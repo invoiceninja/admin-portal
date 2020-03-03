@@ -74,6 +74,7 @@ abstract class CompanyEntity extends Object
       expenses: BuiltList<ExpenseEntity>(),
       projects: BuiltList<ProjectEntity>(),
       vendors: BuiltList<VendorEntity>(),
+      designs: BuiltList<DesignEntity>(),
     );
   }
 
@@ -186,6 +187,8 @@ abstract class CompanyEntity extends Object
   BuiltList<ExpenseEntity> get expenses;
 
   BuiltList<VendorEntity> get vendors;
+
+  BuiltList<DesignEntity> get designs;
 
   BuiltMap<String, UserEntity> get userMap;
 

@@ -171,6 +171,10 @@ class _$CompanyEntitySerializer implements StructuredSerializer<CompanyEntity> {
       serializers.serialize(object.vendors,
           specifiedType:
               const FullType(BuiltList, const [const FullType(VendorEntity)])),
+      'designs',
+      serializers.serialize(object.designs,
+          specifiedType:
+              const FullType(BuiltList, const [const FullType(DesignEntity)])),
       'userMap',
       serializers.serialize(object.userMap,
           specifiedType: const FullType(BuiltMap,
@@ -474,6 +478,12 @@ class _$CompanyEntitySerializer implements StructuredSerializer<CompanyEntity> {
           result.vendors.replace(serializers.deserialize(value,
                   specifiedType: const FullType(
                       BuiltList, const [const FullType(VendorEntity)]))
+              as BuiltList<Object>);
+          break;
+        case 'designs':
+          result.designs.replace(serializers.deserialize(value,
+                  specifiedType: const FullType(
+                      BuiltList, const [const FullType(DesignEntity)]))
               as BuiltList<Object>);
           break;
         case 'userMap':
@@ -2697,6 +2707,8 @@ class _$CompanyEntity extends CompanyEntity {
   @override
   final BuiltList<VendorEntity> vendors;
   @override
+  final BuiltList<DesignEntity> designs;
+  @override
   final BuiltMap<String, UserEntity> userMap;
   @override
   final BuiltMap<String, String> customFields;
@@ -2771,6 +2783,7 @@ class _$CompanyEntity extends CompanyEntity {
       this.projects,
       this.expenses,
       this.vendors,
+      this.designs,
       this.userMap,
       this.customFields,
       this.slackWebhookUrl,
@@ -2907,6 +2920,9 @@ class _$CompanyEntity extends CompanyEntity {
     if (vendors == null) {
       throw new BuiltValueNullFieldError('CompanyEntity', 'vendors');
     }
+    if (designs == null) {
+      throw new BuiltValueNullFieldError('CompanyEntity', 'designs');
+    }
     if (userMap == null) {
       throw new BuiltValueNullFieldError('CompanyEntity', 'userMap');
     }
@@ -2975,6 +2991,7 @@ class _$CompanyEntity extends CompanyEntity {
         projects == other.projects &&
         expenses == other.expenses &&
         vendors == other.vendors &&
+        designs == other.designs &&
         userMap == other.userMap &&
         customFields == other.customFields &&
         slackWebhookUrl == other.slackWebhookUrl &&
@@ -3012,11 +3029,11 @@ class _$CompanyEntity extends CompanyEntity {
                                                                 $jc(
                                                                     $jc(
                                                                         $jc(
-                                                                            $jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc(0, enableCustomSurchargeTaxes1.hashCode), enableCustomSurchargeTaxes2.hashCode), enableCustomSurchargeTaxes3.hashCode), enableCustomSurchargeTaxes4.hashCode), sizeId.hashCode), industryId.hashCode), subdomain.hashCode), portalMode.hashCode), portalDomain.hashCode), updateProducts.hashCode), convertProductExchangeRate.hashCode), fillProducts.hashCode), enableProductCost.hashCode), enableProductQuantity.hashCode), defaultQuantity.hashCode), showProductDetails.hashCode), plan.hashCode), companyKey.hashCode), appUrl.hashCode), firstDayOfWeek.hashCode), firstMonthOfYear.hashCode), groups.hashCode), activities.hashCode), taxRates.hashCode), taskStatuses.hashCode), taskStatusMap.hashCode), companyGateways.hashCode), expenseCategories.hashCode), expenseCategoryMap.hashCode), users.hashCode), clients.hashCode), products.hashCode), invoices.hashCode), payments.hashCode), quotes.hashCode), credits.hashCode),
-                                                                                tasks.hashCode),
-                                                                            projects.hashCode),
-                                                                        expenses.hashCode),
-                                                                    vendors.hashCode),
+                                                                            $jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc(0, enableCustomSurchargeTaxes1.hashCode), enableCustomSurchargeTaxes2.hashCode), enableCustomSurchargeTaxes3.hashCode), enableCustomSurchargeTaxes4.hashCode), sizeId.hashCode), industryId.hashCode), subdomain.hashCode), portalMode.hashCode), portalDomain.hashCode), updateProducts.hashCode), convertProductExchangeRate.hashCode), fillProducts.hashCode), enableProductCost.hashCode), enableProductQuantity.hashCode), defaultQuantity.hashCode), showProductDetails.hashCode), plan.hashCode), companyKey.hashCode), appUrl.hashCode), firstDayOfWeek.hashCode), firstMonthOfYear.hashCode), groups.hashCode), activities.hashCode), taxRates.hashCode), taskStatuses.hashCode), taskStatusMap.hashCode), companyGateways.hashCode), expenseCategories.hashCode), expenseCategoryMap.hashCode), users.hashCode), clients.hashCode), products.hashCode), invoices.hashCode), payments.hashCode), quotes.hashCode), credits.hashCode), tasks.hashCode),
+                                                                                projects.hashCode),
+                                                                            expenses.hashCode),
+                                                                        vendors.hashCode),
+                                                                    designs.hashCode),
                                                                 userMap.hashCode),
                                                             customFields.hashCode),
                                                         slackWebhookUrl.hashCode),
@@ -3077,6 +3094,7 @@ class _$CompanyEntity extends CompanyEntity {
           ..add('projects', projects)
           ..add('expenses', expenses)
           ..add('vendors', vendors)
+          ..add('designs', designs)
           ..add('userMap', userMap)
           ..add('customFields', customFields)
           ..add('slackWebhookUrl', slackWebhookUrl)
@@ -3305,6 +3323,11 @@ class CompanyEntityBuilder
       _$this._vendors ??= new ListBuilder<VendorEntity>();
   set vendors(ListBuilder<VendorEntity> vendors) => _$this._vendors = vendors;
 
+  ListBuilder<DesignEntity> _designs;
+  ListBuilder<DesignEntity> get designs =>
+      _$this._designs ??= new ListBuilder<DesignEntity>();
+  set designs(ListBuilder<DesignEntity> designs) => _$this._designs = designs;
+
   MapBuilder<String, UserEntity> _userMap;
   MapBuilder<String, UserEntity> get userMap =>
       _$this._userMap ??= new MapBuilder<String, UserEntity>();
@@ -3420,6 +3443,7 @@ class CompanyEntityBuilder
       _projects = _$v.projects?.toBuilder();
       _expenses = _$v.expenses?.toBuilder();
       _vendors = _$v.vendors?.toBuilder();
+      _designs = _$v.designs?.toBuilder();
       _userMap = _$v.userMap?.toBuilder();
       _customFields = _$v.customFields?.toBuilder();
       _slackWebhookUrl = _$v.slackWebhookUrl;
@@ -3499,6 +3523,7 @@ class CompanyEntityBuilder
               projects: projects.build(),
               expenses: expenses.build(),
               vendors: vendors.build(),
+              designs: designs.build(),
               userMap: userMap.build(),
               customFields: customFields.build(),
               slackWebhookUrl: slackWebhookUrl,
@@ -3555,6 +3580,8 @@ class CompanyEntityBuilder
         expenses.build();
         _$failedField = 'vendors';
         vendors.build();
+        _$failedField = 'designs';
+        designs.build();
         _$failedField = 'userMap';
         userMap.build();
         _$failedField = 'customFields';
