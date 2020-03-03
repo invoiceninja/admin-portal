@@ -75,10 +75,10 @@ const String kFrameworkBootstrap = 'Bootstrap';
 const String kFrameworkFoundation = 'Foundation';
 
 const List<String> kFrameworks = [
-  kFrameworkBulma,
   kFrameworkTailwind,
   kFrameworkBootstrap,
   kFrameworkFoundation,
+  kFrameworkBulma,
 ];
 
 const int kMinMajorAppVersion = 0;
