@@ -1,5 +1,6 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:invoiceninja_flutter/constants.dart';
 import 'package:invoiceninja_flutter/ui/app/form_card.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/app_form.dart';
 import 'package:invoiceninja_flutter/ui/app/edit_scaffold.dart';
@@ -15,7 +16,8 @@ class AccountManagementSettings extends StatefulWidget {
   final AccountManagementVM viewModel;
 
   @override
-  _AccountManagementSettingsState createState() => _AccountManagementSettingsState();
+  _AccountManagementSettingsState createState() =>
+      _AccountManagementSettingsState();
 }
 
 class _AccountManagementSettingsState extends State<AccountManagementSettings> {
@@ -49,10 +51,8 @@ class _AccountManagementSettingsState extends State<AccountManagementSettings> {
         focusNode: _focusNode,
         children: <Widget>[
           FormCard(
-            children: <Widget>[
-
-            ],
-          ),
+              children:
+                  kModules.keys.map((key) => Text(kModules[key])).toList()),
         ],
       ),
     );

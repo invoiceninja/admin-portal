@@ -256,17 +256,31 @@ const String kReportGroupYear = 'year';
 
 const String kActivityEmailInvoice = '6';
 
-const int kModuleRecurringInvoice = 1;
-const int kModuleCredit = 2;
-const int kModuleQuote = 4;
-const int kModuleTask = 8;
-const int kModuleExpense = 16;
-const int kModuleProject = 32;
-const int kModuleVendor = 64;
-const int kModuleTicket = 128;
-const int kModuleProposal = 256;
-const int kModuleRecurringExpense = 512;
-const int kModuleRecurringTask = 1024;
+const int kModuleRecurringInvoices = 1;
+const int kModuleCredits = 2;
+const int kModuleQuotes = 4;
+const int kModuleTasks = 8;
+const int kModuleExpenses = 16;
+const int kModuleProjects = 32;
+const int kModuleVendors = 64;
+const int kModuleTickets = 128;
+const int kModuleProposals = 256;
+const int kModuleRecurringExpenses = 512;
+const int kModuleRecurringTasks = 1024;
+
+const Map<int, String> kModules = {
+  kModuleCredits: 'credits',
+  kModuleQuotes: 'quotes',
+  kModuleTasks: 'tasks',
+  kModuleExpenses: 'expenses',
+  kModuleProjects: 'projects',
+  kModuleVendors: 'vendors',
+  kModuleTickets: 'tickets',
+  kModuleProposals: 'proposals',
+  kModuleRecurringInvoices: 'recurring_invoices',
+  kModuleRecurringExpenses: 'recurring_expenses',
+  kModuleRecurringTasks: 'recurring_tasks',
+};
 
 class InvoiceStatusColors {
   static const colors = {
