@@ -51,13 +51,31 @@ class _AccountManagementSettingsState extends State<AccountManagementSettings> {
         focusNode: _focusNode,
         children: <Widget>[
           FormCard(
-              children:
-                  kModules.keys.map((key) => ListTile(
-                    title: Text(localization.lookup(kModules[key])),
-                    leading: Checkbox(
-                      value: false,
-                    ),
-                  )).toList()),
+              // TODO change to kModules.keys
+              children: [
+            kModuleQuotes,
+            kModuleCredits,
+                kModuleExpenses,
+          ]
+                  .map((key) => CheckboxListTile(
+                        controlAffinity: ListTileControlAffinity.leading,
+                        title: Text(localization.lookup(kModules[key])),
+                        value: company.enabledModules & key != 0,
+                        onChanged: (value) {
+                          int enabledModules = company.enabledModules;
+                          print('## enabledModules: $enabledModules');
+                          if (value) {
+                            enabledModules = enabledModules | key;
+                            print('## TRUE: enabledModules: $enabledModules');
+                          } else {
+                            enabledModules = enabledModules ^ key;
+                            print('## FALSE: enabledModules: $enabledModules');
+                          }
+                          viewModel.onCompanyChanged(company.rebuild(
+                              (b) => b..enabledModules = enabledModules));
+                        },
+                      ))
+                  .toList()),
         ],
       ),
     );

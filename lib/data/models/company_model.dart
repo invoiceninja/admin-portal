@@ -336,24 +336,22 @@ abstract class CompanyEntity extends Object
       return false;
     }
 
-    /*
     if (entityType == EntityType.recurringInvoice &&
-        enabledModules & kModuleRecurringInvoice == 0) {
+        enabledModules & kModuleRecurringInvoices == 0) {
       return false;
     } else if (entityType == EntityType.credit &&
-        enabledModules & kModuleCredit == 0) {
+        enabledModules & kModuleCredits == 0) {
       return false;
     } else if (entityType == EntityType.quote &&
-        enabledModules & kModuleQuote == 0) {
+        enabledModules & kModuleQuotes == 0) {
       return false;
     } else if ([EntityType.task, EntityType.project].contains(entityType) &&
-        enabledModules & kModuleTask == 0) {
+        enabledModules & kModuleTasks == 0) {
       return false;
     } else if ([EntityType.expense, EntityType.vendor].contains(entityType) &&
-        enabledModules & kModuleExpense == 0) {
+        enabledModules & kModuleExpenses == 0) {
       return false;
     }
-    */
 
     return true;
   }
