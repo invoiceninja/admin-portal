@@ -72,6 +72,7 @@ class _StubEditState extends State<StubEdit> {
     final stub = viewModel.stub;
 
     return EditScaffold(
+      title: localization.editStub,
       onCancelPressed: (context) => viewModel.onCancelPressed(context),
               onSavePressed: (context) {
           final bool isValid = _formKey.currentState.validate();

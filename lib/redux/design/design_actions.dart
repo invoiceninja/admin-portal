@@ -288,7 +288,7 @@ void handleDesignAction(
       break;
     case EntityAction.toggleMultiselect:
       if (!store.state.designListState.isInMultiselect()) {
-        store.dispatch(StartDesignMultiselect(context: context));
+        store.dispatch(StartDesignMultiselect());
       }
 
       if (designs.isEmpty) {
@@ -298,10 +298,10 @@ void handleDesignAction(
       for (final design in designs) {
         if (!store.state.designListState.isSelected(design.id)) {
           store.dispatch(
-              AddToDesignMultiselect(context: context, entity: design));
+              AddToDesignMultiselect(entity: design));
         } else {
           store.dispatch(
-              RemoveFromDesignMultiselect(context: context, entity: design));
+              RemoveFromDesignMultiselect(entity: design));
         }
       }
       break;
@@ -309,27 +309,21 @@ void handleDesignAction(
 }
 
 class StartDesignMultiselect {
-  StartDesignMultiselect({@required this.context});
-
-  final BuildContext context;
+  StartDesignMultiselect();
 }
 
 class AddToDesignMultiselect {
-  AddToDesignMultiselect({@required this.context, @required this.entity});
+  AddToDesignMultiselect({@required this.entity});
 
-  final BuildContext context;
   final BaseEntity entity;
 }
 
 class RemoveFromDesignMultiselect {
-  RemoveFromDesignMultiselect({@required this.context, @required this.entity});
+  RemoveFromDesignMultiselect({@required this.entity});
 
-  final BuildContext context;
   final BaseEntity entity;
 }
 
 class ClearDesignMultiselect {
-  ClearDesignMultiselect({@required this.context});
-
-  final BuildContext context;
+  ClearDesignMultiselect();
 }

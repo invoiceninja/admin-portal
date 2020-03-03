@@ -289,7 +289,7 @@ void handleStubAction(
       break;
     case EntityAction.toggleMultiselect:
       if (!store.state.stubListState.isInMultiselect()) {
-        store.dispatch(StartStubMultiselect(context: context));
+        store.dispatch(StartStubMultiselect());
       }
 
       if (stubs.isEmpty) {
@@ -299,10 +299,10 @@ void handleStubAction(
       for (final stub in stubs) {
         if (!store.state.stubListState.isSelected(stub.id)) {
           store.dispatch(
-              AddToStubMultiselect(context: context, entity: stub));
+              AddToStubMultiselect(entity: stub));
         } else {
           store.dispatch(
-              RemoveFromStubMultiselect(context: context, entity: stub));
+              RemoveFromStubMultiselect(entity: stub));
         }
       }
       break;
@@ -310,27 +310,21 @@ void handleStubAction(
 }
 
 class StartStubMultiselect {
-  StartStubMultiselect({@required this.context});
-
-  final BuildContext context;
+  StartStubMultiselect();
 }
 
 class AddToStubMultiselect {
-  AddToStubMultiselect({@required this.context, @required this.entity});
+  AddToStubMultiselect({@required this.entity});
 
-  final BuildContext context;
   final BaseEntity entity;
 }
 
 class RemoveFromStubMultiselect {
-  RemoveFromStubMultiselect({@required this.context, @required this.entity});
+  RemoveFromStubMultiselect({@required this.entity});
 
-  final BuildContext context;
   final BaseEntity entity;
 }
 
 class ClearStubMultiselect {
-  ClearStubMultiselect({@required this.context});
-
-  final BuildContext context;
+  ClearStubMultiselect();
 }

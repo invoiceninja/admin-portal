@@ -71,6 +71,7 @@ class _DesignEditState extends State<DesignEdit> {
     final design = viewModel.design;
 
     return EditScaffold(
+      title: localization.editDesign,
       onCancelPressed: (context) => viewModel.onCancelPressed(context),
       onSavePressed: (context) {
         final bool isValid = _formKey.currentState.validate();
