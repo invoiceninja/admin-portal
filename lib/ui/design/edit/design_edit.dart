@@ -129,8 +129,8 @@ class _DesignEditState extends State<DesignEdit>
                 focusNode: _focusNode,
                 children: <Widget>[
                   DesignSettings(),
-                  DesignHeader(),
                   DesignPreview(),
+                  DesignHeader(),
                 ])
             : AppForm(
                 focusNode: _focusNode,
