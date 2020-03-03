@@ -143,7 +143,22 @@ class _DesignEditState extends State<DesignEdit>
 class DesignCode extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return Container();
+    return Center(
+      child: SingleChildScrollView(
+        padding: const EdgeInsets.all(14),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+            TextField(
+              //scrollPadding: EdgeInsets.all(20.0),
+              keyboardType: TextInputType.multiline,
+              maxLines: 99999,
+              autofocus: true,
+            )
+          ],
+        ),
+      ),
+    );
   }
 }
 
