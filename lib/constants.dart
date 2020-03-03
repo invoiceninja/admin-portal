@@ -203,6 +203,7 @@ const String kSettingsGroupSettings = 'group_settings';
 const String kSettingsGroupSettingsView = 'group_settings_view';
 const String kSettingsGroupSettingsEdit = 'group_settings_edit';
 const String kSettingsCustomFields = 'custom_fields';
+const String kSettingsCustomDesigns = 'custom_designs';
 const String kSettingsGeneratedNumbers = 'generated_numbers';
 const String kSettingsWorkflowSettings = 'workflow_settings';
 const String kSettingsInvoiceDesign = 'invoice_design';

@@ -139,6 +139,11 @@ class SettingsList extends StatelessWidget {
             section: kSettingsCustomFields,
             viewModel: viewModel,
           ),
+        if (showAll)
+          SettingsListTile(
+            section: kSettingsCustomDesigns,
+            viewModel: viewModel,
+          ),
         SettingsListTile(
           section: kSettingsInvoiceDesign,
           viewModel: viewModel,
@@ -330,6 +335,9 @@ class SettingsSearch extends StatelessWidget {
       'all_pages_footer',
       'hide_paid_to_date',
       'invoice_embed_documents',
+    ],
+    kSettingsCustomDesigns: [
+      'custom_designs',
     ],
     kSettingsWorkflowSettings: [
       'auto_email_invoice',
