@@ -305,6 +305,7 @@ else
     code="import 'package:${package}\/ui\/${module_snake}\/${module_snake}_screen.dart';${lineBreak}"
     code="${code}import 'package:${package}\/ui\/${module_snake}\/edit\/${module_snake}_edit_vm.dart';${lineBreak}"
     code="${code}import 'package:${package}\/ui\/${module_snake}\/view\/${module_snake}_view_vm.dart';${lineBreak}"
+    code="${code}import 'package:${package}\/ui\/${module_snake}\/${module_snake}_screen_vm.dart';${lineBreak}"
     code="${code}import 'package:${package}\/redux\/${module_snake}\/${module_snake}_actions.dart';${lineBreak}"
     code="${code}import 'package:${package}\/redux\/${module_snake}\/${module_snake}_middleware.dart';${lineBreak}"
     sed -i -e "s/$comment/$comment${lineBreak}$code/g" ./lib/main.dart
