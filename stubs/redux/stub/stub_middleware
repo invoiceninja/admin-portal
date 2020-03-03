@@ -32,9 +32,9 @@ List<Middleware<AppState>> createStoreStubsMiddleware([
     TypedMiddleware<AppState, LoadStubs>(loadStubs),
     TypedMiddleware<AppState, LoadStub>(loadStub),
     TypedMiddleware<AppState, SaveStubRequest>(saveStub),
-    TypedMiddleware<AppState, ArchiveStubRequest>(archiveStub),
-    TypedMiddleware<AppState, DeleteStubRequest>(deleteStub),
-    TypedMiddleware<AppState, RestoreStubRequest>(restoreStub),
+    TypedMiddleware<AppState, ArchiveStubsRequest>(archiveStub),
+    TypedMiddleware<AppState, DeleteStubsRequest>(deleteStub),
+    TypedMiddleware<AppState, RestoreStubsRequest>(restoreStub),
   ];
 }
 

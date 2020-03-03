@@ -32,9 +32,9 @@ List<Middleware<AppState>> createStoreDesignsMiddleware([
     TypedMiddleware<AppState, LoadDesigns>(loadDesigns),
     TypedMiddleware<AppState, LoadDesign>(loadDesign),
     TypedMiddleware<AppState, SaveDesignRequest>(saveDesign),
-    TypedMiddleware<AppState, ArchiveDesignRequest>(archiveDesign),
-    TypedMiddleware<AppState, DeleteDesignRequest>(deleteDesign),
-    TypedMiddleware<AppState, RestoreDesignRequest>(restoreDesign),
+    TypedMiddleware<AppState, ArchiveDesignsRequest>(archiveDesign),
+    TypedMiddleware<AppState, DeleteDesignsRequest>(deleteDesign),
+    TypedMiddleware<AppState, RestoreDesignsRequest>(restoreDesign),
   ];
 }
 
