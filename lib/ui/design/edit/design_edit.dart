@@ -94,6 +94,7 @@ class _DesignEditState extends State<DesignEdit>
             ? TabBar(
                 //key: ValueKey(state.settingsUIState.updatedAt),
                 controller: _controller,
+                isScrollable: true,
                 tabs: [
                   Tab(
                     text: localization.settings,
@@ -128,10 +129,10 @@ class _DesignEditState extends State<DesignEdit>
                 formKey: _formKey,
                 focusNode: _focusNode,
                 children: <Widget>[
-                  DesignSettings(),
-                  DesignPreview(),
-                  DesignHeader(),
-                ])
+                    DesignSettings(),
+                    DesignPreview(),
+                    DesignHeader(),
+                  ])
             : AppForm(
                 focusNode: _focusNode,
                 formKey: _formKey,
@@ -142,6 +143,7 @@ class _DesignEditState extends State<DesignEdit>
                         children: <Widget>[
                           TabBar(
                             controller: _controller,
+                            isScrollable: true,
                             tabs: <Widget>[
                               Tab(
                                 text: localization.settings,
