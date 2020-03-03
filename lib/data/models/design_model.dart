@@ -35,6 +35,7 @@ abstract class DesignItemResponse
 
 class DesignFields {
   static const String name = 'name';
+  static const String updatedAt = 'updated_at';
 }
 
 abstract class DesignEntity extends Object

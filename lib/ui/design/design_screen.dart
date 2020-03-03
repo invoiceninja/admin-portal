@@ -98,7 +98,6 @@ class DesignScreen extends StatelessWidget {
         },
         sortFields: [
           DesignFields.name,
-          DesignFields.balance,
           DesignFields.updatedAt,
         ],
         onSelectedState: (EntityState state, value) {
@@ -111,14 +110,6 @@ class DesignScreen extends StatelessWidget {
             store.dispatch(StartDesignMultiselect());
           }
         },
-        customValues1: company.getCustomFieldValues(CustomFieldType.design1,
-            excludeBlank: true),
-        customValues2: company.getCustomFieldValues(CustomFieldType.design2,
-            excludeBlank: true),
-        customValues3: company.getCustomFieldValues(CustomFieldType.design3,
-            excludeBlank: true),
-        customValues4: company.getCustomFieldValues(CustomFieldType.design4,
-            excludeBlank: true),
         onSelectedCustom1: (value) =>
             store.dispatch(FilterDesignsByCustom1(value)),
         onSelectedCustom2: (value) =>

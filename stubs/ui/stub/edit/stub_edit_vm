@@ -2,6 +2,7 @@ import 'dart:async';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
+import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:invoiceninja_flutter/redux/ui/ui_actions.dart';
 import 'package:invoiceninja_flutter/ui/stub/stub_screen.dart';
 import 'package:invoiceninja_flutter/utils/platforms.dart';
@@ -57,14 +58,12 @@ class StubEditVM {
       isSaving: state.isSaving,
       origStub: state.stubState.map[stub.id],
       stub: stub,
-      company: state.selectedCompany,
+      company: state.company,
       onChanged: (StubEntity stub) {
         store.dispatch(UpdateStub(stub));
       },
     onCancelPressed: (BuildContext context) {
-      store.dispatch(EditStub(
-          stub: StubEntity(), context: context, force: true));
-      store.dispatch(UpdateCurrentRoute(state.uiState.previousRoute));
+      createEntity(context: context, entity: StubEntity(), force: true);
     },
       onSavePressed: (BuildContext context) {
         final Completer<StubEntity> completer = new Completer<StubEntity>();

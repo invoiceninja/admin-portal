@@ -2,6 +2,7 @@ import 'dart:async';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
+import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:invoiceninja_flutter/redux/ui/ui_actions.dart';
 import 'package:invoiceninja_flutter/ui/design/design_screen.dart';
 import 'package:invoiceninja_flutter/utils/platforms.dart';
@@ -57,14 +58,12 @@ class DesignEditVM {
       isSaving: state.isSaving,
       origDesign: state.designState.map[design.id],
       design: design,
-      company: state.selectedCompany,
+      company: state.company,
       onChanged: (DesignEntity design) {
         store.dispatch(UpdateDesign(design));
       },
       onCancelPressed: (BuildContext context) {
-        store.dispatch(
-            EditDesign(design: DesignEntity(), context: context, force: true));
-        store.dispatch(UpdateCurrentRoute(state.uiState.previousRoute));
+        createEntity(context: context, entity: DesignEntity(), force: true);
       },
       onSavePressed: (BuildContext context) {
         final Completer<DesignEntity> completer = new Completer<DesignEntity>();

@@ -1,5 +1,6 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:invoiceninja_flutter/ui/app/edit_scaffold.dart';
 import 'package:invoiceninja_flutter/ui/app/form_card.dart';
 import 'package:invoiceninja_flutter/ui/design/edit/design_edit_vm.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
@@ -74,9 +75,11 @@ class _DesignEditState extends State<DesignEdit> {
       onSavePressed: (context) {
         final bool isValid = _formKey.currentState.validate();
 
+        /*
         setState(() {
           _autoValidate = !isValid;
         });
+        */
 
         if (!isValid) {
           return;
