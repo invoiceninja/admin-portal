@@ -64,6 +64,7 @@ class DesignEditVM {
       },
       onCancelPressed: (BuildContext context) {
         createEntity(context: context, entity: DesignEntity(), force: true);
+        store.dispatch(UpdateCurrentRoute(state.uiState.previousRoute));
       },
       onSavePressed: (BuildContext context) {
         final Completer<DesignEntity> completer = new Completer<DesignEntity>();
