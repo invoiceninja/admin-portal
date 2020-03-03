@@ -577,6 +577,8 @@ abstract class UserSettingsEntity
 
   UserSettingsEntity._();
 
+  // TODO remove this
+  @nullable
   @BuiltValueField(wireName: 'accent_color')
   String get accentColor;
 
