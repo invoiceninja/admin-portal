@@ -51,6 +51,9 @@ abstract class DesignEntity extends Object
 
   DesignEntity._();
 
+  @override
+  EntityType get entityType => EntityType.design;
+
   String get name;
 
   String get displayName => name;

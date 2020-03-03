@@ -16,6 +16,9 @@ import 'package:invoiceninja_flutter/ui/credit/credit_screen.dart';
 import 'package:invoiceninja_flutter/ui/credit/credit_screen_vm.dart';
 import 'package:invoiceninja_flutter/ui/credit/edit/credit_edit_vm.dart';
 import 'package:invoiceninja_flutter/ui/credit/view/credit_view_vm.dart';
+import 'package:invoiceninja_flutter/ui/design/design_screen_vm.dart';
+import 'package:invoiceninja_flutter/ui/design/edit/design_edit_vm.dart';
+import 'package:invoiceninja_flutter/ui/design/view/design_view_vm.dart';
 import 'package:invoiceninja_flutter/ui/payment/refund/payment_refund_vm.dart';
 import 'package:invoiceninja_flutter/ui/reports/reports_screen.dart';
 import 'package:invoiceninja_flutter/ui/reports/reports_screen_vm.dart';
@@ -330,6 +333,15 @@ class SettingsScreens extends StatelessWidget {
         break;
       case kSettingsUserManagementEdit:
         screen = UserEditScreen();
+        break;
+      case kSettingsCustomDesigns:
+        screen = DesignScreenBuilder();
+        break;
+      case kSettingsCustomDesignsView:
+        screen = DesignViewScreen();
+        break;
+      case kSettingsCustomDesignsEdit:
+        screen = DesignEditScreen();
         break;
       case kSettingsAccountManagement:
         screen = AccountManagementScreen();
