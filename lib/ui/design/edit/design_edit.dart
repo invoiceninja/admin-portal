@@ -40,6 +40,7 @@ class _DesignEditState extends State<DesignEdit>
   void initState() {
     super.initState();
     _focusNode = FocusScopeNode();
+    _nameController = TextEditingController();
     _controller = TabController(
         vsync: this, length: widget.viewModel.state.prefState.isMobile ? 3 : 2);
   }

@@ -30,9 +30,7 @@ class _DesignViewState extends State<DesignView> {
       entity: design,
       isSettings: true,
       onBackPressed: () => viewModel.onBackPressed(),
-      body: ListView(
-        children: <Widget>[],
-      ),
+      body: Placeholder(),
     );
   }
 }
