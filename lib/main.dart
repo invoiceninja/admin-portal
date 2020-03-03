@@ -38,6 +38,7 @@ import 'package:invoiceninja_flutter/ui/credit/credit_screen_vm.dart';
 import 'package:invoiceninja_flutter/ui/payment/refund/payment_refund_vm.dart';
 import 'package:invoiceninja_flutter/ui/reports/reports_screen.dart';
 import 'package:invoiceninja_flutter/ui/reports/reports_screen_vm.dart';
+import 'package:invoiceninja_flutter/ui/settings/account_management_vm.dart';
 import 'package:invoiceninja_flutter/ui/settings/settings_screen_vm.dart';
 import 'package:invoiceninja_flutter/ui/settings/tax_settings_vm.dart';
 import 'package:invoiceninja_flutter/utils/colors.dart';
@@ -385,6 +386,8 @@ class InvoiceNinjaAppState extends State<InvoiceNinjaApp> {
                   ImportExportScreen.route: (context) => ImportExportScreen(),
                   DeviceSettingsScreen.route: (context) =>
                       DeviceSettingsScreen(),
+                  AccountManagementScreen.route: (context) =>
+                      AccountManagementScreen(),
                   GroupSettingsScreen.route: (context) => GroupScreenBuilder(),
                   GroupEditScreen.route: (context) => GroupEditScreen(),
                   GroupViewScreen.route: (context) => GroupViewScreen(),
