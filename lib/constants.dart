@@ -260,6 +260,12 @@ const int kModuleCredit = 2;
 const int kModuleQuote = 4;
 const int kModuleTask = 8;
 const int kModuleExpense = 16;
+const int kModuleProject = 32;
+const int kModuleVendor = 64;
+const int kModuleTicket = 128;
+const int kModuleProposal = 256;
+const int kModuleRecurringExpense = 512;
+const int kModuleRecurringTask = 1024;
 
 class InvoiceStatusColors {
   static const colors = {
