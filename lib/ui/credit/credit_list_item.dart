@@ -46,7 +46,7 @@ class CreditListItem extends StatelessWidget {
     final localization = AppLocalization.of(context);
     final filterMatch = filter != null && filter.isNotEmpty
         ? (credit.matchesFilterValue(filter) ??
-        client.matchesFilterValue(filter))
+            client.matchesFilterValue(filter))
         : null;
 
     /*
@@ -72,14 +72,14 @@ class CreditListItem extends StatelessWidget {
         onLongPress: onLongPress,
         leading: showCheckbox
             ? IgnorePointer(
-          ignoring: listUIState.isInMultiselect(),
-          child: Checkbox(
-            value: isChecked,
-            materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
-            onChanged: (value) => onCheckboxChanged(value),
-            activeColor: Theme.of(context).accentColor,
-          ),
-        )
+                ignoring: listUIState.isInMultiselect(),
+                child: Checkbox(
+                  value: isChecked,
+                  materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                  onChanged: (value) => onCheckboxChanged(value),
+                  activeColor: Theme.of(context).accentColor,
+                ),
+              )
             : null,
         title: Container(
           width: MediaQuery.of(context).size.width,
@@ -108,25 +108,24 @@ class CreditListItem extends StatelessWidget {
                 Expanded(
                   child: filterMatch == null
                       ? Text((credit.number +
-                      ' • ' +
-                      formatDate(
-                          credit.dueDate.isNotEmpty
-                              ? credit.dueDate
-                              : credit.date,
-                          context) +
-                      (hasDocuments ? '  📎' : ''))
-                      .trim())
+                              ' • ' +
+                              formatDate(
+                                  credit.dueDate.isNotEmpty
+                                      ? credit.dueDate
+                                      : credit.date,
+                                  context) +
+                              (hasDocuments ? '  📎' : ''))
+                          .trim())
                       : Text(
-                    filterMatch,
-                    maxLines: 3,
-                    overflow: TextOverflow.ellipsis,
-                  ),
+                          filterMatch,
+                          maxLines: 3,
+                          overflow: TextOverflow.ellipsis,
+                        ),
                 ),
                 Text(
                     credit.isPastDue
                         ? localization.pastDue
-                        : localization
-                        .lookup('credit_status_$creditStatusId'),
+                        : localization.lookup('credit_status_$creditStatusId'),
                     style: TextStyle(
                       color: credit.isPastDue
                           ? Colors.red

@@ -337,15 +337,8 @@ Middleware<AppState> _loadCredits(CreditRepository repository) {
       if (action.completer != null) {
         action.completer.complete(null);
       }
-      // TODO remove once all modules are supported
-      if (Config.DEMO_MODE) {
-        if (state.projectState.isStale) {
-          store.dispatch(LoadProjects());
-        }
-      } else {
-        if (state.clientState.isStale) {
-          store.dispatch(LoadClients());
-        }
+      if (state.clientState.isStale) {
+        store.dispatch(LoadClients());
       }
     }).catchError((Object error) {
       print(error);

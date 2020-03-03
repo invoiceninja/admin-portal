@@ -39,7 +39,7 @@ class InvoiceListItem extends StatelessWidget {
     final state = StoreProvider.of<AppState>(context).state;
     final uiState = state.uiState;
     final invoiceUIState = uiState.invoiceUIState;
-    final listUIState = invoiceUIState.listUIState;
+    final listUIState = state.getUIState(invoice.entityType).listUIState;
     final isInMultiselect = listUIState.isInMultiselect();
     final showCheckbox = onCheckboxChanged != null || isInMultiselect;
 

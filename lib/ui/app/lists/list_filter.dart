@@ -32,7 +32,6 @@ class FilterListTile extends StatelessWidget {
           borderRadius: BorderRadius.all(Radius.circular(5)),
         ),
         child: ListTile(
-          dense: true,
           leading: Icon(getEntityIcon(entityType)),
           title: Text(localization.filteredBy
               .replaceFirst(':value', entity.listDisplayName)),

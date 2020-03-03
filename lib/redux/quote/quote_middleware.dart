@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/redux/app/app_middleware.dart';
 import 'package:invoiceninja_flutter/redux/client/client_actions.dart';
+import 'package:invoiceninja_flutter/redux/credit/credit_actions.dart';
 import 'package:invoiceninja_flutter/redux/project/project_actions.dart';
 import 'package:invoiceninja_flutter/redux/quote/quote_actions.dart';
 import 'package:invoiceninja_flutter/redux/ui/ui_actions.dart';
@@ -320,9 +321,6 @@ Middleware<AppState> _loadQuote(QuoteRepository repository) {
       if (action.completer != null) {
         action.completer.complete(null);
       }
-      if (state.projectState.isStale) {
-        store.dispatch(LoadProjects());
-      }
     }).catchError((Object error) {
       print(error);
       store.dispatch(LoadQuoteFailure(error));
@@ -358,15 +356,8 @@ Middleware<AppState> _loadQuotes(QuoteRepository repository) {
       if (action.completer != null) {
         action.completer.complete(null);
       }
-      // TODO remove once all modules are supported
-      if (Config.DEMO_MODE) {
-        if (state.projectState.isStale) {
-          store.dispatch(LoadProjects());
-        }
-      } else {
-        if (state.clientState.isStale) {
-          store.dispatch(LoadClients());
-        }
+      if (state.creditState.isStale) {
+        store.dispatch(LoadCredits());
       }
     }).catchError((Object error) {
       print(error);
