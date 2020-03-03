@@ -187,7 +187,7 @@ class _EntityListState extends State<InvoiceList> {
             ],
             source: dataTableSource,
             header: DatatableHeader(
-              entityType: EntityType.invoice,
+              entityType: widget.viewModel.entityType,
               onClearPressed: viewModel.onClearEntityFilterPressed,
             ),
           ),
