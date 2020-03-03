@@ -26,9 +26,17 @@ class SettingsList extends StatelessWidget {
     final showAll = settingsUIState.entityType == EntityType.company;
 
     if (!state.userCompany.isAdmin)
-      return SettingsListTile(
-        section: kSettingsUserDetails,
-        viewModel: viewModel,
+      return ListView(
+        children: <Widget>[
+          SettingsListTile(
+            section: kSettingsUserDetails,
+            viewModel: viewModel,
+          ),
+          SettingsListTile(
+            section: kSettingsDeviceSettings,
+            viewModel: viewModel,
+          ),
+        ],
       );
     else if (settingsUIState.filter != null)
       return SettingsSearch(
@@ -104,11 +112,11 @@ class SettingsList extends StatelessWidget {
           SettingsListTile(
             section: kSettingsDeviceSettings,
             viewModel: viewModel,
-            icon: kIsWeb
-                ? Icons.desktop_mac
-                : isMobile(context)
-                    ? FontAwesomeIcons.mobileAlt
-                    : FontAwesomeIcons.desktop,
+          ),
+        if (showAll)
+          SettingsListTile(
+            section: kSettingsAccountManagement,
+            viewModel: viewModel,
           ),
         Container(
           color: Theme.of(context).bottomAppBarColor,
@@ -182,24 +190,33 @@ class SettingsListTile extends StatelessWidget {
   const SettingsListTile({
     @required this.section,
     @required this.viewModel,
-    this.icon,
   });
 
   final String section;
   final SettingsListVM viewModel;
-  final IconData icon;
 
   @override
   Widget build(BuildContext context) {
     final localization = AppLocalization.of(context);
     final state = viewModel.state;
 
+    IconData icon;
+    if (section == kSettingsDeviceSettings) {
+      icon = kIsWeb
+          ? Icons.desktop_mac
+          : isMobile(context)
+              ? FontAwesomeIcons.mobileAlt
+              : FontAwesomeIcons.desktop;
+    } else {
+      icon = getSettingIcon(section);
+    }
+
     return SelectedIndicator(
       isSelected: viewModel.state.uiState.containsRoute('/$section'),
       child: ListTile(
         leading: Padding(
           padding: const EdgeInsets.only(left: 6, top: 2),
-          child: Icon(icon ?? getSettingIcon(section), size: 20),
+          child: Icon(icon ?? icon, size: 20),
         ),
         title: Text(localization.lookup(section)),
         onTap: () {

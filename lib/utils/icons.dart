@@ -160,6 +160,8 @@ IconData getSettingIcon(String section) {
       return FontAwesomeIcons.link;
     case kSettingsUserManagement:
       return FontAwesomeIcons.users;
+    case kSettingsAccountManagement:
+      return FontAwesomeIcons.shieldAlt;
     default:
       return null;
   }
