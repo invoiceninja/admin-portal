@@ -297,11 +297,9 @@ void handleDesignAction(
 
       for (final design in designs) {
         if (!store.state.designListState.isSelected(design.id)) {
-          store.dispatch(
-              AddToDesignMultiselect(entity: design));
+          store.dispatch(AddToDesignMultiselect(entity: design));
         } else {
-          store.dispatch(
-              RemoveFromDesignMultiselect(entity: design));
+          store.dispatch(RemoveFromDesignMultiselect(entity: design));
         }
       }
       break;

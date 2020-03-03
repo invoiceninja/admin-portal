@@ -41,7 +41,6 @@ class DesignFields {
 abstract class DesignEntity extends Object
     with BaseEntity
     implements Built<DesignEntity, DesignEntityBuilder> {
-
   factory DesignEntity({String id, AppState state}) {
     return _$DesignEntity._(
       id: id ?? BaseEntity.nextId,
