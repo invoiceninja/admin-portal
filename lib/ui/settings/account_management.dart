@@ -52,7 +52,12 @@ class _AccountManagementSettingsState extends State<AccountManagementSettings> {
         children: <Widget>[
           FormCard(
               children:
-                  kModules.keys.map((key) => Text(kModules[key])).toList()),
+                  kModules.keys.map((key) => ListTile(
+                    title: Text(localization.lookup(kModules[key])),
+                    leading: Checkbox(
+                      value: false,
+                    ),
+                  )).toList()),
         ],
       ),
     );

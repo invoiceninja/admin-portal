@@ -269,14 +269,14 @@ const int kModuleRecurringExpenses = 512;
 const int kModuleRecurringTasks = 1024;
 
 const Map<int, String> kModules = {
-  kModuleCredits: 'credits',
   kModuleQuotes: 'quotes',
-  kModuleTasks: 'tasks',
-  kModuleExpenses: 'expenses',
+  kModuleCredits: 'credits',
   kModuleProjects: 'projects',
+  kModuleTasks: 'tasks',
   kModuleVendors: 'vendors',
-  kModuleTickets: 'tickets',
+  kModuleExpenses: 'expenses',
   kModuleProposals: 'proposals',
+  kModuleTickets: 'tickets',
   kModuleRecurringInvoices: 'recurring_invoices',
   kModuleRecurringExpenses: 'recurring_expenses',
   kModuleRecurringTasks: 'recurring_tasks',
