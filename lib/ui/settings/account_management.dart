@@ -50,26 +50,25 @@ class _AccountManagementSettingsState extends State<AccountManagementSettings> {
         formKey: _formKey,
         focusNode: _focusNode,
         children: <Widget>[
+
           FormCard(
               // TODO change to kModules.keys
               children: [
             kModuleQuotes,
             kModuleCredits,
-                kModuleExpenses,
+            kModuleExpenses,
           ]
                   .map((key) => CheckboxListTile(
                         controlAffinity: ListTileControlAffinity.leading,
                         title: Text(localization.lookup(kModules[key])),
                         value: company.enabledModules & key != 0,
+                        activeColor: Theme.of(context).accentColor,
                         onChanged: (value) {
                           int enabledModules = company.enabledModules;
-                          print('## enabledModules: $enabledModules');
                           if (value) {
                             enabledModules = enabledModules | key;
-                            print('## TRUE: enabledModules: $enabledModules');
                           } else {
                             enabledModules = enabledModules ^ key;
-                            print('## FALSE: enabledModules: $enabledModules');
                           }
                           viewModel.onCompanyChanged(company.rebuild(
                               (b) => b..enabledModules = enabledModules));
