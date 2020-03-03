@@ -28,6 +28,7 @@ class _DesignViewState extends State<DesignView> {
 
     return ViewScaffold(
       entity: design,
+      isSettings: true,
       body: ListView(
         children: <Widget>[],
       ),
