@@ -59,14 +59,14 @@ class DesignViewVM {
 
     return DesignViewVM(
       state: state,
-      company: state.selectedCompany,
+      company: state.company,
       isSaving: state.isSaving,
       isLoading: state.isLoading,
       isDirty: design.isNew,
       design: design,
       onRefreshed: (context) => _handleRefresh(context),
       onEntityAction: (BuildContext context, EntityAction action) =>
-          handleDesignAction(context, design, action),
+          handleDesignAction(context, [design], action),
     );
   }
 
