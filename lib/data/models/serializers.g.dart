@@ -46,6 +46,8 @@ Serializers _$serializers = (new Serializers().toBuilder()
       ..add(DatetimeFormatItemResponse.serializer)
       ..add(DatetimeFormatListResponse.serializer)
       ..add(DesignEntity.serializer)
+      ..add(DesignItemResponse.serializer)
+      ..add(DesignListResponse.serializer)
       ..add(DesignState.serializer)
       ..add(DesignUIState.serializer)
       ..add(DocumentEntity.serializer)
@@ -231,6 +233,9 @@ Serializers _$serializers = (new Serializers().toBuilder()
               BuiltList, const [const FullType(DatetimeFormatEntity)]),
           () => new ListBuilder<DatetimeFormatEntity>())
       ..addBuilderFactory(
+          const FullType(BuiltList, const [const FullType(DesignEntity)]),
+          () => new ListBuilder<DesignEntity>())
+      ..addBuilderFactory(
           const FullType(BuiltList, const [const FullType(DocumentEntity)]),
           () => new ListBuilder<DocumentEntity>())
       ..addBuilderFactory(
@@ -288,10 +293,8 @@ Serializers _$serializers = (new Serializers().toBuilder()
               BuiltList, const [const FullType(ExpenseCategoryEntity)]),
           () => new ListBuilder<ExpenseCategoryEntity>())
       ..addBuilderFactory(
-          const FullType(BuiltMap, const [
-            const FullType(String),
-            const FullType(ExpenseCategoryEntity)
-          ]),
+          const FullType(BuiltMap,
+              const [const FullType(String), const FullType(ExpenseCategoryEntity)]),
           () => new MapBuilder<String, ExpenseCategoryEntity>())
       ..addBuilderFactory(
           const FullType(BuiltList, const [const FullType(UserEntity)]),
