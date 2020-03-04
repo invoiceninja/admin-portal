@@ -73,6 +73,9 @@ abstract class ProjectUIState extends Object
   @override
   bool get isCreatingNew => editing.isNew;
 
+  @override
+  String get editingId => editing.id;
+
   static Serializer<ProjectUIState> get serializer =>
       _$projectUIStateSerializer;
 }

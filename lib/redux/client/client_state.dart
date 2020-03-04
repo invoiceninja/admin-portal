@@ -86,5 +86,8 @@ abstract class ClientUIState extends Object
   @override
   bool get isCreatingNew => editing.isNew;
 
+  @override
+  String get editingId => editing.id;
+
   static Serializer<ClientUIState> get serializer => _$clientUIStateSerializer;
 }

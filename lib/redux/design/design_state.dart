@@ -71,5 +71,8 @@ abstract class DesignUIState extends Object
   @override
   bool get isCreatingNew => editing.isNew;
 
+  @override
+  String get editingId => editing.id;
+
   static Serializer<DesignUIState> get serializer => _$designUIStateSerializer;
 }

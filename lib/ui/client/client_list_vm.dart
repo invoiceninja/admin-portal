@@ -10,6 +10,9 @@ import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/redux/client/client_actions.dart';
 import 'package:invoiceninja_flutter/redux/client/client_selectors.dart';
+import 'package:invoiceninja_flutter/ui/app/entities/entity_actions_dialog.dart';
+import 'package:invoiceninja_flutter/ui/app/tables/entity_list.dart';
+import 'package:invoiceninja_flutter/ui/client/client_list_item.dart';
 import 'package:invoiceninja_flutter/ui/client/client_presenter.dart';
 import 'package:invoiceninja_flutter/ui/client/client_list.dart';
 import 'package:invoiceninja_flutter/utils/completers.dart';
@@ -22,12 +25,58 @@ class ClientListBuilder extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return StoreConnector<AppState, ClientListVM>(
-      //rebuildOnChange: true,
       converter: ClientListVM.fromStore,
-      builder: (context, vm) {
-        return ClientList(
-          viewModel: vm,
-        );
+      builder: (context, viewModel) {
+        return EntityList(
+            isLoaded: viewModel.isLoaded,
+            entityType: EntityType.client,
+            presenter: ClientPresenter(),
+            state: viewModel.state,
+            entityList: viewModel.clientList,
+            onEntityTap: viewModel.onClientTap,
+            tableColumns: viewModel.tableColumns,
+            onRefreshed: viewModel.onRefreshed,
+            onClearEntityFilterPressed: viewModel.onClearEntityFilterPressed,
+            onViewEntityFilterPressed: viewModel.onViewEntityFilterPressed,
+            onSortColumn: viewModel.onSortColumn,
+            itemBuilder: (BuildContext context, index) {
+              final state = viewModel.state;
+              final clientId = viewModel.clientList[index];
+              final client = viewModel.clientMap[clientId];
+              final listState = state.getListState(EntityType.client);
+              final isInMultiselect = listState.isInMultiselect();
+
+              return ClientListItem(
+                user: viewModel.state.user,
+                filter: viewModel.filter,
+                client: client,
+                onEntityAction: (EntityAction action) {
+                  if (action == EntityAction.more) {
+                    showEntityActionsDialog(
+                      entities: [client],
+                      context: context,
+                    );
+                  } else {
+                    handleClientAction(context, [client], action);
+                  }
+                },
+                onTap: () => viewModel.onClientTap(context, client),
+                onLongPress: () async {
+                  final longPressIsSelection =
+                      state.prefState.longPressSelectionIsDefault ?? true;
+                  if (longPressIsSelection && !isInMultiselect) {
+                    handleClientAction(
+                        context, [client], EntityAction.toggleMultiselect);
+                  } else {
+                    showEntityActionsDialog(
+                      entities: [client],
+                      context: context,
+                    );
+                  }
+                },
+                isChecked: isInMultiselect && listState.isSelected(client.id),
+              );
+            });
       },
     );
   }
@@ -47,20 +96,22 @@ class ClientListVM {
     @required this.onEntityAction,
     @required this.onClearEntityFilterPressed,
     @required this.onViewEntityFilterPressed,
+    @required this.onSortColumn,
   });
 
   final AppState state;
   final List<String> clientList;
-  final BuiltMap<String, ClientEntity> clientMap;
+  final BuiltMap<String, BaseEntity> clientMap;
   final String filter;
   final bool isLoading;
   final bool isLoaded;
-  final Function(BuildContext, ClientEntity) onClientTap;
+  final Function(BuildContext, BaseEntity) onClientTap;
   final Function(BuildContext) onRefreshed;
-  final Function(BuildContext, List<ClientEntity>, EntityAction) onEntityAction;
+  final Function(BuildContext, List<BaseEntity>, EntityAction) onEntityAction;
   final Function onClearEntityFilterPressed;
   final Function(BuildContext) onViewEntityFilterPressed;
   final List<String> tableColumns;
+  final Function(String) onSortColumn;
 
   static ClientListVM fromStore(Store<AppState> store) {
     Future<Null> _handleRefresh(BuildContext context) {
@@ -100,6 +151,7 @@ class ClientListVM {
           entityId: state.clientListState.filterEntityId,
           entityType: state.clientListState.filterEntityType),
       tableColumns: ClientPresenter.getTableFields(state.userCompany),
+      onSortColumn: (field) => store.dispatch(SortClients(field)),
     );
-  }
+  }//
 }

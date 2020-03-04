@@ -90,8 +90,6 @@ class _EntityListState extends State<InvoiceList> {
 
     if (!viewModel.isLoaded) {
       return viewModel.isLoading ? LoadingIndicator() : SizedBox();
-    } else if (viewModel.invoiceMap.isEmpty) {
-      return HelpText(AppLocalization.of(context).noRecordsFound);
     }
 
     if (state.shouldSelectEntity(
@@ -117,50 +115,55 @@ class _EntityListState extends State<InvoiceList> {
               onClearPressed: viewModel.onClearEntityFilterPressed,
             ),
           Expanded(
-              child: ListView.separated(
-            shrinkWrap: true,
-            separatorBuilder: (context, index) => ListDivider(),
-            itemCount: viewModel.invoiceList.length,
-            itemBuilder: (BuildContext context, index) {
-              final invoiceId = viewModel.invoiceList[index];
-              final invoice = viewModel.invoiceMap[invoiceId];
-              final client =
-                  viewModel.clientMap[invoice.clientId] ?? ClientEntity();
+              child: viewModel.invoiceList.isEmpty
+                  ? HelpText(AppLocalization.of(context).noRecordsFound)
+                  : ListView.separated(
+                      shrinkWrap: true,
+                      separatorBuilder: (context, index) => ListDivider(),
+                      itemCount: viewModel.invoiceList.length,
+                      itemBuilder: (BuildContext context, index) {
+                        final invoiceId = viewModel.invoiceList[index];
+                        final invoice = viewModel.invoiceMap[invoiceId];
+                        final client = viewModel.clientMap[invoice.clientId] ??
+                            ClientEntity();
 
-              void showDialog() => showEntityActionsDialog(
-                    entities: [invoice],
-                    context: context,
-                    client: client,
-                  );
+                        void showDialog() => showEntityActionsDialog(
+                              entities: [invoice],
+                              context: context,
+                              client: client,
+                            );
 
-              return InvoiceListItem(
-                user: viewModel.user,
-                filter: viewModel.filter,
-                hasDocuments: documentMap[invoice.id] == true,
-                invoice: invoice,
-                client: viewModel.clientMap[invoice.clientId] ?? ClientEntity(),
-                onTap: () => viewModel.onInvoiceTap(context, invoice),
-                onEntityAction: (EntityAction action) {
-                  if (action == EntityAction.more) {
-                    showDialog();
-                  } else {
-                    handleInvoiceAction(context, [invoice], action);
-                  }
-                },
-                onLongPress: () async {
-                  final longPressIsSelection =
-                      state.prefState.longPressSelectionIsDefault ?? true;
-                  if (longPressIsSelection && !isInMultiselect) {
-                    handleInvoiceAction(
-                        context, [invoice], EntityAction.toggleMultiselect);
-                  } else {
-                    showDialog();
-                  }
-                },
-                isChecked: isInMultiselect && listState.isSelected(invoice.id),
-              );
-            },
-          )),
+                        return InvoiceListItem(
+                          user: viewModel.user,
+                          filter: viewModel.filter,
+                          hasDocuments: documentMap[invoice.id] == true,
+                          invoice: invoice,
+                          client: viewModel.clientMap[invoice.clientId] ??
+                              ClientEntity(),
+                          onTap: () => viewModel.onInvoiceTap(context, invoice),
+                          onEntityAction: (EntityAction action) {
+                            if (action == EntityAction.more) {
+                              showDialog();
+                            } else {
+                              handleInvoiceAction(context, [invoice], action);
+                            }
+                          },
+                          onLongPress: () async {
+                            final longPressIsSelection =
+                                state.prefState.longPressSelectionIsDefault ??
+                                    true;
+                            if (longPressIsSelection && !isInMultiselect) {
+                              handleInvoiceAction(context, [invoice],
+                                  EntityAction.toggleMultiselect);
+                            } else {
+                              showDialog();
+                            }
+                          },
+                          isChecked: isInMultiselect &&
+                              listState.isSelected(invoice.id),
+                        );
+                      },
+                    )),
         ]);
       } else {
         return SingleChildScrollView(

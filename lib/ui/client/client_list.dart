@@ -74,8 +74,6 @@ class _ClientListState extends State<ClientList> {
 
     if (!viewModel.isLoaded) {
       return viewModel.isLoading ? LoadingIndicator() : SizedBox();
-    } else if (viewModel.clientMap.isEmpty) {
-      return HelpText(AppLocalization.of(context).noRecordsFound);
     }
 
     if (state.shouldSelectEntity(
@@ -89,44 +87,47 @@ class _ClientListState extends State<ClientList> {
 
     final listOrTable = () {
       if (isList) {
-        return ListView.separated(
-            separatorBuilder: (context, index) => ListDivider(),
-            itemCount: viewModel.clientList.length,
-            itemBuilder: (BuildContext context, index) {
-              final clientId = viewModel.clientList[index];
-              final client = viewModel.clientMap[clientId];
+        return viewModel.clientList.isEmpty
+            ? HelpText(AppLocalization.of(context).noRecordsFound)
+            : ListView.separated(
+                separatorBuilder: (context, index) => ListDivider(),
+                itemCount: viewModel.clientList.length,
+                itemBuilder: (BuildContext context, index) {
+                  final clientId = viewModel.clientList[index];
+                  final client = viewModel.clientMap[clientId];
 
-              return ClientListItem(
-                user: viewModel.state.user,
-                filter: viewModel.filter,
-                client: client,
-                onEntityAction: (EntityAction action) {
-                  if (action == EntityAction.more) {
-                    showEntityActionsDialog(
-                      entities: [client],
-                      context: context,
-                    );
-                  } else {
-                    handleClientAction(context, [client], action);
-                  }
-                },
-                onTap: () => viewModel.onClientTap(context, client),
-                onLongPress: () async {
-                  final longPressIsSelection =
-                      state.prefState.longPressSelectionIsDefault ?? true;
-                  if (longPressIsSelection && !isInMultiselect) {
-                    handleClientAction(
-                        context, [client], EntityAction.toggleMultiselect);
-                  } else {
-                    showEntityActionsDialog(
-                      entities: [client],
-                      context: context,
-                    );
-                  }
-                },
-                isChecked: isInMultiselect && listUIState.isSelected(client.id),
-              );
-            });
+                  return ClientListItem(
+                    user: viewModel.state.user,
+                    filter: viewModel.filter,
+                    client: client,
+                    onEntityAction: (EntityAction action) {
+                      if (action == EntityAction.more) {
+                        showEntityActionsDialog(
+                          entities: [client],
+                          context: context,
+                        );
+                      } else {
+                        handleClientAction(context, [client], action);
+                      }
+                    },
+                    onTap: () => viewModel.onClientTap(context, client),
+                    onLongPress: () async {
+                      final longPressIsSelection =
+                          state.prefState.longPressSelectionIsDefault ?? true;
+                      if (longPressIsSelection && !isInMultiselect) {
+                        handleClientAction(
+                            context, [client], EntityAction.toggleMultiselect);
+                      } else {
+                        showEntityActionsDialog(
+                          entities: [client],
+                          context: context,
+                        );
+                      }
+                    },
+                    isChecked:
+                        isInMultiselect && listUIState.isSelected(client.id),
+                  );
+                });
       } else {
         return SingleChildScrollView(
             child: Padding(
@@ -144,10 +145,11 @@ class _ClientListState extends State<ClientList> {
             columns: [
               if (!listUIState.isInMultiselect()) DataColumn(label: SizedBox()),
               ...viewModel.tableColumns.map((field) => DataColumn(
-                  label: Text(AppLocalization.of(context).lookup(field)),
-                  numeric: EntityPresenter.isFieldNumeric(field),
-                  onSort: (int columnIndex, bool ascending) =>
-                      store.dispatch(SortClients(field)))),
+                    label: Text(AppLocalization.of(context).lookup(field)),
+                    numeric: EntityPresenter.isFieldNumeric(field),
+                    onSort: (int columnIndex, bool ascending) =>
+                        store.dispatch(SortClients(field)),
+                  )),
             ],
             source: dataTableSource,
             header: DatatableHeader(

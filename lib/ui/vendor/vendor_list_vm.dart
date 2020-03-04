@@ -10,6 +10,9 @@ import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/redux/ui/list_ui_state.dart';
 import 'package:invoiceninja_flutter/redux/vendor/vendor_actions.dart';
 import 'package:invoiceninja_flutter/redux/vendor/vendor_selectors.dart';
+import 'package:invoiceninja_flutter/ui/app/entities/entity_actions_dialog.dart';
+import 'package:invoiceninja_flutter/ui/app/tables/entity_list.dart';
+import 'package:invoiceninja_flutter/ui/vendor/vendor_list_item.dart';
 import 'package:invoiceninja_flutter/ui/vendor/vendor_presenter.dart';
 import 'package:invoiceninja_flutter/ui/vendor/vendor_list.dart';
 import 'package:invoiceninja_flutter/utils/completers.dart';
@@ -24,8 +27,55 @@ class VendorListBuilder extends StatelessWidget {
     return StoreConnector<AppState, VendorListVM>(
       converter: VendorListVM.fromStore,
       builder: (context, viewModel) {
-        return VendorList(
-          viewModel: viewModel,
+        return EntityList(
+          isLoaded: viewModel.isLoaded,
+          entityType: EntityType.vendor,
+          presenter: VendorPresenter(),
+          state: viewModel.state,
+          entityList: viewModel.vendorList,
+          onEntityTap: viewModel.onVendorTap,
+          tableColumns: viewModel.tableColumns,
+          onRefreshed: viewModel.onRefreshed,
+          onClearEntityFilterPressed: viewModel.onClearEntityFilterPressed,
+          onViewEntityFilterPressed: viewModel.onViewEntityFilterPressed,
+          onSortColumn: viewModel.onSortColumn,
+          itemBuilder: (BuildContext context, index) {
+            final vendorId = viewModel.vendorList[index];
+            final vendor = viewModel.vendorMap[vendorId];
+            final state = viewModel.state;
+            final listUIState = state.getListState(EntityType.vendor);
+            final isInMultiselect = listUIState.isInMultiselect();
+
+            void showDialog() => showEntityActionsDialog(
+                  entities: [vendor],
+                  context: context,
+                );
+
+            return VendorListItem(
+              userCompany: viewModel.state.userCompany,
+              filter: viewModel.filter,
+              vendor: vendor,
+              onTap: () => viewModel.onVendorTap(context, vendor),
+              onEntityAction: (EntityAction action) {
+                if (action == EntityAction.more) {
+                  showDialog();
+                } else {
+                  handleVendorAction(context, [vendor], action);
+                }
+              },
+              onLongPress: () async {
+                final longPressIsSelection =
+                    state.prefState.longPressSelectionIsDefault ?? true;
+                if (longPressIsSelection && !isInMultiselect) {
+                  handleVendorAction(
+                      context, [vendor], EntityAction.toggleMultiselect);
+                } else {
+                  showDialog();
+                }
+              },
+              isChecked: isInMultiselect && listUIState.isSelected(vendor.id),
+            );
+          },
         );
       },
     );
@@ -46,6 +96,7 @@ class VendorListVM {
     @required this.tableColumns,
     @required this.onClearEntityFilterPressed,
     @required this.onViewEntityFilterPressed,
+    @required this.onSortColumn,
   });
 
   static VendorListVM fromStore(Store<AppState> store) {
@@ -84,6 +135,7 @@ class VendorListVM {
       },
       onRefreshed: (context) => _handleRefresh(context),
       tableColumns: VendorPresenter.getTableFields(state.userCompany),
+      onSortColumn: (field) => store.dispatch(SortVendors(field)),
     );
   }
 
@@ -99,4 +151,5 @@ class VendorListVM {
   final Function onClearEntityFilterPressed;
   final Function(BuildContext) onViewEntityFilterPressed;
   final List<String> tableColumns;
+  final Function(String) onSortColumn;
 }

@@ -53,6 +53,7 @@ class CreditListVM extends EntityListVM {
     Function(BuildContext, List<InvoiceEntity>, EntityAction) onEntityAction,
     List<String> tableColumns,
     EntityType entityType,
+    Function(String) onSortColumn,
   }) : super(
           state: state,
           user: user,
@@ -69,6 +70,7 @@ class CreditListVM extends EntityListVM {
           onViewEntityFilterPressed: onViewEntityFilterPressed,
           tableColumns: tableColumns,
           entityType: entityType,
+          onSortColumn: onSortColumn,
         );
 
   static CreditListVM fromStore(Store<AppState> store) {

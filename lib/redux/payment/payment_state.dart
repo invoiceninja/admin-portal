@@ -76,6 +76,9 @@ abstract class PaymentUIState extends Object
   @override
   bool get isCreatingNew => editing.isNew;
 
+  @override
+  String get editingId => editing.id;
+
   static Serializer<PaymentUIState> get serializer =>
       _$paymentUIStateSerializer;
 }

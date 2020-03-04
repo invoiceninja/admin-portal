@@ -11,6 +11,9 @@ import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/redux/payment/payment_actions.dart';
 import 'package:invoiceninja_flutter/redux/payment/payment_selectors.dart';
 import 'package:invoiceninja_flutter/redux/ui/list_ui_state.dart';
+import 'package:invoiceninja_flutter/ui/app/entities/entity_actions_dialog.dart';
+import 'package:invoiceninja_flutter/ui/app/tables/entity_list.dart';
+import 'package:invoiceninja_flutter/ui/payment/payment_list_item.dart';
 import 'package:invoiceninja_flutter/ui/payment/payment_presenter.dart';
 import 'package:invoiceninja_flutter/ui/payment/payment_list.dart';
 import 'package:invoiceninja_flutter/utils/completers.dart';
@@ -25,9 +28,60 @@ class PaymentListBuilder extends StatelessWidget {
     return StoreConnector<AppState, PaymentListVM>(
       converter: PaymentListVM.fromStore,
       builder: (context, viewModel) {
-        return PaymentList(
-          viewModel: viewModel,
-        );
+        return EntityList(
+            isLoaded: viewModel.isLoaded,
+            entityType: EntityType.payment,
+            presenter: PaymentPresenter(),
+            state: viewModel.state,
+            entityList: viewModel.paymentList,
+            onEntityTap: viewModel.onPaymentTap,
+            tableColumns: viewModel.tableColumns,
+            onRefreshed: viewModel.onRefreshed,
+            onClearEntityFilterPressed: viewModel.onClearEntityFilterPressed,
+            onViewEntityFilterPressed: viewModel.onViewEntityFilterPressed,
+            onSortColumn: viewModel.onSortColumn,
+            itemBuilder: (BuildContext context, index) {
+              final paymentId = viewModel.paymentList[index];
+              final state = viewModel.state;
+              final payment = state.paymentState.map[paymentId];
+              final client = state.clientState.map[payment.clientId] ??
+                  ClientEntity(id: payment.clientId);
+              final listState = state.getListState(EntityType.client);
+              final isInMultiselect = listState.isInMultiselect();
+
+
+              void showDialog() => showEntityActionsDialog(
+                entities: [payment],
+                context: context,
+                client: client,
+              );
+
+              return PaymentListItem(
+                user: viewModel.user,
+                filter: viewModel.filter,
+                payment: payment,
+                onTap: () => viewModel.onPaymentTap(context, payment),
+                onEntityAction: (EntityAction action) {
+                  if (action == EntityAction.more) {
+                    showDialog();
+                  } else {
+                    handlePaymentAction(context, [payment], action);
+                  }
+                },
+                onLongPress: () async {
+                  final longPressIsSelection =
+                      state.prefState.longPressSelectionIsDefault ?? true;
+                  if (longPressIsSelection && !isInMultiselect) {
+                    handlePaymentAction(
+                        context, [payment], EntityAction.toggleMultiselect);
+                  } else {
+                    showDialog();
+                  }
+                },
+                isChecked:
+                isInMultiselect && listState.isSelected(payment.id),
+              );
+            });
       },
     );
   }
@@ -49,6 +103,7 @@ class PaymentListVM {
     @required this.onViewEntityFilterPressed,
     @required this.listState,
     @required this.tableColumns,
+    @required this.onSortColumn,
   });
 
   static PaymentListVM fromStore(Store<AppState> store) {
@@ -95,6 +150,7 @@ class PaymentListVM {
           entityType: state.paymentListState.filterEntityType),
       onRefreshed: (context) => _handleRefresh(context),
       tableColumns: PaymentPresenter.getTableFields(state.userCompany),
+      onSortColumn: (field) => store.dispatch(SortPayments(field)),
     );
   }
 
@@ -112,4 +168,5 @@ class PaymentListVM {
   final Function onClearEntityFilterPressed;
   final Function(BuildContext) onViewEntityFilterPressed;
   final List<String> tableColumns;
+  final Function(String) onSortColumn;
 }

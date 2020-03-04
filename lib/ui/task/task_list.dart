@@ -94,7 +94,7 @@ class _TaskListState extends State<TaskList> {
               ? LoadingIndicator()
               : RefreshIndicator(
                   onRefresh: () => widget.viewModel.onRefreshed(context),
-                  child: widget.viewModel.taskMap.isEmpty
+                  child: widget.viewModel.taskList.isEmpty
                       ? HelpText(AppLocalization.of(context).noRecordsFound)
                       : state.prefState.moduleLayout == ModuleLayout.list
                           ? ListView.separated(

@@ -72,6 +72,9 @@ abstract class ProductUIState extends Object
   @override
   bool get isCreatingNew => editing.isNew;
 
+  @override
+  String get editingId => editing.id;
+
   static Serializer<ProductUIState> get serializer =>
       _$productUIStateSerializer;
 }

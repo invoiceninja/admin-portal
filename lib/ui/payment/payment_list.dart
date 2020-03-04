@@ -116,8 +116,6 @@ class _PaymentListState extends State<PaymentList> {
                     client: client,
                   );
 
-              ClientEntity(id: payment.clientId);
-
               return PaymentListItem(
                 user: viewModel.user,
                 filter: viewModel.filter,
