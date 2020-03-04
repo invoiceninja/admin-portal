@@ -235,17 +235,6 @@ class DesignSettings extends StatelessWidget {
             AppDropdownButton<String>(
               value: null,
               onChanged: (dynamic value) {},
-              items: kFrameworks
-                  .map((value) => DropdownMenuItem(
-                        value: value,
-                        child: Text(value),
-                      ))
-                  .toList(),
-              labelText: localization.cssFramework,
-            ),
-            AppDropdownButton<String>(
-              value: null,
-              onChanged: (dynamic value) {},
               items: ['Bootrap']
                   .map((value) => DropdownMenuItem(
                         value: value,

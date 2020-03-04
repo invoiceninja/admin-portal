@@ -69,18 +69,6 @@ const String kPlanEnterprise = 'enterprise';
 
 const double kGutterWidth = 20;
 
-const String kFrameworkBulma = 'Bulma';
-const String kFrameworkTailwind = 'Tailwind';
-const String kFrameworkBootstrap = 'Bootstrap';
-const String kFrameworkFoundation = 'Foundation';
-
-const List<String> kFrameworks = [
-  kFrameworkTailwind,
-  kFrameworkBootstrap,
-  kFrameworkFoundation,
-  kFrameworkBulma,
-];
-
 const int kMinMajorAppVersion = 0;
 const int kMinMinorAppVersion = 0;
 const int kMinPatchAppVersion = 0;
