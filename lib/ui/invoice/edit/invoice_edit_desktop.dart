@@ -235,19 +235,18 @@ class InvoiceEditDesktopState extends State<InvoiceEditDesktop>
                             .onChanged(invoice.rebuild((b) => b..date = date));
                       },
                     ),
-                    DatePicker(
-                      allowClearing: true,
-                      labelText: widget.entityType == EntityType.credit
-                          ? localization.appliedDate
-                          : widget.entityType == EntityType.quote
-                              ? localization.validUntil
-                              : localization.dueDate,
-                      selectedDate: invoice.dueDate,
-                      onSelected: (date) {
-                        viewModel.onChanged(
-                            invoice.rebuild((b) => b..dueDate = date));
-                      },
-                    ),
+                    if (widget.entityType != EntityType.credit)
+                      DatePicker(
+                        allowClearing: true,
+                        labelText: widget.entityType == EntityType.quote
+                            ? localization.validUntil
+                            : localization.dueDate,
+                        selectedDate: invoice.dueDate,
+                        onSelected: (date) {
+                          viewModel.onChanged(
+                              invoice.rebuild((b) => b..dueDate = date));
+                        },
+                      ),
                     DecoratedFormField(
                       label: localization.partialDeposit,
                       controller: _partialController,

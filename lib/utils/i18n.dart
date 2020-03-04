@@ -34,7 +34,6 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'recurring_tasks': 'Recurring Tasks',
       'recurring_expenses': 'Recurring Expenses',
       'account_management': 'Account Management',
-      'applied_date': 'Applied Date',
       'credit_date': 'Credit Date',
       'credit': 'Credit',
       'credits': 'Credits',
@@ -32822,8 +32821,6 @@ mixin LocalizationsProvider on LocaleCodeAware {
   String get restoredCredit => _localizedValues[localeCode]['restored_credit'];
 
   String get creditDate => _localizedValues[localeCode]['credit_date'];
-
-  String get appliedDate => _localizedValues[localeCode]['applied_date'];
 
   String get accountManagement =>
       _localizedValues[localeCode]['account_management'];

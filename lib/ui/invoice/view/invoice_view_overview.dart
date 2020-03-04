@@ -53,9 +53,7 @@ class InvoiceOverview extends StatelessWidget {
     ];
 
     String dueDateField = InvoiceFields.dueDate;
-    if (invoice.subEntityType == EntityType.credit) {
-      dueDateField = CreditFields.appliedDate;
-    } else if (invoice.subEntityType == EntityType.quote) {
+    if (invoice.subEntityType == EntityType.quote) {
       dueDateField = QuoteFields.validUntil;
     }
 
