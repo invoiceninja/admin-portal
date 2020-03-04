@@ -46,7 +46,7 @@ abstract class DesignEntity extends Object
       id: id ?? BaseEntity.nextId,
       isChanged: false,
       name: '',
-      design: '',
+      design: BuiltMap<String, String>(),
       isCustom: true,
     );
   }
@@ -58,7 +58,7 @@ abstract class DesignEntity extends Object
 
   String get name;
 
-  String get design;
+  BuiltMap<String, String> get design;
 
   @BuiltValueField(wireName: 'is_custom')
   bool get isCustom;

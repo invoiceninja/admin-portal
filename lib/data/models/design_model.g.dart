@@ -114,7 +114,8 @@ class _$DesignEntitySerializer implements StructuredSerializer<DesignEntity> {
       serializers.serialize(object.name, specifiedType: const FullType(String)),
       'design',
       serializers.serialize(object.design,
-          specifiedType: const FullType(String)),
+          specifiedType: const FullType(BuiltMap,
+              const [const FullType(String), const FullType(String)])),
       'is_custom',
       serializers.serialize(object.isCustom,
           specifiedType: const FullType(bool)),
@@ -192,8 +193,9 @@ class _$DesignEntitySerializer implements StructuredSerializer<DesignEntity> {
               specifiedType: const FullType(String)) as String;
           break;
         case 'design':
-          result.design = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String;
+          result.design.replace(serializers.deserialize(value,
+              specifiedType: const FullType(BuiltMap,
+                  const [const FullType(String), const FullType(String)])));
           break;
         case 'is_custom':
           result.isCustom = serializers.deserialize(value,
@@ -435,7 +437,7 @@ class _$DesignEntity extends DesignEntity {
   @override
   final String name;
   @override
-  final String design;
+  final BuiltMap<String, String> design;
   @override
   final bool isCustom;
   @override
@@ -563,9 +565,10 @@ class DesignEntityBuilder
   String get name => _$this._name;
   set name(String name) => _$this._name = name;
 
-  String _design;
-  String get design => _$this._design;
-  set design(String design) => _$this._design = design;
+  MapBuilder<String, String> _design;
+  MapBuilder<String, String> get design =>
+      _$this._design ??= new MapBuilder<String, String>();
+  set design(MapBuilder<String, String> design) => _$this._design = design;
 
   bool _isCustom;
   bool get isCustom => _$this._isCustom;
@@ -615,7 +618,7 @@ class DesignEntityBuilder
   DesignEntityBuilder get _$this {
     if (_$v != null) {
       _name = _$v.name;
-      _design = _$v.design;
+      _design = _$v.design?.toBuilder();
       _isCustom = _$v.isCustom;
       _isChanged = _$v.isChanged;
       _createdAt = _$v.createdAt;
@@ -646,20 +649,33 @@ class DesignEntityBuilder
 
   @override
   _$DesignEntity build() {
-    final _$result = _$v ??
-        new _$DesignEntity._(
-            name: name,
-            design: design,
-            isCustom: isCustom,
-            isChanged: isChanged,
-            createdAt: createdAt,
-            updatedAt: updatedAt,
-            archivedAt: archivedAt,
-            isDeleted: isDeleted,
-            createdUserId: createdUserId,
-            assignedUserId: assignedUserId,
-            subEntityType: subEntityType,
-            id: id);
+    _$DesignEntity _$result;
+    try {
+      _$result = _$v ??
+          new _$DesignEntity._(
+              name: name,
+              design: design.build(),
+              isCustom: isCustom,
+              isChanged: isChanged,
+              createdAt: createdAt,
+              updatedAt: updatedAt,
+              archivedAt: archivedAt,
+              isDeleted: isDeleted,
+              createdUserId: createdUserId,
+              assignedUserId: assignedUserId,
+              subEntityType: subEntityType,
+              id: id);
+    } catch (_) {
+      String _$failedField;
+      try {
+        _$failedField = 'design';
+        design.build();
+      } catch (e) {
+        throw new BuiltValueNestedFieldError(
+            'DesignEntity', _$failedField, e.toString());
+      }
+      rethrow;
+    }
     replace(_$result);
     return _$result;
   }

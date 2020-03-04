@@ -56,7 +56,7 @@ class _DesignEditState extends State<DesignEdit>
 
     final design = widget.viewModel.design;
     _nameController.text = design.name;
-    _headerController.text = design.design;
+    _headerController.text = '';//design.design;
 
     _controllers.forEach((controller) => controller.addListener(_onChanged));
 
@@ -79,7 +79,8 @@ class _DesignEditState extends State<DesignEdit>
     _debouncer.run(() {
       final design = widget.viewModel.design.rebuild((b) => b
         ..name = _nameController.text.trim()
-        ..design = _headerController.text.trim());
+        //..design = _headerController.text.trim()
+      );
       if (design != widget.viewModel.design) {
         widget.viewModel.onChanged(design);
       }
