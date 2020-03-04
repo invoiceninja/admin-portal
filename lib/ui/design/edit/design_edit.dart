@@ -194,22 +194,20 @@ class DesignHeader extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Expanded(
-      child: Center(
-        child: SingleChildScrollView(
-          padding: const EdgeInsets.all(14),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: <Widget>[
-              TextField(
-                controller: headerController,
-                //scrollPadding: EdgeInsets.all(20.0),
-                keyboardType: TextInputType.multiline,
-                maxLines: 99999,
-                autofocus: true,
-              )
-            ],
-          ),
+    return Center(
+      child: SingleChildScrollView(
+        padding: const EdgeInsets.all(14),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+            TextField(
+              controller: headerController,
+              //scrollPadding: EdgeInsets.all(20.0),
+              keyboardType: TextInputType.multiline,
+              maxLines: 99999,
+              autofocus: true,
+            )
+          ],
         ),
       ),
     );
