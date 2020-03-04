@@ -32,6 +32,8 @@ import 'package:redux/redux.dart';
 import 'package:invoiceninja_flutter/utils/web_stub.dart'
     if (dart.library.html) 'package:invoiceninja_flutter/utils/web.dart';
 
+import 'credit_report.dart';
+
 class ReportsScreenBuilder extends StatelessWidget {
   const ReportsScreenBuilder({Key key}) : super(key: key);
 
@@ -184,17 +186,16 @@ class ReportsScreenVM {
           state.staticState,
         );
         break;
-      // TODO: Obtain credit map
-      //case kReportCredit:
-      //  reportResult = memoizedCreditReport(
-      //    state.userCompany,
-      //    state.uiState.reportsUIState,
-      //    state.creditState.map,
-      //    state.clientState.map,
-      //    state.userState.map,
-      //    state.staticState,
-      //  );
-      //  break;
+      case kReportCredit:
+        reportResult = memoizedCreditReport(
+          state.userCompany,
+          state.uiState.reportsUIState,
+          state.creditState.map,
+          state.clientState.map,
+          state.userState.map,
+          state.staticState,
+        );
+        break;
       default:
         reportResult = memoizedClientReport(
           state.userCompany,

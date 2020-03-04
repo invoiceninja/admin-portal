@@ -82,7 +82,6 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'deleted_credit': 'Successfully deleted credit',
       'removed_credit': 'Successfully removed credit',
       'restored_credit': 'Successfully restored credit',
-
       'current_version': 'Current Version',
       'latest_version': 'Latest Version',
       'update_now': 'Update Now',
@@ -1082,7 +1081,11 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'vendor_city': 'Vendor City',
       'vendor_state': 'Vendor State',
       'vendor_country': 'Vendor Country',
-      'is_approved': 'Is Approved'
+      'is_approved': 'Is Approved',
+      'tax_name': 'Tax Name',
+      'tax_amount': 'Tax Amount',
+      'tax_paid': 'Tax Paid Amount',
+      'payment_amount': 'Payment Amount'
     },
     'sq': {
       'company1': 'Custom Company 1',
@@ -1094,9 +1097,9 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'product3': 'Custom Product 3',
       'product4': 'Custom Product 4',
       'client1': 'Custom Client 1',
-      'client2': 'Custom Client 1',
-      'client3': 'Custom Client 1',
-      'client4': 'Custom Client 1',
+      'client2': 'Custom Client 2',
+      'client3': 'Custom Client 3',
+      'client4': 'Custom Client 4',
       'contact1': 'Custom Contact 1',
       'contact2': 'Custom Contact 2',
       'contact3': 'Custom Contact 3',
@@ -33025,8 +33028,20 @@ mixin LocalizationsProvider on LocaleCodeAware {
 
   String get isApproved => _localizedValues[localeCode]['is_approved'];
 
+  String get taxName => _localizedValues[localeCode]['tax_name'];
+
+  String get taxAmount => _localizedValues[localeCode]['tax_amount'];
+
+  String get taxPaid => _localizedValues[localeCode]['tax_paid'];
+
+  String get paymentAmount => _localizedValues[localeCode]['payment_amount'];
+
   String lookup(String key) {
     final lookupKey = toSnakeCase(key);
+    print(lookupKey);
+    print(_localizedValues[localeCode][lookupKey] ??
+        _localizedValues[localeCode][lookupKey.replaceFirst('_id', '')] ??
+        key);
     return _localizedValues[localeCode][lookupKey] ??
         _localizedValues[localeCode][lookupKey.replaceFirst('_id', '')] ??
         key;
