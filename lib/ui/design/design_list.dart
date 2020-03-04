@@ -45,16 +45,18 @@ class _DesignListState extends State<DesignList> {
             final designId = viewModel.designList[index];
             final design = viewModel.designMap[designId];
 
+            void showDialog() => showEntityActionsDialog(
+              entities: [design],
+              context: context,
+            );
+
             return DesignListItem(
               user: viewModel.state.user,
               filter: viewModel.filter,
               design: design,
               onEntityAction: (EntityAction action) {
                 if (action == EntityAction.more) {
-                  showEntityActionsDialog(
-                    entities: [design],
-                    context: context,
-                  );
+                  showDialog();
                 } else {
                   handleDesignAction(context, [design], action);
                 }
@@ -67,10 +69,7 @@ class _DesignListState extends State<DesignList> {
                   handleDesignAction(
                       context, [design], EntityAction.toggleMultiselect);
                 } else {
-                  showEntityActionsDialog(
-                    entities: [design],
-                    context: context,
-                  );
+                  showDialog();
                 }
               },
               isChecked: isInMultiselect && listUIState.isSelected(design.id),
