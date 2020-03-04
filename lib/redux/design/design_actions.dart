@@ -264,9 +264,14 @@ void handleDesignAction(
   final design = designs.first as DesignEntity;
   final designIds = designs.map((design) => design.id).toList();
 
+
+  print('## DESIGN ACTION: $action');
   switch (action) {
     case EntityAction.edit:
       editEntity(context: context, entity: design);
+      break;
+    case EntityAction.clone:
+      createEntity(context: context, entity: design.clone);
       break;
     case EntityAction.restore:
       store.dispatch(RestoreDesignsRequest(

@@ -63,6 +63,10 @@ abstract class DesignEntity extends Object
   @BuiltValueField(wireName: 'is_custom')
   bool get isCustom;
 
+  DesignEntity get clone => rebuild((b) => b
+    ..id = BaseEntity.nextId
+    ..isChanged = false
+    ..isDeleted = false);
 
   String get displayName => name;
 
