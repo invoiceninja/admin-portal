@@ -115,6 +115,9 @@ class _$DesignEntitySerializer implements StructuredSerializer<DesignEntity> {
       'design',
       serializers.serialize(object.design,
           specifiedType: const FullType(String)),
+      'is_custom',
+      serializers.serialize(object.isCustom,
+          specifiedType: const FullType(bool)),
     ];
     if (object.isChanged != null) {
       result
@@ -191,6 +194,10 @@ class _$DesignEntitySerializer implements StructuredSerializer<DesignEntity> {
         case 'design':
           result.design = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String;
+          break;
+        case 'is_custom':
+          result.isCustom = serializers.deserialize(value,
+              specifiedType: const FullType(bool)) as bool;
           break;
         case 'isChanged':
           result.isChanged = serializers.deserialize(value,
@@ -430,6 +437,8 @@ class _$DesignEntity extends DesignEntity {
   @override
   final String design;
   @override
+  final bool isCustom;
+  @override
   final bool isChanged;
   @override
   final int createdAt;
@@ -454,6 +463,7 @@ class _$DesignEntity extends DesignEntity {
   _$DesignEntity._(
       {this.name,
       this.design,
+      this.isCustom,
       this.isChanged,
       this.createdAt,
       this.updatedAt,
@@ -470,6 +480,9 @@ class _$DesignEntity extends DesignEntity {
     if (design == null) {
       throw new BuiltValueNullFieldError('DesignEntity', 'design');
     }
+    if (isCustom == null) {
+      throw new BuiltValueNullFieldError('DesignEntity', 'isCustom');
+    }
   }
 
   @override
@@ -485,6 +498,7 @@ class _$DesignEntity extends DesignEntity {
     return other is DesignEntity &&
         name == other.name &&
         design == other.design &&
+        isCustom == other.isCustom &&
         isChanged == other.isChanged &&
         createdAt == other.createdAt &&
         updatedAt == other.updatedAt &&
@@ -507,8 +521,10 @@ class _$DesignEntity extends DesignEntity {
                             $jc(
                                 $jc(
                                     $jc(
-                                        $jc($jc(0, name.hashCode),
-                                            design.hashCode),
+                                        $jc(
+                                            $jc($jc(0, name.hashCode),
+                                                design.hashCode),
+                                            isCustom.hashCode),
                                         isChanged.hashCode),
                                     createdAt.hashCode),
                                 updatedAt.hashCode),
@@ -525,6 +541,7 @@ class _$DesignEntity extends DesignEntity {
     return (newBuiltValueToStringHelper('DesignEntity')
           ..add('name', name)
           ..add('design', design)
+          ..add('isCustom', isCustom)
           ..add('isChanged', isChanged)
           ..add('createdAt', createdAt)
           ..add('updatedAt', updatedAt)
@@ -549,6 +566,10 @@ class DesignEntityBuilder
   String _design;
   String get design => _$this._design;
   set design(String design) => _$this._design = design;
+
+  bool _isCustom;
+  bool get isCustom => _$this._isCustom;
+  set isCustom(bool isCustom) => _$this._isCustom = isCustom;
 
   bool _isChanged;
   bool get isChanged => _$this._isChanged;
@@ -595,6 +616,7 @@ class DesignEntityBuilder
     if (_$v != null) {
       _name = _$v.name;
       _design = _$v.design;
+      _isCustom = _$v.isCustom;
       _isChanged = _$v.isChanged;
       _createdAt = _$v.createdAt;
       _updatedAt = _$v.updatedAt;
@@ -628,6 +650,7 @@ class DesignEntityBuilder
         new _$DesignEntity._(
             name: name,
             design: design,
+            isCustom: isCustom,
             isChanged: isChanged,
             createdAt: createdAt,
             updatedAt: updatedAt,

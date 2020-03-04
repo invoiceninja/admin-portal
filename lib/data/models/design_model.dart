@@ -47,6 +47,7 @@ abstract class DesignEntity extends Object
       isChanged: false,
       name: '',
       design: '',
+      isCustom: true,
     );
   }
 
@@ -58,6 +59,10 @@ abstract class DesignEntity extends Object
   String get name;
 
   String get design;
+
+  @BuiltValueField(wireName: 'is_custom')
+  bool get isCustom;
+
 
   String get displayName => name;
 

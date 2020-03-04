@@ -150,13 +150,11 @@ abstract class ClientEntity extends Object
     return EntityType.client;
   }
 
-  @BuiltValueField(wireName: 'name')
   String get name;
 
   @BuiltValueField(wireName: 'display_name')
   String get displayName;
 
-  @BuiltValueField(wireName: 'balance')
   double get balance;
 
   @BuiltValueField(wireName: 'credit_balance')
