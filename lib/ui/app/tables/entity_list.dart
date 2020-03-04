@@ -90,7 +90,8 @@ class _EntityListState extends State<EntityList> {
     final entityType = widget.entityType;
     final listState = state.getListState(entityType);
     final listUIState = state.getUIState(entityType).listUIState;
-    final isList = state.prefState.moduleLayout == ModuleLayout.list;
+    final isList = state.prefState.moduleLayout == ModuleLayout.list ||
+        widget.presenter == null;
     final entityList = widget.entityList;
     final entityMap = state.getEntityMap(entityType);
 
@@ -98,8 +99,9 @@ class _EntityListState extends State<EntityList> {
       return LoadingIndicator();
     }
 
-    if (state.shouldSelectEntity(
-        entityType: entityType, hasRecords: entityList.isNotEmpty)) {
+    if (!isList &&
+        state.shouldSelectEntity(
+            entityType: entityType, hasRecords: entityList.isNotEmpty)) {
       viewEntityById(
         context: context,
         entityType: entityType,
@@ -108,7 +110,7 @@ class _EntityListState extends State<EntityList> {
     }
 
     final listOrTable = () {
-      if (isList || widget.presenter == null) {
+      if (isList) {
         return Column(children: <Widget>[
           if (listState.filterEntityId != null)
             ListFilterMessage(
