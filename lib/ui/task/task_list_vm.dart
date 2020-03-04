@@ -29,7 +29,7 @@ class TaskListBuilder extends StatelessWidget {
       builder: (context, viewModel) {
         return EntityList(
             isLoaded: viewModel.isLoaded,
-            entityType: EntityType.client,
+            entityType: EntityType.taxRate,
             presenter: TaskPresenter(),
             state: viewModel.state,
             entityList: viewModel.taskList,

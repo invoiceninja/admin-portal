@@ -38,7 +38,7 @@ class QuoteListBuilder extends StatelessWidget {
 
         return EntityList(
             isLoaded: viewModel.isLoaded,
-            entityType: EntityType.client,
+            entityType: EntityType.quote,
             presenter: QuotePresenter(),
             state: viewModel.state,
             entityList: viewModel.invoiceList,

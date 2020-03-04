@@ -45,7 +45,7 @@ class ProjectListBuilder extends StatelessWidget {
               final project = viewModel.projectMap[projectId];
               final client = viewModel.clientMap[project.clientId] ??
                   ClientEntity(id: project.clientId);
-              final listState = state.getListState(EntityType.client);
+              final listState = state.getListState(EntityType.project);
               final isInMultiselect = listState.isInMultiselect();
 
               void showDialog() => showEntityActionsDialog(
