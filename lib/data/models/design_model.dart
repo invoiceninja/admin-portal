@@ -66,6 +66,32 @@ abstract class DesignEntity extends Object
 
   String get displayName => name;
 
+  @override
+  List<EntityAction> getActions(
+      {UserCompanyEntity userCompany,
+        ClientEntity client,
+        bool includeEdit = false,
+        bool multiselect = false}) {
+    final actions = <EntityAction>[];
+
+    if (!isDeleted) {
+      if (!multiselect && includeEdit && userCompany.canEditEntity(this)) {
+        actions.add(EntityAction.edit);
+      }
+    }
+
+    if (userCompany.canCreate(EntityType.design) && !multiselect) {
+      actions.add(EntityAction.clone);
+    }
+
+    if (actions.isNotEmpty) {
+      actions.add(null);
+    }
+
+    return actions..addAll(super.getActions(userCompany: userCompany));
+  }
+
+
   int compareTo(DesignEntity design, String sortField, bool sortAscending) {
     int response = 0;
     DesignEntity designA = sortAscending ? this : design;
