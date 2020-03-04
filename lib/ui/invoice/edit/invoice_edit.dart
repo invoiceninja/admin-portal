@@ -9,6 +9,7 @@ import 'package:invoiceninja_flutter/ui/invoice/edit/invoice_item_selector.dart'
 import 'package:invoiceninja_flutter/ui/app/edit_scaffold.dart';
 import 'package:invoiceninja_flutter/utils/formatting.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
+import 'package:invoiceninja_flutter/utils/platforms.dart';
 
 class InvoiceEdit extends StatefulWidget {
   const InvoiceEdit({
@@ -145,7 +146,9 @@ class _InvoiceEditState extends State<InvoiceEdit>
                   clientId: invoice.clientId,
                   onItemsSelected: (items, [clientId]) {
                     viewModel.onItemsAdded(items, clientId);
-                    _controller.animateTo(kItemScreen);
+                    if (isNotDesktop(context)) {
+                      _controller.animateTo(kItemScreen);
+                    }
                   },
                 );
               });

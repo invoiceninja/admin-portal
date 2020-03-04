@@ -128,8 +128,14 @@ class _$InvoiceEntitySerializer implements StructuredSerializer<InvoiceEntity> {
       'balance',
       serializers.serialize(object.balance,
           specifiedType: const FullType(double)),
+      'client_id',
+      serializers.serialize(object.clientId,
+          specifiedType: const FullType(String)),
       'status_id',
       serializers.serialize(object.statusId,
+          specifiedType: const FullType(String)),
+      'number',
+      serializers.serialize(object.number,
           specifiedType: const FullType(String)),
       'discount',
       serializers.serialize(object.discount,
@@ -153,6 +159,9 @@ class _$InvoiceEntitySerializer implements StructuredSerializer<InvoiceEntity> {
           specifiedType: const FullType(String)),
       'footer',
       serializers.serialize(object.footer,
+          specifiedType: const FullType(String)),
+      'design_id',
+      serializers.serialize(object.designId,
           specifiedType: const FullType(String)),
       'uses_inclusive_taxes',
       serializers.serialize(object.usesInclusiveTaxes,
@@ -223,24 +232,6 @@ class _$InvoiceEntitySerializer implements StructuredSerializer<InvoiceEntity> {
           specifiedType: const FullType(
               BuiltList, const [const FullType(InvitationEntity)])),
     ];
-    if (object.clientId != null) {
-      result
-        ..add('client_id')
-        ..add(serializers.serialize(object.clientId,
-            specifiedType: const FullType(String)));
-    }
-    if (object.number != null) {
-      result
-        ..add('number')
-        ..add(serializers.serialize(object.number,
-            specifiedType: const FullType(String)));
-    }
-    if (object.designId != null) {
-      result
-        ..add('design_id')
-        ..add(serializers.serialize(object.designId,
-            specifiedType: const FullType(String)));
-    }
     if (object.autoBill != null) {
       result
         ..add('auto_bill')
@@ -620,22 +611,16 @@ class _$InvoiceItemEntitySerializer
       'custom_value2',
       serializers.serialize(object.customValue2,
           specifiedType: const FullType(String)),
+      'custom_value3',
+      serializers.serialize(object.customValue3,
+          specifiedType: const FullType(String)),
+      'custom_value4',
+      serializers.serialize(object.customValue4,
+          specifiedType: const FullType(String)),
       'discount',
       serializers.serialize(object.discount,
           specifiedType: const FullType(double)),
     ];
-    if (object.customValue3 != null) {
-      result
-        ..add('custom_value3')
-        ..add(serializers.serialize(object.customValue3,
-            specifiedType: const FullType(String)));
-    }
-    if (object.customValue4 != null) {
-      result
-        ..add('custom_value4')
-        ..add(serializers.serialize(object.customValue4,
-            specifiedType: const FullType(String)));
-    }
     if (object.taskId != null) {
       result
         ..add('task_public_id')
@@ -1267,8 +1252,14 @@ class _$InvoiceEntity extends InvoiceEntity {
     if (balance == null) {
       throw new BuiltValueNullFieldError('InvoiceEntity', 'balance');
     }
+    if (clientId == null) {
+      throw new BuiltValueNullFieldError('InvoiceEntity', 'clientId');
+    }
     if (statusId == null) {
       throw new BuiltValueNullFieldError('InvoiceEntity', 'statusId');
+    }
+    if (number == null) {
+      throw new BuiltValueNullFieldError('InvoiceEntity', 'number');
     }
     if (discount == null) {
       throw new BuiltValueNullFieldError('InvoiceEntity', 'discount');
@@ -1293,6 +1284,9 @@ class _$InvoiceEntity extends InvoiceEntity {
     }
     if (footer == null) {
       throw new BuiltValueNullFieldError('InvoiceEntity', 'footer');
+    }
+    if (designId == null) {
+      throw new BuiltValueNullFieldError('InvoiceEntity', 'designId');
     }
     if (usesInclusiveTaxes == null) {
       throw new BuiltValueNullFieldError('InvoiceEntity', 'usesInclusiveTaxes');
@@ -2007,6 +2001,12 @@ class _$InvoiceItemEntity extends InvoiceItemEntity {
     }
     if (customValue2 == null) {
       throw new BuiltValueNullFieldError('InvoiceItemEntity', 'customValue2');
+    }
+    if (customValue3 == null) {
+      throw new BuiltValueNullFieldError('InvoiceItemEntity', 'customValue3');
+    }
+    if (customValue4 == null) {
+      throw new BuiltValueNullFieldError('InvoiceItemEntity', 'customValue4');
     }
     if (discount == null) {
       throw new BuiltValueNullFieldError('InvoiceItemEntity', 'discount');

@@ -170,18 +170,15 @@ abstract class InvoiceEntity extends Object
   double get balance;
 
   @override
-  @nullable
   @BuiltValueField(wireName: 'client_id')
   String get clientId;
 
   @BuiltValueField(wireName: 'status_id')
   String get statusId;
 
-  @nullable
   @BuiltValueField(wireName: 'number')
   String get number;
 
-  @override
   double get discount;
 
   @BuiltValueField(wireName: 'po_number')
@@ -204,7 +201,6 @@ abstract class InvoiceEntity extends Object
   @BuiltValueField(wireName: 'footer')
   String get footer;
 
-  @nullable
   @BuiltValueField(wireName: 'design_id')
   String get designId;
 
@@ -296,23 +292,23 @@ abstract class InvoiceEntity extends Object
   @BuiltValueField(wireName: 'custom_surcharge4')
   double get customSurcharge4;
 
-  @nullable
   @override
+  @nullable
   @BuiltValueField(wireName: 'custom_taxes1')
   bool get customTaxes1;
 
-  @nullable
   @override
+  @nullable
   @BuiltValueField(wireName: 'custom_taxes2')
   bool get customTaxes2;
 
-  @nullable
   @override
+  @nullable
   @BuiltValueField(wireName: 'custom_taxes3')
   bool get customTaxes3;
 
-  @nullable
   @override
+  @nullable
   @BuiltValueField(wireName: 'custom_taxes4')
   bool get customTaxes4;
 
@@ -612,6 +608,8 @@ abstract class InvoiceItemEntity
       lineItemTypeId: '',
       customValue1: '',
       customValue2: '',
+      customValue3: '',
+      customValue4: '',
       discount: 0.0,
       createdAt: DateTime.now().microsecondsSinceEpoch,
     );
@@ -655,11 +653,9 @@ abstract class InvoiceItemEntity
   @BuiltValueField(wireName: 'custom_value2')
   String get customValue2;
 
-  @nullable
   @BuiltValueField(wireName: 'custom_value3')
   String get customValue3;
 
-  @nullable
   @BuiltValueField(wireName: 'custom_value4')
   String get customValue4;
 
