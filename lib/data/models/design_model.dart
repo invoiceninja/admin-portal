@@ -1,6 +1,7 @@
 import 'package:built_value/built_value.dart';
 import 'package:built_collection/built_collection.dart';
 import 'package:built_value/serializer.dart';
+import 'package:invoiceninja_flutter/constants.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/utils/formatting.dart';
@@ -46,7 +47,14 @@ abstract class DesignEntity extends Object
       id: id ?? BaseEntity.nextId,
       isChanged: false,
       name: '',
-      design: BuiltMap<String, String>(),
+      design: BuiltMap({
+        kDesignHeader: '',
+        kDesignBody: '',
+        kDesignFooter: '',
+        kDesignProducts: '',
+        kDesignTasks: '',
+        kDesignIncludes: '',
+      }),
       isCustom: true,
     );
   }
@@ -72,12 +80,14 @@ abstract class DesignEntity extends Object
 
   String get displayName => name;
 
+  String getSection(String section) => design[section];
+
   @override
   List<EntityAction> getActions(
       {UserCompanyEntity userCompany,
-        ClientEntity client,
-        bool includeEdit = false,
-        bool multiselect = false}) {
+      ClientEntity client,
+      bool includeEdit = false,
+      bool multiselect = false}) {
     final actions = <EntityAction>[];
 
     if (!isDeleted) {
@@ -96,7 +106,6 @@ abstract class DesignEntity extends Object
 
     return actions..addAll(super.getActions(userCompany: userCompany));
   }
-
 
   int compareTo(DesignEntity design, String sortField, bool sortAscending) {
     int response = 0;

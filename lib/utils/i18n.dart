@@ -15,6 +15,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
   static final Map<String, Map<String, String>> _localizedValues = {
     'en': {
       // STARTER: lang key - do not remove comment
+      'includes': 'Includes',
       'header': 'Header',
       'load_design': 'Load Design',
       'css_framework': 'CSS Framework',
@@ -32844,6 +32845,9 @@ mixin LocalizationsProvider on LocaleCodeAware {
   String get loadDesign => _localizedValues[localeCode]['load_design'];
 
   String get header => _localizedValues[localeCode]['header'];
+
+  String get includes => _localizedValues[localeCode]['includes'];
+
 
   String lookup(String key) {
     final lookupKey = toSnakeCase(key);

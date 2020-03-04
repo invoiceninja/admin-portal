@@ -1,5 +1,7 @@
+import 'package:built_collection/built_collection.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:invoiceninja_flutter/constants.dart';
 import 'package:invoiceninja_flutter/ui/app/edit_scaffold.dart';
 import 'package:invoiceninja_flutter/ui/app/form_card.dart';
@@ -31,6 +33,11 @@ class _DesignEditState extends State<DesignEdit>
 
   final _nameController = TextEditingController();
   final _headerController = TextEditingController();
+  final _footerController = TextEditingController();
+  final _bodyController = TextEditingController();
+  final _productsController = TextEditingController();
+  final _tasksController = TextEditingController();
+  final _includesController = TextEditingController();
 
   FocusScopeNode _focusNode;
   TabController _controller;
@@ -42,7 +49,7 @@ class _DesignEditState extends State<DesignEdit>
     super.initState();
     _focusNode = FocusScopeNode();
     _controller = TabController(
-        vsync: this, length: widget.viewModel.state.prefState.isMobile ? 3 : 2);
+        vsync: this, length: widget.viewModel.state.prefState.isMobile ? 7 : 6);
   }
 
   @override
@@ -50,13 +57,24 @@ class _DesignEditState extends State<DesignEdit>
     _controllers = [
       _nameController,
       _headerController,
+      _footerController,
+      _bodyController,
+      _productsController,
+      _tasksController,
+      _includesController,
     ];
 
     _controllers.forEach((controller) => controller.removeListener(_onChanged));
 
     final design = widget.viewModel.design;
     _nameController.text = design.name;
-    _headerController.text = '';//design.design;
+    _headerController.text = design.getSection(kDesignHeader); //design.design;
+    _footerController.text = design.getSection(kDesignHeader); //design.design;
+    _bodyController.text = design.getSection(kDesignHeader); //design.design;
+    _productsController.text =
+        design.getSection(kDesignHeader); //design.design;
+    _tasksController.text = design.getSection(kDesignTasks);
+    _includesController.text = design.getSection(kDesignIncludes);
 
     _controllers.forEach((controller) => controller.addListener(_onChanged));
 
@@ -79,8 +97,15 @@ class _DesignEditState extends State<DesignEdit>
     _debouncer.run(() {
       final design = widget.viewModel.design.rebuild((b) => b
         ..name = _nameController.text.trim()
-        //..design = _headerController.text.trim()
-      );
+        ..design.replace(BuiltMap<String, String>({
+          kDesignHeader: _headerController.text.trim(),
+          kDesignBody: _bodyController.text.trim(),
+          kDesignFooter: _footerController.text.trim(),
+          kDesignProducts: _productsController.text.trim(),
+          kDesignTasks: _tasksController.text.trim(),
+          kDesignIncludes: _includesController.text.trim()
+        })));
+      print('## DESIGN: $design');
       if (design != widget.viewModel.design) {
         widget.viewModel.onChanged(design);
       }
@@ -102,15 +127,14 @@ class _DesignEditState extends State<DesignEdit>
                 controller: _controller,
                 isScrollable: true,
                 tabs: [
-                  Tab(
-                    text: localization.settings,
-                  ),
-                  Tab(
-                    text: localization.preview,
-                  ),
-                  Tab(
-                    text: localization.header,
-                  ),
+                  Tab(text: localization.settings),
+                  Tab(text: localization.preview),
+                  Tab(text: localization.header),
+                  Tab(text: localization.body),
+                  Tab(text: localization.footer),
+                  Tab(text: localization.products),
+                  //Tab(text: localization.tasks),
+                  Tab(text: localization.includes),
                 ],
               )
             : null,
@@ -139,9 +163,12 @@ class _DesignEditState extends State<DesignEdit>
                       nameController: _nameController,
                     ),
                     DesignPreview(),
-                    DesignHeader(
-                      headerController: _headerController,
-                    ),
+                    DesignSection(textController: _headerController),
+                    DesignSection(textController: _bodyController),
+                    DesignSection(textController: _footerController),
+                    DesignSection(textController: _productsController),
+                    //DesignSection(textController: _tasksController),
+                    DesignSection(textController: _includesController),
                   ])
             : AppForm(
                 focusNode: _focusNode,
@@ -155,24 +182,30 @@ class _DesignEditState extends State<DesignEdit>
                             controller: _controller,
                             isScrollable: true,
                             tabs: <Widget>[
-                              Tab(
-                                text: localization.settings,
-                              ),
-                              Tab(
-                                text: localization.header,
-                              ),
+                              Tab(text: localization.settings),
+                              Tab(text: localization.header),
+                              Tab(text: localization.body),
+                              Tab(text: localization.footer),
+                              Tab(text: localization.products),
+                              //Tab(text: localization.tasks),
+                              Tab(text: localization.includes),
                             ],
                           ),
                           Expanded(
                             child: TabBarView(
                               controller: _controller,
                               children: <Widget>[
-                                DesignSettings(
-                                  nameController: _nameController,
-                                ),
-                                DesignHeader(
-                                  headerController: _headerController,
-                                ),
+                                DesignSettings(nameController: _nameController),
+                                DesignSection(
+                                    textController: _headerController),
+                                DesignSection(textController: _bodyController),
+                                DesignSection(
+                                    textController: _footerController),
+                                DesignSection(
+                                    textController: _productsController),
+                                //DesignSection(textController: _productsController),
+                                DesignSection(
+                                    textController: _includesController),
                               ],
                             ),
                           )
@@ -188,10 +221,10 @@ class _DesignEditState extends State<DesignEdit>
   }
 }
 
-class DesignHeader extends StatelessWidget {
-  const DesignHeader({@required this.headerController});
+class DesignSection extends StatelessWidget {
+  const DesignSection({@required this.textController});
 
-  final TextEditingController headerController;
+  final TextEditingController textController;
 
   @override
   Widget build(BuildContext context) {
@@ -202,8 +235,7 @@ class DesignHeader extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
             TextField(
-              controller: headerController,
-              //scrollPadding: EdgeInsets.all(20.0),
+              controller: textController,
               keyboardType: TextInputType.multiline,
               maxLines: 99999,
               autofocus: true,

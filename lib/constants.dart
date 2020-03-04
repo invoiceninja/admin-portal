@@ -141,6 +141,13 @@ const String kGenerateNumberWhenSaved = 'when_saved';
 const String kGenerateNumberWhenSent = 'when_sent';
 //const String kNumberGeneratedWhenPaid = 'paid';
 
+const String kDesignHeader = 'header';
+const String kDesignBody = 'body';
+const String kDesignFooter = 'footer';
+const String kDesignProducts = 'products';
+const String kDesignTasks = 'tasks';
+const String kDesignIncludes = 'include';
+
 const String kEmailDesignPlain = 'plain';
 const String kEmailDesignLight = 'light';
 const String kEmailDesignDark = 'dark';
