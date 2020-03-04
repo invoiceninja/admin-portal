@@ -47,7 +47,7 @@ abstract class DesignState implements Built<DesignState, DesignStateBuilder> {
     return rebuild((b) => b
       ..lastUpdated = DateTime.now().millisecondsSinceEpoch
       ..map.addAll(map)
-      ..list.replace(map.keys));
+      ..list.replace((map.keys.toList() + list.toList()).toSet().toList()));
   }
 
   static Serializer<DesignState> get serializer => _$designStateSerializer;

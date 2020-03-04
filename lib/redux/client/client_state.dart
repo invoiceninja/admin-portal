@@ -55,7 +55,7 @@ abstract class ClientState implements Built<ClientState, ClientStateBuilder> {
     return rebuild((b) => b
       ..lastUpdated = DateTime.now().millisecondsSinceEpoch
       ..map.addAll(map)
-      ..list.replace(map.keys));
+      ..list.replace((map.keys.toList() + list.toList()).toSet().toList()));
   }
 
   bool get isLoaded => lastUpdated != null && lastUpdated > 0;

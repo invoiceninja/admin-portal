@@ -48,7 +48,7 @@ abstract class VendorState implements Built<VendorState, VendorStateBuilder> {
     return rebuild((b) => b
       ..lastUpdated = DateTime.now().millisecondsSinceEpoch
       ..map.addAll(map)
-      ..list.replace(map.keys));
+      ..list.replace((map.keys.toList() + list.toList()).toSet().toList()));
   }
 
   static Serializer<VendorState> get serializer => _$vendorStateSerializer;

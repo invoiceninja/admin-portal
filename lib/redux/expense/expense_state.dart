@@ -49,7 +49,7 @@ abstract class ExpenseState
     return rebuild((b) => b
       ..lastUpdated = DateTime.now().millisecondsSinceEpoch
       ..map.addAll(map)
-      ..list.replace(map.keys));
+      ..list.replace((map.keys.toList() + list.toList()).toSet().toList()));
   }
 
   static Serializer<ExpenseState> get serializer => _$expenseStateSerializer;

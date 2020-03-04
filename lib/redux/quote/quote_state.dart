@@ -51,7 +51,7 @@ abstract class QuoteState implements Built<QuoteState, QuoteStateBuilder> {
     return rebuild((b) => b
       ..lastUpdated = DateTime.now().millisecondsSinceEpoch
       ..map.addAll(map)
-      ..list.replace(map.keys));
+      ..list.replace((map.keys.toList() + list.toList()).toSet().toList()));
   }
 
   static Serializer<QuoteState> get serializer => _$quoteStateSerializer;
