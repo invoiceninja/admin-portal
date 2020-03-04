@@ -129,6 +129,15 @@ class _$PaymentEntitySerializer implements StructuredSerializer<PaymentEntity> {
       'refunded',
       serializers.serialize(object.refunded,
           specifiedType: const FullType(double)),
+      'number',
+      serializers.serialize(object.number,
+          specifiedType: const FullType(String)),
+      'client_id',
+      serializers.serialize(object.clientId,
+          specifiedType: const FullType(String)),
+      'status_id',
+      serializers.serialize(object.statusId,
+          specifiedType: const FullType(String)),
       'transaction_reference',
       serializers.serialize(object.transactionReference,
           specifiedType: const FullType(String)),
@@ -137,9 +146,18 @@ class _$PaymentEntitySerializer implements StructuredSerializer<PaymentEntity> {
       'type_id',
       serializers.serialize(object.typeId,
           specifiedType: const FullType(String)),
+      'private_notes',
+      serializers.serialize(object.privateNotes,
+          specifiedType: const FullType(String)),
       'is_manual',
       serializers.serialize(object.isManual,
           specifiedType: const FullType(bool)),
+      'project_id',
+      serializers.serialize(object.projectId,
+          specifiedType: const FullType(String)),
+      'vendor_id',
+      serializers.serialize(object.vendorId,
+          specifiedType: const FullType(String)),
       'paymentables',
       serializers.serialize(object.paymentables,
           specifiedType: const FullType(
@@ -153,30 +171,6 @@ class _$PaymentEntitySerializer implements StructuredSerializer<PaymentEntity> {
           specifiedType: const FullType(
               BuiltList, const [const FullType(PaymentableEntity)])),
     ];
-    if (object.number != null) {
-      result
-        ..add('number')
-        ..add(serializers.serialize(object.number,
-            specifiedType: const FullType(String)));
-    }
-    if (object.clientId != null) {
-      result
-        ..add('client_id')
-        ..add(serializers.serialize(object.clientId,
-            specifiedType: const FullType(String)));
-    }
-    if (object.statusId != null) {
-      result
-        ..add('status_id')
-        ..add(serializers.serialize(object.statusId,
-            specifiedType: const FullType(String)));
-    }
-    if (object.privateNotes != null) {
-      result
-        ..add('private_notes')
-        ..add(serializers.serialize(object.privateNotes,
-            specifiedType: const FullType(String)));
-    }
     if (object.customValue1 != null) {
       result
         ..add('custom_value1')
@@ -211,18 +205,6 @@ class _$PaymentEntitySerializer implements StructuredSerializer<PaymentEntity> {
       result
         ..add('exchange_currency_id')
         ..add(serializers.serialize(object.exchangeCurrencyId,
-            specifiedType: const FullType(String)));
-    }
-    if (object.projectId != null) {
-      result
-        ..add('project_id')
-        ..add(serializers.serialize(object.projectId,
-            specifiedType: const FullType(String)));
-    }
-    if (object.vendorId != null) {
-      result
-        ..add('vendor_id')
-        ..add(serializers.serialize(object.vendorId,
             specifiedType: const FullType(String)));
     }
     if (object.isChanged != null) {
@@ -820,6 +802,15 @@ class _$PaymentEntity extends PaymentEntity {
     if (refunded == null) {
       throw new BuiltValueNullFieldError('PaymentEntity', 'refunded');
     }
+    if (number == null) {
+      throw new BuiltValueNullFieldError('PaymentEntity', 'number');
+    }
+    if (clientId == null) {
+      throw new BuiltValueNullFieldError('PaymentEntity', 'clientId');
+    }
+    if (statusId == null) {
+      throw new BuiltValueNullFieldError('PaymentEntity', 'statusId');
+    }
     if (transactionReference == null) {
       throw new BuiltValueNullFieldError(
           'PaymentEntity', 'transactionReference');
@@ -830,8 +821,17 @@ class _$PaymentEntity extends PaymentEntity {
     if (typeId == null) {
       throw new BuiltValueNullFieldError('PaymentEntity', 'typeId');
     }
+    if (privateNotes == null) {
+      throw new BuiltValueNullFieldError('PaymentEntity', 'privateNotes');
+    }
     if (isManual == null) {
       throw new BuiltValueNullFieldError('PaymentEntity', 'isManual');
+    }
+    if (projectId == null) {
+      throw new BuiltValueNullFieldError('PaymentEntity', 'projectId');
+    }
+    if (vendorId == null) {
+      throw new BuiltValueNullFieldError('PaymentEntity', 'vendorId');
     }
     if (paymentables == null) {
       throw new BuiltValueNullFieldError('PaymentEntity', 'paymentables');

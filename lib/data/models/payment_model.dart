@@ -115,15 +115,12 @@ abstract class PaymentEntity extends Object
 
   double get refunded;
 
-  @nullable
   String get number;
 
-  @nullable
   @override
   @BuiltValueField(wireName: 'client_id')
   String get clientId;
 
-  @nullable
   @BuiltValueField(wireName: 'status_id')
   String get statusId;
 
@@ -136,7 +133,6 @@ abstract class PaymentEntity extends Object
   @BuiltValueField(wireName: 'type_id')
   String get typeId;
 
-  @nullable
   @BuiltValueField(wireName: 'private_notes')
   String get privateNotes;
 
@@ -167,11 +163,9 @@ abstract class PaymentEntity extends Object
   @BuiltValueField(wireName: 'is_manual')
   bool get isManual;
 
-  @nullable
   @BuiltValueField(wireName: 'project_id')
   String get projectId;
 
-  @nullable
   @BuiltValueField(wireName: 'vendor_id')
   String get vendorId;
 
