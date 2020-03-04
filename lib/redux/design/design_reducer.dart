@@ -143,6 +143,7 @@ final designsReducer = combineReducers<DesignState>([
   TypedReducer<DesignState, AddDesignSuccess>(_addDesign),
   TypedReducer<DesignState, LoadDesignsSuccess>(_setLoadedDesigns),
   TypedReducer<DesignState, LoadDesignSuccess>(_setLoadedDesign),
+  TypedReducer<DesignState, LoadCompanySuccess>(_setLoadedCompany),
   TypedReducer<DesignState, ArchiveDesignsRequest>(_archiveDesignRequest),
   TypedReducer<DesignState, ArchiveDesignsSuccess>(_archiveDesignSuccess),
   TypedReducer<DesignState, ArchiveDesignsFailure>(_archiveDesignFailure),
@@ -273,3 +274,7 @@ DesignState _setLoadedDesign(
 DesignState _setLoadedDesigns(
         DesignState designState, LoadDesignsSuccess action) =>
     designState.loadDesigns(action.designs);
+
+DesignState _setLoadedCompany(
+        DesignState designState, LoadCompanySuccess action) =>
+    designState.loadDesigns(action.userCompany.company.designs);
