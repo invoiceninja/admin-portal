@@ -19,12 +19,12 @@ class EntityList extends StatefulWidget {
     @required this.state,
     @required this.entityType,
     @required this.entityList,
-    @required this.tableColumns,
     @required this.onEntityTap,
     @required this.onRefreshed,
-    @required this.presenter,
     @required this.onSortColumn,
     @required this.itemBuilder,
+    this.presenter,
+    this.tableColumns,
     this.onClearEntityFilterPressed,
     this.onViewEntityFilterPressed,
   }) : super(key: key);
@@ -108,7 +108,7 @@ class _EntityListState extends State<EntityList> {
     }
 
     final listOrTable = () {
-      if (isList) {
+      if (isList || widget.presenter == null) {
         return Column(children: <Widget>[
           if (listState.filterEntityId != null)
             ListFilterMessage(

@@ -1,6 +1,9 @@
 import 'dart:async';
 import 'package:invoiceninja_flutter/data/models/user_model.dart';
 import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
+import 'package:invoiceninja_flutter/ui/app/entities/entity_actions_dialog.dart';
+import 'package:invoiceninja_flutter/ui/app/tables/entity_list.dart';
+import 'package:invoiceninja_flutter/ui/user/user_list_item.dart';
 import 'package:redux/redux.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/foundation.dart';
@@ -24,9 +27,41 @@ class UserListBuilder extends StatelessWidget {
     return StoreConnector<AppState, UserListVM>(
       converter: UserListVM.fromStore,
       builder: (context, viewModel) {
-        return UserList(
-          viewModel: viewModel,
-        );
+        return EntityList(
+            isLoaded: viewModel.isLoaded,
+            entityType: EntityType.user,
+            //presenter: ClientPresenter(),
+            state: viewModel.state,
+            entityList: viewModel.userList,
+            onEntityTap: viewModel.onUserTap,
+            //tableColumns: viewModel.tableColumns,
+            onRefreshed: viewModel.onRefreshed,
+            onClearEntityFilterPressed: viewModel.onClearEntityFilterPressed,
+            onViewEntityFilterPressed: viewModel.onViewEntityFilterPressed,
+            onSortColumn: viewModel.onSortColumn,
+            itemBuilder: (BuildContext context, index) {
+              final userId = viewModel.userList[index];
+              final user = viewModel.userMap[userId];
+
+              void showDialog() => showEntityActionsDialog(
+                    entities: [user],
+                    context: context,
+                  );
+
+              return UserListItem(
+                user: user,
+                filter: viewModel.filter,
+                onTap: () => viewModel.onUserTap(context, user),
+                onEntityAction: (EntityAction action) {
+                  if (action == EntityAction.more) {
+                    showDialog();
+                  } else {
+                    handleUserAction(context, [user], action);
+                  }
+                },
+                onLongPress: () => showDialog(),
+              );
+            });
       },
     );
   }
@@ -34,6 +69,7 @@ class UserListBuilder extends StatelessWidget {
 
 class UserListVM {
   UserListVM({
+    @required this.state,
     @required this.userCompany,
     @required this.userList,
     @required this.userMap,
@@ -45,6 +81,7 @@ class UserListVM {
     @required this.onRefreshed,
     @required this.onClearEntityFilterPressed,
     @required this.onViewEntityFilterPressed,
+    @required this.onSortColumn,
   });
 
   static UserListVM fromStore(Store<AppState> store) {
@@ -61,6 +98,7 @@ class UserListVM {
     final state = store.state;
 
     return UserListVM(
+      state: state,
       userCompany: state.userCompany,
       listState: state.userListState,
       userList: memoizedFilteredUserList(
@@ -82,9 +120,11 @@ class UserListVM {
         }
       },
       onRefreshed: (context) => _handleRefresh(context),
+      onSortColumn: (field) => store.dispatch(SortUsers(field)),
     );
   }
 
+  final AppState state;
   final UserCompanyEntity userCompany;
   final List<String> userList;
   final BuiltMap<String, UserEntity> userMap;
@@ -96,4 +136,5 @@ class UserListVM {
   final Function(BuildContext) onRefreshed;
   final Function onClearEntityFilterPressed;
   final Function(BuildContext) onViewEntityFilterPressed;
+  final Function(String) onSortColumn;
 }

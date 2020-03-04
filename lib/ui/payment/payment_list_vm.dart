@@ -163,7 +163,7 @@ class PaymentListVM {
   final String filter;
   final bool isLoading;
   final bool isLoaded;
-  final Function(BuildContext, PaymentEntity) onPaymentTap;
+  final Function(BuildContext, BaseEntity) onPaymentTap;
   final Function(BuildContext) onRefreshed;
   final Function onClearEntityFilterPressed;
   final Function(BuildContext) onViewEntityFilterPressed;
