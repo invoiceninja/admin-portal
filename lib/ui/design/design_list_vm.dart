@@ -102,7 +102,7 @@ class DesignListVM {
   final String filter;
   final bool isLoading;
   final bool isLoaded;
-  final Function(BuildContext, DesignEntity) onDesignTap;
+  final Function(BuildContext, BaseEntity) onDesignTap;
   final Function(BuildContext) onRefreshed;
   final Function(BuildContext, List<BaseEntity>, EntityAction) onEntityAction;
   final Function onClearEntityFilterPressed;

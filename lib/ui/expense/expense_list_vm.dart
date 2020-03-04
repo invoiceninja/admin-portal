@@ -164,7 +164,7 @@ class ExpenseListVM {
   final String filter;
   final bool isLoading;
   final bool isLoaded;
-  final Function(BuildContext, ExpenseEntity) onExpenseTap;
+  final Function(BuildContext, BaseEntity) onExpenseTap;
   final Function(BuildContext) onRefreshed;
   final Function onClearEntityFilterPressed;
   final Function(BuildContext) onViewEntityFilterPressed;

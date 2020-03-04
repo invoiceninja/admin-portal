@@ -132,7 +132,7 @@ class UserListVM {
   final String filter;
   final bool isLoading;
   final bool isLoaded;
-  final Function(BuildContext, UserEntity) onUserTap;
+  final Function(BuildContext, BaseEntity) onUserTap;
   final Function(BuildContext) onRefreshed;
   final Function onClearEntityFilterPressed;
   final Function(BuildContext) onViewEntityFilterPressed;

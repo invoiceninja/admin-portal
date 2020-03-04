@@ -94,7 +94,7 @@ class TaxRateListVM {
   final String filter;
   final bool isLoading;
   final bool isLoaded;
-  final Function(BuildContext, TaxRateEntity) onTaxRateTap;
+  final Function(BuildContext, BaseEntity) onTaxRateTap;
   final Function(BuildContext) onRefreshed;
   final Function onClearEntityFilterPressed;
   final Function(BuildContext) onViewEntityFilterPressed;

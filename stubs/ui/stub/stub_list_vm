@@ -104,7 +104,7 @@ class StubListVM {
   final String filter;
   final bool isLoading;
   final bool isLoaded;
-  final Function(BuildContext, StubEntity) onStubTap;
+  final Function(BuildContext, BaseEntity) onStubTap;
   final Function(BuildContext) onRefreshed;
   final Function(BuildContext, List<BaseEntity>, EntityAction) onEntityAction;
   final Function onClearEntityFilterPressed;

@@ -145,7 +145,7 @@ class DocumentListVM {
   final String filter;
   final bool isLoading;
   final bool isLoaded;
-  final Function(BuildContext, DocumentEntity) onDocumentTap;
+  final Function(BuildContext, BaseEntity) onDocumentTap;
   final Function(BuildContext) onRefreshed;
   final Function(BuildContext, List<DocumentEntity>, EntityAction)
       onEntityAction;

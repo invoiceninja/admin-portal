@@ -146,7 +146,7 @@ class VendorListVM {
   final String filter;
   final bool isLoading;
   final bool isLoaded;
-  final Function(BuildContext, VendorEntity) onVendorTap;
+  final Function(BuildContext, BaseEntity) onVendorTap;
   final Function(BuildContext) onRefreshed;
   final Function onClearEntityFilterPressed;
   final Function(BuildContext) onViewEntityFilterPressed;

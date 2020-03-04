@@ -46,7 +46,7 @@ class CreditListVM extends EntityListVM {
     String filter,
     bool isLoading,
     bool isLoaded,
-    Function(BuildContext, InvoiceEntity) onInvoiceTap,
+    Function(BuildContext, BaseEntity) onInvoiceTap,
     Function(BuildContext) onRefreshed,
     Function onClearEntityFilterPressed,
     Function(BuildContext) onViewEntityFilterPressed,

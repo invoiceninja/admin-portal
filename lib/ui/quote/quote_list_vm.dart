@@ -32,6 +32,10 @@ class QuoteListBuilder extends StatelessWidget {
     return StoreConnector<AppState, QuoteListVM>(
       converter: QuoteListVM.fromStore,
       builder: (context, viewModel) {
+        final state = viewModel.state;
+        final documentMap = memoizedEntityDocumentMap(EntityType.invoice,
+            state.documentState.map, state.expenseState.map);
+
         return EntityList(
             isLoaded: viewModel.isLoaded,
             entityType: EntityType.client,
@@ -49,9 +53,6 @@ class QuoteListBuilder extends StatelessWidget {
               final invoice = viewModel.invoiceMap[invoiceId];
               final client =
                   viewModel.clientMap[invoice.clientId] ?? ClientEntity();
-              final state = viewModel.state;
-              final documentMap = memoizedEntityDocumentMap(EntityType.invoice,
-                  state.documentState.map, state.expenseState.map);
               final listState = state.getListState(EntityType.quote);
               final isInMultiselect = listState.isInMultiselect();
 
