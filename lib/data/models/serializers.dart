@@ -34,14 +34,10 @@ import 'package:invoiceninja_flutter/redux/task/task_state.dart';
 import 'package:invoiceninja_flutter/redux/project/project_state.dart';
 import 'package:invoiceninja_flutter/redux/payment/payment_state.dart';
 import 'package:invoiceninja_flutter/redux/quote/quote_state.dart';
-
 // STARTER: import - do not remove comment
 import 'package:invoiceninja_flutter/data/models/design_model.dart';
 import 'package:invoiceninja_flutter/redux/design/design_state.dart';
-
-import 'package:invoiceninja_flutter/data/models/credit_model.dart';
 import 'package:invoiceninja_flutter/redux/credit/credit_state.dart';
-
 import 'package:invoiceninja_flutter/data/models/user_model.dart';
 import 'package:invoiceninja_flutter/redux/user/user_state.dart';
 import 'package:invoiceninja_flutter/redux/tax_rate/tax_rate_state.dart';
@@ -116,9 +112,9 @@ part 'serializers.g.dart';
   TaxRateListResponse,
   // STARTER: serializers - do not remove comment
   DesignEntity,
-
+  DesignListResponse,
+  DesignItemResponse,
   InvoiceEntity,
-
   PaymentableEntity,
   UserEntity,
   UserListResponse,

@@ -326,7 +326,7 @@ else
     sed -i -e "s/$comment/$comment${lineBreak}$code/g" ./lib/data/models/serializers.dart
 
     comment="STARTER: serializers - do not remove comment"
-    code="${Module}Entity,${lineBreak}"
+    code="${Module}Entity,${Module}ListResponse,${Module}ItemResponse${lineBreak}"
     sed -i -e "s/$comment/$comment${lineBreak}$code/g" ./lib/data/models/serializers.dart
 
     comment="STARTER: import - do not remove comment"
