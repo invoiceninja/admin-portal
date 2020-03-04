@@ -235,7 +235,7 @@ class DesignSettings extends StatelessWidget {
             AppDropdownButton<String>(
               value: null,
               onChanged: (dynamic value) {},
-              items: ['Bootrap']
+              items: ['']
                   .map((value) => DropdownMenuItem(
                         value: value,
                         child: Text(value),
