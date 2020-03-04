@@ -1085,6 +1085,9 @@ abstract class SettingsEntity
       customPaymentTerms: clientSettings?.customPaymentTerms ??
           groupSettings?.customPaymentTerms ??
           companySettings?.customPaymentTerms,
+      pdfVariables: clientSettings?.pdfVariables ??
+          groupSettings?.pdfVariables ??
+          companySettings?.pdfVariables,
     );
   }
 
@@ -1396,6 +1399,10 @@ abstract class SettingsEntity
   @nullable
   @BuiltValueField(wireName: 'invoice_fields')
   String get invoiceFields;
+
+  @nullable
+  @BuiltValueField(wireName: 'pdf_variables')
+  BuiltMap<String, BuiltList<String>> get pdfVariables;
 
   @nullable
   @BuiltValueField(wireName: 'email_footer')
