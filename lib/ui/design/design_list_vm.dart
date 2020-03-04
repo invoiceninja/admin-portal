@@ -1,5 +1,8 @@
 import 'dart:async';
 import 'package:invoiceninja_flutter/data/models/design_model.dart';
+import 'package:invoiceninja_flutter/ui/app/entities/entity_actions_dialog.dart';
+import 'package:invoiceninja_flutter/ui/app/tables/entity_list.dart';
+import 'package:invoiceninja_flutter/ui/design/design_list_item.dart';
 import 'package:invoiceninja_flutter/ui/design/design_presenter.dart';
 import 'package:redux/redux.dart';
 import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
@@ -25,9 +28,55 @@ class DesignListBuilder extends StatelessWidget {
     return StoreConnector<AppState, DesignListVM>(
       converter: DesignListVM.fromStore,
       builder: (context, viewModel) {
-        return DesignList(
-          viewModel: viewModel,
-        );
+        return EntityList(
+            isLoaded: viewModel.isLoaded,
+            entityType: EntityType.design,
+            //presenter: ClientPresenter(),
+            state: viewModel.state,
+            entityList: viewModel.designList,
+            onEntityTap: viewModel.onDesignTap,
+            tableColumns: viewModel.tableColumns,
+            onRefreshed: viewModel.onRefreshed,
+            onClearEntityFilterPressed: viewModel.onClearEntityFilterPressed,
+            onViewEntityFilterPressed: viewModel.onViewEntityFilterPressed,
+            onSortColumn: viewModel.onSortColumn,
+            itemBuilder: (BuildContext context, index) {
+              final state = viewModel.state;
+              final designId = viewModel.designList[index];
+              final design = viewModel.designMap[designId];
+              final listState = state.getListState(EntityType.design);
+              final isInMultiselect = listState.isInMultiselect();
+
+              void showDialog() => showEntityActionsDialog(
+                    entities: [design],
+                    context: context,
+                  );
+
+              return DesignListItem(
+                user: viewModel.state.user,
+                filter: viewModel.filter,
+                design: design,
+                onEntityAction: (EntityAction action) {
+                  if (action == EntityAction.more) {
+                    showDialog();
+                  } else {
+                    handleDesignAction(context, [design], action);
+                  }
+                },
+                onTap: () => viewModel.onDesignTap(context, design),
+                onLongPress: () async {
+                  final longPressIsSelection =
+                      state.prefState.longPressSelectionIsDefault ?? true;
+                  if (longPressIsSelection && !isInMultiselect) {
+                    handleDesignAction(
+                        context, [design], EntityAction.toggleMultiselect);
+                  } else {
+                    showDialog();
+                  }
+                },
+                isChecked: isInMultiselect && listState.isSelected(design.id),
+              );
+            });
       },
     );
   }
@@ -49,6 +98,7 @@ class DesignListVM {
     @required this.tableColumns,
     @required this.onClearEntityFilterPressed,
     @required this.onViewEntityFilterPressed,
+    @required this.onSortColumn,
   });
 
   static DesignListVM fromStore(Store<AppState> store) {
@@ -91,6 +141,7 @@ class DesignListVM {
           handleDesignAction(context, designs, action),
       onRefreshed: (context) => _handleRefresh(context),
       tableColumns: DesignPresenter.getTableFields(state.userCompany),
+      onSortColumn: (field) => store.dispatch(SortDesigns(field)),
     );
   }
 
@@ -108,4 +159,5 @@ class DesignListVM {
   final Function onClearEntityFilterPressed;
   final Function(BuildContext) onViewEntityFilterPressed;
   final List<String> tableColumns;
+  final Function(String) onSortColumn;
 }

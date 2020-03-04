@@ -122,7 +122,7 @@ class CompanyGatewayListVM {
   final String filter;
   final bool isLoading;
   final bool isLoaded;
-  final Function(BuildContext, BaseEntity) onCompanyGatewayTap;
+  final Function(BuildContext, CompanyGatewayEntity) onCompanyGatewayTap;
   final Function(BuildContext) onRefreshed;
   final Function onClearEntityFilterPressed;
   final Function(BuildContext) onViewEntityFilterPressed;

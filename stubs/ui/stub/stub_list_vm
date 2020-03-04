@@ -25,9 +25,56 @@ class StubListBuilder extends StatelessWidget {
     return StoreConnector<AppState, StubListVM>(
       converter: StubListVM.fromStore,
       builder: (context, viewModel) {
-        return StubList(
-          viewModel: viewModel,
-        );
+        return EntityList(
+            isLoaded: viewModel.isLoaded,
+            entityType: EntityType.stub,
+            presenter: StubPresenter(),
+            state: viewModel.state,
+            entityList: viewModel.stubList,
+            onEntityTap: viewModel.onStubTap,
+            tableColumns: viewModel.tableColumns,
+            onRefreshed: viewModel.onRefreshed,
+            onClearEntityFilterPressed: viewModel.onClearEntityFilterPressed,
+            onViewEntityFilterPressed: viewModel.onViewEntityFilterPressed,
+            onSortColumn: viewModel.onSortColumn,
+            itemBuilder: (BuildContext context, index) {
+              final state = viewModel.state;
+              final stubId = viewModel.stubList[index];
+              final stub = viewModel.stubMap[stubId];
+              final listState = state.getListState(EntityType.stub);
+              final isInMultiselect = listState.isInMultiselect();
+
+              return StubListItem(
+                user: viewModel.state.user,
+                filter: viewModel.filter,
+                stub: stub,
+                onEntityAction: (EntityAction action) {
+                  if (action == EntityAction.more) {
+                    showEntityActionsDialog(
+                      entities: [stub],
+                      context: context,
+                    );
+                  } else {
+                    handleStubAction(context, [stub], action);
+                  }
+                },
+                onTap: () => viewModel.onStubTap(context, stub),
+                onLongPress: () async {
+                  final longPressIsSelection =
+                      state.prefState.longPressSelectionIsDefault ?? true;
+                  if (longPressIsSelection && !isInMultiselect) {
+                    handleStubAction(
+                        context, [stub], EntityAction.toggleMultiselect);
+                  } else {
+                    showEntityActionsDialog(
+                      entities: [stub],
+                      context: context,
+                    );
+                  }
+                },
+                isChecked: isInMultiselect && listState.isSelected(stub.id),
+              );
+            });
       },
     );
   }
@@ -49,6 +96,7 @@ class StubListVM {
     @required this.tableColumns,
     @required this.onClearEntityFilterPressed,
     @required this.onViewEntityFilterPressed,
+    @required this.onSortColumn,
   });
 
   static StubListVM fromStore(Store<AppState> store) {
@@ -93,6 +141,7 @@ class StubListVM {
           handleStubAction(context, stubs, action),
         onRefreshed: (context) => _handleRefresh(context),
         tableColumns: StubPresenter.getTableFields(state.userCompany),
+        onSortColumn: (field) => store.dispatch(SortStubs(field)),
     );
   }
 
@@ -110,4 +159,5 @@ class StubListVM {
   final Function onClearEntityFilterPressed;
   final Function(BuildContext) onViewEntityFilterPressed;
   final List<String> tableColumns;
+  final Function(String) onSortColumn;
 }
