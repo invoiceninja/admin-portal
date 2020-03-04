@@ -47,7 +47,7 @@ abstract class DesignEntity extends Object
       id: id ?? BaseEntity.nextId,
       isChanged: false,
       name: '',
-      design: BuiltMap({
+      design: BuiltMap<String, String>({
         kDesignHeader: '',
         kDesignBody: '',
         kDesignFooter: '',

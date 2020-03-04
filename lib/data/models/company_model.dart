@@ -859,6 +859,9 @@ abstract class SettingsEntity
       defaultQuoteDesignId: clientSettings?.defaultQuoteDesignId ??
           groupSettings?.defaultQuoteDesignId ??
           companySettings?.defaultQuoteDesignId,
+      defaultCreditDesignId: clientSettings?.defaultCreditDesignId ??
+          groupSettings?.defaultCreditDesignId ??
+          companySettings?.defaultCreditDesignId,
       defaultInvoiceFooter: clientSettings?.defaultInvoiceFooter ??
           groupSettings?.defaultInvoiceFooter ??
           companySettings?.defaultInvoiceFooter,
@@ -1359,6 +1362,10 @@ abstract class SettingsEntity
   @nullable
   @BuiltValueField(wireName: 'quote_design_id')
   String get defaultQuoteDesignId;
+
+  @nullable
+  @BuiltValueField(wireName: 'credit_design_id')
+  String get defaultCreditDesignId;
 
   @nullable
   @BuiltValueField(wireName: 'invoice_footer')

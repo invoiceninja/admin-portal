@@ -15,6 +15,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
   static final Map<String, Map<String, String>> _localizedValues = {
     'en': {
       // STARTER: lang key - do not remove comment
+      'credit_design': 'Credit Design',
       'includes': 'Includes',
       'header': 'Header',
       'load_design': 'Load Design',
@@ -32847,6 +32848,8 @@ mixin LocalizationsProvider on LocaleCodeAware {
   String get header => _localizedValues[localeCode]['header'];
 
   String get includes => _localizedValues[localeCode]['includes'];
+
+  String get creditDesign => _localizedValues[localeCode]['credit_design'];
 
 
   String lookup(String key) {

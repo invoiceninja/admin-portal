@@ -82,7 +82,7 @@ class _InvoiceDesignState extends State<InvoiceDesign>
           ListView(children: <Widget>[
             FormCard(
               children: <Widget>[
-                AppDropdownButton(
+                AppDropdownButton<String>(
                   labelText: localization.invoiceDesign,
                   value: settings.defaultInvoiceDesignId,
                   onChanged: (dynamic value) => viewModel.onSettingsChanged(
@@ -95,18 +95,34 @@ class _InvoiceDesignState extends State<InvoiceDesign>
                           ))
                       .toList(),
                 ),
-                AppDropdownButton(
-                  labelText: localization.quoteDesign,
-                  value: settings.defaultQuoteDesignId,
-                  onChanged: (dynamic value) => viewModel.onSettingsChanged(
-                      settings.rebuild((b) => b..defaultQuoteDesignId = value)),
-                  items: designs
-                      .map((designId) => DropdownMenuItem<String>(
-                            value: designId,
-                            child: Text(kInvoiceDesigns[designId]),
-                          ))
-                      .toList(),
-                ),
+                if (company.isModuleEnabled(EntityType.quote))
+                  AppDropdownButton<String>(
+                    labelText: localization.quoteDesign,
+                    value: settings.defaultQuoteDesignId,
+                    onChanged: (dynamic value) => viewModel.onSettingsChanged(
+                        settings
+                            .rebuild((b) => b..defaultQuoteDesignId = value)),
+                    items: designs
+                        .map((designId) => DropdownMenuItem<String>(
+                              value: designId,
+                              child: Text(kInvoiceDesigns[designId]),
+                            ))
+                        .toList(),
+                  ),
+                if (company.isModuleEnabled(EntityType.credit))
+                  AppDropdownButton<String>(
+                    labelText: localization.creditDesign,
+                    value: settings.defaultCreditDesignId,
+                    onChanged: (dynamic value) => viewModel.onSettingsChanged(
+                        settings
+                            .rebuild((b) => b..defaultCreditDesignId = value)),
+                    items: designs
+                        .map((designId) => DropdownMenuItem<String>(
+                              value: designId,
+                              child: Text(kInvoiceDesigns[designId]),
+                            ))
+                        .toList(),
+                  ),
                 AppDropdownButton(
                   labelText: localization.pageSize,
                   value: settings.pageSize,
