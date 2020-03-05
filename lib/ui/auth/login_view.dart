@@ -296,8 +296,10 @@ class _LoginState extends State<LoginView> {
               child: Image.asset('assets/images/logo.png',
                   width: 100.0, height: 100.0),
             ),
-            if (!viewModel.authState.isAuthenticated)
-              Form(
+            AnimatedOpacity(
+              duration: Duration(milliseconds: 500),
+              opacity: viewModel.authState.isAuthenticated ? 0 : 1,
+              child: Form(
                 key: _formKey,
                 child: FormCard(
                   isResponsive: calculateLayout(context) != AppLayout.mobile,
@@ -681,6 +683,7 @@ class _LoginState extends State<LoginView> {
                   ],
                 ),
               ),
+            ),
           ],
         ),
       ],
