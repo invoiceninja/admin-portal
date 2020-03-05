@@ -288,214 +288,221 @@ class _LoginState extends State<LoginView> {
             ),
           ),
         ),
-        ListView(
-          shrinkWrap: true,
-          children: <Widget>[
-            Padding(
-              padding: EdgeInsets.only(top: 20.0, bottom: 20.0),
-              child: Image.asset('assets/images/logo.png',
-                  width: 100.0, height: 100.0),
-            ),
-            Form(
-              key: _formKey,
-              child: FormCard(
-                isResponsive: calculateLayout(context) != AppLayout.mobile,
-                children: <Widget>[
-                  if (isOneTimePassword)
-                    DecoratedFormField(
-                      controller: _oneTimePasswordController,
-                      label: localization.oneTimePassword,
-                    )
-                  else
-                    Column(
-                      children: <Widget>[
-                        SizedBox(height: 10),
-                        if (_createAccount && _emailLogin)
-                          DecoratedFormField(
-                            label: localization.firstName,
-                            controller: _firstNameController,
-                            //autovalidate: _autoValidate,
-                            validator: (val) =>
-                                val.isEmpty || val.trim().isEmpty
-                                    ? localization.pleaseEnterAFirstName
-                                    : null,
-                          ),
-                        if (_createAccount && _emailLogin)
-                          DecoratedFormField(
-                            label: localization.lastName,
-                            controller: _lastNameController,
-                            //autovalidate: _autoValidate,
-                            validator: (val) =>
-                                val.isEmpty || val.trim().isEmpty
-                                    ? localization.pleaseEnterALastName
-                                    : null,
-                          ),
-                        if (_emailLogin)
-                          DecoratedFormField(
-                            controller: _emailController,
-                            autocorrect: false,
-                            textInputAction: _isFormComplete && !_createAccount
-                                ? TextInputAction.done
-                                : TextInputAction.next,
-                            label: localization.email,
-                            keyboardType: TextInputType.emailAddress,
-                            autovalidate: _autoValidate,
-                            validator: (val) =>
-                                val.isEmpty || val.trim().isEmpty
-                                    ? localization.pleaseEnterYourEmail
-                                    : null,
-                            onFieldSubmitted: (String value) =>
-                                FocusScope.of(context).nextFocus(),
-                          ),
-                        if (_emailLogin && !_recoverPassword)
-                          TextFormField(
-                            controller: _passwordController,
-                            key: ValueKey(localization.password),
-                            textInputAction: _isFormComplete && !_createAccount
-                                ? TextInputAction.done
-                                : TextInputAction.next,
-                            autocorrect: false,
-                            autovalidate: _autoValidate,
-                            decoration: InputDecoration(
-                              labelText: localization.password,
-                              suffixIcon: IconButton(
-                                icon: Icon(
-                                  _isPasswordObscured
-                                      ? Icons.visibility
-                                      : Icons.visibility_off,
+        if (!viewModel.authState.isAuthenticated)
+          ListView(
+            shrinkWrap: true,
+            children: <Widget>[
+              Padding(
+                padding: EdgeInsets.only(top: 20.0, bottom: 20.0),
+                child: Image.asset('assets/images/logo.png',
+                    width: 100.0, height: 100.0),
+              ),
+              Form(
+                key: _formKey,
+                child: FormCard(
+                  isResponsive: calculateLayout(context) != AppLayout.mobile,
+                  children: <Widget>[
+                    if (isOneTimePassword)
+                      DecoratedFormField(
+                        controller: _oneTimePasswordController,
+                        label: localization.oneTimePassword,
+                      )
+                    else
+                      Column(
+                        children: <Widget>[
+                          SizedBox(height: 10),
+                          if (_createAccount && _emailLogin)
+                            DecoratedFormField(
+                              label: localization.firstName,
+                              controller: _firstNameController,
+                              //autovalidate: _autoValidate,
+                              validator: (val) =>
+                                  val.isEmpty || val.trim().isEmpty
+                                      ? localization.pleaseEnterAFirstName
+                                      : null,
+                            ),
+                          if (_createAccount && _emailLogin)
+                            DecoratedFormField(
+                              label: localization.lastName,
+                              controller: _lastNameController,
+                              //autovalidate: _autoValidate,
+                              validator: (val) =>
+                                  val.isEmpty || val.trim().isEmpty
+                                      ? localization.pleaseEnterALastName
+                                      : null,
+                            ),
+                          if (_emailLogin)
+                            DecoratedFormField(
+                              controller: _emailController,
+                              autocorrect: false,
+                              textInputAction:
+                                  _isFormComplete && !_createAccount
+                                      ? TextInputAction.done
+                                      : TextInputAction.next,
+                              label: localization.email,
+                              keyboardType: TextInputType.emailAddress,
+                              autovalidate: _autoValidate,
+                              validator: (val) =>
+                                  val.isEmpty || val.trim().isEmpty
+                                      ? localization.pleaseEnterYourEmail
+                                      : null,
+                              onFieldSubmitted: (String value) =>
+                                  FocusScope.of(context).nextFocus(),
+                            ),
+                          if (_emailLogin && !_recoverPassword)
+                            TextFormField(
+                              controller: _passwordController,
+                              key: ValueKey(localization.password),
+                              textInputAction:
+                                  _isFormComplete && !_createAccount
+                                      ? TextInputAction.done
+                                      : TextInputAction.next,
+                              autocorrect: false,
+                              autovalidate: _autoValidate,
+                              decoration: InputDecoration(
+                                labelText: localization.password,
+                                suffixIcon: IconButton(
+                                  icon: Icon(
+                                    _isPasswordObscured
+                                        ? Icons.visibility
+                                        : Icons.visibility_off,
+                                  ),
+                                  onPressed: () {
+                                    setState(() {
+                                      _isPasswordObscured =
+                                          !_isPasswordObscured;
+                                    });
+                                  },
                                 ),
-                                onPressed: () {
-                                  setState(() {
-                                    _isPasswordObscured = !_isPasswordObscured;
-                                  });
-                                },
+                              ),
+                              validator: (value) {
+                                if (value.isEmpty || value.trim().isEmpty) {
+                                  return localization.pleaseEnterYourPassword;
+                                }
+
+                                if (_createAccount) {
+                                  if (value.length < 8) {
+                                    return localization.passwordIsTooShort;
+                                  }
+
+                                  if (!_validatePassword(value)) {
+                                    return localization.passwordIsTooEasy;
+                                  }
+                                }
+
+                                return null;
+                              },
+                              obscureText: _isPasswordObscured,
+                              onFieldSubmitted: (String value) =>
+                                  FocusScope.of(context).nextFocus(),
+                            ),
+                          if (_isSelfHosted)
+                            TextFormField(
+                              controller: _urlController,
+                              key: ValueKey(localization.url),
+                              autocorrect: false,
+                              autovalidate: _autoValidate,
+                              textInputAction: _isFormComplete
+                                  ? TextInputAction.done
+                                  : TextInputAction.next,
+                              decoration:
+                                  InputDecoration(labelText: localization.url),
+                              validator: (val) =>
+                                  val.isEmpty || val.trim().isEmpty
+                                      ? localization.pleaseEnterYourUrl
+                                      : null,
+                              onFieldSubmitted: (String value) =>
+                                  FocusScope.of(context).nextFocus(),
+                              keyboardType: TextInputType.url,
+                            ),
+                          if (_isSelfHosted)
+                            TextFormField(
+                              controller: _secretController,
+                              key: ValueKey(localization.secret),
+                              textInputAction: TextInputAction.done,
+                              autocorrect: false,
+                              decoration: InputDecoration(
+                                  labelText: localization.secret),
+                              obscureText: true,
+                              onFieldSubmitted: (String value) =>
+                                  FocusScope.of(context).nextFocus(),
+                            ),
+                          if (_createAccount)
+                            Padding(
+                              padding: EdgeInsets.only(top: 22),
+                              child: Column(
+                                children: <Widget>[
+                                  CheckboxListTile(
+                                    onChanged: (value) =>
+                                        setState(() => _termsChecked = value),
+                                    controlAffinity:
+                                        ListTileControlAffinity.leading,
+                                    activeColor: convertHexStringToColor(
+                                        kDefaultAccentColor),
+                                    value: _termsChecked,
+                                    title: RichText(
+                                      text: TextSpan(
+                                        children: <TextSpan>[
+                                          TextSpan(
+                                            style: aboutTextStyle,
+                                            text:
+                                                localization.iAgreeToThe + ' ',
+                                          ),
+                                          LinkTextSpan(
+                                            style: linkStyle,
+                                            url: kTermsOfServiceURL,
+                                            text:
+                                                localization.termsOfServiceLink,
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                  ),
+                                  CheckboxListTile(
+                                    onChanged: (value) =>
+                                        setState(() => _privacyChecked = value),
+                                    controlAffinity:
+                                        ListTileControlAffinity.leading,
+                                    activeColor: convertHexStringToColor(
+                                        kDefaultAccentColor),
+                                    value: _privacyChecked,
+                                    title: RichText(
+                                      text: TextSpan(
+                                        children: <TextSpan>[
+                                          TextSpan(
+                                            style: aboutTextStyle,
+                                            text:
+                                                localization.iAgreeToThe + ' ',
+                                          ),
+                                          LinkTextSpan(
+                                            style: linkStyle,
+                                            url: kTermsOfServiceURL,
+                                            text:
+                                                localization.privacyPolicyLink,
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                  ),
+                                ],
                               ),
                             ),
-                            validator: (value) {
-                              if (value.isEmpty || value.trim().isEmpty) {
-                                return localization.pleaseEnterYourPassword;
-                              }
-
-                              if (_createAccount) {
-                                if (value.length < 8) {
-                                  return localization.passwordIsTooShort;
-                                }
-
-                                if (!_validatePassword(value)) {
-                                  return localization.passwordIsTooEasy;
-                                }
-                              }
-
-                              return null;
-                            },
-                            obscureText: _isPasswordObscured,
-                            onFieldSubmitted: (String value) =>
-                                FocusScope.of(context).nextFocus(),
-                          ),
-                        if (_isSelfHosted)
-                          TextFormField(
-                            controller: _urlController,
-                            key: ValueKey(localization.url),
-                            autocorrect: false,
-                            autovalidate: _autoValidate,
-                            textInputAction: _isFormComplete
-                                ? TextInputAction.done
-                                : TextInputAction.next,
-                            decoration:
-                                InputDecoration(labelText: localization.url),
-                            validator: (val) =>
-                                val.isEmpty || val.trim().isEmpty
-                                    ? localization.pleaseEnterYourUrl
-                                    : null,
-                            onFieldSubmitted: (String value) =>
-                                FocusScope.of(context).nextFocus(),
-                            keyboardType: TextInputType.url,
-                          ),
-                        if (_isSelfHosted)
-                          TextFormField(
-                            controller: _secretController,
-                            key: ValueKey(localization.secret),
-                            textInputAction: TextInputAction.done,
-                            autocorrect: false,
-                            decoration:
-                                InputDecoration(labelText: localization.secret),
-                            obscureText: true,
-                            onFieldSubmitted: (String value) =>
-                                FocusScope.of(context).nextFocus(),
-                          ),
-                        if (_createAccount)
-                          Padding(
-                            padding: EdgeInsets.only(top: 22),
-                            child: Column(
-                              children: <Widget>[
-                                CheckboxListTile(
-                                  onChanged: (value) =>
-                                      setState(() => _termsChecked = value),
-                                  controlAffinity:
-                                      ListTileControlAffinity.leading,
-                                  activeColor: convertHexStringToColor(
-                                      kDefaultAccentColor),
-                                  value: _termsChecked,
-                                  title: RichText(
-                                    text: TextSpan(
-                                      children: <TextSpan>[
-                                        TextSpan(
-                                          style: aboutTextStyle,
-                                          text: localization.iAgreeToThe + ' ',
-                                        ),
-                                        LinkTextSpan(
-                                          style: linkStyle,
-                                          url: kTermsOfServiceURL,
-                                          text: localization.termsOfServiceLink,
-                                        ),
-                                      ],
-                                    ),
-                                  ),
-                                ),
-                                CheckboxListTile(
-                                  onChanged: (value) =>
-                                      setState(() => _privacyChecked = value),
-                                  controlAffinity:
-                                      ListTileControlAffinity.leading,
-                                  activeColor: convertHexStringToColor(
-                                      kDefaultAccentColor),
-                                  value: _privacyChecked,
-                                  title: RichText(
-                                    text: TextSpan(
-                                      children: <TextSpan>[
-                                        TextSpan(
-                                          style: aboutTextStyle,
-                                          text: localization.iAgreeToThe + ' ',
-                                        ),
-                                        LinkTextSpan(
-                                          style: linkStyle,
-                                          url: kTermsOfServiceURL,
-                                          text: localization.privacyPolicyLink,
-                                        ),
-                                      ],
-                                    ),
-                                  ),
-                                ),
-                              ],
+                        ],
+                      ),
+                    if (_loginError.isNotEmpty &&
+                        !_loginError.contains(OTP_ERROR))
+                      Container(
+                        padding: EdgeInsets.only(top: 20),
+                        child: Center(
+                          child: Text(
+                            _loginError,
+                            style: TextStyle(
+                              color: Colors.red,
+                              fontWeight: FontWeight.bold,
                             ),
-                          ),
-                      ],
-                    ),
-                  if (_loginError.isNotEmpty &&
-                      !_loginError.contains(OTP_ERROR))
-                    Container(
-                      padding: EdgeInsets.only(top: 20),
-                      child: Center(
-                        child: Text(
-                          _loginError,
-                          style: TextStyle(
-                            color: Colors.red,
-                            fontWeight: FontWeight.bold,
                           ),
                         ),
                       ),
-                    ),
-                  if (!viewModel.authState.isAuthenticated)
                     Padding(
                         padding: EdgeInsets.only(top: 30, bottom: 10),
                         child: viewModel.isLoading
@@ -519,159 +526,163 @@ class _LoginState extends State<LoginView> {
                                         .toUpperCase(),
                                     onPressed: () => _submitLoginForm(),
                                   )),
-                  SizedBox(height: 6),
-                  if (!isOneTimePassword &&
-                      !viewModel.authState.isAuthenticated)
-                    Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: <Widget>[
-                        if (!_recoverPassword)
-                          Padding(
-                            padding: const EdgeInsets.all(6),
-                            child: Row(
-                              mainAxisSize: MainAxisSize.max,
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: <Widget>[
-                                Icon(FontAwesomeIcons.solidEnvelope, size: 16),
-                                _emailLogin
-                                    ? FlatButton(
-                                        onPressed: () => setState(() {
-                                              _emailLogin = false;
-                                              _loginError = '';
-                                            }),
-                                        child: Text(_createAccount
-                                            ? localization.googleSignUp
-                                            : localization.googleLogin))
-                                    : FlatButton(
-                                        key: ValueKey(localization.emailLogin),
-                                        onPressed: () => setState(() {
-                                              _emailLogin = true;
-                                              _loginError = '';
-                                            }),
-                                        child: Text(_createAccount
-                                            ? localization.emailSignUp
-                                            : localization.emailLogin)),
-                              ],
-                            ),
-                          ),
-                        if (!_recoverPassword)
-                          Padding(
-                            padding: const EdgeInsets.all(6),
-                            child: Row(
-                              mainAxisSize: MainAxisSize.max,
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: <Widget>[
-                                Icon(FontAwesomeIcons.user, size: 16),
-                                _createAccount
-                                    ? FlatButton(
-                                        onPressed: () => setState(() {
-                                              _createAccount = false;
-                                              _loginError = '';
-                                            }),
-                                        child: Text(localization.accountLogin))
-                                    : FlatButton(
-                                        key: ValueKey(
-                                            localization.createAccount),
-                                        onPressed: () => setState(() {
-                                              _createAccount = true;
-                                              _isSelfHosted = false;
-                                              _loginError = '';
-                                            }),
-                                        child:
-                                            Text(localization.createAccount)),
-                              ],
-                            ),
-                          ),
-                        if (!_createAccount && !_recoverPassword)
-                          Padding(
-                            padding: const EdgeInsets.all(6),
-                            child: Row(
+                    SizedBox(height: 6),
+                    if (!isOneTimePassword)
+                      Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: <Widget>[
+                          if (!_recoverPassword)
+                            Padding(
+                              padding: const EdgeInsets.all(6),
+                              child: Row(
                                 mainAxisSize: MainAxisSize.max,
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: <Widget>[
-                                  Icon(FontAwesomeIcons.userCog, size: 16),
-                                  _isSelfHosted
+                                  Icon(FontAwesomeIcons.solidEnvelope,
+                                      size: 16),
+                                  _emailLogin
                                       ? FlatButton(
                                           onPressed: () => setState(() {
-                                                _isSelfHosted = false;
+                                                _emailLogin = false;
                                                 _loginError = '';
                                               }),
-                                          child: Text(localization.hostedLogin))
+                                          child: Text(_createAccount
+                                              ? localization.googleSignUp
+                                              : localization.googleLogin))
                                       : FlatButton(
-                                          key: ValueKey(
-                                              localization.selfhostLogin),
+                                          key:
+                                              ValueKey(localization.emailLogin),
                                           onPressed: () => setState(() {
-                                                _isSelfHosted = true;
-                                                _createAccount = false;
                                                 _emailLogin = true;
                                                 _loginError = '';
                                               }),
+                                          child: Text(_createAccount
+                                              ? localization.emailSignUp
+                                              : localization.emailLogin)),
+                                ],
+                              ),
+                            ),
+                          if (!_recoverPassword)
+                            Padding(
+                              padding: const EdgeInsets.all(6),
+                              child: Row(
+                                mainAxisSize: MainAxisSize.max,
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: <Widget>[
+                                  Icon(FontAwesomeIcons.user, size: 16),
+                                  _createAccount
+                                      ? FlatButton(
+                                          onPressed: () => setState(() {
+                                                _createAccount = false;
+                                                _loginError = '';
+                                              }),
                                           child:
-                                              Text(localization.selfhostLogin)),
-                                ]),
-                          ),
-                        if (!_createAccount && _emailLogin)
-                          Padding(
-                            padding: const EdgeInsets.all(6),
-                            child: Row(
-                                mainAxisSize: MainAxisSize.max,
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: <Widget>[
-                                  if (!_recoverPassword)
-                                    Icon(FontAwesomeIcons.lock, size: 16),
-                                  FlatButton(
-                                      child: Text(_recoverPassword
-                                          ? localization.cancel
-                                          : localization.recoverPassword),
-                                      onPressed: () {
-                                        setState(() {
-                                          _recoverPassword = !_recoverPassword;
-                                        });
-                                      }),
-                                ]),
-                          ),
-                        if (_createAccount)
-                          Padding(
-                            padding: const EdgeInsets.all(6),
-                            child: Row(
-                                mainAxisSize: MainAxisSize.max,
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: <Widget>[
-                                  Icon(FontAwesomeIcons.externalLinkAlt,
-                                      size: 16),
-                                  FlatButton(
-                                    child: Text(localization.viewWebsite),
-                                    onPressed: () async {
-                                      if (await canLaunch(kSiteUrl)) {
-                                        await launch(kSiteUrl,
-                                            forceSafariVC: false,
-                                            forceWebView: false);
-                                      }
-                                    },
-                                  ),
-                                ]),
-                          ),
-                      ],
-                    ),
-                  if (isOneTimePassword && !viewModel.isLoading)
-                    Padding(
-                      padding: EdgeInsets.only(top: 12.0, bottom: 12.0),
-                      child: ElevatedButton(
-                        label: localization.cancel.toUpperCase(),
-                        color: Colors.grey,
-                        onPressed: () {
-                          setState(() {
-                            _oneTimePasswordController.text = '';
-                          });
-                        },
+                                              Text(localization.accountLogin))
+                                      : FlatButton(
+                                          key: ValueKey(
+                                              localization.createAccount),
+                                          onPressed: () => setState(() {
+                                                _createAccount = true;
+                                                _isSelfHosted = false;
+                                                _loginError = '';
+                                              }),
+                                          child:
+                                              Text(localization.createAccount)),
+                                ],
+                              ),
+                            ),
+                          if (!_createAccount && !_recoverPassword)
+                            Padding(
+                              padding: const EdgeInsets.all(6),
+                              child: Row(
+                                  mainAxisSize: MainAxisSize.max,
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: <Widget>[
+                                    Icon(FontAwesomeIcons.userCog, size: 16),
+                                    _isSelfHosted
+                                        ? FlatButton(
+                                            onPressed: () => setState(() {
+                                                  _isSelfHosted = false;
+                                                  _loginError = '';
+                                                }),
+                                            child:
+                                                Text(localization.hostedLogin))
+                                        : FlatButton(
+                                            key: ValueKey(
+                                                localization.selfhostLogin),
+                                            onPressed: () => setState(() {
+                                                  _isSelfHosted = true;
+                                                  _createAccount = false;
+                                                  _emailLogin = true;
+                                                  _loginError = '';
+                                                }),
+                                            child: Text(
+                                                localization.selfhostLogin)),
+                                  ]),
+                            ),
+                          if (!_createAccount && _emailLogin)
+                            Padding(
+                              padding: const EdgeInsets.all(6),
+                              child: Row(
+                                  mainAxisSize: MainAxisSize.max,
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: <Widget>[
+                                    if (!_recoverPassword)
+                                      Icon(FontAwesomeIcons.lock, size: 16),
+                                    FlatButton(
+                                        child: Text(_recoverPassword
+                                            ? localization.cancel
+                                            : localization.recoverPassword),
+                                        onPressed: () {
+                                          setState(() {
+                                            _recoverPassword =
+                                                !_recoverPassword;
+                                          });
+                                        }),
+                                  ]),
+                            ),
+                          if (_createAccount)
+                            Padding(
+                              padding: const EdgeInsets.all(6),
+                              child: Row(
+                                  mainAxisSize: MainAxisSize.max,
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: <Widget>[
+                                    Icon(FontAwesomeIcons.externalLinkAlt,
+                                        size: 16),
+                                    FlatButton(
+                                      child: Text(localization.viewWebsite),
+                                      onPressed: () async {
+                                        if (await canLaunch(kSiteUrl)) {
+                                          await launch(kSiteUrl,
+                                              forceSafariVC: false,
+                                              forceWebView: false);
+                                        }
+                                      },
+                                    ),
+                                  ]),
+                            ),
+                        ],
                       ),
-                    ),
-                ],
+                    if (isOneTimePassword && !viewModel.isLoading)
+                      Padding(
+                        padding: EdgeInsets.only(top: 12.0, bottom: 12.0),
+                        child: ElevatedButton(
+                          label: localization.cancel.toUpperCase(),
+                          color: Colors.grey,
+                          onPressed: () {
+                            setState(() {
+                              _oneTimePasswordController.text = '';
+                            });
+                          },
+                        ),
+                      ),
+                  ],
+                ),
               ),
-            ),
-          ],
-        ),
+            ],
+          ),
       ],
     );
   }
