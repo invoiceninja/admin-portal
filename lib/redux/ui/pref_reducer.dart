@@ -399,13 +399,9 @@ Reducer<BuiltList<HistoryRecord>> historyReducer = combineReducers([
       _addToHistory(historyList,
           HistoryRecord(id: action.group.id, entityType: EntityType.group))),
   // STARTER: history - do not remove comment
-  TypedReducer<BuiltList<HistoryRecord>, ViewDesign>((historyList, action) =>
-      _addToHistory(historyList,
-          HistoryRecord(id: action.designId, entityType: EntityType.design))),
   TypedReducer<BuiltList<HistoryRecord>, EditDesign>((historyList, action) =>
       _addToHistory(historyList,
           HistoryRecord(id: action.design.id, entityType: EntityType.design))),
-
   TypedReducer<BuiltList<HistoryRecord>, ViewCredit>((historyList, action) =>
       _addToHistory(historyList,
           HistoryRecord(id: action.creditId, entityType: EntityType.credit))),

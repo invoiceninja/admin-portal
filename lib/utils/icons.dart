@@ -88,6 +88,8 @@ IconData getEntityIcon(EntityType entityType) {
       return FontAwesomeIcons.user;
     case EntityType.credit:
       return FontAwesomeIcons.solidFileAlt;
+    case EntityType.design:
+      return FontAwesomeIcons.stamp;
     default:
       return null;
   }
