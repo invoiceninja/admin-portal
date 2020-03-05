@@ -111,7 +111,7 @@ class _DesignEditState extends State<DesignEdit>
 
       if (design != widget.viewModel.design) {
         widget.viewModel.onChanged(design);
-        _loadPreview(context, design);
+        //_loadPreview(context, design);
       }
     });
   }
@@ -119,9 +119,17 @@ class _DesignEditState extends State<DesignEdit>
   void _loadDesign(String designId) {
     final state = widget.viewModel.state;
     final designState = state.designState;
-    final design = designState.map[designId].design;
+    final designEntity = designState.map[designId];
+    final design = designEntity.design;
 
     _headerController.text = design[kDesignHeader];
+    _bodyController.text = design[kDesignHeader];
+    _footerController.text = design[kDesignFooter];
+    _productsController.text = design[kDesignProducts];
+    _tasksController.text = design[kDesignTasks];
+    _includesController.text = design[kDesignIncludes];
+
+    _loadPreview(context, designEntity);
   }
 
   void _loadPreview(BuildContext context, DesignEntity design) {
