@@ -224,16 +224,6 @@ abstract class CompanyEntity extends Object
   @override
   String get listDisplayName => null;
 
-  List<String> getInvoiceDesigns() {
-    var designs = kInvoiceDesigns.keys.toList();
-
-    if (!isProPlan) {
-      designs = designs.sublist(0, 4);
-    }
-
-    return designs;
-  }
-
   bool hasCustomField(String field) => getCustomFieldLabel(field).isNotEmpty;
 
   String getCustomFieldLabel(String field) {
@@ -294,25 +284,6 @@ abstract class CompanyEntity extends Object
   bool get isProPlan => isSelfHost || plan == kPlanPro;
 
   bool get isEnterprisePlan => isSelfHost || plan == kPlanEnterprise;
-
-  List<String> get invoiceDesignIds {
-    var designIds = kInvoiceDesigns.keys.toList();
-
-    if (!(settings.hasCustomDesign1 ?? true)) {
-      designIds.remove(kDesignCustom1);
-    }
-    if (!(settings.hasCustomDesign2 ?? true)) {
-      designIds.remove(kDesignCustom2);
-    }
-    if (!(settings.hasCustomDesign3 ?? true)) {
-      designIds.remove(kDesignCustom3);
-    }
-    if (!isProPlan) {
-      designIds = designIds.sublist(0, 4);
-    }
-
-    return designIds;
-  }
 
   bool isModuleEnabled(EntityType entityType) {
     if (Config.DEMO_MODE) {

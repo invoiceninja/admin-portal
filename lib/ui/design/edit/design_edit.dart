@@ -10,6 +10,7 @@ import 'package:invoiceninja_flutter/ui/app/form_card.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/app_dropdown_button.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/app_form.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/decorated_form_field.dart';
+import 'package:invoiceninja_flutter/ui/app/forms/design_picker.dart';
 import 'package:invoiceninja_flutter/ui/design/edit/design_edit_vm.dart';
 import 'package:invoiceninja_flutter/utils/designs.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
@@ -116,20 +117,16 @@ class _DesignEditState extends State<DesignEdit>
     });
   }
 
-  void _loadDesign(String designId) {
-    final state = widget.viewModel.state;
-    final designState = state.designState;
-    final designEntity = designState.map[designId];
-    final design = designEntity.design;
+  void _loadDesign(DesignEntity design) {
+    final htmlDesign = design.design;
+    _headerController.text = htmlDesign[kDesignHeader];
+    _bodyController.text = htmlDesign[kDesignHeader];
+    _footerController.text = htmlDesign[kDesignFooter];
+    _productsController.text = htmlDesign[kDesignProducts];
+    _tasksController.text = htmlDesign[kDesignTasks];
+    _includesController.text = htmlDesign[kDesignIncludes];
 
-    _headerController.text = design[kDesignHeader];
-    _bodyController.text = design[kDesignHeader];
-    _footerController.text = design[kDesignFooter];
-    _productsController.text = design[kDesignProducts];
-    _tasksController.text = design[kDesignTasks];
-    _includesController.text = design[kDesignIncludes];
-
-    //_loadPreview(context, designEntity);
+    //_loadPreview(context, design);
   }
 
   void _loadPreview(BuildContext context, DesignEntity design) {
@@ -292,7 +289,7 @@ class DesignSettings extends StatelessWidget {
     @required this.onLoadDesign,
   });
 
-  final Function(String) onLoadDesign;
+  final Function(DesignEntity) onLoadDesign;
   final TextEditingController nameController;
 
   @override
@@ -310,16 +307,9 @@ class DesignSettings extends StatelessWidget {
               label: localization.name,
               controller: nameController,
             ),
-            AppDropdownButton<String>(
-              value: null,
-              onChanged: (dynamic value) => onLoadDesign(value),
-              items: designState.list
-                  .map((value) => DropdownMenuItem(
-                        value: value,
-                        child: Text(designState.map[value].displayName),
-                      ))
-                  .toList(),
-              labelText: localization.loadDesign,
+            DesignPicker(
+              label: localization.loadDesign,
+              onSelected: (value) => onLoadDesign(value),
             ),
           ],
         ),

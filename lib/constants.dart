@@ -344,26 +344,6 @@ class ExpenseStatusColors {
 
 const List<int> kPaymentTerms = [0, -1, 7, 10, 14, 15, 30, 60, 90];
 
-const String kDesignCustom1 = 'Custom 1';
-const String kDesignCustom2 = 'Custom 2';
-const String kDesignCustom3 = 'Custom 3';
-
-const Map<String, String> kInvoiceDesigns = {
-  '1': 'Clean',
-  '2': 'Bold',
-  '3': 'Modern',
-  '4': 'Plain',
-  '5': 'Business',
-  '6': 'Creative',
-  '7': 'Elegant',
-  '8': 'Hipster',
-  '9': 'Playful',
-  '10': 'Photo',
-  '11': kDesignCustom1,
-  '12': kDesignCustom2,
-  '13': kDesignCustom3,
-};
-
 const List<String> kLanguages = [
   'ca',
   'cs',

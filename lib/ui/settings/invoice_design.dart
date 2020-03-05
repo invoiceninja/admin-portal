@@ -10,6 +10,7 @@ import 'package:invoiceninja_flutter/ui/app/forms/app_dropdown_button.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/app_form.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/bool_dropdown_button.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/color_picker.dart';
+import 'package:invoiceninja_flutter/ui/app/forms/design_picker.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/learn_more.dart';
 import 'package:invoiceninja_flutter/ui/settings/invoice_design_vm.dart';
 import 'package:invoiceninja_flutter/ui/app/edit_scaffold.dart';
@@ -57,7 +58,6 @@ class _InvoiceDesignState extends State<InvoiceDesign>
     final state = viewModel.state;
     final settings = viewModel.settings;
     final company = viewModel.company;
-    final designs = company.getInvoiceDesigns();
 
     return EditScaffold(
       title: localization.invoiceDesign,
@@ -82,46 +82,25 @@ class _InvoiceDesignState extends State<InvoiceDesign>
           ListView(children: <Widget>[
             FormCard(
               children: <Widget>[
-                AppDropdownButton<String>(
-                  labelText: localization.invoiceDesign,
-                  value: settings.defaultInvoiceDesignId,
-                  onChanged: (dynamic value) => viewModel.onSettingsChanged(
-                      settings
-                          .rebuild((b) => b..defaultInvoiceDesignId = value)),
-                  items: designs
-                      .map((designId) => DropdownMenuItem<String>(
-                            value: designId,
-                            child: Text(kInvoiceDesigns[designId]),
-                          ))
-                      .toList(),
+                DesignPicker(
+                  label: localization.invoiceDesign,
+                  initialValue: settings.defaultInvoiceDesignId,
+                  onSelected: (value) => viewModel.onSettingsChanged(settings
+                      .rebuild((b) => b..defaultInvoiceDesignId = value.id)),
                 ),
                 if (company.isModuleEnabled(EntityType.quote))
-                  AppDropdownButton<String>(
-                    labelText: localization.quoteDesign,
-                    value: settings.defaultQuoteDesignId,
-                    onChanged: (dynamic value) => viewModel.onSettingsChanged(
-                        settings
-                            .rebuild((b) => b..defaultQuoteDesignId = value)),
-                    items: designs
-                        .map((designId) => DropdownMenuItem<String>(
-                              value: designId,
-                              child: Text(kInvoiceDesigns[designId]),
-                            ))
-                        .toList(),
+                  DesignPicker(
+                    label: localization.quoteDesign,
+                    initialValue: settings.defaultQuoteDesignId,
+                    onSelected: (value) => viewModel.onSettingsChanged(settings
+                        .rebuild((b) => b..defaultQuoteDesignId = value.id)),
                   ),
                 if (company.isModuleEnabled(EntityType.credit))
-                  AppDropdownButton<String>(
-                    labelText: localization.creditDesign,
-                    value: settings.defaultCreditDesignId,
-                    onChanged: (dynamic value) => viewModel.onSettingsChanged(
-                        settings
-                            .rebuild((b) => b..defaultCreditDesignId = value)),
-                    items: designs
-                        .map((designId) => DropdownMenuItem<String>(
-                              value: designId,
-                              child: Text(kInvoiceDesigns[designId]),
-                            ))
-                        .toList(),
+                  DesignPicker(
+                    label: localization.creditDesign,
+                    initialValue: settings.defaultCreditDesignId,
+                    onSelected: (value) => viewModel.onSettingsChanged(settings
+                        .rebuild((b) => b..defaultCreditDesignId = value.id)),
                   ),
                 AppDropdownButton(
                   labelText: localization.pageSize,

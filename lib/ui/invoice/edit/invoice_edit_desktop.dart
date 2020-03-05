@@ -11,6 +11,7 @@ import 'package:invoiceninja_flutter/ui/app/forms/custom_field.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/custom_surcharges.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/date_picker.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/decorated_form_field.dart';
+import 'package:invoiceninja_flutter/ui/app/forms/design_picker.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/discount_field.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/user_picker.dart';
 import 'package:invoiceninja_flutter/ui/app/invoice/tax_rate_dropdown.dart';
@@ -57,7 +58,6 @@ class InvoiceEditDesktopState extends State<InvoiceEditDesktop>
   final _surcharge2Controller = TextEditingController();
   final _surcharge3Controller = TextEditingController();
   final _surcharge4Controller = TextEditingController();
-  final _designController = TextEditingController();
   final _publicNotesController = TextEditingController();
   final _privateNotesController = TextEditingController();
   final _termsController = TextEditingController();
@@ -89,7 +89,6 @@ class InvoiceEditDesktopState extends State<InvoiceEditDesktop>
       _surcharge2Controller,
       _surcharge3Controller,
       _surcharge4Controller,
-      _designController,
       _publicNotesController,
       _privateNotesController,
       _termsController,
@@ -118,8 +117,6 @@ class InvoiceEditDesktopState extends State<InvoiceEditDesktop>
         formatNumberType: FormatNumberType.input);
     _surcharge4Controller.text = formatNumber(invoice.customSurcharge4, context,
         formatNumberType: FormatNumberType.input);
-    _designController.text =
-        invoice.designId != null ? kInvoiceDesigns[invoice.designId] : '';
     _publicNotesController.text = invoice.publicNotes;
     _privateNotesController.text = invoice.privateNotes;
     _termsController.text = invoice.terms;
@@ -415,17 +412,9 @@ class InvoiceEditDesktopState extends State<InvoiceEditDesktop>
                       onChanged: (userId) => viewModel.onChanged(
                           invoice.rebuild((b) => b..assignedUserId = userId)),
                     ),
-                    AppDropdownButton(
-                      labelText: localization.design,
-                      value: invoice.designId,
-                      onChanged: (dynamic value) => viewModel.onChanged(
+                    DesignPicker(
+                      onSelected: (dynamic value) => viewModel.onChanged(
                           invoice.rebuild((b) => b..designId = value)),
-                      items: company.invoiceDesignIds
-                          .map((designId) => DropdownMenuItem<String>(
-                                value: designId,
-                                child: Text(kInvoiceDesigns[designId]),
-                              ))
-                          .toList(),
                     ),
                     CustomSurcharges(
                       surcharge1Controller: _surcharge1Controller,
