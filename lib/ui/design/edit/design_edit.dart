@@ -69,10 +69,10 @@ class _DesignEditState extends State<DesignEdit>
     final design = widget.viewModel.design;
     _nameController.text = design.name;
     _headerController.text = design.getSection(kDesignHeader); //design.design;
-    _footerController.text = design.getSection(kDesignHeader); //design.design;
-    _bodyController.text = design.getSection(kDesignHeader); //design.design;
+    _footerController.text = design.getSection(kDesignFooter); //design.design;
+    _bodyController.text = design.getSection(kDesignBody); //design.design;
     _productsController.text =
-        design.getSection(kDesignHeader); //design.design;
+        design.getSection(kDesignProducts); //design.design;
     _tasksController.text = design.getSection(kDesignTasks);
     _includesController.text = design.getSection(kDesignIncludes);
 
