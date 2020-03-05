@@ -112,6 +112,10 @@ class _$DesignEntitySerializer implements StructuredSerializer<DesignEntity> {
     final result = <Object>[
       'name',
       serializers.serialize(object.name, specifiedType: const FullType(String)),
+      'design',
+      serializers.serialize(object.design,
+          specifiedType: const FullType(BuiltMap,
+              const [const FullType(String), const FullType(String)])),
       'is_custom',
       serializers.serialize(object.isCustom,
           specifiedType: const FullType(bool)),
@@ -187,6 +191,11 @@ class _$DesignEntitySerializer implements StructuredSerializer<DesignEntity> {
         case 'name':
           result.name = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String;
+          break;
+        case 'design':
+          result.design.replace(serializers.deserialize(value,
+              specifiedType: const FullType(BuiltMap,
+                  const [const FullType(String), const FullType(String)])));
           break;
         case 'is_custom':
           result.isCustom = serializers.deserialize(value,

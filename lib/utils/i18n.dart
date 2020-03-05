@@ -32858,7 +32858,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
 
   String get partialPaymentEmail =>
       _localizedValues[localeCode]['partial_payment_email'];
-  
+
   String lookup(String key) {
     final lookupKey = toSnakeCase(key);
     return _localizedValues[localeCode][lookupKey] ??

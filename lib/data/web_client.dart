@@ -77,7 +77,7 @@ class WebClient {
   }) async {
     url = _checkUrl(url);
     print('PUT: $url');
-    debugPrint('Data: $data', wrapWidth: 1024);
+    debugPrint('Data: $data', wrapWidth: 1000);
 
     http.Response response;
 
