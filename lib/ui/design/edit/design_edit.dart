@@ -1,14 +1,15 @@
 import 'package:built_collection/built_collection.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
 import 'package:invoiceninja_flutter/constants.dart';
+import 'package:invoiceninja_flutter/data/models/design_model.dart';
 import 'package:invoiceninja_flutter/ui/app/edit_scaffold.dart';
 import 'package:invoiceninja_flutter/ui/app/form_card.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/app_dropdown_button.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/app_form.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/decorated_form_field.dart';
 import 'package:invoiceninja_flutter/ui/design/edit/design_edit_vm.dart';
+import 'package:invoiceninja_flutter/utils/designs.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:invoiceninja_flutter/utils/completers.dart';
 import 'package:invoiceninja_flutter/utils/platforms.dart';
@@ -105,11 +106,27 @@ class _DesignEditState extends State<DesignEdit>
           kDesignTasks: _tasksController.text.trim(),
           kDesignIncludes: _includesController.text.trim()
         })));
-      print('## DESIGN: $design');
+
       if (design != widget.viewModel.design) {
         widget.viewModel.onChanged(design);
+        _loadDesign(context, design);
       }
     });
+  }
+
+  void _loadDesign(BuildContext context, DesignEntity design) {
+    print('## _loadDesign');
+
+    loadDesign(
+        context: context,
+        design: design.design.toMap(),
+        onStart: (value) {
+          print('## START: $value');
+        },
+        onComplete: (value) {
+          print('## START: $value');
+          ;
+        });
   }
 
   @override

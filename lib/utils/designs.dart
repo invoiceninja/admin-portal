@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:built_collection/built_collection.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:invoiceninja_flutter/data/models/invoice_model.dart';
@@ -9,12 +10,11 @@ import 'package:invoiceninja_flutter/utils/formatting.dart';
 
 import 'dialogs.dart';
 
-void loadTemplate({
+void loadDesign({
   @required BuildContext context,
-  @required String subject,
-  @required String body,
-  @required Function(String, String) onStart,
-  @required Function(String, String) onComplete,
+  @required Map<String, String> design,
+  @required Function(String) onStart,
+  @required Function(String) onComplete,
 }) {
   final webClient = WebClient();
   final state = StoreProvider.of<AppState>(context).state;
@@ -22,30 +22,27 @@ void loadTemplate({
   final invoice = state.invoiceState.list.isEmpty
       ? InvoiceEntity(state: state)
       : state.invoiceState.map[state.invoiceState.list.first];
-  final url = formatApiUrl(credentials.url) + '/templates';
+  final url = formatApiUrl(credentials.url) + '/preview';
   const encoder = const Utf8Encoder();
 
-  subject ??= '';
-  body ??= '';
-
-  final hase64Body =
-      'data:text/html;base64,' + base64Encode(encoder.convert(body));
-  onStart(subject, hase64Body);
+  //final hase64Body = 'data:text/html;base64,' + base64Encode(encoder.convert(body));
+  //onStart(subject, hase64Body);
 
   webClient
       .post(url, credentials.token,
           data: json.encode({
             'entity': 'invoice',
             'entity_id': '${invoice.id}',
-            'subject': subject,
-            'body': body
+            //'subject': subject,
+            'body': json.encode(design),
           }))
       .then((dynamic response) {
-    subject = response['subject'] ?? '';
-    body = base64Encode(encoder.convert(response['body'] ?? ''));
-    onComplete(subject, body);
+    print('## response: $response');
+    //subject = response['subject'] ?? '';
+    //body = base64Encode(encoder.convert(response['body'] ?? ''));
+    //onComplete(subject, body);
   }).catchError((dynamic error) {
     showErrorDialog(context: context, message: '$error');
-    onComplete(subject, hase64Body);
+    //onComplete(subject, hase64Body);
   });
 }
