@@ -149,6 +149,18 @@ class _$PaymentEntitySerializer implements StructuredSerializer<PaymentEntity> {
       'private_notes',
       serializers.serialize(object.privateNotes,
           specifiedType: const FullType(String)),
+      'custom_value1',
+      serializers.serialize(object.customValue1,
+          specifiedType: const FullType(String)),
+      'custom_value2',
+      serializers.serialize(object.customValue2,
+          specifiedType: const FullType(String)),
+      'custom_value3',
+      serializers.serialize(object.customValue3,
+          specifiedType: const FullType(String)),
+      'custom_value4',
+      serializers.serialize(object.customValue4,
+          specifiedType: const FullType(String)),
       'is_manual',
       serializers.serialize(object.isManual,
           specifiedType: const FullType(bool)),
@@ -171,30 +183,6 @@ class _$PaymentEntitySerializer implements StructuredSerializer<PaymentEntity> {
           specifiedType: const FullType(
               BuiltList, const [const FullType(PaymentableEntity)])),
     ];
-    if (object.customValue1 != null) {
-      result
-        ..add('custom_value1')
-        ..add(serializers.serialize(object.customValue1,
-            specifiedType: const FullType(String)));
-    }
-    if (object.customValue2 != null) {
-      result
-        ..add('custom_value2')
-        ..add(serializers.serialize(object.customValue2,
-            specifiedType: const FullType(String)));
-    }
-    if (object.customValue3 != null) {
-      result
-        ..add('custom_value3')
-        ..add(serializers.serialize(object.customValue3,
-            specifiedType: const FullType(String)));
-    }
-    if (object.customValue4 != null) {
-      result
-        ..add('custom_value4')
-        ..add(serializers.serialize(object.customValue4,
-            specifiedType: const FullType(String)));
-    }
     if (object.exchangeRate != null) {
       result
         ..add('exchange_rate')
@@ -823,6 +811,18 @@ class _$PaymentEntity extends PaymentEntity {
     }
     if (privateNotes == null) {
       throw new BuiltValueNullFieldError('PaymentEntity', 'privateNotes');
+    }
+    if (customValue1 == null) {
+      throw new BuiltValueNullFieldError('PaymentEntity', 'customValue1');
+    }
+    if (customValue2 == null) {
+      throw new BuiltValueNullFieldError('PaymentEntity', 'customValue2');
+    }
+    if (customValue3 == null) {
+      throw new BuiltValueNullFieldError('PaymentEntity', 'customValue3');
+    }
+    if (customValue4 == null) {
+      throw new BuiltValueNullFieldError('PaymentEntity', 'customValue4');
     }
     if (isManual == null) {
       throw new BuiltValueNullFieldError('PaymentEntity', 'isManual');

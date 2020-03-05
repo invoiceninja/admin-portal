@@ -1,8 +1,10 @@
 import 'package:built_collection/built_collection.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_redux/flutter_redux.dart';
 import 'package:invoiceninja_flutter/constants.dart';
 import 'package:invoiceninja_flutter/data/models/design_model.dart';
+import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/ui/app/edit_scaffold.dart';
 import 'package:invoiceninja_flutter/ui/app/form_card.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/app_dropdown_button.dart';
@@ -109,12 +111,20 @@ class _DesignEditState extends State<DesignEdit>
 
       if (design != widget.viewModel.design) {
         widget.viewModel.onChanged(design);
-        _loadDesign(context, design);
+        _loadPreview(context, design);
       }
     });
   }
 
-  void _loadDesign(BuildContext context, DesignEntity design) {
+  void _loadDesign(String designId) {
+    final state = widget.viewModel.state;
+    final designState = state.designState;
+    final design = designState.map[designId].design;
+
+    _headerController.text = design[kDesignHeader];
+  }
+
+  void _loadPreview(BuildContext context, DesignEntity design) {
     print('## _loadDesign');
 
     loadDesign(
@@ -178,6 +188,7 @@ class _DesignEditState extends State<DesignEdit>
                 children: <Widget>[
                     DesignSettings(
                       nameController: _nameController,
+                      onLoadDesign: _loadDesign,
                     ),
                     DesignPreview(),
                     DesignSection(textController: _headerController),
@@ -212,7 +223,10 @@ class _DesignEditState extends State<DesignEdit>
                             child: TabBarView(
                               controller: _controller,
                               children: <Widget>[
-                                DesignSettings(nameController: _nameController),
+                                DesignSettings(
+                                  nameController: _nameController,
+                                  onLoadDesign: _loadDesign,
+                                ),
                                 DesignSection(
                                     textController: _headerController),
                                 DesignSection(textController: _bodyController),
@@ -265,13 +279,19 @@ class DesignSection extends StatelessWidget {
 }
 
 class DesignSettings extends StatelessWidget {
-  const DesignSettings({@required this.nameController});
+  const DesignSettings({
+    @required this.nameController,
+    @required this.onLoadDesign,
+  });
 
+  final Function(String) onLoadDesign;
   final TextEditingController nameController;
 
   @override
   Widget build(BuildContext context) {
     final localization = AppLocalization.of(context);
+    final store = StoreProvider.of<AppState>(context);
+    final designState = store.state.designState;
 
     return Column(
       mainAxisSize: MainAxisSize.min,
@@ -284,11 +304,11 @@ class DesignSettings extends StatelessWidget {
             ),
             AppDropdownButton<String>(
               value: null,
-              onChanged: (dynamic value) {},
-              items: ['']
+              onChanged: (dynamic value) => onLoadDesign(value),
+              items: designState.list
                   .map((value) => DropdownMenuItem(
                         value: value,
-                        child: Text(value),
+                        child: Text(designState.map[value].displayName),
                       ))
                   .toList(),
               labelText: localization.loadDesign,
