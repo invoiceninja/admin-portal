@@ -413,8 +413,9 @@ class InvoiceEditDesktopState extends State<InvoiceEditDesktop>
                           invoice.rebuild((b) => b..assignedUserId = userId)),
                     ),
                     DesignPicker(
-                      onSelected: (dynamic value) => viewModel.onChanged(
-                          invoice.rebuild((b) => b..designId = value)),
+                      initialValue: invoice.designId,
+                      onSelected: (value) => viewModel.onChanged(
+                          invoice.rebuild((b) => b..designId = value.id)),
                     ),
                     CustomSurcharges(
                       surcharge1Controller: _surcharge1Controller,

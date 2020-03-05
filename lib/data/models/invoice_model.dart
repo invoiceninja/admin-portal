@@ -98,7 +98,7 @@ abstract class InvoiceEntity extends Object
       privateNotes: '',
       terms: '',
       footer: '',
-      designId: '1',
+      designId: '',
       taxName1: company?.settings?.defaultTaxName1 ?? '',
       taxRate1: company?.settings?.defaultTaxRate1 ?? 0.0,
       taxName2: company?.settings?.defaultTaxName2 ?? '',
