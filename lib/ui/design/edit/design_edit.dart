@@ -105,7 +105,7 @@ class _DesignEditState extends State<DesignEdit>
           kDesignBody: _bodyController.text.trim(),
           kDesignFooter: _footerController.text.trim(),
           kDesignProducts: _productsController.text.trim(),
-          kDesignTasks: _tasksController.text.trim(),
+          kDesignTasks: _tasksController.text.trim() ?? '',
           kDesignIncludes: _includesController.text.trim()
         })));
 
@@ -129,7 +129,7 @@ class _DesignEditState extends State<DesignEdit>
     _tasksController.text = design[kDesignTasks];
     _includesController.text = design[kDesignIncludes];
 
-    _loadPreview(context, designEntity);
+    //_loadPreview(context, designEntity);
   }
 
   void _loadPreview(BuildContext context, DesignEntity design) {
