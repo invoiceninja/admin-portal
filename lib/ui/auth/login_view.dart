@@ -288,15 +288,15 @@ class _LoginState extends State<LoginView> {
             ),
           ),
         ),
-        if (!viewModel.authState.isAuthenticated)
-          ListView(
-            shrinkWrap: true,
-            children: <Widget>[
-              Padding(
-                padding: EdgeInsets.only(top: 20.0, bottom: 20.0),
-                child: Image.asset('assets/images/logo.png',
-                    width: 100.0, height: 100.0),
-              ),
+        ListView(
+          shrinkWrap: true,
+          children: <Widget>[
+            Padding(
+              padding: EdgeInsets.only(top: 20.0, bottom: 20.0),
+              child: Image.asset('assets/images/logo.png',
+                  width: 100.0, height: 100.0),
+            ),
+            if (!viewModel.authState.isAuthenticated)
               Form(
                 key: _formKey,
                 child: FormCard(
@@ -681,8 +681,8 @@ class _LoginState extends State<LoginView> {
                   ],
                 ),
               ),
-            ],
-          ),
+          ],
+        ),
       ],
     );
   }
