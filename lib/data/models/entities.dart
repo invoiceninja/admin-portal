@@ -85,6 +85,7 @@ class EmailTemplate extends EnumClass {
   static const EmailTemplate invoiceEmail = _$invoiceEmail;
   static const EmailTemplate quoteEmail = _$quoteEmail;
   static const EmailTemplate paymentEmail = _$paymentEmail;
+  static const EmailTemplate partialPaymentEmail = _$partialPaymentEmail;
   static const EmailTemplate creditEmail = _$creditEmail;
   static const EmailTemplate firstReminder = _$firstReminder;
   static const EmailTemplate secondReminder = _$secondReminder;

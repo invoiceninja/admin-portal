@@ -904,6 +904,9 @@ abstract class SettingsEntity
       emailSubjectPayment: clientSettings?.emailSubjectPayment ??
           groupSettings?.emailSubjectPayment ??
           companySettings?.emailSubjectPayment,
+      emailSubjectPaymentPartial: clientSettings?.emailSubjectPaymentPartial ??
+          groupSettings?.emailSubjectPaymentPartial ??
+          companySettings?.emailSubjectPaymentPartial,
       emailBodyInvoice: clientSettings?.emailBodyInvoice ??
           groupSettings?.emailBodyInvoice ??
           companySettings?.emailBodyInvoice,
@@ -913,6 +916,9 @@ abstract class SettingsEntity
       emailBodyPayment: clientSettings?.emailBodyPayment ??
           groupSettings?.emailBodyPayment ??
           companySettings?.emailBodyPayment,
+      emailBodyPaymentPartial: clientSettings?.emailBodyPaymentPartial ??
+          groupSettings?.emailBodyPaymentPartial ??
+          companySettings?.emailBodyPaymentPartial,
       emailSubjectReminder1: clientSettings?.emailSubjectReminder1 ??
           groupSettings?.emailSubjectReminder1 ??
           companySettings?.emailSubjectReminder1,
@@ -1428,6 +1434,10 @@ abstract class SettingsEntity
   String get emailSubjectPayment;
 
   @nullable
+  @BuiltValueField(wireName: 'email_subject_payment_partial')
+  String get emailSubjectPaymentPartial;
+
+  @nullable
   @BuiltValueField(wireName: 'email_template_invoice')
   String get emailBodyInvoice;
 
@@ -1438,6 +1448,10 @@ abstract class SettingsEntity
   @nullable
   @BuiltValueField(wireName: 'email_template_payment')
   String get emailBodyPayment;
+
+  @nullable
+  @BuiltValueField(wireName: 'email_template_payment_partial')
+  String get emailBodyPaymentPartial;
 
   @nullable
   @BuiltValueField(wireName: 'email_subject_reminder1')
@@ -1755,6 +1769,8 @@ abstract class SettingsEntity
         return emailSubjectQuote;
       case EmailTemplate.paymentEmail:
         return emailSubjectPayment;
+      case EmailTemplate.partialPaymentEmail:
+        return emailSubjectPaymentPartial;
       case EmailTemplate.firstReminder:
         return emailSubjectReminder1;
       case EmailTemplate.secondReminder:
@@ -1780,6 +1796,8 @@ abstract class SettingsEntity
         return emailBodyQuote;
       case EmailTemplate.paymentEmail:
         return emailBodyPayment;
+      case EmailTemplate.partialPaymentEmail:
+        return emailBodyPaymentPartial;
       case EmailTemplate.firstReminder:
         return emailBodyReminder1;
       case EmailTemplate.secondReminder:

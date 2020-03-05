@@ -260,6 +260,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'days': 'Days',
       'invoice_email': 'Invoice Email',
       'payment_email': 'Payment Email',
+      'partial_payment_email': 'Partial Payment Email',
       'quote_email': 'Quote Email',
       'endless_reminder': 'Endless Reminder',
       'filtered_by_user': 'Filtered by User',
@@ -1016,6 +1017,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'email_subject_invoice': 'Email Invoice Subject',
       'email_subject_quote': 'Email Quote Subject',
       'email_subject_payment': 'Email Payment Subject',
+      'email_subject_payment_partial': 'Email Partial Payment Subject',
       'switch_list_table': 'Switch List Table',
       'client_city': 'Client City',
       'client_state': 'Client State',
@@ -32423,6 +32425,9 @@ mixin LocalizationsProvider on LocaleCodeAware {
   String get emailSubjectPayment =>
       _localizedValues[localeCode]['email_subject_payment'];
 
+  String get emailSubjectPaymentPartial =>
+      _localizedValues[localeCode]['email_subject_payment_partial'];
+
   String get showCost => _localizedValues[localeCode]['show_cost'];
 
   String get showCostHelp => _localizedValues[localeCode]['show_cost_help'];
@@ -32851,7 +32856,9 @@ mixin LocalizationsProvider on LocaleCodeAware {
 
   String get creditDesign => _localizedValues[localeCode]['credit_design'];
 
-
+  String get partialPaymentEmail =>
+      _localizedValues[localeCode]['partial_payment_email'];
+  
   String lookup(String key) {
     final lookupKey = toSnakeCase(key);
     return _localizedValues[localeCode][lookupKey] ??

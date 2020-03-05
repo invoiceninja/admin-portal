@@ -1504,6 +1504,12 @@ class _$SettingsEntitySerializer
         ..add(serializers.serialize(object.emailSubjectPayment,
             specifiedType: const FullType(String)));
     }
+    if (object.emailSubjectPaymentPartial != null) {
+      result
+        ..add('email_subject_payment_partial')
+        ..add(serializers.serialize(object.emailSubjectPaymentPartial,
+            specifiedType: const FullType(String)));
+    }
     if (object.emailBodyInvoice != null) {
       result
         ..add('email_template_invoice')
@@ -1520,6 +1526,12 @@ class _$SettingsEntitySerializer
       result
         ..add('email_template_payment')
         ..add(serializers.serialize(object.emailBodyPayment,
+            specifiedType: const FullType(String)));
+    }
+    if (object.emailBodyPaymentPartial != null) {
+      result
+        ..add('email_template_payment_partial')
+        ..add(serializers.serialize(object.emailBodyPaymentPartial,
             specifiedType: const FullType(String)));
     }
     if (object.emailSubjectReminder1 != null) {
@@ -2300,6 +2312,10 @@ class _$SettingsEntitySerializer
           result.emailSubjectPayment = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String;
           break;
+        case 'email_subject_payment_partial':
+          result.emailSubjectPaymentPartial = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String;
+          break;
         case 'email_template_invoice':
           result.emailBodyInvoice = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String;
@@ -2310,6 +2326,10 @@ class _$SettingsEntitySerializer
           break;
         case 'email_template_payment':
           result.emailBodyPayment = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String;
+          break;
+        case 'email_template_payment_partial':
+          result.emailBodyPaymentPartial = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String;
           break;
         case 'email_subject_reminder1':
@@ -4587,11 +4607,15 @@ class _$SettingsEntity extends SettingsEntity {
   @override
   final String emailSubjectPayment;
   @override
+  final String emailSubjectPaymentPartial;
+  @override
   final String emailBodyInvoice;
   @override
   final String emailBodyQuote;
   @override
   final String emailBodyPayment;
+  @override
+  final String emailBodyPaymentPartial;
   @override
   final String emailSubjectReminder1;
   @override
@@ -4822,9 +4846,11 @@ class _$SettingsEntity extends SettingsEntity {
       this.emailSubjectInvoice,
       this.emailSubjectQuote,
       this.emailSubjectPayment,
+      this.emailSubjectPaymentPartial,
       this.emailBodyInvoice,
       this.emailBodyQuote,
       this.emailBodyPayment,
+      this.emailBodyPaymentPartial,
       this.emailSubjectReminder1,
       this.emailSubjectReminder2,
       this.emailSubjectReminder3,
@@ -4993,9 +5019,11 @@ class _$SettingsEntity extends SettingsEntity {
         emailSubjectInvoice == other.emailSubjectInvoice &&
         emailSubjectQuote == other.emailSubjectQuote &&
         emailSubjectPayment == other.emailSubjectPayment &&
+        emailSubjectPaymentPartial == other.emailSubjectPaymentPartial &&
         emailBodyInvoice == other.emailBodyInvoice &&
         emailBodyQuote == other.emailBodyQuote &&
         emailBodyPayment == other.emailBodyPayment &&
+        emailBodyPaymentPartial == other.emailBodyPaymentPartial &&
         emailSubjectReminder1 == other.emailSubjectReminder1 &&
         emailSubjectReminder2 == other.emailSubjectReminder2 &&
         emailSubjectReminder3 == other.emailSubjectReminder3 &&
@@ -5091,7 +5119,7 @@ class _$SettingsEntity extends SettingsEntity {
                                                                 $jc(
                                                                     $jc(
                                                                         $jc(
-                                                                            $jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc(0, timezoneId.hashCode), dateFormatId.hashCode), enableMilitaryTime.hashCode), languageId.hashCode), showCurrencyCode.hashCode), currencyId.hashCode), customValue1.hashCode), customValue2.hashCode), customValue3.hashCode), customValue4.hashCode), defaultPaymentTerms.hashCode), companyGatewayIds.hashCode), defaultTaskRate.hashCode), sendReminders.hashCode), enablePortal.hashCode), enablePortalDashboard.hashCode), enablePortalTasks.hashCode), emailStyle.hashCode), replyToEmail.hashCode), bccEmail.hashCode), pdfEmailAttachment.hashCode), ublEmailAttachment.hashCode), documentEmailAttachment.hashCode), emailStyleCustom.hashCode), customMessageDashboard.hashCode), customMessageUnpaidInvoice.hashCode), customMessagePaidInvoice.hashCode), customMessageUnapprovedQuote.hashCode), lockSentInvoices.hashCode), autoArchiveInvoice.hashCode), autoArchiveQuote.hashCode), autoEmailInvoice.hashCode), autoConvertQuote.hashCode), enableInclusiveTaxes.hashCode), translations.hashCode), taskNumberPattern.hashCode), taskNumberCounter.hashCode), expenseNumberPattern.hashCode), expenseNumberCounter.hashCode), vendorNumberPattern.hashCode), vendorNumberCounter.hashCode), ticketNumberPattern.hashCode), ticketNumberCounter.hashCode), paymentNumberPattern.hashCode), paymentNumberCounter.hashCode), invoiceNumberPattern.hashCode), invoiceNumberCounter.hashCode), quoteNumberPattern.hashCode), quoteNumberCounter.hashCode), clientNumberPattern.hashCode), clientNumberCounter.hashCode), creditNumberPattern.hashCode), creditNumberCounter.hashCode), recurringNumberPrefix.hashCode), resetCounterFrequencyId.hashCode), resetCounterDate.hashCode), counterPadding.hashCode), sharedInvoiceQuoteCounter.hashCode), defaultInvoiceTerms.hashCode), defaultQuoteTerms.hashCode), defaultQuoteFooter.hashCode), defaultCreditTerms.hashCode), defaultCreditFooter.hashCode), numberOfInvoiceTaxRates.hashCode), numberOfItemTaxRates.hashCode), defaultInvoiceDesignId.hashCode), defaultQuoteDesignId.hashCode), defaultCreditDesignId.hashCode), defaultInvoiceFooter.hashCode), invoiceLabels.hashCode), defaultTaxName1.hashCode), defaultTaxRate1.hashCode), defaultTaxName2.hashCode), defaultTaxRate2.hashCode), defaultTaxName3.hashCode), defaultTaxRate3.hashCode), defaultPaymentTypeId.hashCode), invoiceFields.hashCode), pdfVariables.hashCode), emailFooter.hashCode), emailSubjectInvoice.hashCode), emailSubjectQuote.hashCode), emailSubjectPayment.hashCode), emailBodyInvoice.hashCode), emailBodyQuote.hashCode), emailBodyPayment.hashCode), emailSubjectReminder1.hashCode), emailSubjectReminder2.hashCode), emailSubjectReminder3.hashCode), emailBodyReminder1.hashCode), emailBodyReminder2.hashCode), emailBodyReminder3.hashCode), emailSubjectCustom1.hashCode), emailBodyCustom1.hashCode), emailSubjectCustom2.hashCode), emailBodyCustom2.hashCode), emailSubjectCustom3.hashCode), emailBodyCustom3.hashCode), enablePortalPassword.hashCode), sendPortalPassword.hashCode), signatureOnPdf.hashCode), enableEmailMarkup.hashCode), showAcceptInvoiceTerms.hashCode), showAcceptQuoteTerms.hashCode), requireInvoiceSignature.hashCode), requireQuoteSignature.hashCode), name.hashCode), companyLogo.hashCode), website.hashCode), address1.hashCode), address2.hashCode), city.hashCode), state.hashCode), postalCode.hashCode), phone.hashCode), email.hashCode), countryId.hashCode), vatNumber.hashCode), idNumber.hashCode), pageSize.hashCode), fontSize.hashCode), primaryColor.hashCode), secondaryColor.hashCode), primaryFont.hashCode), secondaryFont.hashCode), hidePaidToDate.hashCode), embedDocuments.hashCode), allPagesHeader.hashCode), allPagesFooter.hashCode), enableReminder1.hashCode), enableReminder2.hashCode), enableReminder3.hashCode), enableReminder4.hashCode), numDaysReminder1.hashCode), numDaysReminder2.hashCode), numDaysReminder3.hashCode), scheduleReminder1.hashCode), scheduleReminder2.hashCode),
+                                                                            $jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc(0, timezoneId.hashCode), dateFormatId.hashCode), enableMilitaryTime.hashCode), languageId.hashCode), showCurrencyCode.hashCode), currencyId.hashCode), customValue1.hashCode), customValue2.hashCode), customValue3.hashCode), customValue4.hashCode), defaultPaymentTerms.hashCode), companyGatewayIds.hashCode), defaultTaskRate.hashCode), sendReminders.hashCode), enablePortal.hashCode), enablePortalDashboard.hashCode), enablePortalTasks.hashCode), emailStyle.hashCode), replyToEmail.hashCode), bccEmail.hashCode), pdfEmailAttachment.hashCode), ublEmailAttachment.hashCode), documentEmailAttachment.hashCode), emailStyleCustom.hashCode), customMessageDashboard.hashCode), customMessageUnpaidInvoice.hashCode), customMessagePaidInvoice.hashCode), customMessageUnapprovedQuote.hashCode), lockSentInvoices.hashCode), autoArchiveInvoice.hashCode), autoArchiveQuote.hashCode), autoEmailInvoice.hashCode), autoConvertQuote.hashCode), enableInclusiveTaxes.hashCode), translations.hashCode), taskNumberPattern.hashCode), taskNumberCounter.hashCode), expenseNumberPattern.hashCode), expenseNumberCounter.hashCode), vendorNumberPattern.hashCode), vendorNumberCounter.hashCode), ticketNumberPattern.hashCode), ticketNumberCounter.hashCode), paymentNumberPattern.hashCode), paymentNumberCounter.hashCode), invoiceNumberPattern.hashCode), invoiceNumberCounter.hashCode), quoteNumberPattern.hashCode), quoteNumberCounter.hashCode), clientNumberPattern.hashCode), clientNumberCounter.hashCode), creditNumberPattern.hashCode), creditNumberCounter.hashCode), recurringNumberPrefix.hashCode), resetCounterFrequencyId.hashCode), resetCounterDate.hashCode), counterPadding.hashCode), sharedInvoiceQuoteCounter.hashCode), defaultInvoiceTerms.hashCode), defaultQuoteTerms.hashCode), defaultQuoteFooter.hashCode), defaultCreditTerms.hashCode), defaultCreditFooter.hashCode), numberOfInvoiceTaxRates.hashCode), numberOfItemTaxRates.hashCode), defaultInvoiceDesignId.hashCode), defaultQuoteDesignId.hashCode), defaultCreditDesignId.hashCode), defaultInvoiceFooter.hashCode), invoiceLabels.hashCode), defaultTaxName1.hashCode), defaultTaxRate1.hashCode), defaultTaxName2.hashCode), defaultTaxRate2.hashCode), defaultTaxName3.hashCode), defaultTaxRate3.hashCode), defaultPaymentTypeId.hashCode), invoiceFields.hashCode), pdfVariables.hashCode), emailFooter.hashCode), emailSubjectInvoice.hashCode), emailSubjectQuote.hashCode), emailSubjectPayment.hashCode), emailSubjectPaymentPartial.hashCode), emailBodyInvoice.hashCode), emailBodyQuote.hashCode), emailBodyPayment.hashCode), emailBodyPaymentPartial.hashCode), emailSubjectReminder1.hashCode), emailSubjectReminder2.hashCode), emailSubjectReminder3.hashCode), emailBodyReminder1.hashCode), emailBodyReminder2.hashCode), emailBodyReminder3.hashCode), emailSubjectCustom1.hashCode), emailBodyCustom1.hashCode), emailSubjectCustom2.hashCode), emailBodyCustom2.hashCode), emailSubjectCustom3.hashCode), emailBodyCustom3.hashCode), enablePortalPassword.hashCode), sendPortalPassword.hashCode), signatureOnPdf.hashCode), enableEmailMarkup.hashCode), showAcceptInvoiceTerms.hashCode), showAcceptQuoteTerms.hashCode), requireInvoiceSignature.hashCode), requireQuoteSignature.hashCode), name.hashCode), companyLogo.hashCode), website.hashCode), address1.hashCode), address2.hashCode), city.hashCode), state.hashCode), postalCode.hashCode), phone.hashCode), email.hashCode), countryId.hashCode), vatNumber.hashCode), idNumber.hashCode), pageSize.hashCode), fontSize.hashCode), primaryColor.hashCode), secondaryColor.hashCode), primaryFont.hashCode), secondaryFont.hashCode), hidePaidToDate.hashCode), embedDocuments.hashCode), allPagesHeader.hashCode), allPagesFooter.hashCode), enableReminder1.hashCode), enableReminder2.hashCode), enableReminder3.hashCode), enableReminder4.hashCode), numDaysReminder1.hashCode), numDaysReminder2.hashCode), numDaysReminder3.hashCode), scheduleReminder1.hashCode), scheduleReminder2.hashCode),
                                                                                 scheduleReminder3.hashCode),
                                                                             endlessReminderFrequencyId.hashCode),
                                                                         lateFeeAmount1.hashCode),
@@ -5199,9 +5227,11 @@ class _$SettingsEntity extends SettingsEntity {
           ..add('emailSubjectInvoice', emailSubjectInvoice)
           ..add('emailSubjectQuote', emailSubjectQuote)
           ..add('emailSubjectPayment', emailSubjectPayment)
+          ..add('emailSubjectPaymentPartial', emailSubjectPaymentPartial)
           ..add('emailBodyInvoice', emailBodyInvoice)
           ..add('emailBodyQuote', emailBodyQuote)
           ..add('emailBodyPayment', emailBodyPayment)
+          ..add('emailBodyPaymentPartial', emailBodyPaymentPartial)
           ..add('emailSubjectReminder1', emailSubjectReminder1)
           ..add('emailSubjectReminder2', emailSubjectReminder2)
           ..add('emailSubjectReminder3', emailSubjectReminder3)
@@ -5688,6 +5718,11 @@ class SettingsEntityBuilder
   set emailSubjectPayment(String emailSubjectPayment) =>
       _$this._emailSubjectPayment = emailSubjectPayment;
 
+  String _emailSubjectPaymentPartial;
+  String get emailSubjectPaymentPartial => _$this._emailSubjectPaymentPartial;
+  set emailSubjectPaymentPartial(String emailSubjectPaymentPartial) =>
+      _$this._emailSubjectPaymentPartial = emailSubjectPaymentPartial;
+
   String _emailBodyInvoice;
   String get emailBodyInvoice => _$this._emailBodyInvoice;
   set emailBodyInvoice(String emailBodyInvoice) =>
@@ -5702,6 +5737,11 @@ class SettingsEntityBuilder
   String get emailBodyPayment => _$this._emailBodyPayment;
   set emailBodyPayment(String emailBodyPayment) =>
       _$this._emailBodyPayment = emailBodyPayment;
+
+  String _emailBodyPaymentPartial;
+  String get emailBodyPaymentPartial => _$this._emailBodyPaymentPartial;
+  set emailBodyPaymentPartial(String emailBodyPaymentPartial) =>
+      _$this._emailBodyPaymentPartial = emailBodyPaymentPartial;
 
   String _emailSubjectReminder1;
   String get emailSubjectReminder1 => _$this._emailSubjectReminder1;
@@ -6131,9 +6171,11 @@ class SettingsEntityBuilder
       _emailSubjectInvoice = _$v.emailSubjectInvoice;
       _emailSubjectQuote = _$v.emailSubjectQuote;
       _emailSubjectPayment = _$v.emailSubjectPayment;
+      _emailSubjectPaymentPartial = _$v.emailSubjectPaymentPartial;
       _emailBodyInvoice = _$v.emailBodyInvoice;
       _emailBodyQuote = _$v.emailBodyQuote;
       _emailBodyPayment = _$v.emailBodyPayment;
+      _emailBodyPaymentPartial = _$v.emailBodyPaymentPartial;
       _emailSubjectReminder1 = _$v.emailSubjectReminder1;
       _emailSubjectReminder2 = _$v.emailSubjectReminder2;
       _emailSubjectReminder3 = _$v.emailSubjectReminder3;
@@ -6312,9 +6354,11 @@ class SettingsEntityBuilder
               emailSubjectInvoice: emailSubjectInvoice,
               emailSubjectQuote: emailSubjectQuote,
               emailSubjectPayment: emailSubjectPayment,
+              emailSubjectPaymentPartial: emailSubjectPaymentPartial,
               emailBodyInvoice: emailBodyInvoice,
               emailBodyQuote: emailBodyQuote,
               emailBodyPayment: emailBodyPayment,
+              emailBodyPaymentPartial: emailBodyPaymentPartial,
               emailSubjectReminder1: emailSubjectReminder1,
               emailSubjectReminder2: emailSubjectReminder2,
               emailSubjectReminder3: emailSubjectReminder3,

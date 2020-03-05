@@ -169,14 +169,17 @@ class SettingsViewer extends StatelessWidget {
       localization.emailSubjectInvoice:
           settings.emailSubjectInvoice?.toString(),
       localization.emailSubjectQuote: settings.emailSubjectQuote?.toString(),
-      localization.emailSubjectPayment:
-          settings.emailSubjectPayment?.toString(),
+      localization.emailSubjectPayment: settings.emailSubjectPayment,
+      localization.emailSubjectPaymentPartial:
+          settings.emailSubjectPaymentPartial,
       //localization.emailBodyInvoice:
       //    settings.emailBodyInvoice?.toString(),
       //localization.emailBodyQuote:
       //    settings.emailBodyQuote?.toString(),
       //localization.emailBodyPayment:
       //    settings.emailBodyPayment?.toString(),
+      //localization.emailBodyPaymentPartial:
+      //    settings.emailBodyPaymentPartial?.toString(),
       //localization.emailSubjectReminder1:
       //    settings.emailSubjectReminder1?.toString(),
       //localization.emailSubjectReminder2:
