@@ -218,22 +218,22 @@ class EmailCreditFailure implements StopSaving {
 }
 
 class MarkSentCreditRequest implements StartSaving {
-  MarkSentCreditRequest(this.completer, this.creditId);
+  MarkSentCreditRequest(this.completer, this.creditIds);
 
   final Completer completer;
-  final String creditId;
+  final List<String> creditIds;
 }
 
 class MarkSentCreditSuccess implements StopSaving, PersistData {
-  MarkSentCreditSuccess(this.credit);
+  MarkSentCreditSuccess(this.credits);
 
-  final InvoiceEntity credit;
+  final List<InvoiceEntity> credits;
 }
 
 class MarkSentCreditFailure implements StopSaving {
-  MarkSentCreditFailure(this.credit);
+  MarkSentCreditFailure(this.error);
 
-  final InvoiceEntity credit;
+  final Object error;
 }
 
 class ArchiveCreditsRequest implements StartSaving {
@@ -397,7 +397,7 @@ Future handleCreditAction(
     case EntityAction.markSent:
       store.dispatch(MarkSentCreditRequest(
           snackBarCompleter<Null>(context, localization.markedCreditAsSent),
-          credit.id));
+          creditIds));
       break;
     case EntityAction.sendEmail:
       store.dispatch(ShowEmailCredit(

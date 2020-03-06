@@ -15,8 +15,7 @@ class SettingsRepository {
   final WebClient webClient;
 
   Future<CompanyEntity> saveCompany(
-      Credentials credentials, CompanyEntity company,
-      [EntityAction action]) async {
+      Credentials credentials, CompanyEntity company) async {
     final data = serializers.serializeWith(CompanyEntity.serializer, company);
     dynamic response;
 

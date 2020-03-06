@@ -57,8 +57,7 @@ class VendorRepository {
     return vendorResponse.data.toList();
   }
 
-  Future<VendorEntity> saveData(Credentials credentials, VendorEntity vendor,
-      [EntityAction action]) async {
+  Future<VendorEntity> saveData(Credentials credentials, VendorEntity vendor) async {
     final data = serializers.serializeWith(VendorEntity.serializer, vendor);
     dynamic response;
 
@@ -67,10 +66,7 @@ class VendorRepository {
           credentials.url + '/vendors', credentials.token,
           data: json.encode(data));
     } else {
-      var url = credentials.url + '/vendors/${vendor.id}?';
-      if (action != null) {
-        url += '&action=' + action.toString();
-      }
+      final url = credentials.url + '/vendors/${vendor.id}';
       response =
           await webClient.put(url, credentials.token, data: json.encode(data));
     }

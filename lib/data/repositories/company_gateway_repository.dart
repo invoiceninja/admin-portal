@@ -60,8 +60,7 @@ class CompanyGatewayRepository {
   }
 
   Future<CompanyGatewayEntity> saveData(
-      Credentials credentials, CompanyGatewayEntity companyGateway,
-      [EntityAction action]) async {
+      Credentials credentials, CompanyGatewayEntity companyGateway) async {
     final data = serializers.serializeWith(
         CompanyGatewayEntity.serializer, companyGateway);
     dynamic response;
@@ -72,11 +71,8 @@ class CompanyGatewayRepository {
           credentials.token,
           data: json.encode(data));
     } else {
-      var url = credentials.url +
+      final url = credentials.url +
           '/company_gateways/${companyGateway.id}?include=gateway';
-      if (action != null) {
-        url += '&action=' + action.toString();
-      }
       response =
           await webClient.put(url, credentials.token, data: json.encode(data));
     }

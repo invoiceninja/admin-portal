@@ -58,8 +58,7 @@ class DocumentRepository {
   }
 
   Future<DocumentEntity> saveData(
-      Credentials credentials, DocumentEntity document,
-      [EntityAction action]) async {
+      Credentials credentials, DocumentEntity document) async {
     dynamic response;
 
     if (document.isNew) {
@@ -76,7 +75,11 @@ class DocumentRepository {
     } else {
       final data =
           serializers.serializeWith(DocumentEntity.serializer, document);
-      var url = '${credentials.url}/documents/${document.id}?';
+      final url = '${credentials.url}/documents/${document.id}?';
+      response =
+      await webClient.put(url, credentials.token, data: json.encode(data));
+
+      /*
       if (action == EntityAction.delete) {
         response = await webClient.delete(url, credentials.token);
       } else {
@@ -86,6 +89,7 @@ class DocumentRepository {
         response = await webClient.put(url, credentials.token,
             data: json.encode(data));
       }
+       */
     }
 
     final DocumentItemResponse documentResponse =

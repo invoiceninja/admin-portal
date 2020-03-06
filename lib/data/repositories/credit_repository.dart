@@ -57,8 +57,8 @@ class CreditRepository {
     return invoiceResponse.data.toList();
   }
 
-  Future<InvoiceEntity> saveData(Credentials credentials, InvoiceEntity credit,
-      [EntityAction action]) async {
+  Future<InvoiceEntity> saveData(
+      Credentials credentials, InvoiceEntity credit) async {
     final data = serializers.serializeWith(InvoiceEntity.serializer, credit);
     dynamic response;
 
@@ -67,10 +67,7 @@ class CreditRepository {
           credentials.url + '/credits?', credentials.token,
           data: json.encode(data));
     } else {
-      var url = '${credentials.url}/credits/${credit.id}?';
-      if (action != null) {
-        url += '&action=$action';
-      }
+      var url = '${credentials.url}/credits/${credit.id}';
       response =
           await webClient.put(url, credentials.token, data: json.encode(data));
     }

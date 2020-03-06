@@ -256,7 +256,12 @@ final creditsReducer = combineReducers<CreditState>([
 
 CreditState _markSentCreditSuccess(
     CreditState creditState, MarkSentCreditSuccess action) {
-  return creditState.rebuild((b) => b..map[action.credit.id] = action.credit);
+  final creditMap = Map<String, InvoiceEntity>.fromIterable(
+    action.credits,
+    key: (dynamic item) => item.id,
+    value: (dynamic item) => item,
+  );
+  return creditState.rebuild((b) => b..map.addAll(creditMap));
 }
 
 CreditState _archiveCreditRequest(

@@ -57,8 +57,7 @@ class DesignRepository {
     return designResponse.data.toList();
   }
 
-  Future<DesignEntity> saveData(Credentials credentials, DesignEntity design,
-      [EntityAction action]) async {
+  Future<DesignEntity> saveData(Credentials credentials, DesignEntity design) async {
     final data = serializers.serializeWith(DesignEntity.serializer, design);
     dynamic response;
 
@@ -67,10 +66,7 @@ class DesignRepository {
           credentials.url + '/designs', credentials.token,
           data: json.encode(data));
     } else {
-      var url = credentials.url + '/designs/${design.id}?';
-      if (action != null) {
-        url += '&action=' + action.toString();
-      }
+      var url = credentials.url + '/designs/${design.id}';
       response =
           await webClient.put(url, credentials.token, data: json.encode(data));
     }

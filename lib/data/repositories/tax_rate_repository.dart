@@ -57,8 +57,7 @@ class TaxRateRepository {
     return taxRateResponse.data.toList();
   }
 
-  Future<TaxRateEntity> saveData(Credentials credentials, TaxRateEntity taxRate,
-      [EntityAction action]) async {
+  Future<TaxRateEntity> saveData(Credentials credentials, TaxRateEntity taxRate) async {
     final data = serializers.serializeWith(TaxRateEntity.serializer, taxRate);
     dynamic response;
 
@@ -67,10 +66,7 @@ class TaxRateRepository {
           credentials.url + '/tax_rates', credentials.token,
           data: json.encode(data));
     } else {
-      var url = credentials.url + '/tax_rates/${taxRate.id}?';
-      if (action != null) {
-        url += '&action=$action';
-      }
+      var url = credentials.url + '/tax_rates/${taxRate.id}';
       response =
           await webClient.put(url, credentials.token, data: json.encode(data));
     }

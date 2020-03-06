@@ -69,8 +69,7 @@ class UserRepository {
   }
 
   Future<UserEntity> saveData(
-      Credentials credentials, UserEntity user, String password,
-      [EntityAction action]) async {
+      Credentials credentials, UserEntity user, String password) async {
     final data = serializers.serializeWith(UserEntity.serializer, user);
     dynamic response;
 
@@ -82,11 +81,8 @@ class UserRepository {
         password: password,
       );
     } else {
-      var url = credentials.url +
+      final url = credentials.url +
           '/users/${user.id}?include=company_user';
-      if (action != null) {
-        url += '&action=$action';
-      }
       response = await webClient.put(
         url,
         credentials.token,

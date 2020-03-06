@@ -209,17 +209,17 @@ Middleware<AppState> _restoreCredit(CreditRepository repository) {
 Middleware<AppState> _markSentCredit(CreditRepository repository) {
   return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
     final action = dynamicAction as MarkSentCreditRequest;
-    final origCredit = store.state.creditState.map[action.creditId];
     repository
-        .saveData(store.state.credentials, origCredit, EntityAction.markSent)
-        .then((InvoiceEntity credit) {
-      store.dispatch(MarkSentCreditSuccess(credit));
+        .bulkAction(
+            store.state.credentials, action.creditIds, EntityAction.markSent)
+        .then((credits) {
+      store.dispatch(MarkSentCreditSuccess(credits));
       if (action.completer != null) {
         action.completer.complete(null);
       }
     }).catchError((Object error) {
       print(error);
-      store.dispatch(MarkSentCreditFailure(origCredit));
+      store.dispatch(MarkSentCreditFailure(error));
       if (action.completer != null) {
         action.completer.completeError(error);
       }
