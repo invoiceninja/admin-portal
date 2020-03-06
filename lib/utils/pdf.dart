@@ -114,11 +114,13 @@ Future<List<PDFPageImage>> renderPDF(
   */
 
   final state = StoreProvider.of<AppState>(context).state;
-  final credentials = state.credentials;
-  final url = kAppUrl +
-      formatApiUrl(credentials.url) +
-      '/${invoice.entityType}/${invoice.invitations.first.key}/download';
+
+  // TODO fix this
+  final invitation = invoice.invitations.first;
+  final url = invitation.downloadLink;
+  print('## URL: $url');
   final request = await HttpClient().getUrl(Uri.parse(url));
+
   request.headers.add('X-API-Token', state.userCompany.token.token);
   final response = await request.close();
   final bytes = await consolidateHttpClientResponseBytes(response);
