@@ -1,9 +1,15 @@
 import 'dart:async';
+import 'dart:convert';
 import 'dart:io';
 import 'package:flutter/material.dart';
+import 'package:flutter_redux/flutter_redux.dart';
+import 'package:invoiceninja_flutter/constants.dart';
 import 'package:invoiceninja_flutter/data/models/invoice_model.dart';
 import 'package:flutter/foundation.dart';
+import 'package:invoiceninja_flutter/data/web_client.dart';
+import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/ui/app/loading_indicator.dart';
+import 'package:invoiceninja_flutter/utils/formatting.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:invoiceninja_flutter/utils/platforms.dart';
 import 'package:native_pdf_view/native_pdf_view.dart';
@@ -47,7 +53,7 @@ Future<Null> viewPdf(InvoiceEntity invoice, BuildContext context) async {
             color: Colors.grey,
             padding: const EdgeInsets.symmetric(vertical: 16),
             child: FutureBuilder(
-                future: renderPDF(invoice.invitationDownloadLink),
+                future: renderPDF(context, invoice),
                 builder: (BuildContext context,
                     AsyncSnapshot<List<PDFPageImage>> snapshot) {
                   switch (snapshot.connectionState) {
@@ -99,15 +105,21 @@ Future<Null> viewPdf(InvoiceEntity invoice, BuildContext context) async {
       });
 }
 
-Future<List<PDFPageImage>> renderPDF(String url) async {
-  print('### renderPDF: $url');
+Future<List<PDFPageImage>> renderPDF(
+    BuildContext context, InvoiceEntity invoice) async {
   /*
   url =
       //'https://staging.invoiceninja.com/download/gj5d2udwzowatfsjibarq4eyo4k0cvpd'; // one page
       'https://staging.invoiceninja.com/download/9gsjumkd8yaujcr0trnucnwfrelt1hil'; // four pages
   */
 
+  final state = StoreProvider.of<AppState>(context).state;
+  final credentials = state.credentials;
+  final url = kAppUrl +
+      formatApiUrl(credentials.url) +
+      '/${invoice.entityType}/${invoice.invitations.first.key}/download';
   final request = await HttpClient().getUrl(Uri.parse(url));
+  request.headers.add('X-API-Token', state.userCompany.token.token);
   final response = await request.close();
   final bytes = await consolidateHttpClientResponseBytes(response);
 
