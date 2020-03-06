@@ -36,10 +36,22 @@ class InvoiceOverview extends StatelessWidget {
     final payments = memoizedPaymentsByInvoice(
         invoice.id, state.paymentState.map, state.paymentState.list);
 
+    Map<String, String> stauses;
+    Map<String, MaterialColor> colors;
+    if (invoice.entityType == EntityType.quote) {
+      stauses = kQuoteStatuses;
+      colors = QuoteStatusColors.colors;
+    } else if (invoice.entityType == EntityType.credit) {
+      stauses = kCreditStatuses;
+      colors = CreditStatusColors.colors;
+    } else {
+      stauses = kInvoiceStatuses;
+      colors = InvoiceStatusColors.colors;
+    }
+
     final userCompany = state.userCompany;
-    final color = invoice.isPastDue
-        ? Colors.red
-        : InvoiceStatusColors.colors[invoice.statusId];
+    final color = invoice.isPastDue ? Colors.red : colors[invoice.statusId];
+
     final widgets = <Widget>[
       EntityHeader(
         backgroundColor: color,
@@ -60,7 +72,7 @@ class InvoiceOverview extends StatelessWidget {
     final Map<String, String> fields = {
       InvoiceFields.statusId: invoice.isPastDue
           ? localization.pastDue
-          : localization.lookup('invoice_status_${invoice.statusId}'),
+          : localization.lookup(stauses[invoice.statusId]),
       InvoiceFields.date: formatDate(invoice.date, context),
       dueDateField: formatDate(invoice.dueDate, context),
       InvoiceFields.partial: formatNumber(invoice.partial, context,

@@ -49,10 +49,6 @@ class QuoteListItem extends StatelessWidget {
             client.matchesFilterValue(filter))
         : null;
 
-    final quoteStatusId = (quote.invoiceId ?? '').isNotEmpty
-        ? kQuoteStatusApproved
-        : quote.statusId;
-
     return DismissibleEntity(
       isSelected: quote.id ==
           (uiState.isEditing
@@ -120,11 +116,11 @@ class QuoteListItem extends StatelessWidget {
                 Text(
                     quote.isPastDue
                         ? localization.expired
-                        : localization.lookup(kQuoteStatuses[quoteStatusId]),
+                        : localization.lookup(kQuoteStatuses[quote.statusId]),
                     style: TextStyle(
                       color: quote.isPastDue
                           ? Colors.red
-                          : QuoteStatusColors.colors[quoteStatusId],
+                          : QuoteStatusColors.colors[quote.statusId],
                     )),
               ],
             ),

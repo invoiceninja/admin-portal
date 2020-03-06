@@ -49,10 +49,6 @@ class CreditListItem extends StatelessWidget {
             client.matchesFilterValue(filter))
         : null;
 
-    final creditStatusId = (credit.invoiceId ?? '').isNotEmpty
-        ? kQuoteStatusApproved
-        : credit.statusId;
-
     return DismissibleEntity(
       isSelected: credit.id ==
           (uiState.isEditing
@@ -114,9 +110,9 @@ class CreditListItem extends StatelessWidget {
                           overflow: TextOverflow.ellipsis,
                         ),
                 ),
-                Text(localization.lookup(kCreditStatuses[creditStatusId]),
+                Text(localization.lookup(kCreditStatuses[credit.statusId]),
                     style: TextStyle(
-                      color: CreditStatusColors.colors[creditStatusId],
+                      color: CreditStatusColors.colors[credit.statusId],
                     )),
               ],
             ),
