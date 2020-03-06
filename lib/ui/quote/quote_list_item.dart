@@ -89,8 +89,7 @@ class QuoteListItem extends StatelessWidget {
               ),
               Text(
                   formatNumber(
-                      quote.balance > 0 ? quote.balance : quote.amount,
-                      context,
+                      quote.balance > 0 ? quote.balance : quote.amount, context,
                       clientId: quote.clientId),
                   style: Theme.of(context).textTheme.headline6),
             ],
@@ -120,9 +119,8 @@ class QuoteListItem extends StatelessWidget {
                 ),
                 Text(
                     quote.isPastDue
-                        ? localization.pastDue
-                        : localization
-                            .lookup('quote_status_$quoteStatusId'),
+                        ? localization.expired
+                        : localization.lookup(kQuoteStatuses[quoteStatusId]),
                     style: TextStyle(
                       color: quote.isPastDue
                           ? Colors.red

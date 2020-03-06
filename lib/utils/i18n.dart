@@ -828,10 +828,6 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'approved': 'Approved',
       'partial': 'Partial',
       'paid': 'Paid',
-      'invoice_status_1': 'Draft',
-      'invoice_status_2': 'Sent',
-      'invoice_status_3': 'Partial',
-      'invoice_status_4': 'Paid',
       'mark_sent': 'Mark Sent',
       'marked_invoice_as_sent': 'Successfully marked invoice as sent',
       'marked_invoice_as_paid': 'Successfully marked invoice as paid',
@@ -31215,14 +31211,6 @@ mixin LocalizationsProvider on LocaleCodeAware {
   String get partial => _localizedValues[localeCode]['partial'];
 
   String get paid => _localizedValues[localeCode]['paid'];
-
-  String get invoiceStatus1 => _localizedValues[localeCode]['invoice_status_1'];
-
-  String get invoiceStatus2 => _localizedValues[localeCode]['invoice_status_2'];
-
-  String get invoiceStatus3 => _localizedValues[localeCode]['invoice_status_3'];
-
-  String get invoiceStatus4 => _localizedValues[localeCode]['invoice_status_4'];
 
   String get markSent => _localizedValues[localeCode]['mark_sent'];
 

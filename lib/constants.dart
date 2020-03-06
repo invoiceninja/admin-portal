@@ -98,15 +98,37 @@ const String kInvoiceStatusSent = '2';
 const String kInvoiceStatusPartial = '3';
 const String kInvoiceStatusPaid = '4';
 
+const kInvoiceStatuses = {
+  kInvoiceStatusPastDue: 'past_due',
+  kInvoiceStatusDraft: 'draft',
+  kInvoiceStatusSent: 'sent',
+  kInvoiceStatusPartial: 'partial',
+  kInvoiceStatusPaid: 'paid',
+};
+
 const String kQuoteStatusExpired = '-1';
 const String kQuoteStatusDraft = '1';
 const String kQuoteStatusSent = '2';
 const String kQuoteStatusApproved = '4';
 
+const kQuoteStatuses = {
+  kQuoteStatusExpired: 'expired',
+  kQuoteStatusDraft: 'draft',
+  kQuoteStatusSent: 'sent',
+  kQuoteStatusApproved: 'approved',
+};
+
 const String kCreditStatusDraft = '1';
 const String kCreditStatusSent = '2';
 const String kCreditStatusPartial = '3';
 const String kCreditStatusApplied = '4';
+
+const kCreditStatuses = {
+  kCreditStatusDraft: 'draft',
+  kCreditStatusSent: 'sent',
+  kCreditStatusPartial: 'partial',
+  kCreditStatusApplied: 'applied',
+};
 
 const String kGatewayTypeCreditCard = '1';
 const String kGatewayTypeBankTransfer = '2';
@@ -318,8 +340,8 @@ class QuoteStatusColors {
   static const colors = {
     kQuoteStatusDraft: Colors.grey,
     kQuoteStatusSent: Colors.blue,
-    //kQuoteStatusViewed: Colors.orange,
     kQuoteStatusApproved: Colors.green,
+    kQuoteStatusExpired: Colors.red,
   };
 }
 

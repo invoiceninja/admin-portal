@@ -105,11 +105,7 @@ class CreditListItem extends StatelessWidget {
                   child: filterMatch == null
                       ? Text(((credit.number ?? localization.pending) +
                               ' • ' +
-                              formatDate(
-                                  credit.dueDate.isNotEmpty
-                                      ? credit.dueDate
-                                      : credit.date,
-                                  context) +
+                              formatDate(credit.date, context) +
                               (hasDocuments ? '  📎' : ''))
                           .trim())
                       : Text(
@@ -118,15 +114,9 @@ class CreditListItem extends StatelessWidget {
                           overflow: TextOverflow.ellipsis,
                         ),
                 ),
-                Text(
-                    credit.isPastDue
-                        ? localization.pastDue
-                        : localization
-                            .lookup('credit_status_$creditStatusId'),
+                Text(localization.lookup(kCreditStatuses[creditStatusId]),
                     style: TextStyle(
-                      color: credit.isPastDue
-                          ? Colors.red
-                          : CreditStatusColors.colors[creditStatusId],
+                      color: CreditStatusColors.colors[creditStatusId],
                     )),
               ],
             ),

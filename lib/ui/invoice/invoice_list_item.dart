@@ -122,7 +122,7 @@ class InvoiceListItem extends StatelessWidget {
                     invoice.isPastDue
                         ? localization.pastDue
                         : localization
-                            .lookup('invoice_status_$invoiceStatusId'),
+                            .lookup(kInvoiceStatuses[invoiceStatusId]),
                     style: TextStyle(
                       color: invoice.isPastDue
                           ? Colors.red
