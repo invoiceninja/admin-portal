@@ -12,8 +12,8 @@ import 'package:invoiceninja_flutter/redux/invoice/invoice_actions.dart';
 import 'package:invoiceninja_flutter/redux/ui/list_ui_state.dart';
 import 'package:invoiceninja_flutter/ui/app/entities/entity_actions_dialog.dart';
 import 'package:invoiceninja_flutter/ui/app/tables/entity_list.dart';
+import 'package:invoiceninja_flutter/ui/credit/credit_list_item.dart';
 import 'package:invoiceninja_flutter/ui/credit/credit_presenter.dart';
-import 'package:invoiceninja_flutter/ui/invoice/invoice_list.dart';
 import 'package:invoiceninja_flutter/ui/invoice/invoice_list_item.dart';
 import 'package:invoiceninja_flutter/ui/invoice/invoice_list_vm.dart';
 import 'package:invoiceninja_flutter/utils/completers.dart';
@@ -63,11 +63,11 @@ class CreditListBuilder extends StatelessWidget {
                       client: client,
                     );
 
-                return InvoiceListItem(
+                return CreditListItem(
                   user: viewModel.user,
                   filter: viewModel.filter,
                   hasDocuments: documentMap[invoice.id] == true,
-                  invoice: invoice,
+                  credit: invoice,
                   client:
                       viewModel.clientMap[invoice.clientId] ?? ClientEntity(),
                   onTap: () => viewModel.onInvoiceTap(context, invoice),
