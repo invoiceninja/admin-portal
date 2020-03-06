@@ -75,7 +75,7 @@ class CompanyGatewayRepository {
       var url = credentials.url +
           '/company_gateways/${companyGateway.id}?include=gateway';
       if (action != null) {
-        url += '?action=' + action.toString();
+        url += '&action=' + action.toString();
       }
       response =
           await webClient.put(url, credentials.token, data: json.encode(data));

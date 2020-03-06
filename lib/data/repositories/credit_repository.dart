@@ -69,7 +69,7 @@ class CreditRepository {
     } else {
       var url = '${credentials.url}/credits/${credit.id}?';
       if (action != null) {
-        url += '?action=' + action.toString();
+        url += '&action=$action';
       }
       response =
           await webClient.put(url, credentials.token, data: json.encode(data));

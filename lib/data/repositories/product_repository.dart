@@ -56,9 +56,9 @@ class ProductRepository {
           credentials.url + '/products', credentials.token,
           data: json.encode(data));
     } else {
-      var url = credentials.url + '/products/' + product.id.toString();
+      var url = credentials.url + '/products/${product.id}?';
       if (action != null) {
-        url += '?action=' + action.toString();
+        url += '&action=' + action.toString();
       }
       response =
           await webClient.put(url, credentials.token, data: json.encode(data));

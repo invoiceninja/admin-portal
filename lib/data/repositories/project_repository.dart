@@ -67,9 +67,9 @@ class ProjectRepository {
           credentials.url + '/projects', credentials.token,
           data: json.encode(data));
     } else {
-      var url = credentials.url + '/projects/' + project.id.toString();
+      var url = credentials.url + '/projects/${project.id}?';
       if (action != null) {
-        url += '?action=' + action.toString();
+        url += '&action=' + action.toString();
       }
       response =
           await webClient.put(url, credentials.token, data: json.encode(data));

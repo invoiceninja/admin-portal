@@ -503,7 +503,7 @@ abstract class AppState implements Built<AppState, AppStateBuilder> {
     //return 'Currency Map: ${staticState.currencyMap}';
     //return 'History: $historyList';
     //return 'Use inclusive: ${invoiceUIState.editing.usesInclusiveTaxes}';
-    //return 'Invitations: ${invoiceUIState.editing.invitations}';
+    return 'Invitations: ${invoiceUIState.editing.invitations}';
     //return 'Token: ${userCompanyStates.map((state) => state.token.token).where((name) => name.isNotEmpty).toList().join(', ')}';
     //return 'Settings: ${company.settings.companyLogo}';
     //return 'Designs: ${company.designs}';

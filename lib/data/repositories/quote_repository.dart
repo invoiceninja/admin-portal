@@ -69,7 +69,7 @@ class QuoteRepository {
     } else {
       var url = '${credentials.url}/quotes/${quote.id}?';
       if (action != null) {
-        url += '?action=' + action.toString();
+        url += '&action=' + action.toString();
       }
       response =
           await webClient.put(url, credentials.token, data: json.encode(data));

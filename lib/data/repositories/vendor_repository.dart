@@ -67,9 +67,9 @@ class VendorRepository {
           credentials.url + '/vendors', credentials.token,
           data: json.encode(data));
     } else {
-      var url = credentials.url + '/vendors/' + vendor.id.toString();
+      var url = credentials.url + '/vendors/${vendor.id}?';
       if (action != null) {
-        url += '?action=' + action.toString();
+        url += '&action=' + action.toString();
       }
       response =
           await webClient.put(url, credentials.token, data: json.encode(data));

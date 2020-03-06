@@ -46,7 +46,7 @@ class InvoiceRepository {
       Credentials credentials, List<String> ids, EntityAction action) async {
     var url = credentials.url + '/invoices/bulk?';
     if (action != null) {
-      url += '&action=' + action.toString();
+      url += 'action=' + action.toString();
     }
     final dynamic response = await webClient.post(url, credentials.token,
         data: json.encode({'ids': ids}));

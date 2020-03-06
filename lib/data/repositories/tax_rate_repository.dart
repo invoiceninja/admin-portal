@@ -67,9 +67,9 @@ class TaxRateRepository {
           credentials.url + '/tax_rates', credentials.token,
           data: json.encode(data));
     } else {
-      var url = credentials.url + '/tax_rates/' + taxRate.id.toString();
+      var url = credentials.url + '/tax_rates/${taxRate.id}?';
       if (action != null) {
-        url += '?action=' + action.toString();
+        url += '&action=$action';
       }
       response =
           await webClient.put(url, credentials.token, data: json.encode(data));

@@ -67,9 +67,9 @@ class ExpenseRepository {
           credentials.url + '/expenses', credentials.token,
           data: json.encode(data));
     } else {
-      var url = credentials.url + '/expenses/' + expense.id.toString();
+      var url = credentials.url + '/expenses/${expense.id}?';
       if (action != null) {
-        url += '?action=' + action.toString();
+        url += '&action=' + action.toString();
       }
       response =
           await webClient.put(url, credentials.token, data: json.encode(data));

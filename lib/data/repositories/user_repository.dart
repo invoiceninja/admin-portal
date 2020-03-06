@@ -83,9 +83,9 @@ class UserRepository {
       );
     } else {
       var url = credentials.url +
-          '/users/${user.id}?include=company_user&password=$password';
+          '/users/${user.id}?include=company_user';
       if (action != null) {
-        url += '?action=' + action.toString();
+        url += '&action=$action';
       }
       response = await webClient.put(
         url,
