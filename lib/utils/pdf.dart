@@ -9,6 +9,7 @@ import 'package:flutter/foundation.dart';
 import 'package:invoiceninja_flutter/data/web_client.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/ui/app/loading_indicator.dart';
+import 'package:invoiceninja_flutter/utils/dialogs.dart';
 import 'package:invoiceninja_flutter/utils/formatting.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:invoiceninja_flutter/utils/platforms.dart';
@@ -123,6 +124,13 @@ Future<List<PDFPageImage>> renderPDF(
 
   request.headers.add('X-API-Token', state.userCompany.token.token);
   final response = await request.close();
+  if (response.statusCode >= 400) {
+    showErrorDialog(
+        context: context,
+        message: '${response.statusCode}: ${response.reasonPhrase}');
+    return [];
+  }
+
   final bytes = await consolidateHttpClientResponseBytes(response);
 
   final document = await PDFDocument.openData(bytes);
