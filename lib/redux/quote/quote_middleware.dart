@@ -215,7 +215,7 @@ Middleware<AppState> _convertQuote(QuoteRepository repository) {
             store.state.credentials, action.quoteIds, EntityAction.convert)
         .then((quotes) {
       store.dispatch(ConvertQuoteSuccess(quotes: quotes));
-      action.completer.complete(quotes);
+      action.completer.complete(null);
     }).catchError((Object error) {
       print(error);
       store.dispatch(ConvertQuoteFailure(error));

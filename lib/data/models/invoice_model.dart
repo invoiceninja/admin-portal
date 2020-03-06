@@ -328,8 +328,7 @@ abstract class InvoiceEntity extends Object
 
   BuiltList<InvitationEntity> get invitations;
 
-  bool get isApproved =>
-      statusId == kQuoteStatusApproved || (invoiceId ?? '').isNotEmpty;
+  bool get isApproved => statusId == kQuoteStatusApproved;
 
   bool get hasClient => '${clientId ?? ''}'.isNotEmpty;
 
@@ -472,7 +471,7 @@ abstract class InvoiceEntity extends Object
           actions.add(EntityAction.sendEmail);
         }
 
-        if (userCompany.canCreate(EntityType.payment) && isUnpaid) {
+        if (!isQuote && userCompany.canCreate(EntityType.payment) && isUnpaid) {
           actions.add(EntityAction.newPayment);
         }
 
@@ -480,8 +479,12 @@ abstract class InvoiceEntity extends Object
           actions.add(EntityAction.markSent);
         }
 
-        if (!isPaid) {
+        if (!isQuote && !isPaid) {
           actions.add(EntityAction.markPaid);
+        }
+
+        if (isQuote && !isApproved) {
+          actions.add(EntityAction.convert);
         }
       }
 

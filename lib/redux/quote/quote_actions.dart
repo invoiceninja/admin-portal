@@ -413,14 +413,9 @@ Future handleQuoteAction(
           entityType: EntityType.invoice);
       break;
     case EntityAction.convert:
-      final Completer<InvoiceEntity> completer = Completer<InvoiceEntity>();
-      store.dispatch(ConvertQuotes(completer, quoteIds));
-      completer.future.then((InvoiceEntity invoice) {
-        viewEntityById(
-            context: context,
-            entityType: EntityType.invoice,
-            entityId: invoice.id);
-      });
+      store.dispatch(ConvertQuotes(
+          snackBarCompleter<Null>(context, localization.convertedQuote),
+          quoteIds));
       break;
     case EntityAction.markSent:
       store.dispatch(MarkSentQuotesRequest(

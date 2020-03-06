@@ -16,6 +16,7 @@ const EntityAction _$cloneToCredit = const EntityAction._('cloneToCredit');
 const EntityAction _$cloneToInvoice = const EntityAction._('cloneToInvoice');
 const EntityAction _$cloneToQuote = const EntityAction._('cloneToQuote');
 const EntityAction _$convert = const EntityAction._('convert');
+const EntityAction _$approve = const EntityAction._('approve');
 const EntityAction _$download = const EntityAction._('download');
 const EntityAction _$sendEmail = const EntityAction._('sendEmail');
 const EntityAction _$markSent = const EntityAction._('markSent');
@@ -63,6 +64,8 @@ EntityAction _$valueOf(String name) {
       return _$cloneToQuote;
     case 'convert':
       return _$convert;
+    case 'approve':
+      return _$approve;
     case 'download':
       return _$download;
     case 'sendEmail':
@@ -126,6 +129,7 @@ final BuiltSet<EntityAction> _$values =
   _$cloneToInvoice,
   _$cloneToQuote,
   _$convert,
+  _$approve,
   _$download,
   _$sendEmail,
   _$markSent,

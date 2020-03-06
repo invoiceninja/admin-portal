@@ -48,6 +48,7 @@ class EntityAction extends EnumClass {
   static const EntityAction cloneToInvoice = _$cloneToInvoice;
   static const EntityAction cloneToQuote = _$cloneToQuote;
   static const EntityAction convert = _$convert;
+  static const EntityAction approve = _$approve;
   static const EntityAction download = _$download;
   static const EntityAction sendEmail = _$sendEmail;
   static const EntityAction markSent = _$markSent;
