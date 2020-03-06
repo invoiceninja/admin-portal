@@ -57,8 +57,7 @@ class QuoteRepository {
     return invoiceResponse.data.toList();
   }
 
-  Future<InvoiceEntity> saveData(Credentials credentials, InvoiceEntity quote,
-      [EntityAction action]) async {
+  Future<InvoiceEntity> saveData(Credentials credentials, InvoiceEntity quote) async {
     final data = serializers.serializeWith(InvoiceEntity.serializer, quote);
     dynamic response;
 
@@ -67,10 +66,7 @@ class QuoteRepository {
           credentials.url + '/quotes?', credentials.token,
           data: json.encode(data));
     } else {
-      var url = '${credentials.url}/quotes/${quote.id}?';
-      if (action != null) {
-        url += '&action=' + action.toString();
-      }
+      final url = '${credentials.url}/quotes/${quote.id}';
       response =
           await webClient.put(url, credentials.token, data: json.encode(data));
     }

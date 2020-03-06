@@ -46,8 +46,7 @@ class ProductRepository {
     return productResponse.data.toList();
   }
 
-  Future<ProductEntity> saveData(Credentials credentials, ProductEntity product,
-      [EntityAction action]) async {
+  Future<ProductEntity> saveData(Credentials credentials, ProductEntity product) async {
     final data = serializers.serializeWith(ProductEntity.serializer, product);
     dynamic response;
 
@@ -56,10 +55,7 @@ class ProductRepository {
           credentials.url + '/products', credentials.token,
           data: json.encode(data));
     } else {
-      var url = credentials.url + '/products/${product.id}?';
-      if (action != null) {
-        url += '&action=' + action.toString();
-      }
+      final url = credentials.url + '/products/${product.id}';
       response =
           await webClient.put(url, credentials.token, data: json.encode(data));
     }

@@ -268,7 +268,6 @@ final invoicesReducer = combineReducers<InvoiceState>([
   TypedReducer<InvoiceState, RestoreInvoicesRequest>(_restoreInvoiceRequest),
   TypedReducer<InvoiceState, RestoreInvoicesSuccess>(_restoreInvoiceSuccess),
   TypedReducer<InvoiceState, RestoreInvoicesFailure>(_restoreInvoiceFailure),
-  TypedReducer<InvoiceState, ConvertQuoteSuccess>(_convertQuoteSuccess),
 ]);
 
 InvoiceState _markInvoicesSentSuccess(
@@ -392,13 +391,6 @@ InvoiceState _restoreInvoiceFailure(
 }
 
 InvoiceState _addInvoice(InvoiceState invoiceState, AddInvoiceSuccess action) {
-  return invoiceState.rebuild((b) => b
-    ..map[action.invoice.id] = action.invoice
-    ..list.add(action.invoice.id));
-}
-
-InvoiceState _convertQuoteSuccess(
-    InvoiceState invoiceState, ConvertQuoteSuccess action) {
   return invoiceState.rebuild((b) => b
     ..map[action.invoice.id] = action.invoice
     ..list.add(action.invoice.id));

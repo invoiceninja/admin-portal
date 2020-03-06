@@ -61,8 +61,7 @@ class StubRepository {
 
   
   Future<StubEntity> saveData(
-      Credentials credentials, StubEntity stub,
-      [EntityAction action]) async {
+      Credentials credentials, StubEntity stub) async {
     final data = serializers.serializeWith(StubEntity.serializer, stub);
     dynamic response;
 
@@ -72,10 +71,7 @@ class StubRepository {
           credentials.token,
           data: json.encode(data));
     } else {
-      var url = '${credentials.url}/stubs/${stub.id}?';
-      if (action != null) {
-        url += '&action=$action';
-      }
+      var url = '${credentials.url}/stubs/${stub.id}';
       response = await webClient.put(url, credentials.token, data: json.encode(data));
     }
 

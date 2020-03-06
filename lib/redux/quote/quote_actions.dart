@@ -217,23 +217,23 @@ class EmailQuoteFailure implements StopSaving {
   final dynamic error;
 }
 
-class MarkSentQuoteRequest implements StartSaving {
-  MarkSentQuoteRequest(this.completer, this.quoteId);
+class MarkSentQuotesRequest implements StartSaving {
+  MarkSentQuotesRequest(this.completer, this.quoteIds);
 
   final Completer completer;
-  final String quoteId;
+  final List<String> quoteIds;
 }
 
 class MarkSentQuoteSuccess implements StopSaving, PersistData {
-  MarkSentQuoteSuccess(this.quote);
+  MarkSentQuoteSuccess(this.quotes);
 
-  final InvoiceEntity quote;
+  final List<InvoiceEntity> quotes;
 }
 
 class MarkSentQuoteFailure implements StopSaving {
-  MarkSentQuoteFailure(this.quote);
+  MarkSentQuoteFailure(this.error);
 
-  final InvoiceEntity quote;
+  final Object error;
 }
 
 class ArchiveQuotesRequest implements StartSaving {
@@ -357,18 +357,17 @@ class FilterQuotesByCustom4 implements PersistUI {
   final String value;
 }
 
-class ConvertQuote implements PersistData {
-  ConvertQuote(this.completer, this.quoteId);
+class ConvertQuotes implements PersistData {
+  ConvertQuotes(this.completer, this.quoteIds);
 
-  final String quoteId;
+  final List<String> quoteIds;
   final Completer completer;
 }
 
 class ConvertQuoteSuccess implements StopSaving, PersistData {
-  ConvertQuoteSuccess({this.quote, this.invoice});
+  ConvertQuoteSuccess({this.quotes});
 
-  final InvoiceEntity quote;
-  final InvoiceEntity invoice;
+  final List<InvoiceEntity> quotes;
 }
 
 class ConvertQuoteFailure implements StopSaving {
@@ -415,7 +414,7 @@ Future handleQuoteAction(
       break;
     case EntityAction.convert:
       final Completer<InvoiceEntity> completer = Completer<InvoiceEntity>();
-      store.dispatch(ConvertQuote(completer, quote.id));
+      store.dispatch(ConvertQuotes(completer, quoteIds));
       completer.future.then((InvoiceEntity invoice) {
         viewEntityById(
             context: context,
@@ -424,9 +423,9 @@ Future handleQuoteAction(
       });
       break;
     case EntityAction.markSent:
-      store.dispatch(MarkSentQuoteRequest(
+      store.dispatch(MarkSentQuotesRequest(
           snackBarCompleter<Null>(context, localization.markedQuoteAsSent),
-          quote.id));
+          quoteIds));
       break;
     case EntityAction.sendEmail:
       store.dispatch(ShowEmailQuote(
