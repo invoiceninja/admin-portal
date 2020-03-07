@@ -9,6 +9,7 @@ import 'package:invoiceninja_flutter/ui/app/edit_scaffold.dart';
 import 'package:invoiceninja_flutter/ui/settings/account_management_vm.dart';
 import 'package:invoiceninja_flutter/utils/dialogs.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
+import 'package:invoiceninja_flutter/utils/platforms.dart';
 
 class AccountManagement extends StatefulWidget {
   const AccountManagement({
@@ -73,26 +74,53 @@ class _AccountManagementState extends State<AccountManagement>
         children: <Widget>[
           ListView(
             children: <Widget>[
-              ElevatedButton(
-                label: companies.length == 1
-                    ? localization.cancelAccount
-                    : localization.deleteCompany,
-                color: Colors.red,
-                iconData: Icons.delete,
-                onPressed: () {
-                  confirmCallback(
-                      context: context,
-                      message: companies.length == 1
-                          ? localization.cancelAccountMessage
-                          : localization.deleteCompanyMessage,
-                      callback: () {
-                        passwordCallback(
-                            context: context,
-                            callback: (password) {
-                              print('delete');
-                            });
-                      });
-                },
+              SizedBox(height: 14),
+              //if (isSelfHosted(context))
+              Padding(
+                padding: const EdgeInsets.all(14),
+                child: Row(
+                  children: <Widget>[
+                    Expanded(
+                      child: ElevatedButton(
+                        label: localization.purchaseLicense,
+                        iconData: Icons.cloud_download,
+                        onPressed: () {},
+                      ),
+                    ),
+                    SizedBox(width: 14),
+                    Expanded(
+                      child: ElevatedButton(
+                        label: localization.applyLicense,
+                        iconData: Icons.cloud_done,
+                        onPressed: () {},
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.all(14),
+                child: ElevatedButton(
+                  label: companies.length == 1
+                      ? localization.cancelAccount
+                      : localization.deleteCompany,
+                  color: Colors.red,
+                  iconData: Icons.delete,
+                  onPressed: () {
+                    confirmCallback(
+                        context: context,
+                        message: companies.length == 1
+                            ? localization.cancelAccountMessage
+                            : localization.deleteCompanyMessage,
+                        callback: () {
+                          passwordCallback(
+                              context: context,
+                              callback: (password) {
+                                print('delete');
+                              });
+                        });
+                  },
+                ),
               ),
             ],
           ),
