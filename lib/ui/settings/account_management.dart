@@ -1,6 +1,7 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:invoiceninja_flutter/constants.dart';
+import 'package:invoiceninja_flutter/redux/company/company_selectors.dart';
 import 'package:invoiceninja_flutter/ui/app/buttons/elevated_button.dart';
 import 'package:invoiceninja_flutter/ui/app/form_card.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/app_form.dart';
@@ -46,13 +47,15 @@ class _AccountManagementState extends State<AccountManagement>
   Widget build(BuildContext context) {
     final localization = AppLocalization.of(context);
     final viewModel = widget.viewModel;
+    final state = viewModel.state;
     final company = viewModel.company;
+    final companies = companiesSelector(state);
 
     return EditScaffold(
       title: localization.accountManagement,
       onSavePressed: viewModel.onSavePressed,
       appBarBottom: TabBar(
-        key: ValueKey(viewModel.state.settingsUIState.updatedAt),
+        key: ValueKey(state.settingsUIState.updatedAt),
         controller: _controller,
         tabs: [
           Tab(
@@ -71,12 +74,17 @@ class _AccountManagementState extends State<AccountManagement>
           ListView(
             children: <Widget>[
               ElevatedButton(
-                label: localization.deleteCompany,
+                label: companies.length == 1
+                    ? localization.cancelAccount
+                    : localization.deleteCompany,
                 color: Colors.red,
                 iconData: Icons.delete,
                 onPressed: () {
                   confirmCallback(
                       context: context,
+                      message: companies.length == 1
+                          ? localization.cancelAccountMessage
+                          : localization.deleteCompanyMessage,
                       callback: () {
                         passwordCallback(
                             context: context,
