@@ -26,20 +26,27 @@ class AppDropdownButton<T> extends StatelessWidget {
     final state = StoreProvider.of<AppState>(context).state;
     final _showBlank = showBlank ?? state.settingsUIState.isFiltered;
 
+    dynamic checkedValue = value;
+    final values = items.toList().map((option) => option.value).toList();
+    if (!values.contains(value)) {
+      checkedValue = blankValue;
+    }
+    final bool isEmpty = checkedValue == null || checkedValue == '';
+
     return InputDecorator(
         decoration: InputDecoration(
           labelText: labelText,
           contentPadding: EdgeInsets.only(right: 12, top: 12, bottom: 12),
         ),
-        isEmpty: value == null || value == '',
+        isEmpty: isEmpty,
         child: DropdownButtonHideUnderline(
           child: DropdownButton<T>(
-            value: value,
+            value: checkedValue,
             isExpanded: true,
             isDense: true,
             onChanged: enabled ? onChanged : null,
             items: [
-              if (_showBlank || value == '')
+              if (_showBlank || isEmpty)
                 DropdownMenuItem(
                   value: blankValue,
                   child: SizedBox(),
