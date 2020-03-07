@@ -76,6 +76,7 @@ class _AccountManagementState extends State<AccountManagement>
             children: <Widget>[
               SizedBox(height: 14),
               //if (isSelfHosted(context))
+              if (false)
               Padding(
                 padding: const EdgeInsets.all(14),
                 child: Row(
@@ -116,7 +117,7 @@ class _AccountManagementState extends State<AccountManagement>
                           passwordCallback(
                               context: context,
                               callback: (password) {
-                                print('delete');
+                                viewModel.onCompanyDelete(context, password);
                               });
                         });
                   },

@@ -46,3 +46,18 @@ class AddCompany {
   AddCompany(this.context);
   final BuildContext context;
 }
+
+class DeleteCompanyRequest implements StartSaving {
+  DeleteCompanyRequest({@required this.completer, @required this.password});
+
+  final Completer completer;
+  final String password;
+}
+
+class DeleteCompanySuccess implements StopSaving, PersistData {
+  DeleteCompanySuccess();
+}
+
+class DeleteCompanyFailure implements StopSaving {
+  DeleteCompanyFailure();
+}

@@ -27,6 +27,7 @@ List<Middleware<AppState>> createStoreAuthMiddleware([
   final refreshRequest = _createRefreshRequest(repository);
   final recoverRequest = _createRecoverRequest(repository);
   final addCompany = _createCompany(repository);
+  final deleteCompany = _deleteCompany(repository);
 
   return [
     TypedMiddleware<AppState, UserLogout>(userLogout),
@@ -36,6 +37,7 @@ List<Middleware<AppState>> createStoreAuthMiddleware([
     TypedMiddleware<AppState, RefreshData>(refreshRequest),
     TypedMiddleware<AppState, RecoverPasswordRequest>(recoverRequest),
     TypedMiddleware<AppState, AddCompany>(addCompany),
+    TypedMiddleware<AppState, DeleteCompanyRequest>(deleteCompany),
   ];
 }
 
@@ -246,6 +248,25 @@ Middleware<AppState> _createCompany(AuthRepository repository) {
         completer: Completer<Null>()
           ..future.then<Null>((_) => store.dispatch(LoadClients())),
       ));
+    });
+
+    next(action);
+  };
+}
+
+Middleware<AppState> _deleteCompany(AuthRepository repository) {
+  return (Store<AppState> store, dynamic dynamicAction,
+      NextDispatcher next) async {
+    final action = dynamicAction as DeleteCompanyRequest;
+    final state = store.state;
+
+    repository
+        .deleteCompany(
+            token: state.credentials.token,
+            password: action.password,
+            companyId: state.company.id)
+        .then((dynamic value) {
+      action.completer.complete(null);
     });
 
     next(action);

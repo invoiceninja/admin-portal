@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:convert';
 import 'dart:core';
+import 'package:flutter/material.dart';
 import 'package:invoiceninja_flutter/.env.dart';
 import 'package:invoiceninja_flutter/constants.dart';
 import 'package:invoiceninja_flutter/data/mock/mock_login.dart';
@@ -95,6 +96,14 @@ class AuthRepository {
     };
 
     return webClient.post('/companies', token, data: json.encode(data));
+  }
+
+  Future<dynamic> deleteCompany({
+    @required String token,
+    @required String companyId,
+    @required String password,
+  }) async {
+    return webClient.delete('/companies/$companyId', token, password: password);
   }
 
   Future<LoginResponse> sendRequest(

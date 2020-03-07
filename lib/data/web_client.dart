@@ -97,13 +97,13 @@ class WebClient {
     return json.decode(response.body);
   }
 
-  Future<dynamic> delete(String url, String token) async {
+  Future<dynamic> delete(String url, String token, {String password}) async {
     url = _checkUrl(url);
     print('Delete: $url');
 
     final http.Response response = await http.Client().delete(
       url,
-      headers: _getHeaders(token),
+      headers: _getHeaders(token, password: password),
     );
 
     _checkResponse(response);

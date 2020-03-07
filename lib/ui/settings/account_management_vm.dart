@@ -1,9 +1,13 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:invoiceninja_flutter/constants.dart';
 import 'package:invoiceninja_flutter/data/models/company_model.dart';
+import 'package:invoiceninja_flutter/redux/auth/auth_actions.dart';
 import 'package:invoiceninja_flutter/redux/company/company_actions.dart';
+import 'package:invoiceninja_flutter/redux/company/company_selectors.dart';
 import 'package:invoiceninja_flutter/ui/settings/account_management.dart';
 import 'package:invoiceninja_flutter/utils/completers.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
@@ -34,6 +38,7 @@ class AccountManagementVM {
     @required this.company,
     @required this.onCompanyChanged,
     @required this.onSavePressed,
+    @required this.onCompanyDelete,
   });
 
   static AccountManagementVM fromStore(Store<AppState> store) {
@@ -44,6 +49,26 @@ class AccountManagementVM {
         company: state.uiState.settingsUIState.company,
         onCompanyChanged: (company) =>
             store.dispatch(UpdateCompany(company: company)),
+        onCompanyDelete: (context, password) {
+          final selectedCompanyIndex = state.uiState.selectedCompanyIndex;
+          final completer = Completer<Null>()
+            ..future.then((value) {
+              final companies = companiesSelector(state);
+              if (companies.length > 1) {
+                int index;
+                for (int i = 0; i < 10; i++) {
+                  index = i;
+                  if (index != selectedCompanyIndex) {
+                    break;
+                  }
+                }
+                store.dispatch(SelectCompany(index));
+              } else {
+                store.dispatch(UserLogout(context));
+              }
+            });
+          store.dispatch(DeleteCompanyRequest(completer: completer, password: password));
+        },
         onSavePressed: (context) {
           final settingsUIState = state.uiState.settingsUIState;
           final completer = snackBarCompleter<Null>(
@@ -57,4 +82,5 @@ class AccountManagementVM {
   final Function(BuildContext) onSavePressed;
   final CompanyEntity company;
   final Function(CompanyEntity) onCompanyChanged;
+  final Function(BuildContext, String) onCompanyDelete;
 }
