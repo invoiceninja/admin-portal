@@ -19,7 +19,7 @@ class AccountManagementScreen extends StatelessWidget {
     return StoreConnector<AppState, AccountManagementVM>(
       converter: AccountManagementVM.fromStore,
       builder: (context, viewModel) {
-        return AccountManagementSettings(
+        return AccountManagement(
           viewModel: viewModel,
           key: ValueKey(viewModel.state.settingsUIState.updatedAt),
         );
