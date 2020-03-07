@@ -166,9 +166,9 @@ const String kGenerateNumberWhenSent = 'when_sent';
 const String kDesignHeader = 'header';
 const String kDesignBody = 'body';
 const String kDesignFooter = 'footer';
-const String kDesignProducts = 'product_table';
-const String kDesignTasks = 'task_table';
-const String kDesignIncludes = 'include';
+const String kDesignProducts = 'product';
+const String kDesignTasks = 'task';
+const String kDesignIncludes = 'includes';
 
 const String kEmailDesignPlain = 'plain';
 const String kEmailDesignLight = 'light';

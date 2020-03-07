@@ -108,22 +108,11 @@ Future<Null> viewPdf(InvoiceEntity invoice, BuildContext context) async {
 
 Future<List<PDFPageImage>> renderPDF(
     BuildContext context, InvoiceEntity invoice) async {
-  /*
-  url =
-      //'https://staging.invoiceninja.com/download/gj5d2udwzowatfsjibarq4eyo4k0cvpd'; // one page
-      'https://staging.invoiceninja.com/download/9gsjumkd8yaujcr0trnucnwfrelt1hil'; // four pages
-  */
-
-  final state = StoreProvider.of<AppState>(context).state;
-
-  // TODO fix this
   final invitation = invoice.invitations.first;
   final url = invitation.downloadLink;
-  print('## URL: $url');
   final request = await HttpClient().getUrl(Uri.parse(url));
-
-  request.headers.add('X-API-Token', state.userCompany.token.token);
   final response = await request.close();
+
   if (response.statusCode >= 400) {
     showErrorDialog(
         context: context,
@@ -132,9 +121,9 @@ Future<List<PDFPageImage>> renderPDF(
   }
 
   final bytes = await consolidateHttpClientResponseBytes(response);
-
   final document = await PDFDocument.openData(bytes);
   final List<PDFPageImage> pages = [];
+
   for (var i = 1; i <= document.pagesCount; i++) {
     final page = await document.getPage(1);
     final pageImage = await page.render(width: page.width, height: page.height);

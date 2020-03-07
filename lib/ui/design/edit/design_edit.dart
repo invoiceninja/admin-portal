@@ -112,7 +112,7 @@ class _DesignEditState extends State<DesignEdit>
 
       if (design != widget.viewModel.design) {
         widget.viewModel.onChanged(design);
-        //_loadPreview(context, design);
+        _loadPreview(context, design);
       }
     });
   }
@@ -126,7 +126,7 @@ class _DesignEditState extends State<DesignEdit>
     _tasksController.text = htmlDesign[kDesignTasks];
     _includesController.text = htmlDesign[kDesignIncludes];
 
-    //_loadPreview(context, design);
+    _loadPreview(context, design);
   }
 
   void _loadPreview(BuildContext context, DesignEntity design) {
