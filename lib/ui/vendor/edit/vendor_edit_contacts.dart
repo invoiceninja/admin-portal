@@ -239,7 +239,7 @@ class ContactEditDetailsState extends State<ContactEditDetails> {
                       ),
                       ElevatedButton(
                         color: Colors.red,
-                        icon: Icons.delete,
+                        iconData: Icons.delete,
                         label: localization.remove,
                         onPressed: () => confirmCallback(
                             context: context,
@@ -253,7 +253,7 @@ class ContactEditDetailsState extends State<ContactEditDetails> {
                         width: 10.0,
                       ),
                       ElevatedButton(
-                        icon: Icons.check_circle,
+                        iconData: Icons.check_circle,
                         label: localization.done,
                         onPressed: () {
                           viewModel.onDoneContactPressed();

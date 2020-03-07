@@ -144,7 +144,7 @@ class TimeEditDetailsState extends State<TimeEditDetails> {
               children: <Widget>[
                 ElevatedButton(
                   color: Colors.red,
-                  icon: Icons.delete,
+                  iconData: Icons.delete,
                   label: localization.remove,
                   onPressed: () {
                     widget.viewModel.onRemoveTaskTimePressed(widget.index);
@@ -155,7 +155,7 @@ class TimeEditDetailsState extends State<TimeEditDetails> {
                   width: 10.0,
                 ),
                 ElevatedButton(
-                  icon: Icons.check_circle,
+                  iconData: Icons.check_circle,
                   label: localization.done,
                   onPressed: () {
                     final startDate = DateTime.parse(_date);

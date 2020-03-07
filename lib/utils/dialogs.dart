@@ -12,7 +12,11 @@ void showErrorDialog({BuildContext context, String message}) {
       });
 }
 
-void confirmCallback({BuildContext context, VoidCallback callback}) {
+void confirmCallback({
+  @required BuildContext context,
+  @required VoidCallback callback,
+  String message,
+}) {
   final localization = AppLocalization.of(context);
 
   showDialog<AlertDialog>(
@@ -20,6 +24,7 @@ void confirmCallback({BuildContext context, VoidCallback callback}) {
     builder: (BuildContext context) => AlertDialog(
       semanticLabel: localization.areYouSure,
       title: Text(localization.areYouSure),
+      content: message == null ? null : Text(message),
       actions: <Widget>[
         FlatButton(
             child: Text(localization.cancel.toUpperCase()),

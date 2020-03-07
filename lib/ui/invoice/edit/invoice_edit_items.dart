@@ -210,7 +210,7 @@ class ItemEditDetailsState extends State<ItemEditDetails> {
               children: <Widget>[
                 ElevatedButton(
                   color: Colors.red,
-                  icon: Icons.delete,
+                  iconData: Icons.delete,
                   label: localization.remove,
                   onPressed: () {
                     widget.viewModel.onRemoveInvoiceItemPressed(widget.index);
@@ -221,7 +221,7 @@ class ItemEditDetailsState extends State<ItemEditDetails> {
                   width: 10.0,
                 ),
                 ElevatedButton(
-                  icon: Icons.check_circle,
+                  iconData: Icons.check_circle,
                   label: localization.done,
                   onPressed: () {
                     viewModel.onDoneInvoiceItemPressed();

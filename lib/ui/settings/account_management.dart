@@ -1,10 +1,12 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:invoiceninja_flutter/constants.dart';
+import 'package:invoiceninja_flutter/ui/app/buttons/elevated_button.dart';
 import 'package:invoiceninja_flutter/ui/app/form_card.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/app_form.dart';
 import 'package:invoiceninja_flutter/ui/app/edit_scaffold.dart';
 import 'package:invoiceninja_flutter/ui/settings/account_management_vm.dart';
+import 'package:invoiceninja_flutter/utils/dialogs.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 
 class AccountManagement extends StatefulWidget {
@@ -16,8 +18,7 @@ class AccountManagement extends StatefulWidget {
   final AccountManagementVM viewModel;
 
   @override
-  _AccountManagementState createState() =>
-      _AccountManagementState();
+  _AccountManagementState createState() => _AccountManagementState();
 }
 
 class _AccountManagementState extends State<AccountManagement>
@@ -69,38 +70,53 @@ class _AccountManagementState extends State<AccountManagement>
         children: <Widget>[
           ListView(
             children: <Widget>[
-
+              ElevatedButton(
+                label: localization.deleteCompany,
+                color: Colors.red,
+                iconData: Icons.delete,
+                onPressed: () {
+                  confirmCallback(
+                      context: context,
+                      callback: () {
+                        passwordCallback(
+                            context: context,
+                            callback: (password) {
+                              print('delete');
+                            });
+                      });
+                },
+              ),
             ],
           ),
           ListView(
             children: <Widget>[
               FormCard(
-                // TODO change to kModules.keys
+                  // TODO change to kModules.keys
                   children: kModules.keys.map((module) {
-                    final implementedModules = [
-                      kModuleQuotes,
-                      kModuleCredits,
-                    ];
-                    final isImplemented = implementedModules.contains(module);
-                    return CheckboxListTile(
-                      controlAffinity: ListTileControlAffinity.leading,
-                      title: Text(localization.lookup(kModules[module])),
-                      value: company.enabledModules & module != 0,
-                      activeColor: Theme.of(context).accentColor,
-                      onChanged: isImplemented
-                          ? (value) {
-                        int enabledModules = company.enabledModules;
-                        if (value) {
-                          enabledModules = enabledModules | module;
-                        } else {
-                          enabledModules = enabledModules ^ module;
+                final implementedModules = [
+                  kModuleQuotes,
+                  kModuleCredits,
+                ];
+                final isImplemented = implementedModules.contains(module);
+                return CheckboxListTile(
+                  controlAffinity: ListTileControlAffinity.leading,
+                  title: Text(localization.lookup(kModules[module])),
+                  value: company.enabledModules & module != 0,
+                  activeColor: Theme.of(context).accentColor,
+                  onChanged: isImplemented
+                      ? (value) {
+                          int enabledModules = company.enabledModules;
+                          if (value) {
+                            enabledModules = enabledModules | module;
+                          } else {
+                            enabledModules = enabledModules ^ module;
+                          }
+                          viewModel.onCompanyChanged(company.rebuild(
+                              (b) => b..enabledModules = enabledModules));
                         }
-                        viewModel.onCompanyChanged(company
-                            .rebuild((b) => b..enabledModules = enabledModules));
-                      }
-                          : null,
-                    );
-                  }).toList()),
+                      : null,
+                );
+              }).toList()),
             ],
           ),
         ],
