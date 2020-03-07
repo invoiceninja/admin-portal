@@ -267,6 +267,9 @@ Middleware<AppState> _deleteCompany(AuthRepository repository) {
             companyId: state.company.id)
         .then((dynamic value) {
       action.completer.complete(null);
+      store.dispatch(DeleteCompanySuccess());
+    }).catchError((Object error) {
+      store.dispatch(DeleteCompanyFailure(error));
     });
 
     next(action);

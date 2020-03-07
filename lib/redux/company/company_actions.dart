@@ -59,5 +59,7 @@ class DeleteCompanySuccess implements StopSaving, PersistData {
 }
 
 class DeleteCompanyFailure implements StopSaving {
-  DeleteCompanyFailure();
+  DeleteCompanyFailure(this.error);
+
+  final Object error;
 }
