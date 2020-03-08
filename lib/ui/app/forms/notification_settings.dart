@@ -1,9 +1,7 @@
 import 'package:built_collection/built_collection.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_redux/flutter_redux.dart';
 import 'package:invoiceninja_flutter/constants.dart';
 import 'package:invoiceninja_flutter/data/models/user_model.dart';
-import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/ui/app/form_card.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/app_dropdown_button.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
@@ -20,7 +18,6 @@ class NotificationSettings extends StatelessWidget {
   static const NOTIFY_USER = 'user';
   static const NOTIFY_ALL = 'all';
   static const NOTIFY_NONE = 'none';
-  static const NOTIFY_CUSTOM = 'custom';
 
   @override
   Widget build(BuildContext context) {
@@ -52,30 +49,25 @@ class NotificationSettings extends StatelessWidget {
                   DataRow(cells: [
                     DataCell(Text(localization.all)),
                     DataCell(_NotificationSelector(
-                      value: emailNotifications.contains(kNotificationsAll)
-                          ? NOTIFY_ALL
-                          : NOTIFY_NONE,
-                      addCustom: true,
+                      value: null,
                       onChanged: (value) {
-                        onChanged(
-                            kNotificationChannelEmail,
-                            value == NOTIFY_ALL
-                                ? [kNotificationsAll]
-                                : value == NOTIFY_USER
-                                    ? [kNotificationsAllUser]
-                                    : []);
+                        List<String> options = [];
+                        if (value == NOTIFY_ALL) {
+                          options = kNotificationEvents
+                              .map((eventType) => '${eventType}_all')
+                              .toList();
+                        } else if (value == NOTIFY_USER) {
+                          options = kNotificationEvents
+                              .map((eventType) => '${eventType}_user')
+                              .toList();
+                        }
+                        onChanged(kNotificationChannelEmail, options);
                       },
                     ))
                   ]),
                   ...kNotificationEvents.map((eventType) {
                     String value;
-                    if (emailNotifications.contains('all_notifications')) {
-                      value = NOTIFY_ALL;
-                    } else if (emailNotifications
-                        .contains('all_user_notifications')) {
-                      value = NOTIFY_USER;
-                    } else if (emailNotifications
-                        .contains('${eventType}_all')) {
+                    if (emailNotifications.contains('${eventType}_all')) {
                       value = NOTIFY_ALL;
                     } else if (emailNotifications
                         .contains('${eventType}_user')) {
@@ -115,10 +107,8 @@ class _NotificationSelector extends StatelessWidget {
   const _NotificationSelector({
     @required this.value,
     @required this.onChanged,
-    this.addCustom = false,
   });
 
-  final bool addCustom;
   final String value;
   final Function(String) onChanged;
 
@@ -145,11 +135,6 @@ class _NotificationSelector extends StatelessWidget {
           value: NotificationSettings.NOTIFY_NONE,
           child: Text(localization.none),
         ),
-        if (addCustom)
-          DropdownMenuItem(
-            value: NotificationSettings.NOTIFY_CUSTOM,
-            child: Text(localization.custom),
-          ),
       ],
     );
   }
