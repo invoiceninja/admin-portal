@@ -23,8 +23,11 @@ class NotificationSettings extends StatelessWidget {
     final localization = AppLocalization.of(context);
     final state = StoreProvider.of<AppState>(context).state;
     final userCompany = state.userCompany;
-    final notifications = userCompany.notifications;
-    final emailNotifications = notifications[kNotificationChannelEmail];
+    final notifications = userCompany.notifications ?? {};
+    final emailNotifications =
+        notifications.containsKey(kNotificationChannelEmail)
+            ? notifications[kNotificationChannelEmail]
+            : <String>[];
 
     return Column(
       mainAxisSize: MainAxisSize.min,
@@ -69,29 +72,20 @@ class NotificationSettings extends StatelessWidget {
                                           .contains('${eventType}_MINE')
                                       ? NOTIFY_MINE
                                       : NOTIFY_NONE,
-                              onChanged: null,
+                              onChanged: (value) {
+                                final options = emailNotifications.toList();
+                                options.remove('${eventType}_all');
+                                options.remove('${eventType}_user');
+                                if (value == NOTIFY_ALL) {
+                                  options.add('${eventType}_all');
+                                } else if (value == NOTIFY_MINE) {
+                                  options.add('${eventType}_user');
+                                }
+                                onChanged(kNotificationChannelEmail, options);
+                              },
                             )),
                           ]))
                       .toList(),
-                  DataRow(cells: [
-                    DataCell(Text(localization.invoiceSent)),
-                    DataCell(_NotificationSelector(
-                      value: NOTIFY_ALL,
-                      onChanged: (value) {
-                        /*
-                        final options = notifications[kNotificationChannelEmail];
-                        options.remove(kNotificationsInvoiceSentAll);
-                        options.remove(kNotificationsInvoiceSentUser);
-                        if (value == PERMISSION_MINE) {
-                          options.add(kNotificationsInvoiceSentUser);
-                        } else if (value == PERMISSION_ALL) {
-                          options.add(kNotificationsInvoiceSentAll);
-                        }
-                        onChanged(kNotificationChannelEmail, options);                        
-                         */
-                      },
-                    )),
-                  ]),
                 ],
               )
             ],
