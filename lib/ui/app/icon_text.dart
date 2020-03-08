@@ -9,10 +9,10 @@ class IconText extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Row(
-      mainAxisAlignment: MainAxisAlignment.center,
+      mainAxisAlignment: MainAxisAlignment.start,
       children: <Widget>[
         Icon(icon),
-        SizedBox(width: 8),
+        SizedBox(width: 10),
         Text(text, style: style),
       ],
     );

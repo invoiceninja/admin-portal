@@ -8,6 +8,7 @@ import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/redux/company/company_selectors.dart';
 import 'package:invoiceninja_flutter/ui/app/form_card.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/app_dropdown_button.dart';
+import 'package:invoiceninja_flutter/ui/app/icon_text.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 
 class NotificationSettings extends StatelessWidget {
@@ -112,10 +113,17 @@ class NotificationSettings extends StatelessWidget {
                       DataCell(Text(localization.lookup(eventType))),
                       DataCell(isAllEnabled
                           ? value == NOTIFY_ALL
-                              ? Text(hasMultipleUsers
-                                  ? localization.all
-                                  : localization.enabled)
-                              : Text(localization.owned)
+                              ? IconText(
+                                  text: hasMultipleUsers
+                                      ? localization.all
+                                      : localization.enabled,
+                                  icon: hasMultipleUsers
+                                      ? Icons.supervised_user_circle
+                                      : Icons.check_circle,
+                                )
+                              : IconText(
+                                  text: localization.owned,
+                                  icon: Icons.account_circle)
                           : _NotificationSelector(
                               value: value,
                               onChanged: (value) {
@@ -170,19 +178,29 @@ class _NotificationSelector extends StatelessWidget {
       items: [
         DropdownMenuItem(
           value: NotificationSettings.NOTIFY_ALL,
-          child:
-              Text(hasMultipleUsers ? localization.all : localization.enabled),
+          child: IconText(
+            text: hasMultipleUsers ? localization.all : localization.enabled,
+            icon: hasMultipleUsers
+                ? Icons.supervised_user_circle
+                : Icons.check_circle,
+          ),
         ),
         if (hasMultipleUsers)
           DropdownMenuItem(
             value: NotificationSettings.NOTIFY_OWNED,
-            child: Text(localization.owned),
+            child:
+                IconText(text: localization.owned, icon: Icons.account_circle),
           ),
         DropdownMenuItem(
           value: NotificationSettings.NOTIFY_NONE,
-          child: Text(showNoneAsCustom
-              ? localization.custom
-              : hasMultipleUsers ? localization.none : localization.disabled),
+          child: IconText(
+            text: showNoneAsCustom
+                ? localization.custom
+                : hasMultipleUsers ? localization.none : localization.disabled,
+            icon: showNoneAsCustom
+                ? Icons.arrow_drop_down_circle
+                : Icons.do_not_disturb_alt,
+          ),
         ),
       ],
     );
