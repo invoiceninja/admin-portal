@@ -99,7 +99,7 @@ class MenuDrawer extends StatelessWidget {
                   value: company.id,
                 ))
             .toList(),
-        if (viewModel.state.userCompany.isAdmin)
+        if (state.userCompany.isOwner)
           PopupMenuItem<String>(
             value: null,
             child: Row(

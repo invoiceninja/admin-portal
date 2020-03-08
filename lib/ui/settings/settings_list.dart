@@ -113,7 +113,7 @@ class SettingsList extends StatelessWidget {
             section: kSettingsDeviceSettings,
             viewModel: viewModel,
           ),
-        if (showAll)
+        if (showAll && state.userCompany.isOwner)
           SettingsListTile(
             section: kSettingsAccountManagement,
             viewModel: viewModel,
