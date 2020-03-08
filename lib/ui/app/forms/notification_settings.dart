@@ -89,11 +89,14 @@ class NotificationSettings extends StatelessWidget {
                     return true;
                   }).map((eventType) {
                     String value;
+                    bool isAllEnabled = false;
                     if (emailNotifications.contains(kNotificationsAll)) {
                       value = NOTIFY_ALL;
+                      isAllEnabled = true;
                     } else if (emailNotifications
                         .contains(kNotificationsAllUser)) {
                       value = NOTIFY_OWNED;
+                      isAllEnabled = true;
                     } else if (emailNotifications
                         .contains('${eventType}_all')) {
                       value = NOTIFY_ALL;
@@ -105,20 +108,24 @@ class NotificationSettings extends StatelessWidget {
                     }
                     return DataRow(cells: [
                       DataCell(Text(localization.lookup(eventType))),
-                      DataCell(_NotificationSelector(
-                        value: value,
-                        onChanged: (value) {
-                          final options = emailNotifications.toList();
-                          options.remove('${eventType}_all');
-                          options.remove('${eventType}_user');
-                          if (value == NOTIFY_ALL) {
-                            options.add('${eventType}_all');
-                          } else if (value == NOTIFY_OWNED) {
-                            options.add('${eventType}_user');
-                          }
-                          onChanged(kNotificationChannelEmail, options);
-                        },
-                      )),
+                      DataCell(isAllEnabled
+                          ? value == NOTIFY_ALL
+                              ? Text(localization.all)
+                              : Text(localization.owned)
+                          : _NotificationSelector(
+                              value: value,
+                              onChanged: (value) {
+                                final options = emailNotifications.toList();
+                                options.remove('${eventType}_all');
+                                options.remove('${eventType}_user');
+                                if (value == NOTIFY_ALL) {
+                                  options.add('${eventType}_all');
+                                } else if (value == NOTIFY_OWNED) {
+                                  options.add('${eventType}_user');
+                                }
+                                onChanged(kNotificationChannelEmail, options);
+                              },
+                            )),
                     ]);
                   }).toList(),
                 ],
@@ -148,7 +155,6 @@ class _NotificationSelector extends StatelessWidget {
 
     return AppDropdownButton<String>(
       value: value,
-      //enabled: false,
       onChanged: (dynamic value) {
         if (value == null || value.isEmpty) {
           return;
