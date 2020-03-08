@@ -68,6 +68,7 @@ class MenuDrawerVM {
             navigator: Navigator.of(context),
             company: company,
             section: state.uiState.subRoute,
+            force: true,
           ));
         }
       },

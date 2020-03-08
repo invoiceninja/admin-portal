@@ -127,7 +127,6 @@ Middleware<AppState> _createSignUpRequest(AuthRepository repository) {
         .signUp(
       email: action.email,
       password: action.password,
-      platform: action.platform,
       firstName: action.firstName,
       lastName: action.lastName,
       secret: action.secret,
@@ -195,7 +194,7 @@ Middleware<AppState> _createRefreshRequest(AuthRepository repository) {
     token = prefs.getString(kSharedPrefToken);
 
     repository
-        .refresh(url: url, token: token, platform: action.platform)
+        .refresh(url: url, token: token)
         .then((data) {
       store.dispatch(LoadAccountSuccess(
           completer: action.completer,
@@ -245,7 +244,6 @@ Middleware<AppState> _createCompany(AuthRepository repository) {
 
     repository.addCompany(token: state.credentials.token).then((dynamic value) {
       store.dispatch(RefreshData(
-        platform: getPlatform(action.context),
         completer: Completer<Null>()
           ..future.then<Null>((_) {
             final companies = companiesSelector(state);

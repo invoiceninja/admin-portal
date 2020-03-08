@@ -176,7 +176,6 @@ class LoginVM {
             lastName: lastName.trim(),
             email: email.trim(),
             password: password.trim(),
-            platform: getPlatform(context),
           ));
           completer.future.then((_) => _handleLogin(context));
         },

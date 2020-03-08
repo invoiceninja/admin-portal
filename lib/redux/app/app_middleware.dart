@@ -215,10 +215,7 @@ Middleware<AppState> _createLoadState(
       store.dispatch(LoadStateSuccess(appState));
 
       if (appState.staticState.isStale) {
-        store.dispatch(RefreshData(
-          loadCompanies: false,
-          platform: getPlatform(action.context),
-        ));
+        store.dispatch(RefreshData(loadCompanies: false));
       }
 
       if (uiState.currentRoute != LoginScreen.route &&
@@ -274,10 +271,7 @@ Middleware<AppState> _createLoadState(
           print('Error (app_middleware): $error');
           store.dispatch(UserLogout(action.context));
         });
-        store.dispatch(RefreshData(
-          platform: getPlatform(action.context),
-          completer: completer,
-        ));
+        store.dispatch(RefreshData(completer: completer));
       } else {
         store.dispatch(UserLogout(action.context));
       }

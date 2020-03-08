@@ -56,7 +56,6 @@ class DeviceSettingsVM {
           shouldPop: true);
 
       store.dispatch(RefreshData(
-        platform: getPlatform(context),
         completer: completer,
       ));
 

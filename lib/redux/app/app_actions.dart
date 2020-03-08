@@ -113,9 +113,8 @@ class LoadAccountSuccess {
 }
 
 class RefreshData {
-  RefreshData({this.platform, this.completer, this.loadCompanies = true});
+  RefreshData({this.completer, this.loadCompanies = true});
 
-  final String platform;
   final Completer completer;
   final bool loadCompanies;
 }

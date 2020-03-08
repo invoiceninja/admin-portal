@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:invoiceninja_flutter/data/models/company_model.dart';
 import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 
+
 class SelectCompany {
   SelectCompany(this.companyIndex);
 

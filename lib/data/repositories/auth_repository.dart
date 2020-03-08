@@ -22,7 +22,6 @@ class AuthRepository {
     String lastName,
     String email,
     String password,
-    String platform,
     String secret,
   }) async {
     final credentials = {
@@ -70,14 +69,10 @@ class AuthRepository {
   }
 
   Future<LoginResponse> refresh(
-      {String url, String token, String platform}) async {
-    final credentials = {
-      'token_name': 'invoice-ninja-$platform-app',
-    };
-
+      {String url, String token}) async {
     url = formatApiUrl(url) + '/refresh';
 
-    return sendRequest(url: url, data: credentials, token: token);
+    return sendRequest(url: url, token: token);
   }
 
   Future<LoginResponse> recoverPassword(

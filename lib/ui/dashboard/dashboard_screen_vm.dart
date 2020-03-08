@@ -63,7 +63,7 @@ class DashboardVM {
 
       // TODO just reload activities
       store.dispatch(
-          RefreshData(completer: completer, platform: getPlatform(context)));
+          RefreshData(completer: completer));
 
       return completer.future;
     }
