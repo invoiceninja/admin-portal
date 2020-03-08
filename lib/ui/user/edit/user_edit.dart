@@ -1,3 +1,4 @@
+import 'package:built_collection/built_collection.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:invoiceninja_flutter/constants.dart';
@@ -7,6 +8,7 @@ import 'package:invoiceninja_flutter/ui/app/edit_scaffold.dart';
 import 'package:invoiceninja_flutter/ui/app/form_card.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/app_form.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/decorated_form_field.dart';
+import 'package:invoiceninja_flutter/ui/app/forms/notification_settings.dart';
 import 'package:invoiceninja_flutter/ui/user/edit/user_edit_vm.dart';
 import 'package:invoiceninja_flutter/utils/completers.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
@@ -173,7 +175,7 @@ class _UserEditState extends State<UserEdit> {
                 child: DataTable(
                   columns: [
                     DataColumn(
-                      label: SizedBox(),
+                      label: Text(localization.permissions),
                     ),
                     DataColumn(
                       label: Text(localization.create),
@@ -269,7 +271,14 @@ class _UserEditState extends State<UserEdit> {
                   ],
                 ),
               ),
-            )
+            ),
+          NotificationSettings(
+            user: user,
+            onChanged: (channel, options) {
+              viewModel.onUserChanged(user.rebuild((b) =>
+                  b..userCompany.notifications[channel] = BuiltList(options)));
+            },
+          ),
         ],
       ),
     );

@@ -148,7 +148,6 @@ class _UserDetailsState extends State<UserDetails> {
           NotificationSettings(
             user: user,
             onChanged: (channel, options) {
-              print('## NotificationSettings.onChanged: $channel - $options');
               viewModel.onChanged(user.rebuild((b) =>
                   b..userCompany.notifications[channel] = BuiltList(options)));
             },
