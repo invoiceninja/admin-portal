@@ -1,3 +1,4 @@
+import 'package:built_collection/built_collection.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -228,12 +229,14 @@ class _InvoiceDesignState extends State<InvoiceDesign>
           FormCard(
             child: MultiSelectList(
               options: settings.pdfVariables[kPdfFieldsClientDetails].toList(),
-              onSelected: (value) {
-                print('## selected: $value');
-              },
-              defaultSelected: settings.pdfVariables[kPdfFieldsClientDetails].toList(),
-              addTitle: localization.addField,
+              defaultSelected:
+                  settings.pdfVariables[kPdfFieldsClientDetails].toList(),
               selected: settings.pdfVariables[kPdfFieldsClientDetails].toList(),
+              onSelected: (value) {
+                viewModel.onSettingsChanged(settings.rebuild((b) => b
+                  ..pdfVariables[kPdfFieldsClientDetails] = BuiltList(value)));
+              },
+              addTitle: localization.addField,
               liveChanges: true,
             ),
           ),

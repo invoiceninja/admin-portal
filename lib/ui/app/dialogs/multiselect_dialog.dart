@@ -98,13 +98,18 @@ class MultiSelectListState extends State<MultiSelectList> {
               if ('$value'.isEmpty) {
                 return;
               }
-              
+
               if (selected.contains(value)) {
                 return;
               }
+
               setState(() {
                 selected.add(value);
               });
+
+              if (widget.liveChanges) {
+                widget.onSelected(selected);
+              }
             },
           ),
           SizedBox(height: 20),
@@ -132,6 +137,9 @@ class MultiSelectListState extends State<MultiSelectList> {
                         icon: Icon(Icons.close),
                         onPressed: () {
                           setState(() => selected.remove(option));
+                          if (widget.liveChanges) {
+                            widget.onSelected(selected);
+                          }
                         },
                       )
                     ],
@@ -153,6 +161,10 @@ class MultiSelectListState extends State<MultiSelectList> {
                   selected.remove(field);
                   selected.insert(newIndex, field);
                 });
+
+                if (widget.liveChanges) {
+                  widget.onSelected(selected);
+                }
               },
             ),
           ),
@@ -165,6 +177,9 @@ class MultiSelectListState extends State<MultiSelectList> {
                     onPressed: () {
                       setState(
                           () => selected = widget.defaultSelected.toList());
+                      if (widget.liveChanges) {
+                        widget.onSelected(selected);
+                      }
                     }),
                 Spacer(),
                 if (!widget.liveChanges)
