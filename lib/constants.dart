@@ -290,6 +290,16 @@ const String kReportTask = 'task';
 const String kReportTaxRate = 'taxRate';
 const String kReportQuote = 'quote';
 
+const String kPdfFieldsClientDetails = 'client_details';
+const String kPdfFieldsCompanyDetails = 'company_details';
+const String kPdfFieldsCompanyAddress = 'company_address';
+const String kPdfFieldsInvoiceDetails = 'invoice_details';
+const String kPdfFieldsQuoteColumns = 'quote_details';
+const String kPdfFieldsCreditColumns = 'credit_details';
+const String kPdfFieldsProductColumns = 'product_columns';
+const String kPdfFieldsTaskColumns = 'task_columns';
+
+const String kPdfFields = '';
 const String kPermissionCreateAll = 'create_all';
 const String kPermissionViewAll = 'view_all';
 const String kPermissionEditAll = 'edit_all';

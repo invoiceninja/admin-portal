@@ -19,7 +19,7 @@ void multiselectDialog(
     builder: (BuildContext context) => AlertDialog(
       semanticLabel: title,
       title: Text(title),
-      content: _MultiSelectList(
+      content: MultiSelectList(
         options: options,
         selected: selected,
         addTitle: addTitle,
@@ -33,8 +33,8 @@ void multiselectDialog(
   );
 }
 
-class _MultiSelectList extends StatefulWidget {
-  const _MultiSelectList({
+class MultiSelectList extends StatefulWidget {
+  const MultiSelectList({
     @required this.options,
     @required this.selected,
     @required this.defaultSelected,
@@ -49,10 +49,10 @@ class _MultiSelectList extends StatefulWidget {
   final Function(List<String>) onSelected;
 
   @override
-  _MultiSelectListState createState() => _MultiSelectListState();
+  MultiSelectListState createState() => MultiSelectListState();
 }
 
-class _MultiSelectListState extends State<_MultiSelectList> {
+class MultiSelectListState extends State<MultiSelectList> {
   List<String> selected;
 
   @override

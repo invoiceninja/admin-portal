@@ -507,7 +507,7 @@ abstract class AppState implements Built<AppState, AppStateBuilder> {
     //return 'Token: ${userCompanyStates.map((state) => state.token.token).where((name) => name.isNotEmpty).toList().join(', ')}';
     //return 'Settings: ${company.settings.companyLogo}';
     //return 'Designs: ${company.designs}';
-    //return 'PDF Variables: ${company.settings.pdfVariables}';
+    return 'PDF Variables: ${company.settings.pdfVariables}';
     //return 'Account: ${userCompany.account}';
     //return 'Notifications: ${user.userCompany.notifications} ${uiState.settingsUIState.user.userCompany.notifications}';
     return 'Layout: ${prefState.appLayout}, Route: ${uiState.currentRoute} Prev: ${uiState.previousRoute}';

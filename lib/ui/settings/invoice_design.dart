@@ -4,6 +4,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:invoiceninja_flutter/constants.dart';
 import 'package:invoiceninja_flutter/data/models/entities.dart';
 import 'package:invoiceninja_flutter/redux/static/static_selectors.dart';
+import 'package:invoiceninja_flutter/ui/app/dialogs/multiselect_dialog.dart';
 import 'package:invoiceninja_flutter/ui/app/entity_dropdown.dart';
 import 'package:invoiceninja_flutter/ui/app/form_card.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/app_dropdown_button.dart';
@@ -41,7 +42,7 @@ class _InvoiceDesignState extends State<InvoiceDesign>
   void initState() {
     super.initState();
     _focusNode = FocusScopeNode();
-    _controller = TabController(vsync: this, length: 2);
+    _controller = TabController(vsync: this, length: 3);
   }
 
   @override
@@ -65,12 +66,16 @@ class _InvoiceDesignState extends State<InvoiceDesign>
       appBarBottom: TabBar(
         key: ValueKey(state.settingsUIState.updatedAt),
         controller: _controller,
+        isScrollable: true,
         tabs: [
           Tab(
             text: localization.generalSettings,
           ),
           Tab(
             text: localization.invoiceOptions,
+          ),
+          Tab(
+            text: localization.invoiceFields,
           ),
         ],
       ),
@@ -219,6 +224,17 @@ class _InvoiceDesignState extends State<InvoiceDesign>
                 ],
               ),
             ],
+          ),
+          FormCard(
+            child: MultiSelectList(
+              options: settings.pdfVariables[kPdfFieldsClientDetails].toList(),
+              onSelected: (value) {
+                print('## selected: $value');
+              },
+              defaultSelected: settings.pdfVariables[kPdfFieldsClientDetails].toList(),
+              addTitle: localization.addField,
+              selected: settings.pdfVariables[kPdfFieldsClientDetails].toList(),
+            ),
           ),
         ],
       ),
