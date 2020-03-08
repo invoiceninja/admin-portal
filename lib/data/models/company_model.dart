@@ -476,6 +476,10 @@ abstract class UserCompanyEntity
   String get permissions;
 
   @nullable
+  @BuiltValueField(serialize: false) // TODO REMOVE THIS
+  Map<String, List<String>> get notifications;
+
+  @nullable
   CompanyEntity get company;
 
   @nullable
@@ -517,6 +521,10 @@ abstract class UserCompanyEntity
     return permissions.contains('${permission}_all') ||
         permissions.contains('${permission}_$entityType');
   }
+
+  bool receivesAllNotifications(String channel) =>
+      notifications.containsKey(channel) &&
+      notifications[channel].contains(kNotificationsAll);
 
   bool canView(EntityType entityType) => can(UserPermission.view, entityType);
 

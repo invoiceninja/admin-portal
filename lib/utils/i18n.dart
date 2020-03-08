@@ -15,6 +15,18 @@ mixin LocalizationsProvider on LocaleCodeAware {
   static final Map<String, Map<String, String>> _localizedValues = {
     'en': {
       // STARTER: lang key - do not remove comment
+      'none': 'None',
+      'mine': 'Mine',
+      'payment_success': 'Payment Success',
+      'payment_failure': 'Payment Failure',
+      'invoice_sent': 'Invoice Sent',
+      'quote_sent': 'Quote Sent',
+      'credit_sent': 'Credit Sent',
+      'invoice_viewed': 'Invoice Viewed',
+      'quote_viewed': 'Quote Viewed',
+      'credit_viewed': 'Credit Viewed',
+      'quote_approved': 'Quote Approved',
+      'receive_all_notifications': 'Receive All Notifications',
       'purchase_license': 'Purchase License',
       'apply_license': 'Apply License',
       'cancel_account': 'Delete Account',
@@ -32880,6 +32892,26 @@ mixin LocalizationsProvider on LocaleCodeAware {
 
   String get applyLicense =>
       _localizedValues[localeCode]['apply_license'];
+
+  String get receiveAllNotifications =>
+      _localizedValues[localeCode]['receive_all_notifications'];
+
+
+  String get invoiceSent => _localizedValues[localeCode]['invoice_sent'];
+  String get invoiceViewed => _localizedValues[localeCode]['invoice_viewed'];
+
+  String get paymentSuccess => _localizedValues[localeCode]['payment_success'];
+  String get paymentFailure => _localizedValues[localeCode]['payment_failure'];
+
+  String get quoteSent => _localizedValues[localeCode]['quote_sent'];
+  String get quoteViewed => _localizedValues[localeCode]['quote_viewed'];
+  String get quoteApproved => _localizedValues[localeCode]['quote_approved'];
+
+  String get creditSent => _localizedValues[localeCode]['credit_sent'];
+  String get creditViewed => _localizedValues[localeCode]['credit_viewed'];
+
+  String get none => _localizedValues[localeCode]['none'];
+  String get mine => _localizedValues[localeCode]['mine'];
 
   String lookup(String key) {
     final lookupKey = toSnakeCase(key);

@@ -153,7 +153,7 @@ void _checkResponse(http.Response response) {
   }
 
   debugPrint(
-      'response: ${response.statusCode} ${response.body.substring(0, min(response.body.length, 20000))}',
+      'response: ${response.statusCode} ${response.body.substring(0, min(response.body.length, 30000))}',
       wrapWidth: 1000);
   //debugPrint('response: ${response.statusCode} ${response.body}');
   print('headers: ${response.headers}');

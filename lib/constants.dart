@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 // This version must be updated in tandem with the pubspec version.
-const String kAppVersion = '2.0.8';
+const String kAppVersion = '2.0.10';
 const String kSiteUrl = 'https://invoiceninja.com';
 //const String kAppUrl = 'https://admin.invoiceninja.com';
 const String kAppUrl = 'https://staging.invoicing.co';
@@ -152,6 +152,30 @@ const kGatewayTypes = {
   kGatewayTypeGoCardless: 'gocardless',
   kGatewayTypeApplePay: 'apple_pay',
 };
+
+
+const String kNotificationChannelEmail = 'email';
+const String kNotificationChannelSlack = 'slack';
+
+const String kNotificationsAll = 'all_notifications';
+const String kNotificationsPaymentSuccessAll = 'payment_success_all';
+const String kNotificationsPaymentSuccessUser = 'payment_success_user';
+const String kNotificationsPaymentFailureAll = 'payment_failure_all';
+const String kNotificationsPaymentFailureUser = 'payment_failure_user';
+const String kNotificationsInvoiceSentAll = 'invoice_sent_all';
+const String kNotificationsInvoiceSentUser = 'Invoice_sent_user';
+const String kNotificationsQuoteSentAll = 'quote_sent_all';
+const String kNotificationsQuoteSentUser = 'quote_sent_user';
+const String kNotificationsCreditSentAll = 'credit_sent_all';
+const String kNotificationsCreditSentUser = 'credit_sent_user';
+const String kNotificationsQuoteViewedAll = 'quote_viewed_all';
+const String kNotificationsQuoteViewedUser = 'quote_viewed_user';
+const String kNotificationsInvoiceViewedAll = 'invoice_viewed_all';
+const String kNotificationsInvoiceViewedUser = 'invoice_viewed_user';
+const String kNotificationsCreditViewedAll = 'credit_viewed_all';
+const String kNotificationsCreditViewedUser = 'credit_viewed_user';
+const String kNotificationsQuoteApprovedAll = 'quote_approved_all';
+const String kNotificationsQuoteApprovedUser = 'quote_approved_user';
 
 const String kGatewayStripe = 'd14dd26a37cecc30fdd65700bfb55b23';
 

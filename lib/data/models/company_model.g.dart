@@ -3899,6 +3899,8 @@ class _$UserCompanyEntity extends UserCompanyEntity {
   @override
   final String permissions;
   @override
+  final Map<String, List<String>> notifications;
+  @override
   final CompanyEntity company;
   @override
   final UserEntity user;
@@ -3917,6 +3919,7 @@ class _$UserCompanyEntity extends UserCompanyEntity {
       {this.isAdmin,
       this.isOwner,
       this.permissions,
+      this.notifications,
       this.company,
       this.user,
       this.token,
@@ -3949,6 +3952,7 @@ class _$UserCompanyEntity extends UserCompanyEntity {
         isAdmin == other.isAdmin &&
         isOwner == other.isOwner &&
         permissions == other.permissions &&
+        notifications == other.notifications &&
         company == other.company &&
         user == other.user &&
         token == other.token &&
@@ -3963,8 +3967,10 @@ class _$UserCompanyEntity extends UserCompanyEntity {
             $jc(
                 $jc(
                     $jc(
-                        $jc($jc($jc(0, isAdmin.hashCode), isOwner.hashCode),
-                            permissions.hashCode),
+                        $jc(
+                            $jc($jc($jc(0, isAdmin.hashCode), isOwner.hashCode),
+                                permissions.hashCode),
+                            notifications.hashCode),
                         company.hashCode),
                     user.hashCode),
                 token.hashCode),
@@ -3978,6 +3984,7 @@ class _$UserCompanyEntity extends UserCompanyEntity {
           ..add('isAdmin', isAdmin)
           ..add('isOwner', isOwner)
           ..add('permissions', permissions)
+          ..add('notifications', notifications)
           ..add('company', company)
           ..add('user', user)
           ..add('token', token)
@@ -4002,6 +4009,11 @@ class UserCompanyEntityBuilder
   String _permissions;
   String get permissions => _$this._permissions;
   set permissions(String permissions) => _$this._permissions = permissions;
+
+  Map<String, List<String>> _notifications;
+  Map<String, List<String>> get notifications => _$this._notifications;
+  set notifications(Map<String, List<String>> notifications) =>
+      _$this._notifications = notifications;
 
   CompanyEntityBuilder _company;
   CompanyEntityBuilder get company =>
@@ -4034,6 +4046,7 @@ class UserCompanyEntityBuilder
       _isAdmin = _$v.isAdmin;
       _isOwner = _$v.isOwner;
       _permissions = _$v.permissions;
+      _notifications = _$v.notifications;
       _company = _$v.company?.toBuilder();
       _user = _$v.user?.toBuilder();
       _token = _$v.token?.toBuilder();
@@ -4066,6 +4079,7 @@ class UserCompanyEntityBuilder
               isAdmin: isAdmin,
               isOwner: isOwner,
               permissions: permissions,
+              notifications: notifications,
               company: _company?.build(),
               user: _user?.build(),
               token: _token?.build(),

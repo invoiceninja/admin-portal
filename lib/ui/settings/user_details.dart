@@ -5,6 +5,7 @@ import 'package:invoiceninja_flutter/ui/app/forms/app_form.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/color_picker.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/decorated_form_field.dart';
 import 'package:invoiceninja_flutter/ui/app/edit_scaffold.dart';
+import 'package:invoiceninja_flutter/ui/app/forms/notification_settings.dart';
 import 'package:invoiceninja_flutter/ui/settings/user_details_vm.dart';
 import 'package:invoiceninja_flutter/utils/completers.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
@@ -142,6 +143,11 @@ class _UserDetailsState extends State<UserDetails> {
                 },
               ),
             ],
+          ),
+          NotificationSettings(
+            onChanged: () {
+              print('## NotificationSettings.onChanged');
+            },
           ),
         ],
       ),
