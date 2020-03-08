@@ -40,6 +40,7 @@ class MultiSelectList extends StatefulWidget {
     @required this.defaultSelected,
     @required this.addTitle,
     @required this.onSelected,
+    this.liveChanges = false,
   });
 
   final List<String> options;
@@ -47,6 +48,7 @@ class MultiSelectList extends StatefulWidget {
   final List<String> defaultSelected;
   final String addTitle;
   final Function(List<String>) onSelected;
+  final bool liveChanges;
 
   @override
   MultiSelectListState createState() => MultiSelectListState();
@@ -93,6 +95,10 @@ class MultiSelectListState extends State<MultiSelectList> {
             }).toList(),
             value: null,
             onChanged: (dynamic value) {
+              if ('$value'.isEmpty) {
+                return;
+              }
+              
               if (selected.contains(value)) {
                 return;
               }
@@ -161,17 +167,19 @@ class MultiSelectListState extends State<MultiSelectList> {
                           () => selected = widget.defaultSelected.toList());
                     }),
                 Spacer(),
-                FlatButton(
-                    child: Text(localization.cancel.toUpperCase()),
-                    onPressed: () {
-                      Navigator.pop(context);
-                    }),
-                FlatButton(
-                    child: Text(localization.save.toUpperCase()),
-                    onPressed: () {
-                      Navigator.pop(context);
-                      widget.onSelected(selected);
-                    })
+                if (!widget.liveChanges)
+                  FlatButton(
+                      child: Text(localization.cancel.toUpperCase()),
+                      onPressed: () {
+                        Navigator.pop(context);
+                      }),
+                if (!widget.liveChanges)
+                  FlatButton(
+                      child: Text(localization.save.toUpperCase()),
+                      onPressed: () {
+                        Navigator.pop(context);
+                        widget.onSelected(selected);
+                      })
               ],
             ),
           )

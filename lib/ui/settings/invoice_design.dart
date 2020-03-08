@@ -234,6 +234,7 @@ class _InvoiceDesignState extends State<InvoiceDesign>
               defaultSelected: settings.pdfVariables[kPdfFieldsClientDetails].toList(),
               addTitle: localization.addField,
               selected: settings.pdfVariables[kPdfFieldsClientDetails].toList(),
+              liveChanges: true,
             ),
           ),
         ],
