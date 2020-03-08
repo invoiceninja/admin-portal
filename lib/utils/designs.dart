@@ -23,8 +23,8 @@ void loadDesign({
       ? InvoiceEntity(state: state)
       : state.invoiceState.map[state.invoiceState.list.first];
   final url = formatApiUrl(credentials.url) + '/preview';
-  const encoder = const Utf8Encoder();
 
+  const encoder = const Utf8Encoder();
   //final hase64Body = 'data:text/html;base64,' + base64Encode(encoder.convert(body));
   //onStart(subject, hase64Body);
 
@@ -33,8 +33,7 @@ void loadDesign({
           data: json.encode({
             'entity': 'invoice',
             'entity_id': '${invoice.id}',
-            //'subject': subject,
-            'body': json.encode(design),
+            'body': design,
           }))
       .then((dynamic response) {
     print('## response: $response');
