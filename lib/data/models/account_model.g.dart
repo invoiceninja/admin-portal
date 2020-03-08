@@ -36,54 +36,6 @@ class _$AccountEntitySerializer implements StructuredSerializer<AccountEntity> {
         ..add(serializers.serialize(object.currentVersion,
             specifiedType: const FullType(String)));
     }
-    if (object.isChanged != null) {
-      result
-        ..add('isChanged')
-        ..add(serializers.serialize(object.isChanged,
-            specifiedType: const FullType(bool)));
-    }
-    if (object.createdAt != null) {
-      result
-        ..add('created_at')
-        ..add(serializers.serialize(object.createdAt,
-            specifiedType: const FullType(int)));
-    }
-    if (object.updatedAt != null) {
-      result
-        ..add('updated_at')
-        ..add(serializers.serialize(object.updatedAt,
-            specifiedType: const FullType(int)));
-    }
-    if (object.archivedAt != null) {
-      result
-        ..add('archived_at')
-        ..add(serializers.serialize(object.archivedAt,
-            specifiedType: const FullType(int)));
-    }
-    if (object.isDeleted != null) {
-      result
-        ..add('is_deleted')
-        ..add(serializers.serialize(object.isDeleted,
-            specifiedType: const FullType(bool)));
-    }
-    if (object.createdUserId != null) {
-      result
-        ..add('user_id')
-        ..add(serializers.serialize(object.createdUserId,
-            specifiedType: const FullType(String)));
-    }
-    if (object.assignedUserId != null) {
-      result
-        ..add('assigned_user_id')
-        ..add(serializers.serialize(object.assignedUserId,
-            specifiedType: const FullType(String)));
-    }
-    if (object.subEntityType != null) {
-      result
-        ..add('entity_type')
-        ..add(serializers.serialize(object.subEntityType,
-            specifiedType: const FullType(EntityType)));
-    }
     return result;
   }
 
@@ -119,38 +71,6 @@ class _$AccountEntitySerializer implements StructuredSerializer<AccountEntity> {
           result.currentVersion = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String;
           break;
-        case 'isChanged':
-          result.isChanged = serializers.deserialize(value,
-              specifiedType: const FullType(bool)) as bool;
-          break;
-        case 'created_at':
-          result.createdAt = serializers.deserialize(value,
-              specifiedType: const FullType(int)) as int;
-          break;
-        case 'updated_at':
-          result.updatedAt = serializers.deserialize(value,
-              specifiedType: const FullType(int)) as int;
-          break;
-        case 'archived_at':
-          result.archivedAt = serializers.deserialize(value,
-              specifiedType: const FullType(int)) as int;
-          break;
-        case 'is_deleted':
-          result.isDeleted = serializers.deserialize(value,
-              specifiedType: const FullType(bool)) as bool;
-          break;
-        case 'user_id':
-          result.createdUserId = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String;
-          break;
-        case 'assigned_user_id':
-          result.assignedUserId = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String;
-          break;
-        case 'entity_type':
-          result.subEntityType = serializers.deserialize(value,
-              specifiedType: const FullType(EntityType)) as EntityType;
-          break;
       }
     }
 
@@ -169,22 +89,6 @@ class _$AccountEntity extends AccountEntity {
   final String latestVersion;
   @override
   final String currentVersion;
-  @override
-  final bool isChanged;
-  @override
-  final int createdAt;
-  @override
-  final int updatedAt;
-  @override
-  final int archivedAt;
-  @override
-  final bool isDeleted;
-  @override
-  final String createdUserId;
-  @override
-  final String assignedUserId;
-  @override
-  final EntityType subEntityType;
 
   factory _$AccountEntity([void Function(AccountEntityBuilder) updates]) =>
       (new AccountEntityBuilder()..update(updates)).build();
@@ -194,15 +98,7 @@ class _$AccountEntity extends AccountEntity {
       this.defaultUrl,
       this.plan,
       this.latestVersion,
-      this.currentVersion,
-      this.isChanged,
-      this.createdAt,
-      this.updatedAt,
-      this.archivedAt,
-      this.isDeleted,
-      this.createdUserId,
-      this.assignedUserId,
-      this.subEntityType})
+      this.currentVersion})
       : super._() {
     if (id == null) {
       throw new BuiltValueNullFieldError('AccountEntity', 'id');
@@ -233,43 +129,15 @@ class _$AccountEntity extends AccountEntity {
         defaultUrl == other.defaultUrl &&
         plan == other.plan &&
         latestVersion == other.latestVersion &&
-        currentVersion == other.currentVersion &&
-        isChanged == other.isChanged &&
-        createdAt == other.createdAt &&
-        updatedAt == other.updatedAt &&
-        archivedAt == other.archivedAt &&
-        isDeleted == other.isDeleted &&
-        createdUserId == other.createdUserId &&
-        assignedUserId == other.assignedUserId &&
-        subEntityType == other.subEntityType;
+        currentVersion == other.currentVersion;
   }
 
   @override
   int get hashCode {
     return $jf($jc(
-        $jc(
-            $jc(
-                $jc(
-                    $jc(
-                        $jc(
-                            $jc(
-                                $jc(
-                                    $jc(
-                                        $jc(
-                                            $jc(
-                                                $jc($jc(0, id.hashCode),
-                                                    defaultUrl.hashCode),
-                                                plan.hashCode),
-                                            latestVersion.hashCode),
-                                        currentVersion.hashCode),
-                                    isChanged.hashCode),
-                                createdAt.hashCode),
-                            updatedAt.hashCode),
-                        archivedAt.hashCode),
-                    isDeleted.hashCode),
-                createdUserId.hashCode),
-            assignedUserId.hashCode),
-        subEntityType.hashCode));
+        $jc($jc($jc($jc(0, id.hashCode), defaultUrl.hashCode), plan.hashCode),
+            latestVersion.hashCode),
+        currentVersion.hashCode));
   }
 
   @override
@@ -279,15 +147,7 @@ class _$AccountEntity extends AccountEntity {
           ..add('defaultUrl', defaultUrl)
           ..add('plan', plan)
           ..add('latestVersion', latestVersion)
-          ..add('currentVersion', currentVersion)
-          ..add('isChanged', isChanged)
-          ..add('createdAt', createdAt)
-          ..add('updatedAt', updatedAt)
-          ..add('archivedAt', archivedAt)
-          ..add('isDeleted', isDeleted)
-          ..add('createdUserId', createdUserId)
-          ..add('assignedUserId', assignedUserId)
-          ..add('subEntityType', subEntityType))
+          ..add('currentVersion', currentVersion))
         .toString();
   }
 }
@@ -318,41 +178,6 @@ class AccountEntityBuilder
   set currentVersion(String currentVersion) =>
       _$this._currentVersion = currentVersion;
 
-  bool _isChanged;
-  bool get isChanged => _$this._isChanged;
-  set isChanged(bool isChanged) => _$this._isChanged = isChanged;
-
-  int _createdAt;
-  int get createdAt => _$this._createdAt;
-  set createdAt(int createdAt) => _$this._createdAt = createdAt;
-
-  int _updatedAt;
-  int get updatedAt => _$this._updatedAt;
-  set updatedAt(int updatedAt) => _$this._updatedAt = updatedAt;
-
-  int _archivedAt;
-  int get archivedAt => _$this._archivedAt;
-  set archivedAt(int archivedAt) => _$this._archivedAt = archivedAt;
-
-  bool _isDeleted;
-  bool get isDeleted => _$this._isDeleted;
-  set isDeleted(bool isDeleted) => _$this._isDeleted = isDeleted;
-
-  String _createdUserId;
-  String get createdUserId => _$this._createdUserId;
-  set createdUserId(String createdUserId) =>
-      _$this._createdUserId = createdUserId;
-
-  String _assignedUserId;
-  String get assignedUserId => _$this._assignedUserId;
-  set assignedUserId(String assignedUserId) =>
-      _$this._assignedUserId = assignedUserId;
-
-  EntityType _subEntityType;
-  EntityType get subEntityType => _$this._subEntityType;
-  set subEntityType(EntityType subEntityType) =>
-      _$this._subEntityType = subEntityType;
-
   AccountEntityBuilder();
 
   AccountEntityBuilder get _$this {
@@ -362,14 +187,6 @@ class AccountEntityBuilder
       _plan = _$v.plan;
       _latestVersion = _$v.latestVersion;
       _currentVersion = _$v.currentVersion;
-      _isChanged = _$v.isChanged;
-      _createdAt = _$v.createdAt;
-      _updatedAt = _$v.updatedAt;
-      _archivedAt = _$v.archivedAt;
-      _isDeleted = _$v.isDeleted;
-      _createdUserId = _$v.createdUserId;
-      _assignedUserId = _$v.assignedUserId;
-      _subEntityType = _$v.subEntityType;
       _$v = null;
     }
     return this;
@@ -396,15 +213,7 @@ class AccountEntityBuilder
             defaultUrl: defaultUrl,
             plan: plan,
             latestVersion: latestVersion,
-            currentVersion: currentVersion,
-            isChanged: isChanged,
-            createdAt: createdAt,
-            updatedAt: updatedAt,
-            archivedAt: archivedAt,
-            isDeleted: isDeleted,
-            createdUserId: createdUserId,
-            assignedUserId: assignedUserId,
-            subEntityType: subEntityType);
+            currentVersion: currentVersion);
     replace(_$result);
     return _$result;
   }

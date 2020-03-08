@@ -1,13 +1,10 @@
 import 'package:built_value/built_value.dart';
 import 'package:built_value/serializer.dart';
-import 'package:invoiceninja_flutter/data/models/entities.dart';
-import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 
 part 'account_model.g.dart';
 
-abstract class AccountEntity extends Object
-    with BaseEntity, SelectableEntity
+abstract class AccountEntity
     implements Built<AccountEntity, AccountEntityBuilder> {
   factory AccountEntity({String id, AppState state}) {
     return _$AccountEntity._(
