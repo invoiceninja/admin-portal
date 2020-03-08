@@ -25,6 +25,10 @@ class SettingsList extends StatelessWidget {
     final settingsUIState = state.uiState.settingsUIState;
     final showAll = settingsUIState.entityType == EntityType.company;
 
+    if (state.credentials.token.isEmpty) {
+      return SizedBox();
+    }
+
     if (!state.userCompany.isAdmin)
       return ListView(
         children: <Widget>[
@@ -108,14 +112,14 @@ class SettingsList extends StatelessWidget {
             viewModel: viewModel,
           ),
          */
-        if (showAll)
-          SettingsListTile(
-            section: kSettingsDeviceSettings,
-            viewModel: viewModel,
-          ),
         if (showAll && state.userCompany.isOwner)
           SettingsListTile(
             section: kSettingsAccountManagement,
+            viewModel: viewModel,
+          ),
+        if (showAll)
+          SettingsListTile(
+            section: kSettingsDeviceSettings,
             viewModel: viewModel,
           ),
         Container(

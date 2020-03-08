@@ -208,11 +208,7 @@ class MenuDrawer extends StatelessWidget {
             children: <Widget>[
               // Hide options while refreshing data
               state.credentials.token.isEmpty
-                  ? Expanded(
-                      child: LoadingIndicator(
-                        height: 30,
-                      ),
-                    )
+                  ? Expanded(child: SizedBox())
                   : Container(
                       padding:
                           EdgeInsets.symmetric(horizontal: 14, vertical: 3),
