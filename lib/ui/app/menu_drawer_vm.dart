@@ -1,6 +1,7 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_redux/flutter_redux.dart';
+import 'package:invoiceninja_flutter/constants.dart';
 import 'package:invoiceninja_flutter/redux/client/client_actions.dart';
 import 'package:invoiceninja_flutter/redux/company/company_actions.dart';
 import 'package:invoiceninja_flutter/redux/settings/settings_actions.dart';
@@ -64,10 +65,14 @@ class MenuDrawerVM {
         AppBuilder.of(context).rebuild();
 
         if (state.uiState.isInSettings) {
+          String section = state.uiState.subRoute;
+          if ([kSettingsUserDetails].contains(section)) {
+            section = kSettingsCompanyDetails;
+          }
           store.dispatch(ViewSettings(
             navigator: Navigator.of(context),
             company: company,
-            section: state.uiState.subRoute,
+            section: section,
             force: true,
           ));
         }
