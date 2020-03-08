@@ -120,6 +120,9 @@ class _NotificationSelector extends StatelessWidget {
       value: value,
       //enabled: false,
       onChanged: (dynamic value) {
+        if (value == null || value.isEmpty) {
+          return;
+        }
         onChanged(value);
       },
       items: [
