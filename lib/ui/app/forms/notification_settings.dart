@@ -1,6 +1,8 @@
+import 'package:built_collection/built_collection.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:invoiceninja_flutter/constants.dart';
+import 'package:invoiceninja_flutter/data/models/user_model.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/ui/app/form_card.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/app_dropdown_button.dart';
@@ -8,9 +10,11 @@ import 'package:invoiceninja_flutter/utils/localization.dart';
 
 class NotificationSettings extends StatelessWidget {
   const NotificationSettings({
+    @required this.user,
     @required this.onChanged,
   });
 
+  final UserEntity user;
   final Function(String, List<String>) onChanged;
 
   static const NOTIFY_MINE = 'user';
@@ -20,14 +24,15 @@ class NotificationSettings extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    print('## build: ${user.userCompany.notifications}');
+
     final localization = AppLocalization.of(context);
-    final state = StoreProvider.of<AppState>(context).state;
-    final userCompany = state.userCompany;
-    final notifications = userCompany.notifications;
-    final List<String> emailNotifications =
+    final notifications =
+        user.userCompany.notifications ?? BuiltMap<String, BuiltList<String>>();
+    final BuiltList<String> emailNotifications =
         notifications.containsKey(kNotificationChannelEmail)
             ? notifications[kNotificationChannelEmail]
-            : <String>[];
+            : BuiltList<String>();
 
     return Column(
       mainAxisSize: MainAxisSize.min,

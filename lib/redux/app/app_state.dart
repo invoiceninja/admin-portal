@@ -509,6 +509,7 @@ abstract class AppState implements Built<AppState, AppStateBuilder> {
     //return 'Designs: ${company.designs}';
     //return 'PDF Variables: ${company.settings.pdfVariables}';
     //return 'Account: ${userCompany.account}';
+    return 'Notifications: ${user.userCompany.notifications} ${uiState.settingsUIState.user.userCompany.notifications}';
     return 'Layout: ${prefState.appLayout}, Route: ${uiState.currentRoute} Prev: ${uiState.previousRoute}';
   }
 }

@@ -105,7 +105,10 @@ UserCompanyEntity loadCompanySuccessReducer(
   if (userCompany.settings == null) {
     userCompany = userCompany.rebuild((b) => b
       ..settings.replace(UserSettingsEntity())
-      ..notifications.replace(BuiltMap<String, BuiltList<String>>()));
+      ..user
+          .userCompany
+          .notifications
+          .replace(BuiltMap<String, BuiltList<String>>()));
   }
 
   userCompany = userCompany.rebuild((b) => b.company
