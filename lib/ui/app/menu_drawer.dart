@@ -9,6 +9,7 @@ import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:invoiceninja_flutter/redux/reports/reports_actions.dart';
 import 'package:invoiceninja_flutter/ui/app/dialogs/alert_dialog.dart';
 import 'package:invoiceninja_flutter/ui/app/dialogs/error_dialog.dart';
+import 'package:invoiceninja_flutter/ui/app/forms/app_dropdown_button.dart';
 import 'package:invoiceninja_flutter/ui/app/loading_indicator.dart';
 import 'package:invoiceninja_flutter/ui/app/resources/cached_image.dart';
 import 'package:invoiceninja_flutter/ui/system/update_dialog.dart';
@@ -125,6 +126,42 @@ class MenuDrawer extends StatelessWidget {
 
     final _expandedCompanySelector = viewModel.companies.isEmpty
         ? SizedBox()
+        : AppDropdownButton<String>(
+            value: viewModel.selectedCompanyIndex,
+            items: [
+              ...viewModel.companies
+                  .map((CompanyEntity company) => DropdownMenuItem<String>(
+                        value:
+                            (viewModel.companies.indexOf(company)).toString(),
+                        child: _companyListItem(company),
+                      ))
+                  .toList(),
+              if (viewModel.state.userCompany.isAdmin)
+                DropdownMenuItem<String>(
+                  value: null,
+                  child: Row(
+                    children: <Widget>[
+                      SizedBox(width: 2),
+                      Icon(Icons.add_circle, size: 32),
+                      SizedBox(width: 28),
+                      Text(localization.addCompany),
+                    ],
+                  ),
+                ),
+            ],
+            onChanged: (dynamic value) {
+              if (value == null) {
+                viewModel.onAddCompany(context);
+              } else {
+                viewModel.onCompanyChanged(
+                    context, value, viewModel.companies[int.parse(value)]);
+              }
+            },
+          );
+
+    /*
+    final _expandedCompanySelector = viewModel.companies.isEmpty
+        ? SizedBox()
         : DropdownButtonHideUnderline(
             child: DropdownButton<String>(
             isExpanded: true,
@@ -160,6 +197,7 @@ class MenuDrawer extends StatelessWidget {
               }
             },
           ));
+  */
 
     return SizedBox(
       width: state.prefState.isMenuCollapsed ? 65 : kDrawerWidth,

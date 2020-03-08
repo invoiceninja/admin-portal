@@ -4,10 +4,10 @@ import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 
 class AppDropdownButton<T> extends StatelessWidget {
   const AppDropdownButton({
-    @required this.labelText,
     @required this.value,
     @required this.onChanged,
     @required this.items,
+    this.labelText,
     this.showBlank,
     this.blankValue = '',
     this.enabled = true,
@@ -33,27 +33,33 @@ class AppDropdownButton<T> extends StatelessWidget {
     }
     final bool isEmpty = checkedValue == null || checkedValue == '';
 
-    return InputDecorator(
-        decoration: InputDecoration(
-          labelText: labelText,
-          contentPadding: EdgeInsets.only(right: 12, top: 12, bottom: 12),
-        ),
-        isEmpty: isEmpty,
-        child: DropdownButtonHideUnderline(
-          child: DropdownButton<T>(
-            value: checkedValue,
-            isExpanded: true,
-            isDense: true,
-            onChanged: enabled ? onChanged : null,
-            items: [
-              if (_showBlank || isEmpty)
-                DropdownMenuItem(
-                  value: blankValue,
-                  child: SizedBox(),
-                ),
-              ...items
-            ],
+    final dropDownButton = DropdownButtonHideUnderline(
+      child: DropdownButton<T>(
+        value: checkedValue,
+        isExpanded: true,
+        isDense: labelText != null,
+        onChanged: enabled ? onChanged : null,
+        items: [
+          if (_showBlank || isEmpty)
+            DropdownMenuItem(
+              value: blankValue,
+              child: SizedBox(),
+            ),
+          ...items
+        ],
+      ),
+    );
+
+    if (labelText != null) {
+      return InputDecorator(
+          decoration: InputDecoration(
+            labelText: labelText,
+            contentPadding: EdgeInsets.only(right: 12, top: 12, bottom: 12),
           ),
-        ));
+          isEmpty: isEmpty,
+          child: dropDownButton);
+    } else {
+      return dropDownButton;
+    }
   }
 }
