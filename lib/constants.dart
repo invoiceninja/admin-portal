@@ -153,29 +153,31 @@ const kGatewayTypes = {
   kGatewayTypeApplePay: 'apple_pay',
 };
 
-
 const String kNotificationChannelEmail = 'email';
 const String kNotificationChannelSlack = 'slack';
 
 const String kNotificationsAll = 'all_notifications';
-const String kNotificationsPaymentSuccessAll = 'payment_success_all';
-const String kNotificationsPaymentSuccessUser = 'payment_success_user';
-const String kNotificationsPaymentFailureAll = 'payment_failure_all';
-const String kNotificationsPaymentFailureUser = 'payment_failure_user';
-const String kNotificationsInvoiceSentAll = 'invoice_sent_all';
-const String kNotificationsInvoiceSentUser = 'Invoice_sent_user';
-const String kNotificationsQuoteSentAll = 'quote_sent_all';
-const String kNotificationsQuoteSentUser = 'quote_sent_user';
-const String kNotificationsCreditSentAll = 'credit_sent_all';
-const String kNotificationsCreditSentUser = 'credit_sent_user';
-const String kNotificationsQuoteViewedAll = 'quote_viewed_all';
-const String kNotificationsQuoteViewedUser = 'quote_viewed_user';
-const String kNotificationsInvoiceViewedAll = 'invoice_viewed_all';
-const String kNotificationsInvoiceViewedUser = 'invoice_viewed_user';
-const String kNotificationsCreditViewedAll = 'credit_viewed_all';
-const String kNotificationsCreditViewedUser = 'credit_viewed_user';
-const String kNotificationsQuoteApprovedAll = 'quote_approved_all';
-const String kNotificationsQuoteApprovedUser = 'quote_approved_user';
+const String kNotificationsPaymentSuccess = 'payment_success';
+const String kNotificationsPaymentFailure = 'payment_failure';
+const String kNotificationsInvoiceSent = 'invoice_sent';
+const String kNotificationsQuoteSent = 'quote_sent';
+const String kNotificationsCreditSent = 'credit_sent';
+const String kNotificationsQuoteViewed = 'quote_viewed';
+const String kNotificationsInvoiceViewed = 'invoice_viewed';
+const String kNotificationsCreditViewed = 'credit_viewed';
+const String kNotificationsQuoteApproved = 'quote_approved';
+
+const kNotificationEvents = [
+  kNotificationsInvoiceSent,
+  kNotificationsInvoiceViewed,
+  kNotificationsPaymentSuccess,
+  kNotificationsPaymentFailure,
+  kNotificationsQuoteSent,
+  kNotificationsQuoteViewed,
+  kNotificationsQuoteApproved,
+  kNotificationsCreditSent,
+  kNotificationsCreditViewed,
+];
 
 const String kGatewayStripe = 'd14dd26a37cecc30fdd65700bfb55b23';
 

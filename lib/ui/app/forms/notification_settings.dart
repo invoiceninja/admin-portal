@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
+import 'package:invoiceninja_flutter/constants.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/ui/app/form_card.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/app_dropdown_button.dart';
@@ -10,18 +11,20 @@ class NotificationSettings extends StatelessWidget {
     @required this.onChanged,
   });
 
-  final Function() onChanged;
+  final Function(String, List<String>) onChanged;
 
-  static const PERMISSION_MINE = 'user';
-  static const PERMISSION_ALL = 'all';
-  static const PERMISSION_NONE = 'none';
-  static const PERMISSION_CUSTOM = 'custom';
+  static const NOTIFY_MINE = 'user';
+  static const NOTIFY_ALL = 'all';
+  static const NOTIFY_NONE = 'none';
+  static const NOTIFY_CUSTOM = 'custom';
 
   @override
   Widget build(BuildContext context) {
     final localization = AppLocalization.of(context);
     final state = StoreProvider.of<AppState>(context).state;
     final userCompany = state.userCompany;
+    final notifications = userCompany.notifications;
+    final emailNotifications = notifications[kNotificationChannelEmail];
 
     return Column(
       mainAxisSize: MainAxisSize.min,
@@ -43,19 +46,49 @@ class NotificationSettings extends StatelessWidget {
                   DataRow(cells: [
                     DataCell(Text(localization.all)),
                     DataCell(_NotificationSelector(
-                      value: PERMISSION_ALL,
+                      value: NOTIFY_ALL,
                       addCustom: true,
                       onChanged: (value) {
                         print('## VALUE: $value');
+                        onChanged(
+                            kNotificationChannelEmail,
+                            value == NOTIFY_ALL
+                                ? [kNotificationsAll]
+                                : value == NOTIFY_NONE ? [] : []);
                       },
                     ))
                   ]),
+                  ...kNotificationEvents
+                      .map((eventType) => DataRow(cells: [
+                            DataCell(Text(localization.lookup(eventType))),
+                            DataCell(_NotificationSelector(
+                              value: emailNotifications
+                                      .contains('${eventType}_all')
+                                  ? NOTIFY_ALL
+                                  : emailNotifications
+                                          .contains('${eventType}_MINE')
+                                      ? NOTIFY_MINE
+                                      : NOTIFY_NONE,
+                              onChanged: null,
+                            )),
+                          ]))
+                      .toList(),
                   DataRow(cells: [
                     DataCell(Text(localization.invoiceSent)),
                     DataCell(_NotificationSelector(
-                      value: PERMISSION_ALL,
+                      value: NOTIFY_ALL,
                       onChanged: (value) {
-                        print('## VALUE: $value');
+                        /*
+                        final options = notifications[kNotificationChannelEmail];
+                        options.remove(kNotificationsInvoiceSentAll);
+                        options.remove(kNotificationsInvoiceSentUser);
+                        if (value == PERMISSION_MINE) {
+                          options.add(kNotificationsInvoiceSentUser);
+                        } else if (value == PERMISSION_ALL) {
+                          options.add(kNotificationsInvoiceSentAll);
+                        }
+                        onChanged(kNotificationChannelEmail, options);                        
+                         */
                       },
                     )),
                   ]),
@@ -91,20 +124,20 @@ class _NotificationSelector extends StatelessWidget {
       },
       items: [
         DropdownMenuItem(
-          value: NotificationSettings.PERMISSION_NONE,
-          child: Text(localization.none),
+          value: NotificationSettings.NOTIFY_ALL,
+          child: Text(localization.all),
         ),
         DropdownMenuItem(
-          value: NotificationSettings.PERMISSION_MINE,
+          value: NotificationSettings.NOTIFY_MINE,
           child: Text(localization.mine),
         ),
         DropdownMenuItem(
-          value: NotificationSettings.PERMISSION_ALL,
-          child: Text(localization.all),
+          value: NotificationSettings.NOTIFY_NONE,
+          child: Text(localization.none),
         ),
         if (addCustom)
           DropdownMenuItem(
-            value: NotificationSettings.PERMISSION_CUSTOM,
+            value: NotificationSettings.NOTIFY_CUSTOM,
             child: Text(localization.custom),
           ),
       ],

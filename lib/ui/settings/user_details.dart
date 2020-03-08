@@ -145,8 +145,8 @@ class _UserDetailsState extends State<UserDetails> {
             ],
           ),
           NotificationSettings(
-            onChanged: () {
-              print('## NotificationSettings.onChanged');
+            onChanged: (channel, options) {
+              print('## NotificationSettings.onChanged: $channel - $options');
             },
           ),
         ],
