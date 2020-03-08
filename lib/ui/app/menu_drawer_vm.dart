@@ -6,6 +6,7 @@ import 'package:invoiceninja_flutter/redux/client/client_actions.dart';
 import 'package:invoiceninja_flutter/redux/company/company_actions.dart';
 import 'package:invoiceninja_flutter/redux/settings/settings_actions.dart';
 import 'package:invoiceninja_flutter/ui/app/app_builder.dart';
+import 'package:invoiceninja_flutter/utils/dialogs.dart';
 import 'package:redux/redux.dart';
 import 'package:invoiceninja_flutter/ui/app/menu_drawer.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
@@ -78,7 +79,11 @@ class MenuDrawerVM {
         }
       },
       onAddCompany: (BuildContext context) {
-        store.dispatch(AddCompany(context));
+        confirmCallback(
+            context: context,
+            callback: () {
+              store.dispatch(AddCompany(context));
+            });
       },
     );
   }
