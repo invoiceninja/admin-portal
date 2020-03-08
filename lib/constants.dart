@@ -157,6 +157,7 @@ const String kNotificationChannelEmail = 'email';
 const String kNotificationChannelSlack = 'slack';
 
 const String kNotificationsAll = 'all_notifications';
+const String kNotificationsAllUser = 'all_user_notifications';
 const String kNotificationsPaymentSuccess = 'payment_success';
 const String kNotificationsPaymentFailure = 'payment_failure';
 const String kNotificationsInvoiceSent = 'invoice_sent';
