@@ -232,9 +232,9 @@ class _InvoiceDesignState extends State<InvoiceDesign>
               defaultSelected:
                   settings.pdfVariables[kPdfFieldsClientDetails].toList(),
               selected: settings.pdfVariables[kPdfFieldsClientDetails].toList(),
-              onSelected: (value) {
+              onSelected: (values) {
                 viewModel.onSettingsChanged(settings.rebuild((b) => b
-                  ..pdfVariables[kPdfFieldsClientDetails] = BuiltList(value)));
+                  ..pdfVariables[kPdfFieldsClientDetails] = BuiltList(values)));
               },
               addTitle: localization.addField,
               liveChanges: true,
