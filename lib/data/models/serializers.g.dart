@@ -7,6 +7,7 @@ part of 'serializers.dart';
 // **************************************************************************
 
 Serializers _$serializers = (new Serializers().toBuilder()
+      ..add(AccountEntity.serializer)
       ..add(ActivityEntity.serializer)
       ..add(AppLayout.serializer)
       ..add(AppSidebarMode.serializer)

@@ -5,6 +5,7 @@ import 'package:built_value/built_value.dart';
 import 'package:built_value/serializer.dart';
 import 'package:flutter/foundation.dart';
 import 'package:invoiceninja_flutter/constants.dart';
+import 'package:invoiceninja_flutter/data/models/account_model.dart';
 import 'package:invoiceninja_flutter/data/models/company_gateway_model.dart';
 import 'package:invoiceninja_flutter/data/models/entities.dart';
 import 'package:invoiceninja_flutter/data/models/group_model.dart';
@@ -460,6 +461,7 @@ abstract class UserCompanyEntity
       company: CompanyEntity(),
       user: UserEntity(),
       token: TokenEntity(),
+      account: AccountEntity(),
     );
   }
 
@@ -481,6 +483,9 @@ abstract class UserCompanyEntity
 
   @nullable
   TokenEntity get token;
+
+  @nullable
+  AccountEntity get account;
 
   @nullable
   UserSettingsEntity get settings;

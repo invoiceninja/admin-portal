@@ -730,6 +730,12 @@ class _$UserCompanyEntitySerializer
         ..add(serializers.serialize(object.token,
             specifiedType: const FullType(TokenEntity)));
     }
+    if (object.account != null) {
+      result
+        ..add('account')
+        ..add(serializers.serialize(object.account,
+            specifiedType: const FullType(AccountEntity)));
+    }
     if (object.settings != null) {
       result
         ..add('settings')
@@ -774,6 +780,10 @@ class _$UserCompanyEntitySerializer
         case 'token':
           result.token.replace(serializers.deserialize(value,
               specifiedType: const FullType(TokenEntity)) as TokenEntity);
+          break;
+        case 'account':
+          result.account.replace(serializers.deserialize(value,
+              specifiedType: const FullType(AccountEntity)) as AccountEntity);
           break;
         case 'settings':
           result.settings.replace(serializers.deserialize(value,
@@ -3895,6 +3905,8 @@ class _$UserCompanyEntity extends UserCompanyEntity {
   @override
   final TokenEntity token;
   @override
+  final AccountEntity account;
+  @override
   final UserSettingsEntity settings;
 
   factory _$UserCompanyEntity(
@@ -3908,6 +3920,7 @@ class _$UserCompanyEntity extends UserCompanyEntity {
       this.company,
       this.user,
       this.token,
+      this.account,
       this.settings})
       : super._() {
     if (isAdmin == null) {
@@ -3939,6 +3952,7 @@ class _$UserCompanyEntity extends UserCompanyEntity {
         company == other.company &&
         user == other.user &&
         token == other.token &&
+        account == other.account &&
         settings == other.settings;
   }
 
@@ -3948,11 +3962,13 @@ class _$UserCompanyEntity extends UserCompanyEntity {
         $jc(
             $jc(
                 $jc(
-                    $jc($jc($jc(0, isAdmin.hashCode), isOwner.hashCode),
-                        permissions.hashCode),
-                    company.hashCode),
-                user.hashCode),
-            token.hashCode),
+                    $jc(
+                        $jc($jc($jc(0, isAdmin.hashCode), isOwner.hashCode),
+                            permissions.hashCode),
+                        company.hashCode),
+                    user.hashCode),
+                token.hashCode),
+            account.hashCode),
         settings.hashCode));
   }
 
@@ -3965,6 +3981,7 @@ class _$UserCompanyEntity extends UserCompanyEntity {
           ..add('company', company)
           ..add('user', user)
           ..add('token', token)
+          ..add('account', account)
           ..add('settings', settings))
         .toString();
   }
@@ -3999,6 +4016,11 @@ class UserCompanyEntityBuilder
   TokenEntityBuilder get token => _$this._token ??= new TokenEntityBuilder();
   set token(TokenEntityBuilder token) => _$this._token = token;
 
+  AccountEntityBuilder _account;
+  AccountEntityBuilder get account =>
+      _$this._account ??= new AccountEntityBuilder();
+  set account(AccountEntityBuilder account) => _$this._account = account;
+
   UserSettingsEntityBuilder _settings;
   UserSettingsEntityBuilder get settings =>
       _$this._settings ??= new UserSettingsEntityBuilder();
@@ -4015,6 +4037,7 @@ class UserCompanyEntityBuilder
       _company = _$v.company?.toBuilder();
       _user = _$v.user?.toBuilder();
       _token = _$v.token?.toBuilder();
+      _account = _$v.account?.toBuilder();
       _settings = _$v.settings?.toBuilder();
       _$v = null;
     }
@@ -4046,6 +4069,7 @@ class UserCompanyEntityBuilder
               company: _company?.build(),
               user: _user?.build(),
               token: _token?.build(),
+              account: _account?.build(),
               settings: _settings?.build());
     } catch (_) {
       String _$failedField;
@@ -4056,6 +4080,8 @@ class UserCompanyEntityBuilder
         _user?.build();
         _$failedField = 'token';
         _token?.build();
+        _$failedField = 'account';
+        _account?.build();
         _$failedField = 'settings';
         _settings?.build();
       } catch (e) {

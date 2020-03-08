@@ -43,6 +43,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'proposals': 'Proposals',
       'tickets': 'Tickets',
       'recurring_invoices': 'Recurring Invoices',
+      'recurring_quotes': 'Recurring Quotes',
       'recurring_tasks': 'Recurring Tasks',
       'recurring_expenses': 'Recurring Expenses',
       'account_management': 'Account Management',
@@ -32836,6 +32837,9 @@ mixin LocalizationsProvider on LocaleCodeAware {
 
   String get recurringInvoices =>
       _localizedValues[localeCode]['recurring_invoices'];
+
+  String get recurringQuotes =>
+      _localizedValues[localeCode]['recurring_quotes'];
 
   String get recurringTasks => _localizedValues[localeCode]['recurring_tasks'];
 
