@@ -51,7 +51,7 @@ class NotificationSettings extends StatelessWidget {
                 ],
                 rows: [
                   DataRow(cells: [
-                    DataCell(Text(localization.all)),
+                    DataCell(Text(localization.allEvents)),
                     DataCell(_NotificationSelector(
                       value: emailNotifications.contains(kNotificationsAll)
                           ? NOTIFY_ALL
