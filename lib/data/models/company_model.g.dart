@@ -3899,7 +3899,7 @@ class _$UserCompanyEntity extends UserCompanyEntity {
   @override
   final String permissions;
   @override
-  final Map<String, List<String>> notifications;
+  final BuiltMap<String, BuiltList<String>> notifications;
   @override
   final CompanyEntity company;
   @override
@@ -4010,9 +4010,10 @@ class UserCompanyEntityBuilder
   String get permissions => _$this._permissions;
   set permissions(String permissions) => _$this._permissions = permissions;
 
-  Map<String, List<String>> _notifications;
-  Map<String, List<String>> get notifications => _$this._notifications;
-  set notifications(Map<String, List<String>> notifications) =>
+  MapBuilder<String, BuiltList<String>> _notifications;
+  MapBuilder<String, BuiltList<String>> get notifications =>
+      _$this._notifications ??= new MapBuilder<String, BuiltList<String>>();
+  set notifications(MapBuilder<String, BuiltList<String>> notifications) =>
       _$this._notifications = notifications;
 
   CompanyEntityBuilder _company;
@@ -4046,7 +4047,7 @@ class UserCompanyEntityBuilder
       _isAdmin = _$v.isAdmin;
       _isOwner = _$v.isOwner;
       _permissions = _$v.permissions;
-      _notifications = _$v.notifications;
+      _notifications = _$v.notifications?.toBuilder();
       _company = _$v.company?.toBuilder();
       _user = _$v.user?.toBuilder();
       _token = _$v.token?.toBuilder();
@@ -4079,7 +4080,7 @@ class UserCompanyEntityBuilder
               isAdmin: isAdmin,
               isOwner: isOwner,
               permissions: permissions,
-              notifications: notifications,
+              notifications: _notifications?.build(),
               company: _company?.build(),
               user: _user?.build(),
               token: _token?.build(),
@@ -4088,6 +4089,8 @@ class UserCompanyEntityBuilder
     } catch (_) {
       String _$failedField;
       try {
+        _$failedField = 'notifications';
+        _notifications?.build();
         _$failedField = 'company';
         _company?.build();
         _$failedField = 'user';

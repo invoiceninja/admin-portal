@@ -23,8 +23,8 @@ class NotificationSettings extends StatelessWidget {
     final localization = AppLocalization.of(context);
     final state = StoreProvider.of<AppState>(context).state;
     final userCompany = state.userCompany;
-    final notifications = userCompany.notifications ?? {};
-    final emailNotifications =
+    final notifications = userCompany.notifications;
+    final List<String> emailNotifications =
         notifications.containsKey(kNotificationChannelEmail)
             ? notifications[kNotificationChannelEmail]
             : <String>[];

@@ -1,3 +1,4 @@
+import 'package:built_collection/built_collection.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:invoiceninja_flutter/ui/app/form_card.dart';
@@ -147,6 +148,8 @@ class _UserDetailsState extends State<UserDetails> {
           NotificationSettings(
             onChanged: (channel, options) {
               print('## NotificationSettings.onChanged: $channel - $options');
+              viewModel.onChanged(user.rebuild((b) =>
+                  b..userCompany.notifications[channel] = BuiltList(options)));
             },
           ),
         ],

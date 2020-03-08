@@ -103,8 +103,9 @@ UserCompanyEntity loadCompanySuccessReducer(
 
   // Check user has a blank user settings object
   if (userCompany.settings == null) {
-    userCompany =
-        userCompany.rebuild((b) => b..settings.replace(UserSettingsEntity()));
+    userCompany = userCompany.rebuild((b) => b
+      ..settings.replace(UserSettingsEntity())
+      ..notifications.replace(BuiltMap<String, BuiltList<String>>()));
   }
 
   userCompany = userCompany.rebuild((b) => b.company

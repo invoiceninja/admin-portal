@@ -477,7 +477,7 @@ abstract class UserCompanyEntity
 
   @nullable
   @BuiltValueField(serialize: false) // TODO REMOVE THIS
-  Map<String, List<String>> get notifications;
+  BuiltMap<String, BuiltList<String>> get notifications;
 
   @nullable
   CompanyEntity get company;

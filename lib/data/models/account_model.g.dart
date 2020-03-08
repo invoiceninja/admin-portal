@@ -29,13 +29,11 @@ class _$AccountEntitySerializer implements StructuredSerializer<AccountEntity> {
       'latest_version',
       serializers.serialize(object.latestVersion,
           specifiedType: const FullType(String)),
+      'current_version',
+      serializers.serialize(object.currentVersion,
+          specifiedType: const FullType(String)),
     ];
-    if (object.currentVersion != null) {
-      result
-        ..add('current_version')
-        ..add(serializers.serialize(object.currentVersion,
-            specifiedType: const FullType(String)));
-    }
+
     return result;
   }
 
@@ -111,6 +109,9 @@ class _$AccountEntity extends AccountEntity {
     }
     if (latestVersion == null) {
       throw new BuiltValueNullFieldError('AccountEntity', 'latestVersion');
+    }
+    if (currentVersion == null) {
+      throw new BuiltValueNullFieldError('AccountEntity', 'currentVersion');
     }
   }
 
