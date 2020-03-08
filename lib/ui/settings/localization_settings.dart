@@ -162,6 +162,7 @@ class _LocalizationSettingsState extends State<LocalizationSettings> {
           if (!state.settingsUIState.isFiltered)
             FormCard(
               children: <Widget>[
+                /*
                 AppDropdownButton(
                   labelText: localization.firstDayOfTheWeek,
                   value: company.firstDayOfWeek,
@@ -177,7 +178,8 @@ class _LocalizationSettingsState extends State<LocalizationSettings> {
                               )))
                       .values
                       .toList(),
-                ),
+                ),                
+                 */
                 AppDropdownButton(
                     labelText: localization.firstMonthOfTheYear,
                     value: company.firstMonthOfYear,

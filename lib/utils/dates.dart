@@ -68,7 +68,7 @@ String calculateStartDate({
   final today = DateTime.now();
   final firstDayOfMonth = DateTime.utc(today.year, today.month, 1);
   final firstDayOfYear =
-      DateTime.utc(today.year, int.tryParse(company.firstMonthOfYear) ?? 0, 1);
+      DateTime.utc(today.year, int.tryParse(company.firstMonthOfYear) ?? 1, 1);
   switch (dateRange) {
     case DateRange.last7Days:
       final date = today.subtract(Duration(days: 7 * (1 + offset)));
@@ -111,7 +111,7 @@ String calculateEndDate({
   final today = DateTime.now();
   final firstDayOfMonth = DateTime.utc(today.year, today.month, 1);
   final firstDayOfYear =
-      DateTime.utc(today.year, int.tryParse(company.firstMonthOfYear) ?? 0, 1);
+      DateTime.utc(today.year, int.tryParse(company.firstMonthOfYear) ?? 1, 1);
   switch (dateRange) {
     case DateRange.last7Days:
       final date = today.subtract(Duration(days: 7 * offset));
