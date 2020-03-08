@@ -139,6 +139,7 @@ abstract class AppState implements Built<AppState, AppStateBuilder> {
 
   bool shouldSelectEntity({EntityType entityType, bool hasRecords}) {
     final entityList = getEntityList(entityType);
+    final entityMap = getEntityMap(entityType);
     final entityUIState = getUIState(entityType);
 
     if (prefState.isMobile || entityList.isEmpty || uiState.isEditing) {
@@ -147,11 +148,8 @@ abstract class AppState implements Built<AppState, AppStateBuilder> {
 
     if (entityUIState.selectedId == null && !hasRecords) {
       return false;
-    } else if (!entityList.contains(entityUIState.selectedId)) {
-      return true;
-    } else if (historyList.isEmpty ||
-        !historyList.first.isEqualTo(
-            entityType: entityType, entityId: entityUIState.selectedId)) {
+    } else if ((entityUIState.selectedId ?? '').isEmpty ||
+        !entityMap.containsKey(entityUIState.selectedId)) {
       return true;
     }
 
@@ -329,7 +327,9 @@ abstract class AppState implements Built<AppState, AppStateBuilder> {
 
   // STARTER: state getters - do not remove comment
   DesignState get designState => userCompanyState.designState;
+
   ListUIState get designListState => uiState.designUIState.listUIState;
+
   DesignUIState get designUIState => uiState.designUIState;
 
   CreditState get creditState => userCompanyState.creditState;

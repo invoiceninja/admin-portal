@@ -102,12 +102,14 @@ class _EntityListState extends State<EntityList> {
     if (!isList &&
         state.shouldSelectEntity(
             entityType: entityType, hasRecords: entityList.isNotEmpty)) {
-      viewEntityById(
-        context: context,
-        entityType: entityType,
-        entityId: entityList.isEmpty ? null : entityList.first,
-      );
-    }
+      WidgetsBinding.instance.addPostFrameCallback((duration) {
+        viewEntityById(
+          context: context,
+          entityType: entityType,
+          entityId: entityList.isEmpty ? null : entityList.first,
+        );
+      });
+    }  
 
     final listOrTable = () {
       if (isList) {

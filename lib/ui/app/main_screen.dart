@@ -428,7 +428,8 @@ class EntityScreens extends StatelessWidget {
       child = refundWidget;
     } else if (subRoute == 'edit') {
       child = editWidget;
-    } else if ((entityUIState.selectedId ?? '').isNotEmpty) {
+    } else if ((entityUIState.selectedId ?? '').isNotEmpty &&
+        state.getEntityMap(entityType).containsKey(entityUIState.selectedId)) {
       child = viewWidget;
     } else {
       child = BlankScreen(AppLocalization.of(context).noRecordSelected);
