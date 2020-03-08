@@ -18,7 +18,7 @@ class NotificationSettings extends StatelessWidget {
   final UserEntity user;
   final Function(String, List<String>) onChanged;
 
-  static const NOTIFY_USER = 'user';
+  static const NOTIFY_OWNED = 'user';
   static const NOTIFY_ALL = 'all';
   static const NOTIFY_NONE = 'none';
 
@@ -60,7 +60,7 @@ class NotificationSettings extends StatelessWidget {
                           options = kNotificationEvents
                               .map((eventType) => '${eventType}_all')
                               .toList();
-                        } else if (value == NOTIFY_USER) {
+                        } else if (value == NOTIFY_OWNED) {
                           options = kNotificationEvents
                               .map((eventType) => '${eventType}_user')
                               .toList();
@@ -92,7 +92,7 @@ class NotificationSettings extends StatelessWidget {
                       value = NOTIFY_ALL;
                     } else if (emailNotifications
                         .contains('${eventType}_user')) {
-                      value = NOTIFY_USER;
+                      value = NOTIFY_OWNED;
                     } else {
                       value = NOTIFY_NONE;
                     }
@@ -106,7 +106,7 @@ class NotificationSettings extends StatelessWidget {
                           options.remove('${eventType}_user');
                           if (value == NOTIFY_ALL) {
                             options.add('${eventType}_all');
-                          } else if (value == NOTIFY_USER) {
+                          } else if (value == NOTIFY_OWNED) {
                             options.add('${eventType}_user');
                           }
                           onChanged(kNotificationChannelEmail, options);
@@ -152,8 +152,8 @@ class _NotificationSelector extends StatelessWidget {
           child: Text(localization.all),
         ),
         DropdownMenuItem(
-          value: NotificationSettings.NOTIFY_USER,
-          child: Text(localization.mine),
+          value: NotificationSettings.NOTIFY_OWNED,
+          child: Text(localization.owned),
         ),
         DropdownMenuItem(
           value: NotificationSettings.NOTIFY_NONE,

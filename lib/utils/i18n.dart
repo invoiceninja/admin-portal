@@ -17,7 +17,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       // STARTER: lang key - do not remove comment
       'permissions': 'Permissions',
       'none': 'None',
-      'mine': 'Mine',
+      'owned': 'Owned',
       'payment_success': 'Payment Success',
       'payment_failure': 'Payment Failure',
       'invoice_sent': 'Invoice Sent',
@@ -32918,7 +32918,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
 
   String get none => _localizedValues[localeCode]['none'];
 
-  String get mine => _localizedValues[localeCode]['mine'];
+  String get owned => _localizedValues[localeCode]['owned'];
 
   String get permissions => _localizedValues[localeCode]['permissions'];
 
