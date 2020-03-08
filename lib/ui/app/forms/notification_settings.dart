@@ -58,6 +58,7 @@ class NotificationSettings extends StatelessWidget {
                           : emailNotifications.contains(kNotificationsAllUser)
                               ? NOTIFY_OWNED
                               : null,
+                      showNoneAsCustom: true,
                       onChanged: (value) {
                         List<String> options = [];
                         if (value == NOTIFY_ALL) {
@@ -128,10 +129,12 @@ class _NotificationSelector extends StatelessWidget {
   const _NotificationSelector({
     @required this.value,
     @required this.onChanged,
+    this.showNoneAsCustom = false,
   });
 
   final String value;
   final Function(String) onChanged;
+  final bool showNoneAsCustom;
 
   @override
   Widget build(BuildContext context) {
@@ -157,7 +160,8 @@ class _NotificationSelector extends StatelessWidget {
         ),
         DropdownMenuItem(
           value: NotificationSettings.NOTIFY_NONE,
-          child: Text(localization.none),
+          child:
+              Text(showNoneAsCustom ? localization.custom : localization.none),
         ),
       ],
     );
