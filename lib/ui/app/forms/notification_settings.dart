@@ -33,8 +33,7 @@ class NotificationSettings extends StatelessWidget {
         notifications.containsKey(kNotificationChannelEmail)
             ? notifications[kNotificationChannelEmail]
             : BuiltList<String>();
-    final companies = companiesSelector(state);
-    final hasMultipleCompanies = companies.length > 1;
+    final hasMultipleUsers = state.userState.list.length > 1;
 
     return Column(
       mainAxisSize: MainAxisSize.min,
@@ -113,7 +112,7 @@ class NotificationSettings extends StatelessWidget {
                       DataCell(Text(localization.lookup(eventType))),
                       DataCell(isAllEnabled
                           ? value == NOTIFY_ALL
-                              ? Text(hasMultipleCompanies
+                              ? Text(hasMultipleUsers
                                   ? localization.all
                                   : localization.enabled)
                               : Text(localization.owned)
@@ -158,8 +157,7 @@ class _NotificationSelector extends StatelessWidget {
   Widget build(BuildContext context) {
     final localization = AppLocalization.of(context);
     final state = StoreProvider.of<AppState>(context).state;
-    final companies = companiesSelector(state);
-    final hasMultipleCompanies = companies.length > 1;
+    final hasMultipleUsers = state.userState.list.length > 1;
 
     return AppDropdownButton<String>(
       value: value,
@@ -172,10 +170,10 @@ class _NotificationSelector extends StatelessWidget {
       items: [
         DropdownMenuItem(
           value: NotificationSettings.NOTIFY_ALL,
-          child: Text(
-              hasMultipleCompanies ? localization.all : localization.enabled),
+          child:
+              Text(hasMultipleUsers ? localization.all : localization.enabled),
         ),
-        if (hasMultipleCompanies)
+        if (hasMultipleUsers)
           DropdownMenuItem(
             value: NotificationSettings.NOTIFY_OWNED,
             child: Text(localization.owned),
@@ -184,9 +182,7 @@ class _NotificationSelector extends StatelessWidget {
           value: NotificationSettings.NOTIFY_NONE,
           child: Text(showNoneAsCustom
               ? localization.custom
-              : hasMultipleCompanies
-                  ? localization.none
-                  : localization.disabled),
+              : hasMultipleUsers ? localization.none : localization.disabled),
         ),
       ],
     );
