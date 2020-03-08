@@ -8,6 +8,7 @@ import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:invoiceninja_flutter/redux/client/client_actions.dart';
 import 'package:invoiceninja_flutter/redux/company/company_actions.dart';
 import 'package:invoiceninja_flutter/redux/company/company_selectors.dart';
+import 'package:invoiceninja_flutter/redux/dashboard/dashboard_actions.dart';
 import 'package:invoiceninja_flutter/redux/ui/ui_actions.dart';
 import 'package:invoiceninja_flutter/ui/auth/login_vm.dart';
 import 'package:invoiceninja_flutter/utils/formatting.dart';
@@ -193,9 +194,7 @@ Middleware<AppState> _createRefreshRequest(AuthRepository repository) {
     url = formatApiUrl(prefs.getString(kSharedPrefUrl) ?? Config.TEST_URL);
     token = prefs.getString(kSharedPrefToken);
 
-    repository
-        .refresh(url: url, token: token)
-        .then((data) {
+    repository.refresh(url: url, token: token).then((data) {
       store.dispatch(LoadAccountSuccess(
           completer: action.completer,
           loginResponse: data,
@@ -248,6 +247,8 @@ Middleware<AppState> _createCompany(AuthRepository repository) {
           ..future.then<Null>((_) {
             final companies = companiesSelector(state);
             store.dispatch(SelectCompany(companies.length));
+            store.dispatch(ViewDashboard(
+                navigator: Navigator.of(action.context), force: true));
             store.dispatch(LoadClients());
           }),
       ));
