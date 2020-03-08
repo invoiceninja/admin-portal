@@ -5,6 +5,7 @@ import 'package:invoiceninja_flutter/constants.dart';
 import 'package:invoiceninja_flutter/data/models/entities.dart';
 import 'package:invoiceninja_flutter/data/models/user_model.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
+import 'package:invoiceninja_flutter/redux/company/company_selectors.dart';
 import 'package:invoiceninja_flutter/ui/app/form_card.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/app_dropdown_button.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
@@ -32,6 +33,8 @@ class NotificationSettings extends StatelessWidget {
         notifications.containsKey(kNotificationChannelEmail)
             ? notifications[kNotificationChannelEmail]
             : BuiltList<String>();
+    final companies = companiesSelector(state);
+    final hasMultipleCompanies = companies.length > 1;
 
     return Column(
       mainAxisSize: MainAxisSize.min,
@@ -110,7 +113,9 @@ class NotificationSettings extends StatelessWidget {
                       DataCell(Text(localization.lookup(eventType))),
                       DataCell(isAllEnabled
                           ? value == NOTIFY_ALL
-                              ? Text(localization.all)
+                              ? Text(hasMultipleCompanies
+                                  ? localization.all
+                                  : localization.enabled)
                               : Text(localization.owned)
                           : _NotificationSelector(
                               value: value,
@@ -152,6 +157,9 @@ class _NotificationSelector extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final localization = AppLocalization.of(context);
+    final state = StoreProvider.of<AppState>(context).state;
+    final companies = companiesSelector(state);
+    final hasMultipleCompanies = companies.length > 1;
 
     return AppDropdownButton<String>(
       value: value,
@@ -164,16 +172,21 @@ class _NotificationSelector extends StatelessWidget {
       items: [
         DropdownMenuItem(
           value: NotificationSettings.NOTIFY_ALL,
-          child: Text(localization.all),
+          child: Text(
+              hasMultipleCompanies ? localization.all : localization.enabled),
         ),
-        DropdownMenuItem(
-          value: NotificationSettings.NOTIFY_OWNED,
-          child: Text(localization.owned),
-        ),
+        if (hasMultipleCompanies)
+          DropdownMenuItem(
+            value: NotificationSettings.NOTIFY_OWNED,
+            child: Text(localization.owned),
+          ),
         DropdownMenuItem(
           value: NotificationSettings.NOTIFY_NONE,
-          child:
-              Text(showNoneAsCustom ? localization.custom : localization.none),
+          child: Text(showNoneAsCustom
+              ? localization.custom
+              : hasMultipleCompanies
+                  ? localization.none
+                  : localization.disabled),
         ),
       ],
     );
