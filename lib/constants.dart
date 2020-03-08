@@ -299,6 +299,7 @@ const int kModuleTickets = 128;
 const int kModuleProposals = 256;
 const int kModuleRecurringExpenses = 512;
 const int kModuleRecurringTasks = 1024;
+const int kModuleRecurringQuotes = 2048;
 
 const Map<int, String> kModules = {
   kModuleQuotes: 'quotes',
