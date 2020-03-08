@@ -7,6 +7,7 @@ import 'package:invoiceninja_flutter/constants.dart';
 import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:invoiceninja_flutter/redux/client/client_actions.dart';
 import 'package:invoiceninja_flutter/redux/company/company_actions.dart';
+import 'package:invoiceninja_flutter/redux/company/company_selectors.dart';
 import 'package:invoiceninja_flutter/redux/ui/ui_actions.dart';
 import 'package:invoiceninja_flutter/ui/auth/login_vm.dart';
 import 'package:invoiceninja_flutter/utils/formatting.dart';
@@ -246,7 +247,11 @@ Middleware<AppState> _createCompany(AuthRepository repository) {
       store.dispatch(RefreshData(
         platform: getPlatform(action.context),
         completer: Completer<Null>()
-          ..future.then<Null>((_) => store.dispatch(LoadClients())),
+          ..future.then<Null>((_) {
+            final companies = companiesSelector(state);
+            store.dispatch(SelectCompany(companies.length));
+            store.dispatch(LoadClients());
+          }),
       ));
     });
 
