@@ -43,7 +43,7 @@ class _InvoiceDesignState extends State<InvoiceDesign>
   void initState() {
     super.initState();
     _focusNode = FocusScopeNode();
-    _controller = TabController(vsync: this, length: 3);
+    _controller = TabController(vsync: this, length: 10);
   }
 
   @override
@@ -76,8 +76,25 @@ class _InvoiceDesignState extends State<InvoiceDesign>
             text: localization.invoiceOptions,
           ),
           Tab(
-            text: localization.invoiceFields,
+            text: localization.clientDetails,
           ),
+          Tab(
+            text: localization.companyDetails,
+          ),
+          Tab(
+            text: localization.companyAddress,
+          ),
+          Tab(
+            text: localization.invoiceDetails,
+          ),
+          Tab(
+            text: localization.quoteDetails,
+          ),
+          Tab(
+            text: localization.creditDetails,
+          ),
+          Tab(text: localization.productColumns),
+          Tab(text: localization.taskColumns),
         ],
       ),
       body: AppTabForm(
@@ -228,13 +245,115 @@ class _InvoiceDesignState extends State<InvoiceDesign>
           ),
           FormCard(
             child: MultiSelectList(
-              options: settings.pdfVariables[kPdfFieldsClientDetails].toList(),
-              defaultSelected:
-                  settings.pdfVariables[kPdfFieldsClientDetails].toList(),
-              selected: settings.pdfVariables[kPdfFieldsClientDetails].toList(),
+              options: [],
+              defaultSelected: [],
+              //selected: settings.pdfVariables[kPdfFieldsClientDetails].toList(),
+              selected: [],
               onSelected: (values) {
                 viewModel.onSettingsChanged(settings.rebuild((b) => b
                   ..pdfVariables[kPdfFieldsClientDetails] = BuiltList(values)));
+              },
+              addTitle: localization.addField,
+              liveChanges: true,
+            ),
+          ),
+          FormCard(
+            child: MultiSelectList(
+              options: [],
+              defaultSelected: [],
+              //selected: settings.pdfVariables[kPdfFieldsCompanyDetails].toList(),
+              selected: [],
+              onSelected: (values) {
+                viewModel.onSettingsChanged(settings.rebuild((b) => b
+                  ..pdfVariables[kPdfFieldsCompanyDetails] =
+                      BuiltList(values)));
+              },
+              addTitle: localization.addField,
+              liveChanges: true,
+            ),
+          ),
+          FormCard(
+            child: MultiSelectList(
+              options: [],
+              defaultSelected: [],
+              //selected: settings.pdfVariables[kPdfFieldsCompanyAddress].toList(),
+              selected: [],
+              onSelected: (values) {
+                viewModel.onSettingsChanged(settings.rebuild((b) => b
+                  ..pdfVariables[kPdfFieldsCompanyAddress] =
+                      BuiltList(values)));
+              },
+              addTitle: localization.addField,
+              liveChanges: true,
+            ),
+          ),
+          FormCard(
+            child: MultiSelectList(
+              options: [],
+              defaultSelected: [],
+              //selected: settings.pdfVariables[kPdfFieldsInvoiceDetails].toList(),
+              selected: [],
+              onSelected: (values) {
+                viewModel.onSettingsChanged(settings.rebuild((b) => b
+                  ..pdfVariables[kPdfFieldsInvoiceDetails] =
+                      BuiltList(values)));
+              },
+              addTitle: localization.addField,
+              liveChanges: true,
+            ),
+          ),
+          FormCard(
+            child: MultiSelectList(
+              options: [],
+              defaultSelected: [],
+              //selected: settings.pdfVariables[kPdfFieldsQuoteDetails].toList(),
+              selected: [],
+              onSelected: (values) {
+                viewModel.onSettingsChanged(settings.rebuild((b) => b
+                  ..pdfVariables[kPdfFieldsQuoteDetails] = BuiltList(values)));
+              },
+              addTitle: localization.addField,
+              liveChanges: true,
+            ),
+          ),
+          FormCard(
+            child: MultiSelectList(
+              options: [],
+              defaultSelected: [],
+              //selected: settings.pdfVariables[kPdfFieldsCreditDetails].toList(),
+              selected: [],
+              onSelected: (values) {
+                viewModel.onSettingsChanged(settings.rebuild((b) => b
+                  ..pdfVariables[kPdfFieldsCreditDetails] = BuiltList(values)));
+              },
+              addTitle: localization.addField,
+              liveChanges: true,
+            ),
+          ),
+          FormCard(
+            child: MultiSelectList(
+              options: [],
+              defaultSelected: [],
+              //selected: settings.pdfVariables[kPdfFieldsProductColumns].toList(),
+              selected: [],
+              onSelected: (values) {
+                viewModel.onSettingsChanged(settings.rebuild((b) => b
+                  ..pdfVariables[kPdfFieldsProductColumns] =
+                      BuiltList(values)));
+              },
+              addTitle: localization.addField,
+              liveChanges: true,
+            ),
+          ),
+          FormCard(
+            child: MultiSelectList(
+              options: [],
+              defaultSelected: [],
+              //selected: settings.pdfVariables[kPdfFieldsTaskColumns].toList(),
+              selected: [],
+              onSelected: (values) {
+                viewModel.onSettingsChanged(settings.rebuild((b) => b
+                  ..pdfVariables[kPdfFieldsTaskColumns] = BuiltList(values)));
               },
               addTitle: localization.addField,
               liveChanges: true,

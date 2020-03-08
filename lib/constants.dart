@@ -294,8 +294,8 @@ const String kPdfFieldsClientDetails = 'client_details';
 const String kPdfFieldsCompanyDetails = 'company_details';
 const String kPdfFieldsCompanyAddress = 'company_address';
 const String kPdfFieldsInvoiceDetails = 'invoice_details';
-const String kPdfFieldsQuoteColumns = 'quote_details';
-const String kPdfFieldsCreditColumns = 'credit_details';
+const String kPdfFieldsQuoteDetails = 'quote_details';
+const String kPdfFieldsCreditDetails = 'credit_details';
 const String kPdfFieldsProductColumns = 'product_columns';
 const String kPdfFieldsTaskColumns = 'task_columns';
 
