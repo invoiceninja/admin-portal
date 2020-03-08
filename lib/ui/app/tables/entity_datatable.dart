@@ -4,6 +4,7 @@ import 'package:flutter_redux/flutter_redux.dart';
 import 'package:invoiceninja_flutter/data/models/entities.dart';
 import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
+import 'package:invoiceninja_flutter/redux/ui/pref_state.dart';
 import 'package:invoiceninja_flutter/ui/app/actions_menu_button.dart';
 import 'package:invoiceninja_flutter/ui/app/lists/list_filter.dart';
 import 'package:invoiceninja_flutter/ui/app/presenters/entity_presenter.dart';
@@ -60,17 +61,18 @@ class EntityDataTableSource extends DataTableSource {
           DataCell(
             Row(
               children: <Widget>[
-                Text(
-                  '•',
-                  style: TextStyle(
-                      color: (state.uiState.isEditing
-                              ? entity.id == editingId
-                              : entity.id == uIState.selectedId)
-                          ? Theme.of(context).accentColor
-                          : Colors.transparent,
-                      fontSize: 30,
-                      fontWeight: FontWeight.bold),
-                ),
+                if (state.prefState.isPreviewVisible || state.uiState.isEditing)
+                  Text(
+                    '•',
+                    style: TextStyle(
+                        color: (state.uiState.isEditing
+                                ? entity.id == editingId
+                                : entity.id == uIState.selectedId)
+                            ? Theme.of(context).accentColor
+                            : Colors.transparent,
+                        fontSize: 30,
+                        fontWeight: FontWeight.bold),
+                  ),
                 ActionMenuButton(
                   entityActions: entity.getActions(
                       userCompany: state.userCompany,
