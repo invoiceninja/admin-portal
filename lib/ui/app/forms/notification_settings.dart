@@ -24,8 +24,6 @@ class NotificationSettings extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    print('## build: ${user.userCompany.notifications}');
-
     final localization = AppLocalization.of(context);
     final notifications =
         user.userCompany.notifications ?? BuiltMap<String, BuiltList<String>>();
@@ -74,7 +72,7 @@ class NotificationSettings extends StatelessWidget {
                                       .contains('${eventType}_all')
                                   ? NOTIFY_ALL
                                   : emailNotifications
-                                          .contains('${eventType}_MINE')
+                                          .contains('${eventType}_user')
                                       ? NOTIFY_MINE
                                       : NOTIFY_NONE,
                               onChanged: (value) {
