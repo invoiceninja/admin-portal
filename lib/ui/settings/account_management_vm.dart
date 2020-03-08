@@ -9,6 +9,7 @@ import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:invoiceninja_flutter/redux/auth/auth_actions.dart';
 import 'package:invoiceninja_flutter/redux/company/company_actions.dart';
 import 'package:invoiceninja_flutter/redux/company/company_selectors.dart';
+import 'package:invoiceninja_flutter/redux/dashboard/dashboard_actions.dart';
 import 'package:invoiceninja_flutter/redux/settings/settings_actions.dart';
 import 'package:invoiceninja_flutter/ui/settings/account_management.dart';
 import 'package:invoiceninja_flutter/utils/completers.dart';
@@ -66,9 +67,7 @@ class AccountManagementVM {
                   }
                 }
                 store.dispatch(SelectCompany(index));
-                store.dispatch(ViewSettings(
-                    navigator: Navigator.of(context),
-                    section: kSettingsCompanyDetails));
+                store.dispatch(ViewDashboard(navigator: Navigator.of(context)));
 
                 final completer = snackBarCompleter<Null>(
                     context, AppLocalization.of(context).refreshComplete);
@@ -76,7 +75,6 @@ class AccountManagementVM {
                   completer: completer,
                   loadCompanies: false,
                 ));
-
               } else {
                 store.dispatch(UserLogout(context));
               }
