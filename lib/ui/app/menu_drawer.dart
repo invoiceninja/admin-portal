@@ -456,6 +456,7 @@ class SidebarFooter extends StatelessWidget {
   Widget build(BuildContext context) {
     final state = StoreProvider.of<AppState>(context).state;
     final localization = AppLocalization.of(context);
+    final account = state.userCompany.account;
 
     return Container(
       color: Theme.of(context).bottomAppBarColor,
@@ -465,7 +466,7 @@ class SidebarFooter extends StatelessWidget {
           if (state.prefState.isMenuCollapsed) ...[
             Expanded(child: SizedBox())
           ] else ...[
-            if (true || isSelfHosted(context))
+            if (account.currentVersion != account.latestVersion)
               IconButton(
                 icon: Icon(
                   Icons.warning,

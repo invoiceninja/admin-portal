@@ -28,6 +28,8 @@ class _UpdateDialogState extends State<UpdateDialog> {
   @override
   Widget build(BuildContext context) {
     final localization = AppLocalization.of(context);
+    final state = StoreProvider.of<AppState>(context).state;
+    final account = state.userCompany.account;
 
     return AlertDialog(
       title: Text(localization.updateAvailable),
@@ -44,8 +46,11 @@ class _UpdateDialogState extends State<UpdateDialog> {
                   children: <Widget>[
                     Text(localization.aNewVersionIsAvailable),
                     SizedBox(height: 20),
-                    Text('• ${localization.currentVersion}: v$kAppVersion'),
-                    //Text('• ${localization.latestVersion}: v???'),
+                    Text(
+                        '• ${localization.currentVersion}: v${account.currentVersion}'),
+                    SizedBox(height: 6),
+                    Text(
+                        '• ${localization.latestVersion}: v${account.latestVersion}'),
                   ],
                 ),
       actions: <Widget>[

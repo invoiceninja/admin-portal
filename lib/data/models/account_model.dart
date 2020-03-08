@@ -28,7 +28,6 @@ abstract class AccountEntity
   @BuiltValueField(wireName: 'latest_version')
   String get latestVersion;
 
-  @nullable
   @BuiltValueField(wireName: 'current_version')
   String get currentVersion;
 
