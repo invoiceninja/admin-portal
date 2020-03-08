@@ -89,7 +89,13 @@ class NotificationSettings extends StatelessWidget {
                     return true;
                   }).map((eventType) {
                     String value;
-                    if (emailNotifications.contains('${eventType}_all')) {
+                    if (emailNotifications.contains(kNotificationsAll)) {
+                      value = NOTIFY_ALL;
+                    } else if (emailNotifications
+                        .contains(kNotificationsAllUser)) {
+                      value = NOTIFY_OWNED;
+                    } else if (emailNotifications
+                        .contains('${eventType}_all')) {
                       value = NOTIFY_ALL;
                     } else if (emailNotifications
                         .contains('${eventType}_user')) {
