@@ -43,7 +43,7 @@ class NotificationSettings extends StatelessWidget {
               DataTable(
                 columns: [
                   DataColumn(
-                    label: Text(localization.notifications),
+                    label: SizedBox(),
                   ),
                   DataColumn(
                     label: Text(localization.email),
@@ -53,17 +53,17 @@ class NotificationSettings extends StatelessWidget {
                   DataRow(cells: [
                     DataCell(Text(localization.all)),
                     DataCell(_NotificationSelector(
-                      value: null,
+                      value: emailNotifications.contains(kNotificationsAll)
+                          ? NOTIFY_ALL
+                          : emailNotifications.contains(kNotificationsAllUser)
+                              ? NOTIFY_OWNED
+                              : null,
                       onChanged: (value) {
                         List<String> options = [];
                         if (value == NOTIFY_ALL) {
-                          options = kNotificationEvents
-                              .map((eventType) => '${eventType}_all')
-                              .toList();
+                          options = [kNotificationsAll];
                         } else if (value == NOTIFY_OWNED) {
-                          options = kNotificationEvents
-                              .map((eventType) => '${eventType}_user')
-                              .toList();
+                          options = [kNotificationsAllUser];
                         }
                         onChanged(kNotificationChannelEmail, options);
                       },

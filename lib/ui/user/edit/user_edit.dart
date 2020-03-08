@@ -216,7 +216,7 @@ class _UserEditState extends State<UserEdit>
                     child: DataTable(
                       columns: [
                         DataColumn(
-                          label: Text(localization.permissions),
+                          label: SizedBox(),
                         ),
                         DataColumn(
                           label: Text(localization.create),
