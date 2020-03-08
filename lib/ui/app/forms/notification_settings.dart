@@ -1,7 +1,10 @@
 import 'package:built_collection/built_collection.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_redux/flutter_redux.dart';
 import 'package:invoiceninja_flutter/constants.dart';
+import 'package:invoiceninja_flutter/data/models/entities.dart';
 import 'package:invoiceninja_flutter/data/models/user_model.dart';
+import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/ui/app/form_card.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/app_dropdown_button.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
@@ -21,6 +24,7 @@ class NotificationSettings extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final state = StoreProvider.of<AppState>(context).state;
     final localization = AppLocalization.of(context);
     final notifications =
         user.userCompany.notifications ?? BuiltMap<String, BuiltList<String>>();
@@ -39,7 +43,7 @@ class NotificationSettings extends StatelessWidget {
               DataTable(
                 columns: [
                   DataColumn(
-                    label: SizedBox(),
+                    label: Text(localization.notifications),
                   ),
                   DataColumn(
                     label: Text(localization.email),
@@ -65,7 +69,24 @@ class NotificationSettings extends StatelessWidget {
                       },
                     ))
                   ]),
-                  ...kNotificationEvents.map((eventType) {
+                  ...kNotificationEvents.where((eventType) {
+                    if ([
+                          kNotificationsQuoteSent,
+                          kNotificationsQuoteViewed,
+                          kNotificationsQuoteApproved
+                        ].contains(eventType) &&
+                        !state.company.isModuleEnabled(EntityType.quote)) {
+                      return false;
+                    } else if ([
+                          kNotificationsCreditSent,
+                          kNotificationsCreditViewed,
+                        ].contains(eventType) &&
+                        !state.company.isModuleEnabled(EntityType.credit)) {
+                      return false;
+                    }
+
+                    return true;
+                  }).map((eventType) {
                     String value;
                     if (emailNotifications.contains('${eventType}_all')) {
                       value = NOTIFY_ALL;
