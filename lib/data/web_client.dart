@@ -185,6 +185,7 @@ String _parseError(int code, String response) {
     message = jsonResponse['message'] ?? jsonResponse;
 
     if (jsonResponse['errors'] != null) {
+      message += '\n';
       try {
         jsonResponse['errors'].forEach((String field, dynamic errors) {
           (errors as List<dynamic>)

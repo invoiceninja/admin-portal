@@ -17,6 +17,7 @@ import 'package:invoiceninja_flutter/data/models/design_model.dart';
 import 'package:invoiceninja_flutter/ui/design/edit/design_edit.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/utils/completers.dart';
+
 class DesignEditScreen extends StatelessWidget {
   const DesignEditScreen({Key key}) : super(key: key);
   static const String route = '/$kSettings/$kSettingsCustomDesignsEdit';
@@ -70,7 +71,7 @@ class DesignEditVM {
       },
       onSavePressed: (BuildContext context) {
         final completer = snackBarCompleter<DesignEntity>(
-            context, AppLocalization.of(context).savedSettings);
+            context, AppLocalization.of(context).savedDesign);
         store.dispatch(SaveDesignRequest(completer: completer, design: design));
       },
     );
