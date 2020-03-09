@@ -363,9 +363,9 @@ class _PaymentableEditorState extends State<PaymentableEditor> {
               labelText: AppLocalization.of(context).credit,
               entityId: paymentable.creditId,
               entityList: memoizedDropdownCreditList(
-                  state.invoiceState.map,
+                  state.creditState.map,
                   state.clientState.map,
-                  state.invoiceState.list,
+                  state.creditState.list,
                   payment.clientId),
               onSelected: (selected) {
                 final credit = selected as InvoiceEntity;
@@ -394,8 +394,13 @@ class _PaymentableEditorState extends State<PaymentableEditor> {
           onPressed: paymentable.isEmpty
               ? null
               : () {
-                  viewModel.onChanged(payment
-                      .rebuild((b) => b..invoices.removeAt(widget.index)));
+                  if (widget.entityType == EntityType.invoice) {
+                    viewModel.onChanged(payment
+                        .rebuild((b) => b..invoices.removeAt(widget.index)));
+                  } else {
+                    viewModel.onChanged(payment
+                        .rebuild((b) => b..credits.removeAt(widget.index)));
+                  }
                 },
         ),
       ],
