@@ -381,7 +381,7 @@ class _DesignPreviewState extends State<DesignPreview> {
   void didUpdateWidget(oldWidget) {
     super.didUpdateWidget(oldWidget);
 
-    if (_scrollController.hasClients) {
+    if (_scrollController.hasClients && _scrollPosition > 0) {
       WidgetsBinding.instance.addPostFrameCallback((duration) {
         _scrollController.jumpTo(_scrollPosition);
       });
