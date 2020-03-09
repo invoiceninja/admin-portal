@@ -117,10 +117,10 @@ class _$DesignPreviewRequestSerializer
       Serializers serializers, DesignPreviewRequest object,
       {FullType specifiedType = FullType.unspecified}) {
     final result = <Object>[
-      'entityType',
+      'entity_type',
       serializers.serialize(object.entityType,
           specifiedType: const FullType(EntityType)),
-      'entityId',
+      'entity_id',
       serializers.serialize(object.entityId,
           specifiedType: const FullType(String)),
       'design',
@@ -143,11 +143,11 @@ class _$DesignPreviewRequestSerializer
       iterator.moveNext();
       final dynamic value = iterator.current;
       switch (key) {
-        case 'entityType':
+        case 'entity_type':
           result.entityType = serializers.deserialize(value,
               specifiedType: const FullType(EntityType)) as EntityType;
           break;
-        case 'entityId':
+        case 'entity_id':
           result.entityId = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String;
           break;

@@ -50,8 +50,10 @@ abstract class DesignPreviewRequest
 
   DesignPreviewRequest._();
 
+  @BuiltValueField(wireName: 'entity_type')
   EntityType get entityType;
 
+  @BuiltValueField(wireName: 'entity_id')
   String get entityId;
 
   DesignEntity get design;
