@@ -190,6 +190,9 @@ const String kGenerateNumberWhenSaved = 'when_saved';
 const String kGenerateNumberWhenSent = 'when_sent';
 //const String kNumberGeneratedWhenPaid = 'paid';
 
+
+const String kDesignCleanId = 'Wpmbk5ezJn';
+
 const String kDesignHeader = 'header';
 const String kDesignBody = 'body';
 const String kDesignFooter = 'footer';
