@@ -401,24 +401,19 @@ class _DesignPreviewState extends State<DesignPreview> {
 
   @override
   Widget build(BuildContext context) {
-    if (widget.pdfPageImage == null) {
-      return Container(
-        color: Colors.grey,
-      );
-    }
-
     return Container(
       color: Colors.grey,
       child: Stack(
         children: <Widget>[
           if (widget.isLoading) LinearProgressIndicator(),
-          SingleChildScrollView(
-            controller: _scrollController,
-            child: ExtendedImage.memory(
-              widget.pdfPageImage.bytes,
-              fit: BoxFit.contain,
-            ),
-          )
+          if (widget.pdfPageImage != null)
+            SingleChildScrollView(
+              controller: _scrollController,
+              child: ExtendedImage.memory(
+                widget.pdfPageImage.bytes,
+                fit: BoxFit.contain,
+              ),
+            )
         ],
       ),
     );
