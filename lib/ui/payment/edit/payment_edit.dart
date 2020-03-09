@@ -251,20 +251,9 @@ class PaymentableEditor extends StatefulWidget {
 
 class _PaymentableEditorState extends State<PaymentableEditor> {
   final _amountController = TextEditingController();
-  String _invoiceId = '';
-  String _creditId = '';
+  String _invoiceId;
+  String _creditId;
   List<TextEditingController> _controllers = [];
-
-  @override
-  void initState() {
-    super.initState();
-
-    if (widget.entityType == EntityType.invoice) {
-      _invoiceId = widget.paymentable.invoiceId;
-    } else {
-      _creditId = widget.paymentable.creditId;
-    }
-  }
 
   @override
   void didChangeDependencies() {
@@ -296,11 +285,11 @@ class _PaymentableEditorState extends State<PaymentableEditor> {
     PaymentableEntity paymentable;
     if (widget.entityType == EntityType.invoice) {
       paymentable = widget.paymentable.rebuild((b) => b
-        ..invoiceId = _invoiceId
+        ..invoiceId = _invoiceId ?? widget.paymentable.invoiceId
         ..amount = parseDouble(_amountController.text));
     } else {
       paymentable = widget.paymentable.rebuild((b) => b
-        ..creditId = _creditId
+        ..creditId = _creditId ?? widget.paymentable.creditId
         ..amount = parseDouble(_amountController.text));
     }
 
