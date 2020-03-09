@@ -158,7 +158,8 @@ class _DesignEditState extends State<DesignEdit>
           final document = await PDFDocument.openData(response.bodyBytes);
 
           final page = await document.getPage(1);
-          final pageImage = await page.render(width: page.width, height: page.height);
+          final pageImage =
+              await page.render(width: page.width, height: page.height);
           page.close();
 
           setState(() {
@@ -342,19 +343,26 @@ class DesignSettings extends StatelessWidget {
 }
 
 class DesignPreview extends StatelessWidget {
-
   const DesignPreview(this.pdfPageImage);
+
   final PDFPageImage pdfPageImage;
 
   @override
   Widget build(BuildContext context) {
     if (pdfPageImage == null) {
-      return Container();
+      return Container(
+        color: Colors.grey,
+      );
     }
 
-    return ExtendedImage.memory(
-      pdfPageImage.bytes,
-      fit: BoxFit.fitHeight,
+    return Container(
+      color: Colors.grey,
+      child: SingleChildScrollView(
+        child: ExtendedImage.memory(
+          pdfPageImage.bytes,
+          fit: BoxFit.contain,
+        ),
+      ),
     );
   }
 }
