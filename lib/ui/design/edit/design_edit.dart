@@ -87,6 +87,8 @@ class _DesignEditState extends State<DesignEdit>
 
     _controllers.forEach((controller) => controller.addListener(_onChanged));
 
+    _loadDesign(design);
+
     super.didChangeDependencies();
   }
 
