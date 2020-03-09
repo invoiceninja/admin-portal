@@ -132,7 +132,7 @@ class DesignListVM {
         if (store.state.designListState.isInMultiselect()) {
           handleDesignAction(context, [design], EntityAction.toggleMultiselect);
         } else {
-          viewEntity(context: context, entity: design);
+          editEntity(context: context, entity: design);
         }
       },
       onEntityAction: (BuildContext context, List<BaseEntity> designs,

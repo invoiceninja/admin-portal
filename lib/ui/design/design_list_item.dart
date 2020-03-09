@@ -49,10 +49,7 @@ class DesignListItem extends StatelessWidget {
     return DismissibleEntity(
       userCompany: state.userCompany,
       entity: design,
-      isSelected: design.id ==
-          (uiState.isEditing
-              ? designUIState.editing.id
-              : designUIState.selectedId),
+      isSelected: false,
       onEntityAction: onEntityAction,
       child: ListTile(
         onTap: isInMultiselect

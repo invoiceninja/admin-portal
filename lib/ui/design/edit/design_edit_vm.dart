@@ -79,7 +79,7 @@ class DesignEditVM {
               Navigator.of(context).pop(savedDesign);
             }
           } else {
-            viewEntity(context: context, entity: savedDesign, force: true);
+            editEntity(context: context, entity: savedDesign);
           }
         }).catchError((Object error) {
           showDialog<ErrorDialog>(
