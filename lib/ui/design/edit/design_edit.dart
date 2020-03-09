@@ -38,7 +38,7 @@ class _DesignEditState extends State<DesignEdit>
   static final GlobalKey<FormState> _formKey =
       GlobalKey<FormState>(debugLabel: '_designEdit');
 
-  final _debouncer = Debouncer(milliseconds: 3000);
+  final _debouncer = Debouncer(milliseconds: 2000);
 
   final _nameController = TextEditingController();
   final _headerController = TextEditingController();
@@ -366,9 +366,9 @@ class DesignPreview extends StatefulWidget {
 class _DesignPreviewState extends State<DesignPreview> {
   double _scrollPosition = 0;
   final _scrollController = ScrollController(
-      //initialScrollOffset: 0,
-      //keepScrollOffset: true,
-      );
+    //initialScrollOffset: 0,
+    keepScrollOffset: true,
+  );
 
   @override
   void initState() {
@@ -403,8 +403,8 @@ class _DesignPreviewState extends State<DesignPreview> {
   Widget build(BuildContext context) {
     return Container(
       color: Colors.grey,
+      alignment: Alignment.center,
       child: Stack(
-        alignment: Alignment.topCenter,
         children: <Widget>[
           if (widget.pdfPageImage != null)
             SingleChildScrollView(
