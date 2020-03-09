@@ -151,19 +151,7 @@ abstract class DesignEntity extends Object
       return response;
     }
   }
-
-  bool matchesSearch(String filter) {
-    if (filter == null || filter.isEmpty) {
-      return true;
-    }
-
-    filter = filter.toLowerCase();
-
-    // STARTER: filter - do not remove comment
-
-    return false;
-  }
-
+  
   @override
   bool matchesFilter(String filter) {
     if (filter == null || filter.isEmpty) {

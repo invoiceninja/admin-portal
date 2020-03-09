@@ -96,18 +96,6 @@ abstract class StubEntity extends Object with BaseEntity implements Built<StubEn
     }
   }
 
-  bool matchesSearch(String filter) {
-    if (filter == null || filter.isEmpty) {
-      return true;
-    }
-
-    filter = filter.toLowerCase();
-
-    // STARTER: filter - do not remove comment
-
-    return false;
-  }
-
   @override
   bool matchesFilter(String filter) {
     if (filter == null || filter.isEmpty) {
