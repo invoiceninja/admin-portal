@@ -62,7 +62,7 @@ final editingReducer = combineReducers<InvoiceEntity>([
     final client = action.client;
     return invoice.rebuild((b) => b
       ..isChanged = true
-      ..clientId = client?.id
+      ..clientId = client?.id ?? ''
       ..invitations.addAll((client?.contacts ?? <ContactEntity>[])
           .where((contact) => contact.sendEmail)
           .map((contact) => InvitationEntity(contactId: contact.id))));
