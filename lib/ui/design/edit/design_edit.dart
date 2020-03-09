@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:built_collection/built_collection.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -299,11 +301,20 @@ class DesignSection extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            TextField(
-              controller: textController,
-              keyboardType: TextInputType.multiline,
-              maxLines: 99999,
-              autofocus: true,
+            Card(
+              child: Padding(
+                padding: const EdgeInsets.all(8),
+                child: TextField(
+                  controller: textController,
+                  keyboardType: TextInputType.multiline,
+                  maxLines: 9999,
+                  autofocus: true,
+                  style: TextStyle(
+                    fontFeatures: [FontFeature.tabularFigures()],
+                    //fontSize: 30,
+                  ),
+                ),
+              ),
             )
           ],
         ),
