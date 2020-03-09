@@ -404,8 +404,8 @@ class _DesignPreviewState extends State<DesignPreview> {
     return Container(
       color: Colors.grey,
       child: Stack(
+        alignment: Alignment.topCenter,
         children: <Widget>[
-          if (widget.isLoading) LinearProgressIndicator(),
           if (widget.pdfPageImage != null)
             SingleChildScrollView(
               controller: _scrollController,
@@ -414,6 +414,12 @@ class _DesignPreviewState extends State<DesignPreview> {
                 fit: BoxFit.contain,
               ),
             )
+          else
+            SizedBox(
+              width: double.infinity,
+              height: double.infinity,
+            ),
+          if (widget.isLoading) LinearProgressIndicator(),
         ],
       ),
     );
