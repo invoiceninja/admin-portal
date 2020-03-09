@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:built_collection/built_collection.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -7,7 +9,6 @@ import 'package:invoiceninja_flutter/data/models/design_model.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/ui/app/edit_scaffold.dart';
 import 'package:invoiceninja_flutter/ui/app/form_card.dart';
-import 'package:invoiceninja_flutter/ui/app/forms/app_dropdown_button.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/app_form.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/decorated_form_field.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/design_picker.dart';
@@ -16,17 +17,7 @@ import 'package:invoiceninja_flutter/utils/designs.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:invoiceninja_flutter/utils/completers.dart';
 import 'package:invoiceninja_flutter/utils/platforms.dart';
-import 'dart:async';
-import 'dart:io';
-import 'package:flutter/material.dart';
-import 'package:invoiceninja_flutter/data/models/invoice_model.dart';
-import 'package:flutter/foundation.dart';
-import 'package:invoiceninja_flutter/ui/app/loading_indicator.dart';
-import 'package:invoiceninja_flutter/utils/dialogs.dart';
-import 'package:invoiceninja_flutter/utils/localization.dart';
-import 'package:invoiceninja_flutter/utils/platforms.dart';
 import 'package:native_pdf_view/native_pdf_view.dart';
-import 'package:url_launcher/url_launcher.dart';
 import 'package:native_pdf_renderer/native_pdf_renderer.dart';
 
 class DesignEdit extends StatefulWidget {
@@ -45,7 +36,8 @@ class _DesignEditState extends State<DesignEdit>
     with SingleTickerProviderStateMixin {
   static final GlobalKey<FormState> _formKey =
       GlobalKey<FormState>(debugLabel: '_designEdit');
-  final _debouncer = Debouncer();
+
+  final _debouncer = Debouncer(milliseconds: 3000);
 
   final _nameController = TextEditingController();
   final _headerController = TextEditingController();
@@ -56,7 +48,7 @@ class _DesignEditState extends State<DesignEdit>
   final _includesController = TextEditingController();
 
   FocusScopeNode _focusNode;
-  TabController _controller;
+  TabController _tabController;
   PDFPageImage _pdfPageImage;
 
   List<TextEditingController> _controllers;
@@ -65,7 +57,7 @@ class _DesignEditState extends State<DesignEdit>
   void initState() {
     super.initState();
     _focusNode = FocusScopeNode();
-    _controller = TabController(
+    _tabController = TabController(
         vsync: this, length: widget.viewModel.state.prefState.isMobile ? 7 : 6);
   }
 
@@ -101,7 +93,7 @@ class _DesignEditState extends State<DesignEdit>
   @override
   void dispose() {
     _focusNode.dispose();
-    _controller.dispose();
+    _tabController.dispose();
     _controllers.forEach((controller) {
       controller.removeListener(_onChanged);
       controller.dispose();
@@ -143,20 +135,14 @@ class _DesignEditState extends State<DesignEdit>
   }
 
   void _loadPreview(BuildContext context, DesignEntity design) async {
-    print('## _loadDesign');
-
     loadDesign(
         context: context,
         design: design,
         onStart: (value) {
-          print('## START: $value');
+          //
         },
         onComplete: (response) async {
-          print('## START: $response');
-
-          //final bytes = await consolidateHttpClientResponseBytes(value);
           final document = await PDFDocument.openData(response.bodyBytes);
-
           final page = await document.getPage(1);
           final pageImage =
               await page.render(width: page.width, height: page.height);
@@ -180,7 +166,7 @@ class _DesignEditState extends State<DesignEdit>
         appBarBottom: isMobile(context)
             ? TabBar(
                 //key: ValueKey(state.settingsUIState.updatedAt),
-                controller: _controller,
+                controller: _tabController,
                 isScrollable: true,
                 tabs: [
                   Tab(text: localization.settings),
@@ -211,7 +197,7 @@ class _DesignEditState extends State<DesignEdit>
         },
         body: isMobile(context)
             ? AppTabForm(
-                tabController: _controller,
+                tabController: _tabController,
                 formKey: _formKey,
                 focusNode: _focusNode,
                 children: <Widget>[
@@ -219,7 +205,9 @@ class _DesignEditState extends State<DesignEdit>
                       nameController: _nameController,
                       onLoadDesign: _loadDesign,
                     ),
-                    DesignPreview(_pdfPageImage),
+                    DesignPreview(
+                      pdfPageImage: _pdfPageImage,
+                    ),
                     DesignSection(textController: _headerController),
                     DesignSection(textController: _bodyController),
                     DesignSection(textController: _footerController),
@@ -236,7 +224,7 @@ class _DesignEditState extends State<DesignEdit>
                       child: Column(
                         children: <Widget>[
                           TabBar(
-                            controller: _controller,
+                            controller: _tabController,
                             isScrollable: true,
                             tabs: <Widget>[
                               Tab(text: localization.settings),
@@ -250,7 +238,7 @@ class _DesignEditState extends State<DesignEdit>
                           ),
                           Expanded(
                             child: TabBarView(
-                              controller: _controller,
+                              controller: _tabController,
                               children: <Widget>[
                                 DesignSettings(
                                   nameController: _nameController,
@@ -273,7 +261,7 @@ class _DesignEditState extends State<DesignEdit>
                       ),
                     ),
                     Expanded(
-                      child: DesignPreview(_pdfPageImage),
+                      child: DesignPreview(pdfPageImage: _pdfPageImage),
                     ),
                   ],
                 ),
@@ -342,14 +330,54 @@ class DesignSettings extends StatelessWidget {
   }
 }
 
-class DesignPreview extends StatelessWidget {
-  const DesignPreview(this.pdfPageImage);
+class DesignPreview extends StatefulWidget {
+  const DesignPreview({@required this.pdfPageImage});
 
   final PDFPageImage pdfPageImage;
 
   @override
+  _DesignPreviewState createState() => _DesignPreviewState();
+}
+
+class _DesignPreviewState extends State<DesignPreview> {
+  double _scrollPosition = 0;
+  final _scrollController = ScrollController(
+      //initialScrollOffset: 0,
+      //keepScrollOffset: true,
+      );
+
+  @override
+  void initState() {
+    super.initState();
+    _scrollController.addListener(onScrolled);
+  }
+
+  void onScrolled() {
+    _scrollPosition = _scrollController.offset;
+  }
+
+  @override
+  void didUpdateWidget(oldWidget) {
+    super.didUpdateWidget(oldWidget);
+
+    if (_scrollController.hasClients) {
+      WidgetsBinding.instance.addPostFrameCallback((duration) {
+        _scrollController.jumpTo(_scrollPosition);
+      });
+    }
+  }
+
+  @override
+  void dispose() {
+    _scrollController.removeListener(onScrolled);
+    _scrollController.dispose();
+
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
-    if (pdfPageImage == null) {
+    if (widget.pdfPageImage == null) {
       return Container(
         color: Colors.grey,
       );
@@ -358,8 +386,9 @@ class DesignPreview extends StatelessWidget {
     return Container(
       color: Colors.grey,
       child: SingleChildScrollView(
+        controller: _scrollController,
         child: ExtendedImage.memory(
-          pdfPageImage.bytes,
+          widget.pdfPageImage.bytes,
           fit: BoxFit.contain,
         ),
       ),
