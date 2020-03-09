@@ -109,7 +109,7 @@ class _EntityListState extends State<EntityList> {
           entityId: entityList.isEmpty ? null : entityList.first,
         );
       });
-    }  
+    }
 
     final listOrTable = () {
       if (isList) {
@@ -158,6 +158,9 @@ class _EntityListState extends State<EntityList> {
               entityType: widget.entityType,
               onClearPressed: widget.onClearEntityFilterPressed,
             ),
+            sortColumnIndex:
+                widget.tableColumns.indexOf(listUIState.sortField) + 1,
+            sortAscending: listUIState.sortAscending,
           ),
         ));
       }
