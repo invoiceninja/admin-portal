@@ -272,10 +272,8 @@ abstract class AppState implements Built<AppState, AppStateBuilder> {
       // STARTER: states switch - do not remove comment
       case EntityType.design:
         return designUIState;
-
       case EntityType.credit:
         return creditUIState;
-
       case EntityType.user:
         return userUIState;
       case EntityType.taxRate:
@@ -510,6 +508,7 @@ abstract class AppState implements Built<AppState, AppStateBuilder> {
     //return 'PDF Variables: ${uiState.settingsUIState.settings.pdfVariables}';
     //return 'Account: ${userCompany.account}';
     //return 'Notifications: ${user.userCompany.notifications} ${uiState.settingsUIState.user.userCompany.notifications}';
+    return 'SORT: Sort Ascending: ${uiState.productUIState.listUIState.sortAscending}';
     return 'Layout: ${prefState.appLayout}, Route: ${uiState.currentRoute} Prev: ${uiState.previousRoute}';
   }
 }
