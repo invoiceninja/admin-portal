@@ -172,6 +172,10 @@ abstract class DesignEntity extends Object
 
     filter = filter.toLowerCase();
 
+    if (name.toLowerCase().contains(filter)) {
+      return true;
+    }
+
     return false;
   }
 
