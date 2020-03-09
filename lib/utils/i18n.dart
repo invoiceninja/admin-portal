@@ -698,6 +698,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'custom': 'Custom',
       'clone_to_invoice': 'Clone to Invoice',
       'clone_to_quote': 'Clone to Quote',
+      'clone_to_credit': 'Clone to Credit',
       'view_invoice': 'View Invoice',
       'convert': 'Convert',
       'more': 'More',
@@ -32946,6 +32947,8 @@ mixin LocalizationsProvider on LocaleCodeAware {
   String get productColumns => _localizedValues[localeCode]['product_columns'];
 
   String get taskColumns => _localizedValues[localeCode]['task_columns'];
+
+  String get cloneToCredit => _localizedValues[localeCode]['clone_to_credit'];
 
   String lookup(String key) {
     final lookupKey = toSnakeCase(key);

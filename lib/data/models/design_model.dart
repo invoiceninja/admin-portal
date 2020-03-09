@@ -34,6 +34,32 @@ abstract class DesignItemResponse
       _$designItemResponseSerializer;
 }
 
+abstract class DesignPreviewRequest
+    implements Built<DesignPreviewRequest, DesignPreviewRequestBuilder> {
+  factory DesignPreviewRequest({
+    EntityType entityType,
+    String entityId,
+    DesignEntity design,
+  }) {
+    return _$DesignPreviewRequest._(
+      entityType: entityType,
+      entityId: entityId,
+      design: design,
+    );
+  }
+
+  DesignPreviewRequest._();
+
+  EntityType get entityType;
+
+  String get entityId;
+
+  DesignEntity get design;
+
+  static Serializer<DesignPreviewRequest> get serializer =>
+      _$designPreviewRequestSerializer;
+}
+
 class DesignFields {
   static const String name = 'name';
   static const String updatedAt = 'updated_at';
@@ -67,7 +93,6 @@ abstract class DesignEntity extends Object
   String get name;
 
   // TODO REMOVE THIS
-  @BuiltValueField(serialize: false)
   BuiltMap<String, String> get design;
 
   @BuiltValueField(wireName: 'is_custom')

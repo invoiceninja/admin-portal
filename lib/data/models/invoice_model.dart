@@ -502,7 +502,12 @@ abstract class InvoiceEntity extends Object
 
     if (userCompany.canCreate(EntityType.invoice) && !multiselect) {
       actions.add(EntityAction.cloneToInvoice);
-      actions.add(EntityAction.cloneToQuote);
+      if (userCompany.company?.isModuleEnabled(EntityType.quote) ?? false) {
+        actions.add(EntityAction.cloneToQuote);
+      }
+      if (userCompany.company?.isModuleEnabled(EntityType.credit) ?? false) {
+        actions.add(EntityAction.cloneToCredit);
+      }
       actions.add(null);
     }
 

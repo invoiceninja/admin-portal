@@ -10,6 +10,8 @@ Serializer<DesignListResponse> _$designListResponseSerializer =
     new _$DesignListResponseSerializer();
 Serializer<DesignItemResponse> _$designItemResponseSerializer =
     new _$DesignItemResponseSerializer();
+Serializer<DesignPreviewRequest> _$designPreviewRequestSerializer =
+    new _$DesignPreviewRequestSerializer();
 Serializer<DesignEntity> _$designEntitySerializer =
     new _$DesignEntitySerializer();
 
@@ -100,6 +102,66 @@ class _$DesignItemResponseSerializer
   }
 }
 
+class _$DesignPreviewRequestSerializer
+    implements StructuredSerializer<DesignPreviewRequest> {
+  @override
+  final Iterable<Type> types = const [
+    DesignPreviewRequest,
+    _$DesignPreviewRequest
+  ];
+  @override
+  final String wireName = 'DesignPreviewRequest';
+
+  @override
+  Iterable<Object> serialize(
+      Serializers serializers, DesignPreviewRequest object,
+      {FullType specifiedType = FullType.unspecified}) {
+    final result = <Object>[
+      'entityType',
+      serializers.serialize(object.entityType,
+          specifiedType: const FullType(EntityType)),
+      'entityId',
+      serializers.serialize(object.entityId,
+          specifiedType: const FullType(String)),
+      'design',
+      serializers.serialize(object.design,
+          specifiedType: const FullType(DesignEntity)),
+    ];
+
+    return result;
+  }
+
+  @override
+  DesignPreviewRequest deserialize(
+      Serializers serializers, Iterable<Object> serialized,
+      {FullType specifiedType = FullType.unspecified}) {
+    final result = new DesignPreviewRequestBuilder();
+
+    final iterator = serialized.iterator;
+    while (iterator.moveNext()) {
+      final key = iterator.current as String;
+      iterator.moveNext();
+      final dynamic value = iterator.current;
+      switch (key) {
+        case 'entityType':
+          result.entityType = serializers.deserialize(value,
+              specifiedType: const FullType(EntityType)) as EntityType;
+          break;
+        case 'entityId':
+          result.entityId = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String;
+          break;
+        case 'design':
+          result.design.replace(serializers.deserialize(value,
+              specifiedType: const FullType(DesignEntity)) as DesignEntity);
+          break;
+      }
+    }
+
+    return result.build();
+  }
+}
+
 class _$DesignEntitySerializer implements StructuredSerializer<DesignEntity> {
   @override
   final Iterable<Type> types = const [DesignEntity, _$DesignEntity];
@@ -112,6 +174,10 @@ class _$DesignEntitySerializer implements StructuredSerializer<DesignEntity> {
     final result = <Object>[
       'name',
       serializers.serialize(object.name, specifiedType: const FullType(String)),
+      'design',
+      serializers.serialize(object.design,
+          specifiedType: const FullType(BuiltMap,
+              const [const FullType(String), const FullType(String)])),
       'is_custom',
       serializers.serialize(object.isCustom,
           specifiedType: const FullType(bool)),
@@ -187,6 +253,11 @@ class _$DesignEntitySerializer implements StructuredSerializer<DesignEntity> {
         case 'name':
           result.name = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String;
+          break;
+        case 'design':
+          result.design.replace(serializers.deserialize(value,
+              specifiedType: const FullType(BuiltMap,
+                  const [const FullType(String), const FullType(String)])));
           break;
         case 'is_custom':
           result.isCustom = serializers.deserialize(value,
@@ -416,6 +487,132 @@ class DesignItemResponseBuilder
       } catch (e) {
         throw new BuiltValueNestedFieldError(
             'DesignItemResponse', _$failedField, e.toString());
+      }
+      rethrow;
+    }
+    replace(_$result);
+    return _$result;
+  }
+}
+
+class _$DesignPreviewRequest extends DesignPreviewRequest {
+  @override
+  final EntityType entityType;
+  @override
+  final String entityId;
+  @override
+  final DesignEntity design;
+
+  factory _$DesignPreviewRequest(
+          [void Function(DesignPreviewRequestBuilder) updates]) =>
+      (new DesignPreviewRequestBuilder()..update(updates)).build();
+
+  _$DesignPreviewRequest._({this.entityType, this.entityId, this.design})
+      : super._() {
+    if (entityType == null) {
+      throw new BuiltValueNullFieldError('DesignPreviewRequest', 'entityType');
+    }
+    if (entityId == null) {
+      throw new BuiltValueNullFieldError('DesignPreviewRequest', 'entityId');
+    }
+    if (design == null) {
+      throw new BuiltValueNullFieldError('DesignPreviewRequest', 'design');
+    }
+  }
+
+  @override
+  DesignPreviewRequest rebuild(
+          void Function(DesignPreviewRequestBuilder) updates) =>
+      (toBuilder()..update(updates)).build();
+
+  @override
+  DesignPreviewRequestBuilder toBuilder() =>
+      new DesignPreviewRequestBuilder()..replace(this);
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(other, this)) return true;
+    return other is DesignPreviewRequest &&
+        entityType == other.entityType &&
+        entityId == other.entityId &&
+        design == other.design;
+  }
+
+  @override
+  int get hashCode {
+    return $jf($jc(
+        $jc($jc(0, entityType.hashCode), entityId.hashCode), design.hashCode));
+  }
+
+  @override
+  String toString() {
+    return (newBuiltValueToStringHelper('DesignPreviewRequest')
+          ..add('entityType', entityType)
+          ..add('entityId', entityId)
+          ..add('design', design))
+        .toString();
+  }
+}
+
+class DesignPreviewRequestBuilder
+    implements Builder<DesignPreviewRequest, DesignPreviewRequestBuilder> {
+  _$DesignPreviewRequest _$v;
+
+  EntityType _entityType;
+  EntityType get entityType => _$this._entityType;
+  set entityType(EntityType entityType) => _$this._entityType = entityType;
+
+  String _entityId;
+  String get entityId => _$this._entityId;
+  set entityId(String entityId) => _$this._entityId = entityId;
+
+  DesignEntityBuilder _design;
+  DesignEntityBuilder get design =>
+      _$this._design ??= new DesignEntityBuilder();
+  set design(DesignEntityBuilder design) => _$this._design = design;
+
+  DesignPreviewRequestBuilder();
+
+  DesignPreviewRequestBuilder get _$this {
+    if (_$v != null) {
+      _entityType = _$v.entityType;
+      _entityId = _$v.entityId;
+      _design = _$v.design?.toBuilder();
+      _$v = null;
+    }
+    return this;
+  }
+
+  @override
+  void replace(DesignPreviewRequest other) {
+    if (other == null) {
+      throw new ArgumentError.notNull('other');
+    }
+    _$v = other as _$DesignPreviewRequest;
+  }
+
+  @override
+  void update(void Function(DesignPreviewRequestBuilder) updates) {
+    if (updates != null) updates(this);
+  }
+
+  @override
+  _$DesignPreviewRequest build() {
+    _$DesignPreviewRequest _$result;
+    try {
+      _$result = _$v ??
+          new _$DesignPreviewRequest._(
+              entityType: entityType,
+              entityId: entityId,
+              design: design.build());
+    } catch (_) {
+      String _$failedField;
+      try {
+        _$failedField = 'design';
+        design.build();
+      } catch (e) {
+        throw new BuiltValueNestedFieldError(
+            'DesignPreviewRequest', _$failedField, e.toString());
       }
       rethrow;
     }

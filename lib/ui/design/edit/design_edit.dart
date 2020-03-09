@@ -134,7 +134,7 @@ class _DesignEditState extends State<DesignEdit>
 
     loadDesign(
         context: context,
-        design: design.design.toMap(),
+        design: design,
         onStart: (value) {
           print('## START: $value');
         },

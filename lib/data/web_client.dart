@@ -133,7 +133,7 @@ Map<String, String> _getHeaders(String token,
   final headers = {
     'X-API-Secret': (secret ?? '').isNotEmpty ? secret : Config.API_SECRET,
     'X-Requested-With': 'XMLHttpRequest',
-    'Content-Type': 'application/json',
+    //'Content-Type': 'application/json',
   };
 
   if (token != null && token.isNotEmpty) {
