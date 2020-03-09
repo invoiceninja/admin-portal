@@ -4,6 +4,7 @@ import 'package:invoiceninja_flutter/constants.dart';
 import 'package:invoiceninja_flutter/data/models/entities.dart';
 import 'package:invoiceninja_flutter/data/models/invoice_model.dart';
 import 'package:invoiceninja_flutter/data/models/payment_model.dart';
+import 'package:invoiceninja_flutter/redux/credit/credit_selectors.dart';
 import 'package:invoiceninja_flutter/redux/invoice/invoice_selectors.dart';
 import 'package:invoiceninja_flutter/redux/client/client_selectors.dart';
 import 'package:invoiceninja_flutter/redux/static/static_selectors.dart';
@@ -88,11 +89,21 @@ class _PaymentEditState extends State<PaymentEdit> {
   Widget build(BuildContext context) {
     final viewModel = widget.viewModel;
     final payment = viewModel.payment;
+    final state = viewModel.state;
     final localization = AppLocalization.of(context);
 
-    final paymentables = payment.invoices.toList();
-    if (paymentables.where((paymentable) => paymentable.isEmpty).isEmpty) {
-      paymentables.add(PaymentableEntity());
+    final invoicePaymentables = payment.invoices.toList();
+    if (invoicePaymentables
+        .where((paymentable) => paymentable.isEmpty)
+        .isEmpty) {
+      invoicePaymentables.add(PaymentableEntity());
+    }
+
+    final creditPaymentables = payment.credits.toList();
+    if (creditPaymentables
+        .where((paymentable) => paymentable.isEmpty)
+        .isEmpty) {
+      creditPaymentables.add(PaymentableEntity());
     }
 
     return EditScaffold(
@@ -138,7 +149,7 @@ class _PaymentEditState extends State<PaymentEdit> {
                         ..invoices.clear()));
                     },
                     entityList: memoizedDropdownClientList(
-                        viewModel.clientMap, viewModel.clientList),
+                        state.clientState.map, state.clientState.list),
                   ),
                   DecoratedFormField(
                     controller: _amountController,
@@ -148,15 +159,27 @@ class _PaymentEditState extends State<PaymentEdit> {
                     label: localization.amount,
                   ),
                 ],
-                for (var index = 0; index < paymentables.length; index++)
+                for (var index = 0; index < invoicePaymentables.length; index++)
                   PaymentableEditor(
                     key: ValueKey(
-                        '__paymentable_${index}_${paymentables[index].id}__'),
+                        '__paymentable_${index}_${invoicePaymentables[index].id}__'),
                     viewModel: viewModel,
-                    paymentable: paymentables[index],
+                    paymentable: invoicePaymentables[index],
                     index: index,
-                    onChanged: () {},
+                    entityType: EntityType.invoice,
                   ),
+                if (state.company.isModuleEnabled(EntityType.credit))
+                  for (var index = 0;
+                      index < creditPaymentables.length;
+                      index++)
+                    PaymentableEditor(
+                      key: ValueKey(
+                          '__paymentable_${index}_${creditPaymentables[index].id}__'),
+                      viewModel: viewModel,
+                      paymentable: creditPaymentables[index],
+                      index: index,
+                      entityType: EntityType.credit,
+                    ),
                 EntityDropdown(
                   key: ValueKey('__payment_type_${payment.typeId}__'),
                   entityType: EntityType.paymentType,
@@ -213,14 +236,14 @@ class PaymentableEditor extends StatefulWidget {
     Key key,
     @required this.viewModel,
     @required this.paymentable,
-    @required this.onChanged,
     @required this.index,
+    @required this.entityType,
   }) : super(key: key);
 
   final PaymentEditVM viewModel;
   final PaymentableEntity paymentable;
-  final Function onChanged;
   final int index;
+  final EntityType entityType;
 
   @override
   _PaymentableEditorState createState() => _PaymentableEditorState();
@@ -229,6 +252,7 @@ class PaymentableEditor extends StatefulWidget {
 class _PaymentableEditorState extends State<PaymentableEditor> {
   final _amountController = TextEditingController();
   String _invoiceId = '';
+  String _creditId = '';
   List<TextEditingController> _controllers = [];
 
   @override
@@ -258,9 +282,16 @@ class _PaymentableEditorState extends State<PaymentableEditor> {
   }
 
   void _onChanged([String clientId]) {
-    final paymentable = widget.paymentable.rebuild((b) => b
-      ..invoiceId = _invoiceId
-      ..amount = parseDouble(_amountController.text));
+    PaymentableEntity paymentable;
+    if (widget.entityType == EntityType.invoice) {
+      paymentable = widget.paymentable.rebuild((b) => b
+        ..invoiceId = _invoiceId
+        ..amount = parseDouble(_amountController.text));
+    } else {
+      paymentable = widget.paymentable.rebuild((b) => b
+        ..creditId = _creditId
+        ..amount = parseDouble(_amountController.text));
+    }
 
     if (paymentable == widget.paymentable || paymentable.isEmpty) {
       return;
@@ -268,12 +299,22 @@ class _PaymentableEditorState extends State<PaymentableEditor> {
 
     PaymentEntity payment;
 
-    if (widget.index == widget.viewModel.payment.invoices.length) {
-      payment =
-          widget.viewModel.payment.rebuild((b) => b..invoices.add(paymentable));
+    if (widget.entityType == EntityType.invoice) {
+      if (widget.index == widget.viewModel.payment.invoices.length) {
+        payment = widget.viewModel.payment
+            .rebuild((b) => b..invoices.add(paymentable));
+      } else {
+        payment = widget.viewModel.payment
+            .rebuild((b) => b..invoices[widget.index] = paymentable);
+      }
     } else {
-      payment = widget.viewModel.payment
-          .rebuild((b) => b..invoices[widget.index] = paymentable);
+      if (widget.index == widget.viewModel.payment.credits.length) {
+        payment = widget.viewModel.payment
+            .rebuild((b) => b..credits.add(paymentable));
+      } else {
+        payment = widget.viewModel.payment
+            .rebuild((b) => b..credits[widget.index] = paymentable);
+      }
     }
 
     if (clientId != null) {
@@ -286,32 +327,55 @@ class _PaymentableEditorState extends State<PaymentableEditor> {
   @override
   Widget build(BuildContext context) {
     final viewModel = widget.viewModel;
+    final state = viewModel.state;
     final payment = viewModel.payment;
     final paymentable = widget.paymentable;
     final localization = AppLocalization.of(context);
 
     return Row(
       children: <Widget>[
-        Expanded(
-          child: EntityDropdown(
-            key: Key('__invoice_${payment.clientId}__'),
-            entityType: EntityType.invoice,
-            labelText: AppLocalization.of(context).invoice,
-            entityId: paymentable.invoiceId,
-            entityList: memoizedDropdownInvoiceList(
-                widget.viewModel.invoiceMap,
-                widget.viewModel.clientMap,
-                widget.viewModel.invoiceList,
-                payment.clientId),
-            onSelected: (selected) {
-              final invoice = selected as InvoiceEntity;
-              _amountController.text = formatNumber(invoice.balance, context,
-                  formatNumberType: FormatNumberType.input);
-              _invoiceId = invoice.id;
-              _onChanged(invoice.clientId);
-            },
+        if (widget.entityType == EntityType.invoice)
+          Expanded(
+            child: EntityDropdown(
+              key: Key('__invoice_${payment.clientId}__'),
+              entityType: EntityType.invoice,
+              labelText: AppLocalization.of(context).invoice,
+              entityId: paymentable.invoiceId,
+              entityList: memoizedDropdownInvoiceList(
+                  state.invoiceState.map,
+                  state.clientState.map,
+                  state.invoiceState.list,
+                  payment.clientId),
+              onSelected: (selected) {
+                final invoice = selected as InvoiceEntity;
+                _amountController.text = formatNumber(invoice.balance, context,
+                    formatNumberType: FormatNumberType.input);
+                _invoiceId = invoice.id;
+                _onChanged(invoice.clientId);
+              },
+            ),
           ),
-        ),
+        if (widget.entityType == EntityType.credit)
+          Expanded(
+            child: EntityDropdown(
+              key: Key('__credit_${payment.clientId}__'),
+              entityType: EntityType.credit,
+              labelText: AppLocalization.of(context).credit,
+              entityId: paymentable.creditId,
+              entityList: memoizedDropdownCreditList(
+                  state.invoiceState.map,
+                  state.clientState.map,
+                  state.invoiceState.list,
+                  payment.clientId),
+              onSelected: (selected) {
+                final credit = selected as InvoiceEntity;
+                _amountController.text = formatNumber(credit.balance, context,
+                    formatNumberType: FormatNumberType.input);
+                _creditId = credit.id;
+                _onChanged(credit.clientId);
+              },
+            ),
+          ),
         SizedBox(
           width: kTableColumnGap,
         ),

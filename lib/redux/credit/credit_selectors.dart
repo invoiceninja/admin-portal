@@ -3,6 +3,42 @@ import 'package:built_collection/built_collection.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/redux/ui/list_ui_state.dart';
 
+
+var memoizedDropdownCreditList = memo4(
+        (BuiltMap<String, InvoiceEntity> creditMap,
+        BuiltMap<String, ClientEntity> clientMap,
+        BuiltList<String> creditList,
+        String clientId) =>
+        dropdownCreditSelector(creditMap, clientMap, creditList, clientId));
+
+List<String> dropdownCreditSelector(
+    BuiltMap<String, InvoiceEntity> creditMap,
+    BuiltMap<String, ClientEntity> clientMap,
+    BuiltList<String> creditList,
+    String clientId) {
+  final list = creditList.where((creditId) {
+    final credit = creditMap[creditId];
+    if (clientId != null &&
+        clientId.isNotEmpty &&
+        credit.clientId != clientId) {
+      return false;
+    }
+    if (!clientMap.containsKey(credit.clientId) ||
+        !clientMap[credit.clientId].isActive) {
+      return false;
+    }
+    return credit.isActive && credit.isUnpaid;
+  }).toList();
+
+  list.sort((creditAId, creditBId) {
+    final creditA = creditMap[creditAId];
+    final creditB = creditMap[creditBId];
+    return creditA.compareTo(creditB, ClientFields.name, true);
+  });
+
+  return list;
+}
+
 ClientEntity creditClientSelector(
     InvoiceEntity credit, BuiltMap<String, ClientEntity> clientMap) {
   return clientMap[credit.clientId];
