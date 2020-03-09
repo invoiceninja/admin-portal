@@ -94,7 +94,6 @@ abstract class DesignEntity extends Object
 
   String get name;
 
-  // TODO REMOVE THIS
   BuiltMap<String, String> get design;
 
   @BuiltValueField(wireName: 'is_custom')

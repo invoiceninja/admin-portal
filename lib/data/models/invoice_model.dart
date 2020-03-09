@@ -652,6 +652,7 @@ abstract class InvoiceItemEntity
   @BuiltValueField(wireName: 'tax_rate3')
   double get taxRate3;
 
+  @nullable
   @BuiltValueField(wireName: 'line_item_type_id')
   String get lineItemTypeId;
 
