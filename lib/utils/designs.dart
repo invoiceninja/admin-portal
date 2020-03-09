@@ -22,9 +22,6 @@ void loadDesign({
   final webClient = WebClient();
   final state = StoreProvider.of<AppState>(context).state;
   final credentials = state.credentials;
-  final invoice = state.invoiceState.list.isEmpty
-      ? InvoiceEntity(state: state)
-      : state.invoiceState.map[state.invoiceState.list.first];
   final url = formatApiUrl(credentials.url) + '/preview';
 
   final request = DesignPreviewRequest(design: design);
