@@ -256,6 +256,17 @@ class _PaymentableEditorState extends State<PaymentableEditor> {
   List<TextEditingController> _controllers = [];
 
   @override
+  void initState() {
+    super.initState();
+
+    if (widget.entityType == EntityType.invoice) {
+      _invoiceId = widget.paymentable.invoiceId;
+    } else {
+      _creditId = widget.paymentable.creditId;
+    }
+  }
+
+  @override
   void didChangeDependencies() {
     _controllers = [
       _amountController,
