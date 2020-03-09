@@ -17,7 +17,6 @@ import 'dialogs.dart';
 void loadDesign({
   @required BuildContext context,
   @required DesignEntity design,
-  @required Function(String) onStart,
   @required Function(Response) onComplete,
 }) {
   final webClient = WebClient();
@@ -47,6 +46,6 @@ void loadDesign({
   }).catchError((dynamic error) {
     print('## error: $error');
     showErrorDialog(context: context, message: '$error');
-    //onComplete(subject, hase64Body);
+    onComplete(null);
   });
 }

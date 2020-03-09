@@ -13,6 +13,7 @@ import 'package:invoiceninja_flutter/ui/app/forms/app_form.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/decorated_form_field.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/design_picker.dart';
 import 'package:invoiceninja_flutter/ui/design/edit/design_edit_vm.dart';
+import 'package:invoiceninja_flutter/utils/dates.dart';
 import 'package:invoiceninja_flutter/utils/designs.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:invoiceninja_flutter/utils/completers.dart';
@@ -50,6 +51,7 @@ class _DesignEditState extends State<DesignEdit>
   FocusScopeNode _focusNode;
   TabController _tabController;
   PDFPageImage _pdfPageImage;
+  bool _isLoading = false;
 
   List<TextEditingController> _controllers;
 
@@ -137,22 +139,34 @@ class _DesignEditState extends State<DesignEdit>
   }
 
   void _loadPreview(BuildContext context, DesignEntity design) async {
+    if (_isLoading) {
+      return;
+    }
+
+    setState(() {
+      _isLoading = true;
+    });
+
     loadDesign(
         context: context,
         design: design,
-        onStart: (value) {
-          //
-        },
         onComplete: (response) async {
-          final document = await PDFDocument.openData(response.bodyBytes);
-          final page = await document.getPage(1);
-          final pageImage =
-              await page.render(width: page.width, height: page.height);
-          page.close();
+          if (response == null) {
+            setState(() {
+              _isLoading = false;
+            });
+          } else {
+            final document = await PDFDocument.openData(response.bodyBytes);
+            final page = await document.getPage(1);
+            final pageImage =
+                await page.render(width: page.width, height: page.height);
+            page.close();
 
-          setState(() {
-            _pdfPageImage = pageImage;
-          });
+            setState(() {
+              _isLoading = false;
+              _pdfPageImage = pageImage;
+            });
+          }
         });
   }
 
@@ -209,6 +223,7 @@ class _DesignEditState extends State<DesignEdit>
                     ),
                     DesignPreview(
                       pdfPageImage: _pdfPageImage,
+                      isLoading: _isLoading,
                     ),
                     DesignSection(textController: _headerController),
                     DesignSection(textController: _bodyController),
@@ -263,7 +278,10 @@ class _DesignEditState extends State<DesignEdit>
                       ),
                     ),
                     Expanded(
-                      child: DesignPreview(pdfPageImage: _pdfPageImage),
+                      child: DesignPreview(
+                        pdfPageImage: _pdfPageImage,
+                        isLoading: _isLoading,
+                      ),
                     ),
                   ],
                 ),
@@ -333,9 +351,13 @@ class DesignSettings extends StatelessWidget {
 }
 
 class DesignPreview extends StatefulWidget {
-  const DesignPreview({@required this.pdfPageImage});
+  const DesignPreview({
+    @required this.pdfPageImage,
+    @required this.isLoading,
+  });
 
   final PDFPageImage pdfPageImage;
+  final bool isLoading;
 
   @override
   _DesignPreviewState createState() => _DesignPreviewState();
@@ -387,12 +409,17 @@ class _DesignPreviewState extends State<DesignPreview> {
 
     return Container(
       color: Colors.grey,
-      child: SingleChildScrollView(
-        controller: _scrollController,
-        child: ExtendedImage.memory(
-          widget.pdfPageImage.bytes,
-          fit: BoxFit.contain,
-        ),
+      child: Stack(
+        children: <Widget>[
+          if (widget.isLoading) LinearProgressIndicator(),
+          SingleChildScrollView(
+            controller: _scrollController,
+            child: ExtendedImage.memory(
+              widget.pdfPageImage.bytes,
+              fit: BoxFit.contain,
+            ),
+          )
+        ],
       ),
     );
   }
