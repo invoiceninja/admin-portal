@@ -27,24 +27,15 @@ void loadDesign({
       : state.invoiceState.map[state.invoiceState.list.first];
   final url = formatApiUrl(credentials.url) + '/preview';
 
-  final request = DesignPreviewRequest(
-    design: design,
-    //entityId: invoice.id,
-    entityId: '',
-    entityType: invoice.entityType,
-  );
+  final request = DesignPreviewRequest(design: design);
   final data =
       serializers.serializeWith(DesignPreviewRequest.serializer, request);
 
   webClient
       .post(url, credentials.token, data: json.encode(data), rawResponse: true)
       .then((dynamic response) {
-    print('## response: $response');
-    //subject = response['subject'] ?? '';
-    //body = base64Encode(encoder.convert(response['body'] ?? ''));
     onComplete(response);
   }).catchError((dynamic error) {
-    print('## error: $error');
     showErrorDialog(context: context, message: '$error');
     onComplete(null);
   });

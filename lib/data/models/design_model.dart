@@ -42,8 +42,8 @@ abstract class DesignPreviewRequest
     DesignEntity design,
   }) {
     return _$DesignPreviewRequest._(
-      entityType: entityType,
-      entityId: entityId,
+      entityType: entityType ?? EntityType.invoice,
+      entityId: entityId ?? '',
       design: design,
     );
   }
@@ -151,7 +151,7 @@ abstract class DesignEntity extends Object
       return response;
     }
   }
-  
+
   @override
   bool matchesFilter(String filter) {
     if (filter == null || filter.isEmpty) {
