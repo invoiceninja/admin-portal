@@ -409,9 +409,14 @@ class _DesignPreviewState extends State<DesignPreview> {
           if (widget.pdfPageImage != null)
             SingleChildScrollView(
               controller: _scrollController,
-              child: ExtendedImage.memory(
-                widget.pdfPageImage.bytes,
-                fit: BoxFit.contain,
+              padding: const EdgeInsets.all(6),
+              child: Card(
+                elevation: 6,
+                child: ExtendedImage.memory(
+                  widget.pdfPageImage.bytes,
+                  fit: BoxFit.fitHeight,
+                  alignment: Alignment.topCenter,
+                ),
               ),
             )
           else
