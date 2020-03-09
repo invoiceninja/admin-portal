@@ -106,7 +106,6 @@ class _AccountManagementState extends State<AccountManagement>
                       ? localization.cancelAccount
                       : localization.deleteCompany,
                   color: Colors.red,
-                  iconData: Icons.delete,
                   onPressed: () {
                     confirmCallback(
                         context: context,

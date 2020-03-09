@@ -26,6 +26,7 @@ class ElevatedButton extends StatelessWidget {
             ? IconText(
                 icon: iconData,
                 text: label,
+                alignment: MainAxisAlignment.center,
               )
             : Text(label),
         textColor: Colors.white,
