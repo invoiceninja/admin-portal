@@ -16,6 +16,18 @@ import 'package:invoiceninja_flutter/utils/designs.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:invoiceninja_flutter/utils/completers.dart';
 import 'package:invoiceninja_flutter/utils/platforms.dart';
+import 'dart:async';
+import 'dart:io';
+import 'package:flutter/material.dart';
+import 'package:invoiceninja_flutter/data/models/invoice_model.dart';
+import 'package:flutter/foundation.dart';
+import 'package:invoiceninja_flutter/ui/app/loading_indicator.dart';
+import 'package:invoiceninja_flutter/utils/dialogs.dart';
+import 'package:invoiceninja_flutter/utils/localization.dart';
+import 'package:invoiceninja_flutter/utils/platforms.dart';
+import 'package:native_pdf_view/native_pdf_view.dart';
+import 'package:url_launcher/url_launcher.dart';
+import 'package:native_pdf_renderer/native_pdf_renderer.dart';
 
 class DesignEdit extends StatefulWidget {
   const DesignEdit({
@@ -45,6 +57,7 @@ class _DesignEditState extends State<DesignEdit>
 
   FocusScopeNode _focusNode;
   TabController _controller;
+  PDFPageImage _pdfPageImage;
 
   List<TextEditingController> _controllers;
 
@@ -129,7 +142,7 @@ class _DesignEditState extends State<DesignEdit>
     _loadPreview(context, design);
   }
 
-  void _loadPreview(BuildContext context, DesignEntity design) {
+  void _loadPreview(BuildContext context, DesignEntity design) async {
     print('## _loadDesign');
 
     loadDesign(
@@ -138,9 +151,19 @@ class _DesignEditState extends State<DesignEdit>
         onStart: (value) {
           print('## START: $value');
         },
-        onComplete: (value) {
-          print('## START: $value');
-          ;
+        onComplete: (response) async {
+          print('## START: $response');
+
+          //final bytes = await consolidateHttpClientResponseBytes(value);
+          final document = await PDFDocument.openData(response.bodyBytes);
+
+          final page = await document.getPage(1);
+          final pageImage = await page.render(width: page.width, height: page.height);
+          page.close();
+
+          setState(() {
+            _pdfPageImage = pageImage;
+          });
         });
   }
 
@@ -195,7 +218,7 @@ class _DesignEditState extends State<DesignEdit>
                       nameController: _nameController,
                       onLoadDesign: _loadDesign,
                     ),
-                    DesignPreview(),
+                    DesignPreview(_pdfPageImage),
                     DesignSection(textController: _headerController),
                     DesignSection(textController: _bodyController),
                     DesignSection(textController: _footerController),
@@ -249,7 +272,7 @@ class _DesignEditState extends State<DesignEdit>
                       ),
                     ),
                     Expanded(
-                      child: DesignPreview(),
+                      child: DesignPreview(_pdfPageImage),
                     ),
                   ],
                 ),
@@ -319,8 +342,19 @@ class DesignSettings extends StatelessWidget {
 }
 
 class DesignPreview extends StatelessWidget {
+
+  const DesignPreview(this.pdfPageImage);
+  final PDFPageImage pdfPageImage;
+
   @override
   Widget build(BuildContext context) {
-    return Placeholder();
+    if (pdfPageImage == null) {
+      return Container();
+    }
+
+    return ExtendedImage.memory(
+      pdfPageImage.bytes,
+      fit: BoxFit.fitHeight,
+    );
   }
 }

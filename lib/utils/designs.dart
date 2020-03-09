@@ -1,8 +1,10 @@
 import 'dart:convert';
+import 'dart:io';
 
 import 'package:built_collection/built_collection.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_redux/flutter_redux.dart';
+import 'package:http/http.dart';
 import 'package:invoiceninja_flutter/data/models/design_model.dart';
 import 'package:invoiceninja_flutter/data/models/invoice_model.dart';
 import 'package:invoiceninja_flutter/data/models/serializers.dart';
@@ -16,7 +18,7 @@ void loadDesign({
   @required BuildContext context,
   @required DesignEntity design,
   @required Function(String) onStart,
-  @required Function(String) onComplete,
+  @required Function(Response) onComplete,
 }) {
   final webClient = WebClient();
   final state = StoreProvider.of<AppState>(context).state;
@@ -36,12 +38,12 @@ void loadDesign({
       serializers.serializeWith(DesignPreviewRequest.serializer, request);
 
   webClient
-      .post(url, credentials.token, data: json.encode(data))
+      .post(url, credentials.token, data: json.encode(data), rawResponse: true)
       .then((dynamic response) {
     print('## response: $response');
     //subject = response['subject'] ?? '';
     //body = base64Encode(encoder.convert(response['body'] ?? ''));
-    //onComplete(subject, body);
+    onComplete(response);
   }).catchError((dynamic error) {
     print('## error: $error');
     showErrorDialog(context: context, message: '$error');

@@ -119,7 +119,7 @@ Future<List<PDFPageImage>> renderPDF(
   final List<PDFPageImage> pages = [];
 
   for (var i = 1; i <= document.pagesCount; i++) {
-    final page = await document.getPage(1);
+    final page = await document.getPage(i);
     final pageImage = await page.render(width: page.width, height: page.height);
     pages.add(pageImage);
     page.close();

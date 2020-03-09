@@ -45,6 +45,7 @@ class WebClient {
     String fileIndex,
     String secret,
     String password,
+    bool rawResponse = false,
   }) async {
     url = _checkUrl(url);
     print('POST: $url');
@@ -60,6 +61,10 @@ class WebClient {
               body: data,
               headers: _getHeaders(token, secret: secret, password: password))
           .timeout(const Duration(seconds: kMaxPostSeconds));
+    }
+
+    if (rawResponse) {
+      return response;
     }
 
     _checkResponse(response);
