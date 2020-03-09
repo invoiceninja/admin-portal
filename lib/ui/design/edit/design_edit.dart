@@ -415,16 +415,6 @@ class _DesignPreviewState extends State<DesignPreview> {
       child: Stack(
         alignment: Alignment.center,
         children: <Widget>[
-          if (widget.isLoading)
-            Column(
-              mainAxisSize: MainAxisSize.max,
-              children: <Widget>[
-                LinearProgressIndicator(),
-                Expanded(
-                  child: SizedBox(),
-                ),
-              ],
-            ),
           if (widget.pdfPageImage != null)
             SingleChildScrollView(
               controller: _scrollController,
@@ -442,6 +432,16 @@ class _DesignPreviewState extends State<DesignPreview> {
             SizedBox(
               width: double.infinity,
               height: double.infinity,
+            ),
+          if (widget.isLoading)
+            Column(
+              mainAxisSize: MainAxisSize.max,
+              children: <Widget>[
+                LinearProgressIndicator(),
+                Expanded(
+                  child: SizedBox(),
+                ),
+              ],
             ),
         ],
       ),
