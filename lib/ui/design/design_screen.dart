@@ -127,8 +127,10 @@ class DesignScreen extends StatelessWidget {
               heroTag: 'design_fab',
               backgroundColor: Theme.of(context).primaryColorDark,
               onPressed: () {
-                createEntityByType(
-                    context: context, entityType: EntityType.design);
+                createEntity(
+                    context: context,
+                    entity: DesignEntity(
+                        design: state.designState.map[kDesignCleanId].design));
               },
               child: Icon(
                 Icons.add,

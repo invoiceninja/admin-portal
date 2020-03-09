@@ -70,19 +70,21 @@ class DesignFields {
 abstract class DesignEntity extends Object
     with BaseEntity
     implements Built<DesignEntity, DesignEntityBuilder> {
-  factory DesignEntity({String id, AppState state}) {
+  factory DesignEntity(
+      {String id, AppState state, BuiltMap<String, String> design}) {
     return _$DesignEntity._(
       id: id ?? BaseEntity.nextId,
       isChanged: false,
       name: '',
-      design: BuiltMap<String, String>({
-        kDesignHeader: '',
-        kDesignBody: '',
-        kDesignFooter: '',
-        kDesignProducts: '',
-        kDesignTasks: '',
-        kDesignIncludes: '',
-      }),
+      design: design ??
+          BuiltMap<String, String>({
+            kDesignHeader: '',
+            kDesignBody: '',
+            kDesignFooter: '',
+            kDesignProducts: '',
+            kDesignTasks: '',
+            kDesignIncludes: '',
+          }),
       isCustom: true,
     );
   }
