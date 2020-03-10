@@ -476,7 +476,6 @@ abstract class UserCompanyEntity
   String get permissions;
 
   @nullable
-  @BuiltValueField(serialize: false) // TODO REMOVE THIS
   BuiltMap<String, BuiltList<String>> get notifications;
 
   @nullable

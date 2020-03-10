@@ -303,7 +303,7 @@ class DesignSection extends StatelessWidget {
           children: <Widget>[
             Card(
               child: Padding(
-                padding: const EdgeInsets.all(8),
+                padding: const EdgeInsets.symmetric(horizontal: 10),
                 child: TextField(
                   controller: textController,
                   keyboardType: TextInputType.multiline,
@@ -335,8 +335,6 @@ class DesignSettings extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final localization = AppLocalization.of(context);
-    final store = StoreProvider.of<AppState>(context);
-    final designState = store.state.designState;
 
     return Column(
       mainAxisSize: MainAxisSize.min,

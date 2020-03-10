@@ -618,10 +618,10 @@ class _$InvoiceItemEntitySerializer
       serializers.serialize(object.discount,
           specifiedType: const FullType(double)),
     ];
-    if (object.lineItemTypeId != null) {
+    if (object.typeId != null) {
       result
-        ..add('line_item_type_id')
-        ..add(serializers.serialize(object.lineItemTypeId,
+        ..add('type_id')
+        ..add(serializers.serialize(object.typeId,
             specifiedType: const FullType(String)));
     }
     if (object.taskId != null) {
@@ -697,8 +697,8 @@ class _$InvoiceItemEntitySerializer
           result.taxRate3 = serializers.deserialize(value,
               specifiedType: const FullType(double)) as double;
           break;
-        case 'line_item_type_id':
-          result.lineItemTypeId = serializers.deserialize(value,
+        case 'type_id':
+          result.typeId = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String;
           break;
         case 'custom_value1':
@@ -1923,7 +1923,7 @@ class _$InvoiceItemEntity extends InvoiceItemEntity {
   @override
   final double taxRate3;
   @override
-  final String lineItemTypeId;
+  final String typeId;
   @override
   final String customValue1;
   @override
@@ -1956,7 +1956,7 @@ class _$InvoiceItemEntity extends InvoiceItemEntity {
       this.taxRate2,
       this.taxName3,
       this.taxRate3,
-      this.lineItemTypeId,
+      this.typeId,
       this.customValue1,
       this.customValue2,
       this.customValue3,
@@ -2035,7 +2035,7 @@ class _$InvoiceItemEntity extends InvoiceItemEntity {
         taxRate2 == other.taxRate2 &&
         taxName3 == other.taxName3 &&
         taxRate3 == other.taxRate3 &&
-        lineItemTypeId == other.lineItemTypeId &&
+        typeId == other.typeId &&
         customValue1 == other.customValue1 &&
         customValue2 == other.customValue2 &&
         customValue3 == other.customValue3 &&
@@ -2083,7 +2083,7 @@ class _$InvoiceItemEntity extends InvoiceItemEntity {
                                                     taxRate2.hashCode),
                                                 taxName3.hashCode),
                                             taxRate3.hashCode),
-                                        lineItemTypeId.hashCode),
+                                        typeId.hashCode),
                                     customValue1.hashCode),
                                 customValue2.hashCode),
                             customValue3.hashCode),
@@ -2107,7 +2107,7 @@ class _$InvoiceItemEntity extends InvoiceItemEntity {
           ..add('taxRate2', taxRate2)
           ..add('taxName3', taxName3)
           ..add('taxRate3', taxRate3)
-          ..add('lineItemTypeId', lineItemTypeId)
+          ..add('typeId', typeId)
           ..add('customValue1', customValue1)
           ..add('customValue2', customValue2)
           ..add('customValue3', customValue3)
@@ -2164,10 +2164,9 @@ class InvoiceItemEntityBuilder
   double get taxRate3 => _$this._taxRate3;
   set taxRate3(double taxRate3) => _$this._taxRate3 = taxRate3;
 
-  String _lineItemTypeId;
-  String get lineItemTypeId => _$this._lineItemTypeId;
-  set lineItemTypeId(String lineItemTypeId) =>
-      _$this._lineItemTypeId = lineItemTypeId;
+  String _typeId;
+  String get typeId => _$this._typeId;
+  set typeId(String typeId) => _$this._typeId = typeId;
 
   String _customValue1;
   String get customValue1 => _$this._customValue1;
@@ -2215,7 +2214,7 @@ class InvoiceItemEntityBuilder
       _taxRate2 = _$v.taxRate2;
       _taxName3 = _$v.taxName3;
       _taxRate3 = _$v.taxRate3;
-      _lineItemTypeId = _$v.lineItemTypeId;
+      _typeId = _$v.typeId;
       _customValue1 = _$v.customValue1;
       _customValue2 = _$v.customValue2;
       _customValue3 = _$v.customValue3;
@@ -2256,7 +2255,7 @@ class InvoiceItemEntityBuilder
             taxRate2: taxRate2,
             taxName3: taxName3,
             taxRate3: taxRate3,
-            lineItemTypeId: lineItemTypeId,
+            typeId: typeId,
             customValue1: customValue1,
             customValue2: customValue2,
             customValue3: customValue3,

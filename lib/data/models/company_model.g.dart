@@ -712,6 +712,15 @@ class _$UserCompanyEntitySerializer
       serializers.serialize(object.permissions,
           specifiedType: const FullType(String)),
     ];
+    if (object.notifications != null) {
+      result
+        ..add('notifications')
+        ..add(serializers.serialize(object.notifications,
+            specifiedType: const FullType(BuiltMap, const [
+              const FullType(String),
+              const FullType(BuiltList, const [const FullType(String)])
+            ])));
+    }
     if (object.company != null) {
       result
         ..add('company')
@@ -768,6 +777,13 @@ class _$UserCompanyEntitySerializer
         case 'permissions':
           result.permissions = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String;
+          break;
+        case 'notifications':
+          result.notifications.replace(serializers.deserialize(value,
+              specifiedType: const FullType(BuiltMap, const [
+                const FullType(String),
+                const FullType(BuiltList, const [const FullType(String)])
+              ])));
           break;
         case 'company':
           result.company.replace(serializers.deserialize(value,
