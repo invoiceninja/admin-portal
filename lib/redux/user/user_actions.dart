@@ -296,7 +296,9 @@ void handleUserAction(
       if (state.authState.hasRecentlyEnteredPassword) {
         dispatch();
       } else {
-        passwordCallback(context: context, callback: (password) {});
+        passwordCallback(context: context, callback: (password) {
+          dispatch(password);
+        });
       }
       break;
     case EntityAction.archive:
@@ -307,7 +309,9 @@ void handleUserAction(
       if (state.authState.hasRecentlyEnteredPassword) {
         dispatch();
       } else {
-        passwordCallback(context: context, callback: (password) {});
+        passwordCallback(context: context, callback: (password) {
+          dispatch(password);
+        });
       }
       break;
     case EntityAction.delete:
@@ -318,7 +322,9 @@ void handleUserAction(
       if (state.authState.hasRecentlyEnteredPassword) {
         dispatch();
       } else {
-        passwordCallback(context: context, callback: (password) {});
+        passwordCallback(context: context, callback: (password) {
+          dispatch(password);
+        });
       }
       break;
     case EntityAction.remove:
@@ -329,7 +335,9 @@ void handleUserAction(
       if (state.authState.hasRecentlyEnteredPassword) {
         dispatch();
       } else {
-        passwordCallback(context: context, callback: (password) {});
+        passwordCallback(context: context, callback: (password) {
+          dispatch(password);
+        });
       }
       break;
     case EntityAction.toggleMultiselect:
