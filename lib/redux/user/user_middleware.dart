@@ -138,7 +138,8 @@ Middleware<AppState> _deleteUser(UserRepository repository) {
 
     repository
         .bulkAction(
-            store.state.credentials, action.userIds, EntityAction.delete)
+            store.state.credentials, action.userIds, EntityAction.delete,
+            password: action.password)
         .then((List<UserEntity> users) {
       store.dispatch(DeleteUserSuccess(users));
       if (action.completer != null) {

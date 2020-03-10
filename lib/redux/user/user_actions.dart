@@ -6,6 +6,7 @@ import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:invoiceninja_flutter/data/models/user_model.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
+import 'package:invoiceninja_flutter/utils/dialogs.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:invoiceninja_flutter/utils/completers.dart';
 
@@ -174,10 +175,11 @@ class ArchiveUserFailure implements StopSaving {
 }
 
 class DeleteUserRequest implements StartSaving {
-  DeleteUserRequest(this.completer, this.userIds);
+  DeleteUserRequest({this.completer, this.userIds, this.password});
 
   final Completer completer;
   final List<String> userIds;
+  final String password;
 }
 
 class DeleteUserSuccess implements StopSaving, PersistData {
@@ -294,8 +296,15 @@ void handleUserAction(
           userIds));
       break;
     case EntityAction.delete:
-      store.dispatch(DeleteUserRequest(
-          snackBarCompleter<Null>(context, localization.deletedUser), userIds));
+      passwordCallback(
+          context: context,
+          callback: (password) {
+            store.dispatch(DeleteUserRequest(
+                completer:
+                    snackBarCompleter<Null>(context, localization.deletedUser),
+                userIds: userIds,
+                password: password));
+          });
       break;
     case EntityAction.remove:
       store.dispatch(RemoveUserRequest(
