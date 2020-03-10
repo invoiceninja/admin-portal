@@ -1,5 +1,6 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:invoiceninja_flutter/constants.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
@@ -132,53 +133,53 @@ class _EntityListState extends State<EntityList> {
                     )),
         ]);
       } else {
-        return Stack(
-          alignment: Alignment.topCenter,
-          children: <Widget>[
-            if (state.isLoading)
-              LinearProgressIndicator(),
-            SingleChildScrollView(
-              child: Padding(
-                padding: const EdgeInsets.all(12),
-                child: PaginatedDataTable(
-                  onSelectAll: (value) {
-                    final invoices = entityList
-                        .map((String entityId) => entityMap[entityId])
-                        .where((invoice) =>
-                            value != listUIState.isSelected(invoice.id))
-                        .toList();
-                    handleEntitiesActions(
-                        context, invoices, EntityAction.toggleMultiselect);
-                  },
-                  columns: [
-                    if (!listUIState.isInMultiselect())
-                      DataColumn(label: SizedBox()),
-                    ...widget.tableColumns.map((field) => DataColumn(
-                        label: Text(AppLocalization.of(context).lookup(field)),
-                        numeric: EntityPresenter.isFieldNumeric(field),
-                        onSort: (int columnIndex, bool ascending) =>
-                            widget.onSortColumn(field))),
-                  ],
-                  source: dataTableSource,
-                  header: DatatableHeader(
-                    entityType: widget.entityType,
-                    onClearPressed: widget.onClearEntityFilterPressed,
-                    onRefreshPressed: () => widget.onRefreshed(context),
-                  ),
-                  sortColumnIndex:
-                      widget.tableColumns.indexOf(listUIState.sortField) + 1,
-                  sortAscending: listUIState.sortAscending,
-                ),
+        return SingleChildScrollView(
+          child: Padding(
+            padding: const EdgeInsets.all(12),
+            child: PaginatedDataTable(
+              onSelectAll: (value) {
+                final invoices = entityList
+                    .map((String entityId) => entityMap[entityId])
+                    .where((invoice) =>
+                        value != listUIState.isSelected(invoice.id))
+                    .toList();
+                handleEntitiesActions(
+                    context, invoices, EntityAction.toggleMultiselect);
+              },
+              columns: [
+                if (!listUIState.isInMultiselect())
+                  DataColumn(label: SizedBox()),
+                ...widget.tableColumns.map((field) => DataColumn(
+                    label: Text(AppLocalization.of(context).lookup(field)),
+                    numeric: EntityPresenter.isFieldNumeric(field),
+                    onSort: (int columnIndex, bool ascending) =>
+                        widget.onSortColumn(field))),
+              ],
+              source: dataTableSource,
+              header: DatatableHeader(
+                entityType: widget.entityType,
+                onClearPressed: widget.onClearEntityFilterPressed,
+                onRefreshPressed: () => widget.onRefreshed(context),
               ),
-            )
-          ],
+              sortColumnIndex:
+                  widget.tableColumns.indexOf(listUIState.sortField) + 1,
+              sortAscending: listUIState.sortAscending,
+            ),
+          ),
         );
       }
     };
 
     return RefreshIndicator(
-      onRefresh: () => widget.onRefreshed(context),
-      child: listOrTable(),
-    );
+        onRefresh: () => widget.onRefreshed(context),
+        child: Stack(
+          alignment: Alignment.topCenter,
+          children: <Widget>[
+            if (state.isLoading ||
+                (kEntitySettings.contains(entityType) && state.isSaving))
+              LinearProgressIndicator(),
+            listOrTable(),
+          ],
+        ));
   }
 }

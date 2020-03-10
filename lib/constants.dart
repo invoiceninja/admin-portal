@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:invoiceninja_flutter/data/models/entities.dart';
 
 // This version must be updated in tandem with the pubspec version.
 const String kAppVersion = '2.0.1';
@@ -279,6 +280,14 @@ const String kSettingsUserManagement = 'user_management';
 const String kSettingsUserManagementView = 'user_management_view';
 const String kSettingsUserManagementEdit = 'user_management_edit';
 const String kSettingsAccountManagement = 'account_management';
+
+const kEntitySettings = [
+  EntityType.group,
+  EntityType.companyGateway,
+  EntityType.taxRate,
+  EntityType.design,
+  EntityType.user,
+];
 
 const String kReportAging = 'aging';
 const String kReportClient = 'client';
