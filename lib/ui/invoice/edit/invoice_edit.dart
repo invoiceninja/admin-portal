@@ -69,6 +69,7 @@ class _InvoiceEditState extends State<InvoiceEdit>
     final state = viewModel.state;
 
     return EditScaffold(
+      isFullscreen: state.prefState.isDesktop,
       entity: invoice,
       title: invoice.isNew ? localization.newInvoice : localization.editInvoice,
       onCancelPressed: (context) => viewModel.onCancelPressed(context),

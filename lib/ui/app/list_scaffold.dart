@@ -42,21 +42,21 @@ class ListScaffold extends StatelessWidget {
     final store = StoreProvider.of<AppState>(context);
     final state = store.state;
 
-    Widget leadingWidget;
+    Widget leading;
     if (showCheckbox && state.prefState.isModuleList) {
-      leadingWidget = Checkbox(
+      leading = Checkbox(
           materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
           onChanged: onCheckboxChanged,
           activeColor: Theme.of(context).accentColor,
           value: isChecked);
     } else if (isSettings) {
       if (onBackPressed != null) {
-        leadingWidget = IconButton(
+        leading = IconButton(
           icon: Icon(Icons.arrow_back),
           onPressed: onBackPressed,
         );
       } else {
-        leadingWidget = isMobile(context)
+        leading = isMobile(context)
             ? IconButton(
                 icon: Icon(Icons.arrow_back),
                 onPressed: () => Navigator.pop(context),
@@ -64,7 +64,7 @@ class ListScaffold extends StatelessWidget {
             : null;
       }
     } else {
-      leadingWidget = Builder(
+      leading = Builder(
         builder: (context) => GestureDetector(
           onLongPress: onHamburgerLongPress,
           child: IconButton(
@@ -95,7 +95,7 @@ class ListScaffold extends StatelessWidget {
               : null,
           appBar: AppBar(
             automaticallyImplyLeading: false,
-            leading: leadingWidget,
+            leading: leading,
             title: appBarTitle,
             actions: [
               ...appBarActions,
