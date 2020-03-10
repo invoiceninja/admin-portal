@@ -43,7 +43,7 @@ class UserRepository {
   }
 
   Future<List<UserEntity>> bulkAction(
-      Credentials credentials, List<String> ids, EntityAction action, {String password}) async {
+      Credentials credentials, List<String> ids, EntityAction action, String password) async {
     var url = credentials.url + '/users/bulk?include=company_user';
     if (action != null) {
       url += '&action=' + action.toString();

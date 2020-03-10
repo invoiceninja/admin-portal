@@ -156,10 +156,11 @@ class SaveUserFailure implements StopSaving {
 }
 
 class ArchiveUserRequest implements StartSaving {
-  ArchiveUserRequest(this.completer, this.userIds);
+  ArchiveUserRequest({this.completer, this.userIds, this.password});
 
   final Completer completer;
   final List<String> userIds;
+  final String password;
 }
 
 class ArchiveUserSuccess implements StopSaving, PersistData {
@@ -195,10 +196,11 @@ class DeleteUserFailure implements StopSaving {
 }
 
 class RestoreUserRequest implements StartSaving {
-  RestoreUserRequest(this.completer, this.userIds);
+  RestoreUserRequest({this.completer, this.userIds, this.password});
 
   final Completer completer;
   final List<String> userIds;
+  final String password;
 }
 
 class RestoreUserSuccess implements StopSaving, PersistData {
@@ -287,14 +289,26 @@ void handleUserAction(
       editEntity(context: context, entity: user);
       break;
     case EntityAction.restore:
-      store.dispatch(RestoreUserRequest(
-          snackBarCompleter<Null>(context, localization.restoredUser),
-          userIds));
+      final dispatch = ([String password]) => store.dispatch(RestoreUserRequest(
+          completer: snackBarCompleter<Null>(context, localization.restoredUser),
+          userIds: userIds,
+          password: password));
+      if (state.authState.hasRecentlyEnteredPassword) {
+        dispatch();
+      } else {
+        passwordCallback(context: context, callback: (password) {});
+      }
       break;
     case EntityAction.archive:
-      store.dispatch(ArchiveUserRequest(
-          snackBarCompleter<Null>(context, localization.archivedUser),
-          userIds));
+      final dispatch = ([String password]) => store.dispatch(ArchiveUserRequest(
+          completer: snackBarCompleter<Null>(context, localization.archivedUser),
+          userIds: userIds,
+          password: password));
+      if (state.authState.hasRecentlyEnteredPassword) {
+        dispatch();
+      } else {
+        passwordCallback(context: context, callback: (password) {});
+      }
       break;
     case EntityAction.delete:
       final dispatch = ([String password]) => store.dispatch(DeleteUserRequest(

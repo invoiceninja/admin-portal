@@ -111,8 +111,8 @@ Middleware<AppState> _archiveUser(UserRepository repository) {
         action.userIds.map((id) => store.state.userState.map[id]).toList();
 
     repository
-        .bulkAction(
-            store.state.credentials, action.userIds, EntityAction.archive)
+        .bulkAction(store.state.credentials, action.userIds,
+            EntityAction.archive, action.password)
         .then((List<UserEntity> users) {
       store.dispatch(ArchiveUserSuccess(users));
       if (action.completer != null) {
@@ -137,9 +137,8 @@ Middleware<AppState> _deleteUser(UserRepository repository) {
         action.userIds.map((id) => store.state.userState.map[id]).toList();
 
     repository
-        .bulkAction(
-            store.state.credentials, action.userIds, EntityAction.delete,
-            password: action.password)
+        .bulkAction(store.state.credentials, action.userIds,
+            EntityAction.delete, action.password)
         .then((List<UserEntity> users) {
       store.dispatch(DeleteUserSuccess(users));
       if (action.completer != null) {
@@ -164,8 +163,8 @@ Middleware<AppState> _restoreUser(UserRepository repository) {
         action.userIds.map((id) => store.state.userState.map[id]).toList();
 
     repository
-        .bulkAction(
-            store.state.credentials, action.userIds, EntityAction.restore)
+        .bulkAction(store.state.credentials, action.userIds,
+            EntityAction.restore, action.password)
         .then((List<UserEntity> users) {
       store.dispatch(RestoreUserSuccess(users));
       if (action.completer != null) {
