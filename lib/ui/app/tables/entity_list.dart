@@ -157,6 +157,7 @@ class _EntityListState extends State<EntityList> {
             header: DatatableHeader(
               entityType: widget.entityType,
               onClearPressed: widget.onClearEntityFilterPressed,
+              onRefreshPressed: () => widget.onRefreshed(context),
             ),
             sortColumnIndex:
                 widget.tableColumns.indexOf(listUIState.sortField) + 1,

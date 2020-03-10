@@ -8,6 +8,7 @@ import 'package:invoiceninja_flutter/redux/ui/pref_state.dart';
 import 'package:invoiceninja_flutter/ui/app/actions_menu_button.dart';
 import 'package:invoiceninja_flutter/ui/app/lists/list_filter.dart';
 import 'package:invoiceninja_flutter/ui/app/presenters/entity_presenter.dart';
+import 'package:invoiceninja_flutter/utils/localization.dart';
 
 class EntityDataTableSource extends DataTableSource {
   EntityDataTableSource(
@@ -105,17 +106,21 @@ class DatatableHeader extends StatelessWidget {
   const DatatableHeader({
     @required this.entityType,
     @required this.onClearPressed,
+    @required this.onRefreshPressed,
   });
 
   final EntityType entityType;
-  final Function() onClearPressed;
+  final Function onClearPressed;
+  final Function onRefreshPressed;
 
   @override
   Widget build(BuildContext context) {
+    final localization = AppLocalization.of(context);
     final state = StoreProvider.of<AppState>(context).state;
     final listUIState = state.getListState(entityType);
 
     Widget message = SizedBox();
+
     if (onClearPressed != null && listUIState.filterEntityId != null) {
       final entity = state.getEntityMap(
           listUIState.filterEntityType)[listUIState.filterEntityId];
@@ -131,9 +136,15 @@ class DatatableHeader extends StatelessWidget {
       );
     }
 
-    return SizedBox(
-      width: 100,
-      child: message,
+    return Row(
+      children: <Widget>[
+        FlatButton(
+          child: Text(localization.refresh),
+          onPressed: onRefreshPressed,
+        ),
+        SizedBox(width: 20),
+        Expanded(child: message),
+      ],
     );
   }
 }
