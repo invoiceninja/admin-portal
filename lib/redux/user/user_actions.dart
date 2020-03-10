@@ -214,10 +214,11 @@ class RestoreUserFailure implements StopSaving {
 }
 
 class RemoveUserRequest implements StartSaving {
-  RemoveUserRequest(this.completer, this.userId);
+  RemoveUserRequest({this.completer, this.userId, this.password});
 
   final Completer completer;
   final String userId;
+  final String password;
 }
 
 class RemoveUserSuccess implements StopSaving, PersistData {
@@ -276,7 +277,7 @@ void handleUserAction(
   }
 
   final store = StoreProvider.of<AppState>(context);
-  //final state = store.state;
+  final state = store.state;
   final localization = AppLocalization.of(context);
   final user = users.first as UserEntity;
   final userIds = users.map((user) => user.id).toList();
@@ -296,19 +297,26 @@ void handleUserAction(
           userIds));
       break;
     case EntityAction.delete:
-      passwordCallback(
-          context: context,
-          callback: (password) {
-            store.dispatch(DeleteUserRequest(
-                completer:
-                    snackBarCompleter<Null>(context, localization.deletedUser),
-                userIds: userIds,
-                password: password));
-          });
+      final dispatch = ([String password]) => store.dispatch(DeleteUserRequest(
+          completer: snackBarCompleter<Null>(context, localization.deletedUser),
+          userIds: userIds,
+          password: password));
+      if (state.authState.hasRecentlyEnteredPassword) {
+        dispatch();
+      } else {
+        passwordCallback(context: context, callback: (password) {});
+      }
       break;
     case EntityAction.remove:
-      store.dispatch(RemoveUserRequest(
-          snackBarCompleter<Null>(context, localization.removedUser), user.id));
+      final dispatch = ([String password]) => store.dispatch(RemoveUserRequest(
+          completer: snackBarCompleter<Null>(context, localization.removedUser),
+          userId: user.id,
+          password: password));
+      if (state.authState.hasRecentlyEnteredPassword) {
+        dispatch();
+      } else {
+        passwordCallback(context: context, callback: (password) {});
+      }
       break;
     case EntityAction.toggleMultiselect:
       if (!store.state.userListState.isInMultiselect()) {
