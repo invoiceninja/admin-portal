@@ -3,6 +3,7 @@ import 'package:built_value/built_value.dart';
 import 'package:built_value/serializer.dart';
 import 'package:flutter/foundation.dart';
 import 'package:invoiceninja_flutter/constants.dart';
+import 'package:invoiceninja_flutter/data/models/account_model.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/redux/auth/auth_state.dart';
 import 'package:invoiceninja_flutter/redux/client/client_selectors.dart';
@@ -109,6 +110,8 @@ abstract class AppState implements Built<AppState, AppStateBuilder> {
   bool get isLoaded {
     return productState.isLoaded && clientState.isLoaded;
   }
+
+  AccountEntity get account => userCompany.account;
 
   CompanyEntity get company => userCompanyState.company;
 

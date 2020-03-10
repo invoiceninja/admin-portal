@@ -31,5 +31,7 @@ abstract class AccountEntity
   @BuiltValueField(wireName: 'current_version')
   String get currentVersion;
 
+  bool get isUpdateAvailable => latestVersion != currentVersion;
+
   static Serializer<AccountEntity> get serializer => _$accountEntitySerializer;
 }

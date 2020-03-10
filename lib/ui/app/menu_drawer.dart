@@ -315,7 +315,9 @@ class MenuDrawer extends StatelessWidget {
                     )),
               Align(
                 child: state.prefState.isMenuCollapsed
-                    ? SidebarFooterCollapsed()
+                    ? SidebarFooterCollapsed(
+                        isUpdateAvailable: state.account.isUpdateAvailable,
+                      )
                     : SidebarFooter(),
                 alignment: Alignment(0, 1),
               ),
@@ -549,11 +551,17 @@ class SidebarFooter extends StatelessWidget {
 }
 
 class SidebarFooterCollapsed extends StatelessWidget {
+  const SidebarFooterCollapsed({@required this.isUpdateAvailable});
+
+  final bool isUpdateAvailable;
+
   @override
   Widget build(BuildContext context) {
     final localization = AppLocalization.of(context);
     return PopupMenuButton<String>(
-      icon: Icon(Icons.info_outline),
+      icon: isUpdateAvailable
+          ? Icon(Icons.warning, color: Theme.of(context).accentColor)
+          : Icon(Icons.info_outline),
       onSelected: (value) {
         if (value == localization.updateAvailable) {
           _showUpdate(context);
@@ -564,7 +572,7 @@ class SidebarFooterCollapsed extends StatelessWidget {
         }
       },
       itemBuilder: (BuildContext context) => [
-        if (true || isSelfHosted(context) && kIsWeb)
+        if (isUpdateAvailable)
           PopupMenuItem<String>(
             child: ListTile(
               leading: Icon(
