@@ -584,6 +584,92 @@ abstract class InvoiceEntity extends Object
         orElse: () => null);
   }
 
+  /// Gets taxes in the form { taxName1: { amount: 0, paid: 0} , ... }
+  Map<String, Map<String, dynamic>> getTaxes() {
+    final taxes = <String, Map<String, dynamic>>{};
+    final taxable = calculateTaxes(usesInclusiveTaxes);
+    final paidAmount = amount - balance;
+
+    if (taxRate1 != 0) {
+      final invoiceTaxAmount = taxable[taxName1];
+      final invoicePaidAmount = (amount * invoiceTaxAmount != 0)
+          ? (paidAmount / amount * invoiceTaxAmount)
+          : 0.0;
+      _calculateTax(taxes, taxName1, taxRate1, invoiceTaxAmount, invoicePaidAmount);
+    }
+
+    if (taxRate2 != 0) {
+      final invoiceTaxAmount = taxable[taxName2];
+      final invoicePaidAmount = (amount * invoiceTaxAmount != 0)
+          ? (paidAmount / amount * invoiceTaxAmount)
+          : 0.0;
+      _calculateTax(taxes, taxName2, taxRate2, invoiceTaxAmount, invoicePaidAmount);
+    }
+
+    if (taxRate3 != 0) {
+      final invoiceTaxAmount = taxable[taxName3];
+      final invoicePaidAmount = (amount * invoiceTaxAmount != 0)
+          ? (paidAmount / amount * invoiceTaxAmount)
+          : 0.0;
+      _calculateTax(taxes, taxName3, taxRate3, invoiceTaxAmount, invoicePaidAmount);
+    }
+
+    for (final item in lineItems) {
+      if (item.taxRate1 != 0) {
+        final itemTaxAmount = taxable[item.taxName1];
+        final itemPaidAmount = amount != null &&
+                itemTaxAmount != null &&
+                amount * itemTaxAmount != 0
+            ? (paidAmount / amount * itemTaxAmount)
+            : 0.0;
+        _calculateTax(taxes, item.taxName1, item.taxRate1, itemTaxAmount, itemPaidAmount);
+      }
+
+      if (item.taxRate2 != 0) {
+        final itemTaxAmount = taxable[item.taxName2];
+        final itemPaidAmount = amount != null &&
+                itemTaxAmount != null &&
+                amount * itemTaxAmount != 0
+            ? (paidAmount / amount * itemTaxAmount)
+            : 0.0;
+        _calculateTax(taxes, item.taxName2, item.taxRate2, itemTaxAmount, itemPaidAmount);
+      }
+
+      if (item.taxRate3 != 0) {
+        final itemTaxAmount = taxable[item.taxName3];
+        final itemPaidAmount = amount != null &&
+                itemTaxAmount != null &&
+                amount * itemTaxAmount != 0
+            ? (paidAmount / amount * itemTaxAmount)
+            : 0.0;
+        _calculateTax(taxes, item.taxName3, item.taxRate3, itemTaxAmount, itemPaidAmount);
+      }
+    }
+
+    return taxes;
+  }
+
+  void _calculateTax(Map<String, Map<String, dynamic>> map, String name,
+      double rate, double amount, double paid) {
+    if (amount == null) {
+      return;
+    }
+
+    final key = rate.toString() + ' ' + name;
+
+    map.putIfAbsent(
+        key,
+        () => <String, dynamic>{
+              'name': name,
+              'rate': rate,
+              'amount': 0.0,
+              'paid': 0.0
+            });
+
+    map[key]['amount'] += amount;
+    map[key]['paid'] += paid;
+  }
+
   String get invitationLink =>
       invitations.isEmpty ? '' : invitations.first.link;
 

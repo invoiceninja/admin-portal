@@ -76,31 +76,16 @@ ReportResult taxRateReport(
     final invoiceTaxAmount = invoice.calculateTaxes(invoice.usesInclusiveTaxes);
     final invoicePaidAmount = invoice.amount - invoice.balance;
 
-    for (var i in Iterable<int>.generate(3)) {
+    final taxes = invoice.getTaxes();
+    for (final key in taxes.keys) {
       bool skip = false;
       final List<ReportElement> row = [];
 
-      final taxName = [invoice.taxName1, invoice.taxName2, invoice.taxName3][i];
-      final taxRate = [invoice.taxRate1, invoice.taxRate2, invoice.taxRate3][i];
+      final String taxName = taxes[key]['name'];
+      final double taxRate = taxes[key]['rate'];
 
-      if (taxRate == null) {
+      if (taxRate == null || taxRate == 0) {
         continue;
-      }
-
-      final invoiceCurrentTaxAmount = invoiceTaxAmount[taxName];
-
-      if (invoiceCurrentTaxAmount == null || invoiceCurrentTaxAmount == 0)
-        continue;
-
-      double invoiceCurrentTaxPaidAmount;
-      if (invoice.amount != null &&
-          invoice.amount > 0 &&
-          invoiceCurrentTaxAmount != null &&
-          invoiceCurrentTaxAmount > 0) {
-        invoiceCurrentTaxPaidAmount =
-            invoicePaidAmount / invoice.amount * invoiceCurrentTaxAmount;
-      } else {
-        invoiceCurrentTaxPaidAmount = 0;
       }
 
       for (var column in columns) {
@@ -123,10 +108,10 @@ ReportResult taxRateReport(
             value = taxRate;
             break;
           case TaxRateReportFields.tax_amount:
-            value = invoiceCurrentTaxAmount ?? 0;
+            value = taxes[key]['amount'] ?? 0.0;
             break;
           case TaxRateReportFields.tax_paid:
-            value = invoiceCurrentTaxPaidAmount;
+            value = taxes[key]['paid'] ?? 0.0;
             break;
           case TaxRateReportFields.payment_amount:
             value = invoicePaidAmount;

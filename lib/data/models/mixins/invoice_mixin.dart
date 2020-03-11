@@ -38,29 +38,10 @@ abstract class CalculateInvoiceTotal {
     final map = <String, double>{};
 
     lineItems.forEach((item) {
-      final double qty = round(item.quantity, 4);
-      final double cost = round(item.cost, 4);
-      final double itemDiscount = round(item.discount, 2);
       final double taxRate1 = round(item.taxRate1, 3);
       final double taxRate2 = round(item.taxRate2, 3);
 
-      double lineTotal = qty * cost;
-
-      if (itemDiscount != 0) {
-        if (isAmountDiscount) {
-          lineTotal -= itemDiscount;
-        } else {
-          lineTotal -= round(lineTotal * itemDiscount / 100, 4);
-        }
-      }
-
-      if (discount != 0) {
-        if (isAmountDiscount) {
-          if (total != 0) {
-            lineTotal -= round(lineTotal / total * discount, 4);
-          }
-        }
-      }
+      final lineTotal = getItemTaxable(item, total);
 
       if (taxRate1 != 0) {
         taxAmount = _calculateTaxAmount(lineTotal, taxRate1, useInclusiveTaxes);
@@ -114,6 +95,31 @@ abstract class CalculateInvoiceTotal {
     }
 
     return map;
+  }
+
+  double getItemTaxable(InvoiceItemEntity item, double invoiceTotal) {
+    final double qty = round(item.quantity, 4);
+    final double cost = round(item.cost, 4);
+    final double itemDiscount = round(item.discount, 2);
+    double lineTotal = qty * cost;
+
+    if (discount != 0) {
+      if (isAmountDiscount) {
+        if (invoiceTotal != 0) {
+          lineTotal -= round(lineTotal / invoiceTotal * discount, 4);
+        }
+      }
+    }
+
+    if (itemDiscount != 0) {
+      if (isAmountDiscount) {
+        lineTotal -= itemDiscount;
+      } else {
+        lineTotal -= round(lineTotal * itemDiscount / 100, 4);
+      }
+    }
+
+    return round(lineTotal, 2);
   }
 
   double calculateTotal(bool useInclusiveTaxes) {
