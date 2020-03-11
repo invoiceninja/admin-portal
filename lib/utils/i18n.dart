@@ -33038,10 +33038,6 @@ mixin LocalizationsProvider on LocaleCodeAware {
 
   String lookup(String key) {
     final lookupKey = toSnakeCase(key);
-    print(lookupKey);
-    print(_localizedValues[localeCode][lookupKey] ??
-        _localizedValues[localeCode][lookupKey.replaceFirst('_id', '')] ??
-        key);
     return _localizedValues[localeCode][lookupKey] ??
         _localizedValues[localeCode][lookupKey.replaceFirst('_id', '')] ??
         key;

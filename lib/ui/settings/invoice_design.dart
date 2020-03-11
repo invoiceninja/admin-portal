@@ -245,10 +245,10 @@ class _InvoiceDesignState extends State<InvoiceDesign>
           ),
           FormCard(
             child: MultiSelectList(
-              options: [],
-              defaultSelected: [],
               //selected: settings.pdfVariables[kPdfFieldsClientDetails].toList(),
-              selected: [],
+              options: settings.pdfVariables[kPdfFieldsClientDetails].toList(),
+              defaultSelected: settings.pdfVariables[kPdfFieldsClientDetails].toList(),
+              selected: settings.pdfVariables[kPdfFieldsClientDetails].toList(),
               onSelected: (values) {
                 viewModel.onSettingsChanged(settings.rebuild((b) => b
                   ..pdfVariables[kPdfFieldsClientDetails] = BuiltList(values)));
