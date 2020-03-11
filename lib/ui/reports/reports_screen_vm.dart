@@ -18,8 +18,10 @@ import 'package:invoiceninja_flutter/ui/reports/expense_report.dart';
 import 'package:invoiceninja_flutter/ui/reports/invoice_report.dart';
 import 'package:invoiceninja_flutter/ui/reports/payment_report.dart';
 import 'package:invoiceninja_flutter/ui/reports/product_report.dart';
+import 'package:invoiceninja_flutter/ui/reports/quote_report.dart';
 import 'package:invoiceninja_flutter/ui/reports/reports_screen.dart';
 import 'package:invoiceninja_flutter/ui/reports/task_report.dart';
+import 'package:invoiceninja_flutter/ui/reports/tax_rate_report.dart';
 import 'package:invoiceninja_flutter/utils/completers.dart';
 import 'package:invoiceninja_flutter/utils/formatting.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
@@ -29,6 +31,8 @@ import 'package:path_provider/path_provider.dart';
 import 'package:redux/redux.dart';
 import 'package:invoiceninja_flutter/utils/web_stub.dart'
     if (dart.library.html) 'package:invoiceninja_flutter/utils/web.dart';
+
+import 'credit_report.dart';
 
 class ReportsScreenBuilder extends StatelessWidget {
   const ReportsScreenBuilder({Key key}) : super(key: key);
@@ -159,17 +163,39 @@ class ReportsScreenVM {
           state.staticState,
         );
         break;
-      // TODO: Obtain credit map
-      //case kReportCredit:
-      //  reportResult = memoizedCreditReport(
-      //    state.userCompany,
-      //    state.uiState.reportsUIState,
-      //    state.creditState.map,
-      //    state.clientState.map,
-      //    state.userState.map,
-      //    state.staticState,
-      //  );
-      //  break;
+      case kReportQuote:
+        reportResult = memoizedQuoteReport(
+          state.userCompany,
+          state.uiState.reportsUIState,
+          state.quoteState.map,
+          state.clientState.map,
+          state.vendorState.map,
+          state.userState.map,
+          state.staticState,
+        );
+        break;
+      case kReportTaxRate:
+        reportResult = memoizedTaxRateReport(
+          state.userCompany,
+          state.uiState.reportsUIState,
+          state.taxRateState.map,
+          state.invoiceState.map,
+          state.clientState.map,
+          state.paymentState.map,
+          state.userState.map,
+          state.staticState,
+        );
+        break;
+      case kReportCredit:
+        reportResult = memoizedCreditReport(
+          state.userCompany,
+          state.uiState.reportsUIState,
+          state.creditState.map,
+          state.clientState.map,
+          state.userState.map,
+          state.staticState,
+        );
+        break;
       default:
         reportResult = memoizedClientReport(
           state.userCompany,

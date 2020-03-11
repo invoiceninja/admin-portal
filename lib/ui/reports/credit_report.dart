@@ -6,18 +6,43 @@ import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/redux/reports/reports_state.dart';
 import 'package:invoiceninja_flutter/redux/static/static_state.dart';
 import 'package:invoiceninja_flutter/ui/reports/reports_screen.dart';
+import 'package:invoiceninja_flutter/utils/formatting.dart';
 import 'package:memoize/memoize.dart';
 
 enum CreditReportFields {
   amount,
   balance,
-  credit_date,
-  credit_number,
   client,
-  client_city,
-  client_state,
-  client_country,
-  client_is_active
+  client_balance,
+  client_address1,
+  client_address2,
+  client_shipping_address1,
+  client_shipping_address2,
+  status,
+  number,
+  discount,
+  po_number,
+  date,
+  due_date,
+  partial,
+  partial_due_date,
+  auto_bill,
+  custom_value1,
+  custom_value2,
+  custom_value3,
+  custom_value4,
+  custom_taxes1,
+  custom_taxes2,
+  custom_taxes3,
+  custom_taxes4,
+  has_expenses,
+  custom_surcharge1,
+  custom_surcharge2,
+  custom_surcharge3,
+  custom_surcharge4,
+  updated_at,
+  archived_at,
+  is_deleted,
 }
 
 var memoizedCreditReport = memo6((
@@ -49,11 +74,12 @@ ReportResult creditReport(
           : ReportSettingsEntity();
 
   final defaultColumns = [
+    CreditReportFields.number,
     CreditReportFields.amount,
     CreditReportFields.balance,
-    CreditReportFields.credit_date,
-    CreditReportFields.credit_number,
-    CreditReportFields.client,
+    CreditReportFields.date,
+    CreditReportFields.due_date,
+    CreditReportFields.client
   ];
 
   if (creditReportSettings.columns.isNotEmpty) {
@@ -84,26 +110,98 @@ ReportResult creditReport(
         case CreditReportFields.balance:
           value = credit.balance;
           break;
-        case CreditReportFields.credit_date:
-          value = credit.date;
+        case CreditReportFields.client:
+          value = client?.listDisplayName ?? '';
           break;
-        case CreditReportFields.credit_number:
+        case CreditReportFields.client_balance:
+          value = client.balance;
+          break;
+        case CreditReportFields.client_address1:
+          value = client.address1;
+          break;
+        case CreditReportFields.client_address2:
+          value = client.address2;
+          break;
+        case CreditReportFields.client_shipping_address1:
+          value = client.shippingAddress1;
+          break;
+        case CreditReportFields.client_shipping_address2:
+          value = client.shippingAddress2;
+          break;
+        case CreditReportFields.status:
+          value = staticState.invoiceStatusMap[credit.statusId]?.name ?? '';
+          break;
+        case CreditReportFields.number:
           value = credit.number;
           break;
-        case CreditReportFields.client:
-          value = client.displayName;
+        case CreditReportFields.discount:
+          value = credit.discount;
           break;
-        case CreditReportFields.client_city:
-          value = client.city;
+        case CreditReportFields.po_number:
+          value = credit.poNumber;
           break;
-        case CreditReportFields.client_state:
-          value = client.state;
+        case CreditReportFields.date:
+          value = credit.date;
           break;
-        case CreditReportFields.client_country:
-          value = staticState.countryMap[client.countryId].listDisplayName;
+        case CreditReportFields.due_date:
+          value = credit.dueDate;
           break;
-        case CreditReportFields.client_is_active:
-          value = client.isActive;
+        case CreditReportFields.partial:
+          value = credit.partial;
+          break;
+        case CreditReportFields.partial_due_date:
+          value = credit.partialDueDate;
+          break;
+        case CreditReportFields.auto_bill:
+          value = credit.autoBill;
+          break;
+        case CreditReportFields.custom_value1:
+          value = credit.customValue1;
+          break;
+        case CreditReportFields.custom_value2:
+          value = credit.customValue2;
+          break;
+        case CreditReportFields.custom_value3:
+          value = credit.customValue3;
+          break;
+        case CreditReportFields.custom_value4:
+          value = credit.customValue4;
+          break;
+        case CreditReportFields.custom_taxes1:
+          value = credit.customTaxes1;
+          break;
+        case CreditReportFields.custom_taxes2:
+          value = credit.customTaxes2;
+          break;
+        case CreditReportFields.custom_taxes3:
+          value = credit.customTaxes3;
+          break;
+        case CreditReportFields.custom_taxes4:
+          value = credit.customTaxes4;
+          break;
+        case CreditReportFields.has_expenses:
+          value = credit.hasExpenses;
+          break;
+        case CreditReportFields.custom_surcharge1:
+          value = credit.customSurcharge1;
+          break;
+        case CreditReportFields.custom_surcharge2:
+          value = credit.customSurcharge2;
+          break;
+        case CreditReportFields.custom_surcharge3:
+          value = credit.customSurcharge3;
+          break;
+        case CreditReportFields.custom_surcharge4:
+          value = credit.customSurcharge4;
+          break;
+        case CreditReportFields.updated_at:
+          value = convertTimestampToDateString(credit.createdAt);
+          break;
+        case CreditReportFields.archived_at:
+          value = convertTimestampToDateString(credit.createdAt);
+          break;
+        case CreditReportFields.is_deleted:
+          value = credit.isDeleted;
           break;
       }
 

@@ -566,6 +566,7 @@ abstract class UserSettingsEntity
   // TODO remove this
   @nullable
   @BuiltValueField(wireName: 'accent_color')
+  @nullable
   String get accentColor;
 
   @BuiltValueField(wireName: 'table_columns')
