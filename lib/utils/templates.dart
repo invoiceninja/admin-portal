@@ -35,8 +35,8 @@ void loadTemplate({
   webClient
       .post(url, credentials.token,
           data: json.encode({
-            'entity': 'invoice',
-            'entity_id': '${invoice.id}',
+            //'entity': 'invoice',
+            //'entity_id': '${invoice.id}',
             'subject': subject,
             'body': body
           }))
