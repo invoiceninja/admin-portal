@@ -1085,7 +1085,8 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'tax_name': 'Tax Name',
       'tax_amount': 'Tax Amount',
       'tax_paid': 'Tax Paid Amount',
-      'payment_amount': 'Payment Amount'
+      'payment_amount': 'Payment Amount',
+      'age': 'Age'
     },
     'sq': {
       'company1': 'Custom Company 1',
@@ -33035,6 +33036,8 @@ mixin LocalizationsProvider on LocaleCodeAware {
   String get taxPaid => _localizedValues[localeCode]['tax_paid'];
 
   String get paymentAmount => _localizedValues[localeCode]['payment_amount'];
+
+  String get age => _localizedValues[localeCode]['age'];
 
   String lookup(String key) {
     final lookupKey = toSnakeCase(key);
