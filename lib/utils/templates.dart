@@ -42,7 +42,7 @@ void loadTemplate({
           }))
       .then((dynamic response) {
     subject = response['subject'] ?? '';
-    body = base64Encode(encoder.convert(response['body'] ?? ''));
+    body = 'data:text/html;base64,' + base64Encode(encoder.convert(response['body'] ?? ''));
     onComplete(subject, body);
   }).catchError((dynamic error) {
     showErrorDialog(context: context, message: '$error');

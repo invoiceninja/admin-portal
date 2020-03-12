@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'dart:html';
+import 'dart:ui' as ui;
 
 Future<String> webFilePicker() {
   final completer = new Completer<String>();
@@ -27,3 +28,12 @@ void webDownload(String filename, String data) {
 }
 
 void webReload() => window.location.reload();
+
+void registerWebView(String html) {
+  // ignore: undefined_prefixed_name
+  ui.platformViewRegistry.registerViewFactory(
+      'preview-html',
+      (int viewId) => IFrameElement()
+        ..src = html
+        ..style.border = 'none');
+}
