@@ -1,5 +1,5 @@
+import 'dart:convert';
 import 'dart:ui';
-
 import 'package:built_collection/built_collection.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -17,6 +17,8 @@ import 'package:invoiceninja_flutter/utils/completers.dart';
 import 'package:invoiceninja_flutter/utils/platforms.dart';
 import 'package:native_pdf_view/native_pdf_view.dart';
 import 'package:native_pdf_renderer/native_pdf_renderer.dart';
+import 'package:invoiceninja_flutter/utils/web_stub.dart'
+    if (dart.library.html) 'package:invoiceninja_flutter/utils/web.dart';
 
 class DesignEdit extends StatefulWidget {
   const DesignEdit({
@@ -48,6 +50,7 @@ class _DesignEditState extends State<DesignEdit>
   FocusScopeNode _focusNode;
   TabController _tabController;
   PDFPageImage _pdfPageImage;
+  String _pdfString;
   bool _isLoading = false;
 
   List<TextEditingController> _controllers;
@@ -152,6 +155,12 @@ class _DesignEditState extends State<DesignEdit>
             setState(() {
               _isLoading = false;
             });
+          } else if (kIsWeb) {
+            setState(() {
+              _isLoading = false;
+              _pdfString = 'data:application/pdf;base64,' +
+                  base64Encode(response.bodyBytes);
+            });
           } else {
             final document = await PDFDocument.openData(response.bodyBytes);
             final page = await document.getPage(1);
@@ -221,6 +230,7 @@ class _DesignEditState extends State<DesignEdit>
                     ),
                     DesignPreview(
                       pdfPageImage: _pdfPageImage,
+                      pdfString: _pdfString,
                       isLoading: _isLoading,
                     ),
                     DesignSection(textController: _headerController),
@@ -278,6 +288,7 @@ class _DesignEditState extends State<DesignEdit>
                     Expanded(
                       child: DesignPreview(
                         pdfPageImage: _pdfPageImage,
+                        pdfString: _pdfString,
                         isLoading: _isLoading,
                       ),
                     ),
@@ -357,10 +368,12 @@ class DesignSettings extends StatelessWidget {
 
 class DesignPreview extends StatefulWidget {
   const DesignPreview({
+    @required this.pdfString,
     @required this.pdfPageImage,
     @required this.isLoading,
   });
 
+  final String pdfString;
   final PDFPageImage pdfPageImage;
   final bool isLoading;
 
@@ -406,6 +419,11 @@ class _DesignPreviewState extends State<DesignPreview> {
 
   @override
   Widget build(BuildContext context) {
+    if (kIsWeb) {
+      registerWebView(widget.pdfString);
+      print('## BUILDING.... ${widget.pdfString}');
+    }
+
     return Container(
       color: Colors.grey,
       alignment: Alignment.center,
@@ -424,6 +442,10 @@ class _DesignPreviewState extends State<DesignPreview> {
                   alignment: Alignment.topCenter,
                 ),
               ),
+            )
+          else if (widget.pdfString != null)
+            HtmlElementView(
+              viewType: 'preview-html',
             )
           else
             SizedBox(
