@@ -32,7 +32,7 @@ void webReload() => window.location.reload();
 void registerWebView(String html) {
   // ignore: undefined_prefixed_name
   ui.platformViewRegistry.registerViewFactory(
-      'preview-html',
+      html,
       (int viewId) => IFrameElement()
         ..src = html
         ..style.border = 'none');

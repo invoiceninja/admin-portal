@@ -532,7 +532,7 @@ class _TemplatePreviewState extends State<TemplatePreview>
 
     if (kIsWeb) {
       registerWebView(widget.html);
-      return HtmlElementView(viewType: 'preview-html');
+      return HtmlElementView(viewType: widget.html);
     } else {
       return WebView(
         debuggingEnabled: true,

@@ -92,7 +92,7 @@ class _PDFScaffoldState extends State<PDFScaffold> {
       body: kIsWeb
           ? _pdfString == null
               ? LoadingIndicator()
-              : HtmlElementView(viewType: 'preview-html')
+              : HtmlElementView(viewType: _pdfString)
           : _pdfImages == null
               ? LoadingIndicator()
               : Container(
