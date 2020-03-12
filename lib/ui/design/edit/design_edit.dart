@@ -402,6 +402,11 @@ class _DesignPreviewState extends State<DesignPreview> {
   void didUpdateWidget(oldWidget) {
     super.didUpdateWidget(oldWidget);
 
+    if (kIsWeb) {
+      registerWebView(widget.pdfString);
+      print('## BUILDING.... ${widget.pdfString}');
+    }
+
     if (_scrollController.hasClients && _scrollPosition > 0) {
       WidgetsBinding.instance.addPostFrameCallback((duration) {
         _scrollController.jumpTo(_scrollPosition);
@@ -419,11 +424,6 @@ class _DesignPreviewState extends State<DesignPreview> {
 
   @override
   Widget build(BuildContext context) {
-    if (kIsWeb) {
-      registerWebView(widget.pdfString);
-      print('## BUILDING.... ${widget.pdfString}');
-    }
-
     return Container(
       color: Colors.grey,
       alignment: Alignment.center,
