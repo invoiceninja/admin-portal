@@ -6,7 +6,6 @@ import 'package:flutter/foundation.dart';
 import 'package:invoiceninja_flutter/ui/app/loading_indicator.dart';
 import 'package:invoiceninja_flutter/utils/dialogs.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
-import 'package:invoiceninja_flutter/utils/platforms.dart';
 import 'package:native_pdf_view/native_pdf_view.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:native_pdf_renderer/native_pdf_renderer.dart';
@@ -31,97 +30,107 @@ Future<Null> viewPdf(InvoiceEntity invoice, BuildContext context) async {
   showDialog<Scaffold>(
       context: context,
       builder: (BuildContext context) {
-        final localization = AppLocalization.of(context);
-
-        return Scaffold(
-          appBar: AppBar(
-            title: Text(localization.invoice + ' ' + (invoice.number ?? '')),
-            actions: <Widget>[
-              FlatButton(
-                child: Text(
-                  localization.download,
-                  style: TextStyle(color: Colors.white),
-                ),
-                onPressed: () {
-                  launch(invoice.invitationDownloadLink,
-                      forceSafariVC: false, forceWebView: false);
-                },
-              ),
-            ],
-          ),
-          body: kIsWeb
-              ? FutureBuilder(
-                  future: renderWebPDF(context, invoice),
-                  builder:
-                      (BuildContext context, AsyncSnapshot<String> snapshot) {
-                    switch (snapshot.connectionState) {
-                      case ConnectionState.none:
-                      case ConnectionState.active:
-                      case ConnectionState.waiting:
-                        return LoadingIndicator();
-                      case ConnectionState.done:
-                        if (snapshot.hasError)
-                          return Text(
-                              '${getPdfRequirements(context)} - Error: ${snapshot.error}');
-                        else
-                          registerWebView(snapshot.data);
-                        return HtmlElementView(viewType: 'preview-html');
-                    }
-                    return null;
-                  })
-              : FutureBuilder(
-                  future: renderMobilePDF(context, invoice),
-                  builder: (BuildContext context,
-                      AsyncSnapshot<List<PDFPageImage>> snapshot) {
-                    switch (snapshot.connectionState) {
-                      case ConnectionState.none:
-                      case ConnectionState.active:
-                      case ConnectionState.waiting:
-                        return LoadingIndicator();
-                      case ConnectionState.done:
-                        if (snapshot.hasError)
-                          return Text(
-                              '${getPdfRequirements(context)} - Error: ${snapshot.error}');
-                        else
-                          return Container(
-                              color: Colors.grey,
-                              padding: const EdgeInsets.symmetric(vertical: 16),
-                              child: snapshot.data.length == 1
-                                  ? Center(
-                                      child: Container(
-                                        color: Colors.white,
-                                        child: Image(
-                                            image: MemoryImage(
-                                                snapshot.data.first.bytes),
-                                            height: double.infinity),
-                                      ),
-                                    )
-                                  : ListView(
-                                      scrollDirection: Axis.horizontal,
-                                      children: snapshot.data
-                                          .map((page) => Row(
-                                                children: <Widget>[
-                                                  Container(
-                                                    width: 20,
-                                                    height: double.infinity,
-                                                    color: Colors.grey,
-                                                  ),
-                                                  Container(
-                                                    color: Colors.white,
-                                                    child: ExtendedImage.memory(
-                                                      page.bytes,
-                                                      fit: BoxFit.fitHeight,
-                                                    ),
-                                                  ),
-                                                ],
-                                              ))
-                                          .toList(),
-                                    ));
-                    }
-                    return null; // unreachable
-                  }),
+        return PDFScaffold(
+          invoice: invoice,
         );
       });
+}
+
+class PDFScaffold extends StatefulWidget {
+  const PDFScaffold({this.invoice});
+
+  final InvoiceEntity invoice;
+
+  @override
+  _PDFScaffoldState createState() => _PDFScaffoldState();
+}
+
+class _PDFScaffoldState extends State<PDFScaffold> {
+  String _pdfString;
+  List<PDFPageImage> _pdfImages;
+
+  @override
+  void initState() {
+    super.initState();
+
+    if (kIsWeb) {
+      renderWebPDF(context, widget.invoice).then((value) => setState(() {
+            _pdfString = value;
+            registerWebView(_pdfString);
+          }));
+    } else {
+      renderMobilePDF(context, widget.invoice)
+          .then((value) => setState(() => _pdfImages = value));
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final localization = AppLocalization.of(context);
+    final invoice = widget.invoice;
+
+    return Scaffold(
+      appBar: AppBar(
+        leading: IconButton(
+          icon: Icon(Icons.arrow_back),
+          onPressed: () => Navigator.of(context).pop(),
+        ),
+        title: Text(localization.invoice + ' ' + (invoice.number ?? '')),
+        actions: <Widget>[
+          FlatButton(
+            child: Text(
+              localization.download,
+              style: TextStyle(color: Colors.white),
+            ),
+            onPressed: () {
+              launch(invoice.invitationDownloadLink,
+                  forceSafariVC: false, forceWebView: false);
+            },
+          ),
+        ],
+      ),
+      body: kIsWeb
+          ? _pdfString == null
+              ? LoadingIndicator()
+              : HtmlElementView(viewType: 'preview-html')
+          : _pdfImages == null
+              ? LoadingIndicator()
+              : Container(
+                  color: Colors.grey,
+                  padding: const EdgeInsets.symmetric(vertical: 16),
+                  child: _pdfImages.length == 1
+                      ? Center(
+                          child: Container(
+                            color: Colors.white,
+                            child: Image(
+                                image: MemoryImage(_pdfImages.first.bytes),
+                                height: double.infinity),
+                          ),
+                        )
+                      : ListView(
+                          scrollDirection: Axis.horizontal,
+                          children: _pdfImages
+                              .map((page) => Row(
+                                    children: <Widget>[
+                                      Container(
+                                        width: 20,
+                                        height: double.infinity,
+                                        color: Colors.grey,
+                                      ),
+                                      Container(
+                                        color: Colors.white,
+                                        child: ExtendedImage.memory(
+                                          page.bytes,
+                                          fit: BoxFit.fitHeight,
+                                        ),
+                                      ),
+                                    ],
+                                  ))
+                              .toList(),
+                        ),
+                ),
+    );
+  }
 }
 
 Future<HttpClientResponse> _loadPDF(
