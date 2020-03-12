@@ -404,7 +404,6 @@ class _DesignPreviewState extends State<DesignPreview> {
 
     if (kIsWeb) {
       registerWebView(widget.pdfString);
-      print('## BUILDING.... ${widget.pdfString}');
     }
 
     if (_scrollController.hasClients && _scrollPosition > 0) {
