@@ -532,12 +532,7 @@ class _TemplatePreviewState extends State<TemplatePreview>
 
     if (kIsWeb) {
       registerWebView(widget.html);
-
-      return SizedBox(
-        width: 640,
-        height: 360,
-        child: HtmlElementView(viewType: 'preview-${widget.html}'),
-      );
+      return HtmlElementView(viewType: 'preview-html');
     } else {
       return WebView(
         debuggingEnabled: true,

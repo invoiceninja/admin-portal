@@ -841,11 +841,11 @@ abstract class InvitationEntity extends Object
   @BuiltValueField(wireName: 'viewed_date')
   String get viewedDate;
 
-  String get silentLink => link + '?silent=true';
+  String get downloadLink => '$link/download_pdf';
 
-  String get borderlessLink => silentLink + '&borderless=true';
+  String get silentLink => '$link?silent=true';
 
-  String get downloadLink => link.replaceFirst('/client/', '/') + '/download';
+  String get borderlessLink => '$silentLink&borderless=true';
 
   @override
   bool matchesFilter(String filter) {

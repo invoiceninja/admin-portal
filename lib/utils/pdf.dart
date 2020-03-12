@@ -14,9 +14,8 @@ import 'package:invoiceninja_flutter/utils/web_stub.dart'
     if (dart.library.html) 'package:invoiceninja_flutter/utils/web.dart';
 
 Future<Null> viewPdf(InvoiceEntity invoice, BuildContext context) async {
-  final localization = AppLocalization.of(context);
-
   /*
+  final localization = AppLocalization.of(context);
   if (Platform.isIOS) {
     if (await canLaunch(invoice.invitationBorderlessLink)) {
       await launch(invoice.invitationBorderlessLink,
@@ -34,10 +33,6 @@ Future<Null> viewPdf(InvoiceEntity invoice, BuildContext context) async {
       builder: (BuildContext context) {
         final localization = AppLocalization.of(context);
 
-        if (kIsWeb) {
-          //registerWebView(widget.html);
-        }
-
         return Scaffold(
           appBar: AppBar(
             title: Text(localization.invoice + ' ' + (invoice.number ?? '')),
@@ -54,77 +49,77 @@ Future<Null> viewPdf(InvoiceEntity invoice, BuildContext context) async {
               ),
             ],
           ),
-          body: Container(
-            color: Colors.grey,
-            padding: const EdgeInsets.symmetric(vertical: 16),
-            child: kIsWeb
-                ? FutureBuilder(
-                    future: renderWebPDF(context, invoice),
-                    builder:
-                        (BuildContext context, AsyncSnapshot<String> snapshot) {
-                      switch (snapshot.connectionState) {
-                        case ConnectionState.none:
-                        case ConnectionState.active:
-                        case ConnectionState.waiting:
-                          return LoadingIndicator();
-                        case ConnectionState.done:
-                          if (snapshot.hasError)
-                            return Text(
-                                '${getPdfRequirements(context)} - Error: ${snapshot.error}');
-                          else
-                            return Text('done');
-                      }
-                      return null;
-                    })
-                : FutureBuilder(
-                    future: renderMobilePDF(context, invoice),
-                    builder: (BuildContext context,
-                        AsyncSnapshot<List<PDFPageImage>> snapshot) {
-                      switch (snapshot.connectionState) {
-                        case ConnectionState.none:
-                        case ConnectionState.active:
-                        case ConnectionState.waiting:
-                          return LoadingIndicator();
-                        case ConnectionState.done:
-                          if (snapshot.hasError)
-                            return Text(
-                                '${getPdfRequirements(context)} - Error: ${snapshot.error}');
-                          else
-                            return snapshot.data.length == 1
-                                ? Center(
-                                    child: Container(
-                                      color: Colors.white,
-                                      child: Image(
-                                          image: MemoryImage(
-                                              snapshot.data.first.bytes),
-                                          height: double.infinity),
-                                    ),
-                                  )
-                                : ListView(
-                                    scrollDirection: Axis.horizontal,
-                                    children: snapshot.data
-                                        .map((page) => Row(
-                                              children: <Widget>[
-                                                Container(
-                                                  width: 20,
-                                                  height: double.infinity,
-                                                  color: Colors.grey,
-                                                ),
-                                                Container(
-                                                  color: Colors.white,
-                                                  child: ExtendedImage.memory(
-                                                    page.bytes,
-                                                    fit: BoxFit.fitHeight,
+          body: kIsWeb
+              ? FutureBuilder(
+                  future: renderWebPDF(context, invoice),
+                  builder:
+                      (BuildContext context, AsyncSnapshot<String> snapshot) {
+                    switch (snapshot.connectionState) {
+                      case ConnectionState.none:
+                      case ConnectionState.active:
+                      case ConnectionState.waiting:
+                        return LoadingIndicator();
+                      case ConnectionState.done:
+                        if (snapshot.hasError)
+                          return Text(
+                              '${getPdfRequirements(context)} - Error: ${snapshot.error}');
+                        else
+                          registerWebView(snapshot.data);
+                        return HtmlElementView(viewType: 'preview-html');
+                    }
+                    return null;
+                  })
+              : FutureBuilder(
+                  future: renderMobilePDF(context, invoice),
+                  builder: (BuildContext context,
+                      AsyncSnapshot<List<PDFPageImage>> snapshot) {
+                    switch (snapshot.connectionState) {
+                      case ConnectionState.none:
+                      case ConnectionState.active:
+                      case ConnectionState.waiting:
+                        return LoadingIndicator();
+                      case ConnectionState.done:
+                        if (snapshot.hasError)
+                          return Text(
+                              '${getPdfRequirements(context)} - Error: ${snapshot.error}');
+                        else
+                          return Container(
+                              color: Colors.grey,
+                              padding: const EdgeInsets.symmetric(vertical: 16),
+                              child: snapshot.data.length == 1
+                                  ? Center(
+                                      child: Container(
+                                        color: Colors.white,
+                                        child: Image(
+                                            image: MemoryImage(
+                                                snapshot.data.first.bytes),
+                                            height: double.infinity),
+                                      ),
+                                    )
+                                  : ListView(
+                                      scrollDirection: Axis.horizontal,
+                                      children: snapshot.data
+                                          .map((page) => Row(
+                                                children: <Widget>[
+                                                  Container(
+                                                    width: 20,
+                                                    height: double.infinity,
+                                                    color: Colors.grey,
                                                   ),
-                                                ),
-                                              ],
-                                            ))
-                                        .toList(),
-                                  );
-                      }
-                      return null; // unreachable
-                    }),
-          ),
+                                                  Container(
+                                                    color: Colors.white,
+                                                    child: ExtendedImage.memory(
+                                                      page.bytes,
+                                                      fit: BoxFit.fitHeight,
+                                                    ),
+                                                  ),
+                                                ],
+                                              ))
+                                          .toList(),
+                                    ));
+                    }
+                    return null; // unreachable
+                  }),
         );
       });
 }
@@ -147,8 +142,12 @@ Future<HttpClientResponse> _loadPDF(
 }
 
 Future<String> renderWebPDF(BuildContext context, InvoiceEntity invoice) async {
-  final response = await _loadPDF(context, invoice);
-  print('Response: $response');
+  const response =
+      'data:application/pdf;base64,JVBERi0xLjUKJYCBgoMKMSAwIG9iago8PC9GaWx0ZXIvRmxhdGVEZWNvZGUvRmlyc3QgMTQxL04gMjAvTGVuZ3==';
+  return Future<String>.value(response);
+
+  //final response = await _loadPDF(context, invoice);
+  //print('Response: $response');
 
   return 'done';
 }
