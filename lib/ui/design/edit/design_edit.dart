@@ -443,9 +443,7 @@ class _DesignPreviewState extends State<DesignPreview> {
               ),
             )
           else if (widget.pdfString != null)
-            RepaintBoundary(
-              child: HtmlElementView(viewType: widget.pdfString),
-            )
+            HtmlElementView(viewType: widget.pdfString)
           else
             SizedBox(
               width: double.infinity,

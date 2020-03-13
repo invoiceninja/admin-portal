@@ -841,7 +841,7 @@ abstract class InvitationEntity extends Object
   @BuiltValueField(wireName: 'viewed_date')
   String get viewedDate;
 
-  String get downloadLink => '$link/download_pdf';
+  String get downloadLink => '$link/download';
 
   String get silentLink => '$link?silent=true';
 
