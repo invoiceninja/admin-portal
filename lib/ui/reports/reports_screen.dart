@@ -150,7 +150,7 @@ class ReportsScreen extends StatelessWidget {
                         onChanged: (dynamic value) =>
                             viewModel.onSettingsChanged(report: value),
                         items: [
-                          //kReportAging,
+                          kReportAging,
                           kReportClient,
                           kReportCredit,
                           //kReportDocument,
@@ -479,9 +479,11 @@ ReportColumnType getReportColumnType(String column, BuildContext context) {
     'cost',
     'total',
     'invoice_amount',
+    'invoice_balance',
     'tax_rate',
     'tax_amount',
     'tax_paid',
+    'age',
     'payment_amount'
   ].contains(column)) {
     return ReportColumnType.number;

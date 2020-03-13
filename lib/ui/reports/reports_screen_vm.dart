@@ -12,6 +12,7 @@ import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/redux/reports/reports_actions.dart';
 import 'package:invoiceninja_flutter/redux/reports/reports_state.dart';
 import 'package:invoiceninja_flutter/redux/settings/settings_actions.dart';
+import 'package:invoiceninja_flutter/ui/reports/aging_report.dart';
 import 'package:invoiceninja_flutter/ui/reports/client_report.dart';
 import 'package:invoiceninja_flutter/ui/reports/document_report.dart';
 import 'package:invoiceninja_flutter/ui/reports/expense_report.dart';
@@ -192,6 +193,17 @@ class ReportsScreenVM {
           state.uiState.reportsUIState,
           state.creditState.map,
           state.clientState.map,
+          state.userState.map,
+          state.staticState,
+        );
+        break;
+      case kReportAging:
+        reportResult = memoizedAgingReport(
+          state.userCompany,
+          state.uiState.reportsUIState,
+          state.invoiceState.map,
+          state.clientState.map,
+          state.paymentState.map,
           state.userState.map,
           state.staticState,
         );
