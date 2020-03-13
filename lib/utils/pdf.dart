@@ -1,12 +1,10 @@
 import 'dart:async';
 import 'dart:convert';
-import 'dart:io';
 import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
 import 'package:http/http.dart';
 import 'package:invoiceninja_flutter/data/models/invoice_model.dart';
 import 'package:flutter/foundation.dart';
-import 'package:invoiceninja_flutter/data/web_client.dart';
 import 'package:invoiceninja_flutter/ui/app/loading_indicator.dart';
 import 'package:invoiceninja_flutter/utils/dialogs.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
@@ -147,9 +145,11 @@ Future<Response> _loadPDF(BuildContext context, InvoiceEntity invoice) async {
   final http.Response response = await http.Client().get(url);
 
   if (response.statusCode >= 400) {
-    showErrorDialog(context: context, message: '${response.statusCode}: ${response.reasonPhrase}');
+    showErrorDialog(
+        context: context,
+        message: '${response.statusCode}: ${response.reasonPhrase}');
   }
-  
+
   return response;
 }
 
@@ -166,9 +166,6 @@ Future<String> renderWebPDF(BuildContext context, InvoiceEntity invoice) async {
 Future<List<PDFPageImage>> renderMobilePDF(
     BuildContext context, InvoiceEntity invoice) async {
   final response = await _loadPDF(context, invoice);
-
-  debugPrint('data:application/pdf;base64,' + base64Encode(response.bodyBytes));
-
   final List<PDFPageImage> pages = [];
 
   if (response == null) {
@@ -176,7 +173,6 @@ Future<List<PDFPageImage>> renderMobilePDF(
   }
 
   final document = await PDFDocument.openData(response.bodyBytes);
-
   for (var i = 1; i <= document.pagesCount; i++) {
     final page = await document.getPage(i);
     final pageImage = await page.render(width: page.width, height: page.height);
@@ -184,6 +180,5 @@ Future<List<PDFPageImage>> renderMobilePDF(
     page.close();
   }
 
-  print('returning pages: ${pages.length}');
   return pages;
 }

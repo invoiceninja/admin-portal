@@ -466,7 +466,15 @@ abstract class InvoiceEntity extends Object
         if (includeEdit && !multiselect) {
           actions.add(EntityAction.edit);
         }
+      }
 
+      if (invitations.isNotEmpty && !multiselect) {
+        if (includeEdit) {
+          actions.add(EntityAction.pdf);
+        }
+      }
+
+      if (userCompany.canEditEntity(this)) {
         if (client != null && client.hasEmailAddress) {
           actions.add(EntityAction.sendEmail);
         }
@@ -489,9 +497,6 @@ abstract class InvoiceEntity extends Object
       }
 
       if (invitations.isNotEmpty && !multiselect) {
-        if (includeEdit) {
-          actions.add(EntityAction.pdf);
-        }
         actions.add(EntityAction.clientPortal);
       }
     }
@@ -595,7 +600,8 @@ abstract class InvoiceEntity extends Object
       final invoicePaidAmount = (amount * invoiceTaxAmount != 0)
           ? (paidAmount / amount * invoiceTaxAmount)
           : 0.0;
-      _calculateTax(taxes, taxName1, taxRate1, invoiceTaxAmount, invoicePaidAmount);
+      _calculateTax(
+          taxes, taxName1, taxRate1, invoiceTaxAmount, invoicePaidAmount);
     }
 
     if (taxRate2 != 0) {
@@ -603,7 +609,8 @@ abstract class InvoiceEntity extends Object
       final invoicePaidAmount = (amount * invoiceTaxAmount != 0)
           ? (paidAmount / amount * invoiceTaxAmount)
           : 0.0;
-      _calculateTax(taxes, taxName2, taxRate2, invoiceTaxAmount, invoicePaidAmount);
+      _calculateTax(
+          taxes, taxName2, taxRate2, invoiceTaxAmount, invoicePaidAmount);
     }
 
     if (taxRate3 != 0) {
@@ -611,7 +618,8 @@ abstract class InvoiceEntity extends Object
       final invoicePaidAmount = (amount * invoiceTaxAmount != 0)
           ? (paidAmount / amount * invoiceTaxAmount)
           : 0.0;
-      _calculateTax(taxes, taxName3, taxRate3, invoiceTaxAmount, invoicePaidAmount);
+      _calculateTax(
+          taxes, taxName3, taxRate3, invoiceTaxAmount, invoicePaidAmount);
     }
 
     for (final item in lineItems) {
@@ -622,7 +630,8 @@ abstract class InvoiceEntity extends Object
                 amount * itemTaxAmount != 0
             ? (paidAmount / amount * itemTaxAmount)
             : 0.0;
-        _calculateTax(taxes, item.taxName1, item.taxRate1, itemTaxAmount, itemPaidAmount);
+        _calculateTax(
+            taxes, item.taxName1, item.taxRate1, itemTaxAmount, itemPaidAmount);
       }
 
       if (item.taxRate2 != 0) {
@@ -632,7 +641,8 @@ abstract class InvoiceEntity extends Object
                 amount * itemTaxAmount != 0
             ? (paidAmount / amount * itemTaxAmount)
             : 0.0;
-        _calculateTax(taxes, item.taxName2, item.taxRate2, itemTaxAmount, itemPaidAmount);
+        _calculateTax(
+            taxes, item.taxName2, item.taxRate2, itemTaxAmount, itemPaidAmount);
       }
 
       if (item.taxRate3 != 0) {
@@ -642,7 +652,8 @@ abstract class InvoiceEntity extends Object
                 amount * itemTaxAmount != 0
             ? (paidAmount / amount * itemTaxAmount)
             : 0.0;
-        _calculateTax(taxes, item.taxName3, item.taxRate3, itemTaxAmount, itemPaidAmount);
+        _calculateTax(
+            taxes, item.taxName3, item.taxRate3, itemTaxAmount, itemPaidAmount);
       }
     }
 
