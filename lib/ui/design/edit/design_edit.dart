@@ -129,7 +129,7 @@ class _DesignEditState extends State<DesignEdit>
   void _loadDesign(DesignEntity design) {
     final htmlDesign = design.design;
     _headerController.text = htmlDesign[kDesignHeader];
-    _bodyController.text = htmlDesign[kDesignHeader];
+    _bodyController.text = htmlDesign[kDesignBody];
     _footerController.text = htmlDesign[kDesignFooter];
     _productsController.text = htmlDesign[kDesignProducts];
     _tasksController.text = htmlDesign[kDesignTasks];
