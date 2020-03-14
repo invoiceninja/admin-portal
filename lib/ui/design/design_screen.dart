@@ -128,9 +128,10 @@ class DesignScreen extends StatelessWidget {
               backgroundColor: Theme.of(context).primaryColorDark,
               onPressed: () {
                 createEntity(
-                    context: context,
-                    entity: DesignEntity(
-                        design: state.designState.map[kDesignCleanId].design));
+                  context: context,
+                  entity: DesignEntity(
+                      design: state.designState.map[kDesignCleanId].design),
+                );
               },
               child: Icon(
                 Icons.add,

@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:invoiceninja_flutter/constants.dart';
+import 'package:invoiceninja_flutter/data/models/design_model.dart';
 import 'package:invoiceninja_flutter/data/models/entities.dart';
 import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
@@ -111,17 +112,22 @@ class _InvoiceDesignState extends State<InvoiceDesign>
         children: <Widget>[
           ListView(children: <Widget>[
             Padding(
-              padding: const EdgeInsets.only(top: 20, right: 16, bottom: 10, left: 16),
+              padding: const EdgeInsets.only(
+                  top: 20, right: 16, bottom: 10, left: 16),
               child: ElevatedButton(
                 label: localization.customize.toUpperCase(),
                 iconData: Icons.settings,
-                onPressed: () => state.designState.customDesigns.isEmpty ? createEntityByType(
-                  context: context,
-                  entityType: EntityType.design,
-                ) : store.dispatch(ViewSettings(
-                  navigator: Navigator.of(context),
-                  section: kSettingsCustomDesigns,
-                )),
+                onPressed: () => state.designState.customDesigns.isEmpty
+                    ? createEntity(
+                        context: context,
+                        entity: DesignEntity(
+                            design:
+                                state.designState.map[kDesignCleanId].design),
+                      )
+                    : store.dispatch(ViewSettings(
+                        navigator: Navigator.of(context),
+                        section: kSettingsCustomDesigns,
+                      )),
                 //onPressed: () => handleDesignAction(context, [group], EntityAction.settings),
               ),
             ),
@@ -269,7 +275,8 @@ class _InvoiceDesignState extends State<InvoiceDesign>
             child: MultiSelectList(
               //selected: settings.pdfVariables[kPdfFieldsClientDetails].toList(),
               options: settings.pdfVariables[kPdfFieldsClientDetails].toList(),
-              defaultSelected: settings.pdfVariables[kPdfFieldsClientDetails].toList(),
+              defaultSelected:
+                  settings.pdfVariables[kPdfFieldsClientDetails].toList(),
               selected: settings.pdfVariables[kPdfFieldsClientDetails].toList(),
               onSelected: (values) {
                 viewModel.onSettingsChanged(settings.rebuild((b) => b
