@@ -457,11 +457,13 @@ abstract class UserCompanyEntity
       isAdmin: false,
       isOwner: false,
       permissions: '',
-      settings: UserSettingsEntity(),
       company: CompanyEntity(),
       user: UserEntity(),
       token: TokenEntity(),
       account: AccountEntity(),
+      notifications: BuiltMap<String, BuiltList<String>>().rebuild((b) => b
+        ..[kNotificationChannelEmail] =
+            BuiltList<String>(<String>[kNotificationsAll])),
     );
   }
 

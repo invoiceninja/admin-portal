@@ -496,8 +496,10 @@ void createEntityByType(
       store.dispatch(EditUser(
         navigator: navigator,
         force: force,
-        user: UserEntity(state: state)
-            .rebuild((b) => b..userCompany.replace(UserCompanyEntity())),
+        user: UserEntity(
+          state: state,
+          userCompany: UserCompanyEntity(),
+        ),
       ));
       break;
     case EntityType.project:

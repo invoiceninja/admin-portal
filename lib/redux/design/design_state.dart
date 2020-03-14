@@ -18,12 +18,14 @@ abstract class DesignState implements Built<DesignState, DesignStateBuilder> {
       list: BuiltList<String>(),
     );
   }
+
   DesignState._();
 
   @nullable
   int get lastUpdated;
 
   BuiltMap<String, DesignEntity> get map;
+
   BuiltList<String> get list;
 
   bool get isStale {
@@ -36,6 +38,11 @@ abstract class DesignState implements Built<DesignState, DesignStateBuilder> {
   }
 
   bool get isLoaded => lastUpdated != null && lastUpdated > 0;
+
+  List<DesignEntity> get customDesigns => list
+      .where((designId) => map[designId].isCustom)
+      .map((designId) => map[designId])
+      .toList();
 
   DesignState loadDesigns(BuiltList<DesignEntity> clients) {
     final map = Map<String, DesignEntity>.fromIterable(
@@ -63,6 +70,7 @@ abstract class DesignUIState extends Object
       selectedId: '',
     );
   }
+
   DesignUIState._();
 
   @nullable

@@ -60,7 +60,7 @@ class UserFields {
 abstract class UserEntity extends Object
     with BaseEntity, SelectableEntity
     implements Built<UserEntity, UserEntityBuilder> {
-  factory UserEntity({String id, AppState state}) {
+  factory UserEntity({String id, AppState state, UserCompanyEntity userCompany}) {
     return _$UserEntity._(
       id: id ?? BaseEntity.nextId,
       isChanged: false,
@@ -78,6 +78,7 @@ abstract class UserEntity extends Object
       customValue2: '',
       customValue3: '',
       customValue4: '',
+      userCompany: userCompany,
     );
   }
 
