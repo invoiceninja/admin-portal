@@ -245,8 +245,7 @@ Middleware<AppState> _createCompany(AuthRepository repository) {
       store.dispatch(RefreshData(
         completer: Completer<Null>()
           ..future.then<Null>((_) {
-            final companies = companiesSelector(state);
-            store.dispatch(SelectCompany(companies.length));
+            store.dispatch(SelectCompany(state.companies.length));
             store.dispatch(ViewDashboard(
                 navigator: Navigator.of(action.context), force: true));
             store.dispatch(LoadClients());

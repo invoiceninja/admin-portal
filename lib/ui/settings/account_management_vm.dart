@@ -57,7 +57,7 @@ class AccountManagementVM {
           final selectedCompanyIndex = state.uiState.selectedCompanyIndex;
           final completer = Completer<Null>()
             ..future.then((value) {
-              final companies = companiesSelector(state);
+              final companies = state.companies;
               if (companies.length > 1) {
                 int index;
                 for (int i = 0; i < 10; i++) {

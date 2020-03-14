@@ -93,7 +93,7 @@ class MenuDrawer extends StatelessWidget {
         child: _companyLogo(viewModel.selectedCompany),
       ),
       itemBuilder: (BuildContext context) => [
-        ...viewModel.companies
+        ...viewModel.state.companies
             .map((company) => PopupMenuItem<String>(
                   child: _companyListItem(company),
                   value: company.id,
@@ -124,15 +124,15 @@ class MenuDrawer extends StatelessWidget {
       },
     );
 
-    final _expandedCompanySelector = viewModel.companies.isEmpty
+    final _expandedCompanySelector = state.companies.isEmpty
         ? SizedBox()
         : AppDropdownButton<String>(
             value: viewModel.selectedCompanyIndex,
             items: [
-              ...viewModel.companies
+              ...state.companies
                   .map((CompanyEntity company) => DropdownMenuItem<String>(
                         value:
-                            (viewModel.companies.indexOf(company)).toString(),
+                            (state.companies.indexOf(company)).toString(),
                         child: _companyListItem(company),
                       ))
                   .toList(),
@@ -154,7 +154,7 @@ class MenuDrawer extends StatelessWidget {
                 viewModel.onAddCompany(context);
               } else {
                 viewModel.onCompanyChanged(
-                    context, value, viewModel.companies[int.parse(value)]);
+                    context, value, state.companies[int.parse(value)]);
               }
             },
           );

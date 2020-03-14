@@ -143,11 +143,6 @@ class SettingsList extends StatelessWidget {
             section: kSettingsCustomFields,
             viewModel: viewModel,
           ),
-        if (showAll)
-          SettingsListTile(
-            section: kSettingsCustomDesigns,
-            viewModel: viewModel,
-          ),
         SettingsListTile(
           section: kSettingsInvoiceDesign,
           viewModel: viewModel,

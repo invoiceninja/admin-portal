@@ -4,7 +4,9 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:invoiceninja_flutter/constants.dart';
 import 'package:invoiceninja_flutter/data/models/entities.dart';
+import 'package:invoiceninja_flutter/redux/design/design_actions.dart';
 import 'package:invoiceninja_flutter/redux/static/static_selectors.dart';
+import 'package:invoiceninja_flutter/ui/app/buttons/elevated_button.dart';
 import 'package:invoiceninja_flutter/ui/app/dialogs/multiselect_dialog.dart';
 import 'package:invoiceninja_flutter/ui/app/entity_dropdown.dart';
 import 'package:invoiceninja_flutter/ui/app/form_card.dart';
@@ -105,6 +107,14 @@ class _InvoiceDesignState extends State<InvoiceDesign>
           ListView(children: <Widget>[
             FormCard(
               children: <Widget>[
+                Padding(
+                  padding: const EdgeInsets.all(16),
+                  child: ElevatedButton(
+                    label: localization.customDesigns.toUpperCase(),
+                    iconData: Icons.settings,
+                    //onPressed: () => handleDesignAction(context, [group], EntityAction.settings),
+                  ),
+                ),
                 DesignPicker(
                   label: localization.invoiceDesign,
                   initialValue: settings.defaultInvoiceDesignId,

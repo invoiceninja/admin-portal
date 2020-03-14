@@ -39,7 +39,7 @@ class AppDrawerVM {
 
     return AppDrawerVM(
       isLoading: state.isLoading,
-      companies: companiesSelector(state),
+      companies: state.companies,
       user: state.user,
       selectedCompany: state.company,
     );

@@ -50,7 +50,7 @@ class _AccountManagementState extends State<AccountManagement>
     final viewModel = widget.viewModel;
     final state = viewModel.state;
     final company = viewModel.company;
-    final companies = companiesSelector(state);
+    final companies = state.companies;
 
     return EditScaffold(
       title: localization.accountManagement,
@@ -100,11 +100,11 @@ class _AccountManagementState extends State<AccountManagement>
                 ),
               ),
               Padding(
-                padding: const EdgeInsets.all(14),
+                padding: const EdgeInsets.all(16),
                 child: ElevatedButton(
                   label: companies.length == 1
-                      ? localization.cancelAccount
-                      : localization.deleteCompany,
+                      ? localization.cancelAccount.toUpperCase()
+                      : localization.deleteCompany.toUpperCase(),
                   color: Colors.red,
                   onPressed: () {
                     confirmCallback(

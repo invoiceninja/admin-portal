@@ -115,6 +115,20 @@ abstract class AppState implements Built<AppState, AppStateBuilder> {
 
   CompanyEntity get company => userCompanyState.company;
 
+  List<CompanyEntity> get companies {
+    final List<CompanyEntity> list = [];
+
+    for (var companyState in userCompanyStates) {
+      if (companyState.company != null) {
+        list.add(companyState.company);
+      }
+    }
+
+    return list
+        .where((CompanyEntity company) => (company.id ?? '').isNotEmpty)
+        .toList();
+  }
+
   DashboardUIState get dashboardUIState => uiState.dashboardUIState;
 
   UserEntity get user => userCompanyState.user;
