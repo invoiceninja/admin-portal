@@ -783,144 +783,163 @@ class ReportResult {
               ],
             ))
           else
-            if (getReportColumnType(column, context) ==
-                ReportColumnType.number)
-              DataCell(TextFormField(
-                controller: textEditingControllers[column],
-                keyboardType: TextInputType.numberWithOptions(decimal: true),
-                decoration: InputDecoration(
-                    suffixIcon: textEditingControllers == null
-                        ? null
-                        : (textEditingControllers[column]?.text ?? '').isEmpty
-                        ? null
-                        : IconButton(
-                      icon: Icon(
-                        Icons.clear,
-                        color: Colors.grey,
-                      ),
-                      onPressed: () {
-                        textEditingControllers[column].text = '';
-                        onFilterChanged(column, '');
-                      },
-                    )),
+            if (column == 'age')
+              DataCell(AppDropdownButton<String>(
+                value: (textEditingControllers[column].text ?? '')
+                    .isNotEmpty &&
+                    textEditingControllers[column].text != 'null'
+                    ? localization.lookup(textEditingControllers[column].text)
+                    : null,
+                onChanged: (dynamic value) {
+                  print('## onChanged: $value');
+                },
+                items: kAgeGroups.keys.map((ageGroup) =>
+                    DropdownMenuItem(
+                      child: Text(localization.lookup(ageGroup)),
+                      value: ageGroup,
+                    )).toList(),
               ))
             else
               if (getReportColumnType(column, context) ==
-                  ReportColumnType.dateTime ||
-                  getReportColumnType(column, context) == ReportColumnType.date)
-                DataCell(AppDropdownButton<DateRange>(
-                  labelText: null,
-                  showBlank: true,
-                  blankValue: null,
-                  value: (textEditingControllers[column].text ?? '')
-                      .isNotEmpty &&
-                      textEditingControllers[column].text != 'null'
-                      ? DateRange.valueOf(textEditingControllers[column].text)
-                      : null,
-                  onChanged: (dynamic value) {
-                    if (value == null) {
-                      textEditingControllers[column].text = '';
-                      onFilterChanged(column, '');
-                    } else {
-                      textEditingControllers[column].text = value.toString();
-                      onFilterChanged(column, value.toString());
-                    }
-                  },
-                  items: DateRange.values
-                      .map((dateRange) =>
-                      DropdownMenuItem<DateRange>(
-                        child: Text(localization.lookup(dateRange.toString())),
-                        value: dateRange,
-                      ))
-                      .toList(),
-                ))
-              // TODO remove DEMO_MODE check
-              else
-                if (Config.DEMO_MODE)
-                  DataCell(TextFormField(
-                    controller: textEditingControllers != null
-                        ? textEditingControllers[column]
-                        : null,
-                    decoration: InputDecoration(
-                        suffixIcon: textEditingControllers == null
-                            ? null
-                            : (textEditingControllers[column]?.text ?? '')
-                            .isEmpty
-                            ? null
-                            : IconButton(
-                          icon: Icon(
-                            Icons.clear,
-                            color: Colors.grey,
-                          ),
-                          onPressed: () {
-                            textEditingControllers[column].text = '';
-                            onFilterChanged(column, '');
-                          },
-                        )),
-                  ))
-                else
-                  DataCell(
-                    TypeAheadFormField(
-                      noItemsFoundBuilder: (context) => SizedBox(),
-                      suggestionsBoxDecoration: SuggestionsBoxDecoration(
-                        constraints: BoxConstraints(
-                          minWidth: 300,
+                  ReportColumnType.number)
+                DataCell(TextFormField(
+                  controller: textEditingControllers[column],
+                  keyboardType: TextInputType.numberWithOptions(decimal: true),
+                  decoration: InputDecoration(
+                      suffixIcon: textEditingControllers == null
+                          ? null
+                          : (textEditingControllers[column]?.text ?? '').isEmpty
+                          ? null
+                          : IconButton(
+                        icon: Icon(
+                          Icons.clear,
+                          color: Colors.grey,
                         ),
+                        onPressed: () {
+                          textEditingControllers[column].text = '';
+                          onFilterChanged(column, '');
+                        },
+                      )),
+                ))
+              else
+                if (getReportColumnType(column, context) ==
+                    ReportColumnType.dateTime ||
+                    getReportColumnType(column, context) ==
+                        ReportColumnType.date)
+                  DataCell(AppDropdownButton<DateRange>(
+                    labelText: null,
+                    showBlank: true,
+                    blankValue: null,
+                    value: (textEditingControllers[column].text ?? '')
+                        .isNotEmpty &&
+                        textEditingControllers[column].text != 'null'
+                        ? DateRange.valueOf(textEditingControllers[column].text)
+                        : null,
+                    onChanged: (dynamic value) {
+                      if (value == null) {
+                        textEditingControllers[column].text = '';
+                        onFilterChanged(column, '');
+                      } else {
+                        textEditingControllers[column].text = value.toString();
+                        onFilterChanged(column, value.toString());
+                      }
+                    },
+                    items: DateRange.values
+                        .map((dateRange) =>
+                        DropdownMenuItem<DateRange>(
+                          child: Text(localization.lookup(dateRange
+                              .toString())),
+                          value: dateRange,
+                        ))
+                        .toList(),
+                  ))
+                // TODO remove DEMO_MODE check
+                else
+                  if (Config.DEMO_MODE)
+                    DataCell(TextFormField(
+                      controller: textEditingControllers != null
+                          ? textEditingControllers[column]
+                          : null,
+                      decoration: InputDecoration(
+                          suffixIcon: textEditingControllers == null
+                              ? null
+                              : (textEditingControllers[column]?.text ?? '')
+                              .isEmpty
+                              ? null
+                              : IconButton(
+                            icon: Icon(
+                              Icons.clear,
+                              color: Colors.grey,
+                            ),
+                            onPressed: () {
+                              textEditingControllers[column].text = '';
+                              onFilterChanged(column, '');
+                            },
+                          )),
+                    ))
+                  else
+                    DataCell(
+                      TypeAheadFormField(
+                        noItemsFoundBuilder: (context) => SizedBox(),
+                        suggestionsBoxDecoration: SuggestionsBoxDecoration(
+                          constraints: BoxConstraints(
+                            minWidth: 300,
+                          ),
+                        ),
+                        suggestionsCallback: (filter) {
+                          filter = filter.toLowerCase();
+                          final index = columns.indexOf(column);
+                          return data
+                              .where((row) =>
+                          row[index]
+                              .renderText(context, column)
+                              .toLowerCase()
+                              .contains(filter) &&
+                              row[index]
+                                  .renderText(context, column)
+                                  .trim()
+                                  .isNotEmpty)
+                              .map((row) =>
+                              row[index].renderText(context, column))
+                              .toSet()
+                              .toList();
+                        },
+                        itemBuilder: (context, String entityId) {
+                          return Padding(
+                            padding: const EdgeInsets.all(12),
+                            child: Text('$entityId'),
+                          );
+                        },
+                        onSuggestionSelected: (String value) {
+                          textEditingControllers[column].text = value;
+                          onFilterChanged(column, value);
+                        },
+                        textFieldConfiguration: TextFieldConfiguration<String>(
+                          controller: textEditingControllers != null
+                              ? textEditingControllers[column]
+                              : null,
+                          decoration: InputDecoration(
+                              suffixIcon: textEditingControllers == null
+                                  ? null
+                                  : (textEditingControllers[column]?.text ?? '')
+                                  .isEmpty
+                                  ? null
+                                  : IconButton(
+                                icon: Icon(
+                                  Icons.clear,
+                                  color: Colors.grey,
+                                ),
+                                onPressed: () {
+                                  textEditingControllers[column].text = '';
+                                  onFilterChanged(column, '');
+                                },
+                              )),
+                        ),
+                        autoFlipDirection: true,
+                        animationStart: 1,
+                        debounceDuration: Duration(seconds: 0),
                       ),
-                      suggestionsCallback: (filter) {
-                        filter = filter.toLowerCase();
-                        final index = columns.indexOf(column);
-                        return data
-                            .where((row) =>
-                        row[index]
-                            .renderText(context, column)
-                            .toLowerCase()
-                            .contains(filter) &&
-                            row[index]
-                                .renderText(context, column)
-                                .trim()
-                                .isNotEmpty)
-                            .map((row) =>
-                            row[index].renderText(context, column))
-                            .toSet()
-                            .toList();
-                      },
-                      itemBuilder: (context, String entityId) {
-                        return Padding(
-                          padding: const EdgeInsets.all(12),
-                          child: Text('$entityId'),
-                        );
-                      },
-                      onSuggestionSelected: (String value) {
-                        textEditingControllers[column].text = value;
-                        onFilterChanged(column, value);
-                      },
-                      textFieldConfiguration: TextFieldConfiguration<String>(
-                        controller: textEditingControllers != null
-                            ? textEditingControllers[column]
-                            : null,
-                        decoration: InputDecoration(
-                            suffixIcon: textEditingControllers == null
-                                ? null
-                                : (textEditingControllers[column]?.text ?? '')
-                                .isEmpty
-                                ? null
-                                : IconButton(
-                              icon: Icon(
-                                Icons.clear,
-                                color: Colors.grey,
-                              ),
-                              onPressed: () {
-                                textEditingControllers[column].text = '';
-                                onFilterChanged(column, '');
-                              },
-                            )),
-                      ),
-                      autoFlipDirection: true,
-                      animationStart: 1,
-                      debounceDuration: Duration(seconds: 0),
-                    ),
-                  )
+                    )
     ]);
   }
 

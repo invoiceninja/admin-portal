@@ -231,6 +231,20 @@ const String kSettings = 'settings';
 const String kDashboard = 'dashboard';
 const String kReports = 'reports';
 
+const String kAgeGroup0 = 'age_group_0';
+const String kAgeGroup30 = 'age_group_30';
+const String kAgeGroup60 = 'age_group_60';
+const String kAgeGroup90 = 'age_group_90';
+const String kAgeGroup120 = 'age_group_120';
+
+const kAgeGroups = {
+  kAgeGroup0: 0,
+  kAgeGroup30: 30,
+  kAgeGroup60: 60,
+  kAgeGroup90: 90,
+  kAgeGroup120: 120,
+};
+
 /*
 const String kEmailTemplateInvoice = 'invoice_email';
 const String kEmailTemplateQuote = 'quote_email';
