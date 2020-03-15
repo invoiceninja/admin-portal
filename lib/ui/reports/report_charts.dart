@@ -44,8 +44,6 @@ class ReportCharts extends StatelessWidget {
     Widget child;
     switch (getReportColumnType(reportState.group, context)) {
       case ReportColumnType.age:
-        child = SizedBox();
-        break;
       case ReportColumnType.string:
       case ReportColumnType.bool:
         child = charts.BarChart(
