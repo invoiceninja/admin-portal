@@ -586,7 +586,13 @@ class ReportResult {
     if (reportsUIState.filters.containsKey(column)) {
       final filter = reportsUIState.filters[column];
       if (filter.isNotEmpty) {
-        if (value.runtimeType == int || value.runtimeType == double) {
+        if (column == 'age') {
+          final min = kAgeGroups[filter];
+          final max = min + 30;
+          if (value < min || value >= max) {
+            return false;
+          }
+        } else if (value.runtimeType == int || value.runtimeType == double) {
           if (!ReportResult.matchAmount(filter: filter, amount: value)) {
             return false;
           }
