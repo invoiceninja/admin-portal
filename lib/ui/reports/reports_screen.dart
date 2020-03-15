@@ -984,20 +984,23 @@ class ReportResult {
       final cells = <DataCell>[];
       for (var column in sortedColumns(reportState)) {
         String value = '';
+        final columnType = getReportColumnType(column, context);
         if (column == groupBy) {
           if (group.isEmpty) {
             value = AppLocalization
                 .of(context)
                 .blank;
-          } else if (getReportColumnType(column, context) ==
+          } else if (columnType ==
               ReportColumnType.dateTime ||
-              getReportColumnType(column, context) == ReportColumnType.date) {
+              columnType == ReportColumnType.date) {
             value = formatDate(group, context);
+          } else if (columnType == ReportColumnType.age) {
+            value = AppLocalization.of(context).lookup(group);
           } else {
             value = group;
           }
           value = value + ' (' + values['count'].floor().toString() + ')';
-        } else if (getReportColumnType(column, context) ==
+        } else if (columnType ==
             ReportColumnType.number) {
           value = formatNumber(values[column], context);
         }
