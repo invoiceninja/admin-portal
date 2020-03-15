@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:invoiceninja_flutter/ui/app/form_card.dart';
 import 'package:invoiceninja_flutter/ui/reports/reports_screen.dart';
 import 'package:invoiceninja_flutter/ui/reports/reports_screen_vm.dart';
+import 'package:invoiceninja_flutter/utils/localization.dart';
 
 class ReportCharts extends StatelessWidget {
   const ReportCharts({@required this.viewModel});
@@ -13,6 +14,7 @@ class ReportCharts extends StatelessWidget {
   Widget build(BuildContext context) {
     final state = viewModel.state;
     final reportState = viewModel.reportState;
+    final localization = AppLocalization.of(context);
 
     if (reportState.chart.isEmpty || reportState.group.isEmpty) {
       return SizedBox();
@@ -42,7 +44,9 @@ class ReportCharts extends StatelessWidget {
     ));
 
     Widget child;
-    switch (getReportColumnType(reportState.group, context)) {
+    final columnType = getReportColumnType(reportState.group, context);
+
+    switch (columnType) {
       case ReportColumnType.age:
       case ReportColumnType.string:
       case ReportColumnType.bool:
@@ -52,7 +56,10 @@ class ReportCharts extends StatelessWidget {
                 id: 'chart',
                 colorFn: (dynamic _, __) =>
                     charts.MaterialPalette.blue.shadeDefault,
-                domainFn: (dynamic item, _) => item['name'],
+                domainFn: (dynamic item, _) =>
+                    columnType == ReportColumnType.age
+                        ? localization.lookup(item['name'])
+                        : item['name'],
                 measureFn: (dynamic item, _) => item['value'],
                 data: viewModel.groupTotals.rows
                     .map((key) => {

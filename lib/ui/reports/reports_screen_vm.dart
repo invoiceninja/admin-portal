@@ -450,9 +450,7 @@ GroupTotals calculateReportTotals({
       }
     }
   }
-
-  print('## TOTALS: $totals');
-
+  
   final rows = totals.keys.toList();
   final sortedColumns = reportResult.sortedColumns(reportState);
   final index = sortedColumns.contains(reportSettings.sortColumn)

@@ -1059,7 +1059,7 @@ class ReportResult {
     final sortedColumns = columns.toList()
       ..sort((String str1, String str2) =>
           str1.compareTo(str2));
-    
+
     return [
       DataColumn(
         label: Text(localization.currency),
