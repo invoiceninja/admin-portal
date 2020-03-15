@@ -150,7 +150,16 @@ class _EntityListState extends State<EntityList> {
                 if (!listUIState.isInMultiselect())
                   DataColumn(label: SizedBox()),
                 ...widget.tableColumns.map((field) => DataColumn(
-                    label: Text(AppLocalization.of(context).lookup(field)),
+                    label: Container(
+                      constraints: BoxConstraints(
+                        minWidth: kTableColumnWidthMin,
+                        maxWidth: kTableColumnWidthMax,
+                      ),
+                      child: Text(
+                        AppLocalization.of(context).lookup(field),
+                        overflow: TextOverflow.ellipsis,
+                      ),
+                    ),
                     numeric: EntityPresenter.isFieldNumeric(field),
                     onSort: (int columnIndex, bool ascending) =>
                         widget.onSortColumn(field))),
