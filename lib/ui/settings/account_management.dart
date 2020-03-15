@@ -106,6 +106,7 @@ class _AccountManagementState extends State<AccountManagement>
                       ? localization.cancelAccount.toUpperCase()
                       : localization.deleteCompany.toUpperCase(),
                   color: Colors.red,
+                  iconData: Icons.delete,
                   onPressed: () {
                     confirmCallback(
                         context: context,
