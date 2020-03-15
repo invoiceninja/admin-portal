@@ -788,10 +788,12 @@ class ReportResult {
                 value: (textEditingControllers[column].text ?? '')
                     .isNotEmpty &&
                     textEditingControllers[column].text != 'null'
-                    ? localization.lookup(textEditingControllers[column].text)
+                    ? textEditingControllers[column].text
                     : null,
+                showBlank: true,
                 onChanged: (dynamic value) {
-                  print('## onChanged: $value');
+                  textEditingControllers[column].text = value;
+                  onFilterChanged(column, value);
                 },
                 items: kAgeGroups.keys.map((ageGroup) =>
                     DropdownMenuItem(
