@@ -413,8 +413,21 @@ GroupTotals calculateReportTotals({
       }
 
       dynamic group = row[columnIndex].value;
-
-      if ((group as String).isNotEmpty && isValidDate(group)) {
+      if (reportState.group == 'age') {
+        if (group < 30) {
+          group = kAgeGroup0;
+        } else if (group < 60) {
+          group = kAgeGroup30;
+        } else if (group < 90) {
+          group = kAgeGroup60;
+        } else if (group < 120) {
+          group = kAgeGroup90;
+        } else {
+          group = kAgeGroup120;
+        }
+      } else if (group.runtimeType == String &&
+          (group as String).isNotEmpty &&
+          isValidDate(group)) {
         group = convertDateTimeToSqlDate(DateTime.tryParse(group));
         if (reportState.subgroup == kReportGroupYear) {
           group = group.substring(0, 4) + '-01-01';
@@ -423,7 +436,7 @@ GroupTotals calculateReportTotals({
         }
       }
 
-      if (!totals.containsKey(group)) {
+      if (!totals.containsKey('$group')) {
         totals['$group'] = {'count': 0};
       }
       if (column == reportState.group) {
@@ -437,6 +450,8 @@ GroupTotals calculateReportTotals({
       }
     }
   }
+
+  print('## TOTALS: $totals');
 
   final rows = totals.keys.toList();
   final sortedColumns = reportResult.sortedColumns(reportState);
