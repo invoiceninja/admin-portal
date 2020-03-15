@@ -399,25 +399,20 @@ class _ReportDataTableState extends State<ReportDataTable> {
             ),
           ),
         FormCard(
-          child: Column(
+          child: isMobile(context) ? SingleChildScrollView(
+            scrollDirection: Axis.horizontal,
+            child: TotalsDataTable(
+              viewModel: viewModel,
+              reportResult: reportResult,
+              reportSettings: reportSettings,
+            ),
+          ) : Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: <Widget>[
-              SingleChildScrollView(
-                scrollDirection: Axis.horizontal,
-                child: DataTable(
-                  sortColumnIndex: reportSettings.sortTotalsIndex != null &&
-                      reportResult.columns.length >
-                          reportSettings.sortTotalsIndex
-                      ? reportSettings.sortTotalsIndex
-                      : null,
-                  sortAscending: reportSettings.sortTotalsAscending ?? true,
-                  columns: reportResult.totalColumns(
-                      context,
-                          (index, ascending) =>
-                          widget.viewModel
-                              .onReportTotalsSorted(index, ascending)),
-                  rows: reportResult.totalRows(context),
-                ),
+              TotalsDataTable(
+                viewModel: viewModel,
+                reportResult: reportResult,
+                reportSettings: reportSettings,
               ),
             ],
           ),
@@ -442,6 +437,36 @@ class _ReportDataTableState extends State<ReportDataTable> {
     );
   }
 }
+
+
+class TotalsDataTable extends StatelessWidget {
+
+  const TotalsDataTable(
+      {this.reportSettings, this.reportResult, this.viewModel});
+
+  final ReportsScreenVM viewModel;
+  final ReportSettingsEntity reportSettings;
+  final ReportResult reportResult;
+
+  @override
+  Widget build(BuildContext context) {
+    return DataTable(
+      sortColumnIndex: reportSettings.sortTotalsIndex != null &&
+          reportResult.columns.length >
+              reportSettings.sortTotalsIndex
+          ? reportSettings.sortTotalsIndex
+          : null,
+      sortAscending: reportSettings.sortTotalsAscending ?? true,
+      columns: reportResult.totalColumns(
+          context,
+              (index, ascending) =>
+              viewModel
+                  .onReportTotalsSorted(index, ascending)),
+      rows: reportResult.totalRows(context),
+    );
+  }
+}
+
 
 enum ReportColumnType {
   string,
