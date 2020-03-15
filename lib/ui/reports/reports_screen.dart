@@ -133,7 +133,8 @@ class ReportsScreen extends StatelessWidget {
         ),
         body: ListView(
           key: ValueKey(
-              '${viewModel.state.isSaving}_${reportsState.report}_${reportsState
+              '${viewModel.state.company.id}_${viewModel.state
+                  .isSaving}_${reportsState.report}_${reportsState
                   .group}'),
           children: <Widget>[
             Flex(
@@ -720,7 +721,7 @@ class ReportResult {
       for (String column in sortedColumns(reportState))
         if (textEditingControllers == null ||
             !textEditingControllers.containsKey(column))
-          DataCell(Text(textEditingControllers == null ? 'null' : 'test'))
+          DataCell(Text(''))
         else
           if (getReportColumnType(column, context) == ReportColumnType.bool)
             DataCell(AppDropdownButton<bool>(

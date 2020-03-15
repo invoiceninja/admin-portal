@@ -87,7 +87,7 @@ class ReportsScreenVM {
   static ReportsScreenVM fromStore(Store<AppState> store) {
     final state = store.state;
     final report = state.uiState.reportsUIState.report;
-    final allReportSettings = state.userCompany.settings.reportSettings;
+    final allReportSettings = state.userCompany?.settings?.reportSettings;
     final reportSettings =
         allReportSettings != null && allReportSettings.containsKey(report)
             ? allReportSettings[report]

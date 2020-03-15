@@ -520,7 +520,6 @@ abstract class AppState implements Built<AppState, AppStateBuilder> {
     //return 'Use inclusive: ${invoiceUIState.editing.usesInclusiveTaxes}';
     //return 'Invitations: ${invoiceUIState.editing.invitations}';
     //return 'Token: ${userCompanyStates.map((state) => state.token.token).where((name) => name.isNotEmpty).toList().join(', ')}';
-    return 'UserCompany: ${UserCompanyEntity()}';
     //return 'Settings: ${company.settings.companyLogo}';
     //return 'Designs: ${company.designs}';
     //return 'PDF Variables: ${uiState.settingsUIState.settings.pdfVariables}';
