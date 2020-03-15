@@ -1056,8 +1056,10 @@ class ReportResult {
   List<DataColumn> totalColumns(BuildContext context,
       Function(int, bool) onSortCallback) {
     final localization = AppLocalization.of(context);
-    columns.toList().sort((String str1, String str2) => str1.compareTo(str2));
-
+    final sortedColumns = columns.toList()
+      ..sort((String str1, String str2) =>
+          str1.compareTo(str2));
+    
     return [
       DataColumn(
         label: Text(localization.currency),
@@ -1067,7 +1069,7 @@ class ReportResult {
         label: Text(localization.count),
         onSort: onSortCallback,
       ),
-      for (String column in columns)
+      for (String column in sortedColumns)
         if ([ReportColumnType.number, ReportColumnType.age,].contains(
             getReportColumnType(column, context)))
           DataColumn(
