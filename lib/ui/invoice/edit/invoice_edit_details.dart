@@ -126,7 +126,7 @@ class InvoiceEditDetailsState extends State<InvoiceEditDetails> {
     if (!(company.hasCustomDesign3 ?? true)) {
       designs.remove(kDesignCustom3);
     }
-    if (!company.isProPlan) {
+    if (!company.isProPlan && !company.isEnterprisePlan) {
       designs = designs.sublist(0, 4);
     }
 
