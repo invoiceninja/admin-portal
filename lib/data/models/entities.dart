@@ -38,6 +38,7 @@ class EntityType extends EnumClass {
   static const EntityType gatewayToken = _$gatewayToken;
   static const EntityType invoiceItem = _$invoiceItem;
   static const EntityType design = _$design;
+
   // STARTER: entity type - do not remove comment
   static const EntityType quoteItem = _$quoteItem;
   static const EntityType contact = _$contact;
@@ -227,6 +228,12 @@ abstract class BaseEntity implements SelectableEntity {
 
   ReportBoolValue getReportBool({bool value}) =>
       ReportBoolValue(entityId: id, entityType: entityType, value: value);
+
+  ReportAgeValue getReportAge({int value, String currencyId}) => ReportAgeValue(
+      entityType: entityType,
+      entityId: id,
+      value: value,
+      currencyId: currencyId);
 
   ReportNumberValue getReportNumber(
           {double value,

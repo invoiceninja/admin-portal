@@ -131,11 +131,8 @@ ReportResult agingReport(
       if (value.runtimeType == bool) {
         row.add(invoice.getReportBool(value: value));
       } else if (column == AgingReportFields.age) {
-        row.add(invoice.getReportNumber(
-            value: value,
-            // TODO figure out why this line is needed
-            currencyId: client.settings.currencyId,
-            formatNumberType: FormatNumberType.int));
+        row.add(invoice.getReportAge(
+            value: value.round(), currencyId: client.settings.currencyId));
       } else if (value.runtimeType == double || value.runtimeType == int) {
         row.add(invoice.getReportNumber(
             value: value, currencyId: client.settings.currencyId));

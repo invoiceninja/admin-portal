@@ -474,6 +474,7 @@ enum ReportColumnType {
   date,
   number,
   bool,
+  age,
 }
 
 ReportColumnType getReportColumnType(String column, BuildContext context) {
@@ -496,6 +497,8 @@ ReportColumnType getReportColumnType(String column, BuildContext context) {
     return ReportColumnType.dateTime;
   } else if (['date', 'due_date'].contains(column)) {
     return ReportColumnType.date;
+  } else if (column == 'age') {
+    return ReportColumnType.age;
   } else if ([
     'balance',
     'paid_to_date',
@@ -509,7 +512,6 @@ ReportColumnType getReportColumnType(String column, BuildContext context) {
     'tax_rate',
     'tax_amount',
     'tax_paid',
-    'age',
     'payment_amount'
   ].contains(column)) {
     return ReportColumnType.number;
@@ -789,7 +791,7 @@ class ReportResult {
               ],
             ))
           else
-            if (column == 'age')
+            if (getReportColumnType(column, context) == ReportColumnType.age)
               DataCell(AppDropdownButton<String>(
                 value: (textEditingControllers[column].text ?? '')
                     .isNotEmpty &&
@@ -1063,7 +1065,8 @@ class ReportResult {
         onSort: onSortCallback,
       ),
       for (String column in columns)
-        if (getReportColumnType(column, context) == ReportColumnType.number)
+        if ([ReportColumnType.number, ReportColumnType.age,].contains(
+            getReportColumnType(column, context)))
           DataColumn(
             label: Text(
               localization.lookup(column),
@@ -1090,8 +1093,14 @@ class ReportResult {
       for (var j = 0; j < row.length; j++) {
         final cell = row[j];
         final column = columns[j];
-        if (cell is ReportNumberValue) {
-          final String currencyId = cell.currencyId;
+
+        if (cell is ReportNumberValue || cell is ReportAgeValue) {
+          String currencyId;
+          if (cell is ReportNumberValue) {
+            currencyId = cell.currencyId;
+          } else if (cell is ReportAgeValue) {
+            currencyId = cell.currencyId;
+          }
 
           if (!totals.containsKey(currencyId)) {
             totals[currencyId] = {'count': 0};
@@ -1210,6 +1219,27 @@ class ReportStringValue extends ReportElement {
     } else {
       return value ?? '';
     }
+  }
+}
+
+class ReportAgeValue extends ReportElement {
+  ReportAgeValue({
+    @required dynamic value,
+    @required EntityType entityType,
+    @required String entityId,
+    @required this.currencyId,
+  }) : super(value: value, entityType: entityType, entityId: entityId);
+
+  final String currencyId;
+
+  @override
+  Widget renderWidget(BuildContext context, String column) {
+    return Text(renderText(context, column));
+  }
+
+  @override
+  String renderText(BuildContext context, String column) {
+    return '$value';
   }
 }
 
