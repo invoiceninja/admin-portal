@@ -52,11 +52,13 @@ ReportResult agingReport(
           : ReportSettingsEntity();
 
   final defaultColumns = [
+    AgingReportFields.client,
     AgingReportFields.invoice,
+    AgingReportFields.date,
+    AgingReportFields.due_date,
     AgingReportFields.age,
     AgingReportFields.invoice_amount,
-    AgingReportFields.due_date,
-    AgingReportFields.client,
+    AgingReportFields.invoice_balance,
   ];
 
   if (agingReportSettings.columns.isNotEmpty) {
