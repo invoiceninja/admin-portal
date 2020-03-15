@@ -1,7 +1,6 @@
 import 'package:built_collection/built_collection.dart';
 import 'package:invoiceninja_flutter/utils/enums.dart';
 import 'package:invoiceninja_flutter/constants.dart';
-import 'package:invoiceninja_flutter/data/models/tax_rate_model.dart';
 import 'package:invoiceninja_flutter/data/models/company_model.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/redux/reports/reports_state.dart';
@@ -134,6 +133,7 @@ ReportResult agingReport(
       } else if (column == AgingReportFields.age) {
         row.add(invoice.getReportNumber(
             value: value,
+            // TODO figure out why this line is needed
             currencyId: client.settings.currencyId,
             formatNumberType: FormatNumberType.int));
       } else if (value.runtimeType == double || value.runtimeType == int) {

@@ -1126,8 +1126,14 @@ class ReportResult {
         ..sort((String str1, String str2) => str1.compareTo(str2));
       fields.forEach((field) {
         final amount = values[field];
-        final value = formatNumber(amount, context, currencyId: currencyId);
         if (field != 'count') {
+          String value;
+          if (field == 'age') {
+            value = formatNumber(amount / values['count'], context,
+                formatNumberType: FormatNumberType.double);
+          } else {
+            value = formatNumber(amount, context, currencyId: currencyId);
+          }
           cells.add(DataCell(Text(value)));
         }
       });
