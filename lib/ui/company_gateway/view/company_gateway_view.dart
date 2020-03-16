@@ -59,6 +59,7 @@ class _CompanyGatewayViewState extends State<CompanyGatewayView> {
       isSettings: true,
       body: ListView(
         children: <Widget>[
+          /*
           EntityHeader(
             label: localization.processed,
             value: '', // TODO calculate value
@@ -67,19 +68,18 @@ class _CompanyGatewayViewState extends State<CompanyGatewayView> {
             icon: getEntityIcon(EntityType.client),
             title: localization.clients,
             //onTap: () => viewModel.onEntityPressed(context, EntityType.invoice),
-            /*
             subtitle: memoizedInvoiceStatsForClient(
                 client.id,
                 state.invoiceState.map,
                 localization.active,
                 localization.archived),
-             */
           ),
           Container(
             color: Theme.of(context).backgroundColor,
             height: 12.0,
           ),
           FieldGrid({}),
+           */
         ],
       ),
     );
