@@ -97,7 +97,13 @@ class _AccountManagementState extends State<AccountManagement>
                         label: localization.applyLicense,
                         iconData: Icons.cloud_done,
                         onPressed: () {
-                          
+                          fieldCallback(
+                              context: context,
+                              title: localization.applyLicense,
+                              field: localization.license,
+                              callback: (value) {
+                                print('## LICENSE: $value');
+                              });
                         },
                       ),
                     ),

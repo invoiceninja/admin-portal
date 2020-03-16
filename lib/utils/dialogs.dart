@@ -114,3 +114,77 @@ class _PasswordConfirmationState extends State<PasswordConfirmation> {
     );
   }
 }
+
+void fieldCallback({
+  BuildContext context,
+  String title,
+  String field,
+  Function(String) callback,
+}) {
+  showDialog<AlertDialog>(
+    context: context,
+    barrierDismissible: false,
+    builder: (BuildContext context) {
+      return FieldConfirmation(
+        callback: callback,
+        field: field,
+        title: title,
+      );
+    },
+  );
+}
+
+class FieldConfirmation extends StatefulWidget {
+  const FieldConfirmation({
+    @required this.callback,
+    @required this.title,
+    @required this.field,
+  });
+
+  final Function(String) callback;
+  final String title;
+  final String field;
+
+  @override
+  _FieldConfirmationState createState() => _FieldConfirmationState();
+}
+
+class _FieldConfirmationState extends State<FieldConfirmation> {
+  String _field;
+
+  void _submit() {
+    widget.callback(_field);
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final localization = AppLocalization.of(context);
+
+    return AlertDialog(
+      title: Text(widget.title),
+      content: TextField(
+        onChanged: (value) => _field = value,
+        decoration: InputDecoration(
+          labelText: widget.field,
+        ),
+        onSubmitted: (value) => _submit(),
+      ),
+      actions: <Widget>[
+        SaveCancelButtons(
+          saveLabel: localization.save.toUpperCase(),
+          onSavePressed: (context) {
+            if ((_field ?? '').isEmpty) {
+              return;
+            }
+            Navigator.pop(context);
+            widget.callback(_field);
+          },
+          cancelLabel: localization.cancel.toUpperCase(),
+          onCancelPressed: (context) {
+            Navigator.pop(context);
+          },
+        ),
+      ],
+    );
+  }
+}
