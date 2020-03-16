@@ -1,7 +1,6 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:invoiceninja_flutter/constants.dart';
-import 'package:invoiceninja_flutter/redux/company/company_selectors.dart';
 import 'package:invoiceninja_flutter/ui/app/buttons/elevated_button.dart';
 import 'package:invoiceninja_flutter/ui/app/form_card.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/app_form.dart';
@@ -9,7 +8,7 @@ import 'package:invoiceninja_flutter/ui/app/edit_scaffold.dart';
 import 'package:invoiceninja_flutter/ui/settings/account_management_vm.dart';
 import 'package:invoiceninja_flutter/utils/dialogs.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
-import 'package:invoiceninja_flutter/utils/platforms.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class AccountManagement extends StatefulWidget {
   const AccountManagement({
@@ -76,29 +75,35 @@ class _AccountManagementState extends State<AccountManagement>
             children: <Widget>[
               SizedBox(height: 14),
               //if (isSelfHosted(context))
-              if (false)
-                Padding(
-                  padding: const EdgeInsets.all(14),
-                  child: Row(
-                    children: <Widget>[
-                      Expanded(
-                        child: ElevatedButton(
-                          label: localization.purchaseLicense,
-                          iconData: Icons.cloud_download,
-                          onPressed: () {},
-                        ),
+              //if (false)
+              Padding(
+                padding: const EdgeInsets.all(14),
+                child: Row(
+                  children: <Widget>[
+                    Expanded(
+                      child: ElevatedButton(
+                        label: localization.purchaseLicense,
+                        iconData: Icons.cloud_download,
+                        onPressed: () async {
+                          if (await canLaunch(kWhiteLabelUrl)) {
+                            launch(kWhiteLabelUrl, forceSafariVC: false);
+                          }
+                        },
                       ),
-                      SizedBox(width: 14),
-                      Expanded(
-                        child: ElevatedButton(
-                          label: localization.applyLicense,
-                          iconData: Icons.cloud_done,
-                          onPressed: () {},
-                        ),
+                    ),
+                    SizedBox(width: 14),
+                    Expanded(
+                      child: ElevatedButton(
+                        label: localization.applyLicense,
+                        iconData: Icons.cloud_done,
+                        onPressed: () {
+                          
+                        },
                       ),
-                    ],
-                  ),
+                    ),
+                  ],
                 ),
+              ),
               /*
               Padding(
                 padding: const EdgeInsets.all(16),
