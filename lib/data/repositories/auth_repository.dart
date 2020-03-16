@@ -101,6 +101,15 @@ class AuthRepository {
     return webClient.delete('/companies/$companyId', token, password: password);
   }
 
+
+  Future<dynamic> purgeData({
+    @required String token,
+    @required String companyId,
+    @required String password,
+  }) async {
+    //return webClient.delete('/companies/$companyId', token, password: password);
+  }
+
   Future<LoginResponse> sendRequest(
       {String url, dynamic data, String token, String secret}) async {
     url += '?first_load=true&include_static=true';

@@ -77,33 +77,34 @@ class _AccountManagementState extends State<AccountManagement>
               SizedBox(height: 14),
               //if (isSelfHosted(context))
               if (false)
-              Padding(
-                padding: const EdgeInsets.all(14),
-                child: Row(
-                  children: <Widget>[
-                    Expanded(
-                      child: ElevatedButton(
-                        label: localization.purchaseLicense,
-                        iconData: Icons.cloud_download,
-                        onPressed: () {},
+                Padding(
+                  padding: const EdgeInsets.all(14),
+                  child: Row(
+                    children: <Widget>[
+                      Expanded(
+                        child: ElevatedButton(
+                          label: localization.purchaseLicense,
+                          iconData: Icons.cloud_download,
+                          onPressed: () {},
+                        ),
                       ),
-                    ),
-                    SizedBox(width: 14),
-                    Expanded(
-                      child: ElevatedButton(
-                        label: localization.applyLicense,
-                        iconData: Icons.cloud_done,
-                        onPressed: () {},
+                      SizedBox(width: 14),
+                      Expanded(
+                        child: ElevatedButton(
+                          label: localization.applyLicense,
+                          iconData: Icons.cloud_done,
+                          onPressed: () {},
+                        ),
                       ),
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
-              ),
+              /*
               Padding(
                 padding: const EdgeInsets.all(16),
                 child: ElevatedButton(
                   label: localization.purgeData.toUpperCase(),
-                  color: Colors.orange,
+                  color: Colors.red,
                   iconData: Icons.delete,
                   onPressed: () {
                     confirmCallback(
@@ -118,7 +119,8 @@ class _AccountManagementState extends State<AccountManagement>
                         });
                   },
                 ),
-              ),
+              ),              
+               */
               Padding(
                 padding: const EdgeInsets.all(16),
                 child: ElevatedButton(

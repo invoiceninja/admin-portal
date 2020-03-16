@@ -30,6 +30,7 @@ List<Middleware<AppState>> createStoreAuthMiddleware([
   final recoverRequest = _createRecoverRequest(repository);
   final addCompany = _createCompany(repository);
   final deleteCompany = _deleteCompany(repository);
+  final purgeData = _purgeData(repository);
 
   return [
     TypedMiddleware<AppState, UserLogout>(userLogout),
@@ -40,6 +41,7 @@ List<Middleware<AppState>> createStoreAuthMiddleware([
     TypedMiddleware<AppState, RecoverPasswordRequest>(recoverRequest),
     TypedMiddleware<AppState, AddCompany>(addCompany),
     TypedMiddleware<AppState, DeleteCompanyRequest>(deleteCompany),
+    TypedMiddleware<AppState, PurgeDataRequest>(purgeData),
   ];
 }
 
@@ -273,6 +275,28 @@ Middleware<AppState> _deleteCompany(AuthRepository repository) {
       store.dispatch(DeleteCompanySuccess());
     }).catchError((Object error) {
       store.dispatch(DeleteCompanyFailure(error));
+    });
+
+    next(action);
+  };
+}
+
+Middleware<AppState> _purgeData(AuthRepository repository) {
+  return (Store<AppState> store, dynamic dynamicAction,
+      NextDispatcher next) async {
+    final action = dynamicAction as DeleteCompanyRequest;
+    final state = store.state;
+
+    repository
+        .purgeData(
+            token: state.credentials.token,
+            password: action.password,
+            companyId: state.company.id)
+        .then((dynamic value) {
+      action.completer.complete(null);
+      store.dispatch(PurgeDataSuccess());
+    }).catchError((Object error) {
+      store.dispatch(PurgeDataFailure(error));
     });
 
     next(action);
