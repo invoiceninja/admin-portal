@@ -1,5 +1,7 @@
 import 'dart:async';
 import 'dart:convert';
+import 'dart:io' as file;
+import 'package:flutter_share/flutter_share.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
 import 'package:http/http.dart';
@@ -9,6 +11,7 @@ import 'package:invoiceninja_flutter/ui/app/loading_indicator.dart';
 import 'package:invoiceninja_flutter/utils/dialogs.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:native_pdf_view/native_pdf_view.dart';
+import 'package:path_provider/path_provider.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:native_pdf_renderer/native_pdf_renderer.dart';
 import 'package:invoiceninja_flutter/utils/web_stub.dart'
@@ -50,20 +53,35 @@ class PDFScaffold extends StatefulWidget {
 class _PDFScaffoldState extends State<PDFScaffold> {
   String _pdfString;
   List<PDFPageImage> _pdfImages;
+  http.Response _response;
 
   @override
   void initState() {
     super.initState();
 
-    if (kIsWeb) {
-      renderWebPDF(context, widget.invoice).then((value) => setState(() {
-            _pdfString = value;
-            registerWebView(_pdfString);
-          }));
-    } else {
-      renderMobilePDF(context, widget.invoice)
-          .then((value) => setState(() => _pdfImages = value));
-    }
+    _loadPDF(context, widget.invoice).then((response) {
+      setState(() {
+        _response = response;
+      });
+      if (kIsWeb) {
+        renderWebPDF(
+          context: context,
+          invoice: widget.invoice,
+          response: response,
+        ).then((value) => setState(() {
+              _pdfString = value;
+              registerWebView(_pdfString);
+            }));
+      } else {
+        renderMobilePDF(
+          context: context,
+          invoice: widget.invoice,
+          response: response,
+        ).then((value) => setState(() {
+              _pdfImages = value;
+            }));
+      }
+    });
   }
 
   @override
@@ -84,10 +102,24 @@ class _PDFScaffoldState extends State<PDFScaffold> {
               localization.download,
               style: TextStyle(color: Colors.white),
             ),
-            onPressed: () {
-              launch(invoice.invitationDownloadLink,
-                  forceSafariVC: false, forceWebView: false);
-            },
+            onPressed: _response == null
+                ? null
+                : () async {
+                    if (kIsWeb) {
+                      launch(invoice.invitationDownloadLink,
+                          forceSafariVC: false, forceWebView: false);
+                    } else {
+                      final directory = await getExternalStorageDirectory();
+                      final filePath =
+                          '${directory.path}/${invoice.invoiceId}.pdf';
+                      final pdfData = file.File(filePath);
+                      pdfData.writeAsBytes(_response.bodyBytes);
+                      await FlutterShare.shareFile(
+                          title: 'test.pdf',
+                          //text: 'Example share text',
+                          filePath: filePath);
+                    }
+                  },
           ),
         ],
       ),
@@ -153,9 +185,11 @@ Future<Response> _loadPDF(BuildContext context, InvoiceEntity invoice) async {
   return response;
 }
 
-Future<String> renderWebPDF(BuildContext context, InvoiceEntity invoice) async {
-  final response = await _loadPDF(context, invoice);
-
+Future<String> renderWebPDF({
+  @required BuildContext context,
+  @required http.Response response,
+  @required InvoiceEntity invoice,
+}) async {
   if (response == null) {
     return '';
   }
@@ -163,9 +197,11 @@ Future<String> renderWebPDF(BuildContext context, InvoiceEntity invoice) async {
   return 'data:application/pdf;base64,' + base64Encode(response.bodyBytes);
 }
 
-Future<List<PDFPageImage>> renderMobilePDF(
-    BuildContext context, InvoiceEntity invoice) async {
-  final response = await _loadPDF(context, invoice);
+Future<List<PDFPageImage>> renderMobilePDF({
+  @required BuildContext context,
+  @required http.Response response,
+  @required InvoiceEntity invoice,
+}) async {
   final List<PDFPageImage> pages = [];
 
   if (response == null) {
