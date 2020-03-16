@@ -15,8 +15,10 @@ import 'package:invoiceninja_flutter/ui/settings/account_management.dart';
 import 'package:invoiceninja_flutter/utils/completers.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:invoiceninja_flutter/utils/platforms.dart';
+import 'package:local_auth/error_codes.dart';
 import 'package:redux/redux.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
+import 'package:invoiceninja_flutter/utils/completers.dart';
 
 class AccountManagementScreen extends StatelessWidget {
   const AccountManagementScreen({Key key}) : super(key: key);
@@ -43,6 +45,7 @@ class AccountManagementVM {
     @required this.onCompanyChanged,
     @required this.onSavePressed,
     @required this.onCompanyDelete,
+    @required this.onPurgeData,
   });
 
   static AccountManagementVM fromStore(Store<AppState> store) {
@@ -88,6 +91,12 @@ class AccountManagementVM {
               context, AppLocalization.of(context).savedSettings);
           store.dispatch(SaveCompanyRequest(
               completer: completer, company: settingsUIState.company));
+        },
+        onPurgeData: (context, password) {
+          final completer = snackBarCompleter<Null>(
+              context, AppLocalization.of(context).purgeSuccessful);
+          store.dispatch(
+              PurgeDataRequest(completer: completer, password: password));
         });
   }
 
@@ -96,4 +105,5 @@ class AccountManagementVM {
   final CompanyEntity company;
   final Function(CompanyEntity) onCompanyChanged;
   final Function(BuildContext, String) onCompanyDelete;
+  final Function(BuildContext, String) onPurgeData;
 }

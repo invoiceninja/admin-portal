@@ -102,6 +102,26 @@ class _AccountManagementState extends State<AccountManagement>
               Padding(
                 padding: const EdgeInsets.all(16),
                 child: ElevatedButton(
+                  label: localization.purgeData.toUpperCase(),
+                  color: Colors.orange,
+                  iconData: Icons.delete,
+                  onPressed: () {
+                    confirmCallback(
+                        context: context,
+                        message: localization.purgeDataMessage,
+                        callback: () {
+                          passwordCallback(
+                              context: context,
+                              callback: (password) {
+                                viewModel.onPurgeData(context, password);
+                              });
+                        });
+                  },
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.all(16),
+                child: ElevatedButton(
                   label: companies.length == 1
                       ? localization.cancelAccount.toUpperCase()
                       : localization.deleteCompany.toUpperCase(),

@@ -64,3 +64,21 @@ class DeleteCompanyFailure implements StopSaving {
 
   final Object error;
 }
+
+
+class PurgeDataRequest implements StartSaving {
+  PurgeDataRequest({@required this.completer, @required this.password});
+
+  final Completer completer;
+  final String password;
+}
+
+class PurgeDataSuccess implements StopSaving, PersistData {
+  PurgeDataSuccess();
+}
+
+class PurgeDataFailure implements StopSaving {
+  PurgeDataFailure(this.error);
+
+  final Object error;
+}
