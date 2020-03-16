@@ -272,7 +272,7 @@ else
 
         #comment="STARTER: widgets - do not remove comment"
         #if [ ${element} = ${fieldsArray[0]} ]; then
-        #    code="Text(${module_snake}.${element}, style: Theme.of(context).textTheme.headline6),${lineBreak}"
+        #    code="Text(${module_snake}.${element}, style: Theme.of(context).textTheme.title),${lineBreak}"
         #    code="${code}SizedBox(height: 12.0),${lineBreak}"
         #else
         #    code="Text(${module_snake}.${element}),"

@@ -130,7 +130,7 @@ class MultiSelectListState extends State<MultiSelectList> {
                               ? localization.lookup(option)
                               : columnTitle,
                           textAlign: TextAlign.left,
-                          style: Theme.of(context).textTheme.headline6,
+                          style: Theme.of(context).textTheme.title,
                         ),
                       ),
                       IconButton(

@@ -80,7 +80,7 @@ class InvoiceListItem extends StatelessWidget {
               Expanded(
                 child: Text(
                   client.displayName,
-                  style: Theme.of(context).textTheme.headline6,
+                  style: Theme.of(context).textTheme.title,
                 ),
               ),
               Text(
@@ -88,7 +88,7 @@ class InvoiceListItem extends StatelessWidget {
                       invoice.balance > 0 ? invoice.balance : invoice.amount,
                       context,
                       clientId: invoice.clientId),
-                  style: Theme.of(context).textTheme.headline6),
+                  style: Theme.of(context).textTheme.title),
             ],
           ),
         ),

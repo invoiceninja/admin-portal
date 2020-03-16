@@ -76,7 +76,7 @@ class MenuDrawer extends StatelessWidget {
                     company.displayName.isEmpty
                         ? localization.untitledCompany
                         : company.displayName,
-                    style: Theme.of(context).textTheme.headline6,
+                    style: Theme.of(context).textTheme.title,
                     overflow: TextOverflow.ellipsis,
                   ),
                 ],
@@ -634,9 +634,9 @@ void _showUpdate(BuildContext context) {
 void _showAbout(BuildContext context) {
   final localization = AppLocalization.of(context);
   final ThemeData themeData = Theme.of(context);
-  final TextStyle aboutTextStyle = themeData.textTheme.bodyText1;
+  final TextStyle aboutTextStyle = themeData.textTheme.body1;
   final TextStyle linkStyle =
-      themeData.textTheme.bodyText1.copyWith(color: themeData.accentColor);
+      themeData.textTheme.body1.copyWith(color: themeData.accentColor);
 
   showAboutDialog(
     context: context,
