@@ -34,9 +34,12 @@ Future<void> login(FlutterDriver driver,
     String loginSecret = Config.TEST_SECRET}) async {
   final localization = TestLocalization('en');
 
+  /*
   if (selfHosted && !retype) {
     await driver.tap(find.byValueKey(localization.selfhostLogin));
   }
+   */
+
   await fillTextFields(driver, <String, dynamic>{
     localization.email: loginEmail,
     localization.password: loginPassword,
@@ -49,7 +52,7 @@ Future<void> login(FlutterDriver driver,
     });
   }
 
-  await driver.tap(find.text(localization.emailLogin.toUpperCase()));
+  await driver.tap(find.text(localization.login.toUpperCase()));
 
   if (loginEmail.isNotEmpty) {
     await driver.waitFor(find.text(localization.dashboard),
@@ -62,8 +65,9 @@ Future<void> logout(FlutterDriver driver, TestLocalization localization) async {
     await driver.tap(find.byTooltip(Keys.openAppDrawer));
   }
 
-  //await driver.scrollUntilVisible(find.byType('Drawer'), find.byValueKey(SettingsKeys.drawer));
+  //await driver.scrollUntilVisible(find.byType('Drawer'), find.text(localization.settings));
   await driver.tap(find.text(localization.settings));
+  await driver.tap(find.text(localization.deviceSettings));
 
   // Tap on Log Out
   await driver.tap(find.text(localization.logout));
@@ -73,7 +77,7 @@ Future<void> logout(FlutterDriver driver, TestLocalization localization) async {
   await driver.tap(find.text(localization.ok.toUpperCase()));
 
   // Should be in the login screen now
-  await driver.waitFor(find.text(localization.emailLogin.toUpperCase()));
+  await driver.waitFor(find.text(localization.login.toUpperCase()));
 }
 
 Future<void> viewSection({FlutterDriver driver, String name}) async {
