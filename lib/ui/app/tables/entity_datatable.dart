@@ -49,6 +49,17 @@ class EntityDataTableSource extends DataTableSource {
     final listState = state.getListState(entityType);
     final uIState = state.getUIState(entityType);
 
+    if (entity == null) {
+      return DataRow(cells: [
+        DataCell(SizedBox()),
+        ...tableColumns.map(
+          (field) => DataCell(
+            SizedBox(),
+          ),
+        )
+      ]);
+    }
+
     return DataRow(
       selected: (listState.selectedIds ?? <String>[]).contains(entity.id),
       onSelectChanged: listState.isInMultiselect()
