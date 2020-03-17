@@ -18,6 +18,7 @@ class AuthRepository {
   final WebClient webClient;
 
   Future<LoginResponse> signUp({
+    String url,
     String firstName,
     String lastName,
     String email,
@@ -34,9 +35,10 @@ class AuthRepository {
       'token_name': '${Config.PLATFORM.toLowerCase()}-client',
     };
 
-    final url = formatApiUrl(kAppUrl) + '/signup';
+    final signupUrl =
+        formatApiUrl((url ?? '').isEmpty ? kAppUrl : url) + '/signup';
 
-    return sendRequest(url: url, data: credentials, secret: secret);
+    return sendRequest(url: signupUrl, data: credentials, secret: secret);
   }
 
   Future<LoginResponse> login(
@@ -68,8 +70,7 @@ class AuthRepository {
     return sendRequest(url: url, data: credentials, secret: secret);
   }
 
-  Future<LoginResponse> refresh(
-      {String url, String token}) async {
+  Future<LoginResponse> refresh({String url, String token}) async {
     url = formatApiUrl(url) + '/refresh';
 
     return sendRequest(url: url, token: token);
@@ -100,7 +101,6 @@ class AuthRepository {
   }) async {
     return webClient.delete('/companies/$companyId', token, password: password);
   }
-
 
   Future<dynamic> purgeData({
     @required String token,

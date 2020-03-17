@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:invoiceninja_flutter/data/models/entities.dart';
 
 // This version must be updated in tandem with the pubspec version.
-const String kAppVersion = '2.0.3';
+const String kAppVersion = '2.0.4';
 const String kSiteUrl = 'https://invoiceninja.com';
 //const String kAppUrl = 'https://admin.invoiceninja.com';
 const String kAppUrl = 'https://staging.invoicing.co';
@@ -24,8 +24,7 @@ const String kSharedPrefs = 'shared_prefs';
 const String kSharedPrefAppVersion = 'app_version';
 const String kSharedPrefEmail = 'email';
 const String kSharedPrefUrl = 'url';
-const String kSharedPrefSecret = 'secret';
-const String kSharedPrefToken = 'api_token';
+const String kSharedPrefToken = 'token';
 
 // TODO remove these
 const String kSharedPrefAddDocumentsToInvoice = 'add_documents_to_invoice';

@@ -75,6 +75,8 @@ class LoginVM {
     @required String lastName,
     @required String email,
     @required String password,
+    @required String url,
+    @required String secret,
   }) onSignUpPressed;
 
   final Function(BuildContext, Completer<Null> completer,
@@ -165,6 +167,8 @@ class LoginVM {
           @required String lastName,
           @required String email,
           @required String password,
+          @required String url,
+          @required String secret,
         }) async {
           if (store.state.isLoading) {
             return;
@@ -176,6 +180,8 @@ class LoginVM {
             lastName: lastName.trim(),
             email: email.trim(),
             password: password.trim(),
+            url: url.trim(),
+            secret: secret.trim(),
           ));
           completer.future.then((_) => _handleLogin(context));
         },

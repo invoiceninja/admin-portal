@@ -15,6 +15,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
   static final Map<String, Map<String, String>> _localizedValues = {
     'en': {
       // STARTER: lang key - do not remove comment
+      'optional': 'Optional',
       'license': 'License',
       'purge_data': 'Purge Data',
       'purge_successful': 'Successfully purged company data',
@@ -33071,6 +33072,9 @@ mixin LocalizationsProvider on LocaleCodeAware {
       _localizedValues[localeCode]['purge_data_message'];
 
   String get license => _localizedValues[localeCode]['license'];
+
+  String get optional => _localizedValues[localeCode]['optional'];
+
 
   String lookup(String key) {
     final lookupKey = toSnakeCase(key);

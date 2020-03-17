@@ -50,7 +50,7 @@ class _LoginState extends State<LoginView> {
   bool _emailLogin = false;
   bool _createAccount = false;
   bool _recoverPassword = false;
-  bool _isSelfHosted = false;
+  bool _isSelfHosted = true;
   bool _autoValidate = false;
   bool _termsChecked = false;
   bool _privacyChecked = false;
@@ -83,10 +83,11 @@ class _LoginState extends State<LoginView> {
       _emailLogin = true;
     }
 
+    /*
     if (cleanApiUrl(state.url).isNotEmpty) {
       _isSelfHosted = true;
     }
-
+     */
     super.didChangeDependencies();
   }
 
@@ -189,6 +190,8 @@ class _LoginState extends State<LoginView> {
         password: _passwordController.text,
         firstName: _firstNameController.text,
         lastName: _lastNameController.text,
+        url: _urlController.text,
+        secret: _secretController.text,
       );
     } else {
       viewModel.onGoogleSignUpPressed(context, completer);
@@ -268,6 +271,7 @@ class _LoginState extends State<LoginView> {
     final TextStyle aboutTextStyle = themeData.textTheme.body1;
     final TextStyle linkStyle = themeData.textTheme.body1
         .copyWith(color: convertHexStringToColor(kDefaultAccentColor));
+    final showHostedOptions = viewModel.authState.isHosted || !kIsWeb;
 
     return Stack(
       children: <Widget>[
@@ -424,7 +428,7 @@ class _LoginState extends State<LoginView> {
                               textInputAction: TextInputAction.done,
                               autocorrect: false,
                               decoration: InputDecoration(
-                                  labelText: localization.secret),
+                                  labelText: '${localization.secret} (${localization.optional})'),
                               obscureText: true,
                               onFieldSubmitted: (String value) =>
                                   FocusScope.of(context).nextFocus(),
@@ -534,7 +538,7 @@ class _LoginState extends State<LoginView> {
                         mainAxisAlignment: MainAxisAlignment.center,
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: <Widget>[
-                          if (!_recoverPassword)
+                          if (!_recoverPassword && showHostedOptions)
                             Padding(
                               padding: const EdgeInsets.all(6),
                               child: Row(
@@ -586,7 +590,7 @@ class _LoginState extends State<LoginView> {
                                               localization.createAccount),
                                           onPressed: () => setState(() {
                                                 _createAccount = true;
-                                                _isSelfHosted = false;
+                                                //_isSelfHosted = false;
                                                 _loginError = '';
                                               }),
                                           child:
@@ -594,7 +598,7 @@ class _LoginState extends State<LoginView> {
                                 ],
                               ),
                             ),
-                          if (!_createAccount && !_recoverPassword)
+                          if (!_createAccount && !_recoverPassword && showHostedOptions)
                             Padding(
                               padding: const EdgeInsets.all(6),
                               child: Row(

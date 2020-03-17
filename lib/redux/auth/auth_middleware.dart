@@ -50,7 +50,6 @@ void _saveAuthLocal(
   final SharedPreferences prefs = await SharedPreferences.getInstance();
   prefs.setString(kSharedPrefEmail, email ?? '');
   prefs.setString(kSharedPrefUrl, formatApiUrl(url));
-  prefs.setString(kSharedPrefSecret, secret);
 }
 
 void _loadAuthLocal(Store<AppState> store) async {
@@ -63,9 +62,8 @@ void _loadAuthLocal(Store<AppState> store) async {
       ? (prefs.getString(kSharedPrefEmail) ?? '')
       : Config.TEST_EMAIL;
   final String url = formatApiUrl(prefs.getString(kSharedPrefUrl) ?? '');
-  final String secret = prefs.getString(kSharedPrefSecret) ?? '';
 
-  store.dispatch(UserLoginLoaded(email, url, secret));
+  store.dispatch(UserLoginLoaded(email, url));
 }
 
 Middleware<AppState> _createUserLogout() {
@@ -128,6 +126,7 @@ Middleware<AppState> _createSignUpRequest(AuthRepository repository) {
 
     repository
         .signUp(
+      url: action.url,
       email: action.email,
       password: action.password,
       firstName: action.firstName,
