@@ -1,4 +1,5 @@
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
@@ -22,6 +23,17 @@ class CachedImage extends StatelessWidget {
       return SizedBox(
         width: width,
         height: height,
+      );
+    }
+
+    // TODO remove this
+    if (kIsWeb) {
+      return Image.network(
+        url,
+        width: width,
+        height: height,
+        key: ValueKey(url),
+        fit: BoxFit.contain,
       );
     }
 

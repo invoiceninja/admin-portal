@@ -23,7 +23,7 @@ class SaveCancelButtons extends StatelessWidget {
 
     return Row(
       children: <Widget>[
-        if (onCancelPressed != null && !isSaving)
+        if (onCancelPressed != null)
           Builder(builder: (BuildContext context) {
             return FlatButton(
               child: Text(

@@ -29,12 +29,12 @@ class QuoteEditDetailsScreen extends StatelessWidget {
           return InvoiceEditDesktop(
             viewModel: viewModel,
             key: ValueKey('__quote_${viewModel.invoice.id}__'),
-            isQuote: true,
+            entityType: EntityType.quote,
           );
         } else {
           return InvoiceEditDetails(
             viewModel: viewModel,
-            isQuote: true,
+            entityType: EntityType.quote,
           );
         }
       },

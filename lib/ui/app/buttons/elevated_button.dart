@@ -5,12 +5,12 @@ class ElevatedButton extends StatelessWidget {
   const ElevatedButton(
       {@required this.label,
       @required this.onPressed,
-      this.icon,
+      this.iconData,
       this.color,
       this.width});
 
   final Color color;
-  final IconData icon;
+  final IconData iconData;
   final String label;
   final Function onPressed;
   final double width;
@@ -22,10 +22,11 @@ class ElevatedButton extends StatelessWidget {
       child: RaisedButton(
         padding: EdgeInsets.symmetric(vertical: 10, horizontal: 10),
         color: color ?? Theme.of(context).buttonColor,
-        child: icon != null
+        child: iconData != null
             ? IconText(
-                icon: icon,
+                icon: iconData,
                 text: label,
+                alignment: MainAxisAlignment.center,
               )
             : Text(label),
         textColor: Colors.white,

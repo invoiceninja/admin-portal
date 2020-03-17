@@ -158,8 +158,8 @@ ReportResult productReport(
   }
 
   final selectedColumns = columns.map((item) => EnumUtils.parse(item)).toList();
-  data.sort(
-      (rowA, rowB) => sortReportTableRows(rowA, rowB, productReportSettings, selectedColumns));
+  data.sort((rowA, rowB) =>
+      sortReportTableRows(rowA, rowB, productReportSettings, selectedColumns));
 
   return ReportResult(
     allColumns:

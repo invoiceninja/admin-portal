@@ -17,7 +17,8 @@ class ClientRepository {
 
   Future<ClientEntity> loadItem(
       Credentials credentials, String entityId) async {
-    final String url = '${credentials.url}/clients/$entityId?include=gateway_tokens,activities';
+    final String url =
+        '${credentials.url}/clients/$entityId?include=gateway_tokens,activities';
 
     final dynamic response = await webClient.get(url, credentials.token);
 

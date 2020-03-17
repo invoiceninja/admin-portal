@@ -5,6 +5,7 @@ import 'package:built_value/built_value.dart';
 import 'package:built_value/serializer.dart';
 import 'package:flutter/foundation.dart';
 import 'package:invoiceninja_flutter/constants.dart';
+import 'package:invoiceninja_flutter/data/models/account_model.dart';
 import 'package:invoiceninja_flutter/data/models/company_gateway_model.dart';
 import 'package:invoiceninja_flutter/data/models/entities.dart';
 import 'package:invoiceninja_flutter/data/models/group_model.dart';
@@ -74,6 +75,7 @@ abstract class CompanyEntity extends Object
       expenses: BuiltList<ExpenseEntity>(),
       projects: BuiltList<ProjectEntity>(),
       vendors: BuiltList<VendorEntity>(),
+      designs: BuiltList<DesignEntity>(),
     );
   }
 
@@ -187,6 +189,8 @@ abstract class CompanyEntity extends Object
 
   BuiltList<VendorEntity> get vendors;
 
+  BuiltList<DesignEntity> get designs;
+
   BuiltMap<String, UserEntity> get userMap;
 
   @BuiltValueField(wireName: 'custom_fields')
@@ -220,16 +224,6 @@ abstract class CompanyEntity extends Object
 
   @override
   String get listDisplayName => null;
-
-  List<String> getInvoiceDesigns() {
-    var designs = kInvoiceDesigns.keys.toList();
-
-    if (!isProPlan) {
-      designs = designs.sublist(0, 4);
-    }
-
-    return designs;
-  }
 
   bool hasCustomField(String field) => getCustomFieldLabel(field).isNotEmpty;
 
@@ -292,25 +286,6 @@ abstract class CompanyEntity extends Object
 
   bool get isEnterprisePlan => isSelfHost || plan == kPlanEnterprise;
 
-  List<String> get invoiceDesignIds {
-    var designIds = kInvoiceDesigns.keys.toList();
-
-    if (!(settings.hasCustomDesign1 ?? true)) {
-      designIds.remove(kDesignCustom1);
-    }
-    if (!(settings.hasCustomDesign2 ?? true)) {
-      designIds.remove(kDesignCustom2);
-    }
-    if (!(settings.hasCustomDesign3 ?? true)) {
-      designIds.remove(kDesignCustom3);
-    }
-    if (!isProPlan) {
-      designIds = designIds.sublist(0, 4);
-    }
-
-    return designIds;
-  }
-
   bool isModuleEnabled(EntityType entityType) {
     if (Config.DEMO_MODE) {
       if ([
@@ -328,7 +303,6 @@ abstract class CompanyEntity extends Object
     // TODO remove this
     if ([
       EntityType.recurringInvoice,
-      EntityType.credit,
       EntityType.project,
       EntityType.task,
       EntityType.expense,
@@ -337,24 +311,22 @@ abstract class CompanyEntity extends Object
       return false;
     }
 
-    /*
     if (entityType == EntityType.recurringInvoice &&
-        enabledModules & kModuleRecurringInvoice == 0) {
+        enabledModules & kModuleRecurringInvoices == 0) {
       return false;
     } else if (entityType == EntityType.credit &&
-        enabledModules & kModuleCredit == 0) {
+        enabledModules & kModuleCredits == 0) {
       return false;
     } else if (entityType == EntityType.quote &&
-        enabledModules & kModuleQuote == 0) {
+        enabledModules & kModuleQuotes == 0) {
       return false;
     } else if ([EntityType.task, EntityType.project].contains(entityType) &&
-        enabledModules & kModuleTask == 0) {
+        enabledModules & kModuleTasks == 0) {
       return false;
     } else if ([EntityType.expense, EntityType.vendor].contains(entityType) &&
-        enabledModules & kModuleExpense == 0) {
+        enabledModules & kModuleExpenses == 0) {
       return false;
     }
-    */
 
     return true;
   }
@@ -485,10 +457,13 @@ abstract class UserCompanyEntity
       isAdmin: false,
       isOwner: false,
       permissions: '',
-      settings: UserSettingsEntity(),
       company: CompanyEntity(),
       user: UserEntity(),
       token: TokenEntity(),
+      account: AccountEntity(),
+      notifications: BuiltMap<String, BuiltList<String>>().rebuild((b) => b
+        ..[kNotificationChannelEmail] =
+            BuiltList<String>(<String>[kNotificationsAll])),
     );
   }
 
@@ -503,6 +478,9 @@ abstract class UserCompanyEntity
   String get permissions;
 
   @nullable
+  BuiltMap<String, BuiltList<String>> get notifications;
+
+  @nullable
   CompanyEntity get company;
 
   @nullable
@@ -510,6 +488,9 @@ abstract class UserCompanyEntity
 
   @nullable
   TokenEntity get token;
+
+  @nullable
+  AccountEntity get account;
 
   @nullable
   UserSettingsEntity get settings;
@@ -541,6 +522,10 @@ abstract class UserCompanyEntity
     return permissions.contains('${permission}_all') ||
         permissions.contains('${permission}_$entityType');
   }
+
+  bool receivesAllNotifications(String channel) =>
+      notifications.containsKey(channel) &&
+      notifications[channel].contains(kNotificationsAll);
 
   bool canView(EntityType entityType) => can(UserPermission.view, entityType);
 
@@ -580,7 +565,10 @@ abstract class UserSettingsEntity
 
   UserSettingsEntity._();
 
+  // TODO remove this
+  @nullable
   @BuiltValueField(wireName: 'accent_color')
+  @nullable
   String get accentColor;
 
   @BuiltValueField(wireName: 'table_columns')
@@ -595,7 +583,12 @@ abstract class UserSettingsEntity
 
 abstract class ReportSettingsEntity
     implements Built<ReportSettingsEntity, ReportSettingsEntityBuilder> {
-  factory ReportSettingsEntity({String sortColumn, bool sortAscending, int sortTotalsIndex, bool sortTotalsAscending, }) {
+  factory ReportSettingsEntity({
+    String sortColumn,
+    bool sortAscending,
+    int sortTotalsIndex,
+    bool sortTotalsAscending,
+  }) {
     return _$ReportSettingsEntity._(
       sortColumn: sortColumn ?? '',
       sortAscending: sortAscending ?? true,
@@ -852,6 +845,9 @@ abstract class SettingsEntity
       defaultQuoteDesignId: clientSettings?.defaultQuoteDesignId ??
           groupSettings?.defaultQuoteDesignId ??
           companySettings?.defaultQuoteDesignId,
+      defaultCreditDesignId: clientSettings?.defaultCreditDesignId ??
+          groupSettings?.defaultCreditDesignId ??
+          companySettings?.defaultCreditDesignId,
       defaultInvoiceFooter: clientSettings?.defaultInvoiceFooter ??
           groupSettings?.defaultInvoiceFooter ??
           companySettings?.defaultInvoiceFooter,
@@ -894,6 +890,9 @@ abstract class SettingsEntity
       emailSubjectPayment: clientSettings?.emailSubjectPayment ??
           groupSettings?.emailSubjectPayment ??
           companySettings?.emailSubjectPayment,
+      emailSubjectPaymentPartial: clientSettings?.emailSubjectPaymentPartial ??
+          groupSettings?.emailSubjectPaymentPartial ??
+          companySettings?.emailSubjectPaymentPartial,
       emailBodyInvoice: clientSettings?.emailBodyInvoice ??
           groupSettings?.emailBodyInvoice ??
           companySettings?.emailBodyInvoice,
@@ -903,6 +902,9 @@ abstract class SettingsEntity
       emailBodyPayment: clientSettings?.emailBodyPayment ??
           groupSettings?.emailBodyPayment ??
           companySettings?.emailBodyPayment,
+      emailBodyPaymentPartial: clientSettings?.emailBodyPaymentPartial ??
+          groupSettings?.emailBodyPaymentPartial ??
+          companySettings?.emailBodyPaymentPartial,
       emailSubjectReminder1: clientSettings?.emailSubjectReminder1 ??
           groupSettings?.emailSubjectReminder1 ??
           companySettings?.emailSubjectReminder1,
@@ -1078,6 +1080,9 @@ abstract class SettingsEntity
       customPaymentTerms: clientSettings?.customPaymentTerms ??
           groupSettings?.customPaymentTerms ??
           companySettings?.customPaymentTerms,
+      pdfVariables: clientSettings?.pdfVariables ??
+          groupSettings?.pdfVariables ??
+          companySettings?.pdfVariables,
     );
   }
 
@@ -1351,6 +1356,10 @@ abstract class SettingsEntity
   String get defaultQuoteDesignId;
 
   @nullable
+  @BuiltValueField(wireName: 'credit_design_id')
+  String get defaultCreditDesignId;
+
+  @nullable
   @BuiltValueField(wireName: 'invoice_footer')
   String get defaultInvoiceFooter;
 
@@ -1391,6 +1400,10 @@ abstract class SettingsEntity
   String get invoiceFields;
 
   @nullable
+  @BuiltValueField(wireName: 'pdf_variables')
+  BuiltMap<String, BuiltList<String>> get pdfVariables;
+
+  @nullable
   @BuiltValueField(wireName: 'email_footer')
   String get emailFooter;
 
@@ -1407,6 +1420,10 @@ abstract class SettingsEntity
   String get emailSubjectPayment;
 
   @nullable
+  @BuiltValueField(wireName: 'email_subject_payment_partial')
+  String get emailSubjectPaymentPartial;
+
+  @nullable
   @BuiltValueField(wireName: 'email_template_invoice')
   String get emailBodyInvoice;
 
@@ -1417,6 +1434,10 @@ abstract class SettingsEntity
   @nullable
   @BuiltValueField(wireName: 'email_template_payment')
   String get emailBodyPayment;
+
+  @nullable
+  @BuiltValueField(wireName: 'email_template_payment_partial')
+  String get emailBodyPaymentPartial;
 
   @nullable
   @BuiltValueField(wireName: 'email_subject_reminder1')
@@ -1734,6 +1755,8 @@ abstract class SettingsEntity
         return emailSubjectQuote;
       case EmailTemplate.paymentEmail:
         return emailSubjectPayment;
+      case EmailTemplate.partialPaymentEmail:
+        return emailSubjectPaymentPartial;
       case EmailTemplate.firstReminder:
         return emailSubjectReminder1;
       case EmailTemplate.secondReminder:
@@ -1759,6 +1782,8 @@ abstract class SettingsEntity
         return emailBodyQuote;
       case EmailTemplate.paymentEmail:
         return emailBodyPayment;
+      case EmailTemplate.partialPaymentEmail:
+        return emailBodyPaymentPartial;
       case EmailTemplate.firstReminder:
         return emailBodyReminder1;
       case EmailTemplate.secondReminder:

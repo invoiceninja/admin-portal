@@ -57,8 +57,7 @@ class GroupRepository {
     return groupResponse.data.toList();
   }
 
-  Future<GroupEntity> saveData(Credentials credentials, GroupEntity group,
-      [EntityAction action]) async {
+  Future<GroupEntity> saveData(Credentials credentials, GroupEntity group) async {
     final data = serializers.serializeWith(GroupEntity.serializer, group);
     dynamic response;
 
@@ -67,10 +66,7 @@ class GroupRepository {
           credentials.url + '/group_settings', credentials.token,
           data: json.encode(data));
     } else {
-      var url = credentials.url + '/group_settings/' + group.id.toString();
-      if (action != null) {
-        url += '?action=' + action.toString();
-      }
+      final url = credentials.url + '/group_settings/${group.id}';
       response =
           await webClient.put(url, credentials.token, data: json.encode(data));
     }

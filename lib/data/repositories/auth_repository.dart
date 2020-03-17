@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:convert';
 import 'dart:core';
+import 'package:flutter/material.dart';
 import 'package:invoiceninja_flutter/.env.dart';
 import 'package:invoiceninja_flutter/constants.dart';
 import 'package:invoiceninja_flutter/data/mock/mock_login.dart';
@@ -17,11 +18,11 @@ class AuthRepository {
   final WebClient webClient;
 
   Future<LoginResponse> signUp({
+    String url,
     String firstName,
     String lastName,
     String email,
     String password,
-    String platform,
     String secret,
   }) async {
     final credentials = {
@@ -34,9 +35,10 @@ class AuthRepository {
       'token_name': '${Config.PLATFORM.toLowerCase()}-client',
     };
 
-    final url = formatApiUrl(kAppUrl) + '/signup';
+    final signupUrl =
+        formatApiUrl((url ?? '').isEmpty ? kAppUrl : url) + '/signup';
 
-    return sendRequest(url: url, data: credentials, secret: secret);
+    return sendRequest(url: signupUrl, data: credentials, secret: secret);
   }
 
   Future<LoginResponse> login(
@@ -68,15 +70,10 @@ class AuthRepository {
     return sendRequest(url: url, data: credentials, secret: secret);
   }
 
-  Future<LoginResponse> refresh(
-      {String url, String token, String platform}) async {
-    final credentials = {
-      'token_name': 'invoice-ninja-$platform-app',
-    };
-
+  Future<LoginResponse> refresh({String url, String token}) async {
     url = formatApiUrl(url) + '/refresh';
 
-    return sendRequest(url: url, data: credentials, token: token);
+    return sendRequest(url: url, token: token);
   }
 
   Future<LoginResponse> recoverPassword(
@@ -97,33 +94,24 @@ class AuthRepository {
     return webClient.post('/companies', token, data: json.encode(data));
   }
 
+  Future<dynamic> deleteCompany({
+    @required String token,
+    @required String companyId,
+    @required String password,
+  }) async {
+    return webClient.delete('/companies/$companyId', token, password: password);
+  }
+
+  Future<dynamic> purgeData({
+    @required String token,
+    @required String companyId,
+    @required String password,
+  }) async {
+    //return webClient.delete('/companies/$companyId', token, password: password);
+  }
+
   Future<LoginResponse> sendRequest(
       {String url, dynamic data, String token, String secret}) async {
-    /*
-    final includes = [
-      'account',
-      'user.company_user',
-      'token',
-      'company.activities',
-      'company.users.company_user',
-      'company.tax_rates',
-      'company.groups',
-      'company.company_gateways.gateway',
-      'company.clients',
-      'company.products',
-      'company.invoices',
-      'company.payments.paymentables',
-      'company.quotes',
-      //'company.credits',
-      //'company.tasks',
-      //'company.projects',
-      //'company.expenses',
-      //'company.vendors',
-      // TODO add to starter
-    ];
-    url += '?include=${includes.join(',')}&include_static=true';
-    */
-
     url += '?first_load=true&include_static=true';
 
     dynamic response;

@@ -1,19 +1,18 @@
 import 'dart:async';
 import 'package:invoiceninja_flutter/data/models/stub_model.dart';
 import 'package:redux/redux.dart';
+import 'package:invoiceninja_flutter/ui/design/design_presenter.dart';
 import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:built_collection/built_collection.dart';
-import 'package:invoiceninja_flutter/redux/client/client_actions.dart';
 import 'package:invoiceninja_flutter/redux/ui/list_ui_state.dart';
 import 'package:invoiceninja_flutter/utils/completers.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:invoiceninja_flutter/redux/stub/stub_selectors.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
-import 'package:invoiceninja_flutter/ui/stub/stub_list.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/redux/stub/stub_actions.dart';
 
@@ -25,9 +24,56 @@ class StubListBuilder extends StatelessWidget {
     return StoreConnector<AppState, StubListVM>(
       converter: StubListVM.fromStore,
       builder: (context, viewModel) {
-        return StubList(
-          viewModel: viewModel,
-        );
+        return EntityList(
+            isLoaded: viewModel.isLoaded,
+            entityType: EntityType.stub,
+            presenter: StubPresenter(),
+            state: viewModel.state,
+            entityList: viewModel.stubList,
+            onEntityTap: viewModel.onStubTap,
+            tableColumns: viewModel.tableColumns,
+            onRefreshed: viewModel.onRefreshed,
+            onClearEntityFilterPressed: viewModel.onClearEntityFilterPressed,
+            onViewEntityFilterPressed: viewModel.onViewEntityFilterPressed,
+            onSortColumn: viewModel.onSortColumn,
+            itemBuilder: (BuildContext context, index) {
+              final state = viewModel.state;
+              final stubId = viewModel.stubList[index];
+              final stub = viewModel.stubMap[stubId];
+              final listState = state.getListState(EntityType.stub);
+              final isInMultiselect = listState.isInMultiselect();
+
+              return StubListItem(
+                user: viewModel.state.user,
+                filter: viewModel.filter,
+                stub: stub,
+                onEntityAction: (EntityAction action) {
+                  if (action == EntityAction.more) {
+                    showEntityActionsDialog(
+                      entities: [stub],
+                      context: context,
+                    );
+                  } else {
+                    handleStubAction(context, [stub], action);
+                  }
+                },
+                onTap: () => viewModel.onStubTap(context, stub),
+                onLongPress: () async {
+                  final longPressIsSelection =
+                      state.prefState.longPressSelectionIsDefault ?? true;
+                  if (longPressIsSelection && !isInMultiselect) {
+                    handleStubAction(
+                        context, [stub], EntityAction.toggleMultiselect);
+                  } else {
+                    showEntityActionsDialog(
+                      entities: [stub],
+                      context: context,
+                    );
+                  }
+                },
+                isChecked: isInMultiselect && listState.isSelected(stub.id),
+              );
+            });
       },
     );
   }
@@ -35,6 +81,7 @@ class StubListBuilder extends StatelessWidget {
 
 class StubListVM {
   StubListVM({
+    @required this.state,
     @required this.userCompany,
     @required this.stubList,
     @required this.stubMap,
@@ -48,6 +95,7 @@ class StubListVM {
     @required this.tableColumns,
     @required this.onClearEntityFilterPressed,
     @required this.onViewEntityFilterPressed,
+    @required this.onSortColumn,
   });
 
   static StubListVM fromStore(Store<AppState> store) {
@@ -64,6 +112,7 @@ class StubListVM {
     final state = store.state;
 
     return StubListVM(
+        state: state,
         userCompany: state.userCompany,
         listState: state.stubListState,
         stubList: memoizedFilteredStubList(state.stubState.map,
@@ -90,9 +139,12 @@ class StubListVM {
           (BuildContext context, List<BaseEntity> stubs, EntityAction action) =>
           handleStubAction(context, stubs, action),
         onRefreshed: (context) => _handleRefresh(context),
+        tableColumns: StubPresenter.getTableFields(state.userCompany),
+        onSortColumn: (field) => store.dispatch(SortStubs(field)),
     );
   }
 
+  final AppState state;
   final UserCompanyEntity userCompany;
   final List<String> stubList;
   final BuiltMap<String, StubEntity> stubMap;
@@ -100,10 +152,11 @@ class StubListVM {
   final String filter;
   final bool isLoading;
   final bool isLoaded;
-  final Function(BuildContext, StubEntity) onStubTap;
+  final Function(BuildContext, BaseEntity) onStubTap;
   final Function(BuildContext) onRefreshed;
   final Function(BuildContext, List<BaseEntity>, EntityAction) onEntityAction;
   final Function onClearEntityFilterPressed;
   final Function(BuildContext) onViewEntityFilterPressed;
   final List<String> tableColumns;
+  final Function(String) onSortColumn;
 }

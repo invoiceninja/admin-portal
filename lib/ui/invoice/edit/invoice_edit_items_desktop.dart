@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_typeahead/flutter_typeahead.dart';
 import 'package:invoiceninja_flutter/constants.dart';
 import 'package:invoiceninja_flutter/data/models/entities.dart';
 import 'package:invoiceninja_flutter/data/models/invoice_model.dart';
@@ -133,17 +134,6 @@ class _InvoiceEditItemsDesktopState extends State<InvoiceEditItemsDesktop> {
                 children: [
                   Padding(
                     padding: const EdgeInsets.only(right: kTableColumnGap),
-                    child: TextFormField(
-                      initialValue: lineItems[index].productKey,
-                      onChanged: (value) => viewModel.onChangedInvoiceItem(
-                          lineItems[index]
-                              .rebuild((b) => b..productKey = value),
-                          index),
-                    ),
-                  ),
-                  /*
-                  Padding(
-                    padding: const EdgeInsets.only(right: kTableColumnGap),
                     child: TypeAheadFormField<String>(
                       initialValue: lineItems[index].productKey,
                       noItemsFoundBuilder: (context) => SizedBox(),
@@ -154,8 +144,36 @@ class _InvoiceEditItemsDesktopState extends State<InvoiceEditItemsDesktop> {
                             .toList();
                       },
                       itemBuilder: (context, suggestion) {
+                        // TODO fix this
+                        /*
                         return ListTile(
                           title: Text(productState.map[suggestion].productKey),
+                        );
+                         */
+                        return Listener(
+                          child: Container(
+                            color: Theme.of(context).cardColor,
+                            child: Padding(
+                              padding: const EdgeInsets.all(12),
+                              child: ListTile(
+                                title: Text(productState.map[suggestion].productKey),
+                              ),
+                            ),
+                          ),
+                          onPointerDown: (_) {
+                            final item = lineItems[index];
+                            final product = productState.map[suggestion];
+                            final updatedItem = item.rebuild((b) => b
+                              ..productKey = product.productKey
+                              ..notes = product.notes
+                              ..cost = product.price
+                              ..quantity = item.quantity == 0 &&
+                                  viewModel.state.company.defaultQuantity
+                                  ? 1
+                                  : item.quantity);
+                            viewModel.onChangedInvoiceItem(updatedItem, index);
+                            _updateTable();
+                          },
                         );
                       },
                       onSuggestionSelected: (suggestion) {
@@ -185,7 +203,6 @@ class _InvoiceEditItemsDesktopState extends State<InvoiceEditItemsDesktop> {
                       debounceDuration: Duration(seconds: 0),
                     ),
                   ),
-                   */
                   Padding(
                     padding: const EdgeInsets.only(right: kTableColumnGap),
                     child: TextFormField(

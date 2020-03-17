@@ -1,9 +1,11 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:invoiceninja_flutter/constants.dart';
+import 'package:invoiceninja_flutter/data/models/entities.dart';
 import 'package:invoiceninja_flutter/ui/app/form_card.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/app_dropdown_button.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/app_form.dart';
+import 'package:invoiceninja_flutter/ui/app/forms/bool_dropdown_button.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/date_picker.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/decorated_form_field.dart';
 import 'package:invoiceninja_flutter/ui/settings/generated_numbers_vm.dart';
@@ -43,8 +45,18 @@ class _GeneratedNumbersState extends State<GeneratedNumbers>
   @override
   void initState() {
     super.initState();
+
+    final company = widget.viewModel.state.company;
+    int tabs = 4;
+
+    [EntityType.quote, EntityType.credit].forEach((entityType) {
+      if (company.isModuleEnabled(entityType)) {
+        tabs++;
+      }
+    });
+
     _focusNode = FocusScopeNode();
-    _controller = TabController(vsync: this, length: 5);
+    _controller = TabController(vsync: this, length: tabs);
   }
 
   @override
@@ -93,6 +105,7 @@ class _GeneratedNumbersState extends State<GeneratedNumbers>
     final viewModel = widget.viewModel;
     final settings = viewModel.settings;
     final state = viewModel.state;
+    final company = state.company;
 
     return EditScaffold(
       title: localization.generatedNumbers,
@@ -100,7 +113,7 @@ class _GeneratedNumbersState extends State<GeneratedNumbers>
       appBarBottom: TabBar(
         key: ValueKey(state.settingsUIState.updatedAt),
         controller: _controller,
-        isScrollable: isMobile(context),
+        isScrollable: true,
         tabs: [
           Tab(
             text: localization.settings,
@@ -112,11 +125,16 @@ class _GeneratedNumbersState extends State<GeneratedNumbers>
             text: localization.invoices,
           ),
           Tab(
-            text: localization.credits,
-          ),
-          Tab(
             text: localization.payments,
           ),
+          if (company.isModuleEnabled(EntityType.quote))
+            Tab(
+              text: localization.quote,
+            ),
+          if (company.isModuleEnabled(EntityType.credit))
+            Tab(
+              text: localization.credit,
+            ),
         ],
       ),
       body: AppTabForm(
@@ -157,6 +175,13 @@ class _GeneratedNumbersState extends State<GeneratedNumbers>
                         value: kGenerateNumberWhenSent,
                       ),
                     ],
+                  ),
+                  BoolDropdownButton(
+                    iconData: Icons.content_copy,
+                    label: localization.sharedInvoiceQuoteCounter,
+                    value: settings.sharedInvoiceQuoteCounter,
+                    onChanged: (value) => viewModel.onSettingsChanged(settings
+                        .rebuild((b) => b..sharedInvoiceQuoteCounter = value)),
                   ),
                   DecoratedFormField(
                     label: localization.recurringPrefix,
@@ -220,16 +245,6 @@ class _GeneratedNumbersState extends State<GeneratedNumbers>
           ]),
           ListView(children: <Widget>[
             EntityNumberSettings(
-              counterValue: settings.quoteNumberCounter,
-              patternValue: settings.quoteNumberPattern,
-              onChanged: (counter, pattern) =>
-                  viewModel.onSettingsChanged(settings.rebuild((b) => b
-                    ..quoteNumberCounter = counter
-                    ..quoteNumberPattern = pattern)),
-            ),
-          ]),
-          ListView(children: <Widget>[
-            EntityNumberSettings(
               counterValue: settings.paymentNumberCounter,
               patternValue: settings.paymentNumberPattern,
               onChanged: (counter, pattern) =>
@@ -238,6 +253,28 @@ class _GeneratedNumbersState extends State<GeneratedNumbers>
                     ..paymentNumberPattern = pattern)),
             ),
           ]),
+          if (company.isModuleEnabled(EntityType.quote))
+            ListView(children: <Widget>[
+              EntityNumberSettings(
+                counterValue: settings.quoteNumberCounter,
+                patternValue: settings.quoteNumberPattern,
+                onChanged: (counter, pattern) =>
+                    viewModel.onSettingsChanged(settings.rebuild((b) => b
+                      ..quoteNumberCounter = counter
+                      ..quoteNumberPattern = pattern)),
+              ),
+            ]),
+          if (company.isModuleEnabled(EntityType.credit))
+            ListView(children: <Widget>[
+              EntityNumberSettings(
+                counterValue: settings.creditNumberCounter,
+                patternValue: settings.creditNumberPattern,
+                onChanged: (counter, pattern) =>
+                    viewModel.onSettingsChanged(settings.rebuild((b) => b
+                      ..creditNumberCounter = counter
+                      ..creditNumberPattern = pattern)),
+              ),
+            ]),
         ],
       ),
     );

@@ -3,6 +3,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:invoiceninja_flutter/constants.dart';
 import 'package:invoiceninja_flutter/data/models/entities.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
+import 'package:invoiceninja_flutter/data/models/quote_model.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/redux/payment/payment_selectors.dart';
 import 'package:invoiceninja_flutter/ui/app/FieldGrid.dart';
@@ -35,10 +36,22 @@ class InvoiceOverview extends StatelessWidget {
     final payments = memoizedPaymentsByInvoice(
         invoice.id, state.paymentState.map, state.paymentState.list);
 
+    Map<String, String> stauses;
+    Map<String, MaterialColor> colors;
+    if (invoice.entityType == EntityType.quote) {
+      stauses = kQuoteStatuses;
+      colors = QuoteStatusColors.colors;
+    } else if (invoice.entityType == EntityType.credit) {
+      stauses = kCreditStatuses;
+      colors = CreditStatusColors.colors;
+    } else {
+      stauses = kInvoiceStatuses;
+      colors = InvoiceStatusColors.colors;
+    }
+
     final userCompany = state.userCompany;
-    final color = invoice.isPastDue
-        ? Colors.red
-        : InvoiceStatusColors.colors[invoice.statusId];
+    final color = invoice.isPastDue ? Colors.red : colors[invoice.statusId];
+
     final widgets = <Widget>[
       EntityHeader(
         backgroundColor: color,
@@ -51,12 +64,17 @@ class InvoiceOverview extends StatelessWidget {
       ),
     ];
 
+    String dueDateField = InvoiceFields.dueDate;
+    if (invoice.subEntityType == EntityType.quote) {
+      dueDateField = QuoteFields.validUntil;
+    }
+
     final Map<String, String> fields = {
-      InvoiceFields.invoiceStatusId: invoice.isPastDue
+      InvoiceFields.statusId: invoice.isPastDue
           ? localization.pastDue
-          : localization.lookup('invoice_status_${invoice.statusId}'),
-      InvoiceFields.invoiceDate: formatDate(invoice.date, context),
-      InvoiceFields.dueDate: formatDate(invoice.dueDate, context),
+          : localization.lookup(stauses[invoice.statusId]),
+      InvoiceFields.date: formatDate(invoice.date, context),
+      dueDateField: formatDate(invoice.dueDate, context),
       InvoiceFields.partial: formatNumber(invoice.partial, context,
           clientId: invoice.clientId, zeroIsNull: true),
       InvoiceFields.partialDueDate: formatDate(invoice.partialDueDate, context),

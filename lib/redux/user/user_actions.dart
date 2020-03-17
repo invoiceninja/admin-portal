@@ -6,6 +6,7 @@ import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:invoiceninja_flutter/data/models/user_model.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
+import 'package:invoiceninja_flutter/utils/dialogs.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:invoiceninja_flutter/utils/completers.dart';
 
@@ -155,10 +156,11 @@ class SaveUserFailure implements StopSaving {
 }
 
 class ArchiveUserRequest implements StartSaving {
-  ArchiveUserRequest(this.completer, this.userIds);
+  ArchiveUserRequest({this.completer, this.userIds, this.password});
 
   final Completer completer;
   final List<String> userIds;
+  final String password;
 }
 
 class ArchiveUserSuccess implements StopSaving, PersistData {
@@ -174,10 +176,11 @@ class ArchiveUserFailure implements StopSaving {
 }
 
 class DeleteUserRequest implements StartSaving {
-  DeleteUserRequest(this.completer, this.userIds);
+  DeleteUserRequest({this.completer, this.userIds, this.password});
 
   final Completer completer;
   final List<String> userIds;
+  final String password;
 }
 
 class DeleteUserSuccess implements StopSaving, PersistData {
@@ -193,10 +196,11 @@ class DeleteUserFailure implements StopSaving {
 }
 
 class RestoreUserRequest implements StartSaving {
-  RestoreUserRequest(this.completer, this.userIds);
+  RestoreUserRequest({this.completer, this.userIds, this.password});
 
   final Completer completer;
   final List<String> userIds;
+  final String password;
 }
 
 class RestoreUserSuccess implements StopSaving, PersistData {
@@ -212,10 +216,11 @@ class RestoreUserFailure implements StopSaving {
 }
 
 class RemoveUserRequest implements StartSaving {
-  RemoveUserRequest(this.completer, this.userId);
+  RemoveUserRequest({this.completer, this.userId, this.password});
 
   final Completer completer;
   final String userId;
+  final String password;
 }
 
 class RemoveUserSuccess implements StopSaving, PersistData {
@@ -274,7 +279,7 @@ void handleUserAction(
   }
 
   final store = StoreProvider.of<AppState>(context);
-  //final state = store.state;
+  final state = store.state;
   final localization = AppLocalization.of(context);
   final user = users.first as UserEntity;
   final userIds = users.map((user) => user.id).toList();
@@ -284,22 +289,56 @@ void handleUserAction(
       editEntity(context: context, entity: user);
       break;
     case EntityAction.restore:
-      store.dispatch(RestoreUserRequest(
-          snackBarCompleter<Null>(context, localization.restoredUser),
-          userIds));
+      final dispatch = ([String password]) => store.dispatch(RestoreUserRequest(
+          completer: snackBarCompleter<Null>(context, localization.restoredUser),
+          userIds: userIds,
+          password: password));
+      if (state.authState.hasRecentlyEnteredPassword) {
+        dispatch();
+      } else {
+        passwordCallback(context: context, callback: (password) {
+          dispatch(password);
+        });
+      }
       break;
     case EntityAction.archive:
-      store.dispatch(ArchiveUserRequest(
-          snackBarCompleter<Null>(context, localization.archivedUser),
-          userIds));
+      final dispatch = ([String password]) => store.dispatch(ArchiveUserRequest(
+          completer: snackBarCompleter<Null>(context, localization.archivedUser),
+          userIds: userIds,
+          password: password));
+      if (state.authState.hasRecentlyEnteredPassword) {
+        dispatch();
+      } else {
+        passwordCallback(context: context, callback: (password) {
+          dispatch(password);
+        });
+      }
       break;
     case EntityAction.delete:
-      store.dispatch(DeleteUserRequest(
-          snackBarCompleter<Null>(context, localization.deletedUser), userIds));
+      final dispatch = ([String password]) => store.dispatch(DeleteUserRequest(
+          completer: snackBarCompleter<Null>(context, localization.deletedUser),
+          userIds: userIds,
+          password: password));
+      if (state.authState.hasRecentlyEnteredPassword) {
+        dispatch();
+      } else {
+        passwordCallback(context: context, callback: (password) {
+          dispatch(password);
+        });
+      }
       break;
     case EntityAction.remove:
-      store.dispatch(RemoveUserRequest(
-          snackBarCompleter<Null>(context, localization.removedUser), user.id));
+      final dispatch = ([String password]) => store.dispatch(RemoveUserRequest(
+          completer: snackBarCompleter<Null>(context, localization.removedUser),
+          userId: user.id,
+          password: password));
+      if (state.authState.hasRecentlyEnteredPassword) {
+        dispatch();
+      } else {
+        passwordCallback(context: context, callback: (password) {
+          dispatch(password);
+        });
+      }
       break;
     case EntityAction.toggleMultiselect:
       if (!store.state.userListState.isInMultiselect()) {

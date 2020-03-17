@@ -19,7 +19,7 @@ void multiselectDialog(
     builder: (BuildContext context) => AlertDialog(
       semanticLabel: title,
       title: Text(title),
-      content: _MultiSelectList(
+      content: MultiSelectList(
         options: options,
         selected: selected,
         addTitle: addTitle,
@@ -33,13 +33,14 @@ void multiselectDialog(
   );
 }
 
-class _MultiSelectList extends StatefulWidget {
-  const _MultiSelectList({
+class MultiSelectList extends StatefulWidget {
+  const MultiSelectList({
     @required this.options,
     @required this.selected,
     @required this.defaultSelected,
     @required this.addTitle,
     @required this.onSelected,
+    this.liveChanges = false,
   });
 
   final List<String> options;
@@ -47,12 +48,13 @@ class _MultiSelectList extends StatefulWidget {
   final List<String> defaultSelected;
   final String addTitle;
   final Function(List<String>) onSelected;
+  final bool liveChanges;
 
   @override
-  _MultiSelectListState createState() => _MultiSelectListState();
+  MultiSelectListState createState() => MultiSelectListState();
 }
 
-class _MultiSelectListState extends State<_MultiSelectList> {
+class MultiSelectListState extends State<MultiSelectList> {
   List<String> selected;
 
   @override
@@ -93,12 +95,21 @@ class _MultiSelectListState extends State<_MultiSelectList> {
             }).toList(),
             value: null,
             onChanged: (dynamic value) {
+              if ('$value'.isEmpty) {
+                return;
+              }
+
               if (selected.contains(value)) {
                 return;
               }
+
               setState(() {
                 selected.add(value);
               });
+
+              if (widget.liveChanges) {
+                widget.onSelected(selected);
+              }
             },
           ),
           SizedBox(height: 20),
@@ -119,13 +130,16 @@ class _MultiSelectListState extends State<_MultiSelectList> {
                               ? localization.lookup(option)
                               : columnTitle,
                           textAlign: TextAlign.left,
-                          style: Theme.of(context).textTheme.headline6,
+                          style: Theme.of(context).textTheme.title,
                         ),
                       ),
                       IconButton(
                         icon: Icon(Icons.close),
                         onPressed: () {
                           setState(() => selected.remove(option));
+                          if (widget.liveChanges) {
+                            widget.onSelected(selected);
+                          }
                         },
                       )
                     ],
@@ -147,6 +161,10 @@ class _MultiSelectListState extends State<_MultiSelectList> {
                   selected.remove(field);
                   selected.insert(newIndex, field);
                 });
+
+                if (widget.liveChanges) {
+                  widget.onSelected(selected);
+                }
               },
             ),
           ),
@@ -159,19 +177,24 @@ class _MultiSelectListState extends State<_MultiSelectList> {
                     onPressed: () {
                       setState(
                           () => selected = widget.defaultSelected.toList());
+                      if (widget.liveChanges) {
+                        widget.onSelected(selected);
+                      }
                     }),
                 Spacer(),
-                FlatButton(
-                    child: Text(localization.cancel.toUpperCase()),
-                    onPressed: () {
-                      Navigator.pop(context);
-                    }),
-                FlatButton(
-                    child: Text(localization.save.toUpperCase()),
-                    onPressed: () {
-                      Navigator.pop(context);
-                      widget.onSelected(selected);
-                    })
+                if (!widget.liveChanges)
+                  FlatButton(
+                      child: Text(localization.cancel.toUpperCase()),
+                      onPressed: () {
+                        Navigator.pop(context);
+                      }),
+                if (!widget.liveChanges)
+                  FlatButton(
+                      child: Text(localization.save.toUpperCase()),
+                      onPressed: () {
+                        Navigator.pop(context);
+                        widget.onSelected(selected);
+                      })
               ],
             ),
           )

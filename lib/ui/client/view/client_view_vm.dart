@@ -56,8 +56,9 @@ class ClientViewVM {
       final completer = snackBarCompleter<Null>(
           context, AppLocalization.of(context).refreshComplete);
       store.dispatch(LoadClient(
-          completer: completer,
-          clientId: client.id,));
+        completer: completer,
+        clientId: client.id,
+      ));
       return completer.future;
     }
 
@@ -133,8 +134,7 @@ class ClientViewVM {
             break;
         }
       },
-      onRefreshed: (context) =>
-          _handleRefresh(context),
+      onRefreshed: (context) => _handleRefresh(context),
       onGroupPressed: (context) {
         viewEntityById(
             context: context,

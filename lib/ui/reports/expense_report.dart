@@ -189,7 +189,8 @@ ReportResult expenseReport(
   }
 
   final selectedColumns = columns.map((item) => EnumUtils.parse(item)).toList();
-  data.sort((rowA, rowB) => sortReportTableRows(rowA, rowB, expenseReportSettings, selectedColumns));
+  data.sort((rowA, rowB) =>
+      sortReportTableRows(rowA, rowB, expenseReportSettings, selectedColumns));
 
   return ReportResult(
     allColumns:

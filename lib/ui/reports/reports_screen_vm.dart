@@ -12,26 +12,28 @@ import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/redux/reports/reports_actions.dart';
 import 'package:invoiceninja_flutter/redux/reports/reports_state.dart';
 import 'package:invoiceninja_flutter/redux/settings/settings_actions.dart';
+import 'package:invoiceninja_flutter/ui/reports/aging_report.dart';
 import 'package:invoiceninja_flutter/ui/reports/client_report.dart';
 import 'package:invoiceninja_flutter/ui/reports/document_report.dart';
+import 'package:invoiceninja_flutter/ui/reports/expense_report.dart';
 import 'package:invoiceninja_flutter/ui/reports/invoice_report.dart';
 import 'package:invoiceninja_flutter/ui/reports/payment_report.dart';
 import 'package:invoiceninja_flutter/ui/reports/product_report.dart';
+import 'package:invoiceninja_flutter/ui/reports/quote_report.dart';
 import 'package:invoiceninja_flutter/ui/reports/reports_screen.dart';
 import 'package:invoiceninja_flutter/ui/reports/task_report.dart';
+import 'package:invoiceninja_flutter/ui/reports/tax_rate_report.dart';
 import 'package:invoiceninja_flutter/utils/completers.dart';
-import 'package:invoiceninja_flutter/utils/dialogs.dart';
 import 'package:invoiceninja_flutter/utils/formatting.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:invoiceninja_flutter/utils/strings.dart';
 import 'package:memoize/memoize.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:redux/redux.dart';
-
-import 'expense_report.dart';
-import 'reports_screen.dart';
 import 'package:invoiceninja_flutter/utils/web_stub.dart'
     if (dart.library.html) 'package:invoiceninja_flutter/utils/web.dart';
+
+import 'credit_report.dart';
 
 class ReportsScreenBuilder extends StatelessWidget {
   const ReportsScreenBuilder({Key key}) : super(key: key);
@@ -85,7 +87,7 @@ class ReportsScreenVM {
   static ReportsScreenVM fromStore(Store<AppState> store) {
     final state = store.state;
     final report = state.uiState.reportsUIState.report;
-    final allReportSettings = state.userCompany.settings.reportSettings;
+    final allReportSettings = state.userCompany?.settings?.reportSettings;
     final reportSettings =
         allReportSettings != null && allReportSettings.containsKey(report)
             ? allReportSettings[report]
@@ -162,17 +164,50 @@ class ReportsScreenVM {
           state.staticState,
         );
         break;
-      // TODO: Obtain credit map
-      //case kReportCredit:
-      //  reportResult = memoizedCreditReport(
-      //    state.userCompany,
-      //    state.uiState.reportsUIState,
-      //    state.creditState.map,
-      //    state.clientState.map,
-      //    state.userState.map,
-      //    state.staticState,
-      //  );
-      //  break;
+      case kReportQuote:
+        reportResult = memoizedQuoteReport(
+          state.userCompany,
+          state.uiState.reportsUIState,
+          state.quoteState.map,
+          state.clientState.map,
+          state.vendorState.map,
+          state.userState.map,
+          state.staticState,
+        );
+        break;
+      case kReportTaxRate:
+        reportResult = memoizedTaxRateReport(
+          state.userCompany,
+          state.uiState.reportsUIState,
+          state.taxRateState.map,
+          state.invoiceState.map,
+          state.clientState.map,
+          state.paymentState.map,
+          state.userState.map,
+          state.staticState,
+        );
+        break;
+      case kReportCredit:
+        reportResult = memoizedCreditReport(
+          state.userCompany,
+          state.uiState.reportsUIState,
+          state.creditState.map,
+          state.clientState.map,
+          state.userState.map,
+          state.staticState,
+        );
+        break;
+      case kReportAging:
+        reportResult = memoizedAgingReport(
+          state.userCompany,
+          state.uiState.reportsUIState,
+          state.invoiceState.map,
+          state.clientState.map,
+          state.paymentState.map,
+          state.userState.map,
+          state.staticState,
+        );
+        break;
       default:
         reportResult = memoizedClientReport(
           state.userCompany,
@@ -378,8 +413,21 @@ GroupTotals calculateReportTotals({
       }
 
       dynamic group = row[columnIndex].value;
-
-      if ((group as String).isNotEmpty && isValidDate(group)) {
+      if (reportState.group == 'age') {
+        if (group < 30) {
+          group = kAgeGroup0;
+        } else if (group < 60) {
+          group = kAgeGroup30;
+        } else if (group < 90) {
+          group = kAgeGroup60;
+        } else if (group < 120) {
+          group = kAgeGroup90;
+        } else {
+          group = kAgeGroup120;
+        }
+      } else if (group.runtimeType == String &&
+          (group as String).isNotEmpty &&
+          isValidDate(group)) {
         group = convertDateTimeToSqlDate(DateTime.tryParse(group));
         if (reportState.subgroup == kReportGroupYear) {
           group = group.substring(0, 4) + '-01-01';
@@ -388,7 +436,7 @@ GroupTotals calculateReportTotals({
         }
       }
 
-      if (!totals.containsKey(group)) {
+      if (!totals.containsKey('$group')) {
         totals['$group'] = {'count': 0};
       }
       if (column == reportState.group) {

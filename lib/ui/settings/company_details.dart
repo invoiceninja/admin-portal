@@ -344,7 +344,7 @@ class _CompanyDetailsState extends State<CompanyDetails>
                               width: double.infinity,
                               color: Colors.redAccent,
                               label: localization.delete,
-                              icon: Icons.delete,
+                              iconData: Icons.delete,
                               onPressed: () {
                                 confirmCallback(
                                     context: context,
@@ -359,7 +359,7 @@ class _CompanyDetailsState extends State<CompanyDetails>
                           child: ElevatedButton(
                             width: double.infinity,
                             label: localization.uploadLogo,
-                            icon: Icons.cloud_upload,
+                            iconData: Icons.cloud_upload,
                             onPressed: () async {
                               String path;
                               if (kIsWeb) {
@@ -451,6 +451,8 @@ class _CompanyDetailsState extends State<CompanyDetails>
                     onSelected: (paymentType) => viewModel.onSettingsChanged(
                         settings.rebuild(
                             (b) => b..defaultPaymentTypeId = paymentType?.id)),
+                    allowClearing: true,
+
                   ),
                   DecoratedFormField(
                     label: localization.paymentTerms,

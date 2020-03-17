@@ -33,11 +33,13 @@ class EntityType extends EnumClass {
   static const EntityType payment = _$payment;
   static const EntityType group = _$group;
   static const EntityType user = _$user;
-
   static const EntityType company = _$company;
   static const EntityType gateway = _$gateway;
   static const EntityType gatewayToken = _$gatewayToken;
   static const EntityType invoiceItem = _$invoiceItem;
+  static const EntityType design = _$design;
+
+  // STARTER: entity type - do not remove comment
   static const EntityType quoteItem = _$quoteItem;
   static const EntityType contact = _$contact;
   static const EntityType vendorContact = _$vendorContact;
@@ -84,6 +86,7 @@ class EmailTemplate extends EnumClass {
   static const EmailTemplate invoiceEmail = _$invoiceEmail;
   static const EmailTemplate quoteEmail = _$quoteEmail;
   static const EmailTemplate paymentEmail = _$paymentEmail;
+  static const EmailTemplate partialPaymentEmail = _$partialPaymentEmail;
   static const EmailTemplate creditEmail = _$creditEmail;
   static const EmailTemplate firstReminder = _$firstReminder;
   static const EmailTemplate secondReminder = _$secondReminder;
@@ -197,6 +200,10 @@ abstract class BaseEntity implements SelectableEntity {
   @BuiltValueField(wireName: 'assigned_user_id')
   String get assignedUserId;
 
+  @nullable
+  @BuiltValueField(wireName: 'entity_type')
+  EntityType get subEntityType;
+
   String get entityKey => '__${entityType}__${id}__';
 
   EntityType get entityType => throw 'EntityType not set: ${this}';
@@ -221,6 +228,12 @@ abstract class BaseEntity implements SelectableEntity {
 
   ReportBoolValue getReportBool({bool value}) =>
       ReportBoolValue(entityId: id, entityType: entityType, value: value);
+
+  ReportAgeValue getReportAge({int value, String currencyId}) => ReportAgeValue(
+      entityType: entityType,
+      entityId: id,
+      value: value,
+      currencyId: currencyId);
 
   ReportNumberValue getReportNumber(
           {double value,
@@ -480,7 +493,7 @@ abstract class ActivityEntity
     ClientEntity client,
     InvoiceEntity invoice,
     PaymentEntity payment,
-    CreditEntity credit,
+    InvoiceEntity credit,
     InvoiceEntity quote,
     TaskEntity task,
     ExpenseEntity expense,

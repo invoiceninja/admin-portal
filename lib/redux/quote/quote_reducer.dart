@@ -256,7 +256,12 @@ final quotesReducer = combineReducers<QuoteState>([
 
 QuoteState _markSentQuoteSuccess(
     QuoteState quoteState, MarkSentQuoteSuccess action) {
-  return quoteState.rebuild((b) => b..map[action.quote.id] = action.quote);
+  final quoteMap = Map<String, InvoiceEntity>.fromIterable(
+    action.quotes,
+    key: (dynamic item) => item.id,
+    value: (dynamic item) => item,
+  );
+  return quoteState.rebuild((b) => b..map.addAll(quoteMap));
 }
 
 QuoteState _archiveQuoteRequest(
@@ -362,10 +367,12 @@ QuoteState _restoreQuoteFailure(
 
 QuoteState _convertQuoteSuccess(
     QuoteState quoteState, ConvertQuoteSuccess action) {
-  final quote = action.quote.rebuild((b) => b
-    ..quoteInvoiceId = action.invoice.id
-    ..statusId = kQuoteStatusApproved);
-  return quoteState.rebuild((b) => b..map[action.quote.id] = quote);
+  final quoteMap = Map<String, InvoiceEntity>.fromIterable(
+    action.quotes,
+    key: (dynamic item) => item.id,
+    value: (dynamic item) => item,
+  );
+  return quoteState.rebuild((b) => b..map.addAll(quoteMap));
 }
 
 QuoteState _addQuote(QuoteState quoteState, AddQuoteSuccess action) {

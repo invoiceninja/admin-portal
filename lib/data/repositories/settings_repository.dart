@@ -15,8 +15,7 @@ class SettingsRepository {
   final WebClient webClient;
 
   Future<CompanyEntity> saveCompany(
-      Credentials credentials, CompanyEntity company,
-      [EntityAction action]) async {
+      Credentials credentials, CompanyEntity company) async {
     final data = serializers.serializeWith(CompanyEntity.serializer, company);
     dynamic response;
 
@@ -44,7 +43,7 @@ class SettingsRepository {
     );
 
     final UserItemResponse userResponse =
-    serializers.deserializeWith(UserItemResponse.serializer, response);
+        serializers.deserializeWith(UserItemResponse.serializer, response);
 
     return userResponse.data;
   }
@@ -61,8 +60,8 @@ class SettingsRepository {
       data: json.encode(data),
     );
 
-    final UserCompanyItemResponse userResponse =
-    serializers.deserializeWith(UserCompanyItemResponse.serializer, response);
+    final UserCompanyItemResponse userResponse = serializers.deserializeWith(
+        UserCompanyItemResponse.serializer, response);
 
     return userResponse.data;
   }

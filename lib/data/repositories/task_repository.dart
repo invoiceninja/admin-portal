@@ -56,8 +56,7 @@ class TaskRepository {
     return taskResponse.data.toList();
   }
 
-  Future<TaskEntity> saveData(Credentials credentials, TaskEntity task,
-      [EntityAction action]) async {
+  Future<TaskEntity> saveData(Credentials credentials, TaskEntity task) async {
     // Workaround for API issue
     if (task.isNew) {
       task = task.rebuild((b) => b..id = null);
@@ -72,10 +71,7 @@ class TaskRepository {
           credentials.url + '/tasks', credentials.token,
           data: json.encode(data));
     } else {
-      var url = credentials.url + '/tasks/' + task.id.toString();
-      if (action != null) {
-        url += '?action=' + action.toString();
-      }
+      final url = credentials.url + '/tasks/${task.id}';
       response =
           await webClient.put(url, credentials.token, data: json.encode(data));
     }

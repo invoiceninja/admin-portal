@@ -51,7 +51,7 @@ abstract class PaymentState
     return rebuild((b) => b
       ..lastUpdated = DateTime.now().millisecondsSinceEpoch
       ..map.addAll(map)
-      ..list.replace(map.keys));
+      ..list.replace((map.keys.toList() + list.toList()).toSet().toList()));
   }
 
   static Serializer<PaymentState> get serializer => _$paymentStateSerializer;
@@ -75,6 +75,9 @@ abstract class PaymentUIState extends Object
 
   @override
   bool get isCreatingNew => editing.isNew;
+
+  @override
+  String get editingId => editing.id;
 
   static Serializer<PaymentUIState> get serializer =>
       _$paymentUIStateSerializer;

@@ -39,7 +39,7 @@ class InvoiceListItem extends StatelessWidget {
     final state = StoreProvider.of<AppState>(context).state;
     final uiState = state.uiState;
     final invoiceUIState = uiState.invoiceUIState;
-    final listUIState = invoiceUIState.listUIState;
+    final listUIState = state.getUIState(invoice.entityType).listUIState;
     final isInMultiselect = listUIState.isInMultiselect();
     final showCheckbox = onCheckboxChanged != null || isInMultiselect;
 
@@ -48,10 +48,6 @@ class InvoiceListItem extends StatelessWidget {
         ? (invoice.matchesFilterValue(filter) ??
             client.matchesFilterValue(filter))
         : null;
-
-    final invoiceStatusId = (invoice.quoteInvoiceId ?? '').isNotEmpty
-        ? kQuoteStatusApproved
-        : invoice.statusId;
 
     return DismissibleEntity(
       isSelected: invoice.id ==
@@ -84,7 +80,7 @@ class InvoiceListItem extends StatelessWidget {
               Expanded(
                 child: Text(
                   client.displayName,
-                  style: Theme.of(context).textTheme.headline6,
+                  style: Theme.of(context).textTheme.title,
                 ),
               ),
               Text(
@@ -92,7 +88,7 @@ class InvoiceListItem extends StatelessWidget {
                       invoice.balance > 0 ? invoice.balance : invoice.amount,
                       context,
                       clientId: invoice.clientId),
-                  style: Theme.of(context).textTheme.headline6),
+                  style: Theme.of(context).textTheme.title),
             ],
           ),
         ),
@@ -122,11 +118,11 @@ class InvoiceListItem extends StatelessWidget {
                     invoice.isPastDue
                         ? localization.pastDue
                         : localization
-                            .lookup('invoice_status_$invoiceStatusId'),
+                            .lookup(kInvoiceStatuses[invoice.statusId]),
                     style: TextStyle(
                       color: invoice.isPastDue
                           ? Colors.red
-                          : InvoiceStatusColors.colors[invoiceStatusId],
+                          : InvoiceStatusColors.colors[invoice.statusId],
                     )),
               ],
             ),

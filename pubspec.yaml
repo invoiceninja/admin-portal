@@ -1,6 +1,6 @@
 name: invoiceninja_flutter
 description: Client for Invoice Ninja
-version: 2.0.0+1
+version: 0.0.1+1
 author: Hillel Coren
 homepage: https://www.invoiceninja.com
 documentation: http://docs.invoiceninja.com
@@ -26,7 +26,8 @@ dependencies:
   cached_network_image: ^2.0.0
   url_launcher: ^5.4.2
   share: ^0.6.3+6
-  intl: ^0.16.1
+  #intl: ^0.16.1
+  intl: any
   flutter_slidable: ^0.5.4
   charts_flutter: ^0.8.1
   google_sign_in: ^4.1.4

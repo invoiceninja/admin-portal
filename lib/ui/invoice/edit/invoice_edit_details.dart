@@ -3,6 +3,7 @@ import 'package:invoiceninja_flutter/ui/app/forms/app_dropdown_button.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/client_picker.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/custom_field.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/decorated_form_field.dart';
+import 'package:invoiceninja_flutter/ui/app/forms/design_picker.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/discount_field.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/user_picker.dart';
 import 'package:invoiceninja_flutter/ui/app/invoice/tax_rate_dropdown.dart';
@@ -19,11 +20,11 @@ class InvoiceEditDetails extends StatefulWidget {
   const InvoiceEditDetails({
     Key key,
     @required this.viewModel,
-    this.isQuote = false,
+    this.entityType = EntityType.invoice,
   }) : super(key: key);
 
   final EntityEditDetailsVM viewModel;
-  final bool isQuote;
+  final EntityType entityType;
 
   @override
   InvoiceEditDetailsState createState() => InvoiceEditDetailsState();
@@ -40,7 +41,6 @@ class InvoiceEditDetailsState extends State<InvoiceEditDetails> {
   final _surcharge2Controller = TextEditingController();
   final _surcharge3Controller = TextEditingController();
   final _surcharge4Controller = TextEditingController();
-  final _designController = TextEditingController();
 
   List<TextEditingController> _controllers = [];
   final _debouncer = Debouncer();
@@ -58,7 +58,6 @@ class InvoiceEditDetailsState extends State<InvoiceEditDetails> {
       _surcharge2Controller,
       _surcharge3Controller,
       _surcharge4Controller,
-      _designController,
     ];
 
     _controllers
@@ -81,8 +80,6 @@ class InvoiceEditDetailsState extends State<InvoiceEditDetails> {
         formatNumberType: FormatNumberType.input);
     _surcharge4Controller.text = formatNumber(invoice.customSurcharge4, context,
         formatNumberType: FormatNumberType.input);
-    _designController.text =
-        invoice.designId != null ? kInvoiceDesigns[invoice.designId] : '';
     _controllers
         .forEach((dynamic controller) => controller.addListener(_onChanged));
 
@@ -142,9 +139,11 @@ class InvoiceEditDetailsState extends State<InvoiceEditDetails> {
                   )
                 : DecoratedFormField(
                     controller: _invoiceNumberController,
-                    label: widget.isQuote
-                        ? localization.quoteNumber
-                        : localization.invoiceNumber,
+                    label: widget.entityType == EntityType.credit
+                        ? localization.creditNumber
+                        : widget.entityType == EntityType.quote
+                            ? localization.quoteNumber
+                            : localization.invoiceNumber,
                     validator: (String val) => val.trim().isEmpty
                         ? AppLocalization.of(context).pleaseEnterAnInvoiceNumber
                         : null,
@@ -158,23 +157,27 @@ class InvoiceEditDetailsState extends State<InvoiceEditDetails> {
               validator: (String val) => val.trim().isEmpty
                   ? AppLocalization.of(context).pleaseSelectADate
                   : null,
-              labelText: widget.isQuote
-                  ? localization.quoteDate
-                  : localization.invoiceDate,
+              labelText: widget.entityType == EntityType.credit
+                  ? localization.creditDate
+                  : widget.entityType == EntityType.quote
+                      ? localization.quoteDate
+                      : localization.invoiceDate,
               selectedDate: invoice.date,
               onSelected: (date) {
                 viewModel.onChanged(invoice.rebuild((b) => b..date = date));
               },
             ),
-            DatePicker(
-              labelText: widget.isQuote
-                  ? localization.validUntil
-                  : localization.dueDate,
-              selectedDate: invoice.dueDate,
-              onSelected: (date) {
-                viewModel.onChanged(invoice.rebuild((b) => b..dueDate = date));
-              },
-            ),
+            if (widget.entityType != EntityType.credit)
+              DatePicker(
+                labelText: widget.entityType == EntityType.quote
+                    ? localization.validUntil
+                    : localization.dueDate,
+                selectedDate: invoice.dueDate,
+                onSelected: (date) {
+                  viewModel
+                      .onChanged(invoice.rebuild((b) => b..dueDate = date));
+                },
+              ),
             DecoratedFormField(
               label: localization.partialDeposit,
               controller: _partialController,
@@ -258,17 +261,10 @@ class InvoiceEditDetailsState extends State<InvoiceEditDetails> {
                 initialTaxName: invoice.taxName3,
                 initialTaxRate: invoice.taxRate3,
               ),
-            AppDropdownButton(
-              labelText: localization.design,
-              value: invoice.designId,
-              onChanged: (dynamic value) => viewModel
-                  .onChanged(invoice.rebuild((b) => b..designId = value)),
-              items: company.invoiceDesignIds
-                  .map((designId) => DropdownMenuItem<String>(
-                        value: designId,
-                        child: Text(kInvoiceDesigns[designId]),
-                      ))
-                  .toList(),
+            DesignPicker(
+              initialValue: invoice.designId,
+              onSelected: (value) => viewModel
+                  .onChanged(invoice.rebuild((b) => b..designId = value?.id)),
             ),
           ],
         ),

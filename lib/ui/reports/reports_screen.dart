@@ -133,7 +133,8 @@ class ReportsScreen extends StatelessWidget {
         ),
         body: ListView(
           key: ValueKey(
-              '${viewModel.state.isSaving}_${reportsState.report}_${reportsState
+              '${viewModel.state.company.id}_${viewModel.state
+                  .isSaving}_${reportsState.report}_${reportsState
                   .group}'),
           children: <Widget>[
             Flex(
@@ -150,9 +151,9 @@ class ReportsScreen extends StatelessWidget {
                         onChanged: (dynamic value) =>
                             viewModel.onSettingsChanged(report: value),
                         items: [
-                          //kReportAging,
+                          kReportAging,
                           kReportClient,
-                          //kReportCredit,
+                          kReportCredit,
                           //kReportDocument,
                           //kReportExpense,
                           kReportInvoice,
@@ -160,8 +161,8 @@ class ReportsScreen extends StatelessWidget {
                           //kReportProduct,
                           //kReportProfitAndLoss,
                           //kReportTask,
-                          //kReportTaxRate,
-                          //kReportQuote,
+                          kReportTaxRate,
+                          kReportQuote,
                         ]
                             .map((report) =>
                             DropdownMenuItem(
@@ -398,22 +399,20 @@ class _ReportDataTableState extends State<ReportDataTable> {
             ),
           ),
         FormCard(
-          child: Column(
+          child: isMobile(context) ? SingleChildScrollView(
+            scrollDirection: Axis.horizontal,
+            child: TotalsDataTable(
+              viewModel: viewModel,
+              reportResult: reportResult,
+              reportSettings: reportSettings,
+            ),
+          ) : Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: <Widget>[
-              DataTable(
-                sortColumnIndex: reportSettings.sortTotalsIndex != null &&
-                    reportResult.columns.length >
-                        reportSettings.sortTotalsIndex
-                    ? reportSettings.sortTotalsIndex
-                    : null,
-                sortAscending: reportSettings.sortTotalsAscending ?? true,
-                columns: reportResult.totalColumns(
-                    context,
-                        (index, ascending) =>
-                        widget.viewModel
-                            .onReportTotalsSorted(index, ascending)),
-                rows: reportResult.totalRows(context),
+              TotalsDataTable(
+                viewModel: viewModel,
+                reportResult: reportResult,
+                reportSettings: reportSettings,
               ),
             ],
           ),
@@ -439,12 +438,43 @@ class _ReportDataTableState extends State<ReportDataTable> {
   }
 }
 
+
+class TotalsDataTable extends StatelessWidget {
+
+  const TotalsDataTable(
+      {this.reportSettings, this.reportResult, this.viewModel});
+
+  final ReportsScreenVM viewModel;
+  final ReportSettingsEntity reportSettings;
+  final ReportResult reportResult;
+
+  @override
+  Widget build(BuildContext context) {
+    return DataTable(
+      sortColumnIndex: reportSettings.sortTotalsIndex != null &&
+          reportResult.columns.length >
+              reportSettings.sortTotalsIndex
+          ? reportSettings.sortTotalsIndex
+          : null,
+      sortAscending: reportSettings.sortTotalsAscending ?? true,
+      columns: reportResult.totalColumns(
+          context,
+              (index, ascending) =>
+              viewModel
+                  .onReportTotalsSorted(index, ascending)),
+      rows: reportResult.totalRows(context),
+    );
+  }
+}
+
+
 enum ReportColumnType {
   string,
   dateTime,
   date,
   number,
   bool,
+  age,
 }
 
 ReportColumnType getReportColumnType(String column, BuildContext context) {
@@ -467,14 +497,22 @@ ReportColumnType getReportColumnType(String column, BuildContext context) {
     return ReportColumnType.dateTime;
   } else if (['date', 'due_date'].contains(column)) {
     return ReportColumnType.date;
+  } else if (column == 'age') {
+    return ReportColumnType.age;
   } else if ([
     'balance',
     'paid_to_date',
     'amount',
     'quantity',
-    'pridce',
+    'price',
     'cost',
     'total',
+    'invoice_amount',
+    'invoice_balance',
+    'tax_rate',
+    'tax_amount',
+    'tax_paid',
+    'payment_amount'
   ].contains(column)) {
     return ReportColumnType.number;
   } else if (['is_active'].contains(column)) {
@@ -550,7 +588,13 @@ class ReportResult {
     if (reportsUIState.filters.containsKey(column)) {
       final filter = reportsUIState.filters[column];
       if (filter.isNotEmpty) {
-        if (value.runtimeType == int || value.runtimeType == double) {
+        if (column == 'age') {
+          final min = kAgeGroups[filter];
+          final max = min + 30;
+          if (value < min || value >= max) {
+            return false;
+          }
+        } else if (value.runtimeType == int || value.runtimeType == double) {
           if (!ReportResult.matchAmount(filter: filter, amount: value)) {
             return false;
           }
@@ -710,7 +754,7 @@ class ReportResult {
       for (String column in sortedColumns(reportState))
         if (textEditingControllers == null ||
             !textEditingControllers.containsKey(column))
-          DataCell(Text(textEditingControllers == null ? 'null' : 'test'))
+          DataCell(Text(''))
         else
           if (getReportColumnType(column, context) == ReportColumnType.bool)
             DataCell(AppDropdownButton<bool>(
@@ -747,144 +791,182 @@ class ReportResult {
               ],
             ))
           else
-            if (getReportColumnType(column, context) ==
-                ReportColumnType.number)
-              DataCell(TextFormField(
-                controller: textEditingControllers[column],
-                keyboardType: TextInputType.numberWithOptions(decimal: true),
-                decoration: InputDecoration(
-                    suffixIcon: textEditingControllers == null
-                        ? null
-                        : (textEditingControllers[column]?.text ?? '').isEmpty
-                        ? null
-                        : IconButton(
-                      icon: Icon(
-                        Icons.clear,
-                        color: Colors.grey,
-                      ),
-                      onPressed: () {
-                        textEditingControllers[column].text = '';
-                        onFilterChanged(column, '');
-                      },
-                    )),
+            if (getReportColumnType(column, context) == ReportColumnType.age)
+              DataCell(AppDropdownButton<String>(
+                value: (textEditingControllers[column].text ?? '')
+                    .isNotEmpty &&
+                    textEditingControllers[column].text != 'null'
+                    ? textEditingControllers[column].text
+                    : null,
+                showBlank: true,
+                onChanged: (dynamic value) {
+                  textEditingControllers[column].text = value;
+                  onFilterChanged(column, value);
+                },
+                items: kAgeGroups.keys.map((ageGroup) =>
+                    DropdownMenuItem(
+                      child: Text(localization.lookup(ageGroup)),
+                      value: ageGroup,
+                    )).toList(),
               ))
             else
               if (getReportColumnType(column, context) ==
-                  ReportColumnType.dateTime ||
-                  getReportColumnType(column, context) == ReportColumnType.date)
-                DataCell(AppDropdownButton<DateRange>(
-                  labelText: null,
-                  showBlank: true,
-                  blankValue: null,
-                  value: (textEditingControllers[column].text ?? '')
-                      .isNotEmpty &&
-                      textEditingControllers[column].text != 'null'
-                      ? DateRange.valueOf(textEditingControllers[column].text)
-                      : null,
-                  onChanged: (dynamic value) {
-                    if (value == null) {
-                      textEditingControllers[column].text = '';
-                      onFilterChanged(column, '');
-                    } else {
-                      textEditingControllers[column].text = value.toString();
-                      onFilterChanged(column, value.toString());
-                    }
-                  },
-                  items: DateRange.values
-                      .map((dateRange) =>
-                      DropdownMenuItem<DateRange>(
-                        child: Text(localization.lookup(dateRange.toString())),
-                        value: dateRange,
-                      ))
-                      .toList(),
-                ))
-              // TODO remove DEMO_MODE check
-              else
-                if (Config.DEMO_MODE)
-                  DataCell(TextFormField(
-                    controller: textEditingControllers != null
-                        ? textEditingControllers[column]
-                        : null,
-                    decoration: InputDecoration(
-                        suffixIcon: textEditingControllers == null
-                            ? null
-                            : (textEditingControllers[column]?.text ?? '')
-                            .isEmpty
-                            ? null
-                            : IconButton(
-                          icon: Icon(
-                            Icons.clear,
-                            color: Colors.grey,
-                          ),
-                          onPressed: () {
-                            textEditingControllers[column].text = '';
-                            onFilterChanged(column, '');
-                          },
-                        )),
-                  ))
-                else
-                  DataCell(
-                    TypeAheadFormField(
-                      noItemsFoundBuilder: (context) => SizedBox(),
-                      suggestionsBoxDecoration: SuggestionsBoxDecoration(
-                        constraints: BoxConstraints(
-                          minWidth: 300,
+                  ReportColumnType.number)
+                DataCell(TextFormField(
+                  controller: textEditingControllers[column],
+                  keyboardType: TextInputType.numberWithOptions(decimal: true),
+                  decoration: InputDecoration(
+                      suffixIcon: textEditingControllers == null
+                          ? null
+                          : (textEditingControllers[column]?.text ?? '').isEmpty
+                          ? null
+                          : IconButton(
+                        icon: Icon(
+                          Icons.clear,
+                          color: Colors.grey,
                         ),
-                      ),
-                      suggestionsCallback: (filter) {
-                        filter = filter.toLowerCase();
-                        final index = columns.indexOf(column);
-                        return data
-                            .where((row) =>
-                        row[index]
-                            .renderText(context, column)
-                            .toLowerCase()
-                            .contains(filter) &&
-                            row[index]
-                                .renderText(context, column)
-                                .trim()
-                                .isNotEmpty)
-                            .map((row) =>
-                            row[index].renderText(context, column))
-                            .toSet()
-                            .toList();
-                      },
-                      itemBuilder: (context, String entityId) {
-                        return Padding(
-                          padding: const EdgeInsets.all(12),
-                          child: Text('$entityId'),
-                        );
-                      },
-                      onSuggestionSelected: (String value) {
-                        textEditingControllers[column].text = value;
-                        onFilterChanged(column, value);
-                      },
-                      textFieldConfiguration: TextFieldConfiguration<String>(
-                        controller: textEditingControllers != null
-                            ? textEditingControllers[column]
-                            : null,
-                        decoration: InputDecoration(
-                            suffixIcon: textEditingControllers == null
-                                ? null
-                                : (textEditingControllers[column]?.text ?? '')
-                                .isEmpty
-                                ? null
-                                : IconButton(
-                              icon: Icon(
-                                Icons.clear,
-                                color: Colors.grey,
+                        onPressed: () {
+                          textEditingControllers[column].text = '';
+                          onFilterChanged(column, '');
+                        },
+                      )),
+                ))
+              else
+                if (getReportColumnType(column, context) ==
+                    ReportColumnType.dateTime ||
+                    getReportColumnType(column, context) ==
+                        ReportColumnType.date)
+                  DataCell(AppDropdownButton<DateRange>(
+                    labelText: null,
+                    showBlank: true,
+                    blankValue: null,
+                    value: (textEditingControllers[column].text ?? '')
+                        .isNotEmpty &&
+                        textEditingControllers[column].text != 'null'
+                        ? DateRange.valueOf(textEditingControllers[column].text)
+                        : null,
+                    onChanged: (dynamic value) {
+                      if (value == null) {
+                        textEditingControllers[column].text = '';
+                        onFilterChanged(column, '');
+                      } else {
+                        textEditingControllers[column].text = value.toString();
+                        onFilterChanged(column, value.toString());
+                      }
+                    },
+                    items: DateRange.values
+                        .map((dateRange) =>
+                        DropdownMenuItem<DateRange>(
+                          child: Text(localization.lookup(dateRange
+                              .toString())),
+                          value: dateRange,
+                        ))
+                        .toList(),
+                  ))
+                // TODO remove DEMO_MODE check
+                else
+                  if (Config.DEMO_MODE)
+                    DataCell(TextFormField(
+                      controller: textEditingControllers != null
+                          ? textEditingControllers[column]
+                          : null,
+                      decoration: InputDecoration(
+                          suffixIcon: textEditingControllers == null
+                              ? null
+                              : (textEditingControllers[column]?.text ?? '')
+                              .isEmpty
+                              ? null
+                              : IconButton(
+                            icon: Icon(
+                              Icons.clear,
+                              color: Colors.grey,
+                            ),
+                            onPressed: () {
+                              textEditingControllers[column].text = '';
+                              onFilterChanged(column, '');
+                            },
+                          )),
+                    ))
+                  else
+                    DataCell(
+                      TypeAheadFormField(
+                        noItemsFoundBuilder: (context) => SizedBox(),
+                        suggestionsBoxDecoration: SuggestionsBoxDecoration(
+                          constraints: BoxConstraints(
+                            minWidth: 300,
+                          ),
+                        ),
+                        suggestionsCallback: (filter) {
+                          filter = filter.toLowerCase();
+                          final index = columns.indexOf(column);
+                          return data
+                              .where((row) =>
+                          row[index]
+                              .renderText(context, column)
+                              .toLowerCase()
+                              .contains(filter) &&
+                              row[index]
+                                  .renderText(context, column)
+                                  .trim()
+                                  .isNotEmpty)
+                              .map((row) =>
+                              row[index].renderText(context, column))
+                              .toSet()
+                              .toList();
+                        },
+                        itemBuilder: (context, String value) {
+                          // TODO fix this
+                          /*
+                          return Padding(
+                            padding: const EdgeInsets.all(12),
+                            child: Text('$value'),
+                          );
+                           */
+                          return Listener(
+                            child: Container(
+                              color: Theme.of(context).cardColor,
+                              child: Padding(
+                                padding: const EdgeInsets.all(12),
+                                child: Text('$value'),
                               ),
-                              onPressed: () {
-                                textEditingControllers[column].text = '';
-                                onFilterChanged(column, '');
-                              },
-                            )),
+                            ),
+                            onPointerDown: (_) {
+                              textEditingControllers[column].text = value;
+                              onFilterChanged(column, value);
+                            },
+                          );
+
+                        },
+                        onSuggestionSelected: (String value) {
+                          textEditingControllers[column].text = value;
+                          onFilterChanged(column, value);
+                        },
+                        textFieldConfiguration: TextFieldConfiguration<String>(
+                          controller: textEditingControllers != null
+                              ? textEditingControllers[column]
+                              : null,
+                          decoration: InputDecoration(
+                              suffixIcon: textEditingControllers == null
+                                  ? null
+                                  : (textEditingControllers[column]?.text ?? '')
+                                  .isEmpty
+                                  ? null
+                                  : IconButton(
+                                icon: Icon(
+                                  Icons.clear,
+                                  color: Colors.grey,
+                                ),
+                                onPressed: () {
+                                  textEditingControllers[column].text = '';
+                                  onFilterChanged(column, '');
+                                },
+                              )),
+                        ),
+                        autoFlipDirection: true,
+                        animationStart: 1,
+                        debounceDuration: Duration(seconds: 0),
                       ),
-                      autoFlipDirection: true,
-                      animationStart: 1,
-                      debounceDuration: Duration(seconds: 0),
-                    ),
-                  )
+                    )
     ]);
   }
 
@@ -919,20 +1001,23 @@ class ReportResult {
       final cells = <DataCell>[];
       for (var column in sortedColumns(reportState)) {
         String value = '';
+        final columnType = getReportColumnType(column, context);
         if (column == groupBy) {
           if (group.isEmpty) {
             value = AppLocalization
                 .of(context)
                 .blank;
-          } else if (getReportColumnType(column, context) ==
+          } else if (columnType ==
               ReportColumnType.dateTime ||
-              getReportColumnType(column, context) == ReportColumnType.date) {
+              columnType == ReportColumnType.date) {
             value = formatDate(group, context);
+          } else if (columnType == ReportColumnType.age) {
+            value = AppLocalization.of(context).lookup(group);
           } else {
             value = group;
           }
           value = value + ' (' + values['count'].floor().toString() + ')';
-        } else if (getReportColumnType(column, context) ==
+        } else if (columnType ==
             ReportColumnType.number) {
           value = formatNumber(values[column], context);
         }
@@ -988,7 +1073,9 @@ class ReportResult {
   List<DataColumn> totalColumns(BuildContext context,
       Function(int, bool) onSortCallback) {
     final localization = AppLocalization.of(context);
-    columns.toList().sort((String str1, String str2) => str1.compareTo(str2));
+    final sortedColumns = columns.toList()
+      ..sort((String str1, String str2) =>
+          str1.compareTo(str2));
 
     return [
       DataColumn(
@@ -999,8 +1086,9 @@ class ReportResult {
         label: Text(localization.count),
         onSort: onSortCallback,
       ),
-      for (String column in columns)
-        if (getReportColumnType(column, context) == ReportColumnType.number)
+      for (String column in sortedColumns)
+        if ([ReportColumnType.number, ReportColumnType.age,].contains(
+            getReportColumnType(column, context)))
           DataColumn(
             label: Text(
               localization.lookup(column),
@@ -1027,8 +1115,14 @@ class ReportResult {
       for (var j = 0; j < row.length; j++) {
         final cell = row[j];
         final column = columns[j];
-        if (cell is ReportNumberValue) {
-          final String currencyId = cell.currencyId;
+
+        if (cell is ReportNumberValue || cell is ReportAgeValue) {
+          String currencyId;
+          if (cell is ReportNumberValue) {
+            currencyId = cell.currencyId;
+          } else if (cell is ReportAgeValue) {
+            currencyId = cell.currencyId;
+          }
 
           if (!totals.containsKey(currencyId)) {
             totals[currencyId] = {'count': 0};
@@ -1090,8 +1184,14 @@ class ReportResult {
         ..sort((String str1, String str2) => str1.compareTo(str2));
       fields.forEach((field) {
         final amount = values[field];
-        final value = formatNumber(amount, context, currencyId: currencyId);
         if (field != 'count') {
+          String value;
+          if (field == 'age') {
+            value = formatNumber(amount / values['count'], context,
+                formatNumberType: FormatNumberType.double);
+          } else {
+            value = formatNumber(amount, context, currencyId: currencyId);
+          }
           cells.add(DataCell(Text(value)));
         }
       });
@@ -1141,6 +1241,27 @@ class ReportStringValue extends ReportElement {
     } else {
       return value ?? '';
     }
+  }
+}
+
+class ReportAgeValue extends ReportElement {
+  ReportAgeValue({
+    @required dynamic value,
+    @required EntityType entityType,
+    @required String entityId,
+    @required this.currencyId,
+  }) : super(value: value, entityType: entityType, entityId: entityId);
+
+  final String currencyId;
+
+  @override
+  Widget renderWidget(BuildContext context, String column) {
+    return Text(renderText(context, column));
+  }
+
+  @override
+  String renderText(BuildContext context, String column) {
+    return '$value';
   }
 }
 

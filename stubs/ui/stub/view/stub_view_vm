@@ -60,14 +60,14 @@ class StubViewVM {
 
     return StubViewVM(
         state: state,
-        company: state.selectedCompany,
+        company: state.company,
         isSaving: state.isSaving,
         isLoading: state.isLoading,
         isDirty: stub.isNew,
         stub: stub,
         onRefreshed: (context) => _handleRefresh(context),
       onEntityAction: (BuildContext context, EntityAction action) =>
-          handleStubAction(context, stub, action),
+          handleStubAction(context, [stub], action),
         );
   }
 

@@ -12,14 +12,19 @@ void showErrorDialog({BuildContext context, String message}) {
       });
 }
 
-void confirmCallback({BuildContext context, VoidCallback callback}) {
+void confirmCallback({
+  @required BuildContext context,
+  @required VoidCallback callback,
+  String message,
+}) {
   final localization = AppLocalization.of(context);
 
   showDialog<AlertDialog>(
     context: context,
     builder: (BuildContext context) => AlertDialog(
       semanticLabel: localization.areYouSure,
-      title: Text(localization.areYouSure),
+      title: Text(message == null ? localization.areYouSure : message),
+      content: message == null ? null : Text(localization.areYouSure),
       actions: <Widget>[
         FlatButton(
             child: Text(localization.cancel.toUpperCase()),
@@ -94,6 +99,9 @@ class _PasswordConfirmationState extends State<PasswordConfirmation> {
         SaveCancelButtons(
           saveLabel: localization.save.toUpperCase(),
           onSavePressed: (context) {
+            if ((_password ?? '').isEmpty) {
+              return;
+            }
             Navigator.pop(context);
             widget.callback(_password);
           },
@@ -107,3 +115,76 @@ class _PasswordConfirmationState extends State<PasswordConfirmation> {
   }
 }
 
+void fieldCallback({
+  BuildContext context,
+  String title,
+  String field,
+  Function(String) callback,
+}) {
+  showDialog<AlertDialog>(
+    context: context,
+    barrierDismissible: false,
+    builder: (BuildContext context) {
+      return FieldConfirmation(
+        callback: callback,
+        field: field,
+        title: title,
+      );
+    },
+  );
+}
+
+class FieldConfirmation extends StatefulWidget {
+  const FieldConfirmation({
+    @required this.callback,
+    @required this.title,
+    @required this.field,
+  });
+
+  final Function(String) callback;
+  final String title;
+  final String field;
+
+  @override
+  _FieldConfirmationState createState() => _FieldConfirmationState();
+}
+
+class _FieldConfirmationState extends State<FieldConfirmation> {
+  String _field;
+
+  void _submit() {
+    widget.callback(_field);
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final localization = AppLocalization.of(context);
+
+    return AlertDialog(
+      title: Text(widget.title),
+      content: TextField(
+        onChanged: (value) => _field = value,
+        decoration: InputDecoration(
+          labelText: widget.field,
+        ),
+        onSubmitted: (value) => _submit(),
+      ),
+      actions: <Widget>[
+        SaveCancelButtons(
+          saveLabel: localization.save.toUpperCase(),
+          onSavePressed: (context) {
+            if ((_field ?? '').isEmpty) {
+              return;
+            }
+            Navigator.pop(context);
+            widget.callback(_field);
+          },
+          cancelLabel: localization.cancel.toUpperCase(),
+          onCancelPressed: (context) {
+            Navigator.pop(context);
+          },
+        ),
+      ],
+    );
+  }
+}

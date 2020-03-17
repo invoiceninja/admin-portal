@@ -18,8 +18,7 @@ class InvoiceRepository {
   Future<InvoiceEntity> loadItem(
       Credentials credentials, String entityId) async {
     final dynamic response = await webClient.get(
-        '${credentials.url}/invoices/$entityId?',
-        credentials.token);
+        '${credentials.url}/invoices/$entityId?', credentials.token);
 
     final InvoiceItemResponse invoiceResponse =
         serializers.deserializeWith(InvoiceItemResponse.serializer, response);
@@ -29,8 +28,7 @@ class InvoiceRepository {
 
   Future<BuiltList<InvoiceEntity>> loadList(
       Credentials credentials, int updatedAt) async {
-    String url =
-        credentials.url + '/invoices?'; // invoice_type_id=1
+    String url = credentials.url + '/invoices?'; // invoice_type_id=1
 
     if (updatedAt > 0) {
       url += '&updated_at=${updatedAt - kUpdatedAtBufferSeconds}';
@@ -48,7 +46,7 @@ class InvoiceRepository {
       Credentials credentials, List<String> ids, EntityAction action) async {
     var url = credentials.url + '/invoices/bulk?';
     if (action != null) {
-      url += '&action=' + action.toString();
+      url += 'action=' + action.toString();
     }
     final dynamic response = await webClient.post(url, credentials.token,
         data: json.encode({'ids': ids}));
@@ -59,8 +57,8 @@ class InvoiceRepository {
     return invoiceResponse.data.toList();
   }
 
-  Future<InvoiceEntity> saveData(Credentials credentials, InvoiceEntity invoice,
-      [EntityAction action]) async {
+  Future<InvoiceEntity> saveData(
+      Credentials credentials, InvoiceEntity invoice) async {
     final data = serializers.serializeWith(InvoiceEntity.serializer, invoice);
     dynamic response;
 
@@ -69,10 +67,7 @@ class InvoiceRepository {
           credentials.url + '/invoices?', credentials.token,
           data: json.encode(data));
     } else {
-      var url = '${credentials.url}/invoices/${invoice.id}?';
-      if (action != null) {
-        url += '&action=' + action.toString();
-      }
+      final url = '${credentials.url}/invoices/${invoice.id}';
       response =
           await webClient.put(url, credentials.token, data: json.encode(data));
     }

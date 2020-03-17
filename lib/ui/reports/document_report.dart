@@ -142,7 +142,8 @@ ReportResult documentReport(
   }
 
   final selectedColumns = columns.map((item) => EnumUtils.parse(item)).toList();
-  data.sort((rowA, rowB) => sortReportTableRows(rowA, rowB, documentReportSettings, selectedColumns));
+  data.sort((rowA, rowB) =>
+      sortReportTableRows(rowA, rowB, documentReportSettings, selectedColumns));
 
   return ReportResult(
     allColumns:

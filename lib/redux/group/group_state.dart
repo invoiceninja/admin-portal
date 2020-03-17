@@ -58,5 +58,8 @@ abstract class GroupUIState extends Object
   @override
   bool get isCreatingNew => editing.isNew;
 
+  @override
+  String get editingId => editing.id;
+
   static Serializer<GroupUIState> get serializer => _$groupUIStateSerializer;
 }

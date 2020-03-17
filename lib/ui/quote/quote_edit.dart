@@ -26,8 +26,7 @@ class _QuoteEditState extends State<QuoteEdit>
   TabController _controller;
 
   static final GlobalKey<FormState> _formKey =
-  GlobalKey<FormState>(debugLabel: '_quoteEdit');
-
+      GlobalKey<FormState>(debugLabel: '_quoteEdit');
 
   static const kDetailsScreen = 0;
   static const kItemScreen = 1;

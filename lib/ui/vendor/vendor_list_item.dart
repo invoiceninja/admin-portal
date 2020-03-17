@@ -75,11 +75,11 @@ class VendorListItem extends StatelessWidget {
               Expanded(
                 child: Text(
                   vendor.name,
-                  style: Theme.of(context).textTheme.headline6,
+                  style: Theme.of(context).textTheme.title,
                 ),
               ),
               Text(formatNumber(vendor.listDisplayAmount, context),
-                  style: Theme.of(context).textTheme.headline6),
+                  style: Theme.of(context).textTheme.title),
             ],
           ),
         ),

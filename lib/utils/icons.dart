@@ -14,6 +14,7 @@ IconData getEntityActionIcon(EntityAction entityAction) {
     case EntityAction.clone:
     case EntityAction.cloneToInvoice:
     case EntityAction.cloneToQuote:
+    case EntityAction.cloneToCredit:
       return Icons.control_point_duplicate;
     case EntityAction.markSent:
       return Icons.publish;
@@ -30,7 +31,9 @@ IconData getEntityActionIcon(EntityAction entityAction) {
     case EntityAction.restore:
       return Icons.restore;
     case EntityAction.convert:
-      return Icons.check_box;
+      return Icons.content_copy;
+    case EntityAction.approve:
+      return Icons.check_circle_outline;
     case EntityAction.viewInvoice:
       return Icons.insert_drive_file;
     case EntityAction.newInvoice:
@@ -38,6 +41,8 @@ IconData getEntityActionIcon(EntityAction entityAction) {
     case EntityAction.newTask:
     case EntityAction.newClient:
     case EntityAction.newPayment:
+    case EntityAction.newQuote:
+    case EntityAction.newCredit:
       return Icons.add_circle_outline;
     case EntityAction.resume:
     case EntityAction.start:
@@ -72,8 +77,6 @@ IconData getEntityIcon(EntityType entityType) {
     case EntityType.payment:
     case EntityType.companyGateway:
       return FontAwesomeIcons.creditCard;
-    case EntityType.credit:
-      return FontAwesomeIcons.creditCard;
     case EntityType.quote:
       return FontAwesomeIcons.fileAlt;
     case EntityType.vendor:
@@ -86,6 +89,10 @@ IconData getEntityIcon(EntityType entityType) {
       return FontAwesomeIcons.layerGroup;
     case EntityType.user:
       return FontAwesomeIcons.user;
+    case EntityType.credit:
+      return FontAwesomeIcons.solidFileAlt;
+    case EntityType.design:
+      return FontAwesomeIcons.stamp;
     default:
       return null;
   }
@@ -140,6 +147,8 @@ IconData getSettingIcon(String section) {
       return FontAwesomeIcons.idBadge;
     case kSettingsCustomFields:
       return FontAwesomeIcons.heading;
+    case kSettingsCustomDesigns:
+      return FontAwesomeIcons.stamp;
     case kSettingsInvoiceDesign:
       return FontAwesomeIcons.paintBrush;
     case kSettingsWorkflowSettings:
@@ -158,6 +167,8 @@ IconData getSettingIcon(String section) {
       return FontAwesomeIcons.link;
     case kSettingsUserManagement:
       return FontAwesomeIcons.users;
+    case kSettingsAccountManagement:
+      return FontAwesomeIcons.shieldAlt;
     default:
       return null;
   }

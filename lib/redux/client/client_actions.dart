@@ -283,16 +283,6 @@ class FilterClientsByCustom4 implements PersistUI {
 
 void handleClientAction(
     BuildContext context, List<BaseEntity> clients, EntityAction action) {
-  assert(
-      [
-            EntityAction.restore,
-            EntityAction.archive,
-            EntityAction.delete,
-            EntityAction.toggleMultiselect
-          ].contains(action) ||
-          clients.length <= 1,
-      'Cannot perform this action on more than one client');
-
   if (clients.isEmpty) {
     return;
   }
@@ -334,7 +324,26 @@ void handleClientAction(
       }
       createEntity(
           context: context,
-          entity: InvoiceEntity(state: state, client: client, isQuote: true));
+          entity: InvoiceEntity(
+            state: state,
+            client: client,
+            entityType: EntityType.quote,
+          ));
+      break;
+    case EntityAction.newCredit:
+      if (isNotMobile(context)) {
+        filterEntitiesByType(
+            context: context,
+            entityType: EntityType.credit,
+            filterEntity: client);
+      }
+      createEntity(
+          context: context,
+          entity: InvoiceEntity(
+            state: state,
+            client: client,
+            entityType: EntityType.credit,
+          ));
       break;
     case EntityAction.newExpense:
       if (isNotMobile(context)) {

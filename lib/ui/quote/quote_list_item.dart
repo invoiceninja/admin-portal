@@ -1,6 +1,5 @@
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:invoiceninja_flutter/constants.dart';
-import 'package:invoiceninja_flutter/data/models/quote_model.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/ui/app/entity_state_label.dart';
 import 'package:invoiceninja_flutter/utils/formatting.dart';
@@ -16,7 +15,7 @@ class QuoteListItem extends StatelessWidget {
     @required this.onEntityAction,
     @required this.onTap,
     @required this.onLongPress,
-    @required this.invoice,
+    @required this.quote,
     @required this.client,
     @required this.filter,
     @required this.hasDocuments,
@@ -28,7 +27,7 @@ class QuoteListItem extends StatelessWidget {
   final Function(EntityAction) onEntityAction;
   final GestureTapCallback onTap;
   final GestureTapCallback onLongPress;
-  final QuoteEntity invoice;
+  final InvoiceEntity quote;
   final ClientEntity client;
   final String filter;
   final bool hasDocuments;
@@ -40,27 +39,23 @@ class QuoteListItem extends StatelessWidget {
     final state = StoreProvider.of<AppState>(context).state;
     final uiState = state.uiState;
     final quoteUIState = uiState.quoteUIState;
-    final listUIState = quoteUIState.listUIState;
+    final listUIState = state.getUIState(quote.entityType).listUIState;
     final isInMultiselect = listUIState.isInMultiselect();
     final showCheckbox = onCheckboxChanged != null || isInMultiselect;
 
     final localization = AppLocalization.of(context);
     final filterMatch = filter != null && filter.isNotEmpty
-        ? (invoice.matchesFilterValue(filter) ??
+        ? (quote.matchesFilterValue(filter) ??
             client.matchesFilterValue(filter))
         : null;
 
-    final invoiceStatusId = (invoice.quoteInvoiceId ?? '').isNotEmpty
-        ? kQuoteStatusApproved
-        : invoice.statusId;
-
     return DismissibleEntity(
-      isSelected: invoice.id ==
+      isSelected: quote.id ==
           (uiState.isEditing
               ? quoteUIState.editing.id
               : quoteUIState.selectedId),
       userCompany: state.userCompany,
-      entity: invoice,
+      entity: quote,
       onEntityAction: onEntityAction,
       child: ListTile(
         onTap: isInMultiselect
@@ -85,15 +80,14 @@ class QuoteListItem extends StatelessWidget {
               Expanded(
                 child: Text(
                   client.displayName,
-                  style: Theme.of(context).textTheme.headline6,
+                  style: Theme.of(context).textTheme.title,
                 ),
               ),
               Text(
                   formatNumber(
-                      invoice.balance > 0 ? invoice.balance : invoice.amount,
-                      context,
-                      clientId: invoice.clientId),
-                  style: Theme.of(context).textTheme.headline6),
+                      quote.balance > 0 ? quote.balance : quote.amount, context,
+                      clientId: quote.clientId),
+                  style: Theme.of(context).textTheme.title),
             ],
           ),
         ),
@@ -104,12 +98,12 @@ class QuoteListItem extends StatelessWidget {
               children: <Widget>[
                 Expanded(
                   child: filterMatch == null
-                      ? Text((invoice.invoiceNumber +
+                      ? Text(((quote.number ?? localization.pending) +
                               ' • ' +
                               formatDate(
-                                  invoice.dueDate.isNotEmpty
-                                      ? invoice.dueDate
-                                      : invoice.invoiceDate,
+                                  quote.dueDate.isNotEmpty
+                                      ? quote.dueDate
+                                      : quote.date,
                                   context) +
                               (hasDocuments ? '  📎' : ''))
                           .trim())
@@ -120,18 +114,17 @@ class QuoteListItem extends StatelessWidget {
                         ),
                 ),
                 Text(
-                    invoice.isPastDue
-                        ? localization.pastDue
-                        : localization
-                            .lookup('invoice_status_$invoiceStatusId'),
+                    quote.isPastDue
+                        ? localization.expired
+                        : localization.lookup(kQuoteStatuses[quote.statusId]),
                     style: TextStyle(
-                      color: invoice.isPastDue
+                      color: quote.isPastDue
                           ? Colors.red
-                          : QuoteStatusColors.colors[invoiceStatusId],
+                          : QuoteStatusColors.colors[quote.statusId],
                     )),
               ],
             ),
-            EntityStateLabel(invoice),
+            EntityStateLabel(quote),
           ],
         ),
       ),

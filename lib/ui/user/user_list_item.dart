@@ -72,11 +72,11 @@ class UserListItem extends StatelessWidget {
               Expanded(
                 child: Text(
                   user.fullName,
-                  style: Theme.of(context).textTheme.headline6,
+                  style: Theme.of(context).textTheme.title,
                 ),
               ),
               Text(formatNumber(user.listDisplayAmount, context),
-                  style: Theme.of(context).textTheme.headline6),
+                  style: Theme.of(context).textTheme.title),
             ],
           ),
         ),

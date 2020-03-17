@@ -51,7 +51,7 @@ abstract class QuoteState implements Built<QuoteState, QuoteStateBuilder> {
     return rebuild((b) => b
       ..lastUpdated = DateTime.now().millisecondsSinceEpoch
       ..map.addAll(map)
-      ..list.replace(map.keys));
+      ..list.replace((map.keys.toList() + list.toList()).toSet().toList()));
   }
 
   static Serializer<QuoteState> get serializer => _$quoteStateSerializer;
@@ -62,7 +62,7 @@ abstract class QuoteUIState extends Object
     implements Built<QuoteUIState, QuoteUIStateBuilder> {
   factory QuoteUIState() {
     return _$QuoteUIState._(
-      listUIState: ListUIState(QuoteFields.quoteNumber, sortAscending: false),
+      listUIState: ListUIState(QuoteFields.number, sortAscending: false),
       editing: InvoiceEntity(),
       selectedId: '',
     );
@@ -79,6 +79,9 @@ abstract class QuoteUIState extends Object
 
   @override
   bool get isCreatingNew => editing.isNew;
+
+  @override
+  String get editingId => editing.id;
 
   static Serializer<QuoteUIState> get serializer => _$quoteUIStateSerializer;
 }

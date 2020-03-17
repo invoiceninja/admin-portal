@@ -2,7 +2,6 @@ import 'package:built_collection/built_collection.dart';
 import 'package:built_value/built_value.dart';
 import 'package:built_value/serializer.dart';
 import 'package:invoiceninja_flutter/utils/strings.dart';
-
 export 'package:invoiceninja_flutter/data/models/client_model.dart';
 export 'package:invoiceninja_flutter/data/models/company_model.dart';
 export 'package:invoiceninja_flutter/data/models/credit_model.dart';
@@ -13,7 +12,9 @@ export 'package:invoiceninja_flutter/data/models/expense_model.dart';
 export 'package:invoiceninja_flutter/data/models/invoice_model.dart';
 export 'package:invoiceninja_flutter/data/models/payment_model.dart';
 export 'package:invoiceninja_flutter/data/models/product_model.dart';
+export 'package:invoiceninja_flutter/data/models/design_model.dart';
 export 'package:invoiceninja_flutter/data/models/project_model.dart';
+//
 export 'package:invoiceninja_flutter/data/models/static/country_model.dart';
 export 'package:invoiceninja_flutter/data/models/static/currency_model.dart';
 export 'package:invoiceninja_flutter/data/models/static/date_format_model.dart';
@@ -43,9 +44,11 @@ class EntityAction extends EnumClass {
   static const EntityAction restore = _$restore;
   static const EntityAction remove = _$remove;
   static const EntityAction clone = _$clone;
+  static const EntityAction cloneToCredit = _$cloneToCredit;
   static const EntityAction cloneToInvoice = _$cloneToInvoice;
   static const EntityAction cloneToQuote = _$cloneToQuote;
   static const EntityAction convert = _$convert;
+  static const EntityAction approve = _$approve;
   static const EntityAction download = _$download;
   static const EntityAction sendEmail = _$sendEmail;
   static const EntityAction markSent = _$markSent;
@@ -53,6 +56,7 @@ class EntityAction extends EnumClass {
   static const EntityAction newClient = _$newClient;
   static const EntityAction newInvoice = _$newInvoice;
   static const EntityAction newQuote = _$newQuote;
+  static const EntityAction newCredit = _$newCredit;
   static const EntityAction newExpense = _$newExpense;
   static const EntityAction newProject = _$newProject;
   static const EntityAction newTask = _$newTask;

@@ -9,12 +9,12 @@ import 'package:invoiceninja_flutter/utils/formatting.dart';
 class QuotePresenter extends EntityPresenter {
   static List<String> getTableFields(UserCompanyEntity userCompany) {
     return [
-      QuoteFields.quoteNumber,
+      QuoteFields.number,
       QuoteFields.client,
-      QuoteFields.quoteDate,
+      QuoteFields.date,
       QuoteFields.amount,
       QuoteFields.balance,
-      QuoteFields.dueDate,
+      QuoteFields.validUntil,
       EntityFields.state,
     ];
   }
@@ -25,19 +25,19 @@ class QuotePresenter extends EntityPresenter {
     final quote = entity as InvoiceEntity;
 
     switch (field) {
-      case QuoteFields.quoteNumber:
+      case QuoteFields.number:
         return Text(quote.number);
       case QuoteFields.client:
         return Text((state.clientState.map[quote.clientId] ??
                 ClientEntity(id: quote.clientId))
             .listDisplayName);
-      case QuoteFields.quoteDate:
+      case QuoteFields.date:
         return Text(formatDate(quote.date, context));
       case QuoteFields.amount:
         return Text(formatNumber(quote.amount, context));
       case QuoteFields.balance:
         return Text(formatNumber(quote.balance, context));
-      case QuoteFields.dueDate:
+      case QuoteFields.validUntil:
         return Text(formatDate(quote.dueDate, context));
     }
 

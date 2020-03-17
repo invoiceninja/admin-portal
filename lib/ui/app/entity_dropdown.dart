@@ -116,65 +116,87 @@ class _EntityDropdownState extends State<EntityDropdown> {
   Widget build(BuildContext context) {
     // TODO remove DEMO_MODE check
     if (isNotMobile(context) && !Config.DEMO_MODE) {
-      return TypeAheadFormField<String>(
-        noItemsFoundBuilder: (context) => SizedBox(),
-        suggestionsBoxDecoration: SuggestionsBoxDecoration(
-          constraints: BoxConstraints(
-            minWidth: 300,
+      return Stack(
+        alignment: Alignment.centerRight,
+        children: <Widget>[
+          TypeAheadFormField<String>(
+            noItemsFoundBuilder: (context) => SizedBox(),
+            suggestionsBoxDecoration: SuggestionsBoxDecoration(
+              constraints: BoxConstraints(
+                minWidth: 300,
+              ),
+            ),
+            suggestionsCallback: (filter) {
+              return (widget.entityList ?? widget.entityMap.keys.toList())
+                  .where((entityId) =>
+                      _entityMap[entityId]?.matchesFilter(filter) ?? false)
+                  .toList();
+            },
+            itemBuilder: (context, entityId) {
+              // TODO remove this
+              /*
+              return _EntityListTile(
+                  entity: _entityMap[entityId],
+                  filter: _textController.text,
+                );
+              */
+              return Listener(
+                child: Container(
+                  color: Theme.of(context).cardColor,
+                  child: _EntityListTile(
+                    entity: _entityMap[entityId],
+                    filter: _textController.text,
+                  ),
+                ),
+                onPointerDown: (_) {
+                  final entity = _entityMap[entityId];
+                  _textController.text = _entityMap[entityId].listDisplayName;
+                  widget.onSelected(entity);
+                },
+              );
+            },
+            onSuggestionSelected: (entityId) {
+              final entity = _entityMap[entityId];
+              _textController.text = _entityMap[entityId].listDisplayName;
+              widget.onSelected(entity);
+            },
+            textFieldConfiguration: TextFieldConfiguration<String>(
+              controller: _textController,
+              autofocus: widget.autofocus ?? false,
+              decoration: InputDecoration(
+                labelText: widget.labelText,
+              ),
+            ),
+            //direction: AxisDirection.up,
+            autoFlipDirection: true,
+            animationStart: 1,
+            debounceDuration: Duration(seconds: 0),
           ),
-        ),
-        suggestionsCallback: (filter) {
-          return (widget.entityList ?? widget.entityMap.keys.toList())
-              .where((entityId) =>
-                  _entityMap[entityId]?.matchesFilter(filter) ?? false)
-              .toList();
-        },
-        itemBuilder: (context, entityId) {
-          return _EntityListTile(
-            entity: _entityMap[entityId],
-            filter: _textController.text,
-          );
-        },
-        onSuggestionSelected: (entityId) {
-          final entity = _entityMap[entityId];
-          _textController.text = _entityMap[entityId].listDisplayName;
-          widget.onSelected(entity);
-        },
-        textFieldConfiguration: TextFieldConfiguration<String>(
-          controller: _textController,
-          autofocus: widget.autofocus,
-          decoration: InputDecoration(
-            labelText: widget.labelText,
-            suffix: showClear
-                ? IconButton(
-                    icon: Icon(Icons.clear),
-                    onPressed: () {
-                      _textController.text = '';
-                      widget.onSelected(null);
-                    },
-                  )
-                : widget.onAddPressed != null
-                    ? IconButton(
-                        icon: Icon(Icons.add_circle_outline),
-                        tooltip: AppLocalization.of(context).createNew,
-                        onPressed: () {
-                          final Completer<SelectableEntity> completer =
-                              Completer<SelectableEntity>();
-                          widget.onAddPressed(completer);
-                          completer.future.then(
-                            (entity) {
-                              widget.onSelected(entity);
-                            },
-                          );
-                        },
-                      )
-                    : SizedBox(),
-          ),
-        ),
-        //direction: AxisDirection.up,
-        autoFlipDirection: true,
-        animationStart: 1,
-        debounceDuration: Duration(seconds: 0),
+          showClear
+              ? IconButton(
+                  icon: Icon(Icons.clear),
+                  onPressed: () {
+                    _textController.text = '';
+                    widget.onSelected(null);
+                  },
+                )
+              : widget.onAddPressed != null
+                  ? IconButton(
+                      icon: Icon(Icons.add_circle_outline),
+                      tooltip: AppLocalization.of(context).createNew,
+                      onPressed: () {
+                        final Completer<SelectableEntity> completer =
+                            Completer<SelectableEntity>();
+                        widget.onAddPressed(completer);
+                        completer.future.then(
+                          (entity) {
+                            widget.onSelected(entity);
+                          },
+                        );
+                      },
+                    )
+                  : SizedBox(),
+        ],
       );
     }
 
@@ -350,13 +372,13 @@ class _EntityListTile extends StatelessWidget {
         children: <Widget>[
           Expanded(
             child: Text(entity.listDisplayName,
-                style: Theme.of(context).textTheme.headline6),
+                style: Theme.of(context).textTheme.title),
           ),
           entity.listDisplayAmount != null
               ? Text(
                   formatNumber(entity.listDisplayAmount, context,
                       formatNumberType: entity.listDisplayAmountType),
-                  style: Theme.of(context).textTheme.headline6)
+                  style: Theme.of(context).textTheme.title)
               : Container(),
         ],
       ),

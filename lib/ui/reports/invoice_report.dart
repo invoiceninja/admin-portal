@@ -231,7 +231,8 @@ ReportResult invoiceReport(
   }
 
   final selectedColumns = columns.map((item) => EnumUtils.parse(item)).toList();
-  data.sort((rowA, rowB) => sortReportTableRows(rowA, rowB, invoiceReportSettings, selectedColumns));
+  data.sort((rowA, rowB) =>
+      sortReportTableRows(rowA, rowB, invoiceReportSettings, selectedColumns));
 
   return ReportResult(
     allColumns:

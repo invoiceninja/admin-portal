@@ -1,11 +1,9 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:invoiceninja_flutter/ui/settings/edit_scaffold.dart';
+import 'package:invoiceninja_flutter/ui/app/edit_scaffold.dart';
 import 'package:invoiceninja_flutter/ui/app/form_card.dart';
 import 'package:invoiceninja_flutter/ui/stub/edit/stub_edit_vm.dart';
-import 'package:invoiceninja_flutter/ui/app/buttons/action_icon_button.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
-import 'package:invoiceninja_flutter/utils/platforms.dart';
 import 'package:invoiceninja_flutter/utils/completers.dart';
 
 class StubEdit extends StatefulWidget {
@@ -74,13 +72,16 @@ class _StubEditState extends State<StubEdit> {
     final stub = viewModel.stub;
 
     return EditScaffold(
+      title: localization.editStub,
       onCancelPressed: (context) => viewModel.onCancelPressed(context),
               onSavePressed: (context) {
           final bool isValid = _formKey.currentState.validate();
 
+            /*
           setState(() {
             _autoValidate = !isValid;
           });
+            */
 
           if (!isValid) {
             return;

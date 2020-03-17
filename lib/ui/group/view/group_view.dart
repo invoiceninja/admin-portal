@@ -45,7 +45,7 @@ class _GroupViewState extends State<GroupView> {
             padding: const EdgeInsets.all(16),
             child: ElevatedButton(
               label: localization.configureSettings.toUpperCase(),
-              icon: Icons.settings,
+              iconData: Icons.settings,
               onPressed: () =>
                   handleGroupAction(context, [group], EntityAction.settings),
             ),
@@ -169,14 +169,17 @@ class SettingsViewer extends StatelessWidget {
       localization.emailSubjectInvoice:
           settings.emailSubjectInvoice?.toString(),
       localization.emailSubjectQuote: settings.emailSubjectQuote?.toString(),
-      localization.emailSubjectPayment:
-          settings.emailSubjectPayment?.toString(),
+      localization.emailSubjectPayment: settings.emailSubjectPayment,
+      localization.emailSubjectPaymentPartial:
+          settings.emailSubjectPaymentPartial,
       //localization.emailBodyInvoice:
       //    settings.emailBodyInvoice?.toString(),
       //localization.emailBodyQuote:
       //    settings.emailBodyQuote?.toString(),
       //localization.emailBodyPayment:
       //    settings.emailBodyPayment?.toString(),
+      //localization.emailBodyPaymentPartial:
+      //    settings.emailBodyPaymentPartial?.toString(),
       //localization.emailSubjectReminder1:
       //    settings.emailSubjectReminder1?.toString(),
       //localization.emailSubjectReminder2:
@@ -249,6 +252,7 @@ class SettingsViewer extends StatelessWidget {
       localization.itemTaxRates: settings.numberOfItemTaxRates?.toString(),
       //localization.defaultInvoiceDesignId: settings.defaultInvoiceDesignId,
       //localization.defaultQuoteDesignId: settings.defaultQuoteDesignId,
+      //localization.defaultCreditDesignId: settings.defaultCreditDesignId,
       localization.invoiceFooter: settings.defaultInvoiceFooter?.toString(),
       localization.invoiceLabels: settings.invoiceLabels?.toString(),
       localization.defaultTaxName1: settings.defaultTaxName1?.toString(),

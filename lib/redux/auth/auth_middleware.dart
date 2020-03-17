@@ -7,6 +7,8 @@ import 'package:invoiceninja_flutter/constants.dart';
 import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:invoiceninja_flutter/redux/client/client_actions.dart';
 import 'package:invoiceninja_flutter/redux/company/company_actions.dart';
+import 'package:invoiceninja_flutter/redux/company/company_selectors.dart';
+import 'package:invoiceninja_flutter/redux/dashboard/dashboard_actions.dart';
 import 'package:invoiceninja_flutter/redux/ui/ui_actions.dart';
 import 'package:invoiceninja_flutter/ui/auth/login_vm.dart';
 import 'package:invoiceninja_flutter/utils/formatting.dart';
@@ -27,6 +29,8 @@ List<Middleware<AppState>> createStoreAuthMiddleware([
   final refreshRequest = _createRefreshRequest(repository);
   final recoverRequest = _createRecoverRequest(repository);
   final addCompany = _createCompany(repository);
+  final deleteCompany = _deleteCompany(repository);
+  final purgeData = _purgeData(repository);
 
   return [
     TypedMiddleware<AppState, UserLogout>(userLogout),
@@ -36,6 +40,8 @@ List<Middleware<AppState>> createStoreAuthMiddleware([
     TypedMiddleware<AppState, RefreshData>(refreshRequest),
     TypedMiddleware<AppState, RecoverPasswordRequest>(recoverRequest),
     TypedMiddleware<AppState, AddCompany>(addCompany),
+    TypedMiddleware<AppState, DeleteCompanyRequest>(deleteCompany),
+    TypedMiddleware<AppState, PurgeDataRequest>(purgeData),
   ];
 }
 
@@ -44,7 +50,6 @@ void _saveAuthLocal(
   final SharedPreferences prefs = await SharedPreferences.getInstance();
   prefs.setString(kSharedPrefEmail, email ?? '');
   prefs.setString(kSharedPrefUrl, formatApiUrl(url));
-  prefs.setString(kSharedPrefSecret, secret);
 }
 
 void _loadAuthLocal(Store<AppState> store) async {
@@ -57,9 +62,8 @@ void _loadAuthLocal(Store<AppState> store) async {
       ? (prefs.getString(kSharedPrefEmail) ?? '')
       : Config.TEST_EMAIL;
   final String url = formatApiUrl(prefs.getString(kSharedPrefUrl) ?? '');
-  final String secret = prefs.getString(kSharedPrefSecret) ?? '';
 
-  store.dispatch(UserLoginLoaded(email, url, secret));
+  store.dispatch(UserLoginLoaded(email, url));
 }
 
 Middleware<AppState> _createUserLogout() {
@@ -122,9 +126,9 @@ Middleware<AppState> _createSignUpRequest(AuthRepository repository) {
 
     repository
         .signUp(
+      url: action.url,
       email: action.email,
       password: action.password,
-      platform: action.platform,
       firstName: action.firstName,
       lastName: action.lastName,
       secret: action.secret,
@@ -191,9 +195,7 @@ Middleware<AppState> _createRefreshRequest(AuthRepository repository) {
     url = formatApiUrl(prefs.getString(kSharedPrefUrl) ?? Config.TEST_URL);
     token = prefs.getString(kSharedPrefToken);
 
-    repository
-        .refresh(url: url, token: token, platform: action.platform)
-        .then((data) {
+    repository.refresh(url: url, token: token).then((data) {
       store.dispatch(LoadAccountSuccess(
           completer: action.completer,
           loginResponse: data,
@@ -242,10 +244,58 @@ Middleware<AppState> _createCompany(AuthRepository repository) {
 
     repository.addCompany(token: state.credentials.token).then((dynamic value) {
       store.dispatch(RefreshData(
-        platform: getPlatform(action.context),
         completer: Completer<Null>()
-          ..future.then<Null>((_) => store.dispatch(LoadClients())),
+          ..future.then<Null>((_) {
+            store.dispatch(SelectCompany(state.companies.length));
+            store.dispatch(ViewDashboard(
+                navigator: Navigator.of(action.context), force: true));
+            store.dispatch(LoadClients());
+          }),
       ));
+    });
+
+    next(action);
+  };
+}
+
+Middleware<AppState> _deleteCompany(AuthRepository repository) {
+  return (Store<AppState> store, dynamic dynamicAction,
+      NextDispatcher next) async {
+    final action = dynamicAction as DeleteCompanyRequest;
+    final state = store.state;
+
+    repository
+        .deleteCompany(
+            token: state.credentials.token,
+            password: action.password,
+            companyId: state.company.id)
+        .then((dynamic value) {
+      action.completer.complete(null);
+      store.dispatch(DeleteCompanySuccess());
+    }).catchError((Object error) {
+      store.dispatch(DeleteCompanyFailure(error));
+    });
+
+    next(action);
+  };
+}
+
+Middleware<AppState> _purgeData(AuthRepository repository) {
+  return (Store<AppState> store, dynamic dynamicAction,
+      NextDispatcher next) async {
+    final action = dynamicAction as DeleteCompanyRequest;
+    final state = store.state;
+
+    repository
+        .purgeData(
+            token: state.credentials.token,
+            password: action.password,
+            companyId: state.company.id)
+        .then((dynamic value) {
+      action.completer.complete(null);
+      store.dispatch(PurgeDataSuccess());
+    }).catchError((Object error) {
+      store.dispatch(PurgeDataFailure(error));
     });
 
     next(action);

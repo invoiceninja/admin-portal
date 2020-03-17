@@ -13,6 +13,7 @@ import 'package:invoiceninja_flutter/ui/product/product_list_item.dart';
 import 'package:invoiceninja_flutter/data/models/entities.dart';
 import 'package:invoiceninja_flutter/ui/task/task_list_item.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
+import 'package:invoiceninja_flutter/utils/platforms.dart';
 
 class InvoiceItemSelector extends StatefulWidget {
   const InvoiceItemSelector({
@@ -161,16 +162,17 @@ class _InvoiceItemSelectorState extends State<InvoiceItemSelector>
                   }
                 },
               ),
-              _selected.isNotEmpty
-                  ? IconButton(
-                      icon: Icon(Icons.check),
-                      onPressed: () => _onItemsSelected(context),
-                    )
-                  : IconButton(
-                      icon: Icon(Icons.add_circle_outline),
-                      tooltip: localization.createNew,
-                      onPressed: () => _addBlankItem(company),
-                    ),
+              if (isNotDesktop(context))
+                _selected.isNotEmpty
+                    ? IconButton(
+                        icon: Icon(Icons.check),
+                        onPressed: () => _onItemsSelected(context),
+                      )
+                    : IconButton(
+                        icon: Icon(Icons.add_circle_outline),
+                        tooltip: localization.createNew,
+                        onPressed: () => _addBlankItem(company),
+                      ),
             ],
           )
         ],

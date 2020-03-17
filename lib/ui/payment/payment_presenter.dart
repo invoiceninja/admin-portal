@@ -32,7 +32,8 @@ class PaymentPresenter extends EntityPresenter {
             .toList()
             .join(', '));
       case PaymentFields.client:
-        return Text(state.clientState.map[payment.clientId]?.listDisplayName ?? '');
+        return Text(
+            state.clientState.map[payment.clientId]?.listDisplayName ?? '');
       case PaymentFields.transactionReference:
         return Text(payment.transactionReference);
       case PaymentFields.paymentDate:

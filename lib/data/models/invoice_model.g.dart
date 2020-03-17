@@ -128,8 +128,14 @@ class _$InvoiceEntitySerializer implements StructuredSerializer<InvoiceEntity> {
       'balance',
       serializers.serialize(object.balance,
           specifiedType: const FullType(double)),
+      'client_id',
+      serializers.serialize(object.clientId,
+          specifiedType: const FullType(String)),
       'status_id',
       serializers.serialize(object.statusId,
+          specifiedType: const FullType(String)),
+      'number',
+      serializers.serialize(object.number,
           specifiedType: const FullType(String)),
       'discount',
       serializers.serialize(object.discount,
@@ -153,6 +159,9 @@ class _$InvoiceEntitySerializer implements StructuredSerializer<InvoiceEntity> {
           specifiedType: const FullType(String)),
       'footer',
       serializers.serialize(object.footer,
+          specifiedType: const FullType(String)),
+      'design_id',
+      serializers.serialize(object.designId,
           specifiedType: const FullType(String)),
       'uses_inclusive_taxes',
       serializers.serialize(object.usesInclusiveTaxes,
@@ -223,24 +232,6 @@ class _$InvoiceEntitySerializer implements StructuredSerializer<InvoiceEntity> {
           specifiedType: const FullType(
               BuiltList, const [const FullType(InvitationEntity)])),
     ];
-    if (object.clientId != null) {
-      result
-        ..add('client_id')
-        ..add(serializers.serialize(object.clientId,
-            specifiedType: const FullType(String)));
-    }
-    if (object.number != null) {
-      result
-        ..add('number')
-        ..add(serializers.serialize(object.number,
-            specifiedType: const FullType(String)));
-    }
-    if (object.designId != null) {
-      result
-        ..add('design_id')
-        ..add(serializers.serialize(object.designId,
-            specifiedType: const FullType(String)));
-    }
     if (object.autoBill != null) {
       result
         ..add('auto_bill')
@@ -271,10 +262,10 @@ class _$InvoiceEntitySerializer implements StructuredSerializer<InvoiceEntity> {
         ..add(serializers.serialize(object.customTaxes4,
             specifiedType: const FullType(bool)));
     }
-    if (object.quoteInvoiceId != null) {
+    if (object.invoiceId != null) {
       result
-        ..add('quote_invoice_id')
-        ..add(serializers.serialize(object.quoteInvoiceId,
+        ..add('invoice_id')
+        ..add(serializers.serialize(object.invoiceId,
             specifiedType: const FullType(String)));
     }
     if (object.filename != null) {
@@ -324,6 +315,12 @@ class _$InvoiceEntitySerializer implements StructuredSerializer<InvoiceEntity> {
         ..add('assigned_user_id')
         ..add(serializers.serialize(object.assignedUserId,
             specifiedType: const FullType(String)));
+    }
+    if (object.subEntityType != null) {
+      result
+        ..add('entity_type')
+        ..add(serializers.serialize(object.subEntityType,
+            specifiedType: const FullType(EntityType)));
     }
     if (object.id != null) {
       result
@@ -502,8 +499,8 @@ class _$InvoiceEntitySerializer implements StructuredSerializer<InvoiceEntity> {
           result.hasExpenses = serializers.deserialize(value,
               specifiedType: const FullType(bool)) as bool;
           break;
-        case 'quote_invoice_id':
-          result.quoteInvoiceId = serializers.deserialize(value,
+        case 'invoice_id':
+          result.invoiceId = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String;
           break;
         case 'filename':
@@ -549,6 +546,10 @@ class _$InvoiceEntitySerializer implements StructuredSerializer<InvoiceEntity> {
         case 'assigned_user_id':
           result.assignedUserId = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String;
+          break;
+        case 'entity_type':
+          result.subEntityType = serializers.deserialize(value,
+              specifiedType: const FullType(EntityType)) as EntityType;
           break;
         case 'id':
           result.id = serializers.deserialize(value,
@@ -601,29 +602,26 @@ class _$InvoiceItemEntitySerializer
       'tax_rate3',
       serializers.serialize(object.taxRate3,
           specifiedType: const FullType(double)),
-      'line_item_type_id',
-      serializers.serialize(object.lineItemTypeId,
-          specifiedType: const FullType(String)),
       'custom_value1',
       serializers.serialize(object.customValue1,
           specifiedType: const FullType(String)),
       'custom_value2',
       serializers.serialize(object.customValue2,
           specifiedType: const FullType(String)),
+      'custom_value3',
+      serializers.serialize(object.customValue3,
+          specifiedType: const FullType(String)),
+      'custom_value4',
+      serializers.serialize(object.customValue4,
+          specifiedType: const FullType(String)),
       'discount',
       serializers.serialize(object.discount,
           specifiedType: const FullType(double)),
     ];
-    if (object.customValue3 != null) {
+    if (object.typeId != null) {
       result
-        ..add('custom_value3')
-        ..add(serializers.serialize(object.customValue3,
-            specifiedType: const FullType(String)));
-    }
-    if (object.customValue4 != null) {
-      result
-        ..add('custom_value4')
-        ..add(serializers.serialize(object.customValue4,
+        ..add('type_id')
+        ..add(serializers.serialize(object.typeId,
             specifiedType: const FullType(String)));
     }
     if (object.taskId != null) {
@@ -699,8 +697,8 @@ class _$InvoiceItemEntitySerializer
           result.taxRate3 = serializers.deserialize(value,
               specifiedType: const FullType(double)) as double;
           break;
-        case 'line_item_type_id':
-          result.lineItemTypeId = serializers.deserialize(value,
+        case 'type_id':
+          result.typeId = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String;
           break;
         case 'custom_value1':
@@ -809,6 +807,12 @@ class _$InvitationEntitySerializer
         ..add(serializers.serialize(object.assignedUserId,
             specifiedType: const FullType(String)));
     }
+    if (object.subEntityType != null) {
+      result
+        ..add('entity_type')
+        ..add(serializers.serialize(object.subEntityType,
+            specifiedType: const FullType(EntityType)));
+    }
     if (object.id != null) {
       result
         ..add('id')
@@ -877,6 +881,10 @@ class _$InvitationEntitySerializer
         case 'assigned_user_id':
           result.assignedUserId = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String;
+          break;
+        case 'entity_type':
+          result.subEntityType = serializers.deserialize(value,
+              specifiedType: const FullType(EntityType)) as EntityType;
           break;
         case 'id':
           result.id = serializers.deserialize(value,
@@ -1158,7 +1166,7 @@ class _$InvoiceEntity extends InvoiceEntity {
   @override
   final bool hasExpenses;
   @override
-  final String quoteInvoiceId;
+  final String invoiceId;
   @override
   final String filename;
   @override
@@ -1179,6 +1187,8 @@ class _$InvoiceEntity extends InvoiceEntity {
   final String createdUserId;
   @override
   final String assignedUserId;
+  @override
+  final EntityType subEntityType;
   @override
   final String id;
 
@@ -1225,7 +1235,7 @@ class _$InvoiceEntity extends InvoiceEntity {
       this.customTaxes3,
       this.customTaxes4,
       this.hasExpenses,
-      this.quoteInvoiceId,
+      this.invoiceId,
       this.filename,
       this.lineItems,
       this.invitations,
@@ -1236,6 +1246,7 @@ class _$InvoiceEntity extends InvoiceEntity {
       this.isDeleted,
       this.createdUserId,
       this.assignedUserId,
+      this.subEntityType,
       this.id})
       : super._() {
     if (amount == null) {
@@ -1244,8 +1255,14 @@ class _$InvoiceEntity extends InvoiceEntity {
     if (balance == null) {
       throw new BuiltValueNullFieldError('InvoiceEntity', 'balance');
     }
+    if (clientId == null) {
+      throw new BuiltValueNullFieldError('InvoiceEntity', 'clientId');
+    }
     if (statusId == null) {
       throw new BuiltValueNullFieldError('InvoiceEntity', 'statusId');
+    }
+    if (number == null) {
+      throw new BuiltValueNullFieldError('InvoiceEntity', 'number');
     }
     if (discount == null) {
       throw new BuiltValueNullFieldError('InvoiceEntity', 'discount');
@@ -1270,6 +1287,9 @@ class _$InvoiceEntity extends InvoiceEntity {
     }
     if (footer == null) {
       throw new BuiltValueNullFieldError('InvoiceEntity', 'footer');
+    }
+    if (designId == null) {
+      throw new BuiltValueNullFieldError('InvoiceEntity', 'designId');
     }
     if (usesInclusiveTaxes == null) {
       throw new BuiltValueNullFieldError('InvoiceEntity', 'usesInclusiveTaxes');
@@ -1389,7 +1409,7 @@ class _$InvoiceEntity extends InvoiceEntity {
         customTaxes3 == other.customTaxes3 &&
         customTaxes4 == other.customTaxes4 &&
         hasExpenses == other.hasExpenses &&
-        quoteInvoiceId == other.quoteInvoiceId &&
+        invoiceId == other.invoiceId &&
         filename == other.filename &&
         lineItems == other.lineItems &&
         invitations == other.invitations &&
@@ -1400,6 +1420,7 @@ class _$InvoiceEntity extends InvoiceEntity {
         isDeleted == other.isDeleted &&
         createdUserId == other.createdUserId &&
         assignedUserId == other.assignedUserId &&
+        subEntityType == other.subEntityType &&
         id == other.id;
   }
 
@@ -1423,25 +1444,25 @@ class _$InvoiceEntity extends InvoiceEntity {
                                                                 $jc(
                                                                     $jc(
                                                                         $jc(
-                                                                            $jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc(0, amount.hashCode), balance.hashCode), clientId.hashCode), statusId.hashCode), number.hashCode), discount.hashCode), poNumber.hashCode), date.hashCode), dueDate.hashCode), publicNotes.hashCode), privateNotes.hashCode), terms.hashCode), footer.hashCode), designId.hashCode), usesInclusiveTaxes.hashCode), taxName1.hashCode), taxRate1.hashCode), taxName2.hashCode), taxRate2.hashCode), taxName3.hashCode), taxRate3.hashCode), isAmountDiscount.hashCode), partial.hashCode), partialDueDate.hashCode), hasTasks.hashCode), autoBill.hashCode), customValue1.hashCode), customValue2.hashCode), customValue3.hashCode), customValue4.hashCode), customSurcharge1.hashCode), customSurcharge2.hashCode),
-                                                                                customSurcharge3.hashCode),
-                                                                            customSurcharge4.hashCode),
-                                                                        customTaxes1.hashCode),
-                                                                    customTaxes2.hashCode),
-                                                                customTaxes3.hashCode),
-                                                            customTaxes4.hashCode),
-                                                        hasExpenses.hashCode),
-                                                    quoteInvoiceId.hashCode),
-                                                filename.hashCode),
-                                            lineItems.hashCode),
-                                        invitations.hashCode),
-                                    isChanged.hashCode),
-                                createdAt.hashCode),
-                            updatedAt.hashCode),
-                        archivedAt.hashCode),
-                    isDeleted.hashCode),
-                createdUserId.hashCode),
-            assignedUserId.hashCode),
+                                                                            $jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc(0, amount.hashCode), balance.hashCode), clientId.hashCode), statusId.hashCode), number.hashCode), discount.hashCode), poNumber.hashCode), date.hashCode), dueDate.hashCode), publicNotes.hashCode), privateNotes.hashCode), terms.hashCode), footer.hashCode), designId.hashCode), usesInclusiveTaxes.hashCode), taxName1.hashCode), taxRate1.hashCode), taxName2.hashCode), taxRate2.hashCode), taxName3.hashCode), taxRate3.hashCode), isAmountDiscount.hashCode), partial.hashCode), partialDueDate.hashCode), hasTasks.hashCode), autoBill.hashCode), customValue1.hashCode), customValue2.hashCode), customValue3.hashCode), customValue4.hashCode), customSurcharge1.hashCode), customSurcharge2.hashCode), customSurcharge3.hashCode),
+                                                                                customSurcharge4.hashCode),
+                                                                            customTaxes1.hashCode),
+                                                                        customTaxes2.hashCode),
+                                                                    customTaxes3.hashCode),
+                                                                customTaxes4.hashCode),
+                                                            hasExpenses.hashCode),
+                                                        invoiceId.hashCode),
+                                                    filename.hashCode),
+                                                lineItems.hashCode),
+                                            invitations.hashCode),
+                                        isChanged.hashCode),
+                                    createdAt.hashCode),
+                                updatedAt.hashCode),
+                            archivedAt.hashCode),
+                        isDeleted.hashCode),
+                    createdUserId.hashCode),
+                assignedUserId.hashCode),
+            subEntityType.hashCode),
         id.hashCode));
   }
 
@@ -1487,7 +1508,7 @@ class _$InvoiceEntity extends InvoiceEntity {
           ..add('customTaxes3', customTaxes3)
           ..add('customTaxes4', customTaxes4)
           ..add('hasExpenses', hasExpenses)
-          ..add('quoteInvoiceId', quoteInvoiceId)
+          ..add('invoiceId', invoiceId)
           ..add('filename', filename)
           ..add('lineItems', lineItems)
           ..add('invitations', invitations)
@@ -1498,6 +1519,7 @@ class _$InvoiceEntity extends InvoiceEntity {
           ..add('isDeleted', isDeleted)
           ..add('createdUserId', createdUserId)
           ..add('assignedUserId', assignedUserId)
+          ..add('subEntityType', subEntityType)
           ..add('id', id))
         .toString();
   }
@@ -1670,10 +1692,9 @@ class InvoiceEntityBuilder
   bool get hasExpenses => _$this._hasExpenses;
   set hasExpenses(bool hasExpenses) => _$this._hasExpenses = hasExpenses;
 
-  String _quoteInvoiceId;
-  String get quoteInvoiceId => _$this._quoteInvoiceId;
-  set quoteInvoiceId(String quoteInvoiceId) =>
-      _$this._quoteInvoiceId = quoteInvoiceId;
+  String _invoiceId;
+  String get invoiceId => _$this._invoiceId;
+  set invoiceId(String invoiceId) => _$this._invoiceId = invoiceId;
 
   String _filename;
   String get filename => _$this._filename;
@@ -1720,6 +1741,11 @@ class InvoiceEntityBuilder
   String get assignedUserId => _$this._assignedUserId;
   set assignedUserId(String assignedUserId) =>
       _$this._assignedUserId = assignedUserId;
+
+  EntityType _subEntityType;
+  EntityType get subEntityType => _$this._subEntityType;
+  set subEntityType(EntityType subEntityType) =>
+      _$this._subEntityType = subEntityType;
 
   String _id;
   String get id => _$this._id;
@@ -1768,7 +1794,7 @@ class InvoiceEntityBuilder
       _customTaxes3 = _$v.customTaxes3;
       _customTaxes4 = _$v.customTaxes4;
       _hasExpenses = _$v.hasExpenses;
-      _quoteInvoiceId = _$v.quoteInvoiceId;
+      _invoiceId = _$v.invoiceId;
       _filename = _$v.filename;
       _lineItems = _$v.lineItems?.toBuilder();
       _invitations = _$v.invitations?.toBuilder();
@@ -1779,6 +1805,7 @@ class InvoiceEntityBuilder
       _isDeleted = _$v.isDeleted;
       _createdUserId = _$v.createdUserId;
       _assignedUserId = _$v.assignedUserId;
+      _subEntityType = _$v.subEntityType;
       _id = _$v.id;
       _$v = null;
     }
@@ -1843,7 +1870,7 @@ class InvoiceEntityBuilder
               customTaxes3: customTaxes3,
               customTaxes4: customTaxes4,
               hasExpenses: hasExpenses,
-              quoteInvoiceId: quoteInvoiceId,
+              invoiceId: invoiceId,
               filename: filename,
               lineItems: lineItems.build(),
               invitations: invitations.build(),
@@ -1854,6 +1881,7 @@ class InvoiceEntityBuilder
               isDeleted: isDeleted,
               createdUserId: createdUserId,
               assignedUserId: assignedUserId,
+              subEntityType: subEntityType,
               id: id);
     } catch (_) {
       String _$failedField;
@@ -1895,7 +1923,7 @@ class _$InvoiceItemEntity extends InvoiceItemEntity {
   @override
   final double taxRate3;
   @override
-  final String lineItemTypeId;
+  final String typeId;
   @override
   final String customValue1;
   @override
@@ -1928,7 +1956,7 @@ class _$InvoiceItemEntity extends InvoiceItemEntity {
       this.taxRate2,
       this.taxName3,
       this.taxRate3,
-      this.lineItemTypeId,
+      this.typeId,
       this.customValue1,
       this.customValue2,
       this.customValue3,
@@ -1968,14 +1996,17 @@ class _$InvoiceItemEntity extends InvoiceItemEntity {
     if (taxRate3 == null) {
       throw new BuiltValueNullFieldError('InvoiceItemEntity', 'taxRate3');
     }
-    if (lineItemTypeId == null) {
-      throw new BuiltValueNullFieldError('InvoiceItemEntity', 'lineItemTypeId');
-    }
     if (customValue1 == null) {
       throw new BuiltValueNullFieldError('InvoiceItemEntity', 'customValue1');
     }
     if (customValue2 == null) {
       throw new BuiltValueNullFieldError('InvoiceItemEntity', 'customValue2');
+    }
+    if (customValue3 == null) {
+      throw new BuiltValueNullFieldError('InvoiceItemEntity', 'customValue3');
+    }
+    if (customValue4 == null) {
+      throw new BuiltValueNullFieldError('InvoiceItemEntity', 'customValue4');
     }
     if (discount == null) {
       throw new BuiltValueNullFieldError('InvoiceItemEntity', 'discount');
@@ -2004,7 +2035,7 @@ class _$InvoiceItemEntity extends InvoiceItemEntity {
         taxRate2 == other.taxRate2 &&
         taxName3 == other.taxName3 &&
         taxRate3 == other.taxRate3 &&
-        lineItemTypeId == other.lineItemTypeId &&
+        typeId == other.typeId &&
         customValue1 == other.customValue1 &&
         customValue2 == other.customValue2 &&
         customValue3 == other.customValue3 &&
@@ -2052,7 +2083,7 @@ class _$InvoiceItemEntity extends InvoiceItemEntity {
                                                     taxRate2.hashCode),
                                                 taxName3.hashCode),
                                             taxRate3.hashCode),
-                                        lineItemTypeId.hashCode),
+                                        typeId.hashCode),
                                     customValue1.hashCode),
                                 customValue2.hashCode),
                             customValue3.hashCode),
@@ -2076,7 +2107,7 @@ class _$InvoiceItemEntity extends InvoiceItemEntity {
           ..add('taxRate2', taxRate2)
           ..add('taxName3', taxName3)
           ..add('taxRate3', taxRate3)
-          ..add('lineItemTypeId', lineItemTypeId)
+          ..add('typeId', typeId)
           ..add('customValue1', customValue1)
           ..add('customValue2', customValue2)
           ..add('customValue3', customValue3)
@@ -2133,10 +2164,9 @@ class InvoiceItemEntityBuilder
   double get taxRate3 => _$this._taxRate3;
   set taxRate3(double taxRate3) => _$this._taxRate3 = taxRate3;
 
-  String _lineItemTypeId;
-  String get lineItemTypeId => _$this._lineItemTypeId;
-  set lineItemTypeId(String lineItemTypeId) =>
-      _$this._lineItemTypeId = lineItemTypeId;
+  String _typeId;
+  String get typeId => _$this._typeId;
+  set typeId(String typeId) => _$this._typeId = typeId;
 
   String _customValue1;
   String get customValue1 => _$this._customValue1;
@@ -2184,7 +2214,7 @@ class InvoiceItemEntityBuilder
       _taxRate2 = _$v.taxRate2;
       _taxName3 = _$v.taxName3;
       _taxRate3 = _$v.taxRate3;
-      _lineItemTypeId = _$v.lineItemTypeId;
+      _typeId = _$v.typeId;
       _customValue1 = _$v.customValue1;
       _customValue2 = _$v.customValue2;
       _customValue3 = _$v.customValue3;
@@ -2225,7 +2255,7 @@ class InvoiceItemEntityBuilder
             taxRate2: taxRate2,
             taxName3: taxName3,
             taxRate3: taxRate3,
-            lineItemTypeId: lineItemTypeId,
+            typeId: typeId,
             customValue1: customValue1,
             customValue2: customValue2,
             customValue3: customValue3,
@@ -2265,6 +2295,8 @@ class _$InvitationEntity extends InvitationEntity {
   @override
   final String assignedUserId;
   @override
+  final EntityType subEntityType;
+  @override
   final String id;
 
   factory _$InvitationEntity(
@@ -2284,6 +2316,7 @@ class _$InvitationEntity extends InvitationEntity {
       this.isDeleted,
       this.createdUserId,
       this.assignedUserId,
+      this.subEntityType,
       this.id})
       : super._() {
     if (key == null) {
@@ -2327,6 +2360,7 @@ class _$InvitationEntity extends InvitationEntity {
         isDeleted == other.isDeleted &&
         createdUserId == other.createdUserId &&
         assignedUserId == other.assignedUserId &&
+        subEntityType == other.subEntityType &&
         id == other.id;
   }
 
@@ -2343,18 +2377,20 @@ class _$InvitationEntity extends InvitationEntity {
                                     $jc(
                                         $jc(
                                             $jc(
-                                                $jc($jc(0, key.hashCode),
-                                                    link.hashCode),
-                                                contactId.hashCode),
-                                            sentDate.hashCode),
-                                        viewedDate.hashCode),
-                                    isChanged.hashCode),
-                                createdAt.hashCode),
-                            updatedAt.hashCode),
-                        archivedAt.hashCode),
-                    isDeleted.hashCode),
-                createdUserId.hashCode),
-            assignedUserId.hashCode),
+                                                $jc(
+                                                    $jc($jc(0, key.hashCode),
+                                                        link.hashCode),
+                                                    contactId.hashCode),
+                                                sentDate.hashCode),
+                                            viewedDate.hashCode),
+                                        isChanged.hashCode),
+                                    createdAt.hashCode),
+                                updatedAt.hashCode),
+                            archivedAt.hashCode),
+                        isDeleted.hashCode),
+                    createdUserId.hashCode),
+                assignedUserId.hashCode),
+            subEntityType.hashCode),
         id.hashCode));
   }
 
@@ -2373,6 +2409,7 @@ class _$InvitationEntity extends InvitationEntity {
           ..add('isDeleted', isDeleted)
           ..add('createdUserId', createdUserId)
           ..add('assignedUserId', assignedUserId)
+          ..add('subEntityType', subEntityType)
           ..add('id', id))
         .toString();
   }
@@ -2432,6 +2469,11 @@ class InvitationEntityBuilder
   set assignedUserId(String assignedUserId) =>
       _$this._assignedUserId = assignedUserId;
 
+  EntityType _subEntityType;
+  EntityType get subEntityType => _$this._subEntityType;
+  set subEntityType(EntityType subEntityType) =>
+      _$this._subEntityType = subEntityType;
+
   String _id;
   String get id => _$this._id;
   set id(String id) => _$this._id = id;
@@ -2452,6 +2494,7 @@ class InvitationEntityBuilder
       _isDeleted = _$v.isDeleted;
       _createdUserId = _$v.createdUserId;
       _assignedUserId = _$v.assignedUserId;
+      _subEntityType = _$v.subEntityType;
       _id = _$v.id;
       _$v = null;
     }
@@ -2487,6 +2530,7 @@ class InvitationEntityBuilder
             isDeleted: isDeleted,
             createdUserId: createdUserId,
             assignedUserId: assignedUserId,
+            subEntityType: subEntityType,
             id: id);
     replace(_$result);
     return _$result;

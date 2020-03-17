@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:invoiceninja_flutter/data/models/company_model.dart';
 import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 
+
 class SelectCompany {
   SelectCompany(this.companyIndex);
 
@@ -45,4 +46,39 @@ class SaveCompanyFailure implements StopSaving {
 class AddCompany {
   AddCompany(this.context);
   final BuildContext context;
+}
+
+class DeleteCompanyRequest implements StartSaving {
+  DeleteCompanyRequest({@required this.completer, @required this.password});
+
+  final Completer completer;
+  final String password;
+}
+
+class DeleteCompanySuccess implements StopSaving, PersistData {
+  DeleteCompanySuccess();
+}
+
+class DeleteCompanyFailure implements StopSaving {
+  DeleteCompanyFailure(this.error);
+
+  final Object error;
+}
+
+
+class PurgeDataRequest implements StartSaving {
+  PurgeDataRequest({@required this.completer, @required this.password});
+
+  final Completer completer;
+  final String password;
+}
+
+class PurgeDataSuccess implements StopSaving, PersistData {
+  PurgeDataSuccess();
+}
+
+class PurgeDataFailure implements StopSaving {
+  PurgeDataFailure(this.error);
+
+  final Object error;
 }

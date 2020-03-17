@@ -6,6 +6,7 @@ import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/redux/client/client_actions.dart';
 import 'package:invoiceninja_flutter/redux/company_gateway/company_gateway_actions.dart';
+import 'package:invoiceninja_flutter/redux/design/design_actions.dart';
 import 'package:invoiceninja_flutter/redux/expense/expense_actions.dart';
 import 'package:invoiceninja_flutter/redux/group/group_actions.dart';
 import 'package:invoiceninja_flutter/redux/invoice/invoice_actions.dart';
@@ -128,6 +129,12 @@ class EntityActionListTile extends StatelessWidget {
           case EntityType.user:
             handleUserAction(mainContext, entities, action);
             break;
+          case EntityType.design:
+            handleDesignAction(mainContext, entities, action);
+            break;
+          // TODO add to starter.sh
+          default:
+            throw 'Error: unhandled entity type ${first.entityType}';
         }
       },
     );

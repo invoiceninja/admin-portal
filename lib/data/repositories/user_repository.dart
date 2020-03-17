@@ -43,13 +43,13 @@ class UserRepository {
   }
 
   Future<List<UserEntity>> bulkAction(
-      Credentials credentials, List<String> ids, EntityAction action) async {
+      Credentials credentials, List<String> ids, EntityAction action, String password) async {
     var url = credentials.url + '/users/bulk?include=company_user';
     if (action != null) {
       url += '&action=' + action.toString();
     }
     final dynamic response = await webClient.post(url, credentials.token,
-        data: json.encode({'ids': ids}));
+        password: password, data: json.encode({'ids': ids}));
 
     final UserListResponse userResponse =
         serializers.deserializeWith(UserListResponse.serializer, response);
@@ -69,8 +69,7 @@ class UserRepository {
   }
 
   Future<UserEntity> saveData(
-      Credentials credentials, UserEntity user, String password,
-      [EntityAction action]) async {
+      Credentials credentials, UserEntity user, String password) async {
     final data = serializers.serializeWith(UserEntity.serializer, user);
     dynamic response;
 
@@ -82,11 +81,8 @@ class UserRepository {
         password: password,
       );
     } else {
-      var url = credentials.url +
-          '/users/${user.id}?include=company_user&password=$password';
-      if (action != null) {
-        url += '?action=' + action.toString();
-      }
+      final url = credentials.url +
+          '/users/${user.id}?include=company_user';
       response = await webClient.put(
         url,
         credentials.token,

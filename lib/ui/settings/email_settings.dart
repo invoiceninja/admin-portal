@@ -23,18 +23,17 @@ class EmailSettings extends StatefulWidget {
   _EmailSettingsState createState() => _EmailSettingsState();
 }
 
-class _EmailSettingsState extends State<EmailSettings>
-    with SingleTickerProviderStateMixin {
+class _EmailSettingsState extends State<EmailSettings> {
   static final GlobalKey<FormState> _formKey =
       GlobalKey<FormState>(debugLabel: '_emailSettings');
 
-  TabController _tabController;
   FocusScopeNode _focusNode;
   bool autoValidate = false;
 
   final _replyToEmailController = TextEditingController();
   final _bccEmailController = TextEditingController();
   final _emailStyleCustomController = TextEditingController();
+  final _emailFooterController = TextEditingController();
 
   List<TextEditingController> _controllers = [];
 
@@ -42,13 +41,11 @@ class _EmailSettingsState extends State<EmailSettings>
   void initState() {
     super.initState();
 
-    _tabController = TabController(vsync: this, length: 2);
     _focusNode = FocusScopeNode();
   }
 
   @override
   void dispose() {
-    _tabController.dispose();
     _focusNode.dispose();
     _controllers.forEach((dynamic controller) {
       controller.removeListener(_onChanged);
@@ -63,17 +60,17 @@ class _EmailSettingsState extends State<EmailSettings>
       _replyToEmailController,
       _bccEmailController,
       _emailStyleCustomController,
+      _emailFooterController,
     ];
 
     _controllers
         .forEach((dynamic controller) => controller.removeListener(_onChanged));
 
     final settings = widget.viewModel.settings;
-    //final signature = settings.emailFooter;
-
     _replyToEmailController.text = settings.replyToEmail;
     _bccEmailController.text = settings.bccEmail;
     _emailStyleCustomController.text = settings.emailStyleCustom;
+    _emailFooterController.text = settings.emailFooter;
 
     _controllers
         .forEach((dynamic controller) => controller.addListener(_onChanged));
@@ -85,7 +82,8 @@ class _EmailSettingsState extends State<EmailSettings>
     final settings = widget.viewModel.settings.rebuild((b) => b
       ..replyToEmail = _replyToEmailController.text.trim()
       ..bccEmail = _bccEmailController.text.trim()
-      ..emailStyleCustom = _emailStyleCustomController.text.trim());
+      ..emailStyleCustom = _emailStyleCustomController.text.trim()
+      ..emailFooter = _emailFooterController.text.trim());
     if (settings != widget.viewModel.settings) {
       widget.viewModel.onSettingsChanged(settings);
     }
@@ -95,121 +93,107 @@ class _EmailSettingsState extends State<EmailSettings>
   Widget build(BuildContext context) {
     final localization = AppLocalization.of(context);
     final viewModel = widget.viewModel;
-    final state = viewModel.state;
     final settings = viewModel.settings;
 
     return EditScaffold(
       title: localization.emailSettings,
       onSavePressed: viewModel.onSavePressed,
-      appBarBottom: TabBar(
-        key: ValueKey(state.settingsUIState.updatedAt),
-        controller: _tabController,
-        tabs: [
-          Tab(
-            text: localization.settings,
-          ),
-          Tab(
-            text: localization.emailSignature,
-          ),
-        ],
-      ),
-      body: AppTabForm(
-        tabController: _tabController,
+      body: AppForm(
         formKey: _formKey,
         focusNode: _focusNode,
         children: <Widget>[
-          ListView(
+          FormCard(
             children: <Widget>[
-              FormCard(
-                children: <Widget>[
-                  AppDropdownButton<String>(
-                    labelText: localization.emailDesign,
-                    value: viewModel.settings.emailStyle,
-                    onChanged: (dynamic value) => viewModel.onSettingsChanged(
-                        settings.rebuild((b) => b..emailStyle = value)),
-                    items: [
-                      DropdownMenuItem(
-                        child: Text(localization.plain),
-                        value: kEmailDesignPlain,
-                      ),
-                      DropdownMenuItem(
-                        child: Text(localization.light),
-                        value: kEmailDesignLight,
-                      ),
-                      DropdownMenuItem(
-                        child: Text(localization.dark),
-                        value: kEmailDesignDark,
-                      ),
-                      DropdownMenuItem(
-                        child: Text(localization.custom),
-                        value: kEmailDesignCustom,
-                      ),
-                    ],
+              AppDropdownButton<String>(
+                labelText: localization.emailDesign,
+                value: viewModel.settings.emailStyle,
+                onChanged: (dynamic value) => viewModel.onSettingsChanged(
+                    settings.rebuild((b) => b..emailStyle = value)),
+                items: [
+                  DropdownMenuItem(
+                    child: Text(localization.plain),
+                    value: kEmailDesignPlain,
                   ),
-                  if (settings.emailStyle == kEmailDesignCustom) ...[
-                    SizedBox(height: 10),
-                    DecoratedFormField(
-                      label: localization.custom,
-                      controller: _emailStyleCustomController,
-                      maxLines: 6,
-                    ),
-                  ]
-                ],
-              ),
-              FormCard(
-                children: <Widget>[
-                  DecoratedFormField(
-                    label: localization.replyToEmail,
-                    controller: _replyToEmailController,
-                    keyboardType: TextInputType.emailAddress,
+                  DropdownMenuItem(
+                    child: Text(localization.light),
+                    value: kEmailDesignLight,
                   ),
-                  DecoratedFormField(
-                    label: localization.bccEmail,
-                    controller: _bccEmailController,
-                    keyboardType: TextInputType.emailAddress,
+                  DropdownMenuItem(
+                    child: Text(localization.dark),
+                    value: kEmailDesignDark,
                   ),
-                  SizedBox(height: 10),
-                  BoolDropdownButton(
-                    label: localization.enableMarkup,
-                    helpLabel: localization.enableMarkupHelp,
-                    value: settings.enableEmailMarkup,
-                    iconData:
-                        kIsWeb ? Icons.email : FontAwesomeIcons.solidEnvelope,
-                    onChanged: (value) => viewModel.onSettingsChanged(
-                        settings.rebuild((b) => b..enableEmailMarkup = value)),
+                  DropdownMenuItem(
+                    child: Text(localization.custom),
+                    value: kEmailDesignCustom,
                   ),
                 ],
               ),
-              FormCard(
-                children: <Widget>[
-                  BoolDropdownButton(
-                    label: localization.attachPdf,
-                    value: settings.pdfEmailAttachment,
-                    iconData: FontAwesomeIcons.fileInvoice,
-                    onChanged: (value) => viewModel.onSettingsChanged(
-                        settings.rebuild((b) => b..pdfEmailAttachment = value)),
-                  ),
-                  BoolDropdownButton(
-                    label: localization.attachDocuments,
-                    value: settings.documentEmailAttachment,
-                    iconData: FontAwesomeIcons.fileImage,
-                    onChanged: (value) => viewModel.onSettingsChanged(settings
-                        .rebuild((b) => b..documentEmailAttachment = value)),
-                  ),
-                  BoolDropdownButton(
-                    label: localization.attachUbl,
-                    value: settings.ublEmailAttachment,
-                    iconData: FontAwesomeIcons.fileArchive,
-                    onChanged: (value) => viewModel.onSettingsChanged(
-                        settings.rebuild((b) => b..ublEmailAttachment = value)),
-                  ),
-                ],
+              if (settings.emailStyle == kEmailDesignCustom) ...[
+                SizedBox(height: 10),
+                DecoratedFormField(
+                  label: localization.custom,
+                  controller: _emailStyleCustomController,
+                  maxLines: 6,
+                ),
+              ]
+            ],
+          ),
+          FormCard(
+            children: <Widget>[
+              DecoratedFormField(
+                label: localization.replyToEmail,
+                controller: _replyToEmailController,
+                keyboardType: TextInputType.emailAddress,
+              ),
+              DecoratedFormField(
+                label: localization.bccEmail,
+                controller: _bccEmailController,
+                keyboardType: TextInputType.emailAddress,
+              ),
+              SizedBox(height: 10),
+              BoolDropdownButton(
+                label: localization.enableMarkup,
+                helpLabel: localization.enableMarkupHelp,
+                value: settings.enableEmailMarkup,
+                iconData: kIsWeb ? Icons.email : FontAwesomeIcons.solidEnvelope,
+                onChanged: (value) => viewModel.onSettingsChanged(
+                    settings.rebuild((b) => b..enableEmailMarkup = value)),
               ),
             ],
           ),
-          Container(
-            color: Colors.grey.shade100,
-            child: SizedBox(),
+          FormCard(
+            children: <Widget>[
+              DecoratedFormField(
+                label: localization.emailSignature,
+                controller: _emailFooterController,
+                maxLines: 6,
+              ),
+            ],
+          ),
+          FormCard(
+            children: <Widget>[
+              BoolDropdownButton(
+                label: localization.attachPdf,
+                value: settings.pdfEmailAttachment,
+                iconData: FontAwesomeIcons.fileInvoice,
+                onChanged: (value) => viewModel.onSettingsChanged(
+                    settings.rebuild((b) => b..pdfEmailAttachment = value)),
+              ),
+              BoolDropdownButton(
+                label: localization.attachDocuments,
+                value: settings.documentEmailAttachment,
+                iconData: FontAwesomeIcons.fileImage,
+                onChanged: (value) => viewModel.onSettingsChanged(settings
+                    .rebuild((b) => b..documentEmailAttachment = value)),
+              ),
+              BoolDropdownButton(
+                label: localization.attachUbl,
+                value: settings.ublEmailAttachment,
+                iconData: FontAwesomeIcons.fileArchive,
+                onChanged: (value) => viewModel.onSettingsChanged(
+                    settings.rebuild((b) => b..ublEmailAttachment = value)),
+              ),
+            ],
           ),
         ],
       ),

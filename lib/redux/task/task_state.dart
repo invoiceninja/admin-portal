@@ -48,7 +48,7 @@ abstract class TaskState implements Built<TaskState, TaskStateBuilder> {
     return rebuild((b) => b
       ..lastUpdated = DateTime.now().millisecondsSinceEpoch
       ..map.addAll(map)
-      ..list.replace(map.keys));
+      ..list.replace((map.keys.toList() + list.toList()).toSet().toList()));
   }
 
   static Serializer<TaskState> get serializer => _$taskStateSerializer;
@@ -75,6 +75,9 @@ abstract class TaskUIState extends Object
 
   @override
   bool get isCreatingNew => editing.isNew;
+
+  @override
+  String get editingId => editing.id;
 
   static Serializer<TaskUIState> get serializer => _$taskUIStateSerializer;
 }

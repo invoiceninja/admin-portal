@@ -4,6 +4,7 @@ import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/redux/invoice/invoice_selectors.dart';
 import 'package:invoiceninja_flutter/redux/payment/payment_selectors.dart';
 import 'package:invoiceninja_flutter/redux/quote/quote_selectors.dart';
+import 'package:invoiceninja_flutter/ui/app/entity_header.dart';
 import 'package:invoiceninja_flutter/ui/app/form_card.dart';
 import 'package:invoiceninja_flutter/ui/app/lists/app_list_tile.dart';
 import 'package:invoiceninja_flutter/ui/app/lists/list_divider.dart';
@@ -36,33 +37,10 @@ class UserView extends StatelessWidget {
       onBackPressed: () => viewModel.onBackPressed(),
       body: ListView(
         children: <Widget>[
-          FormCard(
-            children: <Widget>[
-              AppListTile(
-                icon: Icons.email,
-                title: user.email,
-                copyValue: user.email,
-                subtitle: localization.email,
-                onTap: () => launch('mailto:' + user.email),
-              ),
-              if ((user.phone ?? '').isNotEmpty)
-                AppListTile(
-                  icon: Icons.phone,
-                  title: user.phone,
-                  copyValue: user.phone,
-                  subtitle: localization.phone,
-                  onTap: () => launch('sms:' + cleanPhoneNumber(user.phone)),
-                ),
-            ],
+          EntityHeader(
+            value: user.email,
+            label: localization.email,
           ),
-          /*
-          TwoValueHeader(
-            label1: localization.paidToDate,
-            value1: '',
-            label2: localization.balanceDue,
-            value2: '',
-          ),
-           */
           Divider(
             height: 1.0,
           ),

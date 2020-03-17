@@ -77,7 +77,7 @@ class DashboardPanels extends StatelessWidget {
                           uiState.endDate(company), context),
                       style: Theme.of(context)
                           .textTheme
-                          .headline6
+                          .title
                           .copyWith(fontSize: 18),
                     ),
                   ),

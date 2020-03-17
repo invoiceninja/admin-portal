@@ -12,9 +12,17 @@ import 'package:invoiceninja_flutter/ui/app/history_drawer_vm.dart';
 import 'package:invoiceninja_flutter/ui/app/menu_drawer_vm.dart';
 import 'package:invoiceninja_flutter/ui/app/help_text.dart';
 import 'package:invoiceninja_flutter/ui/app/screen_imports.dart';
+import 'package:invoiceninja_flutter/ui/credit/credit_screen.dart';
+import 'package:invoiceninja_flutter/ui/credit/credit_screen_vm.dart';
+import 'package:invoiceninja_flutter/ui/credit/edit/credit_edit_vm.dart';
+import 'package:invoiceninja_flutter/ui/credit/view/credit_view_vm.dart';
+import 'package:invoiceninja_flutter/ui/design/design_screen_vm.dart';
+import 'package:invoiceninja_flutter/ui/design/edit/design_edit_vm.dart';
+import 'package:invoiceninja_flutter/ui/design/view/design_view_vm.dart';
 import 'package:invoiceninja_flutter/ui/payment/refund/payment_refund_vm.dart';
 import 'package:invoiceninja_flutter/ui/reports/reports_screen.dart';
 import 'package:invoiceninja_flutter/ui/reports/reports_screen_vm.dart';
+import 'package:invoiceninja_flutter/ui/settings/account_management_vm.dart';
 import 'package:invoiceninja_flutter/ui/settings/settings_screen_vm.dart';
 import 'package:invoiceninja_flutter/ui/settings/tax_settings_vm.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
@@ -35,12 +43,23 @@ class MainScreen extends StatelessWidget {
           final subRoute = '/' + uiState.subRoute;
           Widget screen = BlankScreen();
 
-          if ([
-                InvoiceScreen.route,
-                QuoteScreen.route,
-              ].contains(mainRoute) &&
-              subRoute == '/edit' &&
-              prefState.isDesktop) {
+          bool isFullScreen = false;
+          if (prefState.isDesktop) {
+            if ([
+                  InvoiceScreen.route,
+                  QuoteScreen.route,
+                  CreditScreen.route,
+                ].contains(mainRoute) &&
+                subRoute == '/edit') {
+              isFullScreen = true;
+            }
+          }
+          if (prefState.isNotMobile &&
+              DesignEditScreen.route == uiState.currentRoute) {
+            isFullScreen = true;
+          }
+
+          if (isFullScreen) {
             switch (mainRoute) {
               case InvoiceScreen.route:
                 screen = InvoiceEditScreen();
@@ -48,6 +67,15 @@ class MainScreen extends StatelessWidget {
               case QuoteScreen.route:
                 screen = QuoteEditScreen();
                 break;
+              case CreditScreen.route:
+                screen = CreditEditScreen();
+                break;
+              default:
+                switch (uiState.currentRoute) {
+                  case DesignEditScreen.route:
+                    screen = DesignEditScreen();
+                    break;
+                }
             }
           } else {
             switch (mainRoute) {
@@ -104,6 +132,14 @@ class MainScreen extends StatelessWidget {
                   listWidget: QuoteScreenBuilder(),
                   viewWidget: QuoteViewScreen(),
                   editWidget: QuoteEditScreen(),
+                );
+                break;
+              case CreditScreen.route:
+                screen = EntityScreens(
+                  entityType: EntityType.credit,
+                  listWidget: CreditScreenBuilder(),
+                  viewWidget: CreditViewScreen(),
+                  editWidget: CreditEditScreen(),
                 );
                 break;
               case ProjectScreen.route:
@@ -314,6 +350,18 @@ class SettingsScreens extends StatelessWidget {
       case kSettingsUserManagementEdit:
         screen = UserEditScreen();
         break;
+      case kSettingsCustomDesigns:
+        screen = DesignScreenBuilder();
+        break;
+      case kSettingsCustomDesignsView:
+        screen = DesignViewScreen();
+        break;
+      case kSettingsCustomDesignsEdit:
+        screen = DesignEditScreen();
+        break;
+      case kSettingsAccountManagement:
+        screen = AccountManagementScreen();
+        break;
     }
 
     return Row(children: <Widget>[
@@ -373,15 +421,19 @@ class EntityScreens extends StatelessWidget {
       listFlex = 5;
     }
 
-    final child = subRoute == 'email'
-        ? emailWidget
-        : subRoute == 'refund'
-            ? refundWidget
-            : subRoute == 'edit'
-                ? editWidget
-                : (entityUIState.selectedId ?? '').isNotEmpty
-                    ? viewWidget
-                    : BlankScreen(AppLocalization.of(context).noRecordSelected);
+    Widget child;
+    if (subRoute == 'email') {
+      child = emailWidget;
+    } else if (subRoute == 'refund') {
+      child = refundWidget;
+    } else if (subRoute == 'edit') {
+      child = editWidget;
+    } else if ((entityUIState.selectedId ?? '').isNotEmpty &&
+        state.getEntityMap(entityType).containsKey(entityUIState.selectedId)) {
+      child = viewWidget;
+    } else {
+      child = BlankScreen(AppLocalization.of(context).noRecordSelected);
+    }
 
     return Row(
       children: <Widget>[

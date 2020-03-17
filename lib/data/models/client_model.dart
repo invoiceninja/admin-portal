@@ -150,13 +150,11 @@ abstract class ClientEntity extends Object
     return EntityType.client;
   }
 
-  @BuiltValueField(wireName: 'name')
   String get name;
 
   @BuiltValueField(wireName: 'display_name')
   String get displayName;
 
-  @BuiltValueField(wireName: 'balance')
   double get balance;
 
   @BuiltValueField(wireName: 'credit_balance')
@@ -458,12 +456,20 @@ abstract class ClientEntity extends Object
         actions.add(EntityAction.newInvoice);
       }
 
-      if (userCompany.canCreate(EntityType.expense)) {
-        actions.add(EntityAction.newExpense);
-      }
-
       if (userCompany.canCreate(EntityType.payment)) {
         actions.add(EntityAction.newPayment);
+      }
+
+      if (userCompany.canCreate(EntityType.quote)) {
+        actions.add(EntityAction.newQuote);
+      }
+
+      if (userCompany.canCreate(EntityType.credit)) {
+        actions.add(EntityAction.newCredit);
+      }
+
+      if (userCompany.canCreate(EntityType.expense)) {
+        actions.add(EntityAction.newExpense);
       }
     }
 
@@ -582,8 +588,6 @@ abstract class ContactEntity extends Object
 
   String get email;
 
-  // TODO remove this nullable
-  @nullable
   String get password;
 
   String get phone;

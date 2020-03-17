@@ -29,6 +29,7 @@ const EntityType _$company = const EntityType._('company');
 const EntityType _$gateway = const EntityType._('gateway');
 const EntityType _$gatewayToken = const EntityType._('gatewayToken');
 const EntityType _$invoiceItem = const EntityType._('invoiceItem');
+const EntityType _$design = const EntityType._('design');
 const EntityType _$quoteItem = const EntityType._('quoteItem');
 const EntityType _$contact = const EntityType._('contact');
 const EntityType _$vendorContact = const EntityType._('vendorContact');
@@ -92,6 +93,8 @@ EntityType _$typeValueOf(String name) {
       return _$gatewayToken;
     case 'invoiceItem':
       return _$invoiceItem;
+    case 'design':
+      return _$design;
     case 'quoteItem':
       return _$quoteItem;
     case 'contact':
@@ -150,6 +153,7 @@ final BuiltSet<EntityType> _$typeValues =
   _$gateway,
   _$gatewayToken,
   _$invoiceItem,
+  _$design,
   _$quoteItem,
   _$contact,
   _$vendorContact,
@@ -193,6 +197,8 @@ final BuiltSet<EntityState> _$values =
 const EmailTemplate _$invoiceEmail = const EmailTemplate._('invoiceEmail');
 const EmailTemplate _$quoteEmail = const EmailTemplate._('quoteEmail');
 const EmailTemplate _$paymentEmail = const EmailTemplate._('paymentEmail');
+const EmailTemplate _$partialPaymentEmail =
+    const EmailTemplate._('partialPaymentEmail');
 const EmailTemplate _$creditEmail = const EmailTemplate._('creditEmail');
 const EmailTemplate _$firstReminder = const EmailTemplate._('firstReminder');
 const EmailTemplate _$secondReminder = const EmailTemplate._('secondReminder');
@@ -211,6 +217,8 @@ EmailTemplate _$templateValueOf(String name) {
       return _$quoteEmail;
     case 'paymentEmail':
       return _$paymentEmail;
+    case 'partialPaymentEmail':
+      return _$partialPaymentEmail;
     case 'creditEmail':
       return _$creditEmail;
     case 'firstReminder':
@@ -237,6 +245,7 @@ final BuiltSet<EmailTemplate> _$templateValues =
   _$invoiceEmail,
   _$quoteEmail,
   _$paymentEmail,
+  _$partialPaymentEmail,
   _$creditEmail,
   _$firstReminder,
   _$secondReminder,

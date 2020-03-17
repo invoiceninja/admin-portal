@@ -18,6 +18,10 @@ import 'package:invoiceninja_flutter/redux/payment/payment_reducer.dart';
 import 'package:invoiceninja_flutter/redux/quote/quote_reducer.dart';
 
 // STARTER: import - do not remove comment
+import 'package:invoiceninja_flutter/redux/design/design_reducer.dart';
+
+import 'package:invoiceninja_flutter/redux/credit/credit_reducer.dart';
+
 import 'package:invoiceninja_flutter/redux/user/user_reducer.dart';
 import 'package:invoiceninja_flutter/redux/tax_rate/tax_rate_reducer.dart';
 import 'package:invoiceninja_flutter/redux/company_gateway/company_gateway_reducer.dart';
@@ -38,6 +42,8 @@ UserCompanyState companyReducer(UserCompanyState state, dynamic action) {
     ..vendorState.replace(vendorsReducer(state.vendorState, action))
     ..taskState.replace(tasksReducer(state.taskState, action))
     // STARTER: reducer - do not remove comment
+    ..designState.replace(designsReducer(state.designState, action))
+    ..creditState.replace(creditsReducer(state.creditState, action))
     ..userState.replace(usersReducer(state.userState, action))
     ..taxRateState.replace(taxRatesReducer(state.taxRateState, action))
     ..companyGatewayState
@@ -97,8 +103,12 @@ UserCompanyEntity loadCompanySuccessReducer(
 
   // Check user has a blank user settings object
   if (userCompany.settings == null) {
-    userCompany =
-        userCompany.rebuild((b) => b..settings.replace(UserSettingsEntity()));
+    userCompany = userCompany.rebuild((b) => b
+      ..settings.replace(UserSettingsEntity())
+      ..user
+          .userCompany
+          .notifications
+          .replace(BuiltMap<String, BuiltList<String>>()));
   }
 
   userCompany = userCompany.rebuild((b) => b.company

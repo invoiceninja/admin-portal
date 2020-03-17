@@ -191,8 +191,8 @@ ReportResult taskReport(
   }
 
   final selectedColumns = columns.map((item) => EnumUtils.parse(item)).toList();
-  data.sort(
-      (rowA, rowB) => sortReportTableRows(rowA, rowB, taskReportSettings, selectedColumns));
+  data.sort((rowA, rowB) =>
+      sortReportTableRows(rowA, rowB, taskReportSettings, selectedColumns));
 
   return ReportResult(
     allColumns: TaskReportFields.values.map((e) => EnumUtils.parse(e)).toList(),

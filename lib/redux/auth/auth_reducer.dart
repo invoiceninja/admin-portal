@@ -23,7 +23,6 @@ AuthState userLoginLoadedReducer(AuthState authState, UserLoginLoaded action) {
   return authState.rebuild((b) => b
     ..isInitialized = true
     ..url = formatApiUrl(action.url)
-    ..secret = action.secret ?? ''
     ..email = action.email ?? '');
 }
 

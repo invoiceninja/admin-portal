@@ -243,6 +243,12 @@ class _$UserEntitySerializer implements StructuredSerializer<UserEntity> {
         ..add(serializers.serialize(object.assignedUserId,
             specifiedType: const FullType(String)));
     }
+    if (object.subEntityType != null) {
+      result
+        ..add('entity_type')
+        ..add(serializers.serialize(object.subEntityType,
+            specifiedType: const FullType(EntityType)));
+    }
     if (object.id != null) {
       result
         ..add('id')
@@ -327,6 +333,10 @@ class _$UserEntitySerializer implements StructuredSerializer<UserEntity> {
         case 'assigned_user_id':
           result.assignedUserId = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String;
+          break;
+        case 'entity_type':
+          result.subEntityType = serializers.deserialize(value,
+              specifiedType: const FullType(EntityType)) as EntityType;
           break;
         case 'id':
           result.id = serializers.deserialize(value,
@@ -654,6 +664,8 @@ class _$UserEntity extends UserEntity {
   @override
   final String assignedUserId;
   @override
+  final EntityType subEntityType;
+  @override
   final String id;
 
   factory _$UserEntity([void Function(UserEntityBuilder) updates]) =>
@@ -676,6 +688,7 @@ class _$UserEntity extends UserEntity {
       this.isDeleted,
       this.createdUserId,
       this.assignedUserId,
+      this.subEntityType,
       this.id})
       : super._() {
     if (firstName == null) {
@@ -719,6 +732,7 @@ class _$UserEntity extends UserEntity {
         isDeleted == other.isDeleted &&
         createdUserId == other.createdUserId &&
         assignedUserId == other.assignedUserId &&
+        subEntityType == other.subEntityType &&
         id == other.id;
   }
 
@@ -741,25 +755,29 @@ class _$UserEntity extends UserEntity {
                                                             $jc(
                                                                 $jc(
                                                                     $jc(
-                                                                        0,
-                                                                        firstName
+                                                                        $jc(
+                                                                            0,
+                                                                            firstName
+                                                                                .hashCode),
+                                                                        lastName
                                                                             .hashCode),
-                                                                    lastName
+                                                                    email
                                                                         .hashCode),
-                                                                email.hashCode),
-                                                            phone.hashCode),
-                                                        customValue1.hashCode),
-                                                    customValue2.hashCode),
-                                                customValue3.hashCode),
-                                            customValue4.hashCode),
-                                        userCompany.hashCode),
-                                    isChanged.hashCode),
-                                createdAt.hashCode),
-                            updatedAt.hashCode),
-                        archivedAt.hashCode),
-                    isDeleted.hashCode),
-                createdUserId.hashCode),
-            assignedUserId.hashCode),
+                                                                phone.hashCode),
+                                                            customValue1
+                                                                .hashCode),
+                                                        customValue2.hashCode),
+                                                    customValue3.hashCode),
+                                                customValue4.hashCode),
+                                            userCompany.hashCode),
+                                        isChanged.hashCode),
+                                    createdAt.hashCode),
+                                updatedAt.hashCode),
+                            archivedAt.hashCode),
+                        isDeleted.hashCode),
+                    createdUserId.hashCode),
+                assignedUserId.hashCode),
+            subEntityType.hashCode),
         id.hashCode));
   }
 
@@ -782,6 +800,7 @@ class _$UserEntity extends UserEntity {
           ..add('isDeleted', isDeleted)
           ..add('createdUserId', createdUserId)
           ..add('assignedUserId', assignedUserId)
+          ..add('subEntityType', subEntityType)
           ..add('id', id))
         .toString();
   }
@@ -858,6 +877,11 @@ class UserEntityBuilder implements Builder<UserEntity, UserEntityBuilder> {
   set assignedUserId(String assignedUserId) =>
       _$this._assignedUserId = assignedUserId;
 
+  EntityType _subEntityType;
+  EntityType get subEntityType => _$this._subEntityType;
+  set subEntityType(EntityType subEntityType) =>
+      _$this._subEntityType = subEntityType;
+
   String _id;
   String get id => _$this._id;
   set id(String id) => _$this._id = id;
@@ -882,6 +906,7 @@ class UserEntityBuilder implements Builder<UserEntity, UserEntityBuilder> {
       _isDeleted = _$v.isDeleted;
       _createdUserId = _$v.createdUserId;
       _assignedUserId = _$v.assignedUserId;
+      _subEntityType = _$v.subEntityType;
       _id = _$v.id;
       _$v = null;
     }
@@ -923,6 +948,7 @@ class UserEntityBuilder implements Builder<UserEntity, UserEntityBuilder> {
               isDeleted: isDeleted,
               createdUserId: createdUserId,
               assignedUserId: assignedUserId,
+              subEntityType: subEntityType,
               id: id);
     } catch (_) {
       String _$failedField;

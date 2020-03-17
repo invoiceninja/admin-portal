@@ -11,8 +11,10 @@ import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/redux/task/task_actions.dart';
 import 'package:invoiceninja_flutter/redux/task/task_selectors.dart';
 import 'package:invoiceninja_flutter/redux/ui/list_ui_state.dart';
-import 'package:invoiceninja_flutter/ui/app/presenters/task_presenter.dart';
-import 'package:invoiceninja_flutter/ui/task/task_list.dart';
+import 'package:invoiceninja_flutter/ui/app/entities/entity_actions_dialog.dart';
+import 'package:invoiceninja_flutter/ui/app/tables/entity_list.dart';
+import 'package:invoiceninja_flutter/ui/task/task_list_item.dart';
+import 'package:invoiceninja_flutter/ui/task/task_presenter.dart';
 import 'package:invoiceninja_flutter/utils/completers.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:redux/redux.dart';
@@ -25,9 +27,62 @@ class TaskListBuilder extends StatelessWidget {
     return StoreConnector<AppState, TaskListVM>(
       converter: TaskListVM.fromStore,
       builder: (context, viewModel) {
-        return TaskList(
-          viewModel: viewModel,
-        );
+        return EntityList(
+            isLoaded: viewModel.isLoaded,
+            entityType: EntityType.taxRate,
+            presenter: TaskPresenter(),
+            state: viewModel.state,
+            entityList: viewModel.taskList,
+            onEntityTap: viewModel.onTaskTap,
+            tableColumns: viewModel.tableColumns,
+            onRefreshed: viewModel.onRefreshed,
+            onClearEntityFilterPressed: viewModel.onClearEntityFilterPressed,
+            onViewEntityFilterPressed: viewModel.onViewEntityFilterPressed,
+            onSortColumn: viewModel.onSortColumn,
+            itemBuilder: (BuildContext context, index) {
+              final taskId = viewModel.taskList[index];
+              final task = viewModel.taskMap[taskId];
+              final client =
+                  viewModel.clientMap[task.clientId] ?? ClientEntity();
+              final state = viewModel.state;
+              final listUIState = state.getListState(EntityType.client);
+              final isInMultiselect = listUIState.isInMultiselect();
+
+              void showDialog() => showEntityActionsDialog(
+                    entities: [task],
+                    context: context,
+                    client: client,
+                  );
+
+              return TaskListItem(
+                userCompany: viewModel.state.userCompany,
+                filter: viewModel.filter,
+                task: task,
+                client:
+                    viewModel.clientMap[task.clientId] ?? ClientEntity(),
+                project:
+                    viewModel.state.projectState.map[task.projectId],
+                onTap: () => viewModel.onTaskTap(context, task),
+                onEntityAction: (EntityAction action) {
+                  if (action == EntityAction.more) {
+                    showDialog();
+                  } else {
+                    handleTaskAction(context, [task], action);
+                  }
+                },
+                onLongPress: () async {
+                  final longPressIsSelection =
+                      viewModel.state.prefState.longPressSelectionIsDefault ?? true;
+                  if (longPressIsSelection && !isInMultiselect) {
+                    handleTaskAction(
+                        context, [task], EntityAction.toggleMultiselect);
+                  } else {
+                    showDialog();
+                  }
+                },
+                isChecked: isInMultiselect && listUIState.isSelected(task.id),
+              );
+            });
       },
     );
   }
@@ -49,6 +104,7 @@ class TaskListVM {
     @required this.tableColumns,
     @required this.onClearEntityFilterPressed,
     @required this.onViewEntityFilterPressed,
+    @required this.onSortColumn,
   });
 
   static TaskListVM fromStore(Store<AppState> store) {
@@ -84,6 +140,7 @@ class TaskListVM {
           context: context,
           entityId: state.taskListState.filterEntityId,
           entityType: state.taskListState.filterEntityType),
+      onSortColumn: (field) => store.dispatch(SortTasks(field)),
       onTaskTap: (context, task) {
         if (store.state.taskListState.isInMultiselect()) {
           handleTaskAction(context, [task], EntityAction.toggleMultiselect);
@@ -105,9 +162,10 @@ class TaskListVM {
   final String filter;
   final bool isLoading;
   final bool isLoaded;
-  final Function(BuildContext, TaskEntity) onTaskTap;
+  final Function(BuildContext, BaseEntity) onTaskTap;
   final Function(BuildContext) onRefreshed;
   final Function onClearEntityFilterPressed;
   final Function(BuildContext) onViewEntityFilterPressed;
   final List<String> tableColumns;
+  final Function(String) onSortColumn;
 }

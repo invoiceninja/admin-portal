@@ -42,6 +42,12 @@ class _$UIStateSerializer implements StructuredSerializer<UIState> {
       'invoiceUIState',
       serializers.serialize(object.invoiceUIState,
           specifiedType: const FullType(InvoiceUIState)),
+      'designUIState',
+      serializers.serialize(object.designUIState,
+          specifiedType: const FullType(DesignUIState)),
+      'creditUIState',
+      serializers.serialize(object.creditUIState,
+          specifiedType: const FullType(CreditUIState)),
       'userUIState',
       serializers.serialize(object.userUIState,
           specifiedType: const FullType(UserUIState)),
@@ -139,6 +145,14 @@ class _$UIStateSerializer implements StructuredSerializer<UIState> {
           result.invoiceUIState.replace(serializers.deserialize(value,
               specifiedType: const FullType(InvoiceUIState)) as InvoiceUIState);
           break;
+        case 'designUIState':
+          result.designUIState.replace(serializers.deserialize(value,
+              specifiedType: const FullType(DesignUIState)) as DesignUIState);
+          break;
+        case 'creditUIState':
+          result.creditUIState.replace(serializers.deserialize(value,
+              specifiedType: const FullType(CreditUIState)) as CreditUIState);
+          break;
         case 'userUIState':
           result.userUIState.replace(serializers.deserialize(value,
               specifiedType: const FullType(UserUIState)) as UserUIState);
@@ -221,6 +235,10 @@ class _$UIState extends UIState {
   @override
   final InvoiceUIState invoiceUIState;
   @override
+  final DesignUIState designUIState;
+  @override
+  final CreditUIState creditUIState;
+  @override
   final UserUIState userUIState;
   @override
   final TaxRateUIState taxRateUIState;
@@ -260,6 +278,8 @@ class _$UIState extends UIState {
       this.productUIState,
       this.clientUIState,
       this.invoiceUIState,
+      this.designUIState,
+      this.creditUIState,
       this.userUIState,
       this.taxRateUIState,
       this.companyGatewayUIState,
@@ -297,6 +317,12 @@ class _$UIState extends UIState {
     }
     if (invoiceUIState == null) {
       throw new BuiltValueNullFieldError('UIState', 'invoiceUIState');
+    }
+    if (designUIState == null) {
+      throw new BuiltValueNullFieldError('UIState', 'designUIState');
+    }
+    if (creditUIState == null) {
+      throw new BuiltValueNullFieldError('UIState', 'creditUIState');
     }
     if (userUIState == null) {
       throw new BuiltValueNullFieldError('UIState', 'userUIState');
@@ -359,6 +385,8 @@ class _$UIState extends UIState {
         productUIState == other.productUIState &&
         clientUIState == other.clientUIState &&
         invoiceUIState == other.invoiceUIState &&
+        designUIState == other.designUIState &&
+        creditUIState == other.creditUIState &&
         userUIState == other.userUIState &&
         taxRateUIState == other.taxRateUIState &&
         companyGatewayUIState == other.companyGatewayUIState &&
@@ -394,13 +422,13 @@ class _$UIState extends UIState {
                                                                 $jc(
                                                                     $jc(
                                                                         $jc(
-                                                                            $jc($jc($jc($jc(0, selectedCompanyIndex.hashCode), currentRoute.hashCode), previousRoute.hashCode),
-                                                                                filter.hashCode),
-                                                                            filterClearedAt.hashCode),
-                                                                        dashboardUIState.hashCode),
-                                                                    productUIState.hashCode),
-                                                                clientUIState.hashCode),
-                                                            invoiceUIState.hashCode),
+                                                                            $jc($jc($jc($jc($jc($jc(0, selectedCompanyIndex.hashCode), currentRoute.hashCode), previousRoute.hashCode), filter.hashCode), filterClearedAt.hashCode),
+                                                                                dashboardUIState.hashCode),
+                                                                            productUIState.hashCode),
+                                                                        clientUIState.hashCode),
+                                                                    invoiceUIState.hashCode),
+                                                                designUIState.hashCode),
+                                                            creditUIState.hashCode),
                                                         userUIState.hashCode),
                                                     taxRateUIState.hashCode),
                                                 companyGatewayUIState.hashCode),
@@ -428,6 +456,8 @@ class _$UIState extends UIState {
           ..add('productUIState', productUIState)
           ..add('clientUIState', clientUIState)
           ..add('invoiceUIState', invoiceUIState)
+          ..add('designUIState', designUIState)
+          ..add('creditUIState', creditUIState)
           ..add('userUIState', userUIState)
           ..add('taxRateUIState', taxRateUIState)
           ..add('companyGatewayUIState', companyGatewayUIState)
@@ -494,6 +524,18 @@ class UIStateBuilder implements Builder<UIState, UIStateBuilder> {
       _$this._invoiceUIState ??= new InvoiceUIStateBuilder();
   set invoiceUIState(InvoiceUIStateBuilder invoiceUIState) =>
       _$this._invoiceUIState = invoiceUIState;
+
+  DesignUIStateBuilder _designUIState;
+  DesignUIStateBuilder get designUIState =>
+      _$this._designUIState ??= new DesignUIStateBuilder();
+  set designUIState(DesignUIStateBuilder designUIState) =>
+      _$this._designUIState = designUIState;
+
+  CreditUIStateBuilder _creditUIState;
+  CreditUIStateBuilder get creditUIState =>
+      _$this._creditUIState ??= new CreditUIStateBuilder();
+  set creditUIState(CreditUIStateBuilder creditUIState) =>
+      _$this._creditUIState = creditUIState;
 
   UserUIStateBuilder _userUIState;
   UserUIStateBuilder get userUIState =>
@@ -587,6 +629,8 @@ class UIStateBuilder implements Builder<UIState, UIStateBuilder> {
       _productUIState = _$v.productUIState?.toBuilder();
       _clientUIState = _$v.clientUIState?.toBuilder();
       _invoiceUIState = _$v.invoiceUIState?.toBuilder();
+      _designUIState = _$v.designUIState?.toBuilder();
+      _creditUIState = _$v.creditUIState?.toBuilder();
       _userUIState = _$v.userUIState?.toBuilder();
       _taxRateUIState = _$v.taxRateUIState?.toBuilder();
       _companyGatewayUIState = _$v.companyGatewayUIState?.toBuilder();
@@ -633,6 +677,8 @@ class UIStateBuilder implements Builder<UIState, UIStateBuilder> {
               productUIState: productUIState.build(),
               clientUIState: clientUIState.build(),
               invoiceUIState: invoiceUIState.build(),
+              designUIState: designUIState.build(),
+              creditUIState: creditUIState.build(),
               userUIState: userUIState.build(),
               taxRateUIState: taxRateUIState.build(),
               companyGatewayUIState: companyGatewayUIState.build(),
@@ -657,6 +703,10 @@ class UIStateBuilder implements Builder<UIState, UIStateBuilder> {
         clientUIState.build();
         _$failedField = 'invoiceUIState';
         invoiceUIState.build();
+        _$failedField = 'designUIState';
+        designUIState.build();
+        _$failedField = 'creditUIState';
+        creditUIState.build();
         _$failedField = 'userUIState';
         userUIState.build();
         _$failedField = 'taxRateUIState';

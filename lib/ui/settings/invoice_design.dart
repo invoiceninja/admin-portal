@@ -1,16 +1,25 @@
+import 'package:built_collection/built_collection.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_redux/flutter_redux.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:invoiceninja_flutter/constants.dart';
+import 'package:invoiceninja_flutter/data/models/design_model.dart';
 import 'package:invoiceninja_flutter/data/models/entities.dart';
+import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
+import 'package:invoiceninja_flutter/redux/app/app_state.dart';
+import 'package:invoiceninja_flutter/redux/design/design_actions.dart';
+import 'package:invoiceninja_flutter/redux/settings/settings_actions.dart';
 import 'package:invoiceninja_flutter/redux/static/static_selectors.dart';
+import 'package:invoiceninja_flutter/ui/app/buttons/elevated_button.dart';
+import 'package:invoiceninja_flutter/ui/app/dialogs/multiselect_dialog.dart';
 import 'package:invoiceninja_flutter/ui/app/entity_dropdown.dart';
 import 'package:invoiceninja_flutter/ui/app/form_card.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/app_dropdown_button.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/app_form.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/bool_dropdown_button.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/color_picker.dart';
-import 'package:invoiceninja_flutter/ui/app/forms/help_link.dart';
+import 'package:invoiceninja_flutter/ui/app/forms/design_picker.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/learn_more.dart';
 import 'package:invoiceninja_flutter/ui/settings/invoice_design_vm.dart';
 import 'package:invoiceninja_flutter/ui/app/edit_scaffold.dart';
@@ -41,7 +50,7 @@ class _InvoiceDesignState extends State<InvoiceDesign>
   void initState() {
     super.initState();
     _focusNode = FocusScopeNode();
-    _controller = TabController(vsync: this, length: 2);
+    _controller = TabController(vsync: this, length: 10);
   }
 
   @override
@@ -53,12 +62,12 @@ class _InvoiceDesignState extends State<InvoiceDesign>
 
   @override
   Widget build(BuildContext context) {
+    final store = StoreProvider.of<AppState>(context);
     final localization = AppLocalization.of(context);
     final viewModel = widget.viewModel;
     final state = viewModel.state;
     final settings = viewModel.settings;
     final company = viewModel.company;
-    final designs = company.getInvoiceDesigns();
 
     return EditScaffold(
       title: localization.invoiceDesign,
@@ -66,6 +75,7 @@ class _InvoiceDesignState extends State<InvoiceDesign>
       appBarBottom: TabBar(
         key: ValueKey(state.settingsUIState.updatedAt),
         controller: _controller,
+        isScrollable: true,
         tabs: [
           Tab(
             text: localization.generalSettings,
@@ -73,6 +83,26 @@ class _InvoiceDesignState extends State<InvoiceDesign>
           Tab(
             text: localization.invoiceOptions,
           ),
+          Tab(
+            text: localization.clientDetails,
+          ),
+          Tab(
+            text: localization.companyDetails,
+          ),
+          Tab(
+            text: localization.companyAddress,
+          ),
+          Tab(
+            text: localization.invoiceDetails,
+          ),
+          Tab(
+            text: localization.quoteDetails,
+          ),
+          Tab(
+            text: localization.creditDetails,
+          ),
+          Tab(text: localization.productColumns),
+          Tab(text: localization.taskColumns),
         ],
       ),
       body: AppTabForm(
@@ -81,33 +111,48 @@ class _InvoiceDesignState extends State<InvoiceDesign>
         focusNode: _focusNode,
         children: <Widget>[
           ListView(children: <Widget>[
+            Padding(
+              padding: const EdgeInsets.only(
+                  top: 20, right: 16, bottom: 10, left: 16),
+              child: ElevatedButton(
+                label: localization.customize.toUpperCase(),
+                iconData: Icons.settings,
+                onPressed: () => state.designState.customDesigns.isEmpty
+                    ? createEntity(
+                        context: context,
+                        entity: DesignEntity(
+                            design:
+                                state.designState.map[kDesignCleanId].design),
+                      )
+                    : store.dispatch(ViewSettings(
+                        navigator: Navigator.of(context),
+                        section: kSettingsCustomDesigns,
+                      )),
+                //onPressed: () => handleDesignAction(context, [group], EntityAction.settings),
+              ),
+            ),
             FormCard(
               children: <Widget>[
-                AppDropdownButton(
-                  labelText: localization.invoiceDesign,
-                  value: settings.defaultInvoiceDesignId,
-                  onChanged: (dynamic value) => viewModel.onSettingsChanged(
-                      settings
-                          .rebuild((b) => b..defaultInvoiceDesignId = value)),
-                  items: designs
-                      .map((designId) => DropdownMenuItem<String>(
-                            value: designId,
-                            child: Text(kInvoiceDesigns[designId]),
-                          ))
-                      .toList(),
+                DesignPicker(
+                  label: localization.invoiceDesign,
+                  initialValue: settings.defaultInvoiceDesignId,
+                  onSelected: (value) => viewModel.onSettingsChanged(settings
+                      .rebuild((b) => b..defaultInvoiceDesignId = value.id)),
                 ),
-                AppDropdownButton(
-                  labelText: localization.quoteDesign,
-                  value: settings.defaultQuoteDesignId,
-                  onChanged: (dynamic value) => viewModel.onSettingsChanged(
-                      settings.rebuild((b) => b..defaultQuoteDesignId = value)),
-                  items: designs
-                      .map((designId) => DropdownMenuItem<String>(
-                            value: designId,
-                            child: Text(kInvoiceDesigns[designId]),
-                          ))
-                      .toList(),
-                ),
+                if (company.isModuleEnabled(EntityType.quote))
+                  DesignPicker(
+                    label: localization.quoteDesign,
+                    initialValue: settings.defaultQuoteDesignId,
+                    onSelected: (value) => viewModel.onSettingsChanged(settings
+                        .rebuild((b) => b..defaultQuoteDesignId = value.id)),
+                  ),
+                if (company.isModuleEnabled(EntityType.credit))
+                  DesignPicker(
+                    label: localization.creditDesign,
+                    initialValue: settings.defaultCreditDesignId,
+                    onSelected: (value) => viewModel.onSettingsChanged(settings
+                        .rebuild((b) => b..defaultCreditDesignId = value.id)),
+                  ),
                 AppDropdownButton(
                   labelText: localization.pageSize,
                   value: settings.pageSize,
@@ -225,6 +270,123 @@ class _InvoiceDesignState extends State<InvoiceDesign>
                 ],
               ),
             ],
+          ),
+          FormCard(
+            child: MultiSelectList(
+              //selected: settings.pdfVariables[kPdfFieldsClientDetails].toList(),
+              options: settings.pdfVariables[kPdfFieldsClientDetails].toList(),
+              defaultSelected:
+                  settings.pdfVariables[kPdfFieldsClientDetails].toList(),
+              selected: settings.pdfVariables[kPdfFieldsClientDetails].toList(),
+              onSelected: (values) {
+                viewModel.onSettingsChanged(settings.rebuild((b) => b
+                  ..pdfVariables[kPdfFieldsClientDetails] = BuiltList(values)));
+              },
+              addTitle: localization.addField,
+              liveChanges: true,
+            ),
+          ),
+          FormCard(
+            child: MultiSelectList(
+              options: [],
+              defaultSelected: [],
+              //selected: settings.pdfVariables[kPdfFieldsCompanyDetails].toList(),
+              selected: [],
+              onSelected: (values) {
+                viewModel.onSettingsChanged(settings.rebuild((b) => b
+                  ..pdfVariables[kPdfFieldsCompanyDetails] =
+                      BuiltList(values)));
+              },
+              addTitle: localization.addField,
+              liveChanges: true,
+            ),
+          ),
+          FormCard(
+            child: MultiSelectList(
+              options: [],
+              defaultSelected: [],
+              //selected: settings.pdfVariables[kPdfFieldsCompanyAddress].toList(),
+              selected: [],
+              onSelected: (values) {
+                viewModel.onSettingsChanged(settings.rebuild((b) => b
+                  ..pdfVariables[kPdfFieldsCompanyAddress] =
+                      BuiltList(values)));
+              },
+              addTitle: localization.addField,
+              liveChanges: true,
+            ),
+          ),
+          FormCard(
+            child: MultiSelectList(
+              options: [],
+              defaultSelected: [],
+              //selected: settings.pdfVariables[kPdfFieldsInvoiceDetails].toList(),
+              selected: [],
+              onSelected: (values) {
+                viewModel.onSettingsChanged(settings.rebuild((b) => b
+                  ..pdfVariables[kPdfFieldsInvoiceDetails] =
+                      BuiltList(values)));
+              },
+              addTitle: localization.addField,
+              liveChanges: true,
+            ),
+          ),
+          FormCard(
+            child: MultiSelectList(
+              options: [],
+              defaultSelected: [],
+              //selected: settings.pdfVariables[kPdfFieldsQuoteDetails].toList(),
+              selected: [],
+              onSelected: (values) {
+                viewModel.onSettingsChanged(settings.rebuild((b) => b
+                  ..pdfVariables[kPdfFieldsQuoteDetails] = BuiltList(values)));
+              },
+              addTitle: localization.addField,
+              liveChanges: true,
+            ),
+          ),
+          FormCard(
+            child: MultiSelectList(
+              options: [],
+              defaultSelected: [],
+              //selected: settings.pdfVariables[kPdfFieldsCreditDetails].toList(),
+              selected: [],
+              onSelected: (values) {
+                viewModel.onSettingsChanged(settings.rebuild((b) => b
+                  ..pdfVariables[kPdfFieldsCreditDetails] = BuiltList(values)));
+              },
+              addTitle: localization.addField,
+              liveChanges: true,
+            ),
+          ),
+          FormCard(
+            child: MultiSelectList(
+              options: [],
+              defaultSelected: [],
+              //selected: settings.pdfVariables[kPdfFieldsProductColumns].toList(),
+              selected: [],
+              onSelected: (values) {
+                viewModel.onSettingsChanged(settings.rebuild((b) => b
+                  ..pdfVariables[kPdfFieldsProductColumns] =
+                      BuiltList(values)));
+              },
+              addTitle: localization.addField,
+              liveChanges: true,
+            ),
+          ),
+          FormCard(
+            child: MultiSelectList(
+              options: [],
+              defaultSelected: [],
+              //selected: settings.pdfVariables[kPdfFieldsTaskColumns].toList(),
+              selected: [],
+              onSelected: (values) {
+                viewModel.onSettingsChanged(settings.rebuild((b) => b
+                  ..pdfVariables[kPdfFieldsTaskColumns] = BuiltList(values)));
+              },
+              addTitle: localization.addField,
+              liveChanges: true,
+            ),
           ),
         ],
       ),

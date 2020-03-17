@@ -16,11 +16,10 @@ class LoadStateSuccess {
 }
 
 class UserLoginLoaded {
-  UserLoginLoaded(this.email, this.url, this.secret);
+  UserLoginLoaded(this.email, this.url);
 
   final String email;
   final String url;
-  final String secret;
 }
 
 class OAuthLoginRequest implements StartLoading {
@@ -104,10 +103,10 @@ class UserSignUpRequest implements StartLoading {
     this.lastName,
     this.email,
     this.password,
-    this.platform,
     this.photoUrl,
     this.oauthId,
     this.secret,
+    this.url,
   });
 
   final Completer completer;
@@ -115,10 +114,10 @@ class UserSignUpRequest implements StartLoading {
   final String lastName;
   final String email;
   final String password;
-  final String platform;
   final String photoUrl;
   final String oauthId;
   final String secret;
+  final String url;
 }
 
 class UserVerifiedPassword {}

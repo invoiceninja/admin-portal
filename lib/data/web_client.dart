@@ -45,6 +45,7 @@ class WebClient {
     String fileIndex,
     String secret,
     String password,
+    bool rawResponse = false,
   }) async {
     url = _checkUrl(url);
     print('POST: $url');
@@ -60,6 +61,10 @@ class WebClient {
               body: data,
               headers: _getHeaders(token, secret: secret, password: password))
           .timeout(const Duration(seconds: kMaxPostSeconds));
+    }
+
+    if (rawResponse) {
+      return response;
     }
 
     _checkResponse(response);
@@ -97,13 +102,13 @@ class WebClient {
     return json.decode(response.body);
   }
 
-  Future<dynamic> delete(String url, String token) async {
+  Future<dynamic> delete(String url, String token, {String password}) async {
     url = _checkUrl(url);
     print('Delete: $url');
 
     final http.Response response = await http.Client().delete(
       url,
-      headers: _getHeaders(token),
+      headers: _getHeaders(token, password: password),
     );
 
     _checkResponse(response);
@@ -153,7 +158,7 @@ void _checkResponse(http.Response response) {
   }
 
   debugPrint(
-      'response: ${response.statusCode} ${response.body.substring(0, min(response.body.length, 20000))}',
+      'response: ${response.statusCode} ${response.body.substring(0, min(response.body.length, 30000))}',
       wrapWidth: 1000);
   //debugPrint('response: ${response.statusCode} ${response.body}');
   print('headers: ${response.headers}');
@@ -180,6 +185,7 @@ String _parseError(int code, String response) {
     message = jsonResponse['message'] ?? jsonResponse;
 
     if (jsonResponse['errors'] != null) {
+      message += '\n';
       try {
         jsonResponse['errors'].forEach((String field, dynamic errors) {
           (errors as List<dynamic>)

@@ -171,6 +171,10 @@ class _$CompanyEntitySerializer implements StructuredSerializer<CompanyEntity> {
       serializers.serialize(object.vendors,
           specifiedType:
               const FullType(BuiltList, const [const FullType(VendorEntity)])),
+      'designs',
+      serializers.serialize(object.designs,
+          specifiedType:
+              const FullType(BuiltList, const [const FullType(DesignEntity)])),
       'userMap',
       serializers.serialize(object.userMap,
           specifiedType: const FullType(BuiltMap,
@@ -248,6 +252,12 @@ class _$CompanyEntitySerializer implements StructuredSerializer<CompanyEntity> {
         ..add('assigned_user_id')
         ..add(serializers.serialize(object.assignedUserId,
             specifiedType: const FullType(String)));
+    }
+    if (object.subEntityType != null) {
+      result
+        ..add('entity_type')
+        ..add(serializers.serialize(object.subEntityType,
+            specifiedType: const FullType(EntityType)));
     }
     if (object.id != null) {
       result
@@ -470,6 +480,12 @@ class _$CompanyEntitySerializer implements StructuredSerializer<CompanyEntity> {
                       BuiltList, const [const FullType(VendorEntity)]))
               as BuiltList<Object>);
           break;
+        case 'designs':
+          result.designs.replace(serializers.deserialize(value,
+                  specifiedType: const FullType(
+                      BuiltList, const [const FullType(DesignEntity)]))
+              as BuiltList<Object>);
+          break;
         case 'userMap':
           result.userMap.replace(serializers.deserialize(value,
               specifiedType: const FullType(BuiltMap,
@@ -523,6 +539,10 @@ class _$CompanyEntitySerializer implements StructuredSerializer<CompanyEntity> {
         case 'assigned_user_id':
           result.assignedUserId = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String;
+          break;
+        case 'entity_type':
+          result.subEntityType = serializers.deserialize(value,
+              specifiedType: const FullType(EntityType)) as EntityType;
           break;
         case 'id':
           result.id = serializers.deserialize(value,
@@ -692,6 +712,15 @@ class _$UserCompanyEntitySerializer
       serializers.serialize(object.permissions,
           specifiedType: const FullType(String)),
     ];
+    if (object.notifications != null) {
+      result
+        ..add('notifications')
+        ..add(serializers.serialize(object.notifications,
+            specifiedType: const FullType(BuiltMap, const [
+              const FullType(String),
+              const FullType(BuiltList, const [const FullType(String)])
+            ])));
+    }
     if (object.company != null) {
       result
         ..add('company')
@@ -709,6 +738,12 @@ class _$UserCompanyEntitySerializer
         ..add('token')
         ..add(serializers.serialize(object.token,
             specifiedType: const FullType(TokenEntity)));
+    }
+    if (object.account != null) {
+      result
+        ..add('account')
+        ..add(serializers.serialize(object.account,
+            specifiedType: const FullType(AccountEntity)));
     }
     if (object.settings != null) {
       result
@@ -743,6 +778,13 @@ class _$UserCompanyEntitySerializer
           result.permissions = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String;
           break;
+        case 'notifications':
+          result.notifications.replace(serializers.deserialize(value,
+              specifiedType: const FullType(BuiltMap, const [
+                const FullType(String),
+                const FullType(BuiltList, const [const FullType(String)])
+              ])));
+          break;
         case 'company':
           result.company.replace(serializers.deserialize(value,
               specifiedType: const FullType(CompanyEntity)) as CompanyEntity);
@@ -754,6 +796,10 @@ class _$UserCompanyEntitySerializer
         case 'token':
           result.token.replace(serializers.deserialize(value,
               specifiedType: const FullType(TokenEntity)) as TokenEntity);
+          break;
+        case 'account':
+          result.account.replace(serializers.deserialize(value,
+              specifiedType: const FullType(AccountEntity)) as AccountEntity);
           break;
         case 'settings':
           result.settings.replace(serializers.deserialize(value,
@@ -778,9 +824,6 @@ class _$UserSettingsEntitySerializer
   Iterable<Object> serialize(Serializers serializers, UserSettingsEntity object,
       {FullType specifiedType = FullType.unspecified}) {
     final result = <Object>[
-      'accent_color',
-      serializers.serialize(object.accentColor,
-          specifiedType: const FullType(String)),
       'table_columns',
       serializers.serialize(object.tableColumns,
           specifiedType: const FullType(BuiltMap, const [
@@ -794,7 +837,12 @@ class _$UserSettingsEntitySerializer
             const FullType(ReportSettingsEntity)
           ])),
     ];
-
+    if (object.accentColor != null) {
+      result
+        ..add('accent_color')
+        ..add(serializers.serialize(object.accentColor,
+            specifiedType: const FullType(String)));
+    }
     return result;
   }
 
@@ -1383,6 +1431,12 @@ class _$SettingsEntitySerializer
         ..add(serializers.serialize(object.defaultQuoteDesignId,
             specifiedType: const FullType(String)));
     }
+    if (object.defaultCreditDesignId != null) {
+      result
+        ..add('credit_design_id')
+        ..add(serializers.serialize(object.defaultCreditDesignId,
+            specifiedType: const FullType(String)));
+    }
     if (object.defaultInvoiceFooter != null) {
       result
         ..add('invoice_footer')
@@ -1443,6 +1497,15 @@ class _$SettingsEntitySerializer
         ..add(serializers.serialize(object.invoiceFields,
             specifiedType: const FullType(String)));
     }
+    if (object.pdfVariables != null) {
+      result
+        ..add('pdf_variables')
+        ..add(serializers.serialize(object.pdfVariables,
+            specifiedType: const FullType(BuiltMap, const [
+              const FullType(String),
+              const FullType(BuiltList, const [const FullType(String)])
+            ])));
+    }
     if (object.emailFooter != null) {
       result
         ..add('email_footer')
@@ -1467,6 +1530,12 @@ class _$SettingsEntitySerializer
         ..add(serializers.serialize(object.emailSubjectPayment,
             specifiedType: const FullType(String)));
     }
+    if (object.emailSubjectPaymentPartial != null) {
+      result
+        ..add('email_subject_payment_partial')
+        ..add(serializers.serialize(object.emailSubjectPaymentPartial,
+            specifiedType: const FullType(String)));
+    }
     if (object.emailBodyInvoice != null) {
       result
         ..add('email_template_invoice')
@@ -1483,6 +1552,12 @@ class _$SettingsEntitySerializer
       result
         ..add('email_template_payment')
         ..add(serializers.serialize(object.emailBodyPayment,
+            specifiedType: const FullType(String)));
+    }
+    if (object.emailBodyPaymentPartial != null) {
+      result
+        ..add('email_template_payment_partial')
+        ..add(serializers.serialize(object.emailBodyPaymentPartial,
             specifiedType: const FullType(String)));
     }
     if (object.emailSubjectReminder1 != null) {
@@ -2196,6 +2271,10 @@ class _$SettingsEntitySerializer
           result.defaultQuoteDesignId = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String;
           break;
+        case 'credit_design_id':
+          result.defaultCreditDesignId = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String;
+          break;
         case 'invoice_footer':
           result.defaultInvoiceFooter = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String;
@@ -2236,6 +2315,13 @@ class _$SettingsEntitySerializer
           result.invoiceFields = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String;
           break;
+        case 'pdf_variables':
+          result.pdfVariables.replace(serializers.deserialize(value,
+              specifiedType: const FullType(BuiltMap, const [
+                const FullType(String),
+                const FullType(BuiltList, const [const FullType(String)])
+              ])));
+          break;
         case 'email_footer':
           result.emailFooter = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String;
@@ -2252,6 +2338,10 @@ class _$SettingsEntitySerializer
           result.emailSubjectPayment = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String;
           break;
+        case 'email_subject_payment_partial':
+          result.emailSubjectPaymentPartial = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String;
+          break;
         case 'email_template_invoice':
           result.emailBodyInvoice = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String;
@@ -2262,6 +2352,10 @@ class _$SettingsEntitySerializer
           break;
         case 'email_template_payment':
           result.emailBodyPayment = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String;
+          break;
+        case 'email_template_payment_partial':
+          result.emailBodyPaymentPartial = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String;
           break;
         case 'email_subject_reminder1':
@@ -2685,6 +2779,8 @@ class _$CompanyEntity extends CompanyEntity {
   @override
   final BuiltList<VendorEntity> vendors;
   @override
+  final BuiltList<DesignEntity> designs;
+  @override
   final BuiltMap<String, UserEntity> userMap;
   @override
   final BuiltMap<String, String> customFields;
@@ -2710,6 +2806,8 @@ class _$CompanyEntity extends CompanyEntity {
   final String createdUserId;
   @override
   final String assignedUserId;
+  @override
+  final EntityType subEntityType;
   @override
   final String id;
 
@@ -2757,6 +2855,7 @@ class _$CompanyEntity extends CompanyEntity {
       this.projects,
       this.expenses,
       this.vendors,
+      this.designs,
       this.userMap,
       this.customFields,
       this.slackWebhookUrl,
@@ -2770,6 +2869,7 @@ class _$CompanyEntity extends CompanyEntity {
       this.isDeleted,
       this.createdUserId,
       this.assignedUserId,
+      this.subEntityType,
       this.id})
       : super._() {
     if (enableCustomSurchargeTaxes1 == null) {
@@ -2892,6 +2992,9 @@ class _$CompanyEntity extends CompanyEntity {
     if (vendors == null) {
       throw new BuiltValueNullFieldError('CompanyEntity', 'vendors');
     }
+    if (designs == null) {
+      throw new BuiltValueNullFieldError('CompanyEntity', 'designs');
+    }
     if (userMap == null) {
       throw new BuiltValueNullFieldError('CompanyEntity', 'userMap');
     }
@@ -2960,6 +3063,7 @@ class _$CompanyEntity extends CompanyEntity {
         projects == other.projects &&
         expenses == other.expenses &&
         vendors == other.vendors &&
+        designs == other.designs &&
         userMap == other.userMap &&
         customFields == other.customFields &&
         slackWebhookUrl == other.slackWebhookUrl &&
@@ -2973,6 +3077,7 @@ class _$CompanyEntity extends CompanyEntity {
         isDeleted == other.isDeleted &&
         createdUserId == other.createdUserId &&
         assignedUserId == other.assignedUserId &&
+        subEntityType == other.subEntityType &&
         id == other.id;
   }
 
@@ -2996,25 +3101,25 @@ class _$CompanyEntity extends CompanyEntity {
                                                                 $jc(
                                                                     $jc(
                                                                         $jc(
-                                                                            $jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc(0, enableCustomSurchargeTaxes1.hashCode), enableCustomSurchargeTaxes2.hashCode), enableCustomSurchargeTaxes3.hashCode), enableCustomSurchargeTaxes4.hashCode), sizeId.hashCode), industryId.hashCode), subdomain.hashCode), portalMode.hashCode), portalDomain.hashCode), updateProducts.hashCode), convertProductExchangeRate.hashCode), fillProducts.hashCode), enableProductCost.hashCode), enableProductQuantity.hashCode), defaultQuantity.hashCode), showProductDetails.hashCode), plan.hashCode), companyKey.hashCode), appUrl.hashCode), firstDayOfWeek.hashCode), firstMonthOfYear.hashCode), groups.hashCode), activities.hashCode), taxRates.hashCode), taskStatuses.hashCode), taskStatusMap.hashCode), companyGateways.hashCode), expenseCategories.hashCode), expenseCategoryMap.hashCode), users.hashCode), clients.hashCode), products.hashCode), invoices.hashCode), payments.hashCode), quotes.hashCode),
-                                                                                credits.hashCode),
-                                                                            tasks.hashCode),
-                                                                        projects.hashCode),
-                                                                    expenses.hashCode),
-                                                                vendors.hashCode),
-                                                            userMap.hashCode),
-                                                        customFields.hashCode),
-                                                    slackWebhookUrl.hashCode),
-                                                googleAnalyticsUrl.hashCode),
-                                            settings.hashCode),
-                                        enabledModules.hashCode),
-                                    isChanged.hashCode),
-                                createdAt.hashCode),
-                            updatedAt.hashCode),
-                        archivedAt.hashCode),
-                    isDeleted.hashCode),
-                createdUserId.hashCode),
-            assignedUserId.hashCode),
+                                                                            $jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc(0, enableCustomSurchargeTaxes1.hashCode), enableCustomSurchargeTaxes2.hashCode), enableCustomSurchargeTaxes3.hashCode), enableCustomSurchargeTaxes4.hashCode), sizeId.hashCode), industryId.hashCode), subdomain.hashCode), portalMode.hashCode), portalDomain.hashCode), updateProducts.hashCode), convertProductExchangeRate.hashCode), fillProducts.hashCode), enableProductCost.hashCode), enableProductQuantity.hashCode), defaultQuantity.hashCode), showProductDetails.hashCode), plan.hashCode), companyKey.hashCode), appUrl.hashCode), firstDayOfWeek.hashCode), firstMonthOfYear.hashCode), groups.hashCode), activities.hashCode), taxRates.hashCode), taskStatuses.hashCode), taskStatusMap.hashCode), companyGateways.hashCode), expenseCategories.hashCode), expenseCategoryMap.hashCode), users.hashCode), clients.hashCode), products.hashCode), invoices.hashCode), payments.hashCode), quotes.hashCode), credits.hashCode), tasks.hashCode),
+                                                                                projects.hashCode),
+                                                                            expenses.hashCode),
+                                                                        vendors.hashCode),
+                                                                    designs.hashCode),
+                                                                userMap.hashCode),
+                                                            customFields.hashCode),
+                                                        slackWebhookUrl.hashCode),
+                                                    googleAnalyticsUrl.hashCode),
+                                                settings.hashCode),
+                                            enabledModules.hashCode),
+                                        isChanged.hashCode),
+                                    createdAt.hashCode),
+                                updatedAt.hashCode),
+                            archivedAt.hashCode),
+                        isDeleted.hashCode),
+                    createdUserId.hashCode),
+                assignedUserId.hashCode),
+            subEntityType.hashCode),
         id.hashCode));
   }
 
@@ -3061,6 +3166,7 @@ class _$CompanyEntity extends CompanyEntity {
           ..add('projects', projects)
           ..add('expenses', expenses)
           ..add('vendors', vendors)
+          ..add('designs', designs)
           ..add('userMap', userMap)
           ..add('customFields', customFields)
           ..add('slackWebhookUrl', slackWebhookUrl)
@@ -3074,6 +3180,7 @@ class _$CompanyEntity extends CompanyEntity {
           ..add('isDeleted', isDeleted)
           ..add('createdUserId', createdUserId)
           ..add('assignedUserId', assignedUserId)
+          ..add('subEntityType', subEntityType)
           ..add('id', id))
         .toString();
   }
@@ -3288,6 +3395,11 @@ class CompanyEntityBuilder
       _$this._vendors ??= new ListBuilder<VendorEntity>();
   set vendors(ListBuilder<VendorEntity> vendors) => _$this._vendors = vendors;
 
+  ListBuilder<DesignEntity> _designs;
+  ListBuilder<DesignEntity> get designs =>
+      _$this._designs ??= new ListBuilder<DesignEntity>();
+  set designs(ListBuilder<DesignEntity> designs) => _$this._designs = designs;
+
   MapBuilder<String, UserEntity> _userMap;
   MapBuilder<String, UserEntity> get userMap =>
       _$this._userMap ??= new MapBuilder<String, UserEntity>();
@@ -3350,6 +3462,11 @@ class CompanyEntityBuilder
   set assignedUserId(String assignedUserId) =>
       _$this._assignedUserId = assignedUserId;
 
+  EntityType _subEntityType;
+  EntityType get subEntityType => _$this._subEntityType;
+  set subEntityType(EntityType subEntityType) =>
+      _$this._subEntityType = subEntityType;
+
   String _id;
   String get id => _$this._id;
   set id(String id) => _$this._id = id;
@@ -3398,6 +3515,7 @@ class CompanyEntityBuilder
       _projects = _$v.projects?.toBuilder();
       _expenses = _$v.expenses?.toBuilder();
       _vendors = _$v.vendors?.toBuilder();
+      _designs = _$v.designs?.toBuilder();
       _userMap = _$v.userMap?.toBuilder();
       _customFields = _$v.customFields?.toBuilder();
       _slackWebhookUrl = _$v.slackWebhookUrl;
@@ -3411,6 +3529,7 @@ class CompanyEntityBuilder
       _isDeleted = _$v.isDeleted;
       _createdUserId = _$v.createdUserId;
       _assignedUserId = _$v.assignedUserId;
+      _subEntityType = _$v.subEntityType;
       _id = _$v.id;
       _$v = null;
     }
@@ -3476,6 +3595,7 @@ class CompanyEntityBuilder
               projects: projects.build(),
               expenses: expenses.build(),
               vendors: vendors.build(),
+              designs: designs.build(),
               userMap: userMap.build(),
               customFields: customFields.build(),
               slackWebhookUrl: slackWebhookUrl,
@@ -3489,6 +3609,7 @@ class CompanyEntityBuilder
               isDeleted: isDeleted,
               createdUserId: createdUserId,
               assignedUserId: assignedUserId,
+              subEntityType: subEntityType,
               id: id);
     } catch (_) {
       String _$failedField;
@@ -3531,6 +3652,8 @@ class CompanyEntityBuilder
         expenses.build();
         _$failedField = 'vendors';
         vendors.build();
+        _$failedField = 'designs';
+        designs.build();
         _$failedField = 'userMap';
         userMap.build();
         _$failedField = 'customFields';
@@ -3792,11 +3915,15 @@ class _$UserCompanyEntity extends UserCompanyEntity {
   @override
   final String permissions;
   @override
+  final BuiltMap<String, BuiltList<String>> notifications;
+  @override
   final CompanyEntity company;
   @override
   final UserEntity user;
   @override
   final TokenEntity token;
+  @override
+  final AccountEntity account;
   @override
   final UserSettingsEntity settings;
 
@@ -3808,9 +3935,11 @@ class _$UserCompanyEntity extends UserCompanyEntity {
       {this.isAdmin,
       this.isOwner,
       this.permissions,
+      this.notifications,
       this.company,
       this.user,
       this.token,
+      this.account,
       this.settings})
       : super._() {
     if (isAdmin == null) {
@@ -3839,9 +3968,11 @@ class _$UserCompanyEntity extends UserCompanyEntity {
         isAdmin == other.isAdmin &&
         isOwner == other.isOwner &&
         permissions == other.permissions &&
+        notifications == other.notifications &&
         company == other.company &&
         user == other.user &&
         token == other.token &&
+        account == other.account &&
         settings == other.settings;
   }
 
@@ -3851,11 +3982,15 @@ class _$UserCompanyEntity extends UserCompanyEntity {
         $jc(
             $jc(
                 $jc(
-                    $jc($jc($jc(0, isAdmin.hashCode), isOwner.hashCode),
-                        permissions.hashCode),
-                    company.hashCode),
-                user.hashCode),
-            token.hashCode),
+                    $jc(
+                        $jc(
+                            $jc($jc($jc(0, isAdmin.hashCode), isOwner.hashCode),
+                                permissions.hashCode),
+                            notifications.hashCode),
+                        company.hashCode),
+                    user.hashCode),
+                token.hashCode),
+            account.hashCode),
         settings.hashCode));
   }
 
@@ -3865,9 +4000,11 @@ class _$UserCompanyEntity extends UserCompanyEntity {
           ..add('isAdmin', isAdmin)
           ..add('isOwner', isOwner)
           ..add('permissions', permissions)
+          ..add('notifications', notifications)
           ..add('company', company)
           ..add('user', user)
           ..add('token', token)
+          ..add('account', account)
           ..add('settings', settings))
         .toString();
   }
@@ -3889,6 +4026,12 @@ class UserCompanyEntityBuilder
   String get permissions => _$this._permissions;
   set permissions(String permissions) => _$this._permissions = permissions;
 
+  MapBuilder<String, BuiltList<String>> _notifications;
+  MapBuilder<String, BuiltList<String>> get notifications =>
+      _$this._notifications ??= new MapBuilder<String, BuiltList<String>>();
+  set notifications(MapBuilder<String, BuiltList<String>> notifications) =>
+      _$this._notifications = notifications;
+
   CompanyEntityBuilder _company;
   CompanyEntityBuilder get company =>
       _$this._company ??= new CompanyEntityBuilder();
@@ -3901,6 +4044,11 @@ class UserCompanyEntityBuilder
   TokenEntityBuilder _token;
   TokenEntityBuilder get token => _$this._token ??= new TokenEntityBuilder();
   set token(TokenEntityBuilder token) => _$this._token = token;
+
+  AccountEntityBuilder _account;
+  AccountEntityBuilder get account =>
+      _$this._account ??= new AccountEntityBuilder();
+  set account(AccountEntityBuilder account) => _$this._account = account;
 
   UserSettingsEntityBuilder _settings;
   UserSettingsEntityBuilder get settings =>
@@ -3915,9 +4063,11 @@ class UserCompanyEntityBuilder
       _isAdmin = _$v.isAdmin;
       _isOwner = _$v.isOwner;
       _permissions = _$v.permissions;
+      _notifications = _$v.notifications?.toBuilder();
       _company = _$v.company?.toBuilder();
       _user = _$v.user?.toBuilder();
       _token = _$v.token?.toBuilder();
+      _account = _$v.account?.toBuilder();
       _settings = _$v.settings?.toBuilder();
       _$v = null;
     }
@@ -3946,19 +4096,25 @@ class UserCompanyEntityBuilder
               isAdmin: isAdmin,
               isOwner: isOwner,
               permissions: permissions,
+              notifications: _notifications?.build(),
               company: _company?.build(),
               user: _user?.build(),
               token: _token?.build(),
+              account: _account?.build(),
               settings: _settings?.build());
     } catch (_) {
       String _$failedField;
       try {
+        _$failedField = 'notifications';
+        _notifications?.build();
         _$failedField = 'company';
         _company?.build();
         _$failedField = 'user';
         _user?.build();
         _$failedField = 'token';
         _token?.build();
+        _$failedField = 'account';
+        _account?.build();
         _$failedField = 'settings';
         _settings?.build();
       } catch (e) {
@@ -3987,9 +4143,6 @@ class _$UserSettingsEntity extends UserSettingsEntity {
   _$UserSettingsEntity._(
       {this.accentColor, this.tableColumns, this.reportSettings})
       : super._() {
-    if (accentColor == null) {
-      throw new BuiltValueNullFieldError('UserSettingsEntity', 'accentColor');
-    }
     if (tableColumns == null) {
       throw new BuiltValueNullFieldError('UserSettingsEntity', 'tableColumns');
     }
@@ -4481,6 +4634,8 @@ class _$SettingsEntity extends SettingsEntity {
   @override
   final String defaultQuoteDesignId;
   @override
+  final String defaultCreditDesignId;
+  @override
   final String defaultInvoiceFooter;
   @override
   final String invoiceLabels;
@@ -4501,6 +4656,8 @@ class _$SettingsEntity extends SettingsEntity {
   @override
   final String invoiceFields;
   @override
+  final BuiltMap<String, BuiltList<String>> pdfVariables;
+  @override
   final String emailFooter;
   @override
   final String emailSubjectInvoice;
@@ -4509,11 +4666,15 @@ class _$SettingsEntity extends SettingsEntity {
   @override
   final String emailSubjectPayment;
   @override
+  final String emailSubjectPaymentPartial;
+  @override
   final String emailBodyInvoice;
   @override
   final String emailBodyQuote;
   @override
   final String emailBodyPayment;
+  @override
+  final String emailBodyPaymentPartial;
   @override
   final String emailSubjectReminder1;
   @override
@@ -4728,6 +4889,7 @@ class _$SettingsEntity extends SettingsEntity {
       this.numberOfItemTaxRates,
       this.defaultInvoiceDesignId,
       this.defaultQuoteDesignId,
+      this.defaultCreditDesignId,
       this.defaultInvoiceFooter,
       this.invoiceLabels,
       this.defaultTaxName1,
@@ -4738,13 +4900,16 @@ class _$SettingsEntity extends SettingsEntity {
       this.defaultTaxRate3,
       this.defaultPaymentTypeId,
       this.invoiceFields,
+      this.pdfVariables,
       this.emailFooter,
       this.emailSubjectInvoice,
       this.emailSubjectQuote,
       this.emailSubjectPayment,
+      this.emailSubjectPaymentPartial,
       this.emailBodyInvoice,
       this.emailBodyQuote,
       this.emailBodyPayment,
+      this.emailBodyPaymentPartial,
       this.emailSubjectReminder1,
       this.emailSubjectReminder2,
       this.emailSubjectReminder3,
@@ -4897,6 +5062,7 @@ class _$SettingsEntity extends SettingsEntity {
         numberOfItemTaxRates == other.numberOfItemTaxRates &&
         defaultInvoiceDesignId == other.defaultInvoiceDesignId &&
         defaultQuoteDesignId == other.defaultQuoteDesignId &&
+        defaultCreditDesignId == other.defaultCreditDesignId &&
         defaultInvoiceFooter == other.defaultInvoiceFooter &&
         invoiceLabels == other.invoiceLabels &&
         defaultTaxName1 == other.defaultTaxName1 &&
@@ -4907,13 +5073,16 @@ class _$SettingsEntity extends SettingsEntity {
         defaultTaxRate3 == other.defaultTaxRate3 &&
         defaultPaymentTypeId == other.defaultPaymentTypeId &&
         invoiceFields == other.invoiceFields &&
+        pdfVariables == other.pdfVariables &&
         emailFooter == other.emailFooter &&
         emailSubjectInvoice == other.emailSubjectInvoice &&
         emailSubjectQuote == other.emailSubjectQuote &&
         emailSubjectPayment == other.emailSubjectPayment &&
+        emailSubjectPaymentPartial == other.emailSubjectPaymentPartial &&
         emailBodyInvoice == other.emailBodyInvoice &&
         emailBodyQuote == other.emailBodyQuote &&
         emailBodyPayment == other.emailBodyPayment &&
+        emailBodyPaymentPartial == other.emailBodyPaymentPartial &&
         emailSubjectReminder1 == other.emailSubjectReminder1 &&
         emailSubjectReminder2 == other.emailSubjectReminder2 &&
         emailSubjectReminder3 == other.emailSubjectReminder3 &&
@@ -5009,7 +5178,7 @@ class _$SettingsEntity extends SettingsEntity {
                                                                 $jc(
                                                                     $jc(
                                                                         $jc(
-                                                                            $jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc(0, timezoneId.hashCode), dateFormatId.hashCode), enableMilitaryTime.hashCode), languageId.hashCode), showCurrencyCode.hashCode), currencyId.hashCode), customValue1.hashCode), customValue2.hashCode), customValue3.hashCode), customValue4.hashCode), defaultPaymentTerms.hashCode), companyGatewayIds.hashCode), defaultTaskRate.hashCode), sendReminders.hashCode), enablePortal.hashCode), enablePortalDashboard.hashCode), enablePortalTasks.hashCode), emailStyle.hashCode), replyToEmail.hashCode), bccEmail.hashCode), pdfEmailAttachment.hashCode), ublEmailAttachment.hashCode), documentEmailAttachment.hashCode), emailStyleCustom.hashCode), customMessageDashboard.hashCode), customMessageUnpaidInvoice.hashCode), customMessagePaidInvoice.hashCode), customMessageUnapprovedQuote.hashCode), lockSentInvoices.hashCode), autoArchiveInvoice.hashCode), autoArchiveQuote.hashCode), autoEmailInvoice.hashCode), autoConvertQuote.hashCode), enableInclusiveTaxes.hashCode), translations.hashCode), taskNumberPattern.hashCode), taskNumberCounter.hashCode), expenseNumberPattern.hashCode), expenseNumberCounter.hashCode), vendorNumberPattern.hashCode), vendorNumberCounter.hashCode), ticketNumberPattern.hashCode), ticketNumberCounter.hashCode), paymentNumberPattern.hashCode), paymentNumberCounter.hashCode), invoiceNumberPattern.hashCode), invoiceNumberCounter.hashCode), quoteNumberPattern.hashCode), quoteNumberCounter.hashCode), clientNumberPattern.hashCode), clientNumberCounter.hashCode), creditNumberPattern.hashCode), creditNumberCounter.hashCode), recurringNumberPrefix.hashCode), resetCounterFrequencyId.hashCode), resetCounterDate.hashCode), counterPadding.hashCode), sharedInvoiceQuoteCounter.hashCode), defaultInvoiceTerms.hashCode), defaultQuoteTerms.hashCode), defaultQuoteFooter.hashCode), defaultCreditTerms.hashCode), defaultCreditFooter.hashCode), numberOfInvoiceTaxRates.hashCode), numberOfItemTaxRates.hashCode), defaultInvoiceDesignId.hashCode), defaultQuoteDesignId.hashCode), defaultInvoiceFooter.hashCode), invoiceLabels.hashCode), defaultTaxName1.hashCode), defaultTaxRate1.hashCode), defaultTaxName2.hashCode), defaultTaxRate2.hashCode), defaultTaxName3.hashCode), defaultTaxRate3.hashCode), defaultPaymentTypeId.hashCode), invoiceFields.hashCode), emailFooter.hashCode), emailSubjectInvoice.hashCode), emailSubjectQuote.hashCode), emailSubjectPayment.hashCode), emailBodyInvoice.hashCode), emailBodyQuote.hashCode), emailBodyPayment.hashCode), emailSubjectReminder1.hashCode), emailSubjectReminder2.hashCode), emailSubjectReminder3.hashCode), emailBodyReminder1.hashCode), emailBodyReminder2.hashCode), emailBodyReminder3.hashCode), emailSubjectCustom1.hashCode), emailBodyCustom1.hashCode), emailSubjectCustom2.hashCode), emailBodyCustom2.hashCode), emailSubjectCustom3.hashCode), emailBodyCustom3.hashCode), enablePortalPassword.hashCode), sendPortalPassword.hashCode), signatureOnPdf.hashCode), enableEmailMarkup.hashCode), showAcceptInvoiceTerms.hashCode), showAcceptQuoteTerms.hashCode), requireInvoiceSignature.hashCode), requireQuoteSignature.hashCode), name.hashCode), companyLogo.hashCode), website.hashCode), address1.hashCode), address2.hashCode), city.hashCode), state.hashCode), postalCode.hashCode), phone.hashCode), email.hashCode), countryId.hashCode), vatNumber.hashCode), idNumber.hashCode), pageSize.hashCode), fontSize.hashCode), primaryColor.hashCode), secondaryColor.hashCode), primaryFont.hashCode), secondaryFont.hashCode), hidePaidToDate.hashCode), embedDocuments.hashCode), allPagesHeader.hashCode), allPagesFooter.hashCode), enableReminder1.hashCode), enableReminder2.hashCode), enableReminder3.hashCode), enableReminder4.hashCode), numDaysReminder1.hashCode), numDaysReminder2.hashCode), numDaysReminder3.hashCode), scheduleReminder1.hashCode), scheduleReminder2.hashCode),
+                                                                            $jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc(0, timezoneId.hashCode), dateFormatId.hashCode), enableMilitaryTime.hashCode), languageId.hashCode), showCurrencyCode.hashCode), currencyId.hashCode), customValue1.hashCode), customValue2.hashCode), customValue3.hashCode), customValue4.hashCode), defaultPaymentTerms.hashCode), companyGatewayIds.hashCode), defaultTaskRate.hashCode), sendReminders.hashCode), enablePortal.hashCode), enablePortalDashboard.hashCode), enablePortalTasks.hashCode), emailStyle.hashCode), replyToEmail.hashCode), bccEmail.hashCode), pdfEmailAttachment.hashCode), ublEmailAttachment.hashCode), documentEmailAttachment.hashCode), emailStyleCustom.hashCode), customMessageDashboard.hashCode), customMessageUnpaidInvoice.hashCode), customMessagePaidInvoice.hashCode), customMessageUnapprovedQuote.hashCode), lockSentInvoices.hashCode), autoArchiveInvoice.hashCode), autoArchiveQuote.hashCode), autoEmailInvoice.hashCode), autoConvertQuote.hashCode), enableInclusiveTaxes.hashCode), translations.hashCode), taskNumberPattern.hashCode), taskNumberCounter.hashCode), expenseNumberPattern.hashCode), expenseNumberCounter.hashCode), vendorNumberPattern.hashCode), vendorNumberCounter.hashCode), ticketNumberPattern.hashCode), ticketNumberCounter.hashCode), paymentNumberPattern.hashCode), paymentNumberCounter.hashCode), invoiceNumberPattern.hashCode), invoiceNumberCounter.hashCode), quoteNumberPattern.hashCode), quoteNumberCounter.hashCode), clientNumberPattern.hashCode), clientNumberCounter.hashCode), creditNumberPattern.hashCode), creditNumberCounter.hashCode), recurringNumberPrefix.hashCode), resetCounterFrequencyId.hashCode), resetCounterDate.hashCode), counterPadding.hashCode), sharedInvoiceQuoteCounter.hashCode), defaultInvoiceTerms.hashCode), defaultQuoteTerms.hashCode), defaultQuoteFooter.hashCode), defaultCreditTerms.hashCode), defaultCreditFooter.hashCode), numberOfInvoiceTaxRates.hashCode), numberOfItemTaxRates.hashCode), defaultInvoiceDesignId.hashCode), defaultQuoteDesignId.hashCode), defaultCreditDesignId.hashCode), defaultInvoiceFooter.hashCode), invoiceLabels.hashCode), defaultTaxName1.hashCode), defaultTaxRate1.hashCode), defaultTaxName2.hashCode), defaultTaxRate2.hashCode), defaultTaxName3.hashCode), defaultTaxRate3.hashCode), defaultPaymentTypeId.hashCode), invoiceFields.hashCode), pdfVariables.hashCode), emailFooter.hashCode), emailSubjectInvoice.hashCode), emailSubjectQuote.hashCode), emailSubjectPayment.hashCode), emailSubjectPaymentPartial.hashCode), emailBodyInvoice.hashCode), emailBodyQuote.hashCode), emailBodyPayment.hashCode), emailBodyPaymentPartial.hashCode), emailSubjectReminder1.hashCode), emailSubjectReminder2.hashCode), emailSubjectReminder3.hashCode), emailBodyReminder1.hashCode), emailBodyReminder2.hashCode), emailBodyReminder3.hashCode), emailSubjectCustom1.hashCode), emailBodyCustom1.hashCode), emailSubjectCustom2.hashCode), emailBodyCustom2.hashCode), emailSubjectCustom3.hashCode), emailBodyCustom3.hashCode), enablePortalPassword.hashCode), sendPortalPassword.hashCode), signatureOnPdf.hashCode), enableEmailMarkup.hashCode), showAcceptInvoiceTerms.hashCode), showAcceptQuoteTerms.hashCode), requireInvoiceSignature.hashCode), requireQuoteSignature.hashCode), name.hashCode), companyLogo.hashCode), website.hashCode), address1.hashCode), address2.hashCode), city.hashCode), state.hashCode), postalCode.hashCode), phone.hashCode), email.hashCode), countryId.hashCode), vatNumber.hashCode), idNumber.hashCode), pageSize.hashCode), fontSize.hashCode), primaryColor.hashCode), secondaryColor.hashCode), primaryFont.hashCode), secondaryFont.hashCode), hidePaidToDate.hashCode), embedDocuments.hashCode), allPagesHeader.hashCode), allPagesFooter.hashCode), enableReminder1.hashCode), enableReminder2.hashCode), enableReminder3.hashCode), enableReminder4.hashCode), numDaysReminder1.hashCode), numDaysReminder2.hashCode), numDaysReminder3.hashCode), scheduleReminder1.hashCode), scheduleReminder2.hashCode),
                                                                                 scheduleReminder3.hashCode),
                                                                             endlessReminderFrequencyId.hashCode),
                                                                         lateFeeAmount1.hashCode),
@@ -5101,6 +5270,7 @@ class _$SettingsEntity extends SettingsEntity {
           ..add('numberOfItemTaxRates', numberOfItemTaxRates)
           ..add('defaultInvoiceDesignId', defaultInvoiceDesignId)
           ..add('defaultQuoteDesignId', defaultQuoteDesignId)
+          ..add('defaultCreditDesignId', defaultCreditDesignId)
           ..add('defaultInvoiceFooter', defaultInvoiceFooter)
           ..add('invoiceLabels', invoiceLabels)
           ..add('defaultTaxName1', defaultTaxName1)
@@ -5111,13 +5281,16 @@ class _$SettingsEntity extends SettingsEntity {
           ..add('defaultTaxRate3', defaultTaxRate3)
           ..add('defaultPaymentTypeId', defaultPaymentTypeId)
           ..add('invoiceFields', invoiceFields)
+          ..add('pdfVariables', pdfVariables)
           ..add('emailFooter', emailFooter)
           ..add('emailSubjectInvoice', emailSubjectInvoice)
           ..add('emailSubjectQuote', emailSubjectQuote)
           ..add('emailSubjectPayment', emailSubjectPayment)
+          ..add('emailSubjectPaymentPartial', emailSubjectPaymentPartial)
           ..add('emailBodyInvoice', emailBodyInvoice)
           ..add('emailBodyQuote', emailBodyQuote)
           ..add('emailBodyPayment', emailBodyPayment)
+          ..add('emailBodyPaymentPartial', emailBodyPaymentPartial)
           ..add('emailSubjectReminder1', emailSubjectReminder1)
           ..add('emailSubjectReminder2', emailSubjectReminder2)
           ..add('emailSubjectReminder3', emailSubjectReminder3)
@@ -5524,6 +5697,11 @@ class SettingsEntityBuilder
   set defaultQuoteDesignId(String defaultQuoteDesignId) =>
       _$this._defaultQuoteDesignId = defaultQuoteDesignId;
 
+  String _defaultCreditDesignId;
+  String get defaultCreditDesignId => _$this._defaultCreditDesignId;
+  set defaultCreditDesignId(String defaultCreditDesignId) =>
+      _$this._defaultCreditDesignId = defaultCreditDesignId;
+
   String _defaultInvoiceFooter;
   String get defaultInvoiceFooter => _$this._defaultInvoiceFooter;
   set defaultInvoiceFooter(String defaultInvoiceFooter) =>
@@ -5574,6 +5752,12 @@ class SettingsEntityBuilder
   set invoiceFields(String invoiceFields) =>
       _$this._invoiceFields = invoiceFields;
 
+  MapBuilder<String, BuiltList<String>> _pdfVariables;
+  MapBuilder<String, BuiltList<String>> get pdfVariables =>
+      _$this._pdfVariables ??= new MapBuilder<String, BuiltList<String>>();
+  set pdfVariables(MapBuilder<String, BuiltList<String>> pdfVariables) =>
+      _$this._pdfVariables = pdfVariables;
+
   String _emailFooter;
   String get emailFooter => _$this._emailFooter;
   set emailFooter(String emailFooter) => _$this._emailFooter = emailFooter;
@@ -5593,6 +5777,11 @@ class SettingsEntityBuilder
   set emailSubjectPayment(String emailSubjectPayment) =>
       _$this._emailSubjectPayment = emailSubjectPayment;
 
+  String _emailSubjectPaymentPartial;
+  String get emailSubjectPaymentPartial => _$this._emailSubjectPaymentPartial;
+  set emailSubjectPaymentPartial(String emailSubjectPaymentPartial) =>
+      _$this._emailSubjectPaymentPartial = emailSubjectPaymentPartial;
+
   String _emailBodyInvoice;
   String get emailBodyInvoice => _$this._emailBodyInvoice;
   set emailBodyInvoice(String emailBodyInvoice) =>
@@ -5607,6 +5796,11 @@ class SettingsEntityBuilder
   String get emailBodyPayment => _$this._emailBodyPayment;
   set emailBodyPayment(String emailBodyPayment) =>
       _$this._emailBodyPayment = emailBodyPayment;
+
+  String _emailBodyPaymentPartial;
+  String get emailBodyPaymentPartial => _$this._emailBodyPaymentPartial;
+  set emailBodyPaymentPartial(String emailBodyPaymentPartial) =>
+      _$this._emailBodyPaymentPartial = emailBodyPaymentPartial;
 
   String _emailSubjectReminder1;
   String get emailSubjectReminder1 => _$this._emailSubjectReminder1;
@@ -6020,6 +6214,7 @@ class SettingsEntityBuilder
       _numberOfItemTaxRates = _$v.numberOfItemTaxRates;
       _defaultInvoiceDesignId = _$v.defaultInvoiceDesignId;
       _defaultQuoteDesignId = _$v.defaultQuoteDesignId;
+      _defaultCreditDesignId = _$v.defaultCreditDesignId;
       _defaultInvoiceFooter = _$v.defaultInvoiceFooter;
       _invoiceLabels = _$v.invoiceLabels;
       _defaultTaxName1 = _$v.defaultTaxName1;
@@ -6030,13 +6225,16 @@ class SettingsEntityBuilder
       _defaultTaxRate3 = _$v.defaultTaxRate3;
       _defaultPaymentTypeId = _$v.defaultPaymentTypeId;
       _invoiceFields = _$v.invoiceFields;
+      _pdfVariables = _$v.pdfVariables?.toBuilder();
       _emailFooter = _$v.emailFooter;
       _emailSubjectInvoice = _$v.emailSubjectInvoice;
       _emailSubjectQuote = _$v.emailSubjectQuote;
       _emailSubjectPayment = _$v.emailSubjectPayment;
+      _emailSubjectPaymentPartial = _$v.emailSubjectPaymentPartial;
       _emailBodyInvoice = _$v.emailBodyInvoice;
       _emailBodyQuote = _$v.emailBodyQuote;
       _emailBodyPayment = _$v.emailBodyPayment;
+      _emailBodyPaymentPartial = _$v.emailBodyPaymentPartial;
       _emailSubjectReminder1 = _$v.emailSubjectReminder1;
       _emailSubjectReminder2 = _$v.emailSubjectReminder2;
       _emailSubjectReminder3 = _$v.emailSubjectReminder3;
@@ -6199,6 +6397,7 @@ class SettingsEntityBuilder
               numberOfItemTaxRates: numberOfItemTaxRates,
               defaultInvoiceDesignId: defaultInvoiceDesignId,
               defaultQuoteDesignId: defaultQuoteDesignId,
+              defaultCreditDesignId: defaultCreditDesignId,
               defaultInvoiceFooter: defaultInvoiceFooter,
               invoiceLabels: invoiceLabels,
               defaultTaxName1: defaultTaxName1,
@@ -6209,13 +6408,16 @@ class SettingsEntityBuilder
               defaultTaxRate3: defaultTaxRate3,
               defaultPaymentTypeId: defaultPaymentTypeId,
               invoiceFields: invoiceFields,
+              pdfVariables: _pdfVariables?.build(),
               emailFooter: emailFooter,
               emailSubjectInvoice: emailSubjectInvoice,
               emailSubjectQuote: emailSubjectQuote,
               emailSubjectPayment: emailSubjectPayment,
+              emailSubjectPaymentPartial: emailSubjectPaymentPartial,
               emailBodyInvoice: emailBodyInvoice,
               emailBodyQuote: emailBodyQuote,
               emailBodyPayment: emailBodyPayment,
+              emailBodyPaymentPartial: emailBodyPaymentPartial,
               emailSubjectReminder1: emailSubjectReminder1,
               emailSubjectReminder2: emailSubjectReminder2,
               emailSubjectReminder3: emailSubjectReminder3,
@@ -6292,6 +6494,9 @@ class SettingsEntityBuilder
       try {
         _$failedField = 'translations';
         _translations?.build();
+
+        _$failedField = 'pdfVariables';
+        _pdfVariables?.build();
 
         _$failedField = 'customPaymentTerms';
         _customPaymentTerms?.build();

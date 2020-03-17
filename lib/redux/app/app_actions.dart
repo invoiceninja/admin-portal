@@ -17,6 +17,7 @@ import 'package:invoiceninja_flutter/redux/payment/payment_actions.dart';
 import 'package:invoiceninja_flutter/redux/product/product_actions.dart';
 import 'package:invoiceninja_flutter/redux/project/project_actions.dart';
 import 'package:invoiceninja_flutter/redux/quote/quote_actions.dart';
+import 'package:invoiceninja_flutter/redux/settings/settings_actions.dart';
 import 'package:invoiceninja_flutter/redux/task/task_actions.dart';
 import 'package:invoiceninja_flutter/redux/tax_rate/tax_rate_actions.dart';
 import 'package:invoiceninja_flutter/redux/ui/pref_state.dart';
@@ -25,6 +26,11 @@ import 'package:invoiceninja_flutter/redux/vendor/vendor_actions.dart';
 import 'package:invoiceninja_flutter/utils/completers.dart';
 import 'package:invoiceninja_flutter/utils/dialogs.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
+
+// STARTER: import - do not remove comment
+import 'package:invoiceninja_flutter/redux/design/design_actions.dart';
+
+import 'package:invoiceninja_flutter/redux/credit/credit_actions.dart';
 
 class PersistUI {}
 
@@ -108,9 +114,8 @@ class LoadAccountSuccess {
 }
 
 class RefreshData {
-  RefreshData({this.platform, this.completer, this.loadCompanies = true});
+  RefreshData({this.completer, this.loadCompanies = true});
 
-  final String platform;
   final Completer completer;
   final bool loadCompanies;
 }
@@ -228,7 +233,20 @@ void filterEntitiesByType({
         entityType: filterEntity.entityType,
       ));
       break;
-    // TODO Add to starter
+    // STARTER: filter - do not remove comment
+    case EntityType.design:
+      store.dispatch(FilterDesignsByEntity(
+        entityId: filterEntity.id,
+        entityType: filterEntity.entityType,
+      ));
+      break;
+
+    case EntityType.credit:
+      store.dispatch(FilterCreditsByEntity(
+        entityId: filterEntity.id,
+        entityType: filterEntity.entityType,
+      ));
+      break;
   }
 }
 
@@ -297,7 +315,14 @@ void viewEntitiesByType({
     case EntityType.group:
       store.dispatch(ViewGroupList(navigator: navigator));
       break;
-    // TODO Add to starter
+    // STARTER: view list - do not remove comment
+    case EntityType.design:
+      store.dispatch(ViewDesignList(navigator: navigator));
+      break;
+
+    case EntityType.credit:
+      store.dispatch(ViewCreditList(navigator: navigator));
+      break;
   }
 }
 
@@ -309,6 +334,7 @@ void viewEntityById({
   bool showError = true,
 }) {
   final store = StoreProvider.of<AppState>(context);
+  final state = store.state;
   final navigator = Navigator.of(context);
 
   if (entityId != null &&
@@ -318,6 +344,11 @@ void viewEntityById({
         context: context,
         message: AppLocalization.of(context).failedToFindRecord);
     return;
+  }
+
+  if (!state.prefState.isPreviewVisible &&
+      state.prefState.moduleLayout == ModuleLayout.table) {
+    store.dispatch(UserSettingsChanged(isPreviewVisible: true));
   }
 
   switch (entityType) {
@@ -421,7 +452,22 @@ void viewEntityById({
         force: force,
       ));
       break;
-    // TODO Add to starter
+    // STARTER: view - do not remove comment
+    case EntityType.design:
+      store.dispatch(ViewDesign(
+        designId: entityId,
+        navigator: navigator,
+        force: force,
+      ));
+      break;
+
+    case EntityType.credit:
+      store.dispatch(ViewCredit(
+        creditId: entityId,
+        navigator: navigator,
+        force: force,
+      ));
+      break;
   }
 }
 
@@ -450,8 +496,10 @@ void createEntityByType(
       store.dispatch(EditUser(
         navigator: navigator,
         force: force,
-        user: UserEntity(state: state)
-            .rebuild((b) => b..userCompany.replace(UserCompanyEntity())),
+        user: UserEntity(
+          state: state,
+          userCompany: UserCompanyEntity(),
+        ),
       ));
       break;
     case EntityType.project:
@@ -488,7 +536,7 @@ void createEntityByType(
           force: force,
           quote: InvoiceEntity(
             state: state,
-            isQuote: true,
+            entityType: EntityType.quote,
           )));
       break;
     case EntityType.vendor:
@@ -535,7 +583,25 @@ void createEntityByType(
         group: GroupEntity(state: state),
       ));
       break;
-    // TODO Add to starter
+    // STARTER: create type - do not remove comment
+    case EntityType.design:
+      store.dispatch(EditDesign(
+        navigator: navigator,
+        force: force,
+        design: DesignEntity(state: state),
+      ));
+      break;
+
+    case EntityType.credit:
+      store.dispatch(EditCredit(
+        navigator: navigator,
+        force: force,
+        credit: InvoiceEntity(
+          state: state,
+          entityType: EntityType.credit,
+        ),
+      ));
+      break;
   }
 }
 
@@ -666,7 +732,24 @@ void createEntity({
         completer: completer,
       ));
       break;
-    // TODO Add to starter
+    // STARTER: create - do not remove comment
+    case EntityType.design:
+      store.dispatch(EditDesign(
+        navigator: navigator,
+        design: entity,
+        force: force,
+        completer: completer,
+      ));
+      break;
+
+    case EntityType.credit:
+      store.dispatch(EditCredit(
+        navigator: navigator,
+        credit: entity,
+        force: force,
+        completer: completer,
+      ));
+      break;
   }
 }
 
@@ -848,7 +931,32 @@ void editEntityById(
                     : localization.updatedGroup),
       ));
       break;
-    // TODO Add to starter
+    // STARTER: edit - do not remove comment
+    case EntityType.design:
+      store.dispatch(EditDesign(
+        design: map[entityId],
+        navigator: navigator,
+        completer: completer ??
+            snackBarCompleter<DesignEntity>(
+                context,
+                entity.isNew
+                    ? localization.createdDesign
+                    : localization.updatedDesign),
+      ));
+      break;
+
+    case EntityType.credit:
+      store.dispatch(EditCredit(
+        credit: map[entityId],
+        navigator: navigator,
+        completer: completer ??
+            snackBarCompleter<InvoiceEntity>(
+                context,
+                entity.isNew
+                    ? localization.createdCredit
+                    : localization.updatedCredit),
+      ));
+      break;
   }
 }
 
@@ -917,5 +1025,14 @@ void handleEntitiesActions(
       break;
     case EntityType.document:
       handleDocumentAction(context, entities, action);
+      break;
+    // STARTER: actions - do not remove comment
+    case EntityType.design:
+      handleDesignAction(context, entities, action);
+      break;
+
+    case EntityType.credit:
+      handleCreditAction(context, entities, action);
+      break;
   }
 }

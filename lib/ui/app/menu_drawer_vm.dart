@@ -1,17 +1,18 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_redux/flutter_redux.dart';
+import 'package:invoiceninja_flutter/constants.dart';
 import 'package:invoiceninja_flutter/redux/client/client_actions.dart';
 import 'package:invoiceninja_flutter/redux/company/company_actions.dart';
 import 'package:invoiceninja_flutter/redux/settings/settings_actions.dart';
 import 'package:invoiceninja_flutter/ui/app/app_builder.dart';
+import 'package:invoiceninja_flutter/utils/dialogs.dart';
+import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:redux/redux.dart';
 import 'package:invoiceninja_flutter/ui/app/menu_drawer.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/redux/company/company_selectors.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
-import 'package:invoiceninja_flutter/utils/completers.dart';
-import 'package:invoiceninja_flutter/utils/localization.dart';
 
 class MenuDrawerBuilder extends StatelessWidget {
   const MenuDrawerBuilder({Key key}) : super(key: key);
@@ -30,7 +31,6 @@ class MenuDrawerBuilder extends StatelessWidget {
 class MenuDrawerVM {
   MenuDrawerVM({
     @required this.state,
-    @required this.companies,
     @required this.selectedCompany,
     @required this.user,
     @required this.selectedCompanyIndex,
@@ -40,7 +40,6 @@ class MenuDrawerVM {
   });
 
   final AppState state;
-  final List<CompanyEntity> companies;
   final CompanyEntity selectedCompany;
   final UserEntity user;
   final String selectedCompanyIndex;
@@ -55,7 +54,6 @@ class MenuDrawerVM {
     return MenuDrawerVM(
       state: state,
       isLoading: state.isLoading,
-      companies: companiesSelector(state),
       user: state.user,
       selectedCompany: state.company,
       selectedCompanyIndex: state.uiState.selectedCompanyIndex.toString(),
@@ -66,15 +64,25 @@ class MenuDrawerVM {
         AppBuilder.of(context).rebuild();
 
         if (state.uiState.isInSettings) {
+          String section = state.uiState.subRoute;
+          if ([kSettingsUserDetails].contains(section)) {
+            section = kSettingsCompanyDetails;
+          }
           store.dispatch(ViewSettings(
             navigator: Navigator.of(context),
             company: company,
-            section: state.uiState.subRoute,
+            section: section,
+            force: true,
           ));
         }
       },
       onAddCompany: (BuildContext context) {
-        store.dispatch(AddCompany(context));
+        confirmCallback(
+            context: context,
+            message: AppLocalization.of(context).addCompany,
+            callback: () {
+              store.dispatch(AddCompany(context));
+            });
       },
     );
   }

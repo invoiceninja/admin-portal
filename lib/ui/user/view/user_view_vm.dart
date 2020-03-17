@@ -91,11 +91,25 @@ class UserViewVM {
             if (longPress && user.isActive) {
               createEntity(
                   context: context,
-                  entity: InvoiceEntity(state: state, isQuote: true));
+                  entity: InvoiceEntity(
+                      state: state, entityType: EntityType.quote));
             } else {
               viewEntitiesByType(
                   context: context,
                   entityType: EntityType.quote,
+                  filterEntity: user);
+            }
+            break;
+          case EntityType.credit:
+            if (longPress && user.isActive) {
+              createEntity(
+                  context: context,
+                  entity: InvoiceEntity(
+                      state: state, entityType: EntityType.credit));
+            } else {
+              viewEntitiesByType(
+                  context: context,
+                  entityType: EntityType.credit,
                   filterEntity: user);
             }
             break;

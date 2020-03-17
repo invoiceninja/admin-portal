@@ -16,12 +16,15 @@ import 'package:invoiceninja_flutter/redux/auth/auth_state.dart';
 import 'package:invoiceninja_flutter/redux/client/client_actions.dart';
 import 'package:invoiceninja_flutter/redux/company/company_actions.dart';
 import 'package:invoiceninja_flutter/redux/company/company_state.dart';
+import 'package:invoiceninja_flutter/redux/credit/credit_actions.dart';
 import 'package:invoiceninja_flutter/redux/dashboard/dashboard_actions.dart';
+import 'package:invoiceninja_flutter/redux/design/design_actions.dart';
 import 'package:invoiceninja_flutter/redux/expense/expense_actions.dart';
 import 'package:invoiceninja_flutter/redux/invoice/invoice_actions.dart';
 import 'package:invoiceninja_flutter/redux/payment/payment_actions.dart';
 import 'package:invoiceninja_flutter/redux/product/product_actions.dart';
 import 'package:invoiceninja_flutter/redux/project/project_actions.dart';
+import 'package:invoiceninja_flutter/redux/quote/quote_actions.dart';
 import 'package:invoiceninja_flutter/redux/settings/settings_actions.dart';
 import 'package:invoiceninja_flutter/redux/static/static_state.dart';
 import 'package:invoiceninja_flutter/redux/task/task_actions.dart';
@@ -212,10 +215,7 @@ Middleware<AppState> _createLoadState(
       store.dispatch(LoadStateSuccess(appState));
 
       if (appState.staticState.isStale) {
-        store.dispatch(RefreshData(
-          loadCompanies: false,
-          platform: getPlatform(action.context),
-        ));
+        store.dispatch(RefreshData(loadCompanies: false));
       }
 
       if (uiState.currentRoute != LoginScreen.route &&
@@ -271,10 +271,7 @@ Middleware<AppState> _createLoadState(
           print('Error (app_middleware): $error');
           store.dispatch(UserLogout(action.context));
         });
-        store.dispatch(RefreshData(
-          platform: getPlatform(action.context),
-          completer: completer,
-        ));
+        store.dispatch(RefreshData(completer: completer));
       } else {
         store.dispatch(UserLogout(action.context));
       }
@@ -416,7 +413,9 @@ Middleware<AppState> _createAccountLoaded() {
           store.dispatch(LoadProductsSuccess(company.products));
           store.dispatch(LoadInvoicesSuccess(company.invoices));
           store.dispatch(LoadPaymentsSuccess(company.payments));
-          //store.dispatch(LoadQuotesSuccess(company.quotes));
+          store.dispatch(LoadQuotesSuccess(company.quotes));
+          store.dispatch(LoadCreditsSuccess(company.quotes));
+          store.dispatch(LoadDesignsSuccess(company.designs));
           if (Config.DEMO_MODE) {
             store.dispatch(LoadTasksSuccess(company.tasks));
             store.dispatch(LoadProjectsSuccess(company.projects));

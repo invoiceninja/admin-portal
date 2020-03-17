@@ -9,6 +9,7 @@ import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:invoiceninja_flutter/redux/reports/reports_actions.dart';
 import 'package:invoiceninja_flutter/ui/app/dialogs/alert_dialog.dart';
 import 'package:invoiceninja_flutter/ui/app/dialogs/error_dialog.dart';
+import 'package:invoiceninja_flutter/ui/app/forms/app_dropdown_button.dart';
 import 'package:invoiceninja_flutter/ui/app/loading_indicator.dart';
 import 'package:invoiceninja_flutter/ui/app/resources/cached_image.dart';
 import 'package:invoiceninja_flutter/ui/system/update_dialog.dart';
@@ -29,6 +30,7 @@ import 'package:invoiceninja_flutter/utils/platforms.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 // STARTER: import - do not remove comment
+import 'package:invoiceninja_flutter/redux/design/design_actions.dart';
 
 class MenuDrawer extends StatelessWidget {
   const MenuDrawer({
@@ -74,7 +76,7 @@ class MenuDrawer extends StatelessWidget {
                     company.displayName.isEmpty
                         ? localization.untitledCompany
                         : company.displayName,
-                    style: Theme.of(context).textTheme.headline6,
+                    style: Theme.of(context).textTheme.title,
                     overflow: TextOverflow.ellipsis,
                   ),
                 ],
@@ -91,13 +93,13 @@ class MenuDrawer extends StatelessWidget {
         child: _companyLogo(viewModel.selectedCompany),
       ),
       itemBuilder: (BuildContext context) => [
-        ...viewModel.companies
+        ...viewModel.state.companies
             .map((company) => PopupMenuItem<String>(
                   child: _companyListItem(company),
                   value: company.id,
                 ))
             .toList(),
-        if (viewModel.state.userCompany.isAdmin)
+        if (state.userCompany.isOwner)
           PopupMenuItem<String>(
             value: null,
             child: Row(
@@ -122,6 +124,42 @@ class MenuDrawer extends StatelessWidget {
       },
     );
 
+    final _expandedCompanySelector = state.companies.isEmpty
+        ? SizedBox()
+        : AppDropdownButton<String>(
+            value: viewModel.selectedCompanyIndex,
+            items: [
+              ...state.companies
+                  .map((CompanyEntity company) => DropdownMenuItem<String>(
+                        value:
+                            (state.companies.indexOf(company)).toString(),
+                        child: _companyListItem(company),
+                      ))
+                  .toList(),
+              if (viewModel.state.userCompany.isAdmin)
+                DropdownMenuItem<String>(
+                  value: null,
+                  child: Row(
+                    children: <Widget>[
+                      SizedBox(width: 2),
+                      Icon(Icons.add_circle, size: 32),
+                      SizedBox(width: 28),
+                      Text(localization.addCompany),
+                    ],
+                  ),
+                ),
+            ],
+            onChanged: (dynamic value) {
+              if (value == null) {
+                viewModel.onAddCompany(context);
+              } else {
+                viewModel.onCompanyChanged(
+                    context, value, state.companies[int.parse(value)]);
+              }
+            },
+          );
+
+    /*
     final _expandedCompanySelector = viewModel.companies.isEmpty
         ? SizedBox()
         : DropdownButtonHideUnderline(
@@ -159,6 +197,7 @@ class MenuDrawer extends StatelessWidget {
               }
             },
           ));
+  */
 
     return SizedBox(
       width: state.prefState.isMenuCollapsed ? 65 : kDrawerWidth,
@@ -169,11 +208,7 @@ class MenuDrawer extends StatelessWidget {
             children: <Widget>[
               // Hide options while refreshing data
               state.credentials.token.isEmpty
-                  ? Expanded(
-                      child: LoadingIndicator(
-                        height: 30,
-                      ),
-                    )
+                  ? Expanded(child: SizedBox())
                   : Container(
                       padding:
                           EdgeInsets.symmetric(horizontal: 14, vertical: 3),
@@ -220,14 +255,18 @@ class MenuDrawer extends StatelessWidget {
                           icon: getEntityIcon(EntityType.payment),
                           title: localization.payments,
                         ),
-                        // TODO remove this
-                        if (!Config.DEMO_MODE)
-                          DrawerTile(
-                            company: company,
-                            entityType: EntityType.quote,
-                            icon: getEntityIcon(EntityType.quote),
-                            title: localization.quotes,
-                          ),
+                        DrawerTile(
+                          company: company,
+                          entityType: EntityType.quote,
+                          icon: getEntityIcon(EntityType.quote),
+                          title: localization.quotes,
+                        ),
+                        DrawerTile(
+                          company: company,
+                          entityType: EntityType.credit,
+                          icon: getEntityIcon(EntityType.credit),
+                          title: localization.credits,
+                        ),
                         DrawerTile(
                           company: company,
                           entityType: EntityType.project,
@@ -276,7 +315,9 @@ class MenuDrawer extends StatelessWidget {
                     )),
               Align(
                 child: state.prefState.isMenuCollapsed
-                    ? SidebarFooterCollapsed()
+                    ? SidebarFooterCollapsed(
+                        isUpdateAvailable: state.account.isUpdateAvailable,
+                      )
                     : SidebarFooter(),
                 alignment: Alignment(0, 1),
               ),
@@ -413,6 +454,7 @@ class SidebarFooter extends StatelessWidget {
   Widget build(BuildContext context) {
     final state = StoreProvider.of<AppState>(context).state;
     final localization = AppLocalization.of(context);
+    final account = state.userCompany.account;
 
     return Container(
       color: Theme.of(context).bottomAppBarColor,
@@ -422,7 +464,7 @@ class SidebarFooter extends StatelessWidget {
           if (state.prefState.isMenuCollapsed) ...[
             Expanded(child: SizedBox())
           ] else ...[
-            if (true || isSelfHosted(context))
+            if (account.currentVersion != account.latestVersion)
               IconButton(
                 icon: Icon(
                   Icons.warning,
@@ -509,11 +551,17 @@ class SidebarFooter extends StatelessWidget {
 }
 
 class SidebarFooterCollapsed extends StatelessWidget {
+  const SidebarFooterCollapsed({@required this.isUpdateAvailable});
+
+  final bool isUpdateAvailable;
+
   @override
   Widget build(BuildContext context) {
     final localization = AppLocalization.of(context);
     return PopupMenuButton<String>(
-      icon: Icon(Icons.info_outline),
+      icon: isUpdateAvailable
+          ? Icon(Icons.warning, color: Theme.of(context).accentColor)
+          : Icon(Icons.info_outline),
       onSelected: (value) {
         if (value == localization.updateAvailable) {
           _showUpdate(context);
@@ -524,7 +572,7 @@ class SidebarFooterCollapsed extends StatelessWidget {
         }
       },
       itemBuilder: (BuildContext context) => [
-        if (true || isSelfHosted(context) && kIsWeb)
+        if (isUpdateAvailable)
           PopupMenuItem<String>(
             child: ListTile(
               leading: Icon(
@@ -586,9 +634,9 @@ void _showUpdate(BuildContext context) {
 void _showAbout(BuildContext context) {
   final localization = AppLocalization.of(context);
   final ThemeData themeData = Theme.of(context);
-  final TextStyle aboutTextStyle = themeData.textTheme.bodyText1;
+  final TextStyle aboutTextStyle = themeData.textTheme.body1;
   final TextStyle linkStyle =
-      themeData.textTheme.bodyText1.copyWith(color: themeData.accentColor);
+      themeData.textTheme.body1.copyWith(color: themeData.accentColor);
 
   showAboutDialog(
     context: context,

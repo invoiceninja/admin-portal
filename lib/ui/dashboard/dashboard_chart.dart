@@ -95,7 +95,7 @@ class _DashboardChartState extends State<DashboardChart> {
           padding: EdgeInsets.all(14.0),
           child: Text(
             widget.title,
-            style: theme.textTheme.headline5,
+            style: theme.textTheme.headline,
           ),
         ),
         Divider(height: 1.0),
@@ -146,14 +146,14 @@ class _DashboardChartState extends State<DashboardChart> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: <Widget>[
                       Text(localization.lookup(dataGroup.name),
-                          style: theme.textTheme.headline5.copyWith(
+                          style: theme.textTheme.headline.copyWith(
                               color: isSelected ? Colors.white : null,
                               fontWeight: FontWeight.w400)),
                       SizedBox(height: 4.0),
                       Text(
                           formatNumber(dataGroup.total, context,
                               currencyId: widget.currencyId),
-                          style: theme.textTheme.headline5.copyWith(
+                          style: theme.textTheme.headline.copyWith(
                               color: isSelected ? Colors.white : null)),
                       SizedBox(height: 2.0),
                       changeString.isNotEmpty
@@ -197,13 +197,13 @@ class _DashboardChartState extends State<DashboardChart> {
                       ': ' +
                       formatNumber(series.average, context,
                           currencyId: widget.currencyId),
-                  style: theme.textTheme.headline5,
+                  style: theme.textTheme.headline,
                 ),
               ),
               _selected != null
                   ? Text(
                       _selected,
-                      style: theme.textTheme.headline5,
+                      style: theme.textTheme.headline,
                     )
                   : SizedBox(),
             ],

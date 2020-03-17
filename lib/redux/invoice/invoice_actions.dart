@@ -424,7 +424,16 @@ void handleInvoiceAction(BuildContext context, List<BaseEntity> invoices,
       createEntity(context: context, entity: invoice.clone);
       break;
     case EntityAction.cloneToQuote:
-      createEntity(context: context, entity: invoice.clone); // TODO fix this
+      createEntity(
+          context: context,
+          entity: invoice.clone
+              .rebuild((b) => b..subEntityType = EntityType.quote));
+      break;
+    case EntityAction.cloneToCredit:
+      createEntity(
+          context: context,
+          entity: invoice.clone
+              .rebuild((b) => b..subEntityType = EntityType.credit));
       break;
     case EntityAction.newPayment:
       createEntity(

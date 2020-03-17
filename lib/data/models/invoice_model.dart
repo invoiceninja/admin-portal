@@ -43,11 +43,11 @@ class InvoiceFields {
   static const String balance = 'balance';
   static const String clientId = 'clientId';
   static const String client = 'client';
-  static const String invoiceStatusId = 'invoiceStatusId';
-  static const String invoiceNumber = 'invoiceNumber';
+  static const String statusId = 'statusId';
+  static const String number = 'number';
   static const String discount = 'discount';
   static const String poNumber = 'poNumber';
-  static const String invoiceDate = 'invoiceDate';
+  static const String date = 'date';
   static const String dueDate = 'dueDate';
   static const String terms = 'terms';
   static const String footer = 'invoiceFooter';
@@ -74,11 +74,16 @@ class InvoiceFields {
 abstract class InvoiceEntity extends Object
     with BaseEntity, SelectableEntity, CalculateInvoiceTotal, BelongsToClient
     implements Built<InvoiceEntity, InvoiceEntityBuilder> {
-  factory InvoiceEntity(
-      {String id, bool isQuote = false, AppState state, ClientEntity client}) {
+  factory InvoiceEntity({
+    String id,
+    AppState state,
+    ClientEntity client,
+    EntityType entityType,
+  }) {
     final company = state?.company;
     return _$InvoiceEntity._(
       id: id ?? BaseEntity.nextId,
+      subEntityType: entityType ?? EntityType.invoice,
       isChanged: false,
       amount: 0.0,
       balance: 0.0,
@@ -93,7 +98,7 @@ abstract class InvoiceEntity extends Object
       privateNotes: '',
       terms: '',
       footer: '',
-      designId: '1',
+      designId: '',
       taxName1: company?.settings?.defaultTaxName1 ?? '',
       taxRate1: company?.settings?.defaultTaxRate1 ?? 0.0,
       taxName2: company?.settings?.defaultTaxName2 ?? '',
@@ -114,7 +119,7 @@ abstract class InvoiceEntity extends Object
       customTaxes3: false,
       customTaxes4: false,
       hasExpenses: false,
-      quoteInvoiceId: '',
+      invoiceId: '',
       customSurcharge1: 0,
       customSurcharge2: 0,
       customSurcharge3: 0,
@@ -144,7 +149,7 @@ abstract class InvoiceEntity extends Object
     ..isChanged = false
     ..isDeleted = false
     ..statusId = kInvoiceStatusDraft
-    ..quoteInvoiceId = null
+    ..invoiceId = ''
     ..number = ''
     ..date = convertDateTimeToSqlDate()
     ..dueDate = ''
@@ -153,7 +158,11 @@ abstract class InvoiceEntity extends Object
 
   @override
   EntityType get entityType {
-    return EntityType.invoice;
+    if (subEntityType != null) {
+      return subEntityType;
+    } else {
+      return EntityType.invoice;
+    }
   }
 
   double get amount;
@@ -161,18 +170,15 @@ abstract class InvoiceEntity extends Object
   double get balance;
 
   @override
-  @nullable
   @BuiltValueField(wireName: 'client_id')
   String get clientId;
 
   @BuiltValueField(wireName: 'status_id')
   String get statusId;
 
-  @nullable
   @BuiltValueField(wireName: 'number')
   String get number;
 
-  @override
   double get discount;
 
   @BuiltValueField(wireName: 'po_number')
@@ -195,7 +201,6 @@ abstract class InvoiceEntity extends Object
   @BuiltValueField(wireName: 'footer')
   String get footer;
 
-  @nullable
   @BuiltValueField(wireName: 'design_id')
   String get designId;
 
@@ -287,23 +292,23 @@ abstract class InvoiceEntity extends Object
   @BuiltValueField(wireName: 'custom_surcharge4')
   double get customSurcharge4;
 
-  @nullable
   @override
+  @nullable
   @BuiltValueField(wireName: 'custom_taxes1')
   bool get customTaxes1;
 
-  @nullable
   @override
+  @nullable
   @BuiltValueField(wireName: 'custom_taxes2')
   bool get customTaxes2;
 
-  @nullable
   @override
+  @nullable
   @BuiltValueField(wireName: 'custom_taxes3')
   bool get customTaxes3;
 
-  @nullable
   @override
+  @nullable
   @BuiltValueField(wireName: 'custom_taxes4')
   bool get customTaxes4;
 
@@ -311,8 +316,8 @@ abstract class InvoiceEntity extends Object
   bool get hasExpenses;
 
   @nullable
-  @BuiltValueField(wireName: 'quote_invoice_id')
-  String get quoteInvoiceId;
+  @BuiltValueField(wireName: 'invoice_id')
+  String get invoiceId;
 
   @nullable
   String get filename;
@@ -323,8 +328,7 @@ abstract class InvoiceEntity extends Object
 
   BuiltList<InvitationEntity> get invitations;
 
-  bool get isApproved =>
-      statusId == kQuoteStatusApproved || (quoteInvoiceId ?? '').isNotEmpty;
+  bool get isApproved => statusId == kQuoteStatusApproved;
 
   bool get hasClient => '${clientId ?? ''}'.isNotEmpty;
 
@@ -343,8 +347,7 @@ abstract class InvoiceEntity extends Object
       case InvoiceFields.updatedAt:
         response = invoiceA.updatedAt.compareTo(invoiceB.updatedAt);
         break;
-      case InvoiceFields.invoiceDate:
-      case QuoteFields.quoteDate:
+      case InvoiceFields.date:
         response = invoiceA.date.compareTo(invoiceB.date);
         break;
       case InvoiceFields.balance:
@@ -463,12 +466,20 @@ abstract class InvoiceEntity extends Object
         if (includeEdit && !multiselect) {
           actions.add(EntityAction.edit);
         }
+      }
 
+      if (invitations.isNotEmpty && !multiselect) {
+        if (includeEdit) {
+          actions.add(EntityAction.pdf);
+        }
+      }
+
+      if (userCompany.canEditEntity(this)) {
         if (client != null && client.hasEmailAddress) {
           actions.add(EntityAction.sendEmail);
         }
 
-        if (userCompany.canCreate(EntityType.payment) && isUnpaid) {
+        if (!isQuote && userCompany.canCreate(EntityType.payment) && isUnpaid) {
           actions.add(EntityAction.newPayment);
         }
 
@@ -476,15 +487,16 @@ abstract class InvoiceEntity extends Object
           actions.add(EntityAction.markSent);
         }
 
-        if (!isPaid) {
+        if (!isQuote && !isPaid) {
           actions.add(EntityAction.markPaid);
+        }
+
+        if (isQuote && !isApproved) {
+          actions.add(EntityAction.convert);
         }
       }
 
       if (invitations.isNotEmpty && !multiselect) {
-        if (includeEdit) {
-          actions.add(EntityAction.pdf);
-        }
         actions.add(EntityAction.clientPortal);
       }
     }
@@ -495,7 +507,12 @@ abstract class InvoiceEntity extends Object
 
     if (userCompany.canCreate(EntityType.invoice) && !multiselect) {
       actions.add(EntityAction.cloneToInvoice);
-      actions.add(EntityAction.cloneToQuote);
+      if (userCompany.company?.isModuleEnabled(EntityType.quote) ?? false) {
+        actions.add(EntityAction.cloneToQuote);
+      }
+      if (userCompany.company?.isModuleEnabled(EntityType.credit) ?? false) {
+        actions.add(EntityAction.cloneToCredit);
+      }
       actions.add(null);
     }
 
@@ -572,6 +589,98 @@ abstract class InvoiceEntity extends Object
         orElse: () => null);
   }
 
+  /// Gets taxes in the form { taxName1: { amount: 0, paid: 0} , ... }
+  Map<String, Map<String, dynamic>> getTaxes() {
+    final taxes = <String, Map<String, dynamic>>{};
+    final taxable = calculateTaxes(usesInclusiveTaxes);
+    final paidAmount = amount - balance;
+
+    if (taxRate1 != 0) {
+      final invoiceTaxAmount = taxable[taxName1];
+      final invoicePaidAmount = (amount * invoiceTaxAmount != 0)
+          ? (paidAmount / amount * invoiceTaxAmount)
+          : 0.0;
+      _calculateTax(
+          taxes, taxName1, taxRate1, invoiceTaxAmount, invoicePaidAmount);
+    }
+
+    if (taxRate2 != 0) {
+      final invoiceTaxAmount = taxable[taxName2];
+      final invoicePaidAmount = (amount * invoiceTaxAmount != 0)
+          ? (paidAmount / amount * invoiceTaxAmount)
+          : 0.0;
+      _calculateTax(
+          taxes, taxName2, taxRate2, invoiceTaxAmount, invoicePaidAmount);
+    }
+
+    if (taxRate3 != 0) {
+      final invoiceTaxAmount = taxable[taxName3];
+      final invoicePaidAmount = (amount * invoiceTaxAmount != 0)
+          ? (paidAmount / amount * invoiceTaxAmount)
+          : 0.0;
+      _calculateTax(
+          taxes, taxName3, taxRate3, invoiceTaxAmount, invoicePaidAmount);
+    }
+
+    for (final item in lineItems) {
+      if (item.taxRate1 != 0) {
+        final itemTaxAmount = taxable[item.taxName1];
+        final itemPaidAmount = amount != null &&
+                itemTaxAmount != null &&
+                amount * itemTaxAmount != 0
+            ? (paidAmount / amount * itemTaxAmount)
+            : 0.0;
+        _calculateTax(
+            taxes, item.taxName1, item.taxRate1, itemTaxAmount, itemPaidAmount);
+      }
+
+      if (item.taxRate2 != 0) {
+        final itemTaxAmount = taxable[item.taxName2];
+        final itemPaidAmount = amount != null &&
+                itemTaxAmount != null &&
+                amount * itemTaxAmount != 0
+            ? (paidAmount / amount * itemTaxAmount)
+            : 0.0;
+        _calculateTax(
+            taxes, item.taxName2, item.taxRate2, itemTaxAmount, itemPaidAmount);
+      }
+
+      if (item.taxRate3 != 0) {
+        final itemTaxAmount = taxable[item.taxName3];
+        final itemPaidAmount = amount != null &&
+                itemTaxAmount != null &&
+                amount * itemTaxAmount != 0
+            ? (paidAmount / amount * itemTaxAmount)
+            : 0.0;
+        _calculateTax(
+            taxes, item.taxName3, item.taxRate3, itemTaxAmount, itemPaidAmount);
+      }
+    }
+
+    return taxes;
+  }
+
+  void _calculateTax(Map<String, Map<String, dynamic>> map, String name,
+      double rate, double amount, double paid) {
+    if (amount == null) {
+      return;
+    }
+
+    final key = rate.toString() + ' ' + name;
+
+    map.putIfAbsent(
+        key,
+        () => <String, dynamic>{
+              'name': name,
+              'rate': rate,
+              'amount': 0.0,
+              'paid': 0.0
+            });
+
+    map[key]['amount'] += amount;
+    map[key]['paid'] += paid;
+  }
+
   String get invitationLink =>
       invitations.isEmpty ? '' : invitations.first.link;
 
@@ -601,9 +710,11 @@ abstract class InvoiceItemEntity
       taxRate2: 0.0,
       taxName3: '',
       taxRate3: 0.0,
-      lineItemTypeId: '',
+      typeId: '',
       customValue1: '',
       customValue2: '',
+      customValue3: '',
+      customValue4: '',
       discount: 0.0,
       createdAt: DateTime.now().microsecondsSinceEpoch,
     );
@@ -638,8 +749,9 @@ abstract class InvoiceItemEntity
   @BuiltValueField(wireName: 'tax_rate3')
   double get taxRate3;
 
-  @BuiltValueField(wireName: 'line_item_type_id')
-  String get lineItemTypeId;
+  @nullable
+  @BuiltValueField(wireName: 'type_id')
+  String get typeId;
 
   @BuiltValueField(wireName: 'custom_value1')
   String get customValue1;
@@ -647,11 +759,9 @@ abstract class InvoiceItemEntity
   @BuiltValueField(wireName: 'custom_value2')
   String get customValue2;
 
-  @nullable
   @BuiltValueField(wireName: 'custom_value3')
   String get customValue3;
 
-  @nullable
   @BuiltValueField(wireName: 'custom_value4')
   String get customValue4;
 
@@ -742,11 +852,11 @@ abstract class InvitationEntity extends Object
   @BuiltValueField(wireName: 'viewed_date')
   String get viewedDate;
 
-  String get silentLink => link + '?silent=true';
+  String get downloadLink => '$link/download';
 
-  String get borderlessLink => silentLink + '&borderless=true';
+  String get silentLink => '$link?silent=true';
 
-  String get downloadLink => link.replaceFirst('/view/', '/download/');
+  String get borderlessLink => '$silentLink&borderless=true';
 
   @override
   bool matchesFilter(String filter) {

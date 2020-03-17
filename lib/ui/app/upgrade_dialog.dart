@@ -71,9 +71,7 @@ class _UpgradeDialogState extends State<UpgradeDialog> {
             builder: (BuildContext context) {
               return MessageDialog(localization.thankYouForYourPurchase,
                   onDismiss: () {
-                store.dispatch(RefreshData(
-                  platform: getPlatform(context),
-                ));
+                store.dispatch(RefreshData());
               });
             });
 

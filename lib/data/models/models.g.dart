@@ -12,9 +12,11 @@ const EntityAction _$delete = const EntityAction._('delete');
 const EntityAction _$restore = const EntityAction._('restore');
 const EntityAction _$remove = const EntityAction._('remove');
 const EntityAction _$clone = const EntityAction._('clone');
+const EntityAction _$cloneToCredit = const EntityAction._('cloneToCredit');
 const EntityAction _$cloneToInvoice = const EntityAction._('cloneToInvoice');
 const EntityAction _$cloneToQuote = const EntityAction._('cloneToQuote');
 const EntityAction _$convert = const EntityAction._('convert');
+const EntityAction _$approve = const EntityAction._('approve');
 const EntityAction _$download = const EntityAction._('download');
 const EntityAction _$sendEmail = const EntityAction._('sendEmail');
 const EntityAction _$markSent = const EntityAction._('markSent');
@@ -22,6 +24,7 @@ const EntityAction _$markPaid = const EntityAction._('markPaid');
 const EntityAction _$newClient = const EntityAction._('newClient');
 const EntityAction _$newInvoice = const EntityAction._('newInvoice');
 const EntityAction _$newQuote = const EntityAction._('newQuote');
+const EntityAction _$newCredit = const EntityAction._('newCredit');
 const EntityAction _$newExpense = const EntityAction._('newExpense');
 const EntityAction _$newProject = const EntityAction._('newProject');
 const EntityAction _$newTask = const EntityAction._('newTask');
@@ -53,12 +56,16 @@ EntityAction _$valueOf(String name) {
       return _$remove;
     case 'clone':
       return _$clone;
+    case 'cloneToCredit':
+      return _$cloneToCredit;
     case 'cloneToInvoice':
       return _$cloneToInvoice;
     case 'cloneToQuote':
       return _$cloneToQuote;
     case 'convert':
       return _$convert;
+    case 'approve':
+      return _$approve;
     case 'download':
       return _$download;
     case 'sendEmail':
@@ -73,6 +80,8 @@ EntityAction _$valueOf(String name) {
       return _$newInvoice;
     case 'newQuote':
       return _$newQuote;
+    case 'newCredit':
+      return _$newCredit;
     case 'newExpense':
       return _$newExpense;
     case 'newProject':
@@ -116,9 +125,11 @@ final BuiltSet<EntityAction> _$values =
   _$restore,
   _$remove,
   _$clone,
+  _$cloneToCredit,
   _$cloneToInvoice,
   _$cloneToQuote,
   _$convert,
+  _$approve,
   _$download,
   _$sendEmail,
   _$markSent,
@@ -126,6 +137,7 @@ final BuiltSet<EntityAction> _$values =
   _$newClient,
   _$newInvoice,
   _$newQuote,
+  _$newCredit,
   _$newExpense,
   _$newProject,
   _$newTask,

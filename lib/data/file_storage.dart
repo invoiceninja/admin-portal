@@ -49,7 +49,6 @@ class FileStorage {
       final prefs = await SharedPreferences.getInstance();
       prefs.remove(tag);
       return null;
-
     } else {
       final file = await _getLocalFile();
 

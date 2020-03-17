@@ -114,20 +114,6 @@ List<BaseEntity> filteredSelector(String filter, UserCompanyState state) {
   return list;
 }
 
-List<CompanyEntity> companiesSelector(AppState state) {
-  final List<CompanyEntity> list = [];
-
-  for (var companyState in state.userCompanyStates) {
-    if (companyState.company != null) {
-      list.add(companyState.company);
-    }
-  }
-
-  return list
-      .where((CompanyEntity company) => (company.id ?? '').isNotEmpty)
-      .toList();
-}
-
 String localeSelector(AppState state) {
   final locale = state.staticState
           ?.languageMap[state.company?.settings?.languageId]?.locale ??

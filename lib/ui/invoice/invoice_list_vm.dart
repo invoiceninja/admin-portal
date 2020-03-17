@@ -7,11 +7,14 @@ import 'package:flutter_redux/flutter_redux.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
+import 'package:invoiceninja_flutter/redux/document/document_selectors.dart';
 import 'package:invoiceninja_flutter/redux/invoice/invoice_actions.dart';
 import 'package:invoiceninja_flutter/redux/invoice/invoice_selectors.dart';
 import 'package:invoiceninja_flutter/redux/ui/list_ui_state.dart';
-import 'package:invoiceninja_flutter/ui/app/presenters/invoice_presenter.dart';
-import 'package:invoiceninja_flutter/ui/invoice/invoice_list.dart';
+import 'package:invoiceninja_flutter/ui/app/entities/entity_actions_dialog.dart';
+import 'package:invoiceninja_flutter/ui/app/tables/entity_list.dart';
+import 'package:invoiceninja_flutter/ui/invoice/invoice_list_item.dart';
+import 'package:invoiceninja_flutter/ui/invoice/invoice_presenter.dart';
 import 'package:invoiceninja_flutter/utils/completers.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:redux/redux.dart';
@@ -25,10 +28,65 @@ class InvoiceListBuilder extends StatelessWidget {
   Widget build(BuildContext context) {
     return StoreConnector<AppState, InvoiceListVM>(
       converter: InvoiceListVM.fromStore,
-      builder: (context, vm) {
-        return InvoiceList(
-          viewModel: vm,
-        );
+      builder: (context, viewModel) {
+        final state = viewModel.state;
+        final documentMap = memoizedEntityDocumentMap(EntityType.invoice,
+            state.documentState.map, state.expenseState.map);
+
+        return EntityList(
+            isLoaded: viewModel.isLoaded,
+            entityType: EntityType.invoice,
+            presenter: InvoicePresenter(),
+            state: viewModel.state,
+            entityList: viewModel.invoiceList,
+            onEntityTap: viewModel.onInvoiceTap,
+            tableColumns: viewModel.tableColumns,
+            onRefreshed: viewModel.onRefreshed,
+            onClearEntityFilterPressed: viewModel.onClearEntityFilterPressed,
+            onViewEntityFilterPressed: viewModel.onViewEntityFilterPressed,
+            onSortColumn: viewModel.onSortColumn,
+            itemBuilder: (BuildContext context, index) {
+              final invoiceId = viewModel.invoiceList[index];
+              final invoice = viewModel.invoiceMap[invoiceId];
+              final client =
+                  viewModel.clientMap[invoice.clientId] ?? ClientEntity();
+              final listUIState = state.getListState(EntityType.invoice);
+              final isInMultiselect = listUIState.isInMultiselect();
+
+              void showDialog() => showEntityActionsDialog(
+                    entities: [invoice],
+                    context: context,
+                    client: client,
+                  );
+
+              return InvoiceListItem(
+                user: viewModel.user,
+                filter: viewModel.filter,
+                hasDocuments: documentMap[invoice.id] == true,
+                invoice: invoice,
+                client: viewModel.clientMap[invoice.clientId] ?? ClientEntity(),
+                onTap: () => viewModel.onInvoiceTap(context, invoice),
+                onEntityAction: (EntityAction action) {
+                  if (action == EntityAction.more) {
+                    showDialog();
+                  } else {
+                    handleInvoiceAction(context, [invoice], action);
+                  }
+                },
+                onLongPress: () async {
+                  final longPressIsSelection =
+                      state.prefState.longPressSelectionIsDefault ?? true;
+                  if (longPressIsSelection && !isInMultiselect) {
+                    handleInvoiceAction(
+                        context, [invoice], EntityAction.toggleMultiselect);
+                  } else {
+                    showDialog();
+                  }
+                },
+                isChecked:
+                    isInMultiselect && listUIState.isSelected(invoice.id),
+              );
+            });
       },
     );
   }
@@ -51,6 +109,7 @@ class EntityListVM {
     @required this.onClearEntityFilterPressed,
     @required this.onViewEntityFilterPressed,
     @required this.tableColumns,
+    @required this.onSortColumn,
   });
 
   final AppState state;
@@ -63,11 +122,12 @@ class EntityListVM {
   final String filter;
   final bool isLoading;
   final bool isLoaded;
-  final Function(BuildContext, InvoiceEntity) onInvoiceTap;
+  final Function(BuildContext, BaseEntity) onInvoiceTap;
   final Function(BuildContext) onRefreshed;
   final Function onClearEntityFilterPressed;
   final Function(BuildContext) onViewEntityFilterPressed;
   final List<String> tableColumns;
+  final Function(String) onSortColumn;
 }
 
 class InvoiceListVM extends EntityListVM {
@@ -81,13 +141,14 @@ class InvoiceListVM extends EntityListVM {
     String filter,
     bool isLoading,
     bool isLoaded,
-    Function(BuildContext, InvoiceEntity) onInvoiceTap,
+    Function(BuildContext, BaseEntity) onInvoiceTap,
     Function(BuildContext) onRefreshed,
     Function onClearEntityFilterPressed,
     Function(BuildContext) onViewEntityFilterPressed,
     Function(BuildContext, List<InvoiceEntity>, EntityAction) onEntityAction,
     List<String> tableColumns,
     EntityType entityType,
+    Function(String) onSortColumn,
   }) : super(
           state: state,
           user: user,
@@ -104,6 +165,7 @@ class InvoiceListVM extends EntityListVM {
           onViewEntityFilterPressed: onViewEntityFilterPressed,
           tableColumns: tableColumns,
           entityType: entityType,
+          onSortColumn: onSortColumn,
         );
 
   static InvoiceListVM fromStore(Store<AppState> store) {
@@ -153,6 +215,7 @@ class InvoiceListVM extends EntityListVM {
           handleInvoiceAction(context, invoices, action),
       tableColumns: InvoicePresenter.getTableFields(state.userCompany),
       entityType: EntityType.invoice,
+      onSortColumn: (field) => store.dispatch(SortInvoices(field)),
     );
   }
 }

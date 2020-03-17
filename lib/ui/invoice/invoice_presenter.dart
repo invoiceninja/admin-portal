@@ -8,9 +8,9 @@ import 'package:invoiceninja_flutter/utils/formatting.dart';
 class InvoicePresenter extends EntityPresenter {
   static List<String> getTableFields(UserCompanyEntity userCompany) {
     return [
-      InvoiceFields.invoiceNumber,
+      InvoiceFields.number,
       InvoiceFields.client,
-      InvoiceFields.invoiceDate,
+      InvoiceFields.date,
       InvoiceFields.amount,
       InvoiceFields.balance,
       InvoiceFields.dueDate,
@@ -24,13 +24,13 @@ class InvoicePresenter extends EntityPresenter {
     final invoice = entity as InvoiceEntity;
 
     switch (field) {
-      case InvoiceFields.invoiceNumber:
+      case InvoiceFields.number:
         return Text(invoice.number);
       case InvoiceFields.client:
         return Text((state.clientState.map[invoice.clientId] ??
                 ClientEntity(id: invoice.clientId))
             .listDisplayName);
-      case InvoiceFields.invoiceDate:
+      case InvoiceFields.date:
         return Text(formatDate(invoice.date, context));
       case InvoiceFields.amount:
         return Text(formatNumber(invoice.amount, context));

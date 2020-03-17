@@ -16,6 +16,8 @@ import 'package:invoiceninja_flutter/utils/formatting.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:invoiceninja_flutter/utils/templates.dart';
 import 'package:webview_flutter/webview_flutter.dart';
+import 'package:invoiceninja_flutter/utils/web_stub.dart'
+    if (dart.library.html) 'package:invoiceninja_flutter/utils/web.dart';
 
 class TemplatesAndReminders extends StatefulWidget {
   const TemplatesAndReminders({
@@ -116,6 +118,10 @@ class _TemplatesAndRemindersState extends State<TemplatesAndReminders>
         settings = settings.rebuild((b) => b
           ..emailBodyPayment = body
           ..emailSubjectPayment = subject);
+      } else if (_template == EmailTemplate.partialPaymentEmail) {
+        settings = settings.rebuild((b) => b
+          ..emailBodyPaymentPartial = body
+          ..emailSubjectPaymentPartial = subject);
       } else if (_template == EmailTemplate.firstReminder) {
         settings = settings.rebuild((b) => b
           ..emailBodyReminder1 = body
@@ -505,11 +511,18 @@ class _TemplatePreviewState extends State<TemplatePreview>
   bool get wantKeepAlive => true;
 
   @override
+  void initState() {
+    super.initState();
+  }
+
+  @override
   void didUpdateWidget(oldWidget) {
     super.didUpdateWidget(oldWidget);
 
-    if (widget.html != oldWidget.html) {
-      _webViewController.loadUrl(widget.html);
+    if (!kIsWeb) {
+      if (widget.html != oldWidget.html) {
+        _webViewController.loadUrl(widget.html);
+      }
     }
   }
 
@@ -517,14 +530,19 @@ class _TemplatePreviewState extends State<TemplatePreview>
   Widget build(BuildContext context) {
     super.build(context);
 
-    return WebView(
-      debuggingEnabled: true,
-      initialUrl: widget.html,
-      onWebViewCreated: (WebViewController webViewController) {
-        _webViewController = webViewController;
-      },
-      javascriptMode: JavascriptMode.disabled,
-    );
+    if (kIsWeb) {
+      registerWebView(widget.html);
+      return HtmlElementView(viewType: widget.html);
+    } else {
+      return WebView(
+        debuggingEnabled: true,
+        initialUrl: widget.html,
+        onWebViewCreated: (WebViewController webViewController) {
+          _webViewController = webViewController;
+        },
+        javascriptMode: JavascriptMode.disabled,
+      );
+    }
   }
 }
 
@@ -543,30 +561,34 @@ class EmailPreview extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       color: Colors.white,
-      child: Column(
-        mainAxisSize: MainAxisSize.max,
-        crossAxisAlignment: CrossAxisAlignment.start,
+      child: Stack(
+        alignment: Alignment.topCenter,
         children: <Widget>[
-          Padding(
-            padding:
-                const EdgeInsets.only(left: 8, top: 12, bottom: 8, right: 8),
-            child: Text(
-              subject,
-              style: TextStyle(
-                color: Colors.black,
-                fontWeight: FontWeight.bold,
-                fontSize: 20,
-              ),
-            ),
-          ),
-          Expanded(
-            child: TemplatePreview(body),
-          ),
           if (isLoading)
             SizedBox(
-              height: 4.0,
               child: LinearProgressIndicator(),
-            )
+            ),
+          Column(
+            mainAxisSize: MainAxisSize.max,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: <Widget>[
+              Padding(
+                padding: const EdgeInsets.only(
+                    left: 8, top: 12, bottom: 8, right: 8),
+                child: Text(
+                  subject,
+                  style: TextStyle(
+                    color: Colors.black,
+                    fontWeight: FontWeight.bold,
+                    fontSize: 20,
+                  ),
+                ),
+              ),
+              Expanded(
+                child: TemplatePreview(body),
+              ),
+            ],
+          )
         ],
       ),
     );

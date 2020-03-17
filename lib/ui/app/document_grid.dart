@@ -40,7 +40,7 @@ class DocumentGrid extends StatelessWidget {
               children: <Widget>[
                 Expanded(
                   child: ElevatedButton(
-                    icon: Icons.camera_alt,
+                    iconData: Icons.camera_alt,
                     label: localization.takePicture,
                     onPressed: () async {
                       final image = await ImagePicker.pickImage(
@@ -56,7 +56,7 @@ class DocumentGrid extends StatelessWidget {
                 ),
                 Expanded(
                   child: ElevatedButton(
-                    icon: Icons.insert_drive_file,
+                    iconData: Icons.insert_drive_file,
                     label: localization.uploadFile,
                     onPressed: () async {
                       final image = await ImagePicker.pickImage(
@@ -133,7 +133,7 @@ class DocumentTile extends StatelessWidget {
                     children: <Widget>[
                       isFromExpense
                           ? ElevatedButton(
-                              icon: getEntityIcon(EntityType.expense),
+                              iconData: getEntityIcon(EntityType.expense),
                               label: localization.expense,
                               onPressed: () {
                                 Navigator.of(context).pop();
@@ -142,7 +142,7 @@ class DocumentTile extends StatelessWidget {
                             )
                           : ElevatedButton(
                               color: Colors.red,
-                              icon: Icons.delete,
+                              iconData: Icons.delete,
                               label: localization.delete,
                               onPressed: () {
                                 confirmCallback(
@@ -157,7 +157,7 @@ class DocumentTile extends StatelessWidget {
                         width: 16,
                       ),
                       ElevatedButton(
-                        icon: Icons.check_circle,
+                        iconData: Icons.check_circle,
                         label: localization.done,
                         onPressed: () {
                           Navigator.of(context).pop();
@@ -168,10 +168,10 @@ class DocumentTile extends StatelessWidget {
                   SizedBox(height: 25),
                   Text(document.name,
                       overflow: TextOverflow.ellipsis,
-                      style: Theme.of(context).textTheme.headline5),
+                      style: Theme.of(context).textTheme.headline),
                   Text(
                     '${formatDate(convertTimestampToDateString(document.createdAt), context)} • ${document.prettySize}',
-                    style: Theme.of(context).textTheme.headline5,
+                    style: Theme.of(context).textTheme.headline,
                   ),
                   SizedBox(height: 20),
                   DocumentPreview(document),
@@ -207,7 +207,7 @@ class DocumentTile extends StatelessWidget {
                       children: <Widget>[
                         Text(
                           document.name ?? '',
-                          style: Theme.of(context).textTheme.headline5,
+                          style: Theme.of(context).textTheme.headline,
                           overflow: TextOverflow.ellipsis,
                         ),
                         Text(

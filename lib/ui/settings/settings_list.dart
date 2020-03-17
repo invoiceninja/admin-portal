@@ -25,10 +25,22 @@ class SettingsList extends StatelessWidget {
     final settingsUIState = state.uiState.settingsUIState;
     final showAll = settingsUIState.entityType == EntityType.company;
 
+    if (state.credentials.token.isEmpty) {
+      return SizedBox();
+    }
+
     if (!state.userCompany.isAdmin)
-      return SettingsListTile(
-        section: kSettingsUserDetails,
-        viewModel: viewModel,
+      return ListView(
+        children: <Widget>[
+          SettingsListTile(
+            section: kSettingsUserDetails,
+            viewModel: viewModel,
+          ),
+          SettingsListTile(
+            section: kSettingsDeviceSettings,
+            viewModel: viewModel,
+          ),
+        ],
       );
     else if (settingsUIState.filter != null)
       return SettingsSearch(
@@ -57,7 +69,7 @@ class SettingsList extends StatelessWidget {
           padding: const EdgeInsets.only(left: 19, top: 16, bottom: 16),
           child: Text(
             localization.basicSettings,
-            style: Theme.of(context).textTheme.bodyText1,
+            style: Theme.of(context).textTheme.body1,
           ),
         ),
         SettingsListTile(
@@ -100,22 +112,22 @@ class SettingsList extends StatelessWidget {
             viewModel: viewModel,
           ),
          */
+        if (showAll && state.userCompany.isOwner)
+          SettingsListTile(
+            section: kSettingsAccountManagement,
+            viewModel: viewModel,
+          ),
         if (showAll)
           SettingsListTile(
             section: kSettingsDeviceSettings,
             viewModel: viewModel,
-            icon: kIsWeb
-                ? Icons.desktop_mac
-                : isMobile(context)
-                    ? FontAwesomeIcons.mobileAlt
-                    : FontAwesomeIcons.desktop,
           ),
         Container(
           color: Theme.of(context).bottomAppBarColor,
           padding: const EdgeInsets.only(left: 19, top: 16, bottom: 16),
           child: Text(
             localization.advancedSettings,
-            style: Theme.of(context).textTheme.bodyText1,
+            style: Theme.of(context).textTheme.body1,
           ),
         ),
         SettingsListTile(
@@ -182,24 +194,33 @@ class SettingsListTile extends StatelessWidget {
   const SettingsListTile({
     @required this.section,
     @required this.viewModel,
-    this.icon,
   });
 
   final String section;
   final SettingsListVM viewModel;
-  final IconData icon;
 
   @override
   Widget build(BuildContext context) {
     final localization = AppLocalization.of(context);
     final state = viewModel.state;
 
+    IconData icon;
+    if (section == kSettingsDeviceSettings) {
+      icon = kIsWeb
+          ? Icons.desktop_mac
+          : isMobile(context)
+              ? FontAwesomeIcons.mobileAlt
+              : FontAwesomeIcons.desktop;
+    } else {
+      icon = getSettingIcon(section);
+    }
+
     return SelectedIndicator(
       isSelected: viewModel.state.uiState.containsRoute('/$section'),
       child: ListTile(
         leading: Padding(
           padding: const EdgeInsets.only(left: 6, top: 2),
-          child: Icon(icon ?? getSettingIcon(section), size: 20),
+          child: Icon(icon ?? icon, size: 20),
         ),
         title: Text(localization.lookup(section)),
         onTap: () {
@@ -313,6 +334,9 @@ class SettingsSearch extends StatelessWidget {
       'all_pages_footer',
       'hide_paid_to_date',
       'invoice_embed_documents',
+    ],
+    kSettingsCustomDesigns: [
+      'custom_designs',
     ],
     kSettingsWorkflowSettings: [
       'auto_email_invoice',

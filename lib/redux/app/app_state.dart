@@ -3,13 +3,17 @@ import 'package:built_value/built_value.dart';
 import 'package:built_value/serializer.dart';
 import 'package:flutter/foundation.dart';
 import 'package:invoiceninja_flutter/constants.dart';
+import 'package:invoiceninja_flutter/data/models/account_model.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/redux/auth/auth_state.dart';
 import 'package:invoiceninja_flutter/redux/client/client_selectors.dart';
 import 'package:invoiceninja_flutter/redux/client/client_state.dart';
 import 'package:invoiceninja_flutter/redux/company/company_state.dart';
 import 'package:invoiceninja_flutter/redux/company_gateway/company_gateway_selectors.dart';
+import 'package:invoiceninja_flutter/redux/credit/credit_selectors.dart';
 import 'package:invoiceninja_flutter/redux/dashboard/dashboard_state.dart';
+import 'package:invoiceninja_flutter/redux/design/design_selectors.dart';
+import 'package:invoiceninja_flutter/redux/design/design_state.dart';
 import 'package:invoiceninja_flutter/redux/document/document_state.dart';
 import 'package:invoiceninja_flutter/redux/expense/expense_selectors.dart';
 import 'package:invoiceninja_flutter/redux/expense/expense_state.dart';
@@ -37,10 +41,14 @@ import 'package:invoiceninja_flutter/redux/vendor/vendor_state.dart';
 import 'package:invoiceninja_flutter/ui/app/screen_imports.dart';
 import 'package:invoiceninja_flutter/ui/client/edit/client_edit_vm.dart';
 import 'package:invoiceninja_flutter/ui/company_gateway/edit/company_gateway_edit_vm.dart';
+import 'package:invoiceninja_flutter/ui/credit/edit/credit_edit_vm.dart';
+import 'package:invoiceninja_flutter/ui/design/edit/design_edit_vm.dart';
 import 'package:invoiceninja_flutter/ui/group/edit/group_edit_vm.dart';
 import 'package:invoiceninja_flutter/ui/product/edit/product_edit_vm.dart';
 
 // STARTER: import - do not remove comment
+import 'package:invoiceninja_flutter/redux/credit/credit_state.dart';
+
 import 'package:invoiceninja_flutter/redux/user/user_state.dart';
 import 'package:invoiceninja_flutter/redux/tax_rate/tax_rate_state.dart';
 import 'package:invoiceninja_flutter/redux/company_gateway/company_gateway_state.dart';
@@ -103,7 +111,23 @@ abstract class AppState implements Built<AppState, AppStateBuilder> {
     return productState.isLoaded && clientState.isLoaded;
   }
 
+  AccountEntity get account => userCompany.account;
+
   CompanyEntity get company => userCompanyState.company;
+
+  List<CompanyEntity> get companies {
+    final List<CompanyEntity> list = [];
+
+    for (var companyState in userCompanyStates) {
+      if (companyState.company != null) {
+        list.add(companyState.company);
+      }
+    }
+
+    return list
+        .where((CompanyEntity company) => (company.id ?? '').isNotEmpty)
+        .toList();
+  }
 
   DashboardUIState get dashboardUIState => uiState.dashboardUIState;
 
@@ -132,6 +156,7 @@ abstract class AppState implements Built<AppState, AppStateBuilder> {
 
   bool shouldSelectEntity({EntityType entityType, bool hasRecords}) {
     final entityList = getEntityList(entityType);
+    final entityMap = getEntityMap(entityType);
     final entityUIState = getUIState(entityType);
 
     if (prefState.isMobile || entityList.isEmpty || uiState.isEditing) {
@@ -140,11 +165,8 @@ abstract class AppState implements Built<AppState, AppStateBuilder> {
 
     if (entityUIState.selectedId == null && !hasRecords) {
       return false;
-    } else if (!entityList.contains(entityUIState.selectedId)) {
-      return true;
-    } else if (historyList.isEmpty ||
-        !historyList.first.isEqualTo(
-            entityType: entityType, entityId: entityUIState.selectedId)) {
+    } else if ((entityUIState.selectedId ?? '').isEmpty ||
+        !entityMap.containsKey(entityUIState.selectedId)) {
       return true;
     }
 
@@ -159,7 +181,13 @@ abstract class AppState implements Built<AppState, AppStateBuilder> {
         return clientState.map;
       case EntityType.invoice:
         return invoiceState.map;
-      // STARTER: states switch - do not remove comment
+      // STARTER: states switch map - do not remove comment
+      case EntityType.design:
+        return designState.map;
+
+      case EntityType.credit:
+        return creditState.map;
+
       case EntityType.user:
         return userState.map;
       case EntityType.taxRate:
@@ -216,7 +244,13 @@ abstract class AppState implements Built<AppState, AppStateBuilder> {
         return clientState.list;
       case EntityType.invoice:
         return invoiceState.list;
-      // STARTER: states switch - do not remove comment
+      // STARTER: states switch list - do not remove comment
+      case EntityType.design:
+        return designState.list;
+
+      case EntityType.credit:
+        return creditState.list;
+
       case EntityType.user:
         return userState.list;
       case EntityType.taxRate:
@@ -253,6 +287,10 @@ abstract class AppState implements Built<AppState, AppStateBuilder> {
       case EntityType.invoice:
         return invoiceUIState;
       // STARTER: states switch - do not remove comment
+      case EntityType.design:
+        return designUIState;
+      case EntityType.credit:
+        return creditUIState;
       case EntityType.user:
         return userUIState;
       case EntityType.taxRate:
@@ -303,6 +341,18 @@ abstract class AppState implements Built<AppState, AppStateBuilder> {
   ListUIState get invoiceListState => uiState.invoiceUIState.listUIState;
 
   // STARTER: state getters - do not remove comment
+  DesignState get designState => userCompanyState.designState;
+
+  ListUIState get designListState => uiState.designUIState.listUIState;
+
+  DesignUIState get designUIState => uiState.designUIState;
+
+  CreditState get creditState => userCompanyState.creditState;
+
+  ListUIState get creditListState => uiState.creditUIState.listUIState;
+
+  CreditUIState get creditUIState => uiState.creditUIState;
+
   UserState get userState => userCompanyState.userState;
 
   ListUIState get userListState => uiState.userUIState.listUIState;
@@ -401,14 +451,19 @@ abstract class AppState implements Built<AppState, AppStateBuilder> {
       case CompanyGatewayEditScreen.route:
         return hasCompanyGatewayChanges(
             companyGatewayUIState.editing, companyGatewayState.map);
-      // TODO add to stater.sh
+      case CreditEditScreen.route:
+        return hasCreditChanges(creditUIState.editing, creditState.map);
+      // STARTER: has changes - do not remove comment
+      case DesignEditScreen.route:
+        return hasDesignChanges(designUIState.editing, designState.map);
     }
 
     if (uiState.currentRoute.startsWith('/settings')) {
       return settingsUIState.isChanged;
     }
 
-    if (uiState.currentRoute.endsWith('edit')) {
+    if (uiState.currentRoute.endsWith('/edit') ||
+        uiState.currentRoute.endsWith('_edit')) {
       throw 'AppState.hasChanges is not defined for ${uiState.currentRoute}';
     }
 
@@ -464,8 +519,13 @@ abstract class AppState implements Built<AppState, AppStateBuilder> {
     //return 'History: $historyList';
     //return 'Use inclusive: ${invoiceUIState.editing.usesInclusiveTaxes}';
     //return 'Invitations: ${invoiceUIState.editing.invitations}';
-    //return 'Token: ${userCompanyStates.map((state) => state.token.name).where((name) => name.isNotEmpty).toList().join(', ')}';
+    //return 'Token: ${userCompanyStates.map((state) => state.token.token).where((name) => name.isNotEmpty).toList().join(', ')}';
     //return 'Settings: ${company.settings.companyLogo}';
+    //return 'Designs: ${company.designs}';
+    //return 'PDF Variables: ${uiState.settingsUIState.settings.pdfVariables}';
+    //return 'Account: ${userCompany.account}';
+    //return 'Notifications: ${user.userCompany.notifications} ${uiState.settingsUIState.user.userCompany.notifications}';
+    //return 'SORT: Sort Ascending: ${uiState.productUIState.listUIState.sortAscending}';
     return 'Layout: ${prefState.appLayout}, Route: ${uiState.currentRoute} Prev: ${uiState.previousRoute}';
   }
 }

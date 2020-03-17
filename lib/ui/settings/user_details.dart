@@ -1,3 +1,4 @@
+import 'package:built_collection/built_collection.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:invoiceninja_flutter/ui/app/form_card.dart';
@@ -5,6 +6,7 @@ import 'package:invoiceninja_flutter/ui/app/forms/app_form.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/color_picker.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/decorated_form_field.dart';
 import 'package:invoiceninja_flutter/ui/app/edit_scaffold.dart';
+import 'package:invoiceninja_flutter/ui/app/forms/notification_settings.dart';
 import 'package:invoiceninja_flutter/ui/settings/user_details_vm.dart';
 import 'package:invoiceninja_flutter/utils/completers.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
@@ -21,10 +23,12 @@ class UserDetails extends StatefulWidget {
   _UserDetailsState createState() => _UserDetailsState();
 }
 
-class _UserDetailsState extends State<UserDetails> {
+class _UserDetailsState extends State<UserDetails>
+    with SingleTickerProviderStateMixin {
   static final GlobalKey<FormState> _formKey =
       GlobalKey<FormState>(debugLabel: '_userDetails');
-  FocusScopeNode _focusNode;
+  final FocusScopeNode _focusNode = FocusScopeNode();
+  TabController _controller;
   bool autoValidate = false;
 
   final _firstNameController = TextEditingController();
@@ -38,12 +42,13 @@ class _UserDetailsState extends State<UserDetails> {
   @override
   void initState() {
     super.initState();
-    _focusNode = FocusScopeNode();
+    _controller = TabController(vsync: this, length: 2);
   }
 
   @override
   void dispose() {
     _focusNode.dispose();
+    _controller.dispose();
     _controllers.forEach((dynamic controller) {
       controller.removeListener(_onChanged);
       controller.dispose();
@@ -97,52 +102,80 @@ class _UserDetailsState extends State<UserDetails> {
     return EditScaffold(
       title: localization.userDetails,
       onSavePressed: viewModel.onSavePressed,
-      body: AppForm(
+      appBarBottom: TabBar(
+        controller: _controller,
+        tabs: [
+          Tab(
+            text: localization.details,
+          ),
+          Tab(
+            text: localization.notifications,
+          ),
+        ],
+      ),
+      body: AppTabForm(
         focusNode: _focusNode,
         formKey: _formKey,
+        tabController: _controller,
         children: <Widget>[
-          FormCard(children: <Widget>[
-            DecoratedFormField(
-              label: localization.firstName,
-              controller: _firstNameController,
-              validator: (val) => val.isEmpty || val.trim().isEmpty
-                  ? localization.pleaseEnterAFirstName
-                  : null,
-              autovalidate: autoValidate,
-            ),
-            DecoratedFormField(
-              label: localization.lastName,
-              controller: _lastNameController,
-              validator: (val) => val.isEmpty || val.trim().isEmpty
-                  ? localization.pleaseEnterALastName
-                  : null,
-              autovalidate: autoValidate,
-            ),
-            DecoratedFormField(
-              label: localization.email,
-              controller: _emailController,
-              validator: (val) => val.isEmpty || val.trim().isEmpty
-                  ? localization.pleaseEnterYourEmail
-                  : null,
-              autovalidate: autoValidate,
-            ),
-            DecoratedFormField(
-              label: localization.phone,
-              controller: _phoneController,
-            ),
-          ]),
-          FormCard(
+          ListView(
             children: <Widget>[
-              FormColorPicker(
-                labelText: localization.accentColor,
-                initialValue: viewModel.state.userCompany.settings.accentColor,
-                onSelected: (value) {
-                  widget.viewModel.onChanged(user.rebuild(
-                      (b) => b..userCompany.settings.accentColor = value));
-                },
+              FormCard(children: <Widget>[
+                DecoratedFormField(
+                  label: localization.firstName,
+                  controller: _firstNameController,
+                  validator: (val) => val.isEmpty || val.trim().isEmpty
+                      ? localization.pleaseEnterAFirstName
+                      : null,
+                  autovalidate: autoValidate,
+                ),
+                DecoratedFormField(
+                  label: localization.lastName,
+                  controller: _lastNameController,
+                  validator: (val) => val.isEmpty || val.trim().isEmpty
+                      ? localization.pleaseEnterALastName
+                      : null,
+                  autovalidate: autoValidate,
+                ),
+                DecoratedFormField(
+                  label: localization.email,
+                  controller: _emailController,
+                  validator: (val) => val.isEmpty || val.trim().isEmpty
+                      ? localization.pleaseEnterYourEmail
+                      : null,
+                  autovalidate: autoValidate,
+                ),
+                DecoratedFormField(
+                  label: localization.phone,
+                  controller: _phoneController,
+                ),
+              ]),
+              FormCard(
+                children: <Widget>[
+                  FormColorPicker(
+                    labelText: localization.accentColor,
+                    initialValue:
+                        viewModel.state.userCompany.settings.accentColor,
+                    onSelected: (value) {
+                      widget.viewModel.onChanged(user.rebuild(
+                          (b) => b..userCompany.settings.accentColor = value));
+                    },
+                  ),
+                ],
               ),
             ],
           ),
+          ListView(
+            children: <Widget>[
+              NotificationSettings(
+                user: user,
+                onChanged: (channel, options) {
+                  viewModel.onChanged(user.rebuild((b) => b
+                    ..userCompany.notifications[channel] = BuiltList(options)));
+                },
+              ),
+            ],
+          )
         ],
       ),
     );

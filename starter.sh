@@ -168,7 +168,9 @@ else
        './stubs/ui/stub/stub_list_item'
        './stubs/ui/stub/stub_list_vm'
        './stubs/ui/stub/stub_list'
-       './stubs/ui/stub/stub_screen')
+       './stubs/ui/stub/stub_presenter'
+       './stubs/ui/stub/stub_screen'
+       './stubs/ui/stub/stub_screen_vm')
 
     for i in "${files[@]}"
     do
@@ -183,7 +185,15 @@ else
 
     # Link in new module
     comment="STARTER: import - do not remove comment"
-    code="import 'package:${package}\/redux\/${module_snake}\/${module_snake}_state.dart';${lineBreak}"
+    code="import 'package:${package}\/redux\/${module_snake}\/${module_snake}_state.dart';import 'package:${package}/ui/${module_snake}/edit/${module_snake}_edit_vm.dart';import 'package:${package}/redux/${module_snake}/${module_snake}_state.dart';import 'package:${package}/ui/${module_snake}/edit/${module_snake}_edit_vm.dart';import 'package:${package}/redux/${module_snake}/${module_snake}_selectors.dart';${lineBreak}"
+    sed -i -e "s/$comment/$comment${lineBreak}$code/g" ./lib/redux/app/app_state.dart
+
+    comment="STARTER: states switch list - do not remove comment"
+    code="case EntityType.${module_camel}:${lineBreak}return ${module_camel}State.list;${lineBreak}"
+    sed -i -e "s/$comment/$comment${lineBreak}$code/g" ./lib/redux/app/app_state.dart
+
+    comment="STARTER: states switch map - do not remove comment"
+    code="case EntityType.${module_camel}:${lineBreak}return ${module_camel}State.map;${lineBreak}"
     sed -i -e "s/$comment/$comment${lineBreak}$code/g" ./lib/redux/app/app_state.dart
 
     comment="STARTER: states switch - do not remove comment"
@@ -191,9 +201,13 @@ else
     sed -i -e "s/$comment/$comment${lineBreak}$code/g" ./lib/redux/app/app_state.dart
 
     comment="STARTER: state getters - do not remove comment"
-    code="${Module}State get ${module_camel}State => selectedCompanyState.${module_camel}State;${lineBreak}"
+    code="${Module}State get ${module_camel}State => userCompanyState.${module_camel}State;${lineBreak}"
     code="${code}ListUIState get ${module_camel}ListState => uiState.${module_camel}UIState.listUIState;${lineBreak}"
     code="${code}${Module}UIState get ${module_camel}UIState => uiState.${module_camel}UIState;${lineBreak}${lineBreak}"
+    sed -i -e "s/$comment/$comment${lineBreak}$code/g" ./lib/redux/app/app_state.dart
+
+    comment="STARTER: has changes - do not remove comment"
+    code="case ${Module}EditScreen.route: return has${Module}Changes(${module_camel}UIState.editing, ${module_camel}State.map);${lineBreak}"
     sed -i -e "s/$comment/$comment${lineBreak}$code/g" ./lib/redux/app/app_state.dart
 
     for (( idx=${#fieldsArray[@]}-1 ; idx>=0 ; idx-- )) ; do
@@ -258,7 +272,7 @@ else
 
         #comment="STARTER: widgets - do not remove comment"
         #if [ ${element} = ${fieldsArray[0]} ]; then
-        #    code="Text(${module_snake}.${element}, style: Theme.of(context).textTheme.headline6),${lineBreak}"
+        #    code="Text(${module_snake}.${element}, style: Theme.of(context).textTheme.title),${lineBreak}"
         #    code="${code}SizedBox(height: 12.0),${lineBreak}"
         #else
         #    code="Text(${module_snake}.${element}),"
@@ -291,6 +305,7 @@ else
     code="import 'package:${package}\/ui\/${module_snake}\/${module_snake}_screen.dart';${lineBreak}"
     code="${code}import 'package:${package}\/ui\/${module_snake}\/edit\/${module_snake}_edit_vm.dart';${lineBreak}"
     code="${code}import 'package:${package}\/ui\/${module_snake}\/view\/${module_snake}_view_vm.dart';${lineBreak}"
+    code="${code}import 'package:${package}\/ui\/${module_snake}\/${module_snake}_screen_vm.dart';${lineBreak}"
     code="${code}import 'package:${package}\/redux\/${module_snake}\/${module_snake}_actions.dart';${lineBreak}"
     code="${code}import 'package:${package}\/redux\/${module_snake}\/${module_snake}_middleware.dart';${lineBreak}"
     sed -i -e "s/$comment/$comment${lineBreak}$code/g" ./lib/main.dart
@@ -300,7 +315,7 @@ else
     sed -i -e "s/$comment/$comment${lineBreak}$code/g" ./lib/main.dart
 
     comment="STARTER: routes - do not remove comment"
-    code="${Module}Screen.route: (context) => ${Module}Screen(),${lineBreak}"
+    code="${Module}Screen.route: (context) => ${Module}ScreenBuilder(),${lineBreak}"
     code="${code}${Module}ViewScreen.route: (context) => ${Module}ViewScreen(),${lineBreak}"
     code="${code}${Module}EditScreen.route: (context) => ${Module}EditScreen(),${lineBreak}"
     sed -i -e "s/$comment/$comment${lineBreak}$code/g" ./lib/main.dart
@@ -311,7 +326,7 @@ else
     sed -i -e "s/$comment/$comment${lineBreak}$code/g" ./lib/data/models/serializers.dart
 
     comment="STARTER: serializers - do not remove comment"
-    code="${Module}Entity,${lineBreak}"
+    code="${Module}Entity,${Module}ListResponse,${Module}ItemResponse${lineBreak}"
     sed -i -e "s/$comment/$comment${lineBreak}$code/g" ./lib/data/models/serializers.dart
 
     comment="STARTER: import - do not remove comment"
@@ -344,12 +359,6 @@ else
     code="${code}entityType: EntityType.${module_camel},${lineBreak}"
     code="${code}icon: getEntityIcon(EntityType.${module_camel}),${lineBreak}"
     code="${code}title: localization.${module_camel}s,${lineBreak}"
-    code="${code}onTap: () => store.dispatch(View${module_camel}List(context)),${lineBreak}"
-    code="${code}onCreateTap: () {${lineBreak}"
-    code="${code}navigator.pop();${lineBreak}"
-    code="${code}store.dispatch(Edit${Module}(${lineBreak}"
-    code="${code}${module_camel}: ${Module}Entity(), context: context));${lineBreak}"
-    code="${code}},${lineBreak}"
     code="${code}),${lineBreak}"
     sed -i -e "s/$comment/$comment${lineBreak}$code/g" ./lib/ui/app/menu_drawer.dart
 
@@ -373,9 +382,72 @@ else
     code="..${module_camel}UIState.replace(${module_camel}UIReducer(state.${module_camel}UIState, action))${lineBreak}"
     sed -i -e "s/$comment/$comment${lineBreak}$code/g" ./lib/redux/ui/ui_reducer.dart
 
+    comment="STARTER: import - do not remove comment"
+    code="import 'package:${package}\/redux\/${module_snake}\/${module_snake}_actions.dart';${lineBreak}"
+    sed -i -e "s/$comment/$comment${lineBreak}$code/g" ./lib/redux/app/app_reducer.dart
+
+    comment="STARTER: errors - do not remove comment"
+    code="TypedReducer<String, Load${Module}sFailure>((state, action) { return '\${action.error}'; }),${lineBreak}"
+    sed -i -e "s/$comment/$comment${lineBreak}$code/g" ./lib/redux/app/app_reducer.dart
+
+    comment="STARTER: history - do not remove comment"
+    code="TypedReducer<BuiltList<HistoryRecord>, View${Module}>((historyList, action) => _addToHistory(historyList, HistoryRecord(id: action.${module_camel}Id, entityType: EntityType.${module_camel}))),TypedReducer<BuiltList<HistoryRecord>, Edit${Module}>((historyList, action) => _addToHistory(historyList, HistoryRecord(id: action.${module_camel}.id, entityType: EntityType.${module_camel}))),${lineBreak}"
+    sed -i -e "s/$comment/$comment${lineBreak}$code/g" ./lib/redux/ui/pref_reducer.dart
+
+    comment="STARTER: import - do not remove comment"
+    code="import 'package:${package}\/redux\/${module_snake}\/${module_snake}_actions.dart';${lineBreak}"
+    sed -i -e "s/$comment/$comment${lineBreak}$code/g" ./lib/redux/ui/pref_reducer.dart
+
+    comment="STARTER: import - do not remove comment"
+    code="import 'package:${package}\/redux\/${module_snake}\/${module_snake}_actions.dart';${lineBreak}"
+    sed -i -e "s/$comment/$comment${lineBreak}$code/g" ./lib/redux/app/app_actions.dart
+
+    comment="STARTER: filter - do not remove comment"
+    code="case EntityType.${module_camel}: store.dispatch(Filter${Module}sByEntity(entityId: filterEntity.id, entityType: filterEntity.entityType,)); break;${lineBreak}"
+    sed -i -e "s/$comment/$comment${lineBreak}$code/g" ./lib/redux/app/app_actions.dart
+
+    comment="STARTER: view list - do not remove comment"
+    code="case EntityType.${module_camel}: store.dispatch(View${Module}List(navigator: navigator)); break;${lineBreak}"
+    sed -i -e "s/$comment/$comment${lineBreak}$code/g" ./lib/redux/app/app_actions.dart
+
+    comment="STARTER: view - do not remove comment"
+    code="case EntityType.${module_camel}: store.dispatch(View${Module}(${module_camel}Id: entityId, navigator: navigator, force: force,)); break;${lineBreak}"
+    sed -i -e "s/$comment/$comment${lineBreak}$code/g" ./lib/redux/app/app_actions.dart
+
+    comment="STARTER: create type - do not remove comment"
+    code="case EntityType.${module_camel}: store.dispatch(Edit${Module}(navigator: navigator, force: force, ${module_camel}: ${Module}Entity(state: state), )); break;${lineBreak}"
+    sed -i -e "s/$comment/$comment${lineBreak}$code/g" ./lib/redux/app/app_actions.dart
+
+    comment="STARTER: create - do not remove comment"
+    code="case EntityType.${module_camel}: store.dispatch(Edit${Module}(navigator: navigator, ${module_camel}: entity, force: force, completer: completer, )); break;${lineBreak}"
+    sed -i -e "s/$comment/$comment${lineBreak}$code/g" ./lib/redux/app/app_actions.dart
+
+    comment="STARTER: edit - do not remove comment"
+    code="case EntityType.${module_camel}: store.dispatch(Edit${Module}(${module_camel}: map[entityId], navigator: navigator, completer: completer ?? snackBarCompleter<${Module}Entity>(context, entity.isNew ? localization.created${Module} : localization.updated${Module}),));break;${lineBreak}"
+    sed -i -e "s/$comment/$comment${lineBreak}$code/g" ./lib/redux/app/app_actions.dart
+
+    comment="STARTER: actions - do not remove comment"
+    code="case EntityType.${module_camel}: handle${Module}Action(context, entities, action); break;${lineBreak}"
+    sed -i -e "s/$comment/$comment${lineBreak}$code/g" ./lib/redux/app/app_actions.dart
+
+    comment="STARTER: lang key - do not remove comment"
+    code="'${module_snake}': '${Module}', '${module_snake}s': '${Module}s', 'new_${module_snake}': 'New ${Module}', 'edit_${module_snake}': 'Edit ${Module}', 'created_${module_snake}': 'Successfully created ${module_snake}', 'updated_${module_snake}': 'Successfully updated ${module_snake}', 'archived_${module_snake}': 'Successfully archived ${module_snake}', 'deleted_${module_snake}': 'Successfully deleted ${module_snake}', 'removed_${module_snake}': 'Successfully removed ${module_snake}', 'restored_${module_snake}': 'Successfully restored ${module_snake}',${lineBreak}"
+    sed -i -e "s/$comment/$comment${lineBreak}$code/g" ./lib/utils/i18n.dart
+
+    comment="STARTER: lang field - do not remove comment"
+    code="String get ${module_camel} => _localizedValues[localeCode]['${module_snake}']; String get ${module_camel}s => _localizedValues[localeCode]['${module_snake}s']; String get new${Module} => _localizedValues[localeCode]['new_${module_snake}']; String get created${Module} => _localizedValues[localeCode]['created_${module_snake}']; String get updated${Module} => _localizedValues[localeCode]['updated_${module_snake}']; String get archived${Module} => _localizedValues[localeCode]['archived_${module_snake}']; String get deleted${Module} => _localizedValues[localeCode]['deleted_${module_snake}']; String get restored${Module} => _localizedValues[localeCode]['restored_${module_snake}']; String get edit${Module} => _localizedValues[localeCode]['edit_${module_snake}'];${lineBreak}"
+    sed -i -e "s/$comment/$comment${lineBreak}$code/g" ./lib/utils/i18n.dart
+
+    comment="STARTER: entity type - do not remove comment"
+    code="static const EntityType ${module_camel} = _\$${module_camel}${lineBreak}"
+    sed -i -e "s/$comment/$comment${lineBreak}$code/g" ./lib/data/models/entities.dart
+
     echo "Generating built files.."
     flutter packages pub run build_runner clean
     flutter packages pub run build_runner build --delete-conflicting-outputs
+
+    echo "Clean up"
+    flutter dartfmt lib
 fi
 
 echo "Successfully completed"

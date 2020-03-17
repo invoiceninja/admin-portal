@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
-
+import 'package:invoiceninja_flutter/data/models/entities.dart';
 
 // This version must be updated in tandem with the pubspec version.
-const String kAppVersion = '2.0.2';
+const String kAppVersion = '0.0.1+1';
 const String kSiteUrl = 'https://invoiceninja.com';
 //const String kAppUrl = 'https://admin.invoiceninja.com';
 const String kAppUrl = 'https://staging.invoicing.co';
+const String kWhiteLabelUrl =
+    'https://app.invoiceninja.com/buy_now/?account_key=AsFmBAeLXF0IKf7tmi0eiyZfmWW9hxMT&product_id=3';
 //const String kAppUrl = '';
 
 const String kAppPlansURL =
@@ -22,8 +24,7 @@ const String kSharedPrefs = 'shared_prefs';
 const String kSharedPrefAppVersion = 'app_version';
 const String kSharedPrefEmail = 'email';
 const String kSharedPrefUrl = 'url';
-const String kSharedPrefSecret = 'secret';
-const String kSharedPrefToken = 'api_token';
+const String kSharedPrefToken = 'token';
 
 // TODO remove these
 const String kSharedPrefAddDocumentsToInvoice = 'add_documents_to_invoice';
@@ -51,6 +52,9 @@ const double kTableColumnGap = 20;
 
 const double kTabletLayoutWidth = 1000;
 const double kTabletDialogPadding = 250;
+
+const double kTableColumnWidthMin = 50;
+const double kTableColumnWidthMax = 120;
 
 const int kCardTypeVisa = 1;
 const int kCardTypeMasterCard = 2;
@@ -99,10 +103,37 @@ const String kInvoiceStatusSent = '2';
 const String kInvoiceStatusPartial = '3';
 const String kInvoiceStatusPaid = '4';
 
+const kInvoiceStatuses = {
+  kInvoiceStatusPastDue: 'past_due',
+  kInvoiceStatusDraft: 'draft',
+  kInvoiceStatusSent: 'sent',
+  kInvoiceStatusPartial: 'partial',
+  kInvoiceStatusPaid: 'paid',
+};
+
 const String kQuoteStatusExpired = '-1';
 const String kQuoteStatusDraft = '1';
 const String kQuoteStatusSent = '2';
 const String kQuoteStatusApproved = '4';
+
+const kQuoteStatuses = {
+  kQuoteStatusExpired: 'expired',
+  kQuoteStatusDraft: 'draft',
+  kQuoteStatusSent: 'sent',
+  kQuoteStatusApproved: 'approved',
+};
+
+const String kCreditStatusDraft = '1';
+const String kCreditStatusSent = '2';
+const String kCreditStatusPartial = '3';
+const String kCreditStatusApplied = '4';
+
+const kCreditStatuses = {
+  kCreditStatusDraft: 'draft',
+  kCreditStatusSent: 'sent',
+  kCreditStatusPartial: 'partial',
+  kCreditStatusApplied: 'applied',
+};
 
 const String kGatewayTypeCreditCard = '1';
 const String kGatewayTypeBankTransfer = '2';
@@ -127,6 +158,33 @@ const kGatewayTypes = {
   kGatewayTypeApplePay: 'apple_pay',
 };
 
+const String kNotificationChannelEmail = 'email';
+const String kNotificationChannelSlack = 'slack';
+
+const String kNotificationsAll = 'all_notifications';
+const String kNotificationsAllUser = 'all_user_notifications';
+const String kNotificationsPaymentSuccess = 'payment_success';
+const String kNotificationsPaymentFailure = 'payment_failure';
+const String kNotificationsInvoiceSent = 'invoice_sent';
+const String kNotificationsQuoteSent = 'quote_sent';
+const String kNotificationsCreditSent = 'credit_sent';
+const String kNotificationsQuoteViewed = 'quote_viewed';
+const String kNotificationsInvoiceViewed = 'invoice_viewed';
+const String kNotificationsCreditViewed = 'credit_viewed';
+const String kNotificationsQuoteApproved = 'quote_approved';
+
+const kNotificationEvents = [
+  kNotificationsInvoiceSent,
+  kNotificationsInvoiceViewed,
+  kNotificationsPaymentSuccess,
+  kNotificationsPaymentFailure,
+  kNotificationsQuoteSent,
+  kNotificationsQuoteViewed,
+  kNotificationsQuoteApproved,
+  kNotificationsCreditSent,
+  kNotificationsCreditViewed,
+];
+
 const String kGatewayStripe = 'd14dd26a37cecc30fdd65700bfb55b23';
 
 const String kClientPortalModeSubdomain = 'subdomain';
@@ -136,6 +194,15 @@ const String kClientPortalModeIFrame = 'iframe';
 const String kGenerateNumberWhenSaved = 'when_saved';
 const String kGenerateNumberWhenSent = 'when_sent';
 //const String kNumberGeneratedWhenPaid = 'paid';
+
+const String kDesignCleanId = 'Wpmbk5ezJn';
+
+const String kDesignHeader = 'header';
+const String kDesignBody = 'body';
+const String kDesignFooter = 'footer';
+const String kDesignProducts = 'product';
+const String kDesignTasks = 'task';
+const String kDesignIncludes = 'includes';
 
 const String kEmailDesignPlain = 'plain';
 const String kEmailDesignLight = 'light';
@@ -163,6 +230,20 @@ const String kMain = 'main';
 const String kSettings = 'settings';
 const String kDashboard = 'dashboard';
 const String kReports = 'reports';
+
+const String kAgeGroup0 = 'age_group_0';
+const String kAgeGroup30 = 'age_group_30';
+const String kAgeGroup60 = 'age_group_60';
+const String kAgeGroup90 = 'age_group_90';
+const String kAgeGroup120 = 'age_group_120';
+
+const kAgeGroups = {
+  kAgeGroup0: 0,
+  kAgeGroup30: 30,
+  kAgeGroup60: 60,
+  kAgeGroup90: 90,
+  kAgeGroup120: 120,
+};
 
 /*
 const String kEmailTemplateInvoice = 'invoice_email';
@@ -199,6 +280,9 @@ const String kSettingsGroupSettings = 'group_settings';
 const String kSettingsGroupSettingsView = 'group_settings_view';
 const String kSettingsGroupSettingsEdit = 'group_settings_edit';
 const String kSettingsCustomFields = 'custom_fields';
+const String kSettingsCustomDesigns = 'custom_designs';
+const String kSettingsCustomDesignsView = 'custom_designs_view';
+const String kSettingsCustomDesignsEdit = 'custom_designs_edit';
 const String kSettingsGeneratedNumbers = 'generated_numbers';
 const String kSettingsWorkflowSettings = 'workflow_settings';
 const String kSettingsInvoiceDesign = 'invoice_design';
@@ -212,6 +296,15 @@ const String kSettingsApiTokens = 'api_tokens';
 const String kSettingsUserManagement = 'user_management';
 const String kSettingsUserManagementView = 'user_management_view';
 const String kSettingsUserManagementEdit = 'user_management_edit';
+const String kSettingsAccountManagement = 'account_management';
+
+const kEntitySettings = [
+  EntityType.group,
+  EntityType.companyGateway,
+  EntityType.taxRate,
+  EntityType.design,
+  EntityType.user,
+];
 
 const String kReportAging = 'aging';
 const String kReportClient = 'client';
@@ -226,6 +319,16 @@ const String kReportTask = 'task';
 const String kReportTaxRate = 'taxRate';
 const String kReportQuote = 'quote';
 
+const String kPdfFieldsClientDetails = 'client_details';
+const String kPdfFieldsCompanyDetails = 'company_details';
+const String kPdfFieldsCompanyAddress = 'company_address';
+const String kPdfFieldsInvoiceDetails = 'invoice_details';
+const String kPdfFieldsQuoteDetails = 'quote_details';
+const String kPdfFieldsCreditDetails = 'credit_details';
+const String kPdfFieldsProductColumns = 'product_columns';
+const String kPdfFieldsTaskColumns = 'task_columns';
+
+const String kPdfFields = '';
 const String kPermissionCreateAll = 'create_all';
 const String kPermissionViewAll = 'view_all';
 const String kPermissionEditAll = 'edit_all';
@@ -251,11 +354,33 @@ const String kReportGroupYear = 'year';
 
 const String kActivityEmailInvoice = '6';
 
-const int kModuleRecurringInvoice = 1;
-const int kModuleCredit = 2;
-const int kModuleQuote = 4;
-const int kModuleTask = 8;
-const int kModuleExpense = 16;
+const int kModuleRecurringInvoices = 1;
+const int kModuleCredits = 2;
+const int kModuleQuotes = 4;
+const int kModuleTasks = 8;
+const int kModuleExpenses = 16;
+const int kModuleProjects = 32;
+const int kModuleVendors = 64;
+const int kModuleTickets = 128;
+const int kModuleProposals = 256;
+const int kModuleRecurringExpenses = 512;
+const int kModuleRecurringTasks = 1024;
+const int kModuleRecurringQuotes = 2048;
+
+const Map<int, String> kModules = {
+  kModuleQuotes: 'quotes',
+  kModuleCredits: 'credits',
+  kModuleProjects: 'projects',
+  kModuleTasks: 'tasks',
+  kModuleVendors: 'vendors',
+  kModuleExpenses: 'expenses',
+  kModuleProposals: 'proposals',
+  kModuleTickets: 'tickets',
+  kModuleRecurringInvoices: 'recurring_invoices',
+  kModuleRecurringTasks: 'recurring_tasks',
+  kModuleRecurringExpenses: 'recurring_expenses',
+  kModuleRecurringQuotes: 'recurring_quotes',
+};
 
 class InvoiceStatusColors {
   static const colors = {
@@ -268,12 +393,23 @@ class InvoiceStatusColors {
   };
 }
 
+class CreditStatusColors {
+  static const colors = {
+    kCreditStatusDraft: Colors.grey,
+    kCreditStatusSent: Colors.blue,
+    //kInvoiceStatusViewed: Colors.orange,
+    //kInvoiceStatusApproved: Colors.green,
+    kCreditStatusPartial: Colors.deepPurple,
+    kCreditStatusApplied: Colors.green,
+  };
+}
+
 class QuoteStatusColors {
   static const colors = {
     kQuoteStatusDraft: Colors.grey,
     kQuoteStatusSent: Colors.blue,
-    //kQuoteStatusViewed: Colors.orange,
     kQuoteStatusApproved: Colors.green,
+    kQuoteStatusExpired: Colors.red,
   };
 }
 
@@ -297,26 +433,6 @@ class ExpenseStatusColors {
 }
 
 const List<int> kPaymentTerms = [0, -1, 7, 10, 14, 15, 30, 60, 90];
-
-const String kDesignCustom1 = 'Custom 1';
-const String kDesignCustom2 = 'Custom 2';
-const String kDesignCustom3 = 'Custom 3';
-
-const Map<String, String> kInvoiceDesigns = {
-  '1': 'Clean',
-  '2': 'Bold',
-  '3': 'Modern',
-  '4': 'Plain',
-  '5': 'Business',
-  '6': 'Creative',
-  '7': 'Elegant',
-  '8': 'Hipster',
-  '9': 'Playful',
-  '10': 'Photo',
-  '11': kDesignCustom1,
-  '12': kDesignCustom2,
-  '13': kDesignCustom3,
-};
 
 const List<String> kLanguages = [
   'ca',
@@ -363,18 +479,18 @@ const kDaysOfTheWeek = {
 };
 
 const kMonthsOfTheYear = {
-  '0': 'january',
-  '1': 'february',
-  '2': 'march',
-  '3': 'april',
-  '4': 'may',
-  '5': 'june',
-  '6': 'july',
-  '7': 'august',
-  '8': 'september',
-  '9': 'october',
-  '10': 'november',
-  '11': 'december',
+  '1': 'january',
+  '2': 'february',
+  '3': 'march',
+  '4': 'april',
+  '5': 'may',
+  '6': 'june',
+  '7': 'july',
+  '8': 'august',
+  '9': 'september',
+  '10': 'october',
+  '11': 'november',
+  '12': 'december',
 };
 
 const kFrequencies = {

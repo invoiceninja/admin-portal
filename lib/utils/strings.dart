@@ -1,14 +1,26 @@
 String toSnakeCase(String value) {
+  if ((value ?? '').isEmpty) {
+    return '';
+  }
+
   return value.replaceAllMapped(
       RegExp(r'[A-Z]'), (Match match) => '_' + match[0].toLowerCase());
 }
 
 String toSpaceCase(String value) {
+  if ((value ?? '').isEmpty) {
+    return '';
+  }
+
   return value.replaceAllMapped(
       RegExp(r'[A-Z]'), (Match match) => ' ' + match[0].toLowerCase());
 }
 
 String toTitleCase(String text) {
+  if ((text ?? '').isEmpty) {
+    return '';
+  }
+
   if (text.length <= 1) {
     return text.toUpperCase();
   }
@@ -71,7 +83,7 @@ bool isValidDate(String input) {
   try {
     DateTime.parse(input);
     return true;
-  } catch(e) {
+  } catch (e) {
     return false;
   }
 }

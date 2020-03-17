@@ -44,16 +44,13 @@ class PaymentEditScreen extends StatelessWidget {
 
 class PaymentEditVM {
   PaymentEditVM({
+    @required this.state,
     @required this.payment,
     @required this.origPayment,
     @required this.onChanged,
     @required this.onSavePressed,
     @required this.onEmailChanged,
     @required this.prefState,
-    @required this.invoiceMap,
-    @required this.invoiceList,
-    @required this.clientMap,
-    @required this.clientList,
     @required this.staticState,
     @required this.onCancelPressed,
     @required this.isSaving,
@@ -65,16 +62,13 @@ class PaymentEditVM {
     final payment = state.paymentUIState.editing;
 
     return PaymentEditVM(
+      state: state,
       isSaving: state.isSaving,
       isDirty: payment.isNew,
       origPayment: state.paymentState.map[payment.id],
       payment: payment,
       prefState: state.prefState,
       staticState: state.staticState,
-      invoiceMap: state.invoiceState.map,
-      invoiceList: state.invoiceState.list,
-      clientMap: state.clientState.map,
-      clientList: state.clientState.list,
       onChanged: (PaymentEntity payment) {
         store.dispatch(UpdatePayment(payment));
       },
@@ -117,17 +111,14 @@ class PaymentEditVM {
     );
   }
 
+  final AppState state;
   final PaymentEntity payment;
   final PaymentEntity origPayment;
   final Function(PaymentEntity) onChanged;
   final Function(BuildContext) onSavePressed;
   final Function(BuildContext) onCancelPressed;
   final Function(bool) onEmailChanged;
-  final BuiltMap<String, InvoiceEntity> invoiceMap;
   final PrefState prefState;
-  final BuiltList<String> invoiceList;
-  final BuiltMap<String, ClientEntity> clientMap;
-  final BuiltList<String> clientList;
   final StaticState staticState;
   final bool isSaving;
   final bool isDirty;

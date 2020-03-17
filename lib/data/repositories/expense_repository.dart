@@ -57,8 +57,7 @@ class ExpenseRepository {
     return expenseResponse.data.toList();
   }
 
-  Future<ExpenseEntity> saveData(Credentials credentials, ExpenseEntity expense,
-      [EntityAction action]) async {
+  Future<ExpenseEntity> saveData(Credentials credentials, ExpenseEntity expense) async {
     final data = serializers.serializeWith(ExpenseEntity.serializer, expense);
     dynamic response;
 
@@ -67,10 +66,7 @@ class ExpenseRepository {
           credentials.url + '/expenses', credentials.token,
           data: json.encode(data));
     } else {
-      var url = credentials.url + '/expenses/' + expense.id.toString();
-      if (action != null) {
-        url += '?action=' + action.toString();
-      }
+      final url = credentials.url + '/expenses/${expense.id}';
       response =
           await webClient.put(url, credentials.token, data: json.encode(data));
     }

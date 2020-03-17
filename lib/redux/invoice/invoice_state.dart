@@ -58,7 +58,7 @@ abstract class InvoiceState
     return rebuild((b) => b
       ..lastUpdated = DateTime.now().millisecondsSinceEpoch
       ..map.addAll(map)
-      ..list.replace(map.keys));
+      ..list.replace((map.keys.toList() + list.toList()).toSet().toList()));
   }
 
   static Serializer<InvoiceState> get serializer => _$invoiceStateSerializer;
@@ -69,8 +69,7 @@ abstract class InvoiceUIState extends Object
     implements Built<InvoiceUIState, InvoiceUIStateBuilder> {
   factory InvoiceUIState() {
     return _$InvoiceUIState._(
-      listUIState:
-          ListUIState(InvoiceFields.invoiceNumber, sortAscending: false),
+      listUIState: ListUIState(InvoiceFields.number, sortAscending: false),
       editing: InvoiceEntity(),
       selectedId: '',
     );
@@ -87,6 +86,9 @@ abstract class InvoiceUIState extends Object
 
   @override
   bool get isCreatingNew => editing.isNew;
+
+  @override
+  String get editingId => editing.id;
 
   static Serializer<InvoiceUIState> get serializer =>
       _$invoiceUIStateSerializer;

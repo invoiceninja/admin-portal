@@ -160,7 +160,8 @@ ReportResult paymentReport(
   }
 
   final selectedColumns = columns.map((item) => EnumUtils.parse(item)).toList();
-  data.sort((rowA, rowB) => sortReportTableRows(rowA, rowB, paymentReportSettings, selectedColumns));
+  data.sort((rowA, rowB) =>
+      sortReportTableRows(rowA, rowB, paymentReportSettings, selectedColumns));
 
   return ReportResult(
     allColumns:

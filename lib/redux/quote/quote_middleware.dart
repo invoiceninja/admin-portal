@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/redux/app/app_middleware.dart';
-import 'package:invoiceninja_flutter/redux/client/client_actions.dart';
-import 'package:invoiceninja_flutter/redux/project/project_actions.dart';
+import 'package:invoiceninja_flutter/redux/credit/credit_actions.dart';
 import 'package:invoiceninja_flutter/redux/quote/quote_actions.dart';
 import 'package:invoiceninja_flutter/redux/ui/ui_actions.dart';
 import 'package:invoiceninja_flutter/ui/quote/edit/quote_edit_vm.dart';
@@ -10,7 +9,6 @@ import 'package:invoiceninja_flutter/ui/quote/quote_email_vm.dart';
 import 'package:invoiceninja_flutter/ui/quote/quote_screen.dart';
 import 'package:invoiceninja_flutter/ui/quote/view/quote_view_vm.dart';
 import 'package:invoiceninja_flutter/utils/platforms.dart';
-import 'package:invoiceninja_flutter/.env.dart';
 import 'package:redux/redux.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/data/repositories/quote_repository.dart';
@@ -36,7 +34,7 @@ List<Middleware<AppState>> createStoreQuotesMiddleware([
     TypedMiddleware<AppState, ViewQuoteList>(viewQuoteList),
     TypedMiddleware<AppState, ViewQuote>(viewQuote),
     TypedMiddleware<AppState, EditQuote>(editQuote),
-    TypedMiddleware<AppState, ConvertQuote>(convertQuote),
+    TypedMiddleware<AppState, ConvertQuotes>(convertQuote),
     TypedMiddleware<AppState, ShowEmailQuote>(showEmailQuote),
     TypedMiddleware<AppState, LoadQuotes>(loadQuotes),
     TypedMiddleware<AppState, LoadQuote>(loadQuote),
@@ -45,7 +43,7 @@ List<Middleware<AppState>> createStoreQuotesMiddleware([
     TypedMiddleware<AppState, DeleteQuotesRequest>(deleteQuote),
     TypedMiddleware<AppState, RestoreQuotesRequest>(restoreQuote),
     TypedMiddleware<AppState, EmailQuoteRequest>(emailQuote),
-    TypedMiddleware<AppState, MarkSentQuoteRequest>(markSentQuote),
+    TypedMiddleware<AppState, MarkSentQuotesRequest>(markSentQuote),
   ];
 }
 
@@ -211,13 +209,13 @@ Middleware<AppState> _restoreQuote(QuoteRepository repository) {
 
 Middleware<AppState> _convertQuote(QuoteRepository repository) {
   return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
-    final action = dynamicAction as ConvertQuote;
-    final quote = store.state.quoteState.map[action.quoteId];
+    final action = dynamicAction as ConvertQuotes;
     repository
-        .saveData(store.state.credentials, quote, EntityAction.convert)
-        .then((InvoiceEntity invoice) {
-      store.dispatch(ConvertQuoteSuccess(quote: quote, invoice: invoice));
-      action.completer.complete(invoice);
+        .bulkAction(
+            store.state.credentials, action.quoteIds, EntityAction.convert)
+        .then((quotes) {
+      store.dispatch(ConvertQuoteSuccess(quotes: quotes));
+      action.completer.complete(null);
     }).catchError((Object error) {
       print(error);
       store.dispatch(ConvertQuoteFailure(error));
@@ -230,18 +228,18 @@ Middleware<AppState> _convertQuote(QuoteRepository repository) {
 
 Middleware<AppState> _markSentQuote(QuoteRepository repository) {
   return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
-    final action = dynamicAction as MarkSentQuoteRequest;
-    final origQuote = store.state.quoteState.map[action.quoteId];
+    final action = dynamicAction as MarkSentQuotesRequest;
     repository
-        .saveData(store.state.credentials, origQuote, EntityAction.markSent)
-        .then((InvoiceEntity quote) {
-      store.dispatch(MarkSentQuoteSuccess(quote));
+        .bulkAction(
+            store.state.credentials, action.quoteIds, EntityAction.markSent)
+        .then((quotes) {
+      store.dispatch(MarkSentQuoteSuccess(quotes));
       if (action.completer != null) {
         action.completer.complete(null);
       }
     }).catchError((Object error) {
       print(error);
-      store.dispatch(MarkSentQuoteFailure(origQuote));
+      store.dispatch(MarkSentQuoteFailure(error));
       if (action.completer != null) {
         action.completer.completeError(error);
       }
@@ -320,9 +318,6 @@ Middleware<AppState> _loadQuote(QuoteRepository repository) {
       if (action.completer != null) {
         action.completer.complete(null);
       }
-      if (state.projectState.isStale) {
-        store.dispatch(LoadProjects());
-      }
     }).catchError((Object error) {
       print(error);
       store.dispatch(LoadQuoteFailure(error));
@@ -358,15 +353,8 @@ Middleware<AppState> _loadQuotes(QuoteRepository repository) {
       if (action.completer != null) {
         action.completer.complete(null);
       }
-      // TODO remove once all modules are supported
-      if (Config.DEMO_MODE) {
-        if (state.projectState.isStale) {
-          store.dispatch(LoadProjects());
-        }
-      } else {
-        if (state.clientState.isStale) {
-          store.dispatch(LoadClients());
-        }
+      if (state.creditState.isStale) {
+        store.dispatch(LoadCredits());
       }
     }).catchError((Object error) {
       print(error);

@@ -154,7 +154,6 @@ class ContactEditDetailsState extends State<ContactEditDetails> {
   final _firstNameController = TextEditingController();
   final _lastNameController = TextEditingController();
   final _emailController = TextEditingController();
-  final _passwordController = TextEditingController();
   final _phoneController = TextEditingController();
   final _custom1Controller = TextEditingController();
   final _custom2Controller = TextEditingController();
@@ -172,7 +171,6 @@ class ContactEditDetailsState extends State<ContactEditDetails> {
       _firstNameController,
       _lastNameController,
       _emailController,
-      _passwordController,
       _phoneController,
       _custom1Controller,
       _custom2Controller,
@@ -241,7 +239,7 @@ class ContactEditDetailsState extends State<ContactEditDetails> {
                       ),
                       ElevatedButton(
                         color: Colors.red,
-                        icon: Icons.delete,
+                        iconData: Icons.delete,
                         label: localization.remove,
                         onPressed: () => confirmCallback(
                             context: context,
@@ -255,7 +253,7 @@ class ContactEditDetailsState extends State<ContactEditDetails> {
                         width: 10.0,
                       ),
                       ElevatedButton(
-                        icon: Icons.check_circle,
+                        iconData: Icons.check_circle,
                         label: localization.done,
                         onPressed: () {
                           viewModel.onDoneContactPressed();
@@ -281,16 +279,6 @@ class ContactEditDetailsState extends State<ContactEditDetails> {
                   ? localization.emailIsInvalid
                   : null,
             ),
-            company.settings.enablePortalPassword ?? false
-                ? DecoratedFormField(
-                    controller: _passwordController,
-                    label: localization.password,
-                    obscureText: true,
-                    validator: (value) => value.isNotEmpty && value.length < 8
-                        ? localization.passwordIsTooShort
-                        : null,
-                  )
-                : SizedBox(),
             DecoratedFormField(
               controller: _phoneController,
               label: localization.phone,

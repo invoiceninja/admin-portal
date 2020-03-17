@@ -49,7 +49,7 @@ abstract class ProjectState
     return rebuild((b) => b
       ..lastUpdated = DateTime.now().millisecondsSinceEpoch
       ..map.addAll(map)
-      ..list.replace(map.keys));
+      ..list.replace((map.keys.toList() + list.toList()).toSet().toList()));
   }
 
   static Serializer<ProjectState> get serializer => _$projectStateSerializer;
@@ -72,6 +72,9 @@ abstract class ProjectUIState extends Object
 
   @override
   bool get isCreatingNew => editing.isNew;
+
+  @override
+  String get editingId => editing.id;
 
   static Serializer<ProjectUIState> get serializer =>
       _$projectUIStateSerializer;

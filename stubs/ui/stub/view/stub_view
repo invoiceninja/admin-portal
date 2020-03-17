@@ -26,28 +26,11 @@ class _StubViewState extends State<StubView> {
     final userCompany = viewModel.state.userCompany;
     final stub = viewModel.stub;
 
-    return Scaffold(
-      appBar: AppBar(
-        title: EntityStateTitle(entity: stub),
-      actions: [
-        userCompany.canEditEntity(stub)
-            ? EditIconButton(
-                isVisible: !stub.isDeleted,
-                onPressed: () => viewModel.onEditPressed(context),
-              )
-            : Container(),
-        ActionMenuButton(
-          entityActions: stub.getActions(userCompany: userCompany),
-          isSaving: viewModel.isSaving,
-          entity: stub,
-          onSelected: viewModel.onEntityAction,
-        )
-      ],
-      ),
-      body: FormCard(
-        children: [
-          // STARTER: widgets - do not remove comment
-        ]
+    return ViewScaffold(
+      entity: stub,
+      body: ListView(
+        children: <Widget>[
+        ],
       ),
     );
   }

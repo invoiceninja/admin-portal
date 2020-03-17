@@ -26,7 +26,7 @@ class ErrorDialog extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: <Widget>[
                   Text(localization.anErrorOccurred,
-                      style: Theme.of(context).textTheme.headline6),
+                      style: Theme.of(context).textTheme.title),
                   SizedBox(height: 20.0),
                   Text(error.toString()),
                   SizedBox(height: 40.0),
