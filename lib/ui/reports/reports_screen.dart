@@ -914,11 +914,28 @@ class ReportResult {
                               .toSet()
                               .toList();
                         },
-                        itemBuilder: (context, String entityId) {
+                        itemBuilder: (context, String value) {
+                          // TODO fix this
+                          /*
                           return Padding(
                             padding: const EdgeInsets.all(12),
-                            child: Text('$entityId'),
+                            child: Text('$value'),
                           );
+                           */
+                          return Listener(
+                            child: Container(
+                              color: Theme.of(context).cardColor,
+                              child: Padding(
+                                padding: const EdgeInsets.all(12),
+                                child: Text('$value'),
+                              ),
+                            ),
+                            onPointerDown: (_) {
+                              textEditingControllers[column].text = value;
+                              onFilterChanged(column, value);
+                            },
+                          );
+
                         },
                         onSuggestionSelected: (String value) {
                           textEditingControllers[column].text = value;

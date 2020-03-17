@@ -133,9 +133,26 @@ class _EntityDropdownState extends State<EntityDropdown> {
                   .toList();
             },
             itemBuilder: (context, entityId) {
+              // TODO remove this
+              /*
               return _EntityListTile(
-                entity: _entityMap[entityId],
-                filter: _textController.text,
+                  entity: _entityMap[entityId],
+                  filter: _textController.text,
+                );
+              */
+              return Listener(
+                child: Container(
+                  color: Theme.of(context).cardColor,
+                  child: _EntityListTile(
+                    entity: _entityMap[entityId],
+                    filter: _textController.text,
+                  ),
+                ),
+                onPointerDown: (_) {
+                  final entity = _entityMap[entityId];
+                  _textController.text = _entityMap[entityId].listDisplayName;
+                  widget.onSelected(entity);
+                },
               );
             },
             onSuggestionSelected: (entityId) {
