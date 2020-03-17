@@ -34,9 +34,12 @@ Future<void> login(FlutterDriver driver,
     String loginSecret = Config.TEST_SECRET}) async {
   final localization = TestLocalization('en');
 
+  /*
   if (selfHosted && !retype) {
     await driver.tap(find.byValueKey(localization.selfhostLogin));
   }
+   */
+
   await fillTextFields(driver, <String, dynamic>{
     localization.email: loginEmail,
     localization.password: loginPassword,
@@ -49,7 +52,7 @@ Future<void> login(FlutterDriver driver,
     });
   }
 
-  await driver.tap(find.text(localization.emailLogin.toUpperCase()));
+  await driver.tap(find.text(localization.login.toUpperCase()));
 
   if (loginEmail.isNotEmpty) {
     await driver.waitFor(find.text(localization.dashboard),
