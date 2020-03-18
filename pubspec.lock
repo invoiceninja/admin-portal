@@ -598,6 +598,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.9.1"
+  package_info:
+    dependency: "direct main"
+    description:
+      name: package_info
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.4.0+16"
   package_resolver:
     dependency: transitive
     description:
