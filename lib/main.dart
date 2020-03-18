@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'dart:convert';
+import 'package:package_info/package_info.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
@@ -79,12 +80,13 @@ import 'package:invoiceninja_flutter/redux/company_gateway/company_gateway_middl
 void main({bool isTesting = false}) async {
   WidgetsFlutterBinding.ensureInitialized();
 
+  final packageInfo = await PackageInfo.fromPlatform();
   final SentryClient _sentry = Config.SENTRY_DNS.isEmpty
       ? null
       : SentryClient(
           dsn: Config.SENTRY_DNS,
           environmentAttributes: Event(
-            release: kAppVersion,
+            release: packageInfo.version,
             environment: Config.PLATFORM,
           ));
 

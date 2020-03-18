@@ -43,6 +43,7 @@ import 'package:invoiceninja_flutter/utils/platforms.dart';
 import 'package:redux/redux.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:package_info/package_info.dart';
 
 List<Middleware<AppState>> createStorePersistenceMiddleware([
   PersistenceRepository authRepository = const PersistenceRepository(
@@ -190,10 +191,12 @@ Middleware<AppState> _createLoadState(
     final action = dynamicAction as LoadStateRequest;
     try {
       final prefs = await SharedPreferences.getInstance();
-      final appVersion = prefs.getString(kSharedPrefAppVersion);
-      prefs.setString(kSharedPrefAppVersion, kAppVersion);
+      final packageInfo = await PackageInfo.fromPlatform();
 
-      if (appVersion != kAppVersion) {
+      final appVersion = prefs.getString(kSharedPrefAppVersion);
+      prefs.setString(kSharedPrefAppVersion, packageInfo.version);
+
+      if (appVersion != packageInfo.version) {
         throw 'New app version - clearing state';
       }
 

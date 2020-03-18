@@ -31,6 +31,7 @@ import 'package:url_launcher/url_launcher.dart';
 
 // STARTER: import - do not remove comment
 import 'package:invoiceninja_flutter/redux/design/design_actions.dart';
+import 'package:package_info/package_info.dart';
 
 class MenuDrawer extends StatelessWidget {
   const MenuDrawer({
@@ -631,7 +632,8 @@ void _showUpdate(BuildContext context) {
   );
 }
 
-void _showAbout(BuildContext context) {
+void _showAbout(BuildContext context) async {
+  final packageInfo = await PackageInfo.fromPlatform();
   final localization = AppLocalization.of(context);
   final ThemeData themeData = Theme.of(context);
   final TextStyle aboutTextStyle = themeData.textTheme.body1;
@@ -646,7 +648,7 @@ void _showAbout(BuildContext context) {
       width: 40.0,
       height: 40.0,
     ),
-    applicationVersion: 'Version: $kAppVersion',
+    applicationVersion: 'Version: ${packageInfo.version}',
     applicationLegalese: '© ${DateTime.now().year} Invoice Ninja',
     children: <Widget>[
       Padding(
