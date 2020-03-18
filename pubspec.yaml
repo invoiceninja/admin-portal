@@ -2,7 +2,7 @@ name: invoiceninja_flutter
 description: Client for Invoice Ninja
 version: 2.0.1+0
 author: Hillel Coren
-homepage: https://www.invoiceninja.com
+homepage: https://invoiceninja.com
 documentation: http://docs.invoiceninja.com
 
 environment:
