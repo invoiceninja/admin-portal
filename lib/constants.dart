@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:invoiceninja_flutter/data/models/entities.dart';
 
 // This version must be updated in tandem with the pubspec version.
-const String kAppVersion = '2.0.0+1';
+const String kAppVersion = '2.0.1+1';
 const String kSiteUrl = 'https://invoiceninja.com';
 const String kAppUrl = 'https://invoicing.co';
 const String kWhiteLabelUrl =
