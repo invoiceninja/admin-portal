@@ -10,6 +10,7 @@ jobs:
       commit_secret: ${{secrets.commit_secret}}
       commit_email: ${{secrets.commit_email}}
       commit_name: ${{secrets.commit_name}}
+      app_sentry: ${{secrets.app_sentry}}
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v1
@@ -21,7 +22,7 @@ jobs:
       - run: |
           cp lib/.env.dart.example lib/.env.dart
           sed -i 's/secret/password/g' lib/.env.dart
-          cat lib/.env.dart
+          sed -i 's/dns/${{secrets.app_sentry}}/g' lib/.env.dart
       - run: flutter build web --release
       - run: |
           git config --global user.email ${{secrets.commit_email}}
