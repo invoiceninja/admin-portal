@@ -1,12 +1,14 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:invoiceninja_flutter/constants.dart';
+import 'package:invoiceninja_flutter/data/web_client.dart';
 import 'package:invoiceninja_flutter/ui/app/buttons/elevated_button.dart';
 import 'package:invoiceninja_flutter/ui/app/form_card.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/app_form.dart';
 import 'package:invoiceninja_flutter/ui/app/edit_scaffold.dart';
 import 'package:invoiceninja_flutter/ui/settings/account_management_vm.dart';
 import 'package:invoiceninja_flutter/utils/dialogs.dart';
+import 'package:invoiceninja_flutter/utils/formatting.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -102,7 +104,17 @@ class _AccountManagementState extends State<AccountManagement>
                               title: localization.applyLicense,
                               field: localization.license,
                               callback: (value) {
-                                print('## LICENSE: $value');
+                                final state = viewModel.state;
+                                final credentials = state.credentials;
+                                final url = formatApiUrl(credentials.url) +
+                                    '/claim_license';
+                                WebClient()
+                                    .post(url, credentials.token)
+                                    .then((dynamic response) {
+                                  print('## response: response');
+                                }).catchError((dynamic error) {
+                                  print('## error: $error');
+                                });
                               });
                         },
                       ),

@@ -1,6 +1,7 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:invoiceninja_flutter/constants.dart';
 import 'package:invoiceninja_flutter/data/models/entities.dart';
 import 'package:invoiceninja_flutter/redux/static/static_selectors.dart';
 import 'package:invoiceninja_flutter/ui/app/buttons/elevated_button.dart';
@@ -131,9 +132,11 @@ class _CompanyDetailsState extends State<CompanyDetails>
     _postalCodeController.text = settings.postalCode;
     _taskRateController.text = formatNumber(settings.defaultTaskRate, context,
         formatNumberType: FormatNumberType.input);
-    _paymentTermsController.text = formatNumber(
-        settings.defaultPaymentTerms?.toDouble(), context,
-        formatNumberType: FormatNumberType.input);
+    _paymentTermsController.text =
+        settings.defaultPaymentTerms == kPaymentTermsOff
+            ? ''
+            : formatNumber(settings.defaultPaymentTerms?.toDouble(), context,
+                formatNumberType: FormatNumberType.input);
     _custom1Controller.text = settings.customValue1;
     _custom2Controller.text = settings.customValue2;
     _custom3Controller.text = settings.customValue3;
@@ -152,6 +155,7 @@ class _CompanyDetailsState extends State<CompanyDetails>
   }
 
   void _onSettingsChanged() {
+    final state = widget.viewModel.state;
     _debouncer.run(() {
       final settings = widget.viewModel.settings.rebuild((b) => b
         ..name = _nameController.text.trim()
@@ -167,8 +171,11 @@ class _CompanyDetailsState extends State<CompanyDetails>
         ..postalCode = _postalCodeController.text.trim()
         ..defaultTaskRate =
             parseDouble(_taskRateController.text, zeroIsNull: true)
-        ..defaultPaymentTerms =
-            parseInt(_paymentTermsController.text, zeroIsNull: true)
+        ..defaultPaymentTerms = _paymentTermsController.text.isEmpty
+            ? (state.settingsUIState.entityType == EntityType.company
+                ? -1
+                : null)
+            : parseInt(_paymentTermsController.text)
         ..customValue1 = _custom1Controller.text.trim()
         ..customValue2 = _custom2Controller.text.trim()
         ..customValue3 = _custom3Controller.text.trim()
@@ -452,7 +459,6 @@ class _CompanyDetailsState extends State<CompanyDetails>
                         settings.rebuild(
                             (b) => b..defaultPaymentTypeId = paymentType?.id)),
                     allowClearing: true,
-
                   ),
                   DecoratedFormField(
                     label: localization.paymentTerms,
