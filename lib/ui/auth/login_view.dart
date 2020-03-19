@@ -74,6 +74,8 @@ class _LoginState extends State<LoginView> {
         .forEach((dynamic controller) => controller.addListener(_onChanged));
 
     if (!kReleaseMode) {
+      _urlController.text = Config.TEST_URL;
+      _secretController.text = Config.TEST_SECRET;
       _emailController.text = Config.TEST_EMAIL;
       _passwordController.text = Config.TEST_PASSWORD;
       _firstNameController.text = 'TEST';

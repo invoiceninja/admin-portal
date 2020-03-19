@@ -174,6 +174,10 @@ class LoginVM {
             return;
           }
 
+          if (url.isNotEmpty && !url.startsWith('http')) {
+            url = 'https://' + url;
+          }
+
           store.dispatch(UserSignUpRequest(
             completer: completer,
             firstName: firstName.trim(),
