@@ -156,7 +156,8 @@ class _InvoiceEditItemsDesktopState extends State<InvoiceEditItemsDesktop> {
                             child: Padding(
                               padding: const EdgeInsets.all(12),
                               child: ListTile(
-                                title: Text(productState.map[suggestion].productKey),
+                                title: Text(
+                                    productState.map[suggestion].productKey),
                               ),
                             ),
                           ),
@@ -168,7 +169,7 @@ class _InvoiceEditItemsDesktopState extends State<InvoiceEditItemsDesktop> {
                               ..notes = product.notes
                               ..cost = product.price
                               ..quantity = item.quantity == 0 &&
-                                  viewModel.state.company.defaultQuantity
+                                      viewModel.state.company.defaultQuantity
                                   ? 1
                                   : item.quantity);
                             viewModel.onChangedInvoiceItem(updatedItem, index);
@@ -320,6 +321,8 @@ class _InvoiceEditItemsDesktopState extends State<InvoiceEditItemsDesktop> {
                           lineItems[index]
                               .rebuild((b) => b..cost = parseDouble(value)),
                           index),
+                      keyboardType: TextInputType.numberWithOptions(
+                          decimal: true, signed: true),
                     ),
                   ),
                   Padding(
@@ -333,6 +336,8 @@ class _InvoiceEditItemsDesktopState extends State<InvoiceEditItemsDesktop> {
                           lineItems[index]
                               .rebuild((b) => b..quantity = parseDouble(value)),
                           index),
+                      keyboardType: TextInputType.numberWithOptions(
+                          decimal: true, signed: true),
                     ),
                   ),
                   Padding(
