@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:invoiceninja_flutter/utils/formatting.dart';
 import 'package:redux/redux.dart';
 import 'package:invoiceninja_flutter/redux/auth/auth_actions.dart';
@@ -15,7 +16,7 @@ Reducer<AuthState> authReducer = combineReducers([
 AuthState userSignUpRequestReducer(
     AuthState authState, UserSignUpRequest action) {
   return authState.rebuild((b) => b
-    ..url = ''
+    ..url = kReleaseMode ? '' : formatApiUrl(action.url)
     ..secret = '');
 }
 
