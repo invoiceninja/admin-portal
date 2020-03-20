@@ -1,6 +1,5 @@
 import 'dart:async';
 import 'dart:convert';
-import 'package:flutter_driver/driver_extension.dart';
 import 'package:package_info/package_info.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -79,7 +78,6 @@ import 'package:invoiceninja_flutter/ui/company_gateway/view/company_gateway_vie
 import 'package:invoiceninja_flutter/redux/company_gateway/company_gateway_middleware.dart';
 
 void main({bool isTesting = false}) async {
-  enableFlutterDriverExtension();
   WidgetsFlutterBinding.ensureInitialized();
 
   final packageInfo = await PackageInfo.fromPlatform();

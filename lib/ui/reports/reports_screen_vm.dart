@@ -19,6 +19,7 @@ import 'package:invoiceninja_flutter/ui/reports/expense_report.dart';
 import 'package:invoiceninja_flutter/ui/reports/invoice_report.dart';
 import 'package:invoiceninja_flutter/ui/reports/payment_report.dart';
 import 'package:invoiceninja_flutter/ui/reports/product_report.dart';
+import 'package:invoiceninja_flutter/ui/reports/profit_loss_report.dart';
 import 'package:invoiceninja_flutter/ui/reports/quote_report.dart';
 import 'package:invoiceninja_flutter/ui/reports/reports_screen.dart';
 import 'package:invoiceninja_flutter/ui/reports/task_report.dart';
@@ -204,6 +205,18 @@ class ReportsScreenVM {
           state.invoiceState.map,
           state.clientState.map,
           state.paymentState.map,
+          state.userState.map,
+          state.staticState,
+        );
+        break;
+      case kReportProfitAndLoss:
+        reportResult = memoizedProfitAndLossReport(
+          state.userCompany,
+          state.uiState.reportsUIState,
+          state.clientState.map,
+          state.paymentState.map,
+          state.expenseState.map,
+          state.vendorState.map,
           state.userState.map,
           state.staticState,
         );
