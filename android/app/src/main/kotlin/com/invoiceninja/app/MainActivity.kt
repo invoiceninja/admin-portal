@@ -1,4 +1,4 @@
-package com.invoiceninja.client
+package com.invoiceninja.app
 
 import android.os.Bundle
 import io.flutter.app.FlutterFragmentActivity;

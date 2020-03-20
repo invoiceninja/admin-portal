@@ -37,7 +37,7 @@ android {
     }
 
     defaultConfig {
-        applicationId "com.invoiceninja.client"
+        applicationId "com.invoiceninja.app"
         minSdkVersion 18
         targetSdkVersion 28
         versionCode flutterVersionCode.toInteger()
