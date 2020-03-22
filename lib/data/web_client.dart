@@ -25,7 +25,7 @@ class WebClient {
 
     final http.Response response = await http.Client().get(
       url,
-      headers: _getHeaders(token),
+      headers: _getHeaders(url, token),
     );
 
     _checkResponse(response);
@@ -59,7 +59,8 @@ class WebClient {
       response = await http.Client()
           .post(url,
               body: data,
-              headers: _getHeaders(token, secret: secret, password: password))
+              headers:
+                  _getHeaders(url, token, secret: secret, password: password))
           .timeout(const Duration(seconds: kMaxPostSeconds));
     }
 
@@ -93,7 +94,7 @@ class WebClient {
       response = await http.Client().put(
         url,
         body: data,
-        headers: _getHeaders(token, password: password),
+        headers: _getHeaders(url, token, password: password),
       );
     }
 
@@ -108,7 +109,7 @@ class WebClient {
 
     final http.Response response = await http.Client().delete(
       url,
-      headers: _getHeaders(token, password: password),
+      headers: _getHeaders(url, token, password: password),
     );
 
     _checkResponse(response);
@@ -133,10 +134,13 @@ String _checkUrl(String url) {
   return url;
 }
 
-Map<String, String> _getHeaders(String token,
+Map<String, String> _getHeaders(String url, String token,
     {String secret, String password}) {
+  if (url.startsWith(kAppUrl) || url.startsWith(kAppStagingUrl)) {
+    secret = Config.API_SECRET;
+  }
   final headers = {
-    'X-API-SECRET': (secret ?? '').isNotEmpty ? secret : Config.API_SECRET,
+    'X-API-SECRET': secret,
     'X-Requested-With': 'XMLHttpRequest',
     'Content-Type': 'application/json',
   };
@@ -243,7 +247,7 @@ Future<http.Response> _uploadFile(String url, String token, String filePath,
 
   final request = http.MultipartRequest(method, Uri.parse(url))
     ..fields.addAll(data ?? {})
-    ..headers.addAll(_getHeaders(token))
+    ..headers.addAll(_getHeaders(url, token))
     ..files.add(multipartFile);
 
   return await http.Response.fromStream(await request.send())
