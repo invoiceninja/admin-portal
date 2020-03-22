@@ -47,10 +47,12 @@ class _LoginState extends State<LoginView> {
   static const String OTP_ERROR = 'OTP_REQUIRED';
 
   String _loginError = '';
-  bool _emailLogin = false;
+
+  bool _emailLogin = true; // TODO stable - change to false
+  bool _isSelfHosted = true;
+
   bool _createAccount = false;
   bool _recoverPassword = false;
-  bool _isSelfHosted = true;
   bool _autoValidate = false;
   bool _termsChecked = false;
   bool _privacyChecked = false;
@@ -273,7 +275,8 @@ class _LoginState extends State<LoginView> {
     final TextStyle aboutTextStyle = themeData.textTheme.body1;
     final TextStyle linkStyle = themeData.textTheme.body1
         .copyWith(color: convertHexStringToColor(kDefaultAccentColor));
-    final showHostedOptions = viewModel.authState.isHosted || !kIsWeb;
+    //final showHostedOptions = viewModel.authState.isHosted || !kIsWeb;
+    final showHostedOptions = false;
 
     return Stack(
       children: <Widget>[
@@ -571,7 +574,7 @@ class _LoginState extends State<LoginView> {
                                 ],
                               ),
                             ),
-                          if (!_recoverPassword)
+                          if (!_recoverPassword && !_isSelfHosted)
                             Padding(
                               padding: const EdgeInsets.all(6),
                               child: Row(
