@@ -51,14 +51,11 @@ import 'package:redux/redux.dart';
 import 'package:redux_logging/redux_logging.dart';
 import 'package:sentry/sentry.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-
 // STARTER: import - do not remove comment
 import 'package:invoiceninja_flutter/ui/design/design_screen.dart';
 import 'package:invoiceninja_flutter/ui/design/edit/design_edit_vm.dart';
 import 'package:invoiceninja_flutter/ui/design/view/design_view_vm.dart';
-import 'package:invoiceninja_flutter/redux/design/design_actions.dart';
 import 'package:invoiceninja_flutter/redux/design/design_middleware.dart';
-
 import 'package:invoiceninja_flutter/ui/credit/credit_screen.dart';
 import 'package:invoiceninja_flutter/ui/credit/edit/credit_edit_vm.dart';
 import 'package:invoiceninja_flutter/ui/credit/view/credit_view_vm.dart';
