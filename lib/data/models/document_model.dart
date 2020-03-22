@@ -156,7 +156,7 @@ abstract class DocumentEntity extends Object
 
   String previewUrl(String baseUrl) =>
       formatApiUrl(
-          baseUrl != null && baseUrl.startsWith('http') ? baseUrl : kAppUrl) +
+          baseUrl != null && baseUrl.startsWith('http') ? baseUrl : Constants.hostedApiUrl) +
       '/documents/$id';
 
   int compareTo(DocumentEntity document,

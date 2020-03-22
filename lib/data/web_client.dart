@@ -124,7 +124,7 @@ String _checkUrl(String url) {
   }
 
   if (!url.startsWith('http')) {
-    url = kAppUrl + url;
+    url = Constants.hostedApiUrl + url;
   }
 
   if (!url.contains('?')) {
@@ -136,7 +136,7 @@ String _checkUrl(String url) {
 
 Map<String, String> _getHeaders(String url, String token,
     {String secret, String password}) {
-  if (url.startsWith(kAppUrl) || url.startsWith(kAppStagingUrl)) {
+  if (url.startsWith(Constants.hostedApiUrl)) {
     secret = Config.API_SECRET;
   }
   final headers = {

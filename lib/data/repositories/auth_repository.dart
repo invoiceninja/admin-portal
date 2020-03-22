@@ -37,7 +37,7 @@ class AuthRepository {
     };
 
     if ((url ?? '').isEmpty) {
-      url = kReleaseMode ? kAppUrl : kAppStagingUrl;
+      url = Constants.hostedApiUrl;
     }
 
     return sendRequest(
