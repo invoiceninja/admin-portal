@@ -125,7 +125,7 @@ void main({bool isTesting = false}) async {
 
   Future<void> _reportError(dynamic error, dynamic stackTrace) async {
     print('Caught error: $error');
-    if (_isInDebugMode) {
+    if (kDebugMode) {
       print(stackTrace);
       return;
     } else {
@@ -149,18 +149,12 @@ void main({bool isTesting = false}) async {
   }
 
   FlutterError.onError = (FlutterErrorDetails details) {
-    if (_isInDebugMode || !store.state.reportErrors) {
+    if (kDebugMode || !store.state.reportErrors) {
       FlutterError.dumpErrorToConsole(details);
     } else {
       Zone.current.handleUncaughtError(details.exception, details.stack);
     }
   };
-}
-
-bool get _isInDebugMode {
-  bool inDebugMode = false;
-  assert(inDebugMode = true);
-  return inDebugMode;
 }
 
 Future<AppState> _initialState(bool isTesting) async {
