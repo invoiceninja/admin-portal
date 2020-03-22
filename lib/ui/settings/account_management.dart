@@ -103,17 +103,20 @@ class _AccountManagementState extends State<AccountManagement>
                               context: context,
                               title: localization.applyLicense,
                               field: localization.license,
+                              maxLength: 24,
                               callback: (value) {
                                 final state = viewModel.state;
                                 final credentials = state.credentials;
                                 final url = formatApiUrl(credentials.url) +
-                                    '/claim_license';
-                                WebClient()
-                                    .post(url, credentials.token)
-                                    .then((dynamic response) {
-                                  print('## response: response');
+                                    '/claim_license?license_key=$value';
+                                WebClient().post(
+                                  url,
+                                  credentials.token,
+                                ).then((dynamic response) {
+                                  viewModel.onAppliedLicense();
                                 }).catchError((dynamic error) {
-                                  print('## error: $error');
+                                  showErrorDialog(
+                                      context: context, message: '$error');
                                 });
                               });
                         },

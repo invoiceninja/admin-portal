@@ -46,6 +46,7 @@ class AccountManagementVM {
     @required this.onSavePressed,
     @required this.onCompanyDelete,
     @required this.onPurgeData,
+    @required this.onAppliedLicense,
   });
 
   static AccountManagementVM fromStore(Store<AppState> store) {
@@ -97,6 +98,9 @@ class AccountManagementVM {
               context, AppLocalization.of(context).purgeSuccessful);
           store.dispatch(
               PurgeDataRequest(completer: completer, password: password));
+        },
+        onAppliedLicense: () {
+          store.dispatch(RefreshData(loadCompanies: false));
         });
   }
 
@@ -106,4 +110,5 @@ class AccountManagementVM {
   final Function(CompanyEntity) onCompanyChanged;
   final Function(BuildContext, String) onCompanyDelete;
   final Function(BuildContext, String) onPurgeData;
+  final Function onAppliedLicense;
 }
