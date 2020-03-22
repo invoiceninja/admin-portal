@@ -136,7 +136,7 @@ String _checkUrl(String url) {
 Map<String, String> _getHeaders(String token,
     {String secret, String password}) {
   final headers = {
-    'X-API-Secret': (secret ?? '').isNotEmpty ? secret : Config.API_SECRET,
+    'X-API-SECRET': (secret ?? '').isNotEmpty ? secret : Config.API_SECRET,
     'X-Requested-With': 'XMLHttpRequest',
     'Content-Type': 'application/json',
   };

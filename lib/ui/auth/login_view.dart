@@ -194,8 +194,6 @@ class _LoginState extends State<LoginView> {
         password: _passwordController.text,
         firstName: _firstNameController.text,
         lastName: _lastNameController.text,
-        url: _urlController.text,
-        secret: _secretController.text,
       );
     } else {
       viewModel.onGoogleSignUpPressed(context, completer);
@@ -276,7 +274,7 @@ class _LoginState extends State<LoginView> {
     final TextStyle linkStyle = themeData.textTheme.body1
         .copyWith(color: convertHexStringToColor(kDefaultAccentColor));
     //final showHostedOptions = viewModel.authState.isHosted || !kIsWeb;
-    final showHostedOptions = false;
+    final showHostedOptions = !kReleaseMode;
 
     return Stack(
       children: <Widget>[

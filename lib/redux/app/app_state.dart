@@ -521,7 +521,7 @@ abstract class AppState implements Built<AppState, AppStateBuilder> {
     //return 'Invitations: ${invoiceUIState.editing.invitations}';
     //return 'Token: ${userCompanyStates.map((state) => state.token.token).where((name) => name.isNotEmpty).toList().join(', ')}';
     //return 'Settings: ${company.settings.companyLogo}';
-    //return 'Designs: ${company.designs}';
+    //return 'Designs: ${designState.list.map((id) => id + ' ' + designState.map[id].name).toList()}';
     //return 'PDF Variables: ${uiState.settingsUIState.settings.pdfVariables}';
     //return 'Account: ${userCompany.account}';
     //return 'Notifications: ${user.userCompany.notifications} ${uiState.settingsUIState.user.userCompany.notifications}';
