@@ -1,6 +1,5 @@
 import 'dart:async';
 import 'dart:convert';
-import 'package:package_info/package_info.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
@@ -51,6 +50,7 @@ import 'package:redux/redux.dart';
 import 'package:redux_logging/redux_logging.dart';
 import 'package:sentry/sentry.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+
 // STARTER: import - do not remove comment
 import 'package:invoiceninja_flutter/ui/design/design_screen.dart';
 import 'package:invoiceninja_flutter/ui/design/edit/design_edit_vm.dart';
@@ -77,13 +77,15 @@ import 'package:invoiceninja_flutter/redux/company_gateway/company_gateway_middl
 void main({bool isTesting = false}) async {
   WidgetsFlutterBinding.ensureInitialized();
 
-  final packageInfo = await PackageInfo.fromPlatform();
+
+  //final packageInfo = await PackageInfo.fromPlatform();
   final SentryClient _sentry = Config.SENTRY_DNS.isEmpty
       ? null
       : SentryClient(
           dsn: Config.SENTRY_DNS,
           environmentAttributes: Event(
-            release: packageInfo.version,
+            //release: packageInfo.version,
+            release: kAppVersion,
             environment: Config.PLATFORM,
           ));
 

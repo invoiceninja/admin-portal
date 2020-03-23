@@ -1,6 +1,7 @@
 import 'package:built_value/built_value.dart';
 import 'package:built_value/serializer.dart';
 import 'package:invoiceninja_flutter/constants.dart';
+import 'package:invoiceninja_flutter/utils/formatting.dart';
 import 'package:invoiceninja_flutter/.env.dart';
 
 part 'auth_state.g.dart';
@@ -47,9 +48,8 @@ abstract class AuthState implements Built<AuthState, AuthStateBuilder> {
         kMillisecondsToReenterPassword;
   }
 
-  // TODO fix this
-  //bool get isHosted => cleanApiUrl(url).isEmpty || cleanApiUrl(url) == kAppUrl;
-  bool get isHosted => false;
+  bool get isHosted =>
+      cleanApiUrl(url).isEmpty || cleanApiUrl(url) == kAppProductionUrl;
 
   bool get isSelfHost => !isHosted;
 
