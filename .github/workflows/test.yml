@@ -2,10 +2,12 @@ name: Run Tests
 on: [push, pull_request]
 jobs:
   drive:
+    env:
+      app_staging_secret: ${{secrets.app_staging_secret}}
     strategy:
       matrix:
         device:
-          - "iPhone 11 (13."
+          - "iPhone 11"
       fail-fast: false
     runs-on: macOS-latest
     steps:
@@ -21,6 +23,6 @@ jobs:
       - run: |
           cp lib/.env.dart.example lib/.env.dart
           cp android/app/build.gradle.prod android/app/build.gradle
-          sed -i -e 's/secret/password/g' lib/.env.dart
+          sed -i -e 's/secret/${{secrets.app_staging_secret}}/g' lib/.env.dart
       - name: Run Tests
         run: flutter drive --target=test_driver/login_it.dart
