@@ -22,7 +22,7 @@ jobs:
           )
           echo 'UUID'
           echo $UDID
-          xcrun simctl boot "${UDID:?No Simulator with this name found}"
+          xcrun simctl boot E766D3DF-D016-40B7-AFF4-18B566FB5BF3
       - uses: actions/checkout@v1
       - uses: subosito/flutter-action@v1
         with:
