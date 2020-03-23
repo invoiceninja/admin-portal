@@ -120,6 +120,7 @@ void fieldCallback({
   String title,
   String field,
   Function(String) callback,
+  int maxLength,
 }) {
   showDialog<AlertDialog>(
     context: context,
@@ -129,6 +130,7 @@ void fieldCallback({
         callback: callback,
         field: field,
         title: title,
+        maxLength: maxLength,
       );
     },
   );
@@ -139,11 +141,13 @@ class FieldConfirmation extends StatefulWidget {
     @required this.callback,
     @required this.title,
     @required this.field,
+    this.maxLength,
   });
 
   final Function(String) callback;
   final String title;
   final String field;
+  final int maxLength;
 
   @override
   _FieldConfirmationState createState() => _FieldConfirmationState();
@@ -163,7 +167,11 @@ class _FieldConfirmationState extends State<FieldConfirmation> {
     return AlertDialog(
       title: Text(widget.title),
       content: TextField(
+        autofocus: true,
         onChanged: (value) => _field = value,
+        maxLength: widget.maxLength,
+        maxLengthEnforced: widget.maxLength != null,
+        buildCounter: (_, {currentLength, maxLength, isFocused}) => null,
         decoration: InputDecoration(
           labelText: widget.field,
         ),

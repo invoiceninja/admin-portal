@@ -122,7 +122,7 @@ class DesignScreen extends StatelessWidget {
         onSelectedCustom4: (value) =>
             store.dispatch(FilterDesignsByCustom4(value)),
       ),
-      floatingActionButton: userCompany.canCreate(EntityType.design)
+      floatingActionButton: userCompany.isAdmin
           ? FloatingActionButton(
               heroTag: 'design_fab',
               backgroundColor: Theme.of(context).primaryColorDark,
@@ -130,7 +130,7 @@ class DesignScreen extends StatelessWidget {
                 createEntity(
                   context: context,
                   entity: DesignEntity(
-                      design: state.designState.map[kDesignCleanId].design),
+                      design: state.designState.cleanDesign.design),
                 );
               },
               child: Icon(

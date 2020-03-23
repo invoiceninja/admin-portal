@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:convert';
 import 'dart:core';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:invoiceninja_flutter/.env.dart';
 import 'package:invoiceninja_flutter/constants.dart';
@@ -35,10 +36,12 @@ class AuthRepository {
       'token_name': '${Config.PLATFORM.toLowerCase()}-client',
     };
 
-    final signupUrl =
-        formatApiUrl((url ?? '').isEmpty ? kAppUrl : url) + '/signup';
+    if ((url ?? '').isEmpty) {
+      url = Constants.hostedApiUrl;
+    }
 
-    return sendRequest(url: signupUrl, data: credentials, secret: secret);
+    return sendRequest(
+        url: formatApiUrl(url) + '/signup', data: credentials, secret: secret);
   }
 
   Future<LoginResponse> login(

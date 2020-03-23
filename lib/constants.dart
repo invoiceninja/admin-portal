@@ -1,9 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:invoiceninja_flutter/data/models/entities.dart';
+import 'package:flutter/foundation.dart';
 
-// This version must be updated in tandem with the pubspec version.
+class Constants {
+  static String get hostedApiUrl => kReleaseMode ? kAppProductionUrl : kAppStagingUrl;
+}
+
 const String kSiteUrl = 'https://invoiceninja.com';
-const String kAppUrl = 'https://invoicing.co';
+const String kAppProductionUrl = 'https://invoicing.co';
+const String kAppStagingUrl = 'https://staging.invoicing.co';
 const String kWhiteLabelUrl =
     'https://app.invoiceninja.com/buy_now/?account_key=AsFmBAeLXF0IKf7tmi0eiyZfmWW9hxMT&product_id=3';
 
@@ -191,8 +196,6 @@ const String kClientPortalModeIFrame = 'iframe';
 const String kGenerateNumberWhenSaved = 'when_saved';
 const String kGenerateNumberWhenSent = 'when_sent';
 //const String kNumberGeneratedWhenPaid = 'paid';
-
-const String kDesignCleanId = 'Wpmbk5ezJn';
 
 const String kDesignHeader = 'header';
 const String kDesignBody = 'body';
@@ -557,4 +560,3 @@ const kPageSizes = [
   'Letter',
   'Tabloid',
 ];
-

@@ -277,7 +277,7 @@ abstract class CompanyEntity extends Object
       return true;
     }
 
-    return appUrl != null && appUrl.isNotEmpty && appUrl != kAppUrl;
+    return appUrl != null && appUrl.isNotEmpty && appUrl != Constants.hostedApiUrl;
   }
 
   bool get isHosted => !isSelfHost;
