@@ -4,6 +4,7 @@ jobs:
   drive:
     env:
       app_staging_secret: ${{secrets.app_staging_secret}}
+      firebase_ios: ${{secrets.firebase_ios}}
     strategy:
       matrix:
         device:
@@ -24,5 +25,6 @@ jobs:
           cp lib/.env.dart.example lib/.env.dart
           cp android/app/build.gradle.prod android/app/build.gradle
           sed -i -e 's/secret/${{secrets.app_staging_secret}}/g' lib/.env.dart
+          echo ${{secrets.firebase_ios}} | base64 --decode > ios/Runner/GoogleService-Info.plist
       - name: Run Tests
         run: flutter drive --target=test_driver/login_it.dart
