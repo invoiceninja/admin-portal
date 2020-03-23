@@ -21,7 +21,7 @@ jobs:
               '$1 == device { print $2 }'
           )
           echo 'UUID'
-          echo UDID
+          echo $UDID
           xcrun simctl boot "${UDID:?No Simulator with this name found}"
       - uses: actions/checkout@v1
       - uses: subosito/flutter-action@v1
