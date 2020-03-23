@@ -179,6 +179,7 @@ abstract class InvoiceEntity extends Object
   @BuiltValueField(wireName: 'number')
   String get number;
 
+  @override
   double get discount;
 
   @BuiltValueField(wireName: 'po_number')

@@ -168,10 +168,10 @@ class DocumentTile extends StatelessWidget {
                   SizedBox(height: 25),
                   Text(document.name,
                       overflow: TextOverflow.ellipsis,
-                      style: Theme.of(context).textTheme.headline),
+                      style: Theme.of(context).textTheme.headline5),
                   Text(
                     '${formatDate(convertTimestampToDateString(document.createdAt), context)} • ${document.prettySize}',
-                    style: Theme.of(context).textTheme.headline,
+                    style: Theme.of(context).textTheme.headline5,
                   ),
                   SizedBox(height: 20),
                   DocumentPreview(document),
@@ -207,7 +207,7 @@ class DocumentTile extends StatelessWidget {
                       children: <Widget>[
                         Text(
                           document.name ?? '',
-                          style: Theme.of(context).textTheme.headline,
+                          style: Theme.of(context).textTheme.headline5,
                           overflow: TextOverflow.ellipsis,
                         ),
                         Text(

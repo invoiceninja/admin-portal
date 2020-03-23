@@ -66,7 +66,7 @@ class DesignRepository {
           credentials.url + '/designs', credentials.token,
           data: json.encode(data));
     } else {
-      var url = credentials.url + '/designs/${design.id}';
+      final url = credentials.url + '/designs/${design.id}';
       response =
           await webClient.put(url, credentials.token, data: json.encode(data));
     }

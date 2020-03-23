@@ -82,13 +82,10 @@ class PaymentRepository {
     final data = serializers.serializeWith(PaymentEntity.serializer, payment);
     dynamic response;
 
-    var url = credentials.url + '/payments/refund';
-    //var url = credentials.url + '/payments/refund?include=paymentables';
-    /*
+    var url = credentials.url + '/payments/refund?include=paymentables';
     if (sendEmail) {
       url += '&email_receipt=true';
     }
-     */
     response =
         await webClient.post(url, credentials.token, data: json.encode(data));
 
