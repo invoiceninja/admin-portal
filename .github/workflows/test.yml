@@ -1,11 +1,7 @@
-name: Run Tests
-on:
-  push:
-    branches:
-      - develop
+name:  Run Tests
+on: [push, pull_request]
 jobs:
-  build:
-    name: Run Tests
+  drive_android:
     runs-on: macos-latest
     strategy:
       matrix:
@@ -17,13 +13,6 @@ jobs:
       - uses: subosito/flutter-action@v1
         with:
           channel: 'beta'
-      - run: flutter config --enable-web
-      - run: flutter pub get
-      - run: |
-          cp lib/.env.dart.example lib/.env.dart
-          cp android/app/build.gradle.prod android/app/build.gradle
-          sed -i 's/secret/password/g' lib/.env.dart
-          sed -i 's/dns/${{secrets.app_sentry}}/g' lib/.env.dart
       - name: Run Flutter Driver tests
         uses: reactivecircus/android-emulator-runner@v1
         with:
@@ -31,4 +20,4 @@ jobs:
           target: ${{ matrix.target }}
           arch: x86_64
           profile: Nexus 6
-          script: flutter drive --target=test_driver/all_it.dart
+          script: flutter drive --target=test_driver/app.dart
