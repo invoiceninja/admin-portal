@@ -1,17 +1,11 @@
-name: Build/Test Flutter Web
+name: Run Tests
 on:
   push:
     branches:
-      - master
+      - develop
 jobs:
   build:
-    name: Build Flutter Web
-    env:
-      commit_secret: ${{secrets.commit_secret}}
-      commit_email: ${{secrets.commit_email}}
-      commit_name: ${{secrets.commit_name}}
-      app_sentry: ${{secrets.app_sentry}}
-    #runs-on: ubuntu-latest
+    name: Run Tests
     runs-on: macos-latest
     strategy:
       matrix:
@@ -38,16 +32,3 @@ jobs:
           arch: x86_64
           profile: Nexus 6
           script: flutter drive --target=test_driver/all_it.dart
-      - run: flutter build web --release
-      - run: |
-          git config --global user.email ${{secrets.commit_email}}
-          git config --global user.name ${{secrets.commit_name}}
-
-          git clone https://${{secrets.commit_secret}}@github.com/invoiceninja/invoiceninja.git
-          cd invoiceninja
-          git checkout v2
-
-          cp -r ../build/web/* ./public/
-          git add .
-          git commit -m 'Update Flutter client'
-          git push
