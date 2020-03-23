@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:invoiceninja_flutter/redux/company/company_selectors.dart';
 import 'package:invoiceninja_flutter/utils/formatting.dart';
-import 'package:invoiceninja_flutter/utils/localization.dart';
 
 class DatePicker extends StatefulWidget {
   const DatePicker({

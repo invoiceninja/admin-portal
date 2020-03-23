@@ -97,13 +97,13 @@ class TaskListItem extends StatelessWidget {
                       : formatDate(convertTimestampToDateString(task.updatedAt),
                           context),
                   overflow: TextOverflow.ellipsis,
-                  style: Theme.of(context).textTheme.title,
+                  style: Theme.of(context).textTheme.headline6,
                 ),
               ),
               LiveText(() {
                 return formatNumber(task.listDisplayAmount, context,
                     formatNumberType: FormatNumberType.duration);
-              }, style: Theme.of(context).textTheme.title),
+              }, style: Theme.of(context).textTheme.headline6),
             ],
           ),
         ),

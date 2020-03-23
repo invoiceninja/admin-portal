@@ -74,11 +74,11 @@ class TaxRateListItem extends StatelessWidget {
               Expanded(
                 child: Text(
                   taxRate.name,
-                  style: Theme.of(context).textTheme.title,
+                  style: Theme.of(context).textTheme.headline6,
                 ),
               ),
               Text(formatNumber(taxRate.listDisplayAmount, context),
-                  style: Theme.of(context).textTheme.title),
+                  style: Theme.of(context).textTheme.headline6),
             ],
           ),
         ),

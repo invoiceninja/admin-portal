@@ -12,7 +12,6 @@ import 'package:flutter_redux/flutter_redux.dart';
 import 'package:invoiceninja_flutter/redux/ui/list_ui_state.dart';
 import 'package:invoiceninja_flutter/ui/app/entities/entity_actions_dialog.dart';
 import 'package:invoiceninja_flutter/ui/app/tables/entity_list.dart';
-import 'package:invoiceninja_flutter/ui/invoice/invoice_list_item.dart';
 import 'package:invoiceninja_flutter/ui/quote/quote_list_item.dart';
 import 'package:invoiceninja_flutter/ui/quote/quote_presenter.dart';
 import 'package:invoiceninja_flutter/ui/invoice/invoice_list_vm.dart';

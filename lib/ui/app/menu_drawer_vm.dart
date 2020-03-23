@@ -11,7 +11,6 @@ import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:redux/redux.dart';
 import 'package:invoiceninja_flutter/ui/app/menu_drawer.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
-import 'package:invoiceninja_flutter/redux/company/company_selectors.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
 
 class MenuDrawerBuilder extends StatelessWidget {

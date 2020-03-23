@@ -73,7 +73,7 @@ ReportResult taxRateReport(
     final invoice = invoiceMap[invoiceId];
     final client = clientMap[invoice.clientId];
 
-    final invoiceTaxAmount = invoice.calculateTaxes(invoice.usesInclusiveTaxes);
+    //final invoiceTaxAmount = invoice.calculateTaxes(invoice.usesInclusiveTaxes);
     final invoicePaidAmount = invoice.amount - invoice.balance;
 
     final taxes = invoice.getTaxes();

@@ -15,7 +15,6 @@ import 'package:invoiceninja_flutter/ui/settings/device_settings_list.dart';
 import 'package:invoiceninja_flutter/utils/completers.dart';
 import 'package:invoiceninja_flutter/utils/dialogs.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
-import 'package:invoiceninja_flutter/utils/platforms.dart';
 import 'package:local_auth/local_auth.dart';
 import 'package:redux/redux.dart';
 

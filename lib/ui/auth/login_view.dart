@@ -11,7 +11,6 @@ import 'package:invoiceninja_flutter/ui/app/link_text.dart';
 import 'package:invoiceninja_flutter/ui/app/loading_indicator.dart';
 import 'package:invoiceninja_flutter/ui/auth/login_vm.dart';
 import 'package:invoiceninja_flutter/utils/colors.dart';
-import 'package:invoiceninja_flutter/utils/formatting.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:invoiceninja_flutter/ui/app/form_card.dart';
 import 'package:invoiceninja_flutter/utils/platforms.dart';
@@ -61,8 +60,6 @@ class _LoginState extends State<LoginView> {
 
   @override
   void didChangeDependencies() {
-    final state = widget.viewModel.authState;
-
     _controllers = [
       _firstNameController,
       _lastNameController,
@@ -270,8 +267,8 @@ class _LoginState extends State<LoginView> {
         _oneTimePasswordController.text.isNotEmpty;
 
     final ThemeData themeData = Theme.of(context);
-    final TextStyle aboutTextStyle = themeData.textTheme.body1;
-    final TextStyle linkStyle = themeData.textTheme.body1
+    final TextStyle aboutTextStyle = themeData.textTheme.bodyText2;
+    final TextStyle linkStyle = themeData.textTheme.bodyText2
         .copyWith(color: convertHexStringToColor(kDefaultAccentColor));
     //final showHostedOptions = viewModel.authState.isHosted || !kIsWeb;
     final showHostedOptions = !kReleaseMode;
