@@ -12,20 +12,15 @@ jobs:
       - name: List all simulators
         run: "xcrun instruments -s"
       - name: Start Simulator
-        run: |
-          UDID=$(
-            xcrun instruments -s |
-            awk \
-              -F ' *[][]' \
-              -v 'device=${{ matrix.device }}' \
-              '$1 == device { print $2 }'
-          )
-          echo 'UUID'
-          echo $UDID
-          xcrun simctl boot "${UDID:?No Simulator with this name found}"
+        run: xcrun simctl boot E766D3DF-D016-40B7-AFF4-18B566FB5BF3
       - uses: actions/checkout@v1
       - uses: subosito/flutter-action@v1
         with:
           channel: 'beta'
+      - run: flutter pub get
+      - run: |
+          cp lib/.env.dart.example lib/.env.dart
+          cp android/app/build.gradle.prod android/app/build.gradle
+          sed -i 's/secret/password/g' lib/.env.dart
       - name: Run Tests
         run: flutter drive --target=test_driver/login_it.dart
