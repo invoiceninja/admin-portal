@@ -10,6 +10,7 @@ jobs:
       matrix:
         device:
           - "iPhone 11"
+          - "iPad Air"
       fail-fast: false
     runs-on: macOS-latest
     steps:
