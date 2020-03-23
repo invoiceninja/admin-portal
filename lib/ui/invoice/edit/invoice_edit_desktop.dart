@@ -264,9 +264,9 @@ class InvoiceEditDesktopState extends State<InvoiceEditDesktop>
                       value: invoice.customValue1,
                     ),
                     CustomField(
-                      controller: _custom2Controller,
-                      field: CustomFieldType.invoice2,
-                      value: invoice.customValue2,
+                      controller: _custom3Controller,
+                      field: CustomFieldType.invoice3,
+                      value: invoice.customValue3,
                     ),
                   ],
                 ),
