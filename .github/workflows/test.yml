@@ -27,11 +27,11 @@ jobs:
           channel: 'beta'
       - run: flutter pub get
       - run: |
-          cp lib/.env.dart.example lib/.env.dart
           cp android/app/build.gradle.prod android/app/build.gradle
-          sed -i -e 's/user@/medium@/g' lib/.env.dart
+          cp lib/.env.dart.example lib/.env.dart
+          sed -i -e 's/user/medium/g' lib/.env.dart
+          sed -i -e 's/\/example.com/\/${{secrets.staging_url}}/g' lib/.env.dart
           sed -i -e 's/secret/${{secrets.staging_secret}}/g' lib/.env.dart
-          sed -i -e 's/example.com/${{secrets.staging_url}}/g' lib/.env.dart
           echo ${{secrets.firebase_ios}} | base64 --decode > ios/Runner/GoogleService-Info.plist
       - name: Run Tests
         run: flutter drive --target=test_driver/login_it.dart
