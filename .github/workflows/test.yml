@@ -1,4 +1,4 @@
-name: flutter drive
+name: Run Tests
 on: [push, pull_request]
 jobs:
   drive:
@@ -26,6 +26,6 @@ jobs:
       - uses: actions/checkout@v1
       - uses: subosito/flutter-action@v1
         with:
-          channel: 'stable' # or: 'dev' or 'beta'
-      - name: "Run Flutter Driver tests"
-        run: "flutter drive --target=test_driver/app.dart"
+          channel: 'beta'
+      - name: Run Tests
+        run: flutter drive --target=test_driver/login_it.dart
