@@ -28,6 +28,9 @@ abstract class DesignState implements Built<DesignState, DesignStateBuilder> {
 
   BuiltList<String> get list;
 
+  DesignEntity get cleanDesign => map[
+      list.firstWhere((id) => !map[id].isCustom && map[id].name == 'Clean')];
+
   bool get isStale {
     if (!isLoaded) {
       return true;

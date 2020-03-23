@@ -1,4 +1,4 @@
-name: Build Flutter Web
+name: Build/Test Flutter Web
 on:
   push:
     branches:
@@ -11,7 +11,13 @@ jobs:
       commit_email: ${{secrets.commit_email}}
       commit_name: ${{secrets.commit_name}}
       app_sentry: ${{secrets.app_sentry}}
-    runs-on: ubuntu-latest
+    #runs-on: ubuntu-latest
+    runs-on: macos-latest
+    strategy:
+      matrix:
+        api-level: [21, 29]
+        target: [default]
+    needs: test
     steps:
       - uses: actions/checkout@v1
       - uses: subosito/flutter-action@v1
@@ -24,6 +30,14 @@ jobs:
           cp android/app/build.gradle.prod android/app/build.gradle
           sed -i 's/secret/password/g' lib/.env.dart
           sed -i 's/dns/${{secrets.app_sentry}}/g' lib/.env.dart
+      - name: Run Flutter Driver tests
+        uses: reactivecircus/android-emulator-runner@v1
+        with:
+          api-level: ${{ matrix.api-level }}
+          target: ${{ matrix.target }}
+          arch: x86_64
+          profile: Nexus 6
+          script: flutter drive --target=test_driver/all_it.dart
       - run: flutter build web --release
       - run: |
           git config --global user.email ${{secrets.commit_email}}

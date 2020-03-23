@@ -122,7 +122,7 @@ class _InvoiceDesignState extends State<InvoiceDesign>
                         context: context,
                         entity: DesignEntity(
                             design:
-                                state.designState.map[kDesignCleanId].design),
+                                state.designState.cleanDesign.design),
                       )
                     : store.dispatch(ViewSettings(
                         navigator: Navigator.of(context),
