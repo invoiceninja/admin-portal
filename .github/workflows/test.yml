@@ -1,23 +1,32 @@
-name:  Run Tests
-on: [push, pull_request]
+name:  Test, build and deploy
+on: [push,pull_request]
 jobs:
-  drive_android:
-    runs-on: macos-latest
+  drive_ios:
     strategy:
       matrix:
-        api-level: [21, 29]
-        target: [default]
+        device:
+          - "iPhone 8 (13.1)"
+          - "iPhone 11 Pro Max (13.1)"
+      fail-fast: false
+    runs-on: macos-latest
     needs: test
     steps:
+      - name: List all simulators
+        run: xcrun instruments -s
+      - name: Start Simulator
+        run: |
+          UDID=$(
+            xcrun instruments -s |
+            awk \
+              -F ' *[][]' \
+              -v 'device=${{ matrix.device }}' \
+              '$1 == device { print $2 }'
+          )
+          xcrun simctl boot "${UDID:?No Simulator with this name found}"
       - uses: actions/checkout@v1
       - uses: subosito/flutter-action@v1
         with:
-          channel: 'beta'
+          flutter-version: '1.12.14'
+          channel: 'dev'
       - name: Run Flutter Driver tests
-        uses: reactivecircus/android-emulator-runner@v1
-        with:
-          api-level: ${{ matrix.api-level }}
-          target: ${{ matrix.target }}
-          arch: x86_64
-          profile: Nexus 6
-          script: flutter drive --target=test_driver/app.dart
+        run: flutter drive --target=test_driver/app.dart
