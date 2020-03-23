@@ -16,7 +16,11 @@ jobs:
       - name: List all simulators
         run: "xcrun instruments -s"
       - name: Start Simulator
-        run: xcrun simctl boot E766D3DF-D016-40B7-AFF4-18B566FB5BF3
+        run: |
+          UDID=$(
+            xcrun instruments -s | grep "${{ matrix.device }} (" | cut -d'[' -f 2 | cut -d']' -f 1
+          )
+          xcrun simctl boot "${UDID:?No Simulator with this name found}"
       - uses: actions/checkout@v1
       - uses: subosito/flutter-action@v1
         with:
@@ -25,6 +29,7 @@ jobs:
       - run: |
           cp lib/.env.dart.example lib/.env.dart
           cp android/app/build.gradle.prod android/app/build.gradle
+          sed -i -e 's/user/medium/g' lib/.env.dart
           sed -i -e 's/secret/${{secrets.staging_secret}}/g' lib/.env.dart
           sed -i -e 's/example.com/${{secrets.staging_url}}/g' lib/.env.dart
           echo ${{secrets.firebase_ios}} | base64 --decode > ios/Runner/GoogleService-Info.plist
