@@ -21,6 +21,6 @@ jobs:
       - run: |
           cp lib/.env.dart.example lib/.env.dart
           cp android/app/build.gradle.prod android/app/build.gradle
-          
+          sed -i -e 's/secret/password/g' lib/.env.dart
       - name: Run Tests
         run: flutter drive --target=test_driver/login_it.dart
