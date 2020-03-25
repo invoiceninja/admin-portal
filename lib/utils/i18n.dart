@@ -306,6 +306,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'days': 'Days',
       'invoice_email': 'Invoice Email',
       'payment_email': 'Payment Email',
+      'partial_payment': 'Partial Payment',
       'partial_payment_email': 'Partial Payment Email',
       'quote_email': 'Quote Email',
       'endless_reminder': 'Endless Reminder',
@@ -32903,6 +32904,8 @@ mixin LocalizationsProvider on LocaleCodeAware {
   String get partialPaymentEmail =>
       _localizedValues[localeCode]['partial_payment_email'];
 
+  String get partialPayment => _localizedValues[localeCode]['partial_payment'];
+
   String get convertedQuote => _localizedValues[localeCode]['converted_quote'];
 
   String get enableModules => _localizedValues[localeCode]['enable_modules'];
@@ -33074,7 +33077,6 @@ mixin LocalizationsProvider on LocaleCodeAware {
   String get license => _localizedValues[localeCode]['license'];
 
   String get optional => _localizedValues[localeCode]['optional'];
-
 
   String lookup(String key) {
     final lookupKey = toSnakeCase(key);

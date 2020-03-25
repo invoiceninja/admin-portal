@@ -194,47 +194,47 @@ final BuiltSet<EntityState> _$values =
   _$deleted,
 ]);
 
-const EmailTemplate _$invoiceEmail = const EmailTemplate._('invoiceEmail');
-const EmailTemplate _$quoteEmail = const EmailTemplate._('quoteEmail');
-const EmailTemplate _$paymentEmail = const EmailTemplate._('paymentEmail');
-const EmailTemplate _$partialPaymentEmail =
-    const EmailTemplate._('partialPaymentEmail');
-const EmailTemplate _$creditEmail = const EmailTemplate._('creditEmail');
-const EmailTemplate _$firstReminder = const EmailTemplate._('firstReminder');
-const EmailTemplate _$secondReminder = const EmailTemplate._('secondReminder');
-const EmailTemplate _$thirdReminder = const EmailTemplate._('thirdReminder');
-const EmailTemplate _$endlessReminder =
-    const EmailTemplate._('endlessReminder');
-const EmailTemplate _$firstCustom = const EmailTemplate._('firstCustom');
-const EmailTemplate _$secondCustom = const EmailTemplate._('secondCustom');
-const EmailTemplate _$thirdCustom = const EmailTemplate._('thirdCustom');
+const EmailTemplate _$invoice_email = const EmailTemplate._('invoice');
+const EmailTemplate _$quote_email = const EmailTemplate._('quote');
+const EmailTemplate _$payment_email = const EmailTemplate._('payment');
+const EmailTemplate _$partial_payment_email =
+    const EmailTemplate._('partial_payment');
+const EmailTemplate _$credit_email = const EmailTemplate._('credit');
+const EmailTemplate _$reminder1_email = const EmailTemplate._('reminder1');
+const EmailTemplate _$reminder2_email = const EmailTemplate._('reminder2');
+const EmailTemplate _$reminder3_email = const EmailTemplate._('reminder3');
+const EmailTemplate _$reminder_endless_email =
+    const EmailTemplate._('reminder_endless');
+const EmailTemplate _$custom1_email = const EmailTemplate._('custom1');
+const EmailTemplate _$custom2_email = const EmailTemplate._('custom2');
+const EmailTemplate _$custom3_email = const EmailTemplate._('custom3');
 
 EmailTemplate _$templateValueOf(String name) {
   switch (name) {
-    case 'invoiceEmail':
-      return _$invoiceEmail;
-    case 'quoteEmail':
-      return _$quoteEmail;
-    case 'paymentEmail':
-      return _$paymentEmail;
-    case 'partialPaymentEmail':
-      return _$partialPaymentEmail;
-    case 'creditEmail':
-      return _$creditEmail;
-    case 'firstReminder':
-      return _$firstReminder;
-    case 'secondReminder':
-      return _$secondReminder;
-    case 'thirdReminder':
-      return _$thirdReminder;
-    case 'endlessReminder':
-      return _$endlessReminder;
-    case 'firstCustom':
-      return _$firstCustom;
-    case 'secondCustom':
-      return _$secondCustom;
-    case 'thirdCustom':
-      return _$thirdCustom;
+    case 'invoice':
+      return _$invoice_email;
+    case 'quote':
+      return _$quote_email;
+    case 'payment':
+      return _$payment_email;
+    case 'partial_payment':
+      return _$partial_payment_email;
+    case 'credit':
+      return _$credit_email;
+    case 'reminder1':
+      return _$reminder1_email;
+    case 'reminder2':
+      return _$reminder2_email;
+    case 'reminder3':
+      return _$reminder3_email;
+    case 'reminder_endless':
+      return _$reminder_endless_email;
+    case 'custom1':
+      return _$custom1_email;
+    case 'custom2':
+      return _$custom2_email;
+    case 'custom3':
+      return _$custom3_email;
     default:
       throw new ArgumentError(name);
   }
@@ -242,18 +242,18 @@ EmailTemplate _$templateValueOf(String name) {
 
 final BuiltSet<EmailTemplate> _$templateValues =
     new BuiltSet<EmailTemplate>(const <EmailTemplate>[
-  _$invoiceEmail,
-  _$quoteEmail,
-  _$paymentEmail,
-  _$partialPaymentEmail,
-  _$creditEmail,
-  _$firstReminder,
-  _$secondReminder,
-  _$thirdReminder,
-  _$endlessReminder,
-  _$firstCustom,
-  _$secondCustom,
-  _$thirdCustom,
+  _$invoice_email,
+  _$quote_email,
+  _$payment_email,
+  _$partial_payment_email,
+  _$credit_email,
+  _$reminder1_email,
+  _$reminder2_email,
+  _$reminder3_email,
+  _$reminder_endless_email,
+  _$custom1_email,
+  _$custom2_email,
+  _$custom3_email,
 ]);
 
 const UserPermission _$create = const UserPermission._('create');

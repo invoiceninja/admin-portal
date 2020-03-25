@@ -271,16 +271,16 @@ abstract class ClientEntity extends Object
   }
 
   EmailTemplate getNextEmailTemplate(String invoiceId) {
-    EmailTemplate template = EmailTemplate.invoiceEmail;
+    EmailTemplate template = EmailTemplate.invoice;
     getActivities(invoiceId: invoiceId, typeId: kActivityEmailInvoice)
         .forEach((activity) {
-      if (template == EmailTemplate.invoiceEmail) {
-        template = EmailTemplate.firstReminder;
+      if (template == EmailTemplate.invoice) {
+        template = EmailTemplate.reminder1;
       }
       if (activity.notes == 'reminder1') {
-        template = EmailTemplate.secondReminder;
+        template = EmailTemplate.reminder2;
       } else if (activity.notes == 'reminder2') {
-        template = EmailTemplate.thirdReminder;
+        template = EmailTemplate.reminder3;
       }
     });
     return template;

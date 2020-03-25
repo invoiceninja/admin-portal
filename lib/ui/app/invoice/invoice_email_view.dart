@@ -29,8 +29,11 @@ class _InvoiceEmailViewState extends State<InvoiceEmailView>
   EmailTemplate selectedTemplate;
   String _emailSubject;
   String _emailBody;
+
+  EmailTemplate _lastTemplate;
   String _lastSubject;
   String _lastBody;
+
   String _bodyPreview = '';
   String _subjectPreview = '';
   bool _isLoading = false;
@@ -51,27 +54,23 @@ class _InvoiceEmailViewState extends State<InvoiceEmailView>
   void initState() {
     super.initState();
     _controller = TabController(vsync: this, length: 2);
-    _controller.addListener(_handleTabSelection);
-  }
-
-  @override
-  void didChangeDependencies() {
+    _controller.addListener(_loadTemplate);
     _controllers = [
       _subjectController,
       _bodyController,
     ];
+  }
 
-    final invoice = widget.viewModel.invoice;
-    final client = widget.viewModel.client;
-
-    _loadTemplate(client.getNextEmailTemplate(invoice.id));
+  @override
+  void didChangeDependencies() {
+    _loadTemplate();
 
     super.didChangeDependencies();
   }
 
   @override
   void dispose() {
-    _controller.removeListener(_handleTabSelection);
+    _controller.removeListener(_loadTemplate);
     _controller.dispose();
     _controllers.forEach((dynamic controller) {
       controller.removeListener(_onChanged);
@@ -90,28 +89,7 @@ class _InvoiceEmailViewState extends State<InvoiceEmailView>
     });
   }
 
-  void _loadTemplate(EmailTemplate template) {
-    final viewModel = widget.viewModel;
-    final company = viewModel.company;
-
-    selectedTemplate = template;
-
-    _emailSubject = company.settings.getEmailSubject(template) ?? '';
-    _emailBody = company.settings.getEmailBody(template) ?? '';
-
-    _controllers
-        .forEach((dynamic controller) => controller.removeListener(_onChanged));
-
-    _subjectController.text = _emailSubject;
-    _bodyController.text = (_emailBody ?? '').replaceAll('</div>', '</div>\n');
-
-    _controllers
-        .forEach((dynamic controller) => controller.addListener(_onChanged));
-
-    _handleTabSelection();
-  }
-
-  void _handleTabSelection() {
+  void _loadTemplate() {
     if (_isLoading || _controller.index != kTabPreview) {
       return;
     }
@@ -120,19 +98,22 @@ class _InvoiceEmailViewState extends State<InvoiceEmailView>
     final subject = _subjectController.text.trim();
     final body = _bodyController.text.trim();
 
-    if (subject == _lastSubject && body == _lastBody) {
+    if (subject == _lastSubject &&
+        body == _lastBody &&
+        selectedTemplate == _lastTemplate) {
       print('## Skipping');
       return;
     } else {
       _lastSubject = subject;
       _lastBody = body;
+      _lastTemplate = selectedTemplate;
     }
 
     loadTemplate(
         context: context,
         subject: subject,
         body: body,
-        template: 'email_template_invoice',
+        template: 'email_template_$selectedTemplate',
         invoice: widget.viewModel.invoice,
         onStart: (subject, body) {
           setState(() {
@@ -170,8 +151,14 @@ class _InvoiceEmailViewState extends State<InvoiceEmailView>
                 DropdownButtonHideUnderline(
                   child: DropdownButton<EmailTemplate>(
                     value: selectedTemplate,
-                    onChanged: (template) =>
-                        setState(() => _loadTemplate(template)),
+                    onChanged: (template) {
+                      setState(() {
+                        _subjectController.text = _emailSubject = '';
+                        _bodyController.text = _emailBody = '';
+                        selectedTemplate = template;
+                        _loadTemplate();
+                      });
+                    },
                     items: [
                       DropdownMenuItem<EmailTemplate>(
                         child: Text(localization.initialEmail),
@@ -179,27 +166,27 @@ class _InvoiceEmailViewState extends State<InvoiceEmailView>
                       ),
                       DropdownMenuItem<EmailTemplate>(
                         child: Text(localization.firstReminder),
-                        value: EmailTemplate.firstReminder,
+                        value: EmailTemplate.reminder1,
                       ),
                       DropdownMenuItem<EmailTemplate>(
                         child: Text(localization.secondReminder),
-                        value: EmailTemplate.secondReminder,
+                        value: EmailTemplate.reminder2,
                       ),
                       DropdownMenuItem<EmailTemplate>(
                         child: Text(localization.thirdReminder),
-                        value: EmailTemplate.thirdReminder,
+                        value: EmailTemplate.reminder3,
                       ),
                       DropdownMenuItem<EmailTemplate>(
                         child: Text(localization.firstCustom),
-                        value: EmailTemplate.firstCustom,
+                        value: EmailTemplate.custom1,
                       ),
                       DropdownMenuItem<EmailTemplate>(
                         child: Text(localization.secondCustom),
-                        value: EmailTemplate.secondCustom,
+                        value: EmailTemplate.custom2,
                       ),
                       DropdownMenuItem<EmailTemplate>(
                         child: Text(localization.thirdCustom),
-                        value: EmailTemplate.thirdCustom,
+                        value: EmailTemplate.custom3,
                       ),
                     ],
                   ),

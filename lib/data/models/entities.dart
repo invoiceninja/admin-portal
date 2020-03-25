@@ -83,18 +83,18 @@ class EmailTemplate extends EnumClass {
 
   static Serializer<EmailTemplate> get serializer => _$emailTemplateSerializer;
 
-  static const EmailTemplate invoiceEmail = _$invoiceEmail;
-  static const EmailTemplate quoteEmail = _$quoteEmail;
-  static const EmailTemplate paymentEmail = _$paymentEmail;
-  static const EmailTemplate partialPaymentEmail = _$partialPaymentEmail;
-  static const EmailTemplate creditEmail = _$creditEmail;
-  static const EmailTemplate firstReminder = _$firstReminder;
-  static const EmailTemplate secondReminder = _$secondReminder;
-  static const EmailTemplate thirdReminder = _$thirdReminder;
-  static const EmailTemplate endlessReminder = _$endlessReminder;
-  static const EmailTemplate firstCustom = _$firstCustom;
-  static const EmailTemplate secondCustom = _$secondCustom;
-  static const EmailTemplate thirdCustom = _$thirdCustom;
+  static const EmailTemplate invoice = _$invoice_email;
+  static const EmailTemplate quote = _$quote_email;
+  static const EmailTemplate payment = _$payment_email;
+  static const EmailTemplate partial_payment = _$partial_payment_email;
+  static const EmailTemplate credit = _$credit_email;
+  static const EmailTemplate reminder1 = _$reminder1_email;
+  static const EmailTemplate reminder2 = _$reminder2_email;
+  static const EmailTemplate reminder3 = _$reminder3_email;
+  static const EmailTemplate reminder_endless = _$reminder_endless_email;
+  static const EmailTemplate custom1 = _$custom1_email;
+  static const EmailTemplate custom2 = _$custom2_email;
+  static const EmailTemplate custom3 = _$custom3_email;
 
   static BuiltSet<EmailTemplate> get values => _$templateValues;
 
