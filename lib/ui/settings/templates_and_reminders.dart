@@ -246,6 +246,7 @@ class _TemplatesAndRemindersState extends State<TemplatesAndReminders>
                   maxLines: 8,
                 ),
               ]),
+              /*
               if (_template == EmailTemplate.reminder1)
                 ReminderSettings(
                   key: ValueKey('__reminder1_${_template}__'),
@@ -327,7 +328,8 @@ class _TemplatesAndRemindersState extends State<TemplatesAndReminders>
                             .values
                             .toList()),
                   ],
-                ),
+                ),                
+               */
             ],
           ),
           EmailPreview(

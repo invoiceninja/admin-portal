@@ -307,6 +307,8 @@ abstract class CompanyEntity extends Object
       EntityType.task,
       EntityType.expense,
       EntityType.vendor,
+      EntityType.quote,
+      EntityType.credit,
     ].contains(entityType)) {
       return false;
     }
@@ -926,9 +928,6 @@ abstract class SettingsEntity
       enablePortalPassword: clientSettings?.enablePortalPassword ??
           groupSettings?.enablePortalPassword ??
           companySettings?.enablePortalPassword,
-      sendPortalPassword: clientSettings?.sendPortalPassword ??
-          groupSettings?.sendPortalPassword ??
-          companySettings?.sendPortalPassword,
       signatureOnPdf: clientSettings?.signatureOnPdf ??
           groupSettings?.signatureOnPdf ??
           companySettings?.signatureOnPdf,
@@ -1490,10 +1489,6 @@ abstract class SettingsEntity
   @nullable
   @BuiltValueField(wireName: 'enable_portal_password')
   bool get enablePortalPassword;
-
-  @nullable
-  @BuiltValueField(wireName: 'send_portal_password')
-  bool get sendPortalPassword;
 
   @nullable
   @BuiltValueField(wireName: 'signature_on_pdf')

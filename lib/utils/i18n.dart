@@ -425,9 +425,6 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'enable_portal_password': 'Password Protect Invoices',
       'enable_portal_password_help':
           'Allows you to set a password for each contact. If a password is set, the contact will be required to enter a password before viewing invoices.',
-      'send_portal_password': 'Generate Automatically',
-      'send_portal_password_help':
-          'If no password is set, one will be generated and sent with the first invoice.',
       'authorization': 'Authorization',
       'subdomain': 'Subdomain',
       'domain': 'Domain',
@@ -32032,12 +32029,6 @@ mixin LocalizationsProvider on LocaleCodeAware {
 
   String get enablePortalPasswordHelp =>
       _localizedValues[localeCode]['enable_portal_password_help'];
-
-  String get sendPortalPassword =>
-      _localizedValues[localeCode]['send_portal_password'];
-
-  String get sendPortalPasswordHelp =>
-      _localizedValues[localeCode]['send_portal_password_help'];
 
   String get showAcceptInvoiceTerms =>
       _localizedValues[localeCode]['show_accept_invoice_terms'];
