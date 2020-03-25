@@ -30,8 +30,7 @@ void loadTemplate({
   subject ??= '';
   body ??= '';
 
-  final htmlBody = 'data:text/html;charset=utf-8,$body';
-  onStart(subject, htmlBody);
+  onStart(subject, body);
 
   webClient
       .post(url, credentials.token,
@@ -43,11 +42,9 @@ void loadTemplate({
             'body': body,
           }))
       .then((dynamic response) {
-    subject = response['subject'] ?? '';
-    body = 'data:text/html;charset=utf-8,${response['body']}';
-    onComplete(subject, body);
+    onComplete(response['subject'], response['body']);
   }).catchError((dynamic error) {
     showErrorDialog(context: context, message: '$error');
-    onComplete(subject, htmlBody);
+    onComplete(subject, body);
   });
 }

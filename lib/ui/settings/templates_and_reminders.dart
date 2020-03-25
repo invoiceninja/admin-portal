@@ -585,7 +585,7 @@ class EmailPreview extends StatelessWidget {
                 ),
               ),
               Expanded(
-                child: TemplatePreview(body),
+                child: TemplatePreview('data:text/html;charset=utf-8,$body'),
               ),
             ],
           )

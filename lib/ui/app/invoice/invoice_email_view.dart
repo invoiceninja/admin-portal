@@ -1,13 +1,10 @@
-import 'package:invoiceninja_flutter/constants.dart';
 import 'package:invoiceninja_flutter/data/models/entities.dart';
 import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:invoiceninja_flutter/ui/app/form_card.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/decorated_form_field.dart';
-import 'package:invoiceninja_flutter/ui/app/help_text.dart';
 import 'package:invoiceninja_flutter/ui/invoice/invoice_email_vm.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:invoiceninja_flutter/ui/app/lists/activity_list_tile.dart';
 import 'package:invoiceninja_flutter/ui/app/loading_indicator.dart';
 import 'package:invoiceninja_flutter/ui/app/edit_scaffold.dart';
 import 'package:invoiceninja_flutter/ui/settings/templates_and_reminders.dart';
@@ -46,6 +43,7 @@ class _InvoiceEmailViewState extends State<InvoiceEmailView>
   List<TextEditingController> _controllers = [];
 
   static const kTabPreview = 0;
+
   //static const kTabEdit = 1;
   //static const kTabHistory = 2;
 
@@ -146,6 +144,11 @@ class _InvoiceEmailViewState extends State<InvoiceEmailView>
             _isLoading = false;
             _subjectPreview = subject;
             _bodyPreview = body;
+
+            if (_lastSubject.isEmpty && _lastBody.isEmpty) {
+              _subjectController.text = subject;
+              _bodyController.text = body;
+            }
           });
         });
   }
