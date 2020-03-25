@@ -52,7 +52,7 @@ class _InvoiceEmailViewState extends State<InvoiceEmailView>
   @override
   void initState() {
     super.initState();
-    _controller = TabController(vsync: this, length: 3);
+    _controller = TabController(vsync: this, length: 2);
     _controller.addListener(_handleTabSelection);
   }
 
@@ -238,6 +238,7 @@ class _InvoiceEmailViewState extends State<InvoiceEmailView>
     );
   }
 
+  /*
   Widget _buildHistory(BuildContext context) {
     final localization = AppLocalization.of(context);
     final invoice = widget.viewModel.invoice;
@@ -257,6 +258,7 @@ class _InvoiceEmailViewState extends State<InvoiceEmailView>
       },
     );
   }
+   */
 
   @override
   Widget build(BuildContext context) {
@@ -265,7 +267,7 @@ class _InvoiceEmailViewState extends State<InvoiceEmailView>
     final invoice = viewModel.invoice;
 
     return DefaultTabController(
-      length: 3,
+      length: 2,
       child: EditScaffold(
         entity: invoice,
         title: localization.sendEmail,
@@ -276,7 +278,7 @@ class _InvoiceEmailViewState extends State<InvoiceEmailView>
           tabs: [
             Tab(text: localization.preview),
             Tab(text: localization.customize),
-            Tab(text: localization.history),
+            //Tab(text: localization.history),
           ],
         ),
         saveLabel: localization.send,
@@ -292,7 +294,7 @@ class _InvoiceEmailViewState extends State<InvoiceEmailView>
                 children: [
                   _buildPreview(context),
                   _buildEdit(context),
-                  _buildHistory(context),
+                  //_buildHistory(context),
                 ],
               ),
       ),
