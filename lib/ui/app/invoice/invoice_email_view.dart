@@ -94,7 +94,7 @@ class _InvoiceEmailViewState extends State<InvoiceEmailView>
       _isLoading = true;
     });
 
-    loadTemplate(
+    loadEmailTemplate(
         context: context,
         subject: origSubject,
         body: origBody,

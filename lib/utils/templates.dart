@@ -7,7 +7,7 @@ import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/utils/formatting.dart';
 import 'dialogs.dart';
 
-void loadTemplate({
+void loadEmailTemplate({
   @required BuildContext context,
   @required Function(String, String, String) onComplete,
   String template,

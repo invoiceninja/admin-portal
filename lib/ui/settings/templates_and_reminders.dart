@@ -177,7 +177,7 @@ class _TemplatesAndRemindersState extends State<TemplatesAndReminders>
       _isLoading = true;
     });
 
-    loadTemplate(
+    loadEmailTemplate(
         context: context,
         body: body,
         subject: subject,
