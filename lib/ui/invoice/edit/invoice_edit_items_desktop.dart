@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_typeahead/flutter_typeahead.dart';
 import 'package:invoiceninja_flutter/constants.dart';
@@ -154,11 +155,14 @@ class _InvoiceEditItemsDesktopState extends State<InvoiceEditItemsDesktop> {
                           child: Container(
                             color: Theme.of(context).cardColor,
                             child: ListTile(
-                              title: Text(
-                                  productState.map[suggestion].productKey),
+                              title:
+                                  Text(productState.map[suggestion].productKey),
                             ),
                           ),
                           onPointerDown: (_) {
+                            if (!kIsWeb) {
+                              return;
+                            }
                             final item = lineItems[index];
                             final product = productState.map[suggestion];
                             final updatedItem = item.rebuild((b) => b

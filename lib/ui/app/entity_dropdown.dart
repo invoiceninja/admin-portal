@@ -149,6 +149,9 @@ class _EntityDropdownState extends State<EntityDropdown> {
                   ),
                 ),
                 onPointerDown: (_) {
+                  if (!kIsWeb) {
+                    return;
+                  }
                   final entity = _entityMap[entityId];
                   _textController.text = _entityMap[entityId].listDisplayName;
                   widget.onSelected(entity);
