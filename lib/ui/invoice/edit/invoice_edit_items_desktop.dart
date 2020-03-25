@@ -153,12 +153,9 @@ class _InvoiceEditItemsDesktopState extends State<InvoiceEditItemsDesktop> {
                         return Listener(
                           child: Container(
                             color: Theme.of(context).cardColor,
-                            child: Padding(
-                              padding: const EdgeInsets.all(12),
-                              child: ListTile(
-                                title: Text(
-                                    productState.map[suggestion].productKey),
-                              ),
+                            child: ListTile(
+                              title: Text(
+                                  productState.map[suggestion].productKey),
                             ),
                           ),
                           onPointerDown: (_) {
