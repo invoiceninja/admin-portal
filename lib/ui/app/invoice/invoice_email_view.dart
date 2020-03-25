@@ -8,7 +8,6 @@ import 'package:flutter/material.dart';
 import 'package:invoiceninja_flutter/ui/app/loading_indicator.dart';
 import 'package:invoiceninja_flutter/ui/app/edit_scaffold.dart';
 import 'package:invoiceninja_flutter/ui/settings/templates_and_reminders.dart';
-import 'package:invoiceninja_flutter/utils/completers.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:invoiceninja_flutter/utils/templates.dart';
 
@@ -27,18 +26,10 @@ class InvoiceEmailView extends StatefulWidget {
 class _InvoiceEmailViewState extends State<InvoiceEmailView>
     with SingleTickerProviderStateMixin {
   EmailTemplate selectedTemplate;
-  String _emailSubject;
-  String _emailBody;
-
-  EmailTemplate _lastTemplate;
-  String _lastSubject;
-  String _lastBody;
-
   String _bodyPreview = '';
   String _subjectPreview = '';
   bool _isLoading = false;
 
-  final _debouncer = Debouncer();
   final _subjectController = TextEditingController();
   final _bodyController = TextEditingController();
 
@@ -85,20 +76,10 @@ class _InvoiceEmailViewState extends State<InvoiceEmailView>
     _controller.removeListener(_loadTemplate);
     _controller.dispose();
     _controllers.forEach((dynamic controller) {
-      controller.removeListener(_onChanged);
       controller.dispose();
     });
 
     super.dispose();
-  }
-
-  void _onChanged() {
-    _debouncer.run(() {
-      setState(() {
-        _emailSubject = _subjectController.text;
-        _emailBody = _bodyController.text;
-      });
-    });
   }
 
   void _loadTemplate() {
@@ -106,24 +87,13 @@ class _InvoiceEmailViewState extends State<InvoiceEmailView>
       return;
     }
 
-    print('## LOAD TEMPLATE...');
-    final subject = _subjectController.text.trim();
-    final body = _bodyController.text.trim();
-
-    if (subject == _lastSubject &&
-        body == _lastBody &&
-        selectedTemplate == _lastTemplate) {
-      return;
-    } else {
-      _lastSubject = subject;
-      _lastBody = body;
-      _lastTemplate = selectedTemplate;
-    }
+    final origSubject = _subjectController.text.trim();
+    final origBody = _bodyController.text.trim();
 
     loadTemplate(
         context: context,
-        subject: subject,
-        body: body,
+        subject: origSubject,
+        body: origBody,
         template: 'email_template_$selectedTemplate',
         invoice: widget.viewModel.invoice,
         onStart: (subject, body) {
@@ -139,7 +109,7 @@ class _InvoiceEmailViewState extends State<InvoiceEmailView>
             _subjectPreview = subject;
             _bodyPreview = body;
 
-            if (_lastSubject.isEmpty && _lastBody.isEmpty) {
+            if (origSubject.isEmpty && origBody.isEmpty) {
               _subjectController.text = subject;
               _bodyController.text = body;
             }
@@ -164,8 +134,8 @@ class _InvoiceEmailViewState extends State<InvoiceEmailView>
                     value: selectedTemplate,
                     onChanged: (template) {
                       setState(() {
-                        _subjectController.text = _emailSubject = '';
-                        _bodyController.text = _emailBody = '';
+                        _subjectController.text = '';
+                        _bodyController.text = '';
                         selectedTemplate = template;
                         _loadTemplate();
                       });

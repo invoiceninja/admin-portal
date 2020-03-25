@@ -37,7 +37,9 @@ void loadTemplate({
           data: json.encode({
             'entity': '${invoice?.entityType ?? ''}',
             'entity_id': '${invoice?.id ?? ''}',
-            'template': template ?? '',
+            'template': (subject.isEmpty && body.isEmpty && template != null)
+                ? template
+                : '',
             'subject': subject,
             'body': body,
           }))
