@@ -566,15 +566,13 @@ class EmailPreview extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
               Padding(
-                padding: const EdgeInsets.only(
-                    left: 8, top: 12, bottom: 8, right: 8),
+                padding: const EdgeInsets.all(14),
                 child: Text(
                   subject,
-                  style: TextStyle(
-                    color: Colors.black,
-                    fontWeight: FontWeight.bold,
-                    fontSize: 20,
-                  ),
+                  style: Theme.of(context).textTheme.headline6.copyWith(
+                        color: Colors.black,
+                        fontWeight: FontWeight.w700,
+                      ),
                 ),
               ),
               Expanded(
