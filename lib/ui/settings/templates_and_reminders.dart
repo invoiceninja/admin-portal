@@ -492,7 +492,7 @@ class _ReminderSettingsState extends State<ReminderSettings> {
 }
 
 class TemplatePreview extends StatefulWidget {
-  const TemplatePreview(this.html, {Key key}) : super(key: key);
+  const TemplatePreview({Key key, this.html}) : super(key: key);
 
   final String html;
 
@@ -512,7 +512,9 @@ class _TemplatePreviewState extends State<TemplatePreview>
     super.didUpdateWidget(oldWidget);
 
     if (!kIsWeb && widget.html != oldWidget.html) {
-      _webViewController.loadUrl(widget.html);
+      _webViewController.loadUrl(
+          Uri.dataFromString(widget.html, mimeType: 'text/html').toString());
+      debugPrint('## LOAD: ${widget.html}');
     }
   }
 
@@ -526,7 +528,8 @@ class _TemplatePreviewState extends State<TemplatePreview>
     } else {
       return WebView(
         //debuggingEnabled: true,
-        initialUrl: widget.html,
+        initialUrl:
+            Uri.dataFromString(widget.html, mimeType: 'text/html').toString(),
         onWebViewCreated: (WebViewController webViewController) {
           _webViewController = webViewController;
         },
@@ -576,7 +579,7 @@ class EmailPreview extends StatelessWidget {
               ),
               Expanded(
                 child: TemplatePreview(
-                  'data:text/html;charset=utf-8,$body',
+                  html: body,
                 ),
               ),
             ],
