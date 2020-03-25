@@ -38,12 +38,14 @@ class _CompanyGatewayEditState extends State<CompanyGatewayEdit>
 
   final FocusScopeNode _focusNode = FocusScopeNode();
   TabController _controller;
+
+  // ignore: unused_field
   String _gatewayTypeId = kGatewayTypeCreditCard;
 
   @override
   void initState() {
     super.initState();
-    _controller = TabController(vsync: this, length: 3);
+    _controller = TabController(vsync: this, length: 2);
   }
 
   @override
@@ -83,9 +85,11 @@ class _CompanyGatewayEditState extends State<CompanyGatewayEdit>
           Tab(
             text: localization.settings,
           ),
+          /*
           Tab(
             text: localization.limitsAndFees,
           ),
+          */
         ],
       ),
       body: AppTabForm(
@@ -195,6 +199,7 @@ class _CompanyGatewayEditState extends State<CompanyGatewayEdit>
               )
             ],
           ),
+          /*
           ListView(
             children: <Widget>[
               if (companyGateway.gatewayId == kGatewayStripe)
@@ -235,6 +240,7 @@ class _CompanyGatewayEditState extends State<CompanyGatewayEdit>
               ),
             ],
           ),
+           */
         ],
       ),
     );

@@ -195,7 +195,7 @@ class _TemplatesAndRemindersState extends State<TemplatesAndReminders>
     final localization = AppLocalization.of(context);
     final viewModel = widget.viewModel;
     final state = viewModel.state;
-    final settings = viewModel.settings;
+    //final settings = viewModel.settings;
 
     return EditScaffold(
       title: localization.templatesAndReminders,
