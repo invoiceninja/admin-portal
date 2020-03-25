@@ -260,7 +260,6 @@ class _InvoiceEmailViewState extends State<InvoiceEmailView>
             ? LoadingIndicator()
             : TabBarView(
                 controller: _controller,
-                key: ValueKey('__invoice_${widget.viewModel.invoice.id}__'),
                 children: [
                   _buildPreview(context),
                   _buildEdit(context),

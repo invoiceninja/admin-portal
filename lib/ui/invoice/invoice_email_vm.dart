@@ -34,6 +34,7 @@ class InvoiceEmailScreen extends StatelessWidget {
       },
       builder: (context, vm) {
         return InvoiceEmailView(
+          key: ValueKey('__invoice_${vm.invoice.id}__'),
           viewModel: vm,
         );
       },
