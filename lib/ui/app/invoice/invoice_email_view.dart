@@ -116,10 +116,12 @@ class _InvoiceEmailViewState extends State<InvoiceEmailView>
       return;
     }
 
+    print('## LOAD TEMPLATE...');
     final subject = _subjectController.text.trim();
     final body = _bodyController.text.trim();
 
     if (subject == _lastSubject && body == _lastBody) {
+      print('## Skipping');
       return;
     } else {
       _lastSubject = subject;
