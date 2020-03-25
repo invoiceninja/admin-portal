@@ -173,6 +173,10 @@ class _TemplatesAndRemindersState extends State<TemplatesAndReminders>
       _lastBody = body;
     }
 
+    setState(() {
+      _isLoading = true;
+    });
+
     loadTemplate(
         context: context,
         body: body,
@@ -488,7 +492,7 @@ class _ReminderSettingsState extends State<ReminderSettings> {
 }
 
 class TemplatePreview extends StatefulWidget {
-  const TemplatePreview(this.html);
+  const TemplatePreview(this.html, {Key key}) : super(key: key);
 
   final String html;
 
@@ -504,18 +508,11 @@ class _TemplatePreviewState extends State<TemplatePreview>
   bool get wantKeepAlive => true;
 
   @override
-  void initState() {
-    super.initState();
-  }
-
-  @override
   void didUpdateWidget(oldWidget) {
     super.didUpdateWidget(oldWidget);
 
-    if (!kIsWeb) {
-      if (widget.html != oldWidget.html) {
-        _webViewController.loadUrl(widget.html);
-      }
+    if (!kIsWeb && widget.html != oldWidget.html) {
+      _webViewController.loadUrl(widget.html);
     }
   }
 
@@ -528,7 +525,7 @@ class _TemplatePreviewState extends State<TemplatePreview>
       return HtmlElementView(viewType: widget.html);
     } else {
       return WebView(
-        debuggingEnabled: true,
+        //debuggingEnabled: true,
         initialUrl: widget.html,
         onWebViewCreated: (WebViewController webViewController) {
           _webViewController = webViewController;
@@ -578,7 +575,9 @@ class EmailPreview extends StatelessWidget {
                 ),
               ),
               Expanded(
-                child: TemplatePreview('data:text/html;charset=utf-8,$body'),
+                child: TemplatePreview(
+                  'data:text/html;charset=utf-8,$body',
+                ),
               ),
             ],
           )

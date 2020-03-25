@@ -90,6 +90,10 @@ class _InvoiceEmailViewState extends State<InvoiceEmailView>
     final origSubject = _subjectController.text.trim();
     final origBody = _bodyController.text.trim();
 
+    setState(() {
+      _isLoading = true;
+    });
+
     loadTemplate(
         context: context,
         subject: origSubject,
