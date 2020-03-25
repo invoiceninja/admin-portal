@@ -59,6 +59,18 @@ class _InvoiceEmailViewState extends State<InvoiceEmailView>
       _subjectController,
       _bodyController,
     ];
+
+    switch (widget.viewModel.invoice.entityType) {
+      case EntityType.invoice:
+        selectedTemplate = EmailTemplate.invoice;
+        break;
+      case EntityType.quote:
+        selectedTemplate = EmailTemplate.quote;
+        break;
+      case EntityType.credit:
+        selectedTemplate = EmailTemplate.credit;
+        break;
+    }
   }
 
   @override
@@ -101,7 +113,6 @@ class _InvoiceEmailViewState extends State<InvoiceEmailView>
     if (subject == _lastSubject &&
         body == _lastBody &&
         selectedTemplate == _lastTemplate) {
-      print('## Skipping');
       return;
     } else {
       _lastSubject = subject;
