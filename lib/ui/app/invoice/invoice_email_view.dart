@@ -96,18 +96,18 @@ class _InvoiceEmailViewState extends State<InvoiceEmailView>
         body: origBody,
         template: 'email_template_$selectedTemplate',
         invoice: widget.viewModel.invoice,
-        onStart: (subject, body) {
+        onStart: (subject, body, wrapper) {
           setState(() {
             _isLoading = true;
             _subjectPreview = subject;
             _bodyPreview = body;
           });
         },
-        onComplete: (subject, body) {
+        onComplete: (subject, body, wrapper) {
           setState(() {
             _isLoading = false;
             _subjectPreview = subject;
-            _bodyPreview = body;
+            _bodyPreview = wrapper;
 
             if (origSubject.isEmpty && origBody.isEmpty) {
               _subjectController.text = subject;

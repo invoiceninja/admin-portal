@@ -9,12 +9,12 @@ import 'dialogs.dart';
 
 void loadTemplate({
   @required BuildContext context,
-  @required Function(String, String) onStart,
-  @required Function(String, String) onComplete,
+  @required Function(String, String, String) onStart,
+  @required Function(String, String, String) onComplete,
+  String template,
   String subject,
   String body,
   InvoiceEntity invoice,
-  String template,
 }) {
   final webClient = WebClient();
   final state = StoreProvider.of<AppState>(context).state;
@@ -30,7 +30,7 @@ void loadTemplate({
   subject ??= '';
   body ??= '';
 
-  onStart(subject, body);
+  onStart(subject, body, '');
 
   webClient
       .post(url, credentials.token,
@@ -44,9 +44,9 @@ void loadTemplate({
             'body': body,
           }))
       .then((dynamic response) {
-    onComplete(response['subject'], response['body']);
+    onComplete(response['subject'], response['body'], response['wrapper']);
   }).catchError((dynamic error) {
     showErrorDialog(context: context, message: '$error');
-    onComplete(subject, body);
+    onComplete(subject, body, '');
   });
 }
