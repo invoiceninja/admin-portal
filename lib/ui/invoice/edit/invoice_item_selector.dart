@@ -162,17 +162,18 @@ class _InvoiceItemSelectorState extends State<InvoiceItemSelector>
                   }
                 },
               ),
-              if (isNotDesktop(context))
-                _selected.isNotEmpty
-                    ? IconButton(
-                        icon: Icon(Icons.check),
-                        onPressed: () => _onItemsSelected(context),
-                      )
-                    : IconButton(
-                        icon: Icon(Icons.add_circle_outline),
-                        tooltip: localization.createNew,
-                        onPressed: () => _addBlankItem(company),
-                      ),
+              _selected.isNotEmpty
+                  ? IconButton(
+                      icon: Icon(Icons.check),
+                      onPressed: () => _onItemsSelected(context),
+                    )
+                  : isNotDesktop(context)
+                      ? IconButton(
+                          icon: Icon(Icons.add_circle_outline),
+                          tooltip: localization.createNew,
+                          onPressed: () => _addBlankItem(company),
+                        )
+                      : SizedBox(),
             ],
           )
         ],
