@@ -177,13 +177,6 @@ class _TemplatesAndRemindersState extends State<TemplatesAndReminders>
         context: context,
         body: body,
         subject: subject,
-        onStart: (subject, body, wrapper) {
-          setState(() {
-            _isLoading = true;
-            _subjectPreview = subject;
-            _bodyPreview = body;
-          });
-        },
         onComplete: (subject, body, wrapper) {
           setState(() {
             _isLoading = false;

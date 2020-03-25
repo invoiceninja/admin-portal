@@ -9,7 +9,6 @@ import 'dialogs.dart';
 
 void loadTemplate({
   @required BuildContext context,
-  @required Function(String, String, String) onStart,
   @required Function(String, String, String) onComplete,
   String template,
   String subject,
@@ -29,8 +28,6 @@ void loadTemplate({
 
   subject ??= '';
   body ??= '';
-
-  onStart(subject, body, '');
 
   webClient
       .post(url, credentials.token,
