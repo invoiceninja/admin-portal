@@ -39,7 +39,7 @@ class CreditFields {
   static const String statusId = 'status_id';
   static const String creditNumber = 'credit_number';
   static const String discount = 'discount';
-  static const String poNumber = 'poNumber';
+  static const String poNumber = 'po_number';
   static const String date = 'credit_date';
   static const String terms = 'terms';
   static const String footer = 'footer';
