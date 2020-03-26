@@ -18,20 +18,28 @@ List<PaymentEntity> paymentsByInvoiceSelector(String invoiceId,
       .toList();
 }
 
-var memoizedDropdownPaymentList = memo2(
-    (BuiltMap<String, PaymentEntity> paymentMap,
-            BuiltList<String> paymentList) =>
-        dropdownPaymentsSelector(paymentMap, paymentList));
+var memoizedDropdownPaymentList = memo3(
+    (BuiltMap<String, PaymentEntity> paymentMap, BuiltList<String> paymentList,
+            BuiltMap<String, InvoiceEntity> invoiceMap) =>
+        dropdownPaymentsSelector(paymentMap, paymentList, invoiceMap));
 
 List<String> dropdownPaymentsSelector(
-    BuiltMap<String, PaymentEntity> paymentMap, BuiltList<String> paymentList) {
+    BuiltMap<String, PaymentEntity> paymentMap,
+    BuiltList<String> paymentList,
+    BuiltMap<String, InvoiceEntity> invoiceMap) {
   final list =
       paymentList.where((paymentId) => paymentMap[paymentId].isActive).toList();
 
   list.sort((paymentAId, paymentBId) {
     final paymentA = paymentMap[paymentAId];
     final paymentB = paymentMap[paymentBId];
-    return paymentA.compareTo(paymentB, PaymentFields.paymentDate, true);
+
+    return paymentA.compareTo(
+      payment: paymentB,
+      sortAscending: true,
+      sortField: PaymentFields.paymentDate,
+      invoiceMap: invoiceMap,
+    );
   });
 
   return list;
@@ -85,7 +93,11 @@ List<String> filteredPaymentsSelector(
     final paymentA = paymentMap[paymentAId];
     final paymentB = paymentMap[paymentBId];
     return paymentA.compareTo(
-        paymentB, paymentListState.sortField, paymentListState.sortAscending);
+      payment: paymentB,
+      sortAscending: paymentListState.sortAscending,
+      sortField: paymentListState.sortField,
+      invoiceMap: invoiceMap,
+    );
   });
 
   return list;

@@ -171,10 +171,19 @@ abstract class PaymentEntity extends Object
 
   BuiltList<PaymentableEntity> get credits;
 
-  int compareTo(PaymentEntity credit, String sortField, bool sortAscending) {
+  int compareTo(
+      {PaymentEntity payment,
+      String sortField,
+      bool sortAscending,
+      BuiltMap<String, InvoiceEntity> invoiceMap}) {
     int response = 0;
-    final PaymentEntity paymentA = sortAscending ? this : credit;
-    final PaymentEntity paymentB = sortAscending ? credit : this;
+    final PaymentEntity paymentA = sortAscending ? this : payment;
+    final PaymentEntity paymentB = sortAscending ? payment : this;
+
+    final InvoiceEntity invoiceA =
+        invoiceMap[paymentA.invoiceId] ?? InvoiceEntity();
+    final InvoiceEntity invoiceB =
+        invoiceMap[paymentB.invoiceId] ?? InvoiceEntity();
 
     switch (sortField) {
       case PaymentFields.amount:
@@ -213,6 +222,10 @@ abstract class PaymentEntity extends Object
             .toLowerCase()
             .compareTo(paymentB.customValue4.toLowerCase());
         break;
+      case PaymentFields.invoiceNumber:
+        response = invoiceA.number
+            .toLowerCase()
+            .compareTo(invoiceB.number.toLowerCase());
     }
 
     return response;
@@ -317,6 +330,12 @@ abstract class PaymentEntity extends Object
   @override
   double get listDisplayAmount => amount;
 
+  String get invoiceId {
+    final invoicePaymentables =
+        paymentables.firstWhere((p) => p.entityType == EntityType.invoice);
+    return invoicePaymentables.isEmpty ? null : invoicePaymentables.invoiceId;
+  }
+
   bool isBetween(String startDate, String endDate) {
     return startDate.compareTo(date) <= 0 && endDate.compareTo(date) >= 0;
   }
@@ -376,6 +395,9 @@ abstract class PaymentableEntity extends Object
   double get amount;
 
   bool get isEmpty => (invoiceId ?? '').isEmpty && amount == 0;
+
+  EntityType get entityType =>
+      (invoiceId ?? '').isEmpty ? EntityType.credit : EntityType.invoice;
 
   /*
   @override
