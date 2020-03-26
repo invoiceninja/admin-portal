@@ -15,7 +15,7 @@ class MessageDialog extends StatelessWidget {
     final localization = AppLocalization.of(context);
 
     return Padding(
-      padding: EdgeInsets.all(16.0),
+      padding: EdgeInsets.only(left: 16, top: 24, right: 16, bottom: 24),
       child: Column(
         children: <Widget>[
           Material(
@@ -50,7 +50,6 @@ class MessageDialog extends StatelessWidget {
                             onDismiss();
                           }
                         },
-                        textColor: Theme.of(context).accentColor,
                         child: Text(dismissLabel ?? localization.dismiss),
                       ),
                     ],
