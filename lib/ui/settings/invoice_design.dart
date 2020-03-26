@@ -5,11 +5,9 @@ import 'package:flutter_redux/flutter_redux.dart';
 import 'package:invoiceninja_flutter/constants.dart';
 import 'package:invoiceninja_flutter/data/models/client_model.dart';
 import 'package:invoiceninja_flutter/data/models/company_model.dart';
-import 'package:invoiceninja_flutter/data/models/credit_model.dart';
 import 'package:invoiceninja_flutter/data/models/design_model.dart';
 import 'package:invoiceninja_flutter/data/models/entities.dart';
 import 'package:invoiceninja_flutter/data/models/invoice_model.dart';
-import 'package:invoiceninja_flutter/data/models/quote_model.dart';
 import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/redux/settings/settings_actions.dart';
@@ -46,7 +44,7 @@ class _InvoiceDesignState extends State<InvoiceDesign>
   void initState() {
     super.initState();
     _focusNode = FocusScopeNode();
-    _controller = TabController(vsync: this, length: 8);
+    _controller = TabController(vsync: this, length: 6);
   }
 
   @override
@@ -447,6 +445,7 @@ class _InvoiceDesignState extends State<InvoiceDesign>
               prefix: 'invoice',
             ),
           ),
+          /*
           FormCard(
             child: MultiSelectList(
               options: [
@@ -516,6 +515,7 @@ class _InvoiceDesignState extends State<InvoiceDesign>
               prefix: 'credit',
             ),
           ),
+           */
           FormCard(
             child: MultiSelectList(
               options: [
