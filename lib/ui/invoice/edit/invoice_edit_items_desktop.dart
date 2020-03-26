@@ -140,11 +140,19 @@ class _InvoiceEditItemsDesktopState extends State<InvoiceEditItemsDesktop> {
                       noItemsFoundBuilder: (context) => SizedBox(),
                       suggestionsCallback: (pattern) {
                         return productIds
+                            .where((productId) => productState
+                                .map[productId].productKey
+                                .toLowerCase()
+                                .contains(pattern.toLowerCase()))
+                            .toList();
+                        /*
+                        return productIds
                             .where((productId) => productState.map[productId]
                                 .matchesFilter(pattern))
-                            .toList();
+                            .toList();                            
+                         */
                       },
-                      itemBuilder: (context, suggestion) {
+                      itemBuilder: (context, productId) {
                         // TODO fix this
                         /*
                         return ListTile(
@@ -156,7 +164,7 @@ class _InvoiceEditItemsDesktopState extends State<InvoiceEditItemsDesktop> {
                             color: Theme.of(context).cardColor,
                             child: ListTile(
                               title:
-                                  Text(productState.map[suggestion].productKey),
+                                  Text(productState.map[productId].productKey),
                             ),
                           ),
                           onPointerDown: (_) {
@@ -164,7 +172,7 @@ class _InvoiceEditItemsDesktopState extends State<InvoiceEditItemsDesktop> {
                               return;
                             }
                             final item = lineItems[index];
-                            final product = productState.map[suggestion];
+                            final product = productState.map[productId];
                             final updatedItem = item.rebuild((b) => b
                               ..productKey = product.productKey
                               ..notes = product.notes
@@ -172,7 +180,17 @@ class _InvoiceEditItemsDesktopState extends State<InvoiceEditItemsDesktop> {
                               ..quantity = item.quantity == 0 &&
                                       viewModel.state.company.defaultQuantity
                                   ? 1
-                                  : item.quantity);
+                                  : item.quantity
+                              ..customValue1 = product.customValue1
+                              ..customValue2 = product.customValue2
+                              ..customValue3 = product.customValue3
+                              ..customValue4 = product.customValue4
+                              ..taxRate1 = product.taxRate1
+                              ..taxName1 = product.taxName1
+                              ..taxRate2 = product.taxRate2
+                              ..taxName2 = product.taxName2
+                              ..taxRate3 = product.taxRate3
+                              ..taxName3 = product.taxName3);
                             viewModel.onChangedInvoiceItem(updatedItem, index);
                             _updateTable();
                           },
@@ -188,7 +206,17 @@ class _InvoiceEditItemsDesktopState extends State<InvoiceEditItemsDesktop> {
                           ..quantity = item.quantity == 0 &&
                                   viewModel.state.company.defaultQuantity
                               ? 1
-                              : item.quantity);
+                              : item.quantity
+                          ..customValue1 = product.customValue1
+                          ..customValue2 = product.customValue2
+                          ..customValue3 = product.customValue3
+                          ..customValue4 = product.customValue4
+                          ..taxRate1 = product.taxRate1
+                          ..taxName1 = product.taxName1
+                          ..taxRate2 = product.taxRate2
+                          ..taxName2 = product.taxName2
+                          ..taxRate3 = product.taxRate3
+                          ..taxName3 = product.taxName3);
                         viewModel.onChangedInvoiceItem(updatedItem, index);
                         _updateTable();
                       },
