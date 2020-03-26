@@ -110,48 +110,52 @@ class _InvoiceDesignState extends State<InvoiceDesign>
         formKey: _formKey,
         focusNode: _focusNode,
         children: <Widget>[
-          ListView(children: <Widget>[
-            Padding(
-              padding: const EdgeInsets.only(
-                  top: 20, right: 16, bottom: 10, left: 16),
-              child: ElevatedButton(
-                label: localization.customize.toUpperCase(),
-                iconData: Icons.settings,
-                onPressed: () => state.designState.customDesigns.isEmpty
-                    ? createEntity(
-                        context: context,
-                        entity: DesignEntity(
-                            design: state.designState.cleanDesign.design),
-                      )
-                    : store.dispatch(ViewSettings(
-                        navigator: Navigator.of(context),
-                        section: kSettingsCustomDesigns,
-                      )),
-                //onPressed: () => handleDesignAction(context, [group], EntityAction.settings),
-              ),
-            ),
-            FormCard(
-              children: <Widget>[
-                DesignPicker(
-                  label: localization.invoiceDesign,
-                  initialValue: settings.defaultInvoiceDesignId,
-                  onSelected: (value) => viewModel.onSettingsChanged(settings
-                      .rebuild((b) => b..defaultInvoiceDesignId = value.id)),
+          ListView(
+            children: <Widget>[
+              Padding(
+                padding: const EdgeInsets.only(
+                    top: 20, right: 16, bottom: 10, left: 16),
+                child: ElevatedButton(
+                  label: localization.customize.toUpperCase(),
+                  iconData: Icons.settings,
+                  onPressed: () => state.designState.customDesigns.isEmpty
+                      ? createEntity(
+                          context: context,
+                          entity: DesignEntity(
+                              design: state.designState.cleanDesign.design),
+                        )
+                      : store.dispatch(ViewSettings(
+                          navigator: Navigator.of(context),
+                          section: kSettingsCustomDesigns,
+                        )),
+                  //onPressed: () => handleDesignAction(context, [group], EntityAction.settings),
                 ),
-                if (company.isModuleEnabled(EntityType.quote))
+              ),
+              FormCard(
+                children: <Widget>[
                   DesignPicker(
-                    label: localization.quoteDesign,
-                    initialValue: settings.defaultQuoteDesignId,
+                    label: localization.invoiceDesign,
+                    initialValue: settings.defaultInvoiceDesignId,
                     onSelected: (value) => viewModel.onSettingsChanged(settings
-                        .rebuild((b) => b..defaultQuoteDesignId = value.id)),
+                        .rebuild((b) => b..defaultInvoiceDesignId = value.id)),
                   ),
-                if (company.isModuleEnabled(EntityType.credit))
-                  DesignPicker(
-                    label: localization.creditDesign,
-                    initialValue: settings.defaultCreditDesignId,
-                    onSelected: (value) => viewModel.onSettingsChanged(settings
-                        .rebuild((b) => b..defaultCreditDesignId = value.id)),
-                  ),
+                  if (company.isModuleEnabled(EntityType.quote))
+                    DesignPicker(
+                      label: localization.quoteDesign,
+                      initialValue: settings.defaultQuoteDesignId,
+                      onSelected: (value) => viewModel.onSettingsChanged(
+                          settings.rebuild(
+                              (b) => b..defaultQuoteDesignId = value.id)),
+                    ),
+                  if (company.isModuleEnabled(EntityType.credit))
+                    DesignPicker(
+                      label: localization.creditDesign,
+                      initialValue: settings.defaultCreditDesignId,
+                      onSelected: (value) => viewModel.onSettingsChanged(
+                          settings.rebuild(
+                              (b) => b..defaultCreditDesignId = value.id)),
+                    ),
+                  /*
                 AppDropdownButton(
                   labelText: localization.pageSize,
                   value: settings.pageSize,
@@ -179,9 +183,11 @@ class _InvoiceDesignState extends State<InvoiceDesign>
                                 fontSize == 0 ? SizedBox() : Text('$fontSize'),
                           ))
                       .toList(),
-                ),
-              ],
-            ),
+                ),                
+                 */
+                ],
+              ),
+              /*
             FormCard(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
@@ -221,11 +227,14 @@ class _InvoiceDesignState extends State<InvoiceDesign>
                   initialValue: settings.secondaryColor,
                 ),
               ],
-            ),
-          ]),
+            ),            
+             */
+            ],
+          ),
           ListView(
             padding: const EdgeInsets.all(10),
             children: <Widget>[
+              /*
               FormCard(
                 children: <Widget>[
                   BoolDropdownButton(
@@ -267,7 +276,8 @@ class _InvoiceDesignState extends State<InvoiceDesign>
                         settings.rebuild((b) => b..embedDocuments = value)),
                   ),
                 ],
-              ),
+              ),              
+               */
             ],
           ),
           FormCard(
