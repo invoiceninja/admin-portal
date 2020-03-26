@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:invoiceninja_flutter/constants.dart';
+import 'package:invoiceninja_flutter/data/models/client_model.dart';
 import 'package:invoiceninja_flutter/data/models/design_model.dart';
 import 'package:invoiceninja_flutter/data/models/entities.dart';
 import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
@@ -120,8 +121,7 @@ class _InvoiceDesignState extends State<InvoiceDesign>
                     ? createEntity(
                         context: context,
                         entity: DesignEntity(
-                            design:
-                                state.designState.cleanDesign.design),
+                            design: state.designState.cleanDesign.design),
                       )
                     : store.dispatch(ViewSettings(
                         navigator: Navigator.of(context),
@@ -272,10 +272,47 @@ class _InvoiceDesignState extends State<InvoiceDesign>
           ),
           FormCard(
             child: MultiSelectList(
-              //selected: settings.pdfVariables[kPdfFieldsClientDetails].toList(),
-              options: settings.pdfVariables[kPdfFieldsClientDetails].toList(),
-              defaultSelected:
-                  settings.pdfVariables[kPdfFieldsClientDetails].toList(),
+              options: [
+                ...[
+                  ClientFields.name,
+                  ClientFields.idNumber,
+                  ClientFields.vatNumber,
+                  ClientFields.website,
+                  ClientFields.phone,
+                  ClientFields.address1,
+                  ClientFields.address2,
+                  ClientFields.cityStatePostal,
+                  ClientFields.postalCityState,
+                  ClientFields.country,
+                  ClientFields.custom1,
+                  ClientFields.custom2,
+                  ClientFields.custom3,
+                  ClientFields.custom4,
+                ].map((field) => '\$client.$field'),
+                ...[
+                  ContactFields.fullName,
+                  ContactFields.email,
+                  ContactFields.phone,
+                  ContactFields.custom1,
+                  ContactFields.custom2,
+                  ContactFields.custom3,
+                  ContactFields.custom4,
+                ].map((field) => '\$contact.$field'),
+              ],
+              defaultSelected: [
+                ...[
+                  ClientFields.name,
+                  ClientFields.idNumber,
+                  ClientFields.vatNumber,
+                  ClientFields.address1,
+                  ClientFields.address2,
+                  ClientFields.cityStatePostal,
+                  ClientFields.country,
+                ].map((field) => '\$client.$field'),
+                ...[
+                  ContactFields.email,
+                ].map((field) => '\$contact.$field'),
+              ],
               selected: settings.pdfVariables[kPdfFieldsClientDetails].toList(),
               onSelected: (values) {
                 viewModel.onSettingsChanged(settings.rebuild((b) => b
@@ -283,6 +320,7 @@ class _InvoiceDesignState extends State<InvoiceDesign>
               },
               addTitle: localization.addField,
               liveChanges: true,
+              prefix: 'client',
             ),
           ),
           FormCard(

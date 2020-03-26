@@ -77,7 +77,6 @@ import 'package:invoiceninja_flutter/redux/company_gateway/company_gateway_middl
 void main({bool isTesting = false}) async {
   WidgetsFlutterBinding.ensureInitialized();
 
-
   //final packageInfo = await PackageInfo.fromPlatform();
   final SentryClient _sentry = Config.SENTRY_DNS.isEmpty
       ? null

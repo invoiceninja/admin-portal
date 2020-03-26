@@ -43,6 +43,8 @@ class ClientFields {
   static const String clientId = 'client_id';
   static const String name = 'name';
   static const String address1 = 'address1';
+  static const String address2 = 'address2';
+  static const String country = 'country';
   static const String balance = 'balance';
   static const String vatNumber = 'vat_number';
   static const String idNumber = 'id_number';
@@ -55,16 +57,19 @@ class ClientFields {
   static const String contactEmail = 'contact_email';
   static const String state = 'state';
   static const String phone = 'phone';
+  static const String website = 'website';
   static const String language = 'language';
   static const String currency = 'currency';
-  static const String customValue1 = 'custom_value1';
-  static const String customValue2 = 'custom_value2';
-  static const String customValue3 = 'custom_value3';
-  static const String customValue4 = 'custom_value4';
+  static const String custom1 = 'custom1';
+  static const String custom2 = 'custom2';
+  static const String custom3 = 'custom3';
+  static const String custom4 = 'custom4';
   static const String assignedTo = 'assigned_to';
   static const String createdBy = 'created_by';
   static const String assignedToId = 'assigned_to_id';
   static const String createdById = 'created_by_id';
+  static const String cityStatePostal = 'city_state_postal';
+  static const String postalCityState = 'postal_city_state';
 }
 
 abstract class ClientEntity extends Object
@@ -327,22 +332,22 @@ abstract class ClientEntity extends Object
       case ClientFields.createdAt:
         response = clientA.createdAt.compareTo(clientB.createdAt);
         break;
-      case ClientFields.customValue1:
+      case ClientFields.custom1:
         response = clientA.customValue1
             .toLowerCase()
             .compareTo(clientB.customValue1.toLowerCase());
         break;
-      case ClientFields.customValue2:
+      case ClientFields.custom2:
         response = clientA.customValue2
             .toLowerCase()
             .compareTo(clientB.customValue2.toLowerCase());
         break;
-      case ClientFields.customValue3:
+      case ClientFields.custom3:
         response = clientA.customValue3
             .toLowerCase()
             .compareTo(clientB.customValue3.toLowerCase());
         break;
-      case ClientFields.customValue4:
+      case ClientFields.custom4:
         response = clientA.customValue4
             .toLowerCase()
             .compareTo(clientB.customValue4.toLowerCase());
@@ -542,11 +547,15 @@ abstract class ClientEntity extends Object
 }
 
 class ContactFields {
-  static const String fullName = 'fullName';
-  static const String firstName = 'firstName';
-  static const String lastName = 'lastName';
+  static const String fullName = 'full_name';
+  static const String firstName = 'first_name';
+  static const String lastName = 'last_name';
   static const String email = 'email';
   static const String phone = 'phone';
+  static const String custom1 = 'custom1';
+  static const String custom2 = 'custom2';
+  static const String custom3 = 'custom3';
+  static const String custom4 = 'custom4';
 }
 
 abstract class ContactEntity extends Object
