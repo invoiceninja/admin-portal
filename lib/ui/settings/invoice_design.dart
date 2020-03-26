@@ -91,12 +91,14 @@ class _InvoiceDesignState extends State<InvoiceDesign>
           Tab(
             text: localization.invoiceDetails,
           ),
+          /*
           Tab(
             text: localization.quoteDetails,
           ),
           Tab(
             text: localization.creditDetails,
           ),
+           */
           Tab(text: localization.productColumns),
           /*
           Tab(text: localization.taskColumns),
