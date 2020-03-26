@@ -62,7 +62,7 @@ abstract class QuoteUIState extends Object
     implements Built<QuoteUIState, QuoteUIStateBuilder> {
   factory QuoteUIState() {
     return _$QuoteUIState._(
-      listUIState: ListUIState(QuoteFields.number, sortAscending: false),
+      listUIState: ListUIState(QuoteFields.quoteNumber, sortAscending: false),
       editing: InvoiceEntity(),
       selectedId: '',
     );

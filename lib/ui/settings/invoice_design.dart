@@ -413,7 +413,7 @@ class _InvoiceDesignState extends State<InvoiceDesign>
             child: MultiSelectList(
               options: [
                 ...[
-                  InvoiceFields.number,
+                  InvoiceFields.invoiceNumber,
                   InvoiceFields.poNumber,
                   InvoiceFields.date,
                   InvoiceFields.dueDate,
@@ -429,7 +429,7 @@ class _InvoiceDesignState extends State<InvoiceDesign>
                 ].map((field) => '\$client.$field')
               ],
               defaultSelected: [
-                InvoiceFields.number,
+                InvoiceFields.invoiceNumber,
                 InvoiceFields.poNumber,
                 InvoiceFields.date,
                 InvoiceFields.dueDate,

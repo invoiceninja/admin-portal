@@ -97,7 +97,7 @@ class CreditScreen extends StatelessWidget {
           store.dispatch(SortCredits(value));
         },
         sortFields: [
-          CreditFields.number,
+          CreditFields.creditNumber,
           CreditFields.amount,
           CreditFields.updatedAt,
         ],
