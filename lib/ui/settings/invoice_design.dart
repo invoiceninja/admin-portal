@@ -5,6 +5,7 @@ import 'package:flutter_redux/flutter_redux.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:invoiceninja_flutter/constants.dart';
 import 'package:invoiceninja_flutter/data/models/client_model.dart';
+import 'package:invoiceninja_flutter/data/models/company_model.dart';
 import 'package:invoiceninja_flutter/data/models/design_model.dart';
 import 'package:invoiceninja_flutter/data/models/entities.dart';
 import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
@@ -335,10 +336,33 @@ class _InvoiceDesignState extends State<InvoiceDesign>
           ),
           FormCard(
             child: MultiSelectList(
-              options: [],
-              defaultSelected: [],
-              //selected: settings.pdfVariables[kPdfFieldsCompanyDetails].toList(),
-              selected: [],
+              options: [
+                CompanyFields.name,
+                CompanyFields.idNumber,
+                CompanyFields.vatNumber,
+                CompanyFields.website,
+                CompanyFields.email,
+                CompanyFields.phone,
+                CompanyFields.address1,
+                CompanyFields.address2,
+                CompanyFields.cityStatePostal,
+                CompanyFields.postalCityState,
+                CompanyFields.country,
+                CompanyFields.custom1,
+                CompanyFields.custom2,
+                CompanyFields.custom3,
+                CompanyFields.custom4,
+              ],
+              defaultSelected: [
+                CompanyFields.name,
+                CompanyFields.idNumber,
+                CompanyFields.vatNumber,
+                CompanyFields.website,
+                CompanyFields.email,
+                CompanyFields.phone,
+              ],
+              selected:
+                  settings.pdfVariables[kPdfFieldsCompanyDetails].toList(),
               onSelected: (values) {
                 viewModel.onSettingsChanged(settings.rebuild((b) => b
                   ..pdfVariables[kPdfFieldsCompanyDetails] =
@@ -350,10 +374,31 @@ class _InvoiceDesignState extends State<InvoiceDesign>
           ),
           FormCard(
             child: MultiSelectList(
-              options: [],
-              defaultSelected: [],
-              //selected: settings.pdfVariables[kPdfFieldsCompanyAddress].toList(),
-              selected: [],
+              options: [
+                CompanyFields.name,
+                CompanyFields.idNumber,
+                CompanyFields.vatNumber,
+                CompanyFields.website,
+                CompanyFields.email,
+                CompanyFields.phone,
+                CompanyFields.address1,
+                CompanyFields.address2,
+                CompanyFields.cityStatePostal,
+                CompanyFields.postalCityState,
+                CompanyFields.country,
+                CompanyFields.custom1,
+                CompanyFields.custom2,
+                CompanyFields.custom3,
+                CompanyFields.custom4,
+              ],
+              defaultSelected: [
+                CompanyFields.address1,
+                CompanyFields.address2,
+                CompanyFields.cityStatePostal,
+                CompanyFields.country,
+              ],
+              selected:
+                  settings.pdfVariables[kPdfFieldsCompanyAddress].toList(),
               onSelected: (values) {
                 viewModel.onSettingsChanged(settings.rebuild((b) => b
                   ..pdfVariables[kPdfFieldsCompanyAddress] =
@@ -367,8 +412,8 @@ class _InvoiceDesignState extends State<InvoiceDesign>
             child: MultiSelectList(
               options: [],
               defaultSelected: [],
-              //selected: settings.pdfVariables[kPdfFieldsInvoiceDetails].toList(),
-              selected: [],
+              selected:
+                  settings.pdfVariables[kPdfFieldsInvoiceDetails].toList(),
               onSelected: (values) {
                 viewModel.onSettingsChanged(settings.rebuild((b) => b
                   ..pdfVariables[kPdfFieldsInvoiceDetails] =
@@ -382,8 +427,7 @@ class _InvoiceDesignState extends State<InvoiceDesign>
             child: MultiSelectList(
               options: [],
               defaultSelected: [],
-              //selected: settings.pdfVariables[kPdfFieldsQuoteDetails].toList(),
-              selected: [],
+              selected: settings.pdfVariables[kPdfFieldsQuoteDetails].toList(),
               onSelected: (values) {
                 viewModel.onSettingsChanged(settings.rebuild((b) => b
                   ..pdfVariables[kPdfFieldsQuoteDetails] = BuiltList(values)));
@@ -396,8 +440,7 @@ class _InvoiceDesignState extends State<InvoiceDesign>
             child: MultiSelectList(
               options: [],
               defaultSelected: [],
-              //selected: settings.pdfVariables[kPdfFieldsCreditDetails].toList(),
-              selected: [],
+              selected: settings.pdfVariables[kPdfFieldsCreditDetails].toList(),
               onSelected: (values) {
                 viewModel.onSettingsChanged(settings.rebuild((b) => b
                   ..pdfVariables[kPdfFieldsCreditDetails] = BuiltList(values)));
@@ -410,8 +453,8 @@ class _InvoiceDesignState extends State<InvoiceDesign>
             child: MultiSelectList(
               options: [],
               defaultSelected: [],
-              //selected: settings.pdfVariables[kPdfFieldsProductColumns].toList(),
-              selected: [],
+              selected:
+                  settings.pdfVariables[kPdfFieldsProductColumns].toList(),
               onSelected: (values) {
                 viewModel.onSettingsChanged(settings.rebuild((b) => b
                   ..pdfVariables[kPdfFieldsProductColumns] =
@@ -425,8 +468,7 @@ class _InvoiceDesignState extends State<InvoiceDesign>
             child: MultiSelectList(
               options: [],
               defaultSelected: [],
-              //selected: settings.pdfVariables[kPdfFieldsTaskColumns].toList(),
-              selected: [],
+              selected: settings.pdfVariables[kPdfFieldsTaskColumns].toList(),
               onSelected: (values) {
                 viewModel.onSettingsChanged(settings.rebuild((b) => b
                   ..pdfVariables[kPdfFieldsTaskColumns] = BuiltList(values)));

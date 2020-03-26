@@ -16,6 +16,25 @@ import 'package:invoiceninja_flutter/.env.dart';
 
 part 'company_model.g.dart';
 
+class CompanyFields {
+  static const String name = 'name';
+  static const String email = 'email';
+  static const String address1 = 'address1';
+  static const String address2 = 'address2';
+  static const String country = 'country';
+  static const String vatNumber = 'vat_number';
+  static const String idNumber = 'id_number';
+  static const String state = 'state';
+  static const String phone = 'phone';
+  static const String website = 'website';
+  static const String custom1 = 'custom1';
+  static const String custom2 = 'custom2';
+  static const String custom3 = 'custom3';
+  static const String custom4 = 'custom4';
+  static const String cityStatePostal = 'city_state_postal';
+  static const String postalCityState = 'postal_city_state';
+}
+
 abstract class CompanyEntity extends Object
     with BaseEntity
     implements Built<CompanyEntity, CompanyEntityBuilder> {
