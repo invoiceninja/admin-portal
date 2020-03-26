@@ -697,6 +697,19 @@ abstract class InvoiceEntity extends Object
   static Serializer<InvoiceEntity> get serializer => _$invoiceEntitySerializer;
 }
 
+class ProductItemFields {
+  static const String productKey = 'product_key';
+  static const String notes = 'notes';
+  static const String cost = 'cost';
+  static const String quantity = 'quantity';
+  static const String lineTotal = 'line_total';
+  static const String discount = 'discount';
+  static const String custom1 = 'custom1';
+  static const String custom2 = 'custom2';
+  static const String custom3 = 'custom3';
+  static const String custom4 = 'custom4';
+}
+
 abstract class InvoiceItemEntity
     implements Built<InvoiceItemEntity, InvoiceItemEntityBuilder> {
   factory InvoiceItemEntity({String productKey, double quantity}) {

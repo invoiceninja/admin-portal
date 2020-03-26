@@ -516,8 +516,25 @@ class _InvoiceDesignState extends State<InvoiceDesign>
           ),
           FormCard(
             child: MultiSelectList(
-              options: [],
-              defaultSelected: [],
+              options: [
+                ProductItemFields.productKey,
+                ProductItemFields.notes,
+                ProductItemFields.quantity,
+                ProductItemFields.cost,
+                ProductItemFields.discount,
+                ProductItemFields.lineTotal,
+                ProductItemFields.custom1,
+                ProductItemFields.custom2,
+                ProductItemFields.custom3,
+                ProductItemFields.custom4,
+              ].map((field) => '\$product.$field').toList(),
+              defaultSelected: [
+                ProductItemFields.productKey,
+                ProductItemFields.notes,
+                ProductItemFields.quantity,
+                ProductItemFields.cost,
+                ProductItemFields.lineTotal,
+              ].map((field) => '\$product.$field').toList(),
               selected:
                   settings.pdfVariables[kPdfFieldsProductColumns].toList(),
               onSelected: (values) {
