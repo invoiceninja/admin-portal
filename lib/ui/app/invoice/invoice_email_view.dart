@@ -103,12 +103,12 @@ class _InvoiceEmailViewState extends State<InvoiceEmailView>
         onComplete: (subject, body, wrapper) {
           setState(() {
             _isLoading = false;
-            _subjectPreview = subject;
-            _bodyPreview = wrapper;
+            _subjectPreview = subject.trim();
+            _bodyPreview = wrapper.replaceFirst('\$body', body).trim();
 
             if (origSubject.isEmpty && origBody.isEmpty) {
-              _subjectController.text = subject;
-              _bodyController.text = body;
+              _subjectController.text = subject.trim();
+              _bodyController.text = body.trim();
             }
           });
         });

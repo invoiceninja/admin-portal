@@ -179,13 +179,14 @@ class _TemplatesAndRemindersState extends State<TemplatesAndReminders>
 
     loadEmailTemplate(
         context: context,
+        template: '$_template',
         body: body,
         subject: subject,
         onComplete: (subject, body, wrapper) {
           setState(() {
             _isLoading = false;
-            _subjectPreview = subject;
-            _bodyPreview = body;
+            _subjectPreview = subject.trim();
+            _bodyPreview = wrapper.replaceFirst('\$body', body).trim();
           });
         });
   }
