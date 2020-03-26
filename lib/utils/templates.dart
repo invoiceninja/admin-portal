@@ -29,6 +29,10 @@ void loadEmailTemplate({
   subject ??= '';
   body ??= '';
 
+  if (template != null) {
+    template = 'email_template_$template';
+  }
+
   webClient
       .post(url, credentials.token,
           data: json.encode({

@@ -98,7 +98,7 @@ class _InvoiceEmailViewState extends State<InvoiceEmailView>
         context: context,
         subject: origSubject,
         body: origBody,
-        template: 'email_template_$selectedTemplate',
+        template: '$selectedTemplate',
         invoice: widget.viewModel.invoice,
         onComplete: (subject, body, wrapper) {
           setState(() {
