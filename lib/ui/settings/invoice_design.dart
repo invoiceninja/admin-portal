@@ -423,7 +423,7 @@ class _InvoiceDesignState extends State<InvoiceDesign>
                   InvoiceFields.customValue2,
                   InvoiceFields.customValue3,
                   InvoiceFields.customValue4,
-                ].map((field) => '\$company.$field'),
+                ].map((field) => '\$invoice.$field'),
                 ...[
                   ClientFields.balance,
                 ].map((field) => '\$client.$field')
@@ -460,7 +460,7 @@ class _InvoiceDesignState extends State<InvoiceDesign>
                   QuoteFields.customValue2,
                   QuoteFields.customValue3,
                   QuoteFields.customValue4,
-                ].map((field) => '\$company.$field'),
+                ].map((field) => '\$quote.$field'),
                 ...[
                   ClientFields.balance,
                 ].map((field) => '\$client.$field')
@@ -479,6 +479,7 @@ class _InvoiceDesignState extends State<InvoiceDesign>
               },
               addTitle: localization.addField,
               liveChanges: true,
+              prefix: 'quote',
             ),
           ),
           FormCard(
@@ -494,7 +495,7 @@ class _InvoiceDesignState extends State<InvoiceDesign>
                   CreditFields.customValue2,
                   CreditFields.customValue3,
                   CreditFields.customValue4,
-                ].map((field) => '\$company.$field'),
+                ].map((field) => '\$credit.$field'),
                 ...[
                   ClientFields.balance,
                 ].map((field) => '\$client.$field')
@@ -512,6 +513,7 @@ class _InvoiceDesignState extends State<InvoiceDesign>
               },
               addTitle: localization.addField,
               liveChanges: true,
+              prefix: 'credit',
             ),
           ),
           FormCard(
@@ -544,6 +546,7 @@ class _InvoiceDesignState extends State<InvoiceDesign>
               },
               addTitle: localization.addField,
               liveChanges: true,
+              prefix: 'product',
             ),
           ),
           /*
@@ -558,6 +561,7 @@ class _InvoiceDesignState extends State<InvoiceDesign>
               },
               addTitle: localization.addField,
               liveChanges: true,
+              prefix: 'task',
             ),
           ),          
            */
