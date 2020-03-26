@@ -74,7 +74,9 @@ class MultiSelectListState extends State<MultiSelectList> {
     if (parts.length == 1 || parts[0] == widget.prefix) {
       return localization.lookup(parts.last);
     } else {
-      return localization.lookup(parts[0]) + ' ' + localization.lookup(parts[1]);
+      return localization.lookup(parts[0]) +
+          ' ' +
+          localization.lookup(parts[1]);
     }
   }
 
@@ -92,7 +94,8 @@ class MultiSelectListState extends State<MultiSelectList> {
           columnTitle.isEmpty ? lookupOption(option) : columnTitle;
     });
     final keys = options.keys.toList();
-    keys.sort((a, b) => a.toLowerCase().compareTo(b.toLowerCase()));
+    keys.sort((a, b) =>
+        lookupOption(a).toLowerCase().compareTo(lookupOption(b).toLowerCase()));
 
     return Container(
       width: isMobile(context) ? double.maxFinite : 400,
