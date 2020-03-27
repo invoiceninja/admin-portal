@@ -46,16 +46,16 @@ class StaticDataFields {
   static const String sizes = 'sizes';
   static const String industries = 'industries';
   static const String timezones = 'timezones';
-  static const String dateFormats = 'dateFormats';
-  static const String datetimeFormats = 'datetimeFormats';
+  static const String dateFormats = 'date_formats';
+  static const String datetimeFormats = 'datetime_formats';
   static const String languages = 'languages';
-  static const String paymentTypes = 'paymentTypes';
+  static const String paymentTypes = 'payment_types';
   static const String countries = 'countries';
-  static const String invoiceDesigns = 'invoiceDesigns';
-  static const String invoiceStatus = 'invoiceStatus';
+  static const String invoiceDesigns = 'invoice_designs';
+  static const String invoiceStatus = 'invoice_status';
   static const String frequencies = 'frequencies';
   static const String gateways = 'gateways';
-  static const String gatewayTypes = 'gatewayTypes';
+  static const String gatewayTypes = 'gateway_types';
   static const String fonts = 'fonts';
   static const String banks = 'banks';
 }

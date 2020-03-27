@@ -31,23 +31,10 @@ abstract class CountryItemResponse
 
 class CountryFields {
   static const String name = 'name';
-  static const String swapPostalCode = 'swapPostalCode';
-  static const String swapCurrencySymbol = 'swapCurrencySymbol';
-  static const String thousandSeparator = 'thousandSeparator';
-  static const String decimalSeparator = 'decimalSeparator';
-
-  /*
-  static const String capital = 'capital';
-  static const String citizenship = 'citizenship';
-  static const String countryCode = 'countryCode';
-  static const String currency = 'currency';
-  static const String currencyCode = 'currencyCode';
-  static const String currencySubUnit = 'currencySubUnit';
-  static const String fullName = 'fullName';
-  static const String regionCode = 'regionCode';
-  static const String subRegionCode = 'subRegionCode';
-  static const String eea = 'eea';
-  */
+  static const String swapPostalCode = 'swap_postal_code';
+  static const String swapCurrencySymbol = 'swap_currency_symbol';
+  static const String thousandSeparator = 'thousand_separator';
+  static const String decimalSeparator = 'decimal_separator';
 }
 
 abstract class CountryEntity extends Object

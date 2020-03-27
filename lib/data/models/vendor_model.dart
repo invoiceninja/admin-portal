@@ -41,20 +41,21 @@ class VendorFields {
   static const String address2 = 'address2';
   static const String city = 'city';
   static const String state = 'state';
-  static const String postalCode = 'postalCode';
-  static const String countryId = 'countryId';
+  static const String postalCode = 'postal_code';
+  static const String countryId = 'country_id';
   static const String phone = 'phone';
-  static const String privateNotes = 'privateNotes';
+  static const String privateNotes = 'private_notes';
   static const String website = 'website';
-  static const String vatNumber = 'vatNumber';
-  static const String idNumber = 'idNumber';
-  static const String currencyId = 'currencyId';
-  static const String customValue1 = 'customValue1';
-  static const String customValue2 = 'customValue2';
-
-  static const String updatedAt = 'updatedAt';
-  static const String archivedAt = 'archivedAt';
-  static const String isDeleted = 'isDeleted';
+  static const String vatNumber = 'vat_number';
+  static const String idNumber = 'id_number';
+  static const String currencyId = 'currency_id';
+  static const String customValue1 = 'custom1';
+  static const String customValue2 = 'custom2';
+  static const String customValue3 = 'custom3';
+  static const String customValue4 = 'custom4';
+  static const String updatedAt = 'updated_at';
+  static const String archivedAt = 'archived_at';
+  static const String isDeleted = 'is_deleted';
 }
 
 abstract class VendorEntity extends Object

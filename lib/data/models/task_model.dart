@@ -41,19 +41,19 @@ abstract class TaskItemResponse
 class TaskFields {
   static const String description = 'description';
   static const String duration = 'duration';
-  static const String invoiceId = 'invoiceId';
+  static const String invoiceId = 'invoice_id';
   static const String client = 'client';
-  static const String clientId = 'clientId';
+  static const String clientId = 'client_id';
   static const String project = 'project';
-  static const String projectId = 'projectId';
-  static const String timeLog = 'timeLog';
-  static const String isRunning = 'isRunning';
-  static const String customValue1 = 'customValue1';
-  static const String customValue2 = 'customValue2';
+  static const String projectId = 'project_id';
+  static const String timeLog = 'time_log';
+  static const String isRunning = 'is_running';
+  static const String customValue1 = 'custom1';
+  static const String customValue2 = 'custom2';
 
-  static const String updatedAt = 'updatedAt';
-  static const String archivedAt = 'archivedAt';
-  static const String isDeleted = 'isDeleted';
+  static const String updatedAt = 'updated_at';
+  static const String archivedAt = 'archived_at';
+  static const String isDeleted = 'is_deleted';
 }
 
 abstract class TaskTime implements Built<TaskTime, TaskTimeBuilder> {

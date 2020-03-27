@@ -40,8 +40,8 @@ abstract class GatewayTokenItemResponse
 
 class GatewayTokenFields {
   static const String name = 'name';
-  static const String custom1 = 'customValue1';
-  static const String custom2 = 'customValue2';
+  static const String custom1 = 'custom1';
+  static const String custom2 = 'custom2';
 }
 
 abstract class GatewayTokenEntity extends Object
