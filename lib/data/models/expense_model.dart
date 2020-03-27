@@ -36,35 +36,36 @@ abstract class ExpenseItemResponse
 }
 
 class ExpenseFields {
-  static const String privateNotes = 'privateNotes';
-  static const String publicNotes = 'publicNotes';
-  static const String shouldBeInvoiced = 'shouldBeInvoiced';
-  static const String transactionId = 'transactionId';
-  static const String transactionReference = 'transactionReference';
-  static const String bankId = 'bankId';
-  static const String expenseCurrencyId = 'expenseCurrencyId';
-  static const String expenseCategoryId = 'expenseCategoryId';
-  static const String expenseCategory = 'expenseCategory';
+  static const String privateNotes = 'private_notes';
+  static const String publicNotes = 'public_notes';
+  static const String shouldBeInvoiced = 'should_be_invoiced';
+  static const String transactionId = 'transaction_id';
+  static const String transactionReference = 'transaction_reference';
+  static const String bankId = 'bank_id';
+  static const String expenseCurrencyId = 'expense_currency_id';
+  static const String expenseCategoryId = 'expense_category_id';
+  static const String expenseCategory = 'expense_category';
   static const String amount = 'amount';
-  static const String expenseDate = 'expenseDate';
-  static const String paymentDate = 'paymentDate';
-  static const String exchangeRate = 'exchangeRate';
-  static const String invoiceCurrencyId = 'invoiceCurrencyId';
-  static const String taxName1 = 'taxName1';
-  static const String taxName2 = 'taxName2';
-  static const String taxRate1 = 'taxRate1';
-  static const String taxRate2 = 'taxRate2';
-  static const String clientId = 'clientId';
+  static const String expenseDate = 'expense_date';
+  static const String paymentDate = 'payment_date';
+  static const String exchangeRate = 'exchange_rate';
+  static const String invoiceCurrencyId = 'invoice_currency_id';
+  static const String taxName1 = 'tax_name1';
+  static const String taxName2 = 'tax_name2';
+  static const String taxRate1 = 'tax_rate1';
+  static const String taxRate2 = 'tax_rate2';
+  static const String clientId = 'client_id';
   static const String client = 'client';
-  static const String invoiceId = 'invoiceId';
-  static const String vendorId = 'vendorId';
+  static const String invoiceId = 'invoice_id';
+  static const String vendorId = 'vendor_id';
   static const String vendor = 'vendor';
-  static const String customValue1 = 'customValue1';
-  static const String customValue2 = 'customValue2';
-
-  static const String updatedAt = 'updatedAt';
-  static const String archivedAt = 'archivedAt';
-  static const String isDeleted = 'isDeleted';
+  static const String customValue1 = 'custom1';
+  static const String customValue2 = 'custom2';
+  static const String customValue3 = 'custom3';
+  static const String customValue4 = 'custom4';
+  static const String updatedAt = 'updated_at';
+  static const String archivedAt = 'archived_at';
+  static const String isDeleted = 'is_deleted';
 }
 
 abstract class ExpenseEntity extends Object

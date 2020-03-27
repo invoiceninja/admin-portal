@@ -160,10 +160,6 @@ class _$StaticDataEntitySerializer
       serializers.serialize(object.countries,
           specifiedType:
               const FullType(BuiltList, const [const FullType(CountryEntity)])),
-      'invoice_designs',
-      serializers.serialize(object.invoiceDesigns,
-          specifiedType: const FullType(
-              BuiltList, const [const FullType(InvoiceDesignEntity)])),
       'invoice_status',
       serializers.serialize(object.invoiceStatus,
           specifiedType: const FullType(
@@ -243,12 +239,6 @@ class _$StaticDataEntitySerializer
           result.countries.replace(serializers.deserialize(value,
                   specifiedType: const FullType(
                       BuiltList, const [const FullType(CountryEntity)]))
-              as BuiltList<Object>);
-          break;
-        case 'invoice_designs':
-          result.invoiceDesigns.replace(serializers.deserialize(value,
-                  specifiedType: const FullType(
-                      BuiltList, const [const FullType(InvoiceDesignEntity)]))
               as BuiltList<Object>);
           break;
         case 'invoice_status':
@@ -476,8 +466,6 @@ class _$StaticDataEntity extends StaticDataEntity {
   @override
   final BuiltList<CountryEntity> countries;
   @override
-  final BuiltList<InvoiceDesignEntity> invoiceDesigns;
-  @override
   final BuiltList<InvoiceStatusEntity> invoiceStatus;
 
   factory _$StaticDataEntity(
@@ -495,7 +483,6 @@ class _$StaticDataEntity extends StaticDataEntity {
       this.languages,
       this.paymentTypes,
       this.countries,
-      this.invoiceDesigns,
       this.invoiceStatus})
       : super._() {
     if (currencies == null) {
@@ -528,9 +515,6 @@ class _$StaticDataEntity extends StaticDataEntity {
     if (countries == null) {
       throw new BuiltValueNullFieldError('StaticDataEntity', 'countries');
     }
-    if (invoiceDesigns == null) {
-      throw new BuiltValueNullFieldError('StaticDataEntity', 'invoiceDesigns');
-    }
     if (invoiceStatus == null) {
       throw new BuiltValueNullFieldError('StaticDataEntity', 'invoiceStatus');
     }
@@ -558,7 +542,6 @@ class _$StaticDataEntity extends StaticDataEntity {
         languages == other.languages &&
         paymentTypes == other.paymentTypes &&
         countries == other.countries &&
-        invoiceDesigns == other.invoiceDesigns &&
         invoiceStatus == other.invoiceStatus;
   }
 
@@ -573,18 +556,16 @@ class _$StaticDataEntity extends StaticDataEntity {
                             $jc(
                                 $jc(
                                     $jc(
-                                        $jc(
-                                            $jc($jc(0, currencies.hashCode),
-                                                sizes.hashCode),
-                                            industries.hashCode),
-                                        timezones.hashCode),
-                                    gateways.hashCode),
-                                dateFormats.hashCode),
-                            datetimeFormats.hashCode),
-                        languages.hashCode),
-                    paymentTypes.hashCode),
-                countries.hashCode),
-            invoiceDesigns.hashCode),
+                                        $jc($jc(0, currencies.hashCode),
+                                            sizes.hashCode),
+                                        industries.hashCode),
+                                    timezones.hashCode),
+                                gateways.hashCode),
+                            dateFormats.hashCode),
+                        datetimeFormats.hashCode),
+                    languages.hashCode),
+                paymentTypes.hashCode),
+            countries.hashCode),
         invoiceStatus.hashCode));
   }
 
@@ -601,7 +582,6 @@ class _$StaticDataEntity extends StaticDataEntity {
           ..add('languages', languages)
           ..add('paymentTypes', paymentTypes)
           ..add('countries', countries)
-          ..add('invoiceDesigns', invoiceDesigns)
           ..add('invoiceStatus', invoiceStatus))
         .toString();
   }
@@ -670,12 +650,6 @@ class StaticDataEntityBuilder
   set countries(ListBuilder<CountryEntity> countries) =>
       _$this._countries = countries;
 
-  ListBuilder<InvoiceDesignEntity> _invoiceDesigns;
-  ListBuilder<InvoiceDesignEntity> get invoiceDesigns =>
-      _$this._invoiceDesigns ??= new ListBuilder<InvoiceDesignEntity>();
-  set invoiceDesigns(ListBuilder<InvoiceDesignEntity> invoiceDesigns) =>
-      _$this._invoiceDesigns = invoiceDesigns;
-
   ListBuilder<InvoiceStatusEntity> _invoiceStatus;
   ListBuilder<InvoiceStatusEntity> get invoiceStatus =>
       _$this._invoiceStatus ??= new ListBuilder<InvoiceStatusEntity>();
@@ -696,7 +670,6 @@ class StaticDataEntityBuilder
       _languages = _$v.languages?.toBuilder();
       _paymentTypes = _$v.paymentTypes?.toBuilder();
       _countries = _$v.countries?.toBuilder();
-      _invoiceDesigns = _$v.invoiceDesigns?.toBuilder();
       _invoiceStatus = _$v.invoiceStatus?.toBuilder();
       _$v = null;
     }
@@ -732,7 +705,6 @@ class StaticDataEntityBuilder
               languages: languages.build(),
               paymentTypes: paymentTypes.build(),
               countries: countries.build(),
-              invoiceDesigns: invoiceDesigns.build(),
               invoiceStatus: invoiceStatus.build());
     } catch (_) {
       String _$failedField;
@@ -757,8 +729,6 @@ class StaticDataEntityBuilder
         paymentTypes.build();
         _$failedField = 'countries';
         countries.build();
-        _$failedField = 'invoiceDesigns';
-        invoiceDesigns.build();
         _$failedField = 'invoiceStatus';
         invoiceStatus.build();
       } catch (e) {

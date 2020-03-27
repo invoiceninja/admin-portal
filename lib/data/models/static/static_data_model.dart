@@ -8,11 +8,9 @@ import 'package:invoiceninja_flutter/data/models/static/industry_model.dart';
 import 'package:invoiceninja_flutter/data/models/static/timezone_model.dart';
 import 'package:invoiceninja_flutter/data/models/static/date_format_model.dart';
 import 'package:invoiceninja_flutter/data/models/static/datetime_format_model.dart';
-
 import 'package:invoiceninja_flutter/data/models/static/country_model.dart';
 import 'package:invoiceninja_flutter/data/models/static/language_model.dart';
 import 'package:invoiceninja_flutter/data/models/static/payment_type_model.dart';
-import 'package:invoiceninja_flutter/data/models/static/invoice_design_model.dart';
 import 'package:invoiceninja_flutter/data/models/static/invoice_status_model.dart';
 
 part 'static_data_model.g.dart';
@@ -76,7 +74,6 @@ abstract class StaticDataEntity
       languages: BuiltList<LanguageEntity>(),
       paymentTypes: BuiltList<PaymentTypeEntity>(),
       countries: BuiltList<CountryEntity>(),
-      invoiceDesigns: BuiltList<InvoiceDesignEntity>(),
       invoiceStatus: BuiltList<InvoiceStatusEntity>(),
     );
   }
@@ -104,9 +101,6 @@ abstract class StaticDataEntity
   BuiltList<PaymentTypeEntity> get paymentTypes;
 
   BuiltList<CountryEntity> get countries;
-
-  @BuiltValueField(wireName: 'invoice_designs')
-  BuiltList<InvoiceDesignEntity> get invoiceDesigns;
 
   @BuiltValueField(wireName: 'invoice_status')
   BuiltList<InvoiceStatusEntity> get invoiceStatus;
