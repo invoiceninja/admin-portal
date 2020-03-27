@@ -48,9 +48,8 @@ abstract class AuthState implements Built<AuthState, AuthStateBuilder> {
         kMillisecondsToReenterPassword;
   }
 
-  // TODO fix this
-  //bool get isHosted => cleanApiUrl(url).isEmpty || cleanApiUrl(url) == kAppUrl;
-  bool get isHosted => false;
+  bool get isHosted =>
+      cleanApiUrl(url).isEmpty || cleanApiUrl(url) == kAppProductionUrl;
 
   bool get isSelfHost => !isHosted;
 

@@ -264,7 +264,6 @@ class SettingsViewer extends StatelessWidget {
       //localization.defaultPaymentTypeId: settings.defaultPaymentTypeId,
       localization.enablePortalPassword:
           settings.enablePortalPassword?.toString(),
-      localization.sendPortalPassword: settings.sendPortalPassword?.toString(),
       localization.signatureOnPdf: settings.signatureOnPdf?.toString(),
       localization.enableMarkup: settings.enableEmailMarkup?.toString(),
       localization.showAcceptInvoiceTerms:

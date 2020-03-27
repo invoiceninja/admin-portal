@@ -53,7 +53,7 @@ class _DateRangePickerState extends State<DateRangePicker> {
                 shrinkWrap: true,
                 children: <Widget>[
                   Text(localization.dateRange,
-                      style: Theme.of(context).textTheme.title),
+                      style: Theme.of(context).textTheme.headline6),
                   SizedBox(height: 16.0),
                   Row(
                     children: <Widget>[

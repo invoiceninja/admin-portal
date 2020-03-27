@@ -34,7 +34,7 @@ abstract class DatetimeFormatItemResponse
 
 class DatetimeFormatFields {
   static const String format = 'format';
-  static const String formatMoment = 'formatMoment';
+  static const String formatMoment = 'format_moment';
 }
 
 abstract class DatetimeFormatEntity

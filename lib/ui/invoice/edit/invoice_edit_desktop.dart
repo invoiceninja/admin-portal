@@ -4,7 +4,6 @@ import 'package:flutter/widgets.dart';
 import 'package:invoiceninja_flutter/constants.dart';
 import 'package:invoiceninja_flutter/data/models/entities.dart';
 import 'package:invoiceninja_flutter/ui/app/form_card.dart';
-import 'package:invoiceninja_flutter/ui/app/forms/app_dropdown_button.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/app_form.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/client_picker.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/custom_field.dart';
@@ -265,9 +264,9 @@ class InvoiceEditDesktopState extends State<InvoiceEditDesktop>
                       value: invoice.customValue1,
                     ),
                     CustomField(
-                      controller: _custom2Controller,
-                      field: CustomFieldType.invoice2,
-                      value: invoice.customValue2,
+                      controller: _custom3Controller,
+                      field: CustomFieldType.invoice3,
+                      value: invoice.customValue3,
                     ),
                   ],
                 ),

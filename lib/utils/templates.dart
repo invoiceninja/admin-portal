@@ -1,17 +1,19 @@
 import 'dart:convert';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_redux/flutter_redux.dart';
+import 'package:invoiceninja_flutter/data/models/invoice_model.dart';
 import 'package:invoiceninja_flutter/data/web_client.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/utils/formatting.dart';
 import 'dialogs.dart';
 
-void loadTemplate({
+void loadEmailTemplate({
   @required BuildContext context,
-  @required String subject,
-  @required String body,
-  @required Function(String, String) onStart,
-  @required Function(String, String) onComplete,
+  @required Function(String, String, String) onComplete,
+  String template,
+  String subject,
+  String body,
+  InvoiceEntity invoice,
 }) {
   final webClient = WebClient();
   final state = StoreProvider.of<AppState>(context).state;
@@ -27,23 +29,25 @@ void loadTemplate({
   subject ??= '';
   body ??= '';
 
-  final htmlBody = 'data:text/html;charset=utf-8,$body';
-  onStart(subject, htmlBody);
+  if (template != null) {
+    template = 'email_template_$template';
+  }
 
   webClient
       .post(url, credentials.token,
           data: json.encode({
-            //'entity': 'invoice',
-            //'entity_id': '${invoice.id}',
+            'entity': '${invoice?.entityType ?? ''}',
+            'entity_id': '${invoice?.id ?? ''}',
+            'template': (subject.isEmpty && body.isEmpty && template != null)
+                ? template
+                : '',
             'subject': subject,
-            'body': body
+            'body': body,
           }))
       .then((dynamic response) {
-    subject = response['subject'] ?? '';
-    body = 'data:text/html;charset=utf-8,${response['body']}';
-    onComplete(subject, body);
+    onComplete(response['subject'], response['body'], response['wrapper']);
   }).catchError((dynamic error) {
     showErrorDialog(context: context, message: '$error');
-    onComplete(subject, htmlBody);
+    onComplete(subject, body, '');
   });
 }

@@ -32,34 +32,26 @@ abstract class CreditItemResponse
 }
 
 class CreditFields {
-  static const String amount = 'amount';
-  static const String balance = 'balance';
-  static const String clientId = 'clientId';
+  static const String amount = 'credit_total';
+  static const String balance = 'balance_due';
+  static const String clientId = 'client_id';
   static const String client = 'client';
-  static const String statusId = 'statusId';
-  static const String number = 'number';
+  static const String statusId = 'status_id';
+  static const String creditNumber = 'credit_number';
   static const String discount = 'discount';
-  static const String poNumber = 'poNumber';
-  static const String date = 'date';
-  static const String appliedDate = 'appliedDate';
+  static const String poNumber = 'po_number';
+  static const String date = 'credit_date';
   static const String terms = 'terms';
-  static const String footer = 'invoiceFooter';
+  static const String footer = 'footer';
   static const String partial = 'partial';
-  static const String partialDueDate = 'partialDueDate';
-  static const String publicNotes = 'publicNotes';
-  static const String privateNotes = 'privateNotes';
-  static const String invoiceTypeId = 'invoiceTypeId';
-  static const String isRecurring = 'isRecurring';
-  static const String frequencyId = 'frequencyId';
-  static const String startDate = 'startDate';
-  static const String endDate = 'endDate';
-
-  static const String customValue1 = 'customValue1';
-  static const String customValue2 = 'customValue2';
-  static const String customValue3 = 'customValue3';
-  static const String customValue4 = 'customValue4';
-
-  static const String updatedAt = 'updatedAt';
-  static const String archivedAt = 'archivedAt';
-  static const String isDeleted = 'isDeleted';
+  static const String partialDueDate = 'partial_due_date';
+  static const String publicNotes = 'public_notes';
+  static const String privateNotes = 'private_notes';
+  static const String customValue1 = 'custom1';
+  static const String customValue2 = 'custom2';
+  static const String customValue3 = 'custom3';
+  static const String customValue4 = 'custom4';
+  static const String updatedAt = 'updated_at';
+  static const String archivedAt = 'archived_at';
+  static const String isDeleted = 'is_deleted';
 }

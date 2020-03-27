@@ -2,28 +2,22 @@ import 'package:built_collection/built_collection.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:invoiceninja_flutter/constants.dart';
+import 'package:invoiceninja_flutter/data/models/client_model.dart';
+import 'package:invoiceninja_flutter/data/models/company_model.dart';
 import 'package:invoiceninja_flutter/data/models/design_model.dart';
 import 'package:invoiceninja_flutter/data/models/entities.dart';
+import 'package:invoiceninja_flutter/data/models/invoice_model.dart';
 import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
-import 'package:invoiceninja_flutter/redux/design/design_actions.dart';
 import 'package:invoiceninja_flutter/redux/settings/settings_actions.dart';
-import 'package:invoiceninja_flutter/redux/static/static_selectors.dart';
 import 'package:invoiceninja_flutter/ui/app/buttons/elevated_button.dart';
 import 'package:invoiceninja_flutter/ui/app/dialogs/multiselect_dialog.dart';
-import 'package:invoiceninja_flutter/ui/app/entity_dropdown.dart';
 import 'package:invoiceninja_flutter/ui/app/form_card.dart';
-import 'package:invoiceninja_flutter/ui/app/forms/app_dropdown_button.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/app_form.dart';
-import 'package:invoiceninja_flutter/ui/app/forms/bool_dropdown_button.dart';
-import 'package:invoiceninja_flutter/ui/app/forms/color_picker.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/design_picker.dart';
-import 'package:invoiceninja_flutter/ui/app/forms/learn_more.dart';
 import 'package:invoiceninja_flutter/ui/settings/invoice_design_vm.dart';
 import 'package:invoiceninja_flutter/ui/app/edit_scaffold.dart';
-import 'package:invoiceninja_flutter/utils/fonts.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 
 class InvoiceDesign extends StatefulWidget {
@@ -50,7 +44,7 @@ class _InvoiceDesignState extends State<InvoiceDesign>
   void initState() {
     super.initState();
     _focusNode = FocusScopeNode();
-    _controller = TabController(vsync: this, length: 10);
+    _controller = TabController(vsync: this, length: 6);
   }
 
   @override
@@ -80,9 +74,11 @@ class _InvoiceDesignState extends State<InvoiceDesign>
           Tab(
             text: localization.generalSettings,
           ),
+          /*
           Tab(
             text: localization.invoiceOptions,
           ),
+           */
           Tab(
             text: localization.clientDetails,
           ),
@@ -95,14 +91,18 @@ class _InvoiceDesignState extends State<InvoiceDesign>
           Tab(
             text: localization.invoiceDetails,
           ),
+          /*
           Tab(
             text: localization.quoteDetails,
           ),
           Tab(
             text: localization.creditDetails,
           ),
+           */
           Tab(text: localization.productColumns),
+          /*
           Tab(text: localization.taskColumns),
+           */
         ],
       ),
       body: AppTabForm(
@@ -110,49 +110,52 @@ class _InvoiceDesignState extends State<InvoiceDesign>
         formKey: _formKey,
         focusNode: _focusNode,
         children: <Widget>[
-          ListView(children: <Widget>[
-            Padding(
-              padding: const EdgeInsets.only(
-                  top: 20, right: 16, bottom: 10, left: 16),
-              child: ElevatedButton(
-                label: localization.customize.toUpperCase(),
-                iconData: Icons.settings,
-                onPressed: () => state.designState.customDesigns.isEmpty
-                    ? createEntity(
-                        context: context,
-                        entity: DesignEntity(
-                            design:
-                                state.designState.cleanDesign.design),
-                      )
-                    : store.dispatch(ViewSettings(
-                        navigator: Navigator.of(context),
-                        section: kSettingsCustomDesigns,
-                      )),
-                //onPressed: () => handleDesignAction(context, [group], EntityAction.settings),
-              ),
-            ),
-            FormCard(
-              children: <Widget>[
-                DesignPicker(
-                  label: localization.invoiceDesign,
-                  initialValue: settings.defaultInvoiceDesignId,
-                  onSelected: (value) => viewModel.onSettingsChanged(settings
-                      .rebuild((b) => b..defaultInvoiceDesignId = value.id)),
+          ListView(
+            children: <Widget>[
+              Padding(
+                padding: const EdgeInsets.only(
+                    top: 20, right: 16, bottom: 10, left: 16),
+                child: ElevatedButton(
+                  label: localization.customize.toUpperCase(),
+                  iconData: Icons.settings,
+                  onPressed: () => state.designState.customDesigns.isEmpty
+                      ? createEntity(
+                          context: context,
+                          entity: DesignEntity(
+                              design: state.designState.cleanDesign.design),
+                        )
+                      : store.dispatch(ViewSettings(
+                          navigator: Navigator.of(context),
+                          section: kSettingsCustomDesigns,
+                        )),
+                  //onPressed: () => handleDesignAction(context, [group], EntityAction.settings),
                 ),
-                if (company.isModuleEnabled(EntityType.quote))
+              ),
+              FormCard(
+                children: <Widget>[
                   DesignPicker(
-                    label: localization.quoteDesign,
-                    initialValue: settings.defaultQuoteDesignId,
+                    label: localization.invoiceDesign,
+                    initialValue: settings.defaultInvoiceDesignId,
                     onSelected: (value) => viewModel.onSettingsChanged(settings
-                        .rebuild((b) => b..defaultQuoteDesignId = value.id)),
+                        .rebuild((b) => b..defaultInvoiceDesignId = value.id)),
                   ),
-                if (company.isModuleEnabled(EntityType.credit))
-                  DesignPicker(
-                    label: localization.creditDesign,
-                    initialValue: settings.defaultCreditDesignId,
-                    onSelected: (value) => viewModel.onSettingsChanged(settings
-                        .rebuild((b) => b..defaultCreditDesignId = value.id)),
-                  ),
+                  if (company.isModuleEnabled(EntityType.quote))
+                    DesignPicker(
+                      label: localization.quoteDesign,
+                      initialValue: settings.defaultQuoteDesignId,
+                      onSelected: (value) => viewModel.onSettingsChanged(
+                          settings.rebuild(
+                              (b) => b..defaultQuoteDesignId = value.id)),
+                    ),
+                  if (company.isModuleEnabled(EntityType.credit))
+                    DesignPicker(
+                      label: localization.creditDesign,
+                      initialValue: settings.defaultCreditDesignId,
+                      onSelected: (value) => viewModel.onSettingsChanged(
+                          settings.rebuild(
+                              (b) => b..defaultCreditDesignId = value.id)),
+                    ),
+                  /*
                 AppDropdownButton(
                   labelText: localization.pageSize,
                   value: settings.pageSize,
@@ -180,9 +183,11 @@ class _InvoiceDesignState extends State<InvoiceDesign>
                                 fontSize == 0 ? SizedBox() : Text('$fontSize'),
                           ))
                       .toList(),
-                ),
-              ],
-            ),
+                ),                
+                 */
+                ],
+              ),
+              /*
             FormCard(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
@@ -222,8 +227,11 @@ class _InvoiceDesignState extends State<InvoiceDesign>
                   initialValue: settings.secondaryColor,
                 ),
               ],
-            ),
-          ]),
+            ),            
+             */
+            ],
+          ),
+          /*
           ListView(
             padding: const EdgeInsets.all(10),
             children: <Widget>[
@@ -268,15 +276,53 @@ class _InvoiceDesignState extends State<InvoiceDesign>
                         settings.rebuild((b) => b..embedDocuments = value)),
                   ),
                 ],
-              ),
+              ),              
             ],
           ),
+               */
           FormCard(
             child: MultiSelectList(
-              //selected: settings.pdfVariables[kPdfFieldsClientDetails].toList(),
-              options: settings.pdfVariables[kPdfFieldsClientDetails].toList(),
-              defaultSelected:
-                  settings.pdfVariables[kPdfFieldsClientDetails].toList(),
+              options: [
+                ...[
+                  ClientFields.name,
+                  ClientFields.idNumber,
+                  ClientFields.vatNumber,
+                  ClientFields.website,
+                  ClientFields.phone,
+                  ClientFields.address1,
+                  ClientFields.address2,
+                  ClientFields.cityStatePostal,
+                  ClientFields.postalCityState,
+                  ClientFields.country,
+                  ClientFields.custom1,
+                  ClientFields.custom2,
+                  ClientFields.custom3,
+                  ClientFields.custom4,
+                ].map((field) => '\$client.$field'),
+                ...[
+                  ContactFields.fullName,
+                  ContactFields.email,
+                  ContactFields.phone,
+                  ContactFields.custom1,
+                  ContactFields.custom2,
+                  ContactFields.custom3,
+                  ContactFields.custom4,
+                ].map((field) => '\$contact.$field'),
+              ],
+              defaultSelected: [
+                ...[
+                  ClientFields.name,
+                  ClientFields.idNumber,
+                  ClientFields.vatNumber,
+                  ClientFields.address1,
+                  ClientFields.address2,
+                  ClientFields.cityStatePostal,
+                  ClientFields.country,
+                ].map((field) => '\$client.$field'),
+                ...[
+                  ContactFields.email,
+                ].map((field) => '\$contact.$field'),
+              ],
               selected: settings.pdfVariables[kPdfFieldsClientDetails].toList(),
               onSelected: (values) {
                 viewModel.onSettingsChanged(settings.rebuild((b) => b
@@ -284,14 +330,38 @@ class _InvoiceDesignState extends State<InvoiceDesign>
               },
               addTitle: localization.addField,
               liveChanges: true,
+              prefix: 'client',
             ),
           ),
           FormCard(
             child: MultiSelectList(
-              options: [],
-              defaultSelected: [],
-              //selected: settings.pdfVariables[kPdfFieldsCompanyDetails].toList(),
-              selected: [],
+              options: [
+                CompanyFields.name,
+                CompanyFields.idNumber,
+                CompanyFields.vatNumber,
+                CompanyFields.website,
+                CompanyFields.email,
+                CompanyFields.phone,
+                CompanyFields.address1,
+                CompanyFields.address2,
+                CompanyFields.cityStatePostal,
+                CompanyFields.postalCityState,
+                CompanyFields.country,
+                CompanyFields.custom1,
+                CompanyFields.custom2,
+                CompanyFields.custom3,
+                CompanyFields.custom4,
+              ].map((field) => '\$company.$field').toList(),
+              defaultSelected: [
+                CompanyFields.name,
+                CompanyFields.idNumber,
+                CompanyFields.vatNumber,
+                CompanyFields.website,
+                CompanyFields.email,
+                CompanyFields.phone,
+              ].map((field) => '\$company.$field').toList(),
+              selected:
+                  settings.pdfVariables[kPdfFieldsCompanyDetails].toList(),
               onSelected: (values) {
                 viewModel.onSettingsChanged(settings.rebuild((b) => b
                   ..pdfVariables[kPdfFieldsCompanyDetails] =
@@ -299,14 +369,36 @@ class _InvoiceDesignState extends State<InvoiceDesign>
               },
               addTitle: localization.addField,
               liveChanges: true,
+              prefix: 'company',
             ),
           ),
           FormCard(
             child: MultiSelectList(
-              options: [],
-              defaultSelected: [],
-              //selected: settings.pdfVariables[kPdfFieldsCompanyAddress].toList(),
-              selected: [],
+              options: [
+                CompanyFields.name,
+                CompanyFields.idNumber,
+                CompanyFields.vatNumber,
+                CompanyFields.website,
+                CompanyFields.email,
+                CompanyFields.phone,
+                CompanyFields.address1,
+                CompanyFields.address2,
+                CompanyFields.cityStatePostal,
+                CompanyFields.postalCityState,
+                CompanyFields.country,
+                CompanyFields.custom1,
+                CompanyFields.custom2,
+                CompanyFields.custom3,
+                CompanyFields.custom4,
+              ].map((field) => '\$company.$field').toList(),
+              defaultSelected: [
+                CompanyFields.address1,
+                CompanyFields.address2,
+                CompanyFields.cityStatePostal,
+                CompanyFields.country,
+              ].map((field) => '\$company.$field').toList(),
+              selected:
+                  settings.pdfVariables[kPdfFieldsCompanyAddress].toList(),
               onSelected: (values) {
                 viewModel.onSettingsChanged(settings.rebuild((b) => b
                   ..pdfVariables[kPdfFieldsCompanyAddress] =
@@ -314,14 +406,37 @@ class _InvoiceDesignState extends State<InvoiceDesign>
               },
               addTitle: localization.addField,
               liveChanges: true,
+              prefix: 'company',
             ),
           ),
           FormCard(
             child: MultiSelectList(
-              options: [],
-              defaultSelected: [],
-              //selected: settings.pdfVariables[kPdfFieldsInvoiceDetails].toList(),
-              selected: [],
+              options: [
+                ...[
+                  InvoiceFields.invoiceNumber,
+                  InvoiceFields.poNumber,
+                  InvoiceFields.invoiceDate,
+                  InvoiceFields.dueDate,
+                  InvoiceFields.amount,
+                  InvoiceFields.balance,
+                  InvoiceFields.customValue1,
+                  InvoiceFields.customValue2,
+                  InvoiceFields.customValue3,
+                  InvoiceFields.customValue4,
+                ].map((field) => '\$invoice.$field'),
+                ...[
+                  ClientFields.balance,
+                ].map((field) => '\$client.$field')
+              ],
+              defaultSelected: [
+                InvoiceFields.invoiceNumber,
+                InvoiceFields.poNumber,
+                InvoiceFields.invoiceDate,
+                InvoiceFields.dueDate,
+                InvoiceFields.balance,
+              ],
+              selected:
+                  settings.pdfVariables[kPdfFieldsInvoiceDetails].toList(),
               onSelected: (values) {
                 viewModel.onSettingsChanged(settings.rebuild((b) => b
                   ..pdfVariables[kPdfFieldsInvoiceDetails] =
@@ -329,42 +444,103 @@ class _InvoiceDesignState extends State<InvoiceDesign>
               },
               addTitle: localization.addField,
               liveChanges: true,
+              prefix: 'invoice',
             ),
           ),
+          /*
           FormCard(
             child: MultiSelectList(
-              options: [],
-              defaultSelected: [],
-              //selected: settings.pdfVariables[kPdfFieldsQuoteDetails].toList(),
-              selected: [],
+              options: [
+                ...[
+                  QuoteFields.number,
+                  QuoteFields.poNumber,
+                  QuoteFields.date,
+                  QuoteFields.validUntil,
+                  QuoteFields.amount,
+                  QuoteFields.customValue1,
+                  QuoteFields.customValue2,
+                  QuoteFields.customValue3,
+                  QuoteFields.customValue4,
+                ].map((field) => '\$quote.$field'),
+                ...[
+                  ClientFields.balance,
+                ].map((field) => '\$client.$field')
+              ],
+              defaultSelected: [
+                QuoteFields.number,
+                QuoteFields.poNumber,
+                QuoteFields.date,
+                QuoteFields.validUntil,
+                QuoteFields.amount,
+              ],
+              selected: settings.pdfVariables[kPdfFieldsQuoteDetails].toList(),
               onSelected: (values) {
                 viewModel.onSettingsChanged(settings.rebuild((b) => b
                   ..pdfVariables[kPdfFieldsQuoteDetails] = BuiltList(values)));
               },
               addTitle: localization.addField,
               liveChanges: true,
+              prefix: 'quote',
             ),
           ),
           FormCard(
             child: MultiSelectList(
-              options: [],
-              defaultSelected: [],
-              //selected: settings.pdfVariables[kPdfFieldsCreditDetails].toList(),
-              selected: [],
+              options: [
+                ...[
+                  CreditFields.number,
+                  CreditFields.poNumber,
+                  CreditFields.date,
+                  CreditFields.amount,
+                  CreditFields.balance,
+                  CreditFields.customValue1,
+                  CreditFields.customValue2,
+                  CreditFields.customValue3,
+                  CreditFields.customValue4,
+                ].map((field) => '\$credit.$field'),
+                ...[
+                  ClientFields.balance,
+                ].map((field) => '\$client.$field')
+              ],
+              defaultSelected: [
+                CreditFields.number,
+                CreditFields.poNumber,
+                CreditFields.date,
+                CreditFields.balance,
+              ],
+              selected: settings.pdfVariables[kPdfFieldsCreditDetails].toList(),
               onSelected: (values) {
                 viewModel.onSettingsChanged(settings.rebuild((b) => b
                   ..pdfVariables[kPdfFieldsCreditDetails] = BuiltList(values)));
               },
               addTitle: localization.addField,
               liveChanges: true,
+              prefix: 'credit',
             ),
           ),
+           */
           FormCard(
             child: MultiSelectList(
-              options: [],
-              defaultSelected: [],
-              //selected: settings.pdfVariables[kPdfFieldsProductColumns].toList(),
-              selected: [],
+              options: [
+                ProductItemFields.productKey,
+                ProductItemFields.notes,
+                ProductItemFields.quantity,
+                ProductItemFields.cost,
+                ProductItemFields.discount,
+                ProductItemFields.lineTotal,
+                ProductItemFields.custom1,
+                ProductItemFields.custom2,
+                ProductItemFields.custom3,
+                ProductItemFields.custom4,
+              ].map((field) => '\$product.$field').toList(),
+              defaultSelected: [
+                ProductItemFields.productKey,
+                ProductItemFields.notes,
+                ProductItemFields.quantity,
+                ProductItemFields.cost,
+                ProductItemFields.lineTotal,
+              ].map((field) => '\$product.$field').toList(),
+              selected:
+                  settings.pdfVariables[kPdfFieldsProductColumns].toList(),
               onSelected: (values) {
                 viewModel.onSettingsChanged(settings.rebuild((b) => b
                   ..pdfVariables[kPdfFieldsProductColumns] =
@@ -372,22 +548,25 @@ class _InvoiceDesignState extends State<InvoiceDesign>
               },
               addTitle: localization.addField,
               liveChanges: true,
+              prefix: 'product',
             ),
           ),
+          /*
           FormCard(
             child: MultiSelectList(
               options: [],
               defaultSelected: [],
-              //selected: settings.pdfVariables[kPdfFieldsTaskColumns].toList(),
-              selected: [],
+              selected: settings.pdfVariables[kPdfFieldsTaskColumns].toList(),
               onSelected: (values) {
                 viewModel.onSettingsChanged(settings.rebuild((b) => b
                   ..pdfVariables[kPdfFieldsTaskColumns] = BuiltList(values)));
               },
               addTitle: localization.addField,
               liveChanges: true,
+              prefix: 'task',
             ),
-          ),
+          ),          
+           */
         ],
       ),
     );

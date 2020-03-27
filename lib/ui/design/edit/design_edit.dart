@@ -158,8 +158,7 @@ class _DesignEditState extends State<DesignEdit>
           } else if (kIsWeb) {
             setState(() {
               _isLoading = false;
-              _pdfString = 'data:application/pdf;base64,' +
-                  base64Encode(response.bodyBytes);
+              _pdfString = 'data:application/pdf;base64,' + base64Encode(response.bodyBytes);
             });
           } else {
             final document = await PDFDocument.openData(response.bodyBytes);

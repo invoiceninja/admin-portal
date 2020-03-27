@@ -5,15 +5,12 @@ import 'package:invoiceninja_flutter/data/models/entities.dart';
 import 'package:invoiceninja_flutter/ui/app/form_card.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/app_dropdown_button.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/app_form.dart';
-import 'package:invoiceninja_flutter/ui/app/forms/bool_dropdown_button.dart';
-import 'package:invoiceninja_flutter/ui/app/forms/date_picker.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/decorated_form_field.dart';
 import 'package:invoiceninja_flutter/ui/settings/generated_numbers_vm.dart';
 import 'package:invoiceninja_flutter/ui/app/edit_scaffold.dart';
 import 'package:invoiceninja_flutter/utils/completers.dart';
 import 'package:invoiceninja_flutter/utils/formatting.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
-import 'package:invoiceninja_flutter/utils/platforms.dart';
 
 class GeneratedNumbers extends StatefulWidget {
   const GeneratedNumbers({
@@ -176,6 +173,8 @@ class _GeneratedNumbersState extends State<GeneratedNumbers>
                       ),
                     ],
                   ),
+                  // TODO Re-enable with quotes/recurring
+                  /*
                   BoolDropdownButton(
                     iconData: Icons.content_copy,
                     label: localization.sharedInvoiceQuoteCounter,
@@ -183,6 +182,7 @@ class _GeneratedNumbersState extends State<GeneratedNumbers>
                     onChanged: (value) => viewModel.onSettingsChanged(settings
                         .rebuild((b) => b..sharedInvoiceQuoteCounter = value)),
                   ),
+                  SizedBox(height: 15),
                   DecoratedFormField(
                     label: localization.recurringPrefix,
                     controller: _recurringPrefixController,
@@ -219,6 +219,7 @@ class _GeneratedNumbersState extends State<GeneratedNumbers>
                       onSelected: (value) => viewModel.onSettingsChanged(
                           settings.rebuild((b) => b..resetCounterDate = value)),
                     ),
+                   */
                 ],
               ),
             ],

@@ -37,9 +37,9 @@ abstract class TaxRateItemResponse
 
 class TaxRateFields {
   static const String name = 'name';
-  static const String updatedAt = 'updatedAt';
-  static const String archivedAt = 'archivedAt';
-  static const String isDeleted = 'isDeleted';
+  static const String updatedAt = 'updated_at';
+  static const String archivedAt = 'archived_at';
+  static const String isDeleted = 'is_deleted';
 }
 
 abstract class TaxRateEntity extends Object

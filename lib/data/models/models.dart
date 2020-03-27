@@ -14,13 +14,11 @@ export 'package:invoiceninja_flutter/data/models/payment_model.dart';
 export 'package:invoiceninja_flutter/data/models/product_model.dart';
 export 'package:invoiceninja_flutter/data/models/design_model.dart';
 export 'package:invoiceninja_flutter/data/models/project_model.dart';
-//
 export 'package:invoiceninja_flutter/data/models/static/country_model.dart';
 export 'package:invoiceninja_flutter/data/models/static/currency_model.dart';
 export 'package:invoiceninja_flutter/data/models/static/date_format_model.dart';
 export 'package:invoiceninja_flutter/data/models/static/datetime_format_model.dart';
 export 'package:invoiceninja_flutter/data/models/static/industry_model.dart';
-export 'package:invoiceninja_flutter/data/models/static/invoice_design_model.dart';
 export 'package:invoiceninja_flutter/data/models/static/invoice_status_model.dart';
 export 'package:invoiceninja_flutter/data/models/static/language_model.dart';
 export 'package:invoiceninja_flutter/data/models/static/payment_type_model.dart';

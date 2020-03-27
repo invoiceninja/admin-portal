@@ -3,12 +3,11 @@ import 'package:built_collection/built_collection.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/redux/ui/list_ui_state.dart';
 
-
 var memoizedDropdownCreditList = memo4(
-        (BuiltMap<String, InvoiceEntity> creditMap,
-        BuiltMap<String, ClientEntity> clientMap,
-        BuiltList<String> creditList,
-        String clientId) =>
+    (BuiltMap<String, InvoiceEntity> creditMap,
+            BuiltMap<String, ClientEntity> clientMap,
+            BuiltList<String> creditList,
+            String clientId) =>
         dropdownCreditSelector(creditMap, clientMap, creditList, clientId));
 
 List<String> dropdownCreditSelector(
@@ -33,7 +32,12 @@ List<String> dropdownCreditSelector(
   list.sort((creditAId, creditBId) {
     final creditA = creditMap[creditAId];
     final creditB = creditMap[creditBId];
-    return creditA.compareTo(creditB, ClientFields.name, true);
+    return creditA.compareTo(
+      invoice: creditB,
+      clientMap: clientMap,
+      sortAscending: true,
+      sortField: ClientFields.name,
+    );
   });
 
   return list;
@@ -93,8 +97,12 @@ List<String> filteredCreditsSelector(
   }).toList();
 
   list.sort((creditAId, creditBId) {
-    return creditMap[creditAId].compareTo(creditMap[creditBId],
-        creditListState.sortField, creditListState.sortAscending);
+    return creditMap[creditAId].compareTo(
+      invoice: creditMap[creditBId],
+      sortField: creditListState.sortField,
+      sortAscending: creditListState.sortAscending,
+      clientMap: clientMap,
+    );
   });
 
   return list;

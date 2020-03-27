@@ -137,16 +137,16 @@ abstract class DesignEntity extends Object
 
   int compareTo(DesignEntity design, String sortField, bool sortAscending) {
     int response = 0;
-    DesignEntity designA = sortAscending ? this : design;
-    DesignEntity designB = sortAscending ? design : this;
+    final designA = sortAscending ? this : design;
+    final designB = sortAscending ? design : this;
 
     switch (sortField) {
-      // STARTER: sort switch - do not remove comment
+      case DesignFields.updatedAt:
+        response = designA.updatedAt.compareTo(designB.updatedAt);
     }
 
     if (response == 0) {
-      // STARTER: sort default - do not remove comment
-      return 0;
+      return designA.name.toLowerCase().compareTo(designB.name.toLowerCase());
     } else {
       return response;
     }

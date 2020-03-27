@@ -1,6 +1,5 @@
 import 'dart:async';
 import 'dart:convert';
-import 'package:package_info/package_info.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
@@ -46,11 +45,13 @@ import 'package:invoiceninja_flutter/ui/settings/tax_settings_vm.dart';
 import 'package:invoiceninja_flutter/utils/colors.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:invoiceninja_flutter/utils/platforms.dart';
+import 'package:invoiceninja_flutter/utils/sentry.dart';
 import 'package:local_auth/local_auth.dart';
 import 'package:redux/redux.dart';
 import 'package:redux_logging/redux_logging.dart';
 import 'package:sentry/sentry.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+
 // STARTER: import - do not remove comment
 import 'package:invoiceninja_flutter/ui/design/design_screen.dart';
 import 'package:invoiceninja_flutter/ui/design/edit/design_edit_vm.dart';
@@ -77,15 +78,11 @@ import 'package:invoiceninja_flutter/redux/company_gateway/company_gateway_middl
 void main({bool isTesting = false}) async {
   WidgetsFlutterBinding.ensureInitialized();
 
-  final packageInfo = await PackageInfo.fromPlatform();
   final SentryClient _sentry = Config.SENTRY_DNS.isEmpty
       ? null
       : SentryClient(
           dsn: Config.SENTRY_DNS,
-          environmentAttributes: Event(
-            release: packageInfo.version,
-            environment: Config.PLATFORM,
-          ));
+          environmentAttributes: await getSentryEvent());
 
   final store = Store<AppState>(appReducer,
       initialState: await _initialState(isTesting),
@@ -120,35 +117,29 @@ void main({bool isTesting = false}) async {
                 ),
               ]));
 
-  Future<void> _reportError(dynamic error, dynamic stackTrace) async {
-    print('Caught error: $error');
-    if (kDebugMode) {
-      print(stackTrace);
-      return;
-    } else {
-      _sentry.captureException(
-        exception: error,
-        stackTrace: stackTrace,
-      );
-    }
-  }
-
   if (_sentry == null) {
     runApp(InvoiceNinjaApp(store: store));
   } else {
     runZoned<Future<void>>(() async {
       runApp(InvoiceNinjaApp(store: store));
-    }, onError: (dynamic error, dynamic stackTrace) {
-      if (store.state.reportErrors) {
-        _reportError(error, stackTrace);
+    }, onError: (dynamic exception, dynamic stackTrace) async {
+      if (kDebugMode) {
+        print(stackTrace);
+      } else if (store.state.reportErrors) {
+        final event = await getSentryEvent(
+          state: store.state,
+          exception: exception,
+          stackTrace: stackTrace,
+        );
+        _sentry.capture(event: event);
       }
     });
   }
 
   FlutterError.onError = (FlutterErrorDetails details) {
-    if (kDebugMode || !store.state.reportErrors) {
+    if (kDebugMode) {
       FlutterError.dumpErrorToConsole(details);
-    } else {
+    } else if (store.state.reportErrors) {
       Zone.current.handleUncaughtError(details.exception, details.stack);
     }
   };

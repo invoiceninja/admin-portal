@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_typeahead/flutter_typeahead.dart';
 import 'package:invoiceninja_flutter/constants.dart';
@@ -139,11 +140,19 @@ class _InvoiceEditItemsDesktopState extends State<InvoiceEditItemsDesktop> {
                       noItemsFoundBuilder: (context) => SizedBox(),
                       suggestionsCallback: (pattern) {
                         return productIds
+                            .where((productId) => productState
+                                .map[productId].productKey
+                                .toLowerCase()
+                                .contains(pattern.toLowerCase()))
+                            .toList();
+                        /*
+                        return productIds
                             .where((productId) => productState.map[productId]
                                 .matchesFilter(pattern))
-                            .toList();
+                            .toList();                            
+                         */
                       },
-                      itemBuilder: (context, suggestion) {
+                      itemBuilder: (context, productId) {
                         // TODO fix this
                         /*
                         return ListTile(
@@ -153,17 +162,17 @@ class _InvoiceEditItemsDesktopState extends State<InvoiceEditItemsDesktop> {
                         return Listener(
                           child: Container(
                             color: Theme.of(context).cardColor,
-                            child: Padding(
-                              padding: const EdgeInsets.all(12),
-                              child: ListTile(
-                                title: Text(
-                                    productState.map[suggestion].productKey),
-                              ),
+                            child: ListTile(
+                              title:
+                                  Text(productState.map[productId].productKey),
                             ),
                           ),
                           onPointerDown: (_) {
+                            if (!kIsWeb) {
+                              return;
+                            }
                             final item = lineItems[index];
-                            final product = productState.map[suggestion];
+                            final product = productState.map[productId];
                             final updatedItem = item.rebuild((b) => b
                               ..productKey = product.productKey
                               ..notes = product.notes
@@ -171,7 +180,17 @@ class _InvoiceEditItemsDesktopState extends State<InvoiceEditItemsDesktop> {
                               ..quantity = item.quantity == 0 &&
                                       viewModel.state.company.defaultQuantity
                                   ? 1
-                                  : item.quantity);
+                                  : item.quantity
+                              ..customValue1 = product.customValue1
+                              ..customValue2 = product.customValue2
+                              ..customValue3 = product.customValue3
+                              ..customValue4 = product.customValue4
+                              ..taxRate1 = product.taxRate1
+                              ..taxName1 = product.taxName1
+                              ..taxRate2 = product.taxRate2
+                              ..taxName2 = product.taxName2
+                              ..taxRate3 = product.taxRate3
+                              ..taxName3 = product.taxName3);
                             viewModel.onChangedInvoiceItem(updatedItem, index);
                             _updateTable();
                           },
@@ -187,7 +206,17 @@ class _InvoiceEditItemsDesktopState extends State<InvoiceEditItemsDesktop> {
                           ..quantity = item.quantity == 0 &&
                                   viewModel.state.company.defaultQuantity
                               ? 1
-                              : item.quantity);
+                              : item.quantity
+                          ..customValue1 = product.customValue1
+                          ..customValue2 = product.customValue2
+                          ..customValue3 = product.customValue3
+                          ..customValue4 = product.customValue4
+                          ..taxRate1 = product.taxRate1
+                          ..taxName1 = product.taxName1
+                          ..taxRate2 = product.taxRate2
+                          ..taxName2 = product.taxName2
+                          ..taxRate3 = product.taxRate3
+                          ..taxName3 = product.taxName3);
                         viewModel.onChangedInvoiceItem(updatedItem, index);
                         _updateTable();
                       },

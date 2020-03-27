@@ -80,14 +80,14 @@ class QuoteListItem extends StatelessWidget {
               Expanded(
                 child: Text(
                   client.displayName,
-                  style: Theme.of(context).textTheme.title,
+                  style: Theme.of(context).textTheme.headline6,
                 ),
               ),
               Text(
                   formatNumber(
                       quote.balance > 0 ? quote.balance : quote.amount, context,
                       clientId: quote.clientId),
-                  style: Theme.of(context).textTheme.title),
+                  style: Theme.of(context).textTheme.headline6),
             ],
           ),
         ),

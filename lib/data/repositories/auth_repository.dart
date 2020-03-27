@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:convert';
 import 'dart:core';
+import 'dart:io';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:invoiceninja_flutter/.env.dart';
@@ -33,7 +34,7 @@ class AuthRepository {
       'last_name': lastName,
       'terms_of_service': true,
       'privacy_policy': true,
-      'token_name': '${Config.PLATFORM.toLowerCase()}-client',
+      'token_name': _tokenName,
     };
 
     if ((url ?? '').isEmpty) {
@@ -91,7 +92,7 @@ class AuthRepository {
 
   Future<dynamic> addCompany({String token}) async {
     final data = {
-      'token_name': '${Config.PLATFORM.toLowerCase()}-client',
+      'token_name': _tokenName,
     };
 
     return webClient.post('/companies', token, data: json.encode(data));
@@ -128,4 +129,7 @@ class AuthRepository {
 
     return serializers.deserializeWith(LoginResponse.serializer, response);
   }
+
+  String get _tokenName =>
+      kIsWeb ? 'web' : Platform.isAndroid ? 'android' : 'ios';
 }

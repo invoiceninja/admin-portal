@@ -37,7 +37,7 @@ class _TemplatesAndRemindersState extends State<TemplatesAndReminders>
       GlobalKey<FormState>(debugLabel: '_templatesAndReminders');
   final _debouncer = Debouncer();
 
-  EmailTemplate _template = EmailTemplate.invoiceEmail;
+  EmailTemplate _template = EmailTemplate.invoice;
   String _lastSubject;
   String _lastBody;
   String _subjectPreview = '';
@@ -85,7 +85,7 @@ class _TemplatesAndRemindersState extends State<TemplatesAndReminders>
     _controllers
         .forEach((dynamic controller) => controller.removeListener(_onChanged));
 
-    _loadTemplate(EmailTemplate.invoiceEmail);
+    _loadTemplate(EmailTemplate.invoice);
 
     _controllers
         .forEach((dynamic controller) => controller.addListener(_onChanged));
@@ -106,47 +106,47 @@ class _TemplatesAndRemindersState extends State<TemplatesAndReminders>
       final String subject = _subjectController.text.trim();
       SettingsEntity settings = widget.viewModel.settings;
 
-      if (_template == EmailTemplate.invoiceEmail) {
+      if (_template == EmailTemplate.invoice) {
         settings = settings.rebuild((b) => b
           ..emailBodyInvoice = body
           ..emailSubjectInvoice = subject);
-      } else if (_template == EmailTemplate.quoteEmail) {
+      } else if (_template == EmailTemplate.quote) {
         settings = settings.rebuild((b) => b
           ..emailBodyQuote = body
           ..emailSubjectQuote = subject);
-      } else if (_template == EmailTemplate.paymentEmail) {
+      } else if (_template == EmailTemplate.payment) {
         settings = settings.rebuild((b) => b
           ..emailBodyPayment = body
           ..emailSubjectPayment = subject);
-      } else if (_template == EmailTemplate.partialPaymentEmail) {
+      } else if (_template == EmailTemplate.partial_payment) {
         settings = settings.rebuild((b) => b
           ..emailBodyPaymentPartial = body
           ..emailSubjectPaymentPartial = subject);
-      } else if (_template == EmailTemplate.firstReminder) {
+      } else if (_template == EmailTemplate.reminder1) {
         settings = settings.rebuild((b) => b
           ..emailBodyReminder1 = body
           ..emailSubjectReminder1 = subject);
-      } else if (_template == EmailTemplate.secondReminder) {
+      } else if (_template == EmailTemplate.reminder2) {
         settings = settings.rebuild((b) => b
           ..emailBodyReminder2 = body
           ..emailSubjectReminder2 = subject);
-      } else if (_template == EmailTemplate.thirdReminder) {
+      } else if (_template == EmailTemplate.reminder3) {
         settings = settings.rebuild((b) => b
           ..emailBodyReminder3 = body
           ..emailSubjectReminder3 = subject);
-      } else if (_template == EmailTemplate.endlessReminder) {
+      } else if (_template == EmailTemplate.reminder_endless) {
         settings = settings.rebuild((b) => b
           ..emailBodyReminder4 = body
           ..emailSubjectReminder4 = subject);
-      } else if (_template == EmailTemplate.firstCustom) {
+      } else if (_template == EmailTemplate.custom1) {
         settings = settings.rebuild((b) => b
           ..emailBodyCustom1 = body
           ..emailSubjectCustom1 = subject);
-      } else if (_template == EmailTemplate.secondCustom) {
+      } else if (_template == EmailTemplate.custom2) {
         settings = settings.rebuild((b) => b
           ..emailBodyCustom2 = body
           ..emailSubjectCustom2 = subject);
-      } else if (_template == EmailTemplate.thirdCustom) {
+      } else if (_template == EmailTemplate.custom3) {
         settings = settings.rebuild((b) => b
           ..emailBodyCustom3 = body
           ..emailSubjectCustom3 = subject);
@@ -173,22 +173,20 @@ class _TemplatesAndRemindersState extends State<TemplatesAndReminders>
       _lastBody = body;
     }
 
-    loadTemplate(
+    setState(() {
+      _isLoading = true;
+    });
+
+    loadEmailTemplate(
         context: context,
+        template: '$_template',
         body: body,
         subject: subject,
-        onStart: (subject, body) {
-          setState(() {
-            _isLoading = true;
-            _subjectPreview = subject;
-            _bodyPreview = body;
-          });
-        },
-        onComplete: (subject, body) {
+        onComplete: (subject, body, wrapper) {
           setState(() {
             _isLoading = false;
-            _subjectPreview = subject;
-            _bodyPreview = body;
+            _subjectPreview = subject.trim();
+            _bodyPreview = wrapper.replaceFirst('\$body', body).trim();
           });
         });
   }
@@ -198,7 +196,7 @@ class _TemplatesAndRemindersState extends State<TemplatesAndReminders>
     final localization = AppLocalization.of(context);
     final viewModel = widget.viewModel;
     final state = viewModel.state;
-    final settings = viewModel.settings;
+    //final settings = viewModel.settings;
 
     return EditScaffold(
       title: localization.templatesAndReminders,
@@ -249,7 +247,8 @@ class _TemplatesAndRemindersState extends State<TemplatesAndReminders>
                   maxLines: 8,
                 ),
               ]),
-              if (_template == EmailTemplate.firstReminder)
+              /*
+              if (_template == EmailTemplate.reminder1)
                 ReminderSettings(
                   key: ValueKey('__reminder1_${_template}__'),
                   viewModel: viewModel,
@@ -266,7 +265,7 @@ class _TemplatesAndRemindersState extends State<TemplatesAndReminders>
                         ..lateFeeAmount1 = feeAmount
                         ..lateFeePercent1 = feePercent)),
                 ),
-              if (_template == EmailTemplate.secondReminder)
+              if (_template == EmailTemplate.reminder2)
                 ReminderSettings(
                   key: ValueKey('__reminder2_${_template}__'),
                   viewModel: viewModel,
@@ -283,7 +282,7 @@ class _TemplatesAndRemindersState extends State<TemplatesAndReminders>
                         ..lateFeeAmount2 = feeAmount
                         ..lateFeePercent2 = feePercent)),
                 ),
-              if (_template == EmailTemplate.thirdReminder)
+              if (_template == EmailTemplate.reminder3)
                 ReminderSettings(
                   key: ValueKey('__reminder3_${_template}__'),
                   viewModel: viewModel,
@@ -300,7 +299,7 @@ class _TemplatesAndRemindersState extends State<TemplatesAndReminders>
                         ..lateFeeAmount3 = feeAmount
                         ..lateFeePercent3 = feePercent)),
                 ),
-              if (_template == EmailTemplate.endlessReminder)
+              if (_template == EmailTemplate.reminder_endless)
                 FormCard(
                   children: <Widget>[
                     BoolDropdownButton(
@@ -330,7 +329,8 @@ class _TemplatesAndRemindersState extends State<TemplatesAndReminders>
                             .values
                             .toList()),
                   ],
-                ),
+                ),                
+               */
             ],
           ),
           EmailPreview(
@@ -495,7 +495,7 @@ class _ReminderSettingsState extends State<ReminderSettings> {
 }
 
 class TemplatePreview extends StatefulWidget {
-  const TemplatePreview(this.html);
+  const TemplatePreview({Key key, this.html}) : super(key: key);
 
   final String html;
 
@@ -511,18 +511,13 @@ class _TemplatePreviewState extends State<TemplatePreview>
   bool get wantKeepAlive => true;
 
   @override
-  void initState() {
-    super.initState();
-  }
-
-  @override
   void didUpdateWidget(oldWidget) {
     super.didUpdateWidget(oldWidget);
 
-    if (!kIsWeb) {
-      if (widget.html != oldWidget.html) {
-        _webViewController.loadUrl(widget.html);
-      }
+    if (!kIsWeb && widget.html != oldWidget.html) {
+      _webViewController.loadUrl(
+          Uri.dataFromString(widget.html, mimeType: 'text/html').toString());
+      debugPrint('## LOAD: ${widget.html}');
     }
   }
 
@@ -535,8 +530,9 @@ class _TemplatePreviewState extends State<TemplatePreview>
       return HtmlElementView(viewType: widget.html);
     } else {
       return WebView(
-        debuggingEnabled: true,
-        initialUrl: widget.html,
+        //debuggingEnabled: true,
+        initialUrl:
+            Uri.dataFromString(widget.html, mimeType: 'text/html').toString(),
         onWebViewCreated: (WebViewController webViewController) {
           _webViewController = webViewController;
         },
@@ -573,19 +569,19 @@ class EmailPreview extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
               Padding(
-                padding: const EdgeInsets.only(
-                    left: 8, top: 12, bottom: 8, right: 8),
+                padding: const EdgeInsets.all(14),
                 child: Text(
                   subject,
-                  style: TextStyle(
-                    color: Colors.black,
-                    fontWeight: FontWeight.bold,
-                    fontSize: 20,
-                  ),
+                  style: Theme.of(context).textTheme.headline6.copyWith(
+                        color: Colors.black,
+                        fontWeight: FontWeight.w700,
+                      ),
                 ),
               ),
               Expanded(
-                child: TemplatePreview(body),
+                child: TemplatePreview(
+                  html: body,
+                ),
               ),
             ],
           )

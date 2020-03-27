@@ -85,8 +85,6 @@ part 'serializers.g.dart';
   DatetimeFormatListResponse,
   IndustryItemResponse,
   IndustryListResponse,
-  InvoiceDesignItemResponse,
-  InvoiceDesignListResponse,
   LanguageItemResponse,
   LanguageListResponse,
   PaymentTypeItemResponse,

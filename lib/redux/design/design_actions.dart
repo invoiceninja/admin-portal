@@ -258,8 +258,6 @@ void handleDesignAction(
   }
 
   final store = StoreProvider.of<AppState>(context);
-  final state = store.state;
-  final CompanyEntity company = state.company;
   final localization = AppLocalization.of(context);
   final design = designs.first as DesignEntity;
   final designIds = designs.map((design) => design.id).toList();

@@ -80,7 +80,7 @@ class CreditListItem extends StatelessWidget {
               Expanded(
                 child: Text(
                   client.displayName,
-                  style: Theme.of(context).textTheme.title,
+                  style: Theme.of(context).textTheme.headline6,
                 ),
               ),
               Text(
@@ -88,7 +88,7 @@ class CreditListItem extends StatelessWidget {
                       credit.balance > 0 ? credit.balance : credit.amount,
                       context,
                       clientId: credit.clientId),
-                  style: Theme.of(context).textTheme.title),
+                  style: Theme.of(context).textTheme.headline6),
             ],
           ),
         ),

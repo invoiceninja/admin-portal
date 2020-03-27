@@ -116,13 +116,13 @@ class ExpenseListItem extends StatelessWidget {
                       ? expense.publicNotes
                       : formatDate(expense.expenseDate, context),
                   overflow: TextOverflow.ellipsis,
-                  style: Theme.of(context).textTheme.title,
+                  style: Theme.of(context).textTheme.headline6,
                 ),
               ),
               Text(
                   formatNumber(expense.amountWithTax, context,
                       currencyId: expense.expenseCurrencyId),
-                  style: Theme.of(context).textTheme.title)
+                  style: Theme.of(context).textTheme.headline6)
             ],
           ),
         ),

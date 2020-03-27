@@ -39,36 +39,34 @@ abstract class InvoiceItemResponse
 }
 
 class InvoiceFields {
-  static const String amount = 'amount';
-  static const String balance = 'balance';
-  static const String clientId = 'clientId';
+  static const String amount = 'invoice_total';
+  static const String balance = 'balance_due';
+  static const String clientId = 'client_id';
   static const String client = 'client';
-  static const String statusId = 'statusId';
-  static const String number = 'number';
+  static const String statusId = 'status_id';
+  static const String invoiceNumber = 'invoice_number';
   static const String discount = 'discount';
-  static const String poNumber = 'poNumber';
-  static const String date = 'date';
-  static const String dueDate = 'dueDate';
+  static const String poNumber = 'po_number';
+  static const String invoiceDate = 'invoice_date';
+  static const String dueDate = 'due_date';
   static const String terms = 'terms';
-  static const String footer = 'invoiceFooter';
+  static const String footer = 'footer';
   static const String partial = 'partial';
-  static const String partialDueDate = 'partialDueDate';
-  static const String publicNotes = 'publicNotes';
-  static const String privateNotes = 'privateNotes';
-  static const String invoiceTypeId = 'invoiceTypeId';
-  static const String isRecurring = 'isRecurring';
-  static const String frequencyId = 'frequencyId';
-  static const String startDate = 'startDate';
-  static const String endDate = 'endDate';
-
-  static const String customValue1 = 'customValue1';
-  static const String customValue2 = 'customValue2';
-  static const String customValue3 = 'customValue3';
-  static const String customValue4 = 'customValue4';
-
-  static const String updatedAt = 'updatedAt';
-  static const String archivedAt = 'archivedAt';
-  static const String isDeleted = 'isDeleted';
+  static const String partialDueDate = 'partial_due_date';
+  static const String publicNotes = 'public_notes';
+  static const String privateNotes = 'private_notes';
+  static const String invoiceTypeId = 'invoice_type_id';
+  static const String isRecurring = 'is_recurring';
+  static const String frequencyId = 'frequency_id';
+  static const String startDate = 'start_date';
+  static const String endDate = 'end_date';
+  static const String customValue1 = 'custom1';
+  static const String customValue2 = 'custom2';
+  static const String customValue3 = 'custom3';
+  static const String customValue4 = 'custom4';
+  static const String updatedAt = 'updated_at';
+  static const String archivedAt = 'archived_at';
+  static const String isDeleted = 'is_deleted';
 }
 
 abstract class InvoiceEntity extends Object
@@ -179,6 +177,7 @@ abstract class InvoiceEntity extends Object
   @BuiltValueField(wireName: 'number')
   String get number;
 
+  @override
   double get discount;
 
   @BuiltValueField(wireName: 'po_number')
@@ -335,7 +334,11 @@ abstract class InvoiceEntity extends Object
   //String get last_login;
   //String get custom_messages;
 
-  int compareTo(InvoiceEntity invoice, String sortField, bool sortAscending) {
+  int compareTo(
+      {InvoiceEntity invoice,
+      String sortField,
+      bool sortAscending,
+      BuiltMap<String, ClientEntity> clientMap}) {
     int response = 0;
     final InvoiceEntity invoiceA = sortAscending ? this : invoice;
     final InvoiceEntity invoiceB = sortAscending ? invoice : this;
@@ -347,7 +350,7 @@ abstract class InvoiceEntity extends Object
       case InvoiceFields.updatedAt:
         response = invoiceA.updatedAt.compareTo(invoiceB.updatedAt);
         break;
-      case InvoiceFields.date:
+      case InvoiceFields.invoiceDate:
         response = invoiceA.date.compareTo(invoiceB.date);
         break;
       case InvoiceFields.balance:
@@ -376,6 +379,13 @@ abstract class InvoiceEntity extends Object
         response = invoiceA.customValue4
             .toLowerCase()
             .compareTo(invoiceB.customValue4.toLowerCase());
+        break;
+      case InvoiceFields.client:
+        final clientA = clientMap[invoiceA.clientId] ?? ClientEntity();
+        final clientB = clientMap[invoiceB.clientId] ?? ClientEntity();
+        response = clientA.listDisplayName
+            .toLowerCase()
+            .compareTo(clientB.listDisplayName.toLowerCase());
         break;
     }
 
@@ -560,8 +570,8 @@ abstract class InvoiceEntity extends Object
   bool get isCredit => entityType == EntityType.credit;
 
   EmailTemplate get emailTemplate => isQuote
-      ? EmailTemplate.quoteEmail
-      : isCredit ? EmailTemplate.creditEmail : EmailTemplate.invoiceEmail;
+      ? EmailTemplate.quote
+      : isCredit ? EmailTemplate.credit : EmailTemplate.invoice;
 
   double get requestedAmount => partial > 0 ? partial : amount;
 
@@ -694,6 +704,19 @@ abstract class InvoiceEntity extends Object
       invitations.isEmpty ? '' : invitations.first.downloadLink;
 
   static Serializer<InvoiceEntity> get serializer => _$invoiceEntitySerializer;
+}
+
+class ProductItemFields {
+  static const String productKey = 'product_key';
+  static const String notes = 'notes';
+  static const String cost = 'cost';
+  static const String quantity = 'quantity';
+  static const String lineTotal = 'line_total';
+  static const String discount = 'discount';
+  static const String custom1 = 'custom1';
+  static const String custom2 = 'custom2';
+  static const String custom3 = 'custom3';
+  static const String custom4 = 'custom4';
 }
 
 abstract class InvoiceItemEntity

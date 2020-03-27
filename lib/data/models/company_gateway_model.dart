@@ -43,7 +43,7 @@ abstract class CompanyGatewayItemResponse
 
 class CompanyGatewayFields {
   static const String name = 'name';
-  static const String updatedAt = 'updatedAt';
+  static const String updatedAt = 'updated_at';
 }
 
 abstract class CompanyGatewayEntity extends Object

@@ -180,6 +180,7 @@ Future<Response> _loadPDF(BuildContext context, InvoiceEntity invoice) async {
     showErrorDialog(
         context: context,
         message: '${response.statusCode}: ${response.reasonPhrase}');
+    return null;
   }
 
   return response;

@@ -15,6 +15,13 @@ mixin LocalizationsProvider on LocaleCodeAware {
   static final Map<String, Map<String, String>> _localizedValues = {
     'en': {
       // STARTER: lang key - do not remove comment
+      'full_name': 'Full Name',
+      'city_state_postal': 'City/State/Postal',
+      'postal_city_state': 'Postal/City/State',
+      'custom1': 'First Custom',
+      'custom2': 'Second Custom',
+      'custom3': 'Third Custom',
+      'custom4': 'Fourth Custom',
       'optional': 'Optional',
       'license': 'License',
       'purge_data': 'Purge Data',
@@ -306,6 +313,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'days': 'Days',
       'invoice_email': 'Invoice Email',
       'payment_email': 'Payment Email',
+      'partial_payment': 'Partial Payment',
       'partial_payment_email': 'Partial Payment Email',
       'quote_email': 'Quote Email',
       'endless_reminder': 'Endless Reminder',
@@ -421,9 +429,6 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'enable_portal_password': 'Password Protect Invoices',
       'enable_portal_password_help':
           'Allows you to set a password for each contact. If a password is set, the contact will be required to enter a password before viewing invoices.',
-      'send_portal_password': 'Generate Automatically',
-      'send_portal_password_help':
-          'If no password is set, one will be generated and sent with the first invoice.',
       'authorization': 'Authorization',
       'subdomain': 'Subdomain',
       'domain': 'Domain',
@@ -32029,12 +32034,6 @@ mixin LocalizationsProvider on LocaleCodeAware {
   String get enablePortalPasswordHelp =>
       _localizedValues[localeCode]['enable_portal_password_help'];
 
-  String get sendPortalPassword =>
-      _localizedValues[localeCode]['send_portal_password'];
-
-  String get sendPortalPasswordHelp =>
-      _localizedValues[localeCode]['send_portal_password_help'];
-
   String get showAcceptInvoiceTerms =>
       _localizedValues[localeCode]['show_accept_invoice_terms'];
 
@@ -32903,6 +32902,8 @@ mixin LocalizationsProvider on LocaleCodeAware {
   String get partialPaymentEmail =>
       _localizedValues[localeCode]['partial_payment_email'];
 
+  String get partialPayment => _localizedValues[localeCode]['partial_payment'];
+
   String get convertedQuote => _localizedValues[localeCode]['converted_quote'];
 
   String get enableModules => _localizedValues[localeCode]['enable_modules'];
@@ -33075,6 +33076,19 @@ mixin LocalizationsProvider on LocaleCodeAware {
 
   String get optional => _localizedValues[localeCode]['optional'];
 
+  String get custom1 => _localizedValues[localeCode]['custom1'];
+
+  String get custom2 => _localizedValues[localeCode]['custom2'];
+
+  String get custom3 => _localizedValues[localeCode]['custom3'];
+
+  String get custom4 => _localizedValues[localeCode]['custom4'];
+
+  String get fullName => _localizedValues[localeCode]['full_name'];
+
+  String get cityStatePostal => _localizedValues[localeCode]['city_state_postal'];
+
+  String get postalCityState => _localizedValues[localeCode]['postal_city_state'];
 
   String lookup(String key) {
     final lookupKey = toSnakeCase(key);

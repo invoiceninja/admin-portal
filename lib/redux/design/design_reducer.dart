@@ -6,9 +6,7 @@ import 'package:invoiceninja_flutter/redux/company/company_actions.dart';
 import 'package:invoiceninja_flutter/redux/ui/entity_ui_state.dart';
 import 'package:invoiceninja_flutter/redux/design/design_actions.dart';
 import 'package:invoiceninja_flutter/redux/ui/list_ui_state.dart';
-import 'package:invoiceninja_flutter/redux/design/design_actions.dart';
 import 'package:invoiceninja_flutter/redux/design/design_state.dart';
-import 'package:invoiceninja_flutter/data/models/entities.dart';
 
 EntityUIState designUIReducer(DesignUIState state, dynamic action) {
   return state.rebuild((b) => b

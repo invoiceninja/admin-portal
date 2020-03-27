@@ -465,12 +465,14 @@ class _CompanyDetailsState extends State<CompanyDetails>
                     controller: _paymentTermsController,
                     keyboardType: TextInputType.number,
                   ),
+                  /* TODO Re-enable with tasks
                   DecoratedFormField(
                     label: localization.taskRate,
                     controller: _taskRateController,
                     keyboardType:
                         TextInputType.numberWithOptions(decimal: true),
                   ),
+                   */
                 ],
               ),
               FormCard(

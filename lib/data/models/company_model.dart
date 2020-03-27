@@ -16,6 +16,25 @@ import 'package:invoiceninja_flutter/.env.dart';
 
 part 'company_model.g.dart';
 
+class CompanyFields {
+  static const String name = 'name';
+  static const String email = 'email';
+  static const String address1 = 'address1';
+  static const String address2 = 'address2';
+  static const String country = 'country';
+  static const String vatNumber = 'vat_number';
+  static const String idNumber = 'id_number';
+  static const String state = 'state';
+  static const String phone = 'phone';
+  static const String website = 'website';
+  static const String custom1 = 'custom1';
+  static const String custom2 = 'custom2';
+  static const String custom3 = 'custom3';
+  static const String custom4 = 'custom4';
+  static const String cityStatePostal = 'city_state_postal';
+  static const String postalCityState = 'postal_city_state';
+}
+
 abstract class CompanyEntity extends Object
     with BaseEntity
     implements Built<CompanyEntity, CompanyEntityBuilder> {
@@ -307,6 +326,8 @@ abstract class CompanyEntity extends Object
       EntityType.task,
       EntityType.expense,
       EntityType.vendor,
+      EntityType.quote,
+      EntityType.credit,
     ].contains(entityType)) {
       return false;
     }
@@ -926,9 +947,6 @@ abstract class SettingsEntity
       enablePortalPassword: clientSettings?.enablePortalPassword ??
           groupSettings?.enablePortalPassword ??
           companySettings?.enablePortalPassword,
-      sendPortalPassword: clientSettings?.sendPortalPassword ??
-          groupSettings?.sendPortalPassword ??
-          companySettings?.sendPortalPassword,
       signatureOnPdf: clientSettings?.signatureOnPdf ??
           groupSettings?.signatureOnPdf ??
           companySettings?.signatureOnPdf,
@@ -1492,10 +1510,6 @@ abstract class SettingsEntity
   bool get enablePortalPassword;
 
   @nullable
-  @BuiltValueField(wireName: 'send_portal_password')
-  bool get sendPortalPassword;
-
-  @nullable
   @BuiltValueField(wireName: 'signature_on_pdf')
   bool get signatureOnPdf;
 
@@ -1749,25 +1763,25 @@ abstract class SettingsEntity
 
   String getEmailSubject(EmailTemplate emailTemplate) {
     switch (emailTemplate) {
-      case EmailTemplate.invoiceEmail:
+      case EmailTemplate.invoice:
         return emailSubjectInvoice;
-      case EmailTemplate.quoteEmail:
+      case EmailTemplate.quote:
         return emailSubjectQuote;
-      case EmailTemplate.paymentEmail:
+      case EmailTemplate.payment:
         return emailSubjectPayment;
-      case EmailTemplate.partialPaymentEmail:
+      case EmailTemplate.partial_payment:
         return emailSubjectPaymentPartial;
-      case EmailTemplate.firstReminder:
+      case EmailTemplate.reminder1:
         return emailSubjectReminder1;
-      case EmailTemplate.secondReminder:
+      case EmailTemplate.reminder2:
         return emailSubjectReminder2;
-      case EmailTemplate.thirdReminder:
+      case EmailTemplate.reminder3:
         return emailSubjectReminder3;
-      case EmailTemplate.firstCustom:
+      case EmailTemplate.custom1:
         return emailSubjectCustom1;
-      case EmailTemplate.secondCustom:
+      case EmailTemplate.custom2:
         return emailSubjectCustom2;
-      case EmailTemplate.thirdCustom:
+      case EmailTemplate.custom3:
         return emailSubjectCustom3;
       default:
         return emailSubjectInvoice;
@@ -1776,25 +1790,25 @@ abstract class SettingsEntity
 
   String getEmailBody(EmailTemplate template) {
     switch (template) {
-      case EmailTemplate.invoiceEmail:
+      case EmailTemplate.invoice:
         return emailBodyInvoice;
-      case EmailTemplate.quoteEmail:
+      case EmailTemplate.quote:
         return emailBodyQuote;
-      case EmailTemplate.paymentEmail:
+      case EmailTemplate.payment:
         return emailBodyPayment;
-      case EmailTemplate.partialPaymentEmail:
+      case EmailTemplate.partial_payment:
         return emailBodyPaymentPartial;
-      case EmailTemplate.firstReminder:
+      case EmailTemplate.reminder1:
         return emailBodyReminder1;
-      case EmailTemplate.secondReminder:
+      case EmailTemplate.reminder2:
         return emailBodyReminder2;
-      case EmailTemplate.thirdReminder:
+      case EmailTemplate.reminder3:
         return emailBodyReminder3;
-      case EmailTemplate.firstCustom:
+      case EmailTemplate.custom1:
         return emailBodyCustom1;
-      case EmailTemplate.secondCustom:
+      case EmailTemplate.custom2:
         return emailBodyCustom2;
-      case EmailTemplate.thirdCustom:
+      case EmailTemplate.custom3:
         return emailBodyCustom3;
       default:
         return emailBodyInvoice;

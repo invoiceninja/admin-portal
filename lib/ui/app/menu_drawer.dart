@@ -1,5 +1,4 @@
 import 'dart:convert';
-
 import 'package:flutter/foundation.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
@@ -10,7 +9,6 @@ import 'package:invoiceninja_flutter/redux/reports/reports_actions.dart';
 import 'package:invoiceninja_flutter/ui/app/dialogs/alert_dialog.dart';
 import 'package:invoiceninja_flutter/ui/app/dialogs/error_dialog.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/app_dropdown_button.dart';
-import 'package:invoiceninja_flutter/ui/app/loading_indicator.dart';
 import 'package:invoiceninja_flutter/ui/app/resources/cached_image.dart';
 import 'package:invoiceninja_flutter/ui/system/update_dialog.dart';
 import 'package:invoiceninja_flutter/utils/dialogs.dart';
@@ -28,10 +26,7 @@ import 'package:invoiceninja_flutter/utils/icons.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:invoiceninja_flutter/utils/platforms.dart';
 import 'package:url_launcher/url_launcher.dart';
-
 // STARTER: import - do not remove comment
-import 'package:invoiceninja_flutter/redux/design/design_actions.dart';
-import 'package:package_info/package_info.dart';
 
 class MenuDrawer extends StatelessWidget {
   const MenuDrawer({
@@ -77,7 +72,7 @@ class MenuDrawer extends StatelessWidget {
                     company.displayName.isEmpty
                         ? localization.untitledCompany
                         : company.displayName,
-                    style: Theme.of(context).textTheme.title,
+                    style: Theme.of(context).textTheme.headline6,
                     overflow: TextOverflow.ellipsis,
                   ),
                 ],
@@ -132,8 +127,7 @@ class MenuDrawer extends StatelessWidget {
             items: [
               ...state.companies
                   .map((CompanyEntity company) => DropdownMenuItem<String>(
-                        value:
-                            (state.companies.indexOf(company)).toString(),
+                        value: (state.companies.indexOf(company)).toString(),
                         child: _companyListItem(company),
                       ))
                   .toList(),
@@ -354,7 +348,7 @@ class DrawerTile extends StatefulWidget {
 }
 
 class _DrawerTileState extends State<DrawerTile> {
-  bool _isHovered = false;
+  //bool _isHovered = false;
 
   @override
   Widget build(BuildContext context) {
@@ -443,8 +437,8 @@ class _DrawerTileState extends State<DrawerTile> {
     }
 
     return MouseRegion(
-      onEnter: (event) => setState(() => _isHovered = true),
-      onExit: (event) => setState(() => _isHovered = false),
+      //onEnter: (event) => setState(() => _isHovered = true),
+      //onExit: (event) => setState(() => _isHovered = false),
       child: child,
     );
   }
@@ -633,12 +627,12 @@ void _showUpdate(BuildContext context) {
 }
 
 void _showAbout(BuildContext context) async {
-  final packageInfo = await PackageInfo.fromPlatform();
+  //final packageInfo = await PackageInfo.fromPlatform();
   final localization = AppLocalization.of(context);
   final ThemeData themeData = Theme.of(context);
-  final TextStyle aboutTextStyle = themeData.textTheme.body1;
+  final TextStyle aboutTextStyle = themeData.textTheme.bodyText2;
   final TextStyle linkStyle =
-      themeData.textTheme.body1.copyWith(color: themeData.accentColor);
+      themeData.textTheme.bodyText2.copyWith(color: themeData.accentColor);
 
   showAboutDialog(
     context: context,
@@ -648,7 +642,8 @@ void _showAbout(BuildContext context) async {
       width: 40.0,
       height: 40.0,
     ),
-    applicationVersion: 'Version: ${packageInfo.version}',
+    //applicationVersion: 'Version: ${packageInfo.version}',
+    applicationVersion: 'Version: $kAppVersion',
     applicationLegalese: '© ${DateTime.now().year} Invoice Ninja',
     children: <Widget>[
       Padding(

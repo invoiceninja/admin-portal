@@ -218,7 +218,6 @@ class ContactEditDetailsState extends State<ContactEditDetails> {
   Widget build(BuildContext context) {
     final localization = AppLocalization.of(context);
     final viewModel = widget.viewModel;
-    final company = viewModel.company;
 
     return Padding(
       padding: EdgeInsets.only(

@@ -5,16 +5,12 @@ import 'package:invoiceninja_flutter/redux/invoice/invoice_selectors.dart';
 import 'package:invoiceninja_flutter/redux/payment/payment_selectors.dart';
 import 'package:invoiceninja_flutter/redux/quote/quote_selectors.dart';
 import 'package:invoiceninja_flutter/ui/app/entity_header.dart';
-import 'package:invoiceninja_flutter/ui/app/form_card.dart';
-import 'package:invoiceninja_flutter/ui/app/lists/app_list_tile.dart';
 import 'package:invoiceninja_flutter/ui/app/lists/list_divider.dart';
 import 'package:invoiceninja_flutter/ui/app/view_scaffold.dart';
 import 'package:invoiceninja_flutter/ui/user/view/user_view_vm.dart';
 import 'package:flutter/material.dart';
-import 'package:invoiceninja_flutter/utils/formatting.dart';
 import 'package:invoiceninja_flutter/utils/icons.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
-import 'package:url_launcher/url_launcher.dart';
 
 class UserView extends StatelessWidget {
   const UserView({

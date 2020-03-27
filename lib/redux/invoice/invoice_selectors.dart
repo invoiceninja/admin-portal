@@ -32,7 +32,12 @@ List<String> dropdownInvoiceSelector(
   list.sort((invoiceAId, invoiceBId) {
     final invoiceA = invoiceMap[invoiceAId];
     final invoiceB = invoiceMap[invoiceBId];
-    return invoiceA.compareTo(invoiceB, ClientFields.name, true);
+    return invoiceA.compareTo(
+      invoice: invoiceB,
+      clientMap: clientMap,
+      sortAscending: false,
+      sortField: InvoiceFields.invoiceNumber,
+    );
   });
 
   return list;
@@ -88,8 +93,12 @@ List<String> filteredInvoicesSelector(
   }).toList();
 
   list.sort((invoiceAId, invoiceBId) {
-    return invoiceMap[invoiceAId].compareTo(invoiceMap[invoiceBId],
-        invoiceListState.sortField, invoiceListState.sortAscending);
+    return invoiceMap[invoiceAId].compareTo(
+      invoice: invoiceMap[invoiceBId],
+      sortField: invoiceListState.sortField,
+      sortAscending: invoiceListState.sortAscending,
+      clientMap: clientMap,
+    );
   });
 
   return list;

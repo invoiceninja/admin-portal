@@ -82,8 +82,8 @@ abstract class StubEntity extends Object with BaseEntity implements Built<StubEn
 
   int compareTo(StubEntity stub, String sortField, bool sortAscending) {
     int response = 0;
-    StubEntity stubA = sortAscending ? this : stub;
-    StubEntity stubB = sortAscending ? stub: this; 
+    final stubA = sortAscending ? this : stub;
+    final stubB = sortAscending ? stub: this;
 
     switch (sortField) {
       // STARTER: sort switch - do not remove comment

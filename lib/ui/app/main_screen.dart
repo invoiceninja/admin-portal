@@ -414,7 +414,7 @@ class EntityScreens extends StatelessWidget {
     int listFlex = 3;
     int previewFlex = 2;
 
-    if (prefState.isModuleList) {
+    if (prefState.isModuleList || subRoute == 'email') {
       listFlex = 2;
       previewFlex = 3;
     } else if (!isPreviewShown) {

@@ -41,6 +41,7 @@ class MultiSelectList extends StatefulWidget {
     @required this.addTitle,
     @required this.onSelected,
     this.liveChanges = false,
+    this.prefix,
   });
 
   final List<String> options;
@@ -49,6 +50,7 @@ class MultiSelectList extends StatefulWidget {
   final String addTitle;
   final Function(List<String>) onSelected;
   final bool liveChanges;
+  final String prefix;
 
   @override
   MultiSelectListState createState() => MultiSelectListState();
@@ -63,6 +65,21 @@ class MultiSelectListState extends State<MultiSelectList> {
     selected = widget.selected ?? [];
   }
 
+  String lookupOption(String value) {
+    value = value.replaceFirst('\$', '');
+
+    final localization = AppLocalization.of(context);
+    final parts = value.split('.');
+
+    if (parts.length == 1 || parts[0] == widget.prefix) {
+      return localization.lookup(parts.last);
+    } else {
+      return localization.lookup(parts[0]) +
+          ' ' +
+          localization.lookup(parts[1]);
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     final localization = AppLocalization.of(context);
@@ -74,10 +91,11 @@ class MultiSelectListState extends State<MultiSelectList> {
         .forEach((option) {
       final columnTitle = state.company.getCustomFieldLabel(option);
       options[option] =
-          columnTitle.isEmpty ? localization.lookup(option) : columnTitle;
+          columnTitle.isEmpty ? lookupOption(option) : columnTitle;
     });
     final keys = options.keys.toList();
-    keys.sort((a, b) => a.toLowerCase().compareTo(b.toLowerCase()));
+    keys.sort((a, b) =>
+        lookupOption(a).toLowerCase().compareTo(lookupOption(b).toLowerCase()));
 
     return Container(
       width: isMobile(context) ? double.maxFinite : 400,
@@ -127,10 +145,10 @@ class MultiSelectListState extends State<MultiSelectList> {
                       Expanded(
                         child: Text(
                           columnTitle.isEmpty
-                              ? localization.lookup(option)
+                              ? lookupOption(option)
                               : columnTitle,
                           textAlign: TextAlign.left,
-                          style: Theme.of(context).textTheme.title,
+                          style: Theme.of(context).textTheme.headline6,
                         ),
                       ),
                       IconButton(

@@ -1,19 +1,13 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:invoiceninja_flutter/constants.dart';
-import 'package:invoiceninja_flutter/data/models/entities.dart';
 import 'package:invoiceninja_flutter/ui/app/form_card.dart';
-import 'package:invoiceninja_flutter/ui/app/forms/app_dropdown_button.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/app_form.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/bool_dropdown_button.dart';
-import 'package:invoiceninja_flutter/ui/app/forms/decorated_form_field.dart';
 import 'package:invoiceninja_flutter/ui/settings/client_portal_vm.dart';
 import 'package:invoiceninja_flutter/ui/app/edit_scaffold.dart';
 import 'package:invoiceninja_flutter/utils/completers.dart';
-import 'package:invoiceninja_flutter/utils/icons.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
-import 'package:invoiceninja_flutter/utils/platforms.dart';
 
 class ClientPortal extends StatefulWidget {
   const ClientPortal({
@@ -52,7 +46,7 @@ class _ClientPortalState extends State<ClientPortal>
   @override
   void initState() {
     super.initState();
-    _controller = TabController(vsync: this, length: 4);
+    _controller = TabController(vsync: this, length: 2);
   }
 
   @override
@@ -136,7 +130,7 @@ class _ClientPortalState extends State<ClientPortal>
     final localization = AppLocalization.of(context);
     final viewModel = widget.viewModel;
     final state = viewModel.state;
-    final company = viewModel.company;
+    //final company = viewModel.company;
     final settings = viewModel.settings;
 
     return EditScaffold(
@@ -152,12 +146,14 @@ class _ClientPortalState extends State<ClientPortal>
           Tab(
             text: localization.authorization,
           ),
+          /*
           Tab(
             text: localization.messages,
           ),
           Tab(
             text: localization.customize,
           ),
+           */
         ],
       ),
       body: AppTabForm(
@@ -167,6 +163,7 @@ class _ClientPortalState extends State<ClientPortal>
         children: <Widget>[
           ListView(
             children: <Widget>[
+              /*
               if (!state.settingsUIState.isFiltered)
                 FormCard(
                   children: <Widget>[
@@ -209,6 +206,7 @@ class _ClientPortalState extends State<ClientPortal>
                     ),
                   ],
                 ),
+               */
               FormCard(
                 children: <Widget>[
                   BoolDropdownButton(
@@ -227,6 +225,7 @@ class _ClientPortalState extends State<ClientPortal>
                     onChanged: (value) => viewModel.onSettingsChanged(settings
                         .rebuild((b) => b..enablePortalDashboard = value)),
                   ),
+                  /* Re-enable with tasks
                   BoolDropdownButton(
                     label: localization.tasks,
                     value: settings.enablePortalTasks,
@@ -234,6 +233,7 @@ class _ClientPortalState extends State<ClientPortal>
                     onChanged: (value) => viewModel.onSettingsChanged(
                         settings.rebuild((b) => b..enablePortalTasks = value)),
                   ),
+                   */
                 ],
               ),
             ],
@@ -250,15 +250,6 @@ class _ClientPortalState extends State<ClientPortal>
                         kIsWeb ? Icons.security : FontAwesomeIcons.shieldAlt,
                     onChanged: (value) => viewModel.onSettingsChanged(settings
                         .rebuild((b) => b..enablePortalPassword = value)),
-                  ),
-                  BoolDropdownButton(
-                    label: localization.sendPortalPassword,
-                    helpLabel: localization.sendPortalPasswordHelp,
-                    iconData:
-                        kIsWeb ? Icons.email : FontAwesomeIcons.solidEnvelope,
-                    value: settings.sendPortalPassword,
-                    onChanged: (value) => viewModel.onSettingsChanged(
-                        settings.rebuild((b) => b..sendPortalPassword = value)),
                   ),
                 ],
               ),
@@ -300,6 +291,7 @@ class _ClientPortalState extends State<ClientPortal>
                     onChanged: (value) => viewModel.onSettingsChanged(settings
                         .rebuild((b) => b..requireQuoteSignature = value)),
                   ),
+                  /* TODO Re-enable
                   BoolDropdownButton(
                     label: localization.signatureOnPdf,
                     helpLabel: localization.signatureOnPdfHelp,
@@ -308,10 +300,12 @@ class _ClientPortalState extends State<ClientPortal>
                     onChanged: (value) => viewModel.onSettingsChanged(
                         settings.rebuild((b) => b..signatureOnPdf = value)),
                   ),
+                   */
                 ],
               ),
             ],
           ),
+          /*
           ListView(
             children: <Widget>[
               FormCard(
@@ -359,6 +353,7 @@ class _ClientPortalState extends State<ClientPortal>
               )
             ],
           ),
+           */
         ],
       ),
     );

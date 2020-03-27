@@ -36,18 +36,19 @@ abstract class ProjectItemResponse
 
 class ProjectFields {
   static const String name = 'name';
-  static const String clientId = 'clientId';
+  static const String clientId = 'client_id';
   static const String client = 'client';
-  static const String taskRate = 'taskRate';
+  static const String taskRate = 'task_rate';
   static const String dueDate = 'due_date';
-  static const String privateNotes = 'privateNotes';
-  static const String budgetedHours = 'budgetedHours';
-  static const String customValue1 = 'customValue1';
-  static const String customValue2 = 'customValue2';
-
-  static const String updatedAt = 'updatedAt';
-  static const String archivedAt = 'archivedAt';
-  static const String isDeleted = 'isDeleted';
+  static const String privateNotes = 'private_notes';
+  static const String budgetedHours = 'budgeted_hours';
+  static const String customValue1 = 'custom1';
+  static const String customValue2 = 'custom2';
+  static const String customValue3 = 'custom3';
+  static const String customValue4 = 'custom4';
+  static const String updatedAt = 'updated_at';
+  static const String archivedAt = 'archived_at';
+  static const String isDeleted = 'is_deleted';
 }
 
 abstract class ProjectEntity extends Object

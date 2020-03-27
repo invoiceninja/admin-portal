@@ -6,6 +6,9 @@ class Constants {
   static String get hostedApiUrl => kReleaseMode ? kAppProductionUrl : kAppStagingUrl;
 }
 
+// TODO remove version once #46609 is fixed
+const String kAppVersion = '2.0.4';
+
 const String kSiteUrl = 'https://invoiceninja.com';
 const String kAppProductionUrl = 'https://invoicing.co';
 const String kAppStagingUrl = 'https://staging.invoicing.co';

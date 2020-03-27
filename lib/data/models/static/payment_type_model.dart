@@ -33,7 +33,7 @@ abstract class PaymentTypeItemResponse
 
 class PaymentTypeFields {
   static const String name = 'name';
-  static const String gatewayTypeId = 'gatewayTypeId';
+  static const String gatewayTypeId = 'gateway_type_id';
 }
 
 abstract class PaymentTypeEntity extends Object

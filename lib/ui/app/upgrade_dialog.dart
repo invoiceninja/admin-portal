@@ -14,7 +14,6 @@ import 'package:invoiceninja_flutter/ui/app/loading_indicator.dart';
 import 'package:flutter/material.dart';
 import 'package:invoiceninja_flutter/utils/formatting.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
-import 'package:invoiceninja_flutter/utils/platforms.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class UpgradeDialog extends StatefulWidget {
