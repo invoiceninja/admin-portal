@@ -35,18 +35,18 @@ abstract class ProductItemResponse
 }
 
 class ProductFields {
-  static const String productKey = 'productKey';
+  static const String productKey = 'product_key';
   static const String notes = 'notes';
   static const String cost = 'cost';
   static const String price = 'price';
   static const String quantity = 'quantity';
-  static const String updatedAt = 'updatedAt';
-  static const String archivedAt = 'archivedAt';
-  static const String isDeleted = 'isDeleted';
-  static const String customValue1 = 'customValue1';
-  static const String customValue2 = 'customValue2';
-  static const String customValue3 = 'customValue3';
-  static const String customValue4 = 'customValue4';
+  static const String updatedAt = 'updated_at';
+  static const String archivedAt = 'archived_at';
+  static const String isDeleted = 'is_deleted';
+  static const String customValue1 = 'custom1';
+  static const String customValue2 = 'custom2';
+  static const String customValue3 = 'custom3';
+  static const String customValue4 = 'custom4';
 }
 
 abstract class ProductEntity extends Object

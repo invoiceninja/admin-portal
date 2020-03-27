@@ -36,9 +36,9 @@ abstract class DocumentItemResponse
 
 class DocumentFields {
   static const String id = 'id';
-  static const String updatedAt = 'updatedAt';
-  static const String archivedAt = 'archivedAt';
-  static const String isDeleted = 'isDeleted';
+  static const String updatedAt = 'updated_at';
+  static const String archivedAt = 'archived_at';
+  static const String isDeleted = 'is_deleted';
   static const String name = 'name';
 }
 

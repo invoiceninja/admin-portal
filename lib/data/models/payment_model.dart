@@ -38,27 +38,27 @@ abstract class PaymentItemResponse
 class PaymentFields {
   static const String amount = 'amount';
   static const String refunded = 'refunded';
-  static const String transactionReference = 'transactionReference';
-  static const String paymentDate = 'paymentDate';
-  static const String paymentTypeId = 'paymentTypeId';
+  static const String transactionReference = 'transaction_reference';
+  static const String paymentDate = 'payment_date';
+  static const String paymentTypeId = 'payment_type_id';
   static const String client = 'client';
-  static const String clientId = 'clientId';
-  static const String invoiceId = 'invoiceId';
-  static const String invoiceNumber = 'invoiceNumber';
-  static const String privateNotes = 'privateNotes';
-  static const String exchangeRate = 'exchangeRate';
-  static const String exchangeCurrencyId = 'exchangeCurrencyId';
-  static const String paymentStatusId = 'paymentStatusId';
-  static const String paymentStatus = 'paymentStatus';
+  static const String clientId = 'client_id';
+  static const String invoiceId = 'invoice_id';
+  static const String invoiceNumber = 'invoice_number';
+  static const String privateNotes = 'private_notes';
+  static const String exchangeRate = 'exchange_rate';
+  static const String exchangeCurrencyId = 'exchange_currency_id';
+  static const String paymentStatusId = 'payment_status_id';
+  static const String paymentStatus = 'payment_status';
 
-  static const String customValue1 = 'customValue1';
-  static const String customValue2 = 'customValue2';
-  static const String customValue3 = 'customValue3';
-  static const String customValue4 = 'customValue4';
+  static const String customValue1 = 'custom1';
+  static const String customValue2 = 'custom2';
+  static const String customValue3 = 'custom3';
+  static const String customValue4 = 'custom4';
 
-  static const String updatedAt = 'updatedAt';
-  static const String archivedAt = 'archivedAt';
-  static const String isDeleted = 'isDeleted';
+  static const String updatedAt = 'updated_at';
+  static const String archivedAt = 'archived_at';
+  static const String isDeleted = 'is_deleted';
 }
 
 abstract class PaymentEntity extends Object
