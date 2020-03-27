@@ -43,6 +43,7 @@ dependencies:
   flutter_typeahead: ^1.8.0
   flutter_share: ^1.0.2+1
   package_info: ^0.4.0+16
+  device_info: ^0.4.2+1
   #quick_actions: ^0.2.1
 
 dev_dependencies:
