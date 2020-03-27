@@ -180,11 +180,6 @@ abstract class PaymentEntity extends Object
     final PaymentEntity paymentA = sortAscending ? this : payment;
     final PaymentEntity paymentB = sortAscending ? payment : this;
 
-    final InvoiceEntity invoiceA =
-        invoiceMap[paymentA.invoiceId] ?? InvoiceEntity();
-    final InvoiceEntity invoiceB =
-        invoiceMap[paymentB.invoiceId] ?? InvoiceEntity();
-
     switch (sortField) {
       case PaymentFields.amount:
         response = paymentA.amount.compareTo(paymentB.amount);
@@ -223,6 +218,8 @@ abstract class PaymentEntity extends Object
             .compareTo(paymentB.customValue4.toLowerCase());
         break;
       case PaymentFields.invoiceNumber:
+        final invoiceA = invoiceMap[paymentA.invoiceId] ?? InvoiceEntity();
+        final invoiceB = invoiceMap[paymentB.invoiceId] ?? InvoiceEntity();
         response = invoiceA.number
             .toLowerCase()
             .compareTo(invoiceB.number.toLowerCase());

@@ -334,7 +334,11 @@ abstract class InvoiceEntity extends Object
   //String get last_login;
   //String get custom_messages;
 
-  int compareTo(InvoiceEntity invoice, String sortField, bool sortAscending) {
+  int compareTo(
+      {InvoiceEntity invoice,
+      String sortField,
+      bool sortAscending,
+      BuiltMap<String, ClientEntity> clientMap}) {
     int response = 0;
     final InvoiceEntity invoiceA = sortAscending ? this : invoice;
     final InvoiceEntity invoiceB = sortAscending ? invoice : this;
@@ -375,6 +379,13 @@ abstract class InvoiceEntity extends Object
         response = invoiceA.customValue4
             .toLowerCase()
             .compareTo(invoiceB.customValue4.toLowerCase());
+        break;
+      case InvoiceFields.client:
+        final clientA = clientMap[invoiceA.clientId] ?? ClientEntity();
+        final clientB = clientMap[invoiceB.clientId] ?? ClientEntity();
+        response = clientA.listDisplayName
+            .toLowerCase()
+            .compareTo(clientB.listDisplayName.toLowerCase());
         break;
     }
 

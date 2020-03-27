@@ -56,8 +56,12 @@ List<String> filteredQuotesSelector(
   }).toList();
 
   list.sort((quoteAId, quoteBId) {
-    return quoteMap[quoteAId].compareTo(quoteMap[quoteBId],
-        quoteListState.sortField, quoteListState.sortAscending);
+    return quoteMap[quoteAId].compareTo(
+      invoice: quoteMap[quoteBId],
+      sortField: quoteListState.sortField,
+      sortAscending: quoteListState.sortAscending,
+      clientMap: clientMap,
+    );
   });
 
   return list;
