@@ -62,10 +62,7 @@ class EntityDataTableSource extends DataTableSource {
     return DataRow(
       selected: (listState.selectedIds ?? <String>[]).contains(entity.id),
       onSelectChanged:
-          //listState.isInMultiselect() ? (value) => onTap(entity) : null,
-      (value) {
-        print('clicked');
-      },
+          listState.isInMultiselect() ? (value) => onTap(entity) : null,
       cells: [
         if (!listState.isInMultiselect())
           DataCell(
