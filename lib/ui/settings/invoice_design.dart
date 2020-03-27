@@ -415,7 +415,7 @@ class _InvoiceDesignState extends State<InvoiceDesign>
                 ...[
                   InvoiceFields.invoiceNumber,
                   InvoiceFields.poNumber,
-                  InvoiceFields.date,
+                  InvoiceFields.invoiceDate,
                   InvoiceFields.dueDate,
                   InvoiceFields.amount,
                   InvoiceFields.balance,
@@ -431,7 +431,7 @@ class _InvoiceDesignState extends State<InvoiceDesign>
               defaultSelected: [
                 InvoiceFields.invoiceNumber,
                 InvoiceFields.poNumber,
-                InvoiceFields.date,
+                InvoiceFields.invoiceDate,
                 InvoiceFields.dueDate,
                 InvoiceFields.balance,
               ],
