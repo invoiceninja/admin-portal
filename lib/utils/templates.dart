@@ -5,6 +5,7 @@ import 'package:invoiceninja_flutter/data/models/invoice_model.dart';
 import 'package:invoiceninja_flutter/data/web_client.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/utils/formatting.dart';
+import 'package:invoiceninja_flutter/.env.dart';
 import 'dialogs.dart';
 
 void loadEmailTemplate({
@@ -15,6 +16,11 @@ void loadEmailTemplate({
   String body,
   InvoiceEntity invoice,
 }) {
+  if (Config.DEMO_MODE) {
+    onComplete(subject, body, '');
+    return;
+  }
+
   final webClient = WebClient();
   final state = StoreProvider.of<AppState>(context).state;
   final credentials = state.credentials;
