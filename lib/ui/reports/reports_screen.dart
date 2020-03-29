@@ -152,16 +152,16 @@ class ReportsScreen extends StatelessWidget {
                             viewModel.onSettingsChanged(report: value),
                         items: [
                           kReportClient,
-                          kReportCredit,
-                          //kReportDocument,
-                          //kReportExpense,
                           kReportInvoice,
                           kReportPayment,
+                          kReportTaxRate,
+                          //kReportCredit,
+                          //kReportDocument,
+                          //kReportExpense,
                           //kReportProduct,
                           //kReportProfitAndLoss,
                           //kReportTask,
-                          kReportTaxRate,
-                          kReportQuote,
+                          //kReportQuote,
                         ]
                             .map((report) =>
                             DropdownMenuItem(
