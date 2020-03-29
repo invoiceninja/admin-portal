@@ -309,7 +309,6 @@ const kEntitySettings = [
   EntityType.user,
 ];
 
-const String kReportAging = 'aging';
 const String kReportClient = 'client';
 const String kReportCredit = 'credit';
 const String kReportDocument = 'document';

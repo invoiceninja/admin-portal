@@ -151,7 +151,6 @@ class ReportsScreen extends StatelessWidget {
                         onChanged: (dynamic value) =>
                             viewModel.onSettingsChanged(report: value),
                         items: [
-                          kReportAging,
                           kReportClient,
                           kReportCredit,
                           //kReportDocument,
@@ -159,7 +158,7 @@ class ReportsScreen extends StatelessWidget {
                           kReportInvoice,
                           kReportPayment,
                           //kReportProduct,
-                          kReportProfitAndLoss,
+                          //kReportProfitAndLoss,
                           //kReportTask,
                           kReportTaxRate,
                           kReportQuote,
@@ -924,7 +923,9 @@ class ReportResult {
                            */
                           return Listener(
                             child: Container(
-                              color: Theme.of(context).cardColor,
+                              color: Theme
+                                  .of(context)
+                                  .cardColor,
                               child: Padding(
                                 padding: const EdgeInsets.all(12),
                                 child: Text('$value'),
@@ -935,7 +936,6 @@ class ReportResult {
                               onFilterChanged(column, value);
                             },
                           );
-
                         },
                         onSuggestionSelected: (String value) {
                           textEditingControllers[column].text = value;
