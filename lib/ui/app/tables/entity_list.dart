@@ -138,13 +138,14 @@ class _EntityListState extends State<EntityList> {
             padding: const EdgeInsets.all(12),
             child: PaginatedDataTable(
               onSelectAll: (value) {
-                final invoices = entityList
+                final entities = entityList
                     .map((String entityId) => entityMap[entityId])
                     .where((invoice) =>
                         value != listUIState.isSelected(invoice.id))
+                    .map((entity) => entity as BaseEntity)
                     .toList();
                 handleEntitiesActions(
-                    context, invoices, EntityAction.toggleMultiselect);
+                    context, entities, EntityAction.toggleMultiselect);
               },
               columns: [
                 if (!listUIState.isInMultiselect())

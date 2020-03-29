@@ -7,7 +7,7 @@ class Constants {
 }
 
 // TODO remove version once #46609 is fixed
-const String kAppVersion = '2.0.4';
+const String kAppVersion = '2.0.5';
 
 const String kSiteUrl = 'https://invoiceninja.com';
 const String kAppProductionUrl = 'https://invoicing.co';
@@ -309,7 +309,6 @@ const kEntitySettings = [
   EntityType.user,
 ];
 
-const String kReportAging = 'aging';
 const String kReportClient = 'client';
 const String kReportCredit = 'credit';
 const String kReportDocument = 'document';

@@ -528,6 +528,7 @@ abstract class AppState implements Built<AppState, AppStateBuilder> {
     //return 'SORT: Sort Ascending: ${uiState.productUIState.listUIState.sortAscending}';
     //return 'URL: ${authState.url}';
     //return 'PLAN: ${account.plan}';
+    //return 'Invoice ${invoiceUIState.editing}';
     return 'Layout: ${prefState.appLayout}, Route: ${uiState.currentRoute} Prev: ${uiState.previousRoute}';
   }
 }

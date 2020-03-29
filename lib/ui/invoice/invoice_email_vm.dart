@@ -5,6 +5,7 @@ import 'package:invoiceninja_flutter/redux/client/client_actions.dart';
 import 'package:invoiceninja_flutter/redux/invoice/invoice_actions.dart';
 import 'package:invoiceninja_flutter/ui/app/invoice/invoice_email_view.dart';
 import 'package:invoiceninja_flutter/utils/completers.dart';
+import 'package:invoiceninja_flutter/utils/platforms.dart';
 import 'package:redux/redux.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
@@ -90,7 +91,7 @@ class EmailInvoiceVM extends EmailEntityVM {
             ClientEntity(id: invoice.clientId),
         onSendPressed: (context, template, subject, body) =>
             store.dispatch(EmailInvoiceRequest(
-              completer: popCompleter(context, true),
+              completer: isMobile(context) ? popCompleter(context, true) : null,
               invoiceId: invoice.id,
               template: template,
               subject: subject,
