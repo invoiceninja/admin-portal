@@ -137,7 +137,8 @@ class MultiSelectListState extends State<MultiSelectList> {
                 final columnTitle = state.company.getCustomFieldLabel(option);
                 return Padding(
                   key: ValueKey(option),
-                  padding: const EdgeInsets.all(10),
+                  padding:
+                      const EdgeInsets.symmetric(vertical: 3, horizontal: 10),
                   child: Row(
                     children: <Widget>[
                       Icon(Icons.reorder),
@@ -148,7 +149,7 @@ class MultiSelectListState extends State<MultiSelectList> {
                               ? lookupOption(option)
                               : columnTitle,
                           textAlign: TextAlign.left,
-                          style: Theme.of(context).textTheme.headline6,
+                          style: Theme.of(context).textTheme.subtitle1,
                         ),
                       ),
                       IconButton(
