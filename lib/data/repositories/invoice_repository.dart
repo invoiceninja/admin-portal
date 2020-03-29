@@ -81,28 +81,22 @@ class InvoiceRepository {
   Future<Null> emailInvoice(Credentials credentials, InvoiceEntity invoice,
       EmailTemplate template, String subject, String body) async {
     final data = {
-      //'reminder': template == EmailTemplate.initial ? '' : template.toString(),
-      'template': {
-        'body': body,
-        'subject': subject,
-      }
+      'entity': '${invoice.entityType}',
+      'entity_id': invoice.id,
+      'template': 'email_template_$template',
+      'body': body,
+      'subject': subject,
     };
 
-    await webClient.post(
-        credentials.url + '/email_invoice?invoice_id=${invoice.id}',
+    final List<dynamic> response = await webClient.post(
+        credentials.url + '/emails',
         credentials.token,
         data: json.encode(data));
 
-    /*
-    final Future<dynamic> response = await webClient.post(
-        credentials.url + '/email_invoice?invoice_id=${invoice.id}',
-        credentials.token,
-        json.encode(data));
 
     final InvoiceItemResponse invoiceResponse =
         serializers.deserializeWith(InvoiceItemResponse.serializer, response);
 
     return invoiceResponse.data;
-    */
   }
 }

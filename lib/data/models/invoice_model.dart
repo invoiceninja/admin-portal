@@ -331,6 +331,23 @@ abstract class InvoiceEntity extends Object
 
   bool get hasClient => '${clientId ?? ''}'.isNotEmpty;
 
+  int get age {
+    int ageInDays = 0;
+    if (isPastDue) {
+      final now = DateTime.now();
+      final dueDate = DateTime.tryParse(
+          partialDueDate == null || partialDueDate.isEmpty
+              ? this.dueDate
+              : partialDueDate);
+
+      if (dueDate != null) {
+        ageInDays = now.difference(dueDate).inDays;
+      }
+    }
+
+    return ageInDays;
+  }
+
   //String get last_login;
   //String get custom_messages;
 
