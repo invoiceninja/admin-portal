@@ -25,6 +25,7 @@ enum InvoiceReportFields {
   po_number,
   date,
   due_date,
+  age,
   partial,
   partial_due_date,
   auto_bill,
@@ -76,11 +77,12 @@ ReportResult invoiceReport(
 
   final defaultColumns = [
     InvoiceReportFields.number,
+    InvoiceReportFields.client,
     InvoiceReportFields.amount,
     InvoiceReportFields.balance,
     InvoiceReportFields.date,
     InvoiceReportFields.due_date,
-    InvoiceReportFields.client
+    InvoiceReportFields.age,
   ];
 
   if (invoiceReportSettings.columns.isNotEmpty) {
@@ -143,6 +145,9 @@ ReportResult invoiceReport(
           break;
         case InvoiceReportFields.date:
           value = invoice.date;
+          break;
+        case InvoiceReportFields.age:
+          value = invoice.age;
           break;
         case InvoiceReportFields.due_date:
           value = invoice.dueDate;
@@ -217,6 +222,9 @@ ReportResult invoiceReport(
 
       if (value.runtimeType == bool) {
         row.add(invoice.getReportBool(value: value));
+      } else if (column == InvoiceReportFields.age) {
+        row.add(invoice.getReportAge(
+            value: value, currencyId: client.settings.currencyId));
       } else if (value.runtimeType == double || value.runtimeType == int) {
         row.add(invoice.getReportNumber(
             value: value, currencyId: client.settings.currencyId));
