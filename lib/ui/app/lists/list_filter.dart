@@ -21,26 +21,33 @@ class FilterListTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final localization = AppLocalization.of(context);
-    return Padding(
-      padding: const EdgeInsets.only(top: 2),
-      child: Container(
-        decoration: BoxDecoration(
-          border: Border.all(
-            color: Colors.grey,
-            width: .5,
+    return ClipRect(
+      child: Padding(
+        padding: const EdgeInsets.only(top: 2),
+        child: Container(
+          decoration: BoxDecoration(
+            border: Border.all(
+              color: Colors.grey,
+              width: .5,
+            ),
+            borderRadius: BorderRadius.all(Radius.circular(5)),
           ),
-          borderRadius: BorderRadius.all(Radius.circular(5)),
-        ),
-        child: ListTile(
-          leading: Icon(getEntityIcon(entityType)),
-          title: Text(localization.filteredBy
-              .replaceFirst(':value', entity.listDisplayName)),
-          subtitle: Text(localization.lookup(entityType.toString())),
-          onTap: () => onPressed(context),
-          trailing: IconButton(
-            icon: Icon(Icons.clear),
-            onPressed: onClearPressed,
-          ),
+          child: LayoutBuilder(
+              builder: (BuildContext context, BoxConstraints constraints) {
+            return ListTile(
+              leading: constraints.minWidth > 250
+                  ? Icon(getEntityIcon(entityType))
+                  : null,
+              title: Text(localization.filteredBy
+                  .replaceFirst(':value', entity.listDisplayName)),
+              subtitle: Text(localization.lookup(entityType.toString())),
+              onTap: () => onPressed(context),
+              trailing: IconButton(
+                icon: Icon(Icons.clear),
+                onPressed: onClearPressed,
+              ),
+            );
+          }),
         ),
       ),
     );
