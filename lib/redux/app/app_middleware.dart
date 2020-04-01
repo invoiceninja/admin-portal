@@ -1,26 +1,43 @@
 import 'dart:async';
-
+import 'dart:convert';
+import 'package:invoiceninja_flutter/.env.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:invoiceninja_flutter/constants.dart';
 import 'package:invoiceninja_flutter/data/file_storage.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
+import 'package:invoiceninja_flutter/data/models/serializers.dart';
 import 'package:invoiceninja_flutter/data/repositories/persistence_repository.dart';
 import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/redux/auth/auth_actions.dart';
 import 'package:invoiceninja_flutter/redux/auth/auth_state.dart';
+import 'package:invoiceninja_flutter/redux/client/client_actions.dart';
 import 'package:invoiceninja_flutter/redux/company/company_actions.dart';
 import 'package:invoiceninja_flutter/redux/company/company_state.dart';
+import 'package:invoiceninja_flutter/redux/credit/credit_actions.dart';
 import 'package:invoiceninja_flutter/redux/dashboard/dashboard_actions.dart';
+import 'package:invoiceninja_flutter/redux/design/design_actions.dart';
+import 'package:invoiceninja_flutter/redux/expense/expense_actions.dart';
+import 'package:invoiceninja_flutter/redux/invoice/invoice_actions.dart';
+import 'package:invoiceninja_flutter/redux/payment/payment_actions.dart';
+import 'package:invoiceninja_flutter/redux/product/product_actions.dart';
+import 'package:invoiceninja_flutter/redux/project/project_actions.dart';
+import 'package:invoiceninja_flutter/redux/quote/quote_actions.dart';
+import 'package:invoiceninja_flutter/redux/settings/settings_actions.dart';
 import 'package:invoiceninja_flutter/redux/static/static_state.dart';
+import 'package:invoiceninja_flutter/redux/task/task_actions.dart';
+import 'package:invoiceninja_flutter/redux/ui/pref_state.dart';
 import 'package:invoiceninja_flutter/redux/ui/ui_actions.dart';
 import 'package:invoiceninja_flutter/redux/ui/ui_state.dart';
+import 'package:invoiceninja_flutter/redux/vendor/vendor_actions.dart';
 import 'package:invoiceninja_flutter/ui/app/app_builder.dart';
 import 'package:invoiceninja_flutter/ui/app/dialogs/alert_dialog.dart';
 import 'package:invoiceninja_flutter/ui/app/main_screen.dart';
 import 'package:invoiceninja_flutter/ui/auth/login_vm.dart';
-import 'package:invoiceninja_flutter/ui/dashboard/dashboard_screen.dart';
+import 'package:invoiceninja_flutter/ui/dashboard/dashboard_screen_vm.dart';
+import 'package:invoiceninja_flutter/utils/completers.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:invoiceninja_flutter/utils/platforms.dart';
 import 'package:redux/redux.dart';
@@ -46,75 +63,101 @@ List<Middleware<AppState>> createStorePersistenceMiddleware([
       getApplicationDocumentsDirectory,
     ),
   ),
-  PersistenceRepository company1Repository = const PersistenceRepository(
-    fileStorage: const FileStorage(
-      'company1_state',
-      getApplicationDocumentsDirectory,
+  List<PersistenceRepository> companyRepositories = const [
+    const PersistenceRepository(
+      fileStorage: const FileStorage(
+        'company_state_0',
+        getApplicationDocumentsDirectory,
+      ),
     ),
-  ),
-  PersistenceRepository company2Repository = const PersistenceRepository(
-    fileStorage: const FileStorage(
-      'company2_state',
-      getApplicationDocumentsDirectory,
+    const PersistenceRepository(
+      fileStorage: const FileStorage(
+        'company_state_1',
+        getApplicationDocumentsDirectory,
+      ),
     ),
-  ),
-  PersistenceRepository company3Repository = const PersistenceRepository(
-    fileStorage: const FileStorage(
-      'company3_state',
-      getApplicationDocumentsDirectory,
+    const PersistenceRepository(
+      fileStorage: const FileStorage(
+        'company_state_2',
+        getApplicationDocumentsDirectory,
+      ),
     ),
-  ),
-  PersistenceRepository company4Repository = const PersistenceRepository(
-    fileStorage: const FileStorage(
-      'company4_state',
-      getApplicationDocumentsDirectory,
+    const PersistenceRepository(
+      fileStorage: const FileStorage(
+        'company_state_3',
+        getApplicationDocumentsDirectory,
+      ),
     ),
-  ),
-  PersistenceRepository company5Repository = const PersistenceRepository(
-    fileStorage: const FileStorage(
-      'company5_state',
-      getApplicationDocumentsDirectory,
+    const PersistenceRepository(
+      fileStorage: const FileStorage(
+        'company_state_4',
+        getApplicationDocumentsDirectory,
+      ),
     ),
-  ),
+    const PersistenceRepository(
+      fileStorage: const FileStorage(
+        'company_state_5',
+        getApplicationDocumentsDirectory,
+      ),
+    ),
+    const PersistenceRepository(
+      fileStorage: const FileStorage(
+        'company_state_6',
+        getApplicationDocumentsDirectory,
+      ),
+    ),
+    const PersistenceRepository(
+      fileStorage: const FileStorage(
+        'company_state_7',
+        getApplicationDocumentsDirectory,
+      ),
+    ),
+    const PersistenceRepository(
+      fileStorage: const FileStorage(
+        'company_state_8',
+        getApplicationDocumentsDirectory,
+      ),
+    ),
+    const PersistenceRepository(
+      fileStorage: const FileStorage(
+        'company_state_9',
+        getApplicationDocumentsDirectory,
+      ),
+    ),
+  ],
 ]) {
   final loadState = _createLoadState(
-      authRepository,
-      uiRepository,
-      staticRepository,
-      company1Repository,
-      company2Repository,
-      company3Repository,
-      company4Repository,
-      company5Repository);
+    authRepository,
+    uiRepository,
+    staticRepository,
+    companyRepositories,
+  );
 
   final accountLoaded = _createAccountLoaded();
 
-  final persistData = _createPersistData(company1Repository, company2Repository,
-      company3Repository, company4Repository, company5Repository);
+  final persistData = _createPersistData(
+    companyRepositories,
+  );
 
   final persistStatic = _createPersistStatic(staticRepository);
 
   final userLoggedIn = _createUserLoggedIn(
-      authRepository,
-      uiRepository,
-      staticRepository,
-      company1Repository,
-      company2Repository,
-      company3Repository,
-      company4Repository,
-      company5Repository);
+    authRepository,
+    uiRepository,
+    staticRepository,
+    companyRepositories,
+  );
 
   final persistUI = _createPersistUI(uiRepository);
 
+  final persistPrefs = _createPersistPrefs();
+
   final deleteState = _createDeleteState(
-      authRepository,
-      uiRepository,
-      staticRepository,
-      company1Repository,
-      company2Repository,
-      company3Repository,
-      company4Repository,
-      company5Repository);
+    authRepository,
+    uiRepository,
+    staticRepository,
+    companyRepositories,
+  );
 
   final viewMainScreen = _createViewMainScreen();
 
@@ -126,6 +169,7 @@ List<Middleware<AppState>> createStorePersistenceMiddleware([
     TypedMiddleware<AppState, PersistData>(persistData),
     TypedMiddleware<AppState, PersistStatic>(persistStatic),
     TypedMiddleware<AppState, PersistUI>(persistUI),
+    TypedMiddleware<AppState, PersistPrefs>(persistPrefs),
     TypedMiddleware<AppState, ViewMainScreen>(viewMainScreen),
   ];
 }
@@ -134,20 +178,12 @@ Middleware<AppState> _createLoadState(
   PersistenceRepository authRepository,
   PersistenceRepository uiRepository,
   PersistenceRepository staticRepository,
-  PersistenceRepository company1Repository,
-  PersistenceRepository company2Repository,
-  PersistenceRepository company3Repository,
-  PersistenceRepository company4Repository,
-  PersistenceRepository company5Repository,
+  List<PersistenceRepository> companyRepositories,
 ) {
   AuthState authState;
   UIState uiState;
   StaticState staticState;
-  CompanyState company1State;
-  CompanyState company2State;
-  CompanyState company3State;
-  CompanyState company4State;
-  CompanyState company5State;
+  final List<UserCompanyState> companyStates = [];
 
   return (Store<AppState> store, dynamic dynamicAction,
       NextDispatcher next) async {
@@ -155,8 +191,12 @@ Middleware<AppState> _createLoadState(
     try {
       final prefs = await SharedPreferences.getInstance();
       final appVersion = prefs.getString(kSharedPrefAppVersion);
+
+      //final packageInfo = await PackageInfo.fromPlatform();
+      //prefs.setString(kSharedPrefAppVersion, packageInfo.version);
       prefs.setString(kSharedPrefAppVersion, kAppVersion);
 
+      //if (appVersion != packageInfo.version) {
       if (appVersion != kAppVersion) {
         throw 'New app version - clearing state';
       }
@@ -164,37 +204,29 @@ Middleware<AppState> _createLoadState(
       authState = await authRepository.loadAuthState();
       uiState = await uiRepository.loadUIState();
       staticState = await staticRepository.loadStaticState();
-      company1State = await company1Repository.loadCompanyState(1);
-      company2State = await company2Repository.loadCompanyState(2);
-      company3State = await company3Repository.loadCompanyState(3);
-      company4State = await company4Repository.loadCompanyState(4);
-      company5State = await company5Repository.loadCompanyState(5);
+      for (var i = 0; i < companyRepositories.length; i++) {
+        companyStates.add(await companyRepositories[i].loadCompanyState(i));
+      }
 
-      final AppState appState = AppState().rebuild((b) => b
-        ..authState.replace(authState)
-        ..uiState.replace(uiState)
-        ..staticState.replace(staticState)
-        ..companyState1.replace(company1State)
-        ..companyState2.replace(company2State)
-        ..companyState3.replace(company3State)
-        ..companyState4.replace(company4State)
-        ..companyState5.replace(company5State));
+      final AppState appState = AppState(prefState: store.state.prefState)
+          .rebuild((b) => b
+            ..authState.replace(authState)
+            ..uiState.replace(uiState)
+            ..staticState.replace(staticState)
+            ..userCompanyStates.replace(companyStates));
 
       AppBuilder.of(action.context).rebuild();
       store.dispatch(LoadStateSuccess(appState));
 
       if (appState.staticState.isStale) {
-        store.dispatch(RefreshData(
-          loadCompanies: false,
-          platform: getPlatform(action.context),
-        ));
+        store.dispatch(RefreshData(loadCompanies: false));
       }
 
       if (uiState.currentRoute != LoginScreen.route &&
-          authState.url.isNotEmpty) {
+          uiState.currentRoute.isNotEmpty) {
         final NavigatorState navigator = Navigator.of(action.context);
         final routes = _getRoutes(appState);
-        if (uiState.layout == AppLayout.mobile) {
+        if (appState.prefState.appLayout == AppLayout.mobile) {
           bool isFirst = true;
           routes.forEach((route) {
             if (isFirst) {
@@ -207,36 +239,45 @@ Middleware<AppState> _createLoadState(
         } else {
           store.dispatch(
               UpdateCurrentRoute(routes.isEmpty ? '/dashboard' : routes.last));
-          store.dispatch(ViewMainScreen(action.context));
+          store.dispatch(
+              ViewMainScreen(navigator: Navigator.of(action.context)));
         }
       } else {
         throw 'Unknown page';
       }
     } catch (error) {
-      print(error);
+      print('Load state error: $error');
 
-      final SharedPreferences prefs = await SharedPreferences.getInstance();
-      final token = prefs.getString(getCompanyTokenKey()) ?? '';
+      String token;
+      if (Config.DEMO_MODE) {
+        token = 'DEMO';
+      } else {
+        final SharedPreferences prefs = await SharedPreferences.getInstance();
+        token = prefs.getString(kSharedPrefToken) ?? '';
+      }
 
       if (token.isNotEmpty) {
         final Completer<Null> completer = Completer<Null>();
         completer.future.then((_) {
-          if (uiState.layout == AppLayout.mobile) {
-            store.dispatch(ViewDashboard(context: action.context));
+          final layout = calculateLayout(action.context);
+          if (store.state.prefState.isNotMobile && layout == AppLayout.mobile) {
+            store.dispatch(UserSettingsChanged(layout: layout));
+            AppBuilder.of(action.context).rebuild();
+            WidgetsBinding.instance.addPostFrameCallback((duration) {
+              store.dispatch(
+                  ViewDashboard(navigator: Navigator.of(action.context)));
+            });
           } else {
-            store.dispatch(ViewMainScreen(action.context));
+            store.dispatch(
+                ViewMainScreen(navigator: Navigator.of(action.context)));
           }
         }).catchError((Object error) {
-          store.dispatch(UserLogout());
-          store.dispatch(LoadUserLogin(action.context));
+          print('Error (app_middleware): $error');
+          store.dispatch(UserLogout(action.context));
         });
-        store.dispatch(RefreshData(
-          platform: getPlatform(action.context),
-          completer: completer,
-        ));
+        store.dispatch(RefreshData(completer: completer));
       } else {
-        store.dispatch(UserLogout());
-        store.dispatch(LoadUserLogin(action.context));
+        store.dispatch(UserLogout(action.context));
       }
     }
 
@@ -262,9 +303,13 @@ List<String> _getRoutes(AppState state) {
         route += '/view';
       }
     } else {
-      if (!['main', 'dashboard', 'settings'].contains(part) &&
+      if (![kMain, kDashboard, kSettings].contains(part) &&
           entityType == null) {
-        entityType = EntityType.valueOf(part);
+        try {
+          entityType = EntityType.valueOf(part);
+        } catch (e) {
+          // do nothing
+        }
       }
 
       route += '/' + part;
@@ -280,11 +325,7 @@ Middleware<AppState> _createUserLoggedIn(
   PersistenceRepository authRepository,
   PersistenceRepository uiRepository,
   PersistenceRepository staticRepository,
-  PersistenceRepository company1Repository,
-  PersistenceRepository company2Repository,
-  PersistenceRepository company3Repository,
-  PersistenceRepository company4Repository,
-  PersistenceRepository company5Repository,
+  List<PersistenceRepository> companyRepositories,
 ) {
   return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
     final action = dynamicAction as UserLoginSuccess;
@@ -295,13 +336,34 @@ Middleware<AppState> _createUserLoggedIn(
     authRepository.saveAuthState(state.authState);
     uiRepository.saveUIState(state.uiState);
     staticRepository.saveStaticState(state.staticState);
-    company1Repository.saveCompanyState(state.companyState1);
-    company2Repository.saveCompanyState(state.companyState2);
-    company3Repository.saveCompanyState(state.companyState3);
-    company4Repository.saveCompanyState(state.companyState4);
-    company5Repository.saveCompanyState(state.companyState5);
+    for (var i = 0; i < state.userCompanyStates.length; i++) {
+      companyRepositories[i].saveCompanyState(state.userCompanyStates[i]);
+    }
   };
 }
+
+final _persistDataDebouncer =
+    Debouncer(milliseconds: kMillisecondsToDebounceStateSave);
+
+Middleware<AppState> _createPersistData(
+  List<PersistenceRepository> companyRepositories,
+) {
+  return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
+    final action = dynamicAction as PersistData;
+
+    next(action);
+
+    _persistDataDebouncer.run(() {
+      final AppState state = store.state;
+      final index = state.uiState.selectedCompanyIndex;
+      companyRepositories[index]
+          .saveCompanyState(state.userCompanyStates[index]);
+    });
+  };
+}
+
+final _persistUIDebouncer =
+    Debouncer(milliseconds: kMillisecondsToDebounceStateSave);
 
 Middleware<AppState> _createPersistUI(PersistenceRepository uiRepository) {
   return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
@@ -309,7 +371,23 @@ Middleware<AppState> _createPersistUI(PersistenceRepository uiRepository) {
 
     next(action);
 
-    uiRepository.saveUIState(store.state.uiState);
+    _persistUIDebouncer.run(() {
+      uiRepository.saveUIState(store.state.uiState);
+    });
+  };
+}
+
+Middleware<AppState> _createPersistPrefs() {
+  return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
+    final action = dynamicAction as PersistPrefs;
+
+    next(action);
+
+    final string =
+        serializers.serializeWith(PrefState.serializer, store.state.prefState);
+
+    SharedPreferences.getInstance()
+        .then((prefs) => prefs.setString(kSharedPrefs, json.encode(string)));
   };
 }
 
@@ -317,21 +395,41 @@ Middleware<AppState> _createAccountLoaded() {
   return (Store<AppState> store, dynamic dynamicAction,
       NextDispatcher next) async {
     final action = dynamicAction as LoadAccountSuccess;
-    final dynamic data = action.loginResponse;
-    store.dispatch(LoadStaticSuccess(data: data.static, version: data.version));
+    final response = action.loginResponse;
+
+    store.dispatch(LoadStaticSuccess(data: response.static));
 
     if (action.loadCompanies) {
-      for (int i = 0; i < data.accounts.length; i++) {
-        final CompanyEntity company = data.accounts[i];
+      for (int i = 0; i < response.userCompanies.length; i++) {
+        final UserCompanyEntity userCompany = response.userCompanies[i];
 
-        final SharedPreferences prefs = await SharedPreferences.getInstance();
-        prefs.setString(getCompanyTokenKey(i), company.token);
+        if (i == 0) {
+          final SharedPreferences prefs = await SharedPreferences.getInstance();
+          prefs.setString(kSharedPrefToken, userCompany.token.token);
+        }
 
-        store.dispatch(SelectCompany(i + 1, company));
-        store.dispatch(LoadCompanySuccess(company));
+        store.dispatch(SelectCompany(i));
+        store.dispatch(LoadCompanySuccess(userCompany));
+
+        final company = userCompany.company;
+        if (company.clients.isNotEmpty) {
+          store.dispatch(LoadClientsSuccess(company.clients));
+          store.dispatch(LoadProductsSuccess(company.products));
+          store.dispatch(LoadInvoicesSuccess(company.invoices));
+          store.dispatch(LoadPaymentsSuccess(company.payments));
+          store.dispatch(LoadQuotesSuccess(company.quotes));
+          store.dispatch(LoadCreditsSuccess(company.quotes));
+          store.dispatch(LoadDesignsSuccess(company.designs));
+          if (Config.DEMO_MODE) {
+            store.dispatch(LoadTasksSuccess(company.tasks));
+            store.dispatch(LoadProjectsSuccess(company.projects));
+            store.dispatch(LoadVendorsSuccess(company.vendors));
+            store.dispatch(LoadExpensesSuccess(company.expenses));
+          }
+        }
       }
 
-      store.dispatch(SelectCompany(1, data.accounts[0]));
+      store.dispatch(SelectCompany(0));
       store.dispatch(UserLoginSuccess());
     }
 
@@ -353,67 +451,21 @@ Middleware<AppState> _createPersistStatic(
   };
 }
 
-Middleware<AppState> _createPersistData(
-  PersistenceRepository company1Repository,
-  PersistenceRepository company2Repository,
-  PersistenceRepository company3Repository,
-  PersistenceRepository company4Repository,
-  PersistenceRepository company5Repository,
-) {
-  return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
-    final action = dynamicAction as PersistData;
-
-    next(action);
-
-    final AppState state = store.state;
-
-    switch (state.uiState.selectedCompanyIndex) {
-      case 1:
-        company1Repository.saveCompanyState(state.companyState1);
-        break;
-      case 2:
-        company2Repository.saveCompanyState(state.companyState2);
-        break;
-      case 3:
-        company3Repository.saveCompanyState(state.companyState3);
-        break;
-      case 4:
-        company4Repository.saveCompanyState(state.companyState4);
-        break;
-      case 5:
-        company5Repository.saveCompanyState(state.companyState5);
-        break;
-    }
-  };
-}
-
 Middleware<AppState> _createDeleteState(
   PersistenceRepository authRepository,
   PersistenceRepository uiRepository,
   PersistenceRepository staticRepository,
-  PersistenceRepository company1Repository,
-  PersistenceRepository company2Repository,
-  PersistenceRepository company3Repository,
-  PersistenceRepository company4Repository,
-  PersistenceRepository company5Repository,
+  List<PersistenceRepository> companyRepositories,
 ) {
-  return (Store<AppState> store, dynamic dynamicAction,
-      NextDispatcher next) async {
+  return (Store<AppState> store, dynamic action, NextDispatcher next) async {
     authRepository.delete();
     uiRepository.delete();
     staticRepository.delete();
-    company1Repository.delete();
-    company2Repository.delete();
-    company3Repository.delete();
-    company4Repository.delete();
-    company5Repository.delete();
+    companyRepositories.forEach((repo) => repo.delete());
 
-    final action = dynamicAction as UserLogout;
     final SharedPreferences prefs = await SharedPreferences.getInstance();
 
-    for (int i = 0; i < 5; i++) {
-      prefs.setString(getCompanyTokenKey(i), '');
-    }
+    prefs.setString(kSharedPrefToken, '');
 
     next(action);
   };
@@ -425,41 +477,42 @@ Middleware<AppState> _createViewMainScreen() {
 
     next(action);
 
-    store.dispatch(UpdateCurrentRoute(DashboardScreen.route));
+    if (store.state.uiState.currentRoute == LoginScreen.route) {
+      store.dispatch(UpdateCurrentRoute(DashboardScreenBuilder.route));
+    }
 
-    Navigator.of(action.context).pushNamedAndRemoveUntil(
-        MainScreen.route, (Route<dynamic> route) => false);
+    while (action.navigator.canPop()) {
+      action.navigator.pop();
+    }
+
+    WidgetsBinding.instance.addPostFrameCallback((duration) {
+      action.navigator.pushNamed(MainScreen.route);
+    });
   };
 }
 
-/*
-Future<bool> _checkLastLoadWasSuccesfull() async {
-  final SharedPreferences prefs = await SharedPreferences.getInstance();
-  final initialized = prefs.getBool('initialized');
-  prefs.setBool('initialized', false);
-  return initialized;
-}
-
-void _setLastLoadWasSuccesfull() async {
-  final SharedPreferences prefs = await SharedPreferences.getInstance();
-  prefs.setBool('initialized', true);
-}
-*/
-
-bool hasChanges({Store<AppState> store, BuildContext context, bool force}) {
+bool hasChanges({
+  @required Store<AppState> store,
+  @required BuildContext context,
+  @required dynamic action,
+}) {
   if (context == null) {
     print('WARNING: context is null in hasChanges');
     return false;
-  } else if (force == null) {
-    print('WARNING: force is null in hasChanges');
-    return false;
   }
 
-  if (store.state.hasChanges() && !isMobile(context) && !force) {
+  if (store.state.hasChanges() && !isMobile(context)) {
     showDialog<MessageDialog>(
         context: context,
-        builder: (BuildContext context) {
-          return MessageDialog(AppLocalization.of(context).errorUnsavedChanges);
+        builder: (BuildContext dialogContext) {
+          final localization = AppLocalization.of(context);
+
+          return MessageDialog(localization.errorUnsavedChanges,
+              dismissLabel: localization.continueEditing, onDiscard: () {
+            store.dispatch(DiscardChanges());
+            store.dispatch(ResetSettings());
+            store.dispatch(action);
+          });
         });
     return true;
   } else {

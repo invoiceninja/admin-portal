@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:invoiceninja_flutter/redux/app/app_middleware.dart';
-import 'package:invoiceninja_flutter/redux/dashboard/dashboard_actions.dart';
 import 'package:invoiceninja_flutter/redux/expense/expense_actions.dart';
 import 'package:invoiceninja_flutter/utils/platforms.dart';
 import 'package:redux/redux.dart';
@@ -41,12 +40,11 @@ List<Middleware<AppState>> createStoreVendorsMiddleware([
 }
 
 Middleware<AppState> _editVendor() {
-  return (Store<AppState> store, dynamic dynamicAction,
-      NextDispatcher next) async {
+  return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
     final action = dynamicAction as EditVendor;
 
-    if (hasChanges(
-        store: store, context: action.context, force: action.force)) {
+    if (!action.force &&
+        hasChanges(store: store, context: action.context, action: action)) {
       return;
     }
 
@@ -55,12 +53,7 @@ Middleware<AppState> _editVendor() {
     store.dispatch(UpdateCurrentRoute(VendorEditScreen.route));
 
     if (isMobile(action.context)) {
-      final vendor =
-          await Navigator.of(action.context).pushNamed(VendorEditScreen.route);
-
-      if (action.completer != null && vendor != null) {
-        action.completer.complete(vendor);
-      }
+      action.navigator.pushNamed(VendorEditScreen.route);
     }
   };
 }
@@ -70,8 +63,8 @@ Middleware<AppState> _viewVendor() {
       NextDispatcher next) async {
     final action = dynamicAction as ViewVendor;
 
-    if (hasChanges(
-        store: store, context: action.context, force: action.force)) {
+    if (!action.force &&
+        hasChanges(store: store, context: action.context, action: action)) {
       return;
     }
 
@@ -80,7 +73,7 @@ Middleware<AppState> _viewVendor() {
     store.dispatch(UpdateCurrentRoute(VendorViewScreen.route));
 
     if (isMobile(action.context)) {
-      Navigator.of(action.context).pushNamed(VendorViewScreen.route);
+      action.navigator.pushNamed(VendorViewScreen.route);
     }
   };
 }
@@ -89,17 +82,21 @@ Middleware<AppState> _viewVendorList() {
   return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
     final action = dynamicAction as ViewVendorList;
 
-    if (hasChanges(
-        store: store, context: action.context, force: action.force)) {
+    if (!action.force &&
+        hasChanges(store: store, context: action.context, action: action)) {
       return;
     }
 
     next(action);
 
+    if (store.state.vendorState.isStale) {
+      store.dispatch(LoadVendors());
+    }
+
     store.dispatch(UpdateCurrentRoute(VendorScreen.route));
 
     if (isMobile(action.context)) {
-      Navigator.of(action.context).pushNamedAndRemoveUntil(
+      action.navigator.pushNamedAndRemoveUntil(
           VendorScreen.route, (Route<dynamic> route) => false);
     }
   };
@@ -108,18 +105,20 @@ Middleware<AppState> _viewVendorList() {
 Middleware<AppState> _archiveVendor(VendorRepository repository) {
   return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
     final action = dynamicAction as ArchiveVendorRequest;
-    final origVendor = store.state.vendorState.map[action.vendorId];
+    final prevVendors =
+        action.vendorIds.map((id) => store.state.vendorState.map[id]).toList();
+
     repository
-        .saveData(store.state.selectedCompany, store.state.authState,
-            origVendor, EntityAction.archive)
-        .then((VendorEntity vendor) {
-      store.dispatch(ArchiveVendorSuccess(vendor));
+        .bulkAction(
+            store.state.credentials, action.vendorIds, EntityAction.archive)
+        .then((List<VendorEntity> vendors) {
+      store.dispatch(ArchiveVendorSuccess(vendors));
       if (action.completer != null) {
         action.completer.complete(null);
       }
     }).catchError((Object error) {
       print(error);
-      store.dispatch(ArchiveVendorFailure(origVendor));
+      store.dispatch(ArchiveVendorFailure(prevVendors));
       if (action.completer != null) {
         action.completer.completeError(error);
       }
@@ -132,18 +131,20 @@ Middleware<AppState> _archiveVendor(VendorRepository repository) {
 Middleware<AppState> _deleteVendor(VendorRepository repository) {
   return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
     final action = dynamicAction as DeleteVendorRequest;
-    final origVendor = store.state.vendorState.map[action.vendorId];
+    final prevVendors =
+        action.vendorIds.map((id) => store.state.vendorState.map[id]).toList();
+
     repository
-        .saveData(store.state.selectedCompany, store.state.authState,
-            origVendor, EntityAction.delete)
-        .then((VendorEntity vendor) {
-      store.dispatch(DeleteVendorSuccess(vendor));
+        .bulkAction(
+            store.state.credentials, action.vendorIds, EntityAction.delete)
+        .then((List<VendorEntity> vendors) {
+      store.dispatch(DeleteVendorSuccess(vendors));
       if (action.completer != null) {
         action.completer.complete(null);
       }
     }).catchError((Object error) {
       print(error);
-      store.dispatch(DeleteVendorFailure(origVendor));
+      store.dispatch(DeleteVendorFailure(prevVendors));
       if (action.completer != null) {
         action.completer.completeError(error);
       }
@@ -156,18 +157,20 @@ Middleware<AppState> _deleteVendor(VendorRepository repository) {
 Middleware<AppState> _restoreVendor(VendorRepository repository) {
   return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
     final action = dynamicAction as RestoreVendorRequest;
-    final origVendor = store.state.vendorState.map[action.vendorId];
+    final prevVendors =
+        action.vendorIds.map((id) => store.state.vendorState.map[id]).toList();
+
     repository
-        .saveData(store.state.selectedCompany, store.state.authState,
-            origVendor, EntityAction.restore)
-        .then((VendorEntity vendor) {
-      store.dispatch(RestoreVendorSuccess(vendor));
+        .bulkAction(
+            store.state.credentials, action.vendorIds, EntityAction.restore)
+        .then((List<VendorEntity> vendors) {
+      store.dispatch(RestoreVendorSuccess(vendors));
       if (action.completer != null) {
         action.completer.complete(null);
       }
     }).catchError((Object error) {
       print(error);
-      store.dispatch(RestoreVendorFailure(origVendor));
+      store.dispatch(RestoreVendorFailure(prevVendors));
       if (action.completer != null) {
         action.completer.completeError(error);
       }
@@ -181,8 +184,7 @@ Middleware<AppState> _saveVendor(VendorRepository repository) {
   return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
     final action = dynamicAction as SaveVendorRequest;
     repository
-        .saveData(
-            store.state.selectedCompany, store.state.authState, action.vendor)
+        .saveData(store.state.credentials, action.vendor)
         .then((VendorEntity vendor) {
       if (action.vendor.isNew) {
         store.dispatch(AddVendorSuccess(vendor));
@@ -218,24 +220,21 @@ Middleware<AppState> _loadVendor(VendorRepository repository) {
 
     store.dispatch(LoadVendorRequest());
     repository
-        .loadItem(state.selectedCompany, state.authState, action.vendorId)
+        .loadItem(store.state.credentials, action.vendorId)
         .then((vendor) {
       store.dispatch(LoadVendorSuccess(vendor));
 
       if (action.completer != null) {
         action.completer.complete(null);
       }
+      if (state.expenseState.isStale) {
+        store.dispatch(LoadExpenses());
+      }
     }).catchError((Object error) {
       print(error);
       store.dispatch(LoadVendorFailure(error));
       if (action.completer != null) {
         action.completer.completeError(error);
-      }
-
-      // Support selfhost users with older versions
-      // TODO remove this in v2
-      if (state.dashboardState.isStale) {
-        store.dispatch(LoadDashboard());
       }
     });
 
@@ -261,9 +260,7 @@ Middleware<AppState> _loadVendors(VendorRepository repository) {
     final int updatedAt = (state.vendorState.lastUpdated / 1000).round();
 
     store.dispatch(LoadVendorsRequest());
-    repository
-        .loadList(state.selectedCompany, state.authState, updatedAt)
-        .then((data) {
+    repository.loadList(store.state.credentials, updatedAt).then((data) {
       store.dispatch(LoadVendorsSuccess(data));
 
       if (action.completer != null) {

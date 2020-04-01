@@ -3,12 +3,12 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
+import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/redux/client/client_actions.dart';
 import 'package:invoiceninja_flutter/redux/static/static_state.dart';
 import 'package:invoiceninja_flutter/redux/ui/ui_actions.dart';
 import 'package:invoiceninja_flutter/ui/app/dialogs/error_dialog.dart';
-import 'package:invoiceninja_flutter/ui/client/client_screen.dart';
 import 'package:invoiceninja_flutter/ui/client/edit/client_edit.dart';
 import 'package:invoiceninja_flutter/ui/client/view/client_view_vm.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
@@ -37,13 +37,13 @@ class ClientEditScreen extends StatelessWidget {
 
 class ClientEditVM {
   ClientEditVM({
+    @required this.state,
     @required this.company,
     @required this.isSaving,
     @required this.client,
     @required this.origClient,
     @required this.onChanged,
     @required this.onSavePressed,
-    @required this.onBackPressed,
     @required this.onCancelPressed,
     @required this.staticState,
     @required this.copyBillingAddress,
@@ -55,17 +55,12 @@ class ClientEditVM {
     final client = state.clientUIState.editing;
 
     return ClientEditVM(
-        company: state.selectedCompany,
+        state: state,
+        company: state.company,
         client: client,
         origClient: state.clientState.map[client.id],
         staticState: state.staticState,
         isSaving: state.isSaving,
-        onBackPressed: () {
-          if (state.uiState.currentRoute.contains(ClientScreen.route)) {
-            store.dispatch(UpdateCurrentRoute(
-                client.isNew ? ClientScreen.route : ClientViewScreen.route));
-          }
-        },
         onChanged: (ClientEntity client) =>
             store.dispatch(UpdateClient(client)),
         copyBillingAddress: () =>
@@ -85,8 +80,7 @@ class ClientEditVM {
               ..postalCode = client.shippingPostalCode
               ..countryId = client.shippingCountryId))),
         onCancelPressed: (BuildContext context) {
-          store.dispatch(EditClient(
-              client: ClientEntity(), context: context, force: true));
+          createEntity(context: context, entity: ClientEntity(), force: true);
           if (state.clientUIState.cancelCompleter != null) {
             state.clientUIState.cancelCompleter.complete();
           } else {
@@ -107,14 +101,16 @@ class ClientEditVM {
           store.dispatch(
               SaveClientRequest(completer: completer, client: client));
           return completer.future.then((savedClient) {
-            store.dispatch(UpdateCurrentRoute(ClientViewScreen.route));
             if (isMobile(context)) {
+              store.dispatch(UpdateCurrentRoute(ClientViewScreen.route));
               if (client.isNew && state.clientUIState.saveCompleter == null) {
                 Navigator.of(context)
                     .pushReplacementNamed(ClientViewScreen.route);
               } else {
                 Navigator.of(context).pop(savedClient);
               }
+            } else {
+              viewEntity(context: context, entity: savedClient, force: true);
             }
           }).catchError((Object error) {
             showDialog<ErrorDialog>(
@@ -126,13 +122,13 @@ class ClientEditVM {
         });
   }
 
+  final AppState state;
   final CompanyEntity company;
   final bool isSaving;
   final ClientEntity client;
   final ClientEntity origClient;
   final Function(ClientEntity) onChanged;
   final Function(BuildContext) onSavePressed;
-  final Function onBackPressed;
   final Function(BuildContext) onCancelPressed;
   final StaticState staticState;
   final Function() copyShippingAddress;

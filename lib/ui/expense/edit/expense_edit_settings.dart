@@ -3,8 +3,10 @@ import 'package:invoiceninja_flutter/data/models/entities.dart';
 import 'package:invoiceninja_flutter/data/models/static/currency_model.dart';
 import 'package:invoiceninja_flutter/ui/app/entity_dropdown.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/date_picker.dart';
+import 'package:invoiceninja_flutter/ui/app/forms/decorated_form_field.dart';
 import 'package:invoiceninja_flutter/ui/app/invoice/tax_rate_dropdown.dart';
 import 'package:invoiceninja_flutter/ui/expense/edit/expense_edit_vm.dart';
+import 'package:invoiceninja_flutter/utils/completers.dart';
 import 'package:invoiceninja_flutter/utils/formatting.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:invoiceninja_flutter/ui/app/form_card.dart';
@@ -30,11 +32,12 @@ class ExpenseEditSettingsState extends State<ExpenseEditSettings> {
   final _transactionReferenceController = TextEditingController();
   final _exchangeRateController = TextEditingController();
 
-  final List<TextEditingController> _controllers = [];
+  List<TextEditingController> _controllers;
+  final _debouncer = Debouncer();
 
   @override
   void didChangeDependencies() {
-    final List<TextEditingController> _controllers = [
+    _controllers = [
       _transactionReferenceController,
       _exchangeRateController,
     ];
@@ -68,13 +71,15 @@ class ExpenseEditSettingsState extends State<ExpenseEditSettings> {
   }
 
   void _onChanged() {
-    final viewModel = widget.viewModel;
-    final expense = viewModel.expense.rebuild((b) => b
-      ..transactionReference = _transactionReferenceController.text.trim()
-      ..exchangeRate = parseDouble(_exchangeRateController.text));
-    if (expense != viewModel.expense) {
-      viewModel.onChanged(expense);
-    }
+    _debouncer.run(() {
+      final viewModel = widget.viewModel;
+      final expense = viewModel.expense.rebuild((b) => b
+        ..transactionReference = _transactionReferenceController.text.trim()
+        ..exchangeRate = parseDouble(_exchangeRateController.text));
+      if (expense != viewModel.expense) {
+        viewModel.onChanged(expense);
+      }
+    });
   }
 
   void _setCurrency(CurrencyEntity currency) {
@@ -108,28 +113,36 @@ class ExpenseEditSettingsState extends State<ExpenseEditSettings> {
       children: <Widget>[
         FormCard(
           children: <Widget>[
-            TaxRateDropdown(
-              taxRates: company.taxRates,
-              onSelected: (taxRate) =>
-                  viewModel.onChanged(expense.rebuild((b) => b
-                    ..taxRate1 = taxRate.rate
-                    ..taxName1 = taxRate.name)),
-              labelText: localization.tax,
-              initialTaxName: expense.taxName1,
-              initialTaxRate: expense.taxRate1,
-            ),
-            company.enableSecondTaxRate
-                ? TaxRateDropdown(
-                    taxRates: company.taxRates,
-                    onSelected: (taxRate) =>
-                        viewModel.onChanged(expense.rebuild((b) => b
-                          ..taxRate2 = taxRate.rate
-                          ..taxName2 = taxRate.name)),
-                    labelText: localization.tax,
-                    initialTaxName: expense.taxName2,
-                    initialTaxRate: expense.taxRate2,
-                  )
-                : SizedBox(),
+            if (company.settings.enableFirstItemTaxRate)
+              TaxRateDropdown(
+                onSelected: (taxRate) =>
+                    viewModel.onChanged(expense.rebuild((b) => b
+                      ..taxRate1 = taxRate.rate
+                      ..taxName1 = taxRate.name)),
+                labelText: localization.tax,
+                initialTaxName: expense.taxName1,
+                initialTaxRate: expense.taxRate1,
+              ),
+            if (company.settings.enableSecondItemTaxRate)
+              TaxRateDropdown(
+                onSelected: (taxRate) =>
+                    viewModel.onChanged(expense.rebuild((b) => b
+                      ..taxRate2 = taxRate.rate
+                      ..taxName2 = taxRate.name)),
+                labelText: localization.tax,
+                initialTaxName: expense.taxName2,
+                initialTaxRate: expense.taxRate2,
+              ),
+            if (company.settings.enableThirdItemTaxRate)
+              TaxRateDropdown(
+                onSelected: (taxRate) =>
+                    viewModel.onChanged(expense.rebuild((b) => b
+                      ..taxRate3 = taxRate.rate
+                      ..taxName3 = taxRate.name)),
+                labelText: localization.tax,
+                initialTaxName: expense.taxName3,
+                initialTaxRate: expense.taxRate3,
+              ),
             SizedBox(height: 16),
             expense.isInvoiced
                 ? SizedBox()
@@ -167,13 +180,13 @@ class ExpenseEditSettingsState extends State<ExpenseEditSettings> {
                     children: <Widget>[
                       SizedBox(height: 8),
                       EntityDropdown(
+                        key: ValueKey(
+                            '__payment_type_${expense.paymentTypeId}__'),
                         entityType: EntityType.paymentType,
-                        entityMap: staticState.paymentTypeMap,
                         entityList:
                             memoizedPaymentTypeList(staticState.paymentTypeMap),
                         labelText: localization.paymentType,
-                        initialValue: staticState
-                            .paymentTypeMap[expense.paymentTypeId]?.name,
+                        entityId: expense.paymentTypeId,
                         onSelected: (paymentType) => viewModel.onChanged(expense
                             .rebuild((b) => b..paymentTypeId = paymentType.id)),
                       ),
@@ -185,12 +198,10 @@ class ExpenseEditSettingsState extends State<ExpenseEditSettings> {
                               expense.rebuild((b) => b..paymentDate = date));
                         },
                       ),
-                      TextFormField(
+                      DecoratedFormField(
                         controller: _transactionReferenceController,
                         keyboardType: TextInputType.text,
-                        decoration: InputDecoration(
-                          labelText: localization.transactionReference,
-                        ),
+                        label: localization.transactionReference,
                       ),
                       SizedBox(height: 16),
                     ],
@@ -219,25 +230,22 @@ class ExpenseEditSettingsState extends State<ExpenseEditSettings> {
                     children: <Widget>[
                       SizedBox(height: 8),
                       EntityDropdown(
+                        key: ValueKey(
+                            '__invoice_currency_${expense.invoiceCurrencyId}__'),
                         entityType: EntityType.currency,
-                        entityMap: staticState.currencyMap,
                         entityList:
                             memoizedCurrencyList(staticState.currencyMap),
                         labelText: localization.currency,
-                        initialValue: staticState
-                            .currencyMap[viewModel.expense.invoiceCurrencyId]
-                            ?.name,
+                        entityId: expense.invoiceCurrencyId,
                         onSelected: (SelectableEntity currency) =>
                             _setCurrency(currency),
                       ),
-                      TextFormField(
+                      DecoratedFormField(
                         key: ValueKey('__${expense.invoiceCurrencyId}__'),
                         controller: _exchangeRateController,
                         keyboardType:
                             TextInputType.numberWithOptions(decimal: true),
-                        decoration: InputDecoration(
-                          labelText: localization.exchangeRate,
-                        ),
+                        label: localization.exchangeRate,
                       ),
                       SizedBox(height: 16),
                     ],

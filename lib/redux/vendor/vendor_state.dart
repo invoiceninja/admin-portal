@@ -15,8 +15,8 @@ abstract class VendorState implements Built<VendorState, VendorStateBuilder> {
   factory VendorState() {
     return _$VendorState._(
       lastUpdated: 0,
-      map: BuiltMap<int, VendorEntity>(),
-      list: BuiltList<int>(),
+      map: BuiltMap<String, VendorEntity>(),
+      list: BuiltList<String>(),
     );
   }
   VendorState._();
@@ -24,8 +24,8 @@ abstract class VendorState implements Built<VendorState, VendorStateBuilder> {
   @nullable
   int get lastUpdated;
 
-  BuiltMap<int, VendorEntity> get map;
-  BuiltList<int> get list;
+  BuiltMap<String, VendorEntity> get map;
+  BuiltList<String> get list;
 
   bool get isStale {
     if (!isLoaded) {
@@ -38,6 +38,19 @@ abstract class VendorState implements Built<VendorState, VendorStateBuilder> {
 
   bool get isLoaded => lastUpdated != null && lastUpdated > 0;
 
+  VendorState loadVendors(BuiltList<VendorEntity> clients) {
+    final map = Map<String, VendorEntity>.fromIterable(
+      clients,
+      key: (dynamic item) => item.id,
+      value: (dynamic item) => item,
+    );
+
+    return rebuild((b) => b
+      ..lastUpdated = DateTime.now().millisecondsSinceEpoch
+      ..map.addAll(map)
+      ..list.replace((map.keys.toList() + list.toList()).toSet().toList()));
+  }
+
   static Serializer<VendorState> get serializer => _$vendorStateSerializer;
 }
 
@@ -49,7 +62,7 @@ abstract class VendorUIState extends Object
       listUIState: ListUIState(VendorFields.name),
       editing: VendorEntity(),
       editingContact: VendorContactEntity(),
-      selectedId: 0,
+      selectedId: '',
     );
   }
   VendorUIState._();
@@ -62,6 +75,9 @@ abstract class VendorUIState extends Object
 
   @override
   bool get isCreatingNew => editing.isNew;
+
+  @override
+  String get editingId => editing.id;
 
   static Serializer<VendorUIState> get serializer => _$vendorUIStateSerializer;
 }

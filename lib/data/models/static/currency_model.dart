@@ -33,11 +33,11 @@ class CurrencyFields {
   static const String name = 'name';
   static const String symbol = 'symbol';
   static const String precision = 'precision';
-  static const String thousandSeparator = 'thousandSeparator';
-  static const String decimalSeparator = 'decimalSeparator';
+  static const String thousandSeparator = 'thousand_separator';
+  static const String decimalSeparator = 'decimal_separator';
   static const String code = 'code';
-  static const String swapCurrencySymbol = 'swapCurrencySymbol';
-  static const String exchangeRate = 'exchangeRate';
+  static const String swapCurrencySymbol = 'swap_currency_symbol';
+  static const String exchangeRate = 'exchange_rate';
 }
 
 abstract class CurrencyEntity extends Object
@@ -45,15 +45,15 @@ abstract class CurrencyEntity extends Object
     implements Built<CurrencyEntity, CurrencyEntityBuilder> {
   factory CurrencyEntity() {
     return _$CurrencyEntity._(
-      id: 0,
+      id: '',
       name: '',
       symbol: '',
       precision: '',
       thousandSeparator: '',
       decimalSeparator: '',
       code: '',
-      swapCurrencySymbol: false,
       exchangeRate: 0.0,
+      swapCurrencySymbol: false,
     );
   }
   CurrencyEntity._();

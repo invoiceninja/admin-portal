@@ -41,7 +41,7 @@ class ClientEditContactsVM {
     final client = state.clientUIState.editing;
 
     return ClientEditContactsVM(
-        company: state.selectedCompany,
+        company: state.company,
         client: client,
         contact: state.clientUIState.editingContact,
         onAddContactPressed: () {

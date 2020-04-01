@@ -6,16 +6,26 @@ import 'package:intl/intl.dart';
 import 'package:intl/number_symbols_data.dart';
 import 'package:intl/number_symbols.dart';
 import 'package:invoiceninja_flutter/constants.dart';
+import 'package:invoiceninja_flutter/data/models/group_model.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/redux/company/company_selectors.dart';
+import 'package:invoiceninja_flutter/utils/localization.dart';
 
 double round(double value, int precision) {
   final int fac = pow(10, precision);
   return (value * fac).round() / fac;
 }
 
-double parseDouble(String value) {
+int parseInt(String value, {bool zeroIsNull = false}) {
+  value = value.replaceAll(RegExp(r'[^0-9\.\-]'), '');
+
+  final intValue = int.tryParse(value) ?? 0;
+
+  return (intValue == 0 && zeroIsNull) ? null : intValue;
+}
+
+double parseDouble(String value, {bool zeroIsNull = false}) {
   // check for comma as decimal separator
   final RegExp regExp = RegExp(r',[\d]{1,2}$');
   if (regExp.hasMatch(value)) {
@@ -25,7 +35,9 @@ double parseDouble(String value) {
 
   value = value.replaceAll(RegExp(r'[^0-9\.\-]'), '');
 
-  return double.tryParse(value) ?? 0.0;
+  final doubleValue = double.tryParse(value) ?? 0.0;
+
+  return (doubleValue == 0 && zeroIsNull) ? null : doubleValue;
 }
 
 enum FormatNumberType {
@@ -40,9 +52,10 @@ enum FormatNumberType {
 String formatNumber(
   double value,
   BuildContext context, {
-  int clientId,
-  int currencyId,
+  String clientId,
+  String currencyId,
   FormatNumberType formatNumberType = FormatNumberType.money,
+  bool showCurrencyCode,
   bool zeroIsNull = false,
   bool roundToTwo = false,
 }) {
@@ -62,32 +75,33 @@ String formatNumber(
   }
 
   final state = StoreProvider.of<AppState>(context).state;
-  final CompanyEntity company = state.selectedCompany;
-  final ClientEntity client =
-      state.selectedCompanyState.clientState.map[clientId];
+  final CompanyEntity company = state.company;
+  final ClientEntity client = state.clientState.map[clientId];
+  final GroupEntity group = state.groupState.map[client?.groupId];
 
-  int countryId;
+  String countryId;
 
-  if (client != null && client.countryId > 0) {
+  if (client != null && client.hasNameSet) {
     countryId = client.countryId;
-  } else if (company.countryId > 0) {
-    countryId = company.countryId;
   } else {
-    countryId = kCountryUnitedStates;
+    countryId = company.settings.countryId;
   }
 
-  if (currencyId != null && currencyId > 0) {
-    // do nothing
-  } else if (client != null && client.currencyId > 0) {
-    currencyId = client.currencyId;
-  } else if (company.currencyId > 0) {
+  if (currencyId == kCurrencyAll) {
     currencyId = company.currencyId;
+  } else if (currencyId != null && currencyId.isNotEmpty) {
+    // do nothing
+  } else if (client != null && client.hasCurrency) {
+    currencyId = client.currencyId;
+  } else if (group != null && group.hasCurrency) {
+    currencyId = group.currencyId;
   } else {
-    currencyId = kCurrencyUSDollar;
+    currencyId = company.currencyId;
   }
 
   final CurrencyEntity currency = state.staticState.currencyMap[currencyId];
-  final CountryEntity country = state.staticState.countryMap[countryId];
+  final CountryEntity country =
+      state.staticState.countryMap[countryId] ?? CountryEntity();
 
   if (currency == null) {
     return '';
@@ -138,7 +152,8 @@ String formatNumber(
 
   if (formatNumberType == FormatNumberType.percent) {
     return '$formatted%';
-  } else if (company.showCurrencyCode || currency.symbol.isEmpty) {
+  } else if ((showCurrencyCode ?? company.settings.showCurrencyCode) ||
+      currency.symbol.isEmpty) {
     return '$formatted ${currency.code}';
   } else if (swapCurrencySymbol) {
     return '$formatted ${currency.symbol.trim()}';
@@ -192,7 +207,7 @@ String convertDateTimeToSqlDate([DateTime date]) {
 }
 
 DateTime convertTimestampToDate(int timestamp) =>
-    DateTime.fromMillisecondsSinceEpoch(timestamp * 1000);
+    DateTime.fromMillisecondsSinceEpoch((timestamp ?? 0) * 1000);
 
 String convertTimestampToDateString(int timestamp) =>
     convertTimestampToDate(timestamp).toIso8601String();
@@ -241,7 +256,7 @@ String formatDate(String value, BuildContext context,
   }
 
   final state = StoreProvider.of<AppState>(context).state;
-  final CompanyEntity company = state.selectedCompany;
+  final CompanyEntity company = state.company;
 
   if (state.staticState.dateFormatMap.isEmpty) {
     return '';
@@ -251,29 +266,29 @@ String formatDate(String value, BuildContext context,
     String format;
     if (!showDate) {
       format = showSeconds
-          ? company.enableMilitaryTime ? 'H:mm:ss' : 'h:mm:ss a'
-          : company.enableMilitaryTime ? 'H:mm' : 'h:mm a';
+          ? company.settings.enableMilitaryTime ? 'H:mm:ss' : 'h:mm:ss a'
+          : company.settings.enableMilitaryTime ? 'H:mm' : 'h:mm a';
     } else {
-      final dateFormats = state.staticState.datetimeFormatMap;
-      final dateFormatId = company.datetimeFormatId > 0
-          ? company.datetimeFormatId
-          : kDefaultDateTimeFormat;
+      final dateFormats = state.staticState.dateFormatMap;
+      final dateFormatId = (company.settings.dateFormatId ?? '').isNotEmpty
+          ? company.settings.dateFormatId
+          : kDefaultDateFormat;
       format = dateFormats[dateFormatId].format;
-      if (company.enableMilitaryTime) {
-        format = showSeconds
-            ? format.replaceFirst('h:mm:ss a', 'H:mm:ss')
-            : format.replaceFirst('h:mm a', 'H:mm');
-      }
+      format += ' ' +
+          (showSeconds
+              ? company.settings.enableMilitaryTime ? 'H:mm:ss' : 'h:mm:ss a'
+              : company.settings.enableMilitaryTime ? 'H:mm' : 'h:mm a');
     }
     final formatter = DateFormat(format, localeSelector(state));
-    return formatter.format(DateTime.tryParse(value).toLocal());
+    final parsed = DateTime.tryParse(value);
+    return parsed == null ? '' : formatter.format(parsed.toLocal());
   } else {
     final dateFormats = state.staticState.dateFormatMap;
-    final dateFormatId =
-        company.dateFormatId > 0 ? company.dateFormatId : kDefaultDateFormat;
-    final formatter =
-        DateFormat(dateFormats[dateFormatId].format, localeSelector(state));
-    return formatter.format(DateTime.tryParse(value));
+    final formatter = DateFormat(
+        dateFormats[company.settings.dateFormatId].format,
+        localeSelector(state));
+    final parsed = DateTime.tryParse(value);
+    return parsed == null ? '' : formatter.format(parsed);
   }
 }
 
@@ -283,3 +298,20 @@ String cleanApiUrl(String url) => (url ?? '')
     .trim()
     .replaceFirst(RegExp(r'/api/v1'), '')
     .replaceFirst(RegExp(r'/$'), '');
+
+String formatCustomValue({String value, String field, BuildContext context}) {
+  final localization = AppLocalization.of(context);
+  final state = StoreProvider.of<AppState>(context).state;
+  final CompanyEntity company = state.company;
+
+  switch (company.getCustomFieldType(field)) {
+    case kFieldTypeSwitch:
+      return value == 'yes' ? localization.yes : localization.no;
+      break;
+    case kFieldTypeDate:
+      return formatDate(value, context);
+      break;
+    default:
+      return value;
+  }
+}

@@ -12,6 +12,7 @@ class EntityStateTitle extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final localization = AppLocalization.of(context);
+
     final state = entity.entityState;
 
     if (state == kEntityStateActive) {

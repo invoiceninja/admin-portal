@@ -1,8 +1,12 @@
 import 'dart:async';
 import 'dart:convert';
 import 'dart:core';
+import 'dart:io';
+import 'package:flutter/foundation.dart';
+import 'package:flutter/material.dart';
 import 'package:invoiceninja_flutter/.env.dart';
 import 'package:invoiceninja_flutter/constants.dart';
+import 'package:invoiceninja_flutter/data/mock/mock_login.dart';
 import 'package:invoiceninja_flutter/data/models/serializers.dart';
 import 'package:invoiceninja_flutter/data/models/entities.dart';
 import 'package:invoiceninja_flutter/data/web_client.dart';
@@ -15,28 +19,33 @@ class AuthRepository {
 
   final WebClient webClient;
 
-  Future<LoginResponseData> signUp({
+  Future<LoginResponse> signUp({
+    String url,
     String firstName,
     String lastName,
     String email,
     String password,
-    String platform,
+    String secret,
   }) async {
     final credentials = {
-      'first_name': firstName,
-      'last_name': lastName,
-      'token_name': 'invoice-ninja-$platform-app',
-      'api_secret': Config.API_SECRET,
       'email': email,
       'password': password,
+      'first_name': firstName,
+      'last_name': lastName,
+      'terms_of_service': true,
+      'privacy_policy': true,
+      'token_name': _tokenName,
     };
 
-    final url = formatApiUrl(kAppUrl) + '/register';
+    if ((url ?? '').isEmpty) {
+      url = Constants.hostedApiUrl;
+    }
 
-    return sendRequest(url: url, data: credentials);
+    return sendRequest(
+        url: formatApiUrl(url) + '/signup', data: credentials, secret: secret);
   }
 
-  Future<LoginResponseData> login(
+  Future<LoginResponse> login(
       {String email,
       String password,
       String url,
@@ -44,8 +53,6 @@ class AuthRepository {
       String platform,
       String oneTimePassword}) async {
     final credentials = {
-      'token_name': 'invoice-ninja-$platform-app',
-      'api_secret': url.isEmpty ? Config.API_SECRET : secret,
       'email': email,
       'password': password,
       'one_time_password': oneTimePassword,
@@ -53,48 +60,76 @@ class AuthRepository {
 
     url = formatApiUrl(url) + '/login';
 
-    return sendRequest(url: url, data: credentials);
+    return sendRequest(url: url, data: credentials, secret: secret);
   }
 
-  Future<LoginResponseData> oauthLogin(
+  Future<LoginResponse> oauthLogin(
       {String token, String url, String secret, String platform}) async {
     final credentials = {
-      'token_name': 'invoice-ninja-$platform-app',
-      'api_secret': url.isEmpty ? Config.API_SECRET : secret,
       'token': token,
       'provider': 'google',
     };
     url = formatApiUrl(url) + '/oauth_login';
 
+    return sendRequest(url: url, data: credentials, secret: secret);
+  }
+
+  Future<LoginResponse> refresh({String url, String token}) async {
+    url = formatApiUrl(url) + '/refresh';
+
+    return sendRequest(url: url, token: token);
+  }
+
+  Future<LoginResponse> recoverPassword(
+      {String email, String url, String secret, String platform}) async {
+    final credentials = {
+      'email': email,
+    };
+    url = formatApiUrl(url) + '/reset_password';
+
     return sendRequest(url: url, data: credentials);
   }
 
-  Future<LoginResponseData> refresh(
-      {String url, String token, String platform}) async {
-    final credentials = {
-      'token_name': 'invoice-ninja-$platform-app',
+  Future<dynamic> addCompany({String token}) async {
+    final data = {
+      'token_name': _tokenName,
     };
 
-    url = formatApiUrl(url) + '/refresh';
-
-    return sendRequest(url: url, data: credentials, token: token);
+    return webClient.post('/companies', token, data: json.encode(data));
   }
 
-  Future<LoginResponseData> sendRequest(
-      {String url, dynamic data, String token}) async {
-    url +=
-        '?include=tax_rates,users,custom_payment_terms,task_statuses,expense_categories&include_static=true';
+  Future<dynamic> deleteCompany({
+    @required String token,
+    @required String companyId,
+    @required String password,
+  }) async {
+    return webClient.delete('/companies/$companyId', token, password: password);
+  }
 
-    final dynamic response =
-        await webClient.post(url, token ?? '', json.encode(data));
+  Future<dynamic> purgeData({
+    @required String token,
+    @required String companyId,
+    @required String password,
+  }) async {
+    //return webClient.delete('/companies/$companyId', token, password: password);
+  }
 
-    final LoginResponse loginResponse =
-        serializers.deserializeWith(LoginResponse.serializer, response);
+  Future<LoginResponse> sendRequest(
+      {String url, dynamic data, String token, String secret}) async {
+    url += '?first_load=true&include_static=true';
 
-    if (loginResponse.error != null) {
-      throw loginResponse.error.message;
+    dynamic response;
+
+    if (Config.DEMO_MODE) {
+      response = json.decode(kMockLogin);
+    } else {
+      response = await webClient.post(url, token ?? '',
+          secret: secret, data: json.encode(data));
     }
 
-    return loginResponse.data;
+    return serializers.deserializeWith(LoginResponse.serializer, response);
   }
+
+  String get _tokenName =>
+      kIsWeb ? 'web' : Platform.isAndroid ? 'android' : 'ios';
 }

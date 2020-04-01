@@ -9,22 +9,25 @@ class ResponsivePadding extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: isMobile(context)
-          ? EdgeInsets.only(
-              left: kMobileDialogPadding,
-              top: kMobileDialogPadding,
-              right: kMobileDialogPadding,
-              bottom: kMobileDialogPadding +
-                  MediaQuery.of(context).viewInsets.bottom)
-          : EdgeInsets.only(
-              top: kMobileDialogPadding * 2,
-              bottom: (kMobileDialogPadding * 2) +
-                  MediaQuery.of(context).viewInsets.bottom,
-              left: kTabletDialogPadding,
-              right: kTabletDialogPadding,
-            ),
-      child: child,
-    );
+    if (isMobile(context)) {
+      return Padding(
+        padding: EdgeInsets.only(
+            left: kMobileDialogPadding,
+            top: kMobileDialogPadding,
+            right: kMobileDialogPadding,
+            bottom: kMobileDialogPadding +
+                MediaQuery.of(context).viewInsets.bottom),
+        child: child,
+      );
+    } else {
+      return FractionallySizedBox(
+        child: Padding(
+            child: child,
+            padding: EdgeInsets.only(top: kMobileDialogPadding * 2)),
+        //bottom: (kMobileDialogPadding * 2) +
+        //MediaQuery.of(context).viewInsets.bottom)),
+        widthFactor: .5,
+      );
+    }
   }
 }

@@ -4,17 +4,15 @@ import 'package:built_collection/built_collection.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
-import 'package:invoiceninja_flutter/redux/client/client_actions.dart';
+import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:invoiceninja_flutter/redux/ui/ui_actions.dart';
-import 'package:invoiceninja_flutter/ui/app/snackbar_row.dart';
+import 'package:invoiceninja_flutter/ui/app/screen_imports.dart';
+import 'package:invoiceninja_flutter/ui/invoice/edit/invoice_edit_desktop.dart';
 import 'package:invoiceninja_flutter/ui/invoice/edit/invoice_edit_details.dart';
-import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:redux/redux.dart';
 import 'package:invoiceninja_flutter/redux/invoice/invoice_actions.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
-
-import 'invoice_edit_vm.dart';
 
 class InvoiceEditDetailsScreen extends StatelessWidget {
   const InvoiceEditDetailsScreen({Key key}) : super(key: key);
@@ -26,9 +24,16 @@ class InvoiceEditDetailsScreen extends StatelessWidget {
         return InvoiceEditDetailsVM.fromStore(store);
       },
       builder: (context, viewModel) {
-        return InvoiceEditDetails(
-          viewModel: viewModel,
-        );
+        if (viewModel.state.prefState.isDesktop) {
+          return InvoiceEditDesktop(
+            viewModel: viewModel,
+            key: ValueKey('__invoice_${viewModel.invoice.id}__'),
+          );
+        } else {
+          return InvoiceEditDetails(
+            viewModel: viewModel,
+          );
+        }
       },
     );
   }
@@ -36,36 +41,44 @@ class InvoiceEditDetailsScreen extends StatelessWidget {
 
 class EntityEditDetailsVM {
   EntityEditDetailsVM({
+    @required this.state,
     @required this.company,
     @required this.invoice,
     @required this.onChanged,
+    @required this.onClientChanged,
     @required this.clientMap,
     @required this.clientList,
     @required this.onAddClientPressed,
   });
 
+  final AppState state;
   final CompanyEntity company;
   final InvoiceEntity invoice;
   final Function(InvoiceEntity) onChanged;
-  final BuiltMap<int, ClientEntity> clientMap;
-  final BuiltList<int> clientList;
+  final Function(InvoiceEntity, ClientEntity) onClientChanged;
+  final BuiltMap<String, ClientEntity> clientMap;
+  final BuiltList<String> clientList;
   final Function(BuildContext context, Completer<SelectableEntity> completer)
       onAddClientPressed;
 }
 
 class InvoiceEditDetailsVM extends EntityEditDetailsVM {
   InvoiceEditDetailsVM({
+    AppState state,
     CompanyEntity company,
     InvoiceEntity invoice,
     Function(InvoiceEntity) onChanged,
-    BuiltMap<int, ClientEntity> clientMap,
-    BuiltList<int> clientList,
+    Function(InvoiceEntity, ClientEntity) onClientChanged,
+    BuiltMap<String, ClientEntity> clientMap,
+    BuiltList<String> clientList,
     Function(BuildContext context, Completer<SelectableEntity> completer)
         onAddClientPressed,
   }) : super(
+          state: state,
           company: company,
           invoice: invoice,
           onChanged: onChanged,
+          onClientChanged: onClientChanged,
           clientMap: clientMap,
           clientList: clientList,
           onAddClientPressed: onAddClientPressed,
@@ -76,28 +89,28 @@ class InvoiceEditDetailsVM extends EntityEditDetailsVM {
     final invoice = state.invoiceUIState.editing;
 
     return InvoiceEditDetailsVM(
-      company: state.selectedCompany,
+      state: state,
+      company: state.company,
       invoice: invoice,
       onChanged: (InvoiceEntity invoice) =>
           store.dispatch(UpdateInvoice(invoice)),
       clientMap: state.clientState.map,
       clientList: state.clientState.list,
+      onClientChanged: (invoice, client) {
+        store.dispatch(UpdateInvoiceClient(client: client));
+      },
       onAddClientPressed: (context, completer) {
-        store.dispatch(EditClient(
-            client: ClientEntity(),
+        createEntity(
             context: context,
+            entity: ClientEntity(),
+            force: true,
             completer: completer,
             cancelCompleter: Completer<Null>()
               ..future.then((_) {
                 store.dispatch(UpdateCurrentRoute(InvoiceEditScreen.route));
-              }),
-            force: true));
+              }));
         completer.future.then((SelectableEntity client) {
           store.dispatch(UpdateCurrentRoute(InvoiceEditScreen.route));
-          Scaffold.of(context).showSnackBar(SnackBar(
-              content: SnackBarRow(
-            message: AppLocalization.of(context).createdClient,
-          )));
         });
       },
     );

@@ -51,7 +51,7 @@ class _$ClientListResponseSerializer
           result.data.replace(serializers.deserialize(value,
                   specifiedType: const FullType(
                       BuiltList, const [const FullType(ClientEntity)]))
-              as BuiltList<dynamic>);
+              as BuiltList<Object>);
           break;
       }
     }
@@ -112,6 +112,9 @@ class _$ClientEntitySerializer implements StructuredSerializer<ClientEntity> {
   Iterable<Object> serialize(Serializers serializers, ClientEntity object,
       {FullType specifiedType = FullType.unspecified}) {
     final result = <Object>[
+      'group_settings_id',
+      serializers.serialize(object.groupId,
+          specifiedType: const FullType(String)),
       'name',
       serializers.serialize(object.name, specifiedType: const FullType(String)),
       'display_name',
@@ -119,6 +122,9 @@ class _$ClientEntitySerializer implements StructuredSerializer<ClientEntity> {
           specifiedType: const FullType(String)),
       'balance',
       serializers.serialize(object.balance,
+          specifiedType: const FullType(double)),
+      'credit_balance',
+      serializers.serialize(object.creditBalance,
           specifiedType: const FullType(double)),
       'paid_to_date',
       serializers.serialize(object.paidToDate,
@@ -139,9 +145,9 @@ class _$ClientEntitySerializer implements StructuredSerializer<ClientEntity> {
           specifiedType: const FullType(String)),
       'country_id',
       serializers.serialize(object.countryId,
-          specifiedType: const FullType(int)),
-      'work_phone',
-      serializers.serialize(object.workPhone,
+          specifiedType: const FullType(String)),
+      'phone',
+      serializers.serialize(object.phone,
           specifiedType: const FullType(String)),
       'private_notes',
       serializers.serialize(object.privateNotes,
@@ -154,33 +160,16 @@ class _$ClientEntitySerializer implements StructuredSerializer<ClientEntity> {
           specifiedType: const FullType(String)),
       'industry_id',
       serializers.serialize(object.industryId,
-          specifiedType: const FullType(int)),
+          specifiedType: const FullType(String)),
       'size_id',
-      serializers.serialize(object.sizeId, specifiedType: const FullType(int)),
-      'payment_terms',
-      serializers.serialize(object.paymentTerms,
-          specifiedType: const FullType(int)),
+      serializers.serialize(object.sizeId,
+          specifiedType: const FullType(String)),
       'vat_number',
       serializers.serialize(object.vatNumber,
           specifiedType: const FullType(String)),
       'id_number',
       serializers.serialize(object.idNumber,
           specifiedType: const FullType(String)),
-      'language_id',
-      serializers.serialize(object.languageId,
-          specifiedType: const FullType(int)),
-      'currency_id',
-      serializers.serialize(object.currencyId,
-          specifiedType: const FullType(int)),
-      'invoice_number_counter',
-      serializers.serialize(object.invoiceNumberCounter,
-          specifiedType: const FullType(int)),
-      'quote_number_counter',
-      serializers.serialize(object.quoteNumberCounter,
-          specifiedType: const FullType(int)),
-      'task_rate',
-      serializers.serialize(object.taskRate,
-          specifiedType: const FullType(double)),
       'shipping_address1',
       serializers.serialize(object.shippingAddress1,
           specifiedType: const FullType(String)),
@@ -198,21 +187,21 @@ class _$ClientEntitySerializer implements StructuredSerializer<ClientEntity> {
           specifiedType: const FullType(String)),
       'shipping_country_id',
       serializers.serialize(object.shippingCountryId,
-          specifiedType: const FullType(int)),
-      'show_tasks_in_portal',
-      serializers.serialize(object.showTasksInPortal,
-          specifiedType: const FullType(bool)),
-      'send_reminders',
-      serializers.serialize(object.sendReminders,
-          specifiedType: const FullType(bool)),
-      'credit_number_counter',
-      serializers.serialize(object.creditNumberCounter,
-          specifiedType: const FullType(int)),
+          specifiedType: const FullType(String)),
+      'settings',
+      serializers.serialize(object.settings,
+          specifiedType: const FullType(SettingsEntity)),
       'custom_value1',
       serializers.serialize(object.customValue1,
           specifiedType: const FullType(String)),
       'custom_value2',
       serializers.serialize(object.customValue2,
+          specifiedType: const FullType(String)),
+      'custom_value3',
+      serializers.serialize(object.customValue3,
+          specifiedType: const FullType(String)),
+      'custom_value4',
+      serializers.serialize(object.customValue4,
           specifiedType: const FullType(String)),
       'contacts',
       serializers.serialize(object.contacts,
@@ -222,12 +211,22 @@ class _$ClientEntitySerializer implements StructuredSerializer<ClientEntity> {
       serializers.serialize(object.activities,
           specifiedType: const FullType(
               BuiltList, const [const FullType(ActivityEntity)])),
+      'gateway_tokens',
+      serializers.serialize(object.gatewayTokens,
+          specifiedType: const FullType(
+              BuiltList, const [const FullType(GatewayTokenEntity)])),
     ];
     if (object.lastUpdatedActivities != null) {
       result
         ..add('lastUpdatedActivities')
         ..add(serializers.serialize(object.lastUpdatedActivities,
             specifiedType: const FullType(int)));
+    }
+    if (object.isChanged != null) {
+      result
+        ..add('isChanged')
+        ..add(serializers.serialize(object.isChanged,
+            specifiedType: const FullType(bool)));
     }
     if (object.createdAt != null) {
       result
@@ -253,17 +252,29 @@ class _$ClientEntitySerializer implements StructuredSerializer<ClientEntity> {
         ..add(serializers.serialize(object.isDeleted,
             specifiedType: const FullType(bool)));
     }
-    if (object.isOwner != null) {
+    if (object.createdUserId != null) {
       result
-        ..add('is_owner')
-        ..add(serializers.serialize(object.isOwner,
-            specifiedType: const FullType(bool)));
+        ..add('user_id')
+        ..add(serializers.serialize(object.createdUserId,
+            specifiedType: const FullType(String)));
+    }
+    if (object.assignedUserId != null) {
+      result
+        ..add('assigned_user_id')
+        ..add(serializers.serialize(object.assignedUserId,
+            specifiedType: const FullType(String)));
+    }
+    if (object.subEntityType != null) {
+      result
+        ..add('entity_type')
+        ..add(serializers.serialize(object.subEntityType,
+            specifiedType: const FullType(EntityType)));
     }
     if (object.id != null) {
       result
         ..add('id')
         ..add(serializers.serialize(object.id,
-            specifiedType: const FullType(int)));
+            specifiedType: const FullType(String)));
     }
     return result;
   }
@@ -279,6 +290,10 @@ class _$ClientEntitySerializer implements StructuredSerializer<ClientEntity> {
       iterator.moveNext();
       final dynamic value = iterator.current;
       switch (key) {
+        case 'group_settings_id':
+          result.groupId = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String;
+          break;
         case 'lastUpdatedActivities':
           result.lastUpdatedActivities = serializers.deserialize(value,
               specifiedType: const FullType(int)) as int;
@@ -293,6 +308,10 @@ class _$ClientEntitySerializer implements StructuredSerializer<ClientEntity> {
           break;
         case 'balance':
           result.balance = serializers.deserialize(value,
+              specifiedType: const FullType(double)) as double;
+          break;
+        case 'credit_balance':
+          result.creditBalance = serializers.deserialize(value,
               specifiedType: const FullType(double)) as double;
           break;
         case 'paid_to_date':
@@ -321,10 +340,10 @@ class _$ClientEntitySerializer implements StructuredSerializer<ClientEntity> {
           break;
         case 'country_id':
           result.countryId = serializers.deserialize(value,
-              specifiedType: const FullType(int)) as int;
+              specifiedType: const FullType(String)) as String;
           break;
-        case 'work_phone':
-          result.workPhone = serializers.deserialize(value,
+        case 'phone':
+          result.phone = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String;
           break;
         case 'private_notes':
@@ -341,15 +360,11 @@ class _$ClientEntitySerializer implements StructuredSerializer<ClientEntity> {
           break;
         case 'industry_id':
           result.industryId = serializers.deserialize(value,
-              specifiedType: const FullType(int)) as int;
+              specifiedType: const FullType(String)) as String;
           break;
         case 'size_id':
           result.sizeId = serializers.deserialize(value,
-              specifiedType: const FullType(int)) as int;
-          break;
-        case 'payment_terms':
-          result.paymentTerms = serializers.deserialize(value,
-              specifiedType: const FullType(int)) as int;
+              specifiedType: const FullType(String)) as String;
           break;
         case 'vat_number':
           result.vatNumber = serializers.deserialize(value,
@@ -358,26 +373,6 @@ class _$ClientEntitySerializer implements StructuredSerializer<ClientEntity> {
         case 'id_number':
           result.idNumber = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String;
-          break;
-        case 'language_id':
-          result.languageId = serializers.deserialize(value,
-              specifiedType: const FullType(int)) as int;
-          break;
-        case 'currency_id':
-          result.currencyId = serializers.deserialize(value,
-              specifiedType: const FullType(int)) as int;
-          break;
-        case 'invoice_number_counter':
-          result.invoiceNumberCounter = serializers.deserialize(value,
-              specifiedType: const FullType(int)) as int;
-          break;
-        case 'quote_number_counter':
-          result.quoteNumberCounter = serializers.deserialize(value,
-              specifiedType: const FullType(int)) as int;
-          break;
-        case 'task_rate':
-          result.taskRate = serializers.deserialize(value,
-              specifiedType: const FullType(double)) as double;
           break;
         case 'shipping_address1':
           result.shippingAddress1 = serializers.deserialize(value,
@@ -401,19 +396,11 @@ class _$ClientEntitySerializer implements StructuredSerializer<ClientEntity> {
           break;
         case 'shipping_country_id':
           result.shippingCountryId = serializers.deserialize(value,
-              specifiedType: const FullType(int)) as int;
+              specifiedType: const FullType(String)) as String;
           break;
-        case 'show_tasks_in_portal':
-          result.showTasksInPortal = serializers.deserialize(value,
-              specifiedType: const FullType(bool)) as bool;
-          break;
-        case 'send_reminders':
-          result.sendReminders = serializers.deserialize(value,
-              specifiedType: const FullType(bool)) as bool;
-          break;
-        case 'credit_number_counter':
-          result.creditNumberCounter = serializers.deserialize(value,
-              specifiedType: const FullType(int)) as int;
+        case 'settings':
+          result.settings.replace(serializers.deserialize(value,
+              specifiedType: const FullType(SettingsEntity)) as SettingsEntity);
           break;
         case 'custom_value1':
           result.customValue1 = serializers.deserialize(value,
@@ -423,17 +410,35 @@ class _$ClientEntitySerializer implements StructuredSerializer<ClientEntity> {
           result.customValue2 = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String;
           break;
+        case 'custom_value3':
+          result.customValue3 = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String;
+          break;
+        case 'custom_value4':
+          result.customValue4 = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String;
+          break;
         case 'contacts':
           result.contacts.replace(serializers.deserialize(value,
                   specifiedType: const FullType(
                       BuiltList, const [const FullType(ContactEntity)]))
-              as BuiltList<dynamic>);
+              as BuiltList<Object>);
           break;
         case 'activities':
           result.activities.replace(serializers.deserialize(value,
                   specifiedType: const FullType(
                       BuiltList, const [const FullType(ActivityEntity)]))
-              as BuiltList<dynamic>);
+              as BuiltList<Object>);
+          break;
+        case 'gateway_tokens':
+          result.gatewayTokens.replace(serializers.deserialize(value,
+                  specifiedType: const FullType(
+                      BuiltList, const [const FullType(GatewayTokenEntity)]))
+              as BuiltList<Object>);
+          break;
+        case 'isChanged':
+          result.isChanged = serializers.deserialize(value,
+              specifiedType: const FullType(bool)) as bool;
           break;
         case 'created_at':
           result.createdAt = serializers.deserialize(value,
@@ -451,13 +456,21 @@ class _$ClientEntitySerializer implements StructuredSerializer<ClientEntity> {
           result.isDeleted = serializers.deserialize(value,
               specifiedType: const FullType(bool)) as bool;
           break;
-        case 'is_owner':
-          result.isOwner = serializers.deserialize(value,
-              specifiedType: const FullType(bool)) as bool;
+        case 'user_id':
+          result.createdUserId = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String;
+          break;
+        case 'assigned_user_id':
+          result.assignedUserId = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String;
+          break;
+        case 'entity_type':
+          result.subEntityType = serializers.deserialize(value,
+              specifiedType: const FullType(EntityType)) as EntityType;
           break;
         case 'id':
           result.id = serializers.deserialize(value,
-              specifiedType: const FullType(int)) as int;
+              specifiedType: const FullType(String)) as String;
           break;
       }
     }
@@ -485,6 +498,9 @@ class _$ContactEntitySerializer implements StructuredSerializer<ContactEntity> {
       'email',
       serializers.serialize(object.email,
           specifiedType: const FullType(String)),
+      'password',
+      serializers.serialize(object.password,
+          specifiedType: const FullType(String)),
       'phone',
       serializers.serialize(object.phone,
           specifiedType: const FullType(String)),
@@ -494,8 +510,8 @@ class _$ContactEntitySerializer implements StructuredSerializer<ContactEntity> {
       'is_primary',
       serializers.serialize(object.isPrimary,
           specifiedType: const FullType(bool)),
-      'send_invoice',
-      serializers.serialize(object.sendInvoice,
+      'send_email',
+      serializers.serialize(object.sendEmail,
           specifiedType: const FullType(bool)),
       'custom_value1',
       serializers.serialize(object.customValue1,
@@ -503,12 +519,24 @@ class _$ContactEntitySerializer implements StructuredSerializer<ContactEntity> {
       'custom_value2',
       serializers.serialize(object.customValue2,
           specifiedType: const FullType(String)),
+      'custom_value3',
+      serializers.serialize(object.customValue3,
+          specifiedType: const FullType(String)),
+      'custom_value4',
+      serializers.serialize(object.customValue4,
+          specifiedType: const FullType(String)),
     ];
-    if (object.password != null) {
+    if (object.lastLogin != null) {
       result
-        ..add('password')
-        ..add(serializers.serialize(object.password,
-            specifiedType: const FullType(String)));
+        ..add('last_login')
+        ..add(serializers.serialize(object.lastLogin,
+            specifiedType: const FullType(int)));
+    }
+    if (object.isChanged != null) {
+      result
+        ..add('isChanged')
+        ..add(serializers.serialize(object.isChanged,
+            specifiedType: const FullType(bool)));
     }
     if (object.createdAt != null) {
       result
@@ -534,17 +562,29 @@ class _$ContactEntitySerializer implements StructuredSerializer<ContactEntity> {
         ..add(serializers.serialize(object.isDeleted,
             specifiedType: const FullType(bool)));
     }
-    if (object.isOwner != null) {
+    if (object.createdUserId != null) {
       result
-        ..add('is_owner')
-        ..add(serializers.serialize(object.isOwner,
-            specifiedType: const FullType(bool)));
+        ..add('user_id')
+        ..add(serializers.serialize(object.createdUserId,
+            specifiedType: const FullType(String)));
+    }
+    if (object.assignedUserId != null) {
+      result
+        ..add('assigned_user_id')
+        ..add(serializers.serialize(object.assignedUserId,
+            specifiedType: const FullType(String)));
+    }
+    if (object.subEntityType != null) {
+      result
+        ..add('entity_type')
+        ..add(serializers.serialize(object.subEntityType,
+            specifiedType: const FullType(EntityType)));
     }
     if (object.id != null) {
       result
         ..add('id')
         ..add(serializers.serialize(object.id,
-            specifiedType: const FullType(int)));
+            specifiedType: const FullType(String)));
     }
     return result;
   }
@@ -589,8 +629,8 @@ class _$ContactEntitySerializer implements StructuredSerializer<ContactEntity> {
           result.isPrimary = serializers.deserialize(value,
               specifiedType: const FullType(bool)) as bool;
           break;
-        case 'send_invoice':
-          result.sendInvoice = serializers.deserialize(value,
+        case 'send_email':
+          result.sendEmail = serializers.deserialize(value,
               specifiedType: const FullType(bool)) as bool;
           break;
         case 'custom_value1':
@@ -600,6 +640,22 @@ class _$ContactEntitySerializer implements StructuredSerializer<ContactEntity> {
         case 'custom_value2':
           result.customValue2 = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String;
+          break;
+        case 'custom_value3':
+          result.customValue3 = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String;
+          break;
+        case 'custom_value4':
+          result.customValue4 = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String;
+          break;
+        case 'last_login':
+          result.lastLogin = serializers.deserialize(value,
+              specifiedType: const FullType(int)) as int;
+          break;
+        case 'isChanged':
+          result.isChanged = serializers.deserialize(value,
+              specifiedType: const FullType(bool)) as bool;
           break;
         case 'created_at':
           result.createdAt = serializers.deserialize(value,
@@ -617,13 +673,21 @@ class _$ContactEntitySerializer implements StructuredSerializer<ContactEntity> {
           result.isDeleted = serializers.deserialize(value,
               specifiedType: const FullType(bool)) as bool;
           break;
-        case 'is_owner':
-          result.isOwner = serializers.deserialize(value,
-              specifiedType: const FullType(bool)) as bool;
+        case 'user_id':
+          result.createdUserId = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String;
+          break;
+        case 'assigned_user_id':
+          result.assignedUserId = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String;
+          break;
+        case 'entity_type':
+          result.subEntityType = serializers.deserialize(value,
+              specifiedType: const FullType(EntityType)) as EntityType;
           break;
         case 'id':
           result.id = serializers.deserialize(value,
-              specifiedType: const FullType(int)) as int;
+              specifiedType: const FullType(String)) as String;
           break;
       }
     }
@@ -823,6 +887,8 @@ class ClientItemResponseBuilder
 
 class _$ClientEntity extends ClientEntity {
   @override
+  final String groupId;
+  @override
   final int lastUpdatedActivities;
   @override
   final String name;
@@ -830,6 +896,8 @@ class _$ClientEntity extends ClientEntity {
   final String displayName;
   @override
   final double balance;
+  @override
+  final double creditBalance;
   @override
   final double paidToDate;
   @override
@@ -843,9 +911,9 @@ class _$ClientEntity extends ClientEntity {
   @override
   final String postalCode;
   @override
-  final int countryId;
+  final String countryId;
   @override
-  final String workPhone;
+  final String phone;
   @override
   final String privateNotes;
   @override
@@ -853,25 +921,13 @@ class _$ClientEntity extends ClientEntity {
   @override
   final String website;
   @override
-  final int industryId;
+  final String industryId;
   @override
-  final int sizeId;
-  @override
-  final int paymentTerms;
+  final String sizeId;
   @override
   final String vatNumber;
   @override
   final String idNumber;
-  @override
-  final int languageId;
-  @override
-  final int currencyId;
-  @override
-  final int invoiceNumberCounter;
-  @override
-  final int quoteNumberCounter;
-  @override
-  final double taskRate;
   @override
   final String shippingAddress1;
   @override
@@ -883,21 +939,25 @@ class _$ClientEntity extends ClientEntity {
   @override
   final String shippingPostalCode;
   @override
-  final int shippingCountryId;
+  final String shippingCountryId;
   @override
-  final bool showTasksInPortal;
-  @override
-  final bool sendReminders;
-  @override
-  final int creditNumberCounter;
+  final SettingsEntity settings;
   @override
   final String customValue1;
   @override
   final String customValue2;
   @override
+  final String customValue3;
+  @override
+  final String customValue4;
+  @override
   final BuiltList<ContactEntity> contacts;
   @override
   final BuiltList<ActivityEntity> activities;
+  @override
+  final BuiltList<GatewayTokenEntity> gatewayTokens;
+  @override
+  final bool isChanged;
   @override
   final int createdAt;
   @override
@@ -907,18 +967,24 @@ class _$ClientEntity extends ClientEntity {
   @override
   final bool isDeleted;
   @override
-  final bool isOwner;
+  final String createdUserId;
   @override
-  final int id;
+  final String assignedUserId;
+  @override
+  final EntityType subEntityType;
+  @override
+  final String id;
 
   factory _$ClientEntity([void Function(ClientEntityBuilder) updates]) =>
       (new ClientEntityBuilder()..update(updates)).build();
 
   _$ClientEntity._(
-      {this.lastUpdatedActivities,
+      {this.groupId,
+      this.lastUpdatedActivities,
       this.name,
       this.displayName,
       this.balance,
+      this.creditBalance,
       this.paidToDate,
       this.address1,
       this.address2,
@@ -926,40 +992,41 @@ class _$ClientEntity extends ClientEntity {
       this.state,
       this.postalCode,
       this.countryId,
-      this.workPhone,
+      this.phone,
       this.privateNotes,
       this.publicNotes,
       this.website,
       this.industryId,
       this.sizeId,
-      this.paymentTerms,
       this.vatNumber,
       this.idNumber,
-      this.languageId,
-      this.currencyId,
-      this.invoiceNumberCounter,
-      this.quoteNumberCounter,
-      this.taskRate,
       this.shippingAddress1,
       this.shippingAddress2,
       this.shippingCity,
       this.shippingState,
       this.shippingPostalCode,
       this.shippingCountryId,
-      this.showTasksInPortal,
-      this.sendReminders,
-      this.creditNumberCounter,
+      this.settings,
       this.customValue1,
       this.customValue2,
+      this.customValue3,
+      this.customValue4,
       this.contacts,
       this.activities,
+      this.gatewayTokens,
+      this.isChanged,
       this.createdAt,
       this.updatedAt,
       this.archivedAt,
       this.isDeleted,
-      this.isOwner,
+      this.createdUserId,
+      this.assignedUserId,
+      this.subEntityType,
       this.id})
       : super._() {
+    if (groupId == null) {
+      throw new BuiltValueNullFieldError('ClientEntity', 'groupId');
+    }
     if (name == null) {
       throw new BuiltValueNullFieldError('ClientEntity', 'name');
     }
@@ -968,6 +1035,9 @@ class _$ClientEntity extends ClientEntity {
     }
     if (balance == null) {
       throw new BuiltValueNullFieldError('ClientEntity', 'balance');
+    }
+    if (creditBalance == null) {
+      throw new BuiltValueNullFieldError('ClientEntity', 'creditBalance');
     }
     if (paidToDate == null) {
       throw new BuiltValueNullFieldError('ClientEntity', 'paidToDate');
@@ -990,8 +1060,8 @@ class _$ClientEntity extends ClientEntity {
     if (countryId == null) {
       throw new BuiltValueNullFieldError('ClientEntity', 'countryId');
     }
-    if (workPhone == null) {
-      throw new BuiltValueNullFieldError('ClientEntity', 'workPhone');
+    if (phone == null) {
+      throw new BuiltValueNullFieldError('ClientEntity', 'phone');
     }
     if (privateNotes == null) {
       throw new BuiltValueNullFieldError('ClientEntity', 'privateNotes');
@@ -1008,30 +1078,11 @@ class _$ClientEntity extends ClientEntity {
     if (sizeId == null) {
       throw new BuiltValueNullFieldError('ClientEntity', 'sizeId');
     }
-    if (paymentTerms == null) {
-      throw new BuiltValueNullFieldError('ClientEntity', 'paymentTerms');
-    }
     if (vatNumber == null) {
       throw new BuiltValueNullFieldError('ClientEntity', 'vatNumber');
     }
     if (idNumber == null) {
       throw new BuiltValueNullFieldError('ClientEntity', 'idNumber');
-    }
-    if (languageId == null) {
-      throw new BuiltValueNullFieldError('ClientEntity', 'languageId');
-    }
-    if (currencyId == null) {
-      throw new BuiltValueNullFieldError('ClientEntity', 'currencyId');
-    }
-    if (invoiceNumberCounter == null) {
-      throw new BuiltValueNullFieldError(
-          'ClientEntity', 'invoiceNumberCounter');
-    }
-    if (quoteNumberCounter == null) {
-      throw new BuiltValueNullFieldError('ClientEntity', 'quoteNumberCounter');
-    }
-    if (taskRate == null) {
-      throw new BuiltValueNullFieldError('ClientEntity', 'taskRate');
     }
     if (shippingAddress1 == null) {
       throw new BuiltValueNullFieldError('ClientEntity', 'shippingAddress1');
@@ -1051,14 +1102,8 @@ class _$ClientEntity extends ClientEntity {
     if (shippingCountryId == null) {
       throw new BuiltValueNullFieldError('ClientEntity', 'shippingCountryId');
     }
-    if (showTasksInPortal == null) {
-      throw new BuiltValueNullFieldError('ClientEntity', 'showTasksInPortal');
-    }
-    if (sendReminders == null) {
-      throw new BuiltValueNullFieldError('ClientEntity', 'sendReminders');
-    }
-    if (creditNumberCounter == null) {
-      throw new BuiltValueNullFieldError('ClientEntity', 'creditNumberCounter');
+    if (settings == null) {
+      throw new BuiltValueNullFieldError('ClientEntity', 'settings');
     }
     if (customValue1 == null) {
       throw new BuiltValueNullFieldError('ClientEntity', 'customValue1');
@@ -1066,11 +1111,20 @@ class _$ClientEntity extends ClientEntity {
     if (customValue2 == null) {
       throw new BuiltValueNullFieldError('ClientEntity', 'customValue2');
     }
+    if (customValue3 == null) {
+      throw new BuiltValueNullFieldError('ClientEntity', 'customValue3');
+    }
+    if (customValue4 == null) {
+      throw new BuiltValueNullFieldError('ClientEntity', 'customValue4');
+    }
     if (contacts == null) {
       throw new BuiltValueNullFieldError('ClientEntity', 'contacts');
     }
     if (activities == null) {
       throw new BuiltValueNullFieldError('ClientEntity', 'activities');
+    }
+    if (gatewayTokens == null) {
+      throw new BuiltValueNullFieldError('ClientEntity', 'gatewayTokens');
     }
   }
 
@@ -1085,10 +1139,12 @@ class _$ClientEntity extends ClientEntity {
   bool operator ==(Object other) {
     if (identical(other, this)) return true;
     return other is ClientEntity &&
+        groupId == other.groupId &&
         lastUpdatedActivities == other.lastUpdatedActivities &&
         name == other.name &&
         displayName == other.displayName &&
         balance == other.balance &&
+        creditBalance == other.creditBalance &&
         paidToDate == other.paidToDate &&
         address1 == other.address1 &&
         address2 == other.address2 &&
@@ -1096,38 +1152,36 @@ class _$ClientEntity extends ClientEntity {
         state == other.state &&
         postalCode == other.postalCode &&
         countryId == other.countryId &&
-        workPhone == other.workPhone &&
+        phone == other.phone &&
         privateNotes == other.privateNotes &&
         publicNotes == other.publicNotes &&
         website == other.website &&
         industryId == other.industryId &&
         sizeId == other.sizeId &&
-        paymentTerms == other.paymentTerms &&
         vatNumber == other.vatNumber &&
         idNumber == other.idNumber &&
-        languageId == other.languageId &&
-        currencyId == other.currencyId &&
-        invoiceNumberCounter == other.invoiceNumberCounter &&
-        quoteNumberCounter == other.quoteNumberCounter &&
-        taskRate == other.taskRate &&
         shippingAddress1 == other.shippingAddress1 &&
         shippingAddress2 == other.shippingAddress2 &&
         shippingCity == other.shippingCity &&
         shippingState == other.shippingState &&
         shippingPostalCode == other.shippingPostalCode &&
         shippingCountryId == other.shippingCountryId &&
-        showTasksInPortal == other.showTasksInPortal &&
-        sendReminders == other.sendReminders &&
-        creditNumberCounter == other.creditNumberCounter &&
+        settings == other.settings &&
         customValue1 == other.customValue1 &&
         customValue2 == other.customValue2 &&
+        customValue3 == other.customValue3 &&
+        customValue4 == other.customValue4 &&
         contacts == other.contacts &&
         activities == other.activities &&
+        gatewayTokens == other.gatewayTokens &&
+        isChanged == other.isChanged &&
         createdAt == other.createdAt &&
         updatedAt == other.updatedAt &&
         archivedAt == other.archivedAt &&
         isDeleted == other.isDeleted &&
-        isOwner == other.isOwner &&
+        createdUserId == other.createdUserId &&
+        assignedUserId == other.assignedUserId &&
+        subEntityType == other.subEntityType &&
         id == other.id;
   }
 
@@ -1151,35 +1205,37 @@ class _$ClientEntity extends ClientEntity {
                                                                 $jc(
                                                                     $jc(
                                                                         $jc(
-                                                                            $jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc(0, lastUpdatedActivities.hashCode), name.hashCode), displayName.hashCode), balance.hashCode), paidToDate.hashCode), address1.hashCode), address2.hashCode), city.hashCode), state.hashCode), postalCode.hashCode), countryId.hashCode), workPhone.hashCode), privateNotes.hashCode), publicNotes.hashCode), website.hashCode), industryId.hashCode), sizeId.hashCode), paymentTerms.hashCode), vatNumber.hashCode), idNumber.hashCode), languageId.hashCode), currencyId.hashCode), invoiceNumberCounter.hashCode), quoteNumberCounter.hashCode), taskRate.hashCode),
-                                                                                shippingAddress1.hashCode),
-                                                                            shippingAddress2.hashCode),
-                                                                        shippingCity.hashCode),
-                                                                    shippingState.hashCode),
-                                                                shippingPostalCode.hashCode),
-                                                            shippingCountryId.hashCode),
-                                                        showTasksInPortal.hashCode),
-                                                    sendReminders.hashCode),
-                                                creditNumberCounter.hashCode),
-                                            customValue1.hashCode),
-                                        customValue2.hashCode),
-                                    contacts.hashCode),
-                                activities.hashCode),
-                            createdAt.hashCode),
-                        updatedAt.hashCode),
-                    archivedAt.hashCode),
-                isDeleted.hashCode),
-            isOwner.hashCode),
+                                                                            $jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc(0, groupId.hashCode), lastUpdatedActivities.hashCode), name.hashCode), displayName.hashCode), balance.hashCode), creditBalance.hashCode), paidToDate.hashCode), address1.hashCode), address2.hashCode), city.hashCode), state.hashCode), postalCode.hashCode), countryId.hashCode), phone.hashCode), privateNotes.hashCode), publicNotes.hashCode), website.hashCode), industryId.hashCode), sizeId.hashCode), vatNumber.hashCode), idNumber.hashCode), shippingAddress1.hashCode), shippingAddress2.hashCode), shippingCity.hashCode), shippingState.hashCode),
+                                                                                shippingPostalCode.hashCode),
+                                                                            shippingCountryId.hashCode),
+                                                                        settings.hashCode),
+                                                                    customValue1.hashCode),
+                                                                customValue2.hashCode),
+                                                            customValue3.hashCode),
+                                                        customValue4.hashCode),
+                                                    contacts.hashCode),
+                                                activities.hashCode),
+                                            gatewayTokens.hashCode),
+                                        isChanged.hashCode),
+                                    createdAt.hashCode),
+                                updatedAt.hashCode),
+                            archivedAt.hashCode),
+                        isDeleted.hashCode),
+                    createdUserId.hashCode),
+                assignedUserId.hashCode),
+            subEntityType.hashCode),
         id.hashCode));
   }
 
   @override
   String toString() {
     return (newBuiltValueToStringHelper('ClientEntity')
+          ..add('groupId', groupId)
           ..add('lastUpdatedActivities', lastUpdatedActivities)
           ..add('name', name)
           ..add('displayName', displayName)
           ..add('balance', balance)
+          ..add('creditBalance', creditBalance)
           ..add('paidToDate', paidToDate)
           ..add('address1', address1)
           ..add('address2', address2)
@@ -1187,38 +1243,36 @@ class _$ClientEntity extends ClientEntity {
           ..add('state', state)
           ..add('postalCode', postalCode)
           ..add('countryId', countryId)
-          ..add('workPhone', workPhone)
+          ..add('phone', phone)
           ..add('privateNotes', privateNotes)
           ..add('publicNotes', publicNotes)
           ..add('website', website)
           ..add('industryId', industryId)
           ..add('sizeId', sizeId)
-          ..add('paymentTerms', paymentTerms)
           ..add('vatNumber', vatNumber)
           ..add('idNumber', idNumber)
-          ..add('languageId', languageId)
-          ..add('currencyId', currencyId)
-          ..add('invoiceNumberCounter', invoiceNumberCounter)
-          ..add('quoteNumberCounter', quoteNumberCounter)
-          ..add('taskRate', taskRate)
           ..add('shippingAddress1', shippingAddress1)
           ..add('shippingAddress2', shippingAddress2)
           ..add('shippingCity', shippingCity)
           ..add('shippingState', shippingState)
           ..add('shippingPostalCode', shippingPostalCode)
           ..add('shippingCountryId', shippingCountryId)
-          ..add('showTasksInPortal', showTasksInPortal)
-          ..add('sendReminders', sendReminders)
-          ..add('creditNumberCounter', creditNumberCounter)
+          ..add('settings', settings)
           ..add('customValue1', customValue1)
           ..add('customValue2', customValue2)
+          ..add('customValue3', customValue3)
+          ..add('customValue4', customValue4)
           ..add('contacts', contacts)
           ..add('activities', activities)
+          ..add('gatewayTokens', gatewayTokens)
+          ..add('isChanged', isChanged)
           ..add('createdAt', createdAt)
           ..add('updatedAt', updatedAt)
           ..add('archivedAt', archivedAt)
           ..add('isDeleted', isDeleted)
-          ..add('isOwner', isOwner)
+          ..add('createdUserId', createdUserId)
+          ..add('assignedUserId', assignedUserId)
+          ..add('subEntityType', subEntityType)
           ..add('id', id))
         .toString();
   }
@@ -1227,6 +1281,10 @@ class _$ClientEntity extends ClientEntity {
 class ClientEntityBuilder
     implements Builder<ClientEntity, ClientEntityBuilder> {
   _$ClientEntity _$v;
+
+  String _groupId;
+  String get groupId => _$this._groupId;
+  set groupId(String groupId) => _$this._groupId = groupId;
 
   int _lastUpdatedActivities;
   int get lastUpdatedActivities => _$this._lastUpdatedActivities;
@@ -1244,6 +1302,11 @@ class ClientEntityBuilder
   double _balance;
   double get balance => _$this._balance;
   set balance(double balance) => _$this._balance = balance;
+
+  double _creditBalance;
+  double get creditBalance => _$this._creditBalance;
+  set creditBalance(double creditBalance) =>
+      _$this._creditBalance = creditBalance;
 
   double _paidToDate;
   double get paidToDate => _$this._paidToDate;
@@ -1269,13 +1332,13 @@ class ClientEntityBuilder
   String get postalCode => _$this._postalCode;
   set postalCode(String postalCode) => _$this._postalCode = postalCode;
 
-  int _countryId;
-  int get countryId => _$this._countryId;
-  set countryId(int countryId) => _$this._countryId = countryId;
+  String _countryId;
+  String get countryId => _$this._countryId;
+  set countryId(String countryId) => _$this._countryId = countryId;
 
-  String _workPhone;
-  String get workPhone => _$this._workPhone;
-  set workPhone(String workPhone) => _$this._workPhone = workPhone;
+  String _phone;
+  String get phone => _$this._phone;
+  set phone(String phone) => _$this._phone = phone;
 
   String _privateNotes;
   String get privateNotes => _$this._privateNotes;
@@ -1289,17 +1352,13 @@ class ClientEntityBuilder
   String get website => _$this._website;
   set website(String website) => _$this._website = website;
 
-  int _industryId;
-  int get industryId => _$this._industryId;
-  set industryId(int industryId) => _$this._industryId = industryId;
+  String _industryId;
+  String get industryId => _$this._industryId;
+  set industryId(String industryId) => _$this._industryId = industryId;
 
-  int _sizeId;
-  int get sizeId => _$this._sizeId;
-  set sizeId(int sizeId) => _$this._sizeId = sizeId;
-
-  int _paymentTerms;
-  int get paymentTerms => _$this._paymentTerms;
-  set paymentTerms(int paymentTerms) => _$this._paymentTerms = paymentTerms;
+  String _sizeId;
+  String get sizeId => _$this._sizeId;
+  set sizeId(String sizeId) => _$this._sizeId = sizeId;
 
   String _vatNumber;
   String get vatNumber => _$this._vatNumber;
@@ -1308,28 +1367,6 @@ class ClientEntityBuilder
   String _idNumber;
   String get idNumber => _$this._idNumber;
   set idNumber(String idNumber) => _$this._idNumber = idNumber;
-
-  int _languageId;
-  int get languageId => _$this._languageId;
-  set languageId(int languageId) => _$this._languageId = languageId;
-
-  int _currencyId;
-  int get currencyId => _$this._currencyId;
-  set currencyId(int currencyId) => _$this._currencyId = currencyId;
-
-  int _invoiceNumberCounter;
-  int get invoiceNumberCounter => _$this._invoiceNumberCounter;
-  set invoiceNumberCounter(int invoiceNumberCounter) =>
-      _$this._invoiceNumberCounter = invoiceNumberCounter;
-
-  int _quoteNumberCounter;
-  int get quoteNumberCounter => _$this._quoteNumberCounter;
-  set quoteNumberCounter(int quoteNumberCounter) =>
-      _$this._quoteNumberCounter = quoteNumberCounter;
-
-  double _taskRate;
-  double get taskRate => _$this._taskRate;
-  set taskRate(double taskRate) => _$this._taskRate = taskRate;
 
   String _shippingAddress1;
   String get shippingAddress1 => _$this._shippingAddress1;
@@ -1355,25 +1392,15 @@ class ClientEntityBuilder
   set shippingPostalCode(String shippingPostalCode) =>
       _$this._shippingPostalCode = shippingPostalCode;
 
-  int _shippingCountryId;
-  int get shippingCountryId => _$this._shippingCountryId;
-  set shippingCountryId(int shippingCountryId) =>
+  String _shippingCountryId;
+  String get shippingCountryId => _$this._shippingCountryId;
+  set shippingCountryId(String shippingCountryId) =>
       _$this._shippingCountryId = shippingCountryId;
 
-  bool _showTasksInPortal;
-  bool get showTasksInPortal => _$this._showTasksInPortal;
-  set showTasksInPortal(bool showTasksInPortal) =>
-      _$this._showTasksInPortal = showTasksInPortal;
-
-  bool _sendReminders;
-  bool get sendReminders => _$this._sendReminders;
-  set sendReminders(bool sendReminders) =>
-      _$this._sendReminders = sendReminders;
-
-  int _creditNumberCounter;
-  int get creditNumberCounter => _$this._creditNumberCounter;
-  set creditNumberCounter(int creditNumberCounter) =>
-      _$this._creditNumberCounter = creditNumberCounter;
+  SettingsEntityBuilder _settings;
+  SettingsEntityBuilder get settings =>
+      _$this._settings ??= new SettingsEntityBuilder();
+  set settings(SettingsEntityBuilder settings) => _$this._settings = settings;
 
   String _customValue1;
   String get customValue1 => _$this._customValue1;
@@ -1382,6 +1409,14 @@ class ClientEntityBuilder
   String _customValue2;
   String get customValue2 => _$this._customValue2;
   set customValue2(String customValue2) => _$this._customValue2 = customValue2;
+
+  String _customValue3;
+  String get customValue3 => _$this._customValue3;
+  set customValue3(String customValue3) => _$this._customValue3 = customValue3;
+
+  String _customValue4;
+  String get customValue4 => _$this._customValue4;
+  set customValue4(String customValue4) => _$this._customValue4 = customValue4;
 
   ListBuilder<ContactEntity> _contacts;
   ListBuilder<ContactEntity> get contacts =>
@@ -1394,6 +1429,16 @@ class ClientEntityBuilder
       _$this._activities ??= new ListBuilder<ActivityEntity>();
   set activities(ListBuilder<ActivityEntity> activities) =>
       _$this._activities = activities;
+
+  ListBuilder<GatewayTokenEntity> _gatewayTokens;
+  ListBuilder<GatewayTokenEntity> get gatewayTokens =>
+      _$this._gatewayTokens ??= new ListBuilder<GatewayTokenEntity>();
+  set gatewayTokens(ListBuilder<GatewayTokenEntity> gatewayTokens) =>
+      _$this._gatewayTokens = gatewayTokens;
+
+  bool _isChanged;
+  bool get isChanged => _$this._isChanged;
+  set isChanged(bool isChanged) => _$this._isChanged = isChanged;
 
   int _createdAt;
   int get createdAt => _$this._createdAt;
@@ -1411,22 +1456,35 @@ class ClientEntityBuilder
   bool get isDeleted => _$this._isDeleted;
   set isDeleted(bool isDeleted) => _$this._isDeleted = isDeleted;
 
-  bool _isOwner;
-  bool get isOwner => _$this._isOwner;
-  set isOwner(bool isOwner) => _$this._isOwner = isOwner;
+  String _createdUserId;
+  String get createdUserId => _$this._createdUserId;
+  set createdUserId(String createdUserId) =>
+      _$this._createdUserId = createdUserId;
 
-  int _id;
-  int get id => _$this._id;
-  set id(int id) => _$this._id = id;
+  String _assignedUserId;
+  String get assignedUserId => _$this._assignedUserId;
+  set assignedUserId(String assignedUserId) =>
+      _$this._assignedUserId = assignedUserId;
+
+  EntityType _subEntityType;
+  EntityType get subEntityType => _$this._subEntityType;
+  set subEntityType(EntityType subEntityType) =>
+      _$this._subEntityType = subEntityType;
+
+  String _id;
+  String get id => _$this._id;
+  set id(String id) => _$this._id = id;
 
   ClientEntityBuilder();
 
   ClientEntityBuilder get _$this {
     if (_$v != null) {
+      _groupId = _$v.groupId;
       _lastUpdatedActivities = _$v.lastUpdatedActivities;
       _name = _$v.name;
       _displayName = _$v.displayName;
       _balance = _$v.balance;
+      _creditBalance = _$v.creditBalance;
       _paidToDate = _$v.paidToDate;
       _address1 = _$v.address1;
       _address2 = _$v.address2;
@@ -1434,38 +1492,36 @@ class ClientEntityBuilder
       _state = _$v.state;
       _postalCode = _$v.postalCode;
       _countryId = _$v.countryId;
-      _workPhone = _$v.workPhone;
+      _phone = _$v.phone;
       _privateNotes = _$v.privateNotes;
       _publicNotes = _$v.publicNotes;
       _website = _$v.website;
       _industryId = _$v.industryId;
       _sizeId = _$v.sizeId;
-      _paymentTerms = _$v.paymentTerms;
       _vatNumber = _$v.vatNumber;
       _idNumber = _$v.idNumber;
-      _languageId = _$v.languageId;
-      _currencyId = _$v.currencyId;
-      _invoiceNumberCounter = _$v.invoiceNumberCounter;
-      _quoteNumberCounter = _$v.quoteNumberCounter;
-      _taskRate = _$v.taskRate;
       _shippingAddress1 = _$v.shippingAddress1;
       _shippingAddress2 = _$v.shippingAddress2;
       _shippingCity = _$v.shippingCity;
       _shippingState = _$v.shippingState;
       _shippingPostalCode = _$v.shippingPostalCode;
       _shippingCountryId = _$v.shippingCountryId;
-      _showTasksInPortal = _$v.showTasksInPortal;
-      _sendReminders = _$v.sendReminders;
-      _creditNumberCounter = _$v.creditNumberCounter;
+      _settings = _$v.settings?.toBuilder();
       _customValue1 = _$v.customValue1;
       _customValue2 = _$v.customValue2;
+      _customValue3 = _$v.customValue3;
+      _customValue4 = _$v.customValue4;
       _contacts = _$v.contacts?.toBuilder();
       _activities = _$v.activities?.toBuilder();
+      _gatewayTokens = _$v.gatewayTokens?.toBuilder();
+      _isChanged = _$v.isChanged;
       _createdAt = _$v.createdAt;
       _updatedAt = _$v.updatedAt;
       _archivedAt = _$v.archivedAt;
       _isDeleted = _$v.isDeleted;
-      _isOwner = _$v.isOwner;
+      _createdUserId = _$v.createdUserId;
+      _assignedUserId = _$v.assignedUserId;
+      _subEntityType = _$v.subEntityType;
       _id = _$v.id;
       _$v = null;
     }
@@ -1491,10 +1547,12 @@ class ClientEntityBuilder
     try {
       _$result = _$v ??
           new _$ClientEntity._(
+              groupId: groupId,
               lastUpdatedActivities: lastUpdatedActivities,
               name: name,
               displayName: displayName,
               balance: balance,
+              creditBalance: creditBalance,
               paidToDate: paidToDate,
               address1: address1,
               address2: address2,
@@ -1502,46 +1560,49 @@ class ClientEntityBuilder
               state: state,
               postalCode: postalCode,
               countryId: countryId,
-              workPhone: workPhone,
+              phone: phone,
               privateNotes: privateNotes,
               publicNotes: publicNotes,
               website: website,
               industryId: industryId,
               sizeId: sizeId,
-              paymentTerms: paymentTerms,
               vatNumber: vatNumber,
               idNumber: idNumber,
-              languageId: languageId,
-              currencyId: currencyId,
-              invoiceNumberCounter: invoiceNumberCounter,
-              quoteNumberCounter: quoteNumberCounter,
-              taskRate: taskRate,
               shippingAddress1: shippingAddress1,
               shippingAddress2: shippingAddress2,
               shippingCity: shippingCity,
               shippingState: shippingState,
               shippingPostalCode: shippingPostalCode,
               shippingCountryId: shippingCountryId,
-              showTasksInPortal: showTasksInPortal,
-              sendReminders: sendReminders,
-              creditNumberCounter: creditNumberCounter,
+              settings: settings.build(),
               customValue1: customValue1,
               customValue2: customValue2,
+              customValue3: customValue3,
+              customValue4: customValue4,
               contacts: contacts.build(),
               activities: activities.build(),
+              gatewayTokens: gatewayTokens.build(),
+              isChanged: isChanged,
               createdAt: createdAt,
               updatedAt: updatedAt,
               archivedAt: archivedAt,
               isDeleted: isDeleted,
-              isOwner: isOwner,
+              createdUserId: createdUserId,
+              assignedUserId: assignedUserId,
+              subEntityType: subEntityType,
               id: id);
     } catch (_) {
       String _$failedField;
       try {
+        _$failedField = 'settings';
+        settings.build();
+
         _$failedField = 'contacts';
         contacts.build();
         _$failedField = 'activities';
         activities.build();
+        _$failedField = 'gatewayTokens';
+        gatewayTokens.build();
       } catch (e) {
         throw new BuiltValueNestedFieldError(
             'ClientEntity', _$failedField, e.toString());
@@ -1569,11 +1630,19 @@ class _$ContactEntity extends ContactEntity {
   @override
   final bool isPrimary;
   @override
-  final bool sendInvoice;
+  final bool sendEmail;
   @override
   final String customValue1;
   @override
   final String customValue2;
+  @override
+  final String customValue3;
+  @override
+  final String customValue4;
+  @override
+  final int lastLogin;
+  @override
+  final bool isChanged;
   @override
   final int createdAt;
   @override
@@ -1583,9 +1652,13 @@ class _$ContactEntity extends ContactEntity {
   @override
   final bool isDeleted;
   @override
-  final bool isOwner;
+  final String createdUserId;
   @override
-  final int id;
+  final String assignedUserId;
+  @override
+  final EntityType subEntityType;
+  @override
+  final String id;
 
   factory _$ContactEntity([void Function(ContactEntityBuilder) updates]) =>
       (new ContactEntityBuilder()..update(updates)).build();
@@ -1598,14 +1671,20 @@ class _$ContactEntity extends ContactEntity {
       this.phone,
       this.contactKey,
       this.isPrimary,
-      this.sendInvoice,
+      this.sendEmail,
       this.customValue1,
       this.customValue2,
+      this.customValue3,
+      this.customValue4,
+      this.lastLogin,
+      this.isChanged,
       this.createdAt,
       this.updatedAt,
       this.archivedAt,
       this.isDeleted,
-      this.isOwner,
+      this.createdUserId,
+      this.assignedUserId,
+      this.subEntityType,
       this.id})
       : super._() {
     if (firstName == null) {
@@ -1617,6 +1696,9 @@ class _$ContactEntity extends ContactEntity {
     if (email == null) {
       throw new BuiltValueNullFieldError('ContactEntity', 'email');
     }
+    if (password == null) {
+      throw new BuiltValueNullFieldError('ContactEntity', 'password');
+    }
     if (phone == null) {
       throw new BuiltValueNullFieldError('ContactEntity', 'phone');
     }
@@ -1626,14 +1708,20 @@ class _$ContactEntity extends ContactEntity {
     if (isPrimary == null) {
       throw new BuiltValueNullFieldError('ContactEntity', 'isPrimary');
     }
-    if (sendInvoice == null) {
-      throw new BuiltValueNullFieldError('ContactEntity', 'sendInvoice');
+    if (sendEmail == null) {
+      throw new BuiltValueNullFieldError('ContactEntity', 'sendEmail');
     }
     if (customValue1 == null) {
       throw new BuiltValueNullFieldError('ContactEntity', 'customValue1');
     }
     if (customValue2 == null) {
       throw new BuiltValueNullFieldError('ContactEntity', 'customValue2');
+    }
+    if (customValue3 == null) {
+      throw new BuiltValueNullFieldError('ContactEntity', 'customValue3');
+    }
+    if (customValue4 == null) {
+      throw new BuiltValueNullFieldError('ContactEntity', 'customValue4');
     }
   }
 
@@ -1655,14 +1743,20 @@ class _$ContactEntity extends ContactEntity {
         phone == other.phone &&
         contactKey == other.contactKey &&
         isPrimary == other.isPrimary &&
-        sendInvoice == other.sendInvoice &&
+        sendEmail == other.sendEmail &&
         customValue1 == other.customValue1 &&
         customValue2 == other.customValue2 &&
+        customValue3 == other.customValue3 &&
+        customValue4 == other.customValue4 &&
+        lastLogin == other.lastLogin &&
+        isChanged == other.isChanged &&
         createdAt == other.createdAt &&
         updatedAt == other.updatedAt &&
         archivedAt == other.archivedAt &&
         isDeleted == other.isDeleted &&
-        isOwner == other.isOwner &&
+        createdUserId == other.createdUserId &&
+        assignedUserId == other.assignedUserId &&
+        subEntityType == other.subEntityType &&
         id == other.id;
   }
 
@@ -1684,24 +1778,27 @@ class _$ContactEntity extends ContactEntity {
                                                         $jc(
                                                             $jc(
                                                                 $jc(
-                                                                    0,
-                                                                    firstName
-                                                                        .hashCode),
-                                                                lastName
-                                                                    .hashCode),
-                                                            email.hashCode),
-                                                        password.hashCode),
-                                                    phone.hashCode),
-                                                contactKey.hashCode),
-                                            isPrimary.hashCode),
-                                        sendInvoice.hashCode),
-                                    customValue1.hashCode),
-                                customValue2.hashCode),
-                            createdAt.hashCode),
-                        updatedAt.hashCode),
-                    archivedAt.hashCode),
-                isDeleted.hashCode),
-            isOwner.hashCode),
+                                                                    $jc(
+                                                                        $jc(
+                                                                            $jc($jc($jc($jc(0, firstName.hashCode), lastName.hashCode), email.hashCode),
+                                                                                password.hashCode),
+                                                                            phone.hashCode),
+                                                                        contactKey.hashCode),
+                                                                    isPrimary.hashCode),
+                                                                sendEmail.hashCode),
+                                                            customValue1.hashCode),
+                                                        customValue2.hashCode),
+                                                    customValue3.hashCode),
+                                                customValue4.hashCode),
+                                            lastLogin.hashCode),
+                                        isChanged.hashCode),
+                                    createdAt.hashCode),
+                                updatedAt.hashCode),
+                            archivedAt.hashCode),
+                        isDeleted.hashCode),
+                    createdUserId.hashCode),
+                assignedUserId.hashCode),
+            subEntityType.hashCode),
         id.hashCode));
   }
 
@@ -1715,14 +1812,20 @@ class _$ContactEntity extends ContactEntity {
           ..add('phone', phone)
           ..add('contactKey', contactKey)
           ..add('isPrimary', isPrimary)
-          ..add('sendInvoice', sendInvoice)
+          ..add('sendEmail', sendEmail)
           ..add('customValue1', customValue1)
           ..add('customValue2', customValue2)
+          ..add('customValue3', customValue3)
+          ..add('customValue4', customValue4)
+          ..add('lastLogin', lastLogin)
+          ..add('isChanged', isChanged)
           ..add('createdAt', createdAt)
           ..add('updatedAt', updatedAt)
           ..add('archivedAt', archivedAt)
           ..add('isDeleted', isDeleted)
-          ..add('isOwner', isOwner)
+          ..add('createdUserId', createdUserId)
+          ..add('assignedUserId', assignedUserId)
+          ..add('subEntityType', subEntityType)
           ..add('id', id))
         .toString();
   }
@@ -1760,9 +1863,9 @@ class ContactEntityBuilder
   bool get isPrimary => _$this._isPrimary;
   set isPrimary(bool isPrimary) => _$this._isPrimary = isPrimary;
 
-  bool _sendInvoice;
-  bool get sendInvoice => _$this._sendInvoice;
-  set sendInvoice(bool sendInvoice) => _$this._sendInvoice = sendInvoice;
+  bool _sendEmail;
+  bool get sendEmail => _$this._sendEmail;
+  set sendEmail(bool sendEmail) => _$this._sendEmail = sendEmail;
 
   String _customValue1;
   String get customValue1 => _$this._customValue1;
@@ -1771,6 +1874,22 @@ class ContactEntityBuilder
   String _customValue2;
   String get customValue2 => _$this._customValue2;
   set customValue2(String customValue2) => _$this._customValue2 = customValue2;
+
+  String _customValue3;
+  String get customValue3 => _$this._customValue3;
+  set customValue3(String customValue3) => _$this._customValue3 = customValue3;
+
+  String _customValue4;
+  String get customValue4 => _$this._customValue4;
+  set customValue4(String customValue4) => _$this._customValue4 = customValue4;
+
+  int _lastLogin;
+  int get lastLogin => _$this._lastLogin;
+  set lastLogin(int lastLogin) => _$this._lastLogin = lastLogin;
+
+  bool _isChanged;
+  bool get isChanged => _$this._isChanged;
+  set isChanged(bool isChanged) => _$this._isChanged = isChanged;
 
   int _createdAt;
   int get createdAt => _$this._createdAt;
@@ -1788,13 +1907,24 @@ class ContactEntityBuilder
   bool get isDeleted => _$this._isDeleted;
   set isDeleted(bool isDeleted) => _$this._isDeleted = isDeleted;
 
-  bool _isOwner;
-  bool get isOwner => _$this._isOwner;
-  set isOwner(bool isOwner) => _$this._isOwner = isOwner;
+  String _createdUserId;
+  String get createdUserId => _$this._createdUserId;
+  set createdUserId(String createdUserId) =>
+      _$this._createdUserId = createdUserId;
 
-  int _id;
-  int get id => _$this._id;
-  set id(int id) => _$this._id = id;
+  String _assignedUserId;
+  String get assignedUserId => _$this._assignedUserId;
+  set assignedUserId(String assignedUserId) =>
+      _$this._assignedUserId = assignedUserId;
+
+  EntityType _subEntityType;
+  EntityType get subEntityType => _$this._subEntityType;
+  set subEntityType(EntityType subEntityType) =>
+      _$this._subEntityType = subEntityType;
+
+  String _id;
+  String get id => _$this._id;
+  set id(String id) => _$this._id = id;
 
   ContactEntityBuilder();
 
@@ -1807,14 +1937,20 @@ class ContactEntityBuilder
       _phone = _$v.phone;
       _contactKey = _$v.contactKey;
       _isPrimary = _$v.isPrimary;
-      _sendInvoice = _$v.sendInvoice;
+      _sendEmail = _$v.sendEmail;
       _customValue1 = _$v.customValue1;
       _customValue2 = _$v.customValue2;
+      _customValue3 = _$v.customValue3;
+      _customValue4 = _$v.customValue4;
+      _lastLogin = _$v.lastLogin;
+      _isChanged = _$v.isChanged;
       _createdAt = _$v.createdAt;
       _updatedAt = _$v.updatedAt;
       _archivedAt = _$v.archivedAt;
       _isDeleted = _$v.isDeleted;
-      _isOwner = _$v.isOwner;
+      _createdUserId = _$v.createdUserId;
+      _assignedUserId = _$v.assignedUserId;
+      _subEntityType = _$v.subEntityType;
       _id = _$v.id;
       _$v = null;
     }
@@ -1845,14 +1981,20 @@ class ContactEntityBuilder
             phone: phone,
             contactKey: contactKey,
             isPrimary: isPrimary,
-            sendInvoice: sendInvoice,
+            sendEmail: sendEmail,
             customValue1: customValue1,
             customValue2: customValue2,
+            customValue3: customValue3,
+            customValue4: customValue4,
+            lastLogin: lastLogin,
+            isChanged: isChanged,
             createdAt: createdAt,
             updatedAt: updatedAt,
             archivedAt: archivedAt,
             isDeleted: isDeleted,
-            isOwner: isOwner,
+            createdUserId: createdUserId,
+            assignedUserId: assignedUserId,
+            subEntityType: subEntityType,
             id: id);
     replace(_$result);
     return _$result;

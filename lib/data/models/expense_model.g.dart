@@ -57,7 +57,7 @@ class _$ExpenseListResponseSerializer
           result.data.replace(serializers.deserialize(value,
                   specifiedType: const FullType(
                       BuiltList, const [const FullType(ExpenseEntity)]))
-              as BuiltList<dynamic>);
+              as BuiltList<Object>);
           break;
       }
     }
@@ -141,10 +141,11 @@ class _$ExpenseEntitySerializer implements StructuredSerializer<ExpenseEntity> {
       serializers.serialize(object.transactionReference,
           specifiedType: const FullType(String)),
       'bank_id',
-      serializers.serialize(object.bankId, specifiedType: const FullType(int)),
+      serializers.serialize(object.bankId,
+          specifiedType: const FullType(String)),
       'expense_currency_id',
       serializers.serialize(object.expenseCurrencyId,
-          specifiedType: const FullType(int)),
+          specifiedType: const FullType(String)),
       'amount',
       serializers.serialize(object.amount,
           specifiedType: const FullType(double)),
@@ -159,10 +160,10 @@ class _$ExpenseEntitySerializer implements StructuredSerializer<ExpenseEntity> {
           specifiedType: const FullType(double)),
       'invoice_currency_id',
       serializers.serialize(object.invoiceCurrencyId,
-          specifiedType: const FullType(int)),
+          specifiedType: const FullType(String)),
       'payment_type_id',
       serializers.serialize(object.paymentTypeId,
-          specifiedType: const FullType(int)),
+          specifiedType: const FullType(String)),
       'tax_name1',
       serializers.serialize(object.taxName1,
           specifiedType: const FullType(String)),
@@ -175,15 +176,12 @@ class _$ExpenseEntitySerializer implements StructuredSerializer<ExpenseEntity> {
       'tax_rate2',
       serializers.serialize(object.taxRate2,
           specifiedType: const FullType(double)),
-      'client_id',
-      serializers.serialize(object.clientId,
-          specifiedType: const FullType(int)),
-      'invoice_id',
-      serializers.serialize(object.invoiceId,
-          specifiedType: const FullType(int)),
-      'vendor_id',
-      serializers.serialize(object.vendorId,
-          specifiedType: const FullType(int)),
+      'tax_name3',
+      serializers.serialize(object.taxName3,
+          specifiedType: const FullType(String)),
+      'tax_rate3',
+      serializers.serialize(object.taxRate3,
+          specifiedType: const FullType(double)),
       'custom_value1',
       serializers.serialize(object.customValue1,
           specifiedType: const FullType(String)),
@@ -195,7 +193,43 @@ class _$ExpenseEntitySerializer implements StructuredSerializer<ExpenseEntity> {
       result
         ..add('expense_category_id')
         ..add(serializers.serialize(object.categoryId,
-            specifiedType: const FullType(int)));
+            specifiedType: const FullType(String)));
+    }
+    if (object.clientId != null) {
+      result
+        ..add('client_id')
+        ..add(serializers.serialize(object.clientId,
+            specifiedType: const FullType(String)));
+    }
+    if (object.invoiceId != null) {
+      result
+        ..add('invoice_id')
+        ..add(serializers.serialize(object.invoiceId,
+            specifiedType: const FullType(String)));
+    }
+    if (object.vendorId != null) {
+      result
+        ..add('vendor_id')
+        ..add(serializers.serialize(object.vendorId,
+            specifiedType: const FullType(String)));
+    }
+    if (object.customValue3 != null) {
+      result
+        ..add('custom_value3')
+        ..add(serializers.serialize(object.customValue3,
+            specifiedType: const FullType(String)));
+    }
+    if (object.customValue4 != null) {
+      result
+        ..add('custom_value4')
+        ..add(serializers.serialize(object.customValue4,
+            specifiedType: const FullType(String)));
+    }
+    if (object.isChanged != null) {
+      result
+        ..add('isChanged')
+        ..add(serializers.serialize(object.isChanged,
+            specifiedType: const FullType(bool)));
     }
     if (object.createdAt != null) {
       result
@@ -221,17 +255,29 @@ class _$ExpenseEntitySerializer implements StructuredSerializer<ExpenseEntity> {
         ..add(serializers.serialize(object.isDeleted,
             specifiedType: const FullType(bool)));
     }
-    if (object.isOwner != null) {
+    if (object.createdUserId != null) {
       result
-        ..add('is_owner')
-        ..add(serializers.serialize(object.isOwner,
-            specifiedType: const FullType(bool)));
+        ..add('user_id')
+        ..add(serializers.serialize(object.createdUserId,
+            specifiedType: const FullType(String)));
+    }
+    if (object.assignedUserId != null) {
+      result
+        ..add('assigned_user_id')
+        ..add(serializers.serialize(object.assignedUserId,
+            specifiedType: const FullType(String)));
+    }
+    if (object.subEntityType != null) {
+      result
+        ..add('entity_type')
+        ..add(serializers.serialize(object.subEntityType,
+            specifiedType: const FullType(EntityType)));
     }
     if (object.id != null) {
       result
         ..add('id')
         ..add(serializers.serialize(object.id,
-            specifiedType: const FullType(int)));
+            specifiedType: const FullType(String)));
     }
     return result;
   }
@@ -274,15 +320,15 @@ class _$ExpenseEntitySerializer implements StructuredSerializer<ExpenseEntity> {
           break;
         case 'bank_id':
           result.bankId = serializers.deserialize(value,
-              specifiedType: const FullType(int)) as int;
+              specifiedType: const FullType(String)) as String;
           break;
         case 'expense_currency_id':
           result.expenseCurrencyId = serializers.deserialize(value,
-              specifiedType: const FullType(int)) as int;
+              specifiedType: const FullType(String)) as String;
           break;
         case 'expense_category_id':
           result.categoryId = serializers.deserialize(value,
-              specifiedType: const FullType(int)) as int;
+              specifiedType: const FullType(String)) as String;
           break;
         case 'amount':
           result.amount = serializers.deserialize(value,
@@ -302,11 +348,11 @@ class _$ExpenseEntitySerializer implements StructuredSerializer<ExpenseEntity> {
           break;
         case 'invoice_currency_id':
           result.invoiceCurrencyId = serializers.deserialize(value,
-              specifiedType: const FullType(int)) as int;
+              specifiedType: const FullType(String)) as String;
           break;
         case 'payment_type_id':
           result.paymentTypeId = serializers.deserialize(value,
-              specifiedType: const FullType(int)) as int;
+              specifiedType: const FullType(String)) as String;
           break;
         case 'tax_name1':
           result.taxName1 = serializers.deserialize(value,
@@ -324,17 +370,25 @@ class _$ExpenseEntitySerializer implements StructuredSerializer<ExpenseEntity> {
           result.taxRate2 = serializers.deserialize(value,
               specifiedType: const FullType(double)) as double;
           break;
+        case 'tax_name3':
+          result.taxName3 = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String;
+          break;
+        case 'tax_rate3':
+          result.taxRate3 = serializers.deserialize(value,
+              specifiedType: const FullType(double)) as double;
+          break;
         case 'client_id':
           result.clientId = serializers.deserialize(value,
-              specifiedType: const FullType(int)) as int;
+              specifiedType: const FullType(String)) as String;
           break;
         case 'invoice_id':
           result.invoiceId = serializers.deserialize(value,
-              specifiedType: const FullType(int)) as int;
+              specifiedType: const FullType(String)) as String;
           break;
         case 'vendor_id':
           result.vendorId = serializers.deserialize(value,
-              specifiedType: const FullType(int)) as int;
+              specifiedType: const FullType(String)) as String;
           break;
         case 'custom_value1':
           result.customValue1 = serializers.deserialize(value,
@@ -343,6 +397,18 @@ class _$ExpenseEntitySerializer implements StructuredSerializer<ExpenseEntity> {
         case 'custom_value2':
           result.customValue2 = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String;
+          break;
+        case 'custom_value3':
+          result.customValue3 = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String;
+          break;
+        case 'custom_value4':
+          result.customValue4 = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String;
+          break;
+        case 'isChanged':
+          result.isChanged = serializers.deserialize(value,
+              specifiedType: const FullType(bool)) as bool;
           break;
         case 'created_at':
           result.createdAt = serializers.deserialize(value,
@@ -360,13 +426,21 @@ class _$ExpenseEntitySerializer implements StructuredSerializer<ExpenseEntity> {
           result.isDeleted = serializers.deserialize(value,
               specifiedType: const FullType(bool)) as bool;
           break;
-        case 'is_owner':
-          result.isOwner = serializers.deserialize(value,
-              specifiedType: const FullType(bool)) as bool;
+        case 'user_id':
+          result.createdUserId = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String;
+          break;
+        case 'assigned_user_id':
+          result.assignedUserId = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String;
+          break;
+        case 'entity_type':
+          result.subEntityType = serializers.deserialize(value,
+              specifiedType: const FullType(EntityType)) as EntityType;
           break;
         case 'id':
           result.id = serializers.deserialize(value,
-              specifiedType: const FullType(int)) as int;
+              specifiedType: const FullType(String)) as String;
           break;
       }
     }
@@ -393,6 +467,12 @@ class _$ExpenseCategoryEntitySerializer
       'name',
       serializers.serialize(object.name, specifiedType: const FullType(String)),
     ];
+    if (object.isChanged != null) {
+      result
+        ..add('isChanged')
+        ..add(serializers.serialize(object.isChanged,
+            specifiedType: const FullType(bool)));
+    }
     if (object.createdAt != null) {
       result
         ..add('created_at')
@@ -417,17 +497,29 @@ class _$ExpenseCategoryEntitySerializer
         ..add(serializers.serialize(object.isDeleted,
             specifiedType: const FullType(bool)));
     }
-    if (object.isOwner != null) {
+    if (object.createdUserId != null) {
       result
-        ..add('is_owner')
-        ..add(serializers.serialize(object.isOwner,
-            specifiedType: const FullType(bool)));
+        ..add('user_id')
+        ..add(serializers.serialize(object.createdUserId,
+            specifiedType: const FullType(String)));
+    }
+    if (object.assignedUserId != null) {
+      result
+        ..add('assigned_user_id')
+        ..add(serializers.serialize(object.assignedUserId,
+            specifiedType: const FullType(String)));
+    }
+    if (object.subEntityType != null) {
+      result
+        ..add('entity_type')
+        ..add(serializers.serialize(object.subEntityType,
+            specifiedType: const FullType(EntityType)));
     }
     if (object.id != null) {
       result
         ..add('id')
         ..add(serializers.serialize(object.id,
-            specifiedType: const FullType(int)));
+            specifiedType: const FullType(String)));
     }
     return result;
   }
@@ -448,6 +540,10 @@ class _$ExpenseCategoryEntitySerializer
           result.name = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String;
           break;
+        case 'isChanged':
+          result.isChanged = serializers.deserialize(value,
+              specifiedType: const FullType(bool)) as bool;
+          break;
         case 'created_at':
           result.createdAt = serializers.deserialize(value,
               specifiedType: const FullType(int)) as int;
@@ -464,13 +560,21 @@ class _$ExpenseCategoryEntitySerializer
           result.isDeleted = serializers.deserialize(value,
               specifiedType: const FullType(bool)) as bool;
           break;
-        case 'is_owner':
-          result.isOwner = serializers.deserialize(value,
-              specifiedType: const FullType(bool)) as bool;
+        case 'user_id':
+          result.createdUserId = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String;
+          break;
+        case 'assigned_user_id':
+          result.assignedUserId = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String;
+          break;
+        case 'entity_type':
+          result.subEntityType = serializers.deserialize(value,
+              specifiedType: const FullType(EntityType)) as EntityType;
           break;
         case 'id':
           result.id = serializers.deserialize(value,
-              specifiedType: const FullType(int)) as int;
+              specifiedType: const FullType(String)) as String;
           break;
       }
     }
@@ -495,7 +599,7 @@ class _$ExpenseStatusEntitySerializer
       {FullType specifiedType = FullType.unspecified}) {
     final result = <Object>[
       'id',
-      serializers.serialize(object.id, specifiedType: const FullType(int)),
+      serializers.serialize(object.id, specifiedType: const FullType(String)),
       'name',
       serializers.serialize(object.name, specifiedType: const FullType(String)),
     ];
@@ -517,7 +621,7 @@ class _$ExpenseStatusEntitySerializer
       switch (key) {
         case 'id':
           result.id = serializers.deserialize(value,
-              specifiedType: const FullType(int)) as int;
+              specifiedType: const FullType(String)) as String;
           break;
         case 'name':
           result.name = serializers.deserialize(value,
@@ -733,11 +837,11 @@ class _$ExpenseEntity extends ExpenseEntity {
   @override
   final String transactionReference;
   @override
-  final int bankId;
+  final String bankId;
   @override
-  final int expenseCurrencyId;
+  final String expenseCurrencyId;
   @override
-  final int categoryId;
+  final String categoryId;
   @override
   final double amount;
   @override
@@ -747,9 +851,9 @@ class _$ExpenseEntity extends ExpenseEntity {
   @override
   final double exchangeRate;
   @override
-  final int invoiceCurrencyId;
+  final String invoiceCurrencyId;
   @override
-  final int paymentTypeId;
+  final String paymentTypeId;
   @override
   final String taxName1;
   @override
@@ -759,15 +863,25 @@ class _$ExpenseEntity extends ExpenseEntity {
   @override
   final double taxRate2;
   @override
-  final int clientId;
+  final String taxName3;
   @override
-  final int invoiceId;
+  final double taxRate3;
   @override
-  final int vendorId;
+  final String clientId;
+  @override
+  final String invoiceId;
+  @override
+  final String vendorId;
   @override
   final String customValue1;
   @override
   final String customValue2;
+  @override
+  final String customValue3;
+  @override
+  final String customValue4;
+  @override
+  final bool isChanged;
   @override
   final int createdAt;
   @override
@@ -777,9 +891,13 @@ class _$ExpenseEntity extends ExpenseEntity {
   @override
   final bool isDeleted;
   @override
-  final bool isOwner;
+  final String createdUserId;
   @override
-  final int id;
+  final String assignedUserId;
+  @override
+  final EntityType subEntityType;
+  @override
+  final String id;
 
   factory _$ExpenseEntity([void Function(ExpenseEntityBuilder) updates]) =>
       (new ExpenseEntityBuilder()..update(updates)).build();
@@ -804,16 +922,23 @@ class _$ExpenseEntity extends ExpenseEntity {
       this.taxName2,
       this.taxRate1,
       this.taxRate2,
+      this.taxName3,
+      this.taxRate3,
       this.clientId,
       this.invoiceId,
       this.vendorId,
       this.customValue1,
       this.customValue2,
+      this.customValue3,
+      this.customValue4,
+      this.isChanged,
       this.createdAt,
       this.updatedAt,
       this.archivedAt,
       this.isDeleted,
-      this.isOwner,
+      this.createdUserId,
+      this.assignedUserId,
+      this.subEntityType,
       this.id})
       : super._() {
     if (privateNotes == null) {
@@ -871,14 +996,11 @@ class _$ExpenseEntity extends ExpenseEntity {
     if (taxRate2 == null) {
       throw new BuiltValueNullFieldError('ExpenseEntity', 'taxRate2');
     }
-    if (clientId == null) {
-      throw new BuiltValueNullFieldError('ExpenseEntity', 'clientId');
+    if (taxName3 == null) {
+      throw new BuiltValueNullFieldError('ExpenseEntity', 'taxName3');
     }
-    if (invoiceId == null) {
-      throw new BuiltValueNullFieldError('ExpenseEntity', 'invoiceId');
-    }
-    if (vendorId == null) {
-      throw new BuiltValueNullFieldError('ExpenseEntity', 'vendorId');
+    if (taxRate3 == null) {
+      throw new BuiltValueNullFieldError('ExpenseEntity', 'taxRate3');
     }
     if (customValue1 == null) {
       throw new BuiltValueNullFieldError('ExpenseEntity', 'customValue1');
@@ -918,16 +1040,23 @@ class _$ExpenseEntity extends ExpenseEntity {
         taxName2 == other.taxName2 &&
         taxRate1 == other.taxRate1 &&
         taxRate2 == other.taxRate2 &&
+        taxName3 == other.taxName3 &&
+        taxRate3 == other.taxRate3 &&
         clientId == other.clientId &&
         invoiceId == other.invoiceId &&
         vendorId == other.vendorId &&
         customValue1 == other.customValue1 &&
         customValue2 == other.customValue2 &&
+        customValue3 == other.customValue3 &&
+        customValue4 == other.customValue4 &&
+        isChanged == other.isChanged &&
         createdAt == other.createdAt &&
         updatedAt == other.updatedAt &&
         archivedAt == other.archivedAt &&
         isDeleted == other.isDeleted &&
-        isOwner == other.isOwner &&
+        createdUserId == other.createdUserId &&
+        assignedUserId == other.assignedUserId &&
+        subEntityType == other.subEntityType &&
         id == other.id;
   }
 
@@ -951,25 +1080,25 @@ class _$ExpenseEntity extends ExpenseEntity {
                                                                 $jc(
                                                                     $jc(
                                                                         $jc(
-                                                                            $jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc(0, privateNotes.hashCode), publicNotes.hashCode), shouldBeInvoiced.hashCode), invoiceDocuments.hashCode), transactionId.hashCode), transactionReference.hashCode), bankId.hashCode), expenseCurrencyId.hashCode), categoryId.hashCode), amount.hashCode), expenseDate.hashCode),
-                                                                                paymentDate.hashCode),
-                                                                            exchangeRate.hashCode),
-                                                                        invoiceCurrencyId.hashCode),
-                                                                    paymentTypeId.hashCode),
-                                                                taxName1.hashCode),
-                                                            taxName2.hashCode),
-                                                        taxRate1.hashCode),
-                                                    taxRate2.hashCode),
-                                                clientId.hashCode),
-                                            invoiceId.hashCode),
-                                        vendorId.hashCode),
-                                    customValue1.hashCode),
-                                customValue2.hashCode),
-                            createdAt.hashCode),
-                        updatedAt.hashCode),
-                    archivedAt.hashCode),
-                isDeleted.hashCode),
-            isOwner.hashCode),
+                                                                            $jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc(0, privateNotes.hashCode), publicNotes.hashCode), shouldBeInvoiced.hashCode), invoiceDocuments.hashCode), transactionId.hashCode), transactionReference.hashCode), bankId.hashCode), expenseCurrencyId.hashCode), categoryId.hashCode), amount.hashCode), expenseDate.hashCode), paymentDate.hashCode), exchangeRate.hashCode), invoiceCurrencyId.hashCode), paymentTypeId.hashCode), taxName1.hashCode), taxName2.hashCode), taxRate1.hashCode),
+                                                                                taxRate2.hashCode),
+                                                                            taxName3.hashCode),
+                                                                        taxRate3.hashCode),
+                                                                    clientId.hashCode),
+                                                                invoiceId.hashCode),
+                                                            vendorId.hashCode),
+                                                        customValue1.hashCode),
+                                                    customValue2.hashCode),
+                                                customValue3.hashCode),
+                                            customValue4.hashCode),
+                                        isChanged.hashCode),
+                                    createdAt.hashCode),
+                                updatedAt.hashCode),
+                            archivedAt.hashCode),
+                        isDeleted.hashCode),
+                    createdUserId.hashCode),
+                assignedUserId.hashCode),
+            subEntityType.hashCode),
         id.hashCode));
   }
 
@@ -995,16 +1124,23 @@ class _$ExpenseEntity extends ExpenseEntity {
           ..add('taxName2', taxName2)
           ..add('taxRate1', taxRate1)
           ..add('taxRate2', taxRate2)
+          ..add('taxName3', taxName3)
+          ..add('taxRate3', taxRate3)
           ..add('clientId', clientId)
           ..add('invoiceId', invoiceId)
           ..add('vendorId', vendorId)
           ..add('customValue1', customValue1)
           ..add('customValue2', customValue2)
+          ..add('customValue3', customValue3)
+          ..add('customValue4', customValue4)
+          ..add('isChanged', isChanged)
           ..add('createdAt', createdAt)
           ..add('updatedAt', updatedAt)
           ..add('archivedAt', archivedAt)
           ..add('isDeleted', isDeleted)
-          ..add('isOwner', isOwner)
+          ..add('createdUserId', createdUserId)
+          ..add('assignedUserId', assignedUserId)
+          ..add('subEntityType', subEntityType)
           ..add('id', id))
         .toString();
   }
@@ -1042,18 +1178,18 @@ class ExpenseEntityBuilder
   set transactionReference(String transactionReference) =>
       _$this._transactionReference = transactionReference;
 
-  int _bankId;
-  int get bankId => _$this._bankId;
-  set bankId(int bankId) => _$this._bankId = bankId;
+  String _bankId;
+  String get bankId => _$this._bankId;
+  set bankId(String bankId) => _$this._bankId = bankId;
 
-  int _expenseCurrencyId;
-  int get expenseCurrencyId => _$this._expenseCurrencyId;
-  set expenseCurrencyId(int expenseCurrencyId) =>
+  String _expenseCurrencyId;
+  String get expenseCurrencyId => _$this._expenseCurrencyId;
+  set expenseCurrencyId(String expenseCurrencyId) =>
       _$this._expenseCurrencyId = expenseCurrencyId;
 
-  int _categoryId;
-  int get categoryId => _$this._categoryId;
-  set categoryId(int categoryId) => _$this._categoryId = categoryId;
+  String _categoryId;
+  String get categoryId => _$this._categoryId;
+  set categoryId(String categoryId) => _$this._categoryId = categoryId;
 
   double _amount;
   double get amount => _$this._amount;
@@ -1071,14 +1207,15 @@ class ExpenseEntityBuilder
   double get exchangeRate => _$this._exchangeRate;
   set exchangeRate(double exchangeRate) => _$this._exchangeRate = exchangeRate;
 
-  int _invoiceCurrencyId;
-  int get invoiceCurrencyId => _$this._invoiceCurrencyId;
-  set invoiceCurrencyId(int invoiceCurrencyId) =>
+  String _invoiceCurrencyId;
+  String get invoiceCurrencyId => _$this._invoiceCurrencyId;
+  set invoiceCurrencyId(String invoiceCurrencyId) =>
       _$this._invoiceCurrencyId = invoiceCurrencyId;
 
-  int _paymentTypeId;
-  int get paymentTypeId => _$this._paymentTypeId;
-  set paymentTypeId(int paymentTypeId) => _$this._paymentTypeId = paymentTypeId;
+  String _paymentTypeId;
+  String get paymentTypeId => _$this._paymentTypeId;
+  set paymentTypeId(String paymentTypeId) =>
+      _$this._paymentTypeId = paymentTypeId;
 
   String _taxName1;
   String get taxName1 => _$this._taxName1;
@@ -1096,17 +1233,25 @@ class ExpenseEntityBuilder
   double get taxRate2 => _$this._taxRate2;
   set taxRate2(double taxRate2) => _$this._taxRate2 = taxRate2;
 
-  int _clientId;
-  int get clientId => _$this._clientId;
-  set clientId(int clientId) => _$this._clientId = clientId;
+  String _taxName3;
+  String get taxName3 => _$this._taxName3;
+  set taxName3(String taxName3) => _$this._taxName3 = taxName3;
 
-  int _invoiceId;
-  int get invoiceId => _$this._invoiceId;
-  set invoiceId(int invoiceId) => _$this._invoiceId = invoiceId;
+  double _taxRate3;
+  double get taxRate3 => _$this._taxRate3;
+  set taxRate3(double taxRate3) => _$this._taxRate3 = taxRate3;
 
-  int _vendorId;
-  int get vendorId => _$this._vendorId;
-  set vendorId(int vendorId) => _$this._vendorId = vendorId;
+  String _clientId;
+  String get clientId => _$this._clientId;
+  set clientId(String clientId) => _$this._clientId = clientId;
+
+  String _invoiceId;
+  String get invoiceId => _$this._invoiceId;
+  set invoiceId(String invoiceId) => _$this._invoiceId = invoiceId;
+
+  String _vendorId;
+  String get vendorId => _$this._vendorId;
+  set vendorId(String vendorId) => _$this._vendorId = vendorId;
 
   String _customValue1;
   String get customValue1 => _$this._customValue1;
@@ -1115,6 +1260,18 @@ class ExpenseEntityBuilder
   String _customValue2;
   String get customValue2 => _$this._customValue2;
   set customValue2(String customValue2) => _$this._customValue2 = customValue2;
+
+  String _customValue3;
+  String get customValue3 => _$this._customValue3;
+  set customValue3(String customValue3) => _$this._customValue3 = customValue3;
+
+  String _customValue4;
+  String get customValue4 => _$this._customValue4;
+  set customValue4(String customValue4) => _$this._customValue4 = customValue4;
+
+  bool _isChanged;
+  bool get isChanged => _$this._isChanged;
+  set isChanged(bool isChanged) => _$this._isChanged = isChanged;
 
   int _createdAt;
   int get createdAt => _$this._createdAt;
@@ -1132,13 +1289,24 @@ class ExpenseEntityBuilder
   bool get isDeleted => _$this._isDeleted;
   set isDeleted(bool isDeleted) => _$this._isDeleted = isDeleted;
 
-  bool _isOwner;
-  bool get isOwner => _$this._isOwner;
-  set isOwner(bool isOwner) => _$this._isOwner = isOwner;
+  String _createdUserId;
+  String get createdUserId => _$this._createdUserId;
+  set createdUserId(String createdUserId) =>
+      _$this._createdUserId = createdUserId;
 
-  int _id;
-  int get id => _$this._id;
-  set id(int id) => _$this._id = id;
+  String _assignedUserId;
+  String get assignedUserId => _$this._assignedUserId;
+  set assignedUserId(String assignedUserId) =>
+      _$this._assignedUserId = assignedUserId;
+
+  EntityType _subEntityType;
+  EntityType get subEntityType => _$this._subEntityType;
+  set subEntityType(EntityType subEntityType) =>
+      _$this._subEntityType = subEntityType;
+
+  String _id;
+  String get id => _$this._id;
+  set id(String id) => _$this._id = id;
 
   ExpenseEntityBuilder();
 
@@ -1163,16 +1331,23 @@ class ExpenseEntityBuilder
       _taxName2 = _$v.taxName2;
       _taxRate1 = _$v.taxRate1;
       _taxRate2 = _$v.taxRate2;
+      _taxName3 = _$v.taxName3;
+      _taxRate3 = _$v.taxRate3;
       _clientId = _$v.clientId;
       _invoiceId = _$v.invoiceId;
       _vendorId = _$v.vendorId;
       _customValue1 = _$v.customValue1;
       _customValue2 = _$v.customValue2;
+      _customValue3 = _$v.customValue3;
+      _customValue4 = _$v.customValue4;
+      _isChanged = _$v.isChanged;
       _createdAt = _$v.createdAt;
       _updatedAt = _$v.updatedAt;
       _archivedAt = _$v.archivedAt;
       _isDeleted = _$v.isDeleted;
-      _isOwner = _$v.isOwner;
+      _createdUserId = _$v.createdUserId;
+      _assignedUserId = _$v.assignedUserId;
+      _subEntityType = _$v.subEntityType;
       _id = _$v.id;
       _$v = null;
     }
@@ -1215,16 +1390,23 @@ class ExpenseEntityBuilder
             taxName2: taxName2,
             taxRate1: taxRate1,
             taxRate2: taxRate2,
+            taxName3: taxName3,
+            taxRate3: taxRate3,
             clientId: clientId,
             invoiceId: invoiceId,
             vendorId: vendorId,
             customValue1: customValue1,
             customValue2: customValue2,
+            customValue3: customValue3,
+            customValue4: customValue4,
+            isChanged: isChanged,
             createdAt: createdAt,
             updatedAt: updatedAt,
             archivedAt: archivedAt,
             isDeleted: isDeleted,
-            isOwner: isOwner,
+            createdUserId: createdUserId,
+            assignedUserId: assignedUserId,
+            subEntityType: subEntityType,
             id: id);
     replace(_$result);
     return _$result;
@@ -1235,6 +1417,8 @@ class _$ExpenseCategoryEntity extends ExpenseCategoryEntity {
   @override
   final String name;
   @override
+  final bool isChanged;
+  @override
   final int createdAt;
   @override
   final int updatedAt;
@@ -1243,9 +1427,13 @@ class _$ExpenseCategoryEntity extends ExpenseCategoryEntity {
   @override
   final bool isDeleted;
   @override
-  final bool isOwner;
+  final String createdUserId;
   @override
-  final int id;
+  final String assignedUserId;
+  @override
+  final EntityType subEntityType;
+  @override
+  final String id;
 
   factory _$ExpenseCategoryEntity(
           [void Function(ExpenseCategoryEntityBuilder) updates]) =>
@@ -1253,11 +1441,14 @@ class _$ExpenseCategoryEntity extends ExpenseCategoryEntity {
 
   _$ExpenseCategoryEntity._(
       {this.name,
+      this.isChanged,
       this.createdAt,
       this.updatedAt,
       this.archivedAt,
       this.isDeleted,
-      this.isOwner,
+      this.createdUserId,
+      this.assignedUserId,
+      this.subEntityType,
       this.id})
       : super._() {
     if (name == null) {
@@ -1279,11 +1470,14 @@ class _$ExpenseCategoryEntity extends ExpenseCategoryEntity {
     if (identical(other, this)) return true;
     return other is ExpenseCategoryEntity &&
         name == other.name &&
+        isChanged == other.isChanged &&
         createdAt == other.createdAt &&
         updatedAt == other.updatedAt &&
         archivedAt == other.archivedAt &&
         isDeleted == other.isDeleted &&
-        isOwner == other.isOwner &&
+        createdUserId == other.createdUserId &&
+        assignedUserId == other.assignedUserId &&
+        subEntityType == other.subEntityType &&
         id == other.id;
   }
 
@@ -1293,11 +1487,19 @@ class _$ExpenseCategoryEntity extends ExpenseCategoryEntity {
         $jc(
             $jc(
                 $jc(
-                    $jc($jc($jc(0, name.hashCode), createdAt.hashCode),
-                        updatedAt.hashCode),
-                    archivedAt.hashCode),
-                isDeleted.hashCode),
-            isOwner.hashCode),
+                    $jc(
+                        $jc(
+                            $jc(
+                                $jc(
+                                    $jc($jc(0, name.hashCode),
+                                        isChanged.hashCode),
+                                    createdAt.hashCode),
+                                updatedAt.hashCode),
+                            archivedAt.hashCode),
+                        isDeleted.hashCode),
+                    createdUserId.hashCode),
+                assignedUserId.hashCode),
+            subEntityType.hashCode),
         id.hashCode));
   }
 
@@ -1305,11 +1507,14 @@ class _$ExpenseCategoryEntity extends ExpenseCategoryEntity {
   String toString() {
     return (newBuiltValueToStringHelper('ExpenseCategoryEntity')
           ..add('name', name)
+          ..add('isChanged', isChanged)
           ..add('createdAt', createdAt)
           ..add('updatedAt', updatedAt)
           ..add('archivedAt', archivedAt)
           ..add('isDeleted', isDeleted)
-          ..add('isOwner', isOwner)
+          ..add('createdUserId', createdUserId)
+          ..add('assignedUserId', assignedUserId)
+          ..add('subEntityType', subEntityType)
           ..add('id', id))
         .toString();
   }
@@ -1322,6 +1527,10 @@ class ExpenseCategoryEntityBuilder
   String _name;
   String get name => _$this._name;
   set name(String name) => _$this._name = name;
+
+  bool _isChanged;
+  bool get isChanged => _$this._isChanged;
+  set isChanged(bool isChanged) => _$this._isChanged = isChanged;
 
   int _createdAt;
   int get createdAt => _$this._createdAt;
@@ -1339,24 +1548,38 @@ class ExpenseCategoryEntityBuilder
   bool get isDeleted => _$this._isDeleted;
   set isDeleted(bool isDeleted) => _$this._isDeleted = isDeleted;
 
-  bool _isOwner;
-  bool get isOwner => _$this._isOwner;
-  set isOwner(bool isOwner) => _$this._isOwner = isOwner;
+  String _createdUserId;
+  String get createdUserId => _$this._createdUserId;
+  set createdUserId(String createdUserId) =>
+      _$this._createdUserId = createdUserId;
 
-  int _id;
-  int get id => _$this._id;
-  set id(int id) => _$this._id = id;
+  String _assignedUserId;
+  String get assignedUserId => _$this._assignedUserId;
+  set assignedUserId(String assignedUserId) =>
+      _$this._assignedUserId = assignedUserId;
+
+  EntityType _subEntityType;
+  EntityType get subEntityType => _$this._subEntityType;
+  set subEntityType(EntityType subEntityType) =>
+      _$this._subEntityType = subEntityType;
+
+  String _id;
+  String get id => _$this._id;
+  set id(String id) => _$this._id = id;
 
   ExpenseCategoryEntityBuilder();
 
   ExpenseCategoryEntityBuilder get _$this {
     if (_$v != null) {
       _name = _$v.name;
+      _isChanged = _$v.isChanged;
       _createdAt = _$v.createdAt;
       _updatedAt = _$v.updatedAt;
       _archivedAt = _$v.archivedAt;
       _isDeleted = _$v.isDeleted;
-      _isOwner = _$v.isOwner;
+      _createdUserId = _$v.createdUserId;
+      _assignedUserId = _$v.assignedUserId;
+      _subEntityType = _$v.subEntityType;
       _id = _$v.id;
       _$v = null;
     }
@@ -1381,11 +1604,14 @@ class ExpenseCategoryEntityBuilder
     final _$result = _$v ??
         new _$ExpenseCategoryEntity._(
             name: name,
+            isChanged: isChanged,
             createdAt: createdAt,
             updatedAt: updatedAt,
             archivedAt: archivedAt,
             isDeleted: isDeleted,
-            isOwner: isOwner,
+            createdUserId: createdUserId,
+            assignedUserId: assignedUserId,
+            subEntityType: subEntityType,
             id: id);
     replace(_$result);
     return _$result;
@@ -1394,7 +1620,7 @@ class ExpenseCategoryEntityBuilder
 
 class _$ExpenseStatusEntity extends ExpenseStatusEntity {
   @override
-  final int id;
+  final String id;
   @override
   final String name;
 
@@ -1444,9 +1670,9 @@ class ExpenseStatusEntityBuilder
     implements Builder<ExpenseStatusEntity, ExpenseStatusEntityBuilder> {
   _$ExpenseStatusEntity _$v;
 
-  int _id;
-  int get id => _$this._id;
-  set id(int id) => _$this._id = id;
+  String _id;
+  String get id => _$this._id;
+  set id(String id) => _$this._id = id;
 
   String _name;
   String get name => _$this._name;

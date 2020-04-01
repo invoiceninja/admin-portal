@@ -8,17 +8,15 @@ import 'package:invoiceninja_flutter/data/models/project_model.dart';
 import 'package:invoiceninja_flutter/redux/project/project_selectors.dart';
 import 'package:invoiceninja_flutter/ui/app/FieldGrid.dart';
 import 'package:invoiceninja_flutter/redux/task/task_selectors.dart';
-import 'package:invoiceninja_flutter/ui/app/actions_menu_button.dart';
-import 'package:invoiceninja_flutter/ui/app/buttons/edit_icon_button.dart';
 import 'package:invoiceninja_flutter/ui/app/entities/entity_state_title.dart';
 import 'package:invoiceninja_flutter/ui/app/icon_message.dart';
-import 'package:invoiceninja_flutter/ui/app/two_value_header.dart';
+import 'package:invoiceninja_flutter/ui/app/entity_header.dart';
+import 'package:invoiceninja_flutter/ui/app/view_scaffold.dart';
 import 'package:invoiceninja_flutter/ui/client/view/client_view_overview.dart';
 import 'package:invoiceninja_flutter/ui/project/view/project_view_vm.dart';
 import 'package:invoiceninja_flutter/utils/formatting.dart';
 import 'package:invoiceninja_flutter/utils/icons.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
-import 'package:invoiceninja_flutter/utils/platforms.dart';
 
 class ProjectView extends StatefulWidget {
   const ProjectView({
@@ -65,143 +63,100 @@ class _ProjectViewState extends State<ProjectView> {
 
     if (project.customValue1.isNotEmpty) {
       final label1 = company.getCustomFieldLabel(CustomFieldType.project1);
-      fields[label1] = project.customValue1;
+      fields[label1] = formatCustomValue(
+          context: context,
+          field: CustomFieldType.project1,
+          value: project.customValue1);
     }
     if (project.customValue2.isNotEmpty) {
       final label2 = company.getCustomFieldLabel(CustomFieldType.project2);
-      fields[label2] = project.customValue2;
+      fields[label2] = formatCustomValue(
+          context: context,
+          field: CustomFieldType.project2,
+          value: project.customValue2);
     }
 
-    return WillPopScope(
-      onWillPop: () async {
-        viewModel.onBackPressed();
-        return true;
-      },
-      child: Scaffold(
-        appBar: _CustomAppBar(
-          viewModel: viewModel,
-        ),
-        body: Builder(
-          builder: (BuildContext context) {
-            List<Widget> _buildView() {
-              final widgets = <Widget>[
-                TwoValueHeader(
-                  label1: localization.total,
-                  value1: formatDuration(taskDurationForProject(
-                      project, viewModel.state.taskState.map)),
-                  label2: localization.budgeted,
-                  value2: formatDuration(
-                      Duration(hours: project.budgetedHours.toInt()),
-                      showSeconds: false),
+    return ViewScaffold(
+      entity: project,
+      body: Builder(
+        builder: (BuildContext context) {
+          List<Widget> _buildView() {
+            final widgets = <Widget>[
+              EntityHeader(
+                label: localization.total,
+                value: formatDuration(taskDurationForProject(
+                    project, viewModel.state.taskState.map)),
+                secondLabel: localization.budgeted,
+                secondValue: formatDuration(
+                    Duration(hours: project.budgetedHours.toInt()),
+                    showSeconds: false),
+              ),
+              Material(
+                color: Theme.of(context).canvasColor,
+                child: ListTile(
+                  title: EntityStateTitle(entity: client),
+                  leading: Icon(FontAwesomeIcons.users, size: 18.0),
+                  trailing: Icon(Icons.navigate_next),
+                  onTap: () => viewModel.onClientPressed(context),
+                  onLongPress: () => viewModel.onClientPressed(context, true),
                 ),
-                Material(
-                  color: Theme.of(context).canvasColor,
-                  child: ListTile(
-                    title: EntityStateTitle(entity: client),
-                    leading: Icon(FontAwesomeIcons.users, size: 18.0),
-                    trailing: Icon(Icons.navigate_next),
-                    onTap: () => viewModel.onClientPressed(context),
-                    onLongPress: () => viewModel.onClientPressed(context, true),
-                  ),
-                ),
-                Container(
-                  color: Theme.of(context).backgroundColor,
-                  height: 12.0,
-                ),
-                EntityListTile(
-                  icon: getEntityIcon(EntityType.task),
-                  title: localization.tasks,
-                  onTap: () => viewModel.onTasksPressed(context),
-                  onLongPress: () =>
-                      viewModel.onTasksPressed(context, longPress: true),
-                  subtitle: memoizedTaskStatsForProject(
-                      project.id,
-                      viewModel.state.taskState.map,
-                      localization.active,
-                      localization.archived),
-                ),
-                Container(
-                  color: Theme.of(context).backgroundColor,
-                  height: 12.0,
-                ),
-              ];
+              ),
+              Container(
+                color: Theme.of(context).backgroundColor,
+                height: 12.0,
+              ),
+              EntityListTile(
+                icon: getEntityIcon(EntityType.task),
+                title: localization.tasks,
+                onTap: () => viewModel.onTasksPressed(context),
+                onLongPress: () =>
+                    viewModel.onTasksPressed(context, longPress: true),
+                subtitle: memoizedTaskStatsForProject(
+                        project.id, viewModel.state.taskState.map)
+                    .present(localization.active, localization.archived),
+              ),
+              Container(
+                color: Theme.of(context).backgroundColor,
+                height: 12.0,
+              ),
+            ];
 
-              if (project.privateNotes != null &&
-                  project.privateNotes.isNotEmpty) {
-                widgets.addAll([
-                  IconMessage(project.privateNotes),
-                  Container(
-                    color: Theme.of(context).backgroundColor,
-                    height: 12.0,
-                  ),
-                ]);
-              }
-
+            if (project.privateNotes != null &&
+                project.privateNotes.isNotEmpty) {
               widgets.addAll([
-                FieldGrid(fields),
+                IconMessage(project.privateNotes),
+                Container(
+                  color: Theme.of(context).backgroundColor,
+                  height: 12.0,
+                ),
               ]);
-
-              return widgets;
             }
 
-            return RefreshIndicator(
-              onRefresh: () => viewModel.onRefreshed(context),
-              child: ListView(
-                children: _buildView(),
-              ),
-            );
-          },
-        ),
-        floatingActionButton: FloatingActionButton(
-          backgroundColor: Theme.of(context).primaryColorDark,
-          onPressed: () => viewModel.onAddTaskPressed(context),
-          child: Icon(
-            Icons.add,
-            color: Colors.white,
-          ),
-          tooltip: localization.newTask,
-        ),
+            widgets.addAll([
+              FieldGrid(fields),
+            ]);
+
+            return widgets;
+          }
+
+          return RefreshIndicator(
+            onRefresh: () => viewModel.onRefreshed(context),
+            child: ListView(
+              children: _buildView(),
+            ),
+          );
+        },
       ),
-    );
-  }
-}
-
-class _CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
-  const _CustomAppBar({
-    @required this.viewModel,
-  });
-
-  final ProjectViewVM viewModel;
-
-  @override
-  final Size preferredSize = const Size(double.infinity, kToolbarHeight);
-
-  @override
-  Widget build(BuildContext context) {
-    final project = viewModel.project;
-    final user = viewModel.company.user;
-
-    return AppBar(
-      automaticallyImplyLeading: isMobile(context),
-      title: EntityStateTitle(entity: project),
-      actions: project.isNew
-          ? []
-          : [
-              user.canEditEntity(project)
-                  ? EditIconButton(
-                      isVisible: !project.isDeleted,
-                      onPressed: () => viewModel.onEditPressed(context),
-                    )
-                  : Container(),
-              ActionMenuButton(
-                user: user,
-                entityActions:
-                    project.getActions(client: viewModel.client, user: user),
-                isSaving: viewModel.isSaving,
-                entity: project,
-                onSelected: viewModel.onEntityAction,
-              )
-            ],
+      floatingActionButton: FloatingActionButton(
+        heroTag: 'project_view_fab',
+        backgroundColor: Theme.of(context).primaryColorDark,
+        onPressed: () => viewModel.onAddTaskPressed(context),
+        child: Icon(
+          Icons.add,
+          color: Colors.white,
+        ),
+        tooltip: localization.newTask,
+      ),
     );
   }
 }

@@ -1,9 +1,7 @@
 import 'package:built_collection/built_collection.dart';
 import 'package:built_value/built_value.dart';
 import 'package:built_value/serializer.dart';
-import 'package:invoiceninja_flutter/data/models/entities.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
-import 'package:invoiceninja_flutter/utils/formatting.dart';
 
 part 'credit_model.g.dart';
 
@@ -14,7 +12,7 @@ abstract class CreditListResponse
 
   CreditListResponse._();
 
-  BuiltList<CreditEntity> get data;
+  BuiltList<InvoiceEntity> get data;
 
   static Serializer<CreditListResponse> get serializer =>
       _$creditListResponseSerializer;
@@ -27,126 +25,33 @@ abstract class CreditItemResponse
 
   CreditItemResponse._();
 
-  CreditEntity get data;
+  InvoiceEntity get data;
 
   static Serializer<CreditItemResponse> get serializer =>
       _$creditItemResponseSerializer;
 }
 
 class CreditFields {
-  static const String amount = 'amount';
-  static const String balance = 'balance';
-  static const String creditDate = 'creditDate';
-  static const String creditNumber = 'creditNumber';
-  static const String privateNotes = 'privateNotes';
-  static const String publicNotes = 'publicNotes';
-  static const String clientId = 'clientId';
-
-  static const String updatedAt = 'updatedAt';
-  static const String archivedAt = 'archivedAt';
-  static const String isDeleted = 'isDeleted';
-}
-
-abstract class CreditEntity extends Object
-    with BaseEntity, SelectableEntity
-    implements Built<CreditEntity, CreditEntityBuilder> {
-  factory CreditEntity() {
-    return _$CreditEntity._(
-      id: --CreditEntity.counter,
-      amount: 0.0,
-      balance: 0.0,
-      creditDate: '',
-      creditNumber: '',
-      privateNotes: '',
-      publicNotes: '',
-      clientId: 0,
-      updatedAt: 0,
-      archivedAt: 0,
-      isDeleted: false,
-    );
-  }
-
-  CreditEntity._();
-
-  static int counter = 0;
-
-  CreditEntity get clone => rebuild((b) => b
-    ..id = --CreditEntity.counter
-    ..isDeleted = false);
-
-  @override
-  EntityType get entityType {
-    return EntityType.credit;
-  }
-
-  double get amount;
-
-  double get balance;
-
-  @BuiltValueField(wireName: 'credit_date')
-  String get creditDate;
-
-  @BuiltValueField(wireName: 'credit_number')
-  String get creditNumber;
-
-  @BuiltValueField(wireName: 'private_notes')
-  String get privateNotes;
-
-  @BuiltValueField(wireName: 'public_notes')
-  String get publicNotes;
-
-  @BuiltValueField(wireName: 'client_id')
-  int get clientId;
-
-  @override
-  List<EntityAction> getActions(
-      {UserEntity user, ClientEntity client, bool includeEdit = false}) {
-    final actions = <EntityAction>[];
-
-    return actions..addAll(super.getActions(user: user));
-  }
-
-  int compareTo(CreditEntity credit, String sortField, bool sortAscending) {
-    int response = 0;
-    final CreditEntity creditA = sortAscending ? this : credit;
-    final CreditEntity creditB = sortAscending ? credit : this;
-
-    switch (sortField) {
-      case CreditFields.amount:
-        response = creditA.amount.compareTo(creditB.amount);
-    }
-
-    return response;
-  }
-
-  @override
-  bool matchesFilter(String filter) {
-    if (filter == null || filter.isEmpty) {
-      return true;
-    }
-
-    return publicNotes.toLowerCase().contains(filter);
-  }
-
-  @override
-  String matchesFilterValue(String filter) {
-    if (filter == null || filter.isEmpty) {
-      return null;
-    }
-
-    return null;
-  }
-
-  @override
-  String get listDisplayName {
-    return publicNotes;
-  }
-
-  @override
-  double get listDisplayAmount => null;
-
-  @override
-  FormatNumberType get listDisplayAmountType => FormatNumberType.money;
-
-  static Serializer<CreditEntity> get serializer => _$creditEntitySerializer;
+  static const String amount = 'credit_total';
+  static const String balance = 'balance_due';
+  static const String clientId = 'client_id';
+  static const String client = 'client';
+  static const String statusId = 'status_id';
+  static const String creditNumber = 'credit_number';
+  static const String discount = 'discount';
+  static const String poNumber = 'po_number';
+  static const String date = 'credit_date';
+  static const String terms = 'terms';
+  static const String footer = 'footer';
+  static const String partial = 'partial';
+  static const String partialDueDate = 'partial_due_date';
+  static const String publicNotes = 'public_notes';
+  static const String privateNotes = 'private_notes';
+  static const String customValue1 = 'custom1';
+  static const String customValue2 = 'custom2';
+  static const String customValue3 = 'custom3';
+  static const String customValue4 = 'custom4';
+  static const String updatedAt = 'updated_at';
+  static const String archivedAt = 'archived_at';
+  static const String isDeleted = 'is_deleted';
 }

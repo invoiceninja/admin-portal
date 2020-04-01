@@ -1,6 +1,8 @@
 import 'dart:async';
 import 'package:built_collection/built_collection.dart';
-import 'package:invoiceninja_flutter/redux/client/client_actions.dart';
+import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
+import 'package:invoiceninja_flutter/redux/document/document_selectors.dart';
+import 'package:invoiceninja_flutter/redux/invoice/invoice_actions.dart';
 import 'package:invoiceninja_flutter/redux/quote/quote_actions.dart';
 import 'package:invoiceninja_flutter/redux/quote/quote_selectors.dart';
 import 'package:flutter/material.dart';
@@ -8,7 +10,10 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:invoiceninja_flutter/redux/ui/list_ui_state.dart';
-import 'package:invoiceninja_flutter/ui/invoice/invoice_list.dart';
+import 'package:invoiceninja_flutter/ui/app/entities/entity_actions_dialog.dart';
+import 'package:invoiceninja_flutter/ui/app/tables/entity_list.dart';
+import 'package:invoiceninja_flutter/ui/quote/quote_list_item.dart';
+import 'package:invoiceninja_flutter/ui/quote/quote_presenter.dart';
 import 'package:invoiceninja_flutter/ui/invoice/invoice_list_vm.dart';
 import 'package:invoiceninja_flutter/utils/completers.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
@@ -25,10 +30,64 @@ class QuoteListBuilder extends StatelessWidget {
   Widget build(BuildContext context) {
     return StoreConnector<AppState, QuoteListVM>(
       converter: QuoteListVM.fromStore,
-      builder: (context, vm) {
-        return InvoiceList(
-          viewModel: vm,
-        );
+      builder: (context, viewModel) {
+        final state = viewModel.state;
+        final documentMap = memoizedEntityDocumentMap(EntityType.invoice,
+            state.documentState.map, state.expenseState.map);
+
+        return EntityList(
+            isLoaded: viewModel.isLoaded,
+            entityType: EntityType.quote,
+            presenter: QuotePresenter(),
+            state: viewModel.state,
+            entityList: viewModel.invoiceList,
+            onEntityTap: viewModel.onInvoiceTap,
+            tableColumns: viewModel.tableColumns,
+            onRefreshed: viewModel.onRefreshed,
+            onClearEntityFilterPressed: viewModel.onClearEntityFilterPressed,
+            onViewEntityFilterPressed: viewModel.onViewEntityFilterPressed,
+            onSortColumn: viewModel.onSortColumn,
+            itemBuilder: (BuildContext context, index) {
+              final invoiceId = viewModel.invoiceList[index];
+              final invoice = viewModel.invoiceMap[invoiceId];
+              final client =
+                  viewModel.clientMap[invoice.clientId] ?? ClientEntity();
+              final listState = state.getListState(EntityType.quote);
+              final isInMultiselect = listState.isInMultiselect();
+
+              void showDialog() => showEntityActionsDialog(
+                    entities: [invoice],
+                    context: context,
+                    client: client,
+                  );
+
+              return QuoteListItem(
+                user: viewModel.user,
+                filter: viewModel.filter,
+                hasDocuments: documentMap[invoice.id] == true,
+                quote: invoice,
+                client: viewModel.clientMap[invoice.clientId] ?? ClientEntity(),
+                onTap: () => viewModel.onInvoiceTap(context, invoice),
+                onEntityAction: (EntityAction action) {
+                  if (action == EntityAction.more) {
+                    showDialog();
+                  } else {
+                    handleInvoiceAction(context, [invoice], action);
+                  }
+                },
+                onLongPress: () async {
+                  final longPressIsSelection =
+                      state.prefState.longPressSelectionIsDefault ?? true;
+                  if (longPressIsSelection && !isInMultiselect) {
+                    handleInvoiceAction(
+                        context, [invoice], EntityAction.toggleMultiselect);
+                  } else {
+                    showDialog();
+                  }
+                },
+                isChecked: isInMultiselect && listState.isSelected(invoice.id),
+              );
+            });
       },
     );
   }
@@ -39,17 +98,20 @@ class QuoteListVM extends EntityListVM {
     AppState state,
     UserEntity user,
     ListUIState listState,
-    List<int> invoiceList,
-    BuiltMap<int, InvoiceEntity> invoiceMap,
-    BuiltMap<int, ClientEntity> clientMap,
+    List<String> invoiceList,
+    BuiltMap<String, InvoiceEntity> invoiceMap,
+    BuiltMap<String, ClientEntity> clientMap,
     String filter,
     bool isLoading,
     bool isLoaded,
-    Function(BuildContext, InvoiceEntity) onInvoiceTap,
+    Function(BuildContext, BaseEntity) onInvoiceTap,
     Function(BuildContext) onRefreshed,
     Function onClearEntityFilterPressed,
     Function(BuildContext) onViewEntityFilterPressed,
-    Function(BuildContext, InvoiceEntity, EntityAction) onEntityAction,
+    Function(BuildContext, List<InvoiceEntity>, EntityAction) onEntityAction,
+    List<String> tableColumns,
+    EntityType entityType,
+    Function(String) onSortColumn,
   }) : super(
           state: state,
           user: user,
@@ -64,7 +126,9 @@ class QuoteListVM extends EntityListVM {
           onRefreshed: onRefreshed,
           onClearEntityFilterPressed: onClearEntityFilterPressed,
           onViewEntityFilterPressed: onViewEntityFilterPressed,
-          onEntityAction: onEntityAction,
+          tableColumns: tableColumns,
+          entityType: entityType,
+          onSortColumn: onSortColumn,
         );
 
   static QuoteListVM fromStore(Store<AppState> store) {
@@ -72,7 +136,7 @@ class QuoteListVM extends EntityListVM {
       if (store.state.isLoading) {
         return Future<Null>(null);
       }
-      final completer = snackBarCompleter(
+      final completer = snackBarCompleter<Null>(
           context, AppLocalization.of(context).refreshComplete);
       store.dispatch(LoadQuotes(completer: completer, force: true));
       return completer.future;
@@ -92,16 +156,20 @@ class QuoteListVM extends EntityListVM {
       isLoaded: state.quoteState.isLoaded && state.clientState.isLoaded,
       filter: state.quoteListState.filter,
       onInvoiceTap: (context, quote) {
-        store.dispatch(ViewQuote(quoteId: quote.id, context: context));
+        viewEntity(context: context, entity: quote);
       },
       onRefreshed: (context) => _handleRefresh(context),
       onClearEntityFilterPressed: () => store.dispatch(FilterQuotesByEntity()),
-      onViewEntityFilterPressed: (BuildContext context) => store.dispatch(
-          ViewClient(
-              clientId: state.quoteListState.filterEntityId, context: context)),
-      onEntityAction:
-          (BuildContext context, BaseEntity quote, EntityAction action) =>
-              handleQuoteAction(context, quote, action),
+      onViewEntityFilterPressed: (BuildContext context) => viewEntityById(
+          context: context,
+          entityId: state.quoteListState.filterEntityId,
+          entityType: state.quoteListState.filterEntityType),
+      onEntityAction: (BuildContext context, List<BaseEntity> quotes,
+              EntityAction action) =>
+          handleQuoteAction(context, quotes, action),
+      tableColumns: QuotePresenter.getTableFields(state.userCompany),
+      onSortColumn: (field) => store.dispatch(SortQuotes(field)),
+      entityType: EntityType.quote,
     );
   }
 }

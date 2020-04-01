@@ -1,23 +1,20 @@
 import 'dart:async';
+
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:invoiceninja_flutter/redux/client/client_actions.dart';
-import 'package:invoiceninja_flutter/redux/invoice/invoice_actions.dart';
-import 'package:invoiceninja_flutter/redux/project/project_actions.dart';
-import 'package:invoiceninja_flutter/redux/ui/ui_actions.dart';
+import 'package:flutter_redux/flutter_redux.dart';
+import 'package:invoiceninja_flutter/data/models/models.dart';
+import 'package:invoiceninja_flutter/data/models/task_model.dart';
+import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
+import 'package:invoiceninja_flutter/redux/app/app_state.dart';
+import 'package:invoiceninja_flutter/redux/task/task_actions.dart';
 import 'package:invoiceninja_flutter/ui/app/dialogs/error_dialog.dart';
 import 'package:invoiceninja_flutter/ui/app/entities/entity_actions_dialog.dart';
 import 'package:invoiceninja_flutter/ui/app/snackbar_row.dart';
+import 'package:invoiceninja_flutter/ui/task/view/task_view.dart';
 import 'package:invoiceninja_flutter/utils/completers.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
-import 'package:invoiceninja_flutter/ui/task/task_screen.dart';
 import 'package:redux/redux.dart';
-import 'package:flutter_redux/flutter_redux.dart';
-import 'package:invoiceninja_flutter/redux/task/task_actions.dart';
-import 'package:invoiceninja_flutter/data/models/task_model.dart';
-import 'package:invoiceninja_flutter/data/models/models.dart';
-import 'package:invoiceninja_flutter/ui/task/view/task_view.dart';
-import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 
 class TaskViewScreen extends StatelessWidget {
   const TaskViewScreen({Key key}) : super(key: key);
@@ -48,7 +45,6 @@ class TaskViewVM {
     @required this.state,
     @required this.onEntityAction,
     @required this.onEditPressed,
-    @required this.onBackPressed,
     @required this.onRefreshed,
     @required this.onClientPressed,
     @required this.onProjectPressed,
@@ -60,7 +56,6 @@ class TaskViewVM {
 
   factory TaskViewVM.fromStore(Store<AppState> store) {
     final state = store.state;
-    final user = state.user;
     final task = state.taskState.map[state.taskUIState.selectedId] ??
         TaskEntity(id: state.taskUIState.selectedId);
     final client = state.clientState.map[task.clientId];
@@ -68,7 +63,7 @@ class TaskViewVM {
     final invoice = state.invoiceState.map[task.invoiceId];
 
     Future<Null> _handleRefresh(BuildContext context) {
-      final completer = snackBarCompleter(
+      final completer = snackBarCompleter<Null>(
           context, AppLocalization.of(context).refreshComplete);
       store.dispatch(LoadTask(completer: completer, taskId: task.id));
       return completer.future;
@@ -99,7 +94,7 @@ class TaskViewVM {
 
     return TaskViewVM(
       state: state,
-      company: state.selectedCompany,
+      company: state.company,
       isSaving: state.isSaving,
       isLoading: state.isLoading,
       isDirty: task.isNew,
@@ -110,45 +105,39 @@ class TaskViewVM {
       onClientPressed: (BuildContext context, [bool longPress = false]) {
         if (longPress) {
           showEntityActionsDialog(
-              user: user,
-              context: context,
-              entity: client,
-              onEntityAction: (BuildContext context, BaseEntity client,
-                      EntityAction action) =>
-                  handleClientAction(context, client, action));
+            context: context,
+            entities: [client],
+          );
         } else {
-          store.dispatch(ViewClient(clientId: client.id, context: context));
+          viewEntity(context: context, entity: client);
         }
       },
       onProjectPressed: (context, [longPress = false]) {
         if (longPress) {
           showEntityActionsDialog(
-              user: user,
-              context: context,
-              entity: project,
-              client: client,
-              onEntityAction: (BuildContext context, BaseEntity project,
-                      EntityAction action) =>
-                  handleProjectAction(context, project, action));
+            context: context,
+            entities: [project],
+            client: client,
+          );
         } else {
-          store.dispatch(ViewProject(projectId: project.id, context: context));
+          viewEntity(context: context, entity: project);
         }
       },
       onInvoicePressed: (context, [longPress = false]) {
         if (longPress) {
           showEntityActionsDialog(
-              user: user,
-              context: context,
-              entity: invoice,
-              client: client,
-              onEntityAction: (BuildContext context, BaseEntity invoice,
-                      EntityAction action) =>
-                  handleInvoiceAction(context, invoice, action));
+            context: context,
+            entities: [invoice],
+            client: client,
+          );
         } else {
-          store.dispatch(ViewInvoice(invoiceId: invoice.id, context: context));
+          viewEntity(context: context, entity: invoice);
         }
       },
       onEditPressed: (BuildContext context, [TaskTime taskTime]) {
+        // TODO change from time to index
+        editEntity(context: context, entity: task);
+        /*
         final Completer<TaskEntity> completer = new Completer<TaskEntity>();
         store.dispatch(EditTask(
           task: task,
@@ -162,15 +151,11 @@ class TaskViewVM {
             message: AppLocalization.of(context).updatedTask,
           )));
         });
+         */
       },
       onRefreshed: (context) => _handleRefresh(context),
-      onBackPressed: () {
-        if (state.uiState.currentRoute.contains(TaskScreen.route)) {
-          store.dispatch(UpdateCurrentRoute(TaskScreen.route));
-        }
-      },
       onEntityAction: (BuildContext context, EntityAction action) =>
-          handleTaskAction(context, task, action),
+          handleTaskAction(context, [task], action),
     );
   }
 
@@ -181,7 +166,6 @@ class TaskViewVM {
   final CompanyEntity company;
   final Function(BuildContext, EntityAction) onEntityAction;
   final Function(BuildContext, [TaskTime]) onEditPressed;
-  final Function onBackPressed;
   final Function(BuildContext) onFabPressed;
   final Function(BuildContext) onRefreshed;
   final Function(BuildContext, [bool]) onClientPressed;

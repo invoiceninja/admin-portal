@@ -28,18 +28,18 @@ InvoiceItemEntity convertTaskToInvoiceItem(
     ..taskId = task.id
     ..notes = notes
     ..cost = taskRateSelector(
-        company: state.selectedCompany, project: project, client: client)
-    ..qty = round(task.duration / 3600, 3));
+        company: state.company, project: project, client: client)
+    ..quantity = round(task.duration / 3600, 3));
 }
 
 var memoizedTaskList = memo2(
-    (BuiltMap<int, TaskEntity> taskMap, int clientId) =>
+    (BuiltMap<String, TaskEntity> taskMap, String clientId) =>
         taskList(taskMap, clientId));
 
-List<int> taskList(BuiltMap<int, TaskEntity> taskMap, int clientId) {
+List<String> taskList(BuiltMap<String, TaskEntity> taskMap, String clientId) {
   final list = taskMap.keys.where((taskId) {
     final task = taskMap[taskId];
-    if (clientId != null && clientId != 0 && task.clientId != clientId) {
+    if (clientId != null && clientId != null && task.clientId != clientId) {
       return false;
     }
     return task.isActive && task.isStopped && !task.isInvoiced;
@@ -52,11 +52,11 @@ List<int> taskList(BuiltMap<int, TaskEntity> taskMap, int clientId) {
 }
 
 var memoizedDropdownTaskList = memo2(
-    (BuiltMap<int, TaskEntity> taskMap, BuiltList<int> taskList) =>
+    (BuiltMap<String, TaskEntity> taskMap, BuiltList<String> taskList) =>
         dropdownTasksSelector(taskMap, taskList));
 
-List<int> dropdownTasksSelector(
-    BuiltMap<int, TaskEntity> taskMap, BuiltList<int> taskList) {
+List<String> dropdownTasksSelector(
+    BuiltMap<String, TaskEntity> taskMap, BuiltList<String> taskList) {
   final list = taskList.where((taskId) => taskMap[taskId].isActive).toList();
 
   list.sort((taskAId, taskBId) {
@@ -68,19 +68,19 @@ List<int> dropdownTasksSelector(
   return list;
 }
 
-var memoizedFilteredTaskList = memo5((BuiltMap<int, TaskEntity> taskMap,
-        BuiltMap<int, ClientEntity> clientMap,
-        BuiltMap<int, ProjectEntity> projectMap,
-        BuiltList<int> taskList,
+var memoizedFilteredTaskList = memo5((BuiltMap<String, TaskEntity> taskMap,
+        BuiltMap<String, ClientEntity> clientMap,
+        BuiltMap<String, ProjectEntity> projectMap,
+        BuiltList<String> taskList,
         ListUIState taskListState) =>
     filteredTasksSelector(
         taskMap, clientMap, projectMap, taskList, taskListState));
 
-List<int> filteredTasksSelector(
-    BuiltMap<int, TaskEntity> taskMap,
-    BuiltMap<int, ClientEntity> clientMap,
-    BuiltMap<int, ProjectEntity> projectMap,
-    BuiltList<int> taskList,
+List<String> filteredTasksSelector(
+    BuiltMap<String, TaskEntity> taskMap,
+    BuiltMap<String, ClientEntity> clientMap,
+    BuiltMap<String, ProjectEntity> projectMap,
+    BuiltList<String> taskList,
     ListUIState taskListState) {
   final list = taskList.where((taskId) {
     final task = taskMap[taskId];
@@ -146,23 +146,21 @@ double taskRateSelector(
     {CompanyEntity company, ProjectEntity project, ClientEntity client}) {
   if (project != null && project.taskRate > 0) {
     return project.taskRate;
-  } else if (client != null && client.taskRate > 0) {
-    return client.taskRate;
-  } else if (company != null && company.defaultTaskRate > 0) {
-    return company.defaultTaskRate;
+  } else if (client != null && client.settings.defaultTaskRate > 0) {
+    return client.settings.defaultTaskRate;
+  } else if (company != null && company.settings.defaultTaskRate > 0) {
+    return company.settings.defaultTaskRate;
   }
 
   return 0;
 }
 
-var memoizedTaskStatsForClient = memo4((int clientId,
-        BuiltMap<int, TaskEntity> taskMap,
-        String activeLabel,
-        String archivedLabel) =>
-    taskStatsForClient(clientId, taskMap, activeLabel, archivedLabel));
+var memoizedTaskStatsForClient = memo2(
+    (String clientId, BuiltMap<String, TaskEntity> taskMap) =>
+        taskStatsForClient(clientId, taskMap));
 
-String taskStatsForClient(int clientId, BuiltMap<int, TaskEntity> taskMap,
-    String activeLabel, String archivedLabel) {
+EntityStats taskStatsForClient(
+    String clientId, BuiltMap<String, TaskEntity> taskMap) {
   int countActive = 0;
   int countArchived = 0;
   taskMap.forEach((taskId, task) {
@@ -175,28 +173,17 @@ String taskStatsForClient(int clientId, BuiltMap<int, TaskEntity> taskMap,
     }
   });
 
-  String str = '';
-  if (countActive > 0) {
-    str = '$countActive $activeLabel';
-    if (countArchived > 0) {
-      str += ' • ';
-    }
-  }
-  if (countArchived > 0) {
-    str += '$countArchived $archivedLabel';
-  }
-
-  return str;
+  return EntityStats(countActive: countActive, countArchived: countArchived);
 }
 
-var memoizedTaskStatsForProject = memo4((int projectId,
-        BuiltMap<int, TaskEntity> taskMap,
-        String activeLabel,
-        String archivedLabel) =>
-    taskStatsForProject(projectId, taskMap, activeLabel, archivedLabel));
+var memoizedTaskStatsForProject = memo2((
+  String projectId,
+  BuiltMap<String, TaskEntity> taskMap,
+) =>
+    taskStatsForProject(projectId, taskMap));
 
-String taskStatsForProject(int projectId, BuiltMap<int, TaskEntity> taskMap,
-    String activeLabel, String archivedLabel) {
+EntityStats taskStatsForProject(
+    String projectId, BuiltMap<String, TaskEntity> taskMap) {
   int countActive = 0;
   int countArchived = 0;
   taskMap.forEach((taskId, task) {
@@ -209,19 +196,8 @@ String taskStatsForProject(int projectId, BuiltMap<int, TaskEntity> taskMap,
     }
   });
 
-  String str = '';
-  if (countActive > 0) {
-    str = '$countActive $activeLabel';
-    if (countArchived > 0) {
-      str += ' • ';
-    }
-  }
-  if (countArchived > 0) {
-    str += '$countArchived $archivedLabel';
-  }
-
-  return str;
+  return EntityStats(countActive: countActive, countArchived: countArchived);
 }
 
-bool hasTaskChanges(TaskEntity task, BuiltMap<int, TaskEntity> taskMap) =>
-    task.isNew || task != taskMap[task.id];
+bool hasTaskChanges(TaskEntity task, BuiltMap<String, TaskEntity> taskMap) =>
+    task.isNew ? task.isChanged : task != taskMap[task.id];

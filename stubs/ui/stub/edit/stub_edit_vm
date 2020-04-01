@@ -2,8 +2,10 @@ import 'dart:async';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
+import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:invoiceninja_flutter/redux/ui/ui_actions.dart';
 import 'package:invoiceninja_flutter/ui/stub/stub_screen.dart';
+import 'package:invoiceninja_flutter/utils/platforms.dart';
 import 'package:redux/redux.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/ui/app/dialogs/error_dialog.dart';
@@ -26,6 +28,7 @@ class StubEditScreen extends StatelessWidget {
       builder: (context, viewModel) {
         return StubEdit(
           viewModel: viewModel,
+          key: ValueKey(viewModel.stub.id),
         );
       },
     );
@@ -42,13 +45,12 @@ class StubEditVM {
     @required this.origStub,
     @required this.onSavePressed,
     @required this.onCancelPressed,
-    @required this.onBackPressed,
     @required this.isLoading,
   });
 
   factory StubEditVM.fromStore(Store<AppState> store) {
-    final stub = store.state.stubUIState.editing;
     final state = store.state;
+    final stub = state.stubUIState.editing;
 
     return StubEditVM(
       state: state,
@@ -56,40 +58,33 @@ class StubEditVM {
       isSaving: state.isSaving,
       origStub: state.stubState.map[stub.id],
       stub: stub,
-      company: state.selectedCompany,
+      company: state.company,
       onChanged: (StubEntity stub) {
         store.dispatch(UpdateStub(stub));
       },
-      onBackPressed: () {
-        if (state.uiState.currentRoute.contains(StubScreen.route)) {
-          store.dispatch(UpdateCurrentRoute(stub.isNew ? StubScreen.route : StubViewScreen.route));
-        }
-      },
     onCancelPressed: (BuildContext context) {
-      store.dispatch(EditStub(
-          stub: StubEntity(), context: context, force: true));
-      store.dispatch(UpdateCurrentRoute(state.uiState.previousRoute));
+      createEntity(context: context, entity: StubEntity(), force: true);
     },
       onSavePressed: (BuildContext context) {
         final Completer<StubEntity> completer = new Completer<StubEntity>();
         store.dispatch(SaveStubRequest(completer: completer, stub: stub));
-        return completer.future.then((_) {
-            return completer.future.then((savedStub) {
-              store.dispatch(UpdateCurrentRoute(StubViewScreen.route));
-              if (isMobile(context)) {
-                  if (stub.isNew) {
-                    Navigator.of(context).pushReplacementNamed(StubViewScreen.route);
-                  } else {
-                    Navigator.of(context).pop(savedStub);
-                  }
+        return completer.future.then((savedStub) {
+          if (isMobile(context)) {
+                store.dispatch(UpdateCurrentRoute(StubViewScreen.route));
+              if (stub.isNew) {
+                Navigator.of(context).pushReplacementNamed(StubViewScreen.route);
+              } else {
+                Navigator.of(context).pop(savedStub);
               }
-            }).catchError((Object error) {
-              showDialog<ErrorDialog>(
-                  context: context,
-                  builder: (BuildContext context) {
-                    return ErrorDialog(error);
-                  });
-            });
+          } else {
+              viewEntity(context: context, entity: savedStub, force: true);
+          }
+        }).catchError((Object error) {
+          showDialog<ErrorDialog>(
+              context: context,
+              builder: (BuildContext context) {
+                return ErrorDialog(error);
+              });
         });
       },
     );
@@ -100,7 +95,6 @@ class StubEditVM {
   final Function(StubEntity) onChanged;
   final Function(BuildContext) onSavePressed;
   final Function(BuildContext) onCancelPressed;
-  final Function onBackPressed;
   final bool isLoading;
   final bool isSaving;
   final StubEntity origStub;

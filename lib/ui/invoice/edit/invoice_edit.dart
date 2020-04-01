@@ -1,27 +1,23 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:invoiceninja_flutter/ui/invoice/edit/invoice_edit_contacts_vm.dart';
 import 'package:invoiceninja_flutter/ui/invoice/edit/invoice_edit_details_vm.dart';
 import 'package:invoiceninja_flutter/ui/invoice/edit/invoice_edit_items_vm.dart';
 import 'package:invoiceninja_flutter/ui/invoice/edit/invoice_edit_notes_vm.dart';
 import 'package:invoiceninja_flutter/ui/invoice/edit/invoice_edit_vm.dart';
 import 'package:invoiceninja_flutter/ui/invoice/edit/invoice_item_selector.dart';
-import 'package:invoiceninja_flutter/ui/quote/edit/quote_edit_details_vm.dart';
-import 'package:invoiceninja_flutter/ui/quote/edit/quote_edit_items_vm.dart';
-import 'package:invoiceninja_flutter/ui/quote/edit/quote_edit_notes_vm.dart';
+import 'package:invoiceninja_flutter/ui/app/edit_scaffold.dart';
 import 'package:invoiceninja_flutter/utils/formatting.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
-import 'package:invoiceninja_flutter/ui/app/buttons/action_icon_button.dart';
 import 'package:invoiceninja_flutter/utils/platforms.dart';
 
 class InvoiceEdit extends StatefulWidget {
   const InvoiceEdit({
     Key key,
-    @required this.formKey,
     @required this.viewModel,
   }) : super(key: key);
 
   final EntityEditVM viewModel;
-  final GlobalKey<FormState> formKey;
 
   @override
   _InvoiceEditState createState() => _InvoiceEditState();
@@ -31,21 +27,32 @@ class _InvoiceEditState extends State<InvoiceEdit>
     with SingleTickerProviderStateMixin {
   TabController _controller;
 
+  static final GlobalKey<FormState> _formKey =
+      GlobalKey<FormState>(debugLabel: '_invoiceEdit');
+
   static const kDetailsScreen = 0;
-  static const kItemScreen = 1;
-  static const kNotesScreen = 2;
+  //static const kContactScreen = 1;
+  static const kItemScreen = 2;
+  //static const kNotesScreen = 3;
 
   @override
   void initState() {
     super.initState();
 
-    final invoice = widget.viewModel.invoice;
-    final invoiceItem = widget.viewModel.invoiceItem;
+    final viewModel = widget.viewModel;
 
-    final index = invoice.invoiceItems.contains(invoiceItem)
-        ? kItemScreen
-        : kDetailsScreen;
-    _controller = TabController(vsync: this, length: 3, initialIndex: index);
+    final index =
+        viewModel.invoiceItemIndex != null ? kItemScreen : kDetailsScreen;
+    _controller = TabController(vsync: this, length: 4, initialIndex: index);
+  }
+
+  @override
+  void didUpdateWidget(oldWidget) {
+    super.didUpdateWidget(oldWidget);
+
+    if (widget.viewModel.invoiceItemIndex != null) {
+      _controller.animateTo(kItemScreen);
+    }
   }
 
   @override
@@ -59,120 +66,96 @@ class _InvoiceEditState extends State<InvoiceEdit>
     final localization = AppLocalization.of(context);
     final viewModel = widget.viewModel;
     final invoice = viewModel.invoice;
+    final state = viewModel.state;
 
-    return WillPopScope(
-      onWillPop: () async {
-        viewModel.onBackPressed();
-        return true;
+    return EditScaffold(
+      isFullscreen: state.prefState.isDesktop,
+      entity: invoice,
+      title: invoice.isNew ? localization.newInvoice : localization.editInvoice,
+      onCancelPressed: (context) => viewModel.onCancelPressed(context),
+      onSavePressed: (context) {
+        if (!_formKey.currentState.validate()) {
+          return;
+        }
+
+        widget.viewModel.onSavePressed(context);
       },
-      child: Scaffold(
-        appBar: AppBar(
-          automaticallyImplyLeading: isMobile(context),
-          title: Text(invoice.isNew
-              ? invoice.isQuote
-                  ? localization.newQuote
-                  : localization.newInvoice
-              : invoice.isQuote
-                  ? localization.editQuote
-                  : localization.editInvoice),
-          actions: <Widget>[
-            if (!isMobile(context))
-              FlatButton(
-                child: Text(
-                  localization.cancel,
-                  style: TextStyle(color: Colors.white),
+      appBarBottom: state.prefState.isDesktop
+          ? null
+          : TabBar(
+              controller: _controller,
+              //isScrollable: true,
+              tabs: [
+                Tab(
+                  text: localization.details,
                 ),
-                onPressed: () => viewModel.onCancelPressed(context),
+                Tab(
+                  text: localization.contacts,
+                ),
+                Tab(
+                  text: localization.items,
+                ),
+                Tab(
+                  text: localization.notes,
+                ),
+              ],
+            ),
+      body: Form(
+        key: _formKey,
+        child: state.prefState.isDesktop
+            ? InvoiceEditDetailsScreen()
+            : TabBarView(
+                key: ValueKey('__invoice_${viewModel.invoice.id}__'),
+                controller: _controller,
+                children: <Widget>[
+                  InvoiceEditDetailsScreen(),
+                  InvoiceEditContactsScreen(),
+                  InvoiceEditItemsScreen(),
+                  InvoiceEditNotesScreen(),
+                ],
               ),
-            ActionIconButton(
-              icon: Icons.cloud_upload,
-              tooltip: localization.save,
-              isVisible: !invoice.isDeleted,
-              isSaving: widget.viewModel.isSaving,
-              isDirty: invoice.isNew || invoice != viewModel.origInvoice,
-              onPressed: () {
-                if (!widget.formKey.currentState.validate()) {
-                  return;
-                }
-
-                widget.viewModel.onSavePressed(context);
-              },
-            )
-          ],
-          bottom: TabBar(
-            controller: _controller,
-            //isScrollable: true,
-            tabs: [
-              Tab(
-                text: localization.details,
-              ),
-              Tab(
-                text: localization.items,
-              ),
-              Tab(
-                text: localization.notes,
-              ),
-            ],
-          ),
-        ),
-        body: Form(
-          key: widget.formKey,
-          child: TabBarView(
-            key: ValueKey(viewModel.invoice.id),
-            controller: _controller,
-            children: invoice.isQuote
-                ? <Widget>[
-                    QuoteEditDetailsScreen(),
-                    QuoteEditItemsScreen(),
-                    QuoteEditNotesScreen(),
-                  ]
-                : <Widget>[
-                    InvoiceEditDetailsScreen(),
-                    InvoiceEditItemsScreen(),
-                    InvoiceEditNotesScreen(),
-                  ],
-          ),
-        ),
-        bottomNavigationBar: BottomAppBar(
-          color: Theme.of(context).primaryColor,
-          shape: CircularNotchedRectangle(),
-          child: Padding(
-            padding: const EdgeInsets.all(14.0),
-            child: Text(
-              '${localization.total}: ${formatNumber(invoice.calculateTotal(viewModel.company.enableInclusiveTaxes), context, clientId: viewModel.invoice.clientId)}',
-              style: TextStyle(
-                //color: Theme.of(context).selectedRowColor,
-                color: Colors.white,
-                fontSize: 20.0,
-              ),
+      ),
+      bottomNavigationBar: BottomAppBar(
+        color: Theme.of(context).primaryColor,
+        shape: CircularNotchedRectangle(),
+        child: Padding(
+          padding: const EdgeInsets.all(14.0),
+          child: Text(
+            '${localization.total}: ${formatNumber(invoice.calculateTotal(viewModel.company.settings.enableInclusiveTaxes ?? false), context, clientId: viewModel.invoice.clientId)}',
+            style: TextStyle(
+              //color: Theme.of(context).selectedRowColor,
+              color: Colors.white,
+              fontSize: 20.0,
             ),
           ),
         ),
-        floatingActionButtonLocation: FloatingActionButtonLocation.endDocked,
-        floatingActionButton: FloatingActionButton(
-          backgroundColor: Theme.of(context).primaryColorDark,
-          onPressed: () {
-            showDialog<InvoiceItemSelector>(
-                context: context,
-                builder: (BuildContext context) {
-                  return InvoiceItemSelector(
-                    excluded: invoice.invoiceItems
-                        .where((item) => item.isTask || item.isExpense)
-                        .map((item) => item.isTask
-                            ? viewModel.state.taskState.map[item.taskId]
-                            : viewModel.state.expenseState.map[item.expenseId])
-                        .toList(),
-                    clientId: invoice.clientId,
-                    onItemsSelected: (items, [clientId]) {
-                      viewModel.onItemsAdded(items, clientId);
+      ),
+      floatingActionButton: FloatingActionButton(
+        heroTag: 'invoice_edit_fab',
+        backgroundColor: Theme.of(context).primaryColorDark,
+        onPressed: () {
+          showDialog<InvoiceItemSelector>(
+              context: context,
+              builder: (BuildContext context) {
+                return InvoiceItemSelector(
+                  excluded: invoice.lineItems
+                      .where((item) => item.isTask || item.isExpense)
+                      .map((item) => item.isTask
+                          ? viewModel.state.taskState.map[item.taskId]
+                          : viewModel.state.expenseState.map[item.expenseId])
+                      .toList(),
+                  clientId: invoice.clientId,
+                  onItemsSelected: (items, [clientId]) {
+                    viewModel.onItemsAdded(items, clientId);
+                    if (isNotDesktop(context)) {
                       _controller.animateTo(kItemScreen);
-                    },
-                  );
-                });
-          },
-          child: const Icon(Icons.add, color: Colors.white),
-          tooltip: localization.addItem,
-        ),
+                    }
+                  },
+                );
+              });
+        },
+        child: const Icon(Icons.add, color: Colors.white),
+        tooltip: localization.addItem,
       ),
     );
   }

@@ -1,19 +1,16 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:invoiceninja_flutter/redux/client/client_actions.dart';
-import 'package:invoiceninja_flutter/redux/task/task_actions.dart';
-import 'package:invoiceninja_flutter/redux/ui/ui_actions.dart';
+import 'package:flutter_redux/flutter_redux.dart';
+import 'package:invoiceninja_flutter/data/models/models.dart';
+import 'package:invoiceninja_flutter/data/models/project_model.dart';
+import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
+import 'package:invoiceninja_flutter/redux/app/app_state.dart';
+import 'package:invoiceninja_flutter/redux/project/project_actions.dart';
 import 'package:invoiceninja_flutter/ui/app/entities/entity_actions_dialog.dart';
-import 'package:invoiceninja_flutter/ui/project/project_screen.dart';
+import 'package:invoiceninja_flutter/ui/project/view/project_view.dart';
 import 'package:invoiceninja_flutter/utils/completers.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:redux/redux.dart';
-import 'package:flutter_redux/flutter_redux.dart';
-import 'package:invoiceninja_flutter/redux/project/project_actions.dart';
-import 'package:invoiceninja_flutter/data/models/project_model.dart';
-import 'package:invoiceninja_flutter/data/models/models.dart';
-import 'package:invoiceninja_flutter/ui/project/view/project_view.dart';
-import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 
 class ProjectViewScreen extends StatelessWidget {
   const ProjectViewScreen({Key key}) : super(key: key);
@@ -42,8 +39,6 @@ class ProjectViewVM {
     @required this.company,
     @required this.onEntityAction,
     @required this.onTasksPressed,
-    @required this.onEditPressed,
-    @required this.onBackPressed,
     @required this.onAddTaskPressed,
     @required this.onClientPressed,
     @required this.onRefreshed,
@@ -60,7 +55,7 @@ class ProjectViewVM {
         ClientEntity(id: project.clientId);
 
     Future<Null> _handleRefresh(BuildContext context) {
-      final completer = snackBarCompleter(
+      final completer = snackBarCompleter<Null>(
           context, AppLocalization.of(context).refreshComplete);
       store.dispatch(LoadProject(completer: completer, projectId: project.id));
       return completer.future;
@@ -68,58 +63,47 @@ class ProjectViewVM {
 
     return ProjectViewVM(
       state: state,
-      company: state.selectedCompany,
+      company: state.company,
       isSaving: state.isSaving,
       isLoading: state.isLoading,
       isDirty: project.isNew,
       project: project,
       client: client,
-      onEditPressed: (BuildContext context) {
-        store.dispatch(EditProject(project: project, context: context));
-      },
       onRefreshed: (context) => _handleRefresh(context),
       onClientPressed: (BuildContext context, [bool longPress = false]) {
         if (longPress) {
           showEntityActionsDialog(
-              user: state.selectedCompany.user,
-              context: context,
-              entity: client,
-              onEntityAction: (BuildContext context, BaseEntity client,
-                      EntityAction action) =>
-                  handleClientAction(context, client, action));
+            context: context,
+            entities: [client],
+          );
         } else {
-          store.dispatch(ViewClient(clientId: client.id, context: context));
+          viewEntity(context: context, entity: client);
         }
       },
       onTasksPressed: (BuildContext context, {bool longPress = false}) {
         if (longPress && project.isActive && client.isActive) {
-          store.dispatch(EditTask(
-              task: TaskEntity(isRunning: state.uiState.autoStartTasks)
-                  .rebuild((b) => b
-                    ..projectId = project.id
-                    ..clientId = project.clientId),
-              context: context));
+          createEntity(
+              context: context,
+              entity: TaskEntity(state: state).rebuild((b) => b
+                ..projectId = project.id
+                ..clientId = project.clientId));
         } else {
-          store.dispatch(FilterTasksByEntity(
-              entityId: project.id, entityType: EntityType.project));
-          store.dispatch(ViewTaskList(context: context));
+          viewEntitiesByType(
+              context: context,
+              entityType: EntityType.task,
+              filterEntity: project);
         }
       },
-      onAddTaskPressed: (context) => store.dispatch(EditTask(
-        context: context,
-        task:
-            TaskEntity(isRunning: state.uiState.autoStartTasks).rebuild((b) => b
+      onAddTaskPressed: (context) {
+        createEntity(
+            context: context,
+            entity: TaskEntity(state: state).rebuild((b) => b
               ..projectId = project.id
               ..clientId = project.clientId),
-        force: true,
-      )),
-      onBackPressed: () {
-        if (state.uiState.currentRoute.contains(ProjectScreen.route)) {
-          store.dispatch(UpdateCurrentRoute(ProjectScreen.route));
-        }
+            force: true);
       },
       onEntityAction: (BuildContext context, EntityAction action) =>
-          handleProjectAction(context, project, action),
+          handleProjectAction(context, [project], action),
     );
   }
 
@@ -128,9 +112,7 @@ class ProjectViewVM {
   final ClientEntity client;
   final CompanyEntity company;
   final Function(BuildContext, EntityAction) onEntityAction;
-  final Function(BuildContext) onEditPressed;
   final Function(BuildContext, [bool]) onClientPressed;
-  final Function onBackPressed;
   final Function(BuildContext) onAddTaskPressed;
   final Function(BuildContext, {bool longPress}) onTasksPressed;
   final Function(BuildContext) onRefreshed;

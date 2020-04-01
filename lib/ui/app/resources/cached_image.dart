@@ -1,4 +1,5 @@
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
@@ -15,13 +16,24 @@ class CachedImage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final store = StoreProvider.of<AppState>(context);
-    final uiState = store.state.uiState;
+    final state = store.state;
 
     // TODO remove this workaround
-    if (uiState.isTesting || (url ?? '').isEmpty) {
+    if (state.isTesting || (url ?? '').isEmpty) {
       return SizedBox(
         width: width,
         height: height,
+      );
+    }
+
+    // TODO remove this
+    if (kIsWeb) {
+      return Image.network(
+        url,
+        width: width,
+        height: height,
+        key: ValueKey(url),
+        fit: BoxFit.contain,
       );
     }
 

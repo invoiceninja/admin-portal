@@ -2,7 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:invoiceninja_flutter/data/models/entities.dart';
 import 'package:invoiceninja_flutter/ui/app/entity_dropdown.dart';
+import 'package:invoiceninja_flutter/ui/app/forms/app_dropdown_button.dart';
+import 'package:invoiceninja_flutter/ui/app/forms/decorated_form_field.dart';
 import 'package:invoiceninja_flutter/ui/client/edit/client_edit_vm.dart';
+import 'package:invoiceninja_flutter/utils/completers.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:invoiceninja_flutter/ui/app/form_card.dart';
 import 'package:invoiceninja_flutter/redux/static/static_selectors.dart';
@@ -23,11 +26,12 @@ class ClientEditNotesState extends State<ClientEditNotes> {
   final _publicNotesController = TextEditingController();
   final _privateNotesController = TextEditingController();
 
-  final List<TextEditingController> _controllers = [];
+  List<TextEditingController> _controllers;
+  final _debouncer = Debouncer();
 
   @override
   void didChangeDependencies() {
-    final List<TextEditingController> _controllers = [
+    _controllers = [
       _publicNotesController,
       _privateNotesController,
     ];
@@ -56,19 +60,22 @@ class ClientEditNotesState extends State<ClientEditNotes> {
   }
 
   void _onChanged() {
-    final viewModel = widget.viewModel;
-    final client = viewModel.client.rebuild((b) => b
-      ..publicNotes = _publicNotesController.text
-      ..privateNotes = _privateNotesController.text);
-    if (client != viewModel.client) {
-      viewModel.onChanged(client);
-    }
+    _debouncer.run(() {
+      final viewModel = widget.viewModel;
+      final client = viewModel.client.rebuild((b) => b
+        ..publicNotes = _publicNotesController.text
+        ..privateNotes = _privateNotesController.text);
+      if (client != viewModel.client) {
+        viewModel.onChanged(client);
+      }
+    });
   }
 
   @override
   Widget build(BuildContext context) {
     final localization = AppLocalization.of(context);
     final viewModel = widget.viewModel;
+    final state = viewModel.state;
     final client = viewModel.client;
 
     return ListView(
@@ -76,41 +83,42 @@ class ClientEditNotesState extends State<ClientEditNotes> {
       children: <Widget>[
         FormCard(
           children: <Widget>[
-            TextFormField(
+            DecoratedFormField(
               maxLines: 4,
               controller: _publicNotesController,
               keyboardType: TextInputType.multiline,
-              decoration: InputDecoration(
-                labelText: localization.publicNotes,
-              ),
+              label: localization.publicNotes,
             ),
-            TextFormField(
+            DecoratedFormField(
               maxLines: 4,
               controller: _privateNotesController,
               keyboardType: TextInputType.multiline,
-              decoration: InputDecoration(
-                labelText: localization.privateNotes,
-              ),
+              label: localization.privateNotes,
             ),
-            EntityDropdown(
-              entityType: EntityType.size,
-              entityMap: viewModel.staticState.sizeMap,
-              entityList: memoizedSizeList(viewModel.staticState.sizeMap),
+            AppDropdownButton(
+              value: client.sizeId,
               labelText: localization.size,
-              initialValue: viewModel.staticState.sizeMap[client.sizeId]?.name,
-              onSelected: (SelectableEntity size) => viewModel
-                  .onChanged(client.rebuild((b) => b..sizeId = size.id)),
+              items: memoizedSizeList(state.staticState.sizeMap)
+                  .map((sizeId) => DropdownMenuItem(
+                        child: Text(state.staticState.sizeMap[sizeId].name),
+                        value: sizeId,
+                      ))
+                  .toList(),
+              onChanged: (dynamic sizeId) => viewModel.onChanged(
+                client.rebuild((b) => b..sizeId = sizeId),
+              ),
+              showBlank: true,
             ),
             EntityDropdown(
+              key: ValueKey('__industry_${client.industryId}__'),
               entityType: EntityType.industry,
-              entityMap: viewModel.staticState.industryMap,
               entityList:
                   memoizedIndustryList(viewModel.staticState.industryMap),
               labelText: localization.industry,
-              initialValue:
-                  viewModel.staticState.industryMap[client.industryId]?.name,
+              entityId: client.industryId,
               onSelected: (SelectableEntity industry) => viewModel.onChanged(
-                  client.rebuild((b) => b..industryId = industry.id)),
+                  client.rebuild((b) => b..industryId = industry?.id)),
+              allowClearing: true,
             ),
           ],
         ),

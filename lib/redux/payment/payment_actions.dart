@@ -1,41 +1,58 @@
 import 'dart:async';
-import 'package:flutter/widgets.dart';
+
 import 'package:built_collection/built_collection.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
+import 'package:flutter_redux/flutter_redux.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
-import 'package:flutter_redux/flutter_redux.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/utils/completers.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 
-class ViewPaymentList implements PersistUI {
-  ViewPaymentList({@required this.context, this.force = false});
+class ViewPaymentList extends AbstractNavigatorAction implements PersistUI {
+  ViewPaymentList({@required NavigatorState navigator, this.force = false})
+      : super(navigator: navigator);
 
-  final BuildContext context;
   final bool force;
 }
 
-class ViewPayment implements PersistUI {
+class ViewPayment extends AbstractNavigatorAction
+    implements PersistUI, PersistPrefs {
   ViewPayment({
     @required this.paymentId,
-    @required this.context,
+    @required NavigatorState navigator,
     this.force = false,
-  });
+  }) : super(navigator: navigator);
 
-  final int paymentId;
-  final BuildContext context;
+  final String paymentId;
   final bool force;
 }
 
-class EditPayment implements PersistUI {
+class EditPayment extends AbstractNavigatorAction
+    implements PersistUI, PersistPrefs {
   EditPayment(
       {@required this.payment,
-      @required this.context,
+      @required NavigatorState navigator,
       this.completer,
-      this.force = false});
+      this.force = false})
+      : super(navigator: navigator);
 
   final PaymentEntity payment;
-  final BuildContext context;
+  final Completer completer;
+  final bool force;
+}
+
+class RefundPayment extends AbstractNavigatorAction
+    implements PersistUI, PersistPrefs {
+  RefundPayment(
+      {@required this.payment,
+      @required NavigatorState navigator,
+      this.completer,
+      this.force = false})
+      : super(navigator: navigator);
+
+  final PaymentEntity payment;
   final Completer completer;
   final bool force;
 }
@@ -47,18 +64,17 @@ class UpdatePayment implements PersistUI {
 }
 
 class LoadPayment {
-  LoadPayment({this.completer, this.paymentId, this.loadActivities = false});
+  LoadPayment({this.completer, this.paymentId});
 
   final Completer completer;
-  final int paymentId;
-  final bool loadActivities;
+  final String paymentId;
 }
 
 class LoadPaymentActivity {
   LoadPaymentActivity({this.completer, this.paymentId});
 
   final Completer completer;
-  final int paymentId;
+  final String paymentId;
 }
 
 class LoadPayments {
@@ -141,61 +157,80 @@ class SavePaymentFailure implements StopSaving {
   final Object error;
 }
 
-class ArchivePaymentRequest implements StartSaving {
-  ArchivePaymentRequest(this.completer, this.paymentId);
+class RefundPaymentRequest implements StartSaving {
+  RefundPaymentRequest({this.completer, this.payment});
 
   final Completer completer;
-  final int paymentId;
+  final PaymentEntity payment;
 }
 
-class ArchivePaymentSuccess implements StopSaving, PersistData {
-  ArchivePaymentSuccess(this.payment);
+class RefundPaymentSuccess implements StopSaving, PersistData, PersistUI {
+  RefundPaymentSuccess(this.payment);
 
   final PaymentEntity payment;
 }
 
-class ArchivePaymentFailure implements StopSaving {
-  ArchivePaymentFailure(this.payment);
+class RefundPaymentFailure implements StopSaving {
+  RefundPaymentFailure(this.error);
 
-  final PaymentEntity payment;
+  final Object error;
 }
 
-class DeletePaymentRequest implements StartSaving {
-  DeletePaymentRequest(this.completer, this.paymentId);
+class ArchivePaymentsRequest implements StartSaving {
+  ArchivePaymentsRequest(this.completer, this.paymentIds);
 
   final Completer completer;
-  final int paymentId;
+  final List<String> paymentIds;
 }
 
-class DeletePaymentSuccess implements StopSaving, PersistData {
-  DeletePaymentSuccess(this.payment);
+class ArchivePaymentsSuccess implements StopSaving, PersistData {
+  ArchivePaymentsSuccess(this.payments);
 
-  final PaymentEntity payment;
+  final List<PaymentEntity> payments;
 }
 
-class DeletePaymentFailure implements StopSaving {
-  DeletePaymentFailure(this.payment);
+class ArchivePaymentsFailure implements StopSaving {
+  ArchivePaymentsFailure(this.payments);
 
-  final PaymentEntity payment;
+  final List<PaymentEntity> payments;
 }
 
-class RestorePaymentRequest implements StartSaving {
-  RestorePaymentRequest(this.completer, this.paymentId);
+class DeletePaymentsRequest implements StartSaving {
+  DeletePaymentsRequest(this.completer, this.paymentIds);
 
   final Completer completer;
-  final int paymentId;
+  final List<String> paymentIds;
 }
 
-class RestorePaymentSuccess implements StopSaving, PersistData {
-  RestorePaymentSuccess(this.payment);
+class DeletePaymentsSuccess implements StopSaving, PersistData {
+  DeletePaymentsSuccess(this.payments);
 
-  final PaymentEntity payment;
+  final List<PaymentEntity> payments;
 }
 
-class RestorePaymentFailure implements StopSaving {
-  RestorePaymentFailure(this.payment);
+class DeletePaymentsFailure implements StopSaving {
+  DeletePaymentsFailure(this.payments);
 
-  final PaymentEntity payment;
+  final List<PaymentEntity> payments;
+}
+
+class RestorePaymentsRequest implements StartSaving {
+  RestorePaymentsRequest(this.completer, this.paymentIds);
+
+  final Completer completer;
+  final List<String> paymentIds;
+}
+
+class RestorePaymentsSuccess implements StopSaving, PersistData {
+  RestorePaymentsSuccess(this.payments);
+
+  final List<PaymentEntity> payments;
+}
+
+class RestorePaymentsFailure implements StopSaving {
+  RestorePaymentsFailure(this.payments);
+
+  final List<PaymentEntity> payments;
 }
 
 class EmailPaymentRequest implements StartSaving {
@@ -213,7 +248,7 @@ class EmailPaymentFailure implements StopSaving {
   final dynamic error;
 }
 
-class FilterPayments {
+class FilterPayments implements PersistUI {
   FilterPayments(this.filter);
 
   final String filter;
@@ -243,39 +278,98 @@ class FilterPaymentsByCustom2 implements PersistUI {
   final String value;
 }
 
+class FilterPaymentsByCustom3 implements PersistUI {
+  FilterPaymentsByCustom3(this.value);
+
+  final String value;
+}
+
+class FilterPaymentsByCustom4 implements PersistUI {
+  FilterPaymentsByCustom4(this.value);
+
+  final String value;
+}
+
 class FilterPaymentsByEntity implements PersistUI {
   FilterPaymentsByEntity({this.entityId, this.entityType});
 
-  final int entityId;
+  final String entityId;
   final EntityType entityType;
 }
 
 void handlePaymentAction(
-    BuildContext context, PaymentEntity payment, EntityAction action) {
+    BuildContext context, List<BaseEntity> payments, EntityAction action) {
+  if (payments.isEmpty) {
+    return;
+  }
+
   final store = StoreProvider.of<AppState>(context);
   final localization = AppLocalization.of(context);
+  final paymentIds = payments.map((payment) => payment.id).toList();
+  final payment = payments.first;
 
   switch (action) {
     case EntityAction.edit:
-      store.dispatch(EditPayment(context: context, payment: payment));
+      editEntity(context: context, entity: payment);
+      break;
+    case EntityAction.refund:
+      store.dispatch(RefundPayment(
+        navigator: Navigator.of(context),
+        payment: payment,
+      ));
       break;
     case EntityAction.sendEmail:
       store.dispatch(EmailPaymentRequest(
-          snackBarCompleter(context, localization.emailedPayment), payment));
+          snackBarCompleter<Null>(context, localization.emailedPayment),
+          payment));
       break;
     case EntityAction.restore:
-      store.dispatch(RestorePaymentRequest(
-          snackBarCompleter(context, localization.restoredPayment),
-          payment.id));
+      store.dispatch(RestorePaymentsRequest(
+          snackBarCompleter<Null>(context, localization.restoredPayment),
+          paymentIds));
       break;
     case EntityAction.archive:
-      store.dispatch(ArchivePaymentRequest(
-          snackBarCompleter(context, localization.archivedPayment),
-          payment.id));
+      store.dispatch(ArchivePaymentsRequest(
+          snackBarCompleter<Null>(context, localization.archivedPayment),
+          paymentIds));
       break;
     case EntityAction.delete:
-      store.dispatch(DeletePaymentRequest(
-          snackBarCompleter(context, localization.deletedPayment), payment.id));
+      store.dispatch(DeletePaymentsRequest(
+          snackBarCompleter<Null>(context, localization.deletedPayment),
+          paymentIds));
+      break;
+    case EntityAction.toggleMultiselect:
+      if (!store.state.paymentListState.isInMultiselect()) {
+        store.dispatch(StartPaymentMultiselect());
+      }
+
+      if (payments.isEmpty) {
+        break;
+      }
+
+      for (final payment in payments) {
+        if (!store.state.paymentListState.isSelected(payment.id)) {
+          store.dispatch(AddToPaymentMultiselect(entity: payment));
+        } else {
+          store.dispatch(RemoveFromPaymentMultiselect(entity: payment));
+        }
+      }
       break;
   }
 }
+
+class StartPaymentMultiselect {}
+
+class AddToPaymentMultiselect {
+  AddToPaymentMultiselect({@required this.entity});
+
+  final BaseEntity entity;
+}
+
+class RemoveFromPaymentMultiselect {
+  RemoveFromPaymentMultiselect({@required this.entity});
+
+  final BaseEntity entity;
+}
+
+class ClearPaymentMultiselect {}

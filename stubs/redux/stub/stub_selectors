@@ -1,15 +1,16 @@
+import 'package:invoiceninja_flutter/data/models/stub_model.dart';
 import 'package:memoize/memoize.dart';
 import 'package:built_collection/built_collection.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/redux/ui/list_ui_state.dart';
 
 var memoizedDropdownStubList = memo3(
-    (BuiltMap<int, StubEntity> stubMap, BuiltList<int> stubList,
-            int clientId) =>
+    (BuiltMap<String, StubEntity> stubMap, BuiltList<String> stubList,
+            String clientId) =>
         dropdownStubsSelector(stubMap, stubList, clientId));
 
-List<int> dropdownStubsSelector(BuiltMap<int, StubEntity> stubMap,
-    BuiltList<int> stubList, int clientId) {
+List<String> dropdownStubsSelector(BuiltMap<String, StubEntity> stubMap,
+    BuiltList<String> stubList, String clientId) {
   final list = stubList.where((stubId) {
     final stub = stubMap[stubId];
     /*
@@ -29,12 +30,12 @@ List<int> dropdownStubsSelector(BuiltMap<int, StubEntity> stubMap,
   return list;
 }
 
-var memoizedFilteredStubList = memo3((BuiltMap<int, StubEntity> stubMap,
-        BuiltList<int> stubList, ListUIState stubListState) =>
+var memoizedFilteredStubList = memo3((BuiltMap<String, StubEntity> stubMap,
+        BuiltList<String> stubList, ListUIState stubListState) =>
     filteredStubsSelector(stubMap, stubList, stubListState));
 
-List<int> filteredStubsSelector(BuiltMap<int, StubEntity> stubMap,
-    BuiltList<int> stubList, ListUIState stubListState) {
+List<String> filteredStubsSelector(BuiltMap<String, StubEntity> stubMap,
+    BuiltList<String> stubList, ListUIState stubListState) {
   final list = stubList.where((stubId) {
     final stub = stubMap[stubId];
     if (stubListState.filterEntityId != null &&
@@ -67,3 +68,7 @@ List<int> filteredStubsSelector(BuiltMap<int, StubEntity> stubMap,
 
   return list;
 }
+
+bool hasStubChanges(
+        StubEntity stub, BuiltMap<String, StubEntity> stubMap) =>
+    stub.isNew ? stub.isChanged : stub != stubMap[stub.id];

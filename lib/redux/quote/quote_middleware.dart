@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/redux/app/app_middleware.dart';
-import 'package:invoiceninja_flutter/redux/project/project_actions.dart';
+import 'package:invoiceninja_flutter/redux/credit/credit_actions.dart';
 import 'package:invoiceninja_flutter/redux/quote/quote_actions.dart';
 import 'package:invoiceninja_flutter/redux/ui/ui_actions.dart';
 import 'package:invoiceninja_flutter/ui/quote/edit/quote_edit_vm.dart';
@@ -34,16 +34,16 @@ List<Middleware<AppState>> createStoreQuotesMiddleware([
     TypedMiddleware<AppState, ViewQuoteList>(viewQuoteList),
     TypedMiddleware<AppState, ViewQuote>(viewQuote),
     TypedMiddleware<AppState, EditQuote>(editQuote),
-    TypedMiddleware<AppState, ConvertQuote>(convertQuote),
+    TypedMiddleware<AppState, ConvertQuotes>(convertQuote),
     TypedMiddleware<AppState, ShowEmailQuote>(showEmailQuote),
     TypedMiddleware<AppState, LoadQuotes>(loadQuotes),
     TypedMiddleware<AppState, LoadQuote>(loadQuote),
     TypedMiddleware<AppState, SaveQuoteRequest>(saveQuote),
-    TypedMiddleware<AppState, ArchiveQuoteRequest>(archiveQuote),
-    TypedMiddleware<AppState, DeleteQuoteRequest>(deleteQuote),
-    TypedMiddleware<AppState, RestoreQuoteRequest>(restoreQuote),
+    TypedMiddleware<AppState, ArchiveQuotesRequest>(archiveQuote),
+    TypedMiddleware<AppState, DeleteQuotesRequest>(deleteQuote),
+    TypedMiddleware<AppState, RestoreQuotesRequest>(restoreQuote),
     TypedMiddleware<AppState, EmailQuoteRequest>(emailQuote),
-    TypedMiddleware<AppState, MarkSentQuoteRequest>(markSentQuote),
+    TypedMiddleware<AppState, MarkSentQuotesRequest>(markSentQuote),
   ];
 }
 
@@ -52,8 +52,8 @@ Middleware<AppState> _viewQuote() {
       NextDispatcher next) async {
     final action = dynamicAction as ViewQuote;
 
-    if (hasChanges(
-        store: store, context: action.context, force: action.force)) {
+    if (!action.force &&
+        hasChanges(store: store, context: action.context, action: action)) {
       return;
     }
 
@@ -62,7 +62,7 @@ Middleware<AppState> _viewQuote() {
     store.dispatch(UpdateCurrentRoute(QuoteViewScreen.route));
 
     if (isMobile(action.context)) {
-      await Navigator.of(action.context).pushNamed(QuoteViewScreen.route);
+      await action.navigator.pushNamed(QuoteViewScreen.route);
     }
   };
 }
@@ -71,33 +71,41 @@ Middleware<AppState> _viewQuoteList() {
   return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
     final action = dynamicAction as ViewQuoteList;
 
+    if (!action.force &&
+        hasChanges(store: store, context: action.context, action: action)) {
+      return;
+    }
+
     next(action);
+
+    if (store.state.quoteState.isStale) {
+      store.dispatch(LoadQuotes());
+    }
 
     store.dispatch(UpdateCurrentRoute(QuoteScreen.route));
 
     if (isMobile(action.context)) {
-      Navigator.of(action.context).pushNamedAndRemoveUntil(
+      action.navigator.pushNamedAndRemoveUntil(
           QuoteScreen.route, (Route<dynamic> route) => false);
     }
   };
 }
 
 Middleware<AppState> _editQuote() {
-  return (Store<AppState> store, dynamic dynamicAction,
-      NextDispatcher next) async {
+  return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
     final action = dynamicAction as EditQuote;
+
+    if (!action.force &&
+        hasChanges(store: store, context: action.context, action: action)) {
+      return;
+    }
 
     next(action);
 
     store.dispatch(UpdateCurrentRoute(QuoteEditScreen.route));
 
     if (isMobile(action.context)) {
-      final quote =
-          await Navigator.of(action.context).pushNamed(QuoteEditScreen.route);
-
-      if (action.completer != null && quote != null) {
-        action.completer.complete(quote);
-      }
+      action.navigator.pushNamed(QuoteEditScreen.route);
     }
   };
 }
@@ -109,30 +117,35 @@ Middleware<AppState> _showEmailQuote() {
 
     next(action);
 
-    final emailWasSent =
-        await Navigator.of(action.context).pushNamed(QuoteEmailScreen.route);
+    store.dispatch(UpdateCurrentRoute(QuoteEmailScreen.route));
 
-    if (action.completer != null && emailWasSent != null && emailWasSent) {
-      action.completer.complete(null);
+    if (isMobile(action.context)) {
+      final emailWasSent =
+          await Navigator.of(action.context).pushNamed(QuoteEmailScreen.route);
+
+      if (action.completer != null && emailWasSent != null && emailWasSent) {
+        action.completer.complete(null);
+      }
     }
   };
 }
 
 Middleware<AppState> _archiveQuote(QuoteRepository repository) {
   return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
-    final action = dynamicAction as ArchiveQuoteRequest;
-    final origQuote = store.state.quoteState.map[action.quoteId];
+    final action = dynamicAction as ArchiveQuotesRequest;
+    final prevQuotes =
+        action.quoteIds.map((id) => store.state.quoteState.map[id]).toList();
     repository
-        .saveData(store.state.selectedCompany, store.state.authState, origQuote,
-            EntityAction.archive)
-        .then((InvoiceEntity quote) {
-      store.dispatch(ArchiveQuoteSuccess(quote));
+        .bulkAction(
+            store.state.credentials, action.quoteIds, EntityAction.archive)
+        .then((List<InvoiceEntity> quotes) {
+      store.dispatch(ArchiveQuotesSuccess(quotes));
       if (action.completer != null) {
         action.completer.complete(null);
       }
     }).catchError((Object error) {
       print(error);
-      store.dispatch(ArchiveQuoteFailure(origQuote));
+      store.dispatch(ArchiveQuotesFailure(prevQuotes));
       if (action.completer != null) {
         action.completer.completeError(error);
       }
@@ -144,19 +157,21 @@ Middleware<AppState> _archiveQuote(QuoteRepository repository) {
 
 Middleware<AppState> _deleteQuote(QuoteRepository repository) {
   return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
-    final action = dynamicAction as DeleteQuoteRequest;
-    final origQuote = store.state.quoteState.map[action.quoteId];
+    final action = dynamicAction as DeleteQuotesRequest;
+    final prevQuotes =
+        action.quoteIds.map((id) => store.state.quoteState.map[id]).toList();
+
     repository
-        .saveData(store.state.selectedCompany, store.state.authState, origQuote,
-            EntityAction.delete)
-        .then((InvoiceEntity quote) {
-      store.dispatch(DeleteQuoteSuccess(quote));
+        .bulkAction(
+            store.state.credentials, action.quoteIds, EntityAction.delete)
+        .then((List<InvoiceEntity> quotes) {
+      store.dispatch(DeleteQuotesSuccess(quotes));
       if (action.completer != null) {
         action.completer.complete(null);
       }
     }).catchError((Object error) {
       print(error);
-      store.dispatch(DeleteQuoteFailure(origQuote));
+      store.dispatch(DeleteQuotesFailure(prevQuotes));
       if (action.completer != null) {
         action.completer.completeError(error);
       }
@@ -168,19 +183,21 @@ Middleware<AppState> _deleteQuote(QuoteRepository repository) {
 
 Middleware<AppState> _restoreQuote(QuoteRepository repository) {
   return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
-    final action = dynamicAction as RestoreQuoteRequest;
-    final origQuote = store.state.quoteState.map[action.quoteId];
+    final action = dynamicAction as RestoreQuotesRequest;
+    final prevQuotes =
+        action.quoteIds.map((id) => store.state.quoteState.map[id]).toList();
+
     repository
-        .saveData(store.state.selectedCompany, store.state.authState, origQuote,
-            EntityAction.restore)
-        .then((InvoiceEntity quote) {
-      store.dispatch(RestoreQuoteSuccess(quote));
+        .bulkAction(
+            store.state.credentials, action.quoteIds, EntityAction.restore)
+        .then((List<InvoiceEntity> quotes) {
+      store.dispatch(RestoreQuotesSuccess(quotes));
       if (action.completer != null) {
         action.completer.complete(null);
       }
     }).catchError((Object error) {
       print(error);
-      store.dispatch(RestoreQuoteFailure(origQuote));
+      store.dispatch(RestoreQuotesFailure(prevQuotes));
       if (action.completer != null) {
         action.completer.completeError(error);
       }
@@ -192,14 +209,13 @@ Middleware<AppState> _restoreQuote(QuoteRepository repository) {
 
 Middleware<AppState> _convertQuote(QuoteRepository repository) {
   return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
-    final action = dynamicAction as ConvertQuote;
-    final quote = store.state.quoteState.map[action.quoteId];
+    final action = dynamicAction as ConvertQuotes;
     repository
-        .saveData(store.state.selectedCompany, store.state.authState, quote,
-            EntityAction.convert)
-        .then((InvoiceEntity invoice) {
-      store.dispatch(ConvertQuoteSuccess(quote: quote, invoice: invoice));
-      action.completer.complete(invoice);
+        .bulkAction(
+            store.state.credentials, action.quoteIds, EntityAction.convert)
+        .then((quotes) {
+      store.dispatch(ConvertQuoteSuccess(quotes: quotes));
+      action.completer.complete(null);
     }).catchError((Object error) {
       print(error);
       store.dispatch(ConvertQuoteFailure(error));
@@ -212,19 +228,18 @@ Middleware<AppState> _convertQuote(QuoteRepository repository) {
 
 Middleware<AppState> _markSentQuote(QuoteRepository repository) {
   return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
-    final action = dynamicAction as MarkSentQuoteRequest;
-    final origQuote = store.state.quoteState.map[action.quoteId];
+    final action = dynamicAction as MarkSentQuotesRequest;
     repository
-        .saveData(store.state.selectedCompany, store.state.authState, origQuote,
-            EntityAction.markSent)
-        .then((InvoiceEntity quote) {
-      store.dispatch(MarkSentQuoteSuccess(quote));
+        .bulkAction(
+            store.state.credentials, action.quoteIds, EntityAction.markSent)
+        .then((quotes) {
+      store.dispatch(MarkSentQuoteSuccess(quotes));
       if (action.completer != null) {
         action.completer.complete(null);
       }
     }).catchError((Object error) {
       print(error);
-      store.dispatch(MarkSentQuoteFailure(origQuote));
+      store.dispatch(MarkSentQuoteFailure(error));
       if (action.completer != null) {
         action.completer.completeError(error);
       }
@@ -239,8 +254,8 @@ Middleware<AppState> _emailQuote(QuoteRepository repository) {
     final action = dynamicAction as EmailQuoteRequest;
     final origQuote = store.state.quoteState.map[action.quoteId];
     repository
-        .emailQuote(store.state.selectedCompany, store.state.authState,
-            origQuote, action.template, action.subject, action.body)
+        .emailQuote(store.state.credentials, origQuote, action.template,
+            action.subject, action.body)
         .then((void _) {
       store.dispatch(EmailQuoteSuccess());
       if (action.completer != null) {
@@ -261,9 +276,14 @@ Middleware<AppState> _emailQuote(QuoteRepository repository) {
 Middleware<AppState> _saveQuote(QuoteRepository repository) {
   return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
     final action = dynamicAction as SaveQuoteRequest;
+
+    // remove any empty line items
+    final updatedQuote = action.quote.rebuild((b) => b
+      ..lineItems
+          .replace(action.quote.lineItems.where((item) => !item.isEmpty)));
+
     repository
-        .saveData(
-            store.state.selectedCompany, store.state.authState, action.quote)
+        .saveData(store.state.credentials, updatedQuote)
         .then((InvoiceEntity quote) {
       if (action.quote.isNew) {
         store.dispatch(AddQuoteSuccess(quote));
@@ -292,16 +312,11 @@ Middleware<AppState> _loadQuote(QuoteRepository repository) {
     }
 
     store.dispatch(LoadQuoteRequest());
-    repository
-        .loadItem(state.selectedCompany, state.authState, action.quoteId)
-        .then((quote) {
+    repository.loadItem(store.state.credentials, action.quoteId).then((quote) {
       store.dispatch(LoadQuoteSuccess(quote));
 
       if (action.completer != null) {
         action.completer.complete(null);
-      }
-      if (state.projectState.isStale) {
-        store.dispatch(LoadProjects());
       }
     }).catchError((Object error) {
       print(error);
@@ -333,15 +348,13 @@ Middleware<AppState> _loadQuotes(QuoteRepository repository) {
     final int updatedAt = (state.quoteState.lastUpdated / 1000).round();
 
     store.dispatch(LoadQuotesRequest());
-    repository
-        .loadList(state.selectedCompany, state.authState, updatedAt)
-        .then((data) {
+    repository.loadList(store.state.credentials, updatedAt).then((data) {
       store.dispatch(LoadQuotesSuccess(data));
       if (action.completer != null) {
         action.completer.complete(null);
       }
-      if (state.projectState.isStale) {
-        store.dispatch(LoadProjects());
+      if (state.creditState.isStale) {
+        store.dispatch(LoadCredits());
       }
     }).catchError((Object error) {
       print(error);

@@ -30,19 +30,18 @@ List<Middleware<AppState>> createStoreProductsMiddleware([
     TypedMiddleware<AppState, EditProduct>(editProduct),
     TypedMiddleware<AppState, LoadProducts>(loadProducts),
     TypedMiddleware<AppState, SaveProductRequest>(saveProduct),
-    TypedMiddleware<AppState, ArchiveProductRequest>(archiveProduct),
-    TypedMiddleware<AppState, DeleteProductRequest>(deleteProduct),
-    TypedMiddleware<AppState, RestoreProductRequest>(restoreProduct),
+    TypedMiddleware<AppState, ArchiveProductsRequest>(archiveProduct),
+    TypedMiddleware<AppState, DeleteProductsRequest>(deleteProduct),
+    TypedMiddleware<AppState, RestoreProductsRequest>(restoreProduct),
   ];
 }
 
 Middleware<AppState> _editProduct() {
-  return (Store<AppState> store, dynamic dynamicAction,
-      NextDispatcher next) async {
+  return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
     final action = dynamicAction as EditProduct;
 
-    if (hasChanges(
-        store: store, context: action.context, force: action.force)) {
+    if (!action.force &&
+        hasChanges(store: store, context: action.context, action: action)) {
       return;
     }
 
@@ -51,7 +50,7 @@ Middleware<AppState> _editProduct() {
     store.dispatch(UpdateCurrentRoute(ProductEditScreen.route));
 
     if (isMobile(action.context)) {
-      Navigator.of(action.context).pushNamed(ProductEditScreen.route);
+      action.navigator.pushNamed(ProductEditScreen.route);
     }
   };
 }
@@ -61,8 +60,8 @@ Middleware<AppState> _viewProduct() {
       NextDispatcher next) async {
     final action = dynamicAction as ViewProduct;
 
-    if (hasChanges(
-        store: store, context: action.context, force: action.force)) {
+    if (!action.force &&
+        hasChanges(store: store, context: action.context, action: action)) {
       return;
     }
 
@@ -71,7 +70,7 @@ Middleware<AppState> _viewProduct() {
     store.dispatch(UpdateCurrentRoute(ProductViewScreen.route));
 
     if (isMobile(action.context)) {
-      Navigator.of(action.context).pushNamed(ProductViewScreen.route);
+      action.navigator.pushNamed(ProductViewScreen.route);
     }
   };
 }
@@ -80,17 +79,21 @@ Middleware<AppState> _viewProductList() {
   return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
     final action = dynamicAction as ViewProductList;
 
-    if (hasChanges(
-        store: store, context: action.context, force: action.force)) {
+    if (!action.force &&
+        hasChanges(store: store, context: action.context, action: action)) {
       return;
     }
 
     next(action);
 
+    if (store.state.productState.isStale) {
+      store.dispatch(LoadProducts());
+    }
+
     store.dispatch(UpdateCurrentRoute(ProductScreen.route));
 
     if (isMobile(action.context)) {
-      Navigator.of(action.context).pushNamedAndRemoveUntil(
+      action.navigator.pushNamedAndRemoveUntil(
           ProductScreen.route, (Route<dynamic> route) => false);
     }
   };
@@ -98,19 +101,21 @@ Middleware<AppState> _viewProductList() {
 
 Middleware<AppState> _archiveProduct(ProductRepository repository) {
   return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
-    final action = dynamicAction as ArchiveProductRequest;
-    final origProduct = store.state.productState.map[action.productId];
+    final action = dynamicAction as ArchiveProductsRequest;
+    final prevProducts = action.productIds
+        .map((id) => store.state.productState.map[id])
+        .toList();
     repository
-        .saveData(store.state.selectedCompany, store.state.authState,
-            origProduct, EntityAction.archive)
-        .then((ProductEntity product) {
-      store.dispatch(ArchiveProductSuccess(product));
+        .bulkAction(
+            store.state.credentials, action.productIds, EntityAction.archive)
+        .then((List<ProductEntity> products) {
+      store.dispatch(ArchiveProductsSuccess(products));
       if (action.completer != null) {
         action.completer.complete(null);
       }
     }).catchError((dynamic error) {
       print(error);
-      store.dispatch(ArchiveProductFailure(origProduct));
+      store.dispatch(ArchiveProductsFailure(prevProducts));
       if (action.completer != null) {
         action.completer.completeError(error);
       }
@@ -122,19 +127,21 @@ Middleware<AppState> _archiveProduct(ProductRepository repository) {
 
 Middleware<AppState> _deleteProduct(ProductRepository repository) {
   return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
-    final action = dynamicAction as DeleteProductRequest;
-    final origProduct = store.state.productState.map[action.productId];
+    final action = dynamicAction as DeleteProductsRequest;
+    final prevProducts = action.productIds
+        .map((id) => store.state.productState.map[id])
+        .toList();
     repository
-        .saveData(store.state.selectedCompany, store.state.authState,
-            origProduct, EntityAction.delete)
-        .then((ProductEntity product) {
-      store.dispatch(DeleteProductSuccess(product));
+        .bulkAction(
+            store.state.credentials, action.productIds, EntityAction.delete)
+        .then((List<ProductEntity> products) {
+      store.dispatch(DeleteProductsSuccess(products));
       if (action.completer != null) {
         action.completer.complete(null);
       }
     }).catchError((Object error) {
       print(error);
-      store.dispatch(DeleteProductFailure(origProduct));
+      store.dispatch(DeleteProductsFailure(prevProducts));
       if (action.completer != null) {
         action.completer.completeError(error);
       }
@@ -146,19 +153,21 @@ Middleware<AppState> _deleteProduct(ProductRepository repository) {
 
 Middleware<AppState> _restoreProduct(ProductRepository repository) {
   return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
-    final action = dynamicAction as RestoreProductRequest;
-    final origProduct = store.state.productState.map[action.productId];
+    final action = dynamicAction as RestoreProductsRequest;
+    final prevProducts = action.productIds
+        .map((id) => store.state.productState.map[id])
+        .toList();
     repository
-        .saveData(store.state.selectedCompany, store.state.authState,
-            origProduct, EntityAction.restore)
-        .then((ProductEntity product) {
-      store.dispatch(RestoreProductSuccess(product));
+        .bulkAction(
+            store.state.credentials, action.productIds, EntityAction.restore)
+        .then((List<ProductEntity> products) {
+      store.dispatch(RestoreProductsSuccess(products));
       if (action.completer != null) {
         action.completer.complete(null);
       }
     }).catchError((Object error) {
       print(error);
-      store.dispatch(RestoreProductFailure(origProduct));
+      store.dispatch(RestoreProductsFailure(prevProducts));
       if (action.completer != null) {
         action.completer.completeError(error);
       }
@@ -172,15 +181,14 @@ Middleware<AppState> _saveProduct(ProductRepository repository) {
   return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
     final action = dynamicAction as SaveProductRequest;
     repository
-        .saveData(
-            store.state.selectedCompany, store.state.authState, action.product)
+        .saveData(store.state.credentials, action.product)
         .then((ProductEntity product) {
       if (action.product.isNew) {
         store.dispatch(AddProductSuccess(product));
       } else {
         store.dispatch(SaveProductSuccess(product));
       }
-      action.completer.complete(null);
+      action.completer.complete(product);
     }).catchError((Object error) {
       print(error);
       store.dispatch(SaveProductFailure(error));
@@ -209,9 +217,7 @@ Middleware<AppState> _loadProducts(ProductRepository repository) {
     final int updatedAt = (state.productState.lastUpdated / 1000).round();
 
     store.dispatch(LoadProductsRequest());
-    repository
-        .loadList(state.selectedCompany, state.authState, updatedAt)
-        .then((data) {
+    repository.loadList(store.state.credentials, updatedAt).then((data) {
       store.dispatch(LoadProductsSuccess(data));
       if (action.completer != null) {
         action.completer.complete(null);

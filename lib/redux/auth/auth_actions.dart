@@ -15,18 +15,11 @@ class LoadStateSuccess {
   final AppState state;
 }
 
-class LoadUserLogin {
-  LoadUserLogin(this.context);
-
-  final BuildContext context;
-}
-
 class UserLoginLoaded {
-  UserLoginLoaded(this.email, this.url, this.secret);
+  UserLoginLoaded(this.email, this.url);
 
   final String email;
   final String url;
-  final String secret;
 }
 
 class OAuthLoginRequest implements StartLoading {
@@ -36,7 +29,8 @@ class OAuthLoginRequest implements StartLoading {
       this.token,
       this.url,
       this.secret,
-      this.platform});
+      this.platform,
+      this.oneTimePassword});
 
   final Completer completer;
   final String email; // TODO remove this property, break up _saveAuthLocal
@@ -44,6 +38,7 @@ class OAuthLoginRequest implements StartLoading {
   final String url;
   final String secret;
   final String platform;
+  final String oneTimePassword;
 }
 
 class UserLoginRequest implements StartLoading {
@@ -73,17 +68,45 @@ class UserLoginFailure implements StopLoading {
   final Object error;
 }
 
-class UserLogout implements PersistData, PersistUI {}
+class RecoverPasswordRequest implements StartLoading {
+  RecoverPasswordRequest({
+    this.completer,
+    this.email,
+    this.url,
+    this.secret,
+  });
+
+  final Completer completer;
+  final String email;
+  final String url;
+  final String secret;
+}
+
+class RecoverPasswordSuccess implements StopLoading {}
+
+class RecoverPasswordFailure implements StopLoading {
+  RecoverPasswordFailure(this.error);
+
+  final Object error;
+}
+
+class UserLogout implements PersistData, PersistUI {
+  UserLogout(this.context);
+
+  final BuildContext context;
+}
 
 class UserSignUpRequest implements StartLoading {
   UserSignUpRequest({
-
     this.completer,
     this.firstName,
     this.lastName,
     this.email,
     this.password,
-    this.platform,
+    this.photoUrl,
+    this.oauthId,
+    this.secret,
+    this.url,
   });
 
   final Completer completer;
@@ -91,7 +114,10 @@ class UserSignUpRequest implements StartLoading {
   final String lastName;
   final String email;
   final String password;
-  final String platform;
+  final String photoUrl;
+  final String oauthId;
+  final String secret;
+  final String url;
 }
 
-class ClearAuthError {}
+class UserVerifiedPassword {}

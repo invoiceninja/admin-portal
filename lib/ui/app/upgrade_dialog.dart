@@ -14,7 +14,6 @@ import 'package:invoiceninja_flutter/ui/app/loading_indicator.dart';
 import 'package:flutter/material.dart';
 import 'package:invoiceninja_flutter/utils/formatting.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
-import 'package:invoiceninja_flutter/utils/platforms.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class UpgradeDialog extends StatefulWidget {
@@ -49,7 +48,7 @@ class _UpgradeDialogState extends State<UpgradeDialog> {
 
     final localization = AppLocalization.of(context);
     final store = StoreProvider.of<AppState>(context);
-    final company = store.state.selectedCompany;
+    final state = store.state;
     final webClient = WebClient();
     final data = {
       'order_id': purchase.purchaseID,
@@ -61,7 +60,8 @@ class _UpgradeDialogState extends State<UpgradeDialog> {
 
     try {
       final dynamic response = await webClient.post(
-          '/api/v1/upgrade', company.token, json.encode(data));
+          '/api/v1/upgrade', state.credentials.token,
+          data: json.encode(data));
       final String message = response['message'];
 
       if (message == 'success') {
@@ -70,9 +70,7 @@ class _UpgradeDialogState extends State<UpgradeDialog> {
             builder: (BuildContext context) {
               return MessageDialog(localization.thankYouForYourPurchase,
                   onDismiss: () {
-                store.dispatch(RefreshData(
-                  platform: getPlatform(context),
-                ));
+                store.dispatch(RefreshData());
               });
             });
 
@@ -151,7 +149,7 @@ class _UpgradeDialogState extends State<UpgradeDialog> {
 
   void upgrade(BuildContext context, ProductDetails productDetails) {
     final store = StoreProvider.of<AppState>(context);
-    final company = store.state.selectedCompany;
+    final company = store.state.company;
 
     InAppPurchaseConnection.instance.buyNonConsumable(
         purchaseParam: PurchaseParam(
@@ -162,7 +160,7 @@ class _UpgradeDialogState extends State<UpgradeDialog> {
   }
 
   String convertPlanToString(String plan) {
-    switch (plan){
+    switch (plan) {
       case kProductPlanPro:
         return 'Pro - 1 User';
       case kProductPlanEnterprise2:
@@ -175,7 +173,6 @@ class _UpgradeDialogState extends State<UpgradeDialog> {
         return 'Enterprise - 20 Users';
       default:
         return '';
-
     }
   }
 
@@ -206,13 +203,11 @@ class _UpgradeDialogState extends State<UpgradeDialog> {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: <Widget>[
               FlatButton(
-                child: Text('Terms',
-                    style: TextStyle(fontSize: 12)),
+                child: Text('Terms', style: TextStyle(fontSize: 12)),
                 onPressed: () => launch(kTermsOfServiceURL),
               ),
               FlatButton(
-                child: Text('Privacy',
-                    style: TextStyle(fontSize: 12)),
+                child: Text('Privacy', style: TextStyle(fontSize: 12)),
                 onPressed: () => launch(kPrivacyPolicyURL),
               ),
             ],
@@ -248,7 +243,8 @@ class _UpgradeDialogState extends State<UpgradeDialog> {
         if (!_showPastPurchases)
           ..._products
               .map((productDetails) => ListTile(
-                    title: Text(productDetails.title ?? convertPlanToString(productDetails.id)),
+                    title: Text(productDetails.title ??
+                        convertPlanToString(productDetails.id)),
                     subtitle: Text(productDetails.description ?? ''),
                     trailing: Text(productDetails.price ?? '',
                         style: TextStyle(fontSize: 18)),

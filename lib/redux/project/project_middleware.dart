@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:invoiceninja_flutter/redux/app/app_middleware.dart';
-import 'package:invoiceninja_flutter/redux/dashboard/dashboard_actions.dart';
+import 'package:invoiceninja_flutter/redux/client/client_actions.dart';
 import 'package:invoiceninja_flutter/redux/task/task_actions.dart';
 import 'package:invoiceninja_flutter/utils/platforms.dart';
 import 'package:redux/redux.dart';
@@ -41,12 +41,11 @@ List<Middleware<AppState>> createStoreProjectsMiddleware([
 }
 
 Middleware<AppState> _editProject() {
-  return (Store<AppState> store, dynamic dynamicAction,
-      NextDispatcher next) async {
+  return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
     final action = dynamicAction as EditProject;
 
-    if (hasChanges(
-        store: store, context: action.context, force: action.force)) {
+    if (!action.force &&
+        hasChanges(store: store, context: action.context, action: action)) {
       return;
     }
 
@@ -55,12 +54,7 @@ Middleware<AppState> _editProject() {
     store.dispatch(UpdateCurrentRoute(ProjectEditScreen.route));
 
     if (isMobile(action.context)) {
-      final project =
-          await Navigator.of(action.context).pushNamed(ProjectEditScreen.route);
-
-      if (action.completer != null && project != null) {
-        action.completer.complete(project);
-      }
+      action.navigator.pushNamed(ProjectEditScreen.route);
     }
   };
 }
@@ -70,8 +64,8 @@ Middleware<AppState> _viewProject() {
       NextDispatcher next) async {
     final action = dynamicAction as ViewProject;
 
-    if (hasChanges(
-        store: store, context: action.context, force: action.force)) {
+    if (!action.force &&
+        hasChanges(store: store, context: action.context, action: action)) {
       return;
     }
 
@@ -80,7 +74,7 @@ Middleware<AppState> _viewProject() {
     store.dispatch(UpdateCurrentRoute(ProjectViewScreen.route));
 
     if (isMobile(action.context)) {
-      Navigator.of(action.context).pushNamed(ProjectViewScreen.route);
+      action.navigator.pushNamed(ProjectViewScreen.route);
     }
   };
 }
@@ -89,17 +83,21 @@ Middleware<AppState> _viewProjectList() {
   return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
     final action = dynamicAction as ViewProjectList;
 
-    if (hasChanges(
-        store: store, context: action.context, force: action.force)) {
+    if (!action.force &&
+        hasChanges(store: store, context: action.context, action: action)) {
       return;
     }
 
     next(action);
 
+    if (store.state.projectState.isStale) {
+      store.dispatch(LoadProjects());
+    }
+
     store.dispatch(UpdateCurrentRoute(ProjectScreen.route));
 
     if (isMobile(action.context)) {
-      Navigator.of(action.context).pushNamedAndRemoveUntil(
+      action.navigator.pushNamedAndRemoveUntil(
           ProjectScreen.route, (Route<dynamic> route) => false);
     }
   };
@@ -108,18 +106,21 @@ Middleware<AppState> _viewProjectList() {
 Middleware<AppState> _archiveProject(ProjectRepository repository) {
   return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
     final action = dynamicAction as ArchiveProjectRequest;
-    final origProject = store.state.projectState.map[action.projectId];
+    final prevProjects = action.projectIds
+        .map((id) => store.state.projectState.map[id])
+        .toList();
+
     repository
-        .saveData(store.state.selectedCompany, store.state.authState,
-            origProject, EntityAction.archive)
-        .then((ProjectEntity project) {
-      store.dispatch(ArchiveProjectSuccess(project));
+        .bulkAction(
+            store.state.credentials, action.projectIds, EntityAction.archive)
+        .then((List<ProjectEntity> projects) {
+      store.dispatch(ArchiveProjectSuccess(projects));
       if (action.completer != null) {
         action.completer.complete(null);
       }
     }).catchError((Object error) {
       print(error);
-      store.dispatch(ArchiveProjectFailure(origProject));
+      store.dispatch(ArchiveProjectFailure(prevProjects));
       if (action.completer != null) {
         action.completer.completeError(error);
       }
@@ -132,18 +133,21 @@ Middleware<AppState> _archiveProject(ProjectRepository repository) {
 Middleware<AppState> _deleteProject(ProjectRepository repository) {
   return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
     final action = dynamicAction as DeleteProjectRequest;
-    final origProject = store.state.projectState.map[action.projectId];
+    final prevProjects = action.projectIds
+        .map((id) => store.state.projectState.map[id])
+        .toList();
+
     repository
-        .saveData(store.state.selectedCompany, store.state.authState,
-            origProject, EntityAction.delete)
-        .then((ProjectEntity project) {
-      store.dispatch(DeleteProjectSuccess(project));
+        .bulkAction(
+            store.state.credentials, action.projectIds, EntityAction.delete)
+        .then((List<ProjectEntity> projects) {
+      store.dispatch(DeleteProjectSuccess(projects));
       if (action.completer != null) {
         action.completer.complete(null);
       }
     }).catchError((Object error) {
       print(error);
-      store.dispatch(DeleteProjectFailure(origProject));
+      store.dispatch(DeleteProjectFailure(prevProjects));
       if (action.completer != null) {
         action.completer.completeError(error);
       }
@@ -156,18 +160,21 @@ Middleware<AppState> _deleteProject(ProjectRepository repository) {
 Middleware<AppState> _restoreProject(ProjectRepository repository) {
   return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
     final action = dynamicAction as RestoreProjectRequest;
-    final origProject = store.state.projectState.map[action.projectId];
+    final prevProjects = action.projectIds
+        .map((id) => store.state.projectState.map[id])
+        .toList();
+
     repository
-        .saveData(store.state.selectedCompany, store.state.authState,
-            origProject, EntityAction.restore)
-        .then((ProjectEntity project) {
-      store.dispatch(RestoreProjectSuccess(project));
+        .bulkAction(
+            store.state.credentials, action.projectIds, EntityAction.restore)
+        .then((List<ProjectEntity> projects) {
+      store.dispatch(RestoreProjectSuccess(projects));
       if (action.completer != null) {
         action.completer.complete(null);
       }
     }).catchError((Object error) {
       print(error);
-      store.dispatch(RestoreProjectFailure(origProject));
+      store.dispatch(RestoreProjectFailure(prevProjects));
       if (action.completer != null) {
         action.completer.completeError(error);
       }
@@ -181,8 +188,7 @@ Middleware<AppState> _saveProject(ProjectRepository repository) {
   return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
     final action = dynamicAction as SaveProjectRequest;
     repository
-        .saveData(
-            store.state.selectedCompany, store.state.authState, action.project)
+        .saveData(store.state.credentials, action.project)
         .then((ProjectEntity project) {
       if (action.project.isNew) {
         store.dispatch(AddProjectSuccess(project));
@@ -218,15 +224,15 @@ Middleware<AppState> _loadProject(ProjectRepository repository) {
 
     store.dispatch(LoadProjectRequest());
     repository
-        .loadItem(state.selectedCompany, state.authState, action.projectId)
+        .loadItem(store.state.credentials, action.projectId)
         .then((project) {
       store.dispatch(LoadProjectSuccess(project));
 
       if (action.completer != null) {
         action.completer.complete(null);
       }
-      if (state.dashboardState.isStale) {
-        store.dispatch(LoadDashboard());
+      if (state.clientState.isStale) {
+        store.dispatch(LoadClients());
       }
     }).catchError((Object error) {
       print(error);
@@ -258,9 +264,7 @@ Middleware<AppState> _loadProjects(ProjectRepository repository) {
     final int updatedAt = (state.projectState.lastUpdated / 1000).round();
 
     store.dispatch(LoadProjectsRequest());
-    repository
-        .loadList(state.selectedCompany, state.authState, updatedAt)
-        .then((data) {
+    repository.loadList(store.state.credentials, updatedAt).then((data) {
       store.dispatch(LoadProjectsSuccess(data));
 
       if (action.completer != null) {

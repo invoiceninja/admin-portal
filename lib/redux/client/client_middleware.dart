@@ -1,16 +1,17 @@
-import 'package:redux/redux.dart';
+import 'package:invoiceninja_flutter/.env.dart';
 import 'package:flutter/material.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
+import 'package:invoiceninja_flutter/data/repositories/client_repository.dart';
 import 'package:invoiceninja_flutter/redux/app/app_middleware.dart';
+import 'package:invoiceninja_flutter/redux/app/app_state.dart';
+import 'package:invoiceninja_flutter/redux/client/client_actions.dart';
 import 'package:invoiceninja_flutter/redux/product/product_actions.dart';
 import 'package:invoiceninja_flutter/redux/ui/ui_actions.dart';
 import 'package:invoiceninja_flutter/ui/client/client_screen.dart';
 import 'package:invoiceninja_flutter/ui/client/edit/client_edit_vm.dart';
 import 'package:invoiceninja_flutter/ui/client/view/client_view_vm.dart';
 import 'package:invoiceninja_flutter/utils/platforms.dart';
-import 'package:invoiceninja_flutter/redux/client/client_actions.dart';
-import 'package:invoiceninja_flutter/redux/app/app_state.dart';
-import 'package:invoiceninja_flutter/data/repositories/client_repository.dart';
+import 'package:redux/redux.dart';
 
 List<Middleware<AppState>> createStoreClientsMiddleware([
   ClientRepository repository = const ClientRepository(),
@@ -32,19 +33,18 @@ List<Middleware<AppState>> createStoreClientsMiddleware([
     TypedMiddleware<AppState, LoadClients>(loadClients),
     TypedMiddleware<AppState, LoadClient>(loadClient),
     TypedMiddleware<AppState, SaveClientRequest>(saveClient),
-    TypedMiddleware<AppState, ArchiveClientRequest>(archiveClient),
-    TypedMiddleware<AppState, DeleteClientRequest>(deleteClient),
-    TypedMiddleware<AppState, RestoreClientRequest>(restoreClient),
+    TypedMiddleware<AppState, ArchiveClientsRequest>(archiveClient),
+    TypedMiddleware<AppState, DeleteClientsRequest>(deleteClient),
+    TypedMiddleware<AppState, RestoreClientsRequest>(restoreClient),
   ];
 }
 
 Middleware<AppState> _editClient() {
-  return (Store<AppState> store, dynamic dynamicAction,
-      NextDispatcher next) async {
+  return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
     final action = dynamicAction as EditClient;
 
-    if (hasChanges(
-        store: store, context: action.context, force: action.force)) {
+    if (!action.force &&
+        hasChanges(store: store, context: action.context, action: action)) {
       return;
     }
 
@@ -53,7 +53,7 @@ Middleware<AppState> _editClient() {
     store.dispatch(UpdateCurrentRoute(ClientEditScreen.route));
 
     if (isMobile(action.context)) {
-      Navigator.of(action.context).pushNamed(ClientEditScreen.route);
+      action.navigator.pushNamed(ClientEditScreen.route);
     }
   };
 }
@@ -63,8 +63,8 @@ Middleware<AppState> _viewClient() {
       NextDispatcher next) async {
     final action = dynamicAction as ViewClient;
 
-    if (hasChanges(
-        store: store, context: action.context, force: action.force)) {
+    if (!action.force &&
+        hasChanges(store: store, context: action.context, action: action)) {
       return;
     }
 
@@ -73,7 +73,7 @@ Middleware<AppState> _viewClient() {
     store.dispatch(UpdateCurrentRoute(ClientViewScreen.route));
 
     if (isMobile(action.context)) {
-      Navigator.of(action.context).pushNamed(ClientViewScreen.route);
+      action.navigator.pushNamed(ClientViewScreen.route);
     }
   };
 }
@@ -82,17 +82,21 @@ Middleware<AppState> _viewClientList() {
   return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
     final action = dynamicAction as ViewClientList;
 
-    if (hasChanges(
-        store: store, context: action.context, force: action.force)) {
+    if (!action.force &&
+        hasChanges(store: store, context: action.context, action: action)) {
       return;
     }
 
     next(action);
 
+    if (store.state.clientState.isStale) {
+      store.dispatch(LoadClients());
+    }
+
     store.dispatch(UpdateCurrentRoute(ClientScreen.route));
 
     if (isMobile(action.context)) {
-      Navigator.of(action.context).pushNamedAndRemoveUntil(
+      action.navigator.pushNamedAndRemoveUntil(
           ClientScreen.route, (Route<dynamic> route) => false);
     }
   };
@@ -100,19 +104,20 @@ Middleware<AppState> _viewClientList() {
 
 Middleware<AppState> _archiveClient(ClientRepository repository) {
   return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
-    final action = dynamicAction as ArchiveClientRequest;
-    final origClient = store.state.clientState.map[action.clientId];
+    final action = dynamicAction as ArchiveClientsRequest;
+    final prevClients =
+        action.clientIds.map((id) => store.state.clientState.map[id]).toList();
     repository
-        .saveData(store.state.selectedCompany, store.state.authState,
-            origClient, EntityAction.archive)
-        .then((ClientEntity client) {
-      store.dispatch(ArchiveClientSuccess(client));
+        .bulkAction(
+            store.state.credentials, action.clientIds, EntityAction.archive)
+        .then((List<ClientEntity> clients) {
+      store.dispatch(ArchiveClientsSuccess(clients));
       if (action.completer != null) {
         action.completer.complete(null);
       }
     }).catchError((Object error) {
       print(error);
-      store.dispatch(ArchiveClientFailure(origClient));
+      store.dispatch(ArchiveClientsFailure(prevClients));
       if (action.completer != null) {
         action.completer.completeError(error);
       }
@@ -124,19 +129,20 @@ Middleware<AppState> _archiveClient(ClientRepository repository) {
 
 Middleware<AppState> _deleteClient(ClientRepository repository) {
   return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
-    final action = dynamicAction as DeleteClientRequest;
-    final origClient = store.state.clientState.map[action.clientId];
+    final action = dynamicAction as DeleteClientsRequest;
+    final prevClients =
+        action.clientIds.map((id) => store.state.clientState.map[id]).toList();
     repository
-        .saveData(store.state.selectedCompany, store.state.authState,
-            origClient, EntityAction.delete)
-        .then((ClientEntity client) {
-      store.dispatch(DeleteClientSuccess(client));
+        .bulkAction(
+            store.state.credentials, action.clientIds, EntityAction.delete)
+        .then((List<ClientEntity> clients) {
+      store.dispatch(DeleteClientsSuccess(clients));
       if (action.completer != null) {
         action.completer.complete(null);
       }
     }).catchError((Object error) {
       print(error);
-      store.dispatch(DeleteClientFailure(origClient));
+      store.dispatch(DeleteClientsFailure(prevClients));
       if (action.completer != null) {
         action.completer.completeError(error);
       }
@@ -148,19 +154,20 @@ Middleware<AppState> _deleteClient(ClientRepository repository) {
 
 Middleware<AppState> _restoreClient(ClientRepository repository) {
   return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
-    final action = dynamicAction as RestoreClientRequest;
-    final origClient = store.state.clientState.map[action.clientId];
+    final action = dynamicAction as RestoreClientsRequest;
+    final prevClients =
+        action.clientIds.map((id) => store.state.clientState.map[id]).toList();
     repository
-        .saveData(store.state.selectedCompany, store.state.authState,
-            origClient, EntityAction.restore)
-        .then((ClientEntity client) {
-      store.dispatch(RestoreClientSuccess(client));
+        .bulkAction(
+            store.state.credentials, action.clientIds, EntityAction.restore)
+        .then((List<ClientEntity> clients) {
+      store.dispatch(RestoreClientSuccess(clients));
       if (action.completer != null) {
         action.completer.complete(null);
       }
     }).catchError((Object error) {
       print(error);
-      store.dispatch(RestoreClientFailure(origClient));
+      store.dispatch(RestoreClientFailure(prevClients));
       if (action.completer != null) {
         action.completer.completeError(error);
       }
@@ -174,8 +181,7 @@ Middleware<AppState> _saveClient(ClientRepository repository) {
   return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
     final action = dynamicAction as SaveClientRequest;
     repository
-        .saveData(
-            store.state.selectedCompany, store.state.authState, action.client)
+        .saveData(store.state.credentials, action.client)
         .then((ClientEntity client) {
       if (action.client.isNew) {
         store.dispatch(AddClientSuccess(client));
@@ -204,15 +210,14 @@ Middleware<AppState> _loadClient(ClientRepository repository) {
     final action = dynamicAction as LoadClient;
     final AppState state = store.state;
 
-    if (state.isLoading) {
+    if (state.isLoading || Config.DEMO_MODE) {
       next(action);
       return;
     }
 
     store.dispatch(LoadClientRequest());
     repository
-        .loadItem(state.selectedCompany, state.authState, action.clientId,
-            action.loadActivities)
+        .loadItem(store.state.credentials, action.clientId)
         .then((client) {
       store.dispatch(LoadClientSuccess(client));
 
@@ -249,9 +254,7 @@ Middleware<AppState> _loadClients(ClientRepository repository) {
     final int updatedAt = (state.clientState.lastUpdated / 1000).round();
 
     store.dispatch(LoadClientsRequest());
-    repository
-        .loadList(state.selectedCompany, state.authState, updatedAt)
-        .then((data) {
+    repository.loadList(store.state.credentials, updatedAt).then((data) {
       store.dispatch(LoadClientsSuccess(data));
 
       if (action.completer != null) {

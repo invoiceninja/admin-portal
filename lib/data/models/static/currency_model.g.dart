@@ -53,7 +53,7 @@ class _$CurrencyListResponseSerializer
           result.data.replace(serializers.deserialize(value,
                   specifiedType: const FullType(
                       BuiltList, const [const FullType(CurrencyEntity)]))
-              as BuiltList<dynamic>);
+              as BuiltList<Object>);
           break;
       }
     }
@@ -149,7 +149,7 @@ class _$CurrencyEntitySerializer
       result
         ..add('id')
         ..add(serializers.serialize(object.id,
-            specifiedType: const FullType(int)));
+            specifiedType: const FullType(String)));
     }
     return result;
   }
@@ -200,7 +200,7 @@ class _$CurrencyEntitySerializer
           break;
         case 'id':
           result.id = serializers.deserialize(value,
-              specifiedType: const FullType(int)) as int;
+              specifiedType: const FullType(String)) as String;
           break;
       }
     }
@@ -417,7 +417,7 @@ class _$CurrencyEntity extends CurrencyEntity {
   @override
   final double exchangeRate;
   @override
-  final int id;
+  final String id;
 
   factory _$CurrencyEntity([void Function(CurrencyEntityBuilder) updates]) =>
       (new CurrencyEntityBuilder()..update(updates)).build();
@@ -553,9 +553,9 @@ class CurrencyEntityBuilder
   double get exchangeRate => _$this._exchangeRate;
   set exchangeRate(double exchangeRate) => _$this._exchangeRate = exchangeRate;
 
-  int _id;
-  int get id => _$this._id;
-  set id(int id) => _$this._id = id;
+  String _id;
+  String get id => _$this._id;
+  set id(String id) => _$this._id = id;
 
   CurrencyEntityBuilder();
 

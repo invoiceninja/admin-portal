@@ -1,11 +1,14 @@
 import 'dart:async';
+
+import 'package:built_collection/built_collection.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
+import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
+import 'package:invoiceninja_flutter/redux/client/client_actions.dart';
+import 'package:invoiceninja_flutter/redux/client/client_state.dart';
 import 'package:invoiceninja_flutter/redux/company/company_actions.dart';
 import 'package:invoiceninja_flutter/redux/ui/entity_ui_state.dart';
 import 'package:invoiceninja_flutter/redux/ui/list_ui_state.dart';
 import 'package:redux/redux.dart';
-import 'package:invoiceninja_flutter/redux/client/client_actions.dart';
-import 'package:invoiceninja_flutter/redux/client/client_state.dart';
 
 EntityUIState clientUIReducer(ClientUIState state, dynamic action) {
   return state.rebuild((b) => b
@@ -39,13 +42,16 @@ final editingContactReducer = combineReducers<ContactEntity>([
   }),
 ]);
 
-final selectedIdReducer = combineReducers<int>([
-  TypedReducer<int, ViewClient>((selectedId, action) {
+final selectedIdReducer = combineReducers<String>([
+  TypedReducer<String, ViewClient>((selectedId, action) {
     return action.clientId;
   }),
-  TypedReducer<int, AddClientSuccess>((selectedId, action) {
+  TypedReducer<String, AddClientSuccess>((selectedId, action) {
     return action.client.id;
   }),
+  TypedReducer<String, FilterClientsByEntity>(
+      (selectedId, action) => action.entityId == null ? selectedId : ''),
+  TypedReducer<String, SelectCompany>((selectedId, action) => ''),
 ]);
 
 final editingReducer = combineReducers<ClientEntity>([
@@ -55,20 +61,20 @@ final editingReducer = combineReducers<ClientEntity>([
   TypedReducer<ClientEntity, AddClientSuccess>((client, action) {
     return action.client;
   }),
-  TypedReducer<ClientEntity, RestoreClientSuccess>((client, action) {
-    return action.client;
+  TypedReducer<ClientEntity, RestoreClientSuccess>((clients, action) {
+    return action.clients[0];
   }),
-  TypedReducer<ClientEntity, ArchiveClientSuccess>((client, action) {
-    return action.client;
+  TypedReducer<ClientEntity, ArchiveClientsSuccess>((clients, action) {
+    return action.clients[0];
   }),
-  TypedReducer<ClientEntity, DeleteClientSuccess>((client, action) {
-    return action.client;
+  TypedReducer<ClientEntity, DeleteClientsSuccess>((clients, action) {
+    return action.clients[0];
   }),
   TypedReducer<ClientEntity, EditClient>((client, action) {
     return action.client;
   }),
   TypedReducer<ClientEntity, UpdateClient>((client, action) {
-    return action.client;
+    return action.client.rebuild((b) => b..isChanged = true);
   }),
   TypedReducer<ClientEntity, AddContact>((client, action) {
     return client
@@ -89,14 +95,25 @@ final editingReducer = combineReducers<ClientEntity>([
   TypedReducer<ClientEntity, SelectCompany>((client, action) {
     return ClientEntity();
   }),
+  TypedReducer<ClientEntity, DiscardChanges>((client, action) {
+    return ClientEntity();
+  }),
 ]);
 
 final clientListReducer = combineReducers<ListUIState>([
   TypedReducer<ListUIState, SortClients>(_sortClients),
   TypedReducer<ListUIState, FilterClientsByState>(_filterClientsByState),
   TypedReducer<ListUIState, FilterClients>(_filterClients),
+  TypedReducer<ListUIState, FilterClientsByEntity>(_filterClientsByEntity),
   TypedReducer<ListUIState, FilterClientsByCustom1>(_filterClientsByCustom1),
   TypedReducer<ListUIState, FilterClientsByCustom2>(_filterClientsByCustom2),
+  TypedReducer<ListUIState, FilterClientsByCustom3>(_filterClientsByCustom3),
+  TypedReducer<ListUIState, FilterClientsByCustom4>(_filterClientsByCustom4),
+  TypedReducer<ListUIState, StartClientMultiselect>(_startListMultiselect),
+  TypedReducer<ListUIState, AddToClientMultiselect>(_addToListMultiselect),
+  TypedReducer<ListUIState, RemoveFromClientMultiselect>(
+      _removeFromListMultiselect),
+  TypedReducer<ListUIState, ClearClientMultiselect>(_clearListMultiselect),
 ]);
 
 ListUIState _filterClientsByCustom1(
@@ -119,6 +136,26 @@ ListUIState _filterClientsByCustom2(
   }
 }
 
+ListUIState _filterClientsByCustom3(
+    ListUIState clientListState, FilterClientsByCustom3 action) {
+  if (clientListState.custom3Filters.contains(action.value)) {
+    return clientListState
+        .rebuild((b) => b..custom3Filters.remove(action.value));
+  } else {
+    return clientListState.rebuild((b) => b..custom3Filters.add(action.value));
+  }
+}
+
+ListUIState _filterClientsByCustom4(
+    ListUIState clientListState, FilterClientsByCustom4 action) {
+  if (clientListState.custom4Filters.contains(action.value)) {
+    return clientListState
+        .rebuild((b) => b..custom4Filters.remove(action.value));
+  } else {
+    return clientListState.rebuild((b) => b..custom4Filters.add(action.value));
+  }
+}
+
 ListUIState _filterClientsByState(
     ListUIState clientListState, FilterClientsByState action) {
   if (clientListState.stateFilters.contains(action.state)) {
@@ -126,6 +163,13 @@ ListUIState _filterClientsByState(
   } else {
     return clientListState.rebuild((b) => b..stateFilters.add(action.state));
   }
+}
+
+ListUIState _filterClientsByEntity(
+    ListUIState invoiceListState, FilterClientsByEntity action) {
+  return invoiceListState.rebuild((b) => b
+    ..filterEntityId = action.entityId
+    ..filterEntityType = action.entityType);
 }
 
 ListUIState _filterClients(ListUIState clientListState, FilterClients action) {
@@ -142,75 +186,142 @@ ListUIState _sortClients(ListUIState clientListState, SortClients action) {
     ..sortField = action.field);
 }
 
+ListUIState _startListMultiselect(
+    ListUIState clientListState, StartClientMultiselect action) {
+  return clientListState.rebuild((b) => b..selectedIds = ListBuilder());
+}
+
+ListUIState _addToListMultiselect(
+    ListUIState clientListState, AddToClientMultiselect action) {
+  return clientListState.rebuild((b) => b..selectedIds.add(action.entity.id));
+}
+
+ListUIState _removeFromListMultiselect(
+    ListUIState clientListState, RemoveFromClientMultiselect action) {
+  return clientListState
+      .rebuild((b) => b..selectedIds.remove(action.entity.id));
+}
+
+ListUIState _clearListMultiselect(
+    ListUIState clientListState, ClearClientMultiselect action) {
+  return clientListState.rebuild((b) => b..selectedIds = null);
+}
+
 final clientsReducer = combineReducers<ClientState>([
   TypedReducer<ClientState, SaveClientSuccess>(_updateClient),
   TypedReducer<ClientState, AddClientSuccess>(_addClient),
   TypedReducer<ClientState, LoadClientsSuccess>(_setLoadedClients),
   TypedReducer<ClientState, LoadClientSuccess>(_setLoadedClient),
-  TypedReducer<ClientState, ArchiveClientRequest>(_archiveClientRequest),
-  TypedReducer<ClientState, ArchiveClientSuccess>(_archiveClientSuccess),
-  TypedReducer<ClientState, ArchiveClientFailure>(_archiveClientFailure),
-  TypedReducer<ClientState, DeleteClientRequest>(_deleteClientRequest),
-  TypedReducer<ClientState, DeleteClientSuccess>(_deleteClientSuccess),
-  TypedReducer<ClientState, DeleteClientFailure>(_deleteClientFailure),
-  TypedReducer<ClientState, RestoreClientRequest>(_restoreClientRequest),
+  TypedReducer<ClientState, ArchiveClientsRequest>(_archiveClientRequest),
+  TypedReducer<ClientState, ArchiveClientsSuccess>(_archiveClientSuccess),
+  TypedReducer<ClientState, ArchiveClientsFailure>(_archiveClientFailure),
+  TypedReducer<ClientState, DeleteClientsRequest>(_deleteClientRequest),
+  TypedReducer<ClientState, DeleteClientsSuccess>(_deleteClientSuccess),
+  TypedReducer<ClientState, DeleteClientsFailure>(_deleteClientFailure),
+  TypedReducer<ClientState, RestoreClientsRequest>(_restoreClientRequest),
   TypedReducer<ClientState, RestoreClientSuccess>(_restoreClientSuccess),
   TypedReducer<ClientState, RestoreClientFailure>(_restoreClientFailure),
 ]);
 
 ClientState _archiveClientRequest(
-    ClientState clientState, ArchiveClientRequest action) {
-  final client = clientState.map[action.clientId]
-      .rebuild((b) => b..archivedAt = DateTime.now().millisecondsSinceEpoch);
+    ClientState clientState, ArchiveClientsRequest action) {
+  final clients = action.clientIds.map((id) => clientState.map[id]).toList();
 
-  return clientState.rebuild((b) => b..map[action.clientId] = client);
+  for (int i = 0; i < clients.length; i++) {
+    clients[i] = clients[i]
+        .rebuild((b) => b..archivedAt = DateTime.now().millisecondsSinceEpoch);
+  }
+  return clientState.rebuild((b) {
+    for (final client in clients) {
+      b.map[client.id] = client;
+    }
+  });
 }
 
 ClientState _archiveClientSuccess(
-    ClientState clientState, ArchiveClientSuccess action) {
-  return clientState.rebuild((b) => b..map[action.client.id] = action.client);
+    ClientState clientState, ArchiveClientsSuccess action) {
+  return clientState.rebuild((b) {
+    for (final client in action.clients) {
+      b.map[client.id] = client;
+    }
+  });
 }
 
 ClientState _archiveClientFailure(
-    ClientState clientState, ArchiveClientFailure action) {
-  return clientState.rebuild((b) => b..map[action.client.id] = action.client);
+    ClientState clientState, ArchiveClientsFailure action) {
+  return clientState.rebuild((b) {
+    for (final client in action.clients) {
+      b.map[client.id] = client;
+    }
+  });
 }
 
 ClientState _deleteClientRequest(
-    ClientState clientState, DeleteClientRequest action) {
-  final client = clientState.map[action.clientId].rebuild((b) => b
-    ..archivedAt = DateTime.now().millisecondsSinceEpoch
-    ..isDeleted = true);
+    ClientState clientState, DeleteClientsRequest action) {
+  final clients = action.clientIds.map((id) => clientState.map[id]).toList();
 
-  return clientState.rebuild((b) => b..map[action.clientId] = client);
+  for (int i = 0; i < clients.length; i++) {
+    clients[i] = clients[i].rebuild((b) => b
+      ..archivedAt = DateTime.now().millisecondsSinceEpoch
+      ..isDeleted = true);
+  }
+  return clientState.rebuild((b) {
+    for (final client in clients) {
+      b.map[client.id] = client;
+    }
+  });
 }
 
 ClientState _deleteClientSuccess(
-    ClientState clientState, DeleteClientSuccess action) {
-  return clientState.rebuild((b) => b..map[action.client.id] = action.client);
+    ClientState clientState, DeleteClientsSuccess action) {
+  return clientState.rebuild((b) {
+    for (final client in action.clients) {
+      b.map[client.id] = client;
+    }
+  });
 }
 
 ClientState _deleteClientFailure(
-    ClientState clientState, DeleteClientFailure action) {
-  return clientState.rebuild((b) => b..map[action.client.id] = action.client);
+    ClientState clientState, DeleteClientsFailure action) {
+  return clientState.rebuild((b) {
+    for (final client in action.clients) {
+      b.map[client.id] = client;
+    }
+  });
 }
 
 ClientState _restoreClientRequest(
-    ClientState clientState, RestoreClientRequest action) {
-  final client = clientState.map[action.clientId].rebuild((b) => b
-    ..archivedAt = null
-    ..isDeleted = false);
-  return clientState.rebuild((b) => b..map[action.clientId] = client);
+    ClientState clientState, RestoreClientsRequest action) {
+  final clients = action.clientIds.map((id) => clientState.map[id]).toList();
+
+  for (int i = 0; i < clients.length; i++) {
+    clients[i] = clients[i].rebuild((b) => b
+      ..archivedAt = null
+      ..isDeleted = false);
+  }
+  return clientState.rebuild((b) {
+    for (final client in clients) {
+      b.map[client.id] = client;
+    }
+  });
 }
 
 ClientState _restoreClientSuccess(
     ClientState clientState, RestoreClientSuccess action) {
-  return clientState.rebuild((b) => b..map[action.client.id] = action.client);
+  return clientState.rebuild((b) {
+    for (final client in action.clients) {
+      b.map[client.id] = client;
+    }
+  });
 }
 
 ClientState _restoreClientFailure(
     ClientState clientState, RestoreClientFailure action) {
-  return clientState.rebuild((b) => b..map[action.client.id] = action.client);
+  return clientState.rebuild((b) {
+    for (final client in action.clients) {
+      b.map[client.id] = client;
+    }
+  });
 }
 
 ClientState _addClient(ClientState clientState, AddClientSuccess action) {
@@ -233,14 +344,5 @@ ClientState _setLoadedClient(
 }
 
 ClientState _setLoadedClients(
-    ClientState clientState, LoadClientsSuccess action) {
-  final state = clientState.rebuild((b) => b
-    ..lastUpdated = DateTime.now().millisecondsSinceEpoch
-    ..map.addAll(Map.fromIterable(
-      action.clients,
-      key: (dynamic item) => item.id,
-      value: (dynamic item) => item,
-    )));
-
-  return state.rebuild((b) => b..list.replace(state.map.keys));
-}
+        ClientState clientState, LoadClientsSuccess action) =>
+    clientState.loadClients(action.clients);

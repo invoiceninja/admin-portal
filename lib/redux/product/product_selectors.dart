@@ -4,25 +4,54 @@ import 'package:built_collection/built_collection.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/redux/ui/list_ui_state.dart';
 
-InvoiceItemEntity convertProductToInvoiceItem(
-    {BuildContext context, ProductEntity product}) {
-  return InvoiceItemEntity().rebuild((b) => b
-    ..productKey = product.productKey
-    ..notes = product.notes
-    ..cost = product.cost
-    ..qty = 1.0
-    ..customValue1 = product.customValue1
-    ..customValue2 = product.customValue2
-    ..taxName1 = product.taxName1
-    ..taxRate1 = product.taxRate1
-    ..taxName2 = product.taxName2
-    ..taxRate2 = product.taxRate2);
+InvoiceItemEntity convertProductToInvoiceItem({
+  @required ProductEntity product,
+  @required CompanyEntity company,
+}) {
+  if (company.fillProducts) {
+    return InvoiceItemEntity().rebuild((b) => b
+      ..productKey = product.productKey
+      ..notes = product.notes
+      ..cost = product.price
+      ..quantity = company.enableProductQuantity
+          ? product.quantity
+          : company.defaultQuantity ? 1 : null
+      ..customValue1 = product.customValue1
+      ..customValue2 = product.customValue2
+      ..taxName1 = product.taxName1
+      ..taxRate1 = product.taxRate1
+      ..taxName2 = product.taxName2
+      ..taxRate2 = product.taxRate2);
+  } else {
+    return InvoiceItemEntity(
+        productKey: product.productKey,
+        quantity: company.defaultQuantity ? 1 : null);
+  }
 }
 
-var memoizedProductList =
-    memo1((BuiltMap<int, ProductEntity> productMap) => productList(productMap));
+var memoizedDropdownProductList = memo2(
+    (BuiltMap<String, ProductEntity> productMap,
+            BuiltList<String> productList) =>
+        dropdownProductsSelector(productMap, productList));
 
-List<int> productList(BuiltMap<int, ProductEntity> productMap) {
+List<String> dropdownProductsSelector(
+    BuiltMap<String, ProductEntity> productMap, BuiltList<String> productList) {
+  final list =
+      productList.where((productId) => productMap[productId].isActive).toList();
+
+  list.sort((productAId, productBId) {
+    final productA = productMap[productAId];
+    final productB = productMap[productBId];
+    return productA.compareTo(productB, ProductFields.productKey, true);
+  });
+
+  return list;
+}
+
+var memoizedProductList = memo1(
+    (BuiltMap<String, ProductEntity> productMap) => productList(productMap));
+
+List<String> productList(BuiltMap<String, ProductEntity> productMap) {
   final list = productMap.keys
       .where((productId) => productMap[productId].isActive)
       .toList();
@@ -35,12 +64,14 @@ List<int> productList(BuiltMap<int, ProductEntity> productMap) {
 }
 
 var memoizedFilteredProductList = memo3(
-    (BuiltMap<int, ProductEntity> productMap, BuiltList<int> productList,
+    (BuiltMap<String, ProductEntity> productMap, BuiltList<String> productList,
             ListUIState productListState) =>
         filteredProductsSelector(productMap, productList, productListState));
 
-List<int> filteredProductsSelector(BuiltMap<int, ProductEntity> productMap,
-    BuiltList<int> productList, ListUIState productListState) {
+List<String> filteredProductsSelector(
+    BuiltMap<String, ProductEntity> productMap,
+    BuiltList<String> productList,
+    ListUIState productListState) {
   final list = productList.where((productId) {
     final product = productMap[productId];
     if (!product.matchesStates(productListState.stateFilters)) {
@@ -71,5 +102,5 @@ List<int> filteredProductsSelector(BuiltMap<int, ProductEntity> productMap,
 }
 
 bool hasProductChanges(
-        ProductEntity product, BuiltMap<int, ProductEntity> productMap) =>
-    product.isNew || product != productMap[product.id];
+        ProductEntity product, BuiltMap<String, ProductEntity> productMap) =>
+    product.isNew ? product.isChanged : product != productMap[product.id];

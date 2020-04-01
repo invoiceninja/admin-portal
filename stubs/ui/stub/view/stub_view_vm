@@ -40,8 +40,6 @@ class StubViewVM {
     @required this.stub,
     @required this.company,
     @required this.onEntityAction,
-    @required this.onEditPressed,
-    @required this.onBackPressed,
     @required this.onRefreshed,
     @required this.isSaving,
     @required this.isLoading,
@@ -54,7 +52,7 @@ class StubViewVM {
         StubEntity(id: state.stubUIState.selectedId);
 
     Future<Null> _handleRefresh(BuildContext context) {
-      final completer = snackBarCompleter(
+      final completer = snackBarCompleter<Null>(
           context, AppLocalization.of(context).refreshComplete);
       store.dispatch(LoadStub(completer: completer, stubId: stub.id));
       return completer.future;
@@ -62,30 +60,14 @@ class StubViewVM {
 
     return StubViewVM(
         state: state,
-        company: state.selectedCompany,
+        company: state.company,
         isSaving: state.isSaving,
         isLoading: state.isLoading,
         isDirty: stub.isNew,
         stub: stub,
-        onEditPressed: (BuildContext context) {
-          final Completer<StubEntity> completer = Completer<StubEntity>();
-          store.dispatch(EditStub(
-              stub: stub, context: context, completer: completer));
-          completer.future.then((stub) {
-            Scaffold.of(context).showSnackBar(SnackBar(
-                content: SnackBarRow(
-                  message: AppLocalization.of(context).updatedStub,
-                )));
-          });
-        },
         onRefreshed: (context) => _handleRefresh(context),
-        onBackPressed: () {
-          if (state.uiState.currentRoute.contains(StubScreen.route)) {
-            store.dispatch(UpdateCurrentRoute(StubScreen.route));
-          }
-        },
       onEntityAction: (BuildContext context, EntityAction action) =>
-          handleStubAction(context, stub, action),
+          handleStubAction(context, [stub], action),
         );
   }
 
@@ -93,8 +75,6 @@ class StubViewVM {
   final StubEntity stub;
   final CompanyEntity company;
   final Function(BuildContext, EntityAction) onEntityAction;
-  final Function(BuildContext) onEditPressed;
-  final Function onBackPressed;
   final Function(BuildContext) onRefreshed;
   final bool isSaving;
   final bool isLoading;

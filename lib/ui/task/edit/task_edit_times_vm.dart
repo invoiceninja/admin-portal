@@ -39,7 +39,7 @@ class TaskEditTimesVM {
     final task = state.taskUIState.editing;
 
     return TaskEditTimesVM(
-      company: state.selectedCompany,
+      company: state.company,
       task: task,
       taskTime: state.taskUIState.editingTime,
       onRemoveTaskTimePressed: (index) => store.dispatch(DeleteTaskTime(index)),

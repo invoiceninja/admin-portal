@@ -3,13 +3,13 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:invoiceninja_flutter/constants.dart';
 import 'package:invoiceninja_flutter/data/models/entities.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
+import 'package:invoiceninja_flutter/data/models/quote_model.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/redux/payment/payment_selectors.dart';
 import 'package:invoiceninja_flutter/ui/app/FieldGrid.dart';
 import 'package:invoiceninja_flutter/ui/app/entities/entity_state_title.dart';
 import 'package:invoiceninja_flutter/ui/app/invoice/invoice_item_view.dart';
-import 'package:invoiceninja_flutter/ui/app/one_value_header.dart';
-import 'package:invoiceninja_flutter/ui/app/two_value_header.dart';
+import 'package:invoiceninja_flutter/ui/app/entity_header.dart';
 import 'package:invoiceninja_flutter/ui/invoice/view/invoice_view_vm.dart';
 import 'package:invoiceninja_flutter/utils/formatting.dart';
 import 'package:flutter/material.dart';
@@ -36,37 +36,45 @@ class InvoiceOverview extends StatelessWidget {
     final payments = memoizedPaymentsByInvoice(
         invoice.id, state.paymentState.map, state.paymentState.list);
 
-    final user = viewModel.company.user;
-    final color = invoice.isPastDue
-        ? Colors.red
-        : InvoiceStatusColors.colors[invoice.invoiceStatusId];
+    Map<String, String> stauses;
+    Map<String, MaterialColor> colors;
+    if (invoice.entityType == EntityType.quote) {
+      stauses = kQuoteStatuses;
+      colors = QuoteStatusColors.colors;
+    } else if (invoice.entityType == EntityType.credit) {
+      stauses = kCreditStatuses;
+      colors = CreditStatusColors.colors;
+    } else {
+      stauses = kInvoiceStatuses;
+      colors = InvoiceStatusColors.colors;
+    }
+
+    final userCompany = state.userCompany;
+    final color = invoice.isPastDue ? Colors.red : colors[invoice.statusId];
+
     final widgets = <Widget>[
-      invoice.isQuote
-          ? OneValueHeader(
-              backgroundColor: color,
-              label: localization.totalAmount,
-              value: formatNumber(invoice.amount, context,
-                  clientId: invoice.clientId),
-            )
-          : TwoValueHeader(
-              backgroundColor: color,
-              label1: localization.totalAmount,
-              value1: formatNumber(invoice.amount, context,
-                  clientId: invoice.clientId),
-              label2: localization.balanceDue,
-              value2: formatNumber(invoice.balance, context,
-                  clientId: invoice.clientId),
-            ),
+      EntityHeader(
+        backgroundColor: color,
+        label: localization.totalAmount,
+        value:
+            formatNumber(invoice.amount, context, clientId: invoice.clientId),
+        secondLabel: localization.balanceDue,
+        secondValue:
+            formatNumber(invoice.balance, context, clientId: invoice.clientId),
+      ),
     ];
 
+    String dueDateField = InvoiceFields.dueDate;
+    if (invoice.subEntityType == EntityType.quote) {
+      dueDateField = QuoteFields.validUntil;
+    }
+
     final Map<String, String> fields = {
-      InvoiceFields.invoiceStatusId: invoice.isPastDue
+      InvoiceFields.statusId: invoice.isPastDue
           ? localization.pastDue
-          : (invoice.invoiceStatusId > 0
-              ? localization.lookup('invoice_status_${invoice.invoiceStatusId}')
-              : null),
-      InvoiceFields.invoiceDate: formatDate(invoice.invoiceDate, context),
-      InvoiceFields.dueDate: formatDate(invoice.dueDate, context),
+          : localization.lookup(stauses[invoice.statusId]),
+      InvoiceFields.invoiceDate: formatDate(invoice.date, context),
+      dueDateField: formatDate(invoice.dueDate, context),
       InvoiceFields.partial: formatNumber(invoice.partial, context,
           clientId: invoice.clientId, zeroIsNull: true),
       InvoiceFields.partialDueDate: formatDate(invoice.partialDueDate, context),
@@ -79,13 +87,19 @@ class InvoiceOverview extends StatelessWidget {
               : FormatNumberType.percent),
     };
 
-    if (invoice.customTextValue1.isNotEmpty) {
+    if (invoice.customValue1.isNotEmpty) {
       final label1 = company.getCustomFieldLabel(CustomFieldType.invoice1);
-      fields[label1] = invoice.customTextValue1;
+      fields[label1] = formatCustomValue(
+          context: context,
+          field: CustomFieldType.invoice1,
+          value: invoice.customValue1);
     }
-    if (invoice.customTextValue2.isNotEmpty) {
+    if (invoice.customValue2.isNotEmpty) {
       final label2 = company.getCustomFieldLabel(CustomFieldType.invoice2);
-      fields[label2] = invoice.customTextValue2;
+      fields[label2] = formatCustomValue(
+          context: context,
+          field: CustomFieldType.invoice2,
+          value: invoice.customValue2);
     }
 
     widgets.addAll([
@@ -116,7 +130,7 @@ class InvoiceOverview extends StatelessWidget {
               subtitle: Text(
                   formatNumber(payment.amount, context, clientId: client.id) +
                       ' • ' +
-                      formatDate(payment.paymentDate, context)),
+                      formatDate(payment.date, context)),
               leading: Icon(FontAwesomeIcons.creditCard, size: 18.0),
               trailing: Icon(Icons.navigate_next),
               onTap: () => viewModel.onPaymentPressed(context, payment),
@@ -148,8 +162,7 @@ class InvoiceOverview extends StatelessWidget {
     }
 
     widgets.addAll([
-      FieldGrid(fields,
-          fieldConverter: invoice.isQuote ? QuoteFields.convertField : null),
+      FieldGrid(fields),
     ]);
 
     if (invoice.privateNotes != null && invoice.privateNotes.isNotEmpty) {
@@ -162,16 +175,17 @@ class InvoiceOverview extends StatelessWidget {
       ]);
     }
 
-    if (invoice.invoiceItems.isNotEmpty) {
-      invoice.invoiceItems.forEach((invoiceItem) {
+    if (invoice.lineItems.isNotEmpty) {
+      invoice.lineItems.forEach((invoiceItem) {
         widgets.addAll([
           Builder(
             builder: (BuildContext context) {
               return InvoiceItemListTile(
                 invoice: invoice,
                 invoiceItem: invoiceItem,
-                onTap: () => user.canEditEntity(invoice)
-                    ? viewModel.onEditPressed(context, invoiceItem)
+                onTap: () => userCompany.canEditEntity(invoice)
+                    ? viewModel.onEditPressed(
+                        context, invoice.lineItems.indexOf(invoiceItem))
                     : null,
               );
             },
@@ -210,34 +224,46 @@ class InvoiceOverview extends StatelessWidget {
       );
     }
 
-    if (invoice.customValue1 != 0 && company.enableCustomInvoiceTaxes1) {
+    if (invoice.customSurcharge1 != 0 && company.enableCustomSurchargeTaxes1) {
       widgets.add(surchargeRow(
           company.getCustomFieldLabel(CustomFieldType.surcharge1),
-          invoice.customValue1));
+          invoice.customSurcharge1));
     }
 
-    if (invoice.customValue2 != 0 && company.enableCustomInvoiceTaxes2) {
+    if (invoice.customSurcharge2 != 0 && company.enableCustomSurchargeTaxes2) {
       widgets.add(surchargeRow(
           company.getCustomFieldLabel(CustomFieldType.surcharge2),
-          invoice.customValue2));
+          invoice.customSurcharge2));
     }
 
     invoice
-        .calculateTaxes(company.enableInclusiveTaxes)
+        .calculateTaxes(invoice.usesInclusiveTaxes)
         .forEach((taxName, taxAmount) {
       widgets.add(surchargeRow(taxName, taxAmount));
     });
 
-    if (invoice.customValue1 != 0 && !company.enableCustomInvoiceTaxes1) {
+    if (invoice.customSurcharge1 != 0 && !company.enableCustomSurchargeTaxes1) {
       widgets.add(surchargeRow(
           company.getCustomFieldLabel(CustomFieldType.surcharge1),
-          invoice.customValue1));
+          invoice.customSurcharge1));
     }
 
-    if (invoice.customValue2 != 0 && !company.enableCustomInvoiceTaxes2) {
+    if (invoice.customSurcharge2 != 0 && !company.enableCustomSurchargeTaxes2) {
       widgets.add(surchargeRow(
           company.getCustomFieldLabel(CustomFieldType.surcharge2),
-          invoice.customValue2));
+          invoice.customSurcharge2));
+    }
+
+    if (invoice.customSurcharge3 != 0 && !company.enableCustomSurchargeTaxes3) {
+      widgets.add(surchargeRow(
+          company.getCustomFieldLabel(CustomFieldType.surcharge3),
+          invoice.customSurcharge3));
+    }
+
+    if (invoice.customSurcharge4 != 0 && !company.enableCustomSurchargeTaxes4) {
+      widgets.add(surchargeRow(
+          company.getCustomFieldLabel(CustomFieldType.surcharge4),
+          invoice.customSurcharge4));
     }
 
     return ListView(

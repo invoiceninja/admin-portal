@@ -39,7 +39,7 @@ abstract class LanguageEntity extends Object
     implements Built<LanguageEntity, LanguageEntityBuilder> {
   factory LanguageEntity() {
     return _$LanguageEntity._(
-      id: 0,
+      id: '',
       name: '',
       locale: '',
     );

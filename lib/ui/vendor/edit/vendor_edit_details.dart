@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:invoiceninja_flutter/data/models/entities.dart';
-import 'package:invoiceninja_flutter/ui/app/forms/custom_field.dart';
-import 'package:invoiceninja_flutter/ui/vendor/edit/vendor_edit_vm.dart';
-import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:invoiceninja_flutter/ui/app/form_card.dart';
+import 'package:invoiceninja_flutter/ui/app/forms/custom_field.dart';
+import 'package:invoiceninja_flutter/ui/app/forms/decorated_form_field.dart';
+import 'package:invoiceninja_flutter/ui/vendor/edit/vendor_edit_vm.dart';
+import 'package:invoiceninja_flutter/utils/completers.dart';
+import 'package:invoiceninja_flutter/utils/localization.dart';
 
 class VendorEditDetails extends StatefulWidget {
   const VendorEditDetails({
@@ -27,11 +29,12 @@ class VendorEditDetailsState extends State<VendorEditDetails> {
   final _custom1Controller = TextEditingController();
   final _custom2Controller = TextEditingController();
 
-  final List<TextEditingController> _controllers = [];
+  final _debouncer = Debouncer();
+  List<TextEditingController> _controllers;
 
   @override
   void didChangeDependencies() {
-    final List<TextEditingController> _controllers = [
+    _controllers = [
       _nameController,
       _idNumberController,
       _vatNumberController,
@@ -49,7 +52,7 @@ class VendorEditDetailsState extends State<VendorEditDetails> {
     _idNumberController.text = vendor.idNumber;
     _vatNumberController.text = vendor.vatNumber;
     _websiteController.text = vendor.website;
-    _phoneController.text = vendor.workPhone;
+    _phoneController.text = vendor.phone;
     _custom1Controller.text = vendor.customValue1;
     _custom2Controller.text = vendor.customValue2;
 
@@ -70,80 +73,66 @@ class VendorEditDetailsState extends State<VendorEditDetails> {
   }
 
   void _onChanged() {
-    final viewModel = widget.viewModel;
-    final vendor = viewModel.vendor.rebuild((b) => b
-      ..name = _nameController.text.trim()
-      ..idNumber = _idNumberController.text.trim()
-      ..vatNumber = _vatNumberController.text.trim()
-      ..website = _websiteController.text.trim()
-      ..workPhone = _phoneController.text.trim()
-      ..customValue1 = _custom1Controller.text.trim()
-      ..customValue2 = _custom2Controller.text.trim());
-    if (vendor != viewModel.vendor) {
-      viewModel.onChanged(vendor);
-    }
+    _debouncer.run(() {
+      final viewModel = widget.viewModel;
+      final vendor = viewModel.vendor.rebuild((b) => b
+        ..name = _nameController.text.trim()
+        ..idNumber = _idNumberController.text.trim()
+        ..vatNumber = _vatNumberController.text.trim()
+        ..website = _websiteController.text.trim()
+        ..phone = _phoneController.text.trim()
+        ..customValue1 = _custom1Controller.text.trim()
+        ..customValue2 = _custom2Controller.text.trim());
+      if (vendor != viewModel.vendor) {
+        viewModel.onChanged(vendor);
+      }
+    });
   }
 
   @override
   Widget build(BuildContext context) {
     final localization = AppLocalization.of(context);
     final viewModel = widget.viewModel;
-    final company = viewModel.company;
 
     return ListView(
       shrinkWrap: true,
       children: <Widget>[
         FormCard(
           children: <Widget>[
-            TextFormField(
-              autocorrect: false,
+            DecoratedFormField(
               controller: _nameController,
-              decoration: InputDecoration(
-                labelText: localization.name,
-              ),
+              label: localization.name,
               validator: (String val) => val == null || val.isEmpty
                   ? AppLocalization.of(context).pleaseEnterAName
                   : null,
             ),
-            TextFormField(
-              autocorrect: false,
+            DecoratedFormField(
               controller: _idNumberController,
-              decoration: InputDecoration(
-                labelText: localization.idNumber,
-              ),
+              label: localization.idNumber,
             ),
-            TextFormField(
-              autocorrect: false,
+            DecoratedFormField(
               controller: _vatNumberController,
-              decoration: InputDecoration(
-                labelText: localization.vatNumber,
-              ),
+              label: localization.vatNumber,
             ),
-            TextFormField(
-              autocorrect: false,
+            DecoratedFormField(
               controller: _websiteController,
-              decoration: InputDecoration(
-                labelText: localization.website,
-              ),
+              label: localization.website,
               keyboardType: TextInputType.url,
             ),
-            TextFormField(
-              autocorrect: false,
+            DecoratedFormField(
               controller: _phoneController,
-              decoration: InputDecoration(
-                labelText: localization.phone,
-              ),
+              label: localization.phone,
               keyboardType: TextInputType.phone,
             ),
             CustomField(
               controller: _custom1Controller,
-              labelText: company.getCustomFieldLabel(CustomFieldType.vendor1),
-              options: company.getCustomFieldValues(CustomFieldType.vendor1),
+              field: CustomFieldType.vendor1,
+              value: viewModel.vendor.customValue1,
             ),
             CustomField(
               controller: _custom2Controller,
-              labelText: company.getCustomFieldLabel(CustomFieldType.vendor2),
-              options: company.getCustomFieldValues(CustomFieldType.vendor2),
+              field: CustomFieldType.vendor2,
+              value: viewModel.vendor.customValue2,
             ),
           ],
         ),

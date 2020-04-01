@@ -1,10 +1,11 @@
 import 'package:built_value/built_value.dart';
 import 'package:built_collection/built_collection.dart';
 import 'package:built_value/serializer.dart';
+import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
+import 'package:invoiceninja_flutter/utils/formatting.dart';
 
 part 'stub_model.g.dart';
-
 
 abstract class StubListResponse
     implements Built<StubListResponse, StubListResponseBuilder> {
@@ -40,22 +41,49 @@ abstract class StubEntity extends Object with BaseEntity implements Built<StubEn
 
   // STARTER: properties - do not remove comment
 
-  static int counter = 0;
-  factory StubEntity() {
+  factory StubEntity({String id, AppState state}) {
     return _$StubEntity._(
-      id: 0,
+      id: id ?? BaseEntity.nextId,
+      isChanged: false,
       // STARTER: constructor - do not remove comment
     );
   }
+
+  StubEntity._();
+
+  @override
+  EntityType get entityType => EntityType.stub;
 
   String get displayName {
     // STARTER: display name - do not remove comment
   }
 
+
+  @override
+  List<EntityAction> getActions(
+      {UserCompanyEntity userCompany,
+      ClientEntity client,
+      bool includeEdit = false,
+      bool multiselect = false}) {
+    final actions = <EntityAction>[];
+
+    if (!isDeleted) {
+      if (!multiselect && includeEdit && userCompany.canEditEntity(this)) {
+        actions.add(EntityAction.edit);
+      }
+    }
+
+    if (actions.isNotEmpty) {
+      actions.add(null);
+    }
+
+    return actions..addAll(super.getActions(userCompany: userCompany));
+  }
+
   int compareTo(StubEntity stub, String sortField, bool sortAscending) {
     int response = 0;
-    StubEntity stubA = sortAscending ? this : stub;
-    StubEntity stubB = sortAscending ? stub: this; 
+    final stubA = sortAscending ? this : stub;
+    final stubB = sortAscending ? stub: this;
 
     switch (sortField) {
       // STARTER: sort switch - do not remove comment
@@ -68,18 +96,36 @@ abstract class StubEntity extends Object with BaseEntity implements Built<StubEn
     }
   }
 
-  bool matchesSearch(String filter) {
+  @override
+  bool matchesFilter(String filter) {
     if (filter == null || filter.isEmpty) {
       return true;
     }
 
     filter = filter.toLowerCase();
 
-    // STARTER: filter - do not remove comment
-
     return false;
   }
 
-  StubEntity._();
+  @override
+  String matchesFilterValue(String filter) {
+    if (filter == null || filter.isEmpty) {
+      return null;
+    }
+
+    filter = filter.toLowerCase();
+
+    return null;
+  }
+
+  @override
+  String get listDisplayName => null;
+
+  @override
+  double get listDisplayAmount => null;
+
+  @override
+  FormatNumberType get listDisplayAmountType => null;
+
   static Serializer<StubEntity> get serializer => _$stubEntitySerializer;
 }

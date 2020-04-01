@@ -53,7 +53,7 @@ class _$ProductListResponseSerializer
           result.data.replace(serializers.deserialize(value,
                   specifiedType: const FullType(
                       BuiltList, const [const FullType(ProductEntity)]))
-              as BuiltList<dynamic>);
+              as BuiltList<Object>);
           break;
       }
     }
@@ -126,6 +126,12 @@ class _$ProductEntitySerializer implements StructuredSerializer<ProductEntity> {
           specifiedType: const FullType(String)),
       'cost',
       serializers.serialize(object.cost, specifiedType: const FullType(double)),
+      'price',
+      serializers.serialize(object.price,
+          specifiedType: const FullType(double)),
+      'quantity',
+      serializers.serialize(object.quantity,
+          specifiedType: const FullType(double)),
       'tax_name1',
       serializers.serialize(object.taxName1,
           specifiedType: const FullType(String)),
@@ -138,6 +144,12 @@ class _$ProductEntitySerializer implements StructuredSerializer<ProductEntity> {
       'tax_rate2',
       serializers.serialize(object.taxRate2,
           specifiedType: const FullType(double)),
+      'tax_name3',
+      serializers.serialize(object.taxName3,
+          specifiedType: const FullType(String)),
+      'tax_rate3',
+      serializers.serialize(object.taxRate3,
+          specifiedType: const FullType(double)),
       'custom_value1',
       serializers.serialize(object.customValue1,
           specifiedType: const FullType(String)),
@@ -145,6 +157,36 @@ class _$ProductEntitySerializer implements StructuredSerializer<ProductEntity> {
       serializers.serialize(object.customValue2,
           specifiedType: const FullType(String)),
     ];
+    if (object.customValue3 != null) {
+      result
+        ..add('custom_value3')
+        ..add(serializers.serialize(object.customValue3,
+            specifiedType: const FullType(String)));
+    }
+    if (object.customValue4 != null) {
+      result
+        ..add('custom_value4')
+        ..add(serializers.serialize(object.customValue4,
+            specifiedType: const FullType(String)));
+    }
+    if (object.projectId != null) {
+      result
+        ..add('project_id')
+        ..add(serializers.serialize(object.projectId,
+            specifiedType: const FullType(String)));
+    }
+    if (object.vendorId != null) {
+      result
+        ..add('vendor_id')
+        ..add(serializers.serialize(object.vendorId,
+            specifiedType: const FullType(String)));
+    }
+    if (object.isChanged != null) {
+      result
+        ..add('isChanged')
+        ..add(serializers.serialize(object.isChanged,
+            specifiedType: const FullType(bool)));
+    }
     if (object.createdAt != null) {
       result
         ..add('created_at')
@@ -169,17 +211,29 @@ class _$ProductEntitySerializer implements StructuredSerializer<ProductEntity> {
         ..add(serializers.serialize(object.isDeleted,
             specifiedType: const FullType(bool)));
     }
-    if (object.isOwner != null) {
+    if (object.createdUserId != null) {
       result
-        ..add('is_owner')
-        ..add(serializers.serialize(object.isOwner,
-            specifiedType: const FullType(bool)));
+        ..add('user_id')
+        ..add(serializers.serialize(object.createdUserId,
+            specifiedType: const FullType(String)));
+    }
+    if (object.assignedUserId != null) {
+      result
+        ..add('assigned_user_id')
+        ..add(serializers.serialize(object.assignedUserId,
+            specifiedType: const FullType(String)));
+    }
+    if (object.subEntityType != null) {
+      result
+        ..add('entity_type')
+        ..add(serializers.serialize(object.subEntityType,
+            specifiedType: const FullType(EntityType)));
     }
     if (object.id != null) {
       result
         ..add('id')
         ..add(serializers.serialize(object.id,
-            specifiedType: const FullType(int)));
+            specifiedType: const FullType(String)));
     }
     return result;
   }
@@ -208,6 +262,14 @@ class _$ProductEntitySerializer implements StructuredSerializer<ProductEntity> {
           result.cost = serializers.deserialize(value,
               specifiedType: const FullType(double)) as double;
           break;
+        case 'price':
+          result.price = serializers.deserialize(value,
+              specifiedType: const FullType(double)) as double;
+          break;
+        case 'quantity':
+          result.quantity = serializers.deserialize(value,
+              specifiedType: const FullType(double)) as double;
+          break;
         case 'tax_name1':
           result.taxName1 = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String;
@@ -224,6 +286,14 @@ class _$ProductEntitySerializer implements StructuredSerializer<ProductEntity> {
           result.taxRate2 = serializers.deserialize(value,
               specifiedType: const FullType(double)) as double;
           break;
+        case 'tax_name3':
+          result.taxName3 = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String;
+          break;
+        case 'tax_rate3':
+          result.taxRate3 = serializers.deserialize(value,
+              specifiedType: const FullType(double)) as double;
+          break;
         case 'custom_value1':
           result.customValue1 = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String;
@@ -231,6 +301,26 @@ class _$ProductEntitySerializer implements StructuredSerializer<ProductEntity> {
         case 'custom_value2':
           result.customValue2 = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String;
+          break;
+        case 'custom_value3':
+          result.customValue3 = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String;
+          break;
+        case 'custom_value4':
+          result.customValue4 = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String;
+          break;
+        case 'project_id':
+          result.projectId = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String;
+          break;
+        case 'vendor_id':
+          result.vendorId = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String;
+          break;
+        case 'isChanged':
+          result.isChanged = serializers.deserialize(value,
+              specifiedType: const FullType(bool)) as bool;
           break;
         case 'created_at':
           result.createdAt = serializers.deserialize(value,
@@ -248,13 +338,21 @@ class _$ProductEntitySerializer implements StructuredSerializer<ProductEntity> {
           result.isDeleted = serializers.deserialize(value,
               specifiedType: const FullType(bool)) as bool;
           break;
-        case 'is_owner':
-          result.isOwner = serializers.deserialize(value,
-              specifiedType: const FullType(bool)) as bool;
+        case 'user_id':
+          result.createdUserId = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String;
+          break;
+        case 'assigned_user_id':
+          result.assignedUserId = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String;
+          break;
+        case 'entity_type':
+          result.subEntityType = serializers.deserialize(value,
+              specifiedType: const FullType(EntityType)) as EntityType;
           break;
         case 'id':
           result.id = serializers.deserialize(value,
-              specifiedType: const FullType(int)) as int;
+              specifiedType: const FullType(String)) as String;
           break;
       }
     }
@@ -460,6 +558,10 @@ class _$ProductEntity extends ProductEntity {
   @override
   final double cost;
   @override
+  final double price;
+  @override
+  final double quantity;
+  @override
   final String taxName1;
   @override
   final double taxRate1;
@@ -468,9 +570,23 @@ class _$ProductEntity extends ProductEntity {
   @override
   final double taxRate2;
   @override
+  final String taxName3;
+  @override
+  final double taxRate3;
+  @override
   final String customValue1;
   @override
   final String customValue2;
+  @override
+  final String customValue3;
+  @override
+  final String customValue4;
+  @override
+  final String projectId;
+  @override
+  final String vendorId;
+  @override
+  final bool isChanged;
   @override
   final int createdAt;
   @override
@@ -480,9 +596,13 @@ class _$ProductEntity extends ProductEntity {
   @override
   final bool isDeleted;
   @override
-  final bool isOwner;
+  final String createdUserId;
   @override
-  final int id;
+  final String assignedUserId;
+  @override
+  final EntityType subEntityType;
+  @override
+  final String id;
 
   factory _$ProductEntity([void Function(ProductEntityBuilder) updates]) =>
       (new ProductEntityBuilder()..update(updates)).build();
@@ -491,17 +611,28 @@ class _$ProductEntity extends ProductEntity {
       {this.productKey,
       this.notes,
       this.cost,
+      this.price,
+      this.quantity,
       this.taxName1,
       this.taxRate1,
       this.taxName2,
       this.taxRate2,
+      this.taxName3,
+      this.taxRate3,
       this.customValue1,
       this.customValue2,
+      this.customValue3,
+      this.customValue4,
+      this.projectId,
+      this.vendorId,
+      this.isChanged,
       this.createdAt,
       this.updatedAt,
       this.archivedAt,
       this.isDeleted,
-      this.isOwner,
+      this.createdUserId,
+      this.assignedUserId,
+      this.subEntityType,
       this.id})
       : super._() {
     if (productKey == null) {
@@ -512,6 +643,12 @@ class _$ProductEntity extends ProductEntity {
     }
     if (cost == null) {
       throw new BuiltValueNullFieldError('ProductEntity', 'cost');
+    }
+    if (price == null) {
+      throw new BuiltValueNullFieldError('ProductEntity', 'price');
+    }
+    if (quantity == null) {
+      throw new BuiltValueNullFieldError('ProductEntity', 'quantity');
     }
     if (taxName1 == null) {
       throw new BuiltValueNullFieldError('ProductEntity', 'taxName1');
@@ -524,6 +661,12 @@ class _$ProductEntity extends ProductEntity {
     }
     if (taxRate2 == null) {
       throw new BuiltValueNullFieldError('ProductEntity', 'taxRate2');
+    }
+    if (taxName3 == null) {
+      throw new BuiltValueNullFieldError('ProductEntity', 'taxName3');
+    }
+    if (taxRate3 == null) {
+      throw new BuiltValueNullFieldError('ProductEntity', 'taxRate3');
     }
     if (customValue1 == null) {
       throw new BuiltValueNullFieldError('ProductEntity', 'customValue1');
@@ -547,17 +690,28 @@ class _$ProductEntity extends ProductEntity {
         productKey == other.productKey &&
         notes == other.notes &&
         cost == other.cost &&
+        price == other.price &&
+        quantity == other.quantity &&
         taxName1 == other.taxName1 &&
         taxRate1 == other.taxRate1 &&
         taxName2 == other.taxName2 &&
         taxRate2 == other.taxRate2 &&
+        taxName3 == other.taxName3 &&
+        taxRate3 == other.taxRate3 &&
         customValue1 == other.customValue1 &&
         customValue2 == other.customValue2 &&
+        customValue3 == other.customValue3 &&
+        customValue4 == other.customValue4 &&
+        projectId == other.projectId &&
+        vendorId == other.vendorId &&
+        isChanged == other.isChanged &&
         createdAt == other.createdAt &&
         updatedAt == other.updatedAt &&
         archivedAt == other.archivedAt &&
         isDeleted == other.isDeleted &&
-        isOwner == other.isOwner &&
+        createdUserId == other.createdUserId &&
+        assignedUserId == other.assignedUserId &&
+        subEntityType == other.subEntityType &&
         id == other.id;
   }
 
@@ -578,22 +732,28 @@ class _$ProductEntity extends ProductEntity {
                                                     $jc(
                                                         $jc(
                                                             $jc(
-                                                                0,
-                                                                productKey
-                                                                    .hashCode),
-                                                            notes.hashCode),
-                                                        cost.hashCode),
-                                                    taxName1.hashCode),
-                                                taxRate1.hashCode),
-                                            taxName2.hashCode),
-                                        taxRate2.hashCode),
-                                    customValue1.hashCode),
-                                customValue2.hashCode),
-                            createdAt.hashCode),
-                        updatedAt.hashCode),
-                    archivedAt.hashCode),
-                isDeleted.hashCode),
-            isOwner.hashCode),
+                                                                $jc(
+                                                                    $jc(
+                                                                        $jc(
+                                                                            $jc($jc($jc($jc($jc($jc($jc($jc(0, productKey.hashCode), notes.hashCode), cost.hashCode), price.hashCode), quantity.hashCode), taxName1.hashCode), taxRate1.hashCode),
+                                                                                taxName2.hashCode),
+                                                                            taxRate2.hashCode),
+                                                                        taxName3.hashCode),
+                                                                    taxRate3.hashCode),
+                                                                customValue1.hashCode),
+                                                            customValue2.hashCode),
+                                                        customValue3.hashCode),
+                                                    customValue4.hashCode),
+                                                projectId.hashCode),
+                                            vendorId.hashCode),
+                                        isChanged.hashCode),
+                                    createdAt.hashCode),
+                                updatedAt.hashCode),
+                            archivedAt.hashCode),
+                        isDeleted.hashCode),
+                    createdUserId.hashCode),
+                assignedUserId.hashCode),
+            subEntityType.hashCode),
         id.hashCode));
   }
 
@@ -603,17 +763,28 @@ class _$ProductEntity extends ProductEntity {
           ..add('productKey', productKey)
           ..add('notes', notes)
           ..add('cost', cost)
+          ..add('price', price)
+          ..add('quantity', quantity)
           ..add('taxName1', taxName1)
           ..add('taxRate1', taxRate1)
           ..add('taxName2', taxName2)
           ..add('taxRate2', taxRate2)
+          ..add('taxName3', taxName3)
+          ..add('taxRate3', taxRate3)
           ..add('customValue1', customValue1)
           ..add('customValue2', customValue2)
+          ..add('customValue3', customValue3)
+          ..add('customValue4', customValue4)
+          ..add('projectId', projectId)
+          ..add('vendorId', vendorId)
+          ..add('isChanged', isChanged)
           ..add('createdAt', createdAt)
           ..add('updatedAt', updatedAt)
           ..add('archivedAt', archivedAt)
           ..add('isDeleted', isDeleted)
-          ..add('isOwner', isOwner)
+          ..add('createdUserId', createdUserId)
+          ..add('assignedUserId', assignedUserId)
+          ..add('subEntityType', subEntityType)
           ..add('id', id))
         .toString();
   }
@@ -635,6 +806,14 @@ class ProductEntityBuilder
   double get cost => _$this._cost;
   set cost(double cost) => _$this._cost = cost;
 
+  double _price;
+  double get price => _$this._price;
+  set price(double price) => _$this._price = price;
+
+  double _quantity;
+  double get quantity => _$this._quantity;
+  set quantity(double quantity) => _$this._quantity = quantity;
+
   String _taxName1;
   String get taxName1 => _$this._taxName1;
   set taxName1(String taxName1) => _$this._taxName1 = taxName1;
@@ -651,6 +830,14 @@ class ProductEntityBuilder
   double get taxRate2 => _$this._taxRate2;
   set taxRate2(double taxRate2) => _$this._taxRate2 = taxRate2;
 
+  String _taxName3;
+  String get taxName3 => _$this._taxName3;
+  set taxName3(String taxName3) => _$this._taxName3 = taxName3;
+
+  double _taxRate3;
+  double get taxRate3 => _$this._taxRate3;
+  set taxRate3(double taxRate3) => _$this._taxRate3 = taxRate3;
+
   String _customValue1;
   String get customValue1 => _$this._customValue1;
   set customValue1(String customValue1) => _$this._customValue1 = customValue1;
@@ -658,6 +845,26 @@ class ProductEntityBuilder
   String _customValue2;
   String get customValue2 => _$this._customValue2;
   set customValue2(String customValue2) => _$this._customValue2 = customValue2;
+
+  String _customValue3;
+  String get customValue3 => _$this._customValue3;
+  set customValue3(String customValue3) => _$this._customValue3 = customValue3;
+
+  String _customValue4;
+  String get customValue4 => _$this._customValue4;
+  set customValue4(String customValue4) => _$this._customValue4 = customValue4;
+
+  String _projectId;
+  String get projectId => _$this._projectId;
+  set projectId(String projectId) => _$this._projectId = projectId;
+
+  String _vendorId;
+  String get vendorId => _$this._vendorId;
+  set vendorId(String vendorId) => _$this._vendorId = vendorId;
+
+  bool _isChanged;
+  bool get isChanged => _$this._isChanged;
+  set isChanged(bool isChanged) => _$this._isChanged = isChanged;
 
   int _createdAt;
   int get createdAt => _$this._createdAt;
@@ -675,13 +882,24 @@ class ProductEntityBuilder
   bool get isDeleted => _$this._isDeleted;
   set isDeleted(bool isDeleted) => _$this._isDeleted = isDeleted;
 
-  bool _isOwner;
-  bool get isOwner => _$this._isOwner;
-  set isOwner(bool isOwner) => _$this._isOwner = isOwner;
+  String _createdUserId;
+  String get createdUserId => _$this._createdUserId;
+  set createdUserId(String createdUserId) =>
+      _$this._createdUserId = createdUserId;
 
-  int _id;
-  int get id => _$this._id;
-  set id(int id) => _$this._id = id;
+  String _assignedUserId;
+  String get assignedUserId => _$this._assignedUserId;
+  set assignedUserId(String assignedUserId) =>
+      _$this._assignedUserId = assignedUserId;
+
+  EntityType _subEntityType;
+  EntityType get subEntityType => _$this._subEntityType;
+  set subEntityType(EntityType subEntityType) =>
+      _$this._subEntityType = subEntityType;
+
+  String _id;
+  String get id => _$this._id;
+  set id(String id) => _$this._id = id;
 
   ProductEntityBuilder();
 
@@ -690,17 +908,28 @@ class ProductEntityBuilder
       _productKey = _$v.productKey;
       _notes = _$v.notes;
       _cost = _$v.cost;
+      _price = _$v.price;
+      _quantity = _$v.quantity;
       _taxName1 = _$v.taxName1;
       _taxRate1 = _$v.taxRate1;
       _taxName2 = _$v.taxName2;
       _taxRate2 = _$v.taxRate2;
+      _taxName3 = _$v.taxName3;
+      _taxRate3 = _$v.taxRate3;
       _customValue1 = _$v.customValue1;
       _customValue2 = _$v.customValue2;
+      _customValue3 = _$v.customValue3;
+      _customValue4 = _$v.customValue4;
+      _projectId = _$v.projectId;
+      _vendorId = _$v.vendorId;
+      _isChanged = _$v.isChanged;
       _createdAt = _$v.createdAt;
       _updatedAt = _$v.updatedAt;
       _archivedAt = _$v.archivedAt;
       _isDeleted = _$v.isDeleted;
-      _isOwner = _$v.isOwner;
+      _createdUserId = _$v.createdUserId;
+      _assignedUserId = _$v.assignedUserId;
+      _subEntityType = _$v.subEntityType;
       _id = _$v.id;
       _$v = null;
     }
@@ -727,17 +956,28 @@ class ProductEntityBuilder
             productKey: productKey,
             notes: notes,
             cost: cost,
+            price: price,
+            quantity: quantity,
             taxName1: taxName1,
             taxRate1: taxRate1,
             taxName2: taxName2,
             taxRate2: taxRate2,
+            taxName3: taxName3,
+            taxRate3: taxRate3,
             customValue1: customValue1,
             customValue2: customValue2,
+            customValue3: customValue3,
+            customValue4: customValue4,
+            projectId: projectId,
+            vendorId: vendorId,
+            isChanged: isChanged,
             createdAt: createdAt,
             updatedAt: updatedAt,
             archivedAt: archivedAt,
             isDeleted: isDeleted,
-            isOwner: isOwner,
+            createdUserId: createdUserId,
+            assignedUserId: assignedUserId,
+            subEntityType: subEntityType,
             id: id);
     replace(_$result);
     return _$result;

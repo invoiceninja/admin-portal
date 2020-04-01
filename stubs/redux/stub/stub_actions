@@ -1,42 +1,50 @@
 import 'dart:async';
-import 'package:flutter/widgets.dart';
 import 'package:built_collection/built_collection.dart';
+import 'package:flutter/widgets.dart';
+import 'package:flutter_redux/flutter_redux.dart';
+import 'package:invoiceninja_flutter/constants.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
-import 'package:flutter_redux/flutter_redux.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
-import 'package:invoiceninja_flutter/utils/localization.dart';
+import 'package:invoiceninja_flutter/redux/settings/settings_actions.dart';
 import 'package:invoiceninja_flutter/utils/completers.dart';
+import 'package:invoiceninja_flutter/utils/localization.dart';
+import 'package:invoiceninja_flutter/utils/platforms.dart';
 
-class ViewStubList implements PersistUI {
-  ViewStubList({@required this.context, this.force = false});
+class ViewStubList extends AbstractNavigatorAction implements PersistUI {
+  ViewStubList({
+    @required NavigatorState navigator,
+    this.force = false,
+  }) : super(navigator: navigator);
 
-  final BuildContext context;
   final bool force;
 }
 
-class ViewStub implements PersistUI {
+class ViewStub extends AbstractNavigatorAction
+    implements PersistUI, PersistPrefs {
   ViewStub({
-              @required this.stubId,
-              @required this.context,
-              this.force = false,
-            });
+    @required NavigatorState navigator,
+    @required this.stubId,
+    this.force = false,
+  }) : super(navigator: navigator);
 
-  final int stubId;
-  final BuildContext context;
+  final String stubId;
   final bool force;
 }
 
-class EditStub implements PersistUI {
+class EditStub extends AbstractNavigatorAction
+    implements PersistUI, PersistPrefs {
   EditStub(
-                {@required this.stub,
-                @required this.context,
-                this.completer,
-                this.force = false);
+      {@required this.stub,
+      @required NavigatorState navigator,
+      this.completer,
+      this.cancelCompleter,
+      this.force = false})
+      : super(navigator: navigator);
 
   final StubEntity stub;
-  final BuildContext context;
   final Completer completer;
+  final Completer cancelCompleter;
   final bool force;
 }
 
@@ -47,18 +55,17 @@ class UpdateStub implements PersistUI {
 }
 
 class LoadStub {
-  LoadStub({this.completer, this.stubId, this.loadActivities = false});
+  LoadStub({this.completer, this.stubId});
 
   final Completer completer;
-  final int stubId;
-  final bool loadActivities;
+  final String stubId;
 }
 
 class LoadStubActivity {
   LoadStubActivity({this.completer, this.stubId});
 
   final Completer completer;
-  final int stubId;
+  final String stubId;
 }
 
 class LoadStubs {
@@ -142,67 +149,65 @@ class SaveStubFailure implements StopSaving {
   final Object error;
 }
 
-class ArchiveStubRequest implements StartSaving {
-  ArchiveStubRequest(this.completer, this.stubId);
+class ArchiveStubsRequest implements StartSaving {
+  ArchiveStubsRequest(this.completer, this.stubIds);
 
   final Completer completer;
-  final int stubId;
+  final List<String> stubIds;
 }
 
-class ArchiveStubSuccess implements StopSaving, PersistData {
-  ArchiveStubSuccess(this.stub);
+class ArchiveStubsSuccess implements StopSaving, PersistData {
+  ArchiveStubsSuccess(this.stubs);
 
-  final StubEntity stub;
+  final List<StubEntity> stubs;
 }
 
-class ArchiveStubFailure implements StopSaving {
-  ArchiveStubFailure(this.stub);
+class ArchiveStubsFailure implements StopSaving {
+  ArchiveStubsFailure(this.stubs);
 
-  final StubEntity stub;
+  final List<StubEntity> stubs;
 }
 
-class DeleteStubRequest implements StartSaving {
-  DeleteStubRequest(this.completer, this.stubId);
+class DeleteStubsRequest implements StartSaving {
+  DeleteStubsRequest(this.completer, this.stubIds);
 
   final Completer completer;
-  final int stubId;
+  final List<String> stubIds;
 }
 
-class DeleteStubSuccess implements StopSaving, PersistData {
-  DeleteStubSuccess(this.stub);
+class DeleteStubsSuccess implements StopSaving, PersistData {
+  DeleteStubsSuccess(this.stubs);
 
-  final StubEntity stub;
+  final List<StubEntity> stubs;
 }
 
-class DeleteStubFailure implements StopSaving {
-  DeleteStubFailure(this.stub);
+class DeleteStubsFailure implements StopSaving {
+  DeleteStubsFailure(this.stubs);
 
-  final StubEntity stub;
+  final List<StubEntity> stubs;
 }
 
-class RestoreStubRequest implements StartSaving {
-  RestoreStubRequest(this.completer, this.stubId);
+class RestoreStubsRequest implements StartSaving {
+  RestoreStubsRequest(this.completer, this.stubIds);
 
   final Completer completer;
-  final int stubId;
+  final List<String> stubIds;
 }
 
-class RestoreStubSuccess implements StopSaving, PersistData {
-  RestoreStubSuccess(this.stub);
+class RestoreStubsSuccess implements StopSaving, PersistData {
+  RestoreStubsSuccess(this.stubs);
 
-  final StubEntity stub;
+  final List<StubEntity> stubs;
 }
 
-class RestoreStubFailure implements StopSaving {
-  RestoreStubFailure(this.stub);
+class RestoreStubsFailure implements StopSaving {
+  RestoreStubsFailure(this.stubs);
 
-  final StubEntity stub;
+  final List<StubEntity> stubs;
 }
 
 
-
-
-class FilterStubs {
+class FilterStubs implements PersistUI {
   FilterStubs(this.filter);
 
   final String filter;
@@ -232,36 +237,94 @@ class FilterStubsByCustom2 implements PersistUI {
   final String value;
 }
 
+class FilterStubsByCustom3 implements PersistUI {
+  FilterStubsByCustom3(this.value);
+
+  final String value;
+}
+
+class FilterStubsByCustom4 implements PersistUI {
+  FilterStubsByCustom4(this.value);
+
+  final String value;
+}
+
 class FilterStubsByEntity implements PersistUI {
   FilterStubsByEntity({this.entityId, this.entityType});
 
-  final int entityId;
+  final String entityId;
   final EntityType entityType;
 }
 
 
 void handleStubAction(
-    BuildContext context, StubEntity stub, EntityAction action) {
+    BuildContext context, List<BaseEntity> stubs, EntityAction action) {
+
+  if (stubs.isEmpty) {
+    return;
+  }
+
   final store = StoreProvider.of<AppState>(context);
   final state = store.state;
-  final CompanyEntity company = state.selectedCompany;
+  final CompanyEntity company = state.company;
   final localization = AppLocalization.of(context);
+  final stub = stubs.first as StubEntity;
+  final stubIds = stubs.map((stub) => stub.id).toList();
 
   switch (action) {
     case EntityAction.edit:
-      store.dispatch(EditStub(context: context, stub: stub));
+      editEntity(context: context, entity: stub);
       break;
     case EntityAction.restore:
-      store.dispatch(RestoreStubRequest(
-          snackBarCompleter(context, localization.restoredStub), stub.id));
+      store.dispatch(RestoreStubsRequest(
+          snackBarCompleter<Null>(context, localization.restoredStub), stubIds));
       break;
     case EntityAction.archive:
-      store.dispatch(ArchiveStubRequest(
-          snackBarCompleter(context, localization.archivedStub), stub.id));
+      store.dispatch(ArchiveStubsRequest(
+          snackBarCompleter<Null>(context, localization.archivedStub), stubIds));
       break;
     case EntityAction.delete:
-      store.dispatch(DeleteStubRequest(
-          snackBarCompleter(context, localization.deletedStub), stub.id));
+      store.dispatch(DeleteStubsRequest(
+          snackBarCompleter<Null>(context, localization.deletedStub), stubIds));
+      break;
+    case EntityAction.toggleMultiselect:
+      if (!store.state.stubListState.isInMultiselect()) {
+        store.dispatch(StartStubMultiselect());
+      }
+
+      if (stubs.isEmpty) {
+        break;
+      }
+
+      for (final stub in stubs) {
+        if (!store.state.stubListState.isSelected(stub.id)) {
+          store.dispatch(
+              AddToStubMultiselect(entity: stub));
+        } else {
+          store.dispatch(
+              RemoveFromStubMultiselect(entity: stub));
+        }
+      }
       break;
   }
+}
+
+class StartStubMultiselect {
+  StartStubMultiselect();
+}
+
+class AddToStubMultiselect {
+  AddToStubMultiselect({@required this.entity});
+
+  final BaseEntity entity;
+}
+
+class RemoveFromStubMultiselect {
+  RemoveFromStubMultiselect({@required this.entity});
+
+  final BaseEntity entity;
+}
+
+class ClearStubMultiselect {
+  ClearStubMultiselect();
 }

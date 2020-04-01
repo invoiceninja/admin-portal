@@ -1,0 +1,38 @@
+name: Run Tests
+on: [push, pull_request]
+jobs:
+  drive:
+    env:
+      staging_secret: ${{secrets.staging_secret}}
+      staging_url: ${{secrets.staging_url}}
+      firebase_ios: ${{secrets.firebase_ios}}
+    strategy:
+      matrix:
+        device:
+          - "iPhone 11"
+          - "iPad Air"
+      fail-fast: false
+    runs-on: macOS-latest
+    steps:
+      - name: List all simulators
+        run: "xcrun instruments -s"
+      - name: Start Simulator
+        run: |
+          UDID=$(
+            xcrun instruments -s | grep "${{ matrix.device }} (" | cut -d'[' -f 2 | cut -d']' -f 1
+          )
+          xcrun simctl boot "${UDID:?No Simulator with this name found}"
+      - uses: actions/checkout@v1
+      - uses: subosito/flutter-action@v1
+        with:
+          channel: 'beta'
+      - run: flutter pub get
+      - run: |
+          cp android/app/build.gradle.prod android/app/build.gradle
+          cp lib/.env.dart.example lib/.env.dart
+          sed -i -e 's/user/medium/g' lib/.env.dart
+          sed -i -e 's/\/example.com/\/${{secrets.staging_url}}/g' lib/.env.dart
+          sed -i -e 's/secret/${{secrets.staging_secret}}/g' lib/.env.dart
+          echo ${{secrets.firebase_ios}} | base64 --decode > ios/Runner/GoogleService-Info.plist
+      - name: Run Tests
+        run: flutter drive --target=test_driver/login_it.dart

@@ -2,13 +2,16 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:invoiceninja_flutter/ui/invoice/edit/invoice_edit_items.dart';
+import 'package:invoiceninja_flutter/ui/invoice/edit/invoice_edit_items_desktop.dart';
 import 'package:redux/redux.dart';
 import 'package:invoiceninja_flutter/redux/invoice/invoice_actions.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 
 class InvoiceEditItemsScreen extends StatelessWidget {
-  const InvoiceEditItemsScreen({Key key}) : super(key: key);
+  const InvoiceEditItemsScreen({
+    Key key,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -17,9 +20,15 @@ class InvoiceEditItemsScreen extends StatelessWidget {
         return InvoiceEditItemsVM.fromStore(store);
       },
       builder: (context, viewModel) {
-        return InvoiceEditItems(
-          viewModel: viewModel,
-        );
+        if (viewModel.state.prefState.isDesktop) {
+          return InvoiceEditItemsDesktop(
+            viewModel: viewModel,
+          );
+        } else {
+          return InvoiceEditItems(
+            viewModel: viewModel,
+          );
+        }
       },
     );
   }
@@ -27,17 +36,23 @@ class InvoiceEditItemsScreen extends StatelessWidget {
 
 class EntityEditItemsVM {
   EntityEditItemsVM({
+    @required this.state,
     @required this.company,
     @required this.invoice,
-    @required this.invoiceItem,
+    @required this.addLineItem,
+    @required this.deleteLineItem,
+    @required this.invoiceItemIndex,
     @required this.onRemoveInvoiceItemPressed,
     @required this.onDoneInvoiceItemPressed,
     @required this.onChangedInvoiceItem,
   });
 
+  final AppState state;
   final CompanyEntity company;
   final InvoiceEntity invoice;
-  final InvoiceItemEntity invoiceItem;
+  final int invoiceItemIndex;
+  final Function addLineItem;
+  final Function deleteLineItem;
   final Function(int) onRemoveInvoiceItemPressed;
   final Function onDoneInvoiceItemPressed;
   final Function(InvoiceItemEntity, int) onChangedInvoiceItem;
@@ -45,16 +60,22 @@ class EntityEditItemsVM {
 
 class InvoiceEditItemsVM extends EntityEditItemsVM {
   InvoiceEditItemsVM({
+    AppState state,
     CompanyEntity company,
     InvoiceEntity invoice,
-    InvoiceItemEntity invoiceItem,
+    int invoiceItemIndex,
+    Function addLineItem,
+    Function(int) deleteLineItem,
     Function(int) onRemoveInvoiceItemPressed,
     Function onDoneInvoiceItemPressed,
     Function(InvoiceItemEntity, int) onChangedInvoiceItem,
   }) : super(
+          state: state,
           company: company,
           invoice: invoice,
-          invoiceItem: invoiceItem,
+          addLineItem: addLineItem,
+          deleteLineItem: deleteLineItem,
+          invoiceItemIndex: invoiceItemIndex,
           onRemoveInvoiceItemPressed: onRemoveInvoiceItemPressed,
           onDoneInvoiceItemPressed: onDoneInvoiceItemPressed,
           onChangedInvoiceItem: onChangedInvoiceItem,
@@ -65,15 +86,23 @@ class InvoiceEditItemsVM extends EntityEditItemsVM {
     final invoice = state.invoiceUIState.editing;
 
     return InvoiceEditItemsVM(
-        company: state.selectedCompany,
+        state: state,
+        company: state.company,
         invoice: invoice,
-        invoiceItem: state.invoiceUIState.editingItem,
+        invoiceItemIndex: state.invoiceUIState.editingItemIndex,
+        addLineItem: () =>
+            store.dispatch(AddInvoiceItem(invoiceItem: InvoiceItemEntity())),
+        deleteLineItem: null,
         onRemoveInvoiceItemPressed: (index) =>
             store.dispatch(DeleteInvoiceItem(index)),
         onDoneInvoiceItemPressed: () => store.dispatch(EditInvoiceItem()),
         onChangedInvoiceItem: (invoiceItem, index) {
-          store.dispatch(
-              UpdateInvoiceItem(invoiceItem: invoiceItem, index: index));
+          if (index == invoice.lineItems.length) {
+            store.dispatch(AddInvoiceItem(invoiceItem: invoiceItem));
+          } else {
+            store.dispatch(
+                UpdateInvoiceItem(invoiceItem: invoiceItem, index: index));
+          }
         });
   }
 }

@@ -15,8 +15,8 @@ abstract class InvoiceState
   factory InvoiceState() {
     return _$InvoiceState._(
       lastUpdated: 0,
-      map: BuiltMap<int, InvoiceEntity>(),
-      list: BuiltList<int>(),
+      map: BuiltMap<String, InvoiceEntity>(),
+      list: BuiltList<String>(),
     );
   }
 
@@ -25,9 +25,9 @@ abstract class InvoiceState
   @nullable
   int get lastUpdated;
 
-  BuiltMap<int, InvoiceEntity> get map;
+  BuiltMap<String, InvoiceEntity> get map;
 
-  InvoiceEntity get(int invoiceId) {
+  InvoiceEntity get(String invoiceId) {
     if (map.containsKey(invoiceId)) {
       return map[invoiceId];
     } else {
@@ -35,7 +35,7 @@ abstract class InvoiceState
     }
   }
 
-  BuiltList<int> get list;
+  BuiltList<String> get list;
 
   bool get isStale {
     if (!isLoaded) {
@@ -48,6 +48,19 @@ abstract class InvoiceState
 
   bool get isLoaded => lastUpdated != null && lastUpdated > 0;
 
+  InvoiceState loadInvoices(BuiltList<InvoiceEntity> clients) {
+    final map = Map<String, InvoiceEntity>.fromIterable(
+      clients,
+      key: (dynamic item) => item.id,
+      value: (dynamic item) => item,
+    );
+
+    return rebuild((b) => b
+      ..lastUpdated = DateTime.now().millisecondsSinceEpoch
+      ..map.addAll(map)
+      ..list.replace((map.keys.toList() + list.toList()).toSet().toList()));
+  }
+
   static Serializer<InvoiceState> get serializer => _$invoiceStateSerializer;
 }
 
@@ -56,11 +69,9 @@ abstract class InvoiceUIState extends Object
     implements Built<InvoiceUIState, InvoiceUIStateBuilder> {
   factory InvoiceUIState() {
     return _$InvoiceUIState._(
-      listUIState:
-          ListUIState(InvoiceFields.invoiceNumber, sortAscending: false),
+      listUIState: ListUIState(InvoiceFields.invoiceNumber, sortAscending: false),
       editing: InvoiceEntity(),
-      editingItem: InvoiceItemEntity(),
-      selectedId: 0,
+      selectedId: '',
     );
   }
 
@@ -70,10 +81,14 @@ abstract class InvoiceUIState extends Object
   InvoiceEntity get editing;
 
   @nullable
-  InvoiceItemEntity get editingItem;
+  @BuiltValueField(serialize: false)
+  int get editingItemIndex;
 
   @override
   bool get isCreatingNew => editing.isNew;
+
+  @override
+  String get editingId => editing.id;
 
   static Serializer<InvoiceUIState> get serializer =>
       _$invoiceUIStateSerializer;

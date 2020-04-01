@@ -1,22 +1,21 @@
 import 'dart:async';
+
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
-import 'package:invoiceninja_flutter/redux/client/client_actions.dart';
+import 'package:invoiceninja_flutter/data/models/models.dart';
+import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
+import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/redux/document/document_actions.dart';
-import 'package:invoiceninja_flutter/redux/ui/ui_actions.dart';
+import 'package:invoiceninja_flutter/redux/quote/quote_actions.dart';
 import 'package:invoiceninja_flutter/ui/app/dialogs/error_dialog.dart';
 import 'package:invoiceninja_flutter/ui/app/entities/entity_actions_dialog.dart';
+import 'package:invoiceninja_flutter/ui/app/snackbar_row.dart';
 import 'package:invoiceninja_flutter/ui/invoice/view/invoice_view.dart';
 import 'package:invoiceninja_flutter/ui/invoice/view/invoice_view_vm.dart';
-import 'package:invoiceninja_flutter/ui/quote/quote_screen.dart';
 import 'package:invoiceninja_flutter/utils/completers.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:redux/redux.dart';
-import 'package:invoiceninja_flutter/redux/quote/quote_actions.dart';
-import 'package:invoiceninja_flutter/data/models/models.dart';
-import 'package:invoiceninja_flutter/redux/app/app_state.dart';
-import 'package:invoiceninja_flutter/ui/app/snackbar_row.dart';
 
 class QuoteViewScreen extends StatelessWidget {
   const QuoteViewScreen({Key key}) : super(key: key);
@@ -26,7 +25,7 @@ class QuoteViewScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return StoreConnector<AppState, QuoteViewVM>(
-      distinct: true,
+      //distinct: true,
       converter: (Store<AppState> store) {
         return QuoteViewVM.fromStore(store);
       },
@@ -48,12 +47,11 @@ class QuoteViewVM extends EntityViewVM {
     bool isSaving,
     bool isDirty,
     Function(BuildContext, EntityAction) onEntityAction,
-    Function(BuildContext, [InvoiceItemEntity]) onEditPressed,
+    Function(BuildContext, [int]) onEditPressed,
     Function(BuildContext, [bool]) onClientPressed,
     Function(BuildContext) onPaymentsPressed,
     Function(BuildContext, PaymentEntity) onPaymentPressed,
     Function(BuildContext) onRefreshed,
-    Function onBackPressed,
     Function(BuildContext, String) onUploadDocument,
     Function(BuildContext, DocumentEntity) onDeleteDocument,
     Function(BuildContext, DocumentEntity) onViewExpense,
@@ -70,7 +68,6 @@ class QuoteViewVM extends EntityViewVM {
           onPaymentsPressed: onPaymentsPressed,
           onPaymentPressed: onPaymentPressed,
           onRefreshed: onRefreshed,
-          onBackPressed: onBackPressed,
           onUploadDocument: onUploadDocument,
           onDeleteDocument: onDeleteDocument,
           onViewExpense: onViewExpense,
@@ -84,7 +81,7 @@ class QuoteViewVM extends EntityViewVM {
         ClientEntity(id: quote.clientId);
 
     Future<Null> _handleRefresh(BuildContext context) {
-      final completer = snackBarCompleter(
+      final completer = snackBarCompleter<Null>(
           context, AppLocalization.of(context).refreshComplete);
       store.dispatch(LoadQuote(completer: completer, quoteId: quote.id));
       return completer.future;
@@ -92,47 +89,32 @@ class QuoteViewVM extends EntityViewVM {
 
     return QuoteViewVM(
       state: state,
-      company: state.selectedCompany,
+      company: state.company,
       isSaving: state.isSaving,
       isDirty: quote.isNew,
       invoice: quote,
       client: client,
-      onEditPressed: (BuildContext context, [InvoiceItemEntity invoiceItem]) {
-        final Completer<InvoiceEntity> completer =
-            new Completer<InvoiceEntity>();
-        store.dispatch(EditQuote(
-            quote: quote,
+      onEditPressed: (BuildContext context, [int index]) {
+        editEntity(
             context: context,
-            completer: completer,
-            quoteItem: invoiceItem));
-        completer.future.then((invoice) {
-          Scaffold.of(context).showSnackBar(SnackBar(
-              content: SnackBarRow(
-            message: AppLocalization.of(context).updatedQuote,
-          )));
-        });
+            entity: quote,
+            subIndex: index,
+            completer: snackBarCompleter<ClientEntity>(
+                context, AppLocalization.of(context).updatedQuote));
       },
       onRefreshed: (context) => _handleRefresh(context),
-      onBackPressed: () {
-        if (state.uiState.currentRoute.contains(QuoteScreen.route)) {
-          store.dispatch(UpdateCurrentRoute(QuoteScreen.route));
-        }
-      },
       onClientPressed: (BuildContext context, [bool longPress = false]) {
         if (longPress) {
           showEntityActionsDialog(
-              user: state.selectedCompany.user,
-              context: context,
-              entity: client,
-              onEntityAction: (BuildContext context, BaseEntity client,
-                      EntityAction action) =>
-                  handleClientAction(context, client, action));
+            context: context,
+            entities: [client],
+          );
         } else {
-          store.dispatch(ViewClient(clientId: client.id, context: context));
+          viewEntity(context: context, entity: client);
         }
       },
       onEntityAction: (BuildContext context, EntityAction action) =>
-          handleQuoteAction(context, quote, action),
+          handleQuoteAction(context, [quote], action),
       onUploadDocument: (BuildContext context, String path) {
         final Completer<DocumentEntity> completer = Completer<DocumentEntity>();
         final document = DocumentEntity().rebuild((b) => b
@@ -155,9 +137,9 @@ class QuoteViewVM extends EntityViewVM {
       },
       onDeleteDocument: (BuildContext context, DocumentEntity document) {
         store.dispatch(DeleteDocumentRequest(
-            snackBarCompleter(
+            snackBarCompleter<Null>(
                 context, AppLocalization.of(context).deletedDocument),
-            document.id));
+            [document.id]));
       },
     );
   }

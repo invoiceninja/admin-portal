@@ -1,3 +1,5 @@
+import 'package:built_collection/built_collection.dart';
+import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:redux/redux.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/redux/company/company_actions.dart';
@@ -13,23 +15,31 @@ EntityUIState expenseUIReducer(ExpenseUIState state, dynamic action) {
     ..selectedId = selectedIdReducer(state.selectedId, action));
 }
 
-Reducer<int> selectedIdReducer = combineReducers([
-  TypedReducer<int, ViewExpense>((selectedId, action) => action.expenseId),
-  TypedReducer<int, AddExpenseSuccess>(
+Reducer<String> selectedIdReducer = combineReducers([
+  TypedReducer<String, ViewExpense>((selectedId, action) => action.expenseId),
+  TypedReducer<String, AddExpenseSuccess>(
       (selectedId, action) => action.expense.id),
-  TypedReducer<int, FilterExpensesByEntity>(
-      (selectedId, action) => action.entityId == null ? selectedId : 0)
+  TypedReducer<String, SelectCompany>((selectedId, action) => ''),
 ]);
 
 final editingReducer = combineReducers<ExpenseEntity>([
   TypedReducer<ExpenseEntity, SaveExpenseSuccess>(_updateEditing),
   TypedReducer<ExpenseEntity, AddExpenseSuccess>(_updateEditing),
-  TypedReducer<ExpenseEntity, RestoreExpenseSuccess>(_updateEditing),
-  TypedReducer<ExpenseEntity, ArchiveExpenseSuccess>(_updateEditing),
-  TypedReducer<ExpenseEntity, DeleteExpenseSuccess>(_updateEditing),
+  TypedReducer<ExpenseEntity, RestoreExpenseSuccess>((expenses, action) {
+    return action.expenses[0];
+  }),
+  TypedReducer<ExpenseEntity, ArchiveExpenseSuccess>((expenses, action) {
+    return action.expenses[0];
+  }),
+  TypedReducer<ExpenseEntity, DeleteExpenseSuccess>((expenses, action) {
+    return action.expenses[0];
+  }),
   TypedReducer<ExpenseEntity, EditExpense>(_updateEditing),
-  TypedReducer<ExpenseEntity, UpdateExpense>(_updateEditing),
+  TypedReducer<ExpenseEntity, UpdateExpense>((expense, action) {
+    return action.expense.rebuild((b) => b..isChanged = true);
+  }),
   TypedReducer<ExpenseEntity, SelectCompany>(_clearEditing),
+  TypedReducer<ExpenseEntity, DiscardChanges>(_clearEditing),
 ]);
 
 ExpenseEntity _clearEditing(ExpenseEntity expense, dynamic action) {
@@ -47,7 +57,14 @@ final expenseListReducer = combineReducers<ListUIState>([
   TypedReducer<ListUIState, FilterExpenses>(_filterExpenses),
   TypedReducer<ListUIState, FilterExpensesByCustom1>(_filterExpensesByCustom1),
   TypedReducer<ListUIState, FilterExpensesByCustom2>(_filterExpensesByCustom2),
+  TypedReducer<ListUIState, FilterExpensesByCustom3>(_filterExpensesByCustom3),
+  TypedReducer<ListUIState, FilterExpensesByCustom4>(_filterExpensesByCustom4),
   TypedReducer<ListUIState, FilterExpensesByEntity>(_filterExpensesByClient),
+  TypedReducer<ListUIState, StartExpenseMultiselect>(_startListMultiselect),
+  TypedReducer<ListUIState, AddToExpenseMultiselect>(_addToListMultiselect),
+  TypedReducer<ListUIState, RemoveFromExpenseMultiselect>(
+      _removeFromListMultiselect),
+  TypedReducer<ListUIState, ClearExpenseMultiselect>(_clearListMultiselect),
 ]);
 
 ListUIState _filterExpensesByClient(
@@ -74,6 +91,26 @@ ListUIState _filterExpensesByCustom2(
         .rebuild((b) => b..custom2Filters.remove(action.value));
   } else {
     return expenseListState.rebuild((b) => b..custom2Filters.add(action.value));
+  }
+}
+
+ListUIState _filterExpensesByCustom3(
+    ListUIState expenseListState, FilterExpensesByCustom3 action) {
+  if (expenseListState.custom3Filters.contains(action.value)) {
+    return expenseListState
+        .rebuild((b) => b..custom3Filters.remove(action.value));
+  } else {
+    return expenseListState.rebuild((b) => b..custom3Filters.add(action.value));
+  }
+}
+
+ListUIState _filterExpensesByCustom4(
+    ListUIState expenseListState, FilterExpensesByCustom4 action) {
+  if (expenseListState.custom4Filters.contains(action.value)) {
+    return expenseListState
+        .rebuild((b) => b..custom4Filters.remove(action.value));
+  } else {
+    return expenseListState.rebuild((b) => b..custom4Filters.add(action.value));
   }
 }
 
@@ -112,6 +149,27 @@ ListUIState _sortExpenses(ListUIState expenseListState, SortExpenses action) {
     ..sortField = action.field);
 }
 
+ListUIState _startListMultiselect(
+    ListUIState expenseListState, StartExpenseMultiselect action) {
+  return expenseListState.rebuild((b) => b..selectedIds = ListBuilder());
+}
+
+ListUIState _addToListMultiselect(
+    ListUIState expenseListState, AddToExpenseMultiselect action) {
+  return expenseListState.rebuild((b) => b..selectedIds.add(action.entity.id));
+}
+
+ListUIState _removeFromListMultiselect(
+    ListUIState expenseListState, RemoveFromExpenseMultiselect action) {
+  return expenseListState
+      .rebuild((b) => b..selectedIds.remove(action.entity.id));
+}
+
+ListUIState _clearListMultiselect(
+    ListUIState expenseListState, ClearExpenseMultiselect action) {
+  return expenseListState.rebuild((b) => b..selectedIds = null);
+}
+
 final expensesReducer = combineReducers<ExpenseState>([
   TypedReducer<ExpenseState, SaveExpenseSuccess>(_updateExpense),
   TypedReducer<ExpenseState, AddExpenseSuccess>(_addExpense),
@@ -130,63 +188,103 @@ final expensesReducer = combineReducers<ExpenseState>([
 
 ExpenseState _archiveExpenseRequest(
     ExpenseState expenseState, ArchiveExpenseRequest action) {
-  final expense = expenseState.map[action.expenseId]
-      .rebuild((b) => b..archivedAt = DateTime.now().millisecondsSinceEpoch);
+  final expenses = action.expenseIds.map((id) => expenseState.map[id]).toList();
 
-  return expenseState.rebuild((b) => b..map[action.expenseId] = expense);
+  for (int i = 0; i < expenses.length; i++) {
+    expenses[i] = expenses[i]
+        .rebuild((b) => b..archivedAt = DateTime.now().millisecondsSinceEpoch);
+  }
+  return expenseState.rebuild((b) {
+    for (final expense in expenses) {
+      b.map[expense.id] = expense;
+    }
+  });
 }
 
 ExpenseState _archiveExpenseSuccess(
     ExpenseState expenseState, ArchiveExpenseSuccess action) {
-  return expenseState
-      .rebuild((b) => b..map[action.expense.id] = action.expense);
+  return expenseState.rebuild((b) {
+    for (final expense in action.expenses) {
+      b.map[expense.id] = expense;
+    }
+  });
 }
 
 ExpenseState _archiveExpenseFailure(
     ExpenseState expenseState, ArchiveExpenseFailure action) {
-  return expenseState
-      .rebuild((b) => b..map[action.expense.id] = action.expense);
+  return expenseState.rebuild((b) {
+    for (final expense in action.expenses) {
+      b.map[expense.id] = expense;
+    }
+  });
 }
 
 ExpenseState _deleteExpenseRequest(
     ExpenseState expenseState, DeleteExpenseRequest action) {
-  final expense = expenseState.map[action.expenseId].rebuild((b) => b
-    ..archivedAt = DateTime.now().millisecondsSinceEpoch
-    ..isDeleted = true);
+  final expenses = action.expenseIds.map((id) => expenseState.map[id]).toList();
 
-  return expenseState.rebuild((b) => b..map[action.expenseId] = expense);
+  for (int i = 0; i < expenses.length; i++) {
+    expenses[i] = expenses[i].rebuild((b) => b
+      ..archivedAt = DateTime.now().millisecondsSinceEpoch
+      ..isDeleted = true);
+  }
+  return expenseState.rebuild((b) {
+    for (final expense in expenses) {
+      b.map[expense.id] = expense;
+    }
+  });
 }
 
 ExpenseState _deleteExpenseSuccess(
     ExpenseState expenseState, DeleteExpenseSuccess action) {
-  return expenseState
-      .rebuild((b) => b..map[action.expense.id] = action.expense);
+  return expenseState.rebuild((b) {
+    for (final expense in action.expenses) {
+      b.map[expense.id] = expense;
+    }
+  });
 }
 
 ExpenseState _deleteExpenseFailure(
     ExpenseState expenseState, DeleteExpenseFailure action) {
-  return expenseState
-      .rebuild((b) => b..map[action.expense.id] = action.expense);
+  return expenseState.rebuild((b) {
+    for (final expense in action.expenses) {
+      b.map[expense.id] = expense;
+    }
+  });
 }
 
 ExpenseState _restoreExpenseRequest(
     ExpenseState expenseState, RestoreExpenseRequest action) {
-  final expense = expenseState.map[action.expenseId].rebuild((b) => b
-    ..archivedAt = null
-    ..isDeleted = false);
-  return expenseState.rebuild((b) => b..map[action.expenseId] = expense);
+  final expenses = action.expenseIds.map((id) => expenseState.map[id]).toList();
+
+  for (int i = 0; i < expenses.length; i++) {
+    expenses[i] = expenses[i].rebuild((b) => b
+      ..archivedAt = null
+      ..isDeleted = false);
+  }
+  return expenseState.rebuild((b) {
+    for (final expense in expenses) {
+      b.map[expense.id] = expense;
+    }
+  });
 }
 
 ExpenseState _restoreExpenseSuccess(
     ExpenseState expenseState, RestoreExpenseSuccess action) {
-  return expenseState
-      .rebuild((b) => b..map[action.expense.id] = action.expense);
+  return expenseState.rebuild((b) {
+    for (final expense in action.expenses) {
+      b.map[expense.id] = expense;
+    }
+  });
 }
 
 ExpenseState _restoreExpenseFailure(
     ExpenseState expenseState, RestoreExpenseFailure action) {
-  return expenseState
-      .rebuild((b) => b..map[action.expense.id] = action.expense);
+  return expenseState.rebuild((b) {
+    for (final expense in action.expenses) {
+      b.map[expense.id] = expense;
+    }
+  });
 }
 
 ExpenseState _addExpense(ExpenseState expenseState, AddExpenseSuccess action) {
@@ -208,14 +306,5 @@ ExpenseState _setLoadedExpense(
 }
 
 ExpenseState _setLoadedExpenses(
-    ExpenseState expenseState, LoadExpensesSuccess action) {
-  final state = expenseState.rebuild((b) => b
-    ..lastUpdated = DateTime.now().millisecondsSinceEpoch
-    ..map.addAll(Map.fromIterable(
-      action.expenses,
-      key: (dynamic item) => item.id,
-      value: (dynamic item) => item,
-    )));
-
-  return state.rebuild((b) => b..list.replace(state.map.keys));
-}
+        ExpenseState expenseState, LoadExpensesSuccess action) =>
+    expenseState.loadExpenses(action.expenses);

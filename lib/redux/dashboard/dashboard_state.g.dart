@@ -6,64 +6,8 @@ part of 'dashboard_state.dart';
 // BuiltValueGenerator
 // **************************************************************************
 
-Serializer<DashboardState> _$dashboardStateSerializer =
-    new _$DashboardStateSerializer();
 Serializer<DashboardUIState> _$dashboardUIStateSerializer =
     new _$DashboardUIStateSerializer();
-
-class _$DashboardStateSerializer
-    implements StructuredSerializer<DashboardState> {
-  @override
-  final Iterable<Type> types = const [DashboardState, _$DashboardState];
-  @override
-  final String wireName = 'DashboardState';
-
-  @override
-  Iterable<Object> serialize(Serializers serializers, DashboardState object,
-      {FullType specifiedType = FullType.unspecified}) {
-    final result = <Object>[];
-    if (object.lastUpdated != null) {
-      result
-        ..add('lastUpdated')
-        ..add(serializers.serialize(object.lastUpdated,
-            specifiedType: const FullType(int)));
-    }
-    if (object.data != null) {
-      result
-        ..add('data')
-        ..add(serializers.serialize(object.data,
-            specifiedType: const FullType(DashboardEntity)));
-    }
-    return result;
-  }
-
-  @override
-  DashboardState deserialize(
-      Serializers serializers, Iterable<Object> serialized,
-      {FullType specifiedType = FullType.unspecified}) {
-    final result = new DashboardStateBuilder();
-
-    final iterator = serialized.iterator;
-    while (iterator.moveNext()) {
-      final key = iterator.current as String;
-      iterator.moveNext();
-      final dynamic value = iterator.current;
-      switch (key) {
-        case 'lastUpdated':
-          result.lastUpdated = serializers.deserialize(value,
-              specifiedType: const FullType(int)) as int;
-          break;
-        case 'data':
-          result.data.replace(serializers.deserialize(value,
-                  specifiedType: const FullType(DashboardEntity))
-              as DashboardEntity);
-          break;
-      }
-    }
-
-    return result.build();
-  }
-}
 
 class _$DashboardUIStateSerializer
     implements StructuredSerializer<DashboardUIState> {
@@ -101,7 +45,7 @@ class _$DashboardUIStateSerializer
       serializers.serialize(object.offset, specifiedType: const FullType(int)),
       'currencyId',
       serializers.serialize(object.currencyId,
-          specifiedType: const FullType(int)),
+          specifiedType: const FullType(String)),
     ];
 
     return result;
@@ -154,113 +98,12 @@ class _$DashboardUIStateSerializer
           break;
         case 'currencyId':
           result.currencyId = serializers.deserialize(value,
-              specifiedType: const FullType(int)) as int;
+              specifiedType: const FullType(String)) as String;
           break;
       }
     }
 
     return result.build();
-  }
-}
-
-class _$DashboardState extends DashboardState {
-  @override
-  final int lastUpdated;
-  @override
-  final DashboardEntity data;
-
-  factory _$DashboardState([void Function(DashboardStateBuilder) updates]) =>
-      (new DashboardStateBuilder()..update(updates)).build();
-
-  _$DashboardState._({this.lastUpdated, this.data}) : super._();
-
-  @override
-  DashboardState rebuild(void Function(DashboardStateBuilder) updates) =>
-      (toBuilder()..update(updates)).build();
-
-  @override
-  DashboardStateBuilder toBuilder() =>
-      new DashboardStateBuilder()..replace(this);
-
-  @override
-  bool operator ==(Object other) {
-    if (identical(other, this)) return true;
-    return other is DashboardState &&
-        lastUpdated == other.lastUpdated &&
-        data == other.data;
-  }
-
-  @override
-  int get hashCode {
-    return $jf($jc($jc(0, lastUpdated.hashCode), data.hashCode));
-  }
-
-  @override
-  String toString() {
-    return (newBuiltValueToStringHelper('DashboardState')
-          ..add('lastUpdated', lastUpdated)
-          ..add('data', data))
-        .toString();
-  }
-}
-
-class DashboardStateBuilder
-    implements Builder<DashboardState, DashboardStateBuilder> {
-  _$DashboardState _$v;
-
-  int _lastUpdated;
-  int get lastUpdated => _$this._lastUpdated;
-  set lastUpdated(int lastUpdated) => _$this._lastUpdated = lastUpdated;
-
-  DashboardEntityBuilder _data;
-  DashboardEntityBuilder get data =>
-      _$this._data ??= new DashboardEntityBuilder();
-  set data(DashboardEntityBuilder data) => _$this._data = data;
-
-  DashboardStateBuilder();
-
-  DashboardStateBuilder get _$this {
-    if (_$v != null) {
-      _lastUpdated = _$v.lastUpdated;
-      _data = _$v.data?.toBuilder();
-      _$v = null;
-    }
-    return this;
-  }
-
-  @override
-  void replace(DashboardState other) {
-    if (other == null) {
-      throw new ArgumentError.notNull('other');
-    }
-    _$v = other as _$DashboardState;
-  }
-
-  @override
-  void update(void Function(DashboardStateBuilder) updates) {
-    if (updates != null) updates(this);
-  }
-
-  @override
-  _$DashboardState build() {
-    _$DashboardState _$result;
-    try {
-      _$result = _$v ??
-          new _$DashboardState._(
-              lastUpdated: lastUpdated, data: _data?.build());
-    } catch (_) {
-      String _$failedField;
-      try {
-        _$failedField = 'data';
-        _data?.build();
-      } catch (e) {
-        throw new BuiltValueNestedFieldError(
-            'DashboardState', _$failedField, e.toString());
-      }
-      rethrow;
-    }
-    replace(_$result);
-    return _$result;
   }
 }
 
@@ -282,7 +125,7 @@ class _$DashboardUIState extends DashboardUIState {
   @override
   final int offset;
   @override
-  final int currencyId;
+  final String currencyId;
 
   factory _$DashboardUIState(
           [void Function(DashboardUIStateBuilder) updates]) =>
@@ -433,9 +276,9 @@ class DashboardUIStateBuilder
   int get offset => _$this._offset;
   set offset(int offset) => _$this._offset = offset;
 
-  int _currencyId;
-  int get currencyId => _$this._currencyId;
-  set currencyId(int currencyId) => _$this._currencyId = currencyId;
+  String _currencyId;
+  String get currencyId => _$this._currencyId;
+  set currencyId(String currencyId) => _$this._currencyId = currencyId;
 
   DashboardUIStateBuilder();
 

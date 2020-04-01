@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'package:built_value/built_value.dart';
 import 'package:built_value/serializer.dart';
 import 'package:built_collection/built_collection.dart';
@@ -5,6 +6,7 @@ import 'package:invoiceninja_flutter/constants.dart';
 import 'package:invoiceninja_flutter/data/models/stub_model.dart';
 import 'package:invoiceninja_flutter/redux/ui/entity_ui_state.dart';
 import 'package:invoiceninja_flutter/redux/ui/list_ui_state.dart';
+import 'package:invoiceninja_flutter/data/models/models.dart';
 
 part 'stub_state.g.dart';
 
@@ -13,8 +15,8 @@ abstract class StubState implements Built<StubState, StubStateBuilder> {
   factory StubState() {
     return _$StubState._(
       lastUpdated: 0,
-      map: BuiltMap<int, StubEntity>(),
-      list: BuiltList<int>(),
+      map: BuiltMap<String, StubEntity>(),
+      list: BuiltList<String>(),
     );
   }
   StubState._();
@@ -22,8 +24,8 @@ abstract class StubState implements Built<StubState, StubStateBuilder> {
   @nullable
   int get lastUpdated;
 
-  BuiltMap<int, StubEntity> get map;
-  BuiltList<int> get list;
+  BuiltMap<String, StubEntity> get map;
+  BuiltList<String> get list;
 
   bool get isStale {
     if (! isLoaded) {
@@ -35,6 +37,20 @@ abstract class StubState implements Built<StubState, StubStateBuilder> {
 
   bool get isLoaded => lastUpdated != null && lastUpdated > 0;
 
+  StubState loadStubs(BuiltList<StubEntity> clients) {
+    final map = Map<String, StubEntity>.fromIterable(
+      clients,
+      key: (dynamic item) => item.id,
+      value: (dynamic item) => item,
+    );
+
+    return rebuild((b) => b
+      ..lastUpdated = DateTime.now().millisecondsSinceEpoch
+      ..map.addAll(map)
+      ..list.replace((map.keys.toList() + list.toList()).toSet().toList()));
+  }
+
+
   static Serializer<StubState> get serializer => _$stubStateSerializer;
 }
 
@@ -44,7 +60,7 @@ abstract class StubUIState extends Object with EntityUIState implements Built<St
     return _$StubUIState._(
       listUIState: ListUIState(StubFields.name),
       editing: StubEntity(),
-      selectedId: 0,
+      selectedId: '',
     );
   }
   StubUIState._();
@@ -54,6 +70,9 @@ abstract class StubUIState extends Object with EntityUIState implements Built<St
 
   @override
   bool get isCreatingNew => editing.isNew;
+
+  @override
+  String get editingId => editing.id;
 
   static Serializer<StubUIState> get serializer => _$stubUIStateSerializer;
 }

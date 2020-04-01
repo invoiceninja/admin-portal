@@ -1,45 +1,47 @@
 import 'dart:async';
-import 'package:flutter/widgets.dart';
+
 import 'package:built_collection/built_collection.dart';
+import 'package:flutter/widgets.dart';
+import 'package:flutter_redux/flutter_redux.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
-import 'package:flutter_redux/flutter_redux.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
-import 'package:invoiceninja_flutter/redux/expense/expense_actions.dart';
-import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:invoiceninja_flutter/utils/completers.dart';
+import 'package:invoiceninja_flutter/utils/localization.dart';
+import 'package:invoiceninja_flutter/utils/platforms.dart';
 
-class ViewVendorList implements PersistUI {
-  ViewVendorList({@required this.context, this.force = false});
+class ViewVendorList extends AbstractNavigatorAction implements PersistUI {
+  ViewVendorList({@required NavigatorState navigator, this.force = false})
+      : super(navigator: navigator);
 
-  final BuildContext context;
   final bool force;
 }
 
-class ViewVendor implements PersistUI {
+class ViewVendor extends AbstractNavigatorAction
+    implements PersistUI, PersistPrefs {
   ViewVendor({
     @required this.vendorId,
-    @required this.context,
+    @required NavigatorState navigator,
     this.force = false,
-  });
+  }) : super(navigator: navigator);
 
-  final int vendorId;
-  final BuildContext context;
+  final String vendorId;
   final bool force;
 }
 
-class EditVendor implements PersistUI {
+class EditVendor extends AbstractNavigatorAction
+    implements PersistUI, PersistPrefs {
   EditVendor(
       {@required this.vendor,
-      @required this.context,
+      @required NavigatorState navigator,
       this.contact,
       this.completer,
       this.cancelCompleter,
-      this.force = false});
+      this.force = false})
+      : super(navigator: navigator);
 
   final VendorEntity vendor;
   final VendorContactEntity contact;
-  final BuildContext context;
   final Completer completer;
   final Completer cancelCompleter;
   final bool force;
@@ -52,18 +54,17 @@ class UpdateVendor implements PersistUI {
 }
 
 class LoadVendor {
-  LoadVendor({this.completer, this.vendorId, this.loadActivities = false});
+  LoadVendor({this.completer, this.vendorId});
 
   final Completer completer;
-  final int vendorId;
-  final bool loadActivities;
+  final String vendorId;
 }
 
 class LoadVendorActivity {
   LoadVendorActivity({this.completer, this.vendorId});
 
   final Completer completer;
-  final int vendorId;
+  final String vendorId;
 }
 
 class LoadVendors {
@@ -147,60 +148,60 @@ class SaveVendorFailure implements StopSaving {
 }
 
 class ArchiveVendorRequest implements StartSaving {
-  ArchiveVendorRequest(this.completer, this.vendorId);
+  ArchiveVendorRequest(this.completer, this.vendorIds);
 
   final Completer completer;
-  final int vendorId;
+  final List<String> vendorIds;
 }
 
 class ArchiveVendorSuccess implements StopSaving, PersistData {
-  ArchiveVendorSuccess(this.vendor);
+  ArchiveVendorSuccess(this.vendors);
 
-  final VendorEntity vendor;
+  final List<VendorEntity> vendors;
 }
 
 class ArchiveVendorFailure implements StopSaving {
-  ArchiveVendorFailure(this.vendor);
+  ArchiveVendorFailure(this.vendors);
 
-  final VendorEntity vendor;
+  final List<VendorEntity> vendors;
 }
 
 class DeleteVendorRequest implements StartSaving {
-  DeleteVendorRequest(this.completer, this.vendorId);
+  DeleteVendorRequest(this.completer, this.vendorIds);
 
   final Completer completer;
-  final int vendorId;
+  final List<String> vendorIds;
 }
 
 class DeleteVendorSuccess implements StopSaving, PersistData {
-  DeleteVendorSuccess(this.vendor);
+  DeleteVendorSuccess(this.vendors);
 
-  final VendorEntity vendor;
+  final List<VendorEntity> vendors;
 }
 
 class DeleteVendorFailure implements StopSaving {
-  DeleteVendorFailure(this.vendor);
+  DeleteVendorFailure(this.vendors);
 
-  final VendorEntity vendor;
+  final List<VendorEntity> vendors;
 }
 
 class RestoreVendorRequest implements StartSaving {
-  RestoreVendorRequest(this.completer, this.vendorId);
+  RestoreVendorRequest(this.completer, this.vendorIds);
 
   final Completer completer;
-  final int vendorId;
+  final List<String> vendorIds;
 }
 
 class RestoreVendorSuccess implements StopSaving, PersistData {
-  RestoreVendorSuccess(this.vendor);
+  RestoreVendorSuccess(this.vendors);
 
-  final VendorEntity vendor;
+  final List<VendorEntity> vendors;
 }
 
 class RestoreVendorFailure implements StopSaving {
-  RestoreVendorFailure(this.vendor);
+  RestoreVendorFailure(this.vendors);
 
-  final VendorEntity vendor;
+  final List<VendorEntity> vendors;
 }
 
 class EditVendorContact implements PersistUI {
@@ -228,7 +229,7 @@ class DeleteVendorContact implements PersistUI {
   final int index;
 }
 
-class FilterVendors {
+class FilterVendors implements PersistUI {
   FilterVendors(this.filter);
 
   final String filter;
@@ -258,40 +259,109 @@ class FilterVendorsByCustom2 implements PersistUI {
   final String value;
 }
 
+class FilterVendorsByCustom3 implements PersistUI {
+  FilterVendorsByCustom3(this.value);
+
+  final String value;
+}
+
+class FilterVendorsByCustom4 implements PersistUI {
+  FilterVendorsByCustom4(this.value);
+
+  final String value;
+}
+
 class FilterVendorsByEntity implements PersistUI {
   FilterVendorsByEntity({this.entityId, this.entityType});
 
-  final int entityId;
+  final String entityId;
   final EntityType entityType;
 }
 
 void handleVendorAction(
-    BuildContext context, VendorEntity vendor, EntityAction action) {
+    BuildContext context, List<BaseEntity> vendors, EntityAction action) {
+  assert(
+      [
+            EntityAction.restore,
+            EntityAction.archive,
+            EntityAction.delete,
+            EntityAction.toggleMultiselect
+          ].contains(action) ||
+          vendors.length == 1,
+      'Cannot perform this action on more than one vendor');
+
+  if (vendors.isEmpty) {
+    return;
+  }
+
   final store = StoreProvider.of<AppState>(context);
   final state = store.state;
-  final CompanyEntity company = state.selectedCompany;
   final localization = AppLocalization.of(context);
+  final vendor = vendors.first as VendorEntity;
+  final vendorIds = vendors.map((vendor) => vendor.id).toList();
 
   switch (action) {
     case EntityAction.edit:
-      store.dispatch(EditVendor(context: context, vendor: vendor));
+      editEntity(context: context, entity: vendor);
       break;
     case EntityAction.newExpense:
-      store.dispatch(EditExpense(
-          expense: ExpenseEntity(company: company, vendor: vendor),
-          context: context));
+      if (isNotMobile(context)) {
+        filterEntitiesByType(
+            context: context,
+            entityType: EntityType.expense,
+            filterEntity: vendor);
+      }
+      createEntity(
+          context: context,
+          entity: ExpenseEntity(state: state, vendor: vendor));
       break;
     case EntityAction.restore:
       store.dispatch(RestoreVendorRequest(
-          snackBarCompleter(context, localization.restoredVendor), vendor.id));
+          snackBarCompleter<Null>(context, localization.restoredVendor),
+          vendorIds));
       break;
     case EntityAction.archive:
       store.dispatch(ArchiveVendorRequest(
-          snackBarCompleter(context, localization.archivedVendor), vendor.id));
+          snackBarCompleter<Null>(context, localization.archivedVendor),
+          vendorIds));
       break;
     case EntityAction.delete:
       store.dispatch(DeleteVendorRequest(
-          snackBarCompleter(context, localization.deletedVendor), vendor.id));
+          snackBarCompleter<Null>(context, localization.deletedVendor),
+          vendorIds));
+      break;
+    case EntityAction.toggleMultiselect:
+      if (!store.state.vendorListState.isInMultiselect()) {
+        store.dispatch(StartVendorMultiselect());
+      }
+
+      if (vendors.isEmpty) {
+        break;
+      }
+
+      for (final vendor in vendors) {
+        if (!store.state.vendorListState.isSelected(vendor.id)) {
+          store.dispatch(AddToVendorMultiselect(entity: vendor));
+        } else {
+          store.dispatch(RemoveFromVendorMultiselect(entity: vendor));
+        }
+      }
       break;
   }
 }
+
+class StartVendorMultiselect {}
+
+class AddToVendorMultiselect {
+  AddToVendorMultiselect({@required this.entity});
+
+  final BaseEntity entity;
+}
+
+class RemoveFromVendorMultiselect {
+  RemoveFromVendorMultiselect({@required this.entity});
+
+  final BaseEntity entity;
+}
+
+class ClearVendorMultiselect {}

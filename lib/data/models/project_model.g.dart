@@ -53,7 +53,7 @@ class _$ProjectListResponseSerializer
           result.data.replace(serializers.deserialize(value,
                   specifiedType: const FullType(
                       BuiltList, const [const FullType(ProjectEntity)]))
-              as BuiltList<dynamic>);
+              as BuiltList<Object>);
           break;
       }
     }
@@ -122,7 +122,7 @@ class _$ProjectEntitySerializer implements StructuredSerializer<ProjectEntity> {
       serializers.serialize(object.name, specifiedType: const FullType(String)),
       'client_id',
       serializers.serialize(object.clientId,
-          specifiedType: const FullType(int)),
+          specifiedType: const FullType(String)),
       'task_rate',
       serializers.serialize(object.taskRate,
           specifiedType: const FullType(double)),
@@ -141,7 +141,19 @@ class _$ProjectEntitySerializer implements StructuredSerializer<ProjectEntity> {
       'custom_value2',
       serializers.serialize(object.customValue2,
           specifiedType: const FullType(String)),
+      'custom_value3',
+      serializers.serialize(object.customValue3,
+          specifiedType: const FullType(String)),
+      'custom_value4',
+      serializers.serialize(object.customValue4,
+          specifiedType: const FullType(String)),
     ];
+    if (object.isChanged != null) {
+      result
+        ..add('isChanged')
+        ..add(serializers.serialize(object.isChanged,
+            specifiedType: const FullType(bool)));
+    }
     if (object.createdAt != null) {
       result
         ..add('created_at')
@@ -166,17 +178,29 @@ class _$ProjectEntitySerializer implements StructuredSerializer<ProjectEntity> {
         ..add(serializers.serialize(object.isDeleted,
             specifiedType: const FullType(bool)));
     }
-    if (object.isOwner != null) {
+    if (object.createdUserId != null) {
       result
-        ..add('is_owner')
-        ..add(serializers.serialize(object.isOwner,
-            specifiedType: const FullType(bool)));
+        ..add('user_id')
+        ..add(serializers.serialize(object.createdUserId,
+            specifiedType: const FullType(String)));
+    }
+    if (object.assignedUserId != null) {
+      result
+        ..add('assigned_user_id')
+        ..add(serializers.serialize(object.assignedUserId,
+            specifiedType: const FullType(String)));
+    }
+    if (object.subEntityType != null) {
+      result
+        ..add('entity_type')
+        ..add(serializers.serialize(object.subEntityType,
+            specifiedType: const FullType(EntityType)));
     }
     if (object.id != null) {
       result
         ..add('id')
         ..add(serializers.serialize(object.id,
-            specifiedType: const FullType(int)));
+            specifiedType: const FullType(String)));
     }
     return result;
   }
@@ -199,7 +223,7 @@ class _$ProjectEntitySerializer implements StructuredSerializer<ProjectEntity> {
           break;
         case 'client_id':
           result.clientId = serializers.deserialize(value,
-              specifiedType: const FullType(int)) as int;
+              specifiedType: const FullType(String)) as String;
           break;
         case 'task_rate':
           result.taskRate = serializers.deserialize(value,
@@ -225,6 +249,18 @@ class _$ProjectEntitySerializer implements StructuredSerializer<ProjectEntity> {
           result.customValue2 = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String;
           break;
+        case 'custom_value3':
+          result.customValue3 = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String;
+          break;
+        case 'custom_value4':
+          result.customValue4 = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String;
+          break;
+        case 'isChanged':
+          result.isChanged = serializers.deserialize(value,
+              specifiedType: const FullType(bool)) as bool;
+          break;
         case 'created_at':
           result.createdAt = serializers.deserialize(value,
               specifiedType: const FullType(int)) as int;
@@ -241,13 +277,21 @@ class _$ProjectEntitySerializer implements StructuredSerializer<ProjectEntity> {
           result.isDeleted = serializers.deserialize(value,
               specifiedType: const FullType(bool)) as bool;
           break;
-        case 'is_owner':
-          result.isOwner = serializers.deserialize(value,
-              specifiedType: const FullType(bool)) as bool;
+        case 'user_id':
+          result.createdUserId = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String;
+          break;
+        case 'assigned_user_id':
+          result.assignedUserId = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String;
+          break;
+        case 'entity_type':
+          result.subEntityType = serializers.deserialize(value,
+              specifiedType: const FullType(EntityType)) as EntityType;
           break;
         case 'id':
           result.id = serializers.deserialize(value,
-              specifiedType: const FullType(int)) as int;
+              specifiedType: const FullType(String)) as String;
           break;
       }
     }
@@ -449,7 +493,7 @@ class _$ProjectEntity extends ProjectEntity {
   @override
   final String name;
   @override
-  final int clientId;
+  final String clientId;
   @override
   final double taskRate;
   @override
@@ -463,6 +507,12 @@ class _$ProjectEntity extends ProjectEntity {
   @override
   final String customValue2;
   @override
+  final String customValue3;
+  @override
+  final String customValue4;
+  @override
+  final bool isChanged;
+  @override
   final int createdAt;
   @override
   final int updatedAt;
@@ -471,9 +521,13 @@ class _$ProjectEntity extends ProjectEntity {
   @override
   final bool isDeleted;
   @override
-  final bool isOwner;
+  final String createdUserId;
   @override
-  final int id;
+  final String assignedUserId;
+  @override
+  final EntityType subEntityType;
+  @override
+  final String id;
 
   factory _$ProjectEntity([void Function(ProjectEntityBuilder) updates]) =>
       (new ProjectEntityBuilder()..update(updates)).build();
@@ -487,11 +541,16 @@ class _$ProjectEntity extends ProjectEntity {
       this.budgetedHours,
       this.customValue1,
       this.customValue2,
+      this.customValue3,
+      this.customValue4,
+      this.isChanged,
       this.createdAt,
       this.updatedAt,
       this.archivedAt,
       this.isDeleted,
-      this.isOwner,
+      this.createdUserId,
+      this.assignedUserId,
+      this.subEntityType,
       this.id})
       : super._() {
     if (name == null) {
@@ -518,6 +577,12 @@ class _$ProjectEntity extends ProjectEntity {
     if (customValue2 == null) {
       throw new BuiltValueNullFieldError('ProjectEntity', 'customValue2');
     }
+    if (customValue3 == null) {
+      throw new BuiltValueNullFieldError('ProjectEntity', 'customValue3');
+    }
+    if (customValue4 == null) {
+      throw new BuiltValueNullFieldError('ProjectEntity', 'customValue4');
+    }
   }
 
   @override
@@ -539,11 +604,16 @@ class _$ProjectEntity extends ProjectEntity {
         budgetedHours == other.budgetedHours &&
         customValue1 == other.customValue1 &&
         customValue2 == other.customValue2 &&
+        customValue3 == other.customValue3 &&
+        customValue4 == other.customValue4 &&
+        isChanged == other.isChanged &&
         createdAt == other.createdAt &&
         updatedAt == other.updatedAt &&
         archivedAt == other.archivedAt &&
         isDeleted == other.isDeleted &&
-        isOwner == other.isOwner &&
+        createdUserId == other.createdUserId &&
+        assignedUserId == other.assignedUserId &&
+        subEntityType == other.subEntityType &&
         id == other.id;
   }
 
@@ -561,19 +631,38 @@ class _$ProjectEntity extends ProjectEntity {
                                         $jc(
                                             $jc(
                                                 $jc(
-                                                    $jc($jc(0, name.hashCode),
-                                                        clientId.hashCode),
-                                                    taskRate.hashCode),
-                                                dueDate.hashCode),
-                                            privateNotes.hashCode),
-                                        budgetedHours.hashCode),
-                                    customValue1.hashCode),
-                                customValue2.hashCode),
-                            createdAt.hashCode),
-                        updatedAt.hashCode),
-                    archivedAt.hashCode),
-                isDeleted.hashCode),
-            isOwner.hashCode),
+                                                    $jc(
+                                                        $jc(
+                                                            $jc(
+                                                                $jc(
+                                                                    $jc(
+                                                                        $jc(
+                                                                            $jc(
+                                                                                0,
+                                                                                name
+                                                                                    .hashCode),
+                                                                            clientId
+                                                                                .hashCode),
+                                                                        taskRate
+                                                                            .hashCode),
+                                                                    dueDate
+                                                                        .hashCode),
+                                                                privateNotes
+                                                                    .hashCode),
+                                                            budgetedHours
+                                                                .hashCode),
+                                                        customValue1.hashCode),
+                                                    customValue2.hashCode),
+                                                customValue3.hashCode),
+                                            customValue4.hashCode),
+                                        isChanged.hashCode),
+                                    createdAt.hashCode),
+                                updatedAt.hashCode),
+                            archivedAt.hashCode),
+                        isDeleted.hashCode),
+                    createdUserId.hashCode),
+                assignedUserId.hashCode),
+            subEntityType.hashCode),
         id.hashCode));
   }
 
@@ -588,11 +677,16 @@ class _$ProjectEntity extends ProjectEntity {
           ..add('budgetedHours', budgetedHours)
           ..add('customValue1', customValue1)
           ..add('customValue2', customValue2)
+          ..add('customValue3', customValue3)
+          ..add('customValue4', customValue4)
+          ..add('isChanged', isChanged)
           ..add('createdAt', createdAt)
           ..add('updatedAt', updatedAt)
           ..add('archivedAt', archivedAt)
           ..add('isDeleted', isDeleted)
-          ..add('isOwner', isOwner)
+          ..add('createdUserId', createdUserId)
+          ..add('assignedUserId', assignedUserId)
+          ..add('subEntityType', subEntityType)
           ..add('id', id))
         .toString();
   }
@@ -606,9 +700,9 @@ class ProjectEntityBuilder
   String get name => _$this._name;
   set name(String name) => _$this._name = name;
 
-  int _clientId;
-  int get clientId => _$this._clientId;
-  set clientId(int clientId) => _$this._clientId = clientId;
+  String _clientId;
+  String get clientId => _$this._clientId;
+  set clientId(String clientId) => _$this._clientId = clientId;
 
   double _taskRate;
   double get taskRate => _$this._taskRate;
@@ -635,6 +729,18 @@ class ProjectEntityBuilder
   String get customValue2 => _$this._customValue2;
   set customValue2(String customValue2) => _$this._customValue2 = customValue2;
 
+  String _customValue3;
+  String get customValue3 => _$this._customValue3;
+  set customValue3(String customValue3) => _$this._customValue3 = customValue3;
+
+  String _customValue4;
+  String get customValue4 => _$this._customValue4;
+  set customValue4(String customValue4) => _$this._customValue4 = customValue4;
+
+  bool _isChanged;
+  bool get isChanged => _$this._isChanged;
+  set isChanged(bool isChanged) => _$this._isChanged = isChanged;
+
   int _createdAt;
   int get createdAt => _$this._createdAt;
   set createdAt(int createdAt) => _$this._createdAt = createdAt;
@@ -651,13 +757,24 @@ class ProjectEntityBuilder
   bool get isDeleted => _$this._isDeleted;
   set isDeleted(bool isDeleted) => _$this._isDeleted = isDeleted;
 
-  bool _isOwner;
-  bool get isOwner => _$this._isOwner;
-  set isOwner(bool isOwner) => _$this._isOwner = isOwner;
+  String _createdUserId;
+  String get createdUserId => _$this._createdUserId;
+  set createdUserId(String createdUserId) =>
+      _$this._createdUserId = createdUserId;
 
-  int _id;
-  int get id => _$this._id;
-  set id(int id) => _$this._id = id;
+  String _assignedUserId;
+  String get assignedUserId => _$this._assignedUserId;
+  set assignedUserId(String assignedUserId) =>
+      _$this._assignedUserId = assignedUserId;
+
+  EntityType _subEntityType;
+  EntityType get subEntityType => _$this._subEntityType;
+  set subEntityType(EntityType subEntityType) =>
+      _$this._subEntityType = subEntityType;
+
+  String _id;
+  String get id => _$this._id;
+  set id(String id) => _$this._id = id;
 
   ProjectEntityBuilder();
 
@@ -671,11 +788,16 @@ class ProjectEntityBuilder
       _budgetedHours = _$v.budgetedHours;
       _customValue1 = _$v.customValue1;
       _customValue2 = _$v.customValue2;
+      _customValue3 = _$v.customValue3;
+      _customValue4 = _$v.customValue4;
+      _isChanged = _$v.isChanged;
       _createdAt = _$v.createdAt;
       _updatedAt = _$v.updatedAt;
       _archivedAt = _$v.archivedAt;
       _isDeleted = _$v.isDeleted;
-      _isOwner = _$v.isOwner;
+      _createdUserId = _$v.createdUserId;
+      _assignedUserId = _$v.assignedUserId;
+      _subEntityType = _$v.subEntityType;
       _id = _$v.id;
       _$v = null;
     }
@@ -707,11 +829,16 @@ class ProjectEntityBuilder
             budgetedHours: budgetedHours,
             customValue1: customValue1,
             customValue2: customValue2,
+            customValue3: customValue3,
+            customValue4: customValue4,
+            isChanged: isChanged,
             createdAt: createdAt,
             updatedAt: updatedAt,
             archivedAt: archivedAt,
             isDeleted: isDeleted,
-            isOwner: isOwner,
+            createdUserId: createdUserId,
+            assignedUserId: assignedUserId,
+            subEntityType: subEntityType,
             id: id);
     replace(_$result);
     return _$result;

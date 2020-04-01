@@ -4,12 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:invoiceninja_flutter/constants.dart';
 import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
-import 'package:invoiceninja_flutter/redux/client/client_actions.dart';
 import 'package:invoiceninja_flutter/redux/ui/ui_actions.dart';
-import 'package:invoiceninja_flutter/redux/vendor/vendor_actions.dart';
-import 'package:invoiceninja_flutter/ui/app/snackbar_row.dart';
-import 'package:invoiceninja_flutter/ui/expense/expense_screen.dart';
-import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:invoiceninja_flutter/utils/platforms.dart';
 import 'package:redux/redux.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
@@ -50,7 +45,6 @@ class ExpenseEditVM {
     @required this.origExpense,
     @required this.onSavePressed,
     @required this.onCancelPressed,
-    @required this.onBackPressed,
     @required this.isLoading,
     @required this.onAddClientPressed,
     @required this.onAddVendorPressed,
@@ -67,57 +61,41 @@ class ExpenseEditVM {
       isSaving: state.isSaving,
       origExpense: state.expenseState.map[expense.id],
       expense: expense,
-      company: state.selectedCompany,
+      company: state.company,
       onChanged: (ExpenseEntity expense) {
         store.dispatch(UpdateExpense(expense));
       },
-      onBackPressed: () {
-        if (state.uiState.currentRoute.contains(ExpenseScreen.route)) {
-          store.dispatch(UpdateCurrentRoute(
-              expense.isNew ? ExpenseScreen.route : ExpenseViewScreen.route));
-        }
-      },
       onCancelPressed: (BuildContext context) {
-        store.dispatch(EditExpense(
-            expense: ExpenseEntity(), context: context, force: true));
+        createEntityByType(
+            context: context, entityType: EntityType.expense, force: true);
         store.dispatch(UpdateCurrentRoute(state.uiState.previousRoute));
       },
       onAddClientPressed: (context, completer) {
-        store.dispatch(EditClient(
-          client: ClientEntity(),
-          context: context,
-          completer: completer,
-          cancelCompleter: Completer<Null>()
-            ..future.then((_) {
-              store.dispatch(UpdateCurrentRoute(ExpenseEditScreen.route));
-            }),
-          force: true,
-        ));
+        createEntity(
+            context: context,
+            entity: ClientEntity(),
+            force: true,
+            completer: completer,
+            cancelCompleter: Completer<Null>()
+              ..future.then((_) {
+                store.dispatch(UpdateCurrentRoute(ExpenseEditScreen.route));
+              }));
         completer.future.then((SelectableEntity client) {
           store.dispatch(UpdateCurrentRoute(ExpenseEditScreen.route));
-          Scaffold.of(context).showSnackBar(SnackBar(
-              content: SnackBarRow(
-            message: AppLocalization.of(context).createdClient,
-          )));
         });
       },
       onAddVendorPressed: (context, completer) {
-        store.dispatch(EditVendor(
-          vendor: VendorEntity(),
-          context: context,
-          completer: completer,
-          cancelCompleter: Completer<Null>()
-            ..future.then((_) {
-              store.dispatch(UpdateCurrentRoute(ExpenseEditScreen.route));
-            }),
-          force: true,
-        ));
-        completer.future.then((SelectableEntity client) {
+        createEntity(
+            context: context,
+            entity: VendorEntity(),
+            force: true,
+            completer: completer,
+            cancelCompleter: Completer<Null>()
+              ..future.then((_) {
+                store.dispatch(UpdateCurrentRoute(ExpenseEditScreen.route));
+              }));
+        completer.future.then((SelectableEntity expense) {
           store.dispatch(UpdateCurrentRoute(ExpenseEditScreen.route));
-          Scaffold.of(context).showSnackBar(SnackBar(
-              content: SnackBarRow(
-            message: AppLocalization.of(context).createdClient,
-          )));
         });
       },
       onSavePressed: (BuildContext context) {
@@ -125,24 +103,28 @@ class ExpenseEditVM {
             new Completer<ExpenseEntity>();
         store.dispatch(
             SaveExpenseRequest(completer: completer, expense: expense));
-        return completer.future.then((_) {
-          return completer.future.then((savedExpense) {
+        return completer.future.then((savedExpense) {
+          if (isMobile(context)) {
             store.dispatch(UpdateCurrentRoute(ExpenseViewScreen.route));
-            if (isMobile(context)) {
-              if (expense.isNew) {
-                Navigator.of(context)
-                    .pushReplacementNamed(ExpenseViewScreen.route);
-              } else {
-                Navigator.of(context).pop(savedExpense);
-              }
+            if (expense.isNew) {
+              Navigator.of(context)
+                  .pushReplacementNamed(ExpenseViewScreen.route);
+            } else {
+              Navigator.of(context).pop(savedExpense);
             }
-          }).catchError((Object error) {
-            showDialog<ErrorDialog>(
+          } else {
+            viewEntityById(
                 context: context,
-                builder: (BuildContext context) {
-                  return ErrorDialog(error);
-                });
-          });
+                entityType: EntityType.expense,
+                entityId: savedExpense.id,
+                force: true);
+          }
+        }).catchError((Object error) {
+          showDialog<ErrorDialog>(
+              context: context,
+              builder: (BuildContext context) {
+                return ErrorDialog(error);
+              });
         });
       },
       onAddDocumentsChanged: (value) async {
@@ -161,7 +143,6 @@ class ExpenseEditVM {
   final Function(ExpenseEntity) onChanged;
   final Function(BuildContext) onSavePressed;
   final Function(BuildContext) onCancelPressed;
-  final Function onBackPressed;
   final bool isLoading;
   final bool isSaving;
   final ExpenseEntity origExpense;

@@ -1,40 +1,44 @@
 import 'dart:async';
-import 'package:flutter/widgets.dart';
-import 'package:invoiceninja_flutter/data/models/models.dart';
+
 import 'package:built_collection/built_collection.dart';
-import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_redux/flutter_redux.dart';
+import 'package:invoiceninja_flutter/data/models/models.dart';
+import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/redux/product/product_selectors.dart';
-import 'package:invoiceninja_flutter/redux/invoice/invoice_actions.dart';
 import 'package:invoiceninja_flutter/utils/completers.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 
-class ViewProductList implements PersistUI {
-  ViewProductList({@required this.context, this.force = false});
+class ViewProductList extends AbstractNavigatorAction implements PersistUI {
+  ViewProductList({@required NavigatorState navigator, this.force = false})
+      : super(navigator: navigator);
 
-  final BuildContext context;
   final bool force;
 }
 
-class ViewProduct implements PersistUI {
+class ViewProduct extends AbstractNavigatorAction
+    implements PersistUI, PersistPrefs {
   ViewProduct(
-      {@required this.productId, @required this.context, this.force = false});
+      {@required this.productId,
+      @required NavigatorState navigator,
+      this.force = false})
+      : super(navigator: navigator);
 
-  final int productId;
-  final BuildContext context;
+  final String productId;
   final bool force;
 }
 
-class EditProduct implements PersistUI {
+class EditProduct extends AbstractNavigatorAction
+    implements PersistUI, PersistPrefs {
   EditProduct(
       {@required this.product,
-      @required this.context,
+      @required NavigatorState navigator,
       this.completer,
-      this.force = false});
+      this.force = false})
+      : super(navigator: navigator);
 
   final ProductEntity product;
-  final BuildContext context;
   final Completer completer;
   final bool force;
 }
@@ -101,64 +105,64 @@ class SaveProductFailure implements StopSaving {
   final Object error;
 }
 
-class ArchiveProductRequest implements StartSaving {
-  ArchiveProductRequest(this.completer, this.productId);
+class ArchiveProductsRequest implements StartSaving {
+  ArchiveProductsRequest(this.completer, this.productIds);
 
   final Completer completer;
-  final int productId;
+  final List<String> productIds;
 }
 
-class ArchiveProductSuccess implements StopSaving, PersistData {
-  ArchiveProductSuccess(this.product);
+class ArchiveProductsSuccess implements StopSaving, PersistData {
+  ArchiveProductsSuccess(this.products);
 
-  final ProductEntity product;
+  final List<ProductEntity> products;
 }
 
-class ArchiveProductFailure implements StopSaving {
-  ArchiveProductFailure(this.product);
+class ArchiveProductsFailure implements StopSaving {
+  ArchiveProductsFailure(this.products);
 
-  final ProductEntity product;
+  final List<ProductEntity> products;
 }
 
-class DeleteProductRequest implements StartSaving {
-  DeleteProductRequest(this.completer, this.productId);
+class DeleteProductsRequest implements StartSaving {
+  DeleteProductsRequest(this.completer, this.productIds);
 
   final Completer completer;
-  final int productId;
+  final List<String> productIds;
 }
 
-class DeleteProductSuccess implements StopSaving, PersistData {
-  DeleteProductSuccess(this.product);
+class DeleteProductsSuccess implements StopSaving, PersistData {
+  DeleteProductsSuccess(this.products);
 
-  final ProductEntity product;
+  final List<ProductEntity> products;
 }
 
-class DeleteProductFailure implements StopSaving {
-  DeleteProductFailure(this.product);
+class DeleteProductsFailure implements StopSaving {
+  DeleteProductsFailure(this.products);
 
-  final ProductEntity product;
+  final List<ProductEntity> products;
 }
 
-class RestoreProductRequest implements StartSaving {
-  RestoreProductRequest(this.completer, this.productId);
+class RestoreProductsRequest implements StartSaving {
+  RestoreProductsRequest(this.completer, this.productIds);
 
   final Completer completer;
-  final int productId;
+  final List<String> productIds;
 }
 
-class RestoreProductSuccess implements StopSaving, PersistData {
-  RestoreProductSuccess(this.product);
+class RestoreProductsSuccess implements StopSaving, PersistData {
+  RestoreProductsSuccess(this.products);
 
-  final ProductEntity product;
+  final List<ProductEntity> products;
 }
 
-class RestoreProductFailure implements StopSaving {
-  RestoreProductFailure(this.product);
+class RestoreProductsFailure implements StopSaving {
+  RestoreProductsFailure(this.products);
 
-  final ProductEntity product;
+  final List<ProductEntity> products;
 }
 
-class FilterProducts {
+class FilterProducts implements PersistUI {
   FilterProducts(this.filter);
 
   final String filter;
@@ -188,6 +192,18 @@ class FilterProductsByCustom2 implements PersistUI {
   final String value;
 }
 
+class FilterProductsByCustom3 implements PersistUI {
+  FilterProductsByCustom3(this.value);
+
+  final String value;
+}
+
+class FilterProductsByCustom4 implements PersistUI {
+  FilterProductsByCustom4(this.value);
+
+  final String value;
+}
+
 class FilterProductDropdown {
   FilterProductDropdown(this.filter);
 
@@ -195,39 +211,80 @@ class FilterProductDropdown {
 }
 
 void handleProductAction(
-    BuildContext context, ProductEntity product, EntityAction action) {
+    BuildContext context, List<BaseEntity> products, EntityAction action) {
+  if (products.isEmpty) {
+    return;
+  }
+
   final store = StoreProvider.of<AppState>(context);
   final state = store.state;
   final localization = AppLocalization.of(context);
+  final productIds = products.map((product) => product.id).toList();
+  final product = products.first;
 
   switch (action) {
     case EntityAction.newInvoice:
-      final item =
-          convertProductToInvoiceItem(context: context, product: product);
-      store.dispatch(EditInvoice(
+      createEntity(
           context: context,
-          invoice: InvoiceEntity(company: state.selectedCompany)
-              .rebuild((b) => b..invoiceItems.add(item))));
+          entity: InvoiceEntity(state: state).rebuild((b) => b
+            ..lineItems.addAll(productIds.map((productId) =>
+                convertProductToInvoiceItem(
+                    company: state.company,
+                    product: state.productState.map[productId])))));
       break;
     case EntityAction.edit:
-      store.dispatch(EditProduct(context: context, product: product));
+      editEntity(context: context, entity: product);
       break;
     case EntityAction.clone:
-      store.dispatch(EditProduct(context: context, product: product.clone));
+      createEntity(context: context, entity: (product as ProductEntity).clone);
       break;
     case EntityAction.restore:
-      store.dispatch(RestoreProductRequest(
-          snackBarCompleter(context, localization.restoredProduct),
-          product.id));
+      store.dispatch(RestoreProductsRequest(
+          snackBarCompleter<Null>(context, localization.restoredProduct),
+          productIds));
       break;
     case EntityAction.archive:
-      store.dispatch(ArchiveProductRequest(
-          snackBarCompleter(context, localization.archivedProduct),
-          product.id));
+      store.dispatch(ArchiveProductsRequest(
+          snackBarCompleter<Null>(context, localization.archivedProduct),
+          productIds));
       break;
     case EntityAction.delete:
-      store.dispatch(DeleteProductRequest(
-          snackBarCompleter(context, localization.deletedProduct), product.id));
+      store.dispatch(DeleteProductsRequest(
+          snackBarCompleter<Null>(context, localization.deletedProduct),
+          productIds));
+      break;
+    case EntityAction.toggleMultiselect:
+      if (!store.state.productListState.isInMultiselect()) {
+        store.dispatch(StartProductMultiselect());
+      }
+
+      if (products.isEmpty) {
+        break;
+      }
+
+      for (final product in products) {
+        if (!store.state.productListState.isSelected(product.id)) {
+          store.dispatch(AddToProductMultiselect(entity: product));
+        } else {
+          store.dispatch(RemoveFromProductMultiselect(entity: product));
+        }
+      }
       break;
   }
 }
+
+class StartProductMultiselect {}
+
+class AddToProductMultiselect {
+  AddToProductMultiselect({@required this.entity});
+
+  final BaseEntity entity;
+}
+
+class RemoveFromProductMultiselect {
+  RemoveFromProductMultiselect({@required this.entity});
+
+  final BaseEntity entity;
+}
+
+class ClearProductMultiselect {}

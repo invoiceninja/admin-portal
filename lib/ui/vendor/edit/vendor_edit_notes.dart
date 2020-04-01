@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:invoiceninja_flutter/data/models/entities.dart';
 import 'package:invoiceninja_flutter/ui/app/entity_dropdown.dart';
+import 'package:invoiceninja_flutter/ui/app/forms/decorated_form_field.dart';
 import 'package:invoiceninja_flutter/ui/vendor/edit/vendor_edit_vm.dart';
+import 'package:invoiceninja_flutter/utils/completers.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:invoiceninja_flutter/ui/app/form_card.dart';
 import 'package:invoiceninja_flutter/redux/static/static_selectors.dart';
@@ -23,11 +25,12 @@ class VendorEditNotesState extends State<VendorEditNotes> {
   final _publicNotesController = TextEditingController();
   final _privateNotesController = TextEditingController();
 
-  final List<TextEditingController> _controllers = [];
+  List<TextEditingController> _controllers;
+  final _debouncer = Debouncer();
 
   @override
   void didChangeDependencies() {
-    final List<TextEditingController> _controllers = [
+    _controllers = [
       _publicNotesController,
       _privateNotesController,
     ];
@@ -56,13 +59,15 @@ class VendorEditNotesState extends State<VendorEditNotes> {
   }
 
   void _onChanged() {
-    final viewModel = widget.viewModel;
-    final vendor = viewModel.vendor.rebuild((b) => b
-      //..publicNotes = _publicNotesController.text
-      ..privateNotes = _privateNotesController.text);
-    if (vendor != viewModel.vendor) {
-      viewModel.onChanged(vendor);
-    }
+    _debouncer.run(() {
+      final viewModel = widget.viewModel;
+      final vendor = viewModel.vendor.rebuild((b) => b
+        //..publicNotes = _publicNotesController.text
+        ..privateNotes = _privateNotesController.text);
+      if (vendor != viewModel.vendor) {
+        viewModel.onChanged(vendor);
+      }
+    });
   }
 
   @override
@@ -70,6 +75,7 @@ class VendorEditNotesState extends State<VendorEditNotes> {
     final localization = AppLocalization.of(context);
     final viewModel = widget.viewModel;
     final staticState = viewModel.state.staticState;
+    final vendor = viewModel.vendor;
 
     return ListView(
       shrinkWrap: true,
@@ -77,32 +83,25 @@ class VendorEditNotesState extends State<VendorEditNotes> {
         FormCard(
           children: <Widget>[
             EntityDropdown(
+              key: ValueKey('__currency_${vendor.currencyId}__'),
               entityType: EntityType.currency,
-              entityMap: staticState.currencyMap,
               entityList: memoizedCurrencyList(staticState.currencyMap),
               labelText: localization.currency,
-              initialValue:
-                  staticState.currencyMap[viewModel.vendor.currencyId]?.name,
+              entityId: vendor.currencyId,
               onSelected: (SelectableEntity currency) => viewModel.onChanged(
-                  viewModel.vendor.rebuild((b) => b..currencyId = currency.id)),
+                  vendor.rebuild((b) => b..currencyId = currency.id)),
             ),
-            /*
-            TextFormField(
+            DecoratedFormField(
               maxLines: 4,
               controller: _publicNotesController,
               keyboardType: TextInputType.multiline,
-              decoration: InputDecoration(
-                labelText: localization.publicNotes,
-              ),
+              label: localization.publicNotes,
             ),
-            */
-            TextFormField(
+            DecoratedFormField(
               maxLines: 4,
               controller: _privateNotesController,
               keyboardType: TextInputType.multiline,
-              decoration: InputDecoration(
-                labelText: localization.privateNotes,
-              ),
+              label: localization.publicNotes,
             ),
           ],
         ),

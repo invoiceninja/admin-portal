@@ -1,5 +1,7 @@
 import 'dart:async';
+
 import 'package:flutter/material.dart';
+import 'package:invoiceninja_flutter/constants.dart';
 import 'package:invoiceninja_flutter/ui/app/dialogs/error_dialog.dart';
 import 'package:invoiceninja_flutter/ui/app/snackbar_row.dart';
 
@@ -24,9 +26,9 @@ Completer<Null> refreshCompleter(BuildContext context) {
 }
 */
 
-Completer<Null> snackBarCompleter(BuildContext context, String message,
+Completer<T> snackBarCompleter<T>(BuildContext context, String message,
     {bool shouldPop = false}) {
-  final Completer<Null> completer = Completer<Null>();
+  final Completer<T> completer = Completer<T>();
 
   completer.future.then((_) {
     if (shouldPop) {
@@ -37,6 +39,9 @@ Completer<Null> snackBarCompleter(BuildContext context, String message,
       message: message,
     )));
   }).catchError((Object error) {
+    if (shouldPop) {
+      Navigator.of(context).pop();
+    }
     showDialog<ErrorDialog>(
         context: context,
         builder: (BuildContext context) {
@@ -75,4 +80,21 @@ Completer<Null> errorCompleter(BuildContext context) {
   });
 
   return completer;
+}
+
+// https://stackoverflow.com/a/55119208/497368
+class Debouncer {
+  Debouncer({this.milliseconds = kDebounceDelay});
+
+  final int milliseconds;
+  VoidCallback action;
+  Timer _timer;
+
+  void run(VoidCallback action) {
+    if (_timer != null) {
+      _timer.cancel();
+    }
+
+    _timer = Timer(Duration(milliseconds: milliseconds), action);
+  }
 }

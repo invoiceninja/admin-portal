@@ -1,10 +1,14 @@
 import 'package:built_collection/built_collection.dart';
 import 'package:built_value/built_value.dart';
 import 'package:built_value/serializer.dart';
+import 'package:flutter/foundation.dart';
 import 'package:invoiceninja_flutter/constants.dart';
 import 'package:invoiceninja_flutter/data/models/company_model.dart';
 import 'package:invoiceninja_flutter/data/models/entities.dart';
+import 'package:invoiceninja_flutter/data/models/gateway_token_model.dart';
+import 'package:invoiceninja_flutter/data/models/group_model.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
+import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/utils/formatting.dart';
 
 part 'client_model.g.dart';
@@ -36,80 +40,100 @@ abstract class ClientItemResponse
 }
 
 class ClientFields {
+  static const String clientId = 'client_id';
   static const String name = 'name';
+  static const String address1 = 'address1';
+  static const String address2 = 'address2';
+  static const String country = 'country';
   static const String balance = 'balance';
-  static const String vatNumber = 'vatNumber';
-  static const String idNumber = 'idNumber';
-  static const String paidToDate = 'paidToDate';
-  static const String createdAt = 'createdAt';
-  static const String updatedAt = 'updatedAt';
-  static const String archivedAt = 'archivedAt';
-  static const String isDeleted = 'isDeleted';
+  static const String vatNumber = 'vat_number';
+  static const String idNumber = 'id_number';
+  static const String paidToDate = 'paid_to_date';
+  static const String createdAt = 'created_at';
+  static const String updatedAt = 'updated_at';
+  static const String archivedAt = 'archived_at';
+  static const String isDeleted = 'is_deleted';
   static const String contact = 'contact';
-  static const String workPhone = 'workPhone';
+  static const String contactEmail = 'contact_email';
+  static const String state = 'state';
+  static const String phone = 'phone';
+  static const String website = 'website';
   static const String language = 'language';
   static const String currency = 'currency';
+  static const String custom1 = 'custom1';
+  static const String custom2 = 'custom2';
+  static const String custom3 = 'custom3';
+  static const String custom4 = 'custom4';
+  static const String assignedTo = 'assigned_to';
+  static const String createdBy = 'created_by';
+  static const String assignedToId = 'assigned_to_id';
+  static const String createdById = 'created_by_id';
+  static const String cityStatePostal = 'city_state_postal';
+  static const String postalCityState = 'postal_city_state';
 }
 
 abstract class ClientEntity extends Object
     with BaseEntity, SelectableEntity
     implements Built<ClientEntity, ClientEntityBuilder> {
-  factory ClientEntity({int id}) {
+  factory ClientEntity({String id, AppState state}) {
     return _$ClientEntity._(
-      id: id ?? --ClientEntity.counter,
+      id: id ?? BaseEntity.nextId,
+      isChanged: false,
+      settings: SettingsEntity(),
       name: '',
       displayName: '',
-      balance: 0.0,
-      paidToDate: 0.0,
+      balance: 0,
+      creditBalance: 0,
+      paidToDate: 0,
       address1: '',
       address2: '',
       city: '',
       state: '',
       postalCode: '',
-      countryId: 0,
-      workPhone: '',
+      countryId: '',
+      phone: '',
       privateNotes: '',
       publicNotes: '',
       website: '',
-      industryId: 0,
-      sizeId: 0,
-      paymentTerms: 0,
+      industryId: '',
+      sizeId: '',
       vatNumber: '',
       idNumber: '',
-      languageId: 0,
-      currencyId: 0,
-      invoiceNumberCounter: 0,
-      quoteNumberCounter: 0,
-      taskRate: 0.0,
       shippingAddress1: '',
       shippingAddress2: '',
       shippingCity: '',
       shippingState: '',
+      groupId: '',
       shippingPostalCode: '',
-      shippingCountryId: 0,
-      showTasksInPortal: false,
-      sendReminders: false,
-      creditNumberCounter: 0,
+      shippingCountryId: '',
       customValue1: '',
       customValue2: '',
+      customValue3: '',
+      customValue4: '',
       contacts: BuiltList<ContactEntity>(
         <ContactEntity>[ContactEntity().rebuild((b) => b..isPrimary = true)],
       ),
       activities: BuiltList<ActivityEntity>(),
+      gatewayTokens: BuiltList<GatewayTokenEntity>(),
       lastUpdatedActivities: 0,
       updatedAt: 0,
       archivedAt: 0,
       isDeleted: false,
+      createdUserId: '',
+      assignedUserId: '',
+      createdAt: 0,
     );
   }
 
   ClientEntity._();
 
-  static int counter = 0;
-
   ClientEntity get clone => rebuild((b) => b
-    ..id = --ClientEntity.counter
+    ..id = BaseEntity.nextId
+    ..isChanged = false
     ..isDeleted = false);
+
+  @BuiltValueField(wireName: 'group_settings_id')
+  String get groupId;
 
   @nullable
   int get lastUpdatedActivities;
@@ -131,13 +155,15 @@ abstract class ClientEntity extends Object
     return EntityType.client;
   }
 
-  @BuiltValueField(wireName: 'name')
   String get name;
 
   @BuiltValueField(wireName: 'display_name')
   String get displayName;
 
   double get balance;
+
+  @BuiltValueField(wireName: 'credit_balance')
+  double get creditBalance;
 
   @BuiltValueField(wireName: 'paid_to_date')
   double get paidToDate;
@@ -154,10 +180,10 @@ abstract class ClientEntity extends Object
   String get postalCode;
 
   @BuiltValueField(wireName: 'country_id')
-  int get countryId;
+  String get countryId;
 
-  @BuiltValueField(wireName: 'work_phone')
-  String get workPhone;
+  @BuiltValueField(wireName: 'phone')
+  String get phone;
 
   @BuiltValueField(wireName: 'private_notes')
   String get privateNotes;
@@ -168,34 +194,16 @@ abstract class ClientEntity extends Object
   String get website;
 
   @BuiltValueField(wireName: 'industry_id')
-  int get industryId;
+  String get industryId;
 
   @BuiltValueField(wireName: 'size_id')
-  int get sizeId;
-
-  @BuiltValueField(wireName: 'payment_terms')
-  int get paymentTerms;
+  String get sizeId;
 
   @BuiltValueField(wireName: 'vat_number')
   String get vatNumber;
 
   @BuiltValueField(wireName: 'id_number')
   String get idNumber;
-
-  @BuiltValueField(wireName: 'language_id')
-  int get languageId;
-
-  @BuiltValueField(wireName: 'currency_id')
-  int get currencyId;
-
-  @BuiltValueField(wireName: 'invoice_number_counter')
-  int get invoiceNumberCounter;
-
-  @BuiltValueField(wireName: 'quote_number_counter')
-  int get quoteNumberCounter;
-
-  @BuiltValueField(wireName: 'task_rate')
-  double get taskRate;
 
   @BuiltValueField(wireName: 'shipping_address1')
   String get shippingAddress1;
@@ -213,16 +221,9 @@ abstract class ClientEntity extends Object
   String get shippingPostalCode;
 
   @BuiltValueField(wireName: 'shipping_country_id')
-  int get shippingCountryId;
+  String get shippingCountryId;
 
-  @BuiltValueField(wireName: 'show_tasks_in_portal')
-  bool get showTasksInPortal;
-
-  @BuiltValueField(wireName: 'send_reminders')
-  bool get sendReminders;
-
-  @BuiltValueField(wireName: 'credit_number_counter')
-  int get creditNumberCounter;
+  SettingsEntity get settings;
 
   @BuiltValueField(wireName: 'custom_value1')
   String get customValue1;
@@ -230,9 +231,18 @@ abstract class ClientEntity extends Object
   @BuiltValueField(wireName: 'custom_value2')
   String get customValue2;
 
+  @BuiltValueField(wireName: 'custom_value3')
+  String get customValue3;
+
+  @BuiltValueField(wireName: 'custom_value4')
+  String get customValue4;
+
   BuiltList<ContactEntity> get contacts;
 
   BuiltList<ActivityEntity> get activities;
+
+  @BuiltValueField(wireName: 'gateway_tokens')
+  BuiltList<GatewayTokenEntity> get gatewayTokens;
 
   //String get last_login;
   //String get custom_messages;
@@ -242,7 +252,18 @@ abstract class ClientEntity extends Object
     return displayName;
   }
 
-  Iterable<ActivityEntity> getActivities({int invoiceId, int typeId}) {
+  String getCurrencyId(
+      {@required CompanyEntity company, @required GroupEntity group}) {
+    if (hasCurrency) {
+      return settings.currencyId;
+    } else if (group.hasCurrency) {
+      return group.currencyId;
+    } else {
+      return company.currencyId;
+    }
+  }
+
+  Iterable<ActivityEntity> getActivities({String invoiceId, String typeId}) {
     return activities.where((activity) {
       if (invoiceId != null && activity.invoiceId != invoiceId) {
         return false;
@@ -254,11 +275,11 @@ abstract class ClientEntity extends Object
     });
   }
 
-  EmailTemplate getNextEmailTemplate(int invoiceId) {
-    EmailTemplate template = EmailTemplate.initial;
+  EmailTemplate getNextEmailTemplate(String invoiceId) {
+    EmailTemplate template = EmailTemplate.invoice;
     getActivities(invoiceId: invoiceId, typeId: kActivityEmailInvoice)
         .forEach((activity) {
-      if (template == EmailTemplate.initial) {
+      if (template == EmailTemplate.invoice) {
         template = EmailTemplate.reminder1;
       }
       if (activity.notes == 'reminder1') {
@@ -270,15 +291,25 @@ abstract class ClientEntity extends Object
     return template;
   }
 
+  ContactEntity get primaryContact =>
+      contacts.firstWhere((contact) => contact.isPrimary,
+          orElse: () => ContactEntity());
+
   String getPaymentTerm(String netLabel) {
-    if (paymentTerms == 0) {
+    if (settings.defaultPaymentTerms == 0 ||
+        settings.defaultPaymentTerms == null) {
       return '';
-    } else if (paymentTerms == -1) {
+    } else if (settings.defaultPaymentTerms == -1) {
       return '$netLabel 0';
     } else {
-      return '$netLabel $paymentTerms';
+      return '$netLabel ${settings.defaultPaymentTerms}';
     }
   }
+
+  bool get hasGroup => groupId != null && groupId.isNotEmpty;
+
+  bool get hasLanguage =>
+      settings.languageId != null && settings.languageId.isNotEmpty;
 
   bool get hasEmailAddress =>
       contacts.where((contact) => contact.email?.isNotEmpty).isNotEmpty;
@@ -294,6 +325,32 @@ abstract class ClientEntity extends Object
         break;
       case ClientFields.updatedAt:
         response = clientA.updatedAt.compareTo(clientB.updatedAt);
+        break;
+      case ClientFields.idNumber:
+        response = clientA.idNumber.compareTo(clientB.idNumber);
+        break;
+      case ClientFields.createdAt:
+        response = clientA.createdAt.compareTo(clientB.createdAt);
+        break;
+      case ClientFields.custom1:
+        response = clientA.customValue1
+            .toLowerCase()
+            .compareTo(clientB.customValue1.toLowerCase());
+        break;
+      case ClientFields.custom2:
+        response = clientA.customValue2
+            .toLowerCase()
+            .compareTo(clientB.customValue2.toLowerCase());
+        break;
+      case ClientFields.custom3:
+        response = clientA.customValue3
+            .toLowerCase()
+            .compareTo(clientB.customValue3.toLowerCase());
+        break;
+      case ClientFields.custom4:
+        response = clientA.customValue4
+            .toLowerCase()
+            .compareTo(clientB.customValue4.toLowerCase());
         break;
     }
 
@@ -319,15 +376,25 @@ abstract class ClientEntity extends Object
       return true;
     } else if (idNumber.toLowerCase().contains(filter)) {
       return true;
-    } else if (workPhone.toLowerCase().contains(filter)) {
+    } else if (phone.toLowerCase().contains(filter)) {
       return true;
     } else if (address1.toLowerCase().contains(filter)) {
       return true;
     } else if (city.toLowerCase().contains(filter)) {
       return true;
+    } else if (postalCode.toLowerCase().contains(filter)) {
+      return true;
     } else if (contacts
         .where((contact) => contact.matchesFilter(filter))
         .isNotEmpty) {
+      return true;
+    } else if (customValue1.toLowerCase().contains(filter)) {
+      return true;
+    } else if (customValue2.toLowerCase().contains(filter)) {
+      return true;
+    } else if (customValue3.toLowerCase().contains(filter)) {
+      return true;
+    } else if (customValue4.toLowerCase().contains(filter)) {
       return true;
     }
 
@@ -349,15 +416,25 @@ abstract class ClientEntity extends Object
       return vatNumber;
     } else if (idNumber.toLowerCase().contains(filter)) {
       return idNumber;
-    } else if (workPhone.toLowerCase().contains(filter)) {
-      return workPhone;
+    } else if (phone.toLowerCase().contains(filter)) {
+      return phone;
     } else if (address1.toLowerCase().contains(filter)) {
       return address1;
     } else if (city.toLowerCase().contains(filter)) {
       return city;
+    } else if (postalCode.toLowerCase().contains(filter)) {
+      return postalCode;
     } else if (contact != null) {
       final match = contact.matchesFilterValue(filter);
       return match == displayName ? null : match;
+    } else if (customValue1.toLowerCase().contains(filter)) {
+      return customValue1;
+    } else if (customValue2.toLowerCase().contains(filter)) {
+      return customValue2;
+    } else if (customValue3.toLowerCase().contains(filter)) {
+      return customValue3;
+    } else if (customValue4.toLowerCase().contains(filter)) {
+      return customValue4;
     }
 
     return null;
@@ -365,24 +442,39 @@ abstract class ClientEntity extends Object
 
   @override
   List<EntityAction> getActions(
-      {UserEntity user, ClientEntity client, bool includeEdit = false}) {
+      {UserCompanyEntity userCompany,
+      ClientEntity client,
+      bool includeEdit = false,
+      bool multiselect = false}) {
     final actions = <EntityAction>[];
 
-    if (!isDeleted) {
-      if (includeEdit && user.canEditEntity(this)) {
+    if (!isDeleted && !multiselect) {
+      if (includeEdit && userCompany.canEditEntity(this)) {
         actions.add(EntityAction.edit);
       }
 
-      if (user.canCreate(EntityType.client)) {
+      if (userCompany.canEditEntity(this)) {
+        actions.add(EntityAction.settings);
+      }
+
+      if (userCompany.canCreate(EntityType.client)) {
         actions.add(EntityAction.newInvoice);
       }
 
-      if (user.canCreate(EntityType.expense)) {
-        actions.add(EntityAction.newExpense);
+      if (userCompany.canCreate(EntityType.payment)) {
+        actions.add(EntityAction.newPayment);
       }
 
-      if (user.canCreate(EntityType.payment)) {
-        actions.add(EntityAction.enterPayment);
+      if (userCompany.canCreate(EntityType.quote)) {
+        actions.add(EntityAction.newQuote);
+      }
+
+      if (userCompany.canCreate(EntityType.credit)) {
+        actions.add(EntityAction.newCredit);
+      }
+
+      if (userCompany.canCreate(EntityType.expense)) {
+        actions.add(EntityAction.newExpense);
       }
     }
 
@@ -390,7 +482,7 @@ abstract class ClientEntity extends Object
       actions.add(null);
     }
 
-    return actions..addAll(super.getActions(user: user));
+    return actions..addAll(super.getActions(userCompany: userCompany));
   }
 
   @override
@@ -413,7 +505,7 @@ abstract class ClientEntity extends Object
       shippingCity.isNotEmpty ||
       shippingState.isNotEmpty ||
       shippingPostalCode.isNotEmpty ||
-      shippingCountryId > 0;
+      (shippingCountryId ?? '').isNotEmpty;
 
   bool get hasBillingAddress =>
       address1.isNotEmpty ||
@@ -421,10 +513,24 @@ abstract class ClientEntity extends Object
       city.isNotEmpty ||
       state.isNotEmpty ||
       postalCode.isNotEmpty ||
-      countryId > 0;
+      (countryId ?? '').isNotEmpty;
+
+  bool get hasCountry => countryId != null && countryId.isNotEmpty;
+
+  String get currencyId => settings.currencyId;
+
+  bool get hasCurrency =>
+      settings.currencyId != null && settings.currencyId.isNotEmpty;
+
+  String get languageId => settings.languageId;
 
   bool get hasNameSet {
+    if (contacts.isEmpty) {
+      return false;
+    }
+
     final contact = contacts.first;
+
     return name.isNotEmpty ||
         contact.fullName.isNotEmpty ||
         contact.email.isNotEmpty;
@@ -441,10 +547,15 @@ abstract class ClientEntity extends Object
 }
 
 class ContactFields {
-  static const String firstName = 'firstName';
-  static const String lastName = 'lastName';
+  static const String fullName = 'full_name';
+  static const String firstName = 'first_name';
+  static const String lastName = 'last_name';
   static const String email = 'email';
   static const String phone = 'phone';
+  static const String custom1 = 'custom1';
+  static const String custom2 = 'custom2';
+  static const String custom3 = 'custom3';
+  static const String custom4 = 'custom4';
 }
 
 abstract class ContactEntity extends Object
@@ -452,7 +563,8 @@ abstract class ContactEntity extends Object
     implements Built<ContactEntity, ContactEntityBuilder> {
   factory ContactEntity() {
     return _$ContactEntity._(
-      id: --ContactEntity.counter,
+      id: BaseEntity.nextId,
+      isChanged: false,
       firstName: '',
       lastName: '',
       email: '',
@@ -460,18 +572,22 @@ abstract class ContactEntity extends Object
       phone: '',
       contactKey: '',
       isPrimary: false,
-      sendInvoice: true,
+      sendEmail: true,
       customValue1: '',
       customValue2: '',
+      customValue3: '',
+      customValue4: '',
       updatedAt: 0,
       archivedAt: 0,
       isDeleted: false,
+      lastLogin: 0,
+      createdAt: 0,
+      assignedUserId: '',
+      createdUserId: '',
     );
   }
 
   ContactEntity._();
-
-  static int counter = 0;
 
   @BuiltValueField(wireName: 'first_name')
   String get firstName;
@@ -481,7 +597,6 @@ abstract class ContactEntity extends Object
 
   String get email;
 
-  @nullable
   String get password;
 
   String get phone;
@@ -492,14 +607,25 @@ abstract class ContactEntity extends Object
   @BuiltValueField(wireName: 'is_primary')
   bool get isPrimary;
 
-  @BuiltValueField(wireName: 'send_invoice')
-  bool get sendInvoice;
+  @BuiltValueField(wireName: 'send_email')
+  bool get sendEmail;
 
   @BuiltValueField(wireName: 'custom_value1')
   String get customValue1;
 
   @BuiltValueField(wireName: 'custom_value2')
   String get customValue2;
+
+  @BuiltValueField(wireName: 'custom_value3')
+  String get customValue3;
+
+  @BuiltValueField(wireName: 'custom_value4')
+  String get customValue4;
+
+  // TODO remove this nullable
+  @nullable
+  @BuiltValueField(wireName: 'last_login')
+  int get lastLogin;
 
   String get fullName {
     return (firstName + ' ' + lastName).trim();

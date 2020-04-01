@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-import 'package:invoiceninja_flutter/redux/dashboard/dashboard_actions.dart';
+import 'package:invoiceninja_flutter/redux/client/client_actions.dart';
+import 'package:invoiceninja_flutter/utils/platforms.dart';
 import 'package:redux/redux.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/redux/ui/ui_actions.dart';
@@ -38,18 +39,15 @@ List<Middleware<AppState>> createStoreDocumentsMiddleware([
 }
 
 Middleware<AppState> _editDocument() {
-  return (Store<AppState> store, dynamic dynamicAction,
-      NextDispatcher next) async {
+  return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
     final action = dynamicAction as EditDocument;
 
     next(action);
 
     store.dispatch(UpdateCurrentRoute(DocumentEditScreen.route));
-    final document =
-        await Navigator.of(action.context).pushNamed(DocumentEditScreen.route);
 
-    if (action.completer != null && document != null) {
-      action.completer.complete(document);
+    if (isMobile(action.context)) {
+      action.navigator.pushNamed(DocumentEditScreen.route);
     }
   };
 }
@@ -62,7 +60,7 @@ Middleware<AppState> _viewDocument() {
     next(action);
 
     store.dispatch(UpdateCurrentRoute(DocumentViewScreen.route));
-    Navigator.of(action.context).pushNamed(DocumentViewScreen.route);
+    action.navigator.pushNamed(DocumentViewScreen.route);
   };
 }
 
@@ -72,9 +70,13 @@ Middleware<AppState> _viewDocumentList() {
 
     next(action);
 
+    if (store.state.documentState.isStale) {
+      store.dispatch(LoadDocuments());
+    }
+
     store.dispatch(UpdateCurrentRoute(DocumentScreen.route));
 
-    Navigator.of(action.context).pushNamedAndRemoveUntil(
+    action.navigator.pushNamedAndRemoveUntil(
         DocumentScreen.route, (Route<dynamic> route) => false);
   };
 }
@@ -82,18 +84,21 @@ Middleware<AppState> _viewDocumentList() {
 Middleware<AppState> _archiveDocument(DocumentRepository repository) {
   return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
     final action = dynamicAction as ArchiveDocumentRequest;
-    final origDocument = store.state.documentState.map[action.documentId];
+    final prevDocuments = action.documentIds
+        .map((id) => store.state.documentState.map[id])
+        .toList();
+
     repository
-        .saveData(store.state.selectedCompany, store.state.authState,
-            origDocument, EntityAction.archive)
-        .then((DocumentEntity document) {
-      store.dispatch(ArchiveDocumentSuccess(document));
+        .bulkAction(
+            store.state.credentials, action.documentIds, EntityAction.archive)
+        .then((List<DocumentEntity> documents) {
+      store.dispatch(ArchiveDocumentSuccess(documents));
       if (action.completer != null) {
         action.completer.complete(null);
       }
     }).catchError((Object error) {
       print(error);
-      store.dispatch(ArchiveDocumentFailure(origDocument));
+      store.dispatch(ArchiveDocumentFailure(prevDocuments));
       if (action.completer != null) {
         action.completer.completeError(error);
       }
@@ -106,18 +111,21 @@ Middleware<AppState> _archiveDocument(DocumentRepository repository) {
 Middleware<AppState> _deleteDocument(DocumentRepository repository) {
   return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
     final action = dynamicAction as DeleteDocumentRequest;
-    final origDocument = store.state.documentState.map[action.documentId];
+    final prevDocuments = action.documentIds
+        .map((id) => store.state.documentState.map[id])
+        .toList();
+
     repository
-        .saveData(store.state.selectedCompany, store.state.authState,
-            origDocument, EntityAction.delete)
-        .then((DocumentEntity document) {
-      store.dispatch(DeleteDocumentSuccess(document));
+        .bulkAction(
+            store.state.credentials, action.documentIds, EntityAction.delete)
+        .then((List<DocumentEntity> documents) {
+      store.dispatch(DeleteDocumentSuccess(documents));
       if (action.completer != null) {
         action.completer.complete(null);
       }
     }).catchError((Object error) {
       print(error);
-      store.dispatch(DeleteDocumentFailure(origDocument));
+      store.dispatch(DeleteDocumentFailure(prevDocuments));
       if (action.completer != null) {
         action.completer.completeError(error);
       }
@@ -130,18 +138,21 @@ Middleware<AppState> _deleteDocument(DocumentRepository repository) {
 Middleware<AppState> _restoreDocument(DocumentRepository repository) {
   return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
     final action = dynamicAction as RestoreDocumentRequest;
-    final origDocument = store.state.documentState.map[action.documentId];
+    final prevDocuments = action.documentIds
+        .map((id) => store.state.documentState.map[id])
+        .toList();
+
     repository
-        .saveData(store.state.selectedCompany, store.state.authState,
-            origDocument, EntityAction.restore)
-        .then((DocumentEntity document) {
-      store.dispatch(RestoreDocumentSuccess(document));
+        .bulkAction(
+            store.state.credentials, action.documentIds, EntityAction.restore)
+        .then((List<DocumentEntity> documents) {
+      store.dispatch(RestoreDocumentSuccess(documents));
       if (action.completer != null) {
         action.completer.complete(null);
       }
     }).catchError((Object error) {
       print(error);
-      store.dispatch(RestoreDocumentFailure(origDocument));
+      store.dispatch(RestoreDocumentFailure(prevDocuments));
       if (action.completer != null) {
         action.completer.completeError(error);
       }
@@ -154,10 +165,9 @@ Middleware<AppState> _restoreDocument(DocumentRepository repository) {
 Middleware<AppState> _saveDocument(DocumentRepository repository) {
   return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
     final action = dynamicAction as SaveDocumentRequest;
-    if (store.state.selectedCompany.isEnterprisePlan) {
+    if (store.state.company.isEnterprisePlan) {
       repository
-          .saveData(store.state.selectedCompany, store.state.authState,
-              action.document)
+          .saveData(store.state.credentials, action.document)
           .then((DocumentEntity document) {
         if (action.document.isNew) {
           store.dispatch(AddDocumentSuccess(document));
@@ -192,7 +202,7 @@ Middleware<AppState> _loadDocument(DocumentRepository repository) {
 
     store.dispatch(LoadDocumentRequest());
     repository
-        .loadItem(state.selectedCompany, state.authState, action.documentId)
+        .loadItem(store.state.credentials, action.documentId)
         .then((document) {
       store.dispatch(LoadDocumentSuccess(document));
 
@@ -229,16 +239,14 @@ Middleware<AppState> _loadDocuments(DocumentRepository repository) {
     final int updatedAt = (state.documentState.lastUpdated / 1000).round();
 
     store.dispatch(LoadDocumentsRequest());
-    repository
-        .loadList(state.selectedCompany, state.authState, updatedAt)
-        .then((data) {
+    repository.loadList(store.state.credentials, updatedAt).then((data) {
       store.dispatch(LoadDocumentsSuccess(data));
 
       if (action.completer != null) {
         action.completer.complete(null);
       }
-      if (state.dashboardState.isStale) {
-        store.dispatch(LoadDashboard());
+      if (state.clientState.isStale) {
+        store.dispatch(LoadClients());
       }
     }).catchError((Object error) {
       print(error);

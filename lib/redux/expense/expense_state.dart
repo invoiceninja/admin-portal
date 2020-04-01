@@ -16,8 +16,8 @@ abstract class ExpenseState
   factory ExpenseState() {
     return _$ExpenseState._(
       lastUpdated: 0,
-      map: BuiltMap<int, ExpenseEntity>(),
-      list: BuiltList<int>(),
+      map: BuiltMap<String, ExpenseEntity>(),
+      list: BuiltList<String>(),
     );
   }
   ExpenseState._();
@@ -25,8 +25,8 @@ abstract class ExpenseState
   @nullable
   int get lastUpdated;
 
-  BuiltMap<int, ExpenseEntity> get map;
-  BuiltList<int> get list;
+  BuiltMap<String, ExpenseEntity> get map;
+  BuiltList<String> get list;
 
   bool get isStale {
     if (!isLoaded) {
@@ -39,6 +39,19 @@ abstract class ExpenseState
 
   bool get isLoaded => lastUpdated != null && lastUpdated > 0;
 
+  ExpenseState loadExpenses(BuiltList<ExpenseEntity> clients) {
+    final map = Map<String, ExpenseEntity>.fromIterable(
+      clients,
+      key: (dynamic item) => item.id,
+      value: (dynamic item) => item,
+    );
+
+    return rebuild((b) => b
+      ..lastUpdated = DateTime.now().millisecondsSinceEpoch
+      ..map.addAll(map)
+      ..list.replace((map.keys.toList() + list.toList()).toSet().toList()));
+  }
+
   static Serializer<ExpenseState> get serializer => _$expenseStateSerializer;
 }
 
@@ -49,7 +62,7 @@ abstract class ExpenseUIState extends Object
     return _$ExpenseUIState._(
       listUIState: ListUIState(ExpenseFields.publicNotes),
       editing: ExpenseEntity(),
-      selectedId: 0,
+      selectedId: '',
     );
   }
   ExpenseUIState._();
@@ -59,6 +72,9 @@ abstract class ExpenseUIState extends Object
 
   @override
   bool get isCreatingNew => editing.isNew;
+
+  @override
+  String get editingId => editing.id;
 
   static Serializer<ExpenseUIState> get serializer =>
       _$expenseUIStateSerializer;

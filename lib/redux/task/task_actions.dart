@@ -1,50 +1,51 @@
 import 'dart:async';
-import 'package:flutter/widgets.dart';
+
 import 'package:built_collection/built_collection.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
+import 'package:flutter_redux/flutter_redux.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
-import 'package:flutter_redux/flutter_redux.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
-import 'package:invoiceninja_flutter/utils/localization.dart';
-import 'package:invoiceninja_flutter/utils/completers.dart';
-import 'package:invoiceninja_flutter/redux/invoice/invoice_actions.dart';
+import 'package:invoiceninja_flutter/redux/task/task_selectors.dart';
 import 'package:invoiceninja_flutter/ui/app/dialogs/error_dialog.dart';
 import 'package:invoiceninja_flutter/ui/app/snackbar_row.dart';
-import 'package:flutter/material.dart';
-import 'package:invoiceninja_flutter/redux/task/task_selectors.dart';
+import 'package:invoiceninja_flutter/utils/completers.dart';
+import 'package:invoiceninja_flutter/utils/localization.dart';
 
-class ViewTaskList implements PersistUI {
-  ViewTaskList({@required this.context, this.force = false});
+class ViewTaskList extends AbstractNavigatorAction implements PersistUI {
+  ViewTaskList({@required NavigatorState navigator, this.force = false})
+      : super(navigator: navigator);
 
-  final BuildContext context;
   final bool force;
 }
 
-class ViewTask implements PersistUI {
+class ViewTask extends AbstractNavigatorAction
+    implements PersistUI, PersistPrefs {
   ViewTask({
     @required this.taskId,
-    @required this.context,
+    @required NavigatorState navigator,
     this.force = false,
-  });
+  }) : super(navigator: navigator);
 
-  final int taskId;
-  final BuildContext context;
+  final String taskId;
   final bool force;
 }
 
-class EditTask implements PersistUI {
+class EditTask extends AbstractNavigatorAction
+    implements PersistUI, PersistPrefs {
   EditTask(
       {this.task,
       this.taskTime,
-      this.context,
+      @required NavigatorState navigator,
       this.completer,
       this.force = false,
-      this.taskTimeIndex});
+      this.taskTimeIndex})
+      : super(navigator: navigator);
 
   final int taskTimeIndex;
   final TaskEntity task;
   final TaskTime taskTime;
-  final BuildContext context;
   final Completer completer;
   final bool force;
 }
@@ -56,18 +57,17 @@ class UpdateTask implements PersistUI {
 }
 
 class LoadTask {
-  LoadTask({this.completer, this.taskId, this.loadActivities = false});
+  LoadTask({this.completer, this.taskId});
 
   final Completer completer;
-  final int taskId;
-  final bool loadActivities;
+  final String taskId;
 }
 
 class LoadTaskActivity {
   LoadTaskActivity({this.completer, this.taskId});
 
   final Completer completer;
-  final int taskId;
+  final String taskId;
 }
 
 class LoadTasks {
@@ -176,63 +176,63 @@ class SaveTaskFailure implements StopSaving {
 }
 
 class ArchiveTaskRequest implements StartSaving {
-  ArchiveTaskRequest(this.completer, this.taskId);
+  ArchiveTaskRequest(this.completer, this.taskIds);
 
   final Completer completer;
-  final int taskId;
+  final List<String> taskIds;
 }
 
 class ArchiveTaskSuccess implements StopSaving, PersistData {
-  ArchiveTaskSuccess(this.task);
+  ArchiveTaskSuccess(this.tasks);
 
-  final TaskEntity task;
+  final List<TaskEntity> tasks;
 }
 
 class ArchiveTaskFailure implements StopSaving {
-  ArchiveTaskFailure(this.task);
+  ArchiveTaskFailure(this.tasks);
 
-  final TaskEntity task;
+  final List<TaskEntity> tasks;
 }
 
 class DeleteTaskRequest implements StartSaving {
-  DeleteTaskRequest(this.completer, this.taskId);
+  DeleteTaskRequest(this.completer, this.taskIds);
 
   final Completer completer;
-  final int taskId;
+  final List<String> taskIds;
 }
 
 class DeleteTaskSuccess implements StopSaving, PersistData {
-  DeleteTaskSuccess(this.task);
+  DeleteTaskSuccess(this.tasks);
 
-  final TaskEntity task;
+  final List<TaskEntity> tasks;
 }
 
 class DeleteTaskFailure implements StopSaving {
-  DeleteTaskFailure(this.task);
+  DeleteTaskFailure(this.tasks);
 
-  final TaskEntity task;
+  final List<TaskEntity> tasks;
 }
 
 class RestoreTaskRequest implements StartSaving {
-  RestoreTaskRequest(this.completer, this.taskId);
+  RestoreTaskRequest(this.completer, this.taskIds);
 
   final Completer completer;
-  final int taskId;
+  final List<String> taskIds;
 }
 
 class RestoreTaskSuccess implements StopSaving, PersistData {
-  RestoreTaskSuccess(this.task);
+  RestoreTaskSuccess(this.tasks);
 
-  final TaskEntity task;
+  final List<TaskEntity> tasks;
 }
 
 class RestoreTaskFailure implements StopSaving {
-  RestoreTaskFailure(this.task);
+  RestoreTaskFailure(this.tasks);
 
-  final TaskEntity task;
+  final List<TaskEntity> tasks;
 }
 
-class FilterTasks {
+class FilterTasks implements PersistUI {
   FilterTasks(this.filter);
 
   final String filter;
@@ -268,23 +268,50 @@ class FilterTasksByCustom2 implements PersistUI {
   final String value;
 }
 
+class FilterTasksByCustom3 implements PersistUI {
+  FilterTasksByCustom3(this.value);
+
+  final String value;
+}
+
+class FilterTasksByCustom4 implements PersistUI {
+  FilterTasksByCustom4(this.value);
+
+  final String value;
+}
+
 class FilterTasksByEntity implements PersistUI {
   FilterTasksByEntity({this.entityId, this.entityType});
 
-  final int entityId;
+  final String entityId;
   final EntityType entityType;
 }
 
 void handleTaskAction(
-    BuildContext context, TaskEntity task, EntityAction action) {
+    BuildContext context, List<BaseEntity> tasks, EntityAction action) {
+  assert(
+      [
+            EntityAction.restore,
+            EntityAction.archive,
+            EntityAction.delete,
+            EntityAction.toggleMultiselect
+          ].contains(action) ||
+          tasks.length == 1,
+      'Cannot perform this action on more than one task');
+
+  if (tasks.isEmpty) {
+    return;
+  }
+
   final store = StoreProvider.of<AppState>(context);
   final state = store.state;
-  final CompanyEntity company = state.selectedCompany;
   final localization = AppLocalization.of(context);
+  final task = tasks.first as TaskEntity;
+  final taskIds = tasks.map((task) => task.id).toList();
 
   switch (action) {
     case EntityAction.edit:
-      store.dispatch(EditTask(context: context, task: task));
+      editEntity(context: context, entity: task);
       break;
     case EntityAction.start:
     case EntityAction.stop:
@@ -313,30 +340,68 @@ void handleTaskAction(
       break;
     case EntityAction.newInvoice:
       final item = convertTaskToInvoiceItem(task: task, context: context);
-      store.dispatch(EditInvoice(
-          invoice: InvoiceEntity(company: company).rebuild((b) => b
+      createEntity(
+          context: context,
+          entity: InvoiceEntity(state: state).rebuild((b) => b
             ..hasTasks = true
             ..clientId = task.clientId
-            ..invoiceItems.add(item)),
-          context: context));
+            ..lineItems.add(item)));
       break;
     case EntityAction.viewInvoice:
-      store.dispatch(ViewInvoice(invoiceId: task.invoiceId, context: context));
+      viewEntityById(
+          context: context,
+          entityType: EntityType.invoice,
+          entityId: task.invoiceId);
       break;
     case EntityAction.clone:
-      store.dispatch(EditTask(context: context, task: task.clone));
+      createEntity(context: context, entity: task.clone);
       break;
     case EntityAction.restore:
       store.dispatch(RestoreTaskRequest(
-          snackBarCompleter(context, localization.restoredTask), task.id));
+          snackBarCompleter<Null>(context, localization.restoredTask),
+          taskIds));
       break;
     case EntityAction.archive:
       store.dispatch(ArchiveTaskRequest(
-          snackBarCompleter(context, localization.archivedTask), task.id));
+          snackBarCompleter<Null>(context, localization.archivedTask),
+          taskIds));
       break;
     case EntityAction.delete:
       store.dispatch(DeleteTaskRequest(
-          snackBarCompleter(context, localization.deletedTask), task.id));
+          snackBarCompleter<Null>(context, localization.deletedTask), taskIds));
+      break;
+    case EntityAction.toggleMultiselect:
+      if (!store.state.taskListState.isInMultiselect()) {
+        store.dispatch(StartTaskMultiselect());
+      }
+
+      if (tasks.isEmpty) {
+        break;
+      }
+
+      for (final task in tasks) {
+        if (!store.state.taskListState.isSelected(task.id)) {
+          store.dispatch(AddToTaskMultiselect(entity: task));
+        } else {
+          store.dispatch(RemoveFromTaskMultiselect(entity: task));
+        }
+      }
       break;
   }
 }
+
+class StartTaskMultiselect {}
+
+class AddToTaskMultiselect {
+  AddToTaskMultiselect({@required this.entity});
+
+  final BaseEntity entity;
+}
+
+class RemoveFromTaskMultiselect {
+  RemoveFromTaskMultiselect({@required this.entity});
+
+  final BaseEntity entity;
+}
+
+class ClearTaskMultiselect {}

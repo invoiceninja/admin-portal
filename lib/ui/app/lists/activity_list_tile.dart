@@ -1,15 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
-import 'package:invoiceninja_flutter/data/models/company_model.dart';
 import 'package:invoiceninja_flutter/data/models/entities.dart';
+import 'package:invoiceninja_flutter/data/models/models.dart';
+import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
-import 'package:invoiceninja_flutter/redux/client/client_actions.dart';
-import 'package:invoiceninja_flutter/redux/expense/expense_actions.dart';
-import 'package:invoiceninja_flutter/redux/invoice/invoice_actions.dart';
-import 'package:invoiceninja_flutter/redux/payment/payment_actions.dart';
-import 'package:invoiceninja_flutter/redux/quote/quote_actions.dart';
-import 'package:invoiceninja_flutter/redux/task/task_actions.dart';
-import 'package:invoiceninja_flutter/ui/app/dialogs/error_dialog.dart';
 import 'package:invoiceninja_flutter/utils/formatting.dart';
 import 'package:invoiceninja_flutter/utils/icons.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
@@ -33,7 +27,7 @@ class ActivityListTile extends StatelessWidget {
     String title = localization.lookup('activity_${activity.activityTypeId}');
     title = activity.getDescription(
       title,
-      user: state.selectedCompany.userMap[activity.userId] ?? UserEntity(),
+      user: state.userState.map[activity.userId],
       client: state.clientState.map[activity.clientId],
       invoice: state.invoiceState.map[activity.invoiceId],
       quote: state.quoteState.map[activity.invoiceId],
@@ -50,48 +44,42 @@ class ActivityListTile extends StatelessWidget {
           : () {
               switch (activity.entityType) {
                 case EntityType.task:
-                  if (state.taskState.map.containsKey(activity.taskId)) {
-                    return store.dispatch(
-                        ViewTask(taskId: activity.taskId, context: context));
-                  }
+                  viewEntityById(
+                      context: context,
+                      entityId: activity.taskId,
+                      entityType: EntityType.taxRate);
                   break;
                 case EntityType.client:
-                  if (state.clientState.map.containsKey(activity.clientId)) {
-                    return store.dispatch(ViewClient(
-                        clientId: activity.clientId, context: context));
-                  }
+                  viewEntityById(
+                      context: context,
+                      entityId: activity.clientId,
+                      entityType: EntityType.client);
                   break;
                 case EntityType.invoice:
-                  if (state.invoiceState.map.containsKey(activity.invoiceId)) {
-                    return store.dispatch(ViewInvoice(
-                        invoiceId: activity.invoiceId, context: context));
-                  }
+                  viewEntityById(
+                      context: context,
+                      entityId: activity.invoiceId,
+                      entityType: EntityType.invoice);
                   break;
                 case EntityType.quote:
-                  if (state.quoteState.map.containsKey(activity.invoiceId)) {
-                    return store.dispatch(ViewQuote(
-                        quoteId: activity.invoiceId, context: context));
-                  }
+                  viewEntityById(
+                      context: context,
+                      entityId: activity.invoiceId,
+                      entityType: EntityType.quote);
                   break;
                 case EntityType.payment:
-                  if (state.paymentState.map.containsKey(activity.paymentId)) {
-                    return store.dispatch(ViewPayment(
-                        paymentId: activity.paymentId, context: context));
-                  }
+                  viewEntityById(
+                      context: context,
+                      entityId: activity.paymentId,
+                      entityType: EntityType.payment);
                   break;
                 case EntityType.expense:
-                  if (state.expenseState.map.containsKey(activity.expenseId)) {
-                    return store.dispatch(ViewExpense(
-                        expenseId: activity.expenseId, context: context));
-                  }
+                  viewEntityById(
+                      context: context,
+                      entityId: activity.expenseId,
+                      entityType: EntityType.expense);
                   break;
               }
-              showDialog<ErrorDialog>(
-                  context: context,
-                  builder: (BuildContext context) {
-                    return ErrorDialog(
-                        AppLocalization.of(context).failedToFindRecord);
-                  });
             },
       trailing: enableNavigation ? Icon(Icons.navigate_next) : null,
       subtitle: Row(

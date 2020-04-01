@@ -1,43 +1,48 @@
 import 'dart:async';
-import 'package:flutter/widgets.dart';
-import 'package:invoiceninja_flutter/data/models/models.dart';
+
 import 'package:built_collection/built_collection.dart';
-import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_redux/flutter_redux.dart';
+import 'package:invoiceninja_flutter/data/models/models.dart';
+import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/utils/completers.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:invoiceninja_flutter/utils/pdf.dart';
 import 'package:url_launcher/url_launcher.dart';
-import 'package:invoiceninja_flutter/redux/invoice/invoice_actions.dart';
-import 'package:flutter/material.dart';
 
-class ViewQuoteList implements PersistUI {
-  ViewQuoteList({this.context, this.force = false});
+class ViewQuoteList extends AbstractNavigatorAction implements PersistUI {
+  ViewQuoteList({@required NavigatorState navigator, this.force = false})
+      : super(navigator: navigator);
 
-  final BuildContext context;
   final bool force;
 }
 
-class ViewQuote implements PersistUI {
-  ViewQuote({this.quoteId, this.context, this.force = false});
+class ViewQuote extends AbstractNavigatorAction
+    implements PersistUI, PersistPrefs {
+  ViewQuote({
+    this.quoteId,
+    @required NavigatorState navigator,
+    this.force = false,
+  }) : super(navigator: navigator);
 
-  final int quoteId;
-  final BuildContext context;
+  final String quoteId;
   final bool force;
 }
 
-class EditQuote implements PersistUI {
+class EditQuote extends AbstractNavigatorAction
+    implements PersistUI, PersistPrefs {
   EditQuote(
       {this.quote,
-      this.context,
+      @required NavigatorState navigator,
+      this.quoteItemIndex,
       this.completer,
-      this.quoteItem,
-      this.force = false});
+      this.force = false})
+      : super(navigator: navigator);
 
   final InvoiceEntity quote;
-  final InvoiceItemEntity quoteItem;
-  final BuildContext context;
+  final int quoteItemIndex;
   final Completer completer;
   final bool force;
 }
@@ -51,9 +56,9 @@ class ShowEmailQuote {
 }
 
 class EditQuoteItem implements PersistUI {
-  EditQuoteItem([this.quoteItem]);
+  EditQuoteItem([this.quoteItemIndex]);
 
-  final InvoiceItemEntity quoteItem;
+  final int quoteItemIndex;
 }
 
 class UpdateQuote implements PersistUI {
@@ -62,11 +67,17 @@ class UpdateQuote implements PersistUI {
   final InvoiceEntity quote;
 }
 
+class UpdateQuoteClient implements PersistUI {
+  UpdateQuoteClient({this.client});
+
+  final ClientEntity client;
+}
+
 class LoadQuote {
   LoadQuote({this.completer, this.quoteId});
 
   final Completer completer;
-  final int quoteId;
+  final String quoteId;
 }
 
 class LoadQuotes {
@@ -124,6 +135,19 @@ class LoadQuotesSuccess implements StopLoading, PersistData {
   }
 }
 
+class AddQuoteContact implements PersistUI {
+  AddQuoteContact({this.contact, this.invitation});
+
+  final ContactEntity contact;
+  final InvitationEntity invitation;
+}
+
+class RemoveQuoteContact implements PersistUI {
+  RemoveQuoteContact({this.invitation});
+
+  final InvitationEntity invitation;
+}
+
 class AddQuoteItem implements PersistUI {
   AddQuoteItem({this.quoteItem});
 
@@ -179,7 +203,7 @@ class EmailQuoteRequest implements StartSaving {
       {this.completer, this.quoteId, this.template, this.subject, this.body});
 
   final Completer completer;
-  final int quoteId;
+  final String quoteId;
   final EmailTemplate template;
   final String subject;
   final String body;
@@ -193,83 +217,86 @@ class EmailQuoteFailure implements StopSaving {
   final dynamic error;
 }
 
-class MarkSentQuoteRequest implements StartSaving {
-  MarkSentQuoteRequest(this.completer, this.quoteId);
+class MarkSentQuotesRequest implements StartSaving {
+  MarkSentQuotesRequest(this.completer, this.quoteIds);
 
   final Completer completer;
-  final int quoteId;
+  final List<String> quoteIds;
 }
 
 class MarkSentQuoteSuccess implements StopSaving, PersistData {
-  MarkSentQuoteSuccess(this.quote);
+  MarkSentQuoteSuccess(this.quotes);
 
-  final InvoiceEntity quote;
+  final List<InvoiceEntity> quotes;
 }
 
 class MarkSentQuoteFailure implements StopSaving {
-  MarkSentQuoteFailure(this.quote);
+  MarkSentQuoteFailure(this.error);
 
-  final InvoiceEntity quote;
+  final Object error;
 }
 
-class ArchiveQuoteRequest implements StartSaving {
-  ArchiveQuoteRequest(this.completer, this.quoteId);
+class ArchiveQuotesRequest implements StartSaving {
+  ArchiveQuotesRequest(this.completer, this.quoteIds);
 
   final Completer completer;
-  final int quoteId;
+
+  final List<String> quoteIds;
 }
 
-class ArchiveQuoteSuccess implements StopSaving, PersistData {
-  ArchiveQuoteSuccess(this.quote);
+class ArchiveQuotesSuccess implements StopSaving, PersistData {
+  ArchiveQuotesSuccess(this.quotes);
 
-  final InvoiceEntity quote;
+  final List<InvoiceEntity> quotes;
 }
 
-class ArchiveQuoteFailure implements StopSaving {
-  ArchiveQuoteFailure(this.quote);
+class ArchiveQuotesFailure implements StopSaving {
+  ArchiveQuotesFailure(this.quotes);
 
-  final InvoiceEntity quote;
+  final List<InvoiceEntity> quotes;
 }
 
-class DeleteQuoteRequest implements StartSaving {
-  DeleteQuoteRequest(this.completer, this.quoteId);
+class DeleteQuotesRequest implements StartSaving {
+  DeleteQuotesRequest(this.completer, this.quoteIds);
 
   final Completer completer;
-  final int quoteId;
+
+  final List<String> quoteIds;
 }
 
-class DeleteQuoteSuccess implements StopSaving, PersistData {
-  DeleteQuoteSuccess(this.quote);
+class DeleteQuotesSuccess implements StopSaving, PersistData {
+  DeleteQuotesSuccess(this.quotes);
 
-  final InvoiceEntity quote;
+  final List<InvoiceEntity> quotes;
 }
 
-class DeleteQuoteFailure implements StopSaving {
-  DeleteQuoteFailure(this.quote);
+class DeleteQuotesFailure implements StopSaving {
+  DeleteQuotesFailure(this.quotes);
 
-  final InvoiceEntity quote;
+  final List<InvoiceEntity> quotes;
 }
 
-class RestoreQuoteRequest implements StartSaving {
-  RestoreQuoteRequest(this.completer, this.quoteId);
+class RestoreQuotesRequest implements StartSaving {
+  RestoreQuotesRequest(this.completer, this.quoteIds);
 
   final Completer completer;
-  final int quoteId;
+
+  final List<String> quoteIds;
 }
 
-class RestoreQuoteSuccess implements StopSaving, PersistData {
-  RestoreQuoteSuccess(this.quote);
+class RestoreQuotesSuccess implements StopSaving, PersistData {
+  RestoreQuotesSuccess(this.quotes);
 
-  final InvoiceEntity quote;
+  final List<InvoiceEntity> quotes;
 }
 
-class RestoreQuoteFailure implements StopSaving {
-  RestoreQuoteFailure(this.quote);
+class RestoreQuotesFailure implements StopSaving {
+  RestoreQuotesFailure(this.quotes);
 
-  final InvoiceEntity quote;
+  final List<InvoiceEntity> quotes;
 }
 
-class FilterQuotes {
+class FilterQuotes implements PersistUI {
   FilterQuotes(this.filter);
 
   final String filter;
@@ -296,7 +323,7 @@ class FilterQuotesByStatus implements PersistUI {
 class FilterQuotesByEntity implements PersistUI {
   FilterQuotesByEntity({this.entityId, this.entityType});
 
-  final int entityId;
+  final String entityId;
   final EntityType entityType;
 }
 
@@ -318,18 +345,29 @@ class FilterQuotesByCustom2 implements PersistUI {
   final String value;
 }
 
-class ConvertQuote implements PersistData {
-  ConvertQuote(this.completer, this.quoteId);
+class FilterQuotesByCustom3 implements PersistUI {
+  FilterQuotesByCustom3(this.value);
 
-  final int quoteId;
+  final String value;
+}
+
+class FilterQuotesByCustom4 implements PersistUI {
+  FilterQuotesByCustom4(this.value);
+
+  final String value;
+}
+
+class ConvertQuotes implements PersistData {
+  ConvertQuotes(this.completer, this.quoteIds);
+
+  final List<String> quoteIds;
   final Completer completer;
 }
 
 class ConvertQuoteSuccess implements StopSaving, PersistData {
-  ConvertQuoteSuccess({this.quote, this.invoice});
+  ConvertQuoteSuccess({this.quotes});
 
-  final InvoiceEntity quote;
-  final InvoiceEntity invoice;
+  final List<InvoiceEntity> quotes;
 }
 
 class ConvertQuoteFailure implements StopSaving {
@@ -339,13 +377,25 @@ class ConvertQuoteFailure implements StopSaving {
 }
 
 Future handleQuoteAction(
-    BuildContext context, InvoiceEntity quote, EntityAction action) async {
+    BuildContext context, List<BaseEntity> quotes, EntityAction action) async {
+  assert(
+      [
+            EntityAction.restore,
+            EntityAction.archive,
+            EntityAction.delete,
+            EntityAction.toggleMultiselect
+          ].contains(action) ||
+          quotes.length == 1,
+      'Cannot perform this action on more than one quote');
+
   final store = StoreProvider.of<AppState>(context);
   final localization = AppLocalization.of(context);
+  final quote = quotes.first as InvoiceEntity;
+  final quoteIds = quotes.map((quote) => quote.id).toList();
 
   switch (action) {
     case EntityAction.edit:
-      store.dispatch(EditQuote(context: context, quote: quote));
+      editEntity(context: context, entity: quote);
       break;
     case EntityAction.pdf:
       viewPdf(quote, context);
@@ -357,45 +407,82 @@ Future handleQuoteAction(
       }
       break;
     case EntityAction.viewInvoice:
-      store.dispatch(
-          ViewInvoice(context: context, invoiceId: quote.quoteInvoiceId));
+      viewEntityById(
+          context: context,
+          entityId: quote.invoiceId,
+          entityType: EntityType.invoice);
       break;
     case EntityAction.convert:
-      final Completer<InvoiceEntity> completer = Completer<InvoiceEntity>();
-      store.dispatch(ConvertQuote(completer, quote.id));
-      completer.future.then((InvoiceEntity invoice) {
-        store.dispatch(ViewInvoice(invoiceId: invoice.id, context: context));
-      });
+      store.dispatch(ConvertQuotes(
+          snackBarCompleter<Null>(context, localization.convertedQuote),
+          quoteIds));
       break;
     case EntityAction.markSent:
-      store.dispatch(MarkSentQuoteRequest(
-          snackBarCompleter(context, localization.markedQuoteAsSent),
-          quote.id));
+      store.dispatch(MarkSentQuotesRequest(
+          snackBarCompleter<Null>(context, localization.markedQuoteAsSent),
+          quoteIds));
       break;
     case EntityAction.sendEmail:
       store.dispatch(ShowEmailQuote(
-          completer: snackBarCompleter(context, localization.emailedQuote),
+          completer:
+              snackBarCompleter<Null>(context, localization.emailedQuote),
           quote: quote,
           context: context));
       break;
     case EntityAction.cloneToInvoice:
-      store.dispatch(
-          EditInvoice(context: context, invoice: quote.cloneToInvoice));
+      createEntity(context: context, entity: quote.clone);
       break;
     case EntityAction.cloneToQuote:
-      store.dispatch(EditQuote(context: context, quote: quote.cloneToQuote));
+      createEntity(context: context, entity: quote.clone);
+      createEntity(context: context, entity: quote.clone);
       break;
     case EntityAction.restore:
-      store.dispatch(RestoreQuoteRequest(
-          snackBarCompleter(context, localization.restoredQuote), quote.id));
+      store.dispatch(RestoreQuotesRequest(
+          snackBarCompleter<Null>(context, localization.restoredQuote),
+          quoteIds));
       break;
     case EntityAction.archive:
-      store.dispatch(ArchiveQuoteRequest(
-          snackBarCompleter(context, localization.archivedQuote), quote.id));
+      store.dispatch(ArchiveQuotesRequest(
+          snackBarCompleter<Null>(context, localization.archivedQuote),
+          quoteIds));
       break;
     case EntityAction.delete:
-      store.dispatch(DeleteQuoteRequest(
-          snackBarCompleter(context, localization.deletedQuote), quote.id));
+      store.dispatch(DeleteQuotesRequest(
+          snackBarCompleter<Null>(context, localization.deletedQuote),
+          quoteIds));
+      break;
+    case EntityAction.toggleMultiselect:
+      if (!store.state.quoteListState.isInMultiselect()) {
+        store.dispatch(StartQuoteMultiselect());
+      }
+
+      if (quotes.isEmpty) {
+        break;
+      }
+
+      for (final quote in quotes) {
+        if (!store.state.quoteListState.isSelected(quote.id)) {
+          store.dispatch(AddToQuoteMultiselect(entity: quote));
+        } else {
+          store.dispatch(RemoveFromQuoteMultiselect(entity: quote));
+        }
+      }
       break;
   }
 }
+
+class StartQuoteMultiselect {}
+
+class AddToQuoteMultiselect {
+  AddToQuoteMultiselect({@required this.entity});
+
+  final BaseEntity entity;
+}
+
+class RemoveFromQuoteMultiselect {
+  RemoveFromQuoteMultiselect({@required this.entity});
+
+  final BaseEntity entity;
+}
+
+class ClearQuoteMultiselect {}

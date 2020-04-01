@@ -4,7 +4,9 @@ import 'package:invoiceninja_flutter/constants.dart';
 import 'package:invoiceninja_flutter/data/models/company_model.dart';
 import 'package:invoiceninja_flutter/data/models/entities.dart';
 import 'package:invoiceninja_flutter/ui/app/entity_dropdown.dart';
+import 'package:invoiceninja_flutter/ui/app/forms/decorated_form_field.dart';
 import 'package:invoiceninja_flutter/ui/client/edit/client_edit_vm.dart';
+import 'package:invoiceninja_flutter/utils/completers.dart';
 import 'package:invoiceninja_flutter/utils/formatting.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:invoiceninja_flutter/ui/app/form_card.dart';
@@ -26,12 +28,13 @@ class ClientEditSettingsState extends State<ClientEditSettings> {
   final _taskRateController = TextEditingController();
   final _paymentTermsController = TextEditingController();
 
-  final List<TextEditingController> _controllers = [];
+  List<TextEditingController> _controllers;
+  final _debouncer = Debouncer();
 
   @override
   void didChangeDependencies() {
     final localization = AppLocalization.of(context);
-    final List<TextEditingController> _controllers = [
+    _controllers = [
       _taskRateController,
       _paymentTermsController,
     ];
@@ -40,7 +43,8 @@ class ClientEditSettingsState extends State<ClientEditSettings> {
         .forEach((dynamic controller) => controller.removeListener(_onChanged));
 
     final client = widget.viewModel.client;
-    _taskRateController.text = formatNumber(client.taskRate, context,
+    _taskRateController.text = formatNumber(
+        client.settings.defaultTaskRate, context,
         formatNumberType: FormatNumberType.input);
     _paymentTermsController.text = client.getPaymentTerm(localization.net);
 
@@ -61,12 +65,15 @@ class ClientEditSettingsState extends State<ClientEditSettings> {
   }
 
   void _onChanged() {
-    final viewModel = widget.viewModel;
-    final client = viewModel.client
-        .rebuild((b) => b..taskRate = parseDouble(_taskRateController.text));
-    if (client != viewModel.client) {
-      viewModel.onChanged(client);
-    }
+    _debouncer.run(() {
+      final viewModel = widget.viewModel;
+      final client = viewModel.client.rebuild((b) => b
+        ..settings.defaultTaskRate =
+            parseDouble(_taskRateController.text, zeroIsNull: true));
+      if (client != viewModel.client) {
+        viewModel.onChanged(client);
+      }
+    });
   }
 
   @override
@@ -81,33 +88,33 @@ class ClientEditSettingsState extends State<ClientEditSettings> {
         FormCard(
           children: <Widget>[
             EntityDropdown(
+              key: ValueKey('__currency_${client.currencyId}__'),
               entityType: EntityType.currency,
-              entityMap: viewModel.staticState.currencyMap,
               entityList:
                   memoizedCurrencyList(viewModel.staticState.currencyMap),
               labelText: localization.currency,
-              initialValue:
-                  viewModel.staticState.currencyMap[client.currencyId]?.name,
+              entityId: client.currencyId,
+              allowClearing: true,
               onSelected: (SelectableEntity currency) => viewModel.onChanged(
-                  client.rebuild((b) => b..currencyId = currency.id)),
+                  client.rebuild((b) => b..settings.currencyId = currency?.id)),
             ),
             EntityDropdown(
+              key: ValueKey('__language_${client.languageId}__'),
+              allowClearing: true,
               entityType: EntityType.language,
-              entityMap: viewModel.staticState.languageMap,
               entityList:
                   memoizedLanguageList(viewModel.staticState.languageMap),
               labelText: localization.language,
-              initialValue:
-                  viewModel.staticState.languageMap[client.languageId]?.name,
+              entityId: client.languageId,
               onSelected: (SelectableEntity language) => viewModel.onChanged(
-                  client.rebuild((b) => b..languageId = language.id)),
+                  client.rebuild((b) => b..settings.languageId = language?.id)),
             ),
             PopupMenuButton<PaymentTermEntity>(
               padding: EdgeInsets.zero,
               initialValue: null,
               itemBuilder: (BuildContext context) => (<int>[]
                     ..addAll(kPaymentTerms)
-                    ..addAll(viewModel.company.customPaymentTerms
+                    ..addAll(viewModel.company.settings.customPaymentTerms
                         .map((paymentTerm) => paymentTerm.numDays))
                     ..sort((a, b) => a.abs() - b.abs()))
                   .map((int numDays) =>
@@ -119,8 +126,8 @@ class ClientEditSettingsState extends State<ClientEditSettings> {
                       ))
                   .toList(),
               onSelected: (paymentTerm) {
-                viewModel.onChanged(client
-                    .rebuild((b) => b..paymentTerms = paymentTerm.numDays));
+                viewModel.onChanged(client.rebuild((b) =>
+                    b..settings.defaultPaymentTerms = paymentTerm.numDays));
                 _paymentTermsController.text =
                     paymentTerm.getPaymentTerm(localization.net);
               },
@@ -136,33 +143,34 @@ class ClientEditSettingsState extends State<ClientEditSettings> {
                 ),
               ),
             ),
-            TextFormField(
+            DecoratedFormField(
               controller: _taskRateController,
               keyboardType: TextInputType.numberWithOptions(decimal: true),
-              decoration: InputDecoration(
-                labelText: localization.taskRate,
-              ),
+              label: localization.taskRate,
             ),
           ],
         ),
+        // TODO renable this code
+        /*
         FormCard(children: <Widget>[
           SwitchListTile(
             activeColor: Theme.of(context).accentColor,
             title: Text(localization.clientPortal),
             subtitle: Text(localization.showTasks),
-            value: client.showTasksInPortal,
-            onChanged: (value) => viewModel
-                .onChanged(client.rebuild((b) => b..showTasksInPortal = value)),
+            value: client.settings.showTasksInPortal,
+            onChanged: (value) => viewModel.onChanged(
+                client.rebuild((b) => b..settings.showTasksInPortal = value)),
           ),
           SwitchListTile(
             activeColor: Theme.of(context).accentColor,
             title: Text(localization.emailReminders),
             subtitle: Text(localization.enabled),
-            value: client.sendReminders,
-            onChanged: (value) => viewModel
-                .onChanged(client.rebuild((b) => b..sendReminders = value)),
+            value: client.settings.sendReminders,
+            onChanged: (value) => viewModel.onChanged(
+                client.rebuild((b) => b..settings.sendReminders = value)),
           ),
         ]),
+         */
       ],
     );
   }

@@ -1,10 +1,10 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:invoiceninja_flutter/ui/app/edit_scaffold.dart';
 import 'package:invoiceninja_flutter/ui/app/form_card.dart';
 import 'package:invoiceninja_flutter/ui/document/edit/document_edit_vm.dart';
-import 'package:invoiceninja_flutter/ui/app/buttons/action_icon_button.dart';
+import 'package:invoiceninja_flutter/utils/completers.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
-import 'package:invoiceninja_flutter/utils/platforms.dart';
 
 class DocumentEdit extends StatefulWidget {
   const DocumentEdit({
@@ -19,7 +19,9 @@ class DocumentEdit extends StatefulWidget {
 }
 
 class _DocumentEditState extends State<DocumentEdit> {
-  static final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+  static final GlobalKey<FormState> _formKey =
+      GlobalKey<FormState>(debugLabel: '_documentEdit');
+  final _debouncer = Debouncer();
 
   // STARTER: controllers - do not remove comment
 
@@ -52,12 +54,14 @@ class _DocumentEditState extends State<DocumentEdit> {
   }
 
   void _onChanged() {
-    final document = widget.viewModel.document.rebuild((b) => b
-        // STARTER: set value - do not remove comment
-        );
-    if (document != widget.viewModel.document) {
-      widget.viewModel.onChanged(document);
-    }
+    _debouncer.run(() {
+      final document = widget.viewModel.document.rebuild((b) => b
+          // STARTER: set value - do not remove comment
+          );
+      if (document != widget.viewModel.document) {
+        widget.viewModel.onChanged(document);
+      }
+    });
   }
 
   @override
@@ -66,58 +70,30 @@ class _DocumentEditState extends State<DocumentEdit> {
     final localization = AppLocalization.of(context);
     final document = viewModel.document;
 
-    return WillPopScope(
-      onWillPop: () async {
-        viewModel.onBackPressed();
-        return true;
+    return EditScaffold(
+      entity: document,
+      title:
+          document.isNew ? localization.newDocument : localization.editDocument,
+      onSavePressed: (context) {
+        if (!_formKey.currentState.validate()) {
+          return;
+        }
+        viewModel.onSavePressed(context);
       },
-      child: Scaffold(
-        appBar: AppBar(
-          automaticallyImplyLeading: isMobile(context),
-          title: Text(viewModel.document.isNew
-              ? localization.newDocument
-              : localization.editDocument),
-          actions: <Widget>[
-            /*
-            if (!isMobile(context))
-              FlatButton(
-                child: Text(
-                  localization.cancel,
-                  style: TextStyle(color: Colors.white),
+      body: Form(
+          key: _formKey,
+          child: Builder(builder: (BuildContext context) {
+            return ListView(
+              key: ValueKey(viewModel.document.id),
+              children: <Widget>[
+                FormCard(
+                  children: <Widget>[
+                    // STARTER: widgets - do not remove comment
+                  ],
                 ),
-                onPressed: () => viewModel.onCancelPressed(context),
-              ),
-              */
-            ActionIconButton(
-              icon: Icons.cloud_upload,
-              tooltip: localization.save,
-              isVisible: !document.isDeleted,
-              isDirty: document.isNew || document != viewModel.origDocument,
-              isSaving: viewModel.isSaving,
-              onPressed: () {
-                if (!_formKey.currentState.validate()) {
-                  return;
-                }
-                viewModel.onSavePressed(context);
-              },
-            ),
-          ],
-        ),
-        body: Form(
-            key: _formKey,
-            child: Builder(builder: (BuildContext context) {
-              return ListView(
-                key: ValueKey(viewModel.document.id),
-                children: <Widget>[
-                  FormCard(
-                    children: <Widget>[
-                      // STARTER: widgets - do not remove comment
-                    ],
-                  ),
-                ],
-              );
-            })),
-      ),
+              ],
+            );
+          })),
     );
   }
 }

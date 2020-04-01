@@ -35,13 +35,11 @@ class _$AuthStateSerializer implements StructuredSerializer<AuthState> {
       'isAuthenticated',
       serializers.serialize(object.isAuthenticated,
           specifiedType: const FullType(bool)),
+      'lastEnteredPasswordAt',
+      serializers.serialize(object.lastEnteredPasswordAt,
+          specifiedType: const FullType(int)),
     ];
-    if (object.error != null) {
-      result
-        ..add('error')
-        ..add(serializers.serialize(object.error,
-            specifiedType: const FullType(String)));
-    }
+
     return result;
   }
 
@@ -80,9 +78,9 @@ class _$AuthStateSerializer implements StructuredSerializer<AuthState> {
           result.isAuthenticated = serializers.deserialize(value,
               specifiedType: const FullType(bool)) as bool;
           break;
-        case 'error':
-          result.error = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String;
+        case 'lastEnteredPasswordAt':
+          result.lastEnteredPasswordAt = serializers.deserialize(value,
+              specifiedType: const FullType(int)) as int;
           break;
       }
     }
@@ -105,7 +103,7 @@ class _$AuthState extends AuthState {
   @override
   final bool isAuthenticated;
   @override
-  final String error;
+  final int lastEnteredPasswordAt;
 
   factory _$AuthState([void Function(AuthStateBuilder) updates]) =>
       (new AuthStateBuilder()..update(updates)).build();
@@ -117,7 +115,7 @@ class _$AuthState extends AuthState {
       this.secret,
       this.isInitialized,
       this.isAuthenticated,
-      this.error})
+      this.lastEnteredPasswordAt})
       : super._() {
     if (email == null) {
       throw new BuiltValueNullFieldError('AuthState', 'email');
@@ -136,6 +134,9 @@ class _$AuthState extends AuthState {
     }
     if (isAuthenticated == null) {
       throw new BuiltValueNullFieldError('AuthState', 'isAuthenticated');
+    }
+    if (lastEnteredPasswordAt == null) {
+      throw new BuiltValueNullFieldError('AuthState', 'lastEnteredPasswordAt');
     }
   }
 
@@ -156,7 +157,7 @@ class _$AuthState extends AuthState {
         secret == other.secret &&
         isInitialized == other.isInitialized &&
         isAuthenticated == other.isAuthenticated &&
-        error == other.error;
+        lastEnteredPasswordAt == other.lastEnteredPasswordAt;
   }
 
   @override
@@ -170,7 +171,7 @@ class _$AuthState extends AuthState {
                     secret.hashCode),
                 isInitialized.hashCode),
             isAuthenticated.hashCode),
-        error.hashCode));
+        lastEnteredPasswordAt.hashCode));
   }
 
   @override
@@ -182,7 +183,7 @@ class _$AuthState extends AuthState {
           ..add('secret', secret)
           ..add('isInitialized', isInitialized)
           ..add('isAuthenticated', isAuthenticated)
-          ..add('error', error))
+          ..add('lastEnteredPasswordAt', lastEnteredPasswordAt))
         .toString();
   }
 }
@@ -216,9 +217,10 @@ class AuthStateBuilder implements Builder<AuthState, AuthStateBuilder> {
   set isAuthenticated(bool isAuthenticated) =>
       _$this._isAuthenticated = isAuthenticated;
 
-  String _error;
-  String get error => _$this._error;
-  set error(String error) => _$this._error = error;
+  int _lastEnteredPasswordAt;
+  int get lastEnteredPasswordAt => _$this._lastEnteredPasswordAt;
+  set lastEnteredPasswordAt(int lastEnteredPasswordAt) =>
+      _$this._lastEnteredPasswordAt = lastEnteredPasswordAt;
 
   AuthStateBuilder();
 
@@ -230,7 +232,7 @@ class AuthStateBuilder implements Builder<AuthState, AuthStateBuilder> {
       _secret = _$v.secret;
       _isInitialized = _$v.isInitialized;
       _isAuthenticated = _$v.isAuthenticated;
-      _error = _$v.error;
+      _lastEnteredPasswordAt = _$v.lastEnteredPasswordAt;
       _$v = null;
     }
     return this;
@@ -259,7 +261,7 @@ class AuthStateBuilder implements Builder<AuthState, AuthStateBuilder> {
             secret: secret,
             isInitialized: isInitialized,
             isAuthenticated: isAuthenticated,
-            error: error);
+            lastEnteredPasswordAt: lastEnteredPasswordAt);
     replace(_$result);
     return _$result;
   }

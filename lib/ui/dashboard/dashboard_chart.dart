@@ -11,7 +11,7 @@ class DashboardChart extends StatefulWidget {
 
   final List<ChartDataGroup> data;
   final String title;
-  final int currencyId;
+  final String currencyId;
 
   static const PERIOD_CURRENT = 'current';
   static const PERIOD_PREVIOUS = 'previous';
@@ -58,7 +58,7 @@ class _DashboardChartState extends State<DashboardChart> {
     final theme = Theme.of(context);
     final localization = AppLocalization.of(context);
     final state = StoreProvider.of<AppState>(context).state;
-    final color = state.uiState.enableDarkMode
+    final color = state.prefState.enableDarkMode
         ? charts.MaterialPalette.white
         : charts.MaterialPalette.gray.shade700;
 
@@ -83,9 +83,10 @@ class _DashboardChartState extends State<DashboardChart> {
               labelStyle: charts.TextStyleSpec(color: color),
               lineStyle: charts.LineStyleSpec(color: color))),
       primaryMeasureAxis: charts.NumericAxisSpec(
-          renderSpec: charts.GridlineRendererSpec(
-              labelStyle: charts.TextStyleSpec(color: color),
-              lineStyle: charts.LineStyleSpec(color: color))),
+        renderSpec: charts.GridlineRendererSpec(
+            labelStyle: charts.TextStyleSpec(color: color),
+            lineStyle: charts.LineStyleSpec(color: color)),
+      ),
     );
 
     return FormCard(
@@ -94,7 +95,7 @@ class _DashboardChartState extends State<DashboardChart> {
           padding: EdgeInsets.all(14.0),
           child: Text(
             widget.title,
-            style: theme.textTheme.headline,
+            style: theme.textTheme.headline5,
           ),
         ),
         Divider(height: 1.0),
@@ -140,19 +141,19 @@ class _DashboardChartState extends State<DashboardChart> {
                 child: Container(
                   color: isSelected ? Colors.blue : theme.cardColor,
                   padding:
-                      EdgeInsets.only(left: 16, top: 16, right: 32, bottom: 8),
+                      EdgeInsets.only(left: 16, top: 8, right: 32, bottom: 8),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: <Widget>[
                       Text(localization.lookup(dataGroup.name),
-                          style: theme.textTheme.subhead.copyWith(
+                          style: theme.textTheme.headline5.copyWith(
                               color: isSelected ? Colors.white : null,
                               fontWeight: FontWeight.w400)),
                       SizedBox(height: 4.0),
                       Text(
                           formatNumber(dataGroup.total, context,
                               currencyId: widget.currencyId),
-                          style: theme.textTheme.headline.copyWith(
+                          style: theme.textTheme.headline5.copyWith(
                               color: isSelected ? Colors.white : null)),
                       SizedBox(height: 2.0),
                       changeString.isNotEmpty
@@ -179,7 +180,9 @@ class _DashboardChartState extends State<DashboardChart> {
           height: 240.0,
           child: Padding(
             padding: const EdgeInsets.all(16.0),
-            child: chart,
+            child: ClipRect(
+              child: chart,
+            ),
           ),
         ),
         Divider(height: 1.0),
@@ -194,13 +197,13 @@ class _DashboardChartState extends State<DashboardChart> {
                       ': ' +
                       formatNumber(series.average, context,
                           currencyId: widget.currencyId),
-                  style: theme.textTheme.subhead,
+                  style: theme.textTheme.headline5,
                 ),
               ),
               _selected != null
                   ? Text(
                       _selected,
-                      style: theme.textTheme.subhead,
+                      style: theme.textTheme.headline5,
                     )
                   : SizedBox(),
             ],

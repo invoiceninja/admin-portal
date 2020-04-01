@@ -5,6 +5,7 @@ import 'package:invoiceninja_flutter/redux/client/client_actions.dart';
 import 'package:invoiceninja_flutter/redux/invoice/invoice_actions.dart';
 import 'package:invoiceninja_flutter/ui/app/invoice/invoice_email_view.dart';
 import 'package:invoiceninja_flutter/utils/completers.dart';
+import 'package:invoiceninja_flutter/utils/platforms.dart';
 import 'package:redux/redux.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
@@ -23,7 +24,7 @@ class InvoiceEmailScreen extends StatelessWidget {
         final invoice = state.invoiceState.map[invoiceId];
         final client = state.clientState.get(invoice.clientId);
         if (client.areActivitiesStale) {
-          store.dispatch(LoadClient(clientId: client.id, loadActivities: true));
+          store.dispatch(LoadClient(clientId: client.id));
         }
       },
       converter: (Store<AppState> store) {
@@ -34,6 +35,7 @@ class InvoiceEmailScreen extends StatelessWidget {
       },
       builder: (context, vm) {
         return InvoiceEmailView(
+          key: ValueKey('__invoice_${vm.invoice.id}__'),
           viewModel: vm,
         );
       },
@@ -83,13 +85,13 @@ class EmailInvoiceVM extends EmailEntityVM {
     return EmailInvoiceVM(
         isLoading: state.isLoading,
         isSaving: state.isSaving,
-        company: state.selectedCompany,
+        company: state.company,
         invoice: invoice,
         client: state.clientState.map[invoice.clientId] ??
             ClientEntity(id: invoice.clientId),
         onSendPressed: (context, template, subject, body) =>
             store.dispatch(EmailInvoiceRequest(
-              completer: popCompleter(context, true),
+              completer: isMobile(context) ? popCompleter(context, true) : null,
               invoiceId: invoice.id,
               template: template,
               subject: subject,

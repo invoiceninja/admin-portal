@@ -3,8 +3,10 @@ import 'package:flutter/services.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/ui/app/buttons/elevated_button.dart';
 import 'package:invoiceninja_flutter/ui/app/form_card.dart';
-import 'package:invoiceninja_flutter/ui/app/forms/custom_field.dart';
+import 'package:invoiceninja_flutter/ui/app/forms/decorated_form_field.dart';
 import 'package:invoiceninja_flutter/ui/vendor/edit/vendor_edit_contacts_vm.dart';
+import 'package:invoiceninja_flutter/utils/completers.dart';
+import 'package:invoiceninja_flutter/utils/dialogs.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 
 class VendorEditContacts extends StatefulWidget {
@@ -152,11 +154,11 @@ class ContactEditDetailsState extends State<ContactEditDetails> {
   final _firstNameController = TextEditingController();
   final _lastNameController = TextEditingController();
   final _emailController = TextEditingController();
-  final _passwordController = TextEditingController();
   final _phoneController = TextEditingController();
   final _custom1Controller = TextEditingController();
   final _custom2Controller = TextEditingController();
 
+  final _debouncer = Debouncer();
   List<TextEditingController> _controllers = [];
 
   @override
@@ -169,7 +171,6 @@ class ContactEditDetailsState extends State<ContactEditDetails> {
       _firstNameController,
       _lastNameController,
       _emailController,
-      _passwordController,
       _phoneController,
       _custom1Controller,
       _custom2Controller,
@@ -201,45 +202,22 @@ class ContactEditDetailsState extends State<ContactEditDetails> {
   }
 
   void _onChanged() {
-    final contact = widget.contact.rebuild((b) => b
-      ..firstName = _firstNameController.text.trim()
-      ..lastName = _lastNameController.text.trim()
-      ..email = _emailController.text.trim()
-      ..phone = _phoneController.text.trim());
-    if (contact != widget.contact) {
-      widget.viewModel.onChangedContact(contact, widget.index);
-    }
+    _debouncer.run(() {
+      final contact = widget.contact.rebuild((b) => b
+        ..firstName = _firstNameController.text.trim()
+        ..lastName = _lastNameController.text.trim()
+        ..email = _emailController.text.trim()
+        ..phone = _phoneController.text.trim());
+      if (contact != widget.contact) {
+        widget.viewModel.onChangedContact(contact, widget.index);
+      }
+    });
   }
 
   @override
   Widget build(BuildContext context) {
     final localization = AppLocalization.of(context);
     final viewModel = widget.viewModel;
-    final company = viewModel.company;
-
-    void _confirmDelete() {
-      showDialog<AlertDialog>(
-        context: context,
-        builder: (BuildContext context) => AlertDialog(
-          semanticLabel: localization.areYouSure,
-          title: Text(localization.areYouSure),
-          actions: <Widget>[
-            FlatButton(
-                child: Text(localization.cancel.toUpperCase()),
-                onPressed: () {
-                  Navigator.pop(context);
-                }),
-            FlatButton(
-                child: Text(localization.ok.toUpperCase()),
-                onPressed: () {
-                  widget.viewModel.onRemoveContactPressed(widget.index);
-                  Navigator.pop(context);
-                  Navigator.pop(context);
-                })
-          ],
-        ),
-      );
-    }
 
     return Padding(
       padding: EdgeInsets.only(
@@ -260,15 +238,21 @@ class ContactEditDetailsState extends State<ContactEditDetails> {
                       ),
                       ElevatedButton(
                         color: Colors.red,
-                        icon: Icons.delete,
+                        iconData: Icons.delete,
                         label: localization.remove,
-                        onPressed: _confirmDelete,
+                        onPressed: () => confirmCallback(
+                            context: context,
+                            callback: () {
+                              widget.viewModel
+                                  .onRemoveContactPressed(widget.index);
+                              Navigator.pop(context);
+                            }),
                       ),
                       SizedBox(
                         width: 10.0,
                       ),
                       ElevatedButton(
-                        icon: Icons.check_circle,
+                        iconData: Icons.check_circle,
                         label: localization.done,
                         onPressed: () {
                           viewModel.onDoneContactPressed();
@@ -278,62 +262,37 @@ class ContactEditDetailsState extends State<ContactEditDetails> {
                     ],
                   )
                 : Container(),
-            TextFormField(
-              autocorrect: false,
+            DecoratedFormField(
               controller: _firstNameController,
-              decoration: InputDecoration(
-                labelText: localization.firstName,
-              ),
+              label: localization.firstName,
             ),
-            TextFormField(
-              autocorrect: false,
+            DecoratedFormField(
               controller: _lastNameController,
-              decoration: InputDecoration(
-                labelText: localization.lastName,
-              ),
+              label: localization.lastName,
             ),
-            TextFormField(
-              autocorrect: false,
+            DecoratedFormField(
               controller: _emailController,
-              decoration: InputDecoration(
-                labelText: localization.email,
-              ),
+              label: localization.email,
               keyboardType: TextInputType.emailAddress,
               validator: (value) => value.isNotEmpty && !value.contains('@')
                   ? localization.emailIsInvalid
                   : null,
             ),
-            company.enablePortalPassword ?? false
-                ? TextFormField(
-                    autocorrect: false,
-                    controller: _passwordController,
-                    decoration: InputDecoration(
-                      labelText: localization.password,
-                    ),
-                    obscureText: true,
-                    validator: (value) => value.isNotEmpty && value.length < 8
-                        ? localization.passwordIsTooShort
-                        : null,
-                  )
-                : SizedBox(),
-            TextFormField(
-              autocorrect: false,
+            DecoratedFormField(
               controller: _phoneController,
-              decoration: InputDecoration(
-                labelText: localization.phone,
-              ),
+              label: localization.phone,
               keyboardType: TextInputType.phone,
             ),
+            /*
             CustomField(
               controller: _custom1Controller,
-              labelText: company.getCustomFieldLabel(CustomFieldType.contact1),
-              options: company.getCustomFieldValues(CustomFieldType.contact1),
+              field: CustomFieldType.contact1,
             ),
             CustomField(
               controller: _custom2Controller,
-              labelText: company.getCustomFieldLabel(CustomFieldType.contact2),
-              options: company.getCustomFieldValues(CustomFieldType.contact2),
+              field: CustomFieldType.contact2,
             ),
+             */
           ],
         ),
       ),

@@ -1,10 +1,11 @@
-import 'package:redux/redux.dart';
+import 'package:built_collection/built_collection.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/redux/company/company_actions.dart';
-import 'package:invoiceninja_flutter/redux/ui/entity_ui_state.dart';
-import 'package:invoiceninja_flutter/redux/ui/list_ui_state.dart';
 import 'package:invoiceninja_flutter/redux/document/document_actions.dart';
 import 'package:invoiceninja_flutter/redux/document/document_state.dart';
+import 'package:invoiceninja_flutter/redux/ui/entity_ui_state.dart';
+import 'package:invoiceninja_flutter/redux/ui/list_ui_state.dart';
+import 'package:redux/redux.dart';
 
 EntityUIState documentUIReducer(DocumentUIState state, dynamic action) {
   return state.rebuild((b) => b
@@ -13,10 +14,11 @@ EntityUIState documentUIReducer(DocumentUIState state, dynamic action) {
     ..selectedId = selectedIdReducer(state.selectedId, action));
 }
 
-Reducer<int> selectedIdReducer = combineReducers([
-  TypedReducer<int, ViewDocument>((selectedId, action) => action.documentId),
-  TypedReducer<int, AddDocumentSuccess>(
+Reducer<String> selectedIdReducer = combineReducers([
+  TypedReducer<String, ViewDocument>((selectedId, action) => action.documentId),
+  TypedReducer<String, AddDocumentSuccess>(
       (selectedId, action) => action.document.id),
+  TypedReducer<String, SelectCompany>((selectedId, action) => ''),
 ]);
 
 final editingReducer = combineReducers<DocumentEntity>([
@@ -26,7 +28,9 @@ final editingReducer = combineReducers<DocumentEntity>([
   TypedReducer<DocumentEntity, ArchiveDocumentSuccess>(_updateEditing),
   TypedReducer<DocumentEntity, DeleteDocumentSuccess>(_updateEditing),
   TypedReducer<DocumentEntity, EditDocument>(_updateEditing),
-  TypedReducer<DocumentEntity, UpdateDocument>(_updateEditing),
+  TypedReducer<DocumentEntity, UpdateDocument>((document, action) {
+    return action.document.rebuild((b) => b..isChanged = true);
+  }),
   TypedReducer<DocumentEntity, SelectCompany>(_clearEditing),
 ]);
 
@@ -47,6 +51,11 @@ final documentListReducer = combineReducers<ListUIState>([
   TypedReducer<ListUIState, FilterDocumentsByCustom2>(
       _filterDocumentsByCustom2),
   TypedReducer<ListUIState, FilterDocumentsByEntity>(_filterDocumentsByClient),
+  TypedReducer<ListUIState, StartDocumentMultiselect>(_startListMultiselect),
+  TypedReducer<ListUIState, AddToDocumentMultiselect>(_addToListMultiselect),
+  TypedReducer<ListUIState, RemoveFromDocumentMultiselect>(
+      _removeFromListMultiselect),
+  TypedReducer<ListUIState, ClearDocumentMultiselect>(_clearListMultiselect),
 ]);
 
 ListUIState _filterDocumentsByClient(
@@ -104,6 +113,27 @@ ListUIState _sortDocuments(
     ..sortField = action.field);
 }
 
+ListUIState _startListMultiselect(
+    ListUIState documentListState, StartDocumentMultiselect action) {
+  return documentListState.rebuild((b) => b..selectedIds = ListBuilder());
+}
+
+ListUIState _addToListMultiselect(
+    ListUIState documentListState, AddToDocumentMultiselect action) {
+  return documentListState.rebuild((b) => b..selectedIds.add(action.entity.id));
+}
+
+ListUIState _removeFromListMultiselect(
+    ListUIState documentListState, RemoveFromDocumentMultiselect action) {
+  return documentListState
+      .rebuild((b) => b..selectedIds.remove(action.entity.id));
+}
+
+ListUIState _clearListMultiselect(
+    ListUIState documentListState, ClearDocumentMultiselect action) {
+  return documentListState.rebuild((b) => b..selectedIds = null);
+}
+
 final documentsReducer = combineReducers<DocumentState>([
   TypedReducer<DocumentState, SaveDocumentSuccess>(_updateDocument),
   TypedReducer<DocumentState, AddDocumentSuccess>(_addDocument),
@@ -122,63 +152,106 @@ final documentsReducer = combineReducers<DocumentState>([
 
 DocumentState _archiveDocumentRequest(
     DocumentState documentState, ArchiveDocumentRequest action) {
-  final document = documentState.map[action.documentId]
-      .rebuild((b) => b..archivedAt = DateTime.now().millisecondsSinceEpoch);
+  final documents =
+      action.documentIds.map((id) => documentState.map[id]).toList();
 
-  return documentState.rebuild((b) => b..map[action.documentId] = document);
+  for (int i = 0; i < documents.length; i++) {
+    documents[i] = documents[i]
+        .rebuild((b) => b..archivedAt = DateTime.now().millisecondsSinceEpoch);
+  }
+  return documentState.rebuild((b) {
+    for (final document in documents) {
+      b.map[document.id] = document;
+    }
+  });
 }
 
 DocumentState _archiveDocumentSuccess(
     DocumentState documentState, ArchiveDocumentSuccess action) {
-  return documentState
-      .rebuild((b) => b..map[action.document.id] = action.document);
+  return documentState.rebuild((b) {
+    for (final document in action.documents) {
+      b.map[document.id] = document;
+    }
+  });
 }
 
 DocumentState _archiveDocumentFailure(
     DocumentState documentState, ArchiveDocumentFailure action) {
-  return documentState
-      .rebuild((b) => b..map[action.document.id] = action.document);
+  return documentState.rebuild((b) {
+    for (final document in action.documents) {
+      b.map[document.id] = document;
+    }
+  });
 }
 
 DocumentState _deleteDocumentRequest(
     DocumentState documentState, DeleteDocumentRequest action) {
-  final document = documentState.map[action.documentId].rebuild((b) => b
-    ..archivedAt = DateTime.now().millisecondsSinceEpoch
-    ..isDeleted = true);
+  final documents =
+      action.documentIds.map((id) => documentState.map[id]).toList();
 
-  return documentState.rebuild((b) => b..map[action.documentId] = document);
+  for (int i = 0; i < documents.length; i++) {
+    documents[i] = documents[i].rebuild((b) => b
+      ..archivedAt = DateTime.now().millisecondsSinceEpoch
+      ..isDeleted = true);
+  }
+  return documentState.rebuild((b) {
+    for (final document in documents) {
+      b.map[document.id] = document;
+    }
+  });
 }
 
 DocumentState _deleteDocumentSuccess(
     DocumentState documentState, DeleteDocumentSuccess action) {
-  return documentState.rebuild((b) =>
-      b..map.remove(action.document.id)..list.remove(action.document.id));
+  return documentState.rebuild((b) {
+    for (final document in action.documents) {
+      b.map[document.id] = document;
+    }
+  });
 }
 
 DocumentState _deleteDocumentFailure(
     DocumentState documentState, DeleteDocumentFailure action) {
-  return documentState
-      .rebuild((b) => b..map[action.document.id] = action.document);
+  return documentState.rebuild((b) {
+    for (final document in action.documents) {
+      b.map[document.id] = document;
+    }
+  });
 }
 
 DocumentState _restoreDocumentRequest(
     DocumentState documentState, RestoreDocumentRequest action) {
-  final document = documentState.map[action.documentId].rebuild((b) => b
-    ..archivedAt = null
-    ..isDeleted = false);
-  return documentState.rebuild((b) => b..map[action.documentId] = document);
+  final documents =
+      action.documentIds.map((id) => documentState.map[id]).toList();
+
+  for (int i = 0; i < documents.length; i++) {
+    documents[i] = documents[i].rebuild((b) => b
+      ..archivedAt = null
+      ..isDeleted = false);
+  }
+  return documentState.rebuild((b) {
+    for (final document in documents) {
+      b.map[document.id] = document;
+    }
+  });
 }
 
 DocumentState _restoreDocumentSuccess(
     DocumentState documentState, RestoreDocumentSuccess action) {
-  return documentState
-      .rebuild((b) => b..map[action.document.id] = action.document);
+  return documentState.rebuild((b) {
+    for (final document in action.documents) {
+      b.map[document.id] = document;
+    }
+  });
 }
 
 DocumentState _restoreDocumentFailure(
     DocumentState documentState, RestoreDocumentFailure action) {
-  return documentState
-      .rebuild((b) => b..map[action.document.id] = action.document);
+  return documentState.rebuild((b) {
+    for (final document in action.documents) {
+      b.map[document.id] = document;
+    }
+  });
 }
 
 DocumentState _addDocument(

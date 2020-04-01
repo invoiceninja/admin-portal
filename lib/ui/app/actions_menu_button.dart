@@ -5,14 +5,12 @@ import 'package:invoiceninja_flutter/utils/localization.dart';
 
 class ActionMenuButton extends StatelessWidget {
   const ActionMenuButton({
-    @required this.user,
     @required this.entity,
     @required this.onSelected,
     this.isSaving = false,
     this.entityActions,
   });
 
-  final UserEntity user;
   final BaseEntity entity;
   final List<EntityAction> entityActions;
   final Function(BuildContext, EntityAction) onSelected;
@@ -58,7 +56,7 @@ class ActionMenuButton extends StatelessWidget {
       icon: Icon(Icons.more_vert),
       itemBuilder: (BuildContext context) => actions,
       onSelected: (EntityAction action) {
-        this.onSelected(context, action);
+        onSelected(context, action);
       },
     );
   }

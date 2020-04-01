@@ -1,17 +1,18 @@
 import 'dart:async';
+
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
+import 'package:invoiceninja_flutter/data/models/models.dart';
+import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
+import 'package:invoiceninja_flutter/redux/app/app_state.dart';
+import 'package:invoiceninja_flutter/redux/product/product_actions.dart';
 import 'package:invoiceninja_flutter/redux/ui/ui_actions.dart';
 import 'package:invoiceninja_flutter/ui/app/dialogs/error_dialog.dart';
-import 'package:invoiceninja_flutter/ui/product/product_screen.dart';
+import 'package:invoiceninja_flutter/ui/product/edit/product_edit.dart';
 import 'package:invoiceninja_flutter/ui/product/view/product_view_vm.dart';
 import 'package:invoiceninja_flutter/utils/platforms.dart';
 import 'package:redux/redux.dart';
-import 'package:invoiceninja_flutter/redux/product/product_actions.dart';
-import 'package:invoiceninja_flutter/data/models/models.dart';
-import 'package:invoiceninja_flutter/ui/product/edit/product_edit.dart';
-import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 
 class ProductEditScreen extends StatelessWidget {
   const ProductEditScreen({Key key}) : super(key: key);
@@ -36,13 +37,13 @@ class ProductEditScreen extends StatelessWidget {
 
 class ProductEditVM {
   ProductEditVM({
+    @required this.state,
     @required this.company,
     @required this.product,
     @required this.origProduct,
     @required this.onChanged,
     @required this.onSavePressed,
     @required this.onCancelPressed,
-    @required this.onBackPressed,
     @required this.onEntityAction,
     @required this.isSaving,
     @required this.isDirty,
@@ -53,7 +54,8 @@ class ProductEditVM {
     final product = state.productUIState.editing;
 
     return ProductEditVM(
-      company: state.selectedCompany,
+      state: state,
+      company: state.company,
       isSaving: state.isSaving,
       isDirty: product.isNew,
       product: product,
@@ -61,14 +63,8 @@ class ProductEditVM {
       onChanged: (ProductEntity product) {
         store.dispatch(UpdateProduct(product));
       },
-      onBackPressed: () {
-        if (state.uiState.currentRoute.contains(ProductScreen.route)) {
-          store.dispatch(UpdateCurrentRoute(ProductScreen.route));
-        }
-      },
       onCancelPressed: (BuildContext context) {
-        store.dispatch(EditProduct(
-            product: ProductEntity(), context: context, force: true));
+        createEntity(context: context, entity: ProductEntity(), force: true);
         store.dispatch(UpdateCurrentRoute(state.uiState.previousRoute));
       },
       onSavePressed: (BuildContext context) {
@@ -76,24 +72,24 @@ class ProductEditVM {
             new Completer<ProductEntity>();
         store.dispatch(
             SaveProductRequest(completer: completer, product: product));
-        return completer.future.then((_) {
-          return completer.future.then((savedProduct) {
+        return completer.future.then((savedProduct) {
+          if (isMobile(context)) {
             store.dispatch(UpdateCurrentRoute(ProductViewScreen.route));
-            if (isMobile(context)) {
-              if (product.isNew) {
-                Navigator.of(context)
-                    .pushReplacementNamed(ProductViewScreen.route);
-              } else {
-                Navigator.of(context).pop(savedProduct);
-              }
+            if (product.isNew) {
+              Navigator.of(context)
+                  .pushReplacementNamed(ProductViewScreen.route);
+            } else {
+              Navigator.of(context).pop(savedProduct);
             }
-          }).catchError((Object error) {
-            showDialog<ErrorDialog>(
-                context: context,
-                builder: (BuildContext context) {
-                  return ErrorDialog(error);
-                });
-          });
+          } else {
+            viewEntity(context: context, entity: savedProduct, force: true);
+          }
+        }).catchError((Object error) {
+          showDialog<ErrorDialog>(
+              context: context,
+              builder: (BuildContext context) {
+                return ErrorDialog(error);
+              });
         });
       },
       onEntityAction: (BuildContext context, EntityAction action) {
@@ -102,15 +98,16 @@ class ProductEditVM {
         if (action == EntityAction.clone) {
           Navigator.pop(context);
           WidgetsBinding.instance.addPostFrameCallback((duration) {
-            handleProductAction(context, product, action);
+            handleProductAction(context, [product], action);
           });
         } else {
-          handleProductAction(context, product, action);
+          handleProductAction(context, [product], action);
         }
       },
     );
   }
 
+  final AppState state;
   final CompanyEntity company;
   final ProductEntity product;
   final ProductEntity origProduct;
@@ -118,7 +115,6 @@ class ProductEditVM {
   final Function(BuildContext) onSavePressed;
   final Function(BuildContext) onCancelPressed;
   final Function(BuildContext, EntityAction) onEntityAction;
-  final Function onBackPressed;
   final bool isSaving;
   final bool isDirty;
 }

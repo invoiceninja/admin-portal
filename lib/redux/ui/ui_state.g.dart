@@ -6,52 +6,7 @@ part of 'ui_state.dart';
 // BuiltValueGenerator
 // **************************************************************************
 
-const AppLayout _$mobile = const AppLayout._('mobile');
-const AppLayout _$tablet = const AppLayout._('tablet');
-const AppLayout _$desktop = const AppLayout._('desktop');
-
-AppLayout _$valueOf(String name) {
-  switch (name) {
-    case 'mobile':
-      return _$mobile;
-    case 'tablet':
-      return _$tablet;
-    case 'desktop':
-      return _$desktop;
-    default:
-      throw new ArgumentError(name);
-  }
-}
-
-final BuiltSet<AppLayout> _$values = new BuiltSet<AppLayout>(const <AppLayout>[
-  _$mobile,
-  _$tablet,
-  _$desktop,
-]);
-
-const AppSidebar _$menu = const AppSidebar._('menu');
-const AppSidebar _$history = const AppSidebar._('history');
-
-AppSidebar _$valueOfSidebar(String name) {
-  switch (name) {
-    case 'menu':
-      return _$menu;
-    case 'history':
-      return _$history;
-    default:
-      throw new ArgumentError(name);
-  }
-}
-
-final BuiltSet<AppSidebar> _$valuesSidebar =
-    new BuiltSet<AppSidebar>(const <AppSidebar>[
-  _$menu,
-  _$history,
-]);
-
 Serializer<UIState> _$uIStateSerializer = new _$UIStateSerializer();
-Serializer<AppLayout> _$appLayoutSerializer = new _$AppLayoutSerializer();
-Serializer<AppSidebar> _$appSidebarSerializer = new _$AppSidebarSerializer();
 
 class _$UIStateSerializer implements StructuredSerializer<UIState> {
   @override
@@ -63,18 +18,6 @@ class _$UIStateSerializer implements StructuredSerializer<UIState> {
   Iterable<Object> serialize(Serializers serializers, UIState object,
       {FullType specifiedType = FullType.unspecified}) {
     final result = <Object>[
-      'layout',
-      serializers.serialize(object.layout,
-          specifiedType: const FullType(AppLayout)),
-      'isTesting',
-      serializers.serialize(object.isTesting,
-          specifiedType: const FullType(bool)),
-      'isMenuVisible',
-      serializers.serialize(object.isMenuVisible,
-          specifiedType: const FullType(bool)),
-      'isHistoryVisible',
-      serializers.serialize(object.isHistoryVisible,
-          specifiedType: const FullType(bool)),
       'selectedCompanyIndex',
       serializers.serialize(object.selectedCompanyIndex,
           specifiedType: const FullType(int)),
@@ -84,21 +27,9 @@ class _$UIStateSerializer implements StructuredSerializer<UIState> {
       'previousRoute',
       serializers.serialize(object.previousRoute,
           specifiedType: const FullType(String)),
-      'enableDarkMode',
-      serializers.serialize(object.enableDarkMode,
-          specifiedType: const FullType(bool)),
-      'requireAuthentication',
-      serializers.serialize(object.requireAuthentication,
-          specifiedType: const FullType(bool)),
-      'emailPayment',
-      serializers.serialize(object.emailPayment,
-          specifiedType: const FullType(bool)),
-      'autoStartTasks',
-      serializers.serialize(object.autoStartTasks,
-          specifiedType: const FullType(bool)),
-      'addDocumentsToInvoice',
-      serializers.serialize(object.addDocumentsToInvoice,
-          specifiedType: const FullType(bool)),
+      'filterClearedAt',
+      serializers.serialize(object.filterClearedAt,
+          specifiedType: const FullType(int)),
       'dashboardUIState',
       serializers.serialize(object.dashboardUIState,
           specifiedType: const FullType(DashboardUIState)),
@@ -111,6 +42,24 @@ class _$UIStateSerializer implements StructuredSerializer<UIState> {
       'invoiceUIState',
       serializers.serialize(object.invoiceUIState,
           specifiedType: const FullType(InvoiceUIState)),
+      'designUIState',
+      serializers.serialize(object.designUIState,
+          specifiedType: const FullType(DesignUIState)),
+      'creditUIState',
+      serializers.serialize(object.creditUIState,
+          specifiedType: const FullType(CreditUIState)),
+      'userUIState',
+      serializers.serialize(object.userUIState,
+          specifiedType: const FullType(UserUIState)),
+      'taxRateUIState',
+      serializers.serialize(object.taxRateUIState,
+          specifiedType: const FullType(TaxRateUIState)),
+      'companyGatewayUIState',
+      serializers.serialize(object.companyGatewayUIState,
+          specifiedType: const FullType(CompanyGatewayUIState)),
+      'groupUIState',
+      serializers.serialize(object.groupUIState,
+          specifiedType: const FullType(GroupUIState)),
       'documentUIState',
       serializers.serialize(object.documentUIState,
           specifiedType: const FullType(DocumentUIState)),
@@ -132,6 +81,12 @@ class _$UIStateSerializer implements StructuredSerializer<UIState> {
       'quoteUIState',
       serializers.serialize(object.quoteUIState,
           specifiedType: const FullType(QuoteUIState)),
+      'settingsUIState',
+      serializers.serialize(object.settingsUIState,
+          specifiedType: const FullType(SettingsUIState)),
+      'reportsUIState',
+      serializers.serialize(object.reportsUIState,
+          specifiedType: const FullType(ReportsUIState)),
     ];
     if (object.filter != null) {
       result
@@ -153,22 +108,6 @@ class _$UIStateSerializer implements StructuredSerializer<UIState> {
       iterator.moveNext();
       final dynamic value = iterator.current;
       switch (key) {
-        case 'layout':
-          result.layout = serializers.deserialize(value,
-              specifiedType: const FullType(AppLayout)) as AppLayout;
-          break;
-        case 'isTesting':
-          result.isTesting = serializers.deserialize(value,
-              specifiedType: const FullType(bool)) as bool;
-          break;
-        case 'isMenuVisible':
-          result.isMenuVisible = serializers.deserialize(value,
-              specifiedType: const FullType(bool)) as bool;
-          break;
-        case 'isHistoryVisible':
-          result.isHistoryVisible = serializers.deserialize(value,
-              specifiedType: const FullType(bool)) as bool;
-          break;
         case 'selectedCompanyIndex':
           result.selectedCompanyIndex = serializers.deserialize(value,
               specifiedType: const FullType(int)) as int;
@@ -181,29 +120,13 @@ class _$UIStateSerializer implements StructuredSerializer<UIState> {
           result.previousRoute = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String;
           break;
-        case 'enableDarkMode':
-          result.enableDarkMode = serializers.deserialize(value,
-              specifiedType: const FullType(bool)) as bool;
-          break;
-        case 'requireAuthentication':
-          result.requireAuthentication = serializers.deserialize(value,
-              specifiedType: const FullType(bool)) as bool;
-          break;
-        case 'emailPayment':
-          result.emailPayment = serializers.deserialize(value,
-              specifiedType: const FullType(bool)) as bool;
-          break;
-        case 'autoStartTasks':
-          result.autoStartTasks = serializers.deserialize(value,
-              specifiedType: const FullType(bool)) as bool;
-          break;
-        case 'addDocumentsToInvoice':
-          result.addDocumentsToInvoice = serializers.deserialize(value,
-              specifiedType: const FullType(bool)) as bool;
-          break;
         case 'filter':
           result.filter = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String;
+          break;
+        case 'filterClearedAt':
+          result.filterClearedAt = serializers.deserialize(value,
+              specifiedType: const FullType(int)) as int;
           break;
         case 'dashboardUIState':
           result.dashboardUIState.replace(serializers.deserialize(value,
@@ -221,6 +144,31 @@ class _$UIStateSerializer implements StructuredSerializer<UIState> {
         case 'invoiceUIState':
           result.invoiceUIState.replace(serializers.deserialize(value,
               specifiedType: const FullType(InvoiceUIState)) as InvoiceUIState);
+          break;
+        case 'designUIState':
+          result.designUIState.replace(serializers.deserialize(value,
+              specifiedType: const FullType(DesignUIState)) as DesignUIState);
+          break;
+        case 'creditUIState':
+          result.creditUIState.replace(serializers.deserialize(value,
+              specifiedType: const FullType(CreditUIState)) as CreditUIState);
+          break;
+        case 'userUIState':
+          result.userUIState.replace(serializers.deserialize(value,
+              specifiedType: const FullType(UserUIState)) as UserUIState);
+          break;
+        case 'taxRateUIState':
+          result.taxRateUIState.replace(serializers.deserialize(value,
+              specifiedType: const FullType(TaxRateUIState)) as TaxRateUIState);
+          break;
+        case 'companyGatewayUIState':
+          result.companyGatewayUIState.replace(serializers.deserialize(value,
+                  specifiedType: const FullType(CompanyGatewayUIState))
+              as CompanyGatewayUIState);
+          break;
+        case 'groupUIState':
+          result.groupUIState.replace(serializers.deserialize(value,
+              specifiedType: const FullType(GroupUIState)) as GroupUIState);
           break;
         case 'documentUIState':
           result.documentUIState.replace(serializers.deserialize(value,
@@ -251,6 +199,15 @@ class _$UIStateSerializer implements StructuredSerializer<UIState> {
           result.quoteUIState.replace(serializers.deserialize(value,
               specifiedType: const FullType(QuoteUIState)) as QuoteUIState);
           break;
+        case 'settingsUIState':
+          result.settingsUIState.replace(serializers.deserialize(value,
+                  specifiedType: const FullType(SettingsUIState))
+              as SettingsUIState);
+          break;
+        case 'reportsUIState':
+          result.reportsUIState.replace(serializers.deserialize(value,
+              specifiedType: const FullType(ReportsUIState)) as ReportsUIState);
+          break;
       }
     }
 
@@ -258,49 +215,7 @@ class _$UIStateSerializer implements StructuredSerializer<UIState> {
   }
 }
 
-class _$AppLayoutSerializer implements PrimitiveSerializer<AppLayout> {
-  @override
-  final Iterable<Type> types = const <Type>[AppLayout];
-  @override
-  final String wireName = 'AppLayout';
-
-  @override
-  Object serialize(Serializers serializers, AppLayout object,
-          {FullType specifiedType = FullType.unspecified}) =>
-      object.name;
-
-  @override
-  AppLayout deserialize(Serializers serializers, Object serialized,
-          {FullType specifiedType = FullType.unspecified}) =>
-      AppLayout.valueOf(serialized as String);
-}
-
-class _$AppSidebarSerializer implements PrimitiveSerializer<AppSidebar> {
-  @override
-  final Iterable<Type> types = const <Type>[AppSidebar];
-  @override
-  final String wireName = 'AppSidebar';
-
-  @override
-  Object serialize(Serializers serializers, AppSidebar object,
-          {FullType specifiedType = FullType.unspecified}) =>
-      object.name;
-
-  @override
-  AppSidebar deserialize(Serializers serializers, Object serialized,
-          {FullType specifiedType = FullType.unspecified}) =>
-      AppSidebar.valueOf(serialized as String);
-}
-
 class _$UIState extends UIState {
-  @override
-  final AppLayout layout;
-  @override
-  final bool isTesting;
-  @override
-  final bool isMenuVisible;
-  @override
-  final bool isHistoryVisible;
   @override
   final int selectedCompanyIndex;
   @override
@@ -308,17 +223,9 @@ class _$UIState extends UIState {
   @override
   final String previousRoute;
   @override
-  final bool enableDarkMode;
-  @override
-  final bool requireAuthentication;
-  @override
-  final bool emailPayment;
-  @override
-  final bool autoStartTasks;
-  @override
-  final bool addDocumentsToInvoice;
-  @override
   final String filter;
+  @override
+  final int filterClearedAt;
   @override
   final DashboardUIState dashboardUIState;
   @override
@@ -327,6 +234,18 @@ class _$UIState extends UIState {
   final ClientUIState clientUIState;
   @override
   final InvoiceUIState invoiceUIState;
+  @override
+  final DesignUIState designUIState;
+  @override
+  final CreditUIState creditUIState;
+  @override
+  final UserUIState userUIState;
+  @override
+  final TaxRateUIState taxRateUIState;
+  @override
+  final CompanyGatewayUIState companyGatewayUIState;
+  @override
+  final GroupUIState groupUIState;
   @override
   final DocumentUIState documentUIState;
   @override
@@ -341,48 +260,40 @@ class _$UIState extends UIState {
   final PaymentUIState paymentUIState;
   @override
   final QuoteUIState quoteUIState;
+  @override
+  final SettingsUIState settingsUIState;
+  @override
+  final ReportsUIState reportsUIState;
 
   factory _$UIState([void Function(UIStateBuilder) updates]) =>
       (new UIStateBuilder()..update(updates)).build();
 
   _$UIState._(
-      {this.layout,
-      this.isTesting,
-      this.isMenuVisible,
-      this.isHistoryVisible,
-      this.selectedCompanyIndex,
+      {this.selectedCompanyIndex,
       this.currentRoute,
       this.previousRoute,
-      this.enableDarkMode,
-      this.requireAuthentication,
-      this.emailPayment,
-      this.autoStartTasks,
-      this.addDocumentsToInvoice,
       this.filter,
+      this.filterClearedAt,
       this.dashboardUIState,
       this.productUIState,
       this.clientUIState,
       this.invoiceUIState,
+      this.designUIState,
+      this.creditUIState,
+      this.userUIState,
+      this.taxRateUIState,
+      this.companyGatewayUIState,
+      this.groupUIState,
       this.documentUIState,
       this.expenseUIState,
       this.vendorUIState,
       this.taskUIState,
       this.projectUIState,
       this.paymentUIState,
-      this.quoteUIState})
+      this.quoteUIState,
+      this.settingsUIState,
+      this.reportsUIState})
       : super._() {
-    if (layout == null) {
-      throw new BuiltValueNullFieldError('UIState', 'layout');
-    }
-    if (isTesting == null) {
-      throw new BuiltValueNullFieldError('UIState', 'isTesting');
-    }
-    if (isMenuVisible == null) {
-      throw new BuiltValueNullFieldError('UIState', 'isMenuVisible');
-    }
-    if (isHistoryVisible == null) {
-      throw new BuiltValueNullFieldError('UIState', 'isHistoryVisible');
-    }
     if (selectedCompanyIndex == null) {
       throw new BuiltValueNullFieldError('UIState', 'selectedCompanyIndex');
     }
@@ -392,20 +303,8 @@ class _$UIState extends UIState {
     if (previousRoute == null) {
       throw new BuiltValueNullFieldError('UIState', 'previousRoute');
     }
-    if (enableDarkMode == null) {
-      throw new BuiltValueNullFieldError('UIState', 'enableDarkMode');
-    }
-    if (requireAuthentication == null) {
-      throw new BuiltValueNullFieldError('UIState', 'requireAuthentication');
-    }
-    if (emailPayment == null) {
-      throw new BuiltValueNullFieldError('UIState', 'emailPayment');
-    }
-    if (autoStartTasks == null) {
-      throw new BuiltValueNullFieldError('UIState', 'autoStartTasks');
-    }
-    if (addDocumentsToInvoice == null) {
-      throw new BuiltValueNullFieldError('UIState', 'addDocumentsToInvoice');
+    if (filterClearedAt == null) {
+      throw new BuiltValueNullFieldError('UIState', 'filterClearedAt');
     }
     if (dashboardUIState == null) {
       throw new BuiltValueNullFieldError('UIState', 'dashboardUIState');
@@ -418,6 +317,24 @@ class _$UIState extends UIState {
     }
     if (invoiceUIState == null) {
       throw new BuiltValueNullFieldError('UIState', 'invoiceUIState');
+    }
+    if (designUIState == null) {
+      throw new BuiltValueNullFieldError('UIState', 'designUIState');
+    }
+    if (creditUIState == null) {
+      throw new BuiltValueNullFieldError('UIState', 'creditUIState');
+    }
+    if (userUIState == null) {
+      throw new BuiltValueNullFieldError('UIState', 'userUIState');
+    }
+    if (taxRateUIState == null) {
+      throw new BuiltValueNullFieldError('UIState', 'taxRateUIState');
+    }
+    if (companyGatewayUIState == null) {
+      throw new BuiltValueNullFieldError('UIState', 'companyGatewayUIState');
+    }
+    if (groupUIState == null) {
+      throw new BuiltValueNullFieldError('UIState', 'groupUIState');
     }
     if (documentUIState == null) {
       throw new BuiltValueNullFieldError('UIState', 'documentUIState');
@@ -440,6 +357,12 @@ class _$UIState extends UIState {
     if (quoteUIState == null) {
       throw new BuiltValueNullFieldError('UIState', 'quoteUIState');
     }
+    if (settingsUIState == null) {
+      throw new BuiltValueNullFieldError('UIState', 'settingsUIState');
+    }
+    if (reportsUIState == null) {
+      throw new BuiltValueNullFieldError('UIState', 'reportsUIState');
+    }
   }
 
   @override
@@ -453,30 +376,30 @@ class _$UIState extends UIState {
   bool operator ==(Object other) {
     if (identical(other, this)) return true;
     return other is UIState &&
-        layout == other.layout &&
-        isTesting == other.isTesting &&
-        isMenuVisible == other.isMenuVisible &&
-        isHistoryVisible == other.isHistoryVisible &&
         selectedCompanyIndex == other.selectedCompanyIndex &&
         currentRoute == other.currentRoute &&
         previousRoute == other.previousRoute &&
-        enableDarkMode == other.enableDarkMode &&
-        requireAuthentication == other.requireAuthentication &&
-        emailPayment == other.emailPayment &&
-        autoStartTasks == other.autoStartTasks &&
-        addDocumentsToInvoice == other.addDocumentsToInvoice &&
         filter == other.filter &&
+        filterClearedAt == other.filterClearedAt &&
         dashboardUIState == other.dashboardUIState &&
         productUIState == other.productUIState &&
         clientUIState == other.clientUIState &&
         invoiceUIState == other.invoiceUIState &&
+        designUIState == other.designUIState &&
+        creditUIState == other.creditUIState &&
+        userUIState == other.userUIState &&
+        taxRateUIState == other.taxRateUIState &&
+        companyGatewayUIState == other.companyGatewayUIState &&
+        groupUIState == other.groupUIState &&
         documentUIState == other.documentUIState &&
         expenseUIState == other.expenseUIState &&
         vendorUIState == other.vendorUIState &&
         taskUIState == other.taskUIState &&
         projectUIState == other.projectUIState &&
         paymentUIState == other.paymentUIState &&
-        quoteUIState == other.quoteUIState;
+        quoteUIState == other.quoteUIState &&
+        settingsUIState == other.settingsUIState &&
+        reportsUIState == other.reportsUIState;
   }
 
   @override
@@ -499,79 +422,61 @@ class _$UIState extends UIState {
                                                                 $jc(
                                                                     $jc(
                                                                         $jc(
-                                                                            $jc($jc($jc($jc($jc($jc(0, layout.hashCode), isTesting.hashCode), isMenuVisible.hashCode), isHistoryVisible.hashCode), selectedCompanyIndex.hashCode),
-                                                                                currentRoute.hashCode),
-                                                                            previousRoute.hashCode),
-                                                                        enableDarkMode.hashCode),
-                                                                    requireAuthentication.hashCode),
-                                                                emailPayment.hashCode),
-                                                            autoStartTasks.hashCode),
-                                                        addDocumentsToInvoice.hashCode),
-                                                    filter.hashCode),
-                                                dashboardUIState.hashCode),
-                                            productUIState.hashCode),
-                                        clientUIState.hashCode),
-                                    invoiceUIState.hashCode),
-                                documentUIState.hashCode),
-                            expenseUIState.hashCode),
-                        vendorUIState.hashCode),
-                    taskUIState.hashCode),
-                projectUIState.hashCode),
-            paymentUIState.hashCode),
-        quoteUIState.hashCode));
+                                                                            $jc($jc($jc($jc($jc($jc(0, selectedCompanyIndex.hashCode), currentRoute.hashCode), previousRoute.hashCode), filter.hashCode), filterClearedAt.hashCode),
+                                                                                dashboardUIState.hashCode),
+                                                                            productUIState.hashCode),
+                                                                        clientUIState.hashCode),
+                                                                    invoiceUIState.hashCode),
+                                                                designUIState.hashCode),
+                                                            creditUIState.hashCode),
+                                                        userUIState.hashCode),
+                                                    taxRateUIState.hashCode),
+                                                companyGatewayUIState.hashCode),
+                                            groupUIState.hashCode),
+                                        documentUIState.hashCode),
+                                    expenseUIState.hashCode),
+                                vendorUIState.hashCode),
+                            taskUIState.hashCode),
+                        projectUIState.hashCode),
+                    paymentUIState.hashCode),
+                quoteUIState.hashCode),
+            settingsUIState.hashCode),
+        reportsUIState.hashCode));
   }
 
   @override
   String toString() {
     return (newBuiltValueToStringHelper('UIState')
-          ..add('layout', layout)
-          ..add('isTesting', isTesting)
-          ..add('isMenuVisible', isMenuVisible)
-          ..add('isHistoryVisible', isHistoryVisible)
           ..add('selectedCompanyIndex', selectedCompanyIndex)
           ..add('currentRoute', currentRoute)
           ..add('previousRoute', previousRoute)
-          ..add('enableDarkMode', enableDarkMode)
-          ..add('requireAuthentication', requireAuthentication)
-          ..add('emailPayment', emailPayment)
-          ..add('autoStartTasks', autoStartTasks)
-          ..add('addDocumentsToInvoice', addDocumentsToInvoice)
           ..add('filter', filter)
+          ..add('filterClearedAt', filterClearedAt)
           ..add('dashboardUIState', dashboardUIState)
           ..add('productUIState', productUIState)
           ..add('clientUIState', clientUIState)
           ..add('invoiceUIState', invoiceUIState)
+          ..add('designUIState', designUIState)
+          ..add('creditUIState', creditUIState)
+          ..add('userUIState', userUIState)
+          ..add('taxRateUIState', taxRateUIState)
+          ..add('companyGatewayUIState', companyGatewayUIState)
+          ..add('groupUIState', groupUIState)
           ..add('documentUIState', documentUIState)
           ..add('expenseUIState', expenseUIState)
           ..add('vendorUIState', vendorUIState)
           ..add('taskUIState', taskUIState)
           ..add('projectUIState', projectUIState)
           ..add('paymentUIState', paymentUIState)
-          ..add('quoteUIState', quoteUIState))
+          ..add('quoteUIState', quoteUIState)
+          ..add('settingsUIState', settingsUIState)
+          ..add('reportsUIState', reportsUIState))
         .toString();
   }
 }
 
 class UIStateBuilder implements Builder<UIState, UIStateBuilder> {
   _$UIState _$v;
-
-  AppLayout _layout;
-  AppLayout get layout => _$this._layout;
-  set layout(AppLayout layout) => _$this._layout = layout;
-
-  bool _isTesting;
-  bool get isTesting => _$this._isTesting;
-  set isTesting(bool isTesting) => _$this._isTesting = isTesting;
-
-  bool _isMenuVisible;
-  bool get isMenuVisible => _$this._isMenuVisible;
-  set isMenuVisible(bool isMenuVisible) =>
-      _$this._isMenuVisible = isMenuVisible;
-
-  bool _isHistoryVisible;
-  bool get isHistoryVisible => _$this._isHistoryVisible;
-  set isHistoryVisible(bool isHistoryVisible) =>
-      _$this._isHistoryVisible = isHistoryVisible;
 
   int _selectedCompanyIndex;
   int get selectedCompanyIndex => _$this._selectedCompanyIndex;
@@ -587,33 +492,14 @@ class UIStateBuilder implements Builder<UIState, UIStateBuilder> {
   set previousRoute(String previousRoute) =>
       _$this._previousRoute = previousRoute;
 
-  bool _enableDarkMode;
-  bool get enableDarkMode => _$this._enableDarkMode;
-  set enableDarkMode(bool enableDarkMode) =>
-      _$this._enableDarkMode = enableDarkMode;
-
-  bool _requireAuthentication;
-  bool get requireAuthentication => _$this._requireAuthentication;
-  set requireAuthentication(bool requireAuthentication) =>
-      _$this._requireAuthentication = requireAuthentication;
-
-  bool _emailPayment;
-  bool get emailPayment => _$this._emailPayment;
-  set emailPayment(bool emailPayment) => _$this._emailPayment = emailPayment;
-
-  bool _autoStartTasks;
-  bool get autoStartTasks => _$this._autoStartTasks;
-  set autoStartTasks(bool autoStartTasks) =>
-      _$this._autoStartTasks = autoStartTasks;
-
-  bool _addDocumentsToInvoice;
-  bool get addDocumentsToInvoice => _$this._addDocumentsToInvoice;
-  set addDocumentsToInvoice(bool addDocumentsToInvoice) =>
-      _$this._addDocumentsToInvoice = addDocumentsToInvoice;
-
   String _filter;
   String get filter => _$this._filter;
   set filter(String filter) => _$this._filter = filter;
+
+  int _filterClearedAt;
+  int get filterClearedAt => _$this._filterClearedAt;
+  set filterClearedAt(int filterClearedAt) =>
+      _$this._filterClearedAt = filterClearedAt;
 
   DashboardUIStateBuilder _dashboardUIState;
   DashboardUIStateBuilder get dashboardUIState =>
@@ -638,6 +524,43 @@ class UIStateBuilder implements Builder<UIState, UIStateBuilder> {
       _$this._invoiceUIState ??= new InvoiceUIStateBuilder();
   set invoiceUIState(InvoiceUIStateBuilder invoiceUIState) =>
       _$this._invoiceUIState = invoiceUIState;
+
+  DesignUIStateBuilder _designUIState;
+  DesignUIStateBuilder get designUIState =>
+      _$this._designUIState ??= new DesignUIStateBuilder();
+  set designUIState(DesignUIStateBuilder designUIState) =>
+      _$this._designUIState = designUIState;
+
+  CreditUIStateBuilder _creditUIState;
+  CreditUIStateBuilder get creditUIState =>
+      _$this._creditUIState ??= new CreditUIStateBuilder();
+  set creditUIState(CreditUIStateBuilder creditUIState) =>
+      _$this._creditUIState = creditUIState;
+
+  UserUIStateBuilder _userUIState;
+  UserUIStateBuilder get userUIState =>
+      _$this._userUIState ??= new UserUIStateBuilder();
+  set userUIState(UserUIStateBuilder userUIState) =>
+      _$this._userUIState = userUIState;
+
+  TaxRateUIStateBuilder _taxRateUIState;
+  TaxRateUIStateBuilder get taxRateUIState =>
+      _$this._taxRateUIState ??= new TaxRateUIStateBuilder();
+  set taxRateUIState(TaxRateUIStateBuilder taxRateUIState) =>
+      _$this._taxRateUIState = taxRateUIState;
+
+  CompanyGatewayUIStateBuilder _companyGatewayUIState;
+  CompanyGatewayUIStateBuilder get companyGatewayUIState =>
+      _$this._companyGatewayUIState ??= new CompanyGatewayUIStateBuilder();
+  set companyGatewayUIState(
+          CompanyGatewayUIStateBuilder companyGatewayUIState) =>
+      _$this._companyGatewayUIState = companyGatewayUIState;
+
+  GroupUIStateBuilder _groupUIState;
+  GroupUIStateBuilder get groupUIState =>
+      _$this._groupUIState ??= new GroupUIStateBuilder();
+  set groupUIState(GroupUIStateBuilder groupUIState) =>
+      _$this._groupUIState = groupUIState;
 
   DocumentUIStateBuilder _documentUIState;
   DocumentUIStateBuilder get documentUIState =>
@@ -681,27 +604,37 @@ class UIStateBuilder implements Builder<UIState, UIStateBuilder> {
   set quoteUIState(QuoteUIStateBuilder quoteUIState) =>
       _$this._quoteUIState = quoteUIState;
 
+  SettingsUIStateBuilder _settingsUIState;
+  SettingsUIStateBuilder get settingsUIState =>
+      _$this._settingsUIState ??= new SettingsUIStateBuilder();
+  set settingsUIState(SettingsUIStateBuilder settingsUIState) =>
+      _$this._settingsUIState = settingsUIState;
+
+  ReportsUIStateBuilder _reportsUIState;
+  ReportsUIStateBuilder get reportsUIState =>
+      _$this._reportsUIState ??= new ReportsUIStateBuilder();
+  set reportsUIState(ReportsUIStateBuilder reportsUIState) =>
+      _$this._reportsUIState = reportsUIState;
+
   UIStateBuilder();
 
   UIStateBuilder get _$this {
     if (_$v != null) {
-      _layout = _$v.layout;
-      _isTesting = _$v.isTesting;
-      _isMenuVisible = _$v.isMenuVisible;
-      _isHistoryVisible = _$v.isHistoryVisible;
       _selectedCompanyIndex = _$v.selectedCompanyIndex;
       _currentRoute = _$v.currentRoute;
       _previousRoute = _$v.previousRoute;
-      _enableDarkMode = _$v.enableDarkMode;
-      _requireAuthentication = _$v.requireAuthentication;
-      _emailPayment = _$v.emailPayment;
-      _autoStartTasks = _$v.autoStartTasks;
-      _addDocumentsToInvoice = _$v.addDocumentsToInvoice;
       _filter = _$v.filter;
+      _filterClearedAt = _$v.filterClearedAt;
       _dashboardUIState = _$v.dashboardUIState?.toBuilder();
       _productUIState = _$v.productUIState?.toBuilder();
       _clientUIState = _$v.clientUIState?.toBuilder();
       _invoiceUIState = _$v.invoiceUIState?.toBuilder();
+      _designUIState = _$v.designUIState?.toBuilder();
+      _creditUIState = _$v.creditUIState?.toBuilder();
+      _userUIState = _$v.userUIState?.toBuilder();
+      _taxRateUIState = _$v.taxRateUIState?.toBuilder();
+      _companyGatewayUIState = _$v.companyGatewayUIState?.toBuilder();
+      _groupUIState = _$v.groupUIState?.toBuilder();
       _documentUIState = _$v.documentUIState?.toBuilder();
       _expenseUIState = _$v.expenseUIState?.toBuilder();
       _vendorUIState = _$v.vendorUIState?.toBuilder();
@@ -709,6 +642,8 @@ class UIStateBuilder implements Builder<UIState, UIStateBuilder> {
       _projectUIState = _$v.projectUIState?.toBuilder();
       _paymentUIState = _$v.paymentUIState?.toBuilder();
       _quoteUIState = _$v.quoteUIState?.toBuilder();
+      _settingsUIState = _$v.settingsUIState?.toBuilder();
+      _reportsUIState = _$v.reportsUIState?.toBuilder();
       _$v = null;
     }
     return this;
@@ -733,30 +668,30 @@ class UIStateBuilder implements Builder<UIState, UIStateBuilder> {
     try {
       _$result = _$v ??
           new _$UIState._(
-              layout: layout,
-              isTesting: isTesting,
-              isMenuVisible: isMenuVisible,
-              isHistoryVisible: isHistoryVisible,
               selectedCompanyIndex: selectedCompanyIndex,
               currentRoute: currentRoute,
               previousRoute: previousRoute,
-              enableDarkMode: enableDarkMode,
-              requireAuthentication: requireAuthentication,
-              emailPayment: emailPayment,
-              autoStartTasks: autoStartTasks,
-              addDocumentsToInvoice: addDocumentsToInvoice,
               filter: filter,
+              filterClearedAt: filterClearedAt,
               dashboardUIState: dashboardUIState.build(),
               productUIState: productUIState.build(),
               clientUIState: clientUIState.build(),
               invoiceUIState: invoiceUIState.build(),
+              designUIState: designUIState.build(),
+              creditUIState: creditUIState.build(),
+              userUIState: userUIState.build(),
+              taxRateUIState: taxRateUIState.build(),
+              companyGatewayUIState: companyGatewayUIState.build(),
+              groupUIState: groupUIState.build(),
               documentUIState: documentUIState.build(),
               expenseUIState: expenseUIState.build(),
               vendorUIState: vendorUIState.build(),
               taskUIState: taskUIState.build(),
               projectUIState: projectUIState.build(),
               paymentUIState: paymentUIState.build(),
-              quoteUIState: quoteUIState.build());
+              quoteUIState: quoteUIState.build(),
+              settingsUIState: settingsUIState.build(),
+              reportsUIState: reportsUIState.build());
     } catch (_) {
       String _$failedField;
       try {
@@ -768,6 +703,18 @@ class UIStateBuilder implements Builder<UIState, UIStateBuilder> {
         clientUIState.build();
         _$failedField = 'invoiceUIState';
         invoiceUIState.build();
+        _$failedField = 'designUIState';
+        designUIState.build();
+        _$failedField = 'creditUIState';
+        creditUIState.build();
+        _$failedField = 'userUIState';
+        userUIState.build();
+        _$failedField = 'taxRateUIState';
+        taxRateUIState.build();
+        _$failedField = 'companyGatewayUIState';
+        companyGatewayUIState.build();
+        _$failedField = 'groupUIState';
+        groupUIState.build();
         _$failedField = 'documentUIState';
         documentUIState.build();
         _$failedField = 'expenseUIState';
@@ -782,6 +729,10 @@ class UIStateBuilder implements Builder<UIState, UIStateBuilder> {
         paymentUIState.build();
         _$failedField = 'quoteUIState';
         quoteUIState.build();
+        _$failedField = 'settingsUIState';
+        settingsUIState.build();
+        _$failedField = 'reportsUIState';
+        reportsUIState.build();
       } catch (e) {
         throw new BuiltValueNestedFieldError(
             'UIState', _$failedField, e.toString());

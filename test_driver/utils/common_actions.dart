@@ -34,9 +34,12 @@ Future<void> login(FlutterDriver driver,
     String loginSecret = Config.TEST_SECRET}) async {
   final localization = TestLocalization('en');
 
-  if (selfHosted) {
+  /*
+  if (selfHosted && !retype) {
     await driver.tap(find.byValueKey(localization.selfhostLogin));
   }
+   */
+
   await fillTextFields(driver, <String, dynamic>{
     localization.email: loginEmail,
     localization.password: loginPassword,
@@ -52,7 +55,7 @@ Future<void> login(FlutterDriver driver,
   await driver.tap(find.text(localization.login.toUpperCase()));
 
   if (loginEmail.isNotEmpty) {
-    await driver.waitFor(find.byTooltip(localization.dashboard),
+    await driver.waitFor(find.text(localization.dashboard),
         timeout: new Duration(seconds: 60));
   }
 }
@@ -62,8 +65,9 @@ Future<void> logout(FlutterDriver driver, TestLocalization localization) async {
     await driver.tap(find.byTooltip(Keys.openAppDrawer));
   }
 
-  //await driver.scrollUntilVisible(find.byType('Drawer'), find.byValueKey(SettingsKeys.drawer));
-  await driver.tap(find.byTooltip(localization.settings));
+  //await driver.scrollUntilVisible(find.byType('Drawer'), find.text(localization.settings));
+  await driver.tap(find.text(localization.settings));
+  await driver.tap(find.text(localization.deviceSettings));
 
   // Tap on Log Out
   await driver.tap(find.text(localization.logout));
@@ -97,15 +101,19 @@ Future<void> fillTextFields(
   }
 }
 
-Future<void> checkTextFields(
-    FlutterDriver driver, Map<String, dynamic> values) async {
+Future<void> checkTextFields(FlutterDriver driver, Map<String, dynamic> values,
+    {List<String> except = const []}) async {
   for (var entry in values.entries) {
+    if (except.contains(entry.key)) {
+      continue;
+    }
+    print('Checking for $entry');
     await driver.waitFor(find.text(entry.value));
   }
 }
 
-Future<void> fillAndSaveForm(
-    FlutterDriver driver, Map<String, dynamic> values) async {
+Future<void> fillAndSaveForm(FlutterDriver driver, Map<String, dynamic> values,
+    {List<String> skipCheckFor = const []}) async {
   final localization = TestLocalization('en');
 
   print('Fill in form');
@@ -119,7 +127,7 @@ Future<void> fillAndSaveForm(
   //await driver.tap(find.pageBack());
 
   print('Check for updated values');
-  await checkTextFields(driver, values);
+  await checkTextFields(driver, values, except: skipCheckFor);
 }
 
 Future<void> testArchiveAndDelete(

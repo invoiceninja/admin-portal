@@ -1,80 +1,59 @@
-import 'package:flutter/material.dart';
+import 'dart:convert';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter_redux/flutter_redux.dart';
-import 'package:invoiceninja_flutter/data/models/client_model.dart';
 import 'package:invoiceninja_flutter/data/models/invoice_model.dart';
+import 'package:invoiceninja_flutter/data/web_client.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/utils/formatting.dart';
-import 'package:invoiceninja_flutter/utils/localization.dart';
+import 'package:invoiceninja_flutter/.env.dart';
+import 'dialogs.dart';
 
-String processTemplate(
-    String template, InvoiceEntity invoice, BuildContext context) {
-  if (template == null) {
-    return '';
+void loadEmailTemplate({
+  @required BuildContext context,
+  @required Function(String, String, String) onComplete,
+  String template,
+  String subject,
+  String body,
+  InvoiceEntity invoice,
+}) {
+  if (Config.DEMO_MODE) {
+    onComplete(subject, body, '');
+    return;
   }
 
+  final webClient = WebClient();
   final state = StoreProvider.of<AppState>(context).state;
-  final localization = AppLocalization.of(context);
-  final company = state.selectedCompany;
-  final client = state.clientState.map[invoice.clientId] ??
-      ClientEntity(id: invoice.clientId);
-  final contact = client.contacts.first;
+  final credentials = state.credentials;
+  final url = formatApiUrl(credentials.url) + '/templates';
 
-  final String sampleButton = '[${localization.button}]';
-  const String sampleLink = 'https://example.com/...';
+  /*
+  final invoice = state.invoiceState.list.isEmpty
+      ? InvoiceEntity(state: state)
+      : state.invoiceState.map[state.invoiceState.list.first];
+   */
 
-  template = template
-      .replaceAll('\$footer', company.emailFooter)
-      .replaceAll('\$emailSignature', company.emailFooter)
-      .replaceAll('\$client', client.displayName)
-      .replaceAll('\$idNumber', client.idNumber)
-      .replaceAll('\$vatNumber', client.vatNumber)
-      .replaceAll('\$account', company.name)
-      .replaceAll('\$dueDate', formatDate(invoice.dueDate, context))
-      .replaceAll('\$invoiceDate', formatDate(invoice.invoiceDate, context))
-      .replaceAll('\$contact', contact.fullName)
-      .replaceAll('\$firstName', contact.firstName)
-      .replaceAll('\$amount', formatNumber(invoice.requestedAmount, context))
-      .replaceAll('\$total', formatNumber(invoice.amount, context))
-      .replaceAll('\$balance', formatNumber(invoice.balance, context))
-      .replaceAll('\$invoice', invoice.invoiceNumber)
-      .replaceAll('\$quote', invoice.invoiceNumber)
-      .replaceAll('\$number', invoice.invoiceNumber)
-      .replaceAll('\$partial', formatNumber(invoice.partial, context))
-      .replaceAll('\$link', sampleLink)
-      .replaceAll('\$password', '${localization.password}: ###########')
-      .replaceAll('\$viewLink', sampleLink)
-      .replaceAll('\$viewButton', sampleButton)
-      .replaceAll('\$paymentLink', sampleLink)
-      .replaceAll('\$paymentButton', sampleButton)
-      .replaceAll('\$approveLink', sampleLink)
-      .replaceAll('\$approveButton', sampleButton)
-      .replaceAll('\$customClient1', client.customValue1)
-      .replaceAll('\$customClient2', client.customValue2)
-      .replaceAll('\$customContact1', contact.customValue1)
-      .replaceAll('\$customContact2', contact.customValue2)
-      .replaceAll('\$customInvoice1', invoice.customTextValue1)
-      .replaceAll('\$customInvoice2', invoice.customTextValue2)
-      .replaceAll('\$documents', '${localization.documents}: ...')
-      .replaceAll('\$autoBill', '${localization.autoBilling}: ...')
-      .replaceAll('\$portalLink', sampleLink)
-      .replaceAll('\$portalButton', sampleButton);
+  subject ??= '';
+  body ??= '';
 
-  [
-    'creidtCard',
-    'bankTransfer',
-    'paypal',
-    'sofort',
-    'sepa',
-    'gocardless',
-    'applePay',
-    'custom1',
-    'custom2',
-    'custom3'
-  ].forEach((gatewayType) {
-    template = template
-        .replaceAll('\$${gatewayType}Link', sampleLink)
-        .replaceAll('\$${gatewayType}Button', sampleButton);
+  if (template != null) {
+    template = 'email_template_$template';
+  }
+
+  webClient
+      .post(url, credentials.token,
+          data: json.encode({
+            'entity': '${invoice?.entityType ?? ''}',
+            'entity_id': '${invoice?.id ?? ''}',
+            'template': (subject.isEmpty && body.isEmpty && template != null)
+                ? template
+                : '',
+            'subject': subject,
+            'body': body,
+          }))
+      .then((dynamic response) {
+    onComplete(response['subject'], response['body'], response['wrapper']);
+  }).catchError((dynamic error) {
+    showErrorDialog(context: context, message: '$error');
+    onComplete(subject, body, '');
   });
-
-  return template;
 }

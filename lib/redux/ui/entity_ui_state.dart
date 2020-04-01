@@ -6,8 +6,11 @@ import 'package:invoiceninja_flutter/redux/ui/list_ui_state.dart';
 
 abstract class EntityUIState {
   bool get isCreatingNew;
-  int get selectedId;
+  String get editingId;
   ListUIState get listUIState;
+
+  @nullable
+  String get selectedId;
 
   @nullable
   @BuiltValueField(serialize: false)
