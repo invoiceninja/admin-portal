@@ -150,6 +150,10 @@ UserCompanyEntity loadCompanySuccessReducer(
           value: (dynamic item) => item,
         )));
 
+  // clear all sub-data
+  userCompany = userCompany
+      .rebuild((b) => b..company.replace(userCompany.company.coreCompany));
+
   return userCompany;
 }
 
