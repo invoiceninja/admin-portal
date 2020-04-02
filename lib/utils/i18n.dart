@@ -33825,2327 +33825,2573 @@ mixin LocalizationsProvider on LocaleCodeAware {
     },
   };
 
-  String get createdProject => _localizedValues[localeCode]['created_project'];
+  String get createdProject =>
+      _localizedValues[localeCode]['created_project'] ?? '';
 
-  String get updatedProject => _localizedValues[localeCode]['updated_project'];
+  String get updatedProject =>
+      _localizedValues[localeCode]['updated_project'] ?? '';
 
   String get archivedProject =>
-      _localizedValues[localeCode]['archived_project'];
+      _localizedValues[localeCode]['archived_project'] ?? '';
 
-  String get deletedProject => _localizedValues[localeCode]['deleted_project'];
+  String get deletedProject =>
+      _localizedValues[localeCode]['deleted_project'] ?? '';
 
   String get restoredProject =>
-      _localizedValues[localeCode]['restored_project'];
+      _localizedValues[localeCode]['restored_project'] ?? '';
 
-  String get newProject => _localizedValues[localeCode]['new_project'];
+  String get newProject => _localizedValues[localeCode]['new_project'] ?? '';
 
   String get thankYouForUsingOurApp =>
-      _localizedValues[localeCode]['thank_you_for_using_our_app'];
+      _localizedValues[localeCode]['thank_you_for_using_our_app'] ?? '';
 
-  String get ifYouLikeIt => _localizedValues[localeCode]['if_you_like_it'];
+  String get ifYouLikeIt =>
+      _localizedValues[localeCode]['if_you_like_it'] ?? '';
 
-  String get clickHere => _localizedValues[localeCode]['click_here'];
+  String get clickHere => _localizedValues[localeCode]['click_here'] ?? '';
 
   String get clickHereCapital =>
-      _localizedValues[localeCode]['click_here_capital'];
+      _localizedValues[localeCode]['click_here_capital'] ?? '';
 
-  String get toRateIt => _localizedValues[localeCode]['to_rate_it'];
+  String get toRateIt => _localizedValues[localeCode]['to_rate_it'] ?? '';
 
-  String get average => _localizedValues[localeCode]['average'];
+  String get average => _localizedValues[localeCode]['average'] ?? '';
 
-  String get unapproved => _localizedValues[localeCode]['unapproved'];
+  String get unapproved => _localizedValues[localeCode]['unapproved'] ?? '';
 
   String get authenticateToChangeSetting =>
-      _localizedValues[localeCode]['authenticate_to_change_setting'];
+      _localizedValues[localeCode]['authenticate_to_change_setting'] ?? '';
 
-  String get locked => _localizedValues[localeCode]['locked'];
+  String get locked => _localizedValues[localeCode]['locked'] ?? '';
 
-  String get authenticate => _localizedValues[localeCode]['authenticate'];
+  String get authenticate => _localizedValues[localeCode]['authenticate'] ?? '';
 
   String get pleaseAuthenticate =>
-      _localizedValues[localeCode]['please_authenticate'];
+      _localizedValues[localeCode]['please_authenticate'] ?? '';
 
   String get biometricAuthentication =>
-      _localizedValues[localeCode]['biometric_authentication'];
+      _localizedValues[localeCode]['biometric_authentication'] ?? '';
 
-  String get footer => _localizedValues[localeCode]['footer'];
+  String get footer => _localizedValues[localeCode]['footer'] ?? '';
 
-  String get compare => _localizedValues[localeCode]['compare'];
+  String get compare => _localizedValues[localeCode]['compare'] ?? '';
 
-  String get hostedLogin => _localizedValues[localeCode]['hosted_login'];
+  String get hostedLogin => _localizedValues[localeCode]['hosted_login'] ?? '';
 
-  String get selfhostLogin => _localizedValues[localeCode]['selfhost_login'];
+  String get selfhostLogin =>
+      _localizedValues[localeCode]['selfhost_login'] ?? '';
 
-  String get googleLogin => _localizedValues[localeCode]['google_login'];
+  String get googleLogin => _localizedValues[localeCode]['google_login'] ?? '';
 
-  String get today => _localizedValues[localeCode]['today'];
+  String get today => _localizedValues[localeCode]['today'] ?? '';
 
-  String get customRange => _localizedValues[localeCode]['custom_range'];
+  String get customRange => _localizedValues[localeCode]['custom_range'] ?? '';
 
-  String get dateRange => _localizedValues[localeCode]['date_range'];
+  String get dateRange => _localizedValues[localeCode]['date_range'] ?? '';
 
-  String get current => _localizedValues[localeCode]['current'];
+  String get current => _localizedValues[localeCode]['current'] ?? '';
 
-  String get previous => _localizedValues[localeCode]['previous'];
+  String get previous => _localizedValues[localeCode]['previous'] ?? '';
 
-  String get currentPeriod => _localizedValues[localeCode]['current_period'];
+  String get currentPeriod =>
+      _localizedValues[localeCode]['current_period'] ?? '';
 
   String get comparisonPeriod =>
-      _localizedValues[localeCode]['comparison_period'];
+      _localizedValues[localeCode]['comparison_period'] ?? '';
 
-  String get previousPeriod => _localizedValues[localeCode]['previous_period'];
+  String get previousPeriod =>
+      _localizedValues[localeCode]['previous_period'] ?? '';
 
-  String get previousYear => _localizedValues[localeCode]['previous_year'];
+  String get previousYear =>
+      _localizedValues[localeCode]['previous_year'] ?? '';
 
-  String get compareTo => _localizedValues[localeCode]['compare_to'];
+  String get compareTo => _localizedValues[localeCode]['compare_to'] ?? '';
 
-  String get last7Days => _localizedValues[localeCode]['last7_days'];
+  String get last7Days => _localizedValues[localeCode]['last7_days'] ?? '';
 
-  String get lastWeek => _localizedValues[localeCode]['last_week'];
+  String get lastWeek => _localizedValues[localeCode]['last_week'] ?? '';
 
-  String get last30Days => _localizedValues[localeCode]['last30_days'];
+  String get last30Days => _localizedValues[localeCode]['last30_days'] ?? '';
 
-  String get thisMonth => _localizedValues[localeCode]['this_month'];
+  String get thisMonth => _localizedValues[localeCode]['this_month'] ?? '';
 
-  String get lastMonth => _localizedValues[localeCode]['last_month'];
+  String get lastMonth => _localizedValues[localeCode]['last_month'] ?? '';
 
-  String get thisYear => _localizedValues[localeCode]['this_year'];
+  String get thisYear => _localizedValues[localeCode]['this_year'] ?? '';
 
-  String get lastYear => _localizedValues[localeCode]['last_year'];
+  String get lastYear => _localizedValues[localeCode]['last_year'] ?? '';
 
-  String get custom => _localizedValues[localeCode]['custom'];
+  String get custom => _localizedValues[localeCode]['custom'] ?? '';
 
-  String get cloneToInvoice => _localizedValues[localeCode]['clone_to_invoice'];
+  String get cloneToInvoice =>
+      _localizedValues[localeCode]['clone_to_invoice'] ?? '';
 
-  String get cloneToQuote => _localizedValues[localeCode]['clone_to_quote'];
+  String get cloneToQuote =>
+      _localizedValues[localeCode]['clone_to_quote'] ?? '';
 
-  String get viewInvoice => _localizedValues[localeCode]['view_invoice'];
+  String get viewInvoice => _localizedValues[localeCode]['view_invoice'] ?? '';
 
-  String get convert => _localizedValues[localeCode]['convert'];
+  String get convert => _localizedValues[localeCode]['convert'] ?? '';
 
-  String get more => _localizedValues[localeCode]['more'];
+  String get more => _localizedValues[localeCode]['more'] ?? '';
 
-  String get editClient => _localizedValues[localeCode]['edit_client'];
+  String get editClient => _localizedValues[localeCode]['edit_client'] ?? '';
 
-  String get editProduct => _localizedValues[localeCode]['edit_product'];
+  String get editProduct => _localizedValues[localeCode]['edit_product'] ?? '';
 
-  String get editInvoice => _localizedValues[localeCode]['edit_invoice'];
+  String get editInvoice => _localizedValues[localeCode]['edit_invoice'] ?? '';
 
-  String get editQuote => _localizedValues[localeCode]['edit_quote'];
+  String get editQuote => _localizedValues[localeCode]['edit_quote'] ?? '';
 
-  String get editPayment => _localizedValues[localeCode]['edit_payment'];
+  String get editPayment => _localizedValues[localeCode]['edit_payment'] ?? '';
 
-  String get editTask => _localizedValues[localeCode]['edit_task'];
+  String get editTask => _localizedValues[localeCode]['edit_task'] ?? '';
 
-  String get editExpense => _localizedValues[localeCode]['edit_expense'];
+  String get editExpense => _localizedValues[localeCode]['edit_expense'] ?? '';
 
-  String get editVendor => _localizedValues[localeCode]['edit_vendor'];
+  String get editVendor => _localizedValues[localeCode]['edit_vendor'] ?? '';
 
-  String get editProject => _localizedValues[localeCode]['edit_project'];
+  String get editProject => _localizedValues[localeCode]['edit_project'] ?? '';
 
-  String get editCredit => _localizedValues[localeCode]['edit_credit'];
+  String get editCredit => _localizedValues[localeCode]['edit_credit'] ?? '';
 
   String get editRecurringInvoice =>
-      _localizedValues[localeCode]['edit_recurring_invoice'];
+      _localizedValues[localeCode]['edit_recurring_invoice'] ?? '';
 
   String get editRecurringExpense =>
-      _localizedValues[localeCode]['edit_recurring_expense'];
+      _localizedValues[localeCode]['edit_recurring_expense'] ?? '';
 
   String get editRecurringQuote =>
-      _localizedValues[localeCode]['edit_recurring_quote'];
+      _localizedValues[localeCode]['edit_recurring_quote'] ?? '';
 
-  String get billingAddress => _localizedValues[localeCode]['billing_address'];
+  String get billingAddress =>
+      _localizedValues[localeCode]['billing_address'] ?? '';
 
   String get shippingAddress =>
-      _localizedValues[localeCode]['shipping_address'];
+      _localizedValues[localeCode]['shipping_address'] ?? '';
 
-  String get totalRevenue => _localizedValues[localeCode]['total_revenue'];
+  String get totalRevenue =>
+      _localizedValues[localeCode]['total_revenue'] ?? '';
 
-  String get averageInvoice => _localizedValues[localeCode]['average_invoice'];
+  String get averageInvoice =>
+      _localizedValues[localeCode]['average_invoice'] ?? '';
 
-  String get outstanding => _localizedValues[localeCode]['outstanding'];
+  String get outstanding => _localizedValues[localeCode]['outstanding'] ?? '';
 
-  String get invoicesSent => _localizedValues[localeCode]['invoices_sent'];
+  String get invoicesSent =>
+      _localizedValues[localeCode]['invoices_sent'] ?? '';
 
-  String get activeClients => _localizedValues[localeCode]['active_clients'];
+  String get activeClients =>
+      _localizedValues[localeCode]['active_clients'] ?? '';
 
-  String get close => _localizedValues[localeCode]['close'];
+  String get close => _localizedValues[localeCode]['close'] ?? '';
 
-  String get email => _localizedValues[localeCode]['email'];
+  String get email => _localizedValues[localeCode]['email'] ?? '';
 
-  String get password => _localizedValues[localeCode]['password'];
+  String get password => _localizedValues[localeCode]['password'] ?? '';
 
-  String get url => _localizedValues[localeCode]['url'];
+  String get url => _localizedValues[localeCode]['url'] ?? '';
 
-  String get secret => _localizedValues[localeCode]['secret'];
+  String get secret => _localizedValues[localeCode]['secret'] ?? '';
 
-  String get name => _localizedValues[localeCode]['name'];
+  String get name => _localizedValues[localeCode]['name'] ?? '';
 
-  String get logout => _localizedValues[localeCode]['logout'];
+  String get logout => _localizedValues[localeCode]['logout'] ?? '';
 
-  String get login => _localizedValues[localeCode]['login'];
+  String get login => _localizedValues[localeCode]['login'] ?? '';
 
-  String get filter => _localizedValues[localeCode]['filter'];
+  String get filter => _localizedValues[localeCode]['filter'] ?? '';
 
-  String get sort => _localizedValues[localeCode]['sort'];
+  String get sort => _localizedValues[localeCode]['sort'] ?? '';
 
-  String get search => _localizedValues[localeCode]['search'];
+  String get search => _localizedValues[localeCode]['search'] ?? '';
 
-  String get active => _localizedValues[localeCode]['active'];
+  String get active => _localizedValues[localeCode]['active'] ?? '';
 
-  String get archived => _localizedValues[localeCode]['archived'];
+  String get archived => _localizedValues[localeCode]['archived'] ?? '';
 
-  String get deleted => _localizedValues[localeCode]['deleted'];
+  String get deleted => _localizedValues[localeCode]['deleted'] ?? '';
 
-  String get dashboard => _localizedValues[localeCode]['dashboard'];
+  String get dashboard => _localizedValues[localeCode]['dashboard'] ?? '';
 
-  String get archive => _localizedValues[localeCode]['archive'];
+  String get archive => _localizedValues[localeCode]['archive'] ?? '';
 
-  String get delete => _localizedValues[localeCode]['delete'];
+  String get delete => _localizedValues[localeCode]['delete'] ?? '';
 
-  String get restore => _localizedValues[localeCode]['restore'];
+  String get restore => _localizedValues[localeCode]['restore'] ?? '';
 
   String get refreshComplete =>
-      _localizedValues[localeCode]['refresh_complete'];
+      _localizedValues[localeCode]['refresh_complete'] ?? '';
 
   String get pleaseEnterYourEmail =>
-      _localizedValues[localeCode]['please_enter_your_email'];
+      _localizedValues[localeCode]['please_enter_your_email'] ?? '';
 
   String get pleaseEnterYourPassword =>
-      _localizedValues[localeCode]['please_enter_your_password'];
+      _localizedValues[localeCode]['please_enter_your_password'] ?? '';
 
   String get pleaseEnterYourUrl =>
-      _localizedValues[localeCode]['please_enter_your_url'];
+      _localizedValues[localeCode]['please_enter_your_url'] ?? '';
 
   String get pleaseEnterAProductKey =>
-      _localizedValues[localeCode]['please_enter_a_product_key'];
+      _localizedValues[localeCode]['please_enter_a_product_key'] ?? '';
 
   String get pleaseEnterAFirstName =>
-      _localizedValues[localeCode]['please_enter_a_last_name'];
+      _localizedValues[localeCode]['please_enter_a_last_name'] ?? '';
 
   String get pleaseEnterALastName =>
-      _localizedValues[localeCode]['please_enter_a_first_name'];
+      _localizedValues[localeCode]['please_enter_a_first_name'] ?? '';
 
-  String get ascending => _localizedValues[localeCode]['ascending'];
+  String get ascending => _localizedValues[localeCode]['ascending'] ?? '';
 
-  String get descending => _localizedValues[localeCode]['descending'];
+  String get descending => _localizedValues[localeCode]['descending'] ?? '';
 
-  String get save => _localizedValues[localeCode]['save'];
+  String get save => _localizedValues[localeCode]['save'] ?? '';
 
   String get anErrorOccurred =>
-      _localizedValues[localeCode]['an_error_occurred'];
+      _localizedValues[localeCode]['an_error_occurred'] ?? '';
 
-  String get paidToDate => _localizedValues[localeCode]['paid_to_date'];
+  String get paidToDate => _localizedValues[localeCode]['paid_to_date'] ?? '';
 
-  String get balanceDue => _localizedValues[localeCode]['balance_due'];
+  String get balanceDue => _localizedValues[localeCode]['balance_due'] ?? '';
 
-  String get balance => _localizedValues[localeCode]['balance'];
+  String get balance => _localizedValues[localeCode]['balance'] ?? '';
 
-  String get overview => _localizedValues[localeCode]['overview'];
+  String get overview => _localizedValues[localeCode]['overview'] ?? '';
 
-  String get details => _localizedValues[localeCode]['details'];
+  String get details => _localizedValues[localeCode]['details'] ?? '';
 
-  String get phone => _localizedValues[localeCode]['phone'];
+  String get phone => _localizedValues[localeCode]['phone'] ?? '';
 
-  String get website => _localizedValues[localeCode]['website'];
+  String get website => _localizedValues[localeCode]['website'] ?? '';
 
-  String get vatNumber => _localizedValues[localeCode]['vat_number'];
+  String get vatNumber => _localizedValues[localeCode]['vat_number'] ?? '';
 
-  String get idNumber => _localizedValues[localeCode]['id_number'];
+  String get idNumber => _localizedValues[localeCode]['id_number'] ?? '';
 
-  String get create => _localizedValues[localeCode]['create'];
+  String get create => _localizedValues[localeCode]['create'] ?? '';
 
   String get copiedToClipboard =>
-      _localizedValues[localeCode]['copied_to_clipboard'];
+      _localizedValues[localeCode]['copied_to_clipboard'] ?? '';
 
-  String get error => _localizedValues[localeCode]['error'];
+  String get error => _localizedValues[localeCode]['error'] ?? '';
 
-  String get couldNotLaunch => _localizedValues[localeCode]['could_not_launch'];
+  String get couldNotLaunch =>
+      _localizedValues[localeCode]['could_not_launch'] ?? '';
 
-  String get contacts => _localizedValues[localeCode]['contacts'];
+  String get contacts => _localizedValues[localeCode]['contacts'] ?? '';
 
-  String get additional => _localizedValues[localeCode]['additional'];
+  String get additional => _localizedValues[localeCode]['additional'] ?? '';
 
-  String get firstName => _localizedValues[localeCode]['first_name'];
+  String get firstName => _localizedValues[localeCode]['first_name'] ?? '';
 
-  String get lastName => _localizedValues[localeCode]['last_name'];
+  String get lastName => _localizedValues[localeCode]['last_name'] ?? '';
 
-  String get addContact => _localizedValues[localeCode]['add_contact'];
+  String get addContact => _localizedValues[localeCode]['add_contact'] ?? '';
 
-  String get areYouSure => _localizedValues[localeCode]['are_you_sure'];
+  String get areYouSure => _localizedValues[localeCode]['are_you_sure'] ?? '';
 
-  String get cancel => _localizedValues[localeCode]['cancel'];
+  String get cancel => _localizedValues[localeCode]['cancel'] ?? '';
 
-  String get ok => _localizedValues[localeCode]['ok'];
+  String get ok => _localizedValues[localeCode]['ok'] ?? '';
 
-  String get remove => _localizedValues[localeCode]['remove'];
+  String get remove => _localizedValues[localeCode]['remove'] ?? '';
 
-  String get emailIsInvalid => _localizedValues[localeCode]['email_is_invalid'];
+  String get emailIsInvalid =>
+      _localizedValues[localeCode]['email_is_invalid'] ?? '';
 
-  String get product => _localizedValues[localeCode]['product'];
+  String get product => _localizedValues[localeCode]['product'] ?? '';
 
-  String get products => _localizedValues[localeCode]['products'];
+  String get products => _localizedValues[localeCode]['products'] ?? '';
 
-  String get newProduct => _localizedValues[localeCode]['new_product'];
+  String get newProduct => _localizedValues[localeCode]['new_product'] ?? '';
 
-  String get createdProduct => _localizedValues[localeCode]['created_product'];
+  String get createdProduct =>
+      _localizedValues[localeCode]['created_product'] ?? '';
 
-  String get updatedProduct => _localizedValues[localeCode]['updated_product'];
+  String get updatedProduct =>
+      _localizedValues[localeCode]['updated_product'] ?? '';
 
   String get archivedProduct =>
-      _localizedValues[localeCode]['archived_product'];
+      _localizedValues[localeCode]['archived_product'] ?? '';
 
-  String get deletedProduct => _localizedValues[localeCode]['deleted_product'];
+  String get deletedProduct =>
+      _localizedValues[localeCode]['deleted_product'] ?? '';
 
   String get restoredProduct =>
-      _localizedValues[localeCode]['restored_product'];
+      _localizedValues[localeCode]['restored_product'] ?? '';
 
-  String get newVendor => _localizedValues[localeCode]['new_vendor'];
+  String get newVendor => _localizedValues[localeCode]['new_vendor'] ?? '';
 
-  String get createdVendor => _localizedValues[localeCode]['created_vendor'];
+  String get createdVendor =>
+      _localizedValues[localeCode]['created_vendor'] ?? '';
 
-  String get updatedVendor => _localizedValues[localeCode]['updated_vendor'];
+  String get updatedVendor =>
+      _localizedValues[localeCode]['updated_vendor'] ?? '';
 
-  String get archivedVendor => _localizedValues[localeCode]['archived_vendor'];
+  String get archivedVendor =>
+      _localizedValues[localeCode]['archived_vendor'] ?? '';
 
-  String get deletedVendor => _localizedValues[localeCode]['deleted_vendor'];
+  String get deletedVendor =>
+      _localizedValues[localeCode]['deleted_vendor'] ?? '';
 
-  String get restoredVendor => _localizedValues[localeCode]['restored_vendor'];
+  String get restoredVendor =>
+      _localizedValues[localeCode]['restored_vendor'] ?? '';
 
-  String get document => _localizedValues[localeCode]['document'];
+  String get document => _localizedValues[localeCode]['document'] ?? '';
 
-  String get documents => _localizedValues[localeCode]['documents'];
+  String get documents => _localizedValues[localeCode]['documents'] ?? '';
 
-  String get newDocument => _localizedValues[localeCode]['new_document'];
+  String get newDocument => _localizedValues[localeCode]['new_document'] ?? '';
 
-  String get editDocument => _localizedValues[localeCode]['edit_document'];
+  String get editDocument =>
+      _localizedValues[localeCode]['edit_document'] ?? '';
 
   String get uploadedDocument =>
-      _localizedValues[localeCode]['uploaded_document'];
+      _localizedValues[localeCode]['uploaded_document'] ?? '';
 
   String get updatedDocument =>
-      _localizedValues[localeCode]['updated_document'];
+      _localizedValues[localeCode]['updated_document'] ?? '';
 
   String get archivedDocument =>
-      _localizedValues[localeCode]['archived_document'];
+      _localizedValues[localeCode]['archived_document'] ?? '';
 
   String get deletedDocument =>
-      _localizedValues[localeCode]['deleted_document'];
+      _localizedValues[localeCode]['deleted_document'] ?? '';
 
   String get restoredDocument =>
-      _localizedValues[localeCode]['restored_document'];
+      _localizedValues[localeCode]['restored_document'] ?? '';
 
-  String get newExpense => _localizedValues[localeCode]['new_expense'];
+  String get newExpense => _localizedValues[localeCode]['new_expense'] ?? '';
 
-  String get createdExpense => _localizedValues[localeCode]['created_expense'];
+  String get createdExpense =>
+      _localizedValues[localeCode]['created_expense'] ?? '';
 
-  String get updatedExpense => _localizedValues[localeCode]['updated_expense'];
+  String get updatedExpense =>
+      _localizedValues[localeCode]['updated_expense'] ?? '';
 
   String get archivedExpense =>
-      _localizedValues[localeCode]['archived_expense'];
+      _localizedValues[localeCode]['archived_expense'] ?? '';
 
-  String get deletedExpense => _localizedValues[localeCode]['deleted_expense'];
+  String get deletedExpense =>
+      _localizedValues[localeCode]['deleted_expense'] ?? '';
 
   String get restoredExpense =>
-      _localizedValues[localeCode]['restored_expense'];
+      _localizedValues[localeCode]['restored_expense'] ?? '';
 
-  String get productKey => _localizedValues[localeCode]['product_key'];
+  String get productKey => _localizedValues[localeCode]['product_key'] ?? '';
 
-  String get notes => _localizedValues[localeCode]['notes'];
+  String get notes => _localizedValues[localeCode]['notes'] ?? '';
 
-  String get cost => _localizedValues[localeCode]['cost'];
+  String get cost => _localizedValues[localeCode]['cost'] ?? '';
 
-  String get client => _localizedValues[localeCode]['client'];
+  String get client => _localizedValues[localeCode]['client'] ?? '';
 
-  String get clients => _localizedValues[localeCode]['clients'];
+  String get clients => _localizedValues[localeCode]['clients'] ?? '';
 
-  String get newClient => _localizedValues[localeCode]['new_client'];
+  String get newClient => _localizedValues[localeCode]['new_client'] ?? '';
 
-  String get createdClient => _localizedValues[localeCode]['created_client'];
+  String get createdClient =>
+      _localizedValues[localeCode]['created_client'] ?? '';
 
-  String get updatedClient => _localizedValues[localeCode]['updated_client'];
+  String get updatedClient =>
+      _localizedValues[localeCode]['updated_client'] ?? '';
 
-  String get archivedClient => _localizedValues[localeCode]['archived_client'];
+  String get archivedClient =>
+      _localizedValues[localeCode]['archived_client'] ?? '';
 
-  String get deletedClient => _localizedValues[localeCode]['deleted_client'];
+  String get deletedClient =>
+      _localizedValues[localeCode]['deleted_client'] ?? '';
 
-  String get restoredClient => _localizedValues[localeCode]['restored_client'];
+  String get restoredClient =>
+      _localizedValues[localeCode]['restored_client'] ?? '';
 
-  String get address1 => _localizedValues[localeCode]['address1'];
+  String get address1 => _localizedValues[localeCode]['address1'] ?? '';
 
-  String get address2 => _localizedValues[localeCode]['address2'];
+  String get address2 => _localizedValues[localeCode]['address2'] ?? '';
 
-  String get city => _localizedValues[localeCode]['city'];
+  String get city => _localizedValues[localeCode]['city'] ?? '';
 
-  String get state => _localizedValues[localeCode]['state'];
+  String get state => _localizedValues[localeCode]['state'] ?? '';
 
-  String get postalCode => _localizedValues[localeCode]['postal_code'];
+  String get postalCode => _localizedValues[localeCode]['postal_code'] ?? '';
 
-  String get country => _localizedValues[localeCode]['country'];
+  String get country => _localizedValues[localeCode]['country'] ?? '';
 
-  String get invoice => _localizedValues[localeCode]['invoice'];
+  String get invoice => _localizedValues[localeCode]['invoice'] ?? '';
 
-  String get invoices => _localizedValues[localeCode]['invoices'];
+  String get invoices => _localizedValues[localeCode]['invoices'] ?? '';
 
-  String get newInvoice => _localizedValues[localeCode]['new_invoice'];
+  String get newInvoice => _localizedValues[localeCode]['new_invoice'] ?? '';
 
-  String get createdInvoice => _localizedValues[localeCode]['created_invoice'];
+  String get createdInvoice =>
+      _localizedValues[localeCode]['created_invoice'] ?? '';
 
-  String get updatedInvoice => _localizedValues[localeCode]['updated_invoice'];
+  String get updatedInvoice =>
+      _localizedValues[localeCode]['updated_invoice'] ?? '';
 
   String get archivedInvoice =>
-      _localizedValues[localeCode]['archived_invoice'];
+      _localizedValues[localeCode]['archived_invoice'] ?? '';
 
-  String get deletedInvoice => _localizedValues[localeCode]['deleted_invoice'];
+  String get deletedInvoice =>
+      _localizedValues[localeCode]['deleted_invoice'] ?? '';
 
   String get restoredInvoice =>
-      _localizedValues[localeCode]['restored_invoice'];
+      _localizedValues[localeCode]['restored_invoice'] ?? '';
 
-  String get emailedInvoice => _localizedValues[localeCode]['emailed_invoice'];
+  String get emailedInvoice =>
+      _localizedValues[localeCode]['emailed_invoice'] ?? '';
 
-  String get emailedPayment => _localizedValues[localeCode]['emailed_payment'];
+  String get emailedPayment =>
+      _localizedValues[localeCode]['emailed_payment'] ?? '';
 
-  String get amount => _localizedValues[localeCode]['amount'];
+  String get amount => _localizedValues[localeCode]['amount'] ?? '';
 
-  String get invoiceNumber => _localizedValues[localeCode]['invoice_number'];
+  String get invoiceNumber =>
+      _localizedValues[localeCode]['invoice_number'] ?? '';
 
-  String get invoiceDate => _localizedValues[localeCode]['invoice_date'];
+  String get invoiceDate => _localizedValues[localeCode]['invoice_date'] ?? '';
 
-  String get discount => _localizedValues[localeCode]['discount'];
+  String get discount => _localizedValues[localeCode]['discount'] ?? '';
 
-  String get poNumber => _localizedValues[localeCode]['po_number'];
+  String get poNumber => _localizedValues[localeCode]['po_number'] ?? '';
 
-  String get terms => _localizedValues[localeCode]['terms'];
+  String get terms => _localizedValues[localeCode]['terms'] ?? '';
 
-  String get publicNotes => _localizedValues[localeCode]['public_notes'];
+  String get publicNotes => _localizedValues[localeCode]['public_notes'] ?? '';
 
-  String get privateNotes => _localizedValues[localeCode]['private_notes'];
+  String get privateNotes =>
+      _localizedValues[localeCode]['private_notes'] ?? '';
 
-  String get frequency => _localizedValues[localeCode]['frequency'];
+  String get frequency => _localizedValues[localeCode]['frequency'] ?? '';
 
-  String get startDate => _localizedValues[localeCode]['start_date'];
+  String get startDate => _localizedValues[localeCode]['start_date'] ?? '';
 
-  String get endDate => _localizedValues[localeCode]['end_date'];
+  String get endDate => _localizedValues[localeCode]['end_date'] ?? '';
 
-  String get quoteNumber => _localizedValues[localeCode]['quote_number'];
+  String get quoteNumber => _localizedValues[localeCode]['quote_number'] ?? '';
 
-  String get quoteDate => _localizedValues[localeCode]['quote_date'];
+  String get quoteDate => _localizedValues[localeCode]['quote_date'] ?? '';
 
-  String get validUntil => _localizedValues[localeCode]['valid_until'];
+  String get validUntil => _localizedValues[localeCode]['valid_until'] ?? '';
 
-  String get items => _localizedValues[localeCode]['items'];
+  String get items => _localizedValues[localeCode]['items'] ?? '';
 
-  String get partialDeposit => _localizedValues[localeCode]['partial_deposit'];
+  String get partialDeposit =>
+      _localizedValues[localeCode]['partial_deposit'] ?? '';
 
-  String get description => _localizedValues[localeCode]['description'];
+  String get description => _localizedValues[localeCode]['description'] ?? '';
 
-  String get unitCost => _localizedValues[localeCode]['unit_cost'];
+  String get unitCost => _localizedValues[localeCode]['unit_cost'] ?? '';
 
-  String get quantity => _localizedValues[localeCode]['quantity'];
+  String get quantity => _localizedValues[localeCode]['quantity'] ?? '';
 
-  String get addItem => _localizedValues[localeCode]['add_item'];
+  String get addItem => _localizedValues[localeCode]['add_item'] ?? '';
 
-  String get contact => _localizedValues[localeCode]['contact'];
+  String get contact => _localizedValues[localeCode]['contact'] ?? '';
 
-  String get workPhone => _localizedValues[localeCode]['work_phone'];
+  String get workPhone => _localizedValues[localeCode]['work_phone'] ?? '';
 
-  String get totalAmount => _localizedValues[localeCode]['total_amount'];
+  String get totalAmount => _localizedValues[localeCode]['total_amount'] ?? '';
 
-  String get pdf => _localizedValues[localeCode]['pdf'];
+  String get pdf => _localizedValues[localeCode]['pdf'] ?? '';
 
-  String get dueDate => _localizedValues[localeCode]['due_date'];
+  String get dueDate => _localizedValues[localeCode]['due_date'] ?? '';
 
-  String get partialDueDate => _localizedValues[localeCode]['partial_due_date'];
+  String get partialDueDate =>
+      _localizedValues[localeCode]['partial_due_date'] ?? '';
 
-  String get status => _localizedValues[localeCode]['status'];
+  String get status => _localizedValues[localeCode]['status'] ?? '';
 
   String get invoiceStatusId =>
-      _localizedValues[localeCode]['invoice_status_id'];
+      _localizedValues[localeCode]['invoice_status_id'] ?? '';
 
-  String get quoteStatusId => _localizedValues[localeCode]['quote_status'];
+  String get quoteStatusId =>
+      _localizedValues[localeCode]['quote_status'] ?? '';
 
   String get clickPlusToAddItem =>
-      _localizedValues[localeCode]['click_plus_to_add_item'];
+      _localizedValues[localeCode]['click_plus_to_add_item'] ?? '';
 
   String get clickPlusToAddTime =>
-      _localizedValues[localeCode]['click_plus_to_add_time'];
+      _localizedValues[localeCode]['click_plus_to_add_time'] ?? '';
 
-  String get countSelected => _localizedValues[localeCode]['count_selected'];
+  String get countSelected =>
+      _localizedValues[localeCode]['count_selected'] ?? '';
 
-  String get total => _localizedValues[localeCode]['total'];
+  String get total => _localizedValues[localeCode]['total'] ?? '';
 
-  String get totals => _localizedValues[localeCode]['totals'];
+  String get totals => _localizedValues[localeCode]['totals'] ?? '';
 
-  String get percent => _localizedValues[localeCode]['percent'];
+  String get percent => _localizedValues[localeCode]['percent'] ?? '';
 
-  String get edit => _localizedValues[localeCode]['edit'];
+  String get edit => _localizedValues[localeCode]['edit'] ?? '';
 
-  String get dismiss => _localizedValues[localeCode]['dismiss'];
+  String get dismiss => _localizedValues[localeCode]['dismiss'] ?? '';
 
   String get pleaseSelectADate =>
-      _localizedValues[localeCode]['please_select_a_date'];
+      _localizedValues[localeCode]['please_select_a_date'] ?? '';
 
   String get pleaseSelectAClient =>
-      _localizedValues[localeCode]['please_select_a_client'];
+      _localizedValues[localeCode]['please_select_a_client'] ?? '';
 
   String get pleaseSelectAnInvoice =>
-      _localizedValues[localeCode]['please_select_an_invoice'];
+      _localizedValues[localeCode]['please_select_an_invoice'] ?? '';
 
-  String get taskRate => _localizedValues[localeCode]['task_rate'];
+  String get taskRate => _localizedValues[localeCode]['task_rate'] ?? '';
 
-  String get settings => _localizedValues[localeCode]['settings'];
+  String get settings => _localizedValues[localeCode]['settings'] ?? '';
 
-  String get language => _localizedValues[localeCode]['language'];
+  String get language => _localizedValues[localeCode]['language'] ?? '';
 
-  String get currency => _localizedValues[localeCode]['currency'];
+  String get currency => _localizedValues[localeCode]['currency'] ?? '';
 
-  String get createdAt => _localizedValues[localeCode]['created_at'];
+  String get createdAt => _localizedValues[localeCode]['created_at'] ?? '';
 
-  String get updatedAt => _localizedValues[localeCode]['updated_at'];
+  String get updatedAt => _localizedValues[localeCode]['updated_at'] ?? '';
 
-  String get tax => _localizedValues[localeCode]['tax'];
+  String get tax => _localizedValues[localeCode]['tax'] ?? '';
 
   String get pleaseEnterAnInvoiceNumber =>
-      _localizedValues[localeCode]['please_enter_an_invoice_number'];
+      _localizedValues[localeCode]['please_enter_an_invoice_number'] ?? '';
 
   String get pleaseEnterAQuoteNumber =>
-      _localizedValues[localeCode]['please_enter_a_quote_number'];
+      _localizedValues[localeCode]['please_enter_a_quote_number'] ?? '';
 
-  String get pastDue => _localizedValues[localeCode]['past_due'];
+  String get pastDue => _localizedValues[localeCode]['past_due'] ?? '';
 
-  String get draft => _localizedValues[localeCode]['draft'];
+  String get draft => _localizedValues[localeCode]['draft'] ?? '';
 
-  String get sent => _localizedValues[localeCode]['sent'];
+  String get sent => _localizedValues[localeCode]['sent'] ?? '';
 
-  String get viewed => _localizedValues[localeCode]['viewed'];
+  String get viewed => _localizedValues[localeCode]['viewed'] ?? '';
 
-  String get approved => _localizedValues[localeCode]['approved'];
+  String get approved => _localizedValues[localeCode]['approved'] ?? '';
 
-  String get partial => _localizedValues[localeCode]['partial'];
+  String get partial => _localizedValues[localeCode]['partial'] ?? '';
 
-  String get paid => _localizedValues[localeCode]['paid'];
+  String get paid => _localizedValues[localeCode]['paid'] ?? '';
 
-  String get markSent => _localizedValues[localeCode]['mark_sent'];
+  String get markSent => _localizedValues[localeCode]['mark_sent'] ?? '';
 
   String get markedInvoiceAsSent =>
-      _localizedValues[localeCode]['marked_invoice_as_sent'];
+      _localizedValues[localeCode]['marked_invoice_as_sent'] ?? '';
 
   String get markedInvoiceAsPaid =>
-      _localizedValues[localeCode]['marked_invoice_as_paid'];
+      _localizedValues[localeCode]['marked_invoice_as_paid'] ?? '';
 
   String get markedInvoicesAsSent =>
-      _localizedValues[localeCode]['marked_invoices_as_sent'];
+      _localizedValues[localeCode]['marked_invoices_as_sent'] ?? '';
 
   String get markedInvoicesAsPaid =>
-      _localizedValues[localeCode]['marked_invoices_as_paid'];
+      _localizedValues[localeCode]['marked_invoices_as_paid'] ?? '';
 
-  String get done => _localizedValues[localeCode]['done'];
+  String get done => _localizedValues[localeCode]['done'] ?? '';
 
   String get pleaseEnterAClientOrContactName =>
-      _localizedValues[localeCode]['please_enter_a_client_or_contact_name'];
+      _localizedValues[localeCode]['please_enter_a_client_or_contact_name'] ??
+      '';
 
-  String get darkMode => _localizedValues[localeCode]['dark_mode'];
+  String get darkMode => _localizedValues[localeCode]['dark_mode'] ?? '';
 
   String get restartAppToApplyChange =>
-      _localizedValues[localeCode]['restart_app_to_apply_change'];
+      _localizedValues[localeCode]['restart_app_to_apply_change'] ?? '';
 
-  String get refreshData => _localizedValues[localeCode]['refresh_data'];
+  String get refreshData => _localizedValues[localeCode]['refresh_data'] ?? '';
 
-  String get blankContact => _localizedValues[localeCode]['blank_contact'];
+  String get blankContact =>
+      _localizedValues[localeCode]['blank_contact'] ?? '';
 
-  String get activity => _localizedValues[localeCode]['activity'];
+  String get activity => _localizedValues[localeCode]['activity'] ?? '';
 
-  String get noRecordsFound => _localizedValues[localeCode]['no_records_found'];
+  String get noRecordsFound =>
+      _localizedValues[localeCode]['no_records_found'] ?? '';
 
-  String get clone => _localizedValues[localeCode]['clone'];
+  String get clone => _localizedValues[localeCode]['clone'] ?? '';
 
-  String get loading => _localizedValues[localeCode]['loading'];
+  String get loading => _localizedValues[localeCode]['loading'] ?? '';
 
-  String get industry => _localizedValues[localeCode]['industry'];
+  String get industry => _localizedValues[localeCode]['industry'] ?? '';
 
-  String get size => _localizedValues[localeCode]['size'];
+  String get size => _localizedValues[localeCode]['size'] ?? '';
 
-  String get paymentTerms => _localizedValues[localeCode]['payment_terms'];
+  String get paymentTerms =>
+      _localizedValues[localeCode]['payment_terms'] ?? '';
 
-  String get paymentDate => _localizedValues[localeCode]['payment_date'];
+  String get paymentDate => _localizedValues[localeCode]['payment_date'] ?? '';
 
-  String get paymentStatus => _localizedValues[localeCode]['payment_status'];
+  String get paymentStatus =>
+      _localizedValues[localeCode]['payment_status'] ?? '';
 
-  String get net => _localizedValues[localeCode]['net'];
+  String get net => _localizedValues[localeCode]['net'] ?? '';
 
-  String get clientPortal => _localizedValues[localeCode]['client_portal'];
+  String get clientPortal =>
+      _localizedValues[localeCode]['client_portal'] ?? '';
 
-  String get showTasks => _localizedValues[localeCode]['show_tasks'];
+  String get showTasks => _localizedValues[localeCode]['show_tasks'] ?? '';
 
-  String get emailReminders => _localizedValues[localeCode]['email_reminders'];
+  String get emailReminders =>
+      _localizedValues[localeCode]['email_reminders'] ?? '';
 
-  String get enabled => _localizedValues[localeCode]['enabled'];
+  String get enabled => _localizedValues[localeCode]['enabled'] ?? '';
 
-  String get recipients => _localizedValues[localeCode]['recipients'];
+  String get recipients => _localizedValues[localeCode]['recipients'] ?? '';
 
-  String get initialEmail => _localizedValues[localeCode]['initial_email'];
+  String get initialEmail =>
+      _localizedValues[localeCode]['initial_email'] ?? '';
 
-  String get firstReminder => _localizedValues[localeCode]['first_reminder'];
+  String get firstReminder =>
+      _localizedValues[localeCode]['first_reminder'] ?? '';
 
-  String get secondReminder => _localizedValues[localeCode]['second_reminder'];
+  String get secondReminder =>
+      _localizedValues[localeCode]['second_reminder'] ?? '';
 
-  String get thirdReminder => _localizedValues[localeCode]['third_reminder'];
+  String get thirdReminder =>
+      _localizedValues[localeCode]['third_reminder'] ?? '';
 
-  String get template => _localizedValues[localeCode]['template'];
+  String get template => _localizedValues[localeCode]['template'] ?? '';
 
-  String get send => _localizedValues[localeCode]['send'];
+  String get send => _localizedValues[localeCode]['send'] ?? '';
 
-  String get subject => _localizedValues[localeCode]['subject'];
+  String get subject => _localizedValues[localeCode]['subject'] ?? '';
 
-  String get body => _localizedValues[localeCode]['body'];
+  String get body => _localizedValues[localeCode]['body'] ?? '';
 
-  String get sendEmail => _localizedValues[localeCode]['send_email'];
+  String get sendEmail => _localizedValues[localeCode]['send_email'] ?? '';
 
-  String get emailReceipt => _localizedValues[localeCode]['email_receipt'];
+  String get emailReceipt =>
+      _localizedValues[localeCode]['email_receipt'] ?? '';
 
-  String get autoBilling => _localizedValues[localeCode]['auto_billing'];
+  String get autoBilling => _localizedValues[localeCode]['auto_billing'] ?? '';
 
-  String get button => _localizedValues[localeCode]['button'];
+  String get button => _localizedValues[localeCode]['button'] ?? '';
 
-  String get preview => _localizedValues[localeCode]['preview'];
+  String get preview => _localizedValues[localeCode]['preview'] ?? '';
 
-  String get customize => _localizedValues[localeCode]['customize'];
+  String get customize => _localizedValues[localeCode]['customize'] ?? '';
 
-  String get history => _localizedValues[localeCode]['history'];
+  String get history => _localizedValues[localeCode]['history'] ?? '';
 
-  String get payment => _localizedValues[localeCode]['payment'];
+  String get payment => _localizedValues[localeCode]['payment'] ?? '';
 
-  String get payments => _localizedValues[localeCode]['payments'];
+  String get payments => _localizedValues[localeCode]['payments'] ?? '';
 
-  String get refunded => _localizedValues[localeCode]['refunded'];
+  String get refunded => _localizedValues[localeCode]['refunded'] ?? '';
 
-  String get paymentType => _localizedValues[localeCode]['payment_type'];
+  String get paymentType => _localizedValues[localeCode]['payment_type'] ?? '';
 
   String get transactionReference =>
-      _localizedValues[localeCode]['transaction_reference'];
+      _localizedValues[localeCode]['transaction_reference'] ?? '';
 
-  String get enterPayment => _localizedValues[localeCode]['enter_payment'];
+  String get enterPayment =>
+      _localizedValues[localeCode]['enter_payment'] ?? '';
 
-  String get createdPayment => _localizedValues[localeCode]['created_payment'];
+  String get createdPayment =>
+      _localizedValues[localeCode]['created_payment'] ?? '';
 
-  String get updatedPayment => _localizedValues[localeCode]['updated_payment'];
+  String get updatedPayment =>
+      _localizedValues[localeCode]['updated_payment'] ?? '';
 
   String get archivedPayment =>
-      _localizedValues[localeCode]['archived_payment'];
+      _localizedValues[localeCode]['archived_payment'] ?? '';
 
-  String get deletedPayment => _localizedValues[localeCode]['deleted_payment'];
+  String get deletedPayment =>
+      _localizedValues[localeCode]['deleted_payment'] ?? '';
 
   String get restoredPayment =>
-      _localizedValues[localeCode]['restored_payment'];
+      _localizedValues[localeCode]['restored_payment'] ?? '';
 
-  String get quote => _localizedValues[localeCode]['quote'];
+  String get quote => _localizedValues[localeCode]['quote'] ?? '';
 
-  String get quotes => _localizedValues[localeCode]['quotes'];
+  String get quotes => _localizedValues[localeCode]['quotes'] ?? '';
 
-  String get newQuote => _localizedValues[localeCode]['new_quote'];
+  String get newQuote => _localizedValues[localeCode]['new_quote'] ?? '';
 
-  String get createdQuote => _localizedValues[localeCode]['created_quote'];
+  String get createdQuote =>
+      _localizedValues[localeCode]['created_quote'] ?? '';
 
-  String get updatedQuote => _localizedValues[localeCode]['updated_quote'];
+  String get updatedQuote =>
+      _localizedValues[localeCode]['updated_quote'] ?? '';
 
-  String get archivedQuote => _localizedValues[localeCode]['archived_quote'];
+  String get archivedQuote =>
+      _localizedValues[localeCode]['archived_quote'] ?? '';
 
-  String get deletedQuote => _localizedValues[localeCode]['deleted_quote'];
+  String get deletedQuote =>
+      _localizedValues[localeCode]['deleted_quote'] ?? '';
 
-  String get restoredQuote => _localizedValues[localeCode]['restored_quote'];
+  String get restoredQuote =>
+      _localizedValues[localeCode]['restored_quote'] ?? '';
 
-  String get expense => _localizedValues[localeCode]['expense'];
+  String get expense => _localizedValues[localeCode]['expense'] ?? '';
 
-  String get expenses => _localizedValues[localeCode]['expenses'];
+  String get expenses => _localizedValues[localeCode]['expenses'] ?? '';
 
-  String get vendor => _localizedValues[localeCode]['vendor'];
+  String get vendor => _localizedValues[localeCode]['vendor'] ?? '';
 
-  String get vendors => _localizedValues[localeCode]['vendors'];
+  String get vendors => _localizedValues[localeCode]['vendors'] ?? '';
 
-  String get task => _localizedValues[localeCode]['task'];
+  String get task => _localizedValues[localeCode]['task'] ?? '';
 
-  String get tasks => _localizedValues[localeCode]['tasks'];
+  String get tasks => _localizedValues[localeCode]['tasks'] ?? '';
 
-  String get project => _localizedValues[localeCode]['project'];
+  String get project => _localizedValues[localeCode]['project'] ?? '';
 
-  String get projects => _localizedValues[localeCode]['projects'];
+  String get projects => _localizedValues[localeCode]['projects'] ?? '';
 
-  String get activity_1 => _localizedValues[localeCode]['activity_1'];
+  String get activity_1 => _localizedValues[localeCode]['activity_1'] ?? '';
 
-  String get activity_2 => _localizedValues[localeCode]['activity_2'];
+  String get activity_2 => _localizedValues[localeCode]['activity_2'] ?? '';
 
-  String get activity_3 => _localizedValues[localeCode]['activity_3'];
+  String get activity_3 => _localizedValues[localeCode]['activity_3'] ?? '';
 
-  String get activity_4 => _localizedValues[localeCode]['activity_4'];
+  String get activity_4 => _localizedValues[localeCode]['activity_4'] ?? '';
 
-  String get activity_5 => _localizedValues[localeCode]['activity_5'];
+  String get activity_5 => _localizedValues[localeCode]['activity_5'] ?? '';
 
-  String get activity_6 => _localizedValues[localeCode]['activity_6'];
+  String get activity_6 => _localizedValues[localeCode]['activity_6'] ?? '';
 
-  String get activity_7 => _localizedValues[localeCode]['activity_7'];
+  String get activity_7 => _localizedValues[localeCode]['activity_7'] ?? '';
 
-  String get activity_8 => _localizedValues[localeCode]['activity_8'];
+  String get activity_8 => _localizedValues[localeCode]['activity_8'] ?? '';
 
-  String get activity_9 => _localizedValues[localeCode]['activity_9'];
+  String get activity_9 => _localizedValues[localeCode]['activity_9'] ?? '';
 
-  String get activity_10 => _localizedValues[localeCode]['activity_10'];
+  String get activity_10 => _localizedValues[localeCode]['activity_10'] ?? '';
 
-  String get activity_11 => _localizedValues[localeCode]['activity_11'];
+  String get activity_11 => _localizedValues[localeCode]['activity_11'] ?? '';
 
-  String get activity_12 => _localizedValues[localeCode]['activity_12'];
+  String get activity_12 => _localizedValues[localeCode]['activity_12'] ?? '';
 
-  String get activity_13 => _localizedValues[localeCode]['activity_13'];
+  String get activity_13 => _localizedValues[localeCode]['activity_13'] ?? '';
 
-  String get activity_14 => _localizedValues[localeCode]['activity_14'];
+  String get activity_14 => _localizedValues[localeCode]['activity_14'] ?? '';
 
-  String get activity_15 => _localizedValues[localeCode]['activity_15'];
+  String get activity_15 => _localizedValues[localeCode]['activity_15'] ?? '';
 
-  String get activity_16 => _localizedValues[localeCode]['activity_16'];
+  String get activity_16 => _localizedValues[localeCode]['activity_16'] ?? '';
 
-  String get activity_17 => _localizedValues[localeCode]['activity_17'];
+  String get activity_17 => _localizedValues[localeCode]['activity_17'] ?? '';
 
-  String get activity_18 => _localizedValues[localeCode]['activity_18'];
+  String get activity_18 => _localizedValues[localeCode]['activity_18'] ?? '';
 
-  String get activity_19 => _localizedValues[localeCode]['activity_19'];
+  String get activity_19 => _localizedValues[localeCode]['activity_19'] ?? '';
 
-  String get activity_20 => _localizedValues[localeCode]['activity_20'];
+  String get activity_20 => _localizedValues[localeCode]['activity_20'] ?? '';
 
-  String get activity_21 => _localizedValues[localeCode]['activity_21'];
+  String get activity_21 => _localizedValues[localeCode]['activity_21'] ?? '';
 
-  String get activity_22 => _localizedValues[localeCode]['activity_22'];
+  String get activity_22 => _localizedValues[localeCode]['activity_22'] ?? '';
 
-  String get activity_23 => _localizedValues[localeCode]['activity_23'];
+  String get activity_23 => _localizedValues[localeCode]['activity_23'] ?? '';
 
-  String get activity_24 => _localizedValues[localeCode]['activity_24'];
+  String get activity_24 => _localizedValues[localeCode]['activity_24'] ?? '';
 
-  String get activity_25 => _localizedValues[localeCode]['activity_25'];
+  String get activity_25 => _localizedValues[localeCode]['activity_25'] ?? '';
 
-  String get activity_26 => _localizedValues[localeCode]['activity_26'];
+  String get activity_26 => _localizedValues[localeCode]['activity_26'] ?? '';
 
-  String get activity_27 => _localizedValues[localeCode]['activity_27'];
+  String get activity_27 => _localizedValues[localeCode]['activity_27'] ?? '';
 
-  String get activity_28 => _localizedValues[localeCode]['activity_28'];
+  String get activity_28 => _localizedValues[localeCode]['activity_28'] ?? '';
 
-  String get activity_29 => _localizedValues[localeCode]['activity_29'];
+  String get activity_29 => _localizedValues[localeCode]['activity_29'] ?? '';
 
-  String get activity_30 => _localizedValues[localeCode]['activity_30'];
+  String get activity_30 => _localizedValues[localeCode]['activity_30'] ?? '';
 
-  String get activity_31 => _localizedValues[localeCode]['activity_31'];
+  String get activity_31 => _localizedValues[localeCode]['activity_31'] ?? '';
 
-  String get activity_32 => _localizedValues[localeCode]['activity_32'];
+  String get activity_32 => _localizedValues[localeCode]['activity_32'] ?? '';
 
-  String get activity_33 => _localizedValues[localeCode]['activity_33'];
+  String get activity_33 => _localizedValues[localeCode]['activity_33'] ?? '';
 
-  String get activity_34 => _localizedValues[localeCode]['activity_34'];
+  String get activity_34 => _localizedValues[localeCode]['activity_34'] ?? '';
 
-  String get activity_35 => _localizedValues[localeCode]['activity_35'];
+  String get activity_35 => _localizedValues[localeCode]['activity_35'] ?? '';
 
-  String get activity_36 => _localizedValues[localeCode]['activity_36'];
+  String get activity_36 => _localizedValues[localeCode]['activity_36'] ?? '';
 
-  String get activity_37 => _localizedValues[localeCode]['activity_37'];
+  String get activity_37 => _localizedValues[localeCode]['activity_37'] ?? '';
 
-  String get activity_38 => _localizedValues[localeCode]['activity_38'];
+  String get activity_38 => _localizedValues[localeCode]['activity_38'] ?? '';
 
-  String get activity_39 => _localizedValues[localeCode]['activity_39'];
+  String get activity_39 => _localizedValues[localeCode]['activity_39'] ?? '';
 
-  String get activity_40 => _localizedValues[localeCode]['activity_40'];
+  String get activity_40 => _localizedValues[localeCode]['activity_40'] ?? '';
 
-  String get activity_41 => _localizedValues[localeCode]['activity_41'];
+  String get activity_41 => _localizedValues[localeCode]['activity_41'] ?? '';
 
-  String get activity_42 => _localizedValues[localeCode]['activity_42'];
+  String get activity_42 => _localizedValues[localeCode]['activity_42'] ?? '';
 
-  String get activity_43 => _localizedValues[localeCode]['activity_43'];
+  String get activity_43 => _localizedValues[localeCode]['activity_43'] ?? '';
 
-  String get activity_44 => _localizedValues[localeCode]['activity_44'];
+  String get activity_44 => _localizedValues[localeCode]['activity_44'] ?? '';
 
-  String get activity_45 => _localizedValues[localeCode]['activity_45'];
+  String get activity_45 => _localizedValues[localeCode]['activity_45'] ?? '';
 
-  String get activity_46 => _localizedValues[localeCode]['activity_46'];
+  String get activity_46 => _localizedValues[localeCode]['activity_46'] ?? '';
 
-  String get activity_47 => _localizedValues[localeCode]['activity_47'];
+  String get activity_47 => _localizedValues[localeCode]['activity_47'] ?? '';
 
-  String get activity_48 => _localizedValues[localeCode]['activity_48'];
+  String get activity_48 => _localizedValues[localeCode]['activity_48'] ?? '';
 
-  String get activity_79 => _localizedValues[localeCode]['activity_49'];
+  String get activity_79 => _localizedValues[localeCode]['activity_49'] ?? '';
 
-  String get activity_50 => _localizedValues[localeCode]['activity_50'];
+  String get activity_50 => _localizedValues[localeCode]['activity_50'] ?? '';
 
-  String get activity_51 => _localizedValues[localeCode]['activity_51'];
+  String get activity_51 => _localizedValues[localeCode]['activity_51'] ?? '';
 
-  String get activity_52 => _localizedValues[localeCode]['activity_52'];
+  String get activity_52 => _localizedValues[localeCode]['activity_52'] ?? '';
 
-  String get activity_53 => _localizedValues[localeCode]['activity_53'];
+  String get activity_53 => _localizedValues[localeCode]['activity_53'] ?? '';
 
-  String get activity_54 => _localizedValues[localeCode]['activity_54'];
+  String get activity_54 => _localizedValues[localeCode]['activity_54'] ?? '';
 
-  String get activity_55 => _localizedValues[localeCode]['activity_55'];
+  String get activity_55 => _localizedValues[localeCode]['activity_55'] ?? '';
 
-  String get activity_56 => _localizedValues[localeCode]['activity_56'];
+  String get activity_56 => _localizedValues[localeCode]['activity_56'] ?? '';
 
-  String get activity_57 => _localizedValues[localeCode]['activity_57'];
+  String get activity_57 => _localizedValues[localeCode]['activity_57'] ?? '';
 
   String get oneTimePassword =>
-      _localizedValues[localeCode]['one_time_password'];
+      _localizedValues[localeCode]['one_time_password'] ?? '';
 
-  String get emailedQuote => _localizedValues[localeCode]['emailed_quote'];
+  String get emailedQuote =>
+      _localizedValues[localeCode]['emailed_quote'] ?? '';
 
-  String get emailedCredit => _localizedValues[localeCode]['emailed_credit'];
+  String get emailedCredit =>
+      _localizedValues[localeCode]['emailed_credit'] ?? '';
 
   String get markedQuoteAsSent =>
-      _localizedValues[localeCode]['marked_quote_as_sent'];
+      _localizedValues[localeCode]['marked_quote_as_sent'] ?? '';
 
   String get markedCreditAsSent =>
-      _localizedValues[localeCode]['marked_credit_as_sent'];
+      _localizedValues[localeCode]['marked_credit_as_sent'] ?? '';
 
-  String get expired => _localizedValues[localeCode]['expired'];
+  String get expired => _localizedValues[localeCode]['expired'] ?? '';
 
-  String get budgetedHours => _localizedValues[localeCode]['budgeted_hours'];
+  String get budgetedHours =>
+      _localizedValues[localeCode]['budgeted_hours'] ?? '';
 
   String get pleaseEnterAName =>
-      _localizedValues[localeCode]['please_enter_a_name'];
+      _localizedValues[localeCode]['please_enter_a_name'] ?? '';
 
-  String get createdTask => _localizedValues[localeCode]['created_task'];
+  String get createdTask => _localizedValues[localeCode]['created_task'] ?? '';
 
-  String get updatedTask => _localizedValues[localeCode]['updated_task'];
+  String get updatedTask => _localizedValues[localeCode]['updated_task'] ?? '';
 
-  String get archivedTask => _localizedValues[localeCode]['archived_task'];
+  String get archivedTask =>
+      _localizedValues[localeCode]['archived_task'] ?? '';
 
-  String get deletedTask => _localizedValues[localeCode]['deleted_task'];
+  String get deletedTask => _localizedValues[localeCode]['deleted_task'] ?? '';
 
-  String get restoredTask => _localizedValues[localeCode]['restored_task'];
+  String get restoredTask =>
+      _localizedValues[localeCode]['restored_task'] ?? '';
 
-  String get newTask => _localizedValues[localeCode]['new_task'];
+  String get newTask => _localizedValues[localeCode]['new_task'] ?? '';
 
-  String get duration => _localizedValues[localeCode]['duration'];
+  String get duration => _localizedValues[localeCode]['duration'] ?? '';
 
-  String get times => _localizedValues[localeCode]['times'];
+  String get times => _localizedValues[localeCode]['times'] ?? '';
 
-  String get date => _localizedValues[localeCode]['date'];
+  String get date => _localizedValues[localeCode]['date'] ?? '';
 
-  String get startTime => _localizedValues[localeCode]['start_time'];
+  String get startTime => _localizedValues[localeCode]['start_time'] ?? '';
 
-  String get endTime => _localizedValues[localeCode]['end_time'];
+  String get endTime => _localizedValues[localeCode]['end_time'] ?? '';
 
-  String get budgeted => _localizedValues[localeCode]['budgeted'];
+  String get budgeted => _localizedValues[localeCode]['budgeted'] ?? '';
 
-  String get timer => _localizedValues[localeCode]['timer'];
+  String get timer => _localizedValues[localeCode]['timer'] ?? '';
 
-  String get manual => _localizedValues[localeCode]['manual'];
+  String get manual => _localizedValues[localeCode]['manual'] ?? '';
 
-  String get autoStartTasks => _localizedValues[localeCode]['auto_start_tasks'];
+  String get autoStartTasks =>
+      _localizedValues[localeCode]['auto_start_tasks'] ?? '';
 
-  String get now => _localizedValues[localeCode]['now'];
+  String get now => _localizedValues[localeCode]['now'] ?? '';
 
-  String get startedTask => _localizedValues[localeCode]['started_task'];
+  String get startedTask => _localizedValues[localeCode]['started_task'] ?? '';
 
-  String get stoppedTask => _localizedValues[localeCode]['stopped_task'];
+  String get stoppedTask => _localizedValues[localeCode]['stopped_task'] ?? '';
 
-  String get resumedTask => _localizedValues[localeCode]['resumed_task'];
+  String get resumedTask => _localizedValues[localeCode]['resumed_task'] ?? '';
 
-  String get start => _localizedValues[localeCode]['start'];
+  String get start => _localizedValues[localeCode]['start'] ?? '';
 
-  String get stop => _localizedValues[localeCode]['stop'];
+  String get stop => _localizedValues[localeCode]['stop'] ?? '';
 
-  String get taskErrors => _localizedValues[localeCode]['task_errors'];
+  String get taskErrors => _localizedValues[localeCode]['task_errors'] ?? '';
 
-  String get resume => _localizedValues[localeCode]['resume'];
+  String get resume => _localizedValues[localeCode]['resume'] ?? '';
 
-  String get running => _localizedValues[localeCode]['running'];
+  String get running => _localizedValues[localeCode]['running'] ?? '';
 
-  String get invoiced => _localizedValues[localeCode]['invoiced'];
+  String get invoiced => _localizedValues[localeCode]['invoiced'] ?? '';
 
-  String get logged => _localizedValues[localeCode]['logged'];
+  String get logged => _localizedValues[localeCode]['logged'] ?? '';
 
   String get failedToFindRecord =>
-      _localizedValues[localeCode]['failed_to_find_record'];
+      _localizedValues[localeCode]['failed_to_find_record'] ?? '';
 
   String get passwordIsTooShort =>
-      _localizedValues[localeCode]['password_is_too_short'];
+      _localizedValues[localeCode]['password_is_too_short'] ?? '';
 
-  String get design => _localizedValues[localeCode]['design'];
+  String get design => _localizedValues[localeCode]['design'] ?? '';
 
-  String get copyShipping => _localizedValues[localeCode]['copy_shipping'];
+  String get copyShipping =>
+      _localizedValues[localeCode]['copy_shipping'] ?? '';
 
-  String get copyBilling => _localizedValues[localeCode]['copy_billing'];
+  String get copyBilling => _localizedValues[localeCode]['copy_billing'] ?? '';
 
-  String get address => _localizedValues[localeCode]['address'];
+  String get address => _localizedValues[localeCode]['address'] ?? '';
 
-  String get category => _localizedValues[localeCode]['category'];
+  String get category => _localizedValues[localeCode]['category'] ?? '';
 
-  String get markBillable => _localizedValues[localeCode]['mark_billable'];
+  String get markBillable =>
+      _localizedValues[localeCode]['mark_billable'] ?? '';
 
-  String get markPaid => _localizedValues[localeCode]['mark_paid'];
+  String get markPaid => _localizedValues[localeCode]['mark_paid'] ?? '';
 
   String get convertCurrency =>
-      _localizedValues[localeCode]['convert_currency'];
+      _localizedValues[localeCode]['convert_currency'] ?? '';
 
-  String get exchangeRate => _localizedValues[localeCode]['exchange_rate'];
+  String get exchangeRate =>
+      _localizedValues[localeCode]['exchange_rate'] ?? '';
 
   String get addDocumentsToInvoice =>
-      _localizedValues[localeCode]['add_documents_to_invoice'];
+      _localizedValues[localeCode]['add_documents_to_invoice'] ?? '';
 
-  String get pending => _localizedValues[localeCode]['pending'];
+  String get pending => _localizedValues[localeCode]['pending'] ?? '';
 
-  String get converted => _localizedValues[localeCode]['converted'];
+  String get converted => _localizedValues[localeCode]['converted'] ?? '';
 
-  String get expenseStatus1 => _localizedValues[localeCode]['expense_status_1'];
+  String get expenseStatus1 =>
+      _localizedValues[localeCode]['expense_status_1'] ?? '';
 
-  String get expenseStatus2 => _localizedValues[localeCode]['expense_status_2'];
+  String get expenseStatus2 =>
+      _localizedValues[localeCode]['expense_status_2'] ?? '';
 
-  String get expenseStatus3 => _localizedValues[localeCode]['expense_status_3'];
+  String get expenseStatus3 =>
+      _localizedValues[localeCode]['expense_status_3'] ?? '';
 
-  String get expenseDate => _localizedValues[localeCode]['expense_date'];
+  String get expenseDate => _localizedValues[localeCode]['expense_date'] ?? '';
 
-  String get noHistory => _localizedValues[localeCode]['no_history'];
+  String get noHistory => _localizedValues[localeCode]['no_history'] ?? '';
 
-  String get takePicture => _localizedValues[localeCode]['take_picture'];
+  String get takePicture => _localizedValues[localeCode]['take_picture'] ?? '';
 
-  String get uploadFile => _localizedValues[localeCode]['upload_file'];
+  String get uploadFile => _localizedValues[localeCode]['upload_file'] ?? '';
 
-  String get download => _localizedValues[localeCode]['download'];
+  String get download => _localizedValues[localeCode]['download'] ?? '';
 
   String get noRecordSelected =>
-      _localizedValues[localeCode]['no_record_selected'];
+      _localizedValues[localeCode]['no_record_selected'] ?? '';
 
   String get requiresAnEnterprisePlan =>
-      _localizedValues[localeCode]['requires_an_enterprise_plan'];
+      _localizedValues[localeCode]['requires_an_enterprise_plan'] ?? '';
 
   String get errorUnsavedChanges =>
-      _localizedValues[localeCode]['error_unsaved_changes'];
+      _localizedValues[localeCode]['error_unsaved_changes'] ?? '';
 
-  String get createNew => _localizedValues[localeCode]['create_new'];
+  String get createNew => _localizedValues[localeCode]['create_new'] ?? '';
 
-  String get emailLogin => _localizedValues[localeCode]['email_login'];
+  String get emailLogin => _localizedValues[localeCode]['email_login'] ?? '';
 
-  String get createAccount => _localizedValues[localeCode]['create_account'];
+  String get createAccount =>
+      _localizedValues[localeCode]['create_account'] ?? '';
 
-  String get viewWebsite => _localizedValues[localeCode]['view_website'];
+  String get viewWebsite => _localizedValues[localeCode]['view_website'] ?? '';
 
-  String get accountLogin => _localizedValues[localeCode]['account_login'];
+  String get accountLogin =>
+      _localizedValues[localeCode]['account_login'] ?? '';
 
-  String get signUp => _localizedValues[localeCode]['sign_up'];
+  String get signUp => _localizedValues[localeCode]['sign_up'] ?? '';
 
   String get signUpWithGoogle =>
-      _localizedValues[localeCode]['sign_up_with_google'];
+      _localizedValues[localeCode]['sign_up_with_google'] ?? '';
 
   String get pleaseAgreeToTermsAndPrivacy =>
-      _localizedValues[localeCode]['please_agree_to_terms_and_privacy'];
+      _localizedValues[localeCode]['please_agree_to_terms_and_privacy'] ?? '';
 
-  String get iAgreeToThe => _localizedValues[localeCode]['i_agree_to_the'];
+  String get iAgreeToThe =>
+      _localizedValues[localeCode]['i_agree_to_the'] ?? '';
 
   String get termsOfServiceLink =>
-      _localizedValues[localeCode]['terms_of_service_link'];
+      _localizedValues[localeCode]['terms_of_service_link'] ?? '';
 
   String get privacyPolicyLink =>
-      _localizedValues[localeCode]['privacy_policy_link'];
+      _localizedValues[localeCode]['privacy_policy_link'] ?? '';
 
-  String get termsOfService => _localizedValues[localeCode]['terms_of_service'];
+  String get termsOfService =>
+      _localizedValues[localeCode]['terms_of_service'] ?? '';
 
-  String get privacyPolicy => _localizedValues[localeCode]['privacy_policy'];
+  String get privacyPolicy =>
+      _localizedValues[localeCode]['privacy_policy'] ?? '';
 
-  String get upgrade => _localizedValues[localeCode]['upgrade'];
+  String get upgrade => _localizedValues[localeCode]['upgrade'] ?? '';
 
-  String get proPlan => _localizedValues[localeCode]['pro_plan'];
+  String get proPlan => _localizedValues[localeCode]['pro_plan'] ?? '';
 
-  String get enterprisePlan => _localizedValues[localeCode]['enterprise_plan'];
+  String get enterprisePlan =>
+      _localizedValues[localeCode]['enterprise_plan'] ?? '';
 
-  String get countUsers => _localizedValues[localeCode]['count_users'];
+  String get countUsers => _localizedValues[localeCode]['count_users'] ?? '';
 
   String get annualSubscription =>
-      _localizedValues[localeCode]['annual_subscription'];
+      _localizedValues[localeCode]['annual_subscription'] ?? '';
 
-  String get pastPurchases => _localizedValues[localeCode]['past_purchases'];
+  String get pastPurchases =>
+      _localizedValues[localeCode]['past_purchases'] ?? '';
 
-  String get back => _localizedValues[localeCode]['back'];
+  String get back => _localizedValues[localeCode]['back'] ?? '';
 
-  String get redeem => _localizedValues[localeCode]['redeem'];
+  String get redeem => _localizedValues[localeCode]['redeem'] ?? '';
 
   String get thankYouForYourPurchase =>
-      _localizedValues[localeCode]['thank_you_for_your_purchase'];
+      _localizedValues[localeCode]['thank_you_for_your_purchase'] ?? '';
 
-  String get select => _localizedValues[localeCode]['select'];
+  String get select => _localizedValues[localeCode]['select'] ?? '';
 
   String get longPressSelectionIsDefault =>
-      _localizedValues[localeCode]['long_press_multiselect'];
+      _localizedValues[localeCode]['long_press_multiselect'] ?? '';
 
-  String get all => _localizedValues[localeCode]['all'];
+  String get all => _localizedValues[localeCode]['all'] ?? '';
 
-  String get emailSignUp => _localizedValues[localeCode]['email_sign_up'];
+  String get emailSignUp => _localizedValues[localeCode]['email_sign_up'] ?? '';
 
-  String get googleSignUp => _localizedValues[localeCode]['google_sign_up'];
+  String get googleSignUp =>
+      _localizedValues[localeCode]['google_sign_up'] ?? '';
 
-  String get price => _localizedValues[localeCode]['price'];
+  String get price => _localizedValues[localeCode]['price'] ?? '';
 
-  String get companyDetails => _localizedValues[localeCode]['company_details'];
+  String get companyDetails =>
+      _localizedValues[localeCode]['company_details'] ?? '';
 
-  String get userDetails => _localizedValues[localeCode]['user_details'];
+  String get userDetails => _localizedValues[localeCode]['user_details'] ?? '';
 
-  String get localization => _localizedValues[localeCode]['localization'];
+  String get localization => _localizedValues[localeCode]['localization'] ?? '';
 
-  String get onlinePayments => _localizedValues[localeCode]['online_payments'];
+  String get onlinePayments =>
+      _localizedValues[localeCode]['online_payments'] ?? '';
 
-  String get taxRates => _localizedValues[localeCode]['tax_rates'];
+  String get taxRates => _localizedValues[localeCode]['tax_rates'] ?? '';
 
-  String get notifications => _localizedValues[localeCode]['notifications'];
+  String get notifications =>
+      _localizedValues[localeCode]['notifications'] ?? '';
 
-  String get importExport => _localizedValues[localeCode]['import_export'];
+  String get importExport =>
+      _localizedValues[localeCode]['import_export'] ?? '';
 
-  String get customFields => _localizedValues[localeCode]['custom_fields'];
+  String get customFields =>
+      _localizedValues[localeCode]['custom_fields'] ?? '';
 
-  String get invoiceDesign => _localizedValues[localeCode]['invoice_design'];
+  String get invoiceDesign =>
+      _localizedValues[localeCode]['invoice_design'] ?? '';
 
-  String get buyNowButtons => _localizedValues[localeCode]['buy_now_buttons'];
+  String get buyNowButtons =>
+      _localizedValues[localeCode]['buy_now_buttons'] ?? '';
 
-  String get emailSettings => _localizedValues[localeCode]['email_settings'];
+  String get emailSettings =>
+      _localizedValues[localeCode]['email_settings'] ?? '';
 
   String get templatesAndReminders =>
-      _localizedValues[localeCode]['templates_and_reminders'];
+      _localizedValues[localeCode]['templates_and_reminders'] ?? '';
 
   String get creditCardsAndBanks =>
-      _localizedValues[localeCode]['credit_cards_and_banks'];
+      _localizedValues[localeCode]['credit_cards_and_banks'] ?? '';
 
   String get dataVisualizations =>
-      _localizedValues[localeCode]['data_visualizations'];
+      _localizedValues[localeCode]['data_visualizations'] ?? '';
 
-  String get basicSettings => _localizedValues[localeCode]['basic_settings'];
+  String get basicSettings =>
+      _localizedValues[localeCode]['basic_settings'] ?? '';
 
   String get advancedSettings =>
-      _localizedValues[localeCode]['advanced_settings'];
+      _localizedValues[localeCode]['advanced_settings'] ?? '';
 
-  String get defaults => _localizedValues[localeCode]['defaults'];
+  String get defaults => _localizedValues[localeCode]['defaults'] ?? '';
 
-  String get deviceSettings => _localizedValues[localeCode]['device_settings'];
+  String get deviceSettings =>
+      _localizedValues[localeCode]['device_settings'] ?? '';
 
   String get productSettings =>
-      _localizedValues[localeCode]['product_settings'];
+      _localizedValues[localeCode]['product_settings'] ?? '';
 
-  String get savedSettings => _localizedValues[localeCode]['saved_settings'];
+  String get savedSettings =>
+      _localizedValues[localeCode]['saved_settings'] ?? '';
 
-  String get logo => _localizedValues[localeCode]['logo'];
+  String get logo => _localizedValues[localeCode]['logo'] ?? '';
 
-  String get uploadLogo => _localizedValues[localeCode]['upload_logo'];
+  String get uploadLogo => _localizedValues[localeCode]['upload_logo'] ?? '';
 
-  String get uploadedLogo => _localizedValues[localeCode]['uploaded_logo'];
+  String get uploadedLogo =>
+      _localizedValues[localeCode]['uploaded_logo'] ?? '';
 
-  String get newGroup => _localizedValues[localeCode]['new_group'];
+  String get newGroup => _localizedValues[localeCode]['new_group'] ?? '';
 
-  String get createdGroup => _localizedValues[localeCode]['created_group'];
+  String get createdGroup =>
+      _localizedValues[localeCode]['created_group'] ?? '';
 
-  String get updatedGroup => _localizedValues[localeCode]['updated_group'];
+  String get updatedGroup =>
+      _localizedValues[localeCode]['updated_group'] ?? '';
 
-  String get archivedGroup => _localizedValues[localeCode]['archived_group'];
+  String get archivedGroup =>
+      _localizedValues[localeCode]['archived_group'] ?? '';
 
-  String get deletedGroup => _localizedValues[localeCode]['deleted_group'];
+  String get deletedGroup =>
+      _localizedValues[localeCode]['deleted_group'] ?? '';
 
-  String get restoredGroup => _localizedValues[localeCode]['restored_group'];
+  String get restoredGroup =>
+      _localizedValues[localeCode]['restored_group'] ?? '';
 
-  String get editGroup => _localizedValues[localeCode]['edit_group'];
+  String get editGroup => _localizedValues[localeCode]['edit_group'] ?? '';
 
-  String get groups => _localizedValues[localeCode]['groups'];
+  String get groups => _localizedValues[localeCode]['groups'] ?? '';
 
-  String get groupSettings => _localizedValues[localeCode]['group_settings'];
+  String get groupSettings =>
+      _localizedValues[localeCode]['group_settings'] ?? '';
 
   String get filteredByGroup =>
-      _localizedValues[localeCode]['filtered_by_group'];
+      _localizedValues[localeCode]['filtered_by_group'] ?? '';
 
   String get filteredByClient =>
-      _localizedValues[localeCode]['filtered_by_client'];
+      _localizedValues[localeCode]['filtered_by_client'] ?? '';
 
   String get filteredByVendor =>
-      _localizedValues[localeCode]['filtered_by_vendor'];
+      _localizedValues[localeCode]['filtered_by_vendor'] ?? '';
 
   String get filteredByInvoice =>
-      _localizedValues[localeCode]['filtered_by_invoice'];
+      _localizedValues[localeCode]['filtered_by_invoice'] ?? '';
 
   String get filteredByProject =>
-      _localizedValues[localeCode]['filtered_by_project'];
+      _localizedValues[localeCode]['filtered_by_project'] ?? '';
 
-  String get group => _localizedValues[localeCode]['group'];
+  String get group => _localizedValues[localeCode]['group'] ?? '';
 
-  String get timezone => _localizedValues[localeCode]['timezone'];
+  String get timezone => _localizedValues[localeCode]['timezone'] ?? '';
 
-  String get dateFormat => _localizedValues[localeCode]['date_format'];
+  String get dateFormat => _localizedValues[localeCode]['date_format'] ?? '';
 
-  String get datetimeFormat => _localizedValues[localeCode]['datetime_format'];
+  String get datetimeFormat =>
+      _localizedValues[localeCode]['datetime_format'] ?? '';
 
-  String get militaryTime => _localizedValues[localeCode]['military_time'];
+  String get militaryTime =>
+      _localizedValues[localeCode]['military_time'] ?? '';
 
   String get militaryTimeHelp =>
-      _localizedValues[localeCode]['military_time_help'];
+      _localizedValues[localeCode]['military_time_help'] ?? '';
 
-  String get sendReminders => _localizedValues[localeCode]['send_reminders'];
+  String get sendReminders =>
+      _localizedValues[localeCode]['send_reminders'] ?? '';
 
-  String get symbol => _localizedValues[localeCode]['symbol'];
+  String get symbol => _localizedValues[localeCode]['symbol'] ?? '';
 
-  String get code => _localizedValues[localeCode]['ocde'];
+  String get code => _localizedValues[localeCode]['ocde'] ?? '';
 
-  String get sunday => _localizedValues[localeCode]['sunday'];
+  String get sunday => _localizedValues[localeCode]['sunday'] ?? '';
 
-  String get monday => _localizedValues[localeCode]['monday'];
+  String get monday => _localizedValues[localeCode]['monday'] ?? '';
 
-  String get tuesday => _localizedValues[localeCode]['tuesday'];
+  String get tuesday => _localizedValues[localeCode]['tuesday'] ?? '';
 
-  String get wednesday => _localizedValues[localeCode]['wednesday'];
+  String get wednesday => _localizedValues[localeCode]['wednesday'] ?? '';
 
-  String get thursday => _localizedValues[localeCode]['thursday'];
+  String get thursday => _localizedValues[localeCode]['thursday'] ?? '';
 
-  String get friday => _localizedValues[localeCode]['friday'];
+  String get friday => _localizedValues[localeCode]['friday'] ?? '';
 
-  String get saturday => _localizedValues[localeCode]['saturday'];
+  String get saturday => _localizedValues[localeCode]['saturday'] ?? '';
 
-  String get january => _localizedValues[localeCode]['january'];
+  String get january => _localizedValues[localeCode]['january'] ?? '';
 
-  String get february => _localizedValues[localeCode]['february'];
+  String get february => _localizedValues[localeCode]['february'] ?? '';
 
-  String get march => _localizedValues[localeCode]['march'];
+  String get march => _localizedValues[localeCode]['march'] ?? '';
 
-  String get april => _localizedValues[localeCode]['april'];
+  String get april => _localizedValues[localeCode]['april'] ?? '';
 
-  String get may => _localizedValues[localeCode]['may'];
+  String get may => _localizedValues[localeCode]['may'] ?? '';
 
-  String get june => _localizedValues[localeCode]['june'];
+  String get june => _localizedValues[localeCode]['june'] ?? '';
 
-  String get july => _localizedValues[localeCode]['july'];
+  String get july => _localizedValues[localeCode]['july'] ?? '';
 
-  String get august => _localizedValues[localeCode]['august'];
+  String get august => _localizedValues[localeCode]['august'] ?? '';
 
-  String get september => _localizedValues[localeCode]['september'];
+  String get september => _localizedValues[localeCode]['september'] ?? '';
 
-  String get october => _localizedValues[localeCode]['october'];
+  String get october => _localizedValues[localeCode]['october'] ?? '';
 
-  String get november => _localizedValues[localeCode]['november'];
+  String get november => _localizedValues[localeCode]['november'] ?? '';
 
-  String get december => _localizedValues[localeCode]['december'];
+  String get december => _localizedValues[localeCode]['december'] ?? '';
 
   String get firstDayOfTheWeek =>
-      _localizedValues[localeCode]['first_day_of_the_week'];
+      _localizedValues[localeCode]['first_day_of_the_week'] ?? '';
 
   String get firstMonthOfTheYear =>
-      _localizedValues[localeCode]['first_month_of_the_year'];
+      _localizedValues[localeCode]['first_month_of_the_year'] ?? '';
 
-  String get currencyFormat => _localizedValues[localeCode]['currency_format'];
+  String get currencyFormat =>
+      _localizedValues[localeCode]['currency_format'] ?? '';
 
-  String get disabled => _localizedValues[localeCode]['disabled'];
+  String get disabled => _localizedValues[localeCode]['disabled'] ?? '';
 
-  String get defaultValue => _localizedValues[localeCode]['default_value'];
+  String get defaultValue =>
+      _localizedValues[localeCode]['default_value'] ?? '';
 
-  String get discardChanges => _localizedValues[localeCode]['discard_changes'];
+  String get discardChanges =>
+      _localizedValues[localeCode]['discard_changes'] ?? '';
 
   String get continueEditing =>
-      _localizedValues[localeCode]['continue_editing'];
+      _localizedValues[localeCode]['continue_editing'] ?? '';
 
   String get editCompanyGateway =>
-      _localizedValues[localeCode]['edit_company_gateway'];
+      _localizedValues[localeCode]['edit_company_gateway'] ?? '';
 
   String get newCompanyGateway =>
-      _localizedValues[localeCode]['new_company_gateway'];
+      _localizedValues[localeCode]['new_company_gateway'] ?? '';
 
   String get createdCompanyGateway =>
-      _localizedValues[localeCode]['created_company_gateway'];
+      _localizedValues[localeCode]['created_company_gateway'] ?? '';
 
   String get updatedCompanyGateway =>
-      _localizedValues[localeCode]['updated_company_gateway'];
+      _localizedValues[localeCode]['updated_company_gateway'] ?? '';
 
   String get archivedCompanyGateway =>
-      _localizedValues[localeCode]['archived_company_gateway'];
+      _localizedValues[localeCode]['archived_company_gateway'] ?? '';
 
   String get deletedCompanyGateway =>
-      _localizedValues[localeCode]['deleted_company_gateway'];
+      _localizedValues[localeCode]['deleted_company_gateway'] ?? '';
 
   String get restoredCompanyGateway =>
-      _localizedValues[localeCode]['restored_company_gateway'];
+      _localizedValues[localeCode]['restored_company_gateway'] ?? '';
 
   String get companyGateways =>
-      _localizedValues[localeCode]['company_gateways'];
+      _localizedValues[localeCode]['company_gateways'] ?? '';
 
-  String get companyGateway => _localizedValues[localeCode]['company_gateway'];
+  String get companyGateway =>
+      _localizedValues[localeCode]['company_gateway'] ?? '';
 
-  String get provider => _localizedValues[localeCode]['provider'];
+  String get provider => _localizedValues[localeCode]['provider'] ?? '';
 
-  String get fees => _localizedValues[localeCode]['fees'];
+  String get fees => _localizedValues[localeCode]['fees'] ?? '';
 
-  String get limits => _localizedValues[localeCode]['limits'];
+  String get limits => _localizedValues[localeCode]['limits'] ?? '';
 
-  String get fillProducts => _localizedValues[localeCode]['fill_products'];
+  String get fillProducts =>
+      _localizedValues[localeCode]['fill_products'] ?? '';
 
   String get fillProductsHelp =>
-      _localizedValues[localeCode]['fill_products_help'];
+      _localizedValues[localeCode]['fill_products_help'] ?? '';
 
-  String get updateProducts => _localizedValues[localeCode]['update_products'];
+  String get updateProducts =>
+      _localizedValues[localeCode]['update_products'] ?? '';
 
   String get updateProductsHelp =>
-      _localizedValues[localeCode]['update_products_help'];
+      _localizedValues[localeCode]['update_products_help'] ?? '';
 
   String get convertProducts =>
-      _localizedValues[localeCode]['convert_products'];
+      _localizedValues[localeCode]['convert_products'] ?? '';
 
   String get convertProductsHelp =>
-      _localizedValues[localeCode]['convert_products_help'];
+      _localizedValues[localeCode]['convert_products_help'] ?? '';
 
-  String get newTaxRate => _localizedValues[localeCode]['new_tax_rate'];
+  String get newTaxRate => _localizedValues[localeCode]['new_tax_rate'] ?? '';
 
-  String get createdTaxRate => _localizedValues[localeCode]['created_tax_rate'];
+  String get createdTaxRate =>
+      _localizedValues[localeCode]['created_tax_rate'] ?? '';
 
-  String get updatedTaxRate => _localizedValues[localeCode]['updated_tax_rate'];
+  String get updatedTaxRate =>
+      _localizedValues[localeCode]['updated_tax_rate'] ?? '';
 
   String get archivedTaxRate =>
-      _localizedValues[localeCode]['archived_tax_rate'];
+      _localizedValues[localeCode]['archived_tax_rate'] ?? '';
 
-  String get deletedTaxRate => _localizedValues[localeCode]['deleted_tax_rate'];
+  String get deletedTaxRate =>
+      _localizedValues[localeCode]['deleted_tax_rate'] ?? '';
 
   String get restoredTaxRate =>
-      _localizedValues[localeCode]['restored_tax_rate'];
+      _localizedValues[localeCode]['restored_tax_rate'] ?? '';
 
-  String get editTaxRate => _localizedValues[localeCode]['edit_tax_rate'];
+  String get editTaxRate => _localizedValues[localeCode]['edit_tax_rate'] ?? '';
 
-  String get taxRate => _localizedValues[localeCode]['tax_rate'];
+  String get taxRate => _localizedValues[localeCode]['tax_rate'] ?? '';
 
-  String get rate => _localizedValues[localeCode]['rate'];
+  String get rate => _localizedValues[localeCode]['rate'] ?? '';
 
   String get requireBillingAddressHelp =>
-      _localizedValues[localeCode]['require_billing_address_help'];
+      _localizedValues[localeCode]['require_billing_address_help'] ?? '';
 
   String get requireShippingAddressHelp =>
-      _localizedValues[localeCode]['require_shipping_address_help'];
+      _localizedValues[localeCode]['require_shipping_address_help'] ?? '';
 
-  String get updateAddress => _localizedValues[localeCode]['update_address'];
+  String get updateAddress =>
+      _localizedValues[localeCode]['update_address'] ?? '';
 
   String get updateAddressHelp =>
-      _localizedValues[localeCode]['update_address_help'];
+      _localizedValues[localeCode]['update_address_help'] ?? '';
 
-  String get credentials => _localizedValues[localeCode]['credentials'];
+  String get credentials => _localizedValues[localeCode]['credentials'] ?? '';
 
   String get acceptedCardLogos =>
-      _localizedValues[localeCode]['accepted_card_logos'];
+      _localizedValues[localeCode]['accepted_card_logos'] ?? '';
 
-  String get min => _localizedValues[localeCode]['min'];
+  String get min => _localizedValues[localeCode]['min'] ?? '';
 
-  String get max => _localizedValues[localeCode]['max'];
+  String get max => _localizedValues[localeCode]['max'] ?? '';
 
-  String get minLimit => _localizedValues[localeCode]['min_limit'];
+  String get minLimit => _localizedValues[localeCode]['min_limit'] ?? '';
 
-  String get maxLimit => _localizedValues[localeCode]['max_limit'];
+  String get maxLimit => _localizedValues[localeCode]['max_limit'] ?? '';
 
-  String get enableMin => _localizedValues[localeCode]['enable_min'];
+  String get enableMin => _localizedValues[localeCode]['enable_min'] ?? '';
 
-  String get enableMax => _localizedValues[localeCode]['enable_max'];
+  String get enableMax => _localizedValues[localeCode]['enable_max'] ?? '';
 
-  String get limitsAndFees => _localizedValues[localeCode]['limits_and_fees'];
+  String get limitsAndFees =>
+      _localizedValues[localeCode]['limits_and_fees'] ?? '';
 
-  String get feeAmount => _localizedValues[localeCode]['fee_amount'];
+  String get feeAmount => _localizedValues[localeCode]['fee_amount'] ?? '';
 
-  String get feePercent => _localizedValues[localeCode]['fee_percent'];
+  String get feePercent => _localizedValues[localeCode]['fee_percent'] ?? '';
 
-  String get feeCap => _localizedValues[localeCode]['fee_cap'];
+  String get feeCap => _localizedValues[localeCode]['fee_cap'] ?? '';
 
-  String get priority => _localizedValues[localeCode]['priority'];
+  String get priority => _localizedValues[localeCode]['priority'] ?? '';
 
-  String get creditCard => _localizedValues[localeCode]['credit_card'];
+  String get creditCard => _localizedValues[localeCode]['credit_card'] ?? '';
 
-  String get bankTransfer => _localizedValues[localeCode]['bank_transfer'];
+  String get bankTransfer =>
+      _localizedValues[localeCode]['bank_transfer'] ?? '';
 
-  String get processed => _localizedValues[localeCode]['processed'];
+  String get processed => _localizedValues[localeCode]['processed'] ?? '';
 
-  String get replyToEmail => _localizedValues[localeCode]['reply_to_email'];
+  String get replyToEmail =>
+      _localizedValues[localeCode]['reply_to_email'] ?? '';
 
-  String get bccEmail => _localizedValues[localeCode]['bcc_email'];
+  String get bccEmail => _localizedValues[localeCode]['bcc_email'] ?? '';
 
-  String get attachPdf => _localizedValues[localeCode]['attach_pdf'];
+  String get attachPdf => _localizedValues[localeCode]['attach_pdf'] ?? '';
 
   String get attachDocuments =>
-      _localizedValues[localeCode]['attach_documents'];
+      _localizedValues[localeCode]['attach_documents'] ?? '';
 
-  String get attachUbl => _localizedValues[localeCode]['attach_ubl'];
+  String get attachUbl => _localizedValues[localeCode]['attach_ubl'] ?? '';
 
-  String get emailStyle => _localizedValues[localeCode]['email_style'];
+  String get emailStyle => _localizedValues[localeCode]['email_style'] ?? '';
 
   String get enableMarkup =>
-      _localizedValues[localeCode]['enable_email_markup'];
+      _localizedValues[localeCode]['enable_email_markup'] ?? '';
 
   String get enableMarkupHelp =>
-      _localizedValues[localeCode]['enable_email_markup_help'];
+      _localizedValues[localeCode]['enable_email_markup_help'] ?? '';
 
-  String get emailDesign => _localizedValues[localeCode]['email_design'];
+  String get emailDesign => _localizedValues[localeCode]['email_design'] ?? '';
 
-  String get plain => _localizedValues[localeCode]['plain'];
+  String get plain => _localizedValues[localeCode]['plain'] ?? '';
 
-  String get light => _localizedValues[localeCode]['light'];
+  String get light => _localizedValues[localeCode]['light'] ?? '';
 
-  String get dark => _localizedValues[localeCode]['dark'];
+  String get dark => _localizedValues[localeCode]['dark'] ?? '';
 
-  String get emailSignature => _localizedValues[localeCode]['email_signature'];
+  String get emailSignature =>
+      _localizedValues[localeCode]['email_signature'] ?? '';
 
-  String get portalMode => _localizedValues[localeCode]['portal_mode'];
+  String get portalMode => _localizedValues[localeCode]['portal_mode'] ?? '';
 
-  String get domain => _localizedValues[localeCode]['domain'];
+  String get domain => _localizedValues[localeCode]['domain'] ?? '';
 
-  String get subdomain => _localizedValues[localeCode]['subdomain'];
+  String get subdomain => _localizedValues[localeCode]['subdomain'] ?? '';
 
-  String get authorization => _localizedValues[localeCode]['authorization'];
+  String get authorization =>
+      _localizedValues[localeCode]['authorization'] ?? '';
 
   String get enablePortalPassword =>
-      _localizedValues[localeCode]['enable_portal_password'];
+      _localizedValues[localeCode]['enable_portal_password'] ?? '';
 
   String get enablePortalPasswordHelp =>
-      _localizedValues[localeCode]['enable_portal_password_help'];
+      _localizedValues[localeCode]['enable_portal_password_help'] ?? '';
 
   String get showAcceptInvoiceTerms =>
-      _localizedValues[localeCode]['show_accept_invoice_terms'];
+      _localizedValues[localeCode]['show_accept_invoice_terms'] ?? '';
 
   String get showAcceptInvoiceTermsHelp =>
-      _localizedValues[localeCode]['show_accept_invoice_terms_help'];
+      _localizedValues[localeCode]['show_accept_invoice_terms_help'] ?? '';
 
   String get showAcceptQuoteTerms =>
-      _localizedValues[localeCode]['show_accept_quote_terms'];
+      _localizedValues[localeCode]['show_accept_quote_terms'] ?? '';
 
   String get showAcceptQuoteTermsHelp =>
-      _localizedValues[localeCode]['show_accept_quote_terms_help'];
+      _localizedValues[localeCode]['show_accept_quote_terms_help'] ?? '';
 
   String get requireInvoiceSignature =>
-      _localizedValues[localeCode]['require_invoice_signature'];
+      _localizedValues[localeCode]['require_invoice_signature'] ?? '';
 
   String get requireInvoiceSignatureHelp =>
-      _localizedValues[localeCode]['require_invoice_signature_help'];
+      _localizedValues[localeCode]['require_invoice_signature_help'] ?? '';
 
   String get requireQuoteSignature =>
-      _localizedValues[localeCode]['require_quote_signature'];
+      _localizedValues[localeCode]['require_quote_signature'] ?? '';
 
-  String get signatureOnPdf => _localizedValues[localeCode]['signature_on_pdf'];
+  String get signatureOnPdf =>
+      _localizedValues[localeCode]['signature_on_pdf'] ?? '';
 
   String get signatureOnPdfHelp =>
-      _localizedValues[localeCode]['signature_on_pdf_help'];
+      _localizedValues[localeCode]['signature_on_pdf_help'] ?? '';
 
-  String get customCss => _localizedValues[localeCode]['custom_css'];
+  String get customCss => _localizedValues[localeCode]['custom_css'] ?? '';
 
   String get customJavascript =>
-      _localizedValues[localeCode]['custom_javascript'];
+      _localizedValues[localeCode]['custom_javascript'] ?? '';
 
-  String get messages => _localizedValues[localeCode]['messages'];
+  String get messages => _localizedValues[localeCode]['messages'] ?? '';
 
-  String get prefix => _localizedValues[localeCode]['prefix'];
+  String get prefix => _localizedValues[localeCode]['prefix'] ?? '';
 
-  String get numberPattern => _localizedValues[localeCode]['number_pattern'];
+  String get numberPattern =>
+      _localizedValues[localeCode]['number_pattern'] ?? '';
 
-  String get numberCounter => _localizedValues[localeCode]['number_counter'];
+  String get numberCounter =>
+      _localizedValues[localeCode]['number_counter'] ?? '';
 
-  String get creditField => _localizedValues[localeCode]['credit_field'];
+  String get creditField => _localizedValues[localeCode]['credit_field'] ?? '';
 
-  String get invoiceField => _localizedValues[localeCode]['invoice_field'];
+  String get invoiceField =>
+      _localizedValues[localeCode]['invoice_field'] ?? '';
 
-  String get clientField => _localizedValues[localeCode]['client_field'];
+  String get clientField => _localizedValues[localeCode]['client_field'] ?? '';
 
-  String get productField => _localizedValues[localeCode]['product_field'];
+  String get productField =>
+      _localizedValues[localeCode]['product_field'] ?? '';
 
-  String get paymentField => _localizedValues[localeCode]['payment_field'];
+  String get paymentField =>
+      _localizedValues[localeCode]['payment_field'] ?? '';
 
-  String get contactField => _localizedValues[localeCode]['contact_field'];
+  String get contactField =>
+      _localizedValues[localeCode]['contact_field'] ?? '';
 
-  String get vendorField => _localizedValues[localeCode]['vendor_field'];
+  String get vendorField => _localizedValues[localeCode]['vendor_field'] ?? '';
 
-  String get expenseField => _localizedValues[localeCode]['expense_field'];
+  String get expenseField =>
+      _localizedValues[localeCode]['expense_field'] ?? '';
 
-  String get projectField => _localizedValues[localeCode]['project_field'];
+  String get projectField =>
+      _localizedValues[localeCode]['project_field'] ?? '';
 
-  String get taskField => _localizedValues[localeCode]['task_field'];
+  String get taskField => _localizedValues[localeCode]['task_field'] ?? '';
 
-  String get groupField => _localizedValues[localeCode]['group_field'];
+  String get groupField => _localizedValues[localeCode]['group_field'] ?? '';
 
-  String get general => _localizedValues[localeCode]['general'];
+  String get general => _localizedValues[localeCode]['general'] ?? '';
 
-  String get numberPadding => _localizedValues[localeCode]['number_padding'];
+  String get numberPadding =>
+      _localizedValues[localeCode]['number_padding'] ?? '';
 
   String get recurringPrefix =>
-      _localizedValues[localeCode]['recurring_prefix'];
+      _localizedValues[localeCode]['recurring_prefix'] ?? '';
 
-  String get resetCounter => _localizedValues[localeCode]['reset_counter'];
+  String get resetCounter =>
+      _localizedValues[localeCode]['reset_counter'] ?? '';
 
-  String get nextReset => _localizedValues[localeCode]['next_reset'];
+  String get nextReset => _localizedValues[localeCode]['next_reset'] ?? '';
 
-  String get credit => _localizedValues[localeCode]['credit'];
+  String get credit => _localizedValues[localeCode]['credit'] ?? '';
 
-  String get credits => _localizedValues[localeCode]['credits'];
+  String get credits => _localizedValues[localeCode]['credits'] ?? '';
 
   String get customSurcharge =>
-      _localizedValues[localeCode]['invoice_surcharge'];
+      _localizedValues[localeCode]['invoice_surcharge'] ?? '';
 
-  String get chargeTaxes => _localizedValues[localeCode]['charge_taxes'];
+  String get chargeTaxes => _localizedValues[localeCode]['charge_taxes'] ?? '';
 
-  String get companyField => _localizedValues[localeCode]['company_field'];
+  String get companyField =>
+      _localizedValues[localeCode]['company_field'] ?? '';
 
-  String get companyValue => _localizedValues[localeCode]['company_value'];
+  String get companyValue =>
+      _localizedValues[localeCode]['company_value'] ?? '';
 
   String get generatedNumbers =>
-      _localizedValues[localeCode]['generated_numbers'];
+      _localizedValues[localeCode]['generated_numbers'] ?? '';
 
-  String get company => _localizedValues[localeCode]['company'];
+  String get company => _localizedValues[localeCode]['company'] ?? '';
 
-  String get surchargeField => _localizedValues[localeCode]['surcharge_field'];
+  String get surchargeField =>
+      _localizedValues[localeCode]['surcharge_field'] ?? '';
 
-  String get never => _localizedValues[localeCode]['never'];
+  String get never => _localizedValues[localeCode]['never'] ?? '';
 
-  String get freqDaily => _localizedValues[localeCode]['freq_daily'];
+  String get freqDaily => _localizedValues[localeCode]['freq_daily'] ?? '';
 
-  String get freqWeekly => _localizedValues[localeCode]['freq_weekly'];
+  String get freqWeekly => _localizedValues[localeCode]['freq_weekly'] ?? '';
 
-  String get freqTwoWeeks => _localizedValues[localeCode]['freq_two_weeks'];
+  String get freqTwoWeeks =>
+      _localizedValues[localeCode]['freq_two_weeks'] ?? '';
 
-  String get freqFourWeeks => _localizedValues[localeCode]['freq_four_weeks'];
+  String get freqFourWeeks =>
+      _localizedValues[localeCode]['freq_four_weeks'] ?? '';
 
-  String get freqMonthly => _localizedValues[localeCode]['freq_monthly'];
+  String get freqMonthly => _localizedValues[localeCode]['freq_monthly'] ?? '';
 
-  String get freqTwoMonths => _localizedValues[localeCode]['freq_two_months'];
+  String get freqTwoMonths =>
+      _localizedValues[localeCode]['freq_two_months'] ?? '';
 
   String get freqThreeMonths =>
-      _localizedValues[localeCode]['freq_three_months'];
+      _localizedValues[localeCode]['freq_three_months'] ?? '';
 
-  String get freqFourMonths => _localizedValues[localeCode]['freq_four_months'];
+  String get freqFourMonths =>
+      _localizedValues[localeCode]['freq_four_months'] ?? '';
 
-  String get freqSixMonths => _localizedValues[localeCode]['freq_six_months'];
+  String get freqSixMonths =>
+      _localizedValues[localeCode]['freq_six_months'] ?? '';
 
-  String get freqAnnually => _localizedValues[localeCode]['freq_annually'];
+  String get freqAnnually =>
+      _localizedValues[localeCode]['freq_annually'] ?? '';
 
-  String get freqTwoYears => _localizedValues[localeCode]['freq_two_years'];
+  String get freqTwoYears =>
+      _localizedValues[localeCode]['freq_two_years'] ?? '';
 
-  String get freqThreeYears => _localizedValues[localeCode]['freq_three_years'];
+  String get freqThreeYears =>
+      _localizedValues[localeCode]['freq_three_years'] ?? '';
 
   String get workflowSettings =>
-      _localizedValues[localeCode]['workflow_settings'];
+      _localizedValues[localeCode]['workflow_settings'] ?? '';
 
   String get autoEmailInvoice =>
-      _localizedValues[localeCode]['auto_email_invoice'];
+      _localizedValues[localeCode]['auto_email_invoice'] ?? '';
 
   String get autoEmailInvoiceHelp =>
-      _localizedValues[localeCode]['auto_email_invoice_help'];
+      _localizedValues[localeCode]['auto_email_invoice_help'] ?? '';
 
   String get autoArchiveInvoice =>
-      _localizedValues[localeCode]['auto_archive_invoice'];
+      _localizedValues[localeCode]['auto_archive_invoice'] ?? '';
 
   String get autoArchiveInvoiceHelp =>
-      _localizedValues[localeCode]['auto_archive_invoice_help'];
+      _localizedValues[localeCode]['auto_archive_invoice_help'] ?? '';
 
   String get autoArchiveQuote =>
-      _localizedValues[localeCode]['auto_archive_quote'];
+      _localizedValues[localeCode]['auto_archive_quote'] ?? '';
 
   String get autoArchiveQuoteHelp =>
-      _localizedValues[localeCode]['auto_archive_quote_help'];
+      _localizedValues[localeCode]['auto_archive_quote_help'] ?? '';
 
   String get autoConvertQuote =>
-      _localizedValues[localeCode]['auto_convert_quote'];
+      _localizedValues[localeCode]['auto_convert_quote'] ?? '';
 
   String get autoConvertQuoteHelp =>
-      _localizedValues[localeCode]['auto_convert_quote_help'];
+      _localizedValues[localeCode]['auto_convert_quote_help'] ?? '';
 
-  String get invoiceTerms => _localizedValues[localeCode]['invoice_terms'];
+  String get invoiceTerms =>
+      _localizedValues[localeCode]['invoice_terms'] ?? '';
 
-  String get invoiceFooter => _localizedValues[localeCode]['invoice_footer'];
+  String get invoiceFooter =>
+      _localizedValues[localeCode]['invoice_footer'] ?? '';
 
-  String get quoteTerms => _localizedValues[localeCode]['quote_terms'];
+  String get quoteTerms => _localizedValues[localeCode]['quote_terms'] ?? '';
 
-  String get quoteFooter => _localizedValues[localeCode]['quote_footer'];
+  String get quoteFooter => _localizedValues[localeCode]['quote_footer'] ?? '';
 
-  String get invoiceFields => _localizedValues[localeCode]['invoice_fields'];
+  String get invoiceFields =>
+      _localizedValues[localeCode]['invoice_fields'] ?? '';
 
-  String get productFields => _localizedValues[localeCode]['product_fields'];
+  String get productFields =>
+      _localizedValues[localeCode]['product_fields'] ?? '';
 
-  String get quoteDesign => _localizedValues[localeCode]['quote_design'];
+  String get quoteDesign => _localizedValues[localeCode]['quote_design'] ?? '';
 
-  String get pageSize => _localizedValues[localeCode]['page_size'];
+  String get pageSize => _localizedValues[localeCode]['page_size'] ?? '';
 
-  String get fontSize => _localizedValues[localeCode]['font_size'];
+  String get fontSize => _localizedValues[localeCode]['font_size'] ?? '';
 
-  String get primaryColor => _localizedValues[localeCode]['primary_color'];
+  String get primaryColor =>
+      _localizedValues[localeCode]['primary_color'] ?? '';
 
-  String get secondaryColor => _localizedValues[localeCode]['secondary_color'];
+  String get secondaryColor =>
+      _localizedValues[localeCode]['secondary_color'] ?? '';
 
-  String get primaryFont => _localizedValues[localeCode]['primary_font'];
+  String get primaryFont => _localizedValues[localeCode]['primary_font'] ?? '';
 
-  String get secondaryFont => _localizedValues[localeCode]['secondary_font'];
+  String get secondaryFont =>
+      _localizedValues[localeCode]['secondary_font'] ?? '';
 
   String get hidePaidToDate =>
-      _localizedValues[localeCode]['hide_paid_to_date'];
+      _localizedValues[localeCode]['hide_paid_to_date'] ?? '';
 
   String get hidePaidToDateHelp =>
-      _localizedValues[localeCode]['hide_paid_to_date_help'];
+      _localizedValues[localeCode]['hide_paid_to_date_help'] ?? '';
 
   String get invoiceEmbedDocuments =>
-      _localizedValues[localeCode]['invoice_embed_documents'];
+      _localizedValues[localeCode]['invoice_embed_documents'] ?? '';
 
   String get invoiceEmbedDocumentsHelp =>
-      _localizedValues[localeCode]['invoice_embed_documents_help'];
+      _localizedValues[localeCode]['invoice_embed_documents_help'] ?? '';
 
-  String get allPagesHeader => _localizedValues[localeCode]['all_pages_header'];
+  String get allPagesHeader =>
+      _localizedValues[localeCode]['all_pages_header'] ?? '';
 
-  String get allPagesFooter => _localizedValues[localeCode]['all_pages_footer'];
+  String get allPagesFooter =>
+      _localizedValues[localeCode]['all_pages_footer'] ?? '';
 
-  String get firstPage => _localizedValues[localeCode]['first_page'];
+  String get firstPage => _localizedValues[localeCode]['first_page'] ?? '';
 
-  String get allPages => _localizedValues[localeCode]['all_pages'];
+  String get allPages => _localizedValues[localeCode]['all_pages'] ?? '';
 
-  String get lastPage => _localizedValues[localeCode]['last_page'];
+  String get lastPage => _localizedValues[localeCode]['last_page'] ?? '';
 
   String get generalSettings =>
-      _localizedValues[localeCode]['general_settings'];
+      _localizedValues[localeCode]['general_settings'] ?? '';
 
-  String get invoiceOptions => _localizedValues[localeCode]['invoice_options'];
+  String get invoiceOptions =>
+      _localizedValues[localeCode]['invoice_options'] ?? '';
 
-  String get newUser => _localizedValues[localeCode]['new_user'];
+  String get newUser => _localizedValues[localeCode]['new_user'] ?? '';
 
-  String get createdUser => _localizedValues[localeCode]['created_user'];
+  String get createdUser => _localizedValues[localeCode]['created_user'] ?? '';
 
-  String get updatedUser => _localizedValues[localeCode]['updated_user'];
+  String get updatedUser => _localizedValues[localeCode]['updated_user'] ?? '';
 
-  String get archivedUser => _localizedValues[localeCode]['archived_user'];
+  String get archivedUser =>
+      _localizedValues[localeCode]['archived_user'] ?? '';
 
-  String get deletedUser => _localizedValues[localeCode]['deleted_user'];
+  String get deletedUser => _localizedValues[localeCode]['deleted_user'] ?? '';
 
-  String get removedUser => _localizedValues[localeCode]['removed_user'];
+  String get removedUser => _localizedValues[localeCode]['removed_user'] ?? '';
 
-  String get restoredUser => _localizedValues[localeCode]['restored_user'];
+  String get restoredUser =>
+      _localizedValues[localeCode]['restored_user'] ?? '';
 
-  String get editUser => _localizedValues[localeCode]['edit_user'];
+  String get editUser => _localizedValues[localeCode]['edit_user'] ?? '';
 
-  String get users => _localizedValues[localeCode]['users'];
+  String get users => _localizedValues[localeCode]['users'] ?? '';
 
-  String get userManagement => _localizedValues[localeCode]['user_management'];
+  String get userManagement =>
+      _localizedValues[localeCode]['user_management'] ?? '';
 
-  String get administrator => _localizedValues[localeCode]['administrator'];
+  String get administrator =>
+      _localizedValues[localeCode]['administrator'] ?? '';
 
   String get administratorHelp =>
-      _localizedValues[localeCode]['administrator_help'];
+      _localizedValues[localeCode]['administrator_help'] ?? '';
 
-  String get filteredByUser => _localizedValues[localeCode]['filtered_by_user'];
+  String get filteredByUser =>
+      _localizedValues[localeCode]['filtered_by_user'] ?? '';
 
   String get endlessReminder =>
-      _localizedValues[localeCode]['endless_reminder'];
+      _localizedValues[localeCode]['endless_reminder'] ?? '';
 
-  String get invoiceEmail => _localizedValues[localeCode]['invoice_email'];
+  String get invoiceEmail =>
+      _localizedValues[localeCode]['invoice_email'] ?? '';
 
-  String get paymentEmail => _localizedValues[localeCode]['payment_email'];
+  String get paymentEmail =>
+      _localizedValues[localeCode]['payment_email'] ?? '';
 
-  String get quoteEmail => _localizedValues[localeCode]['quote_email'];
+  String get quoteEmail => _localizedValues[localeCode]['quote_email'] ?? '';
 
-  String get days => _localizedValues[localeCode]['days'];
+  String get days => _localizedValues[localeCode]['days'] ?? '';
 
-  String get beforeDueDate => _localizedValues[localeCode]['before_due_date'];
+  String get beforeDueDate =>
+      _localizedValues[localeCode]['before_due_date'] ?? '';
 
-  String get afterDueDate => _localizedValues[localeCode]['after_due_date'];
+  String get afterDueDate =>
+      _localizedValues[localeCode]['after_due_date'] ?? '';
 
   String get afterInvoiceDate =>
-      _localizedValues[localeCode]['after_invoice_date'];
+      _localizedValues[localeCode]['after_invoice_date'] ?? '';
 
-  String get schedule => _localizedValues[localeCode]['schedule'];
+  String get schedule => _localizedValues[localeCode]['schedule'] ?? '';
 
-  String get lateFeeAmount => _localizedValues[localeCode]['late_fee_amount'];
+  String get lateFeeAmount =>
+      _localizedValues[localeCode]['late_fee_amount'] ?? '';
 
-  String get lateFeePercent => _localizedValues[localeCode]['late_fee_percent'];
+  String get lateFeePercent =>
+      _localizedValues[localeCode]['late_fee_percent'] ?? '';
 
-  String get creditNumber => _localizedValues[localeCode]['credit_number'];
+  String get creditNumber =>
+      _localizedValues[localeCode]['credit_number'] ?? '';
 
-  String get paymentNumber => _localizedValues[localeCode]['payment_number'];
+  String get paymentNumber =>
+      _localizedValues[localeCode]['payment_number'] ?? '';
 
-  String get lateFees => _localizedValues[localeCode]['late_fees'];
+  String get lateFees => _localizedValues[localeCode]['late_fees'] ?? '';
 
   String get recoverPassword =>
-      _localizedValues[localeCode]['recover_password'];
+      _localizedValues[localeCode]['recover_password'] ?? '';
 
-  String get submit => _localizedValues[localeCode]['submit'];
+  String get submit => _localizedValues[localeCode]['submit'] ?? '';
 
   String get recoverPasswordEmailSent =>
-      _localizedValues[localeCode]['recover_password_email_sent'];
+      _localizedValues[localeCode]['recover_password_email_sent'] ?? '';
 
-  String get fieldType => _localizedValues[localeCode]['field_type'];
+  String get fieldType => _localizedValues[localeCode]['field_type'] ?? '';
 
-  String get singleLineText => _localizedValues[localeCode]['single_line_text'];
+  String get singleLineText =>
+      _localizedValues[localeCode]['single_line_text'] ?? '';
 
-  String get multiLineText => _localizedValues[localeCode]['multi_line_text'];
+  String get multiLineText =>
+      _localizedValues[localeCode]['multi_line_text'] ?? '';
 
-  String get dropdown => _localizedValues[localeCode]['dropdown'];
+  String get dropdown => _localizedValues[localeCode]['dropdown'] ?? '';
 
-  String get options => _localizedValues[localeCode]['options'];
+  String get options => _localizedValues[localeCode]['options'] ?? '';
 
   String get commaSeparatedList =>
-      _localizedValues[localeCode]['comma_sparated_list'];
+      _localizedValues[localeCode]['comma_sparated_list'] ?? '';
 
-  String get switchLabel => _localizedValues[localeCode]['switch'];
+  String get switchLabel => _localizedValues[localeCode]['switch'] ?? '';
 
-  String get accentColor => _localizedValues[localeCode]['accent_color'];
+  String get accentColor => _localizedValues[localeCode]['accent_color'] ?? '';
 
-  String get taxSettings => _localizedValues[localeCode]['tax_settings'];
+  String get taxSettings => _localizedValues[localeCode]['tax_settings'] ?? '';
 
-  String get configureRates => _localizedValues[localeCode]['configure_rates'];
+  String get configureRates =>
+      _localizedValues[localeCode]['configure_rates'] ?? '';
 
   String get taxSettingsRates =>
-      _localizedValues[localeCode]['tax_settings_rates'];
+      _localizedValues[localeCode]['tax_settings_rates'] ?? '';
 
   String get noClientSelected =>
-      _localizedValues[localeCode]['no_client_selected'];
+      _localizedValues[localeCode]['no_client_selected'] ?? '';
 
-  String get invoiceTax => _localizedValues[localeCode]['invoice_tax'];
+  String get invoiceTax => _localizedValues[localeCode]['invoice_tax'] ?? '';
 
-  String get lineItemTax => _localizedValues[localeCode]['line_item_tax'];
+  String get lineItemTax => _localizedValues[localeCode]['line_item_tax'] ?? '';
 
-  String get inclusiveTaxes => _localizedValues[localeCode]['inclusive_taxes'];
+  String get inclusiveTaxes =>
+      _localizedValues[localeCode]['inclusive_taxes'] ?? '';
 
   String get invoiceTaxRates =>
-      _localizedValues[localeCode]['invoice_tax_rates'];
+      _localizedValues[localeCode]['invoice_tax_rates'] ?? '';
 
-  String get itemTaxRates => _localizedValues[localeCode]['item_tax_rates'];
+  String get itemTaxRates =>
+      _localizedValues[localeCode]['item_tax_rates'] ?? '';
 
-  String get user => _localizedValues[localeCode]['user'];
+  String get user => _localizedValues[localeCode]['user'] ?? '';
 
-  String get defaultTaxRate => _localizedValues[localeCode]['default_tax_rate'];
+  String get defaultTaxRate =>
+      _localizedValues[localeCode]['default_tax_rate'] ?? '';
 
-  String get oneTaxRate => _localizedValues[localeCode]['one_tax_rate'];
+  String get oneTaxRate => _localizedValues[localeCode]['one_tax_rate'] ?? '';
 
-  String get twoTaxRates => _localizedValues[localeCode]['two_tax_rates'];
+  String get twoTaxRates => _localizedValues[localeCode]['two_tax_rates'] ?? '';
 
-  String get threeTaxRates => _localizedValues[localeCode]['three_tax_rates'];
+  String get threeTaxRates =>
+      _localizedValues[localeCode]['three_tax_rates'] ?? '';
 
-  String get customValue1 => _localizedValues[localeCode]['custom_value1'];
+  String get customValue1 =>
+      _localizedValues[localeCode]['custom_value1'] ?? '';
 
-  String get customValue2 => _localizedValues[localeCode]['custom_value2'];
+  String get customValue2 =>
+      _localizedValues[localeCode]['custom_value2'] ?? '';
 
-  String get customValue3 => _localizedValues[localeCode]['custom_value3'];
+  String get customValue3 =>
+      _localizedValues[localeCode]['custom_value3'] ?? '';
 
-  String get customValue4 => _localizedValues[localeCode]['custom_value4'];
+  String get customValue4 =>
+      _localizedValues[localeCode]['custom_value4'] ?? '';
 
   String get emailStyleCustom =>
-      _localizedValues[localeCode]['email_style_custom'];
+      _localizedValues[localeCode]['email_style_custom'] ?? '';
 
   String get customMessageDashboard =>
-      _localizedValues[localeCode]['custom_message_dashboard'];
+      _localizedValues[localeCode]['custom_message_dashboard'] ?? '';
 
   String get customMessageUnpaidInvoice =>
-      _localizedValues[localeCode]['custom_message_unpaid_invoice'];
+      _localizedValues[localeCode]['custom_message_unpaid_invoice'] ?? '';
 
   String get customMessagePaidInvoice =>
-      _localizedValues[localeCode]['custom_message_paid_invoice'];
+      _localizedValues[localeCode]['custom_message_paid_invoice'] ?? '';
 
   String get customMessageUnapprovedQuote =>
-      _localizedValues[localeCode]['custom_message_unapproved_quote'];
+      _localizedValues[localeCode]['custom_message_unapproved_quote'] ?? '';
 
   String get lockSentInvoices =>
-      _localizedValues[localeCode]['lock_sent_invoices'];
+      _localizedValues[localeCode]['lock_sent_invoices'] ?? '';
 
-  String get translations => _localizedValues[localeCode]['translations'];
+  String get translations => _localizedValues[localeCode]['translations'] ?? '';
 
   String get taskNumberPattern =>
-      _localizedValues[localeCode]['task_number_pattern'];
+      _localizedValues[localeCode]['task_number_pattern'] ?? '';
 
   String get taskNumberCounter =>
-      _localizedValues[localeCode]['task_number_counter'];
+      _localizedValues[localeCode]['task_number_counter'] ?? '';
 
   String get expenseNumberPattern =>
-      _localizedValues[localeCode]['expense_number_pattern'];
+      _localizedValues[localeCode]['expense_number_pattern'] ?? '';
 
   String get expenseNumberCounter =>
-      _localizedValues[localeCode]['expense_number_counter'];
+      _localizedValues[localeCode]['expense_number_counter'] ?? '';
 
   String get vendorNumberPattern =>
-      _localizedValues[localeCode]['vendor_number_pattern'];
+      _localizedValues[localeCode]['vendor_number_pattern'] ?? '';
 
   String get vendorNumberCounter =>
-      _localizedValues[localeCode]['vendor_number_counter'];
+      _localizedValues[localeCode]['vendor_number_counter'] ?? '';
 
   String get ticketNumberPattern =>
-      _localizedValues[localeCode]['ticket_number_pattern'];
+      _localizedValues[localeCode]['ticket_number_pattern'] ?? '';
 
   String get ticketNumberCounter =>
-      _localizedValues[localeCode]['ticket_number_counter'];
+      _localizedValues[localeCode]['ticket_number_counter'] ?? '';
 
   String get paymentNumberPattern =>
-      _localizedValues[localeCode]['payment_number_pattern'];
+      _localizedValues[localeCode]['payment_number_pattern'] ?? '';
 
   String get paymentNumberCounter =>
-      _localizedValues[localeCode]['payment_number_counter'];
+      _localizedValues[localeCode]['payment_number_counter'] ?? '';
 
   String get invoiceNumberPattern =>
-      _localizedValues[localeCode]['invoice_number_pattern'];
+      _localizedValues[localeCode]['invoice_number_pattern'] ?? '';
 
   String get invoiceNumberCounter =>
-      _localizedValues[localeCode]['invoice_number_counter'];
+      _localizedValues[localeCode]['invoice_number_counter'] ?? '';
 
   String get quoteNumberPattern =>
-      _localizedValues[localeCode]['quote_number_pattern'];
+      _localizedValues[localeCode]['quote_number_pattern'] ?? '';
 
   String get quoteNumberCounter =>
-      _localizedValues[localeCode]['quote_number_counter'];
+      _localizedValues[localeCode]['quote_number_counter'] ?? '';
 
   String get clientNumberPattern =>
-      _localizedValues[localeCode]['client_number_pattern'];
+      _localizedValues[localeCode]['client_number_pattern'] ?? '';
 
   String get clientNumberCounter =>
-      _localizedValues[localeCode]['client_number_counter'];
+      _localizedValues[localeCode]['client_number_counter'] ?? '';
 
   String get creditNumberPattern =>
-      _localizedValues[localeCode]['credit_number_pattern'];
+      _localizedValues[localeCode]['credit_number_pattern'] ?? '';
 
   String get creditNumberCounter =>
-      _localizedValues[localeCode]['credit_number_counter'];
+      _localizedValues[localeCode]['credit_number_counter'] ?? '';
 
   String get resetCounterDate =>
-      _localizedValues[localeCode]['reset_counter_date'];
+      _localizedValues[localeCode]['reset_counter_date'] ?? '';
 
-  String get counterPadding => _localizedValues[localeCode]['counter_padding'];
+  String get counterPadding =>
+      _localizedValues[localeCode]['counter_padding'] ?? '';
 
   String get sharedInvoiceQuoteCounter =>
-      _localizedValues[localeCode]['shared_invoice_quote_counter'];
+      _localizedValues[localeCode]['shared_invoice_quote_counter'] ?? '';
 
-  String get invoiceLabels => _localizedValues[localeCode]['invoice_labels'];
+  String get invoiceLabels =>
+      _localizedValues[localeCode]['invoice_labels'] ?? '';
 
   String get defaultTaxName1 =>
-      _localizedValues[localeCode]['default_tax_name_1'];
+      _localizedValues[localeCode]['default_tax_name_1'] ?? '';
 
   String get defaultTaxRate1 =>
-      _localizedValues[localeCode]['default_tax_rate_1'];
+      _localizedValues[localeCode]['default_tax_rate_1'] ?? '';
 
   String get defaultTaxName2 =>
-      _localizedValues[localeCode]['default_tax_name_2'];
+      _localizedValues[localeCode]['default_tax_name_2'] ?? '';
 
   String get defaultTaxRate2 =>
-      _localizedValues[localeCode]['default_tax_rate_2'];
+      _localizedValues[localeCode]['default_tax_rate_2'] ?? '';
 
   String get defaultTaxName3 =>
-      _localizedValues[localeCode]['default_tax_name_3'];
+      _localizedValues[localeCode]['default_tax_name_3'] ?? '';
 
   String get defaultTaxRate3 =>
-      _localizedValues[localeCode]['default_tax_rate_3'];
+      _localizedValues[localeCode]['default_tax_rate_3'] ?? '';
 
   String get emailSubjectInvoice =>
-      _localizedValues[localeCode]['email_subject_invoice'];
+      _localizedValues[localeCode]['email_subject_invoice'] ?? '';
 
   String get emailSubjectQuote =>
-      _localizedValues[localeCode]['email_subject_quote'];
+      _localizedValues[localeCode]['email_subject_quote'] ?? '';
 
   String get emailSubjectPayment =>
-      _localizedValues[localeCode]['email_subject_payment'];
+      _localizedValues[localeCode]['email_subject_payment'] ?? '';
 
   String get emailSubjectPaymentPartial =>
-      _localizedValues[localeCode]['email_subject_payment_partial'];
+      _localizedValues[localeCode]['email_subject_payment_partial'] ?? '';
 
-  String get showCost => _localizedValues[localeCode]['show_cost'];
+  String get showCost => _localizedValues[localeCode]['show_cost'] ?? '';
 
-  String get showCostHelp => _localizedValues[localeCode]['show_cost_help'];
+  String get showCostHelp =>
+      _localizedValues[localeCode]['show_cost_help'] ?? '';
 
   String get showInvoiceQuantity =>
-      _localizedValues[localeCode]['show_invoice_quantity'];
+      _localizedValues[localeCode]['show_invoice_quantity'] ?? '';
 
   String get showProductQuantityHelp =>
-      _localizedValues[localeCode]['show_product_quantity_help'];
+      _localizedValues[localeCode]['show_product_quantity_help'] ?? '';
 
   String get showProductQuantity =>
-      _localizedValues[localeCode]['show_product_quantity'];
+      _localizedValues[localeCode]['show_product_quantity'] ?? '';
 
   String get showInvoiceQuantityHelp =>
-      _localizedValues[localeCode]['show_invoice_quantity_help'];
+      _localizedValues[localeCode]['show_invoice_quantity_help'] ?? '';
 
   String get defaultQuantity =>
-      _localizedValues[localeCode]['default_quantity'];
+      _localizedValues[localeCode]['default_quantity'] ?? '';
 
   String get defaultQuantityHelp =>
-      _localizedValues[localeCode]['default_quantity_help'];
+      _localizedValues[localeCode]['default_quantity_help'] ?? '';
 
-  String get firstCustom => _localizedValues[localeCode]['first_custom'];
+  String get firstCustom => _localizedValues[localeCode]['first_custom'] ?? '';
 
-  String get secondCustom => _localizedValues[localeCode]['second_custom'];
+  String get secondCustom =>
+      _localizedValues[localeCode]['second_custom'] ?? '';
 
-  String get thirdCustom => _localizedValues[localeCode]['third_custom'];
+  String get thirdCustom => _localizedValues[localeCode]['third_custom'] ?? '';
 
-  String get module => _localizedValues[localeCode]['module'];
+  String get module => _localizedValues[localeCode]['module'] ?? '';
 
-  String get view => _localizedValues[localeCode]['view'];
+  String get view => _localizedValues[localeCode]['view'] ?? '';
 
-  String get layout => _localizedValues[localeCode]['layout'];
+  String get layout => _localizedValues[localeCode]['layout'] ?? '';
 
-  String get mobile => _localizedValues[localeCode]['mobile'];
+  String get mobile => _localizedValues[localeCode]['mobile'] ?? '';
 
-  String get desktop => _localizedValues[localeCode]['desktop'];
+  String get desktop => _localizedValues[localeCode]['desktop'] ?? '';
 
-  String get tablet => _localizedValues[localeCode]['tablet'];
+  String get tablet => _localizedValues[localeCode]['tablet'] ?? '';
 
-  String get float => _localizedValues[localeCode]['float'];
+  String get float => _localizedValues[localeCode]['float'] ?? '';
 
-  String get collapse => _localizedValues[localeCode]['collapse'];
+  String get collapse => _localizedValues[localeCode]['collapse'] ?? '';
 
-  String get showOrHide => _localizedValues[localeCode]['show_or_hide'];
+  String get showOrHide => _localizedValues[localeCode]['show_or_hide'] ?? '';
 
-  String get menuSidebar => _localizedValues[localeCode]['menu_sidebar'];
+  String get menuSidebar => _localizedValues[localeCode]['menu_sidebar'] ?? '';
 
-  String get historySidebar => _localizedValues[localeCode]['history_sidebar'];
+  String get historySidebar =>
+      _localizedValues[localeCode]['history_sidebar'] ?? '';
 
-  String get selectCompany => _localizedValues[localeCode]['select_company'];
+  String get selectCompany =>
+      _localizedValues[localeCode]['select_company'] ?? '';
 
-  String get newPayment => _localizedValues[localeCode]['new_payment'];
+  String get newPayment => _localizedValues[localeCode]['new_payment'] ?? '';
 
   String get switchListTable =>
-      _localizedValues[localeCode]['switch_list_table'];
+      _localizedValues[localeCode]['switch_list_table'] ?? '';
 
-  String get whenSaved => _localizedValues[localeCode]['when_saved'];
+  String get whenSaved => _localizedValues[localeCode]['when_saved'] ?? '';
 
-  String get whenSent => _localizedValues[localeCode]['when_sent'];
+  String get whenSent => _localizedValues[localeCode]['when_sent'] ?? '';
 
-  String get generateNumber => _localizedValues[localeCode]['generate_number'];
+  String get generateNumber =>
+      _localizedValues[localeCode]['generate_number'] ?? '';
 
-  String get yes => _localizedValues[localeCode]['yes'];
+  String get yes => _localizedValues[localeCode]['yes'] ?? '';
 
-  String get no => _localizedValues[localeCode]['no'];
+  String get no => _localizedValues[localeCode]['no'] ?? '';
 
-  String get deletedLogo => _localizedValues[localeCode]['deleted_logo'];
+  String get deletedLogo => _localizedValues[localeCode]['deleted_logo'] ?? '';
 
   String get pleaseEnterAValue =>
-      _localizedValues[localeCode]['please_enter_a_value'];
+      _localizedValues[localeCode]['please_enter_a_value'] ?? '';
 
   String get clientPortalTasks =>
-      _localizedValues[localeCode]['client_portal_tasks'];
+      _localizedValues[localeCode]['client_portal_tasks'] ?? '';
 
   String get clientPortalDashboard =>
-      _localizedValues[localeCode]['client_portal_dashboard'];
+      _localizedValues[localeCode]['client_portal_dashboard'] ?? '';
 
   String get passwordIsTooEasy =>
-      _localizedValues[localeCode]['password_is_too_easy'];
+      _localizedValues[localeCode]['password_is_too_easy'] ?? '';
 
-  String get iFrameUrl => _localizedValues[localeCode]['iframe_url'];
+  String get iFrameUrl => _localizedValues[localeCode]['iframe_url'] ?? '';
 
-  String get domainUrl => _localizedValues[localeCode]['domain_url'];
+  String get domainUrl => _localizedValues[localeCode]['domain_url'] ?? '';
 
-  String get creditEmail => _localizedValues[localeCode]['credit_email'];
+  String get creditEmail => _localizedValues[localeCode]['credit_email'] ?? '';
 
-  String get item => _localizedValues[localeCode]['item'];
+  String get item => _localizedValues[localeCode]['item'] ?? '';
 
-  String get lineTotal => _localizedValues[localeCode]['line_total'];
+  String get lineTotal => _localizedValues[localeCode]['line_total'] ?? '';
 
-  String get subtotal => _localizedValues[localeCode]['subtotal'];
+  String get subtotal => _localizedValues[localeCode]['subtotal'] ?? '';
 
-  String get contactUs => _localizedValues[localeCode]['contact_us'];
+  String get contactUs => _localizedValues[localeCode]['contact_us'] ?? '';
 
-  String get documentation => _localizedValues[localeCode]['documentation'];
+  String get documentation =>
+      _localizedValues[localeCode]['documentation'] ?? '';
 
-  String get about => _localizedValues[localeCode]['about'];
+  String get about => _localizedValues[localeCode]['about'] ?? '';
 
-  String get supportForum => _localizedValues[localeCode]['support_forum'];
+  String get supportForum =>
+      _localizedValues[localeCode]['support_forum'] ?? '';
 
   String get configureSettings =>
-      _localizedValues[localeCode]['configure_settings'];
+      _localizedValues[localeCode]['configure_settings'] ?? '';
 
   String get adjustFeePercent =>
-      _localizedValues[localeCode]['adjust_fee_percent'];
+      _localizedValues[localeCode]['adjust_fee_percent'] ?? '';
 
   String get adjustFeePercentHelp =>
-      _localizedValues[localeCode]['adjust_fee_percent_help'];
+      _localizedValues[localeCode]['adjust_fee_percent_help'] ?? '';
 
   String get pdfMinRequirements =>
-      _localizedValues[localeCode]['pdf_min_requirements'];
+      _localizedValues[localeCode]['pdf_min_requirements'] ?? '';
 
   String get showProductDetails =>
-      _localizedValues[localeCode]['show_product_details'];
+      _localizedValues[localeCode]['show_product_details'] ?? '';
 
   String get showProductDetailsHelp =>
-      _localizedValues[localeCode]['show_product_details_help'];
+      _localizedValues[localeCode]['show_product_details_help'] ?? '';
 
-  String get from => _localizedValues[localeCode]['from'];
+  String get from => _localizedValues[localeCode]['from'] ?? '';
 
-  String get message => _localizedValues[localeCode]['message'];
+  String get message => _localizedValues[localeCode]['message'] ?? '';
 
   String get yourMessageHasBeenReceived =>
-      _localizedValues[localeCode]['your_message_has_been_received'];
+      _localizedValues[localeCode]['your_message_has_been_received'] ?? '';
 
   String get includeRecentErrors =>
-      _localizedValues[localeCode]['include_recent_errors'];
+      _localizedValues[localeCode]['include_recent_errors'] ?? '';
 
-  String get applied => _localizedValues[localeCode]['applied'];
+  String get applied => _localizedValues[localeCode]['applied'] ?? '';
 
-  String get verifyPassword => _localizedValues[localeCode]['verify_password'];
+  String get verifyPassword =>
+      _localizedValues[localeCode]['verify_password'] ?? '';
 
-  String get entityState => _localizedValues[localeCode]['entity_state'];
+  String get entityState => _localizedValues[localeCode]['entity_state'] ?? '';
 
-  String get multiselect => _localizedValues[localeCode]['multiselect'];
+  String get multiselect => _localizedValues[localeCode]['multiselect'] ?? '';
 
-  String get contactEmail => _localizedValues[localeCode]['contact_email'];
+  String get contactEmail =>
+      _localizedValues[localeCode]['contact_email'] ?? '';
 
-  String get filteredBy => _localizedValues[localeCode]['filtered_by'];
+  String get filteredBy => _localizedValues[localeCode]['filtered_by'] ?? '';
 
-  String get refund => _localizedValues[localeCode]['refund'];
+  String get refund => _localizedValues[localeCode]['refund'] ?? '';
 
-  String get refundDate => _localizedValues[localeCode]['refund_date'];
+  String get refundDate => _localizedValues[localeCode]['refund_date'] ?? '';
 
-  String get help => _localizedValues[localeCode]['help'];
+  String get help => _localizedValues[localeCode]['help'] ?? '';
 
-  String get unpaidInvoice => _localizedValues[localeCode]['unpaid_invoice'];
+  String get unpaidInvoice =>
+      _localizedValues[localeCode]['unpaid_invoice'] ?? '';
 
-  String get paidInvoice => _localizedValues[localeCode]['paid_invoice'];
+  String get paidInvoice => _localizedValues[localeCode]['paid_invoice'] ?? '';
 
   String get unapprovedQuote =>
-      _localizedValues[localeCode]['unapproved_quote'];
+      _localizedValues[localeCode]['unapproved_quote'] ?? '';
 
-  String get addCompany => _localizedValues[localeCode]['add_company'];
+  String get addCompany => _localizedValues[localeCode]['add_company'] ?? '';
 
-  String get reports => _localizedValues[localeCode]['reports'];
+  String get reports => _localizedValues[localeCode]['reports'] ?? '';
 
-  String get report => _localizedValues[localeCode]['report'];
+  String get report => _localizedValues[localeCode]['report'] ?? '';
 
-  String get aging => _localizedValues[localeCode]['aging'];
+  String get aging => _localizedValues[localeCode]['aging'] ?? '';
 
-  String get columns => _localizedValues[localeCode]['columns'];
+  String get columns => _localizedValues[localeCode]['columns'] ?? '';
 
-  String get profitAndLoss => _localizedValues[localeCode]['profit_and_loss'];
+  String get profitAndLoss =>
+      _localizedValues[localeCode]['profit_and_loss'] ?? '';
 
-  String get editColumns => _localizedValues[localeCode]['edit_columns'];
+  String get editColumns => _localizedValues[localeCode]['edit_columns'] ?? '';
 
-  String get addColumn => _localizedValues[localeCode]['add_column'];
+  String get addColumn => _localizedValues[localeCode]['add_column'] ?? '';
 
-  String get assignedTo => _localizedValues[localeCode]['assigned_to'];
+  String get assignedTo => _localizedValues[localeCode]['assigned_to'] ?? '';
 
-  String get createdBy => _localizedValues[localeCode]['created_by'];
+  String get createdBy => _localizedValues[localeCode]['created_by'] ?? '';
 
-  String get assignedTId => _localizedValues[localeCode]['assigned_to_id'];
+  String get assignedTId =>
+      _localizedValues[localeCode]['assigned_to_id'] ?? '';
 
-  String get createdById => _localizedValues[localeCode]['created_by_id'];
+  String get createdById => _localizedValues[localeCode]['created_by_id'] ?? '';
 
-  String get clientId => _localizedValues[localeCode]['client_id'];
+  String get clientId => _localizedValues[localeCode]['client_id'] ?? '';
 
   String get shippingAddress1 =>
-      _localizedValues[localeCode]['shipping_address1'];
+      _localizedValues[localeCode]['shipping_address1'] ?? '';
 
   String get shippingAddress2 =>
-      _localizedValues[localeCode]['shipping_address2'];
+      _localizedValues[localeCode]['shipping_address2'] ?? '';
 
-  String get shippingCity => _localizedValues[localeCode]['shipping_city'];
+  String get shippingCity =>
+      _localizedValues[localeCode]['shipping_city'] ?? '';
 
-  String get shippingState => _localizedValues[localeCode]['shipping_state'];
+  String get shippingState =>
+      _localizedValues[localeCode]['shipping_state'] ?? '';
 
   String get shippingPostalCode =>
-      _localizedValues[localeCode]['shipping_postal_code'];
+      _localizedValues[localeCode]['shipping_postal_code'] ?? '';
 
   String get shippingCountry =>
-      _localizedValues[localeCode]['shipping_country'];
+      _localizedValues[localeCode]['shipping_country'] ?? '';
 
   String get contactFullName =>
-      _localizedValues[localeCode]['contact_full_name'];
+      _localizedValues[localeCode]['contact_full_name'] ?? '';
 
-  String get contactPhone => _localizedValues[localeCode]['contact_phone'];
+  String get contactPhone =>
+      _localizedValues[localeCode]['contact_phone'] ?? '';
 
   String get contactCustomValue1 =>
-      _localizedValues[localeCode]['contact_custom_value1'];
+      _localizedValues[localeCode]['contact_custom_value1'] ?? '';
 
   String get contactCustomValue2 =>
-      _localizedValues[localeCode]['contact_custom_value2'];
+      _localizedValues[localeCode]['contact_custom_value2'] ?? '';
 
   String get contactCustomValue3 =>
-      _localizedValues[localeCode]['contact_custom_value3'];
+      _localizedValues[localeCode]['contact_custom_value3'] ?? '';
 
   String get contactCustomValue4 =>
-      _localizedValues[localeCode]['contact_custom_value4'];
+      _localizedValues[localeCode]['contact_custom_value4'] ?? '';
 
-  String get creditBalance => _localizedValues[localeCode]['credit_balance'];
+  String get creditBalance =>
+      _localizedValues[localeCode]['credit_balance'] ?? '';
 
   String get contactLastLogin =>
-      _localizedValues[localeCode]['contact_last_login'];
+      _localizedValues[localeCode]['contact_last_login'] ?? '';
 
-  String get groupBy => _localizedValues[localeCode]['group_by'];
+  String get groupBy => _localizedValues[localeCode]['group_by'] ?? '';
 
-  String get isActive => _localizedValues[localeCode]['is_active'];
+  String get isActive => _localizedValues[localeCode]['is_active'] ?? '';
 
-  String get subgroup => _localizedValues[localeCode]['subgroup'];
+  String get subgroup => _localizedValues[localeCode]['subgroup'] ?? '';
 
-  String get day => _localizedValues[localeCode]['day'];
+  String get day => _localizedValues[localeCode]['day'] ?? '';
 
-  String get month => _localizedValues[localeCode]['month'];
+  String get month => _localizedValues[localeCode]['month'] ?? '';
 
-  String get year => _localizedValues[localeCode]['year'];
+  String get year => _localizedValues[localeCode]['year'] ?? '';
 
-  String get blank => _localizedValues[localeCode]['blank'];
+  String get blank => _localizedValues[localeCode]['blank'] ?? '';
 
-  String get count => _localizedValues[localeCode]['count'];
+  String get count => _localizedValues[localeCode]['count'] ?? '';
 
-  String get chart => _localizedValues[localeCode]['chart'];
+  String get chart => _localizedValues[localeCode]['chart'] ?? '';
 
-  String get export => _localizedValues[localeCode]['export'];
+  String get export => _localizedValues[localeCode]['export'] ?? '';
 
-  String get number => _localizedValues[localeCode]['number'];
+  String get number => _localizedValues[localeCode]['number'] ?? '';
 
-  String get reset => _localizedValues[localeCode]['reset'];
+  String get reset => _localizedValues[localeCode]['reset'] ?? '';
 
-  String get client1 => _localizedValues[localeCode]['client1'];
+  String get client1 => _localizedValues[localeCode]['client1'] ?? '';
 
-  String get client2 => _localizedValues[localeCode]['client2'];
+  String get client2 => _localizedValues[localeCode]['client2'] ?? '';
 
-  String get client3 => _localizedValues[localeCode]['client3'];
+  String get client3 => _localizedValues[localeCode]['client3'] ?? '';
 
-  String get client4 => _localizedValues[localeCode]['client4'];
+  String get client4 => _localizedValues[localeCode]['client4'] ?? '';
 
-  String get company1 => _localizedValues[localeCode]['company1'];
+  String get company1 => _localizedValues[localeCode]['company1'] ?? '';
 
-  String get company2 => _localizedValues[localeCode]['company2'];
+  String get company2 => _localizedValues[localeCode]['company2'] ?? '';
 
-  String get company3 => _localizedValues[localeCode]['company3'];
+  String get company3 => _localizedValues[localeCode]['company3'] ?? '';
 
-  String get company4 => _localizedValues[localeCode]['company4'];
+  String get company4 => _localizedValues[localeCode]['company4'] ?? '';
 
-  String get product1 => _localizedValues[localeCode]['product1'];
+  String get product1 => _localizedValues[localeCode]['product1'] ?? '';
 
-  String get product2 => _localizedValues[localeCode]['product2'];
+  String get product2 => _localizedValues[localeCode]['product2'] ?? '';
 
-  String get product3 => _localizedValues[localeCode]['product3'];
+  String get product3 => _localizedValues[localeCode]['product3'] ?? '';
 
-  String get product4 => _localizedValues[localeCode]['product4'];
+  String get product4 => _localizedValues[localeCode]['product4'] ?? '';
 
-  String get contact1 => _localizedValues[localeCode]['contact1'];
+  String get contact1 => _localizedValues[localeCode]['contact1'] ?? '';
 
-  String get contact2 => _localizedValues[localeCode]['contact2'];
+  String get contact2 => _localizedValues[localeCode]['contact2'] ?? '';
 
-  String get contact3 => _localizedValues[localeCode]['contact3'];
+  String get contact3 => _localizedValues[localeCode]['contact3'] ?? '';
 
-  String get contact4 => _localizedValues[localeCode]['contact4'];
+  String get contact4 => _localizedValues[localeCode]['contact4'] ?? '';
 
-  String get task1 => _localizedValues[localeCode]['task1'];
+  String get task1 => _localizedValues[localeCode]['task1'] ?? '';
 
-  String get task2 => _localizedValues[localeCode]['task2'];
+  String get task2 => _localizedValues[localeCode]['task2'] ?? '';
 
-  String get task3 => _localizedValues[localeCode]['task3'];
+  String get task3 => _localizedValues[localeCode]['task3'] ?? '';
 
-  String get task4 => _localizedValues[localeCode]['task4'];
+  String get task4 => _localizedValues[localeCode]['task4'] ?? '';
 
-  String get project1 => _localizedValues[localeCode]['project1'];
+  String get project1 => _localizedValues[localeCode]['project1'] ?? '';
 
-  String get project2 => _localizedValues[localeCode]['project2'];
+  String get project2 => _localizedValues[localeCode]['project2'] ?? '';
 
-  String get project3 => _localizedValues[localeCode]['project3'];
+  String get project3 => _localizedValues[localeCode]['project3'] ?? '';
 
-  String get project4 => _localizedValues[localeCode]['project4'];
+  String get project4 => _localizedValues[localeCode]['project4'] ?? '';
 
-  String get expense1 => _localizedValues[localeCode]['expense1'];
+  String get expense1 => _localizedValues[localeCode]['expense1'] ?? '';
 
-  String get expense2 => _localizedValues[localeCode]['expense2'];
+  String get expense2 => _localizedValues[localeCode]['expense2'] ?? '';
 
-  String get expense3 => _localizedValues[localeCode]['expense3'];
+  String get expense3 => _localizedValues[localeCode]['expense3'] ?? '';
 
-  String get expense4 => _localizedValues[localeCode]['expense4'];
+  String get expense4 => _localizedValues[localeCode]['expense4'] ?? '';
 
-  String get vendor1 => _localizedValues[localeCode]['vendor1'];
+  String get vendor1 => _localizedValues[localeCode]['vendor1'] ?? '';
 
-  String get vendor2 => _localizedValues[localeCode]['vendor2'];
+  String get vendor2 => _localizedValues[localeCode]['vendor2'] ?? '';
 
-  String get vendor3 => _localizedValues[localeCode]['vendor3'];
+  String get vendor3 => _localizedValues[localeCode]['vendor3'] ?? '';
 
-  String get vendor4 => _localizedValues[localeCode]['vendor4'];
+  String get vendor4 => _localizedValues[localeCode]['vendor4'] ?? '';
 
-  String get invoice1 => _localizedValues[localeCode]['invoice1'];
+  String get invoice1 => _localizedValues[localeCode]['invoice1'] ?? '';
 
-  String get invoice2 => _localizedValues[localeCode]['invoice2'];
+  String get invoice2 => _localizedValues[localeCode]['invoice2'] ?? '';
 
-  String get invoice3 => _localizedValues[localeCode]['invoice3'];
+  String get invoice3 => _localizedValues[localeCode]['invoice3'] ?? '';
 
-  String get invoice4 => _localizedValues[localeCode]['invoice4'];
+  String get invoice4 => _localizedValues[localeCode]['invoice4'] ?? '';
 
-  String get payment1 => _localizedValues[localeCode]['payment1'];
+  String get payment1 => _localizedValues[localeCode]['payment1'] ?? '';
 
-  String get payment2 => _localizedValues[localeCode]['payment2'];
+  String get payment2 => _localizedValues[localeCode]['payment2'] ?? '';
 
-  String get payment3 => _localizedValues[localeCode]['payment3'];
+  String get payment3 => _localizedValues[localeCode]['payment3'] ?? '';
 
-  String get payment4 => _localizedValues[localeCode]['payment4'];
+  String get payment4 => _localizedValues[localeCode]['payment4'] ?? '';
 
-  String get surcharge1 => _localizedValues[localeCode]['surcharge1'];
+  String get surcharge1 => _localizedValues[localeCode]['surcharge1'] ?? '';
 
-  String get surcharge2 => _localizedValues[localeCode]['surcharge2'];
+  String get surcharge2 => _localizedValues[localeCode]['surcharge2'] ?? '';
 
-  String get surcharge3 => _localizedValues[localeCode]['surcharge3'];
+  String get surcharge3 => _localizedValues[localeCode]['surcharge3'] ?? '';
 
-  String get surcharge4 => _localizedValues[localeCode]['surcharge4'];
+  String get surcharge4 => _localizedValues[localeCode]['surcharge4'] ?? '';
 
-  String get group1 => _localizedValues[localeCode]['group1'];
+  String get group1 => _localizedValues[localeCode]['group1'] ?? '';
 
-  String get group2 => _localizedValues[localeCode]['group2'];
+  String get group2 => _localizedValues[localeCode]['group2'] ?? '';
 
-  String get group3 => _localizedValues[localeCode]['group3'];
+  String get group3 => _localizedValues[localeCode]['group3'] ?? '';
 
-  String get group4 => _localizedValues[localeCode]['group4'];
+  String get group4 => _localizedValues[localeCode]['group4'] ?? '';
 
-  String get addedCompany => _localizedValues[localeCode]['added_company'];
+  String get addedCompany =>
+      _localizedValues[localeCode]['added_company'] ?? '';
 
   String get untitledCompany =>
-      _localizedValues[localeCode]['untitled_company'];
+      _localizedValues[localeCode]['untitled_company'] ?? '';
 
-  String get creditFooter => _localizedValues[localeCode]['credit_footer'];
+  String get creditFooter =>
+      _localizedValues[localeCode]['credit_footer'] ?? '';
 
-  String get creditTerms => _localizedValues[localeCode]['credit_terms'];
+  String get creditTerms => _localizedValues[localeCode]['credit_terms'] ?? '';
 
   String get slackWebhookUrl =>
-      _localizedValues[localeCode]['slack_webhook_url'];
+      _localizedValues[localeCode]['slack_webhook_url'] ?? '';
 
-  String get trackingId => _localizedValues[localeCode]['tracking_id'];
+  String get trackingId => _localizedValues[localeCode]['tracking_id'] ?? '';
 
-  String get integrations => _localizedValues[localeCode]['integrations'];
+  String get integrations => _localizedValues[localeCode]['integrations'] ?? '';
 
-  String get learnMore => _localizedValues[localeCode]['learn_more'];
+  String get learnMore => _localizedValues[localeCode]['learn_more'] ?? '';
 
   String get updateAvailable =>
-      _localizedValues[localeCode]['update_available'];
+      _localizedValues[localeCode]['update_available'] ?? '';
 
   String get aNewVersionIsAvailable =>
-      _localizedValues[localeCode]['a_new_version_is_available'];
+      _localizedValues[localeCode]['a_new_version_is_available'] ?? '';
 
-  String get updateNow => _localizedValues[localeCode]['update_now'];
+  String get updateNow => _localizedValues[localeCode]['update_now'] ?? '';
 
-  String get currentVersion => _localizedValues[localeCode]['current_version'];
+  String get currentVersion =>
+      _localizedValues[localeCode]['current_version'] ?? '';
 
-  String get latestVersion => _localizedValues[localeCode]['latest_version'];
+  String get latestVersion =>
+      _localizedValues[localeCode]['latest_version'] ?? '';
 
-  String get appUpdated => _localizedValues[localeCode]['app_updated'];
+  String get appUpdated => _localizedValues[localeCode]['app_updated'] ?? '';
 
   // STARTER: lang field - do not remove comment
-  String get designs => _localizedValues[localeCode]['designs'];
+  String get designs => _localizedValues[localeCode]['designs'] ?? '';
 
-  String get newDesign => _localizedValues[localeCode]['new_design'];
+  String get newDesign => _localizedValues[localeCode]['new_design'] ?? '';
 
-  String get createdDesign => _localizedValues[localeCode]['created_design'];
+  String get createdDesign =>
+      _localizedValues[localeCode]['created_design'] ?? '';
 
-  String get updatedDesign => _localizedValues[localeCode]['updated_design'];
+  String get updatedDesign =>
+      _localizedValues[localeCode]['updated_design'] ?? '';
 
-  String get archivedDesign => _localizedValues[localeCode]['archived_design'];
+  String get archivedDesign =>
+      _localizedValues[localeCode]['archived_design'] ?? '';
 
-  String get deletedDesign => _localizedValues[localeCode]['deleted_design'];
+  String get deletedDesign =>
+      _localizedValues[localeCode]['deleted_design'] ?? '';
 
-  String get restoredDesign => _localizedValues[localeCode]['restored_design'];
+  String get restoredDesign =>
+      _localizedValues[localeCode]['restored_design'] ?? '';
 
-  String get editDesign => _localizedValues[localeCode]['edit_design'];
+  String get editDesign => _localizedValues[localeCode]['edit_design'] ?? '';
 
-  String get newCredit => _localizedValues[localeCode]['new_credit'];
+  String get newCredit => _localizedValues[localeCode]['new_credit'] ?? '';
 
-  String get createdCredit => _localizedValues[localeCode]['created_credit'];
+  String get createdCredit =>
+      _localizedValues[localeCode]['created_credit'] ?? '';
 
-  String get updatedCredit => _localizedValues[localeCode]['updated_credit'];
+  String get updatedCredit =>
+      _localizedValues[localeCode]['updated_credit'] ?? '';
 
-  String get archivedCredit => _localizedValues[localeCode]['archived_credit'];
+  String get archivedCredit =>
+      _localizedValues[localeCode]['archived_credit'] ?? '';
 
-  String get deletedCredit => _localizedValues[localeCode]['deleted_credit'];
+  String get deletedCredit =>
+      _localizedValues[localeCode]['deleted_credit'] ?? '';
 
-  String get restoredCredit => _localizedValues[localeCode]['restored_credit'];
+  String get restoredCredit =>
+      _localizedValues[localeCode]['restored_credit'] ?? '';
 
-  String get creditDate => _localizedValues[localeCode]['credit_date'];
+  String get creditDate => _localizedValues[localeCode]['credit_date'] ?? '';
 
   String get accountManagement =>
-      _localizedValues[localeCode]['account_management'];
+      _localizedValues[localeCode]['account_management'] ?? '';
 
-  String get proposals => _localizedValues[localeCode]['proposals'];
+  String get proposals => _localizedValues[localeCode]['proposals'] ?? '';
 
-  String get tickets => _localizedValues[localeCode]['tickets'];
+  String get tickets => _localizedValues[localeCode]['tickets'] ?? '';
 
   String get recurringInvoices =>
-      _localizedValues[localeCode]['recurring_invoices'];
+      _localizedValues[localeCode]['recurring_invoices'] ?? '';
 
   String get recurringQuotes =>
-      _localizedValues[localeCode]['recurring_quotes'];
+      _localizedValues[localeCode]['recurring_quotes'] ?? '';
 
-  String get recurringTasks => _localizedValues[localeCode]['recurring_tasks'];
+  String get recurringTasks =>
+      _localizedValues[localeCode]['recurring_tasks'] ?? '';
 
   String get recurringExpenses =>
-      _localizedValues[localeCode]['recurring_expenses'];
+      _localizedValues[localeCode]['recurring_expenses'] ?? '';
 
-  String get customDesigns => _localizedValues[localeCode]['custom_designs'];
+  String get customDesigns =>
+      _localizedValues[localeCode]['custom_designs'] ?? '';
 
-  String get cssFramework => _localizedValues[localeCode]['css_framework'];
+  String get cssFramework =>
+      _localizedValues[localeCode]['css_framework'] ?? '';
 
-  String get loadDesign => _localizedValues[localeCode]['load_design'];
+  String get loadDesign => _localizedValues[localeCode]['load_design'] ?? '';
 
-  String get header => _localizedValues[localeCode]['header'];
+  String get header => _localizedValues[localeCode]['header'] ?? '';
 
-  String get includes => _localizedValues[localeCode]['includes'];
+  String get includes => _localizedValues[localeCode]['includes'] ?? '';
 
-  String get creditDesign => _localizedValues[localeCode]['credit_design'];
+  String get creditDesign =>
+      _localizedValues[localeCode]['credit_design'] ?? '';
 
   String get partialPaymentEmail =>
-      _localizedValues[localeCode]['partial_payment_email'];
+      _localizedValues[localeCode]['partial_payment_email'] ?? '';
 
-  String get partialPayment => _localizedValues[localeCode]['partial_payment'];
+  String get partialPayment =>
+      _localizedValues[localeCode]['partial_payment'] ?? '';
 
-  String get convertedQuote => _localizedValues[localeCode]['converted_quote'];
+  String get convertedQuote =>
+      _localizedValues[localeCode]['converted_quote'] ?? '';
 
-  String get enableModules => _localizedValues[localeCode]['enable_modules'];
+  String get enableModules =>
+      _localizedValues[localeCode]['enable_modules'] ?? '';
 
-  String get cancelAccount => _localizedValues[localeCode]['cancel_account'];
+  String get cancelAccount =>
+      _localizedValues[localeCode]['cancel_account'] ?? '';
 
   String get cancelAccountMessage =>
-      _localizedValues[localeCode]['cancel_account_message'];
+      _localizedValues[localeCode]['cancel_account_message'] ?? '';
 
-  String get deleteCompany => _localizedValues[localeCode]['delete_company'];
+  String get deleteCompany =>
+      _localizedValues[localeCode]['delete_company'] ?? '';
 
   String get deleteCompanyMessage =>
-      _localizedValues[localeCode]['delete_company_message'];
+      _localizedValues[localeCode]['delete_company_message'] ?? '';
 
   String get purchaseLicense =>
-      _localizedValues[localeCode]['purchase_license'];
+      _localizedValues[localeCode]['purchase_license'] ?? '';
 
-  String get applyLicense => _localizedValues[localeCode]['apply_license'];
+  String get applyLicense =>
+      _localizedValues[localeCode]['apply_license'] ?? '';
 
   String get receiveAllNotifications =>
-      _localizedValues[localeCode]['receive_all_notifications'];
+      _localizedValues[localeCode]['receive_all_notifications'] ?? '';
 
-  String get invoiceSent => _localizedValues[localeCode]['invoice_sent'];
+  String get invoiceSent => _localizedValues[localeCode]['invoice_sent'] ?? '';
 
-  String get invoiceViewed => _localizedValues[localeCode]['invoice_viewed'];
+  String get invoiceViewed =>
+      _localizedValues[localeCode]['invoice_viewed'] ?? '';
 
-  String get paymentSuccess => _localizedValues[localeCode]['payment_success'];
+  String get paymentSuccess =>
+      _localizedValues[localeCode]['payment_success'] ?? '';
 
-  String get paymentFailure => _localizedValues[localeCode]['payment_failure'];
+  String get paymentFailure =>
+      _localizedValues[localeCode]['payment_failure'] ?? '';
 
-  String get quoteSent => _localizedValues[localeCode]['quote_sent'];
+  String get quoteSent => _localizedValues[localeCode]['quote_sent'] ?? '';
 
-  String get quoteViewed => _localizedValues[localeCode]['quote_viewed'];
+  String get quoteViewed => _localizedValues[localeCode]['quote_viewed'] ?? '';
 
-  String get quoteApproved => _localizedValues[localeCode]['quote_approved'];
+  String get quoteApproved =>
+      _localizedValues[localeCode]['quote_approved'] ?? '';
 
-  String get creditSent => _localizedValues[localeCode]['credit_sent'];
+  String get creditSent => _localizedValues[localeCode]['credit_sent'] ?? '';
 
-  String get creditViewed => _localizedValues[localeCode]['credit_viewed'];
+  String get creditViewed =>
+      _localizedValues[localeCode]['credit_viewed'] ?? '';
 
-  String get none => _localizedValues[localeCode]['none'];
+  String get none => _localizedValues[localeCode]['none'] ?? '';
 
-  String get owned => _localizedValues[localeCode]['owned'];
+  String get owned => _localizedValues[localeCode]['owned'] ?? '';
 
-  String get permissions => _localizedValues[localeCode]['permissions'];
+  String get permissions => _localizedValues[localeCode]['permissions'] ?? '';
 
-  String get allEvents => _localizedValues[localeCode]['all_events'];
+  String get allEvents => _localizedValues[localeCode]['all_events'] ?? '';
 
-  String get addField => _localizedValues[localeCode]['add_field'];
+  String get addField => _localizedValues[localeCode]['add_field'] ?? '';
 
-  String get clientDetails => _localizedValues[localeCode]['client_details'];
+  String get clientDetails =>
+      _localizedValues[localeCode]['client_details'] ?? '';
 
-  String get companyAddress => _localizedValues[localeCode]['company_address'];
+  String get companyAddress =>
+      _localizedValues[localeCode]['company_address'] ?? '';
 
-  String get invoiceDetails => _localizedValues[localeCode]['invoice_details'];
+  String get invoiceDetails =>
+      _localizedValues[localeCode]['invoice_details'] ?? '';
 
-  String get quoteDetails => _localizedValues[localeCode]['quote_details'];
+  String get quoteDetails =>
+      _localizedValues[localeCode]['quote_details'] ?? '';
 
-  String get creditDetails => _localizedValues[localeCode]['credit_details'];
+  String get creditDetails =>
+      _localizedValues[localeCode]['credit_details'] ?? '';
 
-  String get productColumns => _localizedValues[localeCode]['product_columns'];
+  String get productColumns =>
+      _localizedValues[localeCode]['product_columns'] ?? '';
 
-  String get taskColumns => _localizedValues[localeCode]['task_columns'];
+  String get taskColumns => _localizedValues[localeCode]['task_columns'] ?? '';
 
-  String get cloneToCredit => _localizedValues[localeCode]['clone_to_credit'];
+  String get cloneToCredit =>
+      _localizedValues[localeCode]['clone_to_credit'] ?? '';
 
-  String get savedDesign => _localizedValues[localeCode]['saved_design'];
+  String get savedDesign => _localizedValues[localeCode]['saved_design'] ?? '';
 
-  String get refresh => _localizedValues[localeCode]['refresh'];
+  String get refresh => _localizedValues[localeCode]['refresh'] ?? '';
 
-  String get clientCity => _localizedValues[localeCode]['client_city'];
+  String get clientCity => _localizedValues[localeCode]['client_city'] ?? '';
 
-  String get clientState => _localizedValues[localeCode]['client_state'];
+  String get clientState => _localizedValues[localeCode]['client_state'] ?? '';
 
-  String get clientCountry => _localizedValues[localeCode]['client_country'];
+  String get clientCountry =>
+      _localizedValues[localeCode]['client_country'] ?? '';
 
-  String get clientIsActive => _localizedValues[localeCode]['client_is_active'];
+  String get clientIsActive =>
+      _localizedValues[localeCode]['client_is_active'] ?? '';
 
-  String get clientBalance => _localizedValues[localeCode]['client_balance'];
+  String get clientBalance =>
+      _localizedValues[localeCode]['client_balance'] ?? '';
 
-  String get clientAddress1 => _localizedValues[localeCode]['client_address1'];
+  String get clientAddress1 =>
+      _localizedValues[localeCode]['client_address1'] ?? '';
 
-  String get clientAddress2 => _localizedValues[localeCode]['client_address2'];
+  String get clientAddress2 =>
+      _localizedValues[localeCode]['client_address2'] ?? '';
 
   String get clientShippingAddress1 =>
-      _localizedValues[localeCode]['client_shipping_address1'];
+      _localizedValues[localeCode]['client_shipping_address1'] ?? '';
 
   String get clientShippingAddress2 =>
-      _localizedValues[localeCode]['client_shipping_address2'];
+      _localizedValues[localeCode]['client_shipping_address2'] ?? '';
 
-  String get type => _localizedValues[localeCode]['type'];
+  String get type => _localizedValues[localeCode]['type'] ?? '';
 
-  String get invoiceAmount => _localizedValues[localeCode]['invoice_amount'];
+  String get invoiceAmount =>
+      _localizedValues[localeCode]['invoice_amount'] ?? '';
 
-  String get invoiceDueDate => _localizedValues[localeCode]['invoice_due_date'];
+  String get invoiceDueDate =>
+      _localizedValues[localeCode]['invoice_due_date'] ?? '';
 
-  String get taxRate1 => _localizedValues[localeCode]['tax_rate1'];
+  String get taxRate1 => _localizedValues[localeCode]['tax_rate1'] ?? '';
 
-  String get taxRate2 => _localizedValues[localeCode]['tax_rate2'];
+  String get taxRate2 => _localizedValues[localeCode]['tax_rate2'] ?? '';
 
-  String get taxRate3 => _localizedValues[localeCode]['tax_rate3'];
+  String get taxRate3 => _localizedValues[localeCode]['tax_rate3'] ?? '';
 
-  String get autoBill => _localizedValues[localeCode]['auto_bill'];
+  String get autoBill => _localizedValues[localeCode]['auto_bill'] ?? '';
 
-  String get archivedAt => _localizedValues[localeCode]['archived_at'];
+  String get archivedAt => _localizedValues[localeCode]['archived_at'] ?? '';
 
-  String get hasExpenses => _localizedValues[localeCode]['has_expenses'];
+  String get hasExpenses => _localizedValues[localeCode]['has_expenses'] ?? '';
 
-  String get customTaxes1 => _localizedValues[localeCode]['custom_taxes1'];
+  String get customTaxes1 =>
+      _localizedValues[localeCode]['custom_taxes1'] ?? '';
 
-  String get customTaxes2 => _localizedValues[localeCode]['custom_taxes2'];
+  String get customTaxes2 =>
+      _localizedValues[localeCode]['custom_taxes2'] ?? '';
 
-  String get customTaxes3 => _localizedValues[localeCode]['custom_taxes3'];
+  String get customTaxes3 =>
+      _localizedValues[localeCode]['custom_taxes3'] ?? '';
 
-  String get customTaxes4 => _localizedValues[localeCode]['custom_taxes4'];
+  String get customTaxes4 =>
+      _localizedValues[localeCode]['custom_taxes4'] ?? '';
 
   String get customSurcharge1 =>
-      _localizedValues[localeCode]['custom_surcharge1'];
+      _localizedValues[localeCode]['custom_surcharge1'] ?? '';
 
   String get customSurcharge2 =>
-      _localizedValues[localeCode]['custom_surcharge2'];
+      _localizedValues[localeCode]['custom_surcharge2'] ?? '';
 
   String get customSurcharge3 =>
-      _localizedValues[localeCode]['custom_surcharge3'];
+      _localizedValues[localeCode]['custom_surcharge3'] ?? '';
 
   String get customSurcharge4 =>
-      _localizedValues[localeCode]['custom_surcharge4'];
+      _localizedValues[localeCode]['custom_surcharge4'] ?? '';
 
-  String get isDeleted => _localizedValues[localeCode]['is_deleted'];
+  String get isDeleted => _localizedValues[localeCode]['is_deleted'] ?? '';
 
-  String get vendorCity => _localizedValues[localeCode]['vendor_city'];
+  String get vendorCity => _localizedValues[localeCode]['vendor_city'] ?? '';
 
-  String get vendorState => _localizedValues[localeCode]['vendor_state'];
+  String get vendorState => _localizedValues[localeCode]['vendor_state'] ?? '';
 
-  String get vendorCountry => _localizedValues[localeCode]['vendor_country'];
+  String get vendorCountry =>
+      _localizedValues[localeCode]['vendor_country'] ?? '';
 
-  String get isApproved => _localizedValues[localeCode]['is_approved'];
+  String get isApproved => _localizedValues[localeCode]['is_approved'] ?? '';
 
-  String get taxName => _localizedValues[localeCode]['tax_name'];
+  String get taxName => _localizedValues[localeCode]['tax_name'] ?? '';
 
-  String get taxAmount => _localizedValues[localeCode]['tax_amount'];
+  String get taxAmount => _localizedValues[localeCode]['tax_amount'] ?? '';
 
-  String get taxPaid => _localizedValues[localeCode]['tax_paid'];
+  String get taxPaid => _localizedValues[localeCode]['tax_paid'] ?? '';
 
-  String get paymentAmount => _localizedValues[localeCode]['payment_amount'];
+  String get paymentAmount =>
+      _localizedValues[localeCode]['payment_amount'] ?? '';
 
-  String get age => _localizedValues[localeCode]['age'];
+  String get age => _localizedValues[localeCode]['age'] ?? '';
 
-  String get ageGroup0 => _localizedValues[localeCode]['age_group_0'];
+  String get ageGroup0 => _localizedValues[localeCode]['age_group_0'] ?? '';
 
-  String get ageGroup30 => _localizedValues[localeCode]['age_group_30'];
+  String get ageGroup30 => _localizedValues[localeCode]['age_group_30'] ?? '';
 
-  String get ageGroup60 => _localizedValues[localeCode]['age_group_60'];
+  String get ageGroup60 => _localizedValues[localeCode]['age_group_60'] ?? '';
 
-  String get ageGroup90 => _localizedValues[localeCode]['age_group_90'];
+  String get ageGroup90 => _localizedValues[localeCode]['age_group_90'] ?? '';
 
-  String get ageGroup120 => _localizedValues[localeCode]['age_group_120'];
+  String get ageGroup120 => _localizedValues[localeCode]['age_group_120'] ?? '';
 
-  String get invoiceBalance => _localizedValues[localeCode]['invoice_balance'];
+  String get invoiceBalance =>
+      _localizedValues[localeCode]['invoice_balance'] ?? '';
 
-  String get purgeData => _localizedValues[localeCode]['purge_data'];
+  String get purgeData => _localizedValues[localeCode]['purge_data'] ?? '';
 
   String get purgeSuccessful =>
-      _localizedValues[localeCode]['purge_successful'];
+      _localizedValues[localeCode]['purge_successful'] ?? '';
 
   String get purgeDataMessage =>
-      _localizedValues[localeCode]['purge_data_message'];
+      _localizedValues[localeCode]['purge_data_message'] ?? '';
 
-  String get license => _localizedValues[localeCode]['license'];
+  String get license => _localizedValues[localeCode]['license'] ?? '';
 
-  String get optional => _localizedValues[localeCode]['optional'];
+  String get optional => _localizedValues[localeCode]['optional'] ?? '';
 
-  String get custom1 => _localizedValues[localeCode]['custom1'];
+  String get custom1 => _localizedValues[localeCode]['custom1'] ?? '';
 
-  String get custom2 => _localizedValues[localeCode]['custom2'];
+  String get custom2 => _localizedValues[localeCode]['custom2'] ?? '';
 
-  String get custom3 => _localizedValues[localeCode]['custom3'];
+  String get custom3 => _localizedValues[localeCode]['custom3'] ?? '';
 
-  String get custom4 => _localizedValues[localeCode]['custom4'];
+  String get custom4 => _localizedValues[localeCode]['custom4'] ?? '';
 
-  String get fullName => _localizedValues[localeCode]['full_name'];
+  String get fullName => _localizedValues[localeCode]['full_name'] ?? '';
 
   String get cityStatePostal =>
-      _localizedValues[localeCode]['city_state_postal'];
+      _localizedValues[localeCode]['city_state_postal'] ?? '';
 
   String get postalCityState =>
-      _localizedValues[localeCode]['postal_city_state'];
+      _localizedValues[localeCode]['postal_city_state'] ?? '';
 
   String lookup(String key) {
     final lookupKey = toSnakeCase(key);
