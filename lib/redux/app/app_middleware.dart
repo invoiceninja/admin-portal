@@ -411,6 +411,7 @@ Middleware<AppState> _createAccountLoaded() {
         store.dispatch(SelectCompany(i));
         store.dispatch(LoadCompanySuccess(userCompany));
 
+        // TODO remove this code
         final company = userCompany.company;
         if (company.clients.isNotEmpty) {
           store.dispatch(LoadClientsSuccess(company.clients));

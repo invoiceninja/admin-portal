@@ -1106,6 +1106,106 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'age': 'Age'
     },
     'sq': {
+      'full_name': 'Full Name',
+      'city_state_postal': 'Qytet/Shtet/Poste',
+      'postal_city_state': 'Postal/City/State',
+      'custom1': 'First Custom',
+      'custom2': 'Second Custom',
+      'custom3': 'Third Custom',
+      'custom4': 'Fourth Custom',
+      'optional': 'Optional',
+      'license': 'License',
+      'purge_data': 'Purge Data',
+      'purge_successful': 'Successfully purged company data',
+      'purge_data_message':
+          'Warning: This will permanently erase your data, there is no undo.',
+      'invoice_balance': 'Invoice Balance',
+      'age_group_0': '0 - 30 Days',
+      'age_group_30': '30 - 60 Days',
+      'age_group_60': '60 - 90 Days',
+      'age_group_90': '90 - 120 Days',
+      'age_group_120': '120+ Days',
+      'refresh': 'Refresh',
+      'saved_design': 'Successfully saved design',
+      'client_details': 'Client Details',
+      'company_address': 'Company Address',
+      'invoice_details': 'Invoice Details',
+      'quote_details': 'Quote Details',
+      'credit_details': 'Credit Details',
+      'product_columns': 'Product Columns',
+      'task_columns': 'Task Columns',
+      'add_field': 'Add Field',
+      'all_events': 'All Events',
+      'permissions': 'Lejet',
+      'none': 'None',
+      'owned': 'Owned',
+      'payment_success': 'Payment Success',
+      'payment_failure': 'Payment Failure',
+      'invoice_sent': ':count invoice sent',
+      'quote_sent': 'Quote Sent',
+      'credit_sent': 'Credit Sent',
+      'invoice_viewed': 'Invoice Viewed',
+      'quote_viewed': 'Quote Viewed',
+      'credit_viewed': 'Credit Viewed',
+      'quote_approved': 'Quote Approved',
+      'receive_all_notifications': 'Receive All Notifications',
+      'purchase_license': 'Purchase License',
+      'apply_license': 'Apply License',
+      'cancel_account': 'Fshi llogarinë',
+      'cancel_account_message':
+          'Warning: This will permanently delete your account, there is no undo.',
+      'delete_company': 'Delete Company',
+      'delete_company_message':
+          'Warning: This will permanently delete your company, there is no undo.',
+      'enable_modules': 'Enable Modules',
+      'converted_quote': 'Successfully converted quote',
+      'credit_design': 'Credit Design',
+      'includes': 'Includes',
+      'header': 'Header',
+      'load_design': 'Load Design',
+      'css_framework': 'CSS Framework',
+      'custom_designs': 'Custom Designs',
+      'designs': 'Designs',
+      'new_design': 'New Design',
+      'edit_design': 'Edit Design',
+      'created_design': 'Successfully created design',
+      'updated_design': 'Successfully updated design',
+      'archived_design': 'Successfully archived design',
+      'deleted_design': 'Successfully deleted design',
+      'removed_design': 'Successfully removed design',
+      'restored_design': 'Successfully restored design',
+      'proposals': 'Proposals',
+      'tickets': 'Tickets',
+      'recurring_invoices': 'Fatura të përsëritshme',
+      'recurring_quotes': 'Recurring Quotes',
+      'recurring_tasks': 'Recurring Tasks',
+      'recurring_expenses': 'Recurring Expenses',
+      'account_management': 'Menaxhimi i llogarive',
+      'credit_date': 'Data e kreditit',
+      'credit': 'Kredi',
+      'credits': 'Kredi',
+      'new_credit': 'Enter Credit',
+      'edit_credit': 'Edit Credit',
+      'created_credit': 'Krediti është krijuar me sukses',
+      'updated_credit': 'Successfully updated credit',
+      'archived_credit': 'Krediti është arkivuar me sukses',
+      'deleted_credit': 'Krediti është fshirë me sukses',
+      'removed_credit': 'Successfully removed credit',
+      'restored_credit': 'Krediti është rikhyer me sukses',
+      'current_version': 'Versioni aktual',
+      'latest_version': 'Latest Version',
+      'update_now': 'Update Now',
+      'a_new_version_is_available': 'A new version of the web app is available',
+      'update_available': 'Update Available',
+      'app_updated': 'Update successfully completed',
+      'learn_more': 'Mëso më shumë',
+      'integrations': 'Integrations',
+      'tracking_id': 'Tracking Id',
+      'slack_webhook_url': 'Slack Webhook URL',
+      'credit_footer': 'Credit Footer',
+      'credit_terms': 'Credit Terms',
+      'untitled_company': 'Untitled Company',
+      'added_company': 'Successfully added company',
       'company1': 'Custom Company 1',
       'company2': 'Custom Company 2',
       'company3': 'Custom Company 3',
@@ -1194,7 +1294,6 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'reports': 'Raporte',
       'report': 'Raport',
       'add_company': 'Shto Kompani',
-      'to_learn_about_gogle_fonts': 'to learn about Google Fonts',
       'unpaid_invoice': 'Unpaid Invoice',
       'paid_invoice': 'Paid Invoice',
       'unapproved_quote': 'Unapproved Quote',
@@ -1231,7 +1330,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'domain_url': 'Domain URL',
       'password_is_too_short': 'Password is too short',
       'password_is_too_easy':
-          'Password msut contain an upper case character and a number',
+          'Password must contain an upper case character and a number',
       'client_portal_tasks': 'Client Portal Tasks',
       'client_portal_dashboard': 'Client Portal Dashboard',
       'please_enter_a_value': 'Please enter a value',
@@ -1305,6 +1404,8 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'days': 'Days',
       'invoice_email': 'Emaili i Faturës',
       'payment_email': 'Emaili i Pagesës',
+      'partial_payment': 'Partial Payment',
+      'partial_payment_email': 'Partial Payment Email',
       'quote_email': 'Emaili i Ofertës',
       'endless_reminder': 'Endless Reminder',
       'filtered_by_user': 'Filtered by User',
@@ -1375,8 +1476,6 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'company': 'Company',
       'generated_numbers': 'Generated Numbers',
       'charge_taxes': 'Vendos taksat',
-      'credit': 'Kredi',
-      'credits': 'Kredi',
       'next_reset': 'Next Reset',
       'reset_counter': 'Reset Counter',
       'recurring_prefix': 'Recurring Prefix',
@@ -1419,9 +1518,6 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'enable_portal_password': 'Password Protect Invoices',
       'enable_portal_password_help':
           'Ju mundëson të vendosni fjalëkalim për secilin kontakt. Nëse vendoset fjalëkalimi, kontakti duhet të vendos fjalëkalimin para se t\'i sheh faturat.',
-      'send_portal_password': 'Generate Automatically',
-      'send_portal_password_help':
-          'Nëse nuk caktoni fjalëkalim, do të krijohet një dhe do t\'ju dërgohet me faturën e parë.',
       'authorization': 'Authorization',
       'subdomain': 'Subdomain',
       'domain': 'Domain',
@@ -1709,6 +1805,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'custom': 'E ndryshueshme',
       'clone_to_invoice': 'Clone to Invoice',
       'clone_to_quote': 'Clone to Quote',
+      'clone_to_credit': 'Clone to Credit',
       'view_invoice': 'Shiko Faturën',
       'convert': 'Convert',
       'more': 'More',
@@ -1721,7 +1818,6 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'edit_expense': 'Edito shpenzimi',
       'edit_vendor': 'Edito kompaninë',
       'edit_project': 'Edit Project',
-      'edit_credit': 'Edit Credit',
       'edit_recurring_invoice': 'Edit Recurring Invoice',
       'edit_recurring_expense': 'Edit Recurring Expense',
       'edit_recurring_quote': 'Edit Recurring Quote',
@@ -1872,15 +1968,11 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'approved': 'Approved',
       'partial': 'E pjesshme/depozite',
       'paid': 'Paguar',
-      'invoice_status_1': 'Draft',
-      'invoice_status_2': 'Sent',
-      'invoice_status_3': 'Viewed',
-      'invoice_status_4': 'Approved',
       'mark_sent': 'Shenja është dërguar',
       'marked_invoice_as_sent': 'Successfully marked invoice as sent',
-      'marked_invoice_as_paid': 'Successfully marked invoice as sent',
+      'marked_invoice_as_paid': 'Successfully marked invoice as paid',
       'marked_invoices_as_sent': 'Successfully marked invoices as sent',
-      'marked_invoices_as_paid': 'Successfully marked invoices as sent',
+      'marked_invoices_as_paid': 'Successfully marked invoices as paid',
       'done': 'Përfundo',
       'please_enter_a_client_or_contact_name':
           'Please enter a client or contact name',
@@ -2015,7 +2107,9 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'activity_57': 'System failed to email invoice :invoice',
       'one_time_password': 'One Time Password',
       'emailed_quote': 'Oferta është dërguar me sukses me email',
+      'emailed_credit': 'Successfully emailed credit',
       'marked_quote_as_sent': 'Successfully marked quote as sent',
+      'marked_credit_as_sent': 'Successfully marked credit as sent',
       'expired': 'Skaduar',
       'all': 'Të gjitha',
       'select': 'Selekto',
@@ -2061,6 +2155,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'email_subject_invoice': 'Email Invoice Subject',
       'email_subject_quote': 'Email Quote Subject',
       'email_subject_payment': 'Email Payment Subject',
+      'email_subject_payment_partial': 'Email Partial Payment Subject',
       'switch_list_table': 'Switch List Table',
       'client_city': 'Client City',
       'client_state': 'Client State',
@@ -2092,8 +2187,114 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'vendor_city': 'Vendor City',
       'vendor_state': 'Vendor State',
       'vendor_country': 'Vendor Country',
+      'is_approved': 'Is Approved',
+      'tax_name': 'Emri i taksës',
+      'tax_amount': 'Tax Amount',
+      'tax_paid': 'Tax Paid',
+      'payment_amount': 'Shuma e paguar',
+      'age': 'Age',
     },
     'bg': {
+      'full_name': 'Пълно име',
+      'city_state_postal': 'Град / Щат / Пощ. код',
+      'postal_city_state': 'Пощ. код / Щат / Град',
+      'custom1': 'Първа колона',
+      'custom2': 'Втора колона',
+      'custom3': 'Third Custom',
+      'custom4': 'Fourth Custom',
+      'optional': 'Optional',
+      'license': 'License',
+      'purge_data': 'Изчистване на данни',
+      'purge_successful': 'Успешно изчистени фирмени данни',
+      'purge_data_message':
+          'Внимание: Това ще изтрие данните перманентно без възможност за възстановяване.',
+      'invoice_balance': 'Invoice Balance',
+      'age_group_0': '0 - 30 дни',
+      'age_group_30': '30 - 60 дни',
+      'age_group_60': '60 - 90 дни',
+      'age_group_90': '90 - 120 дни',
+      'age_group_120': '120+ дни',
+      'refresh': 'Опресняване',
+      'saved_design': 'Successfully saved design',
+      'client_details': 'Client Details',
+      'company_address': 'Company Address',
+      'invoice_details': 'Детайли на фактурата',
+      'quote_details': 'Quote Details',
+      'credit_details': 'Credit Details',
+      'product_columns': 'Product Columns',
+      'task_columns': 'Task Columns',
+      'add_field': 'Add Field',
+      'all_events': 'All Events',
+      'permissions': 'Права за достъп',
+      'none': 'Няма',
+      'owned': 'Owned',
+      'payment_success': 'Payment Success',
+      'payment_failure': 'Payment Failure',
+      'invoice_sent': ':count изпратена фактура',
+      'quote_sent': 'Quote Sent',
+      'credit_sent': 'Credit Sent',
+      'invoice_viewed': 'Invoice Viewed',
+      'quote_viewed': 'Quote Viewed',
+      'credit_viewed': 'Credit Viewed',
+      'quote_approved': 'Quote Approved',
+      'receive_all_notifications': 'Receive All Notifications',
+      'purchase_license': 'Purchase License',
+      'apply_license': 'Въведете лиценз',
+      'cancel_account': 'Изтрий Профил',
+      'cancel_account_message':
+          'ВНИМАНИЕ: Това действие ще изтрие перманентно вашият профил и данните в него. След това данните няма как да бъдат възстановени.',
+      'delete_company': 'Изтриване на фирма',
+      'delete_company_message':
+          'Внимание: Това ще изтрие перманентно фирматаВи без възможност за възстановяване.',
+      'enable_modules': 'Enable Modules',
+      'converted_quote': 'Successfully converted quote',
+      'credit_design': 'Credit Design',
+      'includes': 'Includes',
+      'header': 'Хедър',
+      'load_design': 'Зареждане на дизайн',
+      'css_framework': 'CSS Framework',
+      'custom_designs': 'Custom Designs',
+      'designs': 'Designs',
+      'new_design': 'New Design',
+      'edit_design': 'Edit Design',
+      'created_design': 'Successfully created design',
+      'updated_design': 'Successfully updated design',
+      'archived_design': 'Successfully archived design',
+      'deleted_design': 'Successfully deleted design',
+      'removed_design': 'Successfully removed design',
+      'restored_design': 'Successfully restored design',
+      'proposals': 'Предложения',
+      'tickets': 'Tickets',
+      'recurring_invoices': 'Периодични фактури',
+      'recurring_quotes': 'Периодични Оферти',
+      'recurring_tasks': 'Recurring Tasks',
+      'recurring_expenses': 'Повтарящи се разходи',
+      'account_management': 'Управление на акаунтите',
+      'credit_date': 'Кредитна Дата',
+      'credit': 'Кредит',
+      'credits': 'Кредити',
+      'new_credit': 'Въведи кредит',
+      'edit_credit': 'Редакция на кредит',
+      'created_credit': 'Успешно създаден кредит',
+      'updated_credit': 'Успешна актуализация на кредит',
+      'archived_credit': 'Успешно архивиран кредит',
+      'deleted_credit': 'Успешно изтрит кредит',
+      'removed_credit': 'Successfully removed credit',
+      'restored_credit': 'Успешно възстановен кредит',
+      'current_version': 'Текуща версия',
+      'latest_version': 'Latest Version',
+      'update_now': 'Update Now',
+      'a_new_version_is_available': 'A new version of the web app is available',
+      'update_available': 'Update Available',
+      'app_updated': 'Update successfully completed',
+      'learn_more': 'Научи повече',
+      'integrations': 'Integrations',
+      'tracking_id': 'Tracking Id',
+      'slack_webhook_url': 'Slack Webhook URL',
+      'credit_footer': 'Credit Footer',
+      'credit_terms': 'Credit Terms',
+      'untitled_company': 'Untitled Company',
+      'added_company': 'Successfully added company',
       'company1': 'Custom Company 1',
       'company2': 'Custom Company 2',
       'company3': 'Custom Company 3',
@@ -2103,9 +2304,9 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'product3': 'Custom Product 3',
       'product4': 'Custom Product 4',
       'client1': 'Custom Client 1',
-      'client2': 'Custom Client 1',
-      'client3': 'Custom Client 1',
-      'client4': 'Custom Client 1',
+      'client2': 'Custom Client 2',
+      'client3': 'Custom Client 3',
+      'client4': 'Custom Client 4',
       'contact1': 'Custom Contact 1',
       'contact2': 'Custom Contact 2',
       'contact3': 'Custom Contact 3',
@@ -2182,7 +2383,6 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'reports': 'Справки',
       'report': 'Справка',
       'add_company': 'Добавяне на фирма',
-      'to_learn_about_gogle_fonts': 'to learn about Google Fonts',
       'unpaid_invoice': 'Неплатена фактура',
       'paid_invoice': 'Платена фактура',
       'unapproved_quote': 'Неодобрена оферта',
@@ -2219,7 +2419,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'domain_url': 'Domain URL',
       'password_is_too_short': 'Паролата е твърде кратка',
       'password_is_too_easy':
-          'Password msut contain an upper case character and a number',
+          'Password must contain an upper case character and a number',
       'client_portal_tasks': 'Client Portal Tasks',
       'client_portal_dashboard': 'Client Portal Dashboard',
       'please_enter_a_value': 'Please enter a value',
@@ -2281,21 +2481,23 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'recover_password_email_sent': 'A password recovery email has been sent',
       'submit': 'Изпращане',
       'recover_password': 'Възстановяване на парола',
-      'late_fees': 'Late Fees',
+      'late_fees': 'Закъснели Такси',
       'credit_number': 'Кредит номер',
       'payment_number': 'Payment Number',
       'late_fee_amount': 'Стойност на таксата за закъснение',
       'late_fee_percent': 'Процент на таксата за закъснение',
       'schedule': 'График',
-      'before_due_date': 'Before the due date',
-      'after_due_date': 'After the due date',
-      'after_invoice_date': 'After the invoice date',
+      'before_due_date': 'Преди крайната дата',
+      'after_due_date': 'След крайната дата',
+      'after_invoice_date': 'След датата на фактурата',
       'days': 'Дни',
       'invoice_email': 'Имейл за фактура',
       'payment_email': 'Имейл за плащане',
+      'partial_payment': 'Partial Payment',
+      'partial_payment_email': 'Partial Payment Email',
       'quote_email': 'Имейл за оферта',
       'endless_reminder': 'Безкрайно подсещане',
-      'filtered_by_user': 'Filtered by User',
+      'filtered_by_user': 'Филтрирано по Потребител',
       'administrator': 'Администратор',
       'administrator_help':
           'Даване на права на потребителя да управлява другите потребители, да променя настойки и да редактира всички записи',
@@ -2303,7 +2505,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'users': 'Потребители',
       'new_user': 'Нов потребител',
       'edit_user': 'Редактирай Потребител',
-      'created_user': 'Successfully created user',
+      'created_user': 'Успешно създаден потребител',
       'updated_user': 'Успешно обновен потребител',
       'archived_user': 'Успешно архивиране на потребител',
       'deleted_user': 'Успешно изтрит Потребител',
@@ -2322,8 +2524,8 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'first_page': 'Първа страница',
       'all_pages': 'Всички страници',
       'last_page': 'Последна страница',
-      'primary_font': 'Primary Font',
-      'secondary_font': 'Secondary Font',
+      'primary_font': 'Основен Шрифт',
+      'secondary_font': 'Допълнителен Шрифт',
       'primary_color': 'Основен цвят',
       'secondary_color': 'Допълнителен цвят',
       'page_size': 'Размер на страницата',
@@ -2364,8 +2566,6 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'company': 'Фирма',
       'generated_numbers': 'Генерирани номера',
       'charge_taxes': 'Начисли данъци',
-      'credit': 'Кредит',
-      'credits': 'Кредити',
       'next_reset': 'Следващо нулиране',
       'reset_counter': 'Нулиране на брояч',
       'recurring_prefix': 'Префикс за периодични документи',
@@ -2407,9 +2607,6 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'enable_portal_password': 'Защита на фактурите с парола',
       'enable_portal_password_help':
           'Дава възможност да заложите парола за всеки контакт. Ако такава е заложена, контактното лице ще трябва да я въведе преди да види фактурите,',
-      'send_portal_password': 'Автоматично генериране',
-      'send_portal_password_help':
-          'Ако не бъде заложена парола, такава ще се генерира и ще бъде изпратена с първата фактура.',
       'authorization': 'Оторизация',
       'subdomain': 'Subdomain',
       'domain': 'Домейн',
@@ -2421,9 +2618,9 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'light': 'Светло',
       'dark': 'Тъмно',
       'email_design': 'Дизайн на имейл',
-      'attach_pdf': 'Attach PDF',
-      'attach_documents': 'Attach Documents',
-      'attach_ubl': 'Attach UBL',
+      'attach_pdf': 'Прикачване на PDF',
+      'attach_documents': 'Прикачване на Документи',
+      'attach_ubl': 'Прикачване на UBL',
       'email_style': 'Email Style',
       'enable_email_markup': 'Активиране на Markup',
       'reply_to_email': 'Reply-To Email',
@@ -2445,9 +2642,9 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'accepted_card_logos': 'Лога на приемани карти',
       'credentials': 'Credentials',
       'require_billing_address_help':
-          'Require client to provide their billing address',
+          'Изискване клиента да предостави адрес за фактуриране',
       'require_shipping_address_help':
-          'Require client to provide their shipping address',
+          'Изискване клиента да предостави адрес за доставка',
       'update_address': 'Актуализация на адреса',
       'update_address_help':
           'Актуализация на адреса на клиента с предоставените данни',
@@ -2521,20 +2718,20 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'filtered_by_vendor': 'Filtered by Vendor',
       'group_settings': 'Group Settings',
       'group': 'Групиране',
-      'groups': 'Groups',
-      'new_group': 'New Group',
-      'edit_group': 'Edit Group',
-      'created_group': 'Successfully created group',
-      'updated_group': 'Successfully updated group',
-      'archived_group': 'Successfully archived group',
-      'deleted_group': 'Successfully deleted group',
-      'restored_group': 'Successfully restored group',
-      'upload_logo': 'Upload Logo',
-      'uploaded_logo': 'Successfully uploaded logo',
+      'groups': 'Групи',
+      'new_group': 'Нова Група',
+      'edit_group': 'Редактира не Група',
+      'created_group': 'Групата беше създадена успешно',
+      'updated_group': 'Групата беше обновена успешно',
+      'archived_group': 'Групата беше архивирана успешно',
+      'deleted_group': 'Групата беше изтрита успешно',
+      'restored_group': 'Групата беше възстановена успешно',
+      'upload_logo': 'Качване на Лого',
+      'uploaded_logo': 'Логото беше качено успешно',
       'logo': 'Лого',
-      'saved_settings': 'Successfully saved settings',
+      'saved_settings': 'Настройките бяха записани успешно',
       'product_settings': 'Настройки на продукти',
-      'device_settings': 'Device Settings',
+      'device_settings': 'Настройка на Устройство',
       'defaults': 'По подразбиране',
       'basic_settings': 'Основни настройки',
       'advanced_settings': 'Разширени настройки',
@@ -2550,57 +2747,57 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'buy_now_buttons': 'Бутони \"Купи сега\"',
       'email_settings': 'Email настройки',
       'templates_and_reminders': 'Шаблони и напомняния',
-      'credit_cards_and_banks': 'Credit Cards & Banks',
+      'credit_cards_and_banks': 'Кредитни Карти & Банки',
       'data_visualizations': 'Визуализация на данни',
-      'price': 'Price',
-      'email_sign_up': 'Email Sign Up',
-      'google_sign_up': 'Google Sign Up',
-      'thank_you_for_your_purchase': 'Thank you for your purchase!',
+      'price': 'Цена',
+      'email_sign_up': 'Регистрация с E-mail',
+      'google_sign_up': 'Регистрация с Google',
+      'thank_you_for_your_purchase': 'Благодарим за покупката!',
       'redeem': 'Redeem',
-      'sign_up_with_google': 'Sign Up With Google',
-      'back': 'Back',
-      'past_purchases': 'Past Purchases',
-      'annual_subscription': 'Annual Subscription',
-      'pro_plan': 'Pro Plan',
+      'sign_up_with_google': 'Регистриране с Google',
+      'back': 'Назад',
+      'past_purchases': 'Минали покупки',
+      'annual_subscription': 'Годишен абонамен',
+      'pro_plan': 'Pro Абонамент',
       'enterprise_plan': 'Enterprise Plan',
-      'count_users': ':count users',
+      'count_users': ':count потребители',
       'upgrade': 'Upgrade',
-      'please_enter_a_first_name': 'Please enter a first name',
-      'please_enter_a_last_name': 'Please enter a last name',
+      'please_enter_a_first_name': 'Моля въведете собствено име',
+      'please_enter_a_last_name': 'Моля въведете фамилно име',
       'please_agree_to_terms_and_privacy':
-          'Please agree to the terms of service and privacy policy to create an account.',
-      'i_agree_to_the': 'I agree to the',
-      'terms_of_service_link': 'terms of service',
-      'privacy_policy_link': 'privacy policy',
+          'Моля съгласете се с общите условия и политиката за поверителност за да създадете профил.',
+      'i_agree_to_the': 'Съгласявам се с',
+      'terms_of_service_link': 'условията за ползване',
+      'privacy_policy_link': 'политиката за поверителност',
       'terms_of_service': 'Условия за ползване',
       'privacy_policy': 'Политика за защита на личните данни',
       'sign_up': 'Регистрация',
       'account_login': 'Вход в профила',
       'view_website': 'View Website',
-      'create_account': 'Create Account',
+      'create_account': 'Създай Профил',
       'email_login': 'Email Login',
       'create_new': 'Нов',
-      'no_record_selected': 'No record selected',
-      'error_unsaved_changes': 'Please save or cancel your changes',
+      'no_record_selected': 'Няма избрани записи',
+      'error_unsaved_changes': 'Моля запазете или откажете промените',
       'download': 'Сваляне',
-      'requires_an_enterprise_plan': 'Requires an enterprise plan',
-      'take_picture': 'Take Picture',
-      'upload_file': 'Upload File',
+      'requires_an_enterprise_plan': 'Изисква \"Enterprise\" абонамент',
+      'take_picture': 'Направи Снимка',
+      'upload_file': 'Качване на Файл',
       'document': 'Документ',
       'documents': 'Документи',
-      'new_document': 'New Document',
-      'edit_document': 'Edit Document',
-      'uploaded_document': 'Successfully uploaded document',
-      'updated_document': 'Successfully updated document',
-      'archived_document': 'Successfully archived document',
-      'deleted_document': 'Successfully deleted document',
-      'restored_document': 'Successfully restored document',
-      'no_history': 'No History',
+      'new_document': 'Нов Документ',
+      'edit_document': 'Редакция на Документ',
+      'uploaded_document': 'Документът беше качен успешно',
+      'updated_document': 'Документът беше обновен успешно',
+      'archived_document': 'Документът беше архивиран успешно',
+      'deleted_document': 'Документът беше изтрит успешно',
+      'restored_document': 'Документът беше възстановен успешно',
+      'no_history': 'Няма История',
       'expense_date': 'Дата разход',
       'pending': 'Очаквано',
       'expense_status_1': 'Logged',
       'expense_status_2': 'Pending',
-      'expense_status_3': 'Invoiced',
+      'expense_status_3': 'Фактурирано',
       'converted': 'Конвертирано',
       'add_documents_to_invoice': 'Добавяне на документ към фактура',
       'exchange_rate': 'Курс',
@@ -2628,7 +2825,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'invoiced': 'Фактурирано',
       'logged': 'Логвано',
       'running': 'Стартирано',
-      'resume': 'Отказ',
+      'resume': 'Продължаване',
       'task_errors': 'Моля, коригирайте припокриващите се интервали',
       'start': 'Старт',
       'stop': 'Стоп',
@@ -2698,6 +2895,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'custom': 'Custom',
       'clone_to_invoice': 'Копирай във фактура',
       'clone_to_quote': 'Копирай в оферта',
+      'clone_to_credit': 'Clone to Credit',
       'view_invoice': 'Прегледай Фактура',
       'convert': 'Конвертирай',
       'more': 'Още',
@@ -2710,7 +2908,6 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'edit_expense': 'Редакция на разход',
       'edit_vendor': 'Редакция на доставчик',
       'edit_project': 'Редакция на проект',
-      'edit_credit': 'Редакция на кредит',
       'edit_recurring_invoice': 'Редакция на периодична фактура',
       'edit_recurring_expense': 'Редакция на повтарящ се разход',
       'edit_recurring_quote': 'Редакция на периодична оферта',
@@ -2861,15 +3058,11 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'approved': 'Одобрено',
       'partial': 'Частично плащане / депозит',
       'paid': 'Платено',
-      'invoice_status_1': 'Чернова',
-      'invoice_status_2': 'Изпратено',
-      'invoice_status_3': 'Прегледана',
-      'invoice_status_4': 'Одобрена',
       'mark_sent': 'Маркирай като изпратена',
       'marked_invoice_as_sent': 'Фактурата е успешно маркирана като изпратена',
-      'marked_invoice_as_paid': 'Successfully marked invoice as sent',
+      'marked_invoice_as_paid': 'Successfully marked invoice as paid',
       'marked_invoices_as_sent': 'Successfully marked invoices as sent',
-      'marked_invoices_as_paid': 'Successfully marked invoices as sent',
+      'marked_invoices_as_paid': 'Successfully marked invoices as paid',
       'done': 'Готово',
       'please_enter_a_client_or_contact_name':
           'Моля, въведете клиент или лице за контакт',
@@ -2955,7 +3148,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'activity_8': ':user архивира фактура :invoice',
       'activity_9': ':user изтри фактура :invoice',
       'activity_10':
-          ':contact entered payment :payment for :payment_amount on invoice :invoice for :client',
+          ':contact въведе плащане :payment в размер на :payment_amount по фактура :invoice за :client',
       'activity_11': ':user актуализира плащане :payment',
       'activity_12': ':user архивира плащане :payment',
       'activity_13': ':user изтри плащане :payment',
@@ -3005,7 +3198,9 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'activity_57': 'System failed to email invoice :invoice',
       'one_time_password': 'Еднократна парола',
       'emailed_quote': 'Успешно изпратена Оферта',
+      'emailed_credit': 'Successfully emailed credit',
       'marked_quote_as_sent': 'Офертата е успешно маркирана като изпратена',
+      'marked_credit_as_sent': 'Successfully marked credit as sent',
       'expired': 'Изтекла',
       'all': 'Всички',
       'select': 'Избери',
@@ -3051,6 +3246,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'email_subject_invoice': 'Email Invoice Subject',
       'email_subject_quote': 'Email Quote Subject',
       'email_subject_payment': 'Email Payment Subject',
+      'email_subject_payment_partial': 'Email Partial Payment Subject',
       'switch_list_table': 'Switch List Table',
       'client_city': 'Client City',
       'client_state': 'Client State',
@@ -3082,8 +3278,111 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'vendor_city': 'Vendor City',
       'vendor_state': 'Vendor State',
       'vendor_country': 'Vendor Country',
+      'is_approved': 'Is Approved',
+      'tax_name': 'Има на такса',
+      'tax_amount': 'Такса',
+      'tax_paid': 'Платена такса',
+      'payment_amount': 'Сума на плащане',
+      'age': 'Издадена преди',
     },
     'zh_TW': {
+      'full_name': '全名',
+      'city_state_postal': '城市/州省/郵遞區號',
+      'postal_city_state': '城市/州省/郵遞區號',
+      'custom1': '首位顧客',
+      'custom2': '第二名顧客',
+      'custom3': 'Third Custom',
+      'custom4': 'Fourth Custom',
+      'optional': 'Optional',
+      'license': 'License',
+      'purge_data': '清除資料',
+      'purge_successful': '清除公司資料成功',
+      'purge_data_message': '警告: 這將永久性地抹除您的資料；沒有恢復的可能。',
+      'invoice_balance': 'Invoice Balance',
+      'age_group_0': '0 - 30 天',
+      'age_group_30': '30 - 60 天',
+      'age_group_60': '60 - 90 天',
+      'age_group_90': '90 - 120 天',
+      'age_group_120': '120 天以上',
+      'refresh': '更新',
+      'saved_design': 'Successfully saved design',
+      'client_details': 'Client Details',
+      'company_address': 'Company Address',
+      'invoice_details': '發票詳細內容',
+      'quote_details': 'Quote Details',
+      'credit_details': 'Credit Details',
+      'product_columns': 'Product Columns',
+      'task_columns': 'Task Columns',
+      'add_field': 'Add Field',
+      'all_events': 'All Events',
+      'permissions': '權限',
+      'none': '無',
+      'owned': 'Owned',
+      'payment_success': 'Payment Success',
+      'payment_failure': 'Payment Failure',
+      'invoice_sent': '已寄出 :count 份發票',
+      'quote_sent': 'Quote Sent',
+      'credit_sent': 'Credit Sent',
+      'invoice_viewed': 'Invoice Viewed',
+      'quote_viewed': 'Quote Viewed',
+      'credit_viewed': 'Credit Viewed',
+      'quote_approved': 'Quote Approved',
+      'receive_all_notifications': 'Receive All Notifications',
+      'purchase_license': 'Purchase License',
+      'apply_license': '套用授權',
+      'cancel_account': '刪除帳戶',
+      'cancel_account_message': '警告: 這將永久刪除您的帳戶，而且無法恢復。',
+      'delete_company': '刪除公司資料',
+      'delete_company_message': '警告: 這將永久刪除您的公司資料，而且不可能復原。',
+      'enable_modules': 'Enable Modules',
+      'converted_quote': 'Successfully converted quote',
+      'credit_design': 'Credit Design',
+      'includes': 'Includes',
+      'header': '頁首',
+      'load_design': '載入設計',
+      'css_framework': 'CSS Framework',
+      'custom_designs': 'Custom Designs',
+      'designs': 'Designs',
+      'new_design': 'New Design',
+      'edit_design': 'Edit Design',
+      'created_design': 'Successfully created design',
+      'updated_design': 'Successfully updated design',
+      'archived_design': 'Successfully archived design',
+      'deleted_design': 'Successfully deleted design',
+      'removed_design': 'Successfully removed design',
+      'restored_design': 'Successfully restored design',
+      'proposals': '提案',
+      'tickets': '票證',
+      'recurring_invoices': '週期性發票',
+      'recurring_quotes': '週期性報價單',
+      'recurring_tasks': 'Recurring Tasks',
+      'recurring_expenses': '週期性支出',
+      'account_management': '帳號管理',
+      'credit_date': '貸款日期',
+      'credit': '貸款',
+      'credits': '貸款',
+      'new_credit': '輸入貸款資料',
+      'edit_credit': '編輯貸款資料',
+      'created_credit': '建立貸款資料完成',
+      'updated_credit': '更新貸款資料成功',
+      'archived_credit': '歸檔貸款資料成功',
+      'deleted_credit': '刪除貸款資料成功',
+      'removed_credit': 'Successfully removed credit',
+      'restored_credit': '復原貸款資料成功',
+      'current_version': '目前版本',
+      'latest_version': 'Latest Version',
+      'update_now': 'Update Now',
+      'a_new_version_is_available': 'A new version of the web app is available',
+      'update_available': 'Update Available',
+      'app_updated': 'Update successfully completed',
+      'learn_more': '瞭解更多',
+      'integrations': 'Integrations',
+      'tracking_id': 'Tracking Id',
+      'slack_webhook_url': 'Slack Webhook URL',
+      'credit_footer': 'Credit Footer',
+      'credit_terms': 'Credit Terms',
+      'untitled_company': 'Untitled Company',
+      'added_company': 'Successfully added company',
       'company1': 'Custom Company 1',
       'company2': 'Custom Company 2',
       'company3': 'Custom Company 3',
@@ -3093,9 +3392,9 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'product3': 'Custom Product 3',
       'product4': 'Custom Product 4',
       'client1': 'Custom Client 1',
-      'client2': 'Custom Client 1',
-      'client3': 'Custom Client 1',
-      'client4': 'Custom Client 1',
+      'client2': 'Custom Client 2',
+      'client3': 'Custom Client 3',
+      'client4': 'Custom Client 4',
       'contact1': 'Custom Contact 1',
       'contact2': 'Custom Contact 2',
       'contact3': 'Custom Contact 3',
@@ -3159,7 +3458,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'shipping_state': '送貨地址之州/省',
       'shipping_postal_code': '送貨地址之郵遞區號',
       'shipping_country': '送貨地址之國家',
-      'client_id': '客戶 Id',
+      'client_id': '用戶 Id',
       'assigned_to': '分配給',
       'created_by': '由 :name 建立',
       'assigned_to_id': 'Assigned To Id',
@@ -3172,7 +3471,6 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'reports': '報告',
       'report': '報告',
       'add_company': '新增公司資料',
-      'to_learn_about_gogle_fonts': 'to learn about Google Fonts',
       'unpaid_invoice': '未付款之發票',
       'paid_invoice': '已付款之發票',
       'unapproved_quote': '未同意之報價單',
@@ -3209,7 +3507,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'domain_url': 'Domain URL',
       'password_is_too_short': '密碼太短',
       'password_is_too_easy':
-          'Password msut contain an upper case character and a number',
+          'Password must contain an upper case character and a number',
       'client_portal_tasks': 'Client Portal Tasks',
       'client_portal_dashboard': 'Client Portal Dashboard',
       'please_enter_a_value': 'Please enter a value',
@@ -3256,12 +3554,12 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'inclusive_taxes': 'Inclusive Taxes',
       'invoice_tax_rates': 'Invoice Tax Rates',
       'item_tax_rates': 'Item Tax Rates',
-      'no_client_selected': '請選取一個客戶',
+      'no_client_selected': '請選取一個用戶',
       'configure_rates': 'Configure rates',
       'tax_settings': '稅額設定',
       'tax_settings_rates': 'Tax Rates',
       'accent_color': 'Accent Color',
-      'switch': '切換',
+      'switch': 'Switch',
       'comma_sparated_list': 'Comma separated list',
       'options': '選項',
       'single_line_text': 'Single-line text',
@@ -3271,31 +3569,33 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'recover_password_email_sent': 'A password recovery email has been sent',
       'submit': '提交',
       'recover_password': '重設您的密碼',
-      'late_fees': 'Late Fees',
+      'late_fees': '滯納金',
       'credit_number': '貸款編號',
-      'payment_number': 'Payment Number',
+      'payment_number': '付款號碼',
       'late_fee_amount': '逾期費用金額',
       'late_fee_percent': '逾期費用率',
       'schedule': '時間表',
-      'before_due_date': 'Before the due date',
-      'after_due_date': 'After the due date',
-      'after_invoice_date': 'After the invoice date',
+      'before_due_date': '到期日之前',
+      'after_due_date': '到期日之後',
+      'after_invoice_date': '發票日之後',
       'days': '日',
       'invoice_email': '發票電子郵件',
-      'payment_email': '付款資料郵件',
-      'quote_email': '報價單郵件',
+      'payment_email': '付款資料電子郵件',
+      'partial_payment': 'Partial Payment',
+      'partial_payment_email': 'Partial Payment Email',
+      'quote_email': '報價單電子郵件',
       'endless_reminder': '不終止的提醒函',
-      'filtered_by_user': 'Filtered by User',
+      'filtered_by_user': '依使用者篩選',
       'administrator': '管理者',
       'administrator_help': '允許使用者管理所有使用者、改變設定、修改所有紀錄',
       'user_management': '管理使用者',
       'users': '使用者',
       'new_user': '新使用者',
       'edit_user': '編輯使用者',
-      'created_user': 'Successfully created user',
+      'created_user': '已成功建立使用者',
       'updated_user': '更新使用者資料成功',
       'archived_user': '歸檔使用者資料成功',
-      'deleted_user': '成功刪除使用者',
+      'deleted_user': '刪除使用者成功',
       'removed_user': 'Successfully removed user',
       'restored_user': '復原使用者資料成功',
       'general_settings': '一般設定',
@@ -3309,8 +3609,8 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'first_page': '第一頁',
       'all_pages': '所有頁面',
       'last_page': '最後一頁',
-      'primary_font': 'Primary Font',
-      'secondary_font': 'Secondary Font',
+      'primary_font': '主要字型',
+      'secondary_font': '次要字型',
       'primary_color': '主要色彩',
       'secondary_color': '次要色彩',
       'page_size': '頁面尺寸',
@@ -3329,7 +3629,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'auto_archive_quote': '自動歸檔',
       'auto_archive_quote_help': '報價單轉換後，自動將它們歸檔。',
       'auto_convert_quote': '自動轉換',
-      'auto_convert_quote_help': '在客戶核准後自動將報價單轉換為發票。',
+      'auto_convert_quote_help': '在用戶核准後自動將報價單轉換為發票。',
       'workflow_settings': '工作流程設定',
       'freq_daily': '每天',
       'freq_weekly': '每星期',
@@ -3340,80 +3640,76 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'freq_three_months': '三個月',
       'freq_four_months': '四個月',
       'freq_six_months': '六個月',
-      'freq_annually': '每年一次',
+      'freq_annually': 'Annually',
       'freq_two_years': '兩年',
       'freq_three_years': 'Three Years',
       'never': '永不',
       'company': '公司',
       'generated_numbers': '自動產生之號碼',
       'charge_taxes': '附收稅款',
-      'credit': '貸款',
-      'credits': '貸款',
       'next_reset': '下一次重設',
       'reset_counter': '重設計數器',
       'recurring_prefix': '用以標示週期性的前置符號',
-      'number_padding': 'Number Padding',
-      'general': 'General',
-      'surcharge_field': 'Surcharge Field',
+      'number_padding': '數字填充',
+      'general': '一般',
+      'surcharge_field': '附加費欄位',
       'company_field': '公司欄位',
-      'company_value': 'Company Value',
-      'credit_field': 'Credit Field',
+      'company_value': '公司值',
+      'credit_field': '信用欄位',
       'invoice_field': '發票欄位',
       'invoice_surcharge': '發票額外費用',
-      'client_field': '客戶欄位',
+      'client_field': '用戶欄位',
       'product_field': '產品欄位',
-      'payment_field': 'Payment Field',
+      'payment_field': '付款欄位',
       'contact_field': '聯絡人欄位',
       'vendor_field': '供應商欄位',
       'expense_field': '支出欄位',
       'project_field': '專案欄位',
       'task_field': '任務欄位',
-      'group_field': 'Group Field',
-      'number_counter': 'Number Counter',
+      'group_field': '群組欄位',
+      'number_counter': '數字計數器',
       'prefix': '前置符號',
-      'number_pattern': 'Number Pattern',
+      'number_pattern': '數字模式',
       'messages': '訊息',
       'custom_css': '自訂樣式表',
-      'custom_javascript': 'Custom JavaScript',
+      'custom_javascript': '自訂 JavaScript',
       'signature_on_pdf': '在 PDF 檔案上顯示',
-      'signature_on_pdf_help': '在發票/報價單 PDF 顯示客戶簽名。',
+      'signature_on_pdf_help': '在發票/報價單 PDF 顯示用戶簽名。',
       'show_accept_invoice_terms': '發票條款核取方塊',
-      'show_accept_invoice_terms_help': '要求客戶確認他們接受發票條款。',
+      'show_accept_invoice_terms_help': '要求用戶確認他們接受發票條款。',
       'show_accept_quote_terms': '報價單條款核取方塊',
-      'show_accept_quote_terms_help': '要求客戶確認他們接受報價條款。',
+      'show_accept_quote_terms_help': '要求用戶確認他們接受報價條款。',
       'require_invoice_signature': '發票簽名',
-      'require_invoice_signature_help': '要求客戶提供其簽名。',
+      'require_invoice_signature_help': '要求用戶提供其簽名。',
       'require_quote_signature': '報價單簽名',
       'enable_portal_password': '用以保護發票的密碼',
       'enable_portal_password_help':
           '使您能夠為每位聯絡人設定密碼。若設定密碼，聯絡人將會在查看發票之前被要求輸入密碼。',
-      'send_portal_password': '自動產生',
-      'send_portal_password_help': '若無設定密碼，則隨第一份發票自動產生一個，並將隨發票一同寄出。',
       'authorization': '授權',
       'subdomain': '子網域',
       'domain': '網域',
-      'portal_mode': 'Portal Mode',
+      'portal_mode': '入口網站模式',
       'email_signature': '向您致意，',
-      'enable_email_markup_help': '透過在電子郵件中加入 schema.org 標記，使您的客戶更輕鬆地支付您的費用。',
+      'enable_email_markup_help': '透過在電子郵件中加入 schema.org 標記，使您的用戶更輕鬆地支付您的費用。',
       'plain': '純文字',
       'light': '淺色',
       'dark': '深色',
       'email_design': '電子郵件的設計',
-      'attach_pdf': 'Attach PDF',
-      'attach_documents': 'Attach Documents',
-      'attach_ubl': 'Attach UBL',
-      'email_style': 'Email Style',
+      'attach_pdf': '附加 PDF 檔案',
+      'attach_documents': '附加文件',
+      'attach_ubl': '附加 UBL',
+      'email_style': '電子郵件樣式',
       'enable_email_markup': '啟用網頁標示',
       'reply_to_email': '回覆電子郵件',
       'bcc_email': '電子郵件密件副本',
-      'processed': 'Processed',
+      'processed': '處理',
       'credit_card': '信用卡',
       'bank_transfer': '銀行轉帳',
       'priority': '優先順序',
-      'fee_amount': 'Fee Amount',
-      'fee_percent': 'Fee Percent',
-      'fee_cap': 'Fee Cap',
-      'limits_and_fees': 'Limits/Fees',
+      'fee_amount': '費用金額',
+      'fee_percent': '費用百分比',
+      'fee_cap': '費用上限',
+      'limits_and_fees': '限額/費用',
       'enable_min': '啟用最小值',
       'enable_max': '啟用最大值',
       'min_limit': '最小值: :min',
@@ -3421,47 +3717,45 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'min': '最小值',
       'max': '最大值',
       'accepted_card_logos': '接受的卡片標誌',
-      'credentials': 'Credentials',
-      'require_billing_address_help':
-          'Require client to provide their billing address',
-      'require_shipping_address_help':
-          'Require client to provide their shipping address',
+      'credentials': '認證',
+      'require_billing_address_help': '需要使用者提供其帳單地址',
+      'require_shipping_address_help': '需要使用者提供其送貨地址',
       'update_address': '更新地址',
-      'update_address_help': '使用提供的詳細資料更新客戶的地址',
+      'update_address_help': '使用提供的詳細資料更新用戶的地址',
       'rate': '率',
       'tax_rate': '稅率',
       'new_tax_rate': '新稅率',
       'edit_tax_rate': '編輯稅率',
       'created_tax_rate': '已成功地建立稅率',
-      'updated_tax_rate': '已成功更新稅率',
+      'updated_tax_rate': '更新稅率成功',
       'archived_tax_rate': '歸檔稅率資料成功',
-      'deleted_tax_rate': 'Successfully deleted tax rate',
-      'restored_tax_rate': 'Successfully restored tax rate',
+      'deleted_tax_rate': '成功刪除稅率',
+      'restored_tax_rate': '成功恢復稅率',
       'fill_products': '自動填入之產品項目',
       'fill_products_help': '選擇產品將自動<b>填寫描述和成本</b>',
       'update_products': '自動更新產品',
       'update_products_help': '更新發票時會自動 <b>更新產品資料庫</b>',
       'convert_products': '轉換產品',
-      'convert_products_help': '自動將產品價格轉換為客戶的貨幣',
+      'convert_products_help': '自動將產品價格轉換為用戶的貨幣',
       'fees': '費用',
       'limits': '限制',
-      'provider': 'Provider',
-      'company_gateway': 'Payment Gateway',
-      'company_gateways': 'Payment Gateways',
-      'new_company_gateway': 'New Gateway',
-      'edit_company_gateway': 'Edit Gateway',
-      'created_company_gateway': 'Successfully created gateway',
-      'updated_company_gateway': 'Successfully updated gateway',
-      'archived_company_gateway': 'Successfully archived gateway',
-      'deleted_company_gateway': 'Successfully deleted gateway',
-      'restored_company_gateway': 'Successfully restored gateway',
-      'continue_editing': 'Continue Editing',
+      'provider': '供應商',
+      'company_gateway': '付款閘道',
+      'company_gateways': '付款閘道',
+      'new_company_gateway': '新增閘道',
+      'edit_company_gateway': '編輯閘道',
+      'created_company_gateway': '建立閘道資料成功',
+      'updated_company_gateway': '更新閘道資料成功',
+      'archived_company_gateway': '封存閘道資料成功',
+      'deleted_company_gateway': '刪除閘道資料成功',
+      'restored_company_gateway': '復原閘道成功',
+      'continue_editing': '繼續編輯',
       'discard_changes': '放棄變更',
-      'default_value': 'Default value',
+      'default_value': '預設值',
       'disabled': '已停用',
-      'currency_format': 'Currency Format',
-      'first_day_of_the_week': 'First Day of the Week',
-      'first_month_of_the_year': 'First Month of the Year',
+      'currency_format': '貨幣格式',
+      'first_day_of_the_week': '每星期的第一天',
+      'first_month_of_the_year': '年度的第一個月',
       'sunday': '星期日',
       'monday': '星期一',
       'tuesday': '星期二',
@@ -3481,34 +3775,34 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'october': '十月',
       'november': '十一月',
       'december': '十二月',
-      'symbol': 'Symbol',
-      'ocde': 'Code',
-      'date_format': 'Date Format',
-      'datetime_format': 'Datetime Format',
+      'symbol': '符號',
+      'ocde': '代碼',
+      'date_format': '日期格式',
+      'datetime_format': '日期時間格式',
       'military_time': '24 小時制',
       'military_time_help': '24 Hour Display',
-      'send_reminders': 'Send Reminders',
-      'timezone': 'Timezone',
-      'filtered_by_group': 'Filtered by Group',
-      'filtered_by_invoice': 'Filtered by Invoice',
-      'filtered_by_client': 'Filtered by Client',
-      'filtered_by_vendor': 'Filtered by Vendor',
-      'group_settings': 'Group Settings',
+      'send_reminders': '傳送提醒',
+      'timezone': '時區',
+      'filtered_by_group': '依群組篩選',
+      'filtered_by_invoice': '依發票篩選',
+      'filtered_by_client': '依用戶端篩選',
+      'filtered_by_vendor': '依供應商篩選',
+      'group_settings': '群組設定',
       'group': '群組',
-      'groups': 'Groups',
-      'new_group': 'New Group',
-      'edit_group': 'Edit Group',
-      'created_group': 'Successfully created group',
-      'updated_group': 'Successfully updated group',
-      'archived_group': 'Successfully archived group',
-      'deleted_group': 'Successfully deleted group',
-      'restored_group': 'Successfully restored group',
-      'upload_logo': 'Upload Logo',
-      'uploaded_logo': 'Successfully uploaded logo',
+      'groups': '群組',
+      'new_group': '新增群組',
+      'edit_group': '編輯群組',
+      'created_group': '已成功建立群組',
+      'updated_group': '已成功更新群組',
+      'archived_group': '已成功封存群組',
+      'deleted_group': '已成功刪除群組',
+      'restored_group': '已成功還原群組',
+      'upload_logo': '上傳徽標',
+      'uploaded_logo': '已成功上傳徽標',
       'logo': '標誌',
-      'saved_settings': 'Successfully saved settings',
+      'saved_settings': '已成功儲存設定',
       'product_settings': '產品設定',
-      'device_settings': 'Device Settings',
+      'device_settings': '裝置設定',
       'defaults': '預設值',
       'basic_settings': '基本設定',
       'advanced_settings': '進階設定',
@@ -3524,57 +3818,56 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'buy_now_buttons': '現在即購買按鈕',
       'email_settings': '電子郵件設定',
       'templates_and_reminders': '範本與提醒',
-      'credit_cards_and_banks': 'Credit Cards & Banks',
+      'credit_cards_and_banks': '信用卡 & 銀行',
       'data_visualizations': '資料視覺化',
-      'price': 'Price',
-      'email_sign_up': 'Email Sign Up',
-      'google_sign_up': 'Google Sign Up',
-      'thank_you_for_your_purchase': 'Thank you for your purchase!',
-      'redeem': 'Redeem',
-      'sign_up_with_google': 'Sign Up With Google',
-      'back': 'Back',
-      'past_purchases': 'Past Purchases',
-      'annual_subscription': 'Annual Subscription',
-      'pro_plan': 'Pro Plan',
-      'enterprise_plan': 'Enterprise Plan',
+      'price': '價格',
+      'email_sign_up': '電子郵件註冊',
+      'google_sign_up': 'Google 註冊',
+      'thank_you_for_your_purchase': '感謝您的購買!',
+      'redeem': '兌換',
+      'sign_up_with_google': '使用 Google 註冊',
+      'back': '返回',
+      'past_purchases': '過去購買',
+      'annual_subscription': '年度訂閱',
+      'pro_plan': '專業方案',
+      'enterprise_plan': '企業方案',
       'count_users': ':count users',
-      'upgrade': 'Upgrade',
-      'please_enter_a_first_name': 'Please enter a first name',
-      'please_enter_a_last_name': 'Please enter a last name',
-      'please_agree_to_terms_and_privacy':
-          'Please agree to the terms of service and privacy policy to create an account.',
-      'i_agree_to_the': 'I agree to the',
-      'terms_of_service_link': 'terms of service',
-      'privacy_policy_link': 'privacy policy',
+      'upgrade': '升級',
+      'please_enter_a_first_name': '請輸入名字',
+      'please_enter_a_last_name': '請輸入姓氏',
+      'please_agree_to_terms_and_privacy': '請同意服務條款和隱私政策以建立帳戶。',
+      'i_agree_to_the': '我同意',
+      'terms_of_service_link': '服務條款',
+      'privacy_policy_link': '隱私政策',
       'terms_of_service': '服務條款',
       'privacy_policy': '隱私權政策',
       'sign_up': '登入',
       'account_login': '登入帳戶',
-      'view_website': 'View Website',
-      'create_account': 'Create Account',
-      'email_login': 'Email Login',
+      'view_website': '檢視網站',
+      'create_account': '建立帳戶',
+      'email_login': '電子郵件登入',
       'create_new': '建立新的',
-      'no_record_selected': 'No record selected',
-      'error_unsaved_changes': 'Please save or cancel your changes',
+      'no_record_selected': '未選取任何記錄',
+      'error_unsaved_changes': '請儲存或取消您的變更',
       'download': '下載',
-      'requires_an_enterprise_plan': 'Requires an enterprise plan',
-      'take_picture': 'Take Picture',
-      'upload_file': 'Upload File',
+      'requires_an_enterprise_plan': '需要企業方案',
+      'take_picture': '拍照',
+      'upload_file': '上傳檔案',
       'document': '文件',
       'documents': '文件',
-      'new_document': 'New Document',
-      'edit_document': 'Edit Document',
-      'uploaded_document': 'Successfully uploaded document',
-      'updated_document': 'Successfully updated document',
-      'archived_document': 'Successfully archived document',
-      'deleted_document': 'Successfully deleted document',
-      'restored_document': 'Successfully restored document',
-      'no_history': 'No History',
+      'new_document': '新新文件',
+      'edit_document': '編輯文件',
+      'uploaded_document': '已成功上載文件',
+      'updated_document': '已成功更新文件',
+      'archived_document': '已成功封存文件',
+      'deleted_document': '已成功刪除文件',
+      'restored_document': '已成功還原文件',
+      'no_history': '無歷史記錄',
       'expense_date': '支出日期',
       'pending': '擱置',
-      'expense_status_1': 'Logged',
-      'expense_status_2': 'Pending',
-      'expense_status_3': 'Invoiced',
+      'expense_status_1': '已登入',
+      'expense_status_2': '擱置',
+      'expense_status_3': '已開立發票的',
       'converted': '已轉換',
       'add_documents_to_invoice': '新增文件至發票',
       'exchange_rate': '匯率',
@@ -3620,17 +3913,17 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'times': '時段',
       'duration': '時間長度',
       'new_task': '新任務',
-      'created_task': '成功建立的工作項目',
-      'updated_task': '成功更新的工作項目',
+      'created_task': '建立工作項目成功',
+      'updated_task': '更新工作項目成功',
       'archived_task': '歸檔任務資料成功',
-      'deleted_task': '已成功刪除任務',
-      'restored_task': '復原任務資料',
+      'deleted_task': '刪除任務成功',
+      'restored_task': '復原任務資料成功',
       'please_enter_a_name': '請輸入姓名',
       'budgeted_hours': '列入預算的小時',
-      'created_project': '成功建立的專案',
+      'created_project': '建立專案成功',
       'updated_project': '成功更新的專案',
       'archived_project': '歸檔專案項目成功',
-      'deleted_project': '成功刪除的專案',
+      'deleted_project': 'Successfully deleted project',
       'restored_project': '復原專案成功',
       'new_project': '新專案',
       'thank_you_for_using_our_app': '感謝您使用我們的應用程式!',
@@ -3670,10 +3963,11 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'custom': '自訂',
       'clone_to_invoice': '再製到發票',
       'clone_to_quote': '再製到報價單',
+      'clone_to_credit': 'Clone to Credit',
       'view_invoice': '檢視發票',
       'convert': '轉換',
       'more': '更多',
-      'edit_client': '編輯客戶',
+      'edit_client': '編輯用戶',
       'edit_product': '編輯產品資料',
       'edit_invoice': '編輯發票',
       'edit_quote': '編輯報價單',
@@ -3682,17 +3976,16 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'edit_expense': '編輯支出',
       'edit_vendor': '編輯供應商',
       'edit_project': '編輯專案',
-      'edit_credit': '編輯貸款資料',
       'edit_recurring_invoice': '編輯週期性發票',
       'edit_recurring_expense': '編輯週期性支出',
       'edit_recurring_quote': '編輯週期性報價單',
-      'billing_address': '帳單寄送地址',
+      'billing_address': '帳單地址',
       'shipping_address': '送貨位址',
       'total_revenue': '總收入',
       'average_invoice': '平均銷售額',
       'outstanding': '未付清的',
       'invoices_sent': '已寄出 :count 份發票',
-      'active_clients': '活躍客戶',
+      'active_clients': '使用中用戶',
       'close': '關閉',
       'email': '電子郵件',
       'password': '密碼',
@@ -3738,7 +4031,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'first_name': '名字',
       'last_name': '姓氏',
       'add_contact': '新增聯絡資料',
-      'are_you_sure': '您確定嗎？',
+      'are_you_sure': '您確定嗎?',
       'cancel': '取消',
       'ok': '正常',
       'remove': '刪除',
@@ -3746,7 +4039,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'product': '產品',
       'products': '產品',
       'new_product': '新產品',
-      'created_product': '成功建立的產品資料',
+      'created_product': '建立產品資料成功',
       'updated_product': '成功更新的產品資料',
       'archived_product': '歸檔產品資料成功',
       'deleted_product': '已成功刪除產品資料',
@@ -3754,14 +4047,14 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'product_key': '產品',
       'notes': '註記',
       'cost': '成本',
-      'client': '客戶',
-      'clients': '客戶',
-      'new_client': '新客戶',
-      'created_client': '建立客戶資料成功',
-      'updated_client': '更新客戶資料成功',
-      'archived_client': '歸檔客戶資料成功',
-      'deleted_client': '刪除客戶資料成功',
-      'restored_client': '復原客戶資料成功',
+      'client': '用戶',
+      'clients': '用戶',
+      'new_client': '新用戶',
+      'created_client': '建立用戶資料成功',
+      'updated_client': '更新用戶資料成功',
+      'archived_client': '歸檔用戶資料成功',
+      'deleted_client': '刪除用戶資料成功',
+      'restored_client': '復原用戶資料成功',
       'address1': '街道',
       'address2': '大樓/套房',
       'city': '城市',
@@ -3776,8 +4069,8 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'archived_invoice': '歸檔發票資料成功',
       'deleted_invoice': '刪除發票成功',
       'restored_invoice': '復原發票成功',
-      'emailed_invoice': '完成寄送的發票',
-      'emailed_payment': '已成功地以電子郵件寄送付款資料',
+      'emailed_invoice': '以電子郵件寄出發票成功',
+      'emailed_payment': '以電子郵件寄出付款成功',
       'amount': '金額',
       'invoice_number': '發票號碼',
       'invoice_date': '發票開立日期',
@@ -3815,7 +4108,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'edit': '編輯',
       'dismiss': '撤銷',
       'please_select_a_date': '請選取日期',
-      'please_select_a_client': '請選取一個客戶',
+      'please_select_a_client': '請選取一個用戶',
       'please_select_an_invoice': '請選取發票',
       'task_rate': '任務費率',
       'settings': '設定',
@@ -3833,17 +4126,13 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'approved': '已核准',
       'partial': '存款',
       'paid': '已付款',
-      'invoice_status_1': '草稿',
-      'invoice_status_2': '已傳送',
-      'invoice_status_3': '已檢視',
-      'invoice_status_4': '已核准',
       'mark_sent': '標記已傳送',
       'marked_invoice_as_sent': '標記發票為已傳送成功',
-      'marked_invoice_as_paid': 'Successfully marked invoice as sent',
+      'marked_invoice_as_paid': 'Successfully marked invoice as paid',
       'marked_invoices_as_sent': 'Successfully marked invoices as sent',
-      'marked_invoices_as_paid': 'Successfully marked invoices as sent',
+      'marked_invoices_as_paid': 'Successfully marked invoices as paid',
       'done': '完成',
-      'please_enter_a_client_or_contact_name': '請輸入客戶或連絡人姓名',
+      'please_enter_a_client_or_contact_name': '請輸入用戶或連絡人姓名',
       'dark_mode': '黑暗模式',
       'restart_app_to_apply_change': '重新啟動應用程式以套用變更',
       'refresh_data': '重新整理資料',
@@ -3864,7 +4153,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'payment_status_5': '部分退款',
       'payment_status_6': '退款',
       'net': '淨額',
-      'client_portal': '客戶登入頁面',
+      'client_portal': '用戶門戶頁面',
       'show_tasks': '顯示任務',
       'email_reminders': '電子郵件提醒',
       'enabled': '啟用',
@@ -3874,14 +4163,14 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'second_reminder': '第二次提醒',
       'third_reminder': '第三次提醒',
       'reminder1': '首次提醒',
-      'reminder2': '第二提醒',
-      'reminder3': '第三提醒',
+      'reminder2': '第二次提醒',
+      'reminder3': '第三次提醒',
       'template': '範本',
       'send': '傳送',
       'subject': '主旨',
       'body': '內文',
       'send_email': '寄送電子郵件',
-      'email_receipt': '透過電子郵件傳送付款收據給客戶',
+      'email_receipt': '以電子郵件傳送付款收據給用戶',
       'auto_billing': '自動計費',
       'button': '按鈕',
       'preview': '預覽',
@@ -3892,8 +4181,8 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'refunded': '退款',
       'payment_type': '付款方式',
       'transaction_reference': '轉帳資料',
-      'enter_payment': '輸入付款紀錄',
-      'new_payment': '輸入付款記錄',
+      'enter_payment': '輸入付款資料',
+      'new_payment': '輸入付款資料',
       'created_payment': '已建立完成的付款資料',
       'updated_payment': '更新付款資料成功',
       'archived_payment': '歸檔付款資料成功',
@@ -3915,9 +4204,9 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'tasks': '任務',
       'project': '專案',
       'projects': '專案',
-      'activity_1': ':user 已建立客戶 :client',
-      'activity_2': ':user 已將客戶 :client 歸檔',
-      'activity_3': ':user 已刪除客戶 :client',
+      'activity_1': ':user 已建立用戶 :client',
+      'activity_2': ':user 已將用戶 :client 歸檔',
+      'activity_3': ':user 已刪除用戶 :client',
       'activity_4': ':user 已建立發票 :invoice',
       'activity_5': ':user 已更新發票 :invoice',
       'activity_6': ':user emailed invoice :invoice for :client to :contact',
@@ -3941,7 +4230,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'activity_23': ':user 已刪除發票 :quote',
       'activity_24': ':user 已復原報價單 :quote',
       'activity_25': ':user 已復原發票 :invoice',
-      'activity_26': ':user 已復原客戶 :client 資料',
+      'activity_26': ':user 已復原用戶 :client 資料',
       'activity_27': ':user 已復原付款資料 :payment',
       'activity_28': ':user 已復原 :credit 貸款資料',
       'activity_29': ':contact approved quote :quote for :client',
@@ -3973,12 +4262,14 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'activity_56': ':user 已檢視票證 :ticket',
       'activity_57': 'System failed to email invoice :invoice',
       'one_time_password': '一次性密碼',
-      'emailed_quote': '報價單寄送成功',
+      'emailed_quote': '以電子郵件寄出報價單成功',
+      'emailed_credit': 'Successfully emailed credit',
       'marked_quote_as_sent': '標記報價單為已傳送成功',
+      'marked_credit_as_sent': 'Successfully marked credit as sent',
       'expired': '過期',
       'all': '全部',
       'select': '選擇',
-      'long_press_multiselect': 'Long-press Multiselect',
+      'long_press_multiselect': '長按多選',
       'custom_value1': '自訂值',
       'custom_value2': '自訂值',
       'custom_value3': 'Custom Value 3',
@@ -4003,7 +4294,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'invoice_number_pattern': 'Invoice Number Pattern',
       'invoice_number_counter': '發票號碼計數器',
       'quote_number_pattern': 'Quote Number Pattern',
-      'quote_number_counter': '報價單編號計數',
+      'quote_number_counter': '報價單編號計數器',
       'client_number_pattern': 'Credit Number Pattern',
       'client_number_counter': 'Credit Number Counter',
       'credit_number_pattern': 'Credit Number Pattern',
@@ -4020,6 +4311,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'email_subject_invoice': 'Email Invoice Subject',
       'email_subject_quote': 'Email Quote Subject',
       'email_subject_payment': 'Email Payment Subject',
+      'email_subject_payment_partial': 'Email Partial Payment Subject',
       'switch_list_table': 'Switch List Table',
       'client_city': 'Client City',
       'client_state': 'Client State',
@@ -4051,8 +4343,114 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'vendor_city': 'Vendor City',
       'vendor_state': 'Vendor State',
       'vendor_country': 'Vendor Country',
+      'is_approved': 'Is Approved',
+      'tax_name': '稅名',
+      'tax_amount': '稅金金額',
+      'tax_paid': '已付稅',
+      'payment_amount': '付款金額',
+      'age': '年齡',
     },
     'hr': {
+      'full_name': 'Ime i prezime',
+      'city_state_postal': 'City/State/Postal',
+      'postal_city_state': 'Postal/City/State',
+      'custom1': 'First Custom',
+      'custom2': 'Second Custom',
+      'custom3': 'Third Custom',
+      'custom4': 'Fourth Custom',
+      'optional': 'Optional',
+      'license': 'License',
+      'purge_data': 'Purge Data',
+      'purge_successful': 'Successfully purged company data',
+      'purge_data_message':
+          'Warning: This will permanently erase your data, there is no undo.',
+      'invoice_balance': 'Invoice Balance',
+      'age_group_0': '0 - 30 dana',
+      'age_group_30': '30 - 60 dana',
+      'age_group_60': '60 - 90 dana',
+      'age_group_90': '90 - 120 dana',
+      'age_group_120': '120+ dana',
+      'refresh': 'Refresh',
+      'saved_design': 'Successfully saved design',
+      'client_details': 'Client Details',
+      'company_address': 'Company Address',
+      'invoice_details': 'Detalji računa',
+      'quote_details': 'Quote Details',
+      'credit_details': 'Credit Details',
+      'product_columns': 'Product Columns',
+      'task_columns': 'Task Columns',
+      'add_field': 'Add Field',
+      'all_events': 'All Events',
+      'permissions': 'Permissions',
+      'none': 'None',
+      'owned': 'Owned',
+      'payment_success': 'Payment Success',
+      'payment_failure': 'Payment Failure',
+      'invoice_sent': ':count invoice sent',
+      'quote_sent': 'Quote Sent',
+      'credit_sent': 'Credit Sent',
+      'invoice_viewed': 'Invoice Viewed',
+      'quote_viewed': 'Quote Viewed',
+      'credit_viewed': 'Credit Viewed',
+      'quote_approved': 'Quote Approved',
+      'receive_all_notifications': 'Receive All Notifications',
+      'purchase_license': 'Purchase License',
+      'apply_license': 'Apply License',
+      'cancel_account': 'Izbriši korisnički račun',
+      'cancel_account_message':
+          'Pozor: Ovo će trajno obrisati sve vaše podatke, nema povratka.',
+      'delete_company': 'Delete Company',
+      'delete_company_message':
+          'Warning: This will permanently delete your company, there is no undo.',
+      'enable_modules': 'Enable Modules',
+      'converted_quote': 'Successfully converted quote',
+      'credit_design': 'Credit Design',
+      'includes': 'Includes',
+      'header': 'Zaglavlje',
+      'load_design': 'Load Design',
+      'css_framework': 'CSS Framework',
+      'custom_designs': 'Custom Designs',
+      'designs': 'Designs',
+      'new_design': 'New Design',
+      'edit_design': 'Edit Design',
+      'created_design': 'Successfully created design',
+      'updated_design': 'Successfully updated design',
+      'archived_design': 'Successfully archived design',
+      'deleted_design': 'Successfully deleted design',
+      'removed_design': 'Successfully removed design',
+      'restored_design': 'Successfully restored design',
+      'proposals': 'Prijedlozi',
+      'tickets': 'Tickets',
+      'recurring_invoices': 'Redovni računi',
+      'recurring_quotes': 'Ponavljajuće ponude',
+      'recurring_tasks': 'Recurring Tasks',
+      'recurring_expenses': 'Redovni troškovi',
+      'account_management': 'Upravljanje računima',
+      'credit_date': 'Datum kredita',
+      'credit': 'Kredit',
+      'credits': 'Krediti',
+      'new_credit': 'Dodaj kredit',
+      'edit_credit': 'Uredi kredit',
+      'created_credit': 'Uspješno kreiran kredit',
+      'updated_credit': 'Successfully updated credit',
+      'archived_credit': 'Uspješno arhiviran kredit',
+      'deleted_credit': 'Uspješno obrisan kredit',
+      'removed_credit': 'Successfully removed credit',
+      'restored_credit': 'Uspješno obnovljen kredit',
+      'current_version': 'Trenutna verzija',
+      'latest_version': 'Latest Version',
+      'update_now': 'Update Now',
+      'a_new_version_is_available': 'A new version of the web app is available',
+      'update_available': 'Update Available',
+      'app_updated': 'Update successfully completed',
+      'learn_more': 'Više informacija',
+      'integrations': 'Integrations',
+      'tracking_id': 'Tracking Id',
+      'slack_webhook_url': 'Slack Webhook URL',
+      'credit_footer': 'Credit Footer',
+      'credit_terms': 'Credit Terms',
+      'untitled_company': 'Untitled Company',
+      'added_company': 'Successfully added company',
       'company1': 'Custom Company 1',
       'company2': 'Custom Company 2',
       'company3': 'Custom Company 3',
@@ -4062,9 +4460,9 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'product3': 'Custom Product 3',
       'product4': 'Custom Product 4',
       'client1': 'Custom Client 1',
-      'client2': 'Custom Client 1',
-      'client3': 'Custom Client 1',
-      'client4': 'Custom Client 1',
+      'client2': 'Custom Client 2',
+      'client3': 'Custom Client 3',
+      'client4': 'Custom Client 4',
       'contact1': 'Custom Contact 1',
       'contact2': 'Custom Contact 2',
       'contact3': 'Custom Contact 3',
@@ -4111,7 +4509,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'day': 'Dan',
       'month': 'Mjesec',
       'year': 'Godina',
-      'subgroup': 'Podgrupa',
+      'subgroup': 'Subgroup',
       'is_active': 'Is Active',
       'group_by': 'Grupiraj po',
       'credit_balance': 'Stanje kredita',
@@ -4135,16 +4533,15 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'created_by_id': 'Created By Id',
       'add_column': 'Add Column',
       'edit_columns': 'Edit Columns',
-      'columns': 'Columns',
-      'aging': 'Aging',
+      'columns': 'Kolone',
+      'aging': 'Izvan dospijeća',
       'profit_and_loss': 'Profit i Trošak',
       'reports': 'Izvješća',
       'report': 'Izvješća',
       'add_company': 'Dodaj poduzeće',
-      'to_learn_about_gogle_fonts': 'to learn about Google Fonts',
-      'unpaid_invoice': 'Neplaćeni račun',
-      'paid_invoice': 'Plaćeni račun',
-      'unapproved_quote': 'Neodobrena ponuda',
+      'unpaid_invoice': 'Unpaid Invoice',
+      'paid_invoice': 'Paid Invoice',
+      'unapproved_quote': 'Unapproved Quote',
       'help': 'Pomoć',
       'refund': 'Refund',
       'refund_date': 'Refund Date',
@@ -4166,7 +4563,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'adjust_fee_percent': 'Adjust Fee Percent',
       'adjust_fee_percent_help': 'Adjust percent to account for fee',
       'configure_settings': 'Configure Settings',
-      'support_forum': 'forum za podršku',
+      'support_forum': 'support forum',
       'about': 'About',
       'documentation': 'Dokumentacija',
       'contact_us': 'Kontaktirajte nas',
@@ -4178,7 +4575,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'domain_url': 'Domain URL',
       'password_is_too_short': 'Password is too short',
       'password_is_too_easy':
-          'Password msut contain an upper case character and a number',
+          'Password must contain an upper case character and a number',
       'client_portal_tasks': 'Client Portal Tasks',
       'client_portal_dashboard': 'Client Portal Dashboard',
       'please_enter_a_value': 'Please enter a value',
@@ -4195,7 +4592,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'menu_sidebar': 'Menu Sidebar',
       'history_sidebar': 'History Sidebar',
       'tablet': 'Tablet',
-      'mobile': 'Mobilno',
+      'mobile': 'Mobile',
       'desktop': 'Desktop',
       'layout': 'Layout',
       'view': 'Pregled',
@@ -4252,6 +4649,8 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'days': 'Dani',
       'invoice_email': 'E-pošta računa',
       'payment_email': 'E-pošta uplate',
+      'partial_payment': 'Partial Payment',
+      'partial_payment_email': 'Partial Payment Email',
       'quote_email': 'E-pošta ponude',
       'endless_reminder': 'Endless Reminder',
       'filtered_by_user': 'Filtered by User',
@@ -4293,15 +4692,15 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'invoice_footer': 'Podnožje računa',
       'quote_terms': 'Uvjeti ponude',
       'quote_footer': 'Podnožje ponude',
-      'auto_email_invoice': 'Automatski email',
+      'auto_email_invoice': 'Auto Email',
       'auto_email_invoice_help':
-          'Ponavljajuće račune, nakon kreiranja, automatski pošalji emailom.',
-      'auto_archive_invoice': 'Automatsko arhiviranje',
+          'Automatically email recurring invoices when they are created.',
+      'auto_archive_invoice': 'Auto Archive',
       'auto_archive_invoice_help':
-          'Automatski arhiviraj račun nakon što je plaćen.',
-      'auto_archive_quote': 'Automatsko arhiviranje',
+          'Automatically archive invoices when they are paid.',
+      'auto_archive_quote': 'Auto Archive',
       'auto_archive_quote_help':
-          'Automatski arhiviraj ponudu nakon konvertiranja.',
+          'Automatically archive quotes when they are converted.',
       'auto_convert_quote': 'Auto Convert',
       'auto_convert_quote_help':
           'Automatski konvertirajte ponudu u račun nakon što je odobrena od strane klijenta.',
@@ -4319,35 +4718,33 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'freq_two_years': 'Two years',
       'freq_three_years': 'Three Years',
       'never': 'Never',
-      'company': 'Poduzeće',
+      'company': 'Company',
       'generated_numbers': 'Generated Numbers',
       'charge_taxes': 'Naplati poreze',
-      'credit': 'Kredit',
-      'credits': 'Krediti',
-      'next_reset': 'Next Reset',
-      'reset_counter': 'Reset Counter',
+      'next_reset': 'Slijedeći reset',
+      'reset_counter': 'Resetiraj brojač',
       'recurring_prefix': 'Recurring Prefix',
       'number_padding': 'Number Padding',
       'general': 'General',
       'surcharge_field': 'Surcharge Field',
-      'company_field': 'Polje poduzeća',
+      'company_field': 'Company Field',
       'company_value': 'Company Value',
       'credit_field': 'Credit Field',
-      'invoice_field': 'Polje računa',
+      'invoice_field': 'Invoice Field',
       'invoice_surcharge': 'Invoice Surcharge',
-      'client_field': 'Polje klijenta',
-      'product_field': 'Polje proizvoda',
+      'client_field': 'Client Field',
+      'product_field': 'Product Field',
       'payment_field': 'Payment Field',
-      'contact_field': 'Polje kontakta',
-      'vendor_field': 'Polje dobavljača',
-      'expense_field': 'Polje troška',
-      'project_field': 'Polje projekta',
-      'task_field': 'Polje zadatka',
+      'contact_field': 'Contact Field',
+      'vendor_field': 'Vendor Field',
+      'expense_field': 'Expense Field',
+      'project_field': 'Project Field',
+      'task_field': 'Task Field',
       'group_field': 'Group Field',
       'number_counter': 'Number Counter',
       'prefix': 'Prefiks',
       'number_pattern': 'Number Pattern',
-      'messages': 'Poruke',
+      'messages': 'Messages',
       'custom_css': 'Prilagođeni CSS',
       'custom_javascript': 'Custom JavaScript',
       'signature_on_pdf': 'Pokaži na PDF-u',
@@ -4366,9 +4763,6 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'enable_portal_password': 'Password Protect Invoices',
       'enable_portal_password_help':
           'Allows you to set a password for each contact. If a password is set, the contact will be required to enter a password before viewing invoices.',
-      'send_portal_password': 'Generiraj automatski',
-      'send_portal_password_help':
-          'If no password is set, one will be generated and sent with the first invoice.',
       'authorization': 'Authorization',
       'subdomain': 'Poddomena',
       'domain': 'Domain',
@@ -4389,7 +4783,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'bcc_email': 'BCC Email',
       'processed': 'Processed',
       'credit_card': 'Kreditna kartica',
-      'bank_transfer': 'Prijenos preko banke',
+      'bank_transfer': 'Bankovni prijenos',
       'priority': 'Prioritet',
       'fee_amount': 'Fee Amount',
       'fee_percent': 'Fee Percent',
@@ -4478,7 +4872,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'filtered_by_client': 'Filtered by Client',
       'filtered_by_vendor': 'Filtered by Vendor',
       'group_settings': 'Group Settings',
-      'group': 'Grupa',
+      'group': 'Group',
       'groups': 'Groups',
       'new_group': 'New Group',
       'edit_group': 'Edit Group',
@@ -4563,8 +4957,8 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'add_documents_to_invoice': 'Add documents to invoice',
       'exchange_rate': 'Tečaj',
       'convert_currency': 'Konvertiraj valutu',
-      'mark_paid': 'Mark Paid',
-      'mark_billable': 'Mark billable',
+      'mark_paid': 'Označi uplatu',
+      'mark_billable': 'Označi za plaćanje',
       'category': 'Kategorija',
       'address': 'Adresa',
       'new_vendor': 'Novi dobavljač',
@@ -4636,7 +5030,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'selfhost_login': 'Selfhost Login',
       'google_login': 'Google Login',
       'today': 'Today',
-      'custom_range': 'Custom Range',
+      'custom_range': 'Prilagođeni Raspon',
       'date_range': 'Raspon datuma',
       'current': 'Current',
       'previous': 'Previous',
@@ -4648,13 +5042,14 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'last7_days': 'Last 7 Days',
       'last_week': 'Last Week',
       'last30_days': 'Last 30 Days',
-      'this_month': 'This Month',
-      'last_month': 'Last Month',
+      'this_month': 'Ovaj mjesec',
+      'last_month': 'Prošli mjesec',
       'this_year': 'Ova godina',
-      'last_year': 'Last Year',
+      'last_year': 'Prošla godina',
       'custom': 'Prilagođeno',
       'clone_to_invoice': 'Clone to Invoice',
       'clone_to_quote': 'Clone to Quote',
+      'clone_to_credit': 'Clone to Credit',
       'view_invoice': 'Pregled računa',
       'convert': 'Convert',
       'more': 'Više',
@@ -4667,7 +5062,6 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'edit_expense': 'Uredi trošak',
       'edit_vendor': 'Uredi dobavljača',
       'edit_project': 'Uredi projekt',
-      'edit_credit': 'Uredi kredit',
       'edit_recurring_invoice': 'Uredi ponavljajući račun',
       'edit_recurring_expense': 'Uredi redovne troškove',
       'edit_recurring_quote': 'Uredi ponavljajuću ponudu',
@@ -4747,8 +5141,8 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'archived_client': 'Uspješno arhiviran klijent',
       'deleted_client': 'Uspješno obrisan klijent',
       'restored_client': 'Uspješno obnovljen  klijent',
-      'address1': 'Ulica',
-      'address2': 'Kat/soba',
+      'address1': 'Ulica i kućni broj',
+      'address2': 'Kat/Oznaka',
       'city': 'Grad',
       'state': 'Županija',
       'postal_code': 'Poštanski broj',
@@ -4812,21 +5206,17 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'please_enter_an_invoice_number': 'Molimo upišite broj računa',
       'please_enter_a_quote_number': 'Molimo upišite broj ponude',
       'past_due': 'Past Due',
-      'draft': 'Draft',
+      'draft': 'Skica',
       'sent': 'Poslano',
       'viewed': 'Pregledano',
       'approved': 'Odobreno',
       'partial': 'Partial/Deposit',
       'paid': 'Plaćeno',
-      'invoice_status_1': 'Nacrt',
-      'invoice_status_2': 'Poslano',
-      'invoice_status_3': 'Pregledano',
-      'invoice_status_4': 'Odobreno',
       'mark_sent': 'Označi kao poslano',
       'marked_invoice_as_sent': 'Račun je uspješno označen kao poslan',
-      'marked_invoice_as_paid': 'Successfully marked invoice as sent',
+      'marked_invoice_as_paid': 'Successfully marked invoice as paid',
       'marked_invoices_as_sent': 'Successfully marked invoices as sent',
-      'marked_invoices_as_paid': 'Successfully marked invoices as sent',
+      'marked_invoices_as_paid': 'Successfully marked invoices as paid',
       'done': 'Dovršeno',
       'please_enter_a_client_or_contact_name':
           'Molimo upišite ime klijenta ili kontakta',
@@ -4838,7 +5228,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'activity': 'Aktivnost',
       'no_records_found': 'Nije pronađen zapis',
       'clone': 'Kloniraj',
-      'loading': 'Učitavam',
+      'loading': 'Loading',
       'industry': 'Industrija',
       'size': 'Veličina',
       'payment_terms': 'Uvjeti plaćanja',
@@ -4855,15 +5245,15 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'show_tasks': 'Prikaži zadatke',
       'email_reminders': 'Email podsjetnici',
       'enabled': 'Enabled',
-      'recipients': 'Recipients',
-      'initial_email': 'Initial Email',
+      'recipients': 'Primatelji',
+      'initial_email': 'Prvi Email',
       'first_reminder': 'Prvi podsjetnik',
       'second_reminder': 'Drugi podsjetnik',
       'third_reminder': 'Treći podsjetnik',
       'reminder1': 'Prvi podsjetnik',
       'reminder2': 'Drugi podsjetnik',
       'reminder3': 'Treći podsjetnik',
-      'template': 'Template',
+      'template': 'Predložak',
       'send': 'Pošalji',
       'subject': 'Naslov',
       'body': 'Tijelo',
@@ -4907,12 +5297,11 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'activity_3': ':user obrisao klijenta :client',
       'activity_4': ':user kreirao račun :invoice',
       'activity_5': ':user ažurirao račun :invoice',
-      'activity_6': ':user emailed invoice :invoice for :client to :contact',
-      'activity_7': ':contact viewed invoice :invoice for :client',
+      'activity_6': ':user poslao e-poštom račun :invoice za :contact',
+      'activity_7': ':contact pregledao račun :invoice',
       'activity_8': ':user arhivirao račun :invoice',
       'activity_9': ':user obrisao račun :invoce',
-      'activity_10':
-          ':contact entered payment :payment for :payment_amount on invoice :invoice for :client',
+      'activity_10': ':contact upisao uplatu :payment za :invoice',
       'activity_11': ':user ažurirao uplatu :payment',
       'activity_12': ':user ahivirao uplatu :payment',
       'activity_13': ':user obrisao uplatu :payment',
@@ -4922,7 +5311,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'activity_17': ':user obrisao :credit kredit',
       'activity_18': ':user kreirao ponudu :quote',
       'activity_19': ':user ažurirao ponudu :quote',
-      'activity_20': ':user emailed quote :quote for :client to :contact',
+      'activity_20': ':user poslao e-poštom ponudu :quote za :contact',
       'activity_21': ':contact pregledao ponudu :quote',
       'activity_22': ':user arhivirao ponudu :quote',
       'activity_23': ':user obrisao ponudu :quote',
@@ -4931,7 +5320,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'activity_26': ':user obnovio klijenta :client',
       'activity_27': ':user obnovio uplatu :payment',
       'activity_28': ':user obnovio :credit kredit',
-      'activity_29': ':contact approved quote :quote for :client',
+      'activity_29': ':contact odobrio ponudu :quote',
       'activity_30': ':user created vendor :vendor',
       'activity_31': ':user archived vendor :vendor',
       'activity_32': ':user deleted vendor :vendor',
@@ -4962,9 +5351,11 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'activity_57': 'System failed to email invoice :invoice',
       'one_time_password': 'One Time Password',
       'emailed_quote': 'Ponuda uspješno poslana e-poštom',
+      'emailed_credit': 'Successfully emailed credit',
       'marked_quote_as_sent': 'Ponuda je uspješno označena kao poslana',
+      'marked_credit_as_sent': 'Successfully marked credit as sent',
       'expired': 'Isteklo',
-      'all': 'All',
+      'all': 'Svi',
       'select': 'Odaberi',
       'long_press_multiselect': 'Long-press Multiselect',
       'custom_value1': 'Custom Value',
@@ -5008,6 +5399,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'email_subject_invoice': 'Email Invoice Subject',
       'email_subject_quote': 'Email Quote Subject',
       'email_subject_payment': 'Email Payment Subject',
+      'email_subject_payment_partial': 'Email Partial Payment Subject',
       'switch_list_table': 'Switch List Table',
       'client_city': 'Client City',
       'client_state': 'Client State',
@@ -5039,8 +5431,114 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'vendor_city': 'Vendor City',
       'vendor_state': 'Vendor State',
       'vendor_country': 'Vendor Country',
+      'is_approved': 'Is Approved',
+      'tax_name': 'Ime porezne stope',
+      'tax_amount': 'Iznos poreza',
+      'tax_paid': 'Plaćeno poreza',
+      'payment_amount': 'Iznos uplate',
+      'age': 'Dospijeće',
     },
     'cs': {
+      'full_name': 'Full Name',
+      'city_state_postal': 'City/State/Postal',
+      'postal_city_state': 'Postal/City/State',
+      'custom1': 'First Custom',
+      'custom2': 'Second Custom',
+      'custom3': 'Third Custom',
+      'custom4': 'Fourth Custom',
+      'optional': 'Optional',
+      'license': 'License',
+      'purge_data': 'Purge Data',
+      'purge_successful': 'Successfully purged company data',
+      'purge_data_message':
+          'Warning: This will permanently erase your data, there is no undo.',
+      'invoice_balance': 'Invoice Balance',
+      'age_group_0': '0 - 30 Days',
+      'age_group_30': '30 - 60 Days',
+      'age_group_60': '60 - 90 Days',
+      'age_group_90': '90 - 120 Days',
+      'age_group_120': '120+ Days',
+      'refresh': 'Refresh',
+      'saved_design': 'Successfully saved design',
+      'client_details': 'Client Details',
+      'company_address': 'Company Address',
+      'invoice_details': 'Invoice Details',
+      'quote_details': 'Quote Details',
+      'credit_details': 'Credit Details',
+      'product_columns': 'Product Columns',
+      'task_columns': 'Task Columns',
+      'add_field': 'Add Field',
+      'all_events': 'All Events',
+      'permissions': 'Práva',
+      'none': 'None',
+      'owned': 'Owned',
+      'payment_success': 'Payment Success',
+      'payment_failure': 'Payment Failure',
+      'invoice_sent': ':count faktura odeslána',
+      'quote_sent': 'Quote Sent',
+      'credit_sent': 'Credit Sent',
+      'invoice_viewed': 'Invoice Viewed',
+      'quote_viewed': 'Quote Viewed',
+      'credit_viewed': 'Credit Viewed',
+      'quote_approved': 'Quote Approved',
+      'receive_all_notifications': 'Receive All Notifications',
+      'purchase_license': 'Purchase License',
+      'apply_license': 'Apply License',
+      'cancel_account': 'Smazat účet',
+      'cancel_account_message':
+          'Varování: Toto permanentně odstraní Váš účet. Tato akce je nevratná.',
+      'delete_company': 'Delete Company',
+      'delete_company_message':
+          'Warning: This will permanently delete your company, there is no undo.',
+      'enable_modules': 'Enable Modules',
+      'converted_quote': 'Successfully converted quote',
+      'credit_design': 'Credit Design',
+      'includes': 'Includes',
+      'header': 'Hlavička',
+      'load_design': 'Load Design',
+      'css_framework': 'CSS Framework',
+      'custom_designs': 'Custom Designs',
+      'designs': 'Designs',
+      'new_design': 'New Design',
+      'edit_design': 'Edit Design',
+      'created_design': 'Successfully created design',
+      'updated_design': 'Successfully updated design',
+      'archived_design': 'Successfully archived design',
+      'deleted_design': 'Successfully deleted design',
+      'removed_design': 'Successfully removed design',
+      'restored_design': 'Successfully restored design',
+      'proposals': 'Proposals',
+      'tickets': 'Tickets',
+      'recurring_invoices': 'Pravidelné faktury',
+      'recurring_quotes': 'Recurring Quotes',
+      'recurring_tasks': 'Recurring Tasks',
+      'recurring_expenses': 'Recurring Expenses',
+      'account_management': 'Account Management',
+      'credit_date': 'Datum kreditu',
+      'credit': 'Kredit',
+      'credits': 'Kredity',
+      'new_credit': 'Zadat kredit',
+      'edit_credit': 'Edit Credit',
+      'created_credit': 'Kredit úspěšně vytvořen',
+      'updated_credit': 'Successfully updated credit',
+      'archived_credit': 'Kredit úspěšně archivován',
+      'deleted_credit': 'Kredit úspěšně smazán',
+      'removed_credit': 'Successfully removed credit',
+      'restored_credit': 'Kredit úspěšně obnoven',
+      'current_version': 'Současná verze',
+      'latest_version': 'Latest Version',
+      'update_now': 'Update Now',
+      'a_new_version_is_available': 'A new version of the web app is available',
+      'update_available': 'Update Available',
+      'app_updated': 'Update successfully completed',
+      'learn_more': 'Více informací',
+      'integrations': 'Integrations',
+      'tracking_id': 'Tracking Id',
+      'slack_webhook_url': 'Slack Webhook URL',
+      'credit_footer': 'Credit Footer',
+      'credit_terms': 'Credit Terms',
+      'untitled_company': 'Untitled Company',
+      'added_company': 'Successfully added company',
       'company1': 'Custom Company 1',
       'company2': 'Custom Company 2',
       'company3': 'Custom Company 3',
@@ -5050,9 +5548,9 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'product3': 'Custom Product 3',
       'product4': 'Custom Product 4',
       'client1': 'Custom Client 1',
-      'client2': 'Custom Client 1',
-      'client3': 'Custom Client 1',
-      'client4': 'Custom Client 1',
+      'client2': 'Custom Client 2',
+      'client3': 'Custom Client 3',
+      'client4': 'Custom Client 4',
       'contact1': 'Custom Contact 1',
       'contact2': 'Custom Contact 2',
       'contact3': 'Custom Contact 3',
@@ -5129,7 +5627,6 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'reports': 'Reports',
       'report': 'Report',
       'add_company': 'Přidat firmu',
-      'to_learn_about_gogle_fonts': 'to learn about Google Fonts',
       'unpaid_invoice': 'Unpaid Invoice',
       'paid_invoice': 'Paid Invoice',
       'unapproved_quote': 'Unapproved Quote',
@@ -5166,7 +5663,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'domain_url': 'Domain URL',
       'password_is_too_short': 'Password is too short',
       'password_is_too_easy':
-          'Password msut contain an upper case character and a number',
+          'Password must contain an upper case character and a number',
       'client_portal_tasks': 'Client Portal Tasks',
       'client_portal_dashboard': 'Client Portal Dashboard',
       'please_enter_a_value': 'Please enter a value',
@@ -5240,6 +5737,8 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'days': 'Days',
       'invoice_email': 'Email pro fakturu',
       'payment_email': 'Email pro platbu',
+      'partial_payment': 'Partial Payment',
+      'partial_payment_email': 'Partial Payment Email',
       'quote_email': 'Email pro nabídku',
       'endless_reminder': 'Endless Reminder',
       'filtered_by_user': 'Filtered by User',
@@ -5310,8 +5809,6 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'company': 'Company',
       'generated_numbers': 'Generated Numbers',
       'charge_taxes': 'Použít daně',
-      'credit': 'Kredit',
-      'credits': 'Kredity',
       'next_reset': 'Next Reset',
       'reset_counter': 'Reset Counter',
       'recurring_prefix': 'Recurring Prefix',
@@ -5354,9 +5851,6 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'enable_portal_password': 'Password Protect Invoices',
       'enable_portal_password_help':
           'Umožní Vám nastavit heslo pro každý kontakt. Pokud heslo nastavíte, tak kontakt ho bude pro zobrazení faktury vždy použít.',
-      'send_portal_password': 'Generate Automatically',
-      'send_portal_password_help':
-          'Pokud heslo není nastaveno, bude vygenerováno a zasláno spolu s první fakturou.',
       'authorization': 'Schválení',
       'subdomain': 'subdoména',
       'domain': 'Domain',
@@ -5643,6 +6137,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'custom': 'Volitelné',
       'clone_to_invoice': 'Clone to Invoice',
       'clone_to_quote': 'Clone to Quote',
+      'clone_to_credit': 'Clone to Credit',
       'view_invoice': 'Zobrazit fakturu',
       'convert': 'Convert',
       'more': 'More',
@@ -5655,7 +6150,6 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'edit_expense': 'Editovat náklad',
       'edit_vendor': 'Editovat dodavatele',
       'edit_project': 'Edit Project',
-      'edit_credit': 'Edit Credit',
       'edit_recurring_invoice': 'Edit Recurring Invoice',
       'edit_recurring_expense': 'Edit Recurring Expense',
       'edit_recurring_quote': 'Edit Recurring Quote',
@@ -5664,7 +6158,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'total_revenue': 'Celkové příjmy',
       'average_invoice': 'Průměrná faktura',
       'outstanding': 'Nezaplaceno',
-      'invoices_sent': ':count invoices sent',
+      'invoices_sent': ':count faktur odesláno',
       'active_clients': 'aktivní klienti',
       'close': 'Zavřít',
       'email': 'Email',
@@ -5806,15 +6300,11 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'approved': 'Approved',
       'partial': 'Záloha',
       'paid': 'Zaplacené',
-      'invoice_status_1': 'Draft',
-      'invoice_status_2': 'Sent',
-      'invoice_status_3': 'Viewed',
-      'invoice_status_4': 'Approved',
       'mark_sent': 'Značka odesláno',
       'marked_invoice_as_sent': 'Successfully marked invoice as sent',
-      'marked_invoice_as_paid': 'Successfully marked invoice as sent',
+      'marked_invoice_as_paid': 'Successfully marked invoice as paid',
       'marked_invoices_as_sent': 'Successfully marked invoices as sent',
-      'marked_invoices_as_paid': 'Successfully marked invoices as sent',
+      'marked_invoices_as_paid': 'Successfully marked invoices as paid',
       'done': 'Hotovo',
       'please_enter_a_client_or_contact_name':
           'Please enter a client or contact name',
@@ -5894,8 +6384,9 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'activity_3': ':user smazal klienta :client',
       'activity_4': ':user vytvořil fakturu :invoice',
       'activity_5': ':user změnil fakturu :invoice',
-      'activity_6': ':user emailed invoice :invoice for :client to :contact',
-      'activity_7': ':contact viewed invoice :invoice for :client',
+      'activity_6':
+          ':user poslal email s fakturou :invoice pro :client na :contact',
+      'activity_7': 'Klient :contact zobrazil fakturu :invoice pro :client',
       'activity_8': ':user archivoval fakturu :invoice',
       'activity_9': ':user smazal fakturu :invoice',
       'activity_10':
@@ -5937,19 +6428,21 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'activity_45': ':user deleted task :task',
       'activity_46': ':user restored task :task',
       'activity_47': ':user updated expense :expense',
-      'activity_48': ':user updated ticket :ticket',
-      'activity_49': ':user closed ticket :ticket',
-      'activity_50': ':user merged ticket :ticket',
-      'activity_51': ':user split ticket :ticket',
-      'activity_52': ':contact opened ticket :ticket',
-      'activity_53': ':contact reopened ticket :ticket',
-      'activity_54': ':user reopened ticket :ticket',
-      'activity_55': ':contact replied ticket :ticket',
-      'activity_56': ':user viewed ticket :ticket',
+      'activity_48': ':user aktualizoval tiket :ticket',
+      'activity_49': ':user uzavřel tiket :ticket',
+      'activity_50': ':user sloučil tiket :ticket',
+      'activity_51': ':user rozdělil tiket :ticket',
+      'activity_52': ':contact vytvořil tiket :ticket',
+      'activity_53': ':contact znovu otevřel tiket :ticket',
+      'activity_54': ':user znovu otevřel tiket :ticket',
+      'activity_55': ':contact odpověděl na tiket :ticket',
+      'activity_56': ':user zobrazil tiket :ticket',
       'activity_57': 'System failed to email invoice :invoice',
       'one_time_password': 'One Time Password',
       'emailed_quote': 'Nabídka úspěšně odeslána',
+      'emailed_credit': 'Successfully emailed credit',
       'marked_quote_as_sent': 'Successfully marked quote as sent',
+      'marked_credit_as_sent': 'Successfully marked credit as sent',
       'expired': 'Expirované',
       'all': 'All',
       'select': 'Zvolit',
@@ -5995,6 +6488,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'email_subject_invoice': 'Email Invoice Subject',
       'email_subject_quote': 'Email Quote Subject',
       'email_subject_payment': 'Email Payment Subject',
+      'email_subject_payment_partial': 'Email Partial Payment Subject',
       'switch_list_table': 'Switch List Table',
       'client_city': 'Client City',
       'client_state': 'Client State',
@@ -6026,8 +6520,114 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'vendor_city': 'Vendor City',
       'vendor_state': 'Vendor State',
       'vendor_country': 'Vendor Country',
+      'is_approved': 'Is Approved',
+      'tax_name': 'Název daně',
+      'tax_amount': 'Tax Amount',
+      'tax_paid': 'Tax Paid',
+      'payment_amount': 'Částka k platbě',
+      'age': 'Age',
     },
     'da': {
+      'full_name': 'Full Name',
+      'city_state_postal': 'By/Postnummer',
+      'postal_city_state': 'Postnummer/By/Region',
+      'custom1': 'First Custom',
+      'custom2': 'Second Custom',
+      'custom3': 'Third Custom',
+      'custom4': 'Fourth Custom',
+      'optional': 'Optional',
+      'license': 'License',
+      'purge_data': 'Purge Data',
+      'purge_successful': 'Successfully purged company data',
+      'purge_data_message':
+          'Advarsel: Dette vil slette dine data permanent, der er ingen måder at fortryde.',
+      'invoice_balance': 'Invoice Balance',
+      'age_group_0': '0 - 30 dage',
+      'age_group_30': '30 - 60 dage',
+      'age_group_60': '60 - 90 dage',
+      'age_group_90': '90 - 120 dage',
+      'age_group_120': '120+ dage',
+      'refresh': 'Refresh',
+      'saved_design': 'Successfully saved design',
+      'client_details': 'Client Details',
+      'company_address': 'Company Address',
+      'invoice_details': 'Fakturadetaljer',
+      'quote_details': 'Quote Details',
+      'credit_details': 'Credit Details',
+      'product_columns': 'Product Columns',
+      'task_columns': 'Task Columns',
+      'add_field': 'Add Field',
+      'all_events': 'All Events',
+      'permissions': 'Permissions',
+      'none': 'None',
+      'owned': 'Owned',
+      'payment_success': 'Payment Success',
+      'payment_failure': 'Payment Failure',
+      'invoice_sent': ':count fakturaer sendt',
+      'quote_sent': 'Quote Sent',
+      'credit_sent': 'Credit Sent',
+      'invoice_viewed': 'Invoice Viewed',
+      'quote_viewed': 'Quote Viewed',
+      'credit_viewed': 'Credit Viewed',
+      'quote_approved': 'Quote Approved',
+      'receive_all_notifications': 'Receive All Notifications',
+      'purchase_license': 'Purchase License',
+      'apply_license': 'Anvend licens',
+      'cancel_account': 'Annuller konto',
+      'cancel_account_message':
+          'ADVARSEL: Dette vil permanent slette din konto, der er INGEN mulighed for at fortryde.',
+      'delete_company': 'Delete Company',
+      'delete_company_message':
+          'Warning: This will permanently delete your company, there is no undo.',
+      'enable_modules': 'Enable Modules',
+      'converted_quote': 'Successfully converted quote',
+      'credit_design': 'Credit Design',
+      'includes': 'Includes',
+      'header': 'Hoved',
+      'load_design': 'Indlæs design',
+      'css_framework': 'CSS Framework',
+      'custom_designs': 'Custom Designs',
+      'designs': 'Designs',
+      'new_design': 'New Design',
+      'edit_design': 'Edit Design',
+      'created_design': 'Successfully created design',
+      'updated_design': 'Successfully updated design',
+      'archived_design': 'Successfully archived design',
+      'deleted_design': 'Successfully deleted design',
+      'removed_design': 'Successfully removed design',
+      'restored_design': 'Successfully restored design',
+      'proposals': 'Projektforslag',
+      'tickets': 'Sager',
+      'recurring_invoices': 'Gentagende fakturaer',
+      'recurring_quotes': 'Gentagne tilbud',
+      'recurring_tasks': 'Recurring Tasks',
+      'recurring_expenses': 'Recurring Expenses',
+      'account_management': 'Account Management',
+      'credit_date': 'Kreditdato',
+      'credit': 'Kredit',
+      'credits': 'Kreditter',
+      'new_credit': 'Indtast kredit',
+      'edit_credit': 'Redigér kredit',
+      'created_credit': 'Kredit oprettet',
+      'updated_credit': 'Opdatering af kredit gennemført',
+      'archived_credit': 'Kredit arkiveret',
+      'deleted_credit': 'Kredit slettet',
+      'removed_credit': 'Successfully removed credit',
+      'restored_credit': 'Kredit genskabt',
+      'current_version': 'Nuværende version',
+      'latest_version': 'Latest Version',
+      'update_now': 'Update Now',
+      'a_new_version_is_available': 'A new version of the web app is available',
+      'update_available': 'Update Available',
+      'app_updated': 'Update successfully completed',
+      'learn_more': 'Lær mere',
+      'integrations': 'Integrations',
+      'tracking_id': 'Tracking Id',
+      'slack_webhook_url': 'Slack Webhook URL',
+      'credit_footer': 'Credit Footer',
+      'credit_terms': 'Credit Terms',
+      'untitled_company': 'Untitled Company',
+      'added_company': 'Successfully added company',
       'company1': 'Custom Company 1',
       'company2': 'Custom Company 2',
       'company3': 'Custom Company 3',
@@ -6037,9 +6637,9 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'product3': 'Custom Product 3',
       'product4': 'Custom Product 4',
       'client1': 'Custom Client 1',
-      'client2': 'Custom Client 1',
-      'client3': 'Custom Client 1',
-      'client4': 'Custom Client 1',
+      'client2': 'Custom Client 2',
+      'client3': 'Custom Client 3',
+      'client4': 'Custom Client 4',
       'contact1': 'Custom Contact 1',
       'contact2': 'Custom Contact 2',
       'contact3': 'Custom Contact 3',
@@ -6085,14 +6685,14 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'blank': 'Blank',
       'day': 'Dag',
       'month': 'Måned',
-      'year': 'Year',
+      'year': 'År',
       'subgroup': 'Subgroup',
       'is_active': 'Is Active',
       'group_by': 'Gruppér efter',
       'credit_balance': 'Kreditsaldo',
       'contact_last_login': 'Contact Last Login',
       'contact_full_name': 'Contact Full Name',
-      'contact_phone': 'Contact Phone',
+      'contact_phone': 'Kontakttelefon',
       'contact_custom_value1': 'Contact Custom Value 1',
       'contact_custom_value2': 'Contact Custom Value 2',
       'contact_custom_value3': 'Contact Custom Value 3',
@@ -6110,13 +6710,12 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'created_by_id': 'Created By Id',
       'add_column': 'Add Column',
       'edit_columns': 'Edit Columns',
-      'columns': 'Columns',
+      'columns': 'Kolonner',
       'aging': 'Aging',
-      'profit_and_loss': 'Profit and Loss',
+      'profit_and_loss': 'Fortjeneste og tab',
       'reports': 'Rapporter',
       'report': 'Rapport',
       'add_company': 'Tilføj firma',
-      'to_learn_about_gogle_fonts': 'to learn about Google Fonts',
       'unpaid_invoice': 'Unpaid Invoice',
       'paid_invoice': 'Paid Invoice',
       'unapproved_quote': 'Unapproved Quote',
@@ -6124,7 +6723,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'refund': 'Refunder',
       'refund_date': 'Refund Date',
       'filtered_by': 'Filtered by',
-      'contact_email': 'Contact Email',
+      'contact_email': 'E-mailkontakt',
       'multiselect': 'Multiselect',
       'entity_state': 'State',
       'verify_password': 'Verify Password',
@@ -6144,7 +6743,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'support_forum': 'support forum',
       'about': 'About',
       'documentation': 'Dokumentation',
-      'contact_us': 'Contact Us',
+      'contact_us': 'Kontakt os',
       'subtotal': 'Subtotal',
       'line_total': 'Sum',
       'item': 'Produkttype',
@@ -6153,7 +6752,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'domain_url': 'Domain URL',
       'password_is_too_short': 'Password is too short',
       'password_is_too_easy':
-          'Password msut contain an upper case character and a number',
+          'Password must contain an upper case character and a number',
       'client_portal_tasks': 'Client Portal Tasks',
       'client_portal_dashboard': 'Client Portal Dashboard',
       'please_enter_a_value': 'Please enter a value',
@@ -6216,7 +6815,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'submit': 'Indsend',
       'recover_password': 'Generhverv din adgangskode',
       'late_fees': 'Late Fees',
-      'credit_number': 'Credit Number',
+      'credit_number': 'Kreditnummer',
       'payment_number': 'Payment Number',
       'late_fee_amount': 'Late Fee Amount',
       'late_fee_percent': 'Late Fee Percent',
@@ -6224,9 +6823,11 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'before_due_date': 'Before the due date',
       'after_due_date': 'After the due date',
       'after_invoice_date': 'After the invoice date',
-      'days': 'Days',
+      'days': 'Dage',
       'invoice_email': 'Faktura e-mail',
       'payment_email': 'Betalings e-mail',
+      'partial_payment': 'Partial Payment',
+      'partial_payment_email': 'Partial Payment Email',
       'quote_email': 'Tilbuds e-mail',
       'endless_reminder': 'Endless Reminder',
       'filtered_by_user': 'Filtered by User',
@@ -6286,7 +6887,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'freq_two_weeks': 'To uger',
       'freq_four_weeks': 'Fire uger',
       'freq_monthly': 'Månedlig',
-      'freq_two_months': 'Two months',
+      'freq_two_months': 'To måneder',
       'freq_three_months': 'Tre måneder',
       'freq_four_months': 'Fire måneder',
       'freq_six_months': 'Seks måneder',
@@ -6295,10 +6896,8 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'freq_three_years': 'Three Years',
       'never': 'Never',
       'company': 'Company',
-      'generated_numbers': 'Generated Numbers',
+      'generated_numbers': 'Dannede numre',
       'charge_taxes': 'Inkluder skat',
-      'credit': 'Kredit',
-      'credits': 'Kreditter',
       'next_reset': 'Next Reset',
       'reset_counter': 'Reset Counter',
       'recurring_prefix': 'Recurring Prefix',
@@ -6341,12 +6940,9 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'enable_portal_password': 'Adgangskodebeskyttet Fakturaer',
       'enable_portal_password_help':
           'Lader dig indtaste en adgangskode til hver kontakt. Hvis en adgangskode ikke er lavet, vil kontakten blive pålagt at indtaste en adgangskode før det er muligt at se fakturaer.',
-      'send_portal_password': 'Generer automatisk',
-      'send_portal_password_help':
-          'If no password is set, one will be generated and sent with the first invoice.',
       'authorization': 'Autorisation',
       'subdomain': 'Underdomain',
-      'domain': 'Domain',
+      'domain': 'Domæne',
       'portal_mode': 'Portal Mode',
       'email_signature': 'Venlig hilsen,',
       'enable_email_markup_help':
@@ -6360,8 +6956,8 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'attach_ubl': 'Attach UBL',
       'email_style': 'Email Style',
       'enable_email_markup': 'Brug HTML markup sprog',
-      'reply_to_email': 'Reply-To Email',
-      'bcc_email': 'BCC Email',
+      'reply_to_email': 'Svar-til e-mail',
+      'bcc_email': 'BCC-email',
       'processed': 'Processed',
       'credit_card': 'Kreditkort',
       'bank_transfer': 'Bankoverførsel',
@@ -6402,8 +6998,8 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'convert_products': 'Convert Products',
       'convert_products_help':
           'Automatically convert product prices to the client\'s currency',
-      'fees': 'Fees',
-      'limits': 'Limits',
+      'fees': 'Gebyrer',
+      'limits': 'Grænser',
       'provider': 'Provider',
       'company_gateway': 'Payment Gateway',
       'company_gateways': 'Payment Gateways',
@@ -6538,7 +7134,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'add_documents_to_invoice': 'Add documents to invoice',
       'exchange_rate': 'Exchange Rate',
       'convert_currency': 'Convert currency',
-      'mark_paid': 'Mark Paid',
+      'mark_paid': 'Markér som betalt',
       'mark_billable': 'Mark billable',
       'category': 'Kategori',
       'address': 'Adresse',
@@ -6611,7 +7207,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'selfhost_login': 'Selfhost Login',
       'google_login': 'Google Login',
       'today': 'Today',
-      'custom_range': 'Custom Range',
+      'custom_range': 'Valgfri periode',
       'date_range': 'Dato område',
       'current': 'Current',
       'previous': 'Previous',
@@ -6623,13 +7219,14 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'last7_days': 'Last 7 Days',
       'last_week': 'Last Week',
       'last30_days': 'Last 30 Days',
-      'this_month': 'This Month',
-      'last_month': 'Last Month',
-      'this_year': 'This Year',
-      'last_year': 'Last Year',
+      'this_month': 'Denne måned',
+      'last_month': 'Forrige måned',
+      'this_year': 'Dette år',
+      'last_year': 'Forrige år',
       'custom': 'Brugertilpasset',
       'clone_to_invoice': 'Clone to Invoice',
       'clone_to_quote': 'Clone to Quote',
+      'clone_to_credit': 'Clone to Credit',
       'view_invoice': 'Se faktura',
       'convert': 'Convert',
       'more': 'More',
@@ -6642,7 +7239,6 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'edit_expense': 'Edit Expense',
       'edit_vendor': 'Redigér sælger',
       'edit_project': 'Redigér projekt',
-      'edit_credit': 'Edit Credit',
       'edit_recurring_invoice': 'Edit Recurring Invoice',
       'edit_recurring_expense': 'Edit Recurring Expense',
       'edit_recurring_quote': 'Edit Recurring Quote',
@@ -6680,7 +7276,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'descending': 'Descending',
       'save': 'Gem',
       'an_error_occurred': 'An error occurred',
-      'paid_to_date': 'Betalt',
+      'paid_to_date': 'Betalt pr. d.d.',
       'balance_due': 'Udestående beløb',
       'balance': 'Balance',
       'overview': 'Overview',
@@ -6709,8 +7305,8 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'created_product': 'Produkt oprettet',
       'updated_product': 'Produkt opdateret',
       'archived_product': 'Produkt arkiveret',
-      'deleted_product': 'Successfully deleted product',
-      'restored_product': 'Successfully restored product',
+      'deleted_product': 'Sletning af produkt gennemført',
+      'restored_product': 'Genskabelse af produkt gennemført',
       'product_key': 'Produkt',
       'notes': 'Notes',
       'cost': 'Cost',
@@ -6755,7 +7351,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'items': 'Items',
       'partial_deposit': 'Partial/Deposit',
       'description': 'Beskrivelse',
-      'unit_cost': 'Pris',
+      'unit_cost': 'Enhedspris',
       'quantity': 'Stk.',
       'add_item': 'Add Item',
       'contact': 'Kontakt',
@@ -6771,7 +7367,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'click_plus_to_add_time': 'Click + to add time',
       'count_selected': ':count selected',
       'total': 'Total',
-      'percent': 'Percent',
+      'percent': 'Procent',
       'edit': 'Rediger',
       'dismiss': 'Dismiss',
       'please_select_a_date': 'Please select a date',
@@ -6787,21 +7383,17 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'please_enter_an_invoice_number': 'Please enter an invoice number',
       'please_enter_a_quote_number': 'Please enter a quote number',
       'past_due': 'Past Due',
-      'draft': 'Draft',
+      'draft': 'Kladde',
       'sent': 'Sendt',
       'viewed': 'Viewed',
       'approved': 'Approved',
       'partial': 'Udbetaling',
       'paid': 'Betalt',
-      'invoice_status_1': 'Draft',
-      'invoice_status_2': 'Sent',
-      'invoice_status_3': 'Viewed',
-      'invoice_status_4': 'Approved',
       'mark_sent': 'Markér som sendt',
       'marked_invoice_as_sent': 'Successfully marked invoice as sent',
-      'marked_invoice_as_paid': 'Successfully marked invoice as sent',
+      'marked_invoice_as_paid': 'Successfully marked invoice as paid',
       'marked_invoices_as_sent': 'Successfully marked invoices as sent',
-      'marked_invoices_as_paid': 'Successfully marked invoices as sent',
+      'marked_invoices_as_paid': 'Successfully marked invoices as paid',
       'done': 'Færdig',
       'please_enter_a_client_or_contact_name':
           'Please enter a client or contact name',
@@ -6829,8 +7421,8 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'show_tasks': 'Show tasks',
       'email_reminders': 'Email Reminders',
       'enabled': 'Aktiveret',
-      'recipients': 'Recipients',
-      'initial_email': 'Initial Email',
+      'recipients': 'Modtagere',
+      'initial_email': 'Indledende e-mail',
       'first_reminder': 'First Reminder',
       'second_reminder': 'Second Reminder',
       'third_reminder': 'Third Reminder',
@@ -6937,7 +7529,9 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'activity_57': 'System failed to email invoice :invoice',
       'one_time_password': 'One Time Password',
       'emailed_quote': 'Tilbud sendt som e-mail',
+      'emailed_credit': 'Successfully emailed credit',
       'marked_quote_as_sent': 'Successfully marked quote as sent',
+      'marked_credit_as_sent': 'Successfully marked credit as sent',
       'expired': 'Expired',
       'all': 'Alle',
       'select': 'Vælg',
@@ -6983,6 +7577,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'email_subject_invoice': 'Email Invoice Subject',
       'email_subject_quote': 'Email Quote Subject',
       'email_subject_payment': 'Email Payment Subject',
+      'email_subject_payment_partial': 'Email Partial Payment Subject',
       'switch_list_table': 'Switch List Table',
       'client_city': 'Client City',
       'client_state': 'Client State',
@@ -7014,20 +7609,126 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'vendor_city': 'Vendor City',
       'vendor_state': 'Vendor State',
       'vendor_country': 'Vendor Country',
+      'is_approved': 'Is Approved',
+      'tax_name': 'Tax Name',
+      'tax_amount': 'Tax Amount',
+      'tax_paid': 'Tax Paid',
+      'payment_amount': 'Beløb',
+      'age': 'Alder',
     },
     'nl': {
-      'company1': 'Custom Company 1',
-      'company2': 'Custom Company 2',
-      'company3': 'Custom Company 3',
-      'company4': 'Custom Company 4',
-      'product1': 'Custom Product 1',
-      'product2': 'Custom Product 2',
-      'product3': 'Custom Product 3',
-      'product4': 'Custom Product 4',
-      'client1': 'Custom Client 1',
-      'client2': 'Custom Client 1',
-      'client3': 'Custom Client 1',
-      'client4': 'Custom Client 1',
+      'full_name': 'Volledige naam',
+      'city_state_postal': 'Postcode',
+      'postal_city_state': 'Provincie',
+      'custom1': 'Eerste aangepaste',
+      'custom2': 'Tweede aangepaste',
+      'custom3': 'Third Custom',
+      'custom4': 'Fourth Custom',
+      'optional': 'Optional',
+      'license': 'License',
+      'purge_data': 'Wis gegevens',
+      'purge_successful': 'De bedrijfsgegevens zijn gewist',
+      'purge_data_message':
+          'Waarschuwing: Dit zal uw gegevens verwijderen. Er is geen manier om dit ongedaan te maken.',
+      'invoice_balance': 'Invoice Balance',
+      'age_group_0': '0 - 30 dagen',
+      'age_group_30': '30 - 60 dagen',
+      'age_group_60': '60 - 90 dagen',
+      'age_group_90': '90 - 120 dagen',
+      'age_group_120': '120+ dagen',
+      'refresh': 'Verversen',
+      'saved_design': 'Successfully saved design',
+      'client_details': 'Client Details',
+      'company_address': 'Company Address',
+      'invoice_details': 'Factuur details',
+      'quote_details': 'Quote Details',
+      'credit_details': 'Credit Details',
+      'product_columns': 'Product Columns',
+      'task_columns': 'Task Columns',
+      'add_field': 'Add Field',
+      'all_events': 'All Events',
+      'permissions': 'Rechten',
+      'none': 'Geen',
+      'owned': 'Owned',
+      'payment_success': 'Payment Success',
+      'payment_failure': 'Payment Failure',
+      'invoice_sent': ':count factuur verzonden',
+      'quote_sent': 'Quote Sent',
+      'credit_sent': 'Credit Sent',
+      'invoice_viewed': 'Invoice Viewed',
+      'quote_viewed': 'Quote Viewed',
+      'credit_viewed': 'Credit Viewed',
+      'quote_approved': 'Quote Approved',
+      'receive_all_notifications': 'Receive All Notifications',
+      'purchase_license': 'Purchase License',
+      'apply_license': 'Activeer licentie',
+      'cancel_account': 'Account verwijderen',
+      'cancel_account_message':
+          'Waarschuwing: Dit zal uw account verwijderen. Er is geen manier om dit ongedaan te maken.',
+      'delete_company': 'Verwijder bedrijf',
+      'delete_company_message':
+          'Waarschuwing: Hiermee verwijder je permanent je bedrijf, dit kan niet worden ontdaan.',
+      'enable_modules': 'Enable Modules',
+      'converted_quote': 'Successfully converted quote',
+      'credit_design': 'Credit Design',
+      'includes': 'Includes',
+      'header': 'Koptekst',
+      'load_design': 'Laad ontwerp',
+      'css_framework': 'CSS Framework',
+      'custom_designs': 'Custom Designs',
+      'designs': 'Designs',
+      'new_design': 'New Design',
+      'edit_design': 'Edit Design',
+      'created_design': 'Successfully created design',
+      'updated_design': 'Successfully updated design',
+      'archived_design': 'Successfully archived design',
+      'deleted_design': 'Successfully deleted design',
+      'removed_design': 'Successfully removed design',
+      'restored_design': 'Successfully restored design',
+      'proposals': 'Voorstellen',
+      'tickets': 'Tickets',
+      'recurring_invoices': 'Terugkerende facturen',
+      'recurring_quotes': 'Terugkerende offertes',
+      'recurring_tasks': 'Recurring Tasks',
+      'recurring_expenses': 'Terugkerende uitgaven',
+      'account_management': 'Accountbeheer',
+      'credit_date': 'Kredietdatum',
+      'credit': 'Krediet',
+      'credits': 'Kredietnota\'s',
+      'new_credit': 'Nieuwe kredietnota',
+      'edit_credit': 'Wijzig krediet',
+      'created_credit': 'De kredietnota is aangemaakt',
+      'updated_credit': 'Het krediet is gewijzigd',
+      'archived_credit': 'De kredietnota is gearchiveerd',
+      'deleted_credit': 'De kredietnota is verwijderd',
+      'removed_credit': 'Successfully removed credit',
+      'restored_credit': 'De kredietnota is hersteld',
+      'current_version': 'Huidige versie',
+      'latest_version': 'Latest Version',
+      'update_now': 'Update Now',
+      'a_new_version_is_available': 'A new version of the web app is available',
+      'update_available': 'Update Available',
+      'app_updated': 'Update successfully completed',
+      'learn_more': 'Kom meer te weten',
+      'integrations': 'Integrations',
+      'tracking_id': 'Tracking Id',
+      'slack_webhook_url': 'Slack Webhook URL',
+      'credit_footer': 'Credit Footer',
+      'credit_terms': 'Credit Terms',
+      'untitled_company': 'Untitled Company',
+      'added_company': 'Successfully added company',
+      'company1': 'Aangepast bedrijf 1',
+      'company2': 'Aangepast bedrijf 2',
+      'company3': 'Aangepast bedrijf 3',
+      'company4': 'Aangepast bedrijf 4',
+      'product1': 'Aangepast product 1',
+      'product2': 'Aangepast product 2',
+      'product3': 'Aangepast product 3',
+      'product4': 'Aangepast product 4',
+      'client1': 'Aangepast cliënt 1',
+      'client2': 'Aangepast cliënt 2',
+      'client3': 'Aangepast cliënt 3',
+      'client4': 'Aangepast cliënt 4',
       'contact1': 'Custom Contact 1',
       'contact2': 'Custom Contact 2',
       'contact3': 'Custom Contact 3',
@@ -7094,35 +7795,34 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'client_id': 'Klantnummer',
       'assigned_to': 'Toegewezen aan',
       'created_by': 'Aangemaakt door :name',
-      'assigned_to_id': 'Assigned To Id',
-      'created_by_id': 'Created By Id',
-      'add_column': 'Add Column',
-      'edit_columns': 'Edit Columns',
+      'assigned_to_id': 'Toegekend aan ID',
+      'created_by_id': 'Gemaakt door ID',
+      'add_column': 'Voeg kolom toe',
+      'edit_columns': 'Wijzig kolom',
       'columns': 'Kolommen',
       'aging': 'Toekomst',
       'profit_and_loss': 'Winst en verlies',
       'reports': 'Rapporten',
       'report': 'Rapport',
       'add_company': 'Bedrijf toevoegen',
-      'to_learn_about_gogle_fonts': 'to learn about Google Fonts',
       'unpaid_invoice': 'Onbetaalde factuur',
       'paid_invoice': 'Betaalde factuur',
       'unapproved_quote': 'Niet goedgekeurde offerte',
       'help': 'Help',
       'refund': 'Terugbetaling',
-      'refund_date': 'Refund Date',
+      'refund_date': 'Terugbetaling datum',
       'filtered_by': 'Gefilterd op',
       'contact_email': 'Contact e-mail',
       'multiselect': 'Multiselect',
       'entity_state': 'Staat',
-      'verify_password': 'Verify Password',
-      'applied': 'Applied',
+      'verify_password': 'Verifieer wachtwoord',
+      'applied': 'Toegepast',
       'include_recent_errors': 'Include recent errors from the logs',
       'your_message_has_been_received':
-          'We have received your message and will try to respond promptly.',
+          'We hebben uw bericht ontvangen, en zullen zo spoedig mogelijk reageren.',
       'message': 'Bericht',
       'from': 'Van',
-      'show_product_details': 'Show Product Details',
+      'show_product_details': 'toon product details',
       'show_product_details_help':
           'Include the description and cost in the product dropdown',
       'pdf_min_requirements': 'The PDF renderer requires :version',
@@ -7131,7 +7831,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
           'Pas percentage aan om rekening te houden met de kosten',
       'configure_settings': 'Configure Settings',
       'support_forum': 'Support Forum',
-      'about': 'About',
+      'about': 'Over',
       'documentation': 'Documentatie',
       'contact_us': 'Contacteer ons',
       'subtotal': 'Subtotaal',
@@ -7142,7 +7842,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'domain_url': 'Domain URL',
       'password_is_too_short': 'Wachtwoord is te kort',
       'password_is_too_easy':
-          'Password msut contain an upper case character and a number',
+          'Password must contain an upper case character and a number',
       'client_portal_tasks': 'Client Portal Tasks',
       'client_portal_dashboard': 'Client Portal Dashboard',
       'please_enter_a_value': 'Please enter a value',
@@ -7204,21 +7904,23 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'recover_password_email_sent': 'A password recovery email has been sent',
       'submit': 'Opslaan',
       'recover_password': 'Wachtwoord vergeten?',
-      'late_fees': 'Late Fees',
+      'late_fees': 'Late vergoedingen',
       'credit_number': 'Kredietnummer',
-      'payment_number': 'Payment Number',
+      'payment_number': 'Betalingsnummer',
       'late_fee_amount': 'Late vergoedingsbedrag',
       'late_fee_percent': 'Late vergoedingspercentage',
       'schedule': 'Schema',
-      'before_due_date': 'Before the due date',
-      'after_due_date': 'After the due date',
-      'after_invoice_date': 'After the invoice date',
+      'before_due_date': 'Voor de vervaldatum',
+      'after_due_date': 'Na de vervaldatum',
+      'after_invoice_date': 'na de factuurdatum',
       'days': 'Dagen',
       'invoice_email': 'Factuurmail',
       'payment_email': 'Betalingsmail',
+      'partial_payment': 'Partial Payment',
+      'partial_payment_email': 'Partial Payment Email',
       'quote_email': 'Offertemail',
       'endless_reminder': 'Eindeloze taak',
-      'filtered_by_user': 'Filtered by User',
+      'filtered_by_user': 'Gefilterd door gebruiker',
       'administrator': 'Beheerder',
       'administrator_help':
           'Geef gebruiker de toestemming om andere gebruikers te beheren, instellingen te wijzigen en alle regels te bewerken.',
@@ -7226,12 +7928,12 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'users': 'Gebruikers',
       'new_user': 'Nieuwe Gebruiker',
       'edit_user': 'Bewerk gebruiker',
-      'created_user': 'Successfully created user',
-      'updated_user': 'De gebruiker is succesvol gewijzigd',
-      'archived_user': 'De gebruiker is succesvol gearchiveerd',
-      'deleted_user': 'De gebruiker is succesvol verwijderd',
+      'created_user': 'De gebruiker is aangemaakt',
+      'updated_user': 'De gebruiker is gewijzigd',
+      'archived_user': 'De gebruiker is gearchiveerd',
+      'deleted_user': 'De gebruiker is verwijderd',
       'removed_user': 'Successfully removed user',
-      'restored_user': 'De gebruiker is succesvol hersteld',
+      'restored_user': 'De gebruiker is hersteld',
       'general_settings': 'Algemene instellingen',
       'invoice_options': 'Factuuropties',
       'hide_paid_to_date': 'Verberg \"Reeds betaald\"',
@@ -7245,8 +7947,8 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'first_page': 'eerste pagina',
       'all_pages': 'alle pagina\'s',
       'last_page': 'laatste pagina',
-      'primary_font': 'Primary Font',
-      'secondary_font': 'Secondary Font',
+      'primary_font': 'Primair lettertype',
+      'secondary_font': 'Secundair lettertype',
       'primary_color': 'Primaire kleur',
       'secondary_color': 'Secundaire kleur',
       'page_size': 'Paginagrootte',
@@ -7287,34 +7989,32 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'company': 'Bedrijf',
       'generated_numbers': 'Gegenereerde nummers',
       'charge_taxes': 'BTW berekenen',
-      'credit': 'Krediet',
-      'credits': 'Kredietnota\'s',
       'next_reset': 'Volgende reset',
       'reset_counter': 'Teller resetten',
       'recurring_prefix': 'Terugkerend voorvoegsel',
-      'number_padding': 'Number Padding',
-      'general': 'General',
-      'surcharge_field': 'Surcharge Field',
+      'number_padding': 'Nummer afstand',
+      'general': 'Algemeen',
+      'surcharge_field': 'Extra toeslag veld',
       'company_field': 'Bedrijf veld',
-      'company_value': 'Company Value',
-      'credit_field': 'Credit Field',
+      'company_value': 'Bedrijfswaarde',
+      'credit_field': 'Credit veld',
       'invoice_field': 'Factuur veld',
       'invoice_surcharge': 'Factuurkost',
       'client_field': 'Klant veld',
       'product_field': 'Productveld',
-      'payment_field': 'Payment Field',
+      'payment_field': 'Betaalveld',
       'contact_field': 'Contact veld',
       'vendor_field': 'Leverancier veld',
       'expense_field': 'Uitgave veld',
       'project_field': 'Project veld',
       'task_field': 'Taak veld',
-      'group_field': 'Group Field',
-      'number_counter': 'Number Counter',
+      'group_field': 'Groepsveld',
+      'number_counter': 'Nummerteller',
       'prefix': 'Voorvoegsel',
-      'number_pattern': 'Number Pattern',
+      'number_pattern': 'Nummer patroon',
       'messages': 'Berichten',
       'custom_css': 'Aangepaste CSS',
-      'custom_javascript': 'Custom JavaScript',
+      'custom_javascript': 'Zelfgeschreven JavaScript',
       'signature_on_pdf': 'Weergeven op PDF',
       'signature_on_pdf_help':
           'Toon de handtekening van de klant op de factuur/offerte PDF.',
@@ -7331,13 +8031,10 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'enable_portal_password': 'Facturen beveiligen met een wachtwoord',
       'enable_portal_password_help':
           'Geeft u de mogelijkheid om een wachtwoord in te stellen voor elke contactpersoon. Als er een wachtwoord is ingesteld moet de contactpersoon het wachtwoord invoeren voordat deze facturen kan bekijken.',
-      'send_portal_password': 'Automatische generatie',
-      'send_portal_password_help':
-          'Als er geen wachtwoord is ingesteld zal deze automatisch worden gegenereerd en verzonden bij de eerste factuur.',
       'authorization': 'Autorisatie',
       'subdomain': 'Subdomein',
       'domain': 'Domein',
-      'portal_mode': 'Portal Mode',
+      'portal_mode': 'portaalmodus',
       'email_signature': 'Met vriendelijke groeten,',
       'enable_email_markup_help':
           'Maak het gemakkelijker voor uw klanten om te betalen door scherma.org opmaak toe te voegen aan uw e-mails.',
@@ -7345,21 +8042,21 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'light': 'Licht',
       'dark': 'Donker',
       'email_design': 'E-mail Ontwerp',
-      'attach_pdf': 'Attach PDF',
-      'attach_documents': 'Attach Documents',
-      'attach_ubl': 'Attach UBL',
-      'email_style': 'Email Style',
+      'attach_pdf': 'PDF bijlvoegen',
+      'attach_documents': 'Document bijvoegen',
+      'attach_ubl': 'UBL bijvoegen',
+      'email_style': 'Email opmaak',
       'enable_email_markup': 'Opmaak inschakelen',
       'reply_to_email': 'Antwoord naar e-mail',
       'bcc_email': 'BBC Email',
-      'processed': 'Processed',
+      'processed': 'Verwerkt',
       'credit_card': 'Creditcard',
       'bank_transfer': 'Overschrijving',
       'priority': 'Prioriteit',
-      'fee_amount': 'Fee Amount',
-      'fee_percent': 'Fee Percent',
-      'fee_cap': 'Fee Cap',
-      'limits_and_fees': 'Limits/Fees',
+      'fee_amount': 'Vergoedingsbedrag',
+      'fee_percent': 'Vergoedingspercentage',
+      'fee_cap': 'Maximale vergoeding',
+      'limits_and_fees': 'limiet/vergoedingen',
       'enable_min': 'Min inschakelen',
       'enable_max': 'Max inschakelen',
       'min_limit': 'Min: :min',
@@ -7367,11 +8064,11 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'min': 'Min',
       'max': 'Max',
       'accepted_card_logos': 'Geaccepteerde kaart logo\'s',
-      'credentials': 'Credentials',
+      'credentials': 'Gegevens',
       'require_billing_address_help':
-          'Require client to provide their billing address',
+          'Verplicht de klant om zijn factuuradres op te geven',
       'require_shipping_address_help':
-          'Require client to provide their shipping address',
+          'Verplicht de klant om zijn verzendadres op te geven',
       'update_address': 'Adres aanpassen',
       'update_address_help':
           'Pas het adres van de klant aan met de ingevulde gegevens',
@@ -7381,9 +8078,9 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'edit_tax_rate': 'Bewerk tarief',
       'created_tax_rate': 'Het tarief is aangemaakt',
       'updated_tax_rate': 'Het tarief is bijgewerkt',
-      'archived_tax_rate': 'Het tarief is succesvol gearchiveerd',
-      'deleted_tax_rate': 'Successfully deleted tax rate',
-      'restored_tax_rate': 'Successfully restored tax rate',
+      'archived_tax_rate': 'Het tarief is gearchiveerd',
+      'deleted_tax_rate': 'De BTW heffing is verwijderd',
+      'restored_tax_rate': 'De BTW heffing is teruggezet',
       'fill_products': 'Producten Automatisch aanvullen',
       'fill_products_help':
           'Een product selecteren zal automatisch <b>de beschrijving en kosten instellen</b>',
@@ -7396,22 +8093,22 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'fees': 'Transactiekosten',
       'limits': 'Limieten',
       'provider': 'Provider',
-      'company_gateway': 'Payment Gateway',
-      'company_gateways': 'Payment Gateways',
-      'new_company_gateway': 'New Gateway',
-      'edit_company_gateway': 'Edit Gateway',
-      'created_company_gateway': 'Successfully created gateway',
-      'updated_company_gateway': 'Successfully updated gateway',
-      'archived_company_gateway': 'Successfully archived gateway',
-      'deleted_company_gateway': 'Successfully deleted gateway',
-      'restored_company_gateway': 'Successfully restored gateway',
-      'continue_editing': 'Continue Editing',
+      'company_gateway': 'Betalingsgateway',
+      'company_gateways': 'Betalingsgateway',
+      'new_company_gateway': 'Nieuwe instantie aanmaken',
+      'edit_company_gateway': 'Huidige instantie bewerken',
+      'created_company_gateway': 'De nieuwe instantie is aangemaakt',
+      'updated_company_gateway': 'De nieuwe instantie is bijgewerkt',
+      'archived_company_gateway': 'De nieuwe instantie is gearchiveerd',
+      'deleted_company_gateway': 'De nieuwe instantie is verwijderd',
+      'restored_company_gateway': 'De nieuwe instantie is hersteld',
+      'continue_editing': 'Bewerk verder',
       'discard_changes': 'Wis Wijzigingen',
-      'default_value': 'Default value',
+      'default_value': 'Standaard waarde',
       'disabled': 'Uitgeschakeld',
-      'currency_format': 'Currency Format',
-      'first_day_of_the_week': 'First Day of the Week',
-      'first_month_of_the_year': 'First Month of the Year',
+      'currency_format': 'Munt formaat',
+      'first_day_of_the_week': 'Eerste dag van de week',
+      'first_month_of_the_year': 'Eerste maand van het jaar',
       'sunday': 'Zondag',
       'monday': 'Maandag',
       'tuesday': 'Dinsdag',
@@ -7431,34 +8128,34 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'october': 'oktober',
       'november': 'november',
       'december': 'december',
-      'symbol': 'Symbol',
+      'symbol': 'Symbool',
       'ocde': 'Code',
-      'date_format': 'Date Format',
-      'datetime_format': 'Datetime Format',
+      'date_format': 'Datum formaat',
+      'datetime_format': 'Datum/tijd opmaak',
       'military_time': '24-uurs klok',
       'military_time_help': '24 Hour Display',
-      'send_reminders': 'Send Reminders',
-      'timezone': 'Timezone',
-      'filtered_by_group': 'Filtered by Group',
-      'filtered_by_invoice': 'Filtered by Invoice',
-      'filtered_by_client': 'Filtered by Client',
-      'filtered_by_vendor': 'Filtered by Vendor',
-      'group_settings': 'Group Settings',
+      'send_reminders': 'Verstuur herinneringen',
+      'timezone': 'Tijdzone',
+      'filtered_by_group': 'Filteren op groep',
+      'filtered_by_invoice': 'Filteren op factuur',
+      'filtered_by_client': 'Filteren op klant',
+      'filtered_by_vendor': 'Filteren op leverancier',
+      'group_settings': 'Groepsinstellingen',
       'group': 'Groep',
-      'groups': 'Groups',
-      'new_group': 'New Group',
-      'edit_group': 'Edit Group',
-      'created_group': 'Successfully created group',
-      'updated_group': 'Successfully updated group',
-      'archived_group': 'Successfully archived group',
-      'deleted_group': 'Successfully deleted group',
-      'restored_group': 'Successfully restored group',
-      'upload_logo': 'Upload Logo',
-      'uploaded_logo': 'Successfully uploaded logo',
+      'groups': 'Groep',
+      'new_group': 'Nieuwe groep',
+      'edit_group': 'Wijzig groep',
+      'created_group': 'Nieuwe groep aangemaakt',
+      'updated_group': 'Groep gewijzigd',
+      'archived_group': 'Groep gearchiveerd',
+      'deleted_group': 'Groep verwijderd',
+      'restored_group': 'De groep is hersteld',
+      'upload_logo': 'Upload logo',
+      'uploaded_logo': 'Het logo is opgeslagen',
       'logo': 'Logo',
-      'saved_settings': 'Successfully saved settings',
+      'saved_settings': 'De instellingen zijn opgeslagen',
       'product_settings': 'Productinstellingen',
-      'device_settings': 'Device Settings',
+      'device_settings': 'Apparaatinstellingen',
       'defaults': 'Standaardwaarden',
       'basic_settings': 'Basisinstellingen',
       'advanced_settings': 'Geavanceerde instellingen',
@@ -7474,14 +8171,14 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'buy_now_buttons': 'Koop nu knoppen',
       'email_settings': 'E-mailinstellingen',
       'templates_and_reminders': 'Sjablonen en herinneringen',
-      'credit_cards_and_banks': 'Credit Cards & Banks',
+      'credit_cards_and_banks': 'Credit Cards & Banken',
       'data_visualizations': 'Datavisualisaties',
-      'price': 'Price',
-      'email_sign_up': 'Email Sign Up',
-      'google_sign_up': 'Google Sign Up',
+      'price': 'Prijs',
+      'email_sign_up': 'Aanmelden voor email',
+      'google_sign_up': 'Aanmelden bij Google',
       'thank_you_for_your_purchase': 'Bedankt voor uw aankoop!',
       'redeem': 'Verzilver',
-      'sign_up_with_google': 'Sign Up With Google',
+      'sign_up_with_google': 'Aanmelden met Google',
       'back': 'Terug',
       'past_purchases': 'Voorbije aankopen',
       'annual_subscription': 'Jaarlijks abonnement',
@@ -7514,11 +8211,11 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'documents': 'Documenten',
       'new_document': 'Nieuw document',
       'edit_document': 'Bewerk Document',
-      'uploaded_document': 'Document succesvol geupload',
-      'updated_document': 'Document succesvol geupdate',
-      'archived_document': 'Document succesvol gearchiveerd',
-      'deleted_document': 'Document succesvol verwijderd',
-      'restored_document': 'Document succesvol hersteld',
+      'uploaded_document': 'Document is geupload',
+      'updated_document': 'Het document is bijgewerkt',
+      'archived_document': 'Het document is gearchiveerd',
+      'deleted_document': 'Het document is verwijderd',
+      'restored_document': 'Het document is hersteld',
       'no_history': 'Geen geschiedenis',
       'expense_date': 'Uitgave datum',
       'pending': 'In afwachting',
@@ -7534,17 +8231,17 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'category': 'Categorie',
       'address': 'Adres',
       'new_vendor': 'Nieuwe leverancier',
-      'created_vendor': 'De leverancier is succesvol aangemaakt',
-      'updated_vendor': 'De leverancier is succesvol gewijzigd',
-      'archived_vendor': 'De leverancier is succesvol gearchiveerd',
-      'deleted_vendor': 'De leverancier is succesvol verwijderd',
-      'restored_vendor': 'De leverancier is succesvol hersteld',
+      'created_vendor': 'De leverancier is aangemaakt',
+      'updated_vendor': 'De leverancier is gewijzigd',
+      'archived_vendor': 'De leverancier is gearchiveerd',
+      'deleted_vendor': 'De leverancier is verwijderd',
+      'restored_vendor': 'De leverancier is hersteld',
       'new_expense': 'Nieuwe uitgave',
-      'created_expense': 'De uitgave is succesvol aangemaakt',
-      'updated_expense': 'De uitgave is succesvol gewijzigd',
-      'archived_expense': 'De uitgave is succesvol gearchiveerd',
-      'deleted_expense': 'De uitgave is succesvol verwijderd',
-      'restored_expense': 'De uitgave is succesvol hersteld',
+      'created_expense': 'De uitgave is aangemaakt',
+      'updated_expense': 'De uitgave is gewijzigd',
+      'archived_expense': 'De uitgave is gearchiveerd',
+      'deleted_expense': 'De uitgave is verwijderd',
+      'restored_expense': 'De uitgave is hersteld',
       'copy_shipping': 'Levering kopiëren',
       'copy_billing': 'Facturatie kopiëren',
       'design': 'Ontwerp',
@@ -7556,9 +8253,9 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'task_errors': 'Pas overlappende tijden aan a.u.b..',
       'start': 'Start',
       'stop': 'Stop',
-      'started_task': 'Succesvol een taak gestart',
-      'stopped_task': 'Taak succesvol gestopt',
-      'resumed_task': 'Taak succesvol hervat',
+      'started_task': 'De taak is gestart',
+      'stopped_task': 'De taak is gestopt',
+      'resumed_task': 'Taak hervat',
       'now': 'Nu',
       'auto_start_tasks': 'Automatisch Startende Taken',
       'timer': 'Timer',
@@ -7570,18 +8267,18 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'times': 'Tijden',
       'duration': 'Duur',
       'new_task': 'Nieuwe taak',
-      'created_task': 'De taak is succesvol aangemaakt',
-      'updated_task': 'De taak is succesvol gewijzigd',
-      'archived_task': 'De taak is succesvol gearchiveerd',
-      'deleted_task': 'De taak is succesvol verwijderd',
-      'restored_task': 'De taak is succesvol hersteld',
+      'created_task': 'De taak is aangemaakt',
+      'updated_task': 'De taak is gewijzigd',
+      'archived_task': 'De taak is gearchiveerd',
+      'deleted_task': 'De taak is verwijderd',
+      'restored_task': 'De taak is hersteld',
       'please_enter_a_name': 'Geef a.u.b. een naam op',
       'budgeted_hours': 'Begrote uren',
-      'created_project': 'Het project is succesvol aangemaakt',
-      'updated_project': 'Het project is succesvol gewijzigd',
-      'archived_project': 'Het project is succesvol gearchiveerd',
-      'deleted_project': 'Het project is succesvol verwijderd',
-      'restored_project': 'Het project is succesvol hersteld',
+      'created_project': 'Het project is aangemaakt',
+      'updated_project': 'Het project is gewijzigd',
+      'archived_project': 'Het project is gearchiveerd',
+      'deleted_project': 'Het project is verwijderd',
+      'restored_project': 'Het project is hersteld',
       'new_project': 'Nieuw project',
       'thank_you_for_using_our_app': 'Bedankt voor het gebruik van onze app!',
       'if_you_like_it': 'Als je het leuk vindt alsjeblieft',
@@ -7621,6 +8318,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'custom': 'Aangepast',
       'clone_to_invoice': 'Dupliceer als factuur',
       'clone_to_quote': 'Dupliceer als offerte',
+      'clone_to_credit': 'Clone to Credit',
       'view_invoice': 'Bekijk factuur',
       'convert': 'Converteer',
       'more': 'Meer',
@@ -7633,7 +8331,6 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'edit_expense': 'Bewerk uitgave',
       'edit_vendor': 'Bewerk leverancier',
       'edit_project': 'Wijzig project',
-      'edit_credit': 'Wijzig krediet',
       'edit_recurring_invoice': 'Bewerk terugkerende factuur',
       'edit_recurring_expense': 'Terugkerende uitgave bewerken',
       'edit_recurring_quote': 'Bewerk terugkerende offerte',
@@ -7689,7 +8386,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'first_name': 'Voornaam',
       'last_name': 'Achternaam',
       'add_contact': 'Contact toevoegen',
-      'are_you_sure': 'Weet u het zeker?',
+      'are_you_sure': 'Weet je het zeker?',
       'cancel': 'Annuleren',
       'ok': 'OK',
       'remove': 'Verwijderen',
@@ -7697,38 +8394,38 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'product': 'Product',
       'products': 'Producten',
       'new_product': 'Nieuw product',
-      'created_product': 'Het product is succesvol aangemaakt',
-      'updated_product': 'Het product is succesvol gewijzigd',
-      'archived_product': 'Het product is succesvol gearchiveerd',
-      'deleted_product': 'Het product is succesvol verwijderd',
-      'restored_product': 'Het product is succesvol hersteld',
+      'created_product': 'Het product is aangemaakt',
+      'updated_product': 'Het product is gewijzigd',
+      'archived_product': 'Het product is gearchiveerd',
+      'deleted_product': 'Het product is verwijderd',
+      'restored_product': 'Het product is hersteld',
       'product_key': 'Product',
       'notes': 'Notities',
       'cost': 'Kosten',
       'client': 'Klant',
       'clients': 'Klanten',
       'new_client': 'Nieuwe klant',
-      'created_client': 'De klant is succesvol aangemaakt',
-      'updated_client': 'De klant is succesvol gewijzigd',
-      'archived_client': 'De klant is succesvol gearchiveerd',
-      'deleted_client': 'De klant is succesvol verwijderd',
-      'restored_client': 'De klant is succesvol hersteld',
+      'created_client': 'De klant is aangemaakt',
+      'updated_client': 'De klant is bijgewerkt',
+      'archived_client': 'De klant is gearchiveerd',
+      'deleted_client': 'De klant is verwijderd',
+      'restored_client': 'De klant is hersteld',
       'address1': 'Straat',
-      'address2': 'Bus',
+      'address2': 'Huisnummer',
       'city': 'Plaats',
-      'state': 'Staat/Provincie',
+      'state': 'Provincie',
       'postal_code': 'Postcode',
       'country': 'Land',
       'invoice': 'Factuur',
       'invoices': 'Facturen',
       'new_invoice': 'Nieuwe factuur',
-      'created_invoice': 'De factuur is succesvol aangemaakt',
-      'updated_invoice': 'De factuur is succesvol gewijzigd',
-      'archived_invoice': 'De factuur is succesvol gearchiveerd',
-      'deleted_invoice': 'De factuur is succesvol verwijderd',
-      'restored_invoice': 'De factuur is succesvol hersteld',
-      'emailed_invoice': 'De factuur is succesvol gemaild',
-      'emailed_payment': 'Betaling succesvol ge-e-maild',
+      'created_invoice': 'De factuur is aangemaakt',
+      'updated_invoice': 'De factuur is gewijzigd',
+      'archived_invoice': 'De factuur is gearchiveerd',
+      'deleted_invoice': 'De factuur is verwijderd',
+      'restored_invoice': 'De factuur is hersteld',
+      'emailed_invoice': 'De factuur is gemaild',
+      'emailed_payment': 'De betaling is per mail verstuurd',
       'amount': 'Bedrag',
       'invoice_number': 'Factuurnummer',
       'invoice_date': 'Factuurdatum',
@@ -7736,7 +8433,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'po_number': 'Bestelnummer',
       'terms': 'Voorwaarden',
       'public_notes': 'Publieke opmerkingen',
-      'private_notes': 'Private opmerkingen',
+      'private_notes': 'Prive notities',
       'frequency': 'Frequentie',
       'start_date': 'Startdatum',
       'end_date': 'Einddatum',
@@ -7746,7 +8443,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'items': 'Artikelen',
       'partial_deposit': 'Voorschot',
       'description': 'Omschrijving',
-      'unit_cost': 'Eenheidsprijs',
+      'unit_cost': 'Stukprijs',
       'quantity': 'Aantal',
       'add_item': 'Artikel toevoegen',
       'contact': 'Contact',
@@ -7785,16 +8482,11 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'approved': 'Goedgekeurd',
       'partial': 'Voorschot',
       'paid': 'Betaald',
-      'invoice_status_1': 'Concept',
-      'invoice_status_2': 'Verstuurd',
-      'invoice_status_3': 'Bekenen',
-      'invoice_status_4': 'Goedgekeurd',
       'mark_sent': 'Markeer als verzonden',
-      'marked_invoice_as_sent':
-          'De factuur is succesvol gemarkeerd als verzonden',
-      'marked_invoice_as_paid': 'Successfully marked invoice as sent',
+      'marked_invoice_as_sent': 'De factuur is gemarkeerd als verzonden',
+      'marked_invoice_as_paid': 'Successfully marked invoice as paid',
       'marked_invoices_as_sent': 'Successfully marked invoices as sent',
-      'marked_invoices_as_paid': 'Successfully marked invoices as sent',
+      'marked_invoices_as_paid': 'Successfully marked invoices as paid',
       'done': 'Klaar',
       'please_enter_a_client_or_contact_name':
           'Gelieve een bedrijfsnaam of contactpersoon in te voeren',
@@ -7846,22 +8538,22 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'payments': 'Betalingen',
       'refunded': 'Gecrediteerd',
       'payment_type': 'Betalingswijze',
-      'transaction_reference': 'Transactiereferentie',
+      'transaction_reference': 'Transactie referentie',
       'enter_payment': 'Voer betaling in',
       'new_payment': 'Nieuwe betaling',
-      'created_payment': 'De betaling is succesvol aangemaakt',
-      'updated_payment': 'De betaling is succesvol gewijzigd',
-      'archived_payment': 'De betaling is succesvol gearchiveerd',
-      'deleted_payment': 'De betaling is succesvol verwijderd',
-      'restored_payment': 'De betaling is succesvol hersteld',
+      'created_payment': 'De betaling is aangemaakt',
+      'updated_payment': 'De betaling is gewijzigd',
+      'archived_payment': 'De betaling is gearchiveerd',
+      'deleted_payment': 'De betaling is verwijderd',
+      'restored_payment': 'De betaling is hersteld',
       'quote': 'Offerte',
       'quotes': 'Offertes',
       'new_quote': 'Nieuwe offerte',
-      'created_quote': 'De offerte is succesvol aangemaakt',
-      'updated_quote': 'De offerte is succesvol gewijzigd',
-      'archived_quote': 'De offerte is succesvol gearchiveerd',
-      'deleted_quote': 'De offerte is succesvol verwijderd',
-      'restored_quote': 'De offerte is succesvol hersteld',
+      'created_quote': 'De offerte is aangemaakt',
+      'updated_quote': 'De offerte is gewijzigd',
+      'archived_quote': 'De offerte is gearchiveerd',
+      'deleted_quote': 'De offerte is verwijderd',
+      'restored_quote': 'De offerte is hersteld',
       'expense': 'Uitgave',
       'expenses': 'Uitgaven',
       'vendor': 'Leverancier',
@@ -7932,13 +8624,14 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'activity_56': ':user heeft ticket :ticket bekeken',
       'activity_57': 'System failed to email invoice :invoice',
       'one_time_password': 'Eenmalig wachtwoord',
-      'emailed_quote': 'De offerte is succesvol gemaild',
-      'marked_quote_as_sent':
-          'De offerte is succesvol gemarkeerd als verzonden',
+      'emailed_quote': 'De offerte is gemaild',
+      'emailed_credit': 'Successfully emailed credit',
+      'marked_quote_as_sent': 'De offerte is  gemarkeerd als verzonden',
+      'marked_credit_as_sent': 'Successfully marked credit as sent',
       'expired': 'Verlopen',
       'all': 'Alles',
       'select': 'Selecteer',
-      'long_press_multiselect': 'Long-press Multiselect',
+      'long_press_multiselect': 'Lang indrukken multiselect',
       'custom_value1': 'Aangepaste waarde',
       'custom_value2': 'Aangepaste waarde',
       'custom_value3': 'Custom Value 3',
@@ -7980,6 +8673,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'email_subject_invoice': 'Email Invoice Subject',
       'email_subject_quote': 'Email Quote Subject',
       'email_subject_payment': 'Email Payment Subject',
+      'email_subject_payment_partial': 'Email Partial Payment Subject',
       'switch_list_table': 'Switch List Table',
       'client_city': 'Client City',
       'client_state': 'Client State',
@@ -8011,8 +8705,114 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'vendor_city': 'Vendor City',
       'vendor_state': 'Vendor State',
       'vendor_country': 'Vendor Country',
+      'is_approved': 'Is Approved',
+      'tax_name': 'Belasting naam',
+      'tax_amount': 'BTW',
+      'tax_paid': 'Betaalde Belasting',
+      'payment_amount': 'Betalingsbedrag',
+      'age': 'Leeftijd',
     },
     'en_AU': {
+      'full_name': 'Full Name',
+      'city_state_postal': 'City/State/Postcode',
+      'postal_city_state': 'Postcode/City/State',
+      'custom1': 'First Custom',
+      'custom2': 'Second Custom',
+      'custom3': 'Third Custom',
+      'custom4': 'Fourth Custom',
+      'optional': 'Optional',
+      'license': 'License',
+      'purge_data': 'Purge Data',
+      'purge_successful': 'Successfully purged company data',
+      'purge_data_message':
+          'Warning: This will permanently erase your data, there is no undo.',
+      'invoice_balance': 'Invoice Balance',
+      'age_group_0': '0 - 30 Days',
+      'age_group_30': '30 - 60 Days',
+      'age_group_60': '60 - 90 Days',
+      'age_group_90': '90 - 120 Days',
+      'age_group_120': '120+ Days',
+      'refresh': 'Refresh',
+      'saved_design': 'Successfully saved design',
+      'client_details': 'Client Details',
+      'company_address': 'Company Address',
+      'invoice_details': 'Invoice Details',
+      'quote_details': 'Quote Details',
+      'credit_details': 'Credit Details',
+      'product_columns': 'Product Columns',
+      'task_columns': 'Task Columns',
+      'add_field': 'Add Field',
+      'all_events': 'All Events',
+      'permissions': 'Permissions',
+      'none': 'None',
+      'owned': 'Owned',
+      'payment_success': 'Payment Success',
+      'payment_failure': 'Payment Failure',
+      'invoice_sent': ':count invoice sent',
+      'quote_sent': 'Quote Sent',
+      'credit_sent': 'Credit Sent',
+      'invoice_viewed': 'Invoice Viewed',
+      'quote_viewed': 'Quote Viewed',
+      'credit_viewed': 'Credit Viewed',
+      'quote_approved': 'Quote Approved',
+      'receive_all_notifications': 'Receive All Notifications',
+      'purchase_license': 'Purchase License',
+      'apply_license': 'Apply License',
+      'cancel_account': 'Delete Account',
+      'cancel_account_message':
+          'Warning: This will permanently delete your account, there is no undo.',
+      'delete_company': 'Delete Company',
+      'delete_company_message':
+          'Warning: This will permanently delete your company, there is no undo.',
+      'enable_modules': 'Enable Modules',
+      'converted_quote': 'Successfully converted quote',
+      'credit_design': 'Credit Design',
+      'includes': 'Includes',
+      'header': 'Header',
+      'load_design': 'Load Design',
+      'css_framework': 'CSS Framework',
+      'custom_designs': 'Custom Designs',
+      'designs': 'Designs',
+      'new_design': 'New Design',
+      'edit_design': 'Edit Design',
+      'created_design': 'Successfully created design',
+      'updated_design': 'Successfully updated design',
+      'archived_design': 'Successfully archived design',
+      'deleted_design': 'Successfully deleted design',
+      'removed_design': 'Successfully removed design',
+      'restored_design': 'Successfully restored design',
+      'proposals': 'Proposals',
+      'tickets': 'Tickets',
+      'recurring_invoices': 'Recurring Invoices',
+      'recurring_quotes': 'Recurring Quotes',
+      'recurring_tasks': 'Recurring Tasks',
+      'recurring_expenses': 'Recurring Expenses',
+      'account_management': 'Account Management',
+      'credit_date': 'Credit Date',
+      'credit': 'Credit',
+      'credits': 'Credits',
+      'new_credit': 'Enter Credit',
+      'edit_credit': 'Edit Credit',
+      'created_credit': 'Successfully created credit',
+      'updated_credit': 'Successfully updated credit',
+      'archived_credit': 'Successfully archived credit',
+      'deleted_credit': 'Successfully deleted credit',
+      'removed_credit': 'Successfully removed credit',
+      'restored_credit': 'Successfully restored credit',
+      'current_version': 'Current version',
+      'latest_version': 'Latest Version',
+      'update_now': 'Update Now',
+      'a_new_version_is_available': 'A new version of the web app is available',
+      'update_available': 'Update Available',
+      'app_updated': 'Update successfully completed',
+      'learn_more': 'Learn more',
+      'integrations': 'Integrations',
+      'tracking_id': 'Tracking Id',
+      'slack_webhook_url': 'Slack Webhook URL',
+      'credit_footer': 'Credit Footer',
+      'credit_terms': 'Credit Terms',
+      'untitled_company': 'Untitled Company',
+      'added_company': 'Successfully added company',
       'company1': 'Custom Company 1',
       'company2': 'Custom Company 2',
       'company3': 'Custom Company 3',
@@ -8021,10 +8821,10 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'product2': 'Custom Product 2',
       'product3': 'Custom Product 3',
       'product4': 'Custom Product 4',
-      'client1': 'Custom Client 1',
-      'client2': 'Custom Client 1',
-      'client3': 'Custom Client 1',
-      'client4': 'Custom Client 1',
+      'client1': 'Custom Customer 1',
+      'client2': 'Custom Customer 2',
+      'client3': 'Custom Customer 3',
+      'client4': 'Custom Customer 4',
       'contact1': 'Custom Contact 1',
       'contact2': 'Custom Contact 2',
       'contact3': 'Custom Contact 3',
@@ -8041,10 +8841,10 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'expense2': 'Custom Expense 2',
       'expense3': 'Custom Expense 3',
       'expense4': 'Custom Expense 4',
-      'vendor1': 'Custom Vendor 1',
-      'vendor2': 'Custom Vendor 2',
-      'vendor3': 'Custom Vendor 3',
-      'vendor4': 'Custom Vendor 4',
+      'vendor1': 'Custom Supplier 1',
+      'vendor2': 'Custom Supplier 2',
+      'vendor3': 'Custom Supplier 3',
+      'vendor4': 'Custom Supplier 4',
       'invoice1': 'Custom Invoice 1',
       'invoice2': 'Custom Invoice 2',
       'invoice3': 'Custom Invoice 3',
@@ -8101,7 +8901,6 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'reports': 'Reports',
       'report': 'Report',
       'add_company': 'Add Company',
-      'to_learn_about_gogle_fonts': 'to learn about Google Fonts',
       'unpaid_invoice': 'Unpaid Invoice',
       'paid_invoice': 'Paid Invoice',
       'unapproved_quote': 'Unapproved Quote',
@@ -8110,7 +8909,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'refund_date': 'Refund Date',
       'filtered_by': 'Filtered by',
       'contact_email': 'Contact Email',
-      'multiselect': 'Multiselect',
+      'multiselect': 'Multi-select',
       'entity_state': 'State',
       'verify_password': 'Verify Password',
       'applied': 'Applied',
@@ -8138,9 +8937,9 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'domain_url': 'Domain URL',
       'password_is_too_short': 'Password is too short',
       'password_is_too_easy':
-          'Password msut contain an upper case character and a number',
-      'client_portal_tasks': 'Client Portal Tasks',
-      'client_portal_dashboard': 'Client Portal Dashboard',
+          'Password must contain an upper case character and a number',
+      'client_portal_tasks': 'Customer Portal Tasks',
+      'client_portal_dashboard': 'Customer Portal Dashboard',
       'please_enter_a_value': 'Please enter a value',
       'deleted_logo': 'Successfully deleted logo',
       'yes': 'Yes',
@@ -8182,14 +8981,14 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'user': 'User',
       'invoice_tax': 'Invoice Tax',
       'line_item_tax': 'Line Item Tax',
-      'inclusive_taxes': 'Inclusive Taxes',
+      'inclusive_taxes': 'Inclusive of Taxes',
       'invoice_tax_rates': 'Invoice Tax Rates',
       'item_tax_rates': 'Item Tax Rates',
       'no_client_selected': 'Please select a customer',
       'configure_rates': 'Configure rates',
       'tax_settings': 'Tax Settings',
       'tax_settings_rates': 'Tax Rates',
-      'accent_color': 'Accent Color',
+      'accent_color': 'Accent Colour',
       'switch': 'Switch',
       'comma_sparated_list': 'Comma separated list',
       'options': 'Options',
@@ -8212,6 +9011,8 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'days': 'Days',
       'invoice_email': 'Invoice Email',
       'payment_email': 'Payment Email',
+      'partial_payment': 'Partial Payment',
+      'partial_payment_email': 'Partial Payment Email',
       'quote_email': 'Quote Email',
       'endless_reminder': 'Endless Reminder',
       'filtered_by_user': 'Filtered by User',
@@ -8282,8 +9083,6 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'company': 'Company',
       'generated_numbers': 'Generated Numbers',
       'charge_taxes': 'Charge taxes',
-      'credit': 'Credit',
-      'credits': 'Credits',
       'next_reset': 'Next Reset',
       'reset_counter': 'Reset Counter',
       'recurring_prefix': 'Recurring Prefix',
@@ -8326,9 +9125,6 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'enable_portal_password': 'Password Protect Invoices',
       'enable_portal_password_help':
           'Allows you to set a password for each contact. If a password is set, the contact will be required to enter a password before viewing invoices.',
-      'send_portal_password': 'Generate Automatically',
-      'send_portal_password_help':
-          'If no password is set, one will be generated and sent with the first invoice.',
       'authorization': 'Authorisation',
       'subdomain': 'Subdomain',
       'domain': 'Domain',
@@ -8352,7 +9148,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'bank_transfer': 'Bank Transfer',
       'priority': 'Priority',
       'fee_amount': 'Fee Amount',
-      'fee_percent': 'Fee Percent',
+      'fee_percent': 'Fee Percentage',
       'fee_cap': 'Fee Cap',
       'limits_and_fees': 'Limits/Fees',
       'enable_min': 'Enable min',
@@ -8364,9 +9160,9 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'accepted_card_logos': 'Accepted Card Logos',
       'credentials': 'Credentials',
       'require_billing_address_help':
-          'Require client to provide their billing address',
+          'Require customer to provide their billing address',
       'require_shipping_address_help':
-          'Require client to provide their shipping address',
+          'Require customer to provide their shipping address',
       'update_address': 'Update Address',
       'update_address_help': 'Update customer\'s address with provided details',
       'rate': 'Rate',
@@ -8435,8 +9231,8 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'timezone': 'Timezone',
       'filtered_by_group': 'Filtered by Group',
       'filtered_by_invoice': 'Filtered by Invoice',
-      'filtered_by_client': 'Filtered by Client',
-      'filtered_by_vendor': 'Filtered by Vendor',
+      'filtered_by_client': 'Filtered by Customer',
+      'filtered_by_vendor': 'Filtered by Supplier',
       'group_settings': 'Group Settings',
       'group': 'Group',
       'groups': 'Groups',
@@ -8615,6 +9411,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'custom': 'Custom',
       'clone_to_invoice': 'Clone to Invoice',
       'clone_to_quote': 'Clone to Quote',
+      'clone_to_credit': 'Clone to Credit',
       'view_invoice': 'View Invoice',
       'convert': 'Convert',
       'more': 'More',
@@ -8627,7 +9424,6 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'edit_expense': 'Edit Expense',
       'edit_vendor': 'Edit Supplier',
       'edit_project': 'Edit Project',
-      'edit_credit': 'Edit Credit',
       'edit_recurring_invoice': 'Edit Recurring Invoice',
       'edit_recurring_expense': 'Edit Recurring Expense',
       'edit_recurring_quote': 'Edit Recurring Quote',
@@ -8778,15 +9574,11 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'approved': 'Approved',
       'partial': 'Partial Payment/Deposit',
       'paid': 'Paid',
-      'invoice_status_1': 'Draft',
-      'invoice_status_2': 'Sent',
-      'invoice_status_3': 'Viewed',
-      'invoice_status_4': 'Approved',
       'mark_sent': 'Mark as Sent',
       'marked_invoice_as_sent': 'Successfully marked invoice as sent',
-      'marked_invoice_as_paid': 'Successfully marked invoice as sent',
+      'marked_invoice_as_paid': 'Successfully marked invoice as paid',
       'marked_invoices_as_sent': 'Successfully marked invoices as sent',
-      'marked_invoices_as_paid': 'Successfully marked invoices as sent',
+      'marked_invoices_as_paid': 'Successfully marked invoices as paid',
       'done': 'Done',
       'please_enter_a_client_or_contact_name':
           'Please enter a customer or contact name',
@@ -8921,7 +9713,9 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'activity_57': 'System failed to email invoice :invoice',
       'one_time_password': 'One Time Password',
       'emailed_quote': 'Successfully emailed quote',
+      'emailed_credit': 'Successfully emailed credit',
       'marked_quote_as_sent': 'Successfully marked quote as sent',
+      'marked_credit_as_sent': 'Successfully marked credit as sent',
       'expired': 'Expired',
       'all': 'All',
       'select': 'Select',
@@ -8941,8 +9735,8 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'task_number_counter': 'Task Number Counter',
       'expense_number_pattern': 'Expense Number Pattern',
       'expense_number_counter': 'Expense Number Counter',
-      'vendor_number_pattern': 'Vendor Number Pattern',
-      'vendor_number_counter': 'Vendor Number Counter',
+      'vendor_number_pattern': 'Supplier Number Pattern',
+      'vendor_number_counter': 'Supplier Number Counter',
       'ticket_number_pattern': 'Ticket Number Pattern',
       'ticket_number_counter': 'Ticket Number Counter',
       'payment_number_pattern': 'Payment Number Pattern',
@@ -8967,16 +9761,17 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'email_subject_invoice': 'Email Invoice Subject',
       'email_subject_quote': 'Email Quote Subject',
       'email_subject_payment': 'Email Payment Subject',
+      'email_subject_payment_partial': 'Email Partial Payment Subject',
       'switch_list_table': 'Switch List Table',
-      'client_city': 'Client City',
-      'client_state': 'Client State',
-      'client_country': 'Client Country',
-      'client_is_active': 'Client is Active',
-      'client_balance': 'Client Balance',
-      'client_address1': 'Client Address 1',
-      'client_address2': 'Client Address 2',
-      'client_shipping_address1': 'Client Shipping Address 1',
-      'client_shipping_address2': 'Client Shipping Address 2',
+      'client_city': 'Customer Suburb',
+      'client_state': 'Customer State',
+      'client_country': 'Customer Country',
+      'client_is_active': 'Customer is Active',
+      'client_balance': 'Customer Balance',
+      'client_address1': 'Customer Address 1',
+      'client_address2': 'Customer Address 2',
+      'client_shipping_address1': 'Customer Shipping Address 1',
+      'client_shipping_address2': 'Customer Shipping Address 2',
       'type': 'Type',
       'invoice_amount': 'Invoice Amount',
       'invoice_due_date': 'Due Date',
@@ -8995,11 +9790,117 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'custom_surcharge3': 'Custom Surcharge 3',
       'custom_surcharge4': 'Custom Surcharge 4',
       'is_deleted': 'Is Deleted',
-      'vendor_city': 'Vendor City',
-      'vendor_state': 'Vendor State',
-      'vendor_country': 'Vendor Country',
+      'vendor_city': 'Supplier Suburb',
+      'vendor_state': 'Supplier State',
+      'vendor_country': 'Supplier Country',
+      'is_approved': 'Is Approved',
+      'tax_name': 'Tax Name',
+      'tax_amount': 'GST Amount',
+      'tax_paid': 'GST Paid',
+      'payment_amount': 'Payment Amount',
+      'age': 'Age',
     },
     'en_GB': {
+      'full_name': 'Full Name',
+      'city_state_postal': 'City/State/Postal',
+      'postal_city_state': 'Postal/City/State',
+      'custom1': 'First Custom',
+      'custom2': 'Second Custom',
+      'custom3': 'Third Custom',
+      'custom4': 'Fourth Custom',
+      'optional': 'Optional',
+      'license': 'License',
+      'purge_data': 'Purge Data',
+      'purge_successful': 'Successfully purged company data',
+      'purge_data_message':
+          'Warning: This will permanently erase your data, there is no undo.',
+      'invoice_balance': 'Invoice Balance',
+      'age_group_0': '0 - 30 Days',
+      'age_group_30': '30 - 60 Days',
+      'age_group_60': '60 - 90 Days',
+      'age_group_90': '90 - 120 Days',
+      'age_group_120': '120+ Days',
+      'refresh': 'Refresh',
+      'saved_design': 'Successfully saved design',
+      'client_details': 'Client Details',
+      'company_address': 'Company Address',
+      'invoice_details': 'Invoice Details',
+      'quote_details': 'Quote Details',
+      'credit_details': 'Credit Details',
+      'product_columns': 'Product Columns',
+      'task_columns': 'Task Columns',
+      'add_field': 'Add Field',
+      'all_events': 'All Events',
+      'permissions': 'Permissions',
+      'none': 'None',
+      'owned': 'Owned',
+      'payment_success': 'Payment Success',
+      'payment_failure': 'Payment Failure',
+      'invoice_sent': ':count invoice sent',
+      'quote_sent': 'Quote Sent',
+      'credit_sent': 'Credit Sent',
+      'invoice_viewed': 'Invoice Viewed',
+      'quote_viewed': 'Quote Viewed',
+      'credit_viewed': 'Credit Viewed',
+      'quote_approved': 'Quote Approved',
+      'receive_all_notifications': 'Receive All Notifications',
+      'purchase_license': 'Purchase License',
+      'apply_license': 'Apply License',
+      'cancel_account': 'Delete Account',
+      'cancel_account_message':
+          'Warning: This will permanently delete your account, there is no undo.',
+      'delete_company': 'Delete Company',
+      'delete_company_message':
+          'Warning: This will permanently delete your company, there is no undo.',
+      'enable_modules': 'Enable Modules',
+      'converted_quote': 'Successfully converted quote',
+      'credit_design': 'Credit Design',
+      'includes': 'Includes',
+      'header': 'Header',
+      'load_design': 'Load Design',
+      'css_framework': 'CSS Framework',
+      'custom_designs': 'Custom Designs',
+      'designs': 'Designs',
+      'new_design': 'New Design',
+      'edit_design': 'Edit Design',
+      'created_design': 'Successfully created design',
+      'updated_design': 'Successfully updated design',
+      'archived_design': 'Successfully archived design',
+      'deleted_design': 'Successfully deleted design',
+      'removed_design': 'Successfully removed design',
+      'restored_design': 'Successfully restored design',
+      'proposals': 'Proposals',
+      'tickets': 'Tickets',
+      'recurring_invoices': 'Recurring Invoices',
+      'recurring_quotes': 'Recurring Quotes',
+      'recurring_tasks': 'Recurring Tasks',
+      'recurring_expenses': 'Recurring Expenses',
+      'account_management': 'Account Management',
+      'credit_date': 'Credit Date',
+      'credit': 'Credit',
+      'credits': 'Credits',
+      'new_credit': 'Enter Credit',
+      'edit_credit': 'Edit Credit',
+      'created_credit': 'Successfully created credit',
+      'updated_credit': 'Successfully updated credit',
+      'archived_credit': 'Successfully archived credit',
+      'deleted_credit': 'Successfully deleted credit',
+      'removed_credit': 'Successfully removed credit',
+      'restored_credit': 'Successfully restored credit',
+      'current_version': 'Current version',
+      'latest_version': 'Latest Version',
+      'update_now': 'Update Now',
+      'a_new_version_is_available': 'A new version of the web app is available',
+      'update_available': 'Update Available',
+      'app_updated': 'Update successfully completed',
+      'learn_more': 'Learn more',
+      'integrations': 'Integrations',
+      'tracking_id': 'Tracking Id',
+      'slack_webhook_url': 'Slack Webhook URL',
+      'credit_footer': 'Credit Footer',
+      'credit_terms': 'Credit Terms',
+      'untitled_company': 'Untitled Company',
+      'added_company': 'Successfully added company',
       'company1': 'Custom Company 1',
       'company2': 'Custom Company 2',
       'company3': 'Custom Company 3',
@@ -9009,9 +9910,9 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'product3': 'Custom Product 3',
       'product4': 'Custom Product 4',
       'client1': 'Custom Client 1',
-      'client2': 'Custom Client 1',
-      'client3': 'Custom Client 1',
-      'client4': 'Custom Client 1',
+      'client2': 'Custom Client 2',
+      'client3': 'Custom Client 3',
+      'client4': 'Custom Client 4',
       'contact1': 'Custom Contact 1',
       'contact2': 'Custom Contact 2',
       'contact3': 'Custom Contact 3',
@@ -9088,7 +9989,6 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'reports': 'Reports',
       'report': 'Report',
       'add_company': 'Add Company',
-      'to_learn_about_gogle_fonts': 'to learn about Google Fonts',
       'unpaid_invoice': 'Unpaid Invoice',
       'paid_invoice': 'Paid Invoice',
       'unapproved_quote': 'Unapproved Quote',
@@ -9125,7 +10025,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'domain_url': 'Domain URL',
       'password_is_too_short': 'Password is too short',
       'password_is_too_easy':
-          'Password msut contain an upper case character and a number',
+          'Password must contain an upper case character and a number',
       'client_portal_tasks': 'Client Portal Tasks',
       'client_portal_dashboard': 'Client Portal Dashboard',
       'please_enter_a_value': 'Please enter a value',
@@ -9199,6 +10099,8 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'days': 'Days',
       'invoice_email': 'Invoice Email',
       'payment_email': 'Payment Email',
+      'partial_payment': 'Partial Payment',
+      'partial_payment_email': 'Partial Payment Email',
       'quote_email': 'Quote Email',
       'endless_reminder': 'Endless Reminder',
       'filtered_by_user': 'Filtered by User',
@@ -9269,8 +10171,6 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'company': 'Company',
       'generated_numbers': 'Generated Numbers',
       'charge_taxes': 'Charge taxes',
-      'credit': 'Credit',
-      'credits': 'Credits',
       'next_reset': 'Next Reset',
       'reset_counter': 'Reset Counter',
       'recurring_prefix': 'Recurring Prefix',
@@ -9313,9 +10213,6 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'enable_portal_password': 'Password Protect Invoices',
       'enable_portal_password_help':
           'Allows you to set a password for each contact. If a password is set, the contact will be required to enter a password before viewing invoices.',
-      'send_portal_password': 'Generate Automatically',
-      'send_portal_password_help':
-          'If no password is set, one will be generated and sent with the first invoice.',
       'authorization': 'Authorisation',
       'subdomain': 'Subdomain',
       'domain': 'Domain',
@@ -9602,6 +10499,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'custom': 'Custom',
       'clone_to_invoice': 'Clone to Invoice',
       'clone_to_quote': 'Clone to Quote',
+      'clone_to_credit': 'Clone to Credit',
       'view_invoice': 'View Invoice',
       'convert': 'Convert',
       'more': 'More',
@@ -9614,7 +10512,6 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'edit_expense': 'Edit Expense',
       'edit_vendor': 'Edit Vendor',
       'edit_project': 'Edit Project',
-      'edit_credit': 'Edit Credit',
       'edit_recurring_invoice': 'Edit Recurring Invoice',
       'edit_recurring_expense': 'Edit Recurring Expense',
       'edit_recurring_quote': 'Edit Recurring Quote',
@@ -9765,15 +10662,11 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'approved': 'Approved',
       'partial': 'Partial/Deposit',
       'paid': 'Paid',
-      'invoice_status_1': 'Draft',
-      'invoice_status_2': 'Sent',
-      'invoice_status_3': 'Viewed',
-      'invoice_status_4': 'Approved',
       'mark_sent': 'Mark Sent',
       'marked_invoice_as_sent': 'Successfully marked invoice as sent',
-      'marked_invoice_as_paid': 'Successfully marked invoice as sent',
+      'marked_invoice_as_paid': 'Successfully marked invoice as paid',
       'marked_invoices_as_sent': 'Successfully marked invoices as sent',
-      'marked_invoices_as_paid': 'Successfully marked invoices as sent',
+      'marked_invoices_as_paid': 'Successfully marked invoices as paid',
       'done': 'Done',
       'please_enter_a_client_or_contact_name':
           'Please enter a client or contact name',
@@ -9908,7 +10801,9 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'activity_57': 'System failed to email invoice :invoice',
       'one_time_password': 'One Time Password',
       'emailed_quote': 'Successfully emailed quote',
+      'emailed_credit': 'Successfully emailed credit',
       'marked_quote_as_sent': 'Successfully marked quote as sent',
+      'marked_credit_as_sent': 'Successfully marked credit as sent',
       'expired': 'Expired',
       'all': 'All',
       'select': 'Select',
@@ -9954,6 +10849,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'email_subject_invoice': 'Email Invoice Subject',
       'email_subject_quote': 'Email Quote Subject',
       'email_subject_payment': 'Email Payment Subject',
+      'email_subject_payment_partial': 'Email Partial Payment Subject',
       'switch_list_table': 'Switch List Table',
       'client_city': 'Client City',
       'client_state': 'Client State',
@@ -9985,8 +10881,114 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'vendor_city': 'Vendor City',
       'vendor_state': 'Vendor State',
       'vendor_country': 'Vendor Country',
+      'is_approved': 'Is Approved',
+      'tax_name': 'Tax Name',
+      'tax_amount': 'Tax Amount',
+      'tax_paid': 'Tax Paid',
+      'payment_amount': 'Payment Amount',
+      'age': 'Age',
     },
     'fi': {
+      'full_name': 'Full nimi',
+      'city_state_postal': 'kaupunki/State/Postal',
+      'postal_city_state': 'Postal/kaupunki/State',
+      'custom1': 'ensimmäinen muokattu',
+      'custom2': 'toinen muokattu',
+      'custom3': 'Third Custom',
+      'custom4': 'Fourth Custom',
+      'optional': 'Optional',
+      'license': 'License',
+      'purge_data': 'Purge Data',
+      'purge_successful': 'onnistuneesti purged yritys data',
+      'purge_data_message':
+          'Warning: tämä will pysyvästi erase sinun data, there is no undo.',
+      'invoice_balance': 'Invoice Balance',
+      'age_group_0': '0 - 30 päivää',
+      'age_group_30': '30 - 60 päivää',
+      'age_group_60': '60 - 90 päivää',
+      'age_group_90': '90 - 120 päivää',
+      'age_group_120': '120+ päivää',
+      'refresh': 'Refresh',
+      'saved_design': 'Successfully saved design',
+      'client_details': 'Client Details',
+      'company_address': 'Company Address',
+      'invoice_details': 'Lasku Details',
+      'quote_details': 'Quote Details',
+      'credit_details': 'Credit Details',
+      'product_columns': 'Product Columns',
+      'task_columns': 'Task Columns',
+      'add_field': 'Add Field',
+      'all_events': 'All Events',
+      'permissions': 'Permissions',
+      'none': 'None',
+      'owned': 'Owned',
+      'payment_success': 'Payment Success',
+      'payment_failure': 'Payment Failure',
+      'invoice_sent': ':count lasku lähetetty',
+      'quote_sent': 'Quote Sent',
+      'credit_sent': 'Credit Sent',
+      'invoice_viewed': 'Invoice Viewed',
+      'quote_viewed': 'Quote Viewed',
+      'credit_viewed': 'Credit Viewed',
+      'quote_approved': 'Quote Approved',
+      'receive_all_notifications': 'Receive All Notifications',
+      'purchase_license': 'Purchase License',
+      'apply_license': 'Apply lisenssi',
+      'cancel_account': 'Poista tili',
+      'cancel_account_message':
+          'Varoitus: Tämä poistaa tilisi pysyvästi. Tietoja ei pysty palauttamaan.',
+      'delete_company': 'Poista yritys',
+      'delete_company_message':
+          'Warning: tämä will pysyvästi poista sinun yritys, there is no undo.',
+      'enable_modules': 'Enable Modules',
+      'converted_quote': 'Successfully converted quote',
+      'credit_design': 'Credit Design',
+      'includes': 'Includes',
+      'header': 'Ylätunniste',
+      'load_design': 'Load malli',
+      'css_framework': 'CSS Framework',
+      'custom_designs': 'Custom Designs',
+      'designs': 'Designs',
+      'new_design': 'New Design',
+      'edit_design': 'Edit Design',
+      'created_design': 'Successfully created design',
+      'updated_design': 'Successfully updated design',
+      'archived_design': 'Successfully archived design',
+      'deleted_design': 'Successfully deleted design',
+      'removed_design': 'Successfully removed design',
+      'restored_design': 'Successfully restored design',
+      'proposals': 'ehdotukset',
+      'tickets': 'Tickets',
+      'recurring_invoices': 'Toistuvat laskut',
+      'recurring_quotes': 'Toistuvat tarjoukset',
+      'recurring_tasks': 'Recurring Tasks',
+      'recurring_expenses': 'toistuva kulut',
+      'account_management': 'Account Management',
+      'credit_date': 'Hyvityksen päivämäärä',
+      'credit': 'Luotto',
+      'credits': 'Hyvitykset',
+      'new_credit': 'Syötä hyvitys',
+      'edit_credit': 'muokkaa luotto',
+      'created_credit': 'Hyvitys on luotu onnistuneesti',
+      'updated_credit': 'onnistuneesti päivitetty luotto',
+      'archived_credit': 'Hyvitys on arkistoitu onnistuneesti',
+      'deleted_credit': 'Hyvitys on poistettu onnistuneesti',
+      'removed_credit': 'Successfully removed credit',
+      'restored_credit': 'Hyvitys palautettu onnistuneesti',
+      'current_version': 'Nykyinen versio',
+      'latest_version': 'Latest Version',
+      'update_now': 'Update Now',
+      'a_new_version_is_available': 'A new version of the web app is available',
+      'update_available': 'Update Available',
+      'app_updated': 'Update successfully completed',
+      'learn_more': 'Lue lisää',
+      'integrations': 'Integrations',
+      'tracking_id': 'Tracking Id',
+      'slack_webhook_url': 'Slack Webhook URL',
+      'credit_footer': 'Credit Footer',
+      'credit_terms': 'Credit Terms',
+      'untitled_company': 'Untitled Company',
+      'added_company': 'Successfully added company',
       'company1': 'Custom Company 1',
       'company2': 'Custom Company 2',
       'company3': 'Custom Company 3',
@@ -9996,9 +10998,9 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'product3': 'Custom Product 3',
       'product4': 'Custom Product 4',
       'client1': 'Custom Client 1',
-      'client2': 'Custom Client 1',
-      'client3': 'Custom Client 1',
-      'client4': 'Custom Client 1',
+      'client2': 'Custom Client 2',
+      'client3': 'Custom Client 3',
+      'client4': 'Custom Client 4',
       'contact1': 'Custom Contact 1',
       'contact2': 'Custom Contact 2',
       'contact3': 'Custom Contact 3',
@@ -10042,50 +11044,49 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'count': 'Count',
       'totals': 'Yhteensä',
       'blank': 'Blank',
-      'day': 'Day',
-      'month': 'Month',
-      'year': 'Year',
+      'day': 'päivä',
+      'month': 'Kuukausi',
+      'year': 'Vuosi',
       'subgroup': 'Subgroup',
       'is_active': 'Is Active',
       'group_by': 'Niputa',
       'credit_balance': 'Hyvityksen saldo',
       'contact_last_login': 'Contact Last Login',
       'contact_full_name': 'Contact Full Name',
-      'contact_phone': 'Contact Phone',
+      'contact_phone': 'kontakti puhelin',
       'contact_custom_value1': 'Contact Custom Value 1',
       'contact_custom_value2': 'Contact Custom Value 2',
       'contact_custom_value3': 'Contact Custom Value 3',
       'contact_custom_value4': 'Contact Custom Value 4',
-      'shipping_address1': 'Shipping Street',
-      'shipping_address2': 'Shipping Apt/Suite',
-      'shipping_city': 'Shipping City',
-      'shipping_state': 'Shipping State/Province',
-      'shipping_postal_code': 'Shipping Postal Code',
-      'shipping_country': 'Shipping Country',
-      'client_id': 'Client Id',
-      'assigned_to': 'Assigned to',
-      'created_by': 'Created by :name',
+      'shipping_address1': 'toimitus katu',
+      'shipping_address2': 'toimitus Apt/Suite',
+      'shipping_city': 'toimitus kaupunki',
+      'shipping_state': 'toimitus State/Province',
+      'shipping_postal_code': 'toimitus postinumero',
+      'shipping_country': 'toimitus maa',
+      'client_id': 'asiakas Id',
+      'assigned_to': 'Assigned',
+      'created_by': 'luotu by :name',
       'assigned_to_id': 'Assigned To Id',
       'created_by_id': 'Created By Id',
       'add_column': 'Add Column',
       'edit_columns': 'Edit Columns',
       'columns': 'Columns',
       'aging': 'Aging',
-      'profit_and_loss': 'Profit and Loss',
+      'profit_and_loss': 'Profit ja Loss',
       'reports': 'Reports',
       'report': 'Raportti',
       'add_company': 'Lisää yritys',
-      'to_learn_about_gogle_fonts': 'to learn about Google Fonts',
-      'unpaid_invoice': 'Unpaid Invoice',
-      'paid_invoice': 'Paid Invoice',
-      'unapproved_quote': 'Unapproved Quote',
+      'unpaid_invoice': 'Unpaid Lasku',
+      'paid_invoice': 'Paid Lasku',
+      'unapproved_quote': 'Unapproved tarjous',
       'help': 'Ohje',
       'refund': 'Refund',
       'refund_date': 'Refund Date',
       'filtered_by': 'Filtered by',
-      'contact_email': 'Contact Email',
+      'contact_email': 'kontakti Email',
       'multiselect': 'Multiselect',
-      'entity_state': 'State',
+      'entity_state': 'Osavaltio',
       'verify_password': 'Verify Password',
       'applied': 'Applied',
       'include_recent_errors': 'Include recent errors from the logs',
@@ -10098,27 +11099,27 @@ mixin LocalizationsProvider on LocaleCodeAware {
           'Include the description and cost in the product dropdown',
       'pdf_min_requirements': 'The PDF renderer requires :version',
       'adjust_fee_percent': 'Adjust Fee Percent',
-      'adjust_fee_percent_help': 'Adjust percent to account for fee',
+      'adjust_fee_percent_help': 'Adjust percent  tili  palkkio',
       'configure_settings': 'Configure Settings',
       'support_forum': 'support forum',
       'about': 'About',
       'documentation': 'Dokumentaatio',
-      'contact_us': 'Contact Us',
+      'contact_us': 'kontakti Us',
       'subtotal': 'Välisumma',
       'line_total': 'Rivin summa',
       'item': 'Tuote',
       'credit_email': 'Credit Email',
       'iframe_url': 'Verkkosivu',
       'domain_url': 'Domain URL',
-      'password_is_too_short': 'Password is too short',
+      'password_is_too_short': 'salasana on liian lyhyt',
       'password_is_too_easy':
-          'Password msut contain an upper case character and a number',
+          'Password must contain an upper case character and a number',
       'client_portal_tasks': 'Client Portal Tasks',
       'client_portal_dashboard': 'Client Portal Dashboard',
       'please_enter_a_value': 'Please enter a value',
       'deleted_logo': 'Successfully deleted logo',
-      'yes': 'Yes',
-      'no': 'No',
+      'yes': 'Kyllä',
+      'no': 'Ei',
       'generate_number': 'Generate Number',
       'when_saved': 'When Saved',
       'when_sent': 'When Sent',
@@ -10132,7 +11133,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'mobile': 'Mobile',
       'desktop': 'Desktop',
       'layout': 'Layout',
-      'view': 'View',
+      'view': 'Näytä',
       'module': 'Module',
       'first_custom': 'First Custom',
       'second_custom': 'Second Custom',
@@ -10159,7 +11160,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'inclusive_taxes': 'Inclusive Taxes',
       'invoice_tax_rates': 'Invoice Tax Rates',
       'item_tax_rates': 'Item Tax Rates',
-      'no_client_selected': 'Please select a client',
+      'no_client_selected': 'Valitse asiakas',
       'configure_rates': 'Configure rates',
       'tax_settings': 'Veroasetukset',
       'tax_settings_rates': 'Tax Rates',
@@ -10174,29 +11175,31 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'recover_password_email_sent': 'A password recovery email has been sent',
       'submit': 'Submit',
       'recover_password': 'Palauta salasana',
-      'late_fees': 'Late Fees',
-      'credit_number': 'Credit Number',
-      'payment_number': 'Payment Number',
-      'late_fee_amount': 'Late Fee Amount',
-      'late_fee_percent': 'Late Fee Percent',
-      'schedule': 'Schedule',
-      'before_due_date': 'Before the due date',
-      'after_due_date': 'After the due date',
-      'after_invoice_date': 'After the invoice date',
-      'days': 'Days',
+      'late_fees': 'Late palkkiot',
+      'credit_number': 'luotto numero',
+      'payment_number': 'maksu numero',
+      'late_fee_amount': 'Late palkkio määrä',
+      'late_fee_percent': 'Late palkkio Percent',
+      'schedule': 'Aikataulu',
+      'before_due_date': 'Ennen  erä päivämäärä',
+      'after_due_date': 'jälkeen  erä päivämäärä',
+      'after_invoice_date': 'jälkeen  lasku päivämäärä',
+      'days': 'Päivää',
       'invoice_email': 'Laskusähköposti',
       'payment_email': 'Maksusähköposti',
+      'partial_payment': 'Partial Payment',
+      'partial_payment_email': 'Partial Payment Email',
       'quote_email': 'Tarjoussähköposti',
-      'endless_reminder': 'Endless Reminder',
+      'endless_reminder': 'Endless muistutus',
       'filtered_by_user': 'Filtered by User',
-      'administrator': 'Administrator',
+      'administrator': 'Ylläpitäjä',
       'administrator_help':
-          'Allow user to manage users, change settings and modify all records',
+          'Allow käyttäjä  manage users, change asetus ja modify kaikki records',
       'user_management': 'Käyttäjänhallinta',
       'users': 'Käyttäjät',
-      'new_user': 'New User',
+      'new_user': 'Uusi käyttäjä',
       'edit_user': 'Muokkaa käyttäjä',
-      'created_user': 'Successfully created user',
+      'created_user': 'onnistuneesti luotu käyttäjä',
       'updated_user': 'Käyttäjä on päivitetty onnistuneesti',
       'archived_user': 'Käyttäjä arkistoitu onnistuneesti',
       'deleted_user': 'Käyttäjä on poistettu onnistuneesti',
@@ -10208,108 +11211,103 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'hide_paid_to_date_help':
           'Näytä \"Maksettava päivämäärään mennessä\" kenttä laskuillasi vain maksetuilla laskuilla.',
       'invoice_embed_documents': 'Embed Documents',
-      'invoice_embed_documents_help': 'Include attached images in the invoice.',
-      'all_pages_header': 'Show Header on',
-      'all_pages_footer': 'Show Footer on',
-      'first_page': 'First page',
+      'invoice_embed_documents_help': 'Include attached images in  lasku.',
+      'all_pages_header': 'näytä Header on',
+      'all_pages_footer': 'näytä Footer on',
+      'first_page': 'ensimmäinen page',
       'all_pages': 'All pages',
-      'last_page': 'Last page',
-      'primary_font': 'Primary Font',
-      'secondary_font': 'Secondary Font',
+      'last_page': 'viime page',
+      'primary_font': 'Ensisijainen kirjasin',
+      'secondary_font': 'toissijainen kirjasin',
       'primary_color': 'Pääväri',
       'secondary_color': 'Apuväri',
       'page_size': 'Page Size',
       'font_size': 'Fontin koko',
-      'quote_design': 'Quote Design',
+      'quote_design': 'tarjous malli',
       'invoice_fields': 'Laskun kentät',
-      'product_fields': 'Product Fields',
+      'product_fields': 'Tuote kentät',
       'invoice_terms': 'Laskun ehdot',
       'invoice_footer': 'Laskun alatunniste',
       'quote_terms': 'Tarjouksen ehdot',
       'quote_footer': 'Tarjouksen alatunniste',
-      'auto_email_invoice': 'Auto Email',
+      'auto_email_invoice': 'automaattinen Email',
       'auto_email_invoice_help':
-          'Automatically email recurring invoices when they are created.',
-      'auto_archive_invoice': 'Auto Archive',
+          'automaattisesti sähköposti toistuva laskut when they on luotu.',
+      'auto_archive_invoice': 'automaattinen Arkistoi',
       'auto_archive_invoice_help':
-          'Automatically archive invoices when they are paid.',
-      'auto_archive_quote': 'Auto Archive',
+          'automaattisesti archive laskut when they on paid.',
+      'auto_archive_quote': 'automaattinen Arkistoi',
       'auto_archive_quote_help':
-          'Automatically archive quotes when they are converted.',
-      'auto_convert_quote': 'Auto Convert',
+          'automaattisesti archive quotes when they on converted.',
+      'auto_convert_quote': 'automaattinen Convert',
       'auto_convert_quote_help':
-          'Automatically convert a quote to an invoice when approved by a client.',
-      'workflow_settings': 'Workflow Settings',
-      'freq_daily': 'Daily',
-      'freq_weekly': 'Weekly',
-      'freq_two_weeks': 'Two weeks',
-      'freq_four_weeks': 'Four weeks',
-      'freq_monthly': 'Monthly',
-      'freq_two_months': 'Two months',
-      'freq_three_months': 'Three months',
-      'freq_four_months': 'Four months',
-      'freq_six_months': 'Six months',
-      'freq_annually': 'Annually',
-      'freq_two_years': 'Two years',
+          'automaattisesti convert  tarjous   lasku when approved by  asiakas.',
+      'workflow_settings': 'Workflow asetukset',
+      'freq_daily': 'päivittäin',
+      'freq_weekly': 'viikoittain',
+      'freq_two_weeks': 'kaksi viikkoa',
+      'freq_four_weeks': 'neljä viikkoa',
+      'freq_monthly': 'Kuukausittain',
+      'freq_two_months': 'kaksi kuukautta',
+      'freq_three_months': 'kolme kuukautta',
+      'freq_four_months': 'neljä kuukautta',
+      'freq_six_months': 'Six kuukautta',
+      'freq_annually': 'Vuosittain',
+      'freq_two_years': 'kaksi years',
       'freq_three_years': 'Three Years',
       'never': 'Never',
-      'company': 'Company',
+      'company': 'yritys',
       'generated_numbers': 'Generated Numbers',
       'charge_taxes': 'Veloita veroa',
-      'credit': 'Luotto',
-      'credits': 'Hyvitykset',
       'next_reset': 'Next Reset',
       'reset_counter': 'Reset Counter',
-      'recurring_prefix': 'Recurring Prefix',
-      'number_padding': 'Number Padding',
+      'recurring_prefix': 'toistuva etuliite',
+      'number_padding': 'numero Padding',
       'general': 'General',
-      'surcharge_field': 'Surcharge Field',
-      'company_field': 'Company Field',
-      'company_value': 'Company Value',
-      'credit_field': 'Credit Field',
-      'invoice_field': 'Invoice Field',
-      'invoice_surcharge': 'Invoice Surcharge',
-      'client_field': 'Client Field',
-      'product_field': 'Product Field',
-      'payment_field': 'Payment Field',
-      'contact_field': 'Contact Field',
-      'vendor_field': 'Vendor Field',
-      'expense_field': 'Expense Field',
-      'project_field': 'Project Field',
-      'task_field': 'Task Field',
-      'group_field': 'Group Field',
-      'number_counter': 'Number Counter',
+      'surcharge_field': 'Surcharge kenttä',
+      'company_field': 'yritys kenttä',
+      'company_value': 'yritys Value',
+      'credit_field': 'luotto kenttä',
+      'invoice_field': 'Lasku kenttä',
+      'invoice_surcharge': 'Lasku Surcharge',
+      'client_field': 'asiakas kenttä',
+      'product_field': 'Tuote kenttä',
+      'payment_field': 'maksu kenttä',
+      'contact_field': 'kontakti kenttä',
+      'vendor_field': 'Vendor kenttä',
+      'expense_field': 'kulu kenttä',
+      'project_field': 'projekti kenttä',
+      'task_field': 'tehtävä kenttä',
+      'group_field': 'ryhmä kenttä',
+      'number_counter': 'numero Counter',
       'prefix': 'Etuliite',
-      'number_pattern': 'Number Pattern',
+      'number_pattern': 'numero Pattern',
       'messages': 'Messages',
       'custom_css': 'Mukautettu CSS',
-      'custom_javascript': 'Custom JavaScript',
-      'signature_on_pdf': 'Show on PDF',
+      'custom_javascript': 'muokattu JavaScript',
+      'signature_on_pdf': 'näytä on PDF',
       'signature_on_pdf_help':
-          'Show the client signature on the invoice/quote PDF.',
-      'show_accept_invoice_terms': 'Invoice Terms Checkbox',
+          'näytä  asiakas allekirjoitus on  lasku/tarjous PDF.',
+      'show_accept_invoice_terms': 'Lasku Terms Checkbox',
       'show_accept_invoice_terms_help':
-          'Require client to confirm that they accept the invoice terms.',
-      'show_accept_quote_terms': 'Quote Terms Checkbox',
+          'Require asiakas  vahvista that they accept  lasku terms.',
+      'show_accept_quote_terms': 'tarjous Terms Checkbox',
       'show_accept_quote_terms_help':
-          'Require client to confirm that they accept the quote terms.',
-      'require_invoice_signature': 'Invoice Signature',
+          'Require asiakas  vahvista that they accept  tarjous terms.',
+      'require_invoice_signature': 'Lasku Signature',
       'require_invoice_signature_help':
-          'Require client to provide their signature.',
-      'require_quote_signature': 'Quote Signature',
-      'enable_portal_password': 'Password Protect Invoices',
+          'Vaadi asiakasta täyttämään allekirjoitus.',
+      'require_quote_signature': 'tarjous Signature',
+      'enable_portal_password': 'salasana suojaa laskut',
       'enable_portal_password_help':
-          'Allows you to set a password for each contact. If a password is set, the contact will be required to enter a password before viewing invoices.',
-      'send_portal_password': 'Generate Automatically',
-      'send_portal_password_help':
-          'If no password is set, one will be generated and sent with the first invoice.',
+          'Allows you  set  salasana  each kontakti. If  salasana is set,  kontakti  required  syötä  salasana before viewing laskut.',
       'authorization': 'Authorization',
       'subdomain': 'Alidomain',
       'domain': 'Domain',
       'portal_mode': 'Portal Mode',
       'email_signature': 'Ystävällisesti,',
       'enable_email_markup_help':
-          'Make it easier for your clients to pay you by adding schema.org markup to your emails.',
+          'Make it easier  sinun asiakkaat  pay you by adding schema.org markup  sinun sähköpostit.',
       'plain': 'Yksinkertainen',
       'light': 'Vaalea',
       'dark': 'Tumma',
@@ -10322,71 +11320,71 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'reply_to_email': 'Reply-To Email',
       'bcc_email': 'BCC Email',
       'processed': 'Processed',
-      'credit_card': 'Credit Card',
-      'bank_transfer': 'Bank Transfer',
+      'credit_card': 'Luottokortti',
+      'bank_transfer': 'Pankkisiirto',
       'priority': 'Priority',
-      'fee_amount': 'Fee Amount',
-      'fee_percent': 'Fee Percent',
-      'fee_cap': 'Fee Cap',
-      'limits_and_fees': 'Limits/Fees',
+      'fee_amount': 'palkkio määrä',
+      'fee_percent': 'palkkio Percent',
+      'fee_cap': 'palkkio Cap',
+      'limits_and_fees': 'Limits/palkkiot',
       'enable_min': 'Enable min',
       'enable_max': 'Enable max',
       'min_limit': 'Min: :min',
       'max_limit': 'Max: :max',
       'min': 'Min',
       'max': 'Max',
-      'accepted_card_logos': 'Accepted Card Logos',
+      'accepted_card_logos': 'Accepted kortti Logos',
       'credentials': 'Credentials',
       'require_billing_address_help':
-          'Require client to provide their billing address',
+          'Require asiakas  provide their laskutus osoite',
       'require_shipping_address_help':
-          'Require client to provide their shipping address',
+          'Require asiakas  provide their shipping osoite',
       'update_address': 'Päivitä osoite',
       'update_address_help': 'Päivitä asiakkaan osoite annetuilla tiedoilla',
       'rate': 'á hinta',
       'tax_rate': 'Veroprosentti',
-      'new_tax_rate': 'New Tax Rate',
+      'new_tax_rate': 'Uusi veromäärä',
       'edit_tax_rate': 'Muokkaa veroprosenttia',
       'created_tax_rate': 'Veroprosentti luotu onnistuneesti',
       'updated_tax_rate': 'Veroprosentti päivitetty onnistuneesti',
       'archived_tax_rate': 'Veroprosentti arkistoitu onnistuneesti',
-      'deleted_tax_rate': 'Successfully deleted tax rate',
-      'restored_tax_rate': 'Successfully restored tax rate',
+      'deleted_tax_rate': 'onnistuneesti poistettu tax rate',
+      'restored_tax_rate': 'onnistuneesti palautettu tax rate',
       'fill_products': 'Lisää automaattisesti tuotteita',
       'fill_products_help':
           'Tuotteen valinta <b>täyttää kuvauksen ja hinnan</b> automaattisesti',
       'update_products': 'Päivitä automaattisesti tuotteet',
       'update_products_help':
           'Laskun päivittäminen <b>päivittää tuotetietokannan</b> automaattisesti',
-      'convert_products': 'Convert Products',
+      'convert_products': 'Convert tuotteet',
       'convert_products_help':
-          'Automatically convert product prices to the client\'s currency',
-      'fees': 'Fees',
+          'automaattisesti convert tuote prices    asiakas\'s currency',
+      'fees': 'palkkiot',
       'limits': 'Limits',
       'provider': 'Provider',
-      'company_gateway': 'Payment Gateway',
-      'company_gateways': 'Payment Gateways',
-      'new_company_gateway': 'New Gateway',
-      'edit_company_gateway': 'Edit Gateway',
-      'created_company_gateway': 'Successfully created gateway',
-      'updated_company_gateway': 'Successfully updated gateway',
-      'archived_company_gateway': 'Successfully archived gateway',
-      'deleted_company_gateway': 'Successfully deleted gateway',
-      'restored_company_gateway': 'Successfully restored gateway',
-      'continue_editing': 'Continue Editing',
+      'company_gateway': 'maksu Gateway',
+      'company_gateways': 'maksu Gateways',
+      'new_company_gateway': 'uusi Gateway',
+      'edit_company_gateway': 'muokkaa Gateway',
+      'created_company_gateway': 'onnistuneesti luotu gateway',
+      'updated_company_gateway': 'onnistuneesti päivitetty gateway',
+      'archived_company_gateway': 'onnistuneesti arkistoitu gateway',
+      'deleted_company_gateway': 'onnistuneesti poistettu gateway',
+      'restored_company_gateway': 'onnistuneesti palautettu gateway',
+      'continue_editing': 'jatka Editing',
       'discard_changes': 'Discard Changes',
-      'default_value': 'Default value',
+      'default_value': 'oletus arvo',
       'disabled': 'Pois käytöstä',
       'currency_format': 'Currency Format',
-      'first_day_of_the_week': 'First Day of the Week',
-      'first_month_of_the_year': 'First Month of the Year',
-      'sunday': 'Sunday',
-      'monday': 'Monday',
-      'tuesday': 'Tuesday',
-      'wednesday': 'Wednesday',
-      'thursday': 'Thursday',
-      'friday': 'Friday',
-      'saturday': 'Saturday',
+      'first_day_of_the_week': 'ensimmäinen päivä of  viikko',
+      'first_month_of_the_year': 'ensimmäinen kuukausi of  Year',
+      'sunday': 'sunnuntai',
+      'monday': 'Maanantai',
+      'tuesday': 'Tiistai',
+      'wednesday': 'Keskiviikko',
+      'thursday': 'Torstai',
+      'friday': 'Perjantai',
+      'saturday': 'Lauantai',
       'january': 'January',
       'february': 'February',
       'march': 'March',
@@ -10405,118 +11403,118 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'datetime_format': 'Datetime Format',
       'military_time': '24 tunnin aika',
       'military_time_help': '24 Hour Display',
-      'send_reminders': 'Send Reminders',
+      'send_reminders': 'lähetä muistutukset',
       'timezone': 'Timezone',
-      'filtered_by_group': 'Filtered by Group',
-      'filtered_by_invoice': 'Filtered by Invoice',
-      'filtered_by_client': 'Filtered by Client',
+      'filtered_by_group': 'Filtered by ryhmä',
+      'filtered_by_invoice': 'Filtered by Lasku',
+      'filtered_by_client': 'Filtered by asiakas',
       'filtered_by_vendor': 'Filtered by Vendor',
-      'group_settings': 'Group Settings',
-      'group': 'Group',
-      'groups': 'Groups',
-      'new_group': 'New Group',
-      'edit_group': 'Edit Group',
-      'created_group': 'Successfully created group',
-      'updated_group': 'Successfully updated group',
-      'archived_group': 'Successfully archived group',
-      'deleted_group': 'Successfully deleted group',
-      'restored_group': 'Successfully restored group',
+      'group_settings': 'ryhmä asetukset',
+      'group': 'ryhmä',
+      'groups': 'ryhmät',
+      'new_group': 'uusi ryhmä',
+      'edit_group': 'muokkaa ryhmä',
+      'created_group': 'onnistuneesti luotu ryhmä',
+      'updated_group': 'onnistuneesti päivitetty ryhmä',
+      'archived_group': 'onnistuneesti arkistoitu ryhmä',
+      'deleted_group': 'onnistuneesti poistettu ryhmä',
+      'restored_group': 'onnistuneesti palautettu ryhmä',
       'upload_logo': 'Upload Logo',
-      'uploaded_logo': 'Successfully uploaded logo',
+      'uploaded_logo': 'onnistuneesti lähetetty logo',
       'logo': 'Logo',
-      'saved_settings': 'Successfully saved settings',
+      'saved_settings': 'onnistuneesti saved asetus',
       'product_settings': 'Tuoteasetukset',
-      'device_settings': 'Device Settings',
+      'device_settings': 'Device asetukset',
       'defaults': 'Vakiot',
       'basic_settings': 'Perusasetukset',
       'advanced_settings': 'Lisääasetuksia',
       'company_details': 'Yrityksen yhteystiedot',
       'user_details': 'Käyttäjätiedot',
-      'localization': 'Paikallistaa',
+      'localization': 'Lokalisointi',
       'online_payments': 'Online maksut',
       'tax_rates': 'Vero määrä',
-      'notifications': 'Sähköposti ilmoitukset',
+      'notifications': 'Sähköposti-ilmoitukset',
       'import_export': 'Tuonti | Vienti',
       'custom_fields': 'Mukautetut kentät',
       'invoice_design': 'Laskun muotoilu',
       'buy_now_buttons': 'Buy Now Buttons',
       'email_settings': 'Sähköpostin asetukset',
       'templates_and_reminders': 'Pohjat ja muistutukset',
-      'credit_cards_and_banks': 'Credit Cards & Banks',
+      'credit_cards_and_banks': 'luotto Cards & Banks',
       'data_visualizations': 'Datan visualisaatiot',
       'price': 'Price',
       'email_sign_up': 'Email Sign Up',
       'google_sign_up': 'Google Sign Up',
-      'thank_you_for_your_purchase': 'Thank you for your purchase!',
+      'thank_you_for_your_purchase': 'kiitos you  sinun purchase!',
       'redeem': 'Redeem',
       'sign_up_with_google': 'Sign Up With Google',
       'back': 'Back',
       'past_purchases': 'Past Purchases',
-      'annual_subscription': 'Annual Subscription',
+      'annual_subscription': 'Annual tilaus',
       'pro_plan': 'Pro Plan',
       'enterprise_plan': 'Enterprise Plan',
       'count_users': ':count users',
       'upgrade': 'Upgrade',
-      'please_enter_a_first_name': 'Please enter a first name',
-      'please_enter_a_last_name': 'Please enter a last name',
+      'please_enter_a_first_name': 'syötä  etunimi',
+      'please_enter_a_last_name': 'syötä  sukunimi',
       'please_agree_to_terms_and_privacy':
-          'Please agree to the terms of service and privacy policy to create an account.',
-      'i_agree_to_the': 'I agree to the',
-      'terms_of_service_link': 'terms of service',
+          'agree    terms  service ja privacy policy  create  tili.',
+      'i_agree_to_the': 'I agree  the',
+      'terms_of_service_link': 'terms  service',
       'privacy_policy_link': 'privacy policy',
       'terms_of_service': 'Käyttöehdot',
       'privacy_policy': 'Privacy Policy',
       'sign_up': 'Rekisteröidy',
       'account_login': 'Tiliin kirjautuminen',
-      'view_website': 'View Website',
-      'create_account': 'Create Account',
+      'view_website': 'Näytä verkkosivu',
+      'create_account': 'luo Account',
       'email_login': 'Email Login',
-      'create_new': 'Create New',
-      'no_record_selected': 'No record selected',
-      'error_unsaved_changes': 'Please save or cancel your changes',
-      'download': 'Download',
-      'requires_an_enterprise_plan': 'Requires an enterprise plan',
+      'create_new': 'luo uusi',
+      'no_record_selected': 'ei record selected',
+      'error_unsaved_changes': 'save tai peruuta sinun muutokset',
+      'download': 'lataa',
+      'requires_an_enterprise_plan': 'Requires  enterprise plan',
       'take_picture': 'Take Picture',
       'upload_file': 'Upload File',
       'document': 'Document',
       'documents': 'Documents',
-      'new_document': 'New Document',
-      'edit_document': 'Edit Document',
-      'uploaded_document': 'Successfully uploaded document',
-      'updated_document': 'Successfully updated document',
-      'archived_document': 'Successfully archived document',
-      'deleted_document': 'Successfully deleted document',
-      'restored_document': 'Successfully restored document',
-      'no_history': 'No History',
-      'expense_date': 'Expense Date',
+      'new_document': 'uusi Document',
+      'edit_document': 'muokkaa Document',
+      'uploaded_document': 'onnistuneesti lähetetty dokumentti',
+      'updated_document': 'onnistuneesti päivitetty dokumentti',
+      'archived_document': 'onnistuneesti arkistoitu dokumentti',
+      'deleted_document': 'onnistuneesti poistettu dokumentti',
+      'restored_document': 'onnistuneesti palautettu dokumentti',
+      'no_history': 'ei History',
+      'expense_date': 'Kulun päivämäärä',
       'pending': 'Odottaa vastausta',
       'expense_status_1': 'Logged',
       'expense_status_2': 'Pending',
       'expense_status_3': 'Invoiced',
       'converted': 'Muunnettu',
-      'add_documents_to_invoice': 'Add documents to invoice',
+      'add_documents_to_invoice': 'lisää dokumentit  lasku',
       'exchange_rate': 'Exchange Rate',
-      'convert_currency': 'Convert currency',
+      'convert_currency': 'Muuta valuutta',
       'mark_paid': 'Mark Paid',
       'mark_billable': 'Mark billable',
-      'category': 'Category',
+      'category': 'Kategoria',
       'address': 'Osoite',
-      'new_vendor': 'New Vendor',
+      'new_vendor': 'Uusi myyjä',
       'created_vendor': 'Luotin onnistuneesti tavarantoimittaja',
       'updated_vendor': 'Tavarantoimittaja on päivitetty onnistuneesti',
       'archived_vendor': 'Tavarantoimittaja on arkistoitu onnistuneesti',
       'deleted_vendor': 'Tavarantoimittaja on poistettu onnistuneesti',
-      'restored_vendor': 'Successfully restored vendor',
+      'restored_vendor': 'onnistuneesti palautettu vendor',
       'new_expense': 'Syötä kulu',
-      'created_expense': 'Successfully created expense',
-      'updated_expense': 'Successfully updated expense',
-      'archived_expense': 'Successfully archived expense',
-      'deleted_expense': 'Successfully deleted expense',
-      'restored_expense': 'Successfully restored expense',
-      'copy_shipping': 'Copy Shipping',
-      'copy_billing': 'Copy Billing',
-      'design': 'Design',
-      'failed_to_find_record': 'Failed to find record',
+      'created_expense': 'onnistuneesti luotu kulu',
+      'updated_expense': 'onnistuneesti päivitetty kulu',
+      'archived_expense': 'Kulu arkistoitu onnistuneesti',
+      'deleted_expense': 'Kulu poistettu onnistuneesti',
+      'restored_expense': 'onnistuneesti palautettu kulu',
+      'copy_shipping': 'Copy toimitus',
+      'copy_billing': 'Copy laskutus',
+      'design': 'malli',
+      'failed_to_find_record': 'Failed  find record',
       'invoiced': 'Laskutettu',
       'logged': 'Kirjattu',
       'running': 'Käynnissä',
@@ -10524,11 +11522,11 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'task_errors': 'Ole hyvä ja korjaa päällekäiset ajat',
       'start': 'Aloitus',
       'stop': 'Lopetus',
-      'started_task': 'Successfully started task',
+      'started_task': 'onnistuneesti aloitettu tehtävä',
       'stopped_task': 'Tehtävä lopetettu onnistuneesti',
-      'resumed_task': 'Successfully resumed task',
+      'resumed_task': 'onnistuneesti resumed tehtävä',
       'now': 'Nyt',
-      'auto_start_tasks': 'Auto Start Tasks',
+      'auto_start_tasks': 'automaattinen aloita tehtävät',
       'timer': 'Ajastin',
       'manual': 'Manuaalinen',
       'budgeted': 'Budgeted',
@@ -10543,70 +11541,69 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'archived_task': 'Tehtävä arkistoitu onnistuneesti',
       'deleted_task': 'Tehtävä poistettu onnistuneesti',
       'restored_task': 'Tehtävä palautettu onnistuneesti',
-      'please_enter_a_name': 'Please enter a name',
+      'please_enter_a_name': 'syötä  name',
       'budgeted_hours': 'Budgeted Hours',
-      'created_project': 'Successfully created project',
-      'updated_project': 'Successfully updated project',
-      'archived_project': 'Successfully archived project',
-      'deleted_project': 'Successfully deleted project',
-      'restored_project': 'Successfully restored project',
-      'new_project': 'New Project',
-      'thank_you_for_using_our_app': 'Thank you for using our app!',
+      'created_project': 'onnistuneesti luotu projekti',
+      'updated_project': 'onnistuneesti päivitetty projekti',
+      'archived_project': 'onnistuneesti arkistoitu projekti',
+      'deleted_project': 'Projekti poistettu onnistuneesti',
+      'restored_project': 'onnistuneesti palautettu projekti',
+      'new_project': 'uusi projekti',
+      'thank_you_for_using_our_app': 'kiitos you  using our app!',
       'if_you_like_it': 'If you like it please',
       'click_here': 'klikkaa tästä',
       'click_here_capital': 'Click here',
-      'to_rate_it': 'to rate it.',
+      'to_rate_it': 'rate it.',
       'average': 'Average',
       'unapproved': 'Unapproved',
-      'authenticate_to_change_setting':
-          'Please authenticate to change this setting',
+      'authenticate_to_change_setting': 'authenticate  change this asetus',
       'locked': 'Locked',
       'authenticate': 'Authenticate',
-      'please_authenticate': 'Please authenticate',
+      'please_authenticate': 'authenticate',
       'biometric_authentication': 'Biometric Authentication',
       'footer': 'Alatunniste',
       'compare': 'Compare',
       'hosted_login': 'Hosted Login',
       'selfhost_login': 'Selfhost Login',
       'google_login': 'Google Login',
-      'today': 'Today',
-      'custom_range': 'Custom Range',
+      'today': 'tänään',
+      'custom_range': 'muokattu Range',
       'date_range': 'Date Range',
-      'current': 'Current',
+      'current': 'nykyinen',
       'previous': 'Previous',
-      'current_period': 'Current Period',
-      'comparison_period': 'Comparison Period',
-      'previous_period': 'Previous Period',
+      'current_period': 'nykyinen kausi',
+      'comparison_period': 'Comparison kausi',
+      'previous_period': 'Previous kausi',
       'previous_year': 'Previous Year',
-      'compare_to': 'Compare to',
-      'last7_days': 'Last 7 Days',
-      'last_week': 'Last Week',
-      'last30_days': 'Last 30 Days',
-      'this_month': 'This Month',
-      'last_month': 'Last Month',
-      'this_year': 'This Year',
-      'last_year': 'Last Year',
+      'compare_to': 'Compare',
+      'last7_days': 'viime 7 päivää',
+      'last_week': 'viime viikko',
+      'last30_days': 'viime 30 päivää',
+      'this_month': 'tämä kuukausi',
+      'last_month': 'viime kuukausi',
+      'this_year': 'tämä Year',
+      'last_year': 'viime Year',
       'custom': 'Mukautettu',
-      'clone_to_invoice': 'Clone to Invoice',
-      'clone_to_quote': 'Clone to Quote',
+      'clone_to_invoice': 'kloonaa  Lasku',
+      'clone_to_quote': 'kloonaa  tarjous',
+      'clone_to_credit': 'Clone to Credit',
       'view_invoice': 'Katso lasku',
       'convert': 'Convert',
-      'more': 'More',
+      'more': 'lisää',
       'edit_client': 'Muokkaa asiakas',
       'edit_product': 'Muokkaa tuote',
       'edit_invoice': 'Muokkaa laskua',
       'edit_quote': 'Muokkaa tarjous',
       'edit_payment': 'Muokkaa maksua',
       'edit_task': 'Muokkaa tehtävä',
-      'edit_expense': 'Edit Expense',
-      'edit_vendor': 'Edit Vendor',
-      'edit_project': 'Edit Project',
-      'edit_credit': 'Edit Credit',
-      'edit_recurring_invoice': 'Edit Recurring Invoice',
-      'edit_recurring_expense': 'Edit Recurring Expense',
-      'edit_recurring_quote': 'Edit Recurring Quote',
+      'edit_expense': 'muokkaa kulu',
+      'edit_vendor': 'Muokkaa myyjää',
+      'edit_project': 'muokkaa projekti',
+      'edit_recurring_invoice': 'muokkaa toistuva Lasku',
+      'edit_recurring_expense': 'muokkaa toistuva kulu',
+      'edit_recurring_quote': 'muokkaa toistuva tarjous',
       'billing_address': 'Laskutusosoitus',
-      'shipping_address': 'Shipping Address',
+      'shipping_address': 'toimitus Address',
       'total_revenue': 'Kokonaistulot',
       'average_invoice': 'Laskujen keskiarvo',
       'outstanding': 'Maksamattomat laskut',
@@ -10631,48 +11628,48 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'delete': 'Poista',
       'restore': 'Palauta',
       'refresh_complete': 'Refresh Complete',
-      'please_enter_your_email': 'Please enter your email',
-      'please_enter_your_password': 'Please enter your password',
-      'please_enter_your_url': 'Please enter your URL',
-      'please_enter_a_product_key': 'Please enter a product key',
+      'please_enter_your_email': 'syötä sinun sähköposti',
+      'please_enter_your_password': 'syötä sinun salasana',
+      'please_enter_your_url': 'syötä sinun URL',
+      'please_enter_a_product_key': 'syötä  tuote avain',
       'ascending': 'Ascending',
       'descending': 'Descending',
       'save': 'Tallenna',
-      'an_error_occurred': 'An error occurred',
+      'an_error_occurred': 'virhe occurred',
       'paid_to_date': 'Maksettu tähän mennessä',
       'balance_due': 'Avoin lasku',
       'balance': 'Saldo',
-      'overview': 'Overview',
+      'overview': 'Yleiskatsaus',
       'details': 'Yksityiskohdat',
       'phone': 'Puhelin',
       'website': 'Kotisivu',
       'vat_number': 'ALV-numero',
       'id_number': 'ID-numero',
       'create': 'Luo',
-      'copied_to_clipboard': 'Copied :value to the clipboard',
-      'error': 'Error',
+      'copied_to_clipboard': 'Copied :arvo    clipboard',
+      'error': 'Virhe',
       'could_not_launch': 'Could not launch',
       'contacts': 'Yhteystiedot',
       'additional': 'Additional',
       'first_name': 'Etunimi',
       'last_name': 'Sukunimi',
       'add_contact': 'Lisää yhteystieto',
-      'are_you_sure': 'Oletko varmaa?',
+      'are_you_sure': 'Oletko varma?',
       'cancel': 'Peruuta',
       'ok': 'Ok',
       'remove': 'Remove',
       'email_is_invalid': 'Email is invalid',
       'product': 'Tuote',
       'products': 'Tuotteet',
-      'new_product': 'New Product',
+      'new_product': 'Uusi tuote',
       'created_product': 'Tuote on luotu onnistuneesti',
       'updated_product': 'Tuote on päivitetty onnistuneesti',
       'archived_product': 'Tuote on arkistoitu onnistuneesti',
-      'deleted_product': 'Successfully deleted product',
-      'restored_product': 'Successfully restored product',
-      'product_key': 'Product',
+      'deleted_product': 'onnistuneesti poistettu tuote',
+      'restored_product': 'onnistuneesti palautettu tuote',
+      'product_key': 'Tuote',
       'notes': 'Viestit',
-      'cost': 'Cost',
+      'cost': 'Hinta',
       'client': 'Asiakas',
       'clients': 'Asiakkaat',
       'new_client': 'Uusi asiakas',
@@ -10696,15 +11693,15 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'deleted_invoice': 'Lasku poistettiin onnistuneesti',
       'restored_invoice': 'Lasku palautettu onnistuneesti',
       'emailed_invoice': 'Lasku lähetettiin onnistuneesti',
-      'emailed_payment': 'Successfully emailed payment',
-      'amount': 'määrä',
+      'emailed_payment': 'onnistuneesti emailed maksu',
+      'amount': 'Määrä',
       'invoice_number': 'Laskun numero',
-      'invoice_date': 'Päivämäärä',
+      'invoice_date': 'Laskun päivämäärä',
       'discount': 'Alennus',
-      'po_number': 'Hankinta tilaus numero',
+      'po_number': 'Hankintatilaus numero',
       'terms': 'Ehdot',
       'public_notes': 'Public Notes',
-      'private_notes': 'Yksityset muistiinpanot',
+      'private_notes': 'Yksityiset muistiinpanot',
       'frequency': 'Kuinka usein',
       'start_date': 'Alkamispäiväämäärä',
       'end_date': 'Loppupäivämäärä',
@@ -10713,70 +11710,66 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'valid_until': 'Voimassa',
       'items': 'Items',
       'partial_deposit': 'Partial/Deposit',
-      'description': 'Selite',
-      'unit_cost': 'Kappale hinta',
+      'description': 'Kuvaus',
+      'unit_cost': 'Kappalehinta',
       'quantity': 'Määrä',
-      'add_item': 'Add Item',
+      'add_item': 'lisää Item',
       'contact': 'Yhteyshenkilö',
       'work_phone': 'Puhelin',
-      'total_amount': 'Total Amount',
+      'total_amount': 'yhteensä määrä',
       'pdf': 'PDF',
       'due_date': 'Eräpäivä',
-      'partial_due_date': 'Partial Due Date',
+      'partial_due_date': 'Partial eräpäivä',
       'status': 'Tila',
-      'invoice_status_id': 'Invoice Status',
-      'quote_status': 'Quote Status',
-      'click_plus_to_add_item': 'Click + to add an item',
-      'click_plus_to_add_time': 'Click + to add time',
+      'invoice_status_id': 'Lasku tila',
+      'quote_status': 'tarjous tila',
+      'click_plus_to_add_item': 'Click +  lisää  item',
+      'click_plus_to_add_time': 'Click +  lisää time',
       'count_selected': ':count selected',
       'total': 'Loppusumma',
-      'percent': 'Percent',
+      'percent': 'Prosentti',
       'edit': 'Muokkaa',
       'dismiss': 'Dismiss',
-      'please_select_a_date': 'Please select a date',
-      'please_select_a_client': 'Please select a client',
-      'please_select_an_invoice': 'Please select an invoice',
-      'task_rate': 'Task Rate',
+      'please_select_a_date': 'valitse  päivämäärä',
+      'please_select_a_client': 'valitse  asiakas',
+      'please_select_an_invoice': 'valitse  lasku',
+      'task_rate': 'tehtävä Rate',
       'settings': 'Asetukset',
       'language': 'Language',
-      'currency': 'Currency',
-      'created_at': 'Date Created',
-      'updated_at': 'Updated',
+      'currency': 'Valuutta',
+      'created_at': 'Luotu',
+      'updated_at': 'päivitetty',
       'tax': 'Vero',
-      'please_enter_an_invoice_number': 'Please enter an invoice number',
-      'please_enter_a_quote_number': 'Please enter a quote number',
+      'please_enter_an_invoice_number': 'syötä  lasku numero',
+      'please_enter_a_quote_number': 'syötä  tarjous numero',
       'past_due': 'Past Due',
-      'draft': 'Draft',
-      'sent': 'Sent',
-      'viewed': 'Viewed',
+      'draft': 'Luonnos',
+      'sent': 'Lähetetty',
+      'viewed': 'Nähty',
       'approved': 'Approved',
       'partial': 'Osittainen/Talletus',
       'paid': 'Maksettu',
-      'invoice_status_1': 'Draft',
-      'invoice_status_2': 'Sent',
-      'invoice_status_3': 'Viewed',
-      'invoice_status_4': 'Approved',
       'mark_sent': 'Merkitse lähetetyksi',
-      'marked_invoice_as_sent': 'Successfully marked invoice as sent',
-      'marked_invoice_as_paid': 'Successfully marked invoice as sent',
+      'marked_invoice_as_sent': 'onnistuneesti marked lasku  lähettää',
+      'marked_invoice_as_paid': 'Successfully marked invoice as paid',
       'marked_invoices_as_sent': 'Successfully marked invoices as sent',
-      'marked_invoices_as_paid': 'Successfully marked invoices as sent',
+      'marked_invoices_as_paid': 'Successfully marked invoices as paid',
       'done': 'Valmis',
       'please_enter_a_client_or_contact_name':
-          'Please enter a client or contact name',
+          'syötä  asiakas tai kontakti name',
       'dark_mode': 'Tumma tila',
-      'restart_app_to_apply_change': 'Restart the app to apply the change',
+      'restart_app_to_apply_change': 'Restart  app  apply  change',
       'refresh_data': 'Refresh Data',
-      'blank_contact': 'Blank Contact',
+      'blank_contact': 'Blank kontakti',
       'activity': 'Toiminto',
-      'no_records_found': 'No records found',
+      'no_records_found': 'ei records found',
       'clone': 'Kopioi',
       'loading': 'Loading',
       'industry': 'Industry',
       'size': 'Size',
-      'payment_terms': 'Maksu ehdot',
+      'payment_terms': 'Maksuehdot',
       'payment_date': 'Maksun päivämäärä',
-      'payment_status': 'Payment Status',
+      'payment_status': 'maksu tila',
       'payment_status_1': 'Pending',
       'payment_status_2': 'Voided',
       'payment_status_3': 'Failed',
@@ -10785,33 +11778,33 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'payment_status_6': 'Refunded',
       'net': 'Net',
       'client_portal': 'Asiakasportaali',
-      'show_tasks': 'Show tasks',
-      'email_reminders': 'Email Reminders',
+      'show_tasks': 'näytä tasks',
+      'email_reminders': 'Email muistutukset',
       'enabled': 'Enabled',
       'recipients': 'Recipients',
       'initial_email': 'Initial Email',
       'first_reminder': 'Ensimmäinen muistutus',
       'second_reminder': 'Toinen muistutus',
       'third_reminder': 'Kolmas muistutus',
-      'reminder1': 'First Reminder',
-      'reminder2': 'Second Reminder',
-      'reminder3': 'Third Reminder',
-      'template': 'Template',
-      'send': 'Send',
+      'reminder1': 'ensimmäinen muistutus',
+      'reminder2': 'toinen muistutus',
+      'reminder3': 'Third muistutus',
+      'template': 'Malli',
+      'send': 'lähetä',
       'subject': 'Otsikko',
       'body': 'Sisältö',
       'send_email': 'Lähetä sähköposti',
       'email_receipt': 'Lähetä maksukuitti sähköpostilla asiakkaalle',
-      'auto_billing': 'Auto billing',
+      'auto_billing': 'automaattinen laskutus',
       'button': 'Button',
-      'preview': 'Preview',
+      'preview': 'Esikatselu',
       'customize': 'Mukauta',
       'history': 'Historia',
       'payment': 'Maksu',
       'payments': 'Maksut',
       'refunded': 'Refunded',
-      'payment_type': 'Payment Type',
-      'transaction_reference': 'Tapahtumaan viite',
+      'payment_type': 'Maksutyyppi',
+      'transaction_reference': 'Tapahtuman viite',
       'enter_payment': 'Kirjaa maksu',
       'new_payment': 'Syötä maksu',
       'created_payment': 'Maksu on luotu onnistuneesti',
@@ -10829,79 +11822,82 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'restored_quote': 'Tarjous palautettu onnistuneesti',
       'expense': 'Kulu',
       'expenses': 'Kulut',
-      'vendor': 'Vendor',
+      'vendor': 'Myyjä',
       'vendors': 'Vendors',
-      'task': 'Task',
+      'task': 'tehtävä',
       'tasks': 'Tehtävät',
-      'project': 'Project',
+      'project': 'projekti',
       'projects': 'Projects',
-      'activity_1': ':user loi asiakkaan :client',
-      'activity_2': ':user arkistoi asiakkaan :client',
-      'activity_3': ':user poisti asiakkaan :client',
-      'activity_4': ':user loi laskun :invoice',
-      'activity_5': ':user päivitti laskun :invoice',
-      'activity_6': ':user emailed invoice :invoice for :client to :contact',
-      'activity_7': ':contact viewed invoice :invoice for :client',
-      'activity_8': ':user arkistoi laskun :invoice',
-      'activity_9': ':user poisti laskun :invoice',
+      'activity_1': ':käyttäjä loi asiakkaan :client',
+      'activity_2': ':käyttäjä arkistoi asiakkaan :client',
+      'activity_3': ':käyttäjä poisti asiakkaan :client',
+      'activity_4': ':käyttäjä loi laskun :invoice',
+      'activity_5': ':käyttäjä päivitti laskun :invoice',
+      'activity_6': ':käyttäjä emailed lasku :lasku for :asiakas   :kontakti',
+      'activity_7': ':kontakti katsoi lasku :lasku for :asiakas',
+      'activity_8': ':käyttäjä arkistoi laskun :invoice',
+      'activity_9': ':käyttäjä poisti laskun :invoice',
       'activity_10':
-          ':contact entered payment :payment for :payment_amount on invoice :invoice for :client',
-      'activity_11': ':user päivitti maksun :payment',
-      'activity_12': ':user arkistoi maksun :payment',
-      'activity_13': ':user poisti maksun :payment',
-      'activity_14': ':user syötti :credit hyvityksen',
-      'activity_15': ':user päivitti :credit hyvityksen',
-      'activity_16': ':user arkistoi :credit hyvityksen',
-      'activity_17': ':user poisti :credit hyvityksen',
-      'activity_18': ':user loi tarjouksen :quote',
-      'activity_19': ':user päivitti tarjouksen :quote',
-      'activity_20': ':user emailed quote :quote for :client to :contact',
-      'activity_21': ':contact luki tarjouksen :quote',
-      'activity_22': ':user arkistoi tarjouksen :quote',
-      'activity_23': ':user poisti tarjouksen :quote',
-      'activity_24': ':user palautti tarjouksen :quote',
-      'activity_25': ':user palautti laskun :invoice',
-      'activity_26': ':user palautti asiakkaan :client',
-      'activity_27': ':user palautti maksun :payment',
-      'activity_28': ':user palautti hyvityksen :credit',
-      'activity_29': ':contact approved quote :quote for :client',
-      'activity_30': ':user loi kauppiaan :vendor',
-      'activity_31': ':user arkistoi kauppiaan :vendor',
-      'activity_32': ':user poisti kauppiaan :vendor',
-      'activity_33': ':user palautti kauppiaan :vendor',
-      'activity_34': ':user loi kulun :expense',
-      'activity_35': ':user arkistoi kulun :expense',
-      'activity_36': ':user poisti kulun :expense',
-      'activity_37': ':user palautti kulun :expense',
-      'activity_39': ':user cancelled a :payment_amount payment :payment',
+          ':kontakti entered maksu :maksu for :payment_amount on lasku :lasku for :asiakas',
+      'activity_11': ':käyttäjä päivitti maksun :maksu',
+      'activity_12': ':käyttäjä arkistoi maksun :maksu',
+      'activity_13': ':käyttäjä poisti maksun :maksu',
+      'activity_14': ':käyttäjä syötti :luotto hyvityksen',
+      'activity_15': ':käyttäjä päivitti :luotto hyvityksen',
+      'activity_16': ':käyttäjä arkistoi :luotto hyvityksen',
+      'activity_17': ':käyttäjä poisti :luotto hyvityksen',
+      'activity_18': ':käyttäjä loi tarjouksen :quote',
+      'activity_19': ':käyttäjä päivitti tarjouksen :quote',
+      'activity_20':
+          ':käyttäjä emailed tarjous :tarjous for :asiakas   :kontakti',
+      'activity_21': ':kontakti luki tarjouksen :quote',
+      'activity_22': ':käyttäjä arkistoi tarjouksen :quote',
+      'activity_23': ':käyttäjä poisti tarjouksen :quote',
+      'activity_24': ':käyttäjä palautti tarjouksen :quote',
+      'activity_25': ':käyttäjä palautti laskun :invoice',
+      'activity_26': ':käyttäjä palautti asiakkaan :client',
+      'activity_27': ':käyttäjä palautti maksun :maksu',
+      'activity_28': ':käyttäjä palautti hyvityksen :luotto',
+      'activity_29': ':kontakti approved tarjous :tarjous for :asiakas',
+      'activity_30': ':käyttäjä loi kauppiaan :vendor',
+      'activity_31': ':käyttäjä arkistoi kauppiaan :vendor',
+      'activity_32': ':käyttäjä poisti kauppiaan :vendor',
+      'activity_33': ':käyttäjä palautti kauppiaan :vendor',
+      'activity_34': ':käyttäjä loi kulun :kulu',
+      'activity_35': ':käyttäjä arkistoi kulun :kulu',
+      'activity_36': ':käyttäjä poisti kulun :kulu',
+      'activity_37': ':käyttäjä palautti kulun :kulu',
+      'activity_39': ':käyttäjä cancelled a :payment_amount maksu :maksu',
       'activity_40':
-          ':user refunded :adjustment of a :payment_amount payment :payment',
-      'activity_41': ':payment_amount payment (:payment) failed',
-      'activity_42': ':user loi tehtävän :task',
-      'activity_43': ':user päivitti tehtävän :task',
-      'activity_44': ':user arkistoi tehtävän :task',
-      'activity_45': ':user poisti tehtävän :task',
-      'activity_46': ':user palautti tehtävän :task',
-      'activity_47': ':user päivitti kulun :expense',
-      'activity_48': ':user updated ticket :ticket',
-      'activity_49': ':user closed ticket :ticket',
-      'activity_50': ':user merged ticket :ticket',
-      'activity_51': ':user split ticket :ticket',
-      'activity_52': ':contact opened ticket :ticket',
-      'activity_53': ':contact reopened ticket :ticket',
-      'activity_54': ':user reopened ticket :ticket',
-      'activity_55': ':contact replied ticket :ticket',
-      'activity_56': ':user viewed ticket :ticket',
+          ':käyttäjä refunded :adjustment  a :payment_amount maksu :maksu',
+      'activity_41': ':payment_amount maksu (:maksu) failed',
+      'activity_42': ':käyttäjä loi tehtävän :tehtävä',
+      'activity_43': ':käyttäjä päivitti tehtävän :tehtävä',
+      'activity_44': ':käyttäjä arkistoi tehtävän :tehtävä',
+      'activity_45': ':käyttäjä poisti tehtävän :tehtävä',
+      'activity_46': ':käyttäjä palautti tehtävän :tehtävä',
+      'activity_47': ':käyttäjä päivitti kulun :kulu',
+      'activity_48': ':käyttäjä päivitti tehtävän :tiketti',
+      'activity_49': ':käyttäjä sulki tiketin :tiketti',
+      'activity_50': ':käyttäjä mergesi tiketin :tiketti',
+      'activity_51': ':käyttäjä jakoi tiketin :tiketti',
+      'activity_52': ':kontakti avasi tiketin :tiketti',
+      'activity_53': ':kontakti reopened tiketti :tiketti',
+      'activity_54': ':käyttäjä reopened tiketti :tiketti',
+      'activity_55': ':kontakti vastasi tiketti :tiketti',
+      'activity_56': ':käyttäjä katsoi tiketti :tiketti',
       'activity_57': 'System failed to email invoice :invoice',
-      'one_time_password': 'One Time Password',
+      'one_time_password': 'One Time salasana',
       'emailed_quote': 'Tarjous on lähetetty onnistuneesti',
-      'marked_quote_as_sent': 'Successfully marked quote as sent',
+      'emailed_credit': 'Successfully emailed credit',
+      'marked_quote_as_sent': 'onnistuneesti marked tarjous  lähettää',
+      'marked_credit_as_sent': 'Successfully marked credit as sent',
       'expired': 'Expired',
-      'all': 'All',
+      'all': 'Kaikki',
       'select': 'Valitse',
       'long_press_multiselect': 'Long-press Multiselect',
-      'custom_value1': 'Custom Value',
-      'custom_value2': 'Custom Value',
+      'custom_value1': 'muokattu Value',
+      'custom_value2': 'Mukautettu arvo',
       'custom_value3': 'Custom Value 3',
       'custom_value4': 'Custom Value 4',
       'email_style_custom': 'Custom Email Style',
@@ -10941,6 +11937,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'email_subject_invoice': 'Email Invoice Subject',
       'email_subject_quote': 'Email Quote Subject',
       'email_subject_payment': 'Email Payment Subject',
+      'email_subject_payment_partial': 'Email Partial Payment Subject',
       'switch_list_table': 'Switch List Table',
       'client_city': 'Client City',
       'client_state': 'Client State',
@@ -10952,7 +11949,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'client_shipping_address1': 'Client Shipping Address 1',
       'client_shipping_address2': 'Client Shipping Address 2',
       'type': 'Tyyppi',
-      'invoice_amount': 'Invoice Amount',
+      'invoice_amount': 'Lasku määrä',
       'invoice_due_date': 'Eräpäivä',
       'tax_rate1': 'Tax Rate 1',
       'tax_rate2': 'Tax Rate 2',
@@ -10972,77 +11969,184 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'vendor_city': 'Vendor City',
       'vendor_state': 'Vendor State',
       'vendor_country': 'Vendor Country',
+      'is_approved': 'Is Approved',
+      'tax_name': 'veronimi',
+      'tax_amount': 'vero määrä',
+      'tax_paid': 'vero Paid',
+      'payment_amount': 'Maksun määrä',
+      'age': 'Age',
     },
     'fr': {
-      'company1': 'Custom Company 1',
-      'company2': 'Custom Company 2',
-      'company3': 'Custom Company 3',
-      'company4': 'Custom Company 4',
-      'product1': 'Custom Product 1',
-      'product2': 'Custom Product 2',
-      'product3': 'Custom Product 3',
-      'product4': 'Custom Product 4',
-      'client1': 'Custom Client 1',
-      'client2': 'Custom Client 1',
-      'client3': 'Custom Client 1',
-      'client4': 'Custom Client 1',
-      'contact1': 'Custom Contact 1',
-      'contact2': 'Custom Contact 2',
-      'contact3': 'Custom Contact 3',
-      'contact4': 'Custom Contact 4',
-      'task1': 'Custom Task 1',
-      'task2': 'Custom Task 2',
-      'task3': 'Custom Task 3',
-      'task4': 'Custom Task 4',
-      'project1': 'Custom Project 1',
-      'project2': 'Custom Project 2',
-      'project3': 'Custom Project 3',
-      'project4': 'Custom Project 4',
-      'expense1': 'Custom Expense 1',
-      'expense2': 'Custom Expense 2',
-      'expense3': 'Custom Expense 3',
-      'expense4': 'Custom Expense 4',
+      'full_name': 'Nom complet',
+      'city_state_postal': 'Ville/ Province (Département)/ CP',
+      'postal_city_state': 'Ville/Province (Département)/Code postal',
+      'custom1': 'Personnalisé1',
+      'custom2': 'Personnalisé2',
+      'custom3': 'Third Custom',
+      'custom4': 'Fourth Custom',
+      'optional': 'Optional',
+      'license': 'License',
+      'purge_data': 'Purger les données',
+      'purge_successful':
+          'Les données de l\'entreprise ont été purgées avec succès',
+      'purge_data_message':
+          'Attention : Cette action va supprimer vos données et est irréversible',
+      'invoice_balance': 'Invoice Balance',
+      'age_group_0': '0 - 30 jours',
+      'age_group_30': '30 -60 jours',
+      'age_group_60': '60 - 90 jours',
+      'age_group_90': '90 - 120 jours',
+      'age_group_120': '120+ jours',
+      'refresh': 'Rafraîchir',
+      'saved_design': 'Successfully saved design',
+      'client_details': 'Client Details',
+      'company_address': 'Company Address',
+      'invoice_details': 'Détails de la facture',
+      'quote_details': 'Quote Details',
+      'credit_details': 'Credit Details',
+      'product_columns': 'Product Columns',
+      'task_columns': 'Task Columns',
+      'add_field': 'Add Field',
+      'all_events': 'All Events',
+      'permissions': 'Permissions',
+      'none': 'Aucun(e)',
+      'owned': 'Owned',
+      'payment_success': 'Payment Success',
+      'payment_failure': 'Payment Failure',
+      'invoice_sent': ':count facture envoyée',
+      'quote_sent': 'Quote Sent',
+      'credit_sent': 'Credit Sent',
+      'invoice_viewed': 'Invoice Viewed',
+      'quote_viewed': 'Quote Viewed',
+      'credit_viewed': 'Credit Viewed',
+      'quote_approved': 'Quote Approved',
+      'receive_all_notifications': 'Receive All Notifications',
+      'purchase_license': 'Purchase License',
+      'apply_license': 'Activer la licence',
+      'cancel_account': 'Supprimer le compte',
+      'cancel_account_message':
+          'Attention : Ceci va supprimer définitivement votre compte, il n\'y a pas d\'annulation possible.',
+      'delete_company': 'Supprimer la société',
+      'delete_company_message':
+          'Attention : Ceci supprimera définitivement votre société, il n\'y a pas d\'annulation.',
+      'enable_modules': 'Enable Modules',
+      'converted_quote': 'Successfully converted quote',
+      'credit_design': 'Credit Design',
+      'includes': 'Includes',
+      'header': 'En-tête',
+      'load_design': 'Charger un modèle',
+      'css_framework': 'CSS Framework',
+      'custom_designs': 'Custom Designs',
+      'designs': 'Designs',
+      'new_design': 'New Design',
+      'edit_design': 'Edit Design',
+      'created_design': 'Successfully created design',
+      'updated_design': 'Successfully updated design',
+      'archived_design': 'Successfully archived design',
+      'deleted_design': 'Successfully deleted design',
+      'removed_design': 'Successfully removed design',
+      'restored_design': 'Successfully restored design',
+      'proposals': 'Propositions',
+      'tickets': 'Tickets',
+      'recurring_invoices': 'Factures récurrentes',
+      'recurring_quotes': 'Devis récurrent',
+      'recurring_tasks': 'Recurring Tasks',
+      'recurring_expenses': 'Dépenses récurrentes',
+      'account_management': 'Gestion des comptes',
+      'credit_date': 'Date d\'avoir',
+      'credit': 'Crédit',
+      'credits': 'Crédits',
+      'new_credit': 'Entrer un crédit',
+      'edit_credit': 'Éditer le crédit',
+      'created_credit': 'Crédit créé avec succès',
+      'updated_credit': 'Le crédit a été mis à jour avec succès',
+      'archived_credit': 'Crédit archivé avec succès',
+      'deleted_credit': 'Crédit supprimé avec succès',
+      'removed_credit': 'Successfully removed credit',
+      'restored_credit': 'Crédit restauré avec succès',
+      'current_version': 'Version actuelle',
+      'latest_version': 'Latest Version',
+      'update_now': 'Update Now',
+      'a_new_version_is_available': 'A new version of the web app is available',
+      'update_available': 'Update Available',
+      'app_updated': 'Update successfully completed',
+      'learn_more': 'En savoir plus',
+      'integrations': 'Integrations',
+      'tracking_id': 'Tracking Id',
+      'slack_webhook_url': 'Slack Webhook URL',
+      'credit_footer': 'Credit Footer',
+      'credit_terms': 'Credit Terms',
+      'untitled_company': 'Untitled Company',
+      'added_company': 'L\'entreprise a été ajoutée',
+      'company1': 'Champ personnalisé Entreprise 1',
+      'company2': 'Champ personnalisé Entreprise 2',
+      'company3': 'Champ personnalisé Entreprise 3',
+      'company4': 'Champ personnalisé Entreprise 4',
+      'product1': 'Champ personnalisé Produit 1',
+      'product2': 'Champ personnalisé Produit 2',
+      'product3': 'Champ personnalisé Produit 3',
+      'product4': 'Champ personnalisé Produit 4',
+      'client1': 'Champ personnalisé Client 1',
+      'client2': 'Custom Client 2',
+      'client3': 'Custom Client 3',
+      'client4': 'Custom Client 4',
+      'contact1': 'Champ personnalisé Contact 1',
+      'contact2': 'Champ personnalisé Contact 2',
+      'contact3': 'Champ personnalisé Contact 3',
+      'contact4': 'Champ personnalisé Contact 4',
+      'task1': 'Champ personnalisé Tâche 1',
+      'task2': 'Champ personnalisé Tâche 2',
+      'task3': 'Champ personnalisé Tâche 3',
+      'task4': 'Champ personnalisé Tâche 4',
+      'project1': 'Champ personnalisé Projet 1',
+      'project2': 'Champ personnalisé Projet 2',
+      'project3': 'Champ personnalisé Projet 3',
+      'project4': 'Champ personnalisé Projet 4',
+      'expense1': 'Champ personnalisé Dépense 1',
+      'expense2': 'Champ personnalisé Dépense 2',
+      'expense3': 'Champ personnalisé Dépense 3',
+      'expense4': 'Champ personnalisé Dépense 4',
       'vendor1': 'Custom Vendor 1',
       'vendor2': 'Custom Vendor 2',
       'vendor3': 'Custom Vendor 3',
       'vendor4': 'Custom Vendor 4',
-      'invoice1': 'Custom Invoice 1',
-      'invoice2': 'Custom Invoice 2',
-      'invoice3': 'Custom Invoice 3',
-      'invoice4': 'Custom Invoice 4',
-      'payment1': 'Custom Payment 1',
-      'payment2': 'Custom Payment 2',
-      'payment3': 'Custom Payment 3',
-      'payment4': 'Custom Payment 4',
-      'surcharge1': 'Custom Surcharge 1',
-      'surcharge2': 'Custom Surcharge 2',
-      'surcharge3': 'Custom Surcharge 3',
-      'surcharge4': 'Custom Surcharge 4',
-      'group1': 'Custom Group 1',
-      'group2': 'Custom Group 2',
-      'group3': 'Custom Group 3',
-      'group4': 'Custom Group 4',
+      'invoice1': 'Champ personnalisé Facture 1',
+      'invoice2': 'Champ personnalisé Facture 2',
+      'invoice3': 'Champ personnalisé Facture 3',
+      'invoice4': 'Champ personnalisé Facture 4',
+      'payment1': 'Champ personnalisé Paiement 1',
+      'payment2': 'Champ personnalisé Paiement 2',
+      'payment3': 'Champ personnalisé Paiement 3',
+      'payment4': 'Champ personnalisé Paiement 4',
+      'surcharge1': 'Autre frais 1',
+      'surcharge2': 'Autre frais 2',
+      'surcharge3': 'Autre frais 3',
+      'surcharge4': 'Autre frais 4',
+      'group1': 'Champ personnalisé Groupe 1',
+      'group2': 'Champ personnalisé Groupe 2',
+      'group3': 'Champ personnalisé Groupe 3',
+      'group4': 'Champ personnalisé Groupe 4',
       'reset': 'Remettre à zéro',
-      'number': 'Number',
+      'number': 'Nombre',
       'export': 'Exporter',
       'chart': 'Graphique',
-      'count': 'Count',
+      'count': 'Compte',
       'totals': 'Totaux',
       'blank': 'Vide',
       'day': 'Jour',
       'month': 'Mois',
       'year': 'Année',
       'subgroup': 'Sous-groupe',
-      'is_active': 'Is Active',
+      'is_active': 'Actif',
       'group_by': 'Grouper par',
       'credit_balance': 'Solde du crédit',
-      'contact_last_login': 'Contact Last Login',
-      'contact_full_name': 'Contact Full Name',
+      'contact_last_login': 'Dernière connexion du contact',
+      'contact_full_name': 'Nom du contact',
       'contact_phone': 'Téléphone du contact',
-      'contact_custom_value1': 'Contact Custom Value 1',
-      'contact_custom_value2': 'Contact Custom Value 2',
-      'contact_custom_value3': 'Contact Custom Value 3',
-      'contact_custom_value4': 'Contact Custom Value 4',
+      'contact_custom_value1': 'Valeur champ personnalisé Contact 1',
+      'contact_custom_value2': 'Valeur champ personnalisé Contact 2',
+      'contact_custom_value3': 'Valeur champ personnalisé Contact 3',
+      'contact_custom_value4': 'Valeur champ personnalisé Contact 4',
       'shipping_address1': 'Rue',
       'shipping_address2': 'Appt/Bâtiment',
       'shipping_city': 'Ville',
@@ -11054,128 +12158,131 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'created_by': 'Créé par :name',
       'assigned_to_id': 'Assigned To Id',
       'created_by_id': 'Created By Id',
-      'add_column': 'Add Column',
-      'edit_columns': 'Edit Columns',
+      'add_column': 'Ajouter une colonne',
+      'edit_columns': 'Éditer les colonnes',
       'columns': 'Colonnes',
       'aging': 'Vieillissement',
       'profit_and_loss': 'Profits et Pertes',
       'reports': 'Rapports',
       'report': 'Rapport',
       'add_company': 'Ajouter compte',
-      'to_learn_about_gogle_fonts': 'to learn about Google Fonts',
       'unpaid_invoice': 'Facture impayée',
       'paid_invoice': 'Facture payée',
       'unapproved_quote': 'Devis non-approuvé',
       'help': 'Aide',
       'refund': 'Remboursement',
-      'refund_date': 'Refund Date',
+      'refund_date': 'Date du remboursement',
       'filtered_by': 'Filtré par',
       'contact_email': 'Courriel du contact',
-      'multiselect': 'Multiselect',
+      'multiselect': 'Sélection multiple',
       'entity_state': 'État',
       'verify_password': 'Verify Password',
       'applied': 'Applied',
-      'include_recent_errors': 'Include recent errors from the logs',
+      'include_recent_errors': 'Contient les erreurs récentes des journaux',
       'your_message_has_been_received':
-          'We have received your message and will try to respond promptly.',
+          'Nous avons reçu votre message et répondrons dans les meilleurs délais',
       'message': 'Message',
       'from': 'De',
-      'show_product_details': 'Show Product Details',
+      'show_product_details': 'Voir les détails du produit',
       'show_product_details_help':
           'Include the description and cost in the product dropdown',
-      'pdf_min_requirements': 'The PDF renderer requires :version',
+      'pdf_min_requirements':
+          'Le générateur de PDF nécessite la version :version',
       'adjust_fee_percent': 'Adjust Fee Percent',
       'adjust_fee_percent_help': 'Ajuster le frais de pourcentage au compte',
-      'configure_settings': 'Configure Settings',
+      'configure_settings': 'Modifier les paramètres',
       'support_forum': 'forum de support',
-      'about': 'About',
+      'about': 'À propos',
       'documentation': 'Documentation',
       'contact_us': 'Nous joindre',
       'subtotal': 'Sous-total',
       'line_total': 'Total',
       'item': 'Article',
-      'credit_email': 'Credit Email',
+      'credit_email': 'Courriel de crédit',
       'iframe_url': 'Site internet',
-      'domain_url': 'Domain URL',
+      'domain_url': 'URL du domaine',
       'password_is_too_short': 'Mot de passe trop court',
       'password_is_too_easy':
-          'Password msut contain an upper case character and a number',
-      'client_portal_tasks': 'Client Portal Tasks',
-      'client_portal_dashboard': 'Client Portal Dashboard',
-      'please_enter_a_value': 'Please enter a value',
-      'deleted_logo': 'Successfully deleted logo',
+          'Le mot de passe doit comporter au moins une majuscule et un nombre',
+      'client_portal_tasks': 'Tâche du portail client',
+      'client_portal_dashboard': 'Tableau de bord du portail client',
+      'please_enter_a_value': 'Saisissez une valeur',
+      'deleted_logo': 'Le logo a été supprimé',
       'yes': 'Oui',
       'no': 'Non',
-      'generate_number': 'Generate Number',
-      'when_saved': 'When Saved',
-      'when_sent': 'When Sent',
-      'select_company': 'Select Company',
+      'generate_number': 'Générer un nombre',
+      'when_saved': 'Lors de la sauvegarde',
+      'when_sent': 'Lors de l\'envoi',
+      'select_company': 'Sélectionner une entreprise',
       'float': 'Float',
       'collapse': 'Collapse',
-      'show_or_hide': 'Show/hide',
-      'menu_sidebar': 'Menu Sidebar',
+      'show_or_hide': 'Afficher/cacher',
+      'menu_sidebar': 'Barre latérale du menu',
       'history_sidebar': 'History Sidebar',
       'tablet': 'Tablet',
       'mobile': 'Mobile',
       'desktop': 'Bureau',
-      'layout': 'Layout',
+      'layout': 'Présentation',
       'view': 'Voir',
       'module': 'Module',
       'first_custom': 'First Custom',
       'second_custom': 'Second Custom',
       'third_custom': 'Third Custom',
-      'show_cost': 'Show Cost',
+      'show_cost': 'Voir le coût',
       'show_cost_help':
-          'Display a product cost field to track the markup/profit',
-      'show_product_quantity': 'Show Product Quantity',
+          'Afficher un champ coût du produit pour suivre la marge',
+      'show_product_quantity': 'Voir la quantité du produit',
       'show_product_quantity_help':
-          'Display a product quantity field, otherwise default to one',
-      'show_invoice_quantity': 'Show Invoice Quantity',
+          'Afficher un champ de quantité du produit, sinon en choisir un par défaut',
+      'show_invoice_quantity': 'Voir la quantité sur la facture',
       'show_invoice_quantity_help':
-          'Display a line item quantity field, otherwise default to one',
-      'default_quantity': 'Default Quantity',
+          'Afficher un champ de quantité pour la position, sinon en choisir un par défaut',
+      'default_quantity': 'Quantité par défaut',
       'default_quantity_help':
-          'Automatically set the line item quantity to one',
+          'Mettre automatiquement la quantité de la position à un',
       'one_tax_rate': 'One Tax Rate',
       'two_tax_rates': 'Two Tax Rates',
       'three_tax_rates': 'Three Tax Rates',
-      'default_tax_rate': 'Default Tax Rate',
+      'default_tax_rate': 'Taux de taxe par défaut',
       'user': 'Utilisateur',
-      'invoice_tax': 'Invoice Tax',
-      'line_item_tax': 'Line Item Tax',
+      'invoice_tax': 'Taxe de la facture',
+      'line_item_tax': 'Taxe de la position',
       'inclusive_taxes': 'Inclusive Taxes',
-      'invoice_tax_rates': 'Invoice Tax Rates',
-      'item_tax_rates': 'Item Tax Rates',
+      'invoice_tax_rates': 'Taux de taxe de la facture',
+      'item_tax_rates': 'Taux de taxe de la position',
       'no_client_selected': 'Veuillez sélectionner un client',
-      'configure_rates': 'Configure rates',
+      'configure_rates': 'Configurer les taux',
       'tax_settings': 'Réglages des taxes',
-      'tax_settings_rates': 'Tax Rates',
+      'tax_settings_rates': 'Taux de taxes',
       'accent_color': 'Accent Color',
       'switch': 'Changer',
-      'comma_sparated_list': 'Comma separated list',
+      'comma_sparated_list': 'Liste séparée par des virgules',
       'options': 'Options',
-      'single_line_text': 'Single-line text',
-      'multi_line_text': 'Multi-line text',
+      'single_line_text': 'Texte sur une ligne',
+      'multi_line_text': 'Texte multi-lignes',
       'dropdown': 'Dropdown',
-      'field_type': 'Field Type',
-      'recover_password_email_sent': 'A password recovery email has been sent',
+      'field_type': 'Type du champ',
+      'recover_password_email_sent':
+          'Un courriel de récupération du mot de passe a été envoyé',
       'submit': 'Envoyer',
       'recover_password': 'Récupérer votre mot de passe',
-      'late_fees': 'Late Fees',
+      'late_fees': 'Frais de retard',
       'credit_number': 'Numéro d\'avoir',
-      'payment_number': 'Payment Number',
+      'payment_number': 'Numéro de paiement',
       'late_fee_amount': 'Montant de pénalité de retard',
       'late_fee_percent': 'Pourcentage de pénalité de retard',
       'schedule': 'Planification',
-      'before_due_date': 'Before the due date',
-      'after_due_date': 'After the due date',
-      'after_invoice_date': 'After the invoice date',
+      'before_due_date': 'Avant la date d\'échéance',
+      'after_due_date': 'Après la date d\'échéance',
+      'after_invoice_date': 'Après la date de facturation',
       'days': 'Jours',
       'invoice_email': 'Courriel de facture',
       'payment_email': 'Courriel de paiement',
+      'partial_payment': 'Partial Payment',
+      'partial_payment_email': 'Partial Payment Email',
       'quote_email': 'Courriel de devis',
       'endless_reminder': 'Rappel sans fin',
-      'filtered_by_user': 'Filtered by User',
+      'filtered_by_user': 'Filtré par utilisateur',
       'administrator': 'Administrateur',
       'administrator_help':
           'Permettre à l\'utilisateur de gérer les utilisateurs, modifier les paramètres et de modifier tous les enregistrements',
@@ -11183,12 +12290,12 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'users': 'Utilisateurs',
       'new_user': 'Nouvel utilisateur',
       'edit_user': 'Éditer l\'utilisateur',
-      'created_user': 'Successfully created user',
+      'created_user': 'Utilisateur créé avec succès avec succès',
       'updated_user': 'Utilisateur mis à jour avec succès',
       'archived_user': 'Utilisateur archivé avec succès',
       'deleted_user': 'Utilisateur supprimé avec succès',
-      'removed_user': 'Successfully removed user',
-      'restored_user': 'Restaurer la commande',
+      'removed_user': 'L\'utilisateur a été supprimé',
+      'restored_user': 'Commande restaurée avec succès',
       'general_settings': 'Paramètres généraux',
       'invoice_options': 'Options de facturation',
       'hide_paid_to_date': 'Masquer \"Payé à ce jour\"',
@@ -11202,8 +12309,8 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'first_page': 'Première page',
       'all_pages': 'Toutes les pages',
       'last_page': 'Dernière page',
-      'primary_font': 'Primary Font',
-      'secondary_font': 'Secondary Font',
+      'primary_font': 'Police principale',
+      'secondary_font': 'Police secondaire',
       'primary_color': 'Couleur principale',
       'secondary_color': 'Couleur secondaire',
       'page_size': 'Taille de Page',
@@ -11239,39 +12346,37 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'freq_six_months': 'Six mois',
       'freq_annually': 'Annuelle',
       'freq_two_years': 'Deux ans',
-      'freq_three_years': 'Three Years',
+      'freq_three_years': 'Trois ans',
       'never': 'Jamais',
       'company': 'Entreprise',
       'generated_numbers': 'Numéros générés',
       'charge_taxes': 'Taxe supplémentaire',
-      'credit': 'Crédit',
-      'credits': 'Crédits',
       'next_reset': 'Prochaine remise à zéro',
       'reset_counter': 'Remettre le compteur à zéro',
       'recurring_prefix': 'Préfixe récurrent',
-      'number_padding': 'Number Padding',
-      'general': 'General',
-      'surcharge_field': 'Surcharge Field',
+      'number_padding': 'Marge interne du nombre',
+      'general': 'Général',
+      'surcharge_field': 'Champ Surcharge',
       'company_field': 'Champ d\'entreprise',
-      'company_value': 'Company Value',
-      'credit_field': 'Credit Field',
+      'company_value': 'Valeur de compagnie',
+      'credit_field': 'Champ de Crédit',
       'invoice_field': 'Champ de facture',
       'invoice_surcharge': 'Majoration de facture',
       'client_field': 'Champ de client',
       'product_field': 'Champ de produit',
-      'payment_field': 'Payment Field',
+      'payment_field': 'Champ de Paiement',
       'contact_field': 'Champ de contact',
       'vendor_field': 'Champ de fournisseur',
       'expense_field': 'Champ de dépense',
       'project_field': 'Champ de projet',
       'task_field': 'Champ de tâche',
-      'group_field': 'Group Field',
-      'number_counter': 'Number Counter',
+      'group_field': 'Champ de Groupe',
+      'number_counter': 'Compteur de nombre',
       'prefix': 'Préfixe',
-      'number_pattern': 'Number Pattern',
+      'number_pattern': 'Modèle de nombre',
       'messages': 'Messages',
       'custom_css': 'CSS personnalisé',
-      'custom_javascript': 'Custom JavaScript',
+      'custom_javascript': 'JavaScript personnalisé',
       'signature_on_pdf': 'Afficher sur le PDF',
       'signature_on_pdf_help':
           'Afficher la signature du client sur la facture / le devis PDF.',
@@ -11288,13 +12393,10 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'enable_portal_password': 'Protéger les factures avec un mot de passe',
       'enable_portal_password_help':
           'Autoriser la création d\'un mot de passe pour chaque contact. Si un mot de passe est créé, le contact devra entrer un mot de passe avant de voir les factures.',
-      'send_portal_password': 'Générer automatiquement',
-      'send_portal_password_help':
-          'Si aucun mot de passe n\'est créé, un sera généré et envoyé avec la première facture.',
       'authorization': 'Autorisation',
       'subdomain': 'Sous-domaine',
       'domain': 'Domaine',
-      'portal_mode': 'Portal Mode',
+      'portal_mode': 'Mode portail',
       'email_signature': 'Cordialement,',
       'enable_email_markup_help':
           'Rendez le règlement de vos clients plus facile en ajoutant les markup schema.org à vos courriels.',
@@ -11302,21 +12404,21 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'light': 'Clair',
       'dark': 'Sombre',
       'email_design': 'Modèle de courriel',
-      'attach_pdf': 'Attach PDF',
-      'attach_documents': 'Attach Documents',
-      'attach_ubl': 'Attach UBL',
-      'email_style': 'Email Style',
+      'attach_pdf': 'Joindre PDF',
+      'attach_documents': 'Joindre les Documents',
+      'attach_ubl': 'Joindre UBL',
+      'email_style': 'Style d\'email',
       'enable_email_markup': 'Activer le balisage',
       'reply_to_email': 'Adresse de réponse',
       'bcc_email': 'Courriel CCI',
-      'processed': 'Processed',
+      'processed': 'Traité',
       'credit_card': 'Carte de Crédit',
       'bank_transfer': 'Virement bancaire',
       'priority': 'Prioritée',
-      'fee_amount': 'Fee Amount',
-      'fee_percent': 'Fee Percent',
-      'fee_cap': 'Fee Cap',
-      'limits_and_fees': 'Limits/Fees',
+      'fee_amount': 'Montant des frais',
+      'fee_percent': 'Pourcentage des frais',
+      'fee_cap': 'Limite des frais',
+      'limits_and_fees': 'Limites/Frais',
       'enable_min': 'Activer min',
       'enable_max': 'Activer max',
       'min_limit': 'Min: :min',
@@ -11324,11 +12426,11 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'min': 'Min',
       'max': 'Max',
       'accepted_card_logos': 'Logos des cartes acceptées',
-      'credentials': 'Credentials',
+      'credentials': 'Identifiants',
       'require_billing_address_help':
-          'Require client to provide their billing address',
+          'Le client doit fournir son adresse de facturation',
       'require_shipping_address_help':
-          'Require client to provide their shipping address',
+          'Le client doit fournir son adresse de livraison',
       'update_address': 'Mettre à jour l\'adresse',
       'update_address_help':
           'Mettre à jour l\'adresse du client avec les détails fournis',
@@ -11339,8 +12441,8 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'created_tax_rate': 'Taux de taxe créé avec succès',
       'updated_tax_rate': 'Taux de taxe mis à jour avec succès',
       'archived_tax_rate': 'Taux de taxe archivé avec succès',
-      'deleted_tax_rate': 'Successfully deleted tax rate',
-      'restored_tax_rate': 'Successfully restored tax rate',
+      'deleted_tax_rate': 'Le taux de taxe a été supprimé avec succès',
+      'restored_tax_rate': 'Le taux de taxe a été restauré avec succès',
       'fill_products': 'Remplissage auto des produits',
       'fill_products_help':
           'La sélection d’un produit entrainera la MAJ de <b>la description et du prix</b>',
@@ -11352,23 +12454,23 @@ mixin LocalizationsProvider on LocaleCodeAware {
           'Convertir automatiquement les prix des produits dans la devise du client',
       'fees': 'Frais',
       'limits': 'Limites',
-      'provider': 'Provider',
-      'company_gateway': 'Payment Gateway',
-      'company_gateways': 'Payment Gateways',
-      'new_company_gateway': 'New Gateway',
-      'edit_company_gateway': 'Edit Gateway',
-      'created_company_gateway': 'Successfully created gateway',
-      'updated_company_gateway': 'Successfully updated gateway',
-      'archived_company_gateway': 'Successfully archived gateway',
-      'deleted_company_gateway': 'Successfully deleted gateway',
-      'restored_company_gateway': 'Successfully restored gateway',
-      'continue_editing': 'Continue Editing',
+      'provider': 'Fournisseur',
+      'company_gateway': 'Passerelle de paiement',
+      'company_gateways': 'Passerelles de paiements',
+      'new_company_gateway': 'Nouvelle passerelle',
+      'edit_company_gateway': 'Éditer la passerelle',
+      'created_company_gateway': 'La passerelle a été créée avec succès',
+      'updated_company_gateway': 'La passerelle a été mise à jour avec succès',
+      'archived_company_gateway': 'La passerelle a été archivée avec succès',
+      'deleted_company_gateway': 'La passerelle a été supprimée avec succès',
+      'restored_company_gateway': 'La passerelle a été restaurée avec succès',
+      'continue_editing': 'Continuer l\'édition',
       'discard_changes': 'Ignorer les modifications',
-      'default_value': 'Default value',
+      'default_value': 'Valeur Par Défaut',
       'disabled': 'Désactivé',
-      'currency_format': 'Currency Format',
-      'first_day_of_the_week': 'First Day of the Week',
-      'first_month_of_the_year': 'First Month of the Year',
+      'currency_format': 'Format de devise',
+      'first_day_of_the_week': 'Premier Jour de la Semaine',
+      'first_month_of_the_year': 'Premier mois de l\'Année',
       'sunday': 'Dimanche',
       'monday': 'Lundi',
       'tuesday': 'Mardi',
@@ -11388,34 +12490,34 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'october': 'Octobre',
       'november': 'Novembre',
       'december': 'Décembre',
-      'symbol': 'Symbol',
+      'symbol': 'Symbole',
       'ocde': 'Code',
-      'date_format': 'Date Format',
-      'datetime_format': 'Datetime Format',
+      'date_format': 'Format de la date',
+      'datetime_format': 'Format date/heure',
       'military_time': '24H',
-      'military_time_help': '24 Hour Display',
-      'send_reminders': 'Send Reminders',
-      'timezone': 'Timezone',
-      'filtered_by_group': 'Filtered by Group',
-      'filtered_by_invoice': 'Filtered by Invoice',
-      'filtered_by_client': 'Filtered by Client',
-      'filtered_by_vendor': 'Filtered by Vendor',
-      'group_settings': 'Group Settings',
+      'military_time_help': 'Affichage sur 24h',
+      'send_reminders': 'Envoyer des rappels',
+      'timezone': 'Fuseau horaire',
+      'filtered_by_group': 'Filtrer par groupe',
+      'filtered_by_invoice': 'Filtré par Facture',
+      'filtered_by_client': 'Filtré par Client',
+      'filtered_by_vendor': 'Filtré par Vendeur',
+      'group_settings': 'Paramètres de groupe',
       'group': 'Groupe',
-      'groups': 'Groups',
-      'new_group': 'New Group',
-      'edit_group': 'Edit Group',
-      'created_group': 'Successfully created group',
-      'updated_group': 'Successfully updated group',
-      'archived_group': 'Successfully archived group',
-      'deleted_group': 'Successfully deleted group',
-      'restored_group': 'Successfully restored group',
-      'upload_logo': 'Upload Logo',
-      'uploaded_logo': 'Successfully uploaded logo',
+      'groups': 'Groupes',
+      'new_group': 'Nouveau Groupe',
+      'edit_group': 'Éditer le groupe',
+      'created_group': 'Le groupe a été créé avec succès',
+      'updated_group': 'Le groupe a été mis à jour avec succès',
+      'archived_group': 'Le groupe a été archivé avec succès',
+      'deleted_group': 'Le groupe a été supprimé avec succès',
+      'restored_group': 'Le groupe a été restauré avec succès',
+      'upload_logo': 'Envoyer le logo',
+      'uploaded_logo': 'Le logo a été envoyé avec succès',
       'logo': 'Logo',
-      'saved_settings': 'Successfully saved settings',
+      'saved_settings': 'Les paramètres ont été sauvegardés avec succès',
       'product_settings': 'Réglages du produit',
-      'device_settings': 'Device Settings',
+      'device_settings': 'Paramètres de l\'appareil',
       'defaults': 'Valeurs par défaut',
       'basic_settings': 'Paramètres de base',
       'advanced_settings': 'Paramètres avancés',
@@ -11431,14 +12533,14 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'buy_now_buttons': 'Boutons Achetez maintenant',
       'email_settings': 'Paramètres de courriel',
       'templates_and_reminders': 'Modèles & Rappels',
-      'credit_cards_and_banks': 'Credit Cards & Banks',
+      'credit_cards_and_banks': 'Cartes de crédit et banques',
       'data_visualizations': 'Visualisation des données',
-      'price': 'Price',
-      'email_sign_up': 'Email Sign Up',
-      'google_sign_up': 'Google Sign Up',
+      'price': 'Prix',
+      'email_sign_up': 'Inscription par email',
+      'google_sign_up': 'Inscription avec Google',
       'thank_you_for_your_purchase': 'Merci pour votre achat !',
       'redeem': 'Rembourser',
-      'sign_up_with_google': 'Sign Up With Google',
+      'sign_up_with_google': 'Inscrivez-vous avec Google',
       'back': 'Retour',
       'past_purchases': 'Achats antérieurs',
       'annual_subscription': 'Abonnement annuel',
@@ -11467,16 +12569,16 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'download': 'Télécharger',
       'requires_an_enterprise_plan': 'Χρειάζεται πλάνο επιχείρησης',
       'take_picture': 'Φωτογραφίσετε',
-      'upload_file': 'Ανεβάστε Φάκελλο',
+      'upload_file': 'Envoyer un fichier',
       'document': 'Document',
       'documents': 'Documents',
       'new_document': 'Νέο Έγγραφο',
       'edit_document': 'Εκδώσετε Έγγραφο',
-      'uploaded_document': 'Έγγραφο που εστάλη με επιτυχία',
+      'uploaded_document': 'Le document a été envoyé avec succès',
       'updated_document': 'Document mis à jour avec succès',
       'archived_document': 'Document archivé avec succès',
-      'deleted_document': 'Το έγγραφο που διαγράφηκε με επιτυχία',
-      'restored_document': 'Το έγγραφο διορθώθηκε με εππιτυχία',
+      'deleted_document': 'Le document a été supprimé avec succès',
+      'restored_document': 'Le document a été restauré avec succès',
       'no_history': 'Κανένα Ιστορικό',
       'expense_date': 'Date de la dépense',
       'pending': 'En attente',
@@ -11535,16 +12637,16 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'restored_task': 'Tâche restaurée avec succès',
       'please_enter_a_name': 'Veuillez entrer un nom',
       'budgeted_hours': 'Heures budgétées',
-      'created_project': 'Le projet a été créé',
-      'updated_project': 'Le projet a été mis à  jour',
-      'archived_project': 'Le projet a été archivé',
-      'deleted_project': 'Le projet a été supprimé',
-      'restored_project': 'Le projet a été rétabli',
+      'created_project': 'Le projet a été créé avec succès',
+      'updated_project': 'Le projet a été mis à  jour avec succès',
+      'archived_project': 'Le projet a été archivé avec succès',
+      'deleted_project': 'Le projet a été supprimé avec succès',
+      'restored_project': 'Le projet a été rétabli avec succès',
       'new_project': 'Nouveau projet',
       'thank_you_for_using_our_app': 'Merci d\'utiliser notre app !',
       'if_you_like_it': 'Si vous appréciez, merci de',
       'click_here': 'cliquer ici',
-      'click_here_capital': 'Click here',
+      'click_here_capital': 'Cliquer ici',
       'to_rate_it': 'pour évaluer notre app.',
       'average': 'Moyenne',
       'unapproved': 'Non approuvé',
@@ -11577,8 +12679,9 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'this_year': 'Cette année',
       'last_year': 'Dernière année',
       'custom': 'Personnalisé',
-      'clone_to_invoice': 'Cloner en facture',
-      'clone_to_quote': 'Cloner en devis',
+      'clone_to_invoice': 'Dupliquer la facture',
+      'clone_to_quote': 'Dupliquer en devis',
+      'clone_to_credit': 'Clone to Credit',
       'view_invoice': 'Voir la facture',
       'convert': 'Convertir',
       'more': 'Plus',
@@ -11591,7 +12694,6 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'edit_expense': 'Éditer la dépensee',
       'edit_vendor': 'Éditer le fournisseur',
       'edit_project': 'Editer le projet',
-      'edit_credit': 'Éditer le crédit',
       'edit_recurring_invoice': 'Editer facture récurrente',
       'edit_recurring_expense': 'Éditer la dépense récurrente',
       'edit_recurring_quote': 'Editer devis récurrent',
@@ -11658,8 +12760,8 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'created_product': 'Produit créé avec succès',
       'updated_product': 'Produit mis à jour avec succès',
       'archived_product': 'Produit archivé avec succès',
-      'deleted_product': 'Le produit a été supprimé',
-      'restored_product': 'Le produit a été rétabli',
+      'deleted_product': 'Le produit a été supprimé avec succès',
+      'restored_product': 'Le produit a été rétabli avec succès',
       'product_key': 'Produit',
       'notes': 'Notes',
       'cost': 'Coût',
@@ -11686,7 +12788,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'deleted_invoice': 'Facture supprimée avec succès',
       'restored_invoice': 'Facture restaurée avec succès',
       'emailed_invoice': 'Facture envoyée par courriel avec succès',
-      'emailed_payment': 'Paiement envoyé avec succès par courriel',
+      'emailed_payment': 'Paiement envoyé par email avec succès',
       'amount': 'Montant',
       'invoice_number': 'Numéro de facture',
       'invoice_date': 'Date de facture',
@@ -11742,15 +12844,11 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'approved': 'Approuvé',
       'partial': 'Partiel/dépôt',
       'paid': 'Payé',
-      'invoice_status_1': 'Brouillon',
-      'invoice_status_2': 'Envoye',
-      'invoice_status_3': 'Vue',
-      'invoice_status_4': 'Approuvé',
       'mark_sent': 'Marquer comme envoyé',
       'marked_invoice_as_sent': 'Facture marquee comme envoyee avec succes',
-      'marked_invoice_as_paid': 'Successfully marked invoice as sent',
-      'marked_invoices_as_sent': 'Successfully marked invoices as sent',
-      'marked_invoices_as_paid': 'Successfully marked invoices as sent',
+      'marked_invoice_as_paid': 'Successfully marked invoice as paid',
+      'marked_invoices_as_sent': 'Les factures ont été marquées envoyées',
+      'marked_invoices_as_paid': 'Successfully marked invoices as paid',
       'done': 'Terminé',
       'please_enter_a_client_or_contact_name':
           'Veuillez introduire un nom de client',
@@ -11836,7 +12934,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'activity_8': ':user a archivé la facture :invoice',
       'activity_9': ':user a supprimé la facture :invoice',
       'activity_10':
-          ':contact a saisi un paiement :payment concernant :invoice pour :invoiceclient',
+          ':contact a saisi un paiement :payment concernant :invoice pour :client',
       'activity_11': ':user a mis à jour le moyen de paiement :payment',
       'activity_12': ':user a archivé le moyen de paiement :payment',
       'activity_13': ':user a supprimé le moyen de paiement :payment',
@@ -11883,157 +12981,270 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'activity_54': ':user a ré-ouvert le ticket :ticket',
       'activity_55': ':contact a répondu au ticket :ticket',
       'activity_56': ':user a visualisé le ticket :ticket',
-      'activity_57': 'System failed to email invoice :invoice',
+      'activity_57': 'La facture :invoice n\'a pu être envoyée',
       'one_time_password': 'Mot de passe à usage unique',
       'emailed_quote': 'Devis envoyé par courriel avec succès',
+      'emailed_credit': 'Successfully emailed credit',
       'marked_quote_as_sent': 'Le devis sélectionné a été envoyé avec succès',
+      'marked_credit_as_sent': 'Successfully marked credit as sent',
       'expired': 'Expiré',
       'all': 'Tous',
       'select': 'Sélectionner',
-      'long_press_multiselect': 'Long-press Multiselect',
+      'long_press_multiselect': 'Multisélection par pression longue',
       'custom_value1': 'Valeur Personnalisée 1',
       'custom_value2': 'Valeur Personnalisée 2',
-      'custom_value3': 'Custom Value 3',
-      'custom_value4': 'Custom Value 4',
-      'email_style_custom': 'Custom Email Style',
-      'custom_message_dashboard': 'Custom Dashboard Message',
-      'custom_message_unpaid_invoice': 'Custom Unpaid Invoice Message',
-      'custom_message_paid_invoice': 'Custom Paid Invoice Message',
-      'custom_message_unapproved_quote': 'Custom Unapproved Quote Message',
-      'lock_sent_invoices': 'Lock Sent Invoices',
-      'translations': 'Translations',
-      'task_number_pattern': 'Task Number Pattern',
-      'task_number_counter': 'Task Number Counter',
-      'expense_number_pattern': 'Expense Number Pattern',
-      'expense_number_counter': 'Expense Number Counter',
-      'vendor_number_pattern': 'Vendor Number Pattern',
-      'vendor_number_counter': 'Vendor Number Counter',
-      'ticket_number_pattern': 'Ticket Number Pattern',
-      'ticket_number_counter': 'Ticket Number Counter',
-      'payment_number_pattern': 'Payment Number Pattern',
-      'payment_number_counter': 'Payment Number Counter',
-      'invoice_number_pattern': 'Invoice Number Pattern',
+      'custom_value3': 'Valeur personnalisée 3',
+      'custom_value4': 'Valeur personnalisée 4',
+      'email_style_custom': 'Style de courriel personnalisé',
+      'custom_message_dashboard': 'Message personnalisé du tableau de bord',
+      'custom_message_unpaid_invoice':
+          'Message personnalisé pour une facture impayée',
+      'custom_message_paid_invoice':
+          'Message personnalisé pour un paiement de facture',
+      'custom_message_unapproved_quote':
+          'Message personnalisé pour un devis refusé',
+      'lock_sent_invoices': 'Verrouiller les factures envoyées',
+      'translations': 'Traductions',
+      'task_number_pattern': 'Modèle de numéro de tâche',
+      'task_number_counter': 'Modèle de compteur de tâche',
+      'expense_number_pattern': 'Modèle de numéro de dépense',
+      'expense_number_counter': 'Modèle de compteur de dépense',
+      'vendor_number_pattern': 'Modèle de numéro de fournisseur',
+      'vendor_number_counter': 'Modèle de compteur de fournisseur',
+      'ticket_number_pattern': 'Modèle de numéro de ticket',
+      'ticket_number_counter': 'Modèle de compteur de ticket',
+      'payment_number_pattern': 'Modèle de numéro de paiement',
+      'payment_number_counter': 'Modèle de compteur de paiement',
+      'invoice_number_pattern': 'Modèle de numéro de facture',
       'invoice_number_counter': 'Compteur du numéro de facture',
-      'quote_number_pattern': 'Quote Number Pattern',
+      'quote_number_pattern': 'Modèle de numéro de devis',
       'quote_number_counter': 'Compteur du numéro de devis',
-      'client_number_pattern': 'Credit Number Pattern',
-      'client_number_counter': 'Credit Number Counter',
-      'credit_number_pattern': 'Credit Number Pattern',
-      'credit_number_counter': 'Credit Number Counter',
+      'client_number_pattern': 'Modèle de numéro de crédit',
+      'client_number_counter': 'Modèle de compteur de crédit',
+      'credit_number_pattern': 'Modèle de numéro de crédit',
+      'credit_number_counter': 'Modèle de compteur de crédit',
       'reset_counter_date': 'Reset Counter Date',
       'counter_padding': 'Counter Padding',
       'shared_invoice_quote_counter': 'Shared Invoice Quote Counter',
-      'default_tax_name_1': 'Default Tax Name 1',
-      'default_tax_rate_1': 'Default Tax Rate 1',
-      'default_tax_name_2': 'Default Tax Name 2',
-      'default_tax_rate_2': 'Default Tax Rate 2',
-      'default_tax_name_3': 'Default Tax Name 3',
-      'default_tax_rate_3': 'Default Tax Rate 3',
-      'email_subject_invoice': 'Email Invoice Subject',
-      'email_subject_quote': 'Email Quote Subject',
-      'email_subject_payment': 'Email Payment Subject',
+      'default_tax_name_1': 'Nom par défaut de la taxe 1',
+      'default_tax_rate_1': 'Taux par défaut de la taxe 1',
+      'default_tax_name_2': 'Nom par défaut de la taxe 2',
+      'default_tax_rate_2': 'Taux par défaut de la taxe 2',
+      'default_tax_name_3': 'Nom par défaut de la taxe 3',
+      'default_tax_rate_3': 'Taux par défaut de la taxe 3',
+      'email_subject_invoice': 'Sujet du courriel de la facture',
+      'email_subject_quote': 'Sujet du courriel du devis',
+      'email_subject_payment': 'Sujet du courriel du paiement',
+      'email_subject_payment_partial': 'Email Partial Payment Subject',
       'switch_list_table': 'Switch List Table',
-      'client_city': 'Client City',
-      'client_state': 'Client State',
-      'client_country': 'Client Country',
-      'client_is_active': 'Client is Active',
-      'client_balance': 'Client Balance',
-      'client_address1': 'Client Address 1',
-      'client_address2': 'Client Address 2',
-      'client_shipping_address1': 'Client Shipping Address 1',
-      'client_shipping_address2': 'Client Shipping Address 2',
+      'client_city': 'Ville du client',
+      'client_state': 'Région du client',
+      'client_country': 'Pays du client',
+      'client_is_active': 'Le client est actif',
+      'client_balance': 'Solde du client',
+      'client_address1': 'Adresse 1 du client',
+      'client_address2': 'Adresse 2 du client',
+      'client_shipping_address1': 'Adresse d\'expédition 1 du client',
+      'client_shipping_address2': 'Adresse d\'expédition 2 du client',
       'type': 'Type',
       'invoice_amount': 'Montant de la facture',
       'invoice_due_date': 'Date limite',
-      'tax_rate1': 'Tax Rate 1',
-      'tax_rate2': 'Tax Rate 2',
-      'tax_rate3': 'Tax Rate 3',
+      'tax_rate1': 'Taux de taxe 1',
+      'tax_rate2': 'Taux de taxe 2',
+      'tax_rate3': 'Taux de taxe 3',
       'auto_bill': 'Facturation automatique',
-      'archived_at': 'Archived At',
-      'has_expenses': 'Has Expenses',
-      'custom_taxes1': 'Custom Taxes 1',
-      'custom_taxes2': 'Custom Taxes 2',
-      'custom_taxes3': 'Custom Taxes 3',
-      'custom_taxes4': 'Custom Taxes 4',
-      'custom_surcharge1': 'Custom Surcharge 1',
-      'custom_surcharge2': 'Custom Surcharge 2',
-      'custom_surcharge3': 'Custom Surcharge 3',
-      'custom_surcharge4': 'Custom Surcharge 4',
-      'is_deleted': 'Is Deleted',
-      'vendor_city': 'Vendor City',
-      'vendor_state': 'Vendor State',
-      'vendor_country': 'Vendor Country',
+      'archived_at': 'Archivé le',
+      'has_expenses': 'Dépenses en cours',
+      'custom_taxes1': 'Autres taxes 1',
+      'custom_taxes2': 'Autres taxes 2',
+      'custom_taxes3': 'Autres taxes 3',
+      'custom_taxes4': 'Autres taxes 4',
+      'custom_surcharge1': 'Autre frais 1',
+      'custom_surcharge2': 'Autre frais 2',
+      'custom_surcharge3': 'Autre frais 3',
+      'custom_surcharge4': 'Autre frais 4',
+      'is_deleted': 'Supprimé',
+      'vendor_city': 'Ville du fournisseur',
+      'vendor_state': 'Région du fournisseur',
+      'vendor_country': 'Pays du fournisseur',
+      'is_approved': 'Is Approved',
+      'tax_name': 'Nom de la taxe',
+      'tax_amount': 'Montant de la taxe',
+      'tax_paid': 'Taxe payée',
+      'payment_amount': 'Montant du paiement',
+      'age': 'Ancienneté',
     },
     'fr_CA': {
-      'company1': 'Custom Company 1',
-      'company2': 'Custom Company 2',
-      'company3': 'Custom Company 3',
-      'company4': 'Custom Company 4',
-      'product1': 'Custom Product 1',
-      'product2': 'Custom Product 2',
-      'product3': 'Custom Product 3',
-      'product4': 'Custom Product 4',
-      'client1': 'Custom Client 1',
-      'client2': 'Custom Client 1',
-      'client3': 'Custom Client 1',
-      'client4': 'Custom Client 1',
-      'contact1': 'Custom Contact 1',
-      'contact2': 'Custom Contact 2',
-      'contact3': 'Custom Contact 3',
-      'contact4': 'Custom Contact 4',
-      'task1': 'Custom Task 1',
-      'task2': 'Custom Task 2',
-      'task3': 'Custom Task 3',
-      'task4': 'Custom Task 4',
-      'project1': 'Custom Project 1',
-      'project2': 'Custom Project 2',
-      'project3': 'Custom Project 3',
-      'project4': 'Custom Project 4',
-      'expense1': 'Custom Expense 1',
-      'expense2': 'Custom Expense 2',
-      'expense3': 'Custom Expense 3',
-      'expense4': 'Custom Expense 4',
-      'vendor1': 'Custom Vendor 1',
-      'vendor2': 'Custom Vendor 2',
-      'vendor3': 'Custom Vendor 3',
-      'vendor4': 'Custom Vendor 4',
-      'invoice1': 'Custom Invoice 1',
-      'invoice2': 'Custom Invoice 2',
-      'invoice3': 'Custom Invoice 3',
-      'invoice4': 'Custom Invoice 4',
-      'payment1': 'Custom Payment 1',
-      'payment2': 'Custom Payment 2',
-      'payment3': 'Custom Payment 3',
-      'payment4': 'Custom Payment 4',
-      'surcharge1': 'Custom Surcharge 1',
-      'surcharge2': 'Custom Surcharge 2',
-      'surcharge3': 'Custom Surcharge 3',
-      'surcharge4': 'Custom Surcharge 4',
-      'group1': 'Custom Group 1',
-      'group2': 'Custom Group 2',
-      'group3': 'Custom Group 3',
-      'group4': 'Custom Group 4',
+      'full_name': 'Nom complet',
+      'city_state_postal': 'Ville/Prov/CP',
+      'postal_city_state': 'Ville/Province/Code postal',
+      'custom1': 'Personnalisation 1',
+      'custom2': 'Personnalisation 2',
+      'custom3': 'Third Custom',
+      'custom4': 'Fourth Custom',
+      'optional': 'Optional',
+      'license': 'License',
+      'purge_data': 'Purger les données',
+      'purge_successful':
+          'Toutes les données de l\'entreprise ont été supprimées',
+      'purge_data_message':
+          'Avertissement: Cette action est irréversible et va supprimer vos données de façon définitive.',
+      'invoice_balance': 'Invoice Balance',
+      'age_group_0': '0 - 30 jours',
+      'age_group_30': '30 - 60 jours',
+      'age_group_60': '60 - 90 jours',
+      'age_group_90': '90 - 120 jours',
+      'age_group_120': '120+ jours',
+      'refresh': 'Actualiser',
+      'saved_design': 'Successfully saved design',
+      'client_details': 'Client Details',
+      'company_address': 'Company Address',
+      'invoice_details': 'Détails de facture',
+      'quote_details': 'Quote Details',
+      'credit_details': 'Credit Details',
+      'product_columns': 'Product Columns',
+      'task_columns': 'Task Columns',
+      'add_field': 'Add Field',
+      'all_events': 'All Events',
+      'permissions': 'Permissions',
+      'none': 'Aucun',
+      'owned': 'Owned',
+      'payment_success': 'Payment Success',
+      'payment_failure': 'Payment Failure',
+      'invoice_sent': ':count facture envoyée',
+      'quote_sent': 'Quote Sent',
+      'credit_sent': 'Credit Sent',
+      'invoice_viewed': 'Invoice Viewed',
+      'quote_viewed': 'Quote Viewed',
+      'credit_viewed': 'Credit Viewed',
+      'quote_approved': 'Quote Approved',
+      'receive_all_notifications': 'Receive All Notifications',
+      'purchase_license': 'Purchase License',
+      'apply_license': 'Activer la licence',
+      'cancel_account': 'Supprimer le compte',
+      'cancel_account_message':
+          'Avertissement: Cette action est irréversible et va supprimer votre compte de façon définitive.',
+      'delete_company': 'Supprimer l\'entreprise',
+      'delete_company_message':
+          'Avertissement: Cette entreprise sera définitivement supprimée.',
+      'enable_modules': 'Enable Modules',
+      'converted_quote': 'Successfully converted quote',
+      'credit_design': 'Credit Design',
+      'includes': 'Includes',
+      'header': 'Entête',
+      'load_design': 'Charger le design',
+      'css_framework': 'CSS Framework',
+      'custom_designs': 'Custom Designs',
+      'designs': 'Designs',
+      'new_design': 'New Design',
+      'edit_design': 'Edit Design',
+      'created_design': 'Successfully created design',
+      'updated_design': 'Successfully updated design',
+      'archived_design': 'Successfully archived design',
+      'deleted_design': 'Successfully deleted design',
+      'removed_design': 'Successfully removed design',
+      'restored_design': 'Successfully restored design',
+      'proposals': 'Propositions',
+      'tickets': 'Billets',
+      'recurring_invoices': 'Factures récurrentes',
+      'recurring_quotes': 'Soumissions récurrentes',
+      'recurring_tasks': 'Recurring Tasks',
+      'recurring_expenses': 'Dépenses récurrentes',
+      'account_management': 'Gestion du compte',
+      'credit_date': 'Date de crédit',
+      'credit': 'Crédit',
+      'credits': 'Crédits',
+      'new_credit': 'Entrer un crédit',
+      'edit_credit': 'Éditer le crédit',
+      'created_credit': 'Le crédit a été créé',
+      'updated_credit': 'Le crédit a été mis à jour',
+      'archived_credit': 'Le crédit a été archivé',
+      'deleted_credit': 'Le crédit a été supprimé',
+      'removed_credit': 'Successfully removed credit',
+      'restored_credit': 'Le crédit a été restauré',
+      'current_version': 'Version courante',
+      'latest_version': 'Latest Version',
+      'update_now': 'Update Now',
+      'a_new_version_is_available': 'A new version of the web app is available',
+      'update_available': 'Update Available',
+      'app_updated': 'Update successfully completed',
+      'learn_more': 'En savoir plus',
+      'integrations': 'Integrations',
+      'tracking_id': 'Tracking Id',
+      'slack_webhook_url': 'Slack Webhook URL',
+      'credit_footer': 'Pied de page pour crédit',
+      'credit_terms': 'Conditions d\'utilisation pour crédit',
+      'untitled_company': 'Entreprise sans nom',
+      'added_company': 'Entreprise ajoutée',
+      'company1': 'Entreprise personnalisée 1',
+      'company2': 'Entreprise personnalisée 2',
+      'company3': 'Entreprise personnalisée 3',
+      'company4': 'Entreprise personnalisée 4',
+      'product1': 'Produit personnalisé 1',
+      'product2': 'Produit personnalisé 2',
+      'product3': 'Produit personnalisé 3',
+      'product4': 'Produit personnalisé 4',
+      'client1': 'Client personnalisé 1',
+      'client2': 'Client personnalisé 2',
+      'client3': 'Client personnalisé 3',
+      'client4': 'Client personnalisé 4',
+      'contact1': 'Contact personnalisé 1',
+      'contact2': 'Contact personnalisé 2',
+      'contact3': 'Contact personnalisé 3',
+      'contact4': 'Contact personnalisé 4',
+      'task1': 'Tâche personnalisée 1',
+      'task2': 'Tâche personnalisée 2',
+      'task3': 'Tâche personnalisée 3',
+      'task4': 'Tâche personnalisée 4',
+      'project1': 'Projet personnalisé 1',
+      'project2': 'Projet personnalisé 2',
+      'project3': 'Projet personnalisé 3',
+      'project4': 'Projet personnalisé 4',
+      'expense1': 'Dépense personnalisée 1',
+      'expense2': 'Dépense personnalisée 2',
+      'expense3': 'Dépense personnalisée 3',
+      'expense4': 'Dépense personnalisée 4',
+      'vendor1': 'Fournisseur personnalisé 1',
+      'vendor2': 'Fournisseur personnalisé 2',
+      'vendor3': 'Fournisseur personnalisé 3',
+      'vendor4': 'Fournisseur personnalisé 4',
+      'invoice1': 'Facture personnalisée 1',
+      'invoice2': 'Facture personnalisée 2',
+      'invoice3': 'Facture personnalisée 3',
+      'invoice4': 'Facture personnalisée 4',
+      'payment1': 'Paiement personnalisé 1',
+      'payment2': 'Facture personnalisée 2',
+      'payment3': 'Facture personnalisée 3',
+      'payment4': 'Facture personnalisée 4',
+      'surcharge1': 'Surcharge personnalisée 1',
+      'surcharge2': 'Surcharge personnalisée 2',
+      'surcharge3': 'Surcharge personnalisée 3',
+      'surcharge4': 'Surcharge personnalisée 4',
+      'group1': 'Groupe personnalisé 1',
+      'group2': 'Groupe personnalisé 2',
+      'group3': 'Groupe personnalisé 3',
+      'group4': 'Groupe personnalisé 4',
       'reset': 'Remise à zéro',
-      'number': 'Number',
+      'number': 'Nombre',
       'export': 'Exporter',
       'chart': 'Graphique',
-      'count': 'Count',
+      'count': 'Compteur',
       'totals': 'Totaux',
       'blank': 'Vide',
       'day': 'Jour',
       'month': 'Mois',
       'year': 'Année',
       'subgroup': 'Sous-groupe',
-      'is_active': 'Is Active',
+      'is_active': 'Actif',
       'group_by': 'Grouper par',
       'credit_balance': 'Solde du crédit',
-      'contact_last_login': 'Contact Last Login',
-      'contact_full_name': 'Contact Full Name',
+      'contact_last_login': 'Dernière connexion du contact',
+      'contact_full_name': 'Nom complet du contact',
       'contact_phone': 'Téléphone du contact',
-      'contact_custom_value1': 'Contact Custom Value 1',
-      'contact_custom_value2': 'Contact Custom Value 2',
-      'contact_custom_value3': 'Contact Custom Value 3',
-      'contact_custom_value4': 'Contact Custom Value 4',
+      'contact_custom_value1': 'Valeur personnalisée du contact 1',
+      'contact_custom_value2': 'Valeur personnalisée du contact 2',
+      'contact_custom_value3': 'Valeur personnalisée du contact 3',
+      'contact_custom_value4': 'Valeur personnalisée du contact 4',
       'shipping_address1': 'Rue de livraison',
       'shipping_address2': 'App. de livraison',
       'shipping_city': 'Ville de livraison',
@@ -12043,130 +13254,132 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'client_id': 'ID du client',
       'assigned_to': 'Assigné à',
       'created_by': 'Créé par :name',
-      'assigned_to_id': 'Assigned To Id',
-      'created_by_id': 'Created By Id',
-      'add_column': 'Add Column',
-      'edit_columns': 'Edit Columns',
+      'assigned_to_id': 'Assigné à ID',
+      'created_by_id': 'Créé par ID',
+      'add_column': 'Ajouter colonne',
+      'edit_columns': 'Éditer colonne',
       'columns': 'Colonnes',
       'aging': 'Impayés',
       'profit_and_loss': 'Profit et perte',
       'reports': 'Rapports',
       'report': 'Rapport',
       'add_company': 'Ajouter une entreprise',
-      'to_learn_about_gogle_fonts': 'to learn about Google Fonts',
       'unpaid_invoice': 'Facture impayée',
       'paid_invoice': 'Facture payée',
       'unapproved_quote': 'Soumission non approuvée',
       'help': 'Aide',
       'refund': 'Rembousement',
-      'refund_date': 'Refund Date',
+      'refund_date': 'Date de remboursement',
       'filtered_by': 'Filtrée par',
       'contact_email': 'Courriel du contact',
-      'multiselect': 'Multiselect',
+      'multiselect': 'Sélection multiple',
       'entity_state': 'Province',
-      'verify_password': 'Verify Password',
-      'applied': 'Applied',
-      'include_recent_errors': 'Include recent errors from the logs',
+      'verify_password': 'Vérifier le mot de passe',
+      'applied': 'Publié',
+      'include_recent_errors': 'Inclut les erreurs récentes du relevé',
       'your_message_has_been_received':
-          'We have received your message and will try to respond promptly.',
+          'Nous avons reçu votre message et vous répondrons rapidement.',
       'message': 'Message',
       'from': 'De',
-      'show_product_details': 'Show Product Details',
+      'show_product_details': 'Afficher les détails du produit',
       'show_product_details_help':
-          'Include the description and cost in the product dropdown',
-      'pdf_min_requirements': 'The PDF renderer requires :version',
-      'adjust_fee_percent': 'Adjust Fee Percent',
+          'Veuillez inclure la description et le coût dans la liste déroulante du produit',
+      'pdf_min_requirements': 'Le moteur de rendu PDF nécessite :version',
+      'adjust_fee_percent': 'Ajuster le pourcentage de frais',
       'adjust_fee_percent_help': 'Ajuster le frais de pourcentage au compte',
-      'configure_settings': 'Configure Settings',
+      'configure_settings': 'Configurer les paramètres',
       'support_forum': 'Forum de support',
-      'about': 'About',
+      'about': 'À propos',
       'documentation': 'Documentation',
       'contact_us': 'Nous joindre',
       'subtotal': 'Sous total',
       'line_total': 'Total',
       'item': 'Article',
-      'credit_email': 'Credit Email',
+      'credit_email': 'Courriel pour le crédit',
       'iframe_url': 'Site web',
-      'domain_url': 'Domain URL',
+      'domain_url': 'URL de domaine',
       'password_is_too_short': 'Le mot de passe est trop court',
       'password_is_too_easy':
-          'Password msut contain an upper case character and a number',
-      'client_portal_tasks': 'Client Portal Tasks',
-      'client_portal_dashboard': 'Client Portal Dashboard',
-      'please_enter_a_value': 'Please enter a value',
-      'deleted_logo': 'Successfully deleted logo',
+          'Le mot de passe doit contenir une majuscule et un nombre',
+      'client_portal_tasks': 'Tâches du portail client',
+      'client_portal_dashboard': 'Tableau de bord du portail client',
+      'please_enter_a_value': 'Veuillez saisir une valeur',
+      'deleted_logo': 'Logo supprimé',
       'yes': 'Oui',
       'no': 'Non',
-      'generate_number': 'Generate Number',
-      'when_saved': 'When Saved',
-      'when_sent': 'When Sent',
-      'select_company': 'Select Company',
-      'float': 'Float',
-      'collapse': 'Collapse',
-      'show_or_hide': 'Show/hide',
-      'menu_sidebar': 'Menu Sidebar',
-      'history_sidebar': 'History Sidebar',
-      'tablet': 'Tablet',
+      'generate_number': 'Générer un nombre',
+      'when_saved': 'Lors de la sauvegarde',
+      'when_sent': 'Lors de l\'envoi',
+      'select_company': 'Sélectionnez une entreprise',
+      'float': 'Flottant',
+      'collapse': 'Réduire',
+      'show_or_hide': 'Afficher/masquer',
+      'menu_sidebar': 'Menu latéral',
+      'history_sidebar': 'Historique latéral',
+      'tablet': 'Tablette',
       'mobile': 'Mobile',
       'desktop': 'Fixe',
-      'layout': 'Layout',
+      'layout': 'Affichage',
       'view': 'Visualiser',
       'module': 'Module',
-      'first_custom': 'First Custom',
-      'second_custom': 'Second Custom',
-      'third_custom': 'Third Custom',
-      'show_cost': 'Show Cost',
+      'first_custom': 'Premier personnalisé',
+      'second_custom': 'Deuxième latéral',
+      'third_custom': 'Troisième latéral',
+      'show_cost': 'Afficher le coût',
       'show_cost_help':
-          'Display a product cost field to track the markup/profit',
-      'show_product_quantity': 'Show Product Quantity',
+          'Afficher un champ de coût du produit pour suivre le profit',
+      'show_product_quantity': 'Afficher la quantité de produit',
       'show_product_quantity_help':
-          'Display a product quantity field, otherwise default to one',
-      'show_invoice_quantity': 'Show Invoice Quantity',
+          'Afficher un champ Quantité de produit. 1 par défaut.',
+      'show_invoice_quantity': 'Afficher la quantité de facture',
       'show_invoice_quantity_help':
-          'Display a line item quantity field, otherwise default to one',
-      'default_quantity': 'Default Quantity',
+          'Afficher un champ Quantité d\'article par ligne. 1 par défaut.',
+      'default_quantity': 'Quantité par défaut',
       'default_quantity_help':
-          'Automatically set the line item quantity to one',
-      'one_tax_rate': 'One Tax Rate',
-      'two_tax_rates': 'Two Tax Rates',
-      'three_tax_rates': 'Three Tax Rates',
-      'default_tax_rate': 'Default Tax Rate',
+          'Définit automatiquement la quantité d\'article par ligne à 1.',
+      'one_tax_rate': 'Un taux de taxe',
+      'two_tax_rates': 'Deux taux de taxe',
+      'three_tax_rates': 'Trois taux de taxes',
+      'default_tax_rate': 'Taux de taxe par défaut',
       'user': 'Utilisateur',
-      'invoice_tax': 'Invoice Tax',
-      'line_item_tax': 'Line Item Tax',
-      'inclusive_taxes': 'Inclusive Taxes',
-      'invoice_tax_rates': 'Invoice Tax Rates',
-      'item_tax_rates': 'Item Tax Rates',
+      'invoice_tax': 'Taxe de facture',
+      'line_item_tax': 'Taxe d\'article par ligne',
+      'inclusive_taxes': 'Taxes incluses',
+      'invoice_tax_rates': 'Taux de taxe de facture',
+      'item_tax_rates': 'Taux de taxe par article',
       'no_client_selected': 'Veuillez sélectionner un client',
-      'configure_rates': 'Configure rates',
+      'configure_rates': 'Configuration des taux',
       'tax_settings': 'Paramètres de taxe',
-      'tax_settings_rates': 'Tax Rates',
-      'accent_color': 'Accent Color',
+      'tax_settings_rates': 'Taux de taxe',
+      'accent_color': 'Couleur de mise en évidence',
       'switch': 'Changer',
-      'comma_sparated_list': 'Comma separated list',
+      'comma_sparated_list': 'Liste séparée par virgule',
       'options': 'Options',
-      'single_line_text': 'Single-line text',
-      'multi_line_text': 'Multi-line text',
-      'dropdown': 'Dropdown',
-      'field_type': 'Field Type',
-      'recover_password_email_sent': 'A password recovery email has been sent',
+      'single_line_text': 'Ligne de texte simple',
+      'multi_line_text': 'Multiligne de texte',
+      'dropdown': 'Liste déroulante',
+      'field_type': 'Type de champ',
+      'recover_password_email_sent':
+          'Un courriel a été envoyé pour la récupération du mot de passe',
       'submit': 'Envoyer',
       'recover_password': 'Récupérez votre mot de passe',
-      'late_fees': 'Late Fees',
+      'late_fees': 'Frais de retard',
       'credit_number': 'Numéro de crédit',
-      'payment_number': 'Payment Number',
+      'payment_number': 'Numéro de paiement',
       'late_fee_amount': 'Frais de retard',
       'late_fee_percent': 'Pourcentage de frais de retard',
       'schedule': 'Calendrier',
-      'before_due_date': 'Before the due date',
-      'after_due_date': 'After the due date',
-      'after_invoice_date': 'After the invoice date',
+      'before_due_date': 'Avant l\'échéance',
+      'after_due_date': 'Après l\'échéance',
+      'after_invoice_date': 'Après la date de facturation',
       'days': 'Jours',
       'invoice_email': 'Courriel de facturation',
       'payment_email': 'Courriel de paiement',
+      'partial_payment': 'Partial Payment',
+      'partial_payment_email': 'Partial Payment Email',
       'quote_email': 'Courriel de soumission',
       'endless_reminder': 'Rappel perpétuel',
-      'filtered_by_user': 'Filtered by User',
+      'filtered_by_user': 'Filtré par utilisateur',
       'administrator': 'Administrateur',
       'administrator_help':
           'Permet à un utilisateur de gérer d\'autres utilisateurs, modifier les paramètres et tous les enregistrements.',
@@ -12174,11 +13387,11 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'users': 'Utilisateurs',
       'new_user': 'Nouvel utilisateur',
       'edit_user': 'Éditer l\'utilisateur',
-      'created_user': 'Successfully created user',
+      'created_user': 'Utilisateur créé',
       'updated_user': 'Utilisateur mis à jour',
       'archived_user': 'L\'utilisateur a été archivé',
       'deleted_user': 'Utilisateur supprimé',
-      'removed_user': 'Successfully removed user',
+      'removed_user': 'Utilisateur retiré',
       'restored_user': 'Utilisateur restauré',
       'general_settings': 'Paramètres généraux',
       'invoice_options': 'Options de facturation',
@@ -12193,8 +13406,8 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'first_page': 'première page',
       'all_pages': 'toutes les pages',
       'last_page': 'dernière page',
-      'primary_font': 'Primary Font',
-      'secondary_font': 'Secondary Font',
+      'primary_font': 'Fonte principale',
+      'secondary_font': 'Fonte secondaire',
       'primary_color': 'Couleur principale',
       'secondary_color': 'Couleur secondaire',
       'page_size': 'Taille de page',
@@ -12230,39 +13443,37 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'freq_six_months': 'Semestrielle',
       'freq_annually': 'Annuelle',
       'freq_two_years': 'Deux ans',
-      'freq_three_years': 'Three Years',
+      'freq_three_years': 'Trois ans',
       'never': 'Jamais',
       'company': 'Entreprise',
       'generated_numbers': 'Nombres générés',
       'charge_taxes': 'Taxe supplémentaire',
-      'credit': 'Crédit',
-      'credits': 'Crédits',
       'next_reset': 'Prochaine remise à zéro',
       'reset_counter': 'Remettre à zéro le compteur',
       'recurring_prefix': 'Préfixe récurrent',
-      'number_padding': 'Number Padding',
-      'general': 'General',
-      'surcharge_field': 'Surcharge Field',
+      'number_padding': 'Marge interne du nombre',
+      'general': 'Général',
+      'surcharge_field': 'Champ Surcharge',
       'company_field': 'Champ Entreprise',
-      'company_value': 'Company Value',
-      'credit_field': 'Credit Field',
+      'company_value': 'Valeur de compagnie',
+      'credit_field': 'Champ Crédit',
       'invoice_field': 'Champ Facture',
       'invoice_surcharge': 'Surcharge de facture',
       'client_field': 'Champ Client',
       'product_field': 'Champ Produit',
-      'payment_field': 'Payment Field',
+      'payment_field': 'Champ Paiement',
       'contact_field': 'Champ Contact',
       'vendor_field': 'Champ Fournisseur',
       'expense_field': 'Champ Dépense',
       'project_field': 'Champ Projet',
       'task_field': 'Champ Tâche',
-      'group_field': 'Group Field',
-      'number_counter': 'Number Counter',
+      'group_field': 'Champ Groupe',
+      'number_counter': 'Compteur de nombre',
       'prefix': 'Préfixe',
-      'number_pattern': 'Number Pattern',
+      'number_pattern': 'Modèle de nombre',
       'messages': 'Messages',
       'custom_css': 'CSS personnalisé',
-      'custom_javascript': 'Custom JavaScript',
+      'custom_javascript': 'JavaScript personnalisé',
       'signature_on_pdf': 'Afficher sur le PDF',
       'signature_on_pdf_help':
           'Afficher la signature du client sur la facture/soumission PDF.',
@@ -12280,13 +13491,10 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'enable_portal_password': 'Protéger les factures avec un mot de passe',
       'enable_portal_password_help':
           'Permet de spécifier un mot de passe pour chaque contact. Si un mot de passe est spécifié, le contact devra saisir ce mot de passe pour visualiser ses factures.',
-      'send_portal_password': 'Générer automatiquement',
-      'send_portal_password_help':
-          'Si aucun mot de passe n\'est spécifié, le client recevra un mot de passe autogénéré lors de l\'envoi de la première facture.',
       'authorization': 'Autorisation',
       'subdomain': 'sous-domaine',
       'domain': 'Domaine',
-      'portal_mode': 'Portal Mode',
+      'portal_mode': 'Mode portail',
       'email_signature': 'Cordialement,',
       'enable_email_markup_help':
           'rendez le paiement plus facile à vos client en ajoutant à vos courriel, le marquage de schema.org.',
@@ -12294,21 +13502,21 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'light': 'Clair',
       'dark': 'Foncé',
       'email_design': 'Modèle de courriel',
-      'attach_pdf': 'Attach PDF',
-      'attach_documents': 'Attach Documents',
-      'attach_ubl': 'Attach UBL',
-      'email_style': 'Email Style',
+      'attach_pdf': 'Joindre un PDF',
+      'attach_documents': 'Joindre un document',
+      'attach_ubl': 'Joindre UBL',
+      'email_style': 'Style de courriel',
       'enable_email_markup': 'Autoriser le marquage',
       'reply_to_email': 'Courriel de réponse',
       'bcc_email': 'Courriel CCI',
-      'processed': 'Processed',
+      'processed': 'Traité',
       'credit_card': 'Carte de crédit',
       'bank_transfer': 'Virement bancaire',
       'priority': 'Priorité',
-      'fee_amount': 'Fee Amount',
-      'fee_percent': 'Fee Percent',
-      'fee_cap': 'Fee Cap',
-      'limits_and_fees': 'Limits/Fees',
+      'fee_amount': 'Montant des frais',
+      'fee_percent': 'Pourcentage des frais',
+      'fee_cap': 'Limite des frais',
+      'limits_and_fees': 'Limites/Frais',
       'enable_min': 'Activer min',
       'enable_max': 'Activer max',
       'min_limit': 'Min: :min',
@@ -12316,11 +13524,11 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'min': 'Min',
       'max': 'Max',
       'accepted_card_logos': 'Logos des cartes acceptées',
-      'credentials': 'Credentials',
+      'credentials': 'Identifiants',
       'require_billing_address_help':
-          'Require client to provide their billing address',
+          'Le client doit fournir son adresse de facturation',
       'require_shipping_address_help':
-          'Require client to provide their shipping address',
+          'Le client doit fournir son adresse de livraison',
       'update_address': 'Mise à jour de l\\adresse',
       'update_address_help':
           'Met à jour l\'adresse du client avec les informations fournies',
@@ -12331,8 +13539,8 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'created_tax_rate': 'Le taux de taxe a été créé',
       'updated_tax_rate': 'Le taux de taxe a été mis à jour',
       'archived_tax_rate': 'Le taux de taxe a été archivé',
-      'deleted_tax_rate': 'Successfully deleted tax rate',
-      'restored_tax_rate': 'Successfully restored tax rate',
+      'deleted_tax_rate': 'Le taux de taxe a été supprimé',
+      'restored_tax_rate': 'Le taux de taxe a été restauré',
       'fill_products': 'Remplissage auto des produits',
       'fill_products_help':
           'La sélection d\'un produit entrainera la mise à jour de <b>la description et du prix</b>',
@@ -12344,23 +13552,23 @@ mixin LocalizationsProvider on LocaleCodeAware {
           'Convertir automatiquement le prix des produits dans la devise du client',
       'fees': 'Frais',
       'limits': 'Limites',
-      'provider': 'Provider',
-      'company_gateway': 'Payment Gateway',
-      'company_gateways': 'Payment Gateways',
-      'new_company_gateway': 'New Gateway',
-      'edit_company_gateway': 'Edit Gateway',
-      'created_company_gateway': 'Successfully created gateway',
-      'updated_company_gateway': 'Successfully updated gateway',
-      'archived_company_gateway': 'Successfully archived gateway',
-      'deleted_company_gateway': 'Successfully deleted gateway',
-      'restored_company_gateway': 'Successfully restored gateway',
-      'continue_editing': 'Continue Editing',
+      'provider': 'Fournisseur',
+      'company_gateway': 'Passerelle de paiement',
+      'company_gateways': 'Passerelles de paiement',
+      'new_company_gateway': 'Nouvelle passerelle',
+      'edit_company_gateway': 'Éditer la passerelle',
+      'created_company_gateway': 'La passerelle a été créée',
+      'updated_company_gateway': 'La passerelle a été mise à jour',
+      'archived_company_gateway': 'La passerelle a été archivée',
+      'deleted_company_gateway': 'La passerelle a été supprimée',
+      'restored_company_gateway': 'La passerelle a été restaurée',
+      'continue_editing': 'Continuez l\'édition',
       'discard_changes': 'Annuler les changements',
-      'default_value': 'Default value',
+      'default_value': 'Valeur par défaut',
       'disabled': 'Désactivé',
-      'currency_format': 'Currency Format',
-      'first_day_of_the_week': 'First Day of the Week',
-      'first_month_of_the_year': 'First Month of the Year',
+      'currency_format': 'Format de devise',
+      'first_day_of_the_week': 'Premier jour de la semaine',
+      'first_month_of_the_year': 'Premier mois de l\'année',
       'sunday': 'Dimanche',
       'monday': 'Lundi',
       'tuesday': 'Mardi',
@@ -12380,34 +13588,34 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'october': 'Octobre',
       'november': 'Novembre',
       'december': 'Décembre',
-      'symbol': 'Symbol',
+      'symbol': 'Symbole',
       'ocde': 'Code',
-      'date_format': 'Date Format',
-      'datetime_format': 'Datetime Format',
+      'date_format': 'Format de date',
+      'datetime_format': 'Format date/heure',
       'military_time': 'Format d\'heure 24 h',
-      'military_time_help': '24 Hour Display',
-      'send_reminders': 'Send Reminders',
-      'timezone': 'Timezone',
-      'filtered_by_group': 'Filtered by Group',
-      'filtered_by_invoice': 'Filtered by Invoice',
-      'filtered_by_client': 'Filtered by Client',
-      'filtered_by_vendor': 'Filtered by Vendor',
-      'group_settings': 'Group Settings',
+      'military_time_help': 'Affichage 24h',
+      'send_reminders': 'Envoyer des rappels',
+      'timezone': 'Fuseau horaire',
+      'filtered_by_group': 'Filtrer par groupe',
+      'filtered_by_invoice': 'Filtrer par facture',
+      'filtered_by_client': 'Filtrer par client',
+      'filtered_by_vendor': 'Filtrer par fournisseur',
+      'group_settings': 'Paramètres de groupe',
       'group': 'Groupe',
-      'groups': 'Groups',
-      'new_group': 'New Group',
-      'edit_group': 'Edit Group',
-      'created_group': 'Successfully created group',
-      'updated_group': 'Successfully updated group',
-      'archived_group': 'Successfully archived group',
-      'deleted_group': 'Successfully deleted group',
-      'restored_group': 'Successfully restored group',
-      'upload_logo': 'Upload Logo',
-      'uploaded_logo': 'Successfully uploaded logo',
+      'groups': 'Groupes',
+      'new_group': 'Nouveau groupe',
+      'edit_group': 'Éditer le groupe',
+      'created_group': 'Le groupe a été créé',
+      'updated_group': 'Le groupe a été mis à jour',
+      'archived_group': 'Le groupe a été archivé',
+      'deleted_group': 'Le groupe a été supprimé',
+      'restored_group': 'Le groupe a été restauré',
+      'upload_logo': 'Téléverser le logo',
+      'uploaded_logo': 'Le logo a été téléversé',
       'logo': 'Logo',
-      'saved_settings': 'Successfully saved settings',
+      'saved_settings': 'Les paramètres ont été sauvegardés',
       'product_settings': 'Paramètres des produits',
-      'device_settings': 'Device Settings',
+      'device_settings': 'Paramètres de l\'appareil',
       'defaults': 'Pré-définis',
       'basic_settings': 'Paramètres généraux',
       'advanced_settings': 'Paramètres avancés',
@@ -12423,14 +13631,14 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'buy_now_buttons': 'Boutons Achetez maintenant',
       'email_settings': 'Paramètres courriel',
       'templates_and_reminders': 'Modèles et rappels',
-      'credit_cards_and_banks': 'Credit Cards & Banks',
+      'credit_cards_and_banks': 'Cartes de crédit et banques',
       'data_visualizations': 'Visualisation des données',
-      'price': 'Price',
-      'email_sign_up': 'Email Sign Up',
-      'google_sign_up': 'Google Sign Up',
+      'price': 'Prix',
+      'email_sign_up': 'Inscription par courriel',
+      'google_sign_up': 'Inscription avec Google',
       'thank_you_for_your_purchase': 'Merci de votre achat!',
       'redeem': 'Rembourser',
-      'sign_up_with_google': 'Sign Up With Google',
+      'sign_up_with_google': 'Inscrivez-vous avec Google',
       'back': 'Retour',
       'past_purchases': 'Achats précédents',
       'annual_subscription': 'Abonnement annuel',
@@ -12536,7 +13744,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'thank_you_for_using_our_app': 'Merci d\'utiliser notre app!',
       'if_you_like_it': 'Si vous appréciez, merci',
       'click_here': 'cliquer içi',
-      'click_here_capital': 'Click here',
+      'click_here_capital': 'Cliquez ici',
       'to_rate_it': 'd\'évaluer notre app.',
       'average': 'Moyenne',
       'unapproved': 'Non approuvé',
@@ -12571,6 +13779,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'custom': 'Personnalisé',
       'clone_to_invoice': 'Cloner en facture',
       'clone_to_quote': 'Cloner en soumission',
+      'clone_to_credit': 'Clone to Credit',
       'view_invoice': 'Voir la facture',
       'convert': 'Convertir',
       'more': 'Plus',
@@ -12583,7 +13792,6 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'edit_expense': 'Éditer la dépense',
       'edit_vendor': 'Éditer le fournisseur',
       'edit_project': 'Éditer le projet',
-      'edit_credit': 'Éditer le crédit',
       'edit_recurring_invoice': 'Éditer la facture récurrente',
       'edit_recurring_expense': 'Éditer la dépense récurrente',
       'edit_recurring_quote': 'Éditer la soumission récurrente',
@@ -12734,15 +13942,11 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'approved': 'Approuvée',
       'partial': 'Partiel/dépôt',
       'paid': 'Payé',
-      'invoice_status_1': 'Brouillon',
-      'invoice_status_2': 'Envoyée',
-      'invoice_status_3': 'Vue',
-      'invoice_status_4': 'Approuvée',
       'mark_sent': 'Marquer comme envoyé',
       'marked_invoice_as_sent': 'Facture marquée comme envoyée',
-      'marked_invoice_as_paid': 'Successfully marked invoice as sent',
-      'marked_invoices_as_sent': 'Successfully marked invoices as sent',
-      'marked_invoices_as_paid': 'Successfully marked invoices as sent',
+      'marked_invoice_as_paid': 'Successfully marked invoice as paid',
+      'marked_invoices_as_sent': 'Factures marquées comme envoyées',
+      'marked_invoices_as_paid': 'Successfully marked invoices as paid',
       'done': 'Valider',
       'please_enter_a_client_or_contact_name':
           'Veuillez saisir un nom de client ou de contact',
@@ -12877,157 +14081,269 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'activity_54': ':user a réouvert le billet :ticket',
       'activity_55': ':contact a répondu au billet :ticket',
       'activity_56': ':user a vu le billet :ticket',
-      'activity_57': 'System failed to email invoice :invoice',
+      'activity_57':
+          'Le système n\'a pas pu envoyer le courriel de la facture :invoice',
       'one_time_password': 'Mot de passe à usage unique',
       'emailed_quote': 'La soumission a été envoyée',
+      'emailed_credit': 'Successfully emailed credit',
       'marked_quote_as_sent': 'Soumission marquée comme envoyée',
+      'marked_credit_as_sent': 'Successfully marked credit as sent',
       'expired': 'Expiré',
       'all': 'Tous',
       'select': 'Sélectionner',
-      'long_press_multiselect': 'Long-press Multiselect',
+      'long_press_multiselect': 'Multisélection par pression longue',
       'custom_value1': 'Valeur par défaut',
       'custom_value2': 'Valeur par défaut',
-      'custom_value3': 'Custom Value 3',
-      'custom_value4': 'Custom Value 4',
-      'email_style_custom': 'Custom Email Style',
-      'custom_message_dashboard': 'Custom Dashboard Message',
-      'custom_message_unpaid_invoice': 'Custom Unpaid Invoice Message',
-      'custom_message_paid_invoice': 'Custom Paid Invoice Message',
-      'custom_message_unapproved_quote': 'Custom Unapproved Quote Message',
-      'lock_sent_invoices': 'Lock Sent Invoices',
-      'translations': 'Translations',
-      'task_number_pattern': 'Task Number Pattern',
-      'task_number_counter': 'Task Number Counter',
-      'expense_number_pattern': 'Expense Number Pattern',
-      'expense_number_counter': 'Expense Number Counter',
-      'vendor_number_pattern': 'Vendor Number Pattern',
-      'vendor_number_counter': 'Vendor Number Counter',
-      'ticket_number_pattern': 'Ticket Number Pattern',
-      'ticket_number_counter': 'Ticket Number Counter',
-      'payment_number_pattern': 'Payment Number Pattern',
-      'payment_number_counter': 'Payment Number Counter',
-      'invoice_number_pattern': 'Invoice Number Pattern',
+      'custom_value3': 'Valeur personnalisée 3',
+      'custom_value4': 'Valeur personnalisée 4',
+      'email_style_custom': 'Style de courriel personnalisé',
+      'custom_message_dashboard': 'Message personnalisé du tableau de bord',
+      'custom_message_unpaid_invoice':
+          'Message personnalisé pour facture impayée',
+      'custom_message_paid_invoice': 'Message personnalisé pour facture payée',
+      'custom_message_unapproved_quote':
+          'Message personnalisé pour soumission non approuvée',
+      'lock_sent_invoices': 'Verrouiller les factures envoyées',
+      'translations': 'Traductions',
+      'task_number_pattern': 'Modèle du numéro de tâche',
+      'task_number_counter': 'Compteur du numéro de tâche',
+      'expense_number_pattern': 'Modèle du numéro de dépense',
+      'expense_number_counter': 'Compteur du numéro de dépense',
+      'vendor_number_pattern': 'Modèle du numéro de fournisseur',
+      'vendor_number_counter': 'Compteur du numéro de fournisseur',
+      'ticket_number_pattern': 'Modèle du numéro de billet',
+      'ticket_number_counter': 'Compteur du numéro de billet',
+      'payment_number_pattern': 'Modèle du numéro de paiement',
+      'payment_number_counter': 'Compteur du numéro de paiement',
+      'invoice_number_pattern': 'Modèle du numéro de facture',
       'invoice_number_counter': 'Compteur du numéro de facture',
-      'quote_number_pattern': 'Quote Number Pattern',
+      'quote_number_pattern': 'Modèle du numéro de soumission',
       'quote_number_counter': 'Compteur du numéro de soumission',
-      'client_number_pattern': 'Credit Number Pattern',
-      'client_number_counter': 'Credit Number Counter',
-      'credit_number_pattern': 'Credit Number Pattern',
-      'credit_number_counter': 'Credit Number Counter',
-      'reset_counter_date': 'Reset Counter Date',
-      'counter_padding': 'Counter Padding',
-      'shared_invoice_quote_counter': 'Shared Invoice Quote Counter',
-      'default_tax_name_1': 'Default Tax Name 1',
-      'default_tax_rate_1': 'Default Tax Rate 1',
-      'default_tax_name_2': 'Default Tax Name 2',
-      'default_tax_rate_2': 'Default Tax Rate 2',
-      'default_tax_name_3': 'Default Tax Name 3',
-      'default_tax_rate_3': 'Default Tax Rate 3',
-      'email_subject_invoice': 'Email Invoice Subject',
-      'email_subject_quote': 'Email Quote Subject',
-      'email_subject_payment': 'Email Payment Subject',
-      'switch_list_table': 'Switch List Table',
-      'client_city': 'Client City',
-      'client_state': 'Client State',
-      'client_country': 'Client Country',
-      'client_is_active': 'Client is Active',
-      'client_balance': 'Client Balance',
-      'client_address1': 'Client Address 1',
-      'client_address2': 'Client Address 2',
-      'client_shipping_address1': 'Client Shipping Address 1',
-      'client_shipping_address2': 'Client Shipping Address 2',
+      'client_number_pattern': 'Modèle du numéro de crédit',
+      'client_number_counter': 'Compteur du numéro de crédit',
+      'credit_number_pattern': 'Modèle du numéro de crédit',
+      'credit_number_counter': 'Compteur du numéro de crédit',
+      'reset_counter_date': 'Remise à zéro du compteur de date',
+      'counter_padding': 'Espacement du compteur',
+      'shared_invoice_quote_counter': 'Compteur partagé facture/soumission',
+      'default_tax_name_1': 'Nom de taxe par défaut 1',
+      'default_tax_rate_1': 'Taux de taxe par défaut 1',
+      'default_tax_name_2': 'Nom de taxe par défaut 2',
+      'default_tax_rate_2': 'Taux de taxe par défaut 2',
+      'default_tax_name_3': 'Nom de taxe par défaut 3',
+      'default_tax_rate_3': 'Taux de taxe par défaut 3',
+      'email_subject_invoice': 'Objet du courriel de facture',
+      'email_subject_quote': 'Objet du courriel de soumission',
+      'email_subject_payment': 'Objet du courriel de paiement',
+      'email_subject_payment_partial': 'Email Partial Payment Subject',
+      'switch_list_table': 'Basculer à table de liste',
+      'client_city': 'Ville du client',
+      'client_state': 'Province du client',
+      'client_country': 'Pays du client',
+      'client_is_active': 'Client actif',
+      'client_balance': 'Solde du client',
+      'client_address1': 'Adresse client 1',
+      'client_address2': 'Adresse client 2',
+      'client_shipping_address1': 'Adresse de livraison client 1',
+      'client_shipping_address2': 'Adresse de livraison client 2',
       'type': 'Type',
       'invoice_amount': 'Montant de la facture',
       'invoice_due_date': 'Échéance',
-      'tax_rate1': 'Tax Rate 1',
-      'tax_rate2': 'Tax Rate 2',
-      'tax_rate3': 'Tax Rate 3',
+      'tax_rate1': 'Taux de taxe 1',
+      'tax_rate2': 'Taux de taxe 2',
+      'tax_rate3': 'Taux de taxe 3',
       'auto_bill': 'Facturation automatique',
-      'archived_at': 'Archived At',
-      'has_expenses': 'Has Expenses',
-      'custom_taxes1': 'Custom Taxes 1',
-      'custom_taxes2': 'Custom Taxes 2',
-      'custom_taxes3': 'Custom Taxes 3',
-      'custom_taxes4': 'Custom Taxes 4',
-      'custom_surcharge1': 'Custom Surcharge 1',
-      'custom_surcharge2': 'Custom Surcharge 2',
-      'custom_surcharge3': 'Custom Surcharge 3',
-      'custom_surcharge4': 'Custom Surcharge 4',
-      'is_deleted': 'Is Deleted',
-      'vendor_city': 'Vendor City',
-      'vendor_state': 'Vendor State',
-      'vendor_country': 'Vendor Country',
+      'archived_at': 'Archivé à',
+      'has_expenses': 'A Dépenses',
+      'custom_taxes1': 'Taxes personnalisées 1',
+      'custom_taxes2': 'Taxes personnalisées 2',
+      'custom_taxes3': 'Taxes personnalisées 3',
+      'custom_taxes4': 'Taxes personnalisées 4',
+      'custom_surcharge1': 'Surcharge personnalisée 1',
+      'custom_surcharge2': 'Surcharge personnalisée 2',
+      'custom_surcharge3': 'Surcharge personnalisée 3',
+      'custom_surcharge4': 'Surcharge personnalisée 4',
+      'is_deleted': 'Est supprimé',
+      'vendor_city': 'Ville du fournisseur',
+      'vendor_state': 'Province du fournisseur',
+      'vendor_country': 'Pays du fournisseur',
+      'is_approved': 'Is Approved',
+      'tax_name': 'Nom de la taxe',
+      'tax_amount': 'Montant de taxe',
+      'tax_paid': 'Taxe payée',
+      'payment_amount': 'Montant du paiement',
+      'age': 'Âge',
     },
     'de': {
-      'company1': 'Custom Company 1',
-      'company2': 'Custom Company 2',
-      'company3': 'Custom Company 3',
-      'company4': 'Custom Company 4',
-      'product1': 'Custom Product 1',
-      'product2': 'Custom Product 2',
-      'product3': 'Custom Product 3',
-      'product4': 'Custom Product 4',
-      'client1': 'Custom Client 1',
-      'client2': 'Custom Client 1',
-      'client3': 'Custom Client 1',
-      'client4': 'Custom Client 1',
-      'contact1': 'Custom Contact 1',
-      'contact2': 'Custom Contact 2',
-      'contact3': 'Custom Contact 3',
-      'contact4': 'Custom Contact 4',
-      'task1': 'Custom Task 1',
-      'task2': 'Custom Task 2',
-      'task3': 'Custom Task 3',
-      'task4': 'Custom Task 4',
-      'project1': 'Custom Project 1',
-      'project2': 'Custom Project 2',
-      'project3': 'Custom Project 3',
-      'project4': 'Custom Project 4',
-      'expense1': 'Custom Expense 1',
-      'expense2': 'Custom Expense 2',
-      'expense3': 'Custom Expense 3',
-      'expense4': 'Custom Expense 4',
-      'vendor1': 'Custom Vendor 1',
-      'vendor2': 'Custom Vendor 2',
-      'vendor3': 'Custom Vendor 3',
-      'vendor4': 'Custom Vendor 4',
-      'invoice1': 'Custom Invoice 1',
-      'invoice2': 'Custom Invoice 2',
-      'invoice3': 'Custom Invoice 3',
-      'invoice4': 'Custom Invoice 4',
-      'payment1': 'Custom Payment 1',
-      'payment2': 'Custom Payment 2',
-      'payment3': 'Custom Payment 3',
-      'payment4': 'Custom Payment 4',
-      'surcharge1': 'Custom Surcharge 1',
-      'surcharge2': 'Custom Surcharge 2',
-      'surcharge3': 'Custom Surcharge 3',
-      'surcharge4': 'Custom Surcharge 4',
-      'group1': 'Custom Group 1',
-      'group2': 'Custom Group 2',
-      'group3': 'Custom Group 3',
-      'group4': 'Custom Group 4',
+      'full_name': 'Voller Name',
+      'city_state_postal': 'Stadt / Bundesland / PLZ',
+      'postal_city_state': 'Plz/Stadt/Staat',
+      'custom1': 'Benutzerdefiniert 1',
+      'custom2': 'Benutzerdefiniert 2',
+      'custom3': 'Third Custom',
+      'custom4': 'Fourth Custom',
+      'optional': 'Optional',
+      'license': 'License',
+      'purge_data': 'Daten säubern',
+      'purge_successful': 'Die Kontodaten wurden erfolgreich gelöscht',
+      'purge_data_message':
+          'Achtung: Alle Daten werden vollständig gelöscht. Dieser Vorgang kann nicht rückgängig gemacht werden.',
+      'invoice_balance': 'Invoice Balance',
+      'age_group_0': '0 - 30 Tage',
+      'age_group_30': '30 - 60 Tage',
+      'age_group_60': '60 - 90 Tage',
+      'age_group_90': '90 - 120 Tage',
+      'age_group_120': '120+ Tage',
+      'refresh': 'Aktualisieren',
+      'saved_design': 'Successfully saved design',
+      'client_details': 'Client Details',
+      'company_address': 'Company Address',
+      'invoice_details': 'Rechnungsdetails',
+      'quote_details': 'Quote Details',
+      'credit_details': 'Credit Details',
+      'product_columns': 'Product Columns',
+      'task_columns': 'Task Columns',
+      'add_field': 'Add Field',
+      'all_events': 'All Events',
+      'permissions': 'Berechtigungen',
+      'none': 'Nichts',
+      'owned': 'Owned',
+      'payment_success': 'Payment Success',
+      'payment_failure': 'Payment Failure',
+      'invoice_sent': ':count Rechnung versendet',
+      'quote_sent': 'Quote Sent',
+      'credit_sent': 'Credit Sent',
+      'invoice_viewed': 'Invoice Viewed',
+      'quote_viewed': 'Quote Viewed',
+      'credit_viewed': 'Credit Viewed',
+      'quote_approved': 'Quote Approved',
+      'receive_all_notifications': 'Receive All Notifications',
+      'purchase_license': 'Purchase License',
+      'apply_license': 'Lizenz anwenden',
+      'cancel_account': 'Konto kündigen',
+      'cancel_account_message':
+          'Warnung: Diese Aktion wird dein Konto unwiderruflich löschen.',
+      'delete_company': 'Firma löschen',
+      'delete_company_message':
+          'Achtung: Dadurch wird Ihre Firma unwiderruflich gelöscht. Es gibt kein Zurück.',
+      'enable_modules': 'Enable Modules',
+      'converted_quote': 'Successfully converted quote',
+      'credit_design': 'Credit Design',
+      'includes': 'Includes',
+      'header': 'Kopf',
+      'load_design': 'Designvorlage laden',
+      'css_framework': 'CSS Framework',
+      'custom_designs': 'Custom Designs',
+      'designs': 'Designs',
+      'new_design': 'New Design',
+      'edit_design': 'Edit Design',
+      'created_design': 'Successfully created design',
+      'updated_design': 'Successfully updated design',
+      'archived_design': 'Successfully archived design',
+      'deleted_design': 'Successfully deleted design',
+      'removed_design': 'Successfully removed design',
+      'restored_design': 'Successfully restored design',
+      'proposals': 'Vorschläge',
+      'tickets': 'Tickets',
+      'recurring_invoices': 'Wiederkehrende Rechnungen',
+      'recurring_quotes': 'Wiederkehrende Angebote',
+      'recurring_tasks': 'Recurring Tasks',
+      'recurring_expenses': 'Wiederkehrende Ausgaben',
+      'account_management': 'Kontoverwaltung',
+      'credit_date': 'Guthabendatum',
+      'credit': 'Gutschrift',
+      'credits': 'Guthaben',
+      'new_credit': 'Guthaben eingeben',
+      'edit_credit': 'Saldo bearbeiten',
+      'created_credit': 'Guthaben erfolgreich erstellt',
+      'updated_credit': 'Saldo erfolgreich aktualisiert',
+      'archived_credit': 'Guthaben erfolgreich archiviert',
+      'deleted_credit': 'Guthaben erfolgreich gelöscht',
+      'removed_credit': 'Successfully removed credit',
+      'restored_credit': 'Guthaben erfolgreich wiederhergestellt',
+      'current_version': 'Aktuelle Version',
+      'latest_version': 'Latest Version',
+      'update_now': 'Update Now',
+      'a_new_version_is_available': 'A new version of the web app is available',
+      'update_available': 'Update Available',
+      'app_updated': 'Update successfully completed',
+      'learn_more': 'Mehr erfahren',
+      'integrations': 'Integrations',
+      'tracking_id': 'Tracking Id',
+      'slack_webhook_url': 'Slack Webhook URL',
+      'credit_footer': 'Credit Footer',
+      'credit_terms': 'Credit Terms',
+      'untitled_company': 'Unbenannte FIrma',
+      'added_company': 'Erfolgreich Firma hinzugefügt',
+      'company1': 'Benutzerdefinierte Firma 1',
+      'company2': 'Benutzerdefinierte Firma 2',
+      'company3': 'Benutzerdefinierte Firma 3',
+      'company4': 'Benutzerdefinierte Firma 4',
+      'product1': 'Benutzerdefiniertes Produkt 1',
+      'product2': 'Benutzerdefiniertes Produkt 2',
+      'product3': 'Benutzerdefiniertes Produkt 3',
+      'product4': 'Benutzerdefiniertes Produkt 4',
+      'client1': 'Benutzerdefinierter Kunde 1',
+      'client2': 'Benutzerdefinierter Kunde 2',
+      'client3': 'Benutzerdefinierter Kunde 3',
+      'client4': 'Benutzerdefinierter Kunde 4',
+      'contact1': 'Benutzerdefinierter Kontakt 1',
+      'contact2': 'Benutzerdefinierter Kontakt 2',
+      'contact3': 'Benutzerdefinierter Kontakt 3',
+      'contact4': 'Benutzerdefinierter Kontakt 4',
+      'task1': 'Benutzerdefinierte Aufgabe 1',
+      'task2': 'Benutzerdefinierte Aufgabe 2',
+      'task3': 'Benutzerdefinierte Aufgabe 3',
+      'task4': 'Benutzerdefinierte Aufgabe 4',
+      'project1': 'Benutzerdefiniertes Projekt 1',
+      'project2': 'Benutzerdefiniertes Projekt 2',
+      'project3': 'Benutzerdefiniertes Projekt 3',
+      'project4': 'Benutzerdefiniertes Projekt 4',
+      'expense1': 'Benutzerdefinierte Ausgabe 1',
+      'expense2': 'Benutzerdefinierte Ausgabe 2',
+      'expense3': 'Benutzerdefinierte Ausgabe 3',
+      'expense4': 'Benutzerdefinierte Ausgabe 4',
+      'vendor1': 'Benutzerdefinierter Lieferant 1',
+      'vendor2': 'Benutzerdefinierter Lieferant 2',
+      'vendor3': 'Benutzerdefinierter Lieferant 3',
+      'vendor4': 'Benutzerdefinierter Lieferant 4',
+      'invoice1': 'Benutzerdefinierte Rechnung 1',
+      'invoice2': 'Benutzerdefinierte Rechnung 2',
+      'invoice3': 'Benutzerdefinierte Rechnung 3',
+      'invoice4': 'Benutzerdefinierte Rechnung 4',
+      'payment1': 'Benutzerdefinierte Zahlung 1',
+      'payment2': 'Benutzerdefinierte Zahlung 2',
+      'payment3': 'Benutzerdefinierte Zahlung 3',
+      'payment4': 'Benutzerdefinierte Zahlung 4',
+      'surcharge1': 'Benutzerdefinierter Zuschlag 1',
+      'surcharge2': 'Benutzerdefinierter Zuschlag 2',
+      'surcharge3': 'Benutzerdefinierter Zuschlag 3',
+      'surcharge4': 'Benutzerdefinierter Zuschlag 4',
+      'group1': 'Benutzerdefinierte Gruppe 1',
+      'group2': 'Benutzerdefinierte Gruppe 2',
+      'group3': 'Benutzerdefinierte Gruppe 3',
+      'group4': 'Benutzerdefinierte Gruppe 4',
       'reset': 'Zurücksetzen',
-      'number': 'Number',
+      'number': 'Nummer',
       'export': 'Exportieren',
       'chart': 'Diagramm',
-      'count': 'Count',
+      'count': 'Anzahl',
       'totals': 'Summe',
       'blank': 'Leer',
       'day': 'Tag',
       'month': 'Monat',
       'year': 'Jahr',
       'subgroup': 'Untergruppe',
-      'is_active': 'Is Active',
+      'is_active': 'Ist aktiv',
       'group_by': 'Gruppieren nach',
       'credit_balance': 'Guthabenstand',
-      'contact_last_login': 'Contact Last Login',
-      'contact_full_name': 'Contact Full Name',
+      'contact_last_login': 'Letzter Login des Kontakts',
+      'contact_full_name': 'Vollständiger Name des Kontakts',
       'contact_phone': 'Telefonnummer des Kontakts',
-      'contact_custom_value1': 'Contact Custom Value 1',
-      'contact_custom_value2': 'Contact Custom Value 2',
-      'contact_custom_value3': 'Contact Custom Value 3',
-      'contact_custom_value4': 'Contact Custom Value 4',
+      'contact_custom_value1': 'Kontakt Benutzerdefinierter Wert 1',
+      'contact_custom_value2': 'Kontakt Benutzerdefinierter Wert 2',
+      'contact_custom_value3': 'Kontakt Benutzerdefinierter Wert 3',
+      'contact_custom_value4': 'Kontakt Benutzerdefinierter Wert 4',
       'shipping_address1': 'Strasse Versandanschrift',
       'shipping_address2': 'Versand Adresszusatz',
       'shipping_city': 'Stadt Versandanschrift',
@@ -13037,43 +14353,42 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'client_id': 'Kundennummer',
       'assigned_to': 'Zugewiesen an',
       'created_by': 'Erstellt von :name',
-      'assigned_to_id': 'Assigned To Id',
-      'created_by_id': 'Created By Id',
-      'add_column': 'Add Column',
-      'edit_columns': 'Edit Columns',
+      'assigned_to_id': 'Zugewiesen zur ID',
+      'created_by_id': 'Erstellt von ID',
+      'add_column': 'Spalte hinzufügen',
+      'edit_columns': 'Spalten bearbeiten',
       'columns': 'Spalten',
       'aging': 'Versendet',
       'profit_and_loss': 'Gewinn und Verlust',
       'reports': 'Berichte',
       'report': 'Bericht',
       'add_company': 'Konto hinzufügen',
-      'to_learn_about_gogle_fonts': 'to learn about Google Fonts',
       'unpaid_invoice': 'Unbezahlte Rechnung',
       'paid_invoice': 'Bezahlte Rechnung',
       'unapproved_quote': 'Nicht genehmigtes Angebot',
       'help': 'Hilfe',
       'refund': 'Erstattung',
-      'refund_date': 'Refund Date',
+      'refund_date': 'Erstattungsdatum',
       'filtered_by': 'Gefiltert nach',
       'contact_email': 'E-Mail-Adresse des Kontakts',
-      'multiselect': 'Multiselect',
+      'multiselect': 'Mehrfachauswahl',
       'entity_state': 'Status',
-      'verify_password': 'Verify Password',
-      'applied': 'Applied',
-      'include_recent_errors': 'Include recent errors from the logs',
+      'verify_password': 'Passwort überprüfen',
+      'applied': 'Angewendet',
+      'include_recent_errors': 'Kürzliche Fehler aus den Logs einfügen',
       'your_message_has_been_received':
-          'We have received your message and will try to respond promptly.',
+          'Wir haben ihre Nachricht erhalten und bemühen uns schnellstmöglich zu antworten.',
       'message': 'Nachricht',
       'from': 'Von',
-      'show_product_details': 'Show Product Details',
+      'show_product_details': 'Produktdetails anzeigen',
       'show_product_details_help':
-          'Include the description and cost in the product dropdown',
-      'pdf_min_requirements': 'The PDF renderer requires :version',
-      'adjust_fee_percent': 'Adjust Fee Percent',
+          'Beschreibung und Kosten in die Produkt-Dropdown-Liste einfügen',
+      'pdf_min_requirements': 'Der PDF-Renderer benötigt :version',
+      'adjust_fee_percent': 'Anpassungszuschlag Prozent',
       'adjust_fee_percent_help': 'Gebühren Prozentsatz an das Konto anpassen',
-      'configure_settings': 'Configure Settings',
+      'configure_settings': 'Einstellungen bearbeiten',
       'support_forum': 'Support-Forum',
-      'about': 'About',
+      'about': 'Über',
       'documentation': 'Dokumentation',
       'contact_us': 'Kontaktieren Sie uns',
       'subtotal': 'Zwischensumme',
@@ -13081,86 +14396,89 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'item': 'Artikel',
       'credit_email': 'Credit Email',
       'iframe_url': 'Webseite',
-      'domain_url': 'Domain URL',
+      'domain_url': 'Domain-URL',
       'password_is_too_short': 'Das Passwort ist zu kurz',
       'password_is_too_easy':
-          'Password msut contain an upper case character and a number',
-      'client_portal_tasks': 'Client Portal Tasks',
-      'client_portal_dashboard': 'Client Portal Dashboard',
-      'please_enter_a_value': 'Please enter a value',
-      'deleted_logo': 'Successfully deleted logo',
+          'Das Passwort muss einen Großbuchstaben und eine Nummer enthalten',
+      'client_portal_tasks': 'Kundenportal-Aufgaben',
+      'client_portal_dashboard': 'Kundenportal-Übersicht',
+      'please_enter_a_value': 'Bitte einen Wert eingeben',
+      'deleted_logo': 'Logo erfolgreich gelöscht',
       'yes': 'Ja',
       'no': 'Nein',
-      'generate_number': 'Generate Number',
-      'when_saved': 'When Saved',
-      'when_sent': 'When Sent',
-      'select_company': 'Select Company',
+      'generate_number': 'Nummer generieren',
+      'when_saved': 'Wenn gespeichert',
+      'when_sent': 'Wenn gesendet',
+      'select_company': 'Firma auswählen',
       'float': 'Float',
-      'collapse': 'Collapse',
-      'show_or_hide': 'Show/hide',
-      'menu_sidebar': 'Menu Sidebar',
-      'history_sidebar': 'History Sidebar',
+      'collapse': 'Einklappen',
+      'show_or_hide': 'Anzeigen/verstecken',
+      'menu_sidebar': 'Menüleiste',
+      'history_sidebar': 'Verlaufs-Seitenleiste',
       'tablet': 'Tablet',
       'mobile': 'Mobil',
       'desktop': 'Desktop',
       'layout': 'Layout',
       'view': 'Ansehen',
-      'module': 'Module',
-      'first_custom': 'First Custom',
-      'second_custom': 'Second Custom',
-      'third_custom': 'Third Custom',
-      'show_cost': 'Show Cost',
+      'module': 'Modul',
+      'first_custom': 'Erste benutzerdefinierte',
+      'second_custom': 'Zweite benutzerdefinierte',
+      'third_custom': 'Dritte benutzerdefinierte',
+      'show_cost': 'Kosten anzeigen',
       'show_cost_help':
           'Display a product cost field to track the markup/profit',
-      'show_product_quantity': 'Show Product Quantity',
+      'show_product_quantity': 'Produktanzahl anzeigen',
       'show_product_quantity_help':
           'Display a product quantity field, otherwise default to one',
-      'show_invoice_quantity': 'Show Invoice Quantity',
+      'show_invoice_quantity': 'Rechnungsanzahl anzeigen',
       'show_invoice_quantity_help':
           'Display a line item quantity field, otherwise default to one',
-      'default_quantity': 'Default Quantity',
+      'default_quantity': 'Standardanzahl',
       'default_quantity_help':
           'Automatically set the line item quantity to one',
-      'one_tax_rate': 'One Tax Rate',
-      'two_tax_rates': 'Two Tax Rates',
-      'three_tax_rates': 'Three Tax Rates',
-      'default_tax_rate': 'Default Tax Rate',
+      'one_tax_rate': 'Ein Steuersatz',
+      'two_tax_rates': 'Zwei Steuersätze',
+      'three_tax_rates': 'Drei Steuersätze',
+      'default_tax_rate': 'Standard-Steuersatz',
       'user': 'Benutzer',
-      'invoice_tax': 'Invoice Tax',
+      'invoice_tax': 'Rechnungssteuer',
       'line_item_tax': 'Line Item Tax',
-      'inclusive_taxes': 'Inclusive Taxes',
-      'invoice_tax_rates': 'Invoice Tax Rates',
-      'item_tax_rates': 'Item Tax Rates',
+      'inclusive_taxes': 'Inklusive Steuern',
+      'invoice_tax_rates': 'Rechnungs-Steuersätze',
+      'item_tax_rates': 'Element-Steuersätze',
       'no_client_selected': 'Bitte wählen Sie einen Kunden',
-      'configure_rates': 'Configure rates',
+      'configure_rates': 'Steuersätze bearbeiten',
       'tax_settings': 'Steuer-Einstellungen',
-      'tax_settings_rates': 'Tax Rates',
-      'accent_color': 'Accent Color',
+      'tax_settings_rates': 'Steuersätze',
+      'accent_color': 'Akzent-Farbe',
       'switch': 'Switch',
-      'comma_sparated_list': 'Comma separated list',
+      'comma_sparated_list': 'Komma-separierte Liste',
       'options': 'Optionen',
-      'single_line_text': 'Single-line text',
-      'multi_line_text': 'Multi-line text',
+      'single_line_text': 'Einzeiliger Text',
+      'multi_line_text': 'Mehrzeiliger Text',
       'dropdown': 'Dropdown',
-      'field_type': 'Field Type',
-      'recover_password_email_sent': 'A password recovery email has been sent',
+      'field_type': 'Feldtyp',
+      'recover_password_email_sent':
+          'Eine Passwort-Wiederherstellungs-Mail wurde versendet',
       'submit': 'Abschicken',
       'recover_password': 'Passwort wiederherstellen',
-      'late_fees': 'Late Fees',
+      'late_fees': 'Verspätungszuschläge',
       'credit_number': 'Gutschriftnummer',
-      'payment_number': 'Payment Number',
+      'payment_number': 'Zahlungsnummer',
       'late_fee_amount': 'Höhe des Verspätungszuschlags',
       'late_fee_percent': 'Verspätungszuschlag Prozent',
       'schedule': 'Zeitgesteuert',
-      'before_due_date': 'Before the due date',
-      'after_due_date': 'After the due date',
-      'after_invoice_date': 'After the invoice date',
+      'before_due_date': 'Vor dem Fälligkeitsdatum',
+      'after_due_date': 'Nach dem Fälligkeitsdatum',
+      'after_invoice_date': 'Nach dem Rechnungsdatum',
       'days': 'Tage',
       'invoice_email': 'Rechnungsmail',
       'payment_email': 'Zahlungsmail',
+      'partial_payment': 'Partial Payment',
+      'partial_payment_email': 'Partial Payment Email',
       'quote_email': 'Angebotsmail',
       'endless_reminder': 'Endlose Erinnnerung',
-      'filtered_by_user': 'Filtered by User',
+      'filtered_by_user': 'Gefiltert nach Benutzer',
       'administrator': 'Administrator',
       'administrator_help':
           'Dem Benutzer erlauben, andere Benutzer zu administrieren, Einstellungen zu ändern und alle Einträge zu bearbeiten',
@@ -13168,11 +14486,11 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'users': 'Benutzer',
       'new_user': 'Neuer Benutzer',
       'edit_user': 'Benutzer bearbeiten',
-      'created_user': 'Successfully created user',
+      'created_user': 'Benutzer erfolgreich erstellt',
       'updated_user': 'Benutzer erfolgreich aktualisiert',
       'archived_user': 'Benutzer erfolgreich archiviert',
       'deleted_user': 'Benutzer erfolgreich gelöscht',
-      'removed_user': 'Successfully removed user',
+      'removed_user': 'Benutzer erfolgreich entfernt',
       'restored_user': 'Benutzer erfolgreich wiederhergestellt',
       'general_settings': 'Allgemeine Einstellungen',
       'invoice_options': 'Rechnungsoptionen',
@@ -13187,8 +14505,8 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'first_page': 'Erste Seite',
       'all_pages': 'Alle Seiten',
       'last_page': 'Letzte Seite',
-      'primary_font': 'Primary Font',
-      'secondary_font': 'Secondary Font',
+      'primary_font': 'Primäre Schriftart',
+      'secondary_font': 'Sekundäre Schriftart',
       'primary_color': 'Primäre Farbe',
       'secondary_color': 'Sekundäre Farbe',
       'page_size': 'Seitengröße',
@@ -13224,39 +14542,37 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'freq_six_months': 'Halbjährlich',
       'freq_annually': 'Jährlich',
       'freq_two_years': 'Zwei Jahre',
-      'freq_three_years': 'Three Years',
+      'freq_three_years': 'Drei Jahre',
       'never': 'Niemals',
       'company': 'Firma',
       'generated_numbers': 'Generierte Nummern',
       'charge_taxes': 'Steuern erheben',
-      'credit': 'Gutschrift',
-      'credits': 'Guthaben',
       'next_reset': 'Nächster Reset',
       'reset_counter': 'Zähler-Reset',
       'recurring_prefix': 'Wiederkehrender Präfix',
-      'number_padding': 'Number Padding',
-      'general': 'General',
-      'surcharge_field': 'Surcharge Field',
+      'number_padding': 'Nummernabstand',
+      'general': 'Allgemein',
+      'surcharge_field': 'Zuschlagsfeld',
       'company_field': 'Firmenfeld',
-      'company_value': 'Company Value',
-      'credit_field': 'Credit Field',
+      'company_value': 'Firmenwert',
+      'credit_field': 'Kredit-Feld',
       'invoice_field': 'Rechnungsfeld',
       'invoice_surcharge': 'Rechnungsgebühr',
       'client_field': 'Kundenfeld',
       'product_field': 'Produktfeld',
-      'payment_field': 'Payment Field',
+      'payment_field': 'Zahlungs-Feld',
       'contact_field': 'Kontaktfeld',
       'vendor_field': 'Lieferantenfeld',
       'expense_field': 'Ausgabenfeld',
       'project_field': 'Projektfeld',
       'task_field': 'Aufgabenfeld',
-      'group_field': 'Group Field',
-      'number_counter': 'Number Counter',
+      'group_field': 'Gruppen-Feld',
+      'number_counter': 'Nummernzähler',
       'prefix': 'Präfix',
-      'number_pattern': 'Number Pattern',
+      'number_pattern': 'Nummernschema',
       'messages': 'Nachrichten',
       'custom_css': 'Benutzerdefiniertes CSS',
-      'custom_javascript': 'Custom JavaScript',
+      'custom_javascript': 'Benutzerdefiniertes JavaScript',
       'signature_on_pdf': 'Auf PDF anzeigen',
       'signature_on_pdf_help':
           'Unterschrift des Kunden auf dem Angebots/Rechnungs PDF anzeigen.',
@@ -13273,13 +14589,10 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'enable_portal_password': 'Rechnungen mit Passwort schützen',
       'enable_portal_password_help':
           'Erlaubt Ihnen ein Passwort für jeden Kontakt zu erstellen. Wenn ein Passwort erstellt wurde, muss der Kunde dieses eingeben, bevor er eine Rechnung ansehen darf.',
-      'send_portal_password': 'Automatisch generieren',
-      'send_portal_password_help':
-          'Wenn kein Passwort gesetzt wurde, wird eins generiert und mit der ersten Rechnung verschickt.',
       'authorization': 'Genehmigung',
       'subdomain': 'Subdomäne',
       'domain': 'Domäne',
-      'portal_mode': 'Portal Mode',
+      'portal_mode': 'Portalmodus',
       'email_signature': 'Mit freundlichen Grüßen,',
       'enable_email_markup_help':
           'Machen Sie es einfacher für Ihre Kunden zu bezahlen, indem Sie schema.org Markup zu Ihren E-Mails hinzufügen.',
@@ -13287,21 +14600,21 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'light': 'Hell',
       'dark': 'Dunkel',
       'email_design': 'E-Mail-Design',
-      'attach_pdf': 'Attach PDF',
-      'attach_documents': 'Attach Documents',
-      'attach_ubl': 'Attach UBL',
-      'email_style': 'Email Style',
+      'attach_pdf': 'PDF anhängen',
+      'attach_documents': 'Dokumente anhängen',
+      'attach_ubl': 'UBL anhängen',
+      'email_style': 'E-Mail-Stil',
       'enable_email_markup': 'Markup erlauben',
       'reply_to_email': 'Antwort-E-Mail-Adresse',
       'bcc_email': 'BCC E-Mail',
-      'processed': 'Processed',
+      'processed': 'Verarbeitet',
       'credit_card': 'Kreditkarte',
       'bank_transfer': 'Überweisung',
       'priority': 'Priorität',
-      'fee_amount': 'Fee Amount',
-      'fee_percent': 'Fee Percent',
-      'fee_cap': 'Fee Cap',
-      'limits_and_fees': 'Limits/Fees',
+      'fee_amount': 'Zuschlag Betrag',
+      'fee_percent': 'Zuschlag Prozent',
+      'fee_cap': 'Gebührenobergrenze',
+      'limits_and_fees': 'Grenzwerte/Gebühren',
       'enable_min': 'Min aktivieren',
       'enable_max': 'Max aktivieren',
       'min_limit': 'Min: :min',
@@ -13309,11 +14622,10 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'min': 'Min',
       'max': 'Max',
       'accepted_card_logos': 'Logos der akzeptierten Kreditkarten',
-      'credentials': 'Credentials',
+      'credentials': 'Zugangsdaten',
       'require_billing_address_help':
-          'Require client to provide their billing address',
-      'require_shipping_address_help':
-          'Require client to provide their shipping address',
+          'Kunde muss seine Rechnungsadresse angeben',
+      'require_shipping_address_help': 'Kunde muss seine Lieferadresse angeben',
       'update_address': 'Adresse aktualisieren',
       'update_address_help':
           'Kundenadresse mit den gemachten Angaben aktualisieren',
@@ -13324,8 +14636,8 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'created_tax_rate': 'Steuersatz erstellt',
       'updated_tax_rate': 'Steuersatz aktualisiert',
       'archived_tax_rate': 'Steuersatz archiviert',
-      'deleted_tax_rate': 'Successfully deleted tax rate',
-      'restored_tax_rate': 'Successfully restored tax rate',
+      'deleted_tax_rate': 'Steuersatz erfolgreich gelöscht',
+      'restored_tax_rate': 'Steuersatz erfolgreich wiederhergestellt',
       'fill_products': 'Produkte automatisch ausfüllen',
       'fill_products_help':
           'Beim Auswählen eines Produktes werden automatisch <strong>Beschreibung und Kosten ausgefüllt</strong>',
@@ -13337,23 +14649,23 @@ mixin LocalizationsProvider on LocaleCodeAware {
           'Produktpreise automatisch in die Währung des Kunden konvertieren',
       'fees': 'Gebühren',
       'limits': 'Grenzwerte',
-      'provider': 'Provider',
-      'company_gateway': 'Payment Gateway',
-      'company_gateways': 'Payment Gateways',
-      'new_company_gateway': 'New Gateway',
-      'edit_company_gateway': 'Edit Gateway',
-      'created_company_gateway': 'Successfully created gateway',
-      'updated_company_gateway': 'Successfully updated gateway',
-      'archived_company_gateway': 'Successfully archived gateway',
-      'deleted_company_gateway': 'Successfully deleted gateway',
-      'restored_company_gateway': 'Successfully restored gateway',
-      'continue_editing': 'Continue Editing',
+      'provider': 'Anbieter',
+      'company_gateway': 'Zahlungs-Gateway',
+      'company_gateways': 'Zahlungs-Gateways',
+      'new_company_gateway': 'Neues Gateway',
+      'edit_company_gateway': 'Gateway bearbeiten',
+      'created_company_gateway': 'Gateway erfolgreich erstellt',
+      'updated_company_gateway': 'Gateway erfolgreich aktualisiert',
+      'archived_company_gateway': 'Gateway erfolgreich archiviert',
+      'deleted_company_gateway': 'Gateway erfolgreich gelöscht',
+      'restored_company_gateway': 'Gateway erfolgreich wiederhergestellt',
+      'continue_editing': 'Weiterbearbeiten',
       'discard_changes': 'Änderungen verwerfen',
-      'default_value': 'Default value',
+      'default_value': 'Standardwert',
       'disabled': 'Deaktiviert',
-      'currency_format': 'Currency Format',
-      'first_day_of_the_week': 'First Day of the Week',
-      'first_month_of_the_year': 'First Month of the Year',
+      'currency_format': 'Währungsformat',
+      'first_day_of_the_week': 'Erster Tag der Woche',
+      'first_month_of_the_year': 'Erster Monat des Jahres',
       'sunday': 'Sonntag',
       'monday': 'Montag',
       'tuesday': 'Dienstag',
@@ -13375,32 +14687,32 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'december': 'Dezember',
       'symbol': 'Symbol',
       'ocde': 'Code',
-      'date_format': 'Date Format',
-      'datetime_format': 'Datetime Format',
+      'date_format': 'Datumsformat',
+      'datetime_format': 'Datums-/Zeitformat',
       'military_time': '24-Stunden-Zeit',
-      'military_time_help': '24 Hour Display',
-      'send_reminders': 'Send Reminders',
-      'timezone': 'Timezone',
-      'filtered_by_group': 'Filtered by Group',
-      'filtered_by_invoice': 'Filtered by Invoice',
-      'filtered_by_client': 'Filtered by Client',
-      'filtered_by_vendor': 'Filtered by Vendor',
-      'group_settings': 'Group Settings',
+      'military_time_help': '24-Stunden-Anzeige',
+      'send_reminders': 'Erinnerungen senden',
+      'timezone': 'Zeitzone',
+      'filtered_by_group': 'Gefiltert nach Gruppe',
+      'filtered_by_invoice': 'Gefiltert nach Rechnung',
+      'filtered_by_client': 'Gefiltert nach Kunde',
+      'filtered_by_vendor': 'Gefiltert nach Lieferant',
+      'group_settings': 'Gruppeneinstellungen',
       'group': 'Gruppe',
-      'groups': 'Groups',
-      'new_group': 'New Group',
-      'edit_group': 'Edit Group',
-      'created_group': 'Successfully created group',
-      'updated_group': 'Successfully updated group',
-      'archived_group': 'Successfully archived group',
-      'deleted_group': 'Successfully deleted group',
-      'restored_group': 'Successfully restored group',
-      'upload_logo': 'Upload Logo',
-      'uploaded_logo': 'Successfully uploaded logo',
+      'groups': 'Gruppen',
+      'new_group': 'Neue Gruppe',
+      'edit_group': 'Gruppe bearbeiten',
+      'created_group': 'Gruppe erfolgreich erstellt',
+      'updated_group': 'Gruppe erfolgreich aktualisiert',
+      'archived_group': 'Gruppe erfolgreich archiviert',
+      'deleted_group': 'Gruppe erfolgreich gelöscht',
+      'restored_group': 'Gruppe erfolgreich wiederhergestellt',
+      'upload_logo': 'Logo hochladen',
+      'uploaded_logo': 'Logo erfolgreich hochgeladen',
       'logo': 'Logo',
-      'saved_settings': 'Successfully saved settings',
+      'saved_settings': 'Einstellungen erfolgreich gespeichert',
       'product_settings': 'Produkt-Einstellungen',
-      'device_settings': 'Device Settings',
+      'device_settings': 'Geräteeinstellungen',
       'defaults': 'Standards',
       'basic_settings': 'Allgemeine Einstellungen',
       'advanced_settings': 'Erweiterte Einstellungen',
@@ -13416,14 +14728,14 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'buy_now_buttons': '\"Kaufe jetzt\"-Buttons',
       'email_settings': 'E-Mail-Einstellungen',
       'templates_and_reminders': 'Vorlagen & Erinnerungen',
-      'credit_cards_and_banks': 'Credit Cards & Banks',
+      'credit_cards_and_banks': 'Kreditkarten & Banken',
       'data_visualizations': 'Datenvisualisierungen',
-      'price': 'Price',
-      'email_sign_up': 'Email Sign Up',
-      'google_sign_up': 'Google Sign Up',
+      'price': 'Preis',
+      'email_sign_up': 'E-Mail-Registrierung',
+      'google_sign_up': 'Registrierung via Google',
       'thank_you_for_your_purchase': 'Vielen Dank für Ihren Kauf!',
       'redeem': 'Einlösen',
-      'sign_up_with_google': 'Sign Up With Google',
+      'sign_up_with_google': 'Mit Google registrieren',
       'back': 'Zurück',
       'past_purchases': 'Vergangene Käufe',
       'annual_subscription': 'Jahres-Abonnement',
@@ -13529,7 +14841,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'thank_you_for_using_our_app': 'Vielen Dank, dass Sie unsere App nutzen!',
       'if_you_like_it': 'Wenn es dir gefällt, bitte',
       'click_here': 'hier klicken',
-      'click_here_capital': 'Click here',
+      'click_here_capital': 'Klicke hier',
       'to_rate_it': ', um es zu bewerten.',
       'average': 'Durchschnittlich',
       'unapproved': 'Nicht genehmigt',
@@ -13564,6 +14876,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'custom': 'Benutzerdefiniert',
       'clone_to_invoice': 'Klone in Rechnung',
       'clone_to_quote': 'Klone in Angebot',
+      'clone_to_credit': 'Clone to Credit',
       'view_invoice': 'Rechnung anschauen',
       'convert': 'Konvertiere',
       'more': 'Mehr',
@@ -13576,7 +14889,6 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'edit_expense': 'Ausgabe Bearbeiten',
       'edit_vendor': 'Lieferant Bearbeiten',
       'edit_project': 'Projekt bearbeiten',
-      'edit_credit': 'Saldo bearbeiten',
       'edit_recurring_invoice': 'Bearbeite wiederkehrende Rechnung',
       'edit_recurring_expense': 'Wiederkehrende Ausgabe bearbeiten',
       'edit_recurring_quote': 'Bearbeite wiederkehrendes Angebot',
@@ -13730,15 +15042,12 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'approved': 'Bestätigt',
       'partial': 'Teil-/Anzahlung',
       'paid': 'Bezahlt',
-      'invoice_status_1': 'Entwurf',
-      'invoice_status_2': 'Versendet',
-      'invoice_status_3': 'Angesehen',
-      'invoice_status_4': 'Bestätigt',
       'mark_sent': 'Als versendet markieren',
       'marked_invoice_as_sent': 'Rechnung erfolgreich als versendet markiert',
-      'marked_invoice_as_paid': 'Successfully marked invoice as sent',
-      'marked_invoices_as_sent': 'Successfully marked invoices as sent',
-      'marked_invoices_as_paid': 'Successfully marked invoices as sent',
+      'marked_invoice_as_paid': 'Successfully marked invoice as paid',
+      'marked_invoices_as_sent':
+          'Erfolgreich Rechnungen als versendet markiert',
+      'marked_invoices_as_paid': 'Successfully marked invoices as paid',
       'done': 'Erledigt',
       'please_enter_a_client_or_contact_name':
           'Bitte geben Sie einen Kunden- oder Kontaktnamen ein',
@@ -13872,157 +15181,270 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'activity_54': ':user hat Ticket :ticket wieder geöffnet',
       'activity_55': ':contact hat auf Ticket :ticket geantwortet',
       'activity_56': ':user  hat Ticket :ticket angesehen',
-      'activity_57': 'System failed to email invoice :invoice',
+      'activity_57':
+          'Das System konnte die Rechnung :invoice nicht per E-Mail versenden',
       'one_time_password': 'Einmaliges Passwort',
       'emailed_quote': 'Angebot erfolgreich versendet',
+      'emailed_credit': 'Successfully emailed credit',
       'marked_quote_as_sent': 'Angebot erfolgreich als versendet markiert',
+      'marked_credit_as_sent': 'Successfully marked credit as sent',
       'expired': 'Abgelaufen',
       'all': 'Alle',
       'select': 'Wählen',
-      'long_press_multiselect': 'Long-press Multiselect',
+      'long_press_multiselect': 'Mehrfachauswahl durch langes Drücken',
       'custom_value1': 'Benutzerdefinierten Wert',
       'custom_value2': 'Benutzerdefinierten Wert',
-      'custom_value3': 'Custom Value 3',
-      'custom_value4': 'Custom Value 4',
-      'email_style_custom': 'Custom Email Style',
-      'custom_message_dashboard': 'Custom Dashboard Message',
-      'custom_message_unpaid_invoice': 'Custom Unpaid Invoice Message',
-      'custom_message_paid_invoice': 'Custom Paid Invoice Message',
-      'custom_message_unapproved_quote': 'Custom Unapproved Quote Message',
+      'custom_value3': 'Benutzerdefinierter Wert 3',
+      'custom_value4': 'Benutzerdefinierter Wert 4',
+      'email_style_custom': 'Benutzer definierter E-Mail-Stil',
+      'custom_message_dashboard': 'Benutzerdefinierte Dashboard-Nachricht',
+      'custom_message_unpaid_invoice':
+          'Benutzerdefinierte Nachricht für unbezahlte Rechnung',
+      'custom_message_paid_invoice':
+          'Benutzerdefinierte Nachricht für bezahlte Rechnung',
+      'custom_message_unapproved_quote':
+          'Benutzerdefinierte Nachricht für nicht genehmigten Kostenvoranschlag',
       'lock_sent_invoices': 'Lock Sent Invoices',
-      'translations': 'Translations',
-      'task_number_pattern': 'Task Number Pattern',
-      'task_number_counter': 'Task Number Counter',
-      'expense_number_pattern': 'Expense Number Pattern',
-      'expense_number_counter': 'Expense Number Counter',
-      'vendor_number_pattern': 'Vendor Number Pattern',
-      'vendor_number_counter': 'Vendor Number Counter',
+      'translations': 'Übersetzungen',
+      'task_number_pattern': 'Aufgabennummernschema',
+      'task_number_counter': 'Aufgabennummernzähler',
+      'expense_number_pattern': 'Ausgabennummernschema',
+      'expense_number_counter': 'Ausgabennummernzähler',
+      'vendor_number_pattern': 'Lieferantennummernschema',
+      'vendor_number_counter': 'Lieferantennummernzähler',
       'ticket_number_pattern': 'Ticket Number Pattern',
       'ticket_number_counter': 'Ticket Number Counter',
-      'payment_number_pattern': 'Payment Number Pattern',
-      'payment_number_counter': 'Payment Number Counter',
-      'invoice_number_pattern': 'Invoice Number Pattern',
+      'payment_number_pattern': 'Zahlungsnummernschema',
+      'payment_number_counter': 'Zahlungsnummernzähler',
+      'invoice_number_pattern': 'Rechnungsnummernschema',
       'invoice_number_counter': 'Zähler für Rechnungsnummer',
-      'quote_number_pattern': 'Quote Number Pattern',
+      'quote_number_pattern': 'Kostenvoranschlags-Nummernschema',
       'quote_number_counter': 'Zähler für Angebotsnummer',
       'client_number_pattern': 'Credit Number Pattern',
       'client_number_counter': 'Credit Number Counter',
       'credit_number_pattern': 'Credit Number Pattern',
       'credit_number_counter': 'Credit Number Counter',
-      'reset_counter_date': 'Reset Counter Date',
-      'counter_padding': 'Counter Padding',
+      'reset_counter_date': 'Zählerdatum zurücksetzen',
+      'counter_padding': 'Zähler-Innenabstand',
       'shared_invoice_quote_counter': 'Shared Invoice Quote Counter',
-      'default_tax_name_1': 'Default Tax Name 1',
-      'default_tax_rate_1': 'Default Tax Rate 1',
-      'default_tax_name_2': 'Default Tax Name 2',
-      'default_tax_rate_2': 'Default Tax Rate 2',
-      'default_tax_name_3': 'Default Tax Name 3',
-      'default_tax_rate_3': 'Default Tax Rate 3',
+      'default_tax_name_1': 'Standard-Steuername 1',
+      'default_tax_rate_1': 'Standard-Steuersatz 1',
+      'default_tax_name_2': 'Standard-Steuername 2',
+      'default_tax_rate_2': 'Standard-Steuersatz 2',
+      'default_tax_name_3': 'Standard-Steuername 3',
+      'default_tax_rate_3': 'Standard-Steuersatz 3',
       'email_subject_invoice': 'Email Invoice Subject',
       'email_subject_quote': 'Email Quote Subject',
       'email_subject_payment': 'Email Payment Subject',
+      'email_subject_payment_partial': 'Email Partial Payment Subject',
       'switch_list_table': 'Switch List Table',
-      'client_city': 'Client City',
-      'client_state': 'Client State',
-      'client_country': 'Client Country',
-      'client_is_active': 'Client is Active',
+      'client_city': 'Kunden-Stadt',
+      'client_state': 'Kunden-Bundesland/Kanton',
+      'client_country': 'Kunden-Land',
+      'client_is_active': 'Kunde ist aktiv',
       'client_balance': 'Client Balance',
-      'client_address1': 'Client Address 1',
-      'client_address2': 'Client Address 2',
-      'client_shipping_address1': 'Client Shipping Address 1',
-      'client_shipping_address2': 'Client Shipping Address 2',
+      'client_address1': 'Kundenadresse 1',
+      'client_address2': 'Kundenadresse 2',
+      'client_shipping_address1': 'Kunden-Lieferadresse 1',
+      'client_shipping_address2': 'Kunden-Lieferadresse 2',
       'type': 'Typ',
       'invoice_amount': 'Rechnungssumme',
       'invoice_due_date': 'Fälligkeitsdatum',
-      'tax_rate1': 'Tax Rate 1',
-      'tax_rate2': 'Tax Rate 2',
-      'tax_rate3': 'Tax Rate 3',
+      'tax_rate1': 'Steuersatz 1',
+      'tax_rate2': 'Steuersatz 2',
+      'tax_rate3': 'Steuersatz 3',
       'auto_bill': 'Automatische Verrechnung',
-      'archived_at': 'Archived At',
-      'has_expenses': 'Has Expenses',
-      'custom_taxes1': 'Custom Taxes 1',
-      'custom_taxes2': 'Custom Taxes 2',
-      'custom_taxes3': 'Custom Taxes 3',
-      'custom_taxes4': 'Custom Taxes 4',
-      'custom_surcharge1': 'Custom Surcharge 1',
-      'custom_surcharge2': 'Custom Surcharge 2',
-      'custom_surcharge3': 'Custom Surcharge 3',
-      'custom_surcharge4': 'Custom Surcharge 4',
-      'is_deleted': 'Is Deleted',
-      'vendor_city': 'Vendor City',
-      'vendor_state': 'Vendor State',
-      'vendor_country': 'Vendor Country',
+      'archived_at': 'Archiviert um',
+      'has_expenses': 'Hat Ausgaben',
+      'custom_taxes1': 'Benutzerdefinierte Steuern 1',
+      'custom_taxes2': 'Benutzerdefinierte Steuern 2',
+      'custom_taxes3': 'Benutzerdefinierte Steuern 3',
+      'custom_taxes4': 'Benutzerdefinierte Steuern 4',
+      'custom_surcharge1': 'Benutzerdefinierter Zuschlag 1',
+      'custom_surcharge2': 'Benutzerdefinierter Zuschlag 2',
+      'custom_surcharge3': 'Benutzerdefinierter Zuschlag 3',
+      'custom_surcharge4': 'Benutzerdefinierter Zuschlag 4',
+      'is_deleted': 'ist gelöscht',
+      'vendor_city': 'Lieferanten-Stadt',
+      'vendor_state': 'Lieferanten-Bundesland/Kanton',
+      'vendor_country': 'Lieferanten-Land',
+      'is_approved': 'Is Approved',
+      'tax_name': 'Steuersatz Name',
+      'tax_amount': 'Steuerwert',
+      'tax_paid': 'Steuern bezahlt',
+      'payment_amount': 'Zahlungsbetrag',
+      'age': 'Alter',
     },
     'el': {
-      'company1': 'Custom Company 1',
-      'company2': 'Custom Company 2',
-      'company3': 'Custom Company 3',
-      'company4': 'Custom Company 4',
-      'product1': 'Custom Product 1',
-      'product2': 'Custom Product 2',
-      'product3': 'Custom Product 3',
-      'product4': 'Custom Product 4',
-      'client1': 'Custom Client 1',
-      'client2': 'Custom Client 1',
-      'client3': 'Custom Client 1',
-      'client4': 'Custom Client 1',
-      'contact1': 'Custom Contact 1',
-      'contact2': 'Custom Contact 2',
-      'contact3': 'Custom Contact 3',
-      'contact4': 'Custom Contact 4',
-      'task1': 'Custom Task 1',
-      'task2': 'Custom Task 2',
-      'task3': 'Custom Task 3',
-      'task4': 'Custom Task 4',
-      'project1': 'Custom Project 1',
-      'project2': 'Custom Project 2',
-      'project3': 'Custom Project 3',
-      'project4': 'Custom Project 4',
-      'expense1': 'Custom Expense 1',
-      'expense2': 'Custom Expense 2',
-      'expense3': 'Custom Expense 3',
-      'expense4': 'Custom Expense 4',
-      'vendor1': 'Custom Vendor 1',
-      'vendor2': 'Custom Vendor 2',
-      'vendor3': 'Custom Vendor 3',
-      'vendor4': 'Custom Vendor 4',
-      'invoice1': 'Custom Invoice 1',
-      'invoice2': 'Custom Invoice 2',
-      'invoice3': 'Custom Invoice 3',
-      'invoice4': 'Custom Invoice 4',
-      'payment1': 'Custom Payment 1',
-      'payment2': 'Custom Payment 2',
-      'payment3': 'Custom Payment 3',
-      'payment4': 'Custom Payment 4',
-      'surcharge1': 'Custom Surcharge 1',
-      'surcharge2': 'Custom Surcharge 2',
-      'surcharge3': 'Custom Surcharge 3',
-      'surcharge4': 'Custom Surcharge 4',
-      'group1': 'Custom Group 1',
-      'group2': 'Custom Group 2',
-      'group3': 'Custom Group 3',
-      'group4': 'Custom Group 4',
+      'full_name': 'Πλήρες Όνομα',
+      'city_state_postal': 'Πόλη/Νομός/Τ.Κ.',
+      'postal_city_state': 'ΤΚ/Πόλη/Περιοχή',
+      'custom1': 'Πρώτη Προσαρμογή',
+      'custom2': 'Δεύτερη Προσαρμογή',
+      'custom3': 'Third Custom',
+      'custom4': 'Fourth Custom',
+      'optional': 'Optional',
+      'license': 'License',
+      'purge_data': 'Εκκαθάριση Δεδομένων',
+      'purge_successful': 'Επιτυχής εκκαθάριση δεδομένων επιχείρησης',
+      'purge_data_message':
+          'Προσοχή: Αυτό θα σβήσει όλα σας τα δεδομένα, χωρίς δυνατότητα αναίρεσης.',
+      'invoice_balance': 'Invoice Balance',
+      'age_group_0': '0 - 30 Ημέρες',
+      'age_group_30': '30 - 60 Ημέρες',
+      'age_group_60': '60 - 90 Ημέρες',
+      'age_group_90': '90 - 120 Ημέρες',
+      'age_group_120': '120+ Ημέρες',
+      'refresh': 'Ανανέωση',
+      'saved_design': 'Successfully saved design',
+      'client_details': 'Client Details',
+      'company_address': 'Company Address',
+      'invoice_details': 'Στοιχεία Τιμολογίου',
+      'quote_details': 'Quote Details',
+      'credit_details': 'Credit Details',
+      'product_columns': 'Product Columns',
+      'task_columns': 'Task Columns',
+      'add_field': 'Add Field',
+      'all_events': 'All Events',
+      'permissions': 'Δικαιώματα',
+      'none': 'Κανένα',
+      'owned': 'Owned',
+      'payment_success': 'Payment Success',
+      'payment_failure': 'Payment Failure',
+      'invoice_sent': ':count τιμολόγιο στάλθηκε',
+      'quote_sent': 'Quote Sent',
+      'credit_sent': 'Credit Sent',
+      'invoice_viewed': 'Invoice Viewed',
+      'quote_viewed': 'Quote Viewed',
+      'credit_viewed': 'Credit Viewed',
+      'quote_approved': 'Quote Approved',
+      'receive_all_notifications': 'Receive All Notifications',
+      'purchase_license': 'Purchase License',
+      'apply_license': 'Εφαρμογή Άδειας Χρήσης',
+      'cancel_account': 'Διαγραφή Λογαριασμού',
+      'cancel_account_message':
+          'Προσοχή: Αυτό θα σβήσει το λογαριασμό σας, χωρίς δυνατότητα αναίρεσης.',
+      'delete_company': 'Διαγραφή Επιχείρησης',
+      'delete_company_message':
+          'Προειδοποίηση: Αυτό θα διαγράψει οριστικά την επιχείρηση, χωρίς αναίρεση.',
+      'enable_modules': 'Enable Modules',
+      'converted_quote': 'Successfully converted quote',
+      'credit_design': 'Credit Design',
+      'includes': 'Includes',
+      'header': 'Επικεφαλίδα',
+      'load_design': 'Φόρτωση Σχεδιασμού',
+      'css_framework': 'CSS Framework',
+      'custom_designs': 'Custom Designs',
+      'designs': 'Designs',
+      'new_design': 'New Design',
+      'edit_design': 'Edit Design',
+      'created_design': 'Successfully created design',
+      'updated_design': 'Successfully updated design',
+      'archived_design': 'Successfully archived design',
+      'deleted_design': 'Successfully deleted design',
+      'removed_design': 'Successfully removed design',
+      'restored_design': 'Successfully restored design',
+      'proposals': 'Προτάσεις',
+      'tickets': 'Αιτήματα υποστήριξης',
+      'recurring_invoices': 'Επαναλαμβανόμενα Τιμολόγια',
+      'recurring_quotes': 'Επαναλαμβανόμενες Προσφορές',
+      'recurring_tasks': 'Recurring Tasks',
+      'recurring_expenses': 'Επαναλαμβανόμενες Δαπάνες',
+      'account_management': 'Διαχείριση Λογαριασμού',
+      'credit_date': 'Ημ/νία Πίστωσης',
+      'credit': 'Πίστωση',
+      'credits': 'Πιστώσεις',
+      'new_credit': 'Εισάγετε Πίστωση',
+      'edit_credit': 'Επεξεργασία Πίστωσης',
+      'created_credit': 'Επιτυχής δημιουργία πίστωσης',
+      'updated_credit': 'Επιτυχής ενημέρωση πίστωσης',
+      'archived_credit': 'Επιτυχής αρχειοθέτηση πίστωσης',
+      'deleted_credit': 'Επιτυχής διαγραφή πίστωσης',
+      'removed_credit': 'Successfully removed credit',
+      'restored_credit': 'Επιτυχής ανάκτηση πίστωσης',
+      'current_version': 'Τρέχουσα έκδοση',
+      'latest_version': 'Latest Version',
+      'update_now': 'Update Now',
+      'a_new_version_is_available': 'A new version of the web app is available',
+      'update_available': 'Update Available',
+      'app_updated': 'Update successfully completed',
+      'learn_more': 'Μάθετε περισσότερα',
+      'integrations': 'Integrations',
+      'tracking_id': 'Tracking Id',
+      'slack_webhook_url': 'Slack Webhook URL',
+      'credit_footer': 'Υποσέλιδο Πίστωσης',
+      'credit_terms': 'Όροι Πίστωσης',
+      'untitled_company': 'Ανώνυμη Εταιρία',
+      'added_company': 'Επιτυχής προσθήκη επιχείρησης',
+      'company1': 'Προσαρμοσμένη εταιρεία 1',
+      'company2': 'Προσαρμοσμένη εταιρεία 2',
+      'company3': 'Προσαρμοσμένη εταιρεία 3',
+      'company4': 'Προσαρμοσμένη εταιρεία 4',
+      'product1': 'Προσαρμοσμένο Προιόν 1',
+      'product2': 'Προσαρμοσμένο Προιόν 2',
+      'product3': 'Προσαρμοσμένο Προιόν 3',
+      'product4': 'Προσαρμοσμένο Προιόν 4',
+      'client1': 'Προσαρμοσμένος Πελάτης 1',
+      'client2': 'Προσαρμοσμένος Πελάτης 2',
+      'client3': 'Προσαρμοσμένος Πελάτης 3',
+      'client4': 'Προσαρμοσμένος Πελάτης 4',
+      'contact1': 'Προσαρμοσμένη Επαφή 1',
+      'contact2': 'Προσαρμοσμένη Επαφή 2',
+      'contact3': 'Προσαρμοσμένη Επαφή 3',
+      'contact4': 'Προσαρμοσμένη Επαφή 4',
+      'task1': 'Προσαρμοσμένη Εργασία 1',
+      'task2': 'Προσαρμοσμένη Εργασία 2',
+      'task3': 'Προσαρμοσμένη Εργασία 3',
+      'task4': 'Προσαρμοσμένη Εργασία 4',
+      'project1': 'Προσαρμοσμένο Εργο 1',
+      'project2': 'Προσαρμοσμένο Εργο 2',
+      'project3': 'Προσαρμοσμένο Εργο 3',
+      'project4': 'Προσαρμοσμένο Εργο 4',
+      'expense1': 'Προσαρμοσμένες Δαπάνες 1',
+      'expense2': 'Προσαρμοσμένες Δαπάνες 2',
+      'expense3': 'Προσαρμοσμένες Δαπάνες 3',
+      'expense4': 'Προσαρμοσμένες Δαπάνες 4',
+      'vendor1': 'Προσαρμοσμένος Προμηθευτής 1',
+      'vendor2': 'Προσαρμοσμένος Προμηθευτής 2',
+      'vendor3': 'Προσαρμοσμένος Προμηθευτής 3',
+      'vendor4': 'Προσαρμοσμένος Προμηθευτής 4',
+      'invoice1': 'Προσαρμοσμένο Τιμολόγιο 1',
+      'invoice2': 'Προσαρμοσμένο Τιμολόγιο 2',
+      'invoice3': 'Προσαρμοσμένο Τιμολόγιο 3',
+      'invoice4': 'Προσαρμοσμένο Τιμολόγιο 4',
+      'payment1': 'Προσαρμοσμένη Πληρωμή 1',
+      'payment2': 'Προσαρμοσμένη Πληρωμή 2',
+      'payment3': 'Προσαρμοσμένη Πληρωμή 3',
+      'payment4': 'Προσαρμοσμένη Πληρωμή 4',
+      'surcharge1': 'Προσαρμοσμένη Προσαύξηση 1',
+      'surcharge2': 'Προσαρμοσμένη Προσαύξηση 2',
+      'surcharge3': 'Προσαρμοσμένη Προσαύξηση 3',
+      'surcharge4': 'Προσαρμοσμένη Προσαύξηση 4',
+      'group1': 'Προσαρμοσένη Ομάδα 1',
+      'group2': 'Προσαρμοσένη Ομάδα 2',
+      'group3': 'Προσαρμοσένη Ομάδα 3',
+      'group4': 'Προσαρμοσένη Ομάδα 4',
       'reset': 'Επαναφορά',
-      'number': 'Number',
+      'number': 'Αριθμός',
       'export': 'Εξαγωγή',
       'chart': 'Διάγραμμα',
-      'count': 'Count',
+      'count': 'Μέτρηση',
       'totals': 'Σύνολα',
       'blank': 'Κενό',
       'day': 'Ημέρα',
       'month': 'Μήνας',
       'year': 'Έτος',
       'subgroup': 'Υποομάδα',
-      'is_active': 'Is Active',
+      'is_active': 'Είναι ενεργό',
       'group_by': 'Ομαδοποίηση με',
       'credit_balance': 'Υπόλοιπο Πίστωσης',
-      'contact_last_login': 'Contact Last Login',
-      'contact_full_name': 'Contact Full Name',
+      'contact_last_login': 'Τελευταία είσοδος επαφής',
+      'contact_full_name': 'Πλήρες ονοματεπώνυμο επαφής',
       'contact_phone': 'Τηλέφωνο Επικοινωνίας',
-      'contact_custom_value1': 'Contact Custom Value 1',
-      'contact_custom_value2': 'Contact Custom Value 2',
-      'contact_custom_value3': 'Contact Custom Value 3',
-      'contact_custom_value4': 'Contact Custom Value 4',
+      'contact_custom_value1': 'Προσαρμοσμένη Τιμή Επαφής 1',
+      'contact_custom_value2': 'Προσαρμοσμένη Τιμή Επαφής 2',
+      'contact_custom_value3': 'Προσαρμοσμένη Τιμή Επαφής 3',
+      'contact_custom_value4': 'Προσαρμοσμένη Τιμή Επαφής 4',
       'shipping_address1': 'Οδός Αποστολής',
       'shipping_address2': 'Διαμέρισμα Αποστολής',
       'shipping_city': 'Πόλη Αποστολής',
@@ -14032,131 +15454,133 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'client_id': 'Id Πελάτη',
       'assigned_to': 'Ανατέθηκε σε',
       'created_by': 'Δημιουργήθηκε από :name',
-      'assigned_to_id': 'Assigned To Id',
-      'created_by_id': 'Created By Id',
-      'add_column': 'Add Column',
-      'edit_columns': 'Edit Columns',
+      'assigned_to_id': 'Ορίστηκε σε Id',
+      'created_by_id': 'Δημιουργήθηκε απο Id',
+      'add_column': 'Προσθήκη στήλης',
+      'edit_columns': 'Επεξεργασία στηλών',
       'columns': 'Στήλες',
       'aging': 'Γήρανση',
       'profit_and_loss': 'Κέρδος και Ζημιά',
       'reports': 'Αναφορές',
       'report': 'Αναφορά',
       'add_company': 'Προσθήκη Εταιρείας',
-      'to_learn_about_gogle_fonts': 'to learn about Google Fonts',
       'unpaid_invoice': 'Μη Εξοφλημένο Τιμολόγιο',
       'paid_invoice': 'Εξοφλημένο Τιμολόγιο',
       'unapproved_quote': 'Μη Εγκεκριμένη Προσφορά',
       'help': 'Βοήθεια',
       'refund': 'Επιστροφή χρημάτων',
-      'refund_date': 'Refund Date',
+      'refund_date': 'Ημερομηνία επιστροφής χρημάτων',
       'filtered_by': 'Φιλτράρισμα με',
       'contact_email': 'Email Επικοινωνίας',
-      'multiselect': 'Multiselect',
+      'multiselect': 'Πολλαπλή επιλογή',
       'entity_state': 'Περιοχή',
-      'verify_password': 'Verify Password',
-      'applied': 'Applied',
-      'include_recent_errors': 'Include recent errors from the logs',
+      'verify_password': 'Επαλήθευση Κωδικού',
+      'applied': 'Εγινε εφαρμογή',
+      'include_recent_errors':
+          'Συμπερίληψη πρόσφατων σφαλμάτων απο αρχεία καταγραφής',
       'your_message_has_been_received':
-          'We have received your message and will try to respond promptly.',
+          'Εχουμε λάβει το μήνυμά σας και θα σας απαντήσουμε σύντομα.',
       'message': 'Μήνυμα',
       'from': 'Από',
-      'show_product_details': 'Show Product Details',
+      'show_product_details': 'Εμφάνιση Λεπτομερειών Προιόντος',
       'show_product_details_help':
-          'Include the description and cost in the product dropdown',
-      'pdf_min_requirements': 'The PDF renderer requires :version',
-      'adjust_fee_percent': 'Adjust Fee Percent',
+          'Συμπερίληψη της περιγραφής και κόστους τιμής στη λίστα προιόντος',
+      'pdf_min_requirements': 'Ο κωδικοποιητής PDF απαιτεί :version',
+      'adjust_fee_percent': 'Προσαρμογή του ποσοστού του τέλους',
       'adjust_fee_percent_help':
-          'Τροποποιηση του ποσοστού του λογαριασμού για αμοιβή',
-      'configure_settings': 'Configure Settings',
+          'Τροποποίηση του ποσοστού του λογαριασμού για τέλος',
+      'configure_settings': 'Προσαρμογή Ρυθμίσεων',
       'support_forum': 'φόρουμ υποστήριξης',
-      'about': 'About',
+      'about': 'Περί',
       'documentation': 'Τεκμηρίωση',
       'contact_us': 'Επικοινωνήστε μαζί μας',
       'subtotal': 'Μερικό Σύνολο',
       'line_total': 'Σύνολο Γραμμής',
       'item': 'Προϊόν',
-      'credit_email': 'Credit Email',
+      'credit_email': 'Πιστωτικό μήνυμα ηλεκτρονικού ταχυδρομείου',
       'iframe_url': 'Ιστοσελίδα',
-      'domain_url': 'Domain URL',
+      'domain_url': 'Σύνδεσμος URL',
       'password_is_too_short': 'Ο κωδικός πρόσβασης είναι πολύ μικρός',
       'password_is_too_easy':
-          'Password msut contain an upper case character and a number',
-      'client_portal_tasks': 'Client Portal Tasks',
-      'client_portal_dashboard': 'Client Portal Dashboard',
-      'please_enter_a_value': 'Please enter a value',
-      'deleted_logo': 'Successfully deleted logo',
+          'Ο κωδικός πρόσβασης πρέπει να περιέχει ένα κεφαλαίο χαρακτήρα και έναν αριθμό',
+      'client_portal_tasks': 'Εργασίες πύλης πελάτη',
+      'client_portal_dashboard': 'Πίνακας ελέγχου πύλης πελατών',
+      'please_enter_a_value': 'Παρακαλούμε ορίστε μια τιμή',
+      'deleted_logo': 'Επιτυχής διαγραφή λογότυπου',
       'yes': 'Ναι',
       'no': 'Όχι',
-      'generate_number': 'Generate Number',
-      'when_saved': 'When Saved',
-      'when_sent': 'When Sent',
-      'select_company': 'Select Company',
+      'generate_number': 'Δημιουργία Αριθμού',
+      'when_saved': 'Οταν αποθηκευτεί',
+      'when_sent': 'Οταν αποσταλλεί',
+      'select_company': 'Επιλέξτε Εταιρεία',
       'float': 'Float',
-      'collapse': 'Collapse',
-      'show_or_hide': 'Show/hide',
-      'menu_sidebar': 'Menu Sidebar',
-      'history_sidebar': 'History Sidebar',
-      'tablet': 'Tablet',
+      'collapse': 'Συρρίκνωση',
+      'show_or_hide': 'Εμφάνιση/απόκρυψη',
+      'menu_sidebar': 'Πλευρικό Μενού',
+      'history_sidebar': 'Μενού Πλευρικού Ιστορικού',
+      'tablet': 'Τάμπλετ',
       'mobile': 'Κινητό',
       'desktop': 'Σταθερός υπολογιστής',
-      'layout': 'Layout',
+      'layout': 'Εμφάνιση',
       'view': 'Προβολή',
-      'module': 'Module',
-      'first_custom': 'First Custom',
-      'second_custom': 'Second Custom',
-      'third_custom': 'Third Custom',
-      'show_cost': 'Show Cost',
+      'module': 'Ενότητα',
+      'first_custom': 'Πρώτη Προσαρμογή',
+      'second_custom': 'Δεύτερη Προσαρμογή',
+      'third_custom': 'Τρίτη Προσαρμογή',
+      'show_cost': 'Εμφάνιση Κόστους',
       'show_cost_help':
-          'Display a product cost field to track the markup/profit',
-      'show_product_quantity': 'Show Product Quantity',
+          'Εμφάνιση του πεδίου κόστους προϊόντος για να είναι δυνατή η εύρεση του κέρδους',
+      'show_product_quantity': 'Εμφάνισε την Ποσότητα Προϊόντος',
       'show_product_quantity_help':
-          'Display a product quantity field, otherwise default to one',
-      'show_invoice_quantity': 'Show Invoice Quantity',
+          'Εμφάνιση του πεδίου ποσότητας προϊόντος, αλλιώς ορισμός σε ένα',
+      'show_invoice_quantity': 'Εμφάνισε την Ποσότητα Τιμολογίου',
       'show_invoice_quantity_help':
-          'Display a line item quantity field, otherwise default to one',
-      'default_quantity': 'Default Quantity',
-      'default_quantity_help':
-          'Automatically set the line item quantity to one',
-      'one_tax_rate': 'One Tax Rate',
-      'two_tax_rates': 'Two Tax Rates',
-      'three_tax_rates': 'Three Tax Rates',
-      'default_tax_rate': 'Default Tax Rate',
+          'Εμφάνιση του πεδίου ποσότητας γραμμής, αλλιώς ορισμός σε ένα',
+      'default_quantity': 'Προεπιλεγμένη Ποσότητα',
+      'default_quantity_help': 'Αυτόματος ορισμός της ποσότητας γραμμής σε ένα',
+      'one_tax_rate': 'Ένα Ποσοστό Φόρου',
+      'two_tax_rates': 'Δύο Ποσοστά Φόρων',
+      'three_tax_rates': 'Τρία Ποσοστά Φόρων',
+      'default_tax_rate': 'Προεπιλεγμένο Ποσοστό Φόρου',
       'user': 'Χρήστης',
-      'invoice_tax': 'Invoice Tax',
-      'line_item_tax': 'Line Item Tax',
-      'inclusive_taxes': 'Inclusive Taxes',
-      'invoice_tax_rates': 'Invoice Tax Rates',
-      'item_tax_rates': 'Item Tax Rates',
+      'invoice_tax': 'Φόρος Τιμολογίου',
+      'line_item_tax': 'Ποσοστό Φόρου Γραμμής',
+      'inclusive_taxes': 'Συμπεριλαμβανόμενοι Φόροι',
+      'invoice_tax_rates': 'Φόροι Τιμολογίου',
+      'item_tax_rates': 'Ποσοστά Φόρων Προϊόντος',
       'no_client_selected': 'Παρακαλώ επιλέξτε πελάτη',
-      'configure_rates': 'Configure rates',
+      'configure_rates': 'Προσαρμογή ποσοστών',
       'tax_settings': 'Ρυθμίσεις Φόρων',
-      'tax_settings_rates': 'Tax Rates',
-      'accent_color': 'Accent Color',
+      'tax_settings_rates': 'Ποσοστά Φόρων',
+      'accent_color': 'Χρώμα Τονισμού',
       'switch': 'Εναλλαγή',
-      'comma_sparated_list': 'Comma separated list',
+      'comma_sparated_list': 'Λίστα διαχωριζόμενη με κόμματα',
       'options': 'Επιλογές',
-      'single_line_text': 'Single-line text',
-      'multi_line_text': 'Multi-line text',
-      'dropdown': 'Dropdown',
-      'field_type': 'Field Type',
-      'recover_password_email_sent': 'A password recovery email has been sent',
+      'single_line_text': 'Κείμενο μονής γραμμής',
+      'multi_line_text': 'Κείμενο πολλαπλών γραμμών',
+      'dropdown': 'Πτυσώμενο',
+      'field_type': 'Τύπος Πεδίου',
+      'recover_password_email_sent':
+          'Ένα email ανάκτησης κωδικού έχει αποσταλεί',
       'submit': 'Υποβολή',
       'recover_password': 'Ανάκτηση του κωδικού  πρόσβασής σας',
-      'late_fees': 'Late Fees',
+      'late_fees': 'Καθυστερούμενα Τέλη',
       'credit_number': 'Αριθμός Πίστωσης',
-      'payment_number': 'Payment Number',
-      'late_fee_amount': 'Ποσό Χρέωσης Καθυστερημένης Εξόφλισης',
-      'late_fee_percent': 'Ποσοστό Χρέωσης Καθυστερημένης Εξόφλισης',
+      'payment_number': 'Αριθμός Πληρωμής',
+      'late_fee_amount': 'Ποσό Τέλους Καθυστερημένης Εξόφλησης',
+      'late_fee_percent': 'Ποσοστό Τέλους Καθυστερημένης Εξόφλησης',
       'schedule': 'Προγραμμάτισε',
-      'before_due_date': 'Before the due date',
-      'after_due_date': 'After the due date',
-      'after_invoice_date': 'After the invoice date',
+      'before_due_date': 'Πριν την ημερομηνία πληρωμής',
+      'after_due_date': 'Μετά την ημερομηνία πληρωμής',
+      'after_invoice_date': 'Μετά την ημερομηνία τιμολογίου',
       'days': 'Ημέρες',
       'invoice_email': 'Email Τιμολογίων',
       'payment_email': 'Email Πληρωμών',
+      'partial_payment': 'Partial Payment',
+      'partial_payment_email': 'Partial Payment Email',
       'quote_email': 'Email Προσφορών',
       'endless_reminder': 'Συνεχής Υπενθύμιση',
-      'filtered_by_user': 'Filtered by User',
+      'filtered_by_user': 'Φιλτράρισμα από το Χρήστη',
       'administrator': 'Διαχειριστής',
       'administrator_help':
           'Επιτρέψτε στο χρήστη να διαχειρίζεται χρήστες, να αλλάζει ρυθμίσεις και να τροποποιεί όλες τις εγγραφές',
@@ -14164,11 +15588,11 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'users': 'Χρήστες',
       'new_user': 'Νέος Χρήστης',
       'edit_user': 'Επεξεργασία Χρήστη',
-      'created_user': 'Successfully created user',
+      'created_user': 'Επιτυχής δημιουργία χρήστη',
       'updated_user': 'Επιτυχής ενημέρωση χρήστη',
       'archived_user': 'Επιτυχής αρχειοθέτηση χρήστη',
       'deleted_user': 'Επιτυχής διαγραφή χρήστη',
-      'removed_user': 'Successfully removed user',
+      'removed_user': 'Επιτυχής αφαίρεση χρήστη',
       'restored_user': 'Επιτυχής ανάκτηση χρήστη',
       'general_settings': 'Γενικές Ρυθμίσεις',
       'invoice_options': 'Επιλογές Τιμολογίου',
@@ -14183,8 +15607,8 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'first_page': 'Πρώτη σελίδα',
       'all_pages': 'Προσθήκη Σελίδας',
       'last_page': 'Τελευταία σελίδα',
-      'primary_font': 'Primary Font',
-      'secondary_font': 'Secondary Font',
+      'primary_font': 'Κύρια Γραμματοσειρά',
+      'secondary_font': 'Δευτερεύουσα Γραμματοσειρά',
       'primary_color': 'Κύριο Χρώμα',
       'secondary_color': 'Δευτερεύον Χρώμα',
       'page_size': 'Μέγεθος Σελίδας',
@@ -14220,39 +15644,37 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'freq_six_months': 'Έξι μήνες',
       'freq_annually': 'Έτος',
       'freq_two_years': 'Δύο χρόνια',
-      'freq_three_years': 'Three Years',
+      'freq_three_years': 'Τρία Χρόνια',
       'never': 'Ποτέ',
       'company': 'Εταιρεία',
       'generated_numbers': 'Δημιουργημένοι Αριθμοί',
       'charge_taxes': 'Χρέωση φόρων',
-      'credit': 'Πίστωση',
-      'credits': 'Πιστώσεις',
       'next_reset': 'Επόμενη επανεκκίνηση',
       'reset_counter': 'Επανεκκίνηση Μετρητή',
       'recurring_prefix': 'Επαναλαμβανόμενο Πρόθεμα',
-      'number_padding': 'Number Padding',
-      'general': 'General',
-      'surcharge_field': 'Surcharge Field',
+      'number_padding': 'Περιθώριο Αρίθμησης',
+      'general': 'Γενικός',
+      'surcharge_field': 'Πεδίο Επιβάρυνσης',
       'company_field': 'Πεδίο Εταιρείας',
-      'company_value': 'Company Value',
-      'credit_field': 'Credit Field',
+      'company_value': 'Αξία Εταιρίας',
+      'credit_field': 'Πεδίο Πίστωσης',
       'invoice_field': 'Πεδίο Τιμολογίου',
       'invoice_surcharge': 'Επιβάρυνση Τιμολογίου',
       'client_field': 'Πεδίο Πελάτη',
       'product_field': 'Πεδίο Προϊόντος',
-      'payment_field': 'Payment Field',
+      'payment_field': 'Πεδίο Πληρωμής',
       'contact_field': 'Πεδίο Επαφής',
       'vendor_field': 'Πεδίο Προμηθευτή',
       'expense_field': 'Πεδίο Δαπάνης',
       'project_field': 'Πεδίο Project',
       'task_field': 'Πεδίο Εργασίας',
-      'group_field': 'Group Field',
-      'number_counter': 'Number Counter',
+      'group_field': 'Πεδίο Γκρουπ',
+      'number_counter': 'Μετρητής Αρίθμησης',
       'prefix': 'Πρόθεμα',
-      'number_pattern': 'Number Pattern',
+      'number_pattern': 'Μοτίβο Αρίθμησης',
       'messages': 'Μηνύματα',
       'custom_css': 'Προσαρμοσμένο CSS',
-      'custom_javascript': 'Custom JavaScript',
+      'custom_javascript': 'Προσαρμοσμένη JavaScript',
       'signature_on_pdf': 'Εμφάνισε στο PDF',
       'signature_on_pdf_help':
           'Εμφάνισε την υπογραφή του πελάτη στο PDF του τιμολογίου/προσφοράς.',
@@ -14269,9 +15691,6 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'enable_portal_password': 'Προστασία Τιμολογίων με Κωδικό Πρόσβασης',
       'enable_portal_password_help':
           'Επιτρέπει τον καθορισμό κωδικού πρόσβασης για κάθε επαφή. Αν έχει καθοριστεί κωδικός, η επαφή θα υποχρεούται να καταχωρήσει κωδικό πριν την προβολή των τιμολογίων.',
-      'send_portal_password': 'Αυτόματη Δημιουργία',
-      'send_portal_password_help':
-          'Εάν δεν έχει οριστεί κωδικό πρόσβασης, θα δημιουργηθεί ένα αυτόματα και θα αποσταλεί με το πρώτο τιμολόγιο.',
       'authorization': 'Εξουσιοδότηση',
       'subdomain': 'Υποτομέας',
       'domain': 'Domain',
@@ -14283,21 +15702,21 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'light': 'Ανοιχτό',
       'dark': 'Σκούρο',
       'email_design': 'Σχεδίαση Email',
-      'attach_pdf': 'Attach PDF',
-      'attach_documents': 'Attach Documents',
-      'attach_ubl': 'Attach UBL',
-      'email_style': 'Email Style',
+      'attach_pdf': 'Επισύναψε PDF',
+      'attach_documents': 'Επισύναψη Εγγράφων',
+      'attach_ubl': 'Επισύναψη UBL',
+      'email_style': 'Στυλ Email',
       'enable_email_markup': 'Ενεργοποίηση Σημανσης',
       'reply_to_email': 'Email Απάντησης',
       'bcc_email': 'Email ιδιαίτερης κοινοποίησης',
-      'processed': 'Processed',
+      'processed': 'Επεξεργάσθηκε',
       'credit_card': 'Πιστωτική Κάρτα',
       'bank_transfer': 'Τραπεζικό Έμβασμα',
       'priority': 'Προτεραιότητα',
-      'fee_amount': 'Fee Amount',
-      'fee_percent': 'Fee Percent',
-      'fee_cap': 'Fee Cap',
-      'limits_and_fees': 'Limits/Fees',
+      'fee_amount': 'Ποσό Τέλους',
+      'fee_percent': 'Ποσοστό Τέλους',
+      'fee_cap': 'Ανώτατο Όριο Τέλους',
+      'limits_and_fees': 'Όρια/Τέλη',
       'enable_min': 'Ενεργοποίηση ελάχιστου',
       'enable_max': 'Ενεργοποίηση μέγιστου',
       'min_limit': 'Ελάχιστο: :min',
@@ -14305,11 +15724,11 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'min': 'Ελάχιστο',
       'max': 'Μέγιστο',
       'accepted_card_logos': 'Λογότυπα Αποδεκτών Καρτών',
-      'credentials': 'Credentials',
+      'credentials': 'Στοιχεία εισόδου',
       'require_billing_address_help':
-          'Require client to provide their billing address',
+          'Απαίτηση από τον πελάτη να συμπληρώσει τη διεύθυνση τιμολόγησης',
       'require_shipping_address_help':
-          'Require client to provide their shipping address',
+          'Απαίτηση από τον πελάτη να εισάγει την διεύθυνση αποστολής του',
       'update_address': 'Ενημέρωση Διεύθυνσης',
       'update_address_help':
           'Ενημέρωση της διεύθυνσης του πελάτη με τα παρεχόμενα στοιχεία',
@@ -14320,8 +15739,8 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'created_tax_rate': 'Επιτυχής δημιουργία ποσοστού φόρου',
       'updated_tax_rate': 'Επιτυχής ενημέρωση ποσοστού φόρου',
       'archived_tax_rate': 'Επιτυχής αρχειοθέτηση ποσοστού φόρου',
-      'deleted_tax_rate': 'Successfully deleted tax rate',
-      'restored_tax_rate': 'Successfully restored tax rate',
+      'deleted_tax_rate': 'Επιτυχής διαγραφή ποσοστού φόρου',
+      'restored_tax_rate': 'Επιτυχής ανάκτηση ποσοστού φόρου',
       'fill_products': 'Αυτόματη συμπλήρωση προϊόντων',
       'fill_products_help':
           'Επιλέγοντας ένα προϊόν, αυτόματα <b>θα συμπληρωθεί η περιγραφή και η αξία</b>',
@@ -14331,25 +15750,26 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'convert_products': 'Μετατροπή Τιμών Προϊόντων',
       'convert_products_help':
           'Αυτόματη μετατροπή τιμών προϊόντων στο νόμισμα συναλλαγών του πελάτη',
-      'fees': 'Προμήθειες',
+      'fees': 'Τέλη',
       'limits': 'Όρια',
       'provider': 'Provider',
-      'company_gateway': 'Payment Gateway',
-      'company_gateways': 'Payment Gateways',
-      'new_company_gateway': 'New Gateway',
-      'edit_company_gateway': 'Edit Gateway',
-      'created_company_gateway': 'Successfully created gateway',
-      'updated_company_gateway': 'Successfully updated gateway',
-      'archived_company_gateway': 'Successfully archived gateway',
-      'deleted_company_gateway': 'Successfully deleted gateway',
-      'restored_company_gateway': 'Successfully restored gateway',
-      'continue_editing': 'Continue Editing',
+      'company_gateway': 'Πύλη Πληρωμών (Gateway)',
+      'company_gateways': 'Πύλες Πληρωμών (Gateways)',
+      'new_company_gateway': 'Νέα Πύλη πληρωμής (Gateway)',
+      'edit_company_gateway': 'Επεξεργασία Πύλης Πληρωμών (Gateway)',
+      'created_company_gateway': 'Επιτυχής δημιουργία πύλης πληρωμών (Gateway)',
+      'updated_company_gateway': 'Επιτυχής ενημέρωση πύλης πληρωμών (Gateway)',
+      'archived_company_gateway':
+          'Επιτυχής αρχειοθέτηση πύλης πληρωμών (Gateway)',
+      'deleted_company_gateway': 'Επιτυχής διαγραφή πύλης πληρωμών (Gateway)',
+      'restored_company_gateway': 'Επιτυχής επαναφορά πύλης πληρωμών (Gateway)',
+      'continue_editing': 'Συνεχίστε την Επεξεργασία',
       'discard_changes': 'Απόρριψη Αλλαγών',
-      'default_value': 'Default value',
+      'default_value': 'Προεπιλεγμένη τιμή',
       'disabled': 'Απενεργοποιημένο',
-      'currency_format': 'Currency Format',
-      'first_day_of_the_week': 'First Day of the Week',
-      'first_month_of_the_year': 'First Month of the Year',
+      'currency_format': 'Μορφή Νομίσματος',
+      'first_day_of_the_week': 'Πρώτη Μέρα της Εβδομάδας',
+      'first_month_of_the_year': 'Πρώτος Μήνας του Έτους',
       'sunday': 'Κυριακή',
       'monday': 'Δευτέρα',
       'tuesday': 'Τρίτη',
@@ -14369,34 +15789,34 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'october': 'Οκτώβριος',
       'november': 'Νοέμβριος',
       'december': 'Δεκέμβριος',
-      'symbol': 'Symbol',
-      'ocde': 'Code',
-      'date_format': 'Date Format',
-      'datetime_format': 'Datetime Format',
+      'symbol': 'Σύμβολο',
+      'ocde': 'Κωδικός',
+      'date_format': 'Μορφή Ημερομηνίας',
+      'datetime_format': 'Μορφή Ημερομηνίας/Ώρας',
       'military_time': '24ωρη εμφάνιση Ώρας',
-      'military_time_help': '24 Hour Display',
-      'send_reminders': 'Send Reminders',
-      'timezone': 'Timezone',
-      'filtered_by_group': 'Filtered by Group',
-      'filtered_by_invoice': 'Filtered by Invoice',
-      'filtered_by_client': 'Filtered by Client',
-      'filtered_by_vendor': 'Filtered by Vendor',
-      'group_settings': 'Group Settings',
+      'military_time_help': '24ωρη εμφάνιση Ώρας',
+      'send_reminders': 'Αποστολή Υπενθυμίσεων',
+      'timezone': 'Ζώνη ώρας',
+      'filtered_by_group': 'Φιλτράρισμα ανά Γκρουπ',
+      'filtered_by_invoice': 'Φιλτράρισμα ανά Τιμολόγιο',
+      'filtered_by_client': 'Φιλτράρισμα ανά Πελάτη',
+      'filtered_by_vendor': 'Φιλτράρισμα ανά Προμηθευτή',
+      'group_settings': 'Ρυθμίσεις Γρουπ',
       'group': 'Ομάδα',
-      'groups': 'Groups',
-      'new_group': 'New Group',
-      'edit_group': 'Edit Group',
-      'created_group': 'Successfully created group',
-      'updated_group': 'Successfully updated group',
-      'archived_group': 'Successfully archived group',
-      'deleted_group': 'Successfully deleted group',
-      'restored_group': 'Successfully restored group',
-      'upload_logo': 'Upload Logo',
-      'uploaded_logo': 'Successfully uploaded logo',
+      'groups': 'Γρουπ',
+      'new_group': 'Νέο Γκρουπ',
+      'edit_group': 'Επεξεργασία Γκρουπ',
+      'created_group': 'Επιτυχής δημιουργία γκρουπ',
+      'updated_group': 'Επιτυχής ενημέρωση γκρουπ',
+      'archived_group': 'Επιτυχής αρχειοθέτηση γκρουπ',
+      'deleted_group': 'Επιτυχής διαγραφή γκρουπ',
+      'restored_group': 'Επιτυχής ανάκτηση γκρουπ',
+      'upload_logo': 'Μεταφόρτωση Λογοτύπου',
+      'uploaded_logo': 'Επιτυχής μεταφόρτωση λογοτύπου',
       'logo': 'Λογότυπο',
-      'saved_settings': 'Successfully saved settings',
+      'saved_settings': 'Επιτυχής αποθήκευση ρυθμίσεων',
       'product_settings': 'Ρυθμίσεις Προϊόντων',
-      'device_settings': 'Device Settings',
+      'device_settings': 'Ρυθμίσεις Συσκευής',
       'defaults': 'Προεπιλογές',
       'basic_settings': 'Βασικές Ρυθμίσεις',
       'advanced_settings': 'Ρυθμίσεις για Προχωρημένους',
@@ -14412,14 +15832,14 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'buy_now_buttons': 'Κουμπιά Αγορά Τώρα',
       'email_settings': 'Ρυθμίσεις Email',
       'templates_and_reminders': 'Πρότυπα & Υπενθυμίσεις',
-      'credit_cards_and_banks': 'Credit Cards & Banks',
+      'credit_cards_and_banks': 'Πιστωτικές Κάρτες & Τράπεζες',
       'data_visualizations': 'Απεικονίσεις Δεδομένων',
-      'price': 'Price',
-      'email_sign_up': 'Email Sign Up',
-      'google_sign_up': 'Google Sign Up',
+      'price': 'Τιμή',
+      'email_sign_up': 'Εγγραφή μέσω Email',
+      'google_sign_up': 'Εγγραφή μέσω Google',
       'thank_you_for_your_purchase': 'Ευχαριστούμε για την αγορά σας!',
       'redeem': 'Εξαργύρωσε',
-      'sign_up_with_google': 'Sign Up With Google',
+      'sign_up_with_google': 'Εγγραφή μέσω Google',
       'back': 'Πίσω',
       'past_purchases': 'Παρελθόντες Αγορές',
       'annual_subscription': 'Ετη΄σια Συνδρομή',
@@ -14525,7 +15945,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
           'Ευχαριστούμε που χρησιμοποιήσατε την εφαρμογή μας!',
       'if_you_like_it': 'Εάν σας αρέσει παρακαλούμε',
       'click_here': 'πατήστε εδώ',
-      'click_here_capital': 'Click here',
+      'click_here_capital': 'Πατήστε εδώ',
       'to_rate_it': 'για να το αξιολογήσετε.',
       'average': 'Μέσος όρος',
       'unapproved': 'Μη εγκεκριμένη',
@@ -14560,6 +15980,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'custom': 'Προσαρμοσμένο',
       'clone_to_invoice': 'Κλωνοποίηση σε Τιμολόγιο',
       'clone_to_quote': 'Κλωνοποίηση σε Προσφορά',
+      'clone_to_credit': 'Clone to Credit',
       'view_invoice': 'Προβολή Τιμολογίου',
       'convert': 'Μετατροπή',
       'more': 'Περισσότερα',
@@ -14572,7 +15993,6 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'edit_expense': 'Επεξεργασία Δαπάνης',
       'edit_vendor': 'Επεξεργασία Προμηθευτή',
       'edit_project': 'Επεξεργασία Project',
-      'edit_credit': 'Επεξεργασία Πίστωσης',
       'edit_recurring_invoice': 'Επεξεργασία Επαναλαμβανόμενων Τιμολογίων',
       'edit_recurring_expense': 'Επεξεργασία Επαναλαμβανόμενης Δαπάνης',
       'edit_recurring_quote': 'Επεξεργασία Επαναλαμβανόμενων Προσφορών',
@@ -14725,15 +16145,11 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'approved': 'Αποδεκτή',
       'partial': 'Μερικό/Κατάθεση',
       'paid': 'Πληρωμένα',
-      'invoice_status_1': 'Πρόχειρο',
-      'invoice_status_2': 'Απεσταλμένα',
-      'invoice_status_3': 'Εμφανισμένα',
-      'invoice_status_4': 'Αποδεκτή',
       'mark_sent': 'Σήμανση ως Απεσταλμένο',
       'marked_invoice_as_sent': 'Επιτυχής ορισμός τιμολογίου ως απεσταλμένο',
-      'marked_invoice_as_paid': 'Successfully marked invoice as sent',
-      'marked_invoices_as_sent': 'Successfully marked invoices as sent',
-      'marked_invoices_as_paid': 'Successfully marked invoices as sent',
+      'marked_invoice_as_paid': 'Successfully marked invoice as paid',
+      'marked_invoices_as_sent': 'Επιτυχής ορισμός τιμολογίων ως απεσταλμένα',
+      'marked_invoices_as_paid': 'Successfully marked invoices as paid',
       'done': 'Έτοιμο',
       'please_enter_a_client_or_contact_name':
           'Παρακαλώ εισάγετε ένα πελάτη ή το όνομα μίας επαφής',
@@ -14874,88 +16290,202 @@ mixin LocalizationsProvider on LocaleCodeAware {
           'Ο χρήστης :user επαναδημιούργησε το αίτημα υποστήριξης :ticket',
       'activity_55': 'Η επαφή :contact απάντησε στο αίτημα υποστήριξης :ticket',
       'activity_56': 'Ο χρήστης :user είδε το αίτημα υποστήριξης :ticket',
-      'activity_57': 'System failed to email invoice :invoice',
+      'activity_57':
+          'Το σύστημα απέτυχε να στείλει με email το τιμολόγιο :invoice',
       'one_time_password': 'Κωδικός Πρόσβασης μίας Φοράς',
       'emailed_quote': 'Επιτυχής αποστολή προσφοράς',
+      'emailed_credit': 'Successfully emailed credit',
       'marked_quote_as_sent': 'Επιτυχής ορισμός προσφοράς ως απεσταλμένη',
+      'marked_credit_as_sent': 'Successfully marked credit as sent',
       'expired': 'Ληγμένα',
       'all': 'Όλα',
       'select': 'Επιλογή',
-      'long_press_multiselect': 'Long-press Multiselect',
+      'long_press_multiselect': 'Πολλαπλή επιλογή με Παρατεταμένη πίεση',
       'custom_value1': 'Προσαρμοσμένη Τιμή',
       'custom_value2': 'Προσαρμοσμένη Τιμή',
-      'custom_value3': 'Custom Value 3',
-      'custom_value4': 'Custom Value 4',
-      'email_style_custom': 'Custom Email Style',
-      'custom_message_dashboard': 'Custom Dashboard Message',
-      'custom_message_unpaid_invoice': 'Custom Unpaid Invoice Message',
-      'custom_message_paid_invoice': 'Custom Paid Invoice Message',
-      'custom_message_unapproved_quote': 'Custom Unapproved Quote Message',
-      'lock_sent_invoices': 'Lock Sent Invoices',
-      'translations': 'Translations',
-      'task_number_pattern': 'Task Number Pattern',
-      'task_number_counter': 'Task Number Counter',
-      'expense_number_pattern': 'Expense Number Pattern',
-      'expense_number_counter': 'Expense Number Counter',
-      'vendor_number_pattern': 'Vendor Number Pattern',
-      'vendor_number_counter': 'Vendor Number Counter',
-      'ticket_number_pattern': 'Ticket Number Pattern',
-      'ticket_number_counter': 'Ticket Number Counter',
-      'payment_number_pattern': 'Payment Number Pattern',
-      'payment_number_counter': 'Payment Number Counter',
-      'invoice_number_pattern': 'Invoice Number Pattern',
+      'custom_value3': 'Προσαρμοσμένη Τιμή 3',
+      'custom_value4': 'Προσαρμοσμένη Τιμή 4',
+      'email_style_custom': 'Προσαρμοσμένο Στυλ Email',
+      'custom_message_dashboard': 'Προσαρμοσμένο Μήνυμα Πίνακα Διαχείρισης',
+      'custom_message_unpaid_invoice':
+          'Προσαρμοσμένο Μήνυμα Ανεξόφλητου Τιμολογίου',
+      'custom_message_paid_invoice':
+          'Προσαρμοσμένο Μήνυμα Εξοφλημένου Τιμολογίου',
+      'custom_message_unapproved_quote':
+          'Προσαρμοσμένο Μήνυμα Μη Εγκεκριμένη Προσφοράς',
+      'lock_sent_invoices': 'Κλείδωμα Απεσταλένων Τιμολογίων',
+      'translations': 'Μεταφράσεις',
+      'task_number_pattern': 'Μοτίβο Αρίθμησης Εργασίας',
+      'task_number_counter': 'Μετρητής Αρίθμησης Εργασίας',
+      'expense_number_pattern': 'Μοτίβο Αρίθμησης Δαπάνης',
+      'expense_number_counter': 'Μετρητής Αρίθμησης Δαπάνης',
+      'vendor_number_pattern': 'Μοτίβο Αρίθμησης Προμηθευτή',
+      'vendor_number_counter': 'Μετρητής Αρίθμησης Προμηθευτή',
+      'ticket_number_pattern': 'Μοτίβο Αρίθμησης Αιτήματος Βοήθειας',
+      'ticket_number_counter': 'Μετρητής Αρίθμησης Αιτήματος Βοήθειας',
+      'payment_number_pattern': 'Μοτίβο Αρίθμησης Πληρωμής',
+      'payment_number_counter': 'Μετρητής Αρίθμησης Πληρωμής',
+      'invoice_number_pattern': 'Μοτίβο Αρίθμησης Τιμολογίου',
       'invoice_number_counter': 'Αρίθμηση Τιμολογίου',
-      'quote_number_pattern': 'Quote Number Pattern',
+      'quote_number_pattern': 'Μοτίβο Αρίθμησης Προσφοράς',
       'quote_number_counter': 'Αρίθμηση Προσφοράς',
-      'client_number_pattern': 'Credit Number Pattern',
-      'client_number_counter': 'Credit Number Counter',
-      'credit_number_pattern': 'Credit Number Pattern',
-      'credit_number_counter': 'Credit Number Counter',
-      'reset_counter_date': 'Reset Counter Date',
-      'counter_padding': 'Counter Padding',
-      'shared_invoice_quote_counter': 'Shared Invoice Quote Counter',
-      'default_tax_name_1': 'Default Tax Name 1',
-      'default_tax_rate_1': 'Default Tax Rate 1',
-      'default_tax_name_2': 'Default Tax Name 2',
-      'default_tax_rate_2': 'Default Tax Rate 2',
-      'default_tax_name_3': 'Default Tax Name 3',
-      'default_tax_rate_3': 'Default Tax Rate 3',
-      'email_subject_invoice': 'Email Invoice Subject',
-      'email_subject_quote': 'Email Quote Subject',
-      'email_subject_payment': 'Email Payment Subject',
-      'switch_list_table': 'Switch List Table',
-      'client_city': 'Client City',
-      'client_state': 'Client State',
-      'client_country': 'Client Country',
-      'client_is_active': 'Client is Active',
-      'client_balance': 'Client Balance',
-      'client_address1': 'Client Address 1',
-      'client_address2': 'Client Address 2',
-      'client_shipping_address1': 'Client Shipping Address 1',
-      'client_shipping_address2': 'Client Shipping Address 2',
+      'client_number_pattern': 'Μοντέλο αριθμών πιστωτικού',
+      'client_number_counter': 'Μετρητής Αριθμών πιστωτικών',
+      'credit_number_pattern': 'Μοντέλο πιστωτικού αριθμού',
+      'credit_number_counter': 'Μετρητής Αριθμών πιστωτικών',
+      'reset_counter_date': 'Μηδενισμός Μετρητή Ημερομηνίας',
+      'counter_padding': 'Αντισταθμιστής',
+      'shared_invoice_quote_counter':
+          'Κοινόχρηστο παράθυρο παραγγελίας τιμολογίου',
+      'default_tax_name_1': 'Προεπιλεγμένη ονομασία φορολογικού συντελεστή 1',
+      'default_tax_rate_1': 'Προεπιλεγμένος φορολογικός συντελεστής 1',
+      'default_tax_name_2': 'Προεπιλεγμένη ονομασία φορολογικού συντελεστή 2',
+      'default_tax_rate_2': 'Προεπιλεγμένος φορολογικός συντελεστής 2',
+      'default_tax_name_3': 'Προεπιλεγμένη ονομασία φορολογικού συντελεστή 3',
+      'default_tax_rate_3': 'Προεπιλεγμένος φορολογικός συντελεστής 3',
+      'email_subject_invoice': 'Θέμα τιμολογίου με ηλεκτρονικό ταχυδρομείο',
+      'email_subject_quote': 'Θέμα ηλεκτρονικού ταχυδρομείου',
+      'email_subject_payment': 'Θέμα Πληρωμής με ηλεκτρονικό ταχυδρομείο',
+      'email_subject_payment_partial': 'Email Partial Payment Subject',
+      'switch_list_table': 'Πίνακας Λίστας Αλλαγών',
+      'client_city': 'Πόλη Πελάτη',
+      'client_state': 'Κράτος Πελάτη',
+      'client_country': 'Χώρα Πελάτη',
+      'client_is_active': 'Ο Πελάτης είναι Ενεργός',
+      'client_balance': 'Ισοζύγιο Πελατών',
+      'client_address1': 'Διεύθυνση Πελάτη 1',
+      'client_address2': 'Διεύθυνση Πελάτη 2',
+      'client_shipping_address1': 'Διεύθυνση Αποστολής Πελάτη 1',
+      'client_shipping_address2': 'Διεύθυνση Αποστολής Πελάτη 2',
       'type': 'Τύπος',
       'invoice_amount': 'Ποσό Τιμολογίου',
       'invoice_due_date': 'Ημερομηνία Πληρωμής',
-      'tax_rate1': 'Tax Rate 1',
-      'tax_rate2': 'Tax Rate 2',
-      'tax_rate3': 'Tax Rate 3',
+      'tax_rate1': 'Φορολογικός Συντελεστής 1',
+      'tax_rate2': 'Φορολογικός Συντελεστής 2',
+      'tax_rate3': 'Φορολογικός Συντελεστής 3',
       'auto_bill': 'Αυτόματη Χρέωση',
-      'archived_at': 'Archived At',
-      'has_expenses': 'Has Expenses',
-      'custom_taxes1': 'Custom Taxes 1',
-      'custom_taxes2': 'Custom Taxes 2',
-      'custom_taxes3': 'Custom Taxes 3',
-      'custom_taxes4': 'Custom Taxes 4',
-      'custom_surcharge1': 'Custom Surcharge 1',
-      'custom_surcharge2': 'Custom Surcharge 2',
-      'custom_surcharge3': 'Custom Surcharge 3',
-      'custom_surcharge4': 'Custom Surcharge 4',
-      'is_deleted': 'Is Deleted',
-      'vendor_city': 'Vendor City',
-      'vendor_state': 'Vendor State',
-      'vendor_country': 'Vendor Country',
+      'archived_at': 'Αρχειοθετήθηκε στις',
+      'has_expenses': 'Εχει έξοδα',
+      'custom_taxes1': 'Προσαρμοσμένη Φορολόγηση 1',
+      'custom_taxes2': 'Προσαρμοσμένη Φορολόγηση 2',
+      'custom_taxes3': 'Προσαρμοσμένη Φορολόγηση 3',
+      'custom_taxes4': 'Προσαρμοσμένη Φορολόγηση 4',
+      'custom_surcharge1': 'Προσαρμοσμένη Προσαύξηση 1',
+      'custom_surcharge2': 'Προσαρμοσμένη Προσαύξηση 2',
+      'custom_surcharge3': 'Προσαρμοσμένη Προσαύξηση 3',
+      'custom_surcharge4': 'Προσαρμοσμένη Προσαύξηση 4',
+      'is_deleted': 'Εχει διαγραφεί',
+      'vendor_city': 'Πόλη Προμηθευτή',
+      'vendor_state': 'Κράτος Προμηθευτή',
+      'vendor_country': 'Χώρα Προμηθευτή',
+      'is_approved': 'Is Approved',
+      'tax_name': 'Ονομασία Φόρου',
+      'tax_amount': 'Ποσό Φόρου',
+      'tax_paid': 'Πληρωμένος Φόρος',
+      'payment_amount': 'Ποσό Πληρωμής',
+      'age': 'Ηλικία',
     },
     'it': {
+      'full_name': 'Nome Completo',
+      'city_state_postal': 'Città/Stato/CAP',
+      'postal_city_state': 'Postal/City/State',
+      'custom1': 'First Custom',
+      'custom2': 'Second Custom',
+      'custom3': 'Third Custom',
+      'custom4': 'Fourth Custom',
+      'optional': 'Optional',
+      'license': 'License',
+      'purge_data': 'Purge Data',
+      'purge_successful': 'Successfully purged company data',
+      'purge_data_message':
+          'Warning: This will permanently erase your data, there is no undo.',
+      'invoice_balance': 'Invoice Balance',
+      'age_group_0': '0 - 30 Giorni',
+      'age_group_30': '30 - 60 Giorni',
+      'age_group_60': '60 - 90 Giorni',
+      'age_group_90': '90 - 120 Giorni',
+      'age_group_120': '120+ Giorni',
+      'refresh': 'Refresh',
+      'saved_design': 'Successfully saved design',
+      'client_details': 'Client Details',
+      'company_address': 'Company Address',
+      'invoice_details': 'Dettagli fattura',
+      'quote_details': 'Quote Details',
+      'credit_details': 'Credit Details',
+      'product_columns': 'Product Columns',
+      'task_columns': 'Task Columns',
+      'add_field': 'Add Field',
+      'all_events': 'All Events',
+      'permissions': 'Permissions',
+      'none': 'None',
+      'owned': 'Owned',
+      'payment_success': 'Payment Success',
+      'payment_failure': 'Payment Failure',
+      'invoice_sent': ':count fattura inviata',
+      'quote_sent': 'Quote Sent',
+      'credit_sent': 'Credit Sent',
+      'invoice_viewed': 'Invoice Viewed',
+      'quote_viewed': 'Quote Viewed',
+      'credit_viewed': 'Credit Viewed',
+      'quote_approved': 'Quote Approved',
+      'receive_all_notifications': 'Receive All Notifications',
+      'purchase_license': 'Purchase License',
+      'apply_license': 'Apply License',
+      'cancel_account': 'Elimina l\'account',
+      'cancel_account_message':
+          'Attenzione: Questo eliminerà permanentemente il tuo account, non si potrà più tornare indietro.',
+      'delete_company': 'Delete Company',
+      'delete_company_message':
+          'Warning: This will permanently delete your company, there is no undo.',
+      'enable_modules': 'Enable Modules',
+      'converted_quote': 'Successfully converted quote',
+      'credit_design': 'Credit Design',
+      'includes': 'Includes',
+      'header': 'Header',
+      'load_design': 'Carica Design',
+      'css_framework': 'CSS Framework',
+      'custom_designs': 'Custom Designs',
+      'designs': 'Designs',
+      'new_design': 'New Design',
+      'edit_design': 'Edit Design',
+      'created_design': 'Successfully created design',
+      'updated_design': 'Successfully updated design',
+      'archived_design': 'Successfully archived design',
+      'deleted_design': 'Successfully deleted design',
+      'removed_design': 'Successfully removed design',
+      'restored_design': 'Successfully restored design',
+      'proposals': 'Proposte',
+      'tickets': 'Tickets',
+      'recurring_invoices': 'Fatture Ricorrenti',
+      'recurring_quotes': 'Preventivi Ricorrenti',
+      'recurring_tasks': 'Recurring Tasks',
+      'recurring_expenses': 'Spese Ricorrenti',
+      'account_management': 'Account Management',
+      'credit_date': 'Data Credito',
+      'credit': 'Credito',
+      'credits': 'Crediti',
+      'new_credit': 'Inserisci il credito',
+      'edit_credit': 'Edit Credit',
+      'created_credit': 'Credito creato con successo',
+      'updated_credit': 'Successfully updated credit',
+      'archived_credit': 'Credito archiviato con successo',
+      'deleted_credit': 'Credito eliminato con successo',
+      'removed_credit': 'Successfully removed credit',
+      'restored_credit': 'Credito ripristinato con successo',
+      'current_version': 'Versione attuale',
+      'latest_version': 'Latest Version',
+      'update_now': 'Update Now',
+      'a_new_version_is_available': 'A new version of the web app is available',
+      'update_available': 'Update Available',
+      'app_updated': 'Update successfully completed',
+      'learn_more': 'Scopri di più',
+      'integrations': 'Integrations',
+      'tracking_id': 'Tracking Id',
+      'slack_webhook_url': 'Slack Webhook URL',
+      'credit_footer': 'Credit Footer',
+      'credit_terms': 'Credit Terms',
+      'untitled_company': 'Untitled Company',
+      'added_company': 'Successfully added company',
       'company1': 'Custom Company 1',
       'company2': 'Custom Company 2',
       'company3': 'Custom Company 3',
@@ -14965,9 +16495,9 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'product3': 'Custom Product 3',
       'product4': 'Custom Product 4',
       'client1': 'Custom Client 1',
-      'client2': 'Custom Client 1',
-      'client3': 'Custom Client 1',
-      'client4': 'Custom Client 1',
+      'client2': 'Custom Client 2',
+      'client3': 'Custom Client 3',
+      'client4': 'Custom Client 4',
       'contact1': 'Custom Contact 1',
       'contact2': 'Custom Contact 2',
       'contact3': 'Custom Contact 3',
@@ -15041,10 +16571,9 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'columns': 'Colonne',
       'aging': 'Aging',
       'profit_and_loss': 'Utile e Perdite',
-      'reports': 'Reports',
+      'reports': 'Rapporti',
       'report': 'Report',
       'add_company': 'Aggiungi azienda',
-      'to_learn_about_gogle_fonts': 'to learn about Google Fonts',
       'unpaid_invoice': 'Unpaid Invoice',
       'paid_invoice': 'Paid Invoice',
       'unapproved_quote': 'Unapproved Quote',
@@ -15079,9 +16608,9 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'credit_email': 'Credit Email',
       'iframe_url': 'Website',
       'domain_url': 'Domain URL',
-      'password_is_too_short': 'Password is too short',
+      'password_is_too_short': 'La parola chiave è troppo corta',
       'password_is_too_easy':
-          'Password msut contain an upper case character and a number',
+          'Password must contain an upper case character and a number',
       'client_portal_tasks': 'Client Portal Tasks',
       'client_portal_dashboard': 'Client Portal Dashboard',
       'please_enter_a_value': 'Please enter a value',
@@ -15149,12 +16678,14 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'late_fee_amount': 'Late Fee Amount',
       'late_fee_percent': 'Late Fee Percent',
       'schedule': 'Schedule',
-      'before_due_date': 'Before the due date',
+      'before_due_date': 'Prima della data di scadenza',
       'after_due_date': 'After the due date',
       'after_invoice_date': 'After the invoice date',
       'days': 'Giorni',
       'invoice_email': 'Email Fattura',
       'payment_email': 'Email Pagamento',
+      'partial_payment': 'Partial Payment',
+      'partial_payment_email': 'Partial Payment Email',
       'quote_email': 'Email Preventivo',
       'endless_reminder': 'Endless Reminder',
       'filtered_by_user': 'Filtered by User',
@@ -15177,7 +16708,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'hide_paid_to_date_help':
           'Visualizza l\'area \"Pagato alla data\" sulle fatture solo dopo aver ricevuto un pagamento.',
       'invoice_embed_documents': 'Embed Documents',
-      'invoice_embed_documents_help': 'Include attached images in the invoice.',
+      'invoice_embed_documents_help': 'Includi immagini allegate alla fattura.',
       'all_pages_header': 'Mostra l\'Intestazione nel',
       'all_pages_footer': 'Visualizza Piè di Pagina nel',
       'first_page': 'Prima pagina',
@@ -15198,14 +16729,14 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'quote_footer': 'Piè di Pagina Preventivi',
       'auto_email_invoice': 'Auto Email',
       'auto_email_invoice_help':
-          'Automatically email recurring invoices when they are created.',
+          'Invia automaticamente per email le fatture ricorrenti quando vengono create.',
       'auto_archive_invoice': 'Auto Archive',
       'auto_archive_invoice_help':
           'Automatically archive invoices when they are paid.',
       'auto_archive_quote': 'Auto Archive',
       'auto_archive_quote_help':
           'Automatically archive quotes when they are converted.',
-      'auto_convert_quote': 'Auto Convert',
+      'auto_convert_quote': 'Conversione automatica',
       'auto_convert_quote_help':
           'Converti automaticamente un preventivo in una fattura se approvato da un cliente.',
       'workflow_settings': 'Workflow Settings',
@@ -15225,11 +16756,9 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'company': 'Compagnia',
       'generated_numbers': 'Genera numeri',
       'charge_taxes': 'Ricarica tassa',
-      'credit': 'Credito',
-      'credits': 'Crediti',
       'next_reset': 'Prossimo reset',
       'reset_counter': 'Resetta contatori',
-      'recurring_prefix': 'Recurring Prefix',
+      'recurring_prefix': 'Prefisso Ricorrente',
       'number_padding': 'Number Padding',
       'general': 'General',
       'surcharge_field': 'Surcharge Field',
@@ -15245,7 +16774,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'vendor_field': 'Vendor Field',
       'expense_field': 'Expense Field',
       'project_field': 'Project Field',
-      'task_field': 'Task Field',
+      'task_field': 'Campo attività',
       'group_field': 'Group Field',
       'number_counter': 'Number Counter',
       'prefix': 'Prefisso',
@@ -15269,9 +16798,6 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'enable_portal_password': 'Fatture Protette da Password',
       'enable_portal_password_help':
           'Allows you to set a password for each contact. If a password is set, the contact will be required to enter a password before viewing invoices.',
-      'send_portal_password': 'Generato Automaticamente',
-      'send_portal_password_help':
-          'If no password is set, one will be generated and sent with the first invoice.',
       'authorization': 'Autorizzazione',
       'subdomain': 'Sottodominio',
       'domain': 'Dominio',
@@ -15300,8 +16826,8 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'limits_and_fees': 'Limits/Fees',
       'enable_min': 'Attiva minimo',
       'enable_max': 'Attiva massimo',
-      'min_limit': 'Min: :min',
-      'max_limit': 'Max: :max',
+      'min_limit': 'Minimo :min',
+      'max_limit': 'Massimo :max',
       'min': 'Min',
       'max': 'ax',
       'accepted_card_logos': 'Accepted Card Logos',
@@ -15334,22 +16860,22 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'fees': 'Commissioni',
       'limits': 'Limiti',
       'provider': 'Provider',
-      'company_gateway': 'Payment Gateway',
-      'company_gateways': 'Payment Gateways',
-      'new_company_gateway': 'New Gateway',
-      'edit_company_gateway': 'Edit Gateway',
-      'created_company_gateway': 'Successfully created gateway',
-      'updated_company_gateway': 'Successfully updated gateway',
-      'archived_company_gateway': 'Successfully archived gateway',
-      'deleted_company_gateway': 'Successfully deleted gateway',
-      'restored_company_gateway': 'Successfully restored gateway',
+      'company_gateway': 'Piattaforma di Pagamento',
+      'company_gateways': 'Piattaforme di Pagamento',
+      'new_company_gateway': 'Nuova Piattaforma',
+      'edit_company_gateway': 'Modifica Piattaforma',
+      'created_company_gateway': 'Piattaforma creata con successo',
+      'updated_company_gateway': 'Piattaforma aggiornata con successo',
+      'archived_company_gateway': 'Piattaforma archiviata con successo',
+      'deleted_company_gateway': 'Piattaforma eliminata con successo',
+      'restored_company_gateway': 'Piattaforma ripristinata con successo',
       'continue_editing': 'Continue Editing',
       'discard_changes': 'Discard Changes',
       'default_value': 'Default value',
       'disabled': 'Disabled',
-      'currency_format': 'Currency Format',
-      'first_day_of_the_week': 'First Day of the Week',
-      'first_month_of_the_year': 'First Month of the Year',
+      'currency_format': 'Formato moneta',
+      'first_day_of_the_week': 'Primo giorno della settimana',
+      'first_month_of_the_year': 'Primo mese dell\'anno',
       'sunday': 'Domenica',
       'monday': 'Lunedì',
       'tuesday': 'Martedì',
@@ -15381,22 +16907,22 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'filtered_by_invoice': 'Filtered by Invoice',
       'filtered_by_client': 'Filtered by Client',
       'filtered_by_vendor': 'Filtered by Vendor',
-      'group_settings': 'Group Settings',
+      'group_settings': 'Impostazioni gruppo',
       'group': 'Gruppo',
       'groups': 'Groups',
-      'new_group': 'New Group',
-      'edit_group': 'Edit Group',
+      'new_group': 'Nuovo gruppo',
+      'edit_group': 'Modifica gruppo',
       'created_group': 'Successfully created group',
       'updated_group': 'Successfully updated group',
       'archived_group': 'Successfully archived group',
       'deleted_group': 'Successfully deleted group',
       'restored_group': 'Successfully restored group',
-      'upload_logo': 'Upload Logo',
+      'upload_logo': 'Carica logo',
       'uploaded_logo': 'Successfully uploaded logo',
       'logo': 'Logo',
       'saved_settings': 'Successfully saved settings',
       'product_settings': 'Preferenze Prodotti',
-      'device_settings': 'Device Settings',
+      'device_settings': 'Impostazioni dispositivo',
       'defaults': 'Predefiniti',
       'basic_settings': 'Impostazioni Base',
       'advanced_settings': 'Impostazioni Avanzate',
@@ -15414,19 +16940,19 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'templates_and_reminders': 'Template & Promemoria',
       'credit_cards_and_banks': 'Credit Cards & Banks',
       'data_visualizations': 'Visualizzazioni dei dati',
-      'price': 'Price',
-      'email_sign_up': 'Email Sign Up',
-      'google_sign_up': 'Google Sign Up',
+      'price': 'Prezzo',
+      'email_sign_up': 'Registrati via Email',
+      'google_sign_up': 'Registrati con Google',
       'thank_you_for_your_purchase': 'Thank you for your purchase!',
       'redeem': 'Redeem',
-      'sign_up_with_google': 'Sign Up With Google',
+      'sign_up_with_google': 'Accedi con Google',
       'back': 'Back',
       'past_purchases': 'Past Purchases',
       'annual_subscription': 'Annual Subscription',
       'pro_plan': 'Pro Plan',
       'enterprise_plan': 'Enterprise Plan',
       'count_users': ':count users',
-      'upgrade': 'Upgrade',
+      'upgrade': 'Aggiorna',
       'please_enter_a_first_name': 'Please enter a first name',
       'please_enter_a_last_name': 'Please enter a last name',
       'please_agree_to_terms_and_privacy':
@@ -15450,7 +16976,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'upload_file': 'Upload File',
       'document': 'Document',
       'documents': 'Documents',
-      'new_document': 'New Document',
+      'new_document': 'Nuovo documento',
       'edit_document': 'Edit Document',
       'uploaded_document': 'Successfully uploaded document',
       'updated_document': 'Successfully updated document',
@@ -15495,11 +17021,11 @@ mixin LocalizationsProvider on LocaleCodeAware {
           'Si prega di correggere eventuali tempi di sovrapposizione',
       'start': 'Inizia',
       'stop': 'Ferma',
-      'started_task': 'Successfully started task',
+      'started_task': 'Attività iniziata con successo',
       'stopped_task': 'Attività arrestata con successo',
-      'resumed_task': 'Successfully resumed task',
+      'resumed_task': 'Attività ripresa con sucesso',
       'now': 'Adesso',
-      'auto_start_tasks': 'Auto Start Tasks',
+      'auto_start_tasks': 'Partenza automaticha delle attività',
       'timer': 'Timer',
       'manual': 'Manuale',
       'budgeted': 'Budgeted',
@@ -15508,13 +17034,13 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'date': 'Data',
       'times': 'Tempi',
       'duration': 'Durata',
-      'new_task': 'Nuovo Task',
+      'new_task': 'Nuova Attività',
       'created_task': 'Attività creata con successo',
       'updated_task': 'Attività aggiornata con successo',
       'archived_task': 'Attività archiviata con successo',
       'deleted_task': 'Attività cancellata con successo',
       'restored_task': 'Attività ripristinata con successo',
-      'please_enter_a_name': 'Please enter a name',
+      'please_enter_a_name': 'Vogliate inserire un nome',
       'budgeted_hours': 'Budgeted Hours',
       'created_project': 'Progetto creato con successo',
       'updated_project': 'Progetto aggiornato con successo',
@@ -15528,7 +17054,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'click_here_capital': 'Click here',
       'to_rate_it': 'to rate it.',
       'average': 'Average',
-      'unapproved': 'Unapproved',
+      'unapproved': 'non approvato',
       'authenticate_to_change_setting':
           'Please authenticate to change this setting',
       'locked': 'Locked',
@@ -15560,6 +17086,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'custom': 'Personalizzato',
       'clone_to_invoice': 'Clona la fattura',
       'clone_to_quote': 'Clone to Quote',
+      'clone_to_credit': 'Clone to Credit',
       'view_invoice': 'Vedi Fattura',
       'convert': 'Convertire',
       'more': 'Altro',
@@ -15568,14 +17095,13 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'edit_invoice': 'Modifica Fattura',
       'edit_quote': 'Modifica Preventivo',
       'edit_payment': 'Modifica pagamento',
-      'edit_task': 'Modifica il Task',
+      'edit_task': 'Modifica l\'attività',
       'edit_expense': 'Modifica Spesa',
       'edit_vendor': 'Modifica Fornitore',
       'edit_project': 'Modifica Progetto',
-      'edit_credit': 'Edit Credit',
-      'edit_recurring_invoice': 'Edit Recurring Invoice',
-      'edit_recurring_expense': 'Edit Recurring Expense',
-      'edit_recurring_quote': 'Edit Recurring Quote',
+      'edit_recurring_invoice': 'Modifica Fattura Ricorrente',
+      'edit_recurring_expense': 'Modifica Spesa Ricorrente',
+      'edit_recurring_quote': 'Modifica Preventivo Ricorrente',
       'billing_address': 'Indirizzo di fatturazione',
       'shipping_address': 'Shipping Address',
       'total_revenue': 'Ricavo totale',
@@ -15632,7 +17158,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'cancel': 'Annulla',
       'ok': 'Ok',
       'remove': 'Elimina',
-      'email_is_invalid': 'Email is invalid',
+      'email_is_invalid': 'Email non valida',
       'product': 'Prodotto',
       'products': 'Prodotti',
       'new_product': 'New Product',
@@ -15704,10 +17230,10 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'percent': 'Percentuale',
       'edit': 'Modifica',
       'dismiss': 'Dismiss',
-      'please_select_a_date': 'Please select a date',
+      'please_select_a_date': 'Selezionate una data per favore',
       'please_select_a_client': 'Please select a client',
-      'please_select_an_invoice': 'Please select an invoice',
-      'task_rate': 'Task Rate',
+      'please_select_an_invoice': 'Selezionate una fattura per favore',
+      'task_rate': 'Tariffa per le  attività',
       'settings': 'Impostazioni',
       'language': 'Linguaggio',
       'currency': 'Currency',
@@ -15719,19 +17245,15 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'past_due': 'Scaduta',
       'draft': 'Bozza',
       'sent': 'Inviato',
-      'viewed': 'Viewed',
-      'approved': 'Approved',
+      'viewed': 'Visto',
+      'approved': 'Approvato',
       'partial': 'Parziale/Deposito',
       'paid': 'Pagata',
-      'invoice_status_1': 'Bozza',
-      'invoice_status_2': 'Invia',
-      'invoice_status_3': 'Visto',
-      'invoice_status_4': 'Approvato',
       'mark_sent': 'Contrassegna come inviato',
       'marked_invoice_as_sent': 'Successfully marked invoice as sent',
-      'marked_invoice_as_paid': 'Successfully marked invoice as sent',
+      'marked_invoice_as_paid': 'Successfully marked invoice as paid',
       'marked_invoices_as_sent': 'Successfully marked invoices as sent',
-      'marked_invoices_as_paid': 'Successfully marked invoices as sent',
+      'marked_invoices_as_paid': 'Successfully marked invoices as paid',
       'done': 'Fatto',
       'please_enter_a_client_or_contact_name':
           'Please enter a client or contact name',
@@ -15747,7 +17269,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'size': 'Dimensione',
       'payment_terms': 'Condizioni di pagamento',
       'payment_date': 'Data Pagamento',
-      'payment_status': 'Payment Status',
+      'payment_status': 'Stato del pagamento',
       'payment_status_1': 'Pending',
       'payment_status_2': 'Voided',
       'payment_status_3': 'Failed',
@@ -15756,7 +17278,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'payment_status_6': 'Refunded',
       'net': 'Net',
       'client_portal': 'Client Portal',
-      'show_tasks': 'Show tasks',
+      'show_tasks': 'Mostra attività',
       'email_reminders': 'Email Reminders',
       'enabled': 'Abilitato',
       'recipients': 'Destinatari',
@@ -15774,7 +17296,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'send_email': 'Invia Email',
       'email_receipt': 'Invia ricevuta di pagamento al cliente',
       'auto_billing': 'Auto billing',
-      'button': 'Button',
+      'button': 'Pulsante',
       'preview': 'Preview',
       'customize': 'Personalizza',
       'history': 'Storia',
@@ -15802,8 +17324,8 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'expenses': 'Spese',
       'vendor': 'Fornitore',
       'vendors': 'Fornitori',
-      'task': 'Task',
-      'tasks': 'Task',
+      'task': 'Attività',
+      'tasks': 'Attività',
       'project': 'Progetto',
       'projects': 'Progetti',
       'activity_1': ':user ha creato il cliente :client',
@@ -15811,12 +17333,13 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'activity_3': ':user deleted client :client',
       'activity_4': ':user ha creato la fattura :invoice',
       'activity_5': ':user ha aggiornato la fattura :invoice',
-      'activity_6': ':user emailed invoice :invoice for :client to :contact',
-      'activity_7': ':contact viewed invoice :invoice for :client',
+      'activity_6':
+          ':user ha inviato per email la fattura :invoice per:client a :contact',
+      'activity_7': ':contact ha visualizzato la fattura :invoice per :client',
       'activity_8': ':user ha archiviato la fattura :invoice',
       'activity_9': ':user ha cancellato la fattura :invoice',
       'activity_10':
-          ':contact entered payment :payment for :payment_amount on invoice :invoice for :client',
+          ':contact ha registrato il pagamento :payment di :payment_amount sulla fattura :invoice per :client',
       'activity_11': ':user ha aggiornato il pagamento :payment',
       'activity_12': ':user ha archiviato il pagamento :payment',
       'activity_13': ':user ha cancellato il pagamento :payment',
@@ -15826,7 +17349,8 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'activity_17': ':user deleted :credit credit',
       'activity_18': ':user created quote :quote',
       'activity_19': ':user updated quote :quote',
-      'activity_20': ':user emailed quote :quote for :client to :contact',
+      'activity_20':
+          ':user ha inviato per email il preventivo :quote per :client a :contact',
       'activity_21': ':contact ha visto il preventivo :quote',
       'activity_22': ':user archived quote :quote',
       'activity_23': ':user deleted quote :quote',
@@ -15835,7 +17359,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'activity_26': ':user restored client :client',
       'activity_27': ':user restored payment :payment',
       'activity_28': ':user restored :credit credit',
-      'activity_29': ':contact approved quote :quote for :client',
+      'activity_29': ':contact ha approvato il preventivo :quote per :client',
       'activity_30': 'L\'utente :user ha creato il fornitore :vendor',
       'activity_31': 'L\'utente :user ha archiviato il fornitore :vendor',
       'activity_32': 'L\'utente :user ha eliminato il fornitore :vendor',
@@ -15844,9 +17368,10 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'activity_35': 'L\'utente :user ha archiviato la spesa :expense',
       'activity_36': 'L\'utente :user ha eliminato la spesa :expense',
       'activity_37': 'L\'utente :user ha ripristinato la spesa :expense',
-      'activity_39': ':user cancelled a :payment_amount payment :payment',
+      'activity_39':
+          ':user ha annullato un pagamento :payment da :payment_amount',
       'activity_40':
-          ':user refunded :adjustment of a :payment_amount payment :payment',
+          ':user ha rimborsato :adjustment di un pagamento :payment da :payment_amount',
       'activity_41': 'pagamento di :payment_amount (:payment) fallito',
       'activity_42': 'L\'utente :user ha creato l\'attività :task',
       'activity_43': 'L\'utente :user ha aggiornato l\'attività :task',
@@ -15854,19 +17379,21 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'activity_45': 'L\'utente :user ha eliminato l\'attività :task',
       'activity_46': 'L\'utente :user ha ripristinato l\'attività :task',
       'activity_47': 'L\'utente :user ha aggiornato la spesa :expense',
-      'activity_48': ':user updated ticket :ticket',
-      'activity_49': ':user closed ticket :ticket',
-      'activity_50': ':user merged ticket :ticket',
-      'activity_51': ':user split ticket :ticket',
-      'activity_52': ':contact opened ticket :ticket',
-      'activity_53': ':contact reopened ticket :ticket',
-      'activity_54': ':user reopened ticket :ticket',
-      'activity_55': ':contact replied ticket :ticket',
-      'activity_56': ':user viewed ticket :ticket',
+      'activity_48': ':user ha aggiornato il ticket :ticket',
+      'activity_49': ':user ha chiuso il ticket :ticket',
+      'activity_50': ':user ha unito il ticket :ticket',
+      'activity_51': ':user ha separato il ticket :ticket',
+      'activity_52': ':contact ha aperto il ticket :ticket',
+      'activity_53': ':contact ha riaperto il ticket :ticket',
+      'activity_54': ':user ha riaperto il ticket :ticket',
+      'activity_55': ':contact ha risposto al ticket :ticket',
+      'activity_56': ':user ha visualizzato il ticket :ticket',
       'activity_57': 'System failed to email invoice :invoice',
       'one_time_password': 'One Time Password',
       'emailed_quote': 'Preventivo inviato con successo',
+      'emailed_credit': 'Successfully emailed credit',
       'marked_quote_as_sent': 'Successfully marked quote as sent',
+      'marked_credit_as_sent': 'Successfully marked credit as sent',
       'expired': 'Expired',
       'all': 'Tutti',
       'select': 'Seleziona',
@@ -15912,6 +17439,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'email_subject_invoice': 'Email Invoice Subject',
       'email_subject_quote': 'Email Quote Subject',
       'email_subject_payment': 'Email Payment Subject',
+      'email_subject_payment_partial': 'Email Partial Payment Subject',
       'switch_list_table': 'Switch List Table',
       'client_city': 'Client City',
       'client_state': 'Client State',
@@ -15943,8 +17471,114 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'vendor_city': 'Vendor City',
       'vendor_state': 'Vendor State',
       'vendor_country': 'Vendor Country',
+      'is_approved': 'Is Approved',
+      'tax_name': 'Tax Name',
+      'tax_amount': 'Tax Amount',
+      'tax_paid': 'Tax Paid',
+      'payment_amount': 'Importo Pagamento',
+      'age': 'Età',
     },
     'ja': {
+      'full_name': 'Full Name',
+      'city_state_postal': 'City/State/Postal',
+      'postal_city_state': 'Postal/City/State',
+      'custom1': 'First Custom',
+      'custom2': 'Second Custom',
+      'custom3': 'Third Custom',
+      'custom4': 'Fourth Custom',
+      'optional': 'Optional',
+      'license': 'License',
+      'purge_data': 'Purge Data',
+      'purge_successful': 'Successfully purged company data',
+      'purge_data_message':
+          'Warning: This will permanently erase your data, there is no undo.',
+      'invoice_balance': 'Invoice Balance',
+      'age_group_0': '0 - 30 Days',
+      'age_group_30': '30 - 60 Days',
+      'age_group_60': '60 - 90 Days',
+      'age_group_90': '90 - 120 Days',
+      'age_group_120': '120+ Days',
+      'refresh': 'Refresh',
+      'saved_design': 'Successfully saved design',
+      'client_details': 'Client Details',
+      'company_address': 'Company Address',
+      'invoice_details': 'Invoice Details',
+      'quote_details': 'Quote Details',
+      'credit_details': 'Credit Details',
+      'product_columns': 'Product Columns',
+      'task_columns': 'Task Columns',
+      'add_field': 'Add Field',
+      'all_events': 'All Events',
+      'permissions': 'Permissions',
+      'none': 'None',
+      'owned': 'Owned',
+      'payment_success': 'Payment Success',
+      'payment_failure': 'Payment Failure',
+      'invoice_sent': ':count invoice sent',
+      'quote_sent': 'Quote Sent',
+      'credit_sent': 'Credit Sent',
+      'invoice_viewed': 'Invoice Viewed',
+      'quote_viewed': 'Quote Viewed',
+      'credit_viewed': 'Credit Viewed',
+      'quote_approved': 'Quote Approved',
+      'receive_all_notifications': 'Receive All Notifications',
+      'purchase_license': 'Purchase License',
+      'apply_license': 'Apply License',
+      'cancel_account': 'アカウントのキャンセル',
+      'cancel_account_message':
+          'Warning: This will permanently delete your account, there is no undo.',
+      'delete_company': 'Delete Company',
+      'delete_company_message':
+          'Warning: This will permanently delete your company, there is no undo.',
+      'enable_modules': 'Enable Modules',
+      'converted_quote': 'Successfully converted quote',
+      'credit_design': 'Credit Design',
+      'includes': 'Includes',
+      'header': 'ヘッダ',
+      'load_design': 'Load Design',
+      'css_framework': 'CSS Framework',
+      'custom_designs': 'Custom Designs',
+      'designs': 'Designs',
+      'new_design': 'New Design',
+      'edit_design': 'Edit Design',
+      'created_design': 'Successfully created design',
+      'updated_design': 'Successfully updated design',
+      'archived_design': 'Successfully archived design',
+      'deleted_design': 'Successfully deleted design',
+      'removed_design': 'Successfully removed design',
+      'restored_design': 'Successfully restored design',
+      'proposals': 'Proposals',
+      'tickets': 'Tickets',
+      'recurring_invoices': '繰り返しの請求書',
+      'recurring_quotes': 'Recurring Quotes',
+      'recurring_tasks': 'Recurring Tasks',
+      'recurring_expenses': 'Recurring Expenses',
+      'account_management': 'Account Management',
+      'credit_date': '前受日付',
+      'credit': 'Credit',
+      'credits': '前受金',
+      'new_credit': 'Enter Credit',
+      'edit_credit': 'Edit Credit',
+      'created_credit': '前受金を登録しました。',
+      'updated_credit': 'Successfully updated credit',
+      'archived_credit': '前受金をアーカイブしました。',
+      'deleted_credit': '前受金を削除しました。',
+      'removed_credit': 'Successfully removed credit',
+      'restored_credit': 'Successfully restored credit',
+      'current_version': '現在のバージョン',
+      'latest_version': 'Latest Version',
+      'update_now': 'Update Now',
+      'a_new_version_is_available': 'A new version of the web app is available',
+      'update_available': 'Update Available',
+      'app_updated': 'Update successfully completed',
+      'learn_more': 'Learn more',
+      'integrations': 'Integrations',
+      'tracking_id': 'Tracking Id',
+      'slack_webhook_url': 'Slack Webhook URL',
+      'credit_footer': 'Credit Footer',
+      'credit_terms': 'Credit Terms',
+      'untitled_company': 'Untitled Company',
+      'added_company': 'Successfully added company',
       'company1': 'Custom Company 1',
       'company2': 'Custom Company 2',
       'company3': 'Custom Company 3',
@@ -15954,9 +17588,9 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'product3': 'Custom Product 3',
       'product4': 'Custom Product 4',
       'client1': 'Custom Client 1',
-      'client2': 'Custom Client 1',
-      'client3': 'Custom Client 1',
-      'client4': 'Custom Client 1',
+      'client2': 'Custom Client 2',
+      'client3': 'Custom Client 3',
+      'client4': 'Custom Client 4',
       'contact1': 'Custom Contact 1',
       'contact2': 'Custom Contact 2',
       'contact3': 'Custom Contact 3',
@@ -16033,7 +17667,6 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'reports': 'Reports',
       'report': 'レポート',
       'add_company': 'Add Company',
-      'to_learn_about_gogle_fonts': 'to learn about Google Fonts',
       'unpaid_invoice': 'Unpaid Invoice',
       'paid_invoice': 'Paid Invoice',
       'unapproved_quote': 'Unapproved Quote',
@@ -16070,7 +17703,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'domain_url': 'Domain URL',
       'password_is_too_short': 'Password is too short',
       'password_is_too_easy':
-          'Password msut contain an upper case character and a number',
+          'Password must contain an upper case character and a number',
       'client_portal_tasks': 'Client Portal Tasks',
       'client_portal_dashboard': 'Client Portal Dashboard',
       'please_enter_a_value': 'Please enter a value',
@@ -16144,6 +17777,8 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'days': 'Days',
       'invoice_email': '請求書メール',
       'payment_email': '支払いメール',
+      'partial_payment': 'Partial Payment',
+      'partial_payment_email': 'Partial Payment Email',
       'quote_email': '見積書メール',
       'endless_reminder': 'Endless Reminder',
       'filtered_by_user': 'Filtered by User',
@@ -16214,8 +17849,6 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'company': 'Company',
       'generated_numbers': 'Generated Numbers',
       'charge_taxes': 'Charge taxes',
-      'credit': 'Credit',
-      'credits': '前受金',
       'next_reset': 'Next Reset',
       'reset_counter': 'Reset Counter',
       'recurring_prefix': 'Recurring Prefix',
@@ -16258,9 +17891,6 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'enable_portal_password': 'Password Protect Invoices',
       'enable_portal_password_help':
           'Allows you to set a password for each contact. If a password is set, the contact will be required to enter a password before viewing invoices.',
-      'send_portal_password': 'Generate Automatically',
-      'send_portal_password_help':
-          'If no password is set, one will be generated and sent with the first invoice.',
       'authorization': 'Authorization',
       'subdomain': 'サブドメイン',
       'domain': 'Domain',
@@ -16547,6 +18177,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'custom': 'カスタム',
       'clone_to_invoice': 'Clone to Invoice',
       'clone_to_quote': 'Clone to Quote',
+      'clone_to_credit': 'Clone to Credit',
       'view_invoice': '請求書を表示',
       'convert': 'Convert',
       'more': 'More',
@@ -16559,7 +18190,6 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'edit_expense': 'Edit Expense',
       'edit_vendor': 'Edit Vendor',
       'edit_project': 'Edit Project',
-      'edit_credit': 'Edit Credit',
       'edit_recurring_invoice': 'Edit Recurring Invoice',
       'edit_recurring_expense': 'Edit Recurring Expense',
       'edit_recurring_quote': 'Edit Recurring Quote',
@@ -16710,15 +18340,11 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'approved': 'Approved',
       'partial': 'Partial/Deposit',
       'paid': 'Paid',
-      'invoice_status_1': 'Draft',
-      'invoice_status_2': 'Sent',
-      'invoice_status_3': 'Viewed',
-      'invoice_status_4': 'Approved',
       'mark_sent': '送付済みにする',
       'marked_invoice_as_sent': 'Successfully marked invoice as sent',
-      'marked_invoice_as_paid': 'Successfully marked invoice as sent',
+      'marked_invoice_as_paid': 'Successfully marked invoice as paid',
       'marked_invoices_as_sent': 'Successfully marked invoices as sent',
-      'marked_invoices_as_paid': 'Successfully marked invoices as sent',
+      'marked_invoices_as_paid': 'Successfully marked invoices as paid',
       'done': '完了',
       'please_enter_a_client_or_contact_name':
           'Please enter a client or contact name',
@@ -16853,7 +18479,9 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'activity_57': 'System failed to email invoice :invoice',
       'one_time_password': 'One Time Password',
       'emailed_quote': '見積書をメールしました。',
+      'emailed_credit': 'Successfully emailed credit',
       'marked_quote_as_sent': 'Successfully marked quote as sent',
+      'marked_credit_as_sent': 'Successfully marked credit as sent',
       'expired': 'Expired',
       'all': 'All',
       'select': 'Select',
@@ -16899,6 +18527,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'email_subject_invoice': 'Email Invoice Subject',
       'email_subject_quote': 'Email Quote Subject',
       'email_subject_payment': 'Email Payment Subject',
+      'email_subject_payment_partial': 'Email Partial Payment Subject',
       'switch_list_table': 'Switch List Table',
       'client_city': 'Client City',
       'client_state': 'Client State',
@@ -16930,8 +18559,114 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'vendor_city': 'Vendor City',
       'vendor_state': 'Vendor State',
       'vendor_country': 'Vendor Country',
+      'is_approved': 'Is Approved',
+      'tax_name': '税名称',
+      'tax_amount': 'Tax Amount',
+      'tax_paid': 'Tax Paid',
+      'payment_amount': '入金額',
+      'age': 'Age',
     },
     'lt': {
+      'full_name': 'Full Name',
+      'city_state_postal': 'City/State/Postal',
+      'postal_city_state': 'Postal/City/State',
+      'custom1': 'First Custom',
+      'custom2': 'Second Custom',
+      'custom3': 'Third Custom',
+      'custom4': 'Fourth Custom',
+      'optional': 'Optional',
+      'license': 'License',
+      'purge_data': 'Purge Data',
+      'purge_successful': 'Successfully purged company data',
+      'purge_data_message':
+          'Warning: This will permanently erase your data, there is no undo.',
+      'invoice_balance': 'Invoice Balance',
+      'age_group_0': '0 - 30 Days',
+      'age_group_30': '30 - 60 Days',
+      'age_group_60': '60 - 90 Days',
+      'age_group_90': '90 - 120 Days',
+      'age_group_120': '120+ Days',
+      'refresh': 'Refresh',
+      'saved_design': 'Successfully saved design',
+      'client_details': 'Client Details',
+      'company_address': 'Company Address',
+      'invoice_details': 'Invoice Details',
+      'quote_details': 'Quote Details',
+      'credit_details': 'Credit Details',
+      'product_columns': 'Product Columns',
+      'task_columns': 'Task Columns',
+      'add_field': 'Add Field',
+      'all_events': 'All Events',
+      'permissions': 'Permissions',
+      'none': 'None',
+      'owned': 'Owned',
+      'payment_success': 'Payment Success',
+      'payment_failure': 'Payment Failure',
+      'invoice_sent': ':count invoice sent',
+      'quote_sent': 'Quote Sent',
+      'credit_sent': 'Credit Sent',
+      'invoice_viewed': 'Invoice Viewed',
+      'quote_viewed': 'Quote Viewed',
+      'credit_viewed': 'Credit Viewed',
+      'quote_approved': 'Quote Approved',
+      'receive_all_notifications': 'Receive All Notifications',
+      'purchase_license': 'Purchase License',
+      'apply_license': 'Apply License',
+      'cancel_account': 'Cancel Account',
+      'cancel_account_message':
+          'Warning: This will permanently delete your account, there is no undo.',
+      'delete_company': 'Delete Company',
+      'delete_company_message':
+          'Warning: This will permanently delete your company, there is no undo.',
+      'enable_modules': 'Enable Modules',
+      'converted_quote': 'Successfully converted quote',
+      'credit_design': 'Credit Design',
+      'includes': 'Includes',
+      'header': 'Viršus',
+      'load_design': 'Load Design',
+      'css_framework': 'CSS Framework',
+      'custom_designs': 'Custom Designs',
+      'designs': 'Designs',
+      'new_design': 'New Design',
+      'edit_design': 'Edit Design',
+      'created_design': 'Successfully created design',
+      'updated_design': 'Successfully updated design',
+      'archived_design': 'Successfully archived design',
+      'deleted_design': 'Successfully deleted design',
+      'removed_design': 'Successfully removed design',
+      'restored_design': 'Successfully restored design',
+      'proposals': 'Pasiūlymai',
+      'tickets': 'Tickets',
+      'recurring_invoices': 'Debeto sąskaitos',
+      'recurring_quotes': 'Pasikartojančios sąmatos',
+      'recurring_tasks': 'Recurring Tasks',
+      'recurring_expenses': 'Recurring Expenses',
+      'account_management': 'Account Management',
+      'credit_date': 'Išrašymo data',
+      'credit': 'Kreditas',
+      'credits': 'Kreditai',
+      'new_credit': 'Įvesti kreditą',
+      'edit_credit': 'Edit Credit',
+      'created_credit': 'Successfully created credit',
+      'updated_credit': 'Successfully updated credit',
+      'archived_credit': 'Successfully archived credit',
+      'deleted_credit': 'Successfully deleted credit',
+      'removed_credit': 'Successfully removed credit',
+      'restored_credit': 'Successfully restored credit',
+      'current_version': 'Current version',
+      'latest_version': 'Latest Version',
+      'update_now': 'Update Now',
+      'a_new_version_is_available': 'A new version of the web app is available',
+      'update_available': 'Update Available',
+      'app_updated': 'Update successfully completed',
+      'learn_more': 'Plačiau',
+      'integrations': 'Integrations',
+      'tracking_id': 'Tracking Id',
+      'slack_webhook_url': 'Slack Webhook URL',
+      'credit_footer': 'Credit Footer',
+      'credit_terms': 'Credit Terms',
+      'untitled_company': 'Untitled Company',
+      'added_company': 'Successfully added company',
       'company1': 'Custom Company 1',
       'company2': 'Custom Company 2',
       'company3': 'Custom Company 3',
@@ -16941,9 +18676,9 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'product3': 'Custom Product 3',
       'product4': 'Custom Product 4',
       'client1': 'Custom Client 1',
-      'client2': 'Custom Client 1',
-      'client3': 'Custom Client 1',
-      'client4': 'Custom Client 1',
+      'client2': 'Custom Client 2',
+      'client3': 'Custom Client 3',
+      'client4': 'Custom Client 4',
       'contact1': 'Custom Contact 1',
       'contact2': 'Custom Contact 2',
       'contact3': 'Custom Contact 3',
@@ -17020,7 +18755,6 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'reports': 'Reports',
       'report': 'Ataskaita',
       'add_company': 'Add Company',
-      'to_learn_about_gogle_fonts': 'to learn about Google Fonts',
       'unpaid_invoice': 'Unpaid Invoice',
       'paid_invoice': 'Paid Invoice',
       'unapproved_quote': 'Unapproved Quote',
@@ -17045,11 +18779,11 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'adjust_fee_percent': 'Adjust Fee Percent',
       'adjust_fee_percent_help': 'Adjust percent to account for fee',
       'configure_settings': 'Configure Settings',
-      'support_forum': 'support forum',
+      'support_forum': 'palaikymo forumas',
       'about': 'About',
       'documentation': 'Documentation',
       'contact_us': 'Contact Us',
-      'subtotal': 'Suma be PVM',
+      'subtotal': 'Tarpinė suma',
       'line_total': 'Suma',
       'item': 'Prekė/Paslauga',
       'credit_email': 'Credit Email',
@@ -17057,7 +18791,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'domain_url': 'Domain URL',
       'password_is_too_short': 'Password is too short',
       'password_is_too_easy':
-          'Password msut contain an upper case character and a number',
+          'Password must contain an upper case character and a number',
       'client_portal_tasks': 'Client Portal Tasks',
       'client_portal_dashboard': 'Client Portal Dashboard',
       'please_enter_a_value': 'Please enter a value',
@@ -17131,6 +18865,8 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'days': 'Days',
       'invoice_email': 'Invoice Email',
       'payment_email': 'Payment Email',
+      'partial_payment': 'Partial Payment',
+      'partial_payment_email': 'Partial Payment Email',
       'quote_email': 'Quote Email',
       'endless_reminder': 'Endless Reminder',
       'filtered_by_user': 'Filtered by User',
@@ -17138,7 +18874,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'administrator_help':
           'Allow user to manage users, change settings and modify all records',
       'user_management': 'User Management',
-      'users': 'Klientai',
+      'users': 'Vartotojai',
       'new_user': 'New User',
       'edit_user': 'Edit User',
       'created_user': 'Successfully created user',
@@ -17185,11 +18921,11 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'auto_convert_quote_help':
           'Automatically convert a quote to an invoice when approved by a client.',
       'workflow_settings': 'Workflow Settings',
-      'freq_daily': 'Daily',
-      'freq_weekly': 'Weekly',
-      'freq_two_weeks': 'Two weeks',
+      'freq_daily': 'Kasdien',
+      'freq_weekly': 'Kas savaitę',
+      'freq_two_weeks': 'Dvi savaitės',
       'freq_four_weeks': 'Four weeks',
-      'freq_monthly': 'Monthly',
+      'freq_monthly': 'Kas mėnesį',
       'freq_two_months': 'Two months',
       'freq_three_months': 'Three months',
       'freq_four_months': 'Four months',
@@ -17201,8 +18937,6 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'company': 'Company',
       'generated_numbers': 'Generated Numbers',
       'charge_taxes': 'Charge taxes',
-      'credit': 'Kreditas',
-      'credits': 'Kreditai',
       'next_reset': 'Next Reset',
       'reset_counter': 'Reset Counter',
       'recurring_prefix': 'Recurring Prefix',
@@ -17245,9 +18979,6 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'enable_portal_password': 'Password Protect Invoices',
       'enable_portal_password_help':
           'Allows you to set a password for each contact. If a password is set, the contact will be required to enter a password before viewing invoices.',
-      'send_portal_password': 'Sugeneruoti Automatiškai',
-      'send_portal_password_help':
-          'If no password is set, one will be generated and sent with the first invoice.',
       'authorization': 'Authorization',
       'subdomain': 'Subdomain',
       'domain': 'Domain',
@@ -17377,7 +19108,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'advanced_settings': 'Advanced Settings',
       'company_details': 'Imonės informacija',
       'user_details': 'User Details',
-      'localization': 'Localization',
+      'localization': 'Lokalizacija',
       'online_payments': 'Online mokėjimai',
       'tax_rates': 'Mokesčių įkainiai',
       'notifications': 'Pranešimai',
@@ -17385,7 +19116,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'custom_fields': 'Custom fields',
       'invoice_design': 'Invoice Design',
       'buy_now_buttons': 'Pirkti dabar mygtukas',
-      'email_settings': 'Email Settings',
+      'email_settings': 'Email nustatymai',
       'templates_and_reminders': 'Templates & Reminders',
       'credit_cards_and_banks': 'Credit Cards & Banks',
       'data_visualizations': 'Data Visualizations',
@@ -17534,19 +19265,19 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'custom': 'Kurti',
       'clone_to_invoice': 'Clone to Invoice',
       'clone_to_quote': 'Clone to Quote',
+      'clone_to_credit': 'Clone to Credit',
       'view_invoice': 'Rodyti sąskaitą',
       'convert': 'Convert',
       'more': 'More',
       'edit_client': 'Redaguoti',
       'edit_product': 'Edit Product',
       'edit_invoice': 'Redaguoti',
-      'edit_quote': 'Keisti pasiūlymą',
+      'edit_quote': 'Keisti sąmatą',
       'edit_payment': 'Edit Payment',
       'edit_task': 'Keisti',
       'edit_expense': 'Edit Expense',
       'edit_vendor': 'Keisti',
       'edit_project': 'Edit Project',
-      'edit_credit': 'Edit Credit',
       'edit_recurring_invoice': 'Edit Recurring Invoice',
       'edit_recurring_expense': 'Edit Recurring Expense',
       'edit_recurring_quote': 'Edit Recurring Quote',
@@ -17556,7 +19287,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'average_invoice': 'Sąskaitų vidurkis',
       'outstanding': 'Neapmokėta',
       'invoices_sent': ':count invoices sent',
-      'active_clients': 'active clients',
+      'active_clients': 'aktyvūs klientai',
       'close': 'Uždaryti',
       'email': 'El. paštas',
       'password': 'Slaptažodis',
@@ -17653,10 +19384,10 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'frequency': 'Periodas',
       'start_date': 'Pradžia',
       'end_date': 'Pabaiga',
-      'quote_number': 'Quote Number',
-      'quote_date': 'Quote Date',
+      'quote_number': 'Sąmatos numeris',
+      'quote_date': 'Sąmatos data',
       'valid_until': 'Galioja iki',
-      'items': 'Items',
+      'items': 'Prekės/Paslaugos',
       'partial_deposit': 'Partial/Deposit',
       'description': 'Aprašymas',
       'unit_cost': 'Vnt. kaina',
@@ -17697,15 +19428,11 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'approved': 'Approved',
       'partial': 'Partial/Deposit',
       'paid': 'Apmokėta',
-      'invoice_status_1': 'Draft',
-      'invoice_status_2': 'Sent',
-      'invoice_status_3': 'Viewed',
-      'invoice_status_4': 'Approved',
       'mark_sent': 'Mark sent',
       'marked_invoice_as_sent': 'Successfully marked invoice as sent',
-      'marked_invoice_as_paid': 'Successfully marked invoice as sent',
+      'marked_invoice_as_paid': 'Successfully marked invoice as paid',
       'marked_invoices_as_sent': 'Successfully marked invoices as sent',
-      'marked_invoices_as_paid': 'Successfully marked invoices as sent',
+      'marked_invoices_as_paid': 'Successfully marked invoices as paid',
       'done': 'Baigta',
       'please_enter_a_client_or_contact_name':
           'Please enter a client or contact name',
@@ -17756,7 +19483,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'payments': 'Mokėjimai',
       'refunded': 'Refunded',
       'payment_type': 'Mokėjimo tipas',
-      'transaction_reference': 'Transaction Reference',
+      'transaction_reference': 'Tranzakcijos numeris',
       'enter_payment': 'Įvesti apmokėjimą',
       'new_payment': 'Naujas mokėjimas',
       'created_payment': 'Successfully created payment',
@@ -17764,9 +19491,9 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'archived_payment': 'Successfully archived payment',
       'deleted_payment': 'Successfully deleted payment',
       'restored_payment': 'Successfully restored payment',
-      'quote': 'Pasiūlymas',
-      'quotes': 'Pasiūlymai',
-      'new_quote': 'Naujas pasiūlymas',
+      'quote': 'Sąmata',
+      'quotes': 'Sąmatos',
+      'new_quote': 'Nauja sąmata',
       'created_quote': 'Successfully created quote',
       'updated_quote': 'Successfully updated quote',
       'archived_quote': 'Successfully archived quote',
@@ -17840,7 +19567,9 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'activity_57': 'System failed to email invoice :invoice',
       'one_time_password': 'One Time Password',
       'emailed_quote': 'Successfully emailed quote',
+      'emailed_credit': 'Successfully emailed credit',
       'marked_quote_as_sent': 'Successfully marked quote as sent',
+      'marked_credit_as_sent': 'Successfully marked credit as sent',
       'expired': 'Expired',
       'all': 'Visi',
       'select': 'Pasirinkite',
@@ -17886,6 +19615,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'email_subject_invoice': 'Email Invoice Subject',
       'email_subject_quote': 'Email Quote Subject',
       'email_subject_payment': 'Email Payment Subject',
+      'email_subject_payment_partial': 'Email Partial Payment Subject',
       'switch_list_table': 'Switch List Table',
       'client_city': 'Client City',
       'client_state': 'Client State',
@@ -17917,8 +19647,114 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'vendor_city': 'Vendor City',
       'vendor_state': 'Vendor State',
       'vendor_country': 'Vendor Country',
+      'is_approved': 'Is Approved',
+      'tax_name': 'Tax Name',
+      'tax_amount': 'Tax Amount',
+      'tax_paid': 'Tax Paid',
+      'payment_amount': 'Mokėjimo suma',
+      'age': 'Age',
     },
     'mk_MK': {
+      'full_name': 'Целосно име',
+      'city_state_postal': 'Град/Држава/Поштенски број',
+      'postal_city_state': 'Поштенски број/Град/Држава',
+      'custom1': 'Прво прилагодено',
+      'custom2': 'Второ прилагодено',
+      'custom3': 'Third Custom',
+      'custom4': 'Fourth Custom',
+      'optional': 'Optional',
+      'license': 'License',
+      'purge_data': 'Прочисти податоци',
+      'purge_successful': 'Успешно прочистени податоци за компаанија',
+      'purge_data_message':
+          'Предупредување: Ова трајно ќе ги избрише вашите податоци, нема враќање назад.',
+      'invoice_balance': 'Invoice Balance',
+      'age_group_0': '0 - 30 дена',
+      'age_group_30': '30 - 60 дена',
+      'age_group_60': '60 - 90 дена',
+      'age_group_90': '90 - 120 дена',
+      'age_group_120': '120+ дена',
+      'refresh': 'Освежи',
+      'saved_design': 'Successfully saved design',
+      'client_details': 'Client Details',
+      'company_address': 'Company Address',
+      'invoice_details': 'Детали за фактура',
+      'quote_details': 'Quote Details',
+      'credit_details': 'Credit Details',
+      'product_columns': 'Product Columns',
+      'task_columns': 'Task Columns',
+      'add_field': 'Add Field',
+      'all_events': 'All Events',
+      'permissions': 'Дозволи',
+      'none': 'Нема',
+      'owned': 'Owned',
+      'payment_success': 'Payment Success',
+      'payment_failure': 'Payment Failure',
+      'invoice_sent': ':count испратена фактура',
+      'quote_sent': 'Quote Sent',
+      'credit_sent': 'Credit Sent',
+      'invoice_viewed': 'Invoice Viewed',
+      'quote_viewed': 'Quote Viewed',
+      'credit_viewed': 'Credit Viewed',
+      'quote_approved': 'Quote Approved',
+      'receive_all_notifications': 'Receive All Notifications',
+      'purchase_license': 'Purchase License',
+      'apply_license': 'Примени лиценца',
+      'cancel_account': 'Избриши сметка',
+      'cancel_account_message':
+          'Предупредување: Ова трајно ќе ја избрише вашата сметка, нема враќање.',
+      'delete_company': 'Избриши компанија',
+      'delete_company_message':
+          'Предупредување: Ова трајно ќе ја избрише вашата компанија, нема враќање назад.',
+      'enable_modules': 'Enable Modules',
+      'converted_quote': 'Successfully converted quote',
+      'credit_design': 'Credit Design',
+      'includes': 'Includes',
+      'header': 'Заглавје',
+      'load_design': 'Вчитај дизајн',
+      'css_framework': 'CSS Framework',
+      'custom_designs': 'Custom Designs',
+      'designs': 'Designs',
+      'new_design': 'New Design',
+      'edit_design': 'Edit Design',
+      'created_design': 'Successfully created design',
+      'updated_design': 'Successfully updated design',
+      'archived_design': 'Successfully archived design',
+      'deleted_design': 'Successfully deleted design',
+      'removed_design': 'Successfully removed design',
+      'restored_design': 'Successfully restored design',
+      'proposals': 'Предлози',
+      'tickets': 'Tickets',
+      'recurring_invoices': 'Фактури што се повторуваат',
+      'recurring_quotes': 'Рекурентни понуди',
+      'recurring_tasks': 'Recurring Tasks',
+      'recurring_expenses': 'Рекурентни трошоци',
+      'account_management': 'Менаџирање на сметка',
+      'credit_date': 'Датум на кредит',
+      'credit': 'Кредит',
+      'credits': 'Кредити',
+      'new_credit': 'Внеси Кредит',
+      'edit_credit': 'Измени кредит',
+      'created_credit': 'Успешно креирање на кредит',
+      'updated_credit': 'Успешно ажурирање на кредит',
+      'archived_credit': 'Успешно архивирање на кредит',
+      'deleted_credit': 'Успешно бришење на кредит',
+      'removed_credit': 'Successfully removed credit',
+      'restored_credit': 'Успешно повратување на кредит',
+      'current_version': 'Сегашна верзија',
+      'latest_version': 'Latest Version',
+      'update_now': 'Update Now',
+      'a_new_version_is_available': 'A new version of the web app is available',
+      'update_available': 'Update Available',
+      'app_updated': 'Update successfully completed',
+      'learn_more': 'Повеќе',
+      'integrations': 'Integrations',
+      'tracking_id': 'Tracking Id',
+      'slack_webhook_url': 'Slack Webhook URL',
+      'credit_footer': 'Credit Footer',
+      'credit_terms': 'Credit Terms',
+      'untitled_company': 'Untitled Company',
+      'added_company': 'Successfully added company',
       'company1': 'Custom Company 1',
       'company2': 'Custom Company 2',
       'company3': 'Custom Company 3',
@@ -17928,9 +19764,9 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'product3': 'Custom Product 3',
       'product4': 'Custom Product 4',
       'client1': 'Custom Client 1',
-      'client2': 'Custom Client 1',
-      'client3': 'Custom Client 1',
-      'client4': 'Custom Client 1',
+      'client2': 'Custom Client 2',
+      'client3': 'Custom Client 3',
+      'client4': 'Custom Client 4',
       'contact1': 'Custom Contact 1',
       'contact2': 'Custom Contact 2',
       'contact3': 'Custom Contact 3',
@@ -18007,7 +19843,6 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'reports': 'Извештаи',
       'report': 'Извештај',
       'add_company': 'Додај компанија',
-      'to_learn_about_gogle_fonts': 'to learn about Google Fonts',
       'unpaid_invoice': 'Неплатена фактура',
       'paid_invoice': 'Платена фактура',
       'unapproved_quote': 'Неодобрена понуда',
@@ -18044,7 +19879,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'domain_url': 'Domain URL',
       'password_is_too_short': 'Password is too short',
       'password_is_too_easy':
-          'Password msut contain an upper case character and a number',
+          'Password must contain an upper case character and a number',
       'client_portal_tasks': 'Client Portal Tasks',
       'client_portal_dashboard': 'Client Portal Dashboard',
       'please_enter_a_value': 'Please enter a value',
@@ -18118,6 +19953,8 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'days': 'Денови',
       'invoice_email': 'Мејл за фактура',
       'payment_email': 'Мејл за плаќање',
+      'partial_payment': 'Partial Payment',
+      'partial_payment_email': 'Partial Payment Email',
       'quote_email': 'Мејл за понуда',
       'endless_reminder': 'Бескраен потсетник',
       'filtered_by_user': 'Filtered by User',
@@ -18189,8 +20026,6 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'company': 'Компанија',
       'generated_numbers': 'Генерирани броеви',
       'charge_taxes': 'Наплати даноци',
-      'credit': 'Кредит',
-      'credits': 'Кредити',
       'next_reset': 'Следно ресетирање',
       'reset_counter': 'Ресетирај бројач',
       'recurring_prefix': 'Рекурентен префикс',
@@ -18233,9 +20068,6 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'enable_portal_password': 'Фактури заштитени со лозинка',
       'enable_portal_password_help':
           'Ви дозволува поставување на лозинка за секој контакт. Ако поставите лозинка. контактот ќе мора да ја внесе лозинката пред да ги прегледа фактурите.',
-      'send_portal_password': 'Генерирај автоматски',
-      'send_portal_password_help':
-          'Ако не е поставена лозинка, ќе се изгенерира и ќе се прати заедно со првата фактура.',
       'authorization': 'Овластување',
       'subdomain': 'Поддомен',
       'domain': 'Домен',
@@ -18523,6 +20355,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'custom': 'Прилагодено',
       'clone_to_invoice': 'Clone to Invoice',
       'clone_to_quote': 'Clone to Quote',
+      'clone_to_credit': 'Clone to Credit',
       'view_invoice': 'Преглед на фактура',
       'convert': 'Convert',
       'more': 'More',
@@ -18535,7 +20368,6 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'edit_expense': 'Измени трошок',
       'edit_vendor': 'Измени продавач',
       'edit_project': 'Измени проект',
-      'edit_credit': 'Измени кредит',
       'edit_recurring_invoice': 'Edit Recurring Invoice',
       'edit_recurring_expense': 'Измени рекурентен трошок',
       'edit_recurring_quote': 'Edit Recurring Quote',
@@ -18686,15 +20518,11 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'approved': 'Approved',
       'partial': 'Делумно/Депозит',
       'paid': 'Платено',
-      'invoice_status_1': 'Draft',
-      'invoice_status_2': 'Sent',
-      'invoice_status_3': 'Viewed',
-      'invoice_status_4': 'Approved',
       'mark_sent': 'Белегот е пратен',
       'marked_invoice_as_sent': 'Successfully marked invoice as sent',
-      'marked_invoice_as_paid': 'Successfully marked invoice as sent',
+      'marked_invoice_as_paid': 'Successfully marked invoice as paid',
       'marked_invoices_as_sent': 'Successfully marked invoices as sent',
-      'marked_invoices_as_paid': 'Successfully marked invoices as sent',
+      'marked_invoices_as_paid': 'Successfully marked invoices as paid',
       'done': 'Завршено',
       'please_enter_a_client_or_contact_name':
           'Please enter a client or contact name',
@@ -18829,7 +20657,9 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'activity_57': 'System failed to email invoice :invoice',
       'one_time_password': 'Еднократна лозинка',
       'emailed_quote': 'Успешно пратена понуда по ел. пошта',
+      'emailed_credit': 'Successfully emailed credit',
       'marked_quote_as_sent': 'Successfully marked quote as sent',
+      'marked_credit_as_sent': 'Successfully marked credit as sent',
       'expired': 'Истечено',
       'all': 'Сите',
       'select': 'Селектирај',
@@ -18875,6 +20705,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'email_subject_invoice': 'Email Invoice Subject',
       'email_subject_quote': 'Email Quote Subject',
       'email_subject_payment': 'Email Payment Subject',
+      'email_subject_payment_partial': 'Email Partial Payment Subject',
       'switch_list_table': 'Switch List Table',
       'client_city': 'Client City',
       'client_state': 'Client State',
@@ -18906,8 +20737,114 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'vendor_city': 'Vendor City',
       'vendor_state': 'Vendor State',
       'vendor_country': 'Vendor Country',
+      'is_approved': 'Is Approved',
+      'tax_name': 'Име на данок',
+      'tax_amount': 'Износ на данок',
+      'tax_paid': 'Платен данок',
+      'payment_amount': 'Износ на плаќање',
+      'age': 'Возраст',
     },
     'nb_NO': {
+      'full_name': 'Fullt Navn',
+      'city_state_postal': 'By/Fylke/Postnummer',
+      'postal_city_state': 'Postnr./Sted/Fylke',
+      'custom1': 'First Custom',
+      'custom2': 'Second Custom',
+      'custom3': 'Third Custom',
+      'custom4': 'Fourth Custom',
+      'optional': 'Optional',
+      'license': 'License',
+      'purge_data': 'Fjern data',
+      'purge_successful': 'Successfully purged company data',
+      'purge_data_message':
+          'Advarsel: Dette sletter alle dine data permanent, og kan ikke gjennopprettes.',
+      'invoice_balance': 'Invoice Balance',
+      'age_group_0': '0 - 30 Dager',
+      'age_group_30': '30 - 60 Dager',
+      'age_group_60': '60 - 90 Dager',
+      'age_group_90': '90 - 120 Dager',
+      'age_group_120': 'Mer enn 120 dager',
+      'refresh': 'Refresh',
+      'saved_design': 'Successfully saved design',
+      'client_details': 'Client Details',
+      'company_address': 'Company Address',
+      'invoice_details': 'Fakturadetaljer',
+      'quote_details': 'Quote Details',
+      'credit_details': 'Credit Details',
+      'product_columns': 'Product Columns',
+      'task_columns': 'Task Columns',
+      'add_field': 'Add Field',
+      'all_events': 'All Events',
+      'permissions': 'Permissions',
+      'none': 'None',
+      'owned': 'Owned',
+      'payment_success': 'Payment Success',
+      'payment_failure': 'Payment Failure',
+      'invoice_sent': ':count faktura sendt',
+      'quote_sent': 'Quote Sent',
+      'credit_sent': 'Credit Sent',
+      'invoice_viewed': 'Invoice Viewed',
+      'quote_viewed': 'Quote Viewed',
+      'credit_viewed': 'Credit Viewed',
+      'quote_approved': 'Quote Approved',
+      'receive_all_notifications': 'Receive All Notifications',
+      'purchase_license': 'Purchase License',
+      'apply_license': 'aktiver lisens',
+      'cancel_account': 'Kanseler Konto',
+      'cancel_account_message':
+          'Advarsel: Dette vil permanent slette kontoen din, du kan ikke angre.',
+      'delete_company': 'Slett Firma',
+      'delete_company_message':
+          'Advarsel: Dette vil permanent slette ditt firma, dette kan ikke gjennopprettes.',
+      'enable_modules': 'Enable Modules',
+      'converted_quote': 'Successfully converted quote',
+      'credit_design': 'Credit Design',
+      'includes': 'Includes',
+      'header': 'Header',
+      'load_design': 'Load Design',
+      'css_framework': 'CSS Framework',
+      'custom_designs': 'Custom Designs',
+      'designs': 'Designs',
+      'new_design': 'New Design',
+      'edit_design': 'Edit Design',
+      'created_design': 'Successfully created design',
+      'updated_design': 'Successfully updated design',
+      'archived_design': 'Successfully archived design',
+      'deleted_design': 'Successfully deleted design',
+      'removed_design': 'Successfully removed design',
+      'restored_design': 'Successfully restored design',
+      'proposals': 'Forslag',
+      'tickets': 'Tickets',
+      'recurring_invoices': 'Gjentakende Fakturaer',
+      'recurring_quotes': 'Recurring Quotes',
+      'recurring_tasks': 'Recurring Tasks',
+      'recurring_expenses': 'Gjentakende Utgifter',
+      'account_management': 'Kontoadministrasjon',
+      'credit_date': 'Kreditdato',
+      'credit': 'Kredit',
+      'credits': 'Krediter',
+      'new_credit': 'Oppgi Kredit',
+      'edit_credit': 'Rediger Kredit',
+      'created_credit': 'Kredit opprettet',
+      'updated_credit': 'Kredit oppdatert',
+      'archived_credit': 'Kredit arkivert',
+      'deleted_credit': 'Kredit slettet',
+      'removed_credit': 'Successfully removed credit',
+      'restored_credit': 'Suksessfullt gjenopprettet kredit',
+      'current_version': 'Nåværende versjon',
+      'latest_version': 'Latest Version',
+      'update_now': 'Update Now',
+      'a_new_version_is_available': 'A new version of the web app is available',
+      'update_available': 'Update Available',
+      'app_updated': 'Update successfully completed',
+      'learn_more': 'Lær mer',
+      'integrations': 'Integrations',
+      'tracking_id': 'Tracking Id',
+      'slack_webhook_url': 'Slack Webhook URL',
+      'credit_footer': 'Credit Footer',
+      'credit_terms': 'Credit Terms',
+      'untitled_company': 'Untitled Company',
+      'added_company': 'Successfully added company',
       'company1': 'Custom Company 1',
       'company2': 'Custom Company 2',
       'company3': 'Custom Company 3',
@@ -18917,9 +20854,9 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'product3': 'Custom Product 3',
       'product4': 'Custom Product 4',
       'client1': 'Custom Client 1',
-      'client2': 'Custom Client 1',
-      'client3': 'Custom Client 1',
-      'client4': 'Custom Client 1',
+      'client2': 'Custom Client 2',
+      'client3': 'Custom Client 3',
+      'client4': 'Custom Client 4',
       'contact1': 'Custom Contact 1',
       'contact2': 'Custom Contact 2',
       'contact3': 'Custom Contact 3',
@@ -18996,7 +20933,6 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'reports': 'Rapporter',
       'report': 'Rapport',
       'add_company': 'Legg til Firma',
-      'to_learn_about_gogle_fonts': 'to learn about Google Fonts',
       'unpaid_invoice': 'Unpaid Invoice',
       'paid_invoice': 'Paid Invoice',
       'unapproved_quote': 'Unapproved Quote',
@@ -19033,7 +20969,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'domain_url': 'Domain URL',
       'password_is_too_short': 'Password is too short',
       'password_is_too_easy':
-          'Password msut contain an upper case character and a number',
+          'Password must contain an upper case character and a number',
       'client_portal_tasks': 'Client Portal Tasks',
       'client_portal_dashboard': 'Client Portal Dashboard',
       'please_enter_a_value': 'Please enter a value',
@@ -19107,6 +21043,8 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'days': 'Dager',
       'invoice_email': 'Faktura-e-post',
       'payment_email': 'Betalings-e-post',
+      'partial_payment': 'Partial Payment',
+      'partial_payment_email': 'Partial Payment Email',
       'quote_email': 'Tilbuds-e-post',
       'endless_reminder': 'Endless Reminder',
       'filtered_by_user': 'Filtered by User',
@@ -19177,8 +21115,6 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'company': 'Company',
       'generated_numbers': 'Genererte Nummere',
       'charge_taxes': 'Inkluder skatt',
-      'credit': 'Kredit',
-      'credits': 'Krediter',
       'next_reset': 'Neste Nullstilling',
       'reset_counter': 'Nullstill Teller',
       'recurring_prefix': 'Recurring Prefix',
@@ -19220,9 +21156,6 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'enable_portal_password': 'Passord-beskytt fakturaer',
       'enable_portal_password_help':
           'Allows you to set a password for each contact. If a password is set, the contact will be required to enter a password before viewing invoices.',
-      'send_portal_password': 'Opprett Automatisk',
-      'send_portal_password_help':
-          'If no password is set, one will be generated and sent with the first invoice.',
       'authorization': 'Autorisasjon',
       'subdomain': 'Subdomene',
       'domain': 'Domene',
@@ -19364,7 +21297,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'templates_and_reminders': 'Design & Påminnelser',
       'credit_cards_and_banks': 'Credit Cards & Banks',
       'data_visualizations': 'Datavisualiseringer',
-      'price': 'Price',
+      'price': 'Pris',
       'email_sign_up': 'Email Sign Up',
       'google_sign_up': 'Google Sign Up',
       'thank_you_for_your_purchase': 'Thank you for your purchase!',
@@ -19480,7 +21413,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'unapproved': 'Unapproved',
       'authenticate_to_change_setting':
           'Please authenticate to change this setting',
-      'locked': 'Locked',
+      'locked': 'Låst',
       'authenticate': 'Authenticate',
       'please_authenticate': 'Please authenticate',
       'biometric_authentication': 'Biometric Authentication',
@@ -19509,19 +21442,19 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'custom': 'Egendefiner',
       'clone_to_invoice': 'Clone to Invoice',
       'clone_to_quote': 'Clone to Quote',
+      'clone_to_credit': 'Clone to Credit',
       'view_invoice': 'Se faktura',
       'convert': 'Convert',
       'more': 'More',
       'edit_client': 'Rediger Kunde',
       'edit_product': 'Endre produkt',
-      'edit_invoice': 'Rediger Faktura',
+      'edit_invoice': 'Rediger faktura',
       'edit_quote': 'Endre tilbud',
       'edit_payment': 'Rediger Betaling',
       'edit_task': 'Rediger Oppgave',
       'edit_expense': 'Edit Expense',
       'edit_vendor': 'Rediger Leverandør',
       'edit_project': 'Rediger Prosjekt',
-      'edit_credit': 'Rediger Kredit',
       'edit_recurring_invoice': 'Edit Recurring Invoice',
       'edit_recurring_expense': 'Rediger Gjentakende Utgift',
       'edit_recurring_quote': 'Edit Recurring Quote',
@@ -19609,7 +21542,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'country': 'Country',
       'invoice': 'Faktura',
       'invoices': 'Fakturaer',
-      'new_invoice': 'Ny Faktura',
+      'new_invoice': 'Ny faktura',
       'created_invoice': 'Faktura opprettet',
       'updated_invoice': 'Faktura oppdatert',
       'archived_invoice': 'Faktura arkivert',
@@ -19620,7 +21553,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'amount': 'Beløp',
       'invoice_number': 'Fakturanummer',
       'invoice_date': 'Faktureringsdato',
-      'discount': 'Rabatt',
+      'discount': 'Rabatter:',
       'po_number': 'Ordrenummer',
       'terms': 'Vilkår',
       'public_notes': 'Offentlig notater',
@@ -19672,15 +21605,11 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'approved': 'Approved',
       'partial': 'Delvis/Depositum',
       'paid': 'Betalt',
-      'invoice_status_1': 'Draft',
-      'invoice_status_2': 'Sent',
-      'invoice_status_3': 'Viewed',
-      'invoice_status_4': 'Approved',
       'mark_sent': 'Merk som Sendt',
       'marked_invoice_as_sent': 'Successfully marked invoice as sent',
-      'marked_invoice_as_paid': 'Successfully marked invoice as sent',
+      'marked_invoice_as_paid': 'Successfully marked invoice as paid',
       'marked_invoices_as_sent': 'Successfully marked invoices as sent',
-      'marked_invoices_as_paid': 'Successfully marked invoices as sent',
+      'marked_invoices_as_paid': 'Successfully marked invoices as paid',
       'done': 'Ferdig',
       'please_enter_a_client_or_contact_name':
           'Please enter a client or contact name',
@@ -19732,7 +21661,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'refunded': 'Refunded',
       'payment_type': 'Betalingstype',
       'transaction_reference': 'Transaksjonsreferanse',
-      'enter_payment': 'Oppgi Betaling',
+      'enter_payment': 'Oppgi betaling',
       'new_payment': 'Oppgi Betaling',
       'created_payment': 'Betaling opprettet',
       'updated_payment': 'Suksessfullt oppdatert betaling',
@@ -19815,7 +21744,9 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'activity_57': 'System failed to email invoice :invoice',
       'one_time_password': 'One Time Password',
       'emailed_quote': 'Tilbud sendt som e-post',
+      'emailed_credit': 'Successfully emailed credit',
       'marked_quote_as_sent': 'Successfully marked quote as sent',
+      'marked_credit_as_sent': 'Successfully marked credit as sent',
       'expired': 'Expired',
       'all': 'Alle',
       'select': 'Velg',
@@ -19861,6 +21792,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'email_subject_invoice': 'Email Invoice Subject',
       'email_subject_quote': 'Email Quote Subject',
       'email_subject_payment': 'Email Payment Subject',
+      'email_subject_payment_partial': 'Email Partial Payment Subject',
       'switch_list_table': 'Switch List Table',
       'client_city': 'Client City',
       'client_state': 'Client State',
@@ -19892,8 +21824,114 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'vendor_city': 'Vendor City',
       'vendor_state': 'Vendor State',
       'vendor_country': 'Vendor Country',
+      'is_approved': 'Is Approved',
+      'tax_name': 'Skattenavn',
+      'tax_amount': 'Tax Amount',
+      'tax_paid': 'Tax Paid',
+      'payment_amount': 'Beløp',
+      'age': 'Alder',
     },
     'pl': {
+      'full_name': 'Pełna nazwa',
+      'city_state_postal': 'Miasto/województwo/kod pocztowy',
+      'postal_city_state': 'Kod pocztowy/Miasto/Województwo',
+      'custom1': 'First Custom',
+      'custom2': 'Second Custom',
+      'custom3': 'Third Custom',
+      'custom4': 'Fourth Custom',
+      'optional': 'Optional',
+      'license': 'License',
+      'purge_data': 'Purge Data',
+      'purge_successful': 'Successfully purged company data',
+      'purge_data_message':
+          'Warning: This will permanently erase your data, there is no undo.',
+      'invoice_balance': 'Invoice Balance',
+      'age_group_0': '0 - 30 dni',
+      'age_group_30': '30 - 60 dni',
+      'age_group_60': '60 - 90 dni',
+      'age_group_90': '90 - 120 dni',
+      'age_group_120': 'ponad 120 dni',
+      'refresh': 'Refresh',
+      'saved_design': 'Successfully saved design',
+      'client_details': 'Client Details',
+      'company_address': 'Company Address',
+      'invoice_details': 'Szczegóły faktury',
+      'quote_details': 'Quote Details',
+      'credit_details': 'Credit Details',
+      'product_columns': 'Product Columns',
+      'task_columns': 'Task Columns',
+      'add_field': 'Add Field',
+      'all_events': 'All Events',
+      'permissions': 'Uprawnienia',
+      'none': 'None',
+      'owned': 'Owned',
+      'payment_success': 'Payment Success',
+      'payment_failure': 'Payment Failure',
+      'invoice_sent': ':count wysłana faktura',
+      'quote_sent': 'Quote Sent',
+      'credit_sent': 'Credit Sent',
+      'invoice_viewed': 'Invoice Viewed',
+      'quote_viewed': 'Quote Viewed',
+      'credit_viewed': 'Credit Viewed',
+      'quote_approved': 'Quote Approved',
+      'receive_all_notifications': 'Receive All Notifications',
+      'purchase_license': 'Purchase License',
+      'apply_license': 'Zastosuj licencję',
+      'cancel_account': 'Anuluj konto',
+      'cancel_account_message':
+          'Ostrzeżenie: Nie można cofnąć tej operacji, wszystkie twoje dane zostaną usunięte.',
+      'delete_company': 'Delete Company',
+      'delete_company_message':
+          'Warning: This will permanently delete your company, there is no undo.',
+      'enable_modules': 'Enable Modules',
+      'converted_quote': 'Successfully converted quote',
+      'credit_design': 'Credit Design',
+      'includes': 'Includes',
+      'header': 'Nagłówek',
+      'load_design': 'Load Design',
+      'css_framework': 'CSS Framework',
+      'custom_designs': 'Custom Designs',
+      'designs': 'Designs',
+      'new_design': 'New Design',
+      'edit_design': 'Edit Design',
+      'created_design': 'Successfully created design',
+      'updated_design': 'Successfully updated design',
+      'archived_design': 'Successfully archived design',
+      'deleted_design': 'Successfully deleted design',
+      'removed_design': 'Successfully removed design',
+      'restored_design': 'Successfully restored design',
+      'proposals': 'Propozycje',
+      'tickets': 'Tickets',
+      'recurring_invoices': 'Faktury odnawialne',
+      'recurring_quotes': 'Powtarzalne wyceny',
+      'recurring_tasks': 'Recurring Tasks',
+      'recurring_expenses': 'Recurring Expenses',
+      'account_management': 'Zarządzanie kontem',
+      'credit_date': 'Data kredytu',
+      'credit': 'Kredyt',
+      'credits': 'Kredyty',
+      'new_credit': 'Wprowadź kredyt',
+      'edit_credit': 'Edytuj kredyt',
+      'created_credit': 'Kredyt został utworzony',
+      'updated_credit': 'Zaktualizowano kredyt',
+      'archived_credit': 'Kredyt zarchiwizowano',
+      'deleted_credit': 'Kredyt został usunięty',
+      'removed_credit': 'Successfully removed credit',
+      'restored_credit': 'Kredyt został przywrócony',
+      'current_version': 'Aktualna wersja',
+      'latest_version': 'Latest Version',
+      'update_now': 'Update Now',
+      'a_new_version_is_available': 'A new version of the web app is available',
+      'update_available': 'Update Available',
+      'app_updated': 'Update successfully completed',
+      'learn_more': 'Więcej informacji',
+      'integrations': 'Integrations',
+      'tracking_id': 'Tracking Id',
+      'slack_webhook_url': 'Slack Webhook URL',
+      'credit_footer': 'Credit Footer',
+      'credit_terms': 'Credit Terms',
+      'untitled_company': 'Untitled Company',
+      'added_company': 'Successfully added company',
       'company1': 'Custom Company 1',
       'company2': 'Custom Company 2',
       'company3': 'Custom Company 3',
@@ -19903,9 +21941,9 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'product3': 'Custom Product 3',
       'product4': 'Custom Product 4',
       'client1': 'Custom Client 1',
-      'client2': 'Custom Client 1',
-      'client3': 'Custom Client 1',
-      'client4': 'Custom Client 1',
+      'client2': 'Custom Client 2',
+      'client3': 'Custom Client 3',
+      'client4': 'Custom Client 4',
       'contact1': 'Custom Contact 1',
       'contact2': 'Custom Contact 2',
       'contact3': 'Custom Contact 3',
@@ -19982,7 +22020,6 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'reports': 'Raporty',
       'report': 'Raport',
       'add_company': 'Dodaj firmę',
-      'to_learn_about_gogle_fonts': 'to learn about Google Fonts',
       'unpaid_invoice': 'Unpaid Invoice',
       'paid_invoice': 'Paid Invoice',
       'unapproved_quote': 'Unapproved Quote',
@@ -19990,7 +22027,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'refund': 'Zwrot',
       'refund_date': 'Refund Date',
       'filtered_by': 'Filtered by',
-      'contact_email': 'Contact Email',
+      'contact_email': 'Email kontaktowy',
       'multiselect': 'Multiselect',
       'entity_state': 'Stan',
       'verify_password': 'Verify Password',
@@ -20019,7 +22056,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'domain_url': 'Domain URL',
       'password_is_too_short': 'Password is too short',
       'password_is_too_easy':
-          'Password msut contain an upper case character and a number',
+          'Password must contain an upper case character and a number',
       'client_portal_tasks': 'Client Portal Tasks',
       'client_portal_dashboard': 'Client Portal Dashboard',
       'please_enter_a_value': 'Please enter a value',
@@ -20093,6 +22130,8 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'days': 'Dni',
       'invoice_email': 'Email faktury',
       'payment_email': 'Email płatności',
+      'partial_payment': 'Partial Payment',
+      'partial_payment_email': 'Partial Payment Email',
       'quote_email': 'Email oferty',
       'endless_reminder': 'Endless Reminder',
       'filtered_by_user': 'Filtered by User',
@@ -20157,14 +22196,12 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'freq_four_months': 'Four months',
       'freq_six_months': 'Co sześć miesięcy',
       'freq_annually': 'Co rok',
-      'freq_two_years': 'Two years',
+      'freq_two_years': 'Dwa lata',
       'freq_three_years': 'Three Years',
       'never': 'Nigdy',
       'company': 'Company',
       'generated_numbers': 'Wygenerowane numery',
       'charge_taxes': 'Obciąż podatkami',
-      'credit': 'Kredyt',
-      'credits': 'Kredyty',
       'next_reset': 'Następny reset',
       'reset_counter': 'Zresetuj licznik',
       'recurring_prefix': 'Recurring Prefix',
@@ -20206,9 +22243,6 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'enable_portal_password': 'Faktury chronione hasłem',
       'enable_portal_password_help':
           'Zezwala na utworzenie haseł dla każdego kontaktu. Jeśli hasło zostanie ustanowione, użytkownik będzie musiał podać hasło, aby przeglądać faktury.',
-      'send_portal_password': 'Wygeneruj automatycznie',
-      'send_portal_password_help':
-          'Wygeneruje hasło automatycznie, jeśli nie zostanie ono wpisane. Klient otrzyma je razem z pierwszą fakturą.',
       'authorization': 'Autoryzacja',
       'subdomain': 'Subdomena',
       'domain': 'Domena',
@@ -20225,12 +22259,12 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'attach_ubl': 'Attach UBL',
       'email_style': 'Email Style',
       'enable_email_markup': 'Aktywuj Markup',
-      'reply_to_email': 'Reply-To Email',
+      'reply_to_email': 'Odpowiedz do:',
       'bcc_email': 'UDW Email',
       'processed': 'Processed',
       'credit_card': 'Karta Kredytowa',
       'bank_transfer': 'Przelew bankowy',
-      'priority': 'Priority',
+      'priority': 'Priorytet',
       'fee_amount': 'Fee Amount',
       'fee_percent': 'Fee Percent',
       'fee_cap': 'Fee Cap',
@@ -20328,12 +22362,12 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'archived_group': 'Successfully archived group',
       'deleted_group': 'Successfully deleted group',
       'restored_group': 'Successfully restored group',
-      'upload_logo': 'Upload Logo',
+      'upload_logo': 'Prześlij logo',
       'uploaded_logo': 'Successfully uploaded logo',
       'logo': 'Logo',
       'saved_settings': 'Successfully saved settings',
       'product_settings': 'Ustawienia produktu',
-      'device_settings': 'Device Settings',
+      'device_settings': 'Ustawienia urządzenia',
       'defaults': 'Domyślne',
       'basic_settings': 'Ustawienia podstawowe',
       'advanced_settings': 'Ustawienia zaawansowane',
@@ -20351,7 +22385,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'templates_and_reminders': 'Szablony i przypomnienia',
       'credit_cards_and_banks': 'Credit Cards & Banks',
       'data_visualizations': 'Wizualizacje danych',
-      'price': 'Price',
+      'price': 'Cena',
       'email_sign_up': 'Email Sign Up',
       'google_sign_up': 'Google Sign Up',
       'thank_you_for_your_purchase': 'Thank you for your purchase!',
@@ -20383,12 +22417,12 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'error_unsaved_changes': 'Please save or cancel your changes',
       'download': 'Pobierz',
       'requires_an_enterprise_plan': 'Requires an enterprise plan',
-      'take_picture': 'Take Picture',
+      'take_picture': 'Zrób zdjęcie',
       'upload_file': 'Upload File',
       'document': 'Dokument',
       'documents': 'Dokumenty',
-      'new_document': 'New Document',
-      'edit_document': 'Edit Document',
+      'new_document': 'Nowy dokument',
+      'edit_document': 'Edytuj dokument',
       'uploaded_document': 'Successfully uploaded document',
       'updated_document': 'Successfully updated document',
       'archived_document': 'Successfully archived document',
@@ -20496,9 +22530,10 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'custom': 'Dostosowanie',
       'clone_to_invoice': 'Clone to Invoice',
       'clone_to_quote': 'Clone to Quote',
+      'clone_to_credit': 'Clone to Credit',
       'view_invoice': 'Zobacz fakturę',
       'convert': 'Convert',
-      'more': 'More',
+      'more': 'Więcej',
       'edit_client': 'Edytuj klienta',
       'edit_product': 'Edytuj produkt',
       'edit_invoice': 'Edytuj fakturę',
@@ -20508,7 +22543,6 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'edit_expense': 'Edytuj wydatek',
       'edit_vendor': 'Edytuj dostawcę',
       'edit_project': 'Edytuj projekt',
-      'edit_credit': 'Edytuj kredyt',
       'edit_recurring_invoice': 'Edit Recurring Invoice',
       'edit_recurring_expense': 'Edit Recurring Expense',
       'edit_recurring_quote': 'Edit Recurring Quote',
@@ -20659,15 +22693,11 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'approved': 'Approved',
       'partial': 'Zaliczka/Opł.część',
       'paid': 'Zapłacone',
-      'invoice_status_1': 'Draft',
-      'invoice_status_2': 'Sent',
-      'invoice_status_3': 'Viewed',
-      'invoice_status_4': 'Approved',
       'mark_sent': 'Oznacz jako wysłane',
       'marked_invoice_as_sent': 'Successfully marked invoice as sent',
-      'marked_invoice_as_paid': 'Successfully marked invoice as sent',
+      'marked_invoice_as_paid': 'Successfully marked invoice as paid',
       'marked_invoices_as_sent': 'Successfully marked invoices as sent',
-      'marked_invoices_as_paid': 'Successfully marked invoices as sent',
+      'marked_invoices_as_paid': 'Successfully marked invoices as paid',
       'done': 'Gotowe',
       'please_enter_a_client_or_contact_name':
           'Please enter a client or contact name',
@@ -20681,7 +22711,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'clone': 'Klonuj',
       'loading': 'Loading',
       'industry': 'Industry',
-      'size': 'Size',
+      'size': 'Rozmiar',
       'payment_terms': 'Warunki płatnicze',
       'payment_date': 'Data płatności',
       'payment_status': 'Payment Status',
@@ -20693,7 +22723,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'payment_status_6': 'Refunded',
       'net': 'Net',
       'client_portal': 'Portal klienta',
-      'show_tasks': 'Show tasks',
+      'show_tasks': 'Pokaż zadania',
       'email_reminders': 'Email Reminders',
       'enabled': 'Aktywny',
       'recipients': 'Odbiorcy',
@@ -20781,7 +22811,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'activity_35': ':user zarchiwizował wydatek :expense',
       'activity_36': ':user usunął wydatek :expense',
       'activity_37': ':user przywrócił wydatek :expense',
-      'activity_39': ':user cancelled a :payment_amount payment :payment',
+      'activity_39': ':user anulował płatność na :payment_amount nr. :payment',
       'activity_40':
           ':user refunded :adjustment of a :payment_amount payment :payment',
       'activity_41': 'płatność :payment_amount (:payment) nieudana',
@@ -20803,7 +22833,9 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'activity_57': 'System failed to email invoice :invoice',
       'one_time_password': 'One Time Password',
       'emailed_quote': 'Oferta została wysłana',
+      'emailed_credit': 'Successfully emailed credit',
       'marked_quote_as_sent': 'Successfully marked quote as sent',
+      'marked_credit_as_sent': 'Successfully marked credit as sent',
       'expired': 'Wygasło',
       'all': 'Wszystko',
       'select': 'Wybierz',
@@ -20849,6 +22881,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'email_subject_invoice': 'Email Invoice Subject',
       'email_subject_quote': 'Email Quote Subject',
       'email_subject_payment': 'Email Payment Subject',
+      'email_subject_payment_partial': 'Email Partial Payment Subject',
       'switch_list_table': 'Switch List Table',
       'client_city': 'Client City',
       'client_state': 'Client State',
@@ -20880,72 +22913,178 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'vendor_city': 'Vendor City',
       'vendor_state': 'Vendor State',
       'vendor_country': 'Vendor Country',
+      'is_approved': 'Is Approved',
+      'tax_name': 'Nazwa podatku',
+      'tax_amount': 'Tax Amount',
+      'tax_paid': 'Tax Paid',
+      'payment_amount': 'Kwota płatności',
+      'age': 'Wiek',
     },
     'pt_BR': {
-      'company1': 'Custom Company 1',
-      'company2': 'Custom Company 2',
-      'company3': 'Custom Company 3',
-      'company4': 'Custom Company 4',
-      'product1': 'Custom Product 1',
-      'product2': 'Custom Product 2',
-      'product3': 'Custom Product 3',
-      'product4': 'Custom Product 4',
-      'client1': 'Custom Client 1',
-      'client2': 'Custom Client 1',
-      'client3': 'Custom Client 1',
-      'client4': 'Custom Client 1',
-      'contact1': 'Custom Contact 1',
-      'contact2': 'Custom Contact 2',
-      'contact3': 'Custom Contact 3',
-      'contact4': 'Custom Contact 4',
-      'task1': 'Custom Task 1',
-      'task2': 'Custom Task 2',
-      'task3': 'Custom Task 3',
-      'task4': 'Custom Task 4',
-      'project1': 'Custom Project 1',
-      'project2': 'Custom Project 2',
-      'project3': 'Custom Project 3',
-      'project4': 'Custom Project 4',
-      'expense1': 'Custom Expense 1',
-      'expense2': 'Custom Expense 2',
-      'expense3': 'Custom Expense 3',
-      'expense4': 'Custom Expense 4',
-      'vendor1': 'Custom Vendor 1',
-      'vendor2': 'Custom Vendor 2',
-      'vendor3': 'Custom Vendor 3',
-      'vendor4': 'Custom Vendor 4',
-      'invoice1': 'Custom Invoice 1',
-      'invoice2': 'Custom Invoice 2',
-      'invoice3': 'Custom Invoice 3',
-      'invoice4': 'Custom Invoice 4',
-      'payment1': 'Custom Payment 1',
-      'payment2': 'Custom Payment 2',
-      'payment3': 'Custom Payment 3',
-      'payment4': 'Custom Payment 4',
+      'full_name': 'Nome Completo',
+      'city_state_postal': 'Cidade/Estado/CEP',
+      'postal_city_state': 'CEP/Cidade/Estado',
+      'custom1': 'Primeiro Personalizado',
+      'custom2': 'Segundo Personalizado',
+      'custom3': 'Third Custom',
+      'custom4': 'Fourth Custom',
+      'optional': 'Optional',
+      'license': 'License',
+      'purge_data': 'Limpar Dados',
+      'purge_successful': 'Dados da empresa limpos com sucesso',
+      'purge_data_message':
+          'Aviso: Isto irá apagar seus dados permanentemente, não há como defazer esta ação.',
+      'invoice_balance': 'Invoice Balance',
+      'age_group_0': '0 - 30 Dias',
+      'age_group_30': '30 - 60 Dias',
+      'age_group_60': '60 - 90 Dias',
+      'age_group_90': '90 - 120 Dias',
+      'age_group_120': '120+ Dias',
+      'refresh': 'Atualizar',
+      'saved_design': 'Successfully saved design',
+      'client_details': 'Client Details',
+      'company_address': 'Company Address',
+      'invoice_details': 'Detalhes da Fatura',
+      'quote_details': 'Quote Details',
+      'credit_details': 'Credit Details',
+      'product_columns': 'Product Columns',
+      'task_columns': 'Task Columns',
+      'add_field': 'Add Field',
+      'all_events': 'All Events',
+      'permissions': 'Permissões',
+      'none': 'Nenhum',
+      'owned': 'Owned',
+      'payment_success': 'Payment Success',
+      'payment_failure': 'Payment Failure',
+      'invoice_sent': ':count fatura enviada',
+      'quote_sent': 'Quote Sent',
+      'credit_sent': 'Credit Sent',
+      'invoice_viewed': 'Invoice Viewed',
+      'quote_viewed': 'Quote Viewed',
+      'credit_viewed': 'Credit Viewed',
+      'quote_approved': 'Quote Approved',
+      'receive_all_notifications': 'Receive All Notifications',
+      'purchase_license': 'Purchase License',
+      'apply_license': 'Aplicar Licença',
+      'cancel_account': 'Excluir Conta',
+      'cancel_account_message':
+          'Aviso: Isso excluirá permanentemente sua conta, não há como desfazer esta ação.',
+      'delete_company': 'Excluir Empresa',
+      'delete_company_message':
+          'Aviso: Isto irá excluir permanentemente sua empresa, não há como desfazer esta ação.',
+      'enable_modules': 'Enable Modules',
+      'converted_quote': 'Successfully converted quote',
+      'credit_design': 'Credit Design',
+      'includes': 'Includes',
+      'header': 'Cabeçalho',
+      'load_design': 'Carregar Design',
+      'css_framework': 'CSS Framework',
+      'custom_designs': 'Custom Designs',
+      'designs': 'Designs',
+      'new_design': 'New Design',
+      'edit_design': 'Edit Design',
+      'created_design': 'Successfully created design',
+      'updated_design': 'Successfully updated design',
+      'archived_design': 'Successfully archived design',
+      'deleted_design': 'Successfully deleted design',
+      'removed_design': 'Successfully removed design',
+      'restored_design': 'Successfully restored design',
+      'proposals': 'Propostas',
+      'tickets': 'Tickets',
+      'recurring_invoices': 'Faturas Recorrentes',
+      'recurring_quotes': 'Orçamentos Recorrentes',
+      'recurring_tasks': 'Recurring Tasks',
+      'recurring_expenses': 'Despesas Recorrentes',
+      'account_management': 'Gerenciamento da Conta',
+      'credit_date': 'Data do Crédito',
+      'credit': 'Crédito',
+      'credits': 'Créditos',
+      'new_credit': 'Adicionar Crédito',
+      'edit_credit': 'Editar Crédito',
+      'created_credit': 'Crédito criado com sucesso',
+      'updated_credit': 'Crédito atualizado com sucesso',
+      'archived_credit': 'Crédito arquivado com sucesso',
+      'deleted_credit': 'Crédito excluído com sucesso',
+      'removed_credit': 'Successfully removed credit',
+      'restored_credit': 'Crédito restaurado com sucesso',
+      'current_version': 'Versão Atual',
+      'latest_version': 'Latest Version',
+      'update_now': 'Update Now',
+      'a_new_version_is_available': 'A new version of the web app is available',
+      'update_available': 'Update Available',
+      'app_updated': 'Update successfully completed',
+      'learn_more': 'Saiba mais',
+      'integrations': 'Integrations',
+      'tracking_id': 'Tracking Id',
+      'slack_webhook_url': 'Slack Webhook URL',
+      'credit_footer': 'Rodapé do Crédito',
+      'credit_terms': 'Termos do Crédito',
+      'untitled_company': 'Empresa Sem Nome',
+      'added_company': 'Empresa adicionada com sucesso',
+      'company1': 'Companhia 1 Personalizada',
+      'company2': 'Companhia 2 Personalizada',
+      'company3': 'Companhia 3 Personalizada',
+      'company4': 'Companhia 4 Personalizada',
+      'product1': 'Produto 1 Personalizado',
+      'product2': 'Produto 2 Personalizado',
+      'product3': 'Produto 3 Personalizado',
+      'product4': 'Produto 4 Personalizado',
+      'client1': 'Cliente 1 Personalizado',
+      'client2': 'Cliente 2 Personalizado',
+      'client3': 'Cliente 3 Personalizado',
+      'client4': 'Cliente 4 Personalizado',
+      'contact1': 'Contato 1 Personalizado',
+      'contact2': 'Contato 2 Personalizado',
+      'contact3': 'Contato 3 Personalizado',
+      'contact4': 'Contato 4 Personalizado',
+      'task1': 'Tarefa 1 Personalizada',
+      'task2': 'Tarefa 2 Personalizada',
+      'task3': 'Tarefa 3 Personalizada',
+      'task4': 'Tarefa 4 Personalizada',
+      'project1': 'Projeto 1 Personalizado',
+      'project2': 'Projeto 2 Personalizado',
+      'project3': 'Projeto 3 Personalizado',
+      'project4': 'Projeto 4 Personalizado',
+      'expense1': 'Despesa 1 Personalizada',
+      'expense2': 'Despesa 2 Personalizada',
+      'expense3': 'Despesa 3 Personalizada',
+      'expense4': 'Despesa 4 Personalizada',
+      'vendor1': 'Vendedor 1 Personalizado',
+      'vendor2': 'Vendedor 2 Personalizado',
+      'vendor3': 'Vendedor 3 Personalizado',
+      'vendor4': 'Vendedor 4 Personalizado',
+      'invoice1': 'Fatura 1 Personalizada',
+      'invoice2': 'Fatura 2 Personalizada',
+      'invoice3': 'Fatura 3 Personalizada',
+      'invoice4': 'Fatura 4 Personalizada',
+      'payment1': 'Pagamento 1 Personalizado',
+      'payment2': 'Pagamento 2 Personalizado',
+      'payment3': 'Pagamento 3 Personalizado',
+      'payment4': 'Pagamento 4 Personalizado',
       'surcharge1': 'Custom Surcharge 1',
       'surcharge2': 'Custom Surcharge 2',
       'surcharge3': 'Custom Surcharge 3',
       'surcharge4': 'Custom Surcharge 4',
-      'group1': 'Custom Group 1',
-      'group2': 'Custom Group 2',
-      'group3': 'Custom Group 3',
-      'group4': 'Custom Group 4',
+      'group1': 'Grupo 1 Personalizado',
+      'group2': 'Grupo 2 Personalizado',
+      'group3': 'Grupo 3 Personalizado',
+      'group4': 'Grupo 4 Personalizado',
       'reset': 'Redefinir',
-      'number': 'Number',
+      'number': 'Número',
       'export': 'Exportar',
       'chart': 'Gráfico',
-      'count': 'Count',
+      'count': 'Contagem',
       'totals': 'Totais',
       'blank': 'Vazio',
       'day': 'Dia',
       'month': 'Mês',
       'year': 'Ano',
       'subgroup': 'Subgrupo',
-      'is_active': 'Is Active',
+      'is_active': 'Ativo',
       'group_by': 'Agrupado por',
       'credit_balance': 'Saldo do Crédito',
-      'contact_last_login': 'Contact Last Login',
-      'contact_full_name': 'Contact Full Name',
+      'contact_last_login': 'Último Login do Contato',
+      'contact_full_name': 'Nome Completo do Contato',
       'contact_phone': 'Telefone de Contato',
       'contact_custom_value1': 'Contact Custom Value 1',
       'contact_custom_value2': 'Contact Custom Value 2',
@@ -20960,88 +23099,88 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'client_id': 'Cód Cliente',
       'assigned_to': 'Atribuído para',
       'created_by': 'Criado por :name',
-      'assigned_to_id': 'Assigned To Id',
-      'created_by_id': 'Created By Id',
-      'add_column': 'Add Column',
-      'edit_columns': 'Edit Columns',
+      'assigned_to_id': 'Atribuído ao ID',
+      'created_by_id': 'Criado pelo ID',
+      'add_column': 'Adicionar Coluna',
+      'edit_columns': 'Editar Colunas',
       'columns': 'Colunas',
       'aging': 'Envelhecimento',
       'profit_and_loss': 'Lucro e Prejuízo',
       'reports': 'Relatórios',
       'report': 'Relatório',
       'add_company': 'Adicionar Empresa',
-      'to_learn_about_gogle_fonts': 'to learn about Google Fonts',
       'unpaid_invoice': 'Fatura não Paga',
       'paid_invoice': 'Fatura Paga',
       'unapproved_quote': 'Orçamento não Aprovado',
       'help': 'Ajuda',
       'refund': 'Reembolsar',
-      'refund_date': 'Refund Date',
+      'refund_date': 'Data de Reembolso',
       'filtered_by': 'Filtrado por',
       'contact_email': 'Email de Contato',
       'multiselect': 'Multiselect',
       'entity_state': 'Estado',
-      'verify_password': 'Verify Password',
-      'applied': 'Applied',
-      'include_recent_errors': 'Include recent errors from the logs',
+      'verify_password': 'Verificar Senha',
+      'applied': 'Aplicado',
+      'include_recent_errors': 'Inclui erros recentes dos logs',
       'your_message_has_been_received':
-          'We have received your message and will try to respond promptly.',
+          'Recebemos sua mensagem e tentaremos responder rapidamente.',
       'message': 'Mensagem',
       'from': 'De',
-      'show_product_details': 'Show Product Details',
+      'show_product_details': 'Mostrar Detalhes do Produto',
       'show_product_details_help':
           'Include the description and cost in the product dropdown',
-      'pdf_min_requirements': 'The PDF renderer requires :version',
-      'adjust_fee_percent': 'Adjust Fee Percent',
+      'pdf_min_requirements':
+          'A renderização de PDF precisa da versão :version',
+      'adjust_fee_percent': 'Ajustar Porcentagem da Multa',
       'adjust_fee_percent_help': 'Ajustar o percentual de taxa a contabilizar',
-      'configure_settings': 'Configure Settings',
+      'configure_settings': 'Configurações Gerais',
       'support_forum': 'fórum de suporte',
-      'about': 'About',
+      'about': 'Sobre',
       'documentation': 'Documentação',
       'contact_us': 'Contate-nos',
       'subtotal': 'Subtotal',
       'line_total': 'Total da Linha',
       'item': 'Item',
-      'credit_email': 'Credit Email',
+      'credit_email': 'E-mail de Crédito',
       'iframe_url': 'Website',
-      'domain_url': 'Domain URL',
+      'domain_url': 'URL do Domínio',
       'password_is_too_short': 'A senha é muito curta',
       'password_is_too_easy':
-          'Password msut contain an upper case character and a number',
-      'client_portal_tasks': 'Client Portal Tasks',
-      'client_portal_dashboard': 'Client Portal Dashboard',
-      'please_enter_a_value': 'Please enter a value',
-      'deleted_logo': 'Successfully deleted logo',
+          'Password must contain an upper case character and a number',
+      'client_portal_tasks': 'Tarefas do Portal do Cliente',
+      'client_portal_dashboard': 'Painel do Portal do Cliente',
+      'please_enter_a_value': 'Por favor digite um valor',
+      'deleted_logo': 'Logo removido com sucesso',
       'yes': 'Sim',
       'no': 'Não',
-      'generate_number': 'Generate Number',
-      'when_saved': 'When Saved',
-      'when_sent': 'When Sent',
-      'select_company': 'Select Company',
-      'float': 'Float',
-      'collapse': 'Collapse',
-      'show_or_hide': 'Show/hide',
-      'menu_sidebar': 'Menu Sidebar',
-      'history_sidebar': 'History Sidebar',
+      'generate_number': 'Gerar Número',
+      'when_saved': 'Quando Salvo',
+      'when_sent': 'Quando Enviado',
+      'select_company': 'Selecionar Empresa',
+      'float': 'Flutuante',
+      'collapse': 'Fechar',
+      'show_or_hide': 'Exibir/esconder',
+      'menu_sidebar': 'Menu da Barra Lateral',
+      'history_sidebar': 'Barra Lateral de Histórico',
       'tablet': 'Tablet',
       'mobile': 'Móvel',
       'desktop': 'Desktop',
       'layout': 'Layout',
       'view': 'Visualizar',
-      'module': 'Module',
-      'first_custom': 'First Custom',
-      'second_custom': 'Second Custom',
-      'third_custom': 'Third Custom',
-      'show_cost': 'Show Cost',
+      'module': 'Módulo',
+      'first_custom': 'Primeiro Personalizado',
+      'second_custom': 'Segundo Personalizado',
+      'third_custom': 'Terceiro Personalizado',
+      'show_cost': 'Mostrar Custo',
       'show_cost_help':
           'Display a product cost field to track the markup/profit',
-      'show_product_quantity': 'Show Product Quantity',
+      'show_product_quantity': 'Mostrar Quantidade do Produto',
       'show_product_quantity_help':
-          'Display a product quantity field, otherwise default to one',
+          'Mostrar um campo de quantidade de produto, caso contrário o padrão de um',
       'show_invoice_quantity': 'Show Invoice Quantity',
       'show_invoice_quantity_help':
           'Display a line item quantity field, otherwise default to one',
-      'default_quantity': 'Default Quantity',
+      'default_quantity': 'Quantidade Padrão',
       'default_quantity_help':
           'Automatically set the line item quantity to one',
       'one_tax_rate': 'One Tax Rate',
@@ -21049,41 +23188,44 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'three_tax_rates': 'Three Tax Rates',
       'default_tax_rate': 'Default Tax Rate',
       'user': 'Usuário',
-      'invoice_tax': 'Invoice Tax',
-      'line_item_tax': 'Line Item Tax',
-      'inclusive_taxes': 'Inclusive Taxes',
-      'invoice_tax_rates': 'Invoice Tax Rates',
-      'item_tax_rates': 'Item Tax Rates',
+      'invoice_tax': 'Imposto da Fatura',
+      'line_item_tax': 'Imposto da Linha do Item',
+      'inclusive_taxes': 'Impostos Inclusos',
+      'invoice_tax_rates': 'Tarifa do Imposto da Fatura',
+      'item_tax_rates': 'Tarifa do Imposto do Item',
       'no_client_selected': 'Selecione um cliente',
-      'configure_rates': 'Configure rates',
+      'configure_rates': 'Configurar tarifas',
       'tax_settings': 'Configurações de Impostos',
-      'tax_settings_rates': 'Tax Rates',
+      'tax_settings_rates': 'Tarifas de Impostos',
       'accent_color': 'Accent Color',
       'switch': 'Mudar',
-      'comma_sparated_list': 'Comma separated list',
+      'comma_sparated_list': 'Lista separada por vírgulas',
       'options': 'Opções',
       'single_line_text': 'Single-line text',
       'multi_line_text': 'Multi-line text',
       'dropdown': 'Dropdown',
-      'field_type': 'Field Type',
-      'recover_password_email_sent': 'A password recovery email has been sent',
+      'field_type': 'Tipo de Campo',
+      'recover_password_email_sent':
+          'Foi enviado um e-mail de recuperação de senha',
       'submit': 'Enviar',
       'recover_password': 'Recupere sua senha',
       'late_fees': 'Late Fees',
       'credit_number': 'Número do Crédito',
-      'payment_number': 'Payment Number',
+      'payment_number': 'Pagamento Número',
       'late_fee_amount': 'Quantia da Multa',
       'late_fee_percent': 'Percentual de Multa',
       'schedule': 'Agendamento',
-      'before_due_date': 'Before the due date',
-      'after_due_date': 'After the due date',
-      'after_invoice_date': 'After the invoice date',
+      'before_due_date': 'Até a data de vencimento',
+      'after_due_date': 'Depois da data de vencimento',
+      'after_invoice_date': 'Até a data da fatura',
       'days': 'Dias',
       'invoice_email': 'Email de Fatura',
       'payment_email': 'Email de Pagamento',
+      'partial_payment': 'Partial Payment',
+      'partial_payment_email': 'Partial Payment Email',
       'quote_email': 'Email de Orçamento',
       'endless_reminder': 'Lembrete contínuo',
-      'filtered_by_user': 'Filtered by User',
+      'filtered_by_user': 'Filtrado por Usuário',
       'administrator': 'Administrador',
       'administrator_help':
           'Permite ao usuário gerenciar usuários, mudar configurações e modificar todos os registros',
@@ -21091,11 +23233,11 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'users': 'Usuários',
       'new_user': 'Novo Usuário',
       'edit_user': 'Editar Usuário',
-      'created_user': 'Successfully created user',
+      'created_user': 'Usuário criado com sucesso',
       'updated_user': 'Usuário atualizado com sucesso',
       'archived_user': 'Usuário arquivado com sucesso',
       'deleted_user': 'Usuário excluído com sucesso',
-      'removed_user': 'Successfully removed user',
+      'removed_user': 'Usuário removido com sucesso',
       'restored_user': 'Usuário restaurado com sucesso',
       'general_settings': 'Configurações Gerais',
       'invoice_options': 'Opções da Fatura',
@@ -21109,8 +23251,8 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'first_page': 'Primeira página',
       'all_pages': 'Todas as páginas',
       'last_page': 'Última página',
-      'primary_font': 'Primary Font',
-      'secondary_font': 'Secondary Font',
+      'primary_font': 'Fonte Primária',
+      'secondary_font': 'Fonte Secundária',
       'primary_color': 'Cor Primária',
       'secondary_color': 'Cor Secundaria',
       'page_size': 'Tamanho da Página',
@@ -21146,39 +23288,37 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'freq_six_months': '6 meses',
       'freq_annually': 'Anualmente',
       'freq_two_years': '2 anos',
-      'freq_three_years': 'Three Years',
+      'freq_three_years': 'Três Anos',
       'never': 'Nunca',
       'company': 'Empresa',
       'generated_numbers': 'Números Gerados',
       'charge_taxes': 'Cobrar impostos',
-      'credit': 'Crédito',
-      'credits': 'Créditos',
       'next_reset': 'Próximo Reset',
       'reset_counter': 'Reiniciar Contador',
       'recurring_prefix': 'Prefixo da Recorrência',
       'number_padding': 'Number Padding',
-      'general': 'General',
-      'surcharge_field': 'Surcharge Field',
+      'general': 'Geral',
+      'surcharge_field': 'Campo de Sobretaxa',
       'company_field': 'Campo da Empresa',
       'company_value': 'Company Value',
-      'credit_field': 'Credit Field',
+      'credit_field': 'Campo de Crédito',
       'invoice_field': 'Campo da Fatura',
       'invoice_surcharge': 'Sobretaxa de Fatura',
       'client_field': 'Campo do Cliente',
       'product_field': 'Campo do Produto',
-      'payment_field': 'Payment Field',
+      'payment_field': 'Campo de Pagamento',
       'contact_field': 'Campo do Contato',
       'vendor_field': 'Campo do Fornecedor',
       'expense_field': 'Campo da Despesa',
       'project_field': 'Campo do Projeto',
       'task_field': 'Campo da Tarefa',
-      'group_field': 'Group Field',
-      'number_counter': 'Number Counter',
+      'group_field': 'Campo de Grupo',
+      'number_counter': 'Contador Numérico',
       'prefix': 'Prefixo',
-      'number_pattern': 'Number Pattern',
+      'number_pattern': 'Padrão de Numeração',
       'messages': 'Mensagens',
       'custom_css': 'CSS Personalizado',
-      'custom_javascript': 'Custom JavaScript',
+      'custom_javascript': 'JavaScript Personalizado',
       'signature_on_pdf': 'Exibir em PDF',
       'signature_on_pdf_help':
           'Exibir a assinatura do cliente no PDF da fatura/orçamento.',
@@ -21195,13 +23335,10 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'enable_portal_password': 'Proteger Faturas com Senha',
       'enable_portal_password_help':
           'Permite definir uma senha para cada contato. Se uma senha for definida, o contato deverá informar uma senha antes de visualizar faturas.',
-      'send_portal_password': 'Gerar Automaticamente',
-      'send_portal_password_help':
-          'Se nenhuma senha for definida, uma será gerada e enviada com a primeira fatura.',
       'authorization': 'Autorização',
       'subdomain': 'Subdomínio',
       'domain': 'Domínio',
-      'portal_mode': 'Portal Mode',
+      'portal_mode': 'Modo Portal',
       'email_signature': 'Atenciosamente,',
       'enable_email_markup_help':
           'Tornar mais fácil para os seus clientes efetuarem seus pagamentos acrescentando marcações schema.org a seus emails.',
@@ -21209,21 +23346,21 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'light': 'Claro',
       'dark': 'Escuro',
       'email_design': 'Design do Email',
-      'attach_pdf': 'Attach PDF',
-      'attach_documents': 'Attach Documents',
-      'attach_ubl': 'Attach UBL',
-      'email_style': 'Email Style',
+      'attach_pdf': 'Anexar PDF',
+      'attach_documents': 'Anexar Documentos',
+      'attach_ubl': 'Anexar UBL',
+      'email_style': 'Estilo do E-mail',
       'enable_email_markup': 'Habilitar Marcação',
       'reply_to_email': 'Email para Resposta',
       'bcc_email': 'Email CCO',
-      'processed': 'Processed',
+      'processed': 'Processado',
       'credit_card': 'Cartão de Crédito',
       'bank_transfer': 'Transferência Bancária',
       'priority': 'Prioridade',
-      'fee_amount': 'Fee Amount',
-      'fee_percent': 'Fee Percent',
+      'fee_amount': 'Valor da Multa',
+      'fee_percent': 'Porcentagem da Multa',
       'fee_cap': 'Fee Cap',
-      'limits_and_fees': 'Limits/Fees',
+      'limits_and_fees': 'Limites/Multas',
       'enable_min': 'Habilitar mín',
       'enable_max': 'Habilitar máx',
       'min_limit': 'Mín: :min',
@@ -21231,7 +23368,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'min': 'Min',
       'max': 'Máx',
       'accepted_card_logos': 'Logos de Cartões Aceitos',
-      'credentials': 'Credentials',
+      'credentials': 'Credenciais',
       'require_billing_address_help':
           'Require client to provide their billing address',
       'require_shipping_address_help':
@@ -21259,23 +23396,23 @@ mixin LocalizationsProvider on LocaleCodeAware {
           'Converter automaticamente preços de produtos para a moeda do cliente',
       'fees': 'Taxas',
       'limits': 'Limites',
-      'provider': 'Provider',
-      'company_gateway': 'Payment Gateway',
-      'company_gateways': 'Payment Gateways',
-      'new_company_gateway': 'New Gateway',
-      'edit_company_gateway': 'Edit Gateway',
-      'created_company_gateway': 'Successfully created gateway',
-      'updated_company_gateway': 'Successfully updated gateway',
-      'archived_company_gateway': 'Successfully archived gateway',
-      'deleted_company_gateway': 'Successfully deleted gateway',
-      'restored_company_gateway': 'Successfully restored gateway',
-      'continue_editing': 'Continue Editing',
+      'provider': 'Provedor',
+      'company_gateway': 'Gateway de Pagamento',
+      'company_gateways': 'Gateways de Pagamento',
+      'new_company_gateway': 'Novo Gateway',
+      'edit_company_gateway': 'Editar Gateway',
+      'created_company_gateway': 'Gateway criado com sucesso',
+      'updated_company_gateway': 'Gateway atualizado com sucesso',
+      'archived_company_gateway': 'Gateway arquivado com sucesso',
+      'deleted_company_gateway': 'Gateway excluído com sucesso',
+      'restored_company_gateway': 'Gateway restaurado com sucesso',
+      'continue_editing': 'Continuar Editando',
       'discard_changes': 'Descartar Mudanças',
-      'default_value': 'Default value',
+      'default_value': 'Valor padrão',
       'disabled': 'Desabilitado',
-      'currency_format': 'Currency Format',
-      'first_day_of_the_week': 'First Day of the Week',
-      'first_month_of_the_year': 'First Month of the Year',
+      'currency_format': 'Formato de Moeda',
+      'first_day_of_the_week': 'Primeiro dia da Semana',
+      'first_month_of_the_year': 'Primeiro Mês do Ano',
       'sunday': 'Domingo',
       'monday': 'Segunda-Feira',
       'tuesday': 'Terça-Feira',
@@ -21295,34 +23432,34 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'october': 'Outubro',
       'november': 'Novembro',
       'december': 'Dezembro',
-      'symbol': 'Symbol',
-      'ocde': 'Code',
-      'date_format': 'Date Format',
-      'datetime_format': 'Datetime Format',
+      'symbol': 'Símbolo',
+      'ocde': 'Código',
+      'date_format': 'Formato de Data',
+      'datetime_format': 'Formato de Data/Hora',
       'military_time': 'Formato de Tempo 24h',
-      'military_time_help': '24 Hour Display',
-      'send_reminders': 'Send Reminders',
-      'timezone': 'Timezone',
-      'filtered_by_group': 'Filtered by Group',
-      'filtered_by_invoice': 'Filtered by Invoice',
-      'filtered_by_client': 'Filtered by Client',
-      'filtered_by_vendor': 'Filtered by Vendor',
-      'group_settings': 'Group Settings',
+      'military_time_help': 'Formato de Hora 24h',
+      'send_reminders': 'Enviar Lembretes',
+      'timezone': 'Fuso Horário',
+      'filtered_by_group': 'Filtrado por Grupo',
+      'filtered_by_invoice': 'Filtrado por Fatura',
+      'filtered_by_client': 'Filtrado por Cliente',
+      'filtered_by_vendor': 'Filtrado por Vendedor',
+      'group_settings': 'Configurações de Grupos',
       'group': 'Grupo',
-      'groups': 'Groups',
-      'new_group': 'New Group',
-      'edit_group': 'Edit Group',
-      'created_group': 'Successfully created group',
-      'updated_group': 'Successfully updated group',
-      'archived_group': 'Successfully archived group',
-      'deleted_group': 'Successfully deleted group',
-      'restored_group': 'Successfully restored group',
-      'upload_logo': 'Upload Logo',
-      'uploaded_logo': 'Successfully uploaded logo',
+      'groups': 'Grupos',
+      'new_group': 'Novo Grupo',
+      'edit_group': 'Editar Grupo',
+      'created_group': 'Grupo criado com sucesso',
+      'updated_group': 'Grupo atualizado com sucesso',
+      'archived_group': 'Grupo arquivado com sucesso',
+      'deleted_group': 'Grupo removido com sucesso',
+      'restored_group': 'Grupo restaurado com sucesso',
+      'upload_logo': 'Carregar Logo',
+      'uploaded_logo': 'Logo carregado com sucesso',
       'logo': 'Logo',
-      'saved_settings': 'Successfully saved settings',
+      'saved_settings': 'Configurações salvas com sucesso',
       'product_settings': 'Configurações de Produtos',
-      'device_settings': 'Device Settings',
+      'device_settings': 'Configurações do Dispositivo',
       'defaults': 'Padrões',
       'basic_settings': 'Configurações Básicas',
       'advanced_settings': 'Configurações Avançadas',
@@ -21337,58 +23474,58 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'invoice_design': 'Design da Fatura',
       'buy_now_buttons': 'Botões Compre Já',
       'email_settings': 'Configurações de Email',
-      'templates_and_reminders': 'Modelos & Lembretes',
-      'credit_cards_and_banks': 'Credit Cards & Banks',
+      'templates_and_reminders': 'Modelos e Lembretes',
+      'credit_cards_and_banks': 'Cartões de Crédito & Bancos',
       'data_visualizations': 'Visualização de Dados',
-      'price': 'Price',
+      'price': 'Preço',
       'email_sign_up': 'Email Sign Up',
       'google_sign_up': 'Google Sign Up',
-      'thank_you_for_your_purchase': 'Thank you for your purchase!',
+      'thank_you_for_your_purchase': 'Obrigado por sua compra!',
       'redeem': 'Redeem',
       'sign_up_with_google': 'Sign Up With Google',
-      'back': 'Back',
-      'past_purchases': 'Past Purchases',
-      'annual_subscription': 'Annual Subscription',
-      'pro_plan': 'Pro Plan',
-      'enterprise_plan': 'Enterprise Plan',
-      'count_users': ':count users',
+      'back': 'Voltar',
+      'past_purchases': 'Compras Passadas',
+      'annual_subscription': 'Assinatura Anual',
+      'pro_plan': 'Plano Pro',
+      'enterprise_plan': 'Plano Empresarial',
+      'count_users': ':count usuários',
       'upgrade': 'Upgrade',
-      'please_enter_a_first_name': 'Please enter a first name',
-      'please_enter_a_last_name': 'Please enter a last name',
+      'please_enter_a_first_name': 'Por favor digite o primeiro nome',
+      'please_enter_a_last_name': 'Por favor digite o sobrenome',
       'please_agree_to_terms_and_privacy':
-          'Please agree to the terms of service and privacy policy to create an account.',
-      'i_agree_to_the': 'I agree to the',
-      'terms_of_service_link': 'terms of service',
-      'privacy_policy_link': 'privacy policy',
+          'Por favor, aceite os termos de serviço e política de privacidade para criar uma conta.',
+      'i_agree_to_the': 'Aceito os',
+      'terms_of_service_link': 'termos do serviço',
+      'privacy_policy_link': 'política de privacidade',
       'terms_of_service': 'Condições do Serviço',
       'privacy_policy': 'Política de Privacidade',
       'sign_up': 'Cadastro',
       'account_login': 'Login na Conta',
-      'view_website': 'View Website',
-      'create_account': 'Create Account',
-      'email_login': 'Email Login',
+      'view_website': 'Ver o Website',
+      'create_account': 'Criar Conta',
+      'email_login': 'E-mail de Login',
       'create_new': 'Criar Novo',
-      'no_record_selected': 'No record selected',
-      'error_unsaved_changes': 'Please save or cancel your changes',
+      'no_record_selected': 'Nenhum registro selecionado',
+      'error_unsaved_changes': 'Por favor, salve ou cancele suas alterações',
       'download': 'Download',
-      'requires_an_enterprise_plan': 'Requires an enterprise plan',
-      'take_picture': 'Take Picture',
-      'upload_file': 'Upload File',
+      'requires_an_enterprise_plan': 'Necessita um plano empresarial',
+      'take_picture': 'Tire uma Foto',
+      'upload_file': 'Enviar Arquivo',
       'document': 'Documento',
       'documents': 'Documentos',
-      'new_document': 'New Document',
-      'edit_document': 'Edit Document',
-      'uploaded_document': 'Successfully uploaded document',
-      'updated_document': 'Successfully updated document',
-      'archived_document': 'Successfully archived document',
-      'deleted_document': 'Successfully deleted document',
-      'restored_document': 'Successfully restored document',
-      'no_history': 'No History',
+      'new_document': 'Novo Documento',
+      'edit_document': 'Editar Documento',
+      'uploaded_document': 'Documento enviado com sucesso',
+      'updated_document': 'Documento atualizado com sucesso',
+      'archived_document': 'Documento arquivado com sucesso',
+      'deleted_document': 'Documento apagado com sucesso',
+      'restored_document': 'Documento recuperado com sucesso',
+      'no_history': 'Sem Histórico',
       'expense_date': 'Data da Despesa',
       'pending': 'Pendente',
-      'expense_status_1': 'Logged',
-      'expense_status_2': 'Pending',
-      'expense_status_3': 'Invoiced',
+      'expense_status_1': 'Autenticado',
+      'expense_status_2': 'Pendente',
+      'expense_status_3': 'Faturado',
       'converted': 'Convertido',
       'add_documents_to_invoice': 'Adicionar documentos à fatura',
       'exchange_rate': 'Taxa de Câmbio',
@@ -21450,7 +23587,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'thank_you_for_using_our_app': 'Obrigado por usar nosso app!',
       'if_you_like_it': 'Se você desejar por favor',
       'click_here': 'clique aqui',
-      'click_here_capital': 'Click here',
+      'click_here_capital': 'Clique aqui',
       'to_rate_it': 'para dar uma nota.',
       'average': 'Médio',
       'unapproved': 'Não Aprovado',
@@ -21485,6 +23622,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'custom': 'Personalizado',
       'clone_to_invoice': 'Clonar para Fatura',
       'clone_to_quote': 'Clonar ao Orçamento',
+      'clone_to_credit': 'Clone to Credit',
       'view_invoice': 'Visualizar fatura',
       'convert': 'Converter',
       'more': 'Mais',
@@ -21497,7 +23635,6 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'edit_expense': 'Editar Despesa',
       'edit_vendor': 'Editar Fornecedor',
       'edit_project': 'Editar Projeto',
-      'edit_credit': 'Editar Crédito',
       'edit_recurring_invoice': 'Editar Fatura Recorrente',
       'edit_recurring_expense': 'Editar Despesa Recorrente',
       'edit_recurring_quote': 'Editar Orçamento Recorrente',
@@ -21648,15 +23785,11 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'approved': 'Aprovado',
       'partial': 'Depósito / Parcial',
       'paid': 'Pago',
-      'invoice_status_1': 'Rascunho',
-      'invoice_status_2': 'Enviado',
-      'invoice_status_3': 'Visualizado',
-      'invoice_status_4': 'Aprovado',
       'mark_sent': 'Marcar como Enviada',
       'marked_invoice_as_sent': 'Fatura marcada como enviada com sucesso',
-      'marked_invoice_as_paid': 'Successfully marked invoice as sent',
-      'marked_invoices_as_sent': 'Successfully marked invoices as sent',
-      'marked_invoices_as_paid': 'Successfully marked invoices as sent',
+      'marked_invoice_as_paid': 'Successfully marked invoice as paid',
+      'marked_invoices_as_sent': 'Faturas marcadas como enviadas com sucesso',
+      'marked_invoices_as_paid': 'Successfully marked invoices as paid',
       'done': 'Concluído',
       'please_enter_a_client_or_contact_name':
           'Por favor digite um cliente ou nome de contato',
@@ -21736,12 +23869,12 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'activity_3': ':user excluiu o cliente :client',
       'activity_4': ':user criou a fatura :invoice',
       'activity_5': ':user atualizou a fatura :invoice',
-      'activity_6': ':user emailed invoice :invoice for :client to :contact',
-      'activity_7': ':contact viewed invoice :invoice for :client',
+      'activity_6': ':user enviou a fatura :invoice para :client do :contact',
+      'activity_7': ':contact viu a fatura :invoice para o :client',
       'activity_8': ':user arquivou a fatura :invoice',
       'activity_9': ':user excluiu a fatura :invoice',
       'activity_10':
-          ':contact entered payment :payment for :payment_amount on invoice :invoice for :client',
+          ':contact efetuou o pagamento :payment de :payment_amount da fatura :invoice do cliente :client',
       'activity_11': ':user atualizou o pagamento :payment',
       'activity_12': ':user arquivou o pagamento :payment',
       'activity_13': ':user excluiu o pagamento :payment',
@@ -21751,7 +23884,8 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'activity_17': ':user excluiu crédito :credit',
       'activity_18': ':user criou o orçamento :quote',
       'activity_19': ':user atualizou o orçamento :quote',
-      'activity_20': ':user emailed quote :quote for :client to :contact',
+      'activity_20':
+          ':user enviou o orçamento :quote do cliente :client para o contato :contact',
       'activity_21': ':contact visualizou o orçamento :quote',
       'activity_22': ':user arquivou o orçamento :quote',
       'activity_23': ':user excluiu o orçamento :quote',
@@ -21760,7 +23894,8 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'activity_26': ':user restaurou o cliente :client',
       'activity_27': ':user restaurou o pagamento :payment',
       'activity_28': ':user restaurou o crédito :credit',
-      'activity_29': ':contact approved quote :quote for :client',
+      'activity_29':
+          ':contact aprovou o orçamento :quote para o cliente :client',
       'activity_30': ':user criou o fornecedor :vendor',
       'activity_31': ':user arquivou o fornecedor :vendor',
       'activity_32': ':user excluiu :vendor',
@@ -21789,45 +23924,49 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'activity_54': ':user reabriu o ticket :ticket',
       'activity_55': ':contact respondeu o ticket :ticket',
       'activity_56': ':user visualizou o ticket :ticket',
-      'activity_57': 'System failed to email invoice :invoice',
+      'activity_57': 'O sistema falhou ao enviar a fatura :invoice',
       'one_time_password': 'Senha One-Time (OTP)',
       'emailed_quote': 'Orçamento enviado por email com sucesso',
+      'emailed_credit': 'Successfully emailed credit',
       'marked_quote_as_sent': 'Orçamento marcado como enviado com sucesso',
+      'marked_credit_as_sent': 'Successfully marked credit as sent',
       'expired': 'Expirado',
       'all': 'Todos',
       'select': 'Selecionar',
       'long_press_multiselect': 'Long-press Multiselect',
       'custom_value1': 'Valor Personalizado',
       'custom_value2': 'Valor Personalizado',
-      'custom_value3': 'Custom Value 3',
-      'custom_value4': 'Custom Value 4',
-      'email_style_custom': 'Custom Email Style',
-      'custom_message_dashboard': 'Custom Dashboard Message',
-      'custom_message_unpaid_invoice': 'Custom Unpaid Invoice Message',
-      'custom_message_paid_invoice': 'Custom Paid Invoice Message',
-      'custom_message_unapproved_quote': 'Custom Unapproved Quote Message',
-      'lock_sent_invoices': 'Lock Sent Invoices',
-      'translations': 'Translations',
-      'task_number_pattern': 'Task Number Pattern',
-      'task_number_counter': 'Task Number Counter',
-      'expense_number_pattern': 'Expense Number Pattern',
-      'expense_number_counter': 'Expense Number Counter',
-      'vendor_number_pattern': 'Vendor Number Pattern',
-      'vendor_number_counter': 'Vendor Number Counter',
-      'ticket_number_pattern': 'Ticket Number Pattern',
-      'ticket_number_counter': 'Ticket Number Counter',
-      'payment_number_pattern': 'Payment Number Pattern',
-      'payment_number_counter': 'Payment Number Counter',
-      'invoice_number_pattern': 'Invoice Number Pattern',
+      'custom_value3': 'Valor Personalizado 3',
+      'custom_value4': 'Valor Personalizado 4',
+      'email_style_custom': 'Estilo de E-mail Personalizado',
+      'custom_message_dashboard': 'Mensagem de Painel Personalizada',
+      'custom_message_unpaid_invoice':
+          'Mensagem Personalizada de Fatura Atrasada',
+      'custom_message_paid_invoice': 'Mensagem Personalizada de Fatura Paga',
+      'custom_message_unapproved_quote':
+          'Mensagem Personalizada de Orçamento Não Aprovado',
+      'lock_sent_invoices': 'Travar Faturas Enviadas',
+      'translations': 'Traduções',
+      'task_number_pattern': 'Padrão de Numeração de Tarefa',
+      'task_number_counter': 'Contador Numérico de Tarefas',
+      'expense_number_pattern': 'Padrão de Numeração de Despesa',
+      'expense_number_counter': 'Contador Numérico de Despesas',
+      'vendor_number_pattern': 'Padrão de Numeração de Vendedor',
+      'vendor_number_counter': 'Contador Numérico de Vendedores',
+      'ticket_number_pattern': 'Padrão de Numeração de Ticket',
+      'ticket_number_counter': 'Contador Numérico de Tickets',
+      'payment_number_pattern': 'Padrão de Numeração de Pagamento',
+      'payment_number_counter': 'Contador Numérico de Pagamentos',
+      'invoice_number_pattern': 'Padrão de Numeração de Fatura',
       'invoice_number_counter': 'Contador Numérico de Faturas',
-      'quote_number_pattern': 'Quote Number Pattern',
+      'quote_number_pattern': 'Padrão de Numeração de Orçamento',
       'quote_number_counter': 'Contador Numérico de Orçamentos',
-      'client_number_pattern': 'Credit Number Pattern',
-      'client_number_counter': 'Credit Number Counter',
-      'credit_number_pattern': 'Credit Number Pattern',
-      'credit_number_counter': 'Credit Number Counter',
-      'reset_counter_date': 'Reset Counter Date',
-      'counter_padding': 'Counter Padding',
+      'client_number_pattern': 'Padrão de Numeração de Crédito',
+      'client_number_counter': 'Contador Numérico de Créditos',
+      'credit_number_pattern': 'Padrão de Numeração de Crédito',
+      'credit_number_counter': 'Contador Numérico de Créditos',
+      'reset_counter_date': 'Reiniciar Data do Contador',
+      'counter_padding': 'Padrão do Contador',
       'shared_invoice_quote_counter': 'Shared Invoice Quote Counter',
       'default_tax_name_1': 'Default Tax Name 1',
       'default_tax_rate_1': 'Default Tax Rate 1',
@@ -21835,17 +23974,18 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'default_tax_rate_2': 'Default Tax Rate 2',
       'default_tax_name_3': 'Default Tax Name 3',
       'default_tax_rate_3': 'Default Tax Rate 3',
-      'email_subject_invoice': 'Email Invoice Subject',
-      'email_subject_quote': 'Email Quote Subject',
-      'email_subject_payment': 'Email Payment Subject',
+      'email_subject_invoice': 'Assunto do E-mail de Fatura',
+      'email_subject_quote': 'Assunto do E-mail de Orçamento',
+      'email_subject_payment': 'Assunto do E-mail de Pagamento',
+      'email_subject_payment_partial': 'Email Partial Payment Subject',
       'switch_list_table': 'Switch List Table',
-      'client_city': 'Client City',
-      'client_state': 'Client State',
-      'client_country': 'Client Country',
-      'client_is_active': 'Client is Active',
-      'client_balance': 'Client Balance',
-      'client_address1': 'Client Address 1',
-      'client_address2': 'Client Address 2',
+      'client_city': 'Cidade do Cliente',
+      'client_state': 'Estado do Cliente',
+      'client_country': 'País do Cliente',
+      'client_is_active': 'Cliente Ativo',
+      'client_balance': 'Balanço do Cliente',
+      'client_address1': 'Endereço 1 do Cliente',
+      'client_address2': 'Endereço 2 do Cliente',
       'client_shipping_address1': 'Client Shipping Address 1',
       'client_shipping_address2': 'Client Shipping Address 2',
       'type': 'Tipo',
@@ -21855,7 +23995,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'tax_rate2': 'Tax Rate 2',
       'tax_rate3': 'Tax Rate 3',
       'auto_bill': 'Cobrança Automática',
-      'archived_at': 'Archived At',
+      'archived_at': 'Arquivado em',
       'has_expenses': 'Has Expenses',
       'custom_taxes1': 'Custom Taxes 1',
       'custom_taxes2': 'Custom Taxes 2',
@@ -21865,12 +24005,117 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'custom_surcharge2': 'Custom Surcharge 2',
       'custom_surcharge3': 'Custom Surcharge 3',
       'custom_surcharge4': 'Custom Surcharge 4',
-      'is_deleted': 'Is Deleted',
-      'vendor_city': 'Vendor City',
-      'vendor_state': 'Vendor State',
-      'vendor_country': 'Vendor Country',
+      'is_deleted': 'Excluído',
+      'vendor_city': 'Cidade do Vendedor',
+      'vendor_state': 'Estado do Vendedor',
+      'vendor_country': 'País do Vendedor',
+      'is_approved': 'Is Approved',
+      'tax_name': 'Nome do Imposto',
+      'tax_amount': 'Quantia de Impostos',
+      'tax_paid': 'Impostos pagos',
+      'payment_amount': 'Quantia de Pagamento',
+      'age': 'Idade',
     },
     'pt_PT': {
+      'full_name': 'Nome completo',
+      'city_state_postal': 'Cidade/Distrito/C. Postal',
+      'postal_city_state': 'Código-Postal/Cidade/Distrito',
+      'custom1': 'First Custom',
+      'custom2': 'Second Custom',
+      'custom3': 'Third Custom',
+      'custom4': 'Fourth Custom',
+      'optional': 'Optional',
+      'license': 'License',
+      'purge_data': 'Purgar dados',
+      'purge_successful': 'Successfully purged company data',
+      'purge_data_message': 'Aviso: apagará todos os seus dados.',
+      'invoice_balance': 'Invoice Balance',
+      'age_group_0': '0 - 30 Dias',
+      'age_group_30': '30 - 60 Dias',
+      'age_group_60': '60 - 90 Dias',
+      'age_group_90': '90 - 120 Dias',
+      'age_group_120': '120+ Dias',
+      'refresh': 'Refresh',
+      'saved_design': 'Successfully saved design',
+      'client_details': 'Client Details',
+      'company_address': 'Company Address',
+      'invoice_details': 'Detalhes da nota de pag.',
+      'quote_details': 'Quote Details',
+      'credit_details': 'Credit Details',
+      'product_columns': 'Product Columns',
+      'task_columns': 'Task Columns',
+      'add_field': 'Add Field',
+      'all_events': 'All Events',
+      'permissions': 'Permissões',
+      'none': 'None',
+      'owned': 'Owned',
+      'payment_success': 'Payment Success',
+      'payment_failure': 'Payment Failure',
+      'invoice_sent': ':count nota de pag. enviada',
+      'quote_sent': 'Quote Sent',
+      'credit_sent': 'Credit Sent',
+      'invoice_viewed': 'Invoice Viewed',
+      'quote_viewed': 'Quote Viewed',
+      'credit_viewed': 'Credit Viewed',
+      'quote_approved': 'Quote Approved',
+      'receive_all_notifications': 'Receive All Notifications',
+      'purchase_license': 'Purchase License',
+      'apply_license': 'Aplicar Linceça',
+      'cancel_account': 'Cancelar Conta',
+      'cancel_account_message':
+          'Aviso: Irá apagar permanentemente a sua conta.',
+      'delete_company': 'Delete Company',
+      'delete_company_message':
+          'Warning: This will permanently delete your company, there is no undo.',
+      'enable_modules': 'Enable Modules',
+      'converted_quote': 'Successfully converted quote',
+      'credit_design': 'Credit Design',
+      'includes': 'Includes',
+      'header': 'Cabeçalho',
+      'load_design': 'Load Design',
+      'css_framework': 'CSS Framework',
+      'custom_designs': 'Custom Designs',
+      'designs': 'Designs',
+      'new_design': 'New Design',
+      'edit_design': 'Edit Design',
+      'created_design': 'Successfully created design',
+      'updated_design': 'Successfully updated design',
+      'archived_design': 'Successfully archived design',
+      'deleted_design': 'Successfully deleted design',
+      'removed_design': 'Successfully removed design',
+      'restored_design': 'Successfully restored design',
+      'proposals': 'Proposals',
+      'tickets': 'Tickets',
+      'recurring_invoices': 'Notas de Pagamento Recorrentes',
+      'recurring_quotes': 'Recurring Quotes',
+      'recurring_tasks': 'Recurring Tasks',
+      'recurring_expenses': 'Recurring Expenses',
+      'account_management': 'Gerir Conta',
+      'credit_date': 'Data do Crédito',
+      'credit': 'Crédito',
+      'credits': 'Créditos',
+      'new_credit': 'Introduzir Crédito',
+      'edit_credit': 'Editar Crédito',
+      'created_credit': 'Crédito criado com sucesso',
+      'updated_credit': 'Crédito atualizado com sucesso',
+      'archived_credit': 'Crédito arquivado com sucesso',
+      'deleted_credit': 'Crédito apagado com sucesso',
+      'removed_credit': 'Successfully removed credit',
+      'restored_credit': 'Crédito restaurado',
+      'current_version': 'Versão Atual',
+      'latest_version': 'Latest Version',
+      'update_now': 'Update Now',
+      'a_new_version_is_available': 'A new version of the web app is available',
+      'update_available': 'Update Available',
+      'app_updated': 'Update successfully completed',
+      'learn_more': 'Saber mais',
+      'integrations': 'Integrations',
+      'tracking_id': 'Tracking Id',
+      'slack_webhook_url': 'Slack Webhook URL',
+      'credit_footer': 'Credit Footer',
+      'credit_terms': 'Credit Terms',
+      'untitled_company': 'Untitled Company',
+      'added_company': 'Successfully added company',
       'company1': 'Custom Company 1',
       'company2': 'Custom Company 2',
       'company3': 'Custom Company 3',
@@ -21880,9 +24125,9 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'product3': 'Custom Product 3',
       'product4': 'Custom Product 4',
       'client1': 'Custom Client 1',
-      'client2': 'Custom Client 1',
-      'client3': 'Custom Client 1',
-      'client4': 'Custom Client 1',
+      'client2': 'Custom Client 2',
+      'client3': 'Custom Client 3',
+      'client4': 'Custom Client 4',
       'contact1': 'Custom Contact 1',
       'contact2': 'Custom Contact 2',
       'contact3': 'Custom Contact 3',
@@ -21959,7 +24204,6 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'reports': 'Relatórios',
       'report': 'Relatório',
       'add_company': 'Adicionar Empresa',
-      'to_learn_about_gogle_fonts': 'to learn about Google Fonts',
       'unpaid_invoice': 'Unpaid Invoice',
       'paid_invoice': 'Paid Invoice',
       'unapproved_quote': 'Unapproved Quote',
@@ -21996,7 +24240,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'domain_url': 'Domain URL',
       'password_is_too_short': 'Password is too short',
       'password_is_too_easy':
-          'Password msut contain an upper case character and a number',
+          'Password must contain an upper case character and a number',
       'client_portal_tasks': 'Client Portal Tasks',
       'client_portal_dashboard': 'Client Portal Dashboard',
       'please_enter_a_value': 'Please enter a value',
@@ -22070,6 +24314,8 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'days': 'Dias',
       'invoice_email': 'E-mail para Notas de Pag.',
       'payment_email': 'E-mail para Pagamentos',
+      'partial_payment': 'Partial Payment',
+      'partial_payment_email': 'Partial Payment Email',
       'quote_email': 'E-mail para Orçamentos',
       'endless_reminder': 'Endless Reminder',
       'filtered_by_user': 'Filtered by User',
@@ -22141,8 +24387,6 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'company': 'Company',
       'generated_numbers': 'Números gerados',
       'charge_taxes': 'Impostos',
-      'credit': 'Crédito',
-      'credits': 'Créditos',
       'next_reset': 'Próxima redefinição',
       'reset_counter': 'Redefinir contador',
       'recurring_prefix': 'Recurring Prefix',
@@ -22185,9 +24429,6 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'enable_portal_password': 'Proteger notas de pag. com palavra-passe',
       'enable_portal_password_help':
           'Permite definir uma palavra-passe para cada contacto. Se uma palavra-passe for definida, o contacto deverá introduzir a palavra-passe antes de visualizar a nota de pagamento.',
-      'send_portal_password': 'Generate Automatically',
-      'send_portal_password_help':
-          'Se não definir uma palavra-passe, será gerada uma automaticamente e enviada com a primeira nota de pagamento.',
       'authorization': 'Autorização',
       'subdomain': 'Subdomínio',
       'domain': 'Domínio',
@@ -22474,6 +24715,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'custom': 'Personalizado',
       'clone_to_invoice': 'Clone to Invoice',
       'clone_to_quote': 'Clone to Quote',
+      'clone_to_credit': 'Clone to Credit',
       'view_invoice': 'Visualizar nota de pag.',
       'convert': 'Convert',
       'more': 'More',
@@ -22486,7 +24728,6 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'edit_expense': 'Editar Despesa',
       'edit_vendor': 'Editar Fornecedor',
       'edit_project': 'Editar Projeto',
-      'edit_credit': 'Editar Crédito',
       'edit_recurring_invoice': 'Edit Recurring Invoice',
       'edit_recurring_expense': 'Edit Recurring Expense',
       'edit_recurring_quote': 'Edit Recurring Quote',
@@ -22637,15 +24878,11 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'approved': 'Approved',
       'partial': 'Depósito/Parcial',
       'paid': 'Pago',
-      'invoice_status_1': 'Draft',
-      'invoice_status_2': 'Sent',
-      'invoice_status_3': 'Viewed',
-      'invoice_status_4': 'Approved',
       'mark_sent': 'Marcar como Enviada',
       'marked_invoice_as_sent': 'Successfully marked invoice as sent',
-      'marked_invoice_as_paid': 'Successfully marked invoice as sent',
+      'marked_invoice_as_paid': 'Successfully marked invoice as paid',
       'marked_invoices_as_sent': 'Successfully marked invoices as sent',
-      'marked_invoices_as_paid': 'Successfully marked invoices as sent',
+      'marked_invoices_as_paid': 'Successfully marked invoices as paid',
       'done': 'Feito',
       'please_enter_a_client_or_contact_name':
           'Please enter a client or contact name',
@@ -22780,7 +25017,9 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'activity_57': 'System failed to email invoice :invoice',
       'one_time_password': 'One Time Password',
       'emailed_quote': 'Orçamento enviado',
+      'emailed_credit': 'Successfully emailed credit',
       'marked_quote_as_sent': 'Successfully marked quote as sent',
+      'marked_credit_as_sent': 'Successfully marked credit as sent',
       'expired': 'Expirada',
       'all': 'Todos',
       'select': 'Selecionar',
@@ -22826,6 +25065,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'email_subject_invoice': 'Email Invoice Subject',
       'email_subject_quote': 'Email Quote Subject',
       'email_subject_payment': 'Email Payment Subject',
+      'email_subject_payment_partial': 'Email Partial Payment Subject',
       'switch_list_table': 'Switch List Table',
       'client_city': 'Client City',
       'client_state': 'Client State',
@@ -22857,8 +25097,114 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'vendor_city': 'Vendor City',
       'vendor_state': 'Vendor State',
       'vendor_country': 'Vendor Country',
+      'is_approved': 'Is Approved',
+      'tax_name': 'Nome do Imposto',
+      'tax_amount': 'Tax Amount',
+      'tax_paid': 'Tax Paid',
+      'payment_amount': 'Valor do Pagamento',
+      'age': 'Idade',
     },
     'ro': {
+      'full_name': 'Full Name',
+      'city_state_postal': 'City/State/Postal',
+      'postal_city_state': 'Postal/City/State',
+      'custom1': 'First Custom',
+      'custom2': 'Second Custom',
+      'custom3': 'Third Custom',
+      'custom4': 'Fourth Custom',
+      'optional': 'Optional',
+      'license': 'License',
+      'purge_data': 'Purge Data',
+      'purge_successful': 'Successfully purged company data',
+      'purge_data_message':
+          'Warning: This will permanently erase your data, there is no undo.',
+      'invoice_balance': 'Invoice Balance',
+      'age_group_0': '0 - 30 Days',
+      'age_group_30': '30 - 60 Days',
+      'age_group_60': '60 - 90 Days',
+      'age_group_90': '90 - 120 Days',
+      'age_group_120': '120+ Days',
+      'refresh': 'Refresh',
+      'saved_design': 'Successfully saved design',
+      'client_details': 'Client Details',
+      'company_address': 'Company Address',
+      'invoice_details': 'Invoice Details',
+      'quote_details': 'Quote Details',
+      'credit_details': 'Credit Details',
+      'product_columns': 'Product Columns',
+      'task_columns': 'Task Columns',
+      'add_field': 'Add Field',
+      'all_events': 'All Events',
+      'permissions': 'Permissions',
+      'none': 'None',
+      'owned': 'Owned',
+      'payment_success': 'Payment Success',
+      'payment_failure': 'Payment Failure',
+      'invoice_sent': ':count factură trimisă',
+      'quote_sent': 'Quote Sent',
+      'credit_sent': 'Credit Sent',
+      'invoice_viewed': 'Invoice Viewed',
+      'quote_viewed': 'Quote Viewed',
+      'credit_viewed': 'Credit Viewed',
+      'quote_approved': 'Quote Approved',
+      'receive_all_notifications': 'Receive All Notifications',
+      'purchase_license': 'Purchase License',
+      'apply_license': 'Aplică Licență',
+      'cancel_account': 'Șterge cont',
+      'cancel_account_message':
+          'ATENȚIE: Toate datele vor fi șterse definitiv, nu se pot recupera.',
+      'delete_company': 'Delete Company',
+      'delete_company_message':
+          'Warning: This will permanently delete your company, there is no undo.',
+      'enable_modules': 'Enable Modules',
+      'converted_quote': 'Successfully converted quote',
+      'credit_design': 'Credit Design',
+      'includes': 'Includes',
+      'header': 'Antet',
+      'load_design': 'Load Design',
+      'css_framework': 'CSS Framework',
+      'custom_designs': 'Custom Designs',
+      'designs': 'Designs',
+      'new_design': 'New Design',
+      'edit_design': 'Edit Design',
+      'created_design': 'Successfully created design',
+      'updated_design': 'Successfully updated design',
+      'archived_design': 'Successfully archived design',
+      'deleted_design': 'Successfully deleted design',
+      'removed_design': 'Successfully removed design',
+      'restored_design': 'Successfully restored design',
+      'proposals': 'Proposals',
+      'tickets': 'Tickets',
+      'recurring_invoices': 'Facturi Recurente',
+      'recurring_quotes': 'Proforme Recurente',
+      'recurring_tasks': 'Recurring Tasks',
+      'recurring_expenses': 'Recurring Expenses',
+      'account_management': 'Administrare cont',
+      'credit_date': 'Data Creditului',
+      'credit': 'Credit',
+      'credits': 'Credite',
+      'new_credit': 'Adaugă Credit',
+      'edit_credit': 'Edit Credit',
+      'created_credit': 'Credit adăugat cu succes',
+      'updated_credit': 'Successfully updated credit',
+      'archived_credit': 'Credit arhivat cu succes',
+      'deleted_credit': 'Credit șters',
+      'removed_credit': 'Successfully removed credit',
+      'restored_credit': 'Credit restaurat',
+      'current_version': 'Versiunea Curentă',
+      'latest_version': 'Latest Version',
+      'update_now': 'Update Now',
+      'a_new_version_is_available': 'A new version of the web app is available',
+      'update_available': 'Update Available',
+      'app_updated': 'Update successfully completed',
+      'learn_more': 'Afla mai mult',
+      'integrations': 'Integrations',
+      'tracking_id': 'Tracking Id',
+      'slack_webhook_url': 'Slack Webhook URL',
+      'credit_footer': 'Credit Footer',
+      'credit_terms': 'Credit Terms',
+      'untitled_company': 'Untitled Company',
+      'added_company': 'Successfully added company',
       'company1': 'Custom Company 1',
       'company2': 'Custom Company 2',
       'company3': 'Custom Company 3',
@@ -22868,9 +25214,9 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'product3': 'Custom Product 3',
       'product4': 'Custom Product 4',
       'client1': 'Custom Client 1',
-      'client2': 'Custom Client 1',
-      'client3': 'Custom Client 1',
-      'client4': 'Custom Client 1',
+      'client2': 'Custom Client 2',
+      'client3': 'Custom Client 3',
+      'client4': 'Custom Client 4',
       'contact1': 'Custom Contact 1',
       'contact2': 'Custom Contact 2',
       'contact3': 'Custom Contact 3',
@@ -22947,7 +25293,6 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'reports': 'Reports',
       'report': 'Raport',
       'add_company': 'Adaugă Firmă',
-      'to_learn_about_gogle_fonts': 'to learn about Google Fonts',
       'unpaid_invoice': 'Unpaid Invoice',
       'paid_invoice': 'Paid Invoice',
       'unapproved_quote': 'Unapproved Quote',
@@ -22984,7 +25329,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'domain_url': 'Domain URL',
       'password_is_too_short': 'Password is too short',
       'password_is_too_easy':
-          'Password msut contain an upper case character and a number',
+          'Password must contain an upper case character and a number',
       'client_portal_tasks': 'Client Portal Tasks',
       'client_portal_dashboard': 'Client Portal Dashboard',
       'please_enter_a_value': 'Please enter a value',
@@ -23058,6 +25403,8 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'days': 'Days',
       'invoice_email': 'Email Factură',
       'payment_email': 'Email Plată',
+      'partial_payment': 'Partial Payment',
+      'partial_payment_email': 'Partial Payment Email',
       'quote_email': 'Email Ofertă',
       'endless_reminder': 'Endless Reminder',
       'filtered_by_user': 'Filtered by User',
@@ -23128,8 +25475,6 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'company': 'Company',
       'generated_numbers': 'Generated Numbers',
       'charge_taxes': 'Taxe',
-      'credit': 'Credit',
-      'credits': 'Credite',
       'next_reset': 'Next Reset',
       'reset_counter': 'Reset Counter',
       'recurring_prefix': 'Recurring Prefix',
@@ -23172,9 +25517,6 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'enable_portal_password': 'Password Protect Invoices',
       'enable_portal_password_help':
           'Allows you to set a password for each contact. If a password is set, the contact will be required to enter a password before viewing invoices.',
-      'send_portal_password': 'Generate Automatically',
-      'send_portal_password_help':
-          'If no password is set, one will be generated and sent with the first invoice.',
       'authorization': 'Authorization',
       'subdomain': 'Subdomeniu',
       'domain': 'Domain',
@@ -23462,6 +25804,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'custom': 'Personalizat',
       'clone_to_invoice': 'Clone to Invoice',
       'clone_to_quote': 'Clone to Quote',
+      'clone_to_credit': 'Clone to Credit',
       'view_invoice': 'Vizualizare Factură',
       'convert': 'Convert',
       'more': 'More',
@@ -23474,7 +25817,6 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'edit_expense': 'Edit Expense',
       'edit_vendor': 'Editează Furnizor',
       'edit_project': 'Editează Proiect',
-      'edit_credit': 'Edit Credit',
       'edit_recurring_invoice': 'Edit Recurring Invoice',
       'edit_recurring_expense': 'Edit Recurring Expense',
       'edit_recurring_quote': 'Edit Recurring Quote',
@@ -23625,15 +25967,11 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'approved': 'Approved',
       'partial': 'Parțial/Depunere',
       'paid': 'Plătit',
-      'invoice_status_1': 'Draft',
-      'invoice_status_2': 'Sent',
-      'invoice_status_3': 'Viewed',
-      'invoice_status_4': 'Approved',
       'mark_sent': 'Marchează ca trimis',
       'marked_invoice_as_sent': 'Successfully marked invoice as sent',
-      'marked_invoice_as_paid': 'Successfully marked invoice as sent',
+      'marked_invoice_as_paid': 'Successfully marked invoice as paid',
       'marked_invoices_as_sent': 'Successfully marked invoices as sent',
-      'marked_invoices_as_paid': 'Successfully marked invoices as sent',
+      'marked_invoices_as_paid': 'Successfully marked invoices as paid',
       'done': 'Gata',
       'please_enter_a_client_or_contact_name':
           'Please enter a client or contact name',
@@ -23770,7 +26108,9 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'activity_57': 'System failed to email invoice :invoice',
       'one_time_password': 'One Time Password',
       'emailed_quote': 'Proformă trimisă cu succes',
+      'emailed_credit': 'Successfully emailed credit',
       'marked_quote_as_sent': 'Successfully marked quote as sent',
+      'marked_credit_as_sent': 'Successfully marked credit as sent',
       'expired': 'Expired',
       'all': 'All',
       'select': 'Selecteaza',
@@ -23816,6 +26156,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'email_subject_invoice': 'Email Invoice Subject',
       'email_subject_quote': 'Email Quote Subject',
       'email_subject_payment': 'Email Payment Subject',
+      'email_subject_payment_partial': 'Email Partial Payment Subject',
       'switch_list_table': 'Switch List Table',
       'client_city': 'Client City',
       'client_state': 'Client State',
@@ -23847,8 +26188,114 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'vendor_city': 'Vendor City',
       'vendor_state': 'Vendor State',
       'vendor_country': 'Vendor Country',
+      'is_approved': 'Is Approved',
+      'tax_name': 'Tax Name',
+      'tax_amount': 'Tax Amount',
+      'tax_paid': 'Tax Paid',
+      'payment_amount': 'Valoare plata',
+      'age': 'Age',
     },
     'sr_RS': {
+      'full_name': 'Full Name',
+      'city_state_postal': 'City/State/Postal',
+      'postal_city_state': 'Postal/City/State',
+      'custom1': 'Prvo prilagođeno',
+      'custom2': 'Drugo prilagođeno',
+      'custom3': 'Third Custom',
+      'custom4': 'Fourth Custom',
+      'optional': 'Optional',
+      'license': 'License',
+      'purge_data': 'Purge Data',
+      'purge_successful': 'Uspešno očišćeni podatci kompanije',
+      'purge_data_message':
+          'Warning: This will permanently erase your data, there is no undo.',
+      'invoice_balance': 'Invoice Balance',
+      'age_group_0': '0 - 30 Days',
+      'age_group_30': '30 - 60 Days',
+      'age_group_60': '60 - 90 Days',
+      'age_group_90': '90 - 120 Days',
+      'age_group_120': '120+ Days',
+      'refresh': 'Osveži',
+      'saved_design': 'Successfully saved design',
+      'client_details': 'Client Details',
+      'company_address': 'Company Address',
+      'invoice_details': 'Invoice Details',
+      'quote_details': 'Quote Details',
+      'credit_details': 'Credit Details',
+      'product_columns': 'Product Columns',
+      'task_columns': 'Task Columns',
+      'add_field': 'Add Field',
+      'all_events': 'All Events',
+      'permissions': 'Permissions',
+      'none': 'Nema',
+      'owned': 'Owned',
+      'payment_success': 'Payment Success',
+      'payment_failure': 'Payment Failure',
+      'invoice_sent': ':count račun poslat',
+      'quote_sent': 'Quote Sent',
+      'credit_sent': 'Credit Sent',
+      'invoice_viewed': 'Invoice Viewed',
+      'quote_viewed': 'Quote Viewed',
+      'credit_viewed': 'Credit Viewed',
+      'quote_approved': 'Quote Approved',
+      'receive_all_notifications': 'Receive All Notifications',
+      'purchase_license': 'Purchase License',
+      'apply_license': 'Apply License',
+      'cancel_account': 'Delete Account',
+      'cancel_account_message':
+          'Warning: This will permanently delete your account, there is no undo.',
+      'delete_company': 'Izbriši kompaniju',
+      'delete_company_message':
+          'Upozorenje: Ovo će potpuno obrisati podatke o Vašooj komplaniji, nema mogućnosti povratka podataka.',
+      'enable_modules': 'Enable Modules',
+      'converted_quote': 'Successfully converted quote',
+      'credit_design': 'Credit Design',
+      'includes': 'Includes',
+      'header': 'Zaglavlje',
+      'load_design': 'Učitaj Dizajn',
+      'css_framework': 'CSS Framework',
+      'custom_designs': 'Custom Designs',
+      'designs': 'Designs',
+      'new_design': 'New Design',
+      'edit_design': 'Edit Design',
+      'created_design': 'Successfully created design',
+      'updated_design': 'Successfully updated design',
+      'archived_design': 'Successfully archived design',
+      'deleted_design': 'Successfully deleted design',
+      'removed_design': 'Successfully removed design',
+      'restored_design': 'Successfully restored design',
+      'proposals': 'Ponude',
+      'tickets': 'Tiketi',
+      'recurring_invoices': 'Redovni računi',
+      'recurring_quotes': 'Ponavljajuća ponuda',
+      'recurring_tasks': 'Recurring Tasks',
+      'recurring_expenses': 'Redovni troškovi',
+      'account_management': 'Account Management',
+      'credit_date': 'Datum kredita',
+      'credit': 'Kredit',
+      'credits': 'Krediti',
+      'new_credit': 'Unesi kredit',
+      'edit_credit': 'Edit Credit',
+      'created_credit': 'Uspešno kreiran kredit',
+      'updated_credit': 'Successfully updated credit',
+      'archived_credit': 'Uspešno arhiviran kredit',
+      'deleted_credit': 'Uspešno obrisan kredit',
+      'removed_credit': 'Successfully removed credit',
+      'restored_credit': 'Uspešno vraćen kredit',
+      'current_version': 'Trenutna verzija',
+      'latest_version': 'Latest Version',
+      'update_now': 'Update Now',
+      'a_new_version_is_available': 'A new version of the web app is available',
+      'update_available': 'Update Available',
+      'app_updated': 'Update successfully completed',
+      'learn_more': 'Više informacija',
+      'integrations': 'Integrations',
+      'tracking_id': 'Tracking Id',
+      'slack_webhook_url': 'Slack Webhook URL',
+      'credit_footer': 'Credit Footer',
+      'credit_terms': 'Credit Terms',
+      'untitled_company': 'Untitled Company',
+      'added_company': 'Successfully added company',
       'company1': 'Custom Company 1',
       'company2': 'Custom Company 2',
       'company3': 'Custom Company 3',
@@ -23858,9 +26305,9 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'product3': 'Custom Product 3',
       'product4': 'Custom Product 4',
       'client1': 'Custom Client 1',
-      'client2': 'Custom Client 1',
-      'client3': 'Custom Client 1',
-      'client4': 'Custom Client 1',
+      'client2': 'Custom Client 2',
+      'client3': 'Custom Client 3',
+      'client4': 'Custom Client 4',
       'contact1': 'Custom Contact 1',
       'contact2': 'Custom Contact 2',
       'contact3': 'Custom Contact 3',
@@ -23937,7 +26384,6 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'reports': 'Reports',
       'report': 'Izveštaji',
       'add_company': 'Dodaj preduzeće',
-      'to_learn_about_gogle_fonts': 'to learn about Google Fonts',
       'unpaid_invoice': 'Neplaćeni računi',
       'paid_invoice': 'Plaćeni računi',
       'unapproved_quote': 'Ne odobrene ponude',
@@ -23974,7 +26420,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'domain_url': 'Domain URL',
       'password_is_too_short': 'Lozinka je prekratka',
       'password_is_too_easy':
-          'Password msut contain an upper case character and a number',
+          'Password must contain an upper case character and a number',
       'client_portal_tasks': 'Client Portal Tasks',
       'client_portal_dashboard': 'Client Portal Dashboard',
       'please_enter_a_value': 'Please enter a value',
@@ -24048,6 +26494,8 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'days': 'Days',
       'invoice_email': 'E-pošta računa',
       'payment_email': 'E-pošta uplate',
+      'partial_payment': 'Partial Payment',
+      'partial_payment_email': 'Partial Payment Email',
       'quote_email': 'E-pošta ponuda',
       'endless_reminder': 'Beskrajni podsetnik',
       'filtered_by_user': 'Filtered by User',
@@ -24118,8 +26566,6 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'company': 'Kompanija',
       'generated_numbers': 'Generated Numbers',
       'charge_taxes': 'Naplati poreze',
-      'credit': 'Kredit',
-      'credits': 'Krediti',
       'next_reset': 'Next Reset',
       'reset_counter': 'Reset Counter',
       'recurring_prefix': 'Prefiks koji se ponavlja',
@@ -24162,9 +26608,6 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'enable_portal_password': 'Password Protect Invoices',
       'enable_portal_password_help':
           'Allows you to set a password for each contact. If a password is set, the contact will be required to enter a password before viewing invoices.',
-      'send_portal_password': 'Generiši automatski',
-      'send_portal_password_help':
-          'If no password is set, one will be generated and sent with the first invoice.',
       'authorization': 'Authorization',
       'subdomain': 'Poddomena',
       'domain': 'Domain',
@@ -24451,6 +26894,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'custom': 'Prilagođeno',
       'clone_to_invoice': 'Kloniraj u račun',
       'clone_to_quote': 'Kloniraj u ponudu',
+      'clone_to_credit': 'Clone to Credit',
       'view_invoice': 'Pregled računa',
       'convert': 'Konvertuj',
       'more': 'Više',
@@ -24463,7 +26907,6 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'edit_expense': 'Izmeni trošak',
       'edit_vendor': 'Uredi dobavljača',
       'edit_project': 'Edit Project',
-      'edit_credit': 'Edit Credit',
       'edit_recurring_invoice': 'Izmeni ponavljajući račun',
       'edit_recurring_expense': 'Izmena redovnih troškova',
       'edit_recurring_quote': 'Izmeni ponavljajuću ponudu',
@@ -24614,15 +27057,11 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'approved': 'Odobreno',
       'partial': 'Partial/Deposit',
       'paid': 'Plaćeno',
-      'invoice_status_1': 'Nacrt',
-      'invoice_status_2': 'Poslato',
-      'invoice_status_3': 'Pregledano',
-      'invoice_status_4': 'Odobreno',
       'mark_sent': 'Označi kao poslato',
       'marked_invoice_as_sent': 'Račun uspešno obeležen kao poslat',
-      'marked_invoice_as_paid': 'Successfully marked invoice as sent',
+      'marked_invoice_as_paid': 'Successfully marked invoice as paid',
       'marked_invoices_as_sent': 'Successfully marked invoices as sent',
-      'marked_invoices_as_paid': 'Successfully marked invoices as sent',
+      'marked_invoices_as_paid': 'Successfully marked invoices as paid',
       'done': 'Završeno',
       'please_enter_a_client_or_contact_name':
           'Unesite klijenta ili ime kontakta',
@@ -24758,7 +27197,9 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'activity_57': 'System failed to email invoice :invoice',
       'one_time_password': 'Jednokratna lozinka',
       'emailed_quote': 'Ponuda je uspešno poslata e-poštom',
+      'emailed_credit': 'Successfully emailed credit',
       'marked_quote_as_sent': 'Ponuda uspešno obeležena kao poslata',
+      'marked_credit_as_sent': 'Successfully marked credit as sent',
       'expired': 'Expired',
       'all': 'All',
       'select': 'Odaberi',
@@ -24804,6 +27245,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'email_subject_invoice': 'Email Invoice Subject',
       'email_subject_quote': 'Email Quote Subject',
       'email_subject_payment': 'Email Payment Subject',
+      'email_subject_payment_partial': 'Email Partial Payment Subject',
       'switch_list_table': 'Switch List Table',
       'client_city': 'Client City',
       'client_state': 'Client State',
@@ -24835,8 +27277,114 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'vendor_city': 'Vendor City',
       'vendor_state': 'Vendor State',
       'vendor_country': 'Vendor Country',
+      'is_approved': 'Is Approved',
+      'tax_name': 'Naziv poreske stope',
+      'tax_amount': 'Iznos poreza',
+      'tax_paid': 'Porez Plaćen',
+      'payment_amount': 'Iznos uplate',
+      'age': 'Age',
     },
     'sl': {
+      'full_name': 'Polno ime',
+      'city_state_postal': 'Mesto/Država/Pošta',
+      'postal_city_state': 'Pošta/Mesto/Država',
+      'custom1': 'Prvi po meri',
+      'custom2': 'Drugi po meri',
+      'custom3': 'Third Custom',
+      'custom4': 'Fourth Custom',
+      'optional': 'Optional',
+      'license': 'License',
+      'purge_data': 'Izprazni podatke',
+      'purge_successful': 'Podatki podjetja uspešno odstranjeni',
+      'purge_data_message':
+          'Opozorilo: Vaši podatki bodo trajno zbrisani. Razveljavitev kasneje ni mogoča.',
+      'invoice_balance': 'Invoice Balance',
+      'age_group_0': '0 - 30 Dni',
+      'age_group_30': '30 - 60 Dni',
+      'age_group_60': '60 - 90 Dni',
+      'age_group_90': '90 - 120 Dni',
+      'age_group_120': '120+ dni',
+      'refresh': 'Osveži',
+      'saved_design': 'Successfully saved design',
+      'client_details': 'Client Details',
+      'company_address': 'Company Address',
+      'invoice_details': 'Detalji računa',
+      'quote_details': 'Quote Details',
+      'credit_details': 'Credit Details',
+      'product_columns': 'Product Columns',
+      'task_columns': 'Task Columns',
+      'add_field': 'Add Field',
+      'all_events': 'All Events',
+      'permissions': 'Pravice',
+      'none': 'None',
+      'owned': 'Owned',
+      'payment_success': 'Payment Success',
+      'payment_failure': 'Payment Failure',
+      'invoice_sent': ':count račun poslan',
+      'quote_sent': 'Quote Sent',
+      'credit_sent': 'Credit Sent',
+      'invoice_viewed': 'Invoice Viewed',
+      'quote_viewed': 'Quote Viewed',
+      'credit_viewed': 'Credit Viewed',
+      'quote_approved': 'Quote Approved',
+      'receive_all_notifications': 'Receive All Notifications',
+      'purchase_license': 'Purchase License',
+      'apply_license': 'Potrdi licenco',
+      'cancel_account': 'Odstani račun',
+      'cancel_account_message':
+          'Opozorilo: Vaš račun bo trajno zbrisan. Razveljavitev ni mogoča.',
+      'delete_company': 'Izbriši podjetje',
+      'delete_company_message':
+          'Opozorilo: Vaše podjetne bo trajno zbrisano. Razveljavitev ni mogoča.',
+      'enable_modules': 'Enable Modules',
+      'converted_quote': 'Successfully converted quote',
+      'credit_design': 'Credit Design',
+      'includes': 'Includes',
+      'header': 'Glava',
+      'load_design': 'Noloži obliko',
+      'css_framework': 'CSS Framework',
+      'custom_designs': 'Custom Designs',
+      'designs': 'Designs',
+      'new_design': 'New Design',
+      'edit_design': 'Edit Design',
+      'created_design': 'Successfully created design',
+      'updated_design': 'Successfully updated design',
+      'archived_design': 'Successfully archived design',
+      'deleted_design': 'Successfully deleted design',
+      'removed_design': 'Successfully removed design',
+      'restored_design': 'Successfully restored design',
+      'proposals': 'Ponudbe',
+      'tickets': 'Tickets',
+      'recurring_invoices': 'Ponavljajoči računi',
+      'recurring_quotes': 'Ponavljajoči predračuni',
+      'recurring_tasks': 'Recurring Tasks',
+      'recurring_expenses': 'Ponavaljajoči stroški',
+      'account_management': 'Upravljanje računa',
+      'credit_date': 'Datum dobropisa',
+      'credit': 'Dobropis',
+      'credits': 'Dobropisi',
+      'new_credit': 'Vnesi dobropis',
+      'edit_credit': 'Uredi dobropis',
+      'created_credit': 'Dobropis uspešno ustvarjen',
+      'updated_credit': 'Uspešno posodobljen dobropis',
+      'archived_credit': 'Dobropis uspešno arhiviran',
+      'deleted_credit': 'Dobropis uspešno odstranjen',
+      'removed_credit': 'Successfully removed credit',
+      'restored_credit': 'Dobropis uspešno obnovljen',
+      'current_version': 'Trenutna različica',
+      'latest_version': 'Latest Version',
+      'update_now': 'Update Now',
+      'a_new_version_is_available': 'A new version of the web app is available',
+      'update_available': 'Update Available',
+      'app_updated': 'Update successfully completed',
+      'learn_more': 'Izvedi več',
+      'integrations': 'Integrations',
+      'tracking_id': 'Tracking Id',
+      'slack_webhook_url': 'Slack Webhook URL',
+      'credit_footer': 'Credit Footer',
+      'credit_terms': 'Credit Terms',
+      'untitled_company': 'Untitled Company',
+      'added_company': 'Successfully added company',
       'company1': 'Custom Company 1',
       'company2': 'Custom Company 2',
       'company3': 'Custom Company 3',
@@ -24846,9 +27394,9 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'product3': 'Custom Product 3',
       'product4': 'Custom Product 4',
       'client1': 'Custom Client 1',
-      'client2': 'Custom Client 1',
-      'client3': 'Custom Client 1',
-      'client4': 'Custom Client 1',
+      'client2': 'Custom Client 2',
+      'client3': 'Custom Client 3',
+      'client4': 'Custom Client 4',
       'contact1': 'Custom Contact 1',
       'contact2': 'Custom Contact 2',
       'contact3': 'Custom Contact 3',
@@ -24925,7 +27473,6 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'reports': 'Poročila',
       'report': 'Poročilo',
       'add_company': 'Dodaj podjetje',
-      'to_learn_about_gogle_fonts': 'to learn about Google Fonts',
       'unpaid_invoice': 'Unpaid Invoice',
       'paid_invoice': 'Paid Invoice',
       'unapproved_quote': 'Nepotrjen predračun',
@@ -24962,7 +27509,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'domain_url': 'Domain URL',
       'password_is_too_short': 'Password is too short',
       'password_is_too_easy':
-          'Password msut contain an upper case character and a number',
+          'Password must contain an upper case character and a number',
       'client_portal_tasks': 'Client Portal Tasks',
       'client_portal_dashboard': 'Client Portal Dashboard',
       'please_enter_a_value': 'Please enter a value',
@@ -25036,6 +27583,8 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'days': 'Dnevi',
       'invoice_email': 'Račun',
       'payment_email': 'Potrdilo',
+      'partial_payment': 'Partial Payment',
+      'partial_payment_email': 'Partial Payment Email',
       'quote_email': 'Predračun',
       'endless_reminder': 'Periodičen opomin',
       'filtered_by_user': 'Filtered by User',
@@ -25072,7 +27621,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'font_size': 'Velikost pisave',
       'quote_design': 'Predloga predračuna',
       'invoice_fields': 'Polja računa',
-      'product_fields': 'Polja produkta',
+      'product_fields': 'Polja izdelka',
       'invoice_terms': 'Pogoji računa',
       'invoice_footer': 'Noga računa',
       'quote_terms': 'Pogoji predračuna',
@@ -25105,8 +27654,6 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'company': 'Company',
       'generated_numbers': 'Ustvarjene številke',
       'charge_taxes': 'Zaračunaj davke',
-      'credit': 'Dobropis',
-      'credits': 'Dobropisi',
       'next_reset': 'Naslednja ponastavitev',
       'reset_counter': 'Ponastavi števec',
       'recurring_prefix': 'Predpona ponavljajočih',
@@ -25119,7 +27666,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'invoice_field': 'Invoice Field',
       'invoice_surcharge': 'Invoice Surcharge',
       'client_field': 'Client Field',
-      'product_field': 'Product Field',
+      'product_field': 'Polje izdelka',
       'payment_field': 'Payment Field',
       'contact_field': 'Contact Field',
       'vendor_field': 'Vendor Field',
@@ -25149,9 +27696,6 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'enable_portal_password': 'Zaščiti račune z geslom',
       'enable_portal_password_help':
           'Omogoča da nastavite geslo za vsako osebo. Če je geslo nastavljeno, ga bo uporabnik moral vnesti pred ogledom računa.',
-      'send_portal_password': 'Samodejno nastavi',
-      'send_portal_password_help':
-          'Če geslo ni nastavljeno, bo ustvarjeno samodejno in se pošlje s prvim računom.',
       'authorization': 'Overovitev',
       'subdomain': 'Poddomena',
       'domain': 'Domena',
@@ -25201,15 +27745,15 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'archived_tax_rate': 'Davčna stopnja uspešno arhivirana',
       'deleted_tax_rate': 'Successfully deleted tax rate',
       'restored_tax_rate': 'Successfully restored tax rate',
-      'fill_products': 'Samodejno vnesi produkte',
+      'fill_products': 'Samodejno vnesi izdelke',
       'fill_products_help':
-          'Izbira produkta bo samodejno <b>vnesla opis in ceno</b>',
-      'update_products': 'Samodejno posodobi produkte',
+          'Izbira izdelka bo samodejno <b>vnesla opis in ceno</b>',
+      'update_products': 'Samodejno posodobi izdelke',
       'update_products_help':
-          'Posodobitev računa bo samodejno <b>posodobila knjižnico produktov</b>',
-      'convert_products': 'Pretvori produkte',
+          'Posodobitev računa bo samodejno <b>posodobila knjižnico izdelkov</b>',
+      'convert_products': 'Pretvori izdelke',
       'convert_products_help':
-          'Samodejno pretvori cene produktov v valuto stranke',
+          'Samodejno pretvori cene izdelkov v valuto stranke',
       'fees': 'Provizije',
       'limits': 'Omejitve',
       'provider': 'Provider',
@@ -25274,7 +27818,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'uploaded_logo': 'Successfully uploaded logo',
       'logo': 'Logotip',
       'saved_settings': 'Successfully saved settings',
-      'product_settings': 'Nastavitve produkta',
+      'product_settings': 'izdelka',
       'device_settings': 'Device Settings',
       'defaults': 'Privzeto',
       'basic_settings': 'Osnovne nastavitve',
@@ -25438,11 +27982,12 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'custom': 'Po meri',
       'clone_to_invoice': 'Clone to Invoice',
       'clone_to_quote': 'Kopiraj v predračun',
+      'clone_to_credit': 'Clone to Credit',
       'view_invoice': 'Ogled računa',
       'convert': 'Convert',
       'more': 'More',
       'edit_client': 'Uredi stranko',
-      'edit_product': 'Uredi produkt',
+      'edit_product': 'Uredi izdelek',
       'edit_invoice': 'Uredi račun',
       'edit_quote': 'Uredi predračun',
       'edit_payment': 'Uredi plačilo',
@@ -25450,7 +27995,6 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'edit_expense': 'Uredi strošek',
       'edit_vendor': 'Uredi prodajalca',
       'edit_project': 'Uredi projekt',
-      'edit_credit': 'Uredi dobropis',
       'edit_recurring_invoice': 'Edit Recurring Invoice',
       'edit_recurring_expense': 'Uredi ponavaljajoč strošek',
       'edit_recurring_quote': 'Uredi ponavaljajoč predračun',
@@ -25483,7 +28027,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'please_enter_your_email': 'Please enter your email',
       'please_enter_your_password': 'Please enter your password',
       'please_enter_your_url': 'Please enter your URL',
-      'please_enter_a_product_key': 'Please enter a product key',
+      'please_enter_a_product_key': 'Prosim vnesi ključ izdelka',
       'ascending': 'Naraščajoče',
       'descending': 'Padajoče',
       'save': 'Shrani',
@@ -25511,15 +28055,15 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'ok': 'Ok',
       'remove': 'Odstrani',
       'email_is_invalid': 'Email is invalid',
-      'product': 'Produkt',
-      'products': 'Produkti',
-      'new_product': 'Nov produkt',
-      'created_product': 'Produkt uspešno ustvarjen',
-      'updated_product': 'Produkt uspešno posodobljen',
-      'archived_product': 'Produkt uspešno arhiviran',
-      'deleted_product': 'Produkt uspešno odstranjen',
-      'restored_product': 'Produkt uspešno obnovljen',
-      'product_key': 'Produkt',
+      'product': 'Izdelek',
+      'products': 'Izdelki',
+      'new_product': 'Nov izdelek',
+      'created_product': 'Izdelek uspešno ustvarjen',
+      'updated_product': 'Izdelek uspešno posodobljen',
+      'archived_product': 'Izdelek uspešno arhiviran',
+      'deleted_product': 'Izdelek uspešno odstranjen',
+      'restored_product': 'Izdelek uspešno obnovljen',
+      'product_key': 'Izdelki',
       'notes': 'Opis',
       'cost': 'Cena',
       'client': 'Stranka',
@@ -25571,7 +28115,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'total_amount': 'Total Amount',
       'pdf': 'PDF',
       'due_date': 'Rok plačila',
-      'partial_due_date': 'Partial Due Date',
+      'partial_due_date': 'Delno plačilo do datuma',
       'status': 'Stanje',
       'invoice_status_id': 'Invoice Status',
       'quote_status': 'Stanje predračuna',
@@ -25588,28 +28132,24 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'task_rate': 'Urna postavka',
       'settings': 'Nastavitve',
       'language': 'Language',
-      'currency': 'Currency',
+      'currency': 'Valuta',
       'created_at': 'Ustvarjen dne',
       'updated_at': 'Updated',
       'tax': 'DDV',
       'please_enter_an_invoice_number': 'Please enter an invoice number',
       'please_enter_a_quote_number': 'Prosim vnesi številko predračuna',
-      'past_due': 'Past Due',
+      'past_due': 'Zapadlo',
       'draft': 'Osnutek',
       'sent': 'Poslano',
       'viewed': 'Viewed',
       'approved': 'Approved',
       'partial': 'Delno plačilo/polog',
       'paid': 'Plačano',
-      'invoice_status_1': 'Draft',
-      'invoice_status_2': 'Sent',
-      'invoice_status_3': 'Viewed',
-      'invoice_status_4': 'Approved',
       'mark_sent': 'Označi kot poslano',
       'marked_invoice_as_sent': 'Successfully marked invoice as sent',
-      'marked_invoice_as_paid': 'Successfully marked invoice as sent',
+      'marked_invoice_as_paid': 'Successfully marked invoice as paid',
       'marked_invoices_as_sent': 'Successfully marked invoices as sent',
-      'marked_invoices_as_paid': 'Successfully marked invoices as sent',
+      'marked_invoices_as_paid': 'Successfully marked invoices as paid',
       'done': 'Končano',
       'please_enter_a_client_or_contact_name':
           'Please enter a client or contact name',
@@ -25746,13 +28286,15 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'activity_57': 'System failed to email invoice :invoice',
       'one_time_password': 'Geslo za enkratno uporabo',
       'emailed_quote': 'Predračun uspešno poslan',
+      'emailed_credit': 'Successfully emailed credit',
       'marked_quote_as_sent': 'Predračun označen kot poslan',
+      'marked_credit_as_sent': 'Successfully marked credit as sent',
       'expired': 'Poteklo',
       'all': 'Vse',
       'select': 'Izberi',
       'long_press_multiselect': 'Long-press Multiselect',
-      'custom_value1': 'Custom Value',
-      'custom_value2': 'Custom Value',
+      'custom_value1': 'Vrednost po meri',
+      'custom_value2': 'Vrednost po meri',
       'custom_value3': 'Custom Value 3',
       'custom_value4': 'Custom Value 4',
       'email_style_custom': 'Custom Email Style',
@@ -25792,6 +28334,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'email_subject_invoice': 'Email Invoice Subject',
       'email_subject_quote': 'Email Quote Subject',
       'email_subject_payment': 'Email Payment Subject',
+      'email_subject_payment_partial': 'Email Partial Payment Subject',
       'switch_list_table': 'Switch List Table',
       'client_city': 'Client City',
       'client_state': 'Client State',
@@ -25823,8 +28366,114 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'vendor_city': 'Vendor City',
       'vendor_state': 'Vendor State',
       'vendor_country': 'Vendor Country',
+      'is_approved': 'Is Approved',
+      'tax_name': 'Ime davčne stopnje',
+      'tax_amount': 'Tax Amount',
+      'tax_paid': 'Tax Paid',
+      'payment_amount': 'Znesek plačila',
+      'age': 'Starost',
     },
     'es': {
+      'full_name': 'Nombre Completo',
+      'city_state_postal': 'City/State/Postal',
+      'postal_city_state': 'Código Postal/Ciudad/Estado',
+      'custom1': 'First Custom',
+      'custom2': 'Second Custom',
+      'custom3': 'Third Custom',
+      'custom4': 'Fourth Custom',
+      'optional': 'Optional',
+      'license': 'License',
+      'purge_data': 'Purgar Datos',
+      'purge_successful': 'Datos de la empresa purgados con éxito',
+      'purge_data_message':
+          'Advertencia: Esto borrará definitivamente tus datos, no hay de deshacerlo.',
+      'invoice_balance': 'Invoice Balance',
+      'age_group_0': '0 - 30 Días',
+      'age_group_30': '30 - 60 Días',
+      'age_group_60': '60 - 90 Días',
+      'age_group_90': '90 - 120 Días',
+      'age_group_120': '120+ Días',
+      'refresh': 'Refrescar',
+      'saved_design': 'Successfully saved design',
+      'client_details': 'Client Details',
+      'company_address': 'Company Address',
+      'invoice_details': 'Detalles de la Factura',
+      'quote_details': 'Quote Details',
+      'credit_details': 'Credit Details',
+      'product_columns': 'Product Columns',
+      'task_columns': 'Task Columns',
+      'add_field': 'Add Field',
+      'all_events': 'All Events',
+      'permissions': 'Permissions',
+      'none': 'None',
+      'owned': 'Owned',
+      'payment_success': 'Payment Success',
+      'payment_failure': 'Payment Failure',
+      'invoice_sent': ':count factura enviada',
+      'quote_sent': 'Quote Sent',
+      'credit_sent': 'Credit Sent',
+      'invoice_viewed': 'Invoice Viewed',
+      'quote_viewed': 'Quote Viewed',
+      'credit_viewed': 'Credit Viewed',
+      'quote_approved': 'Quote Approved',
+      'receive_all_notifications': 'Receive All Notifications',
+      'purchase_license': 'Purchase License',
+      'apply_license': 'Activar Licencia',
+      'cancel_account': 'Cancelar Cuenta',
+      'cancel_account_message':
+          'AVISO: Esta acción eliminará tu cuenta de forma permanente.',
+      'delete_company': 'Eliminar Empresa',
+      'delete_company_message':
+          'Advertencia: Esto eliminará su empresa, no hay manera de deshacerlo.',
+      'enable_modules': 'Enable Modules',
+      'converted_quote': 'Successfully converted quote',
+      'credit_design': 'Credit Design',
+      'includes': 'Includes',
+      'header': 'Encabezado',
+      'load_design': 'Cargar Diseño',
+      'css_framework': 'CSS Framework',
+      'custom_designs': 'Custom Designs',
+      'designs': 'Designs',
+      'new_design': 'New Design',
+      'edit_design': 'Edit Design',
+      'created_design': 'Successfully created design',
+      'updated_design': 'Successfully updated design',
+      'archived_design': 'Successfully archived design',
+      'deleted_design': 'Successfully deleted design',
+      'removed_design': 'Successfully removed design',
+      'restored_design': 'Successfully restored design',
+      'proposals': 'Proposals',
+      'tickets': 'Tickets',
+      'recurring_invoices': 'Facturas Recurrentes',
+      'recurring_quotes': 'Recurring Quotes',
+      'recurring_tasks': 'Recurring Tasks',
+      'recurring_expenses': 'Gastos Recurrentes',
+      'account_management': 'Account Management',
+      'credit_date': 'Fecha de Crédito',
+      'credit': 'Crédito',
+      'credits': 'Créditos',
+      'new_credit': 'Ingresa el Crédito',
+      'edit_credit': 'Editar Crédito',
+      'created_credit': 'Crédito creado con éxito',
+      'updated_credit': 'Crédito actualizado con éxito',
+      'archived_credit': 'Crédito archivado con éxito',
+      'deleted_credit': 'Créditos eliminados con éxito',
+      'removed_credit': 'Successfully removed credit',
+      'restored_credit': 'Crédito restaurado con éxito',
+      'current_version': 'Versión Actual',
+      'latest_version': 'Latest Version',
+      'update_now': 'Update Now',
+      'a_new_version_is_available': 'A new version of the web app is available',
+      'update_available': 'Update Available',
+      'app_updated': 'Update successfully completed',
+      'learn_more': 'Saber más',
+      'integrations': 'Integrations',
+      'tracking_id': 'Tracking Id',
+      'slack_webhook_url': 'Slack Webhook URL',
+      'credit_footer': 'Credit Footer',
+      'credit_terms': 'Credit Terms',
+      'untitled_company': 'Untitled Company',
+      'added_company': 'Successfully added company',
       'company1': 'Custom Company 1',
       'company2': 'Custom Company 2',
       'company3': 'Custom Company 3',
@@ -25834,9 +28483,9 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'product3': 'Custom Product 3',
       'product4': 'Custom Product 4',
       'client1': 'Custom Client 1',
-      'client2': 'Custom Client 1',
-      'client3': 'Custom Client 1',
-      'client4': 'Custom Client 1',
+      'client2': 'Custom Client 2',
+      'client3': 'Custom Client 3',
+      'client4': 'Custom Client 4',
       'contact1': 'Custom Contact 1',
       'contact2': 'Custom Contact 2',
       'contact3': 'Custom Contact 3',
@@ -25913,7 +28562,6 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'reports': 'Informes',
       'report': 'Reporte',
       'add_company': 'Agregar Compañía',
-      'to_learn_about_gogle_fonts': 'to learn about Google Fonts',
       'unpaid_invoice': 'Unpaid Invoice',
       'paid_invoice': 'Paid Invoice',
       'unapproved_quote': 'Unapproved Quote',
@@ -25950,7 +28598,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'domain_url': 'Domain URL',
       'password_is_too_short': 'Password is too short',
       'password_is_too_easy':
-          'Password msut contain an upper case character and a number',
+          'Password must contain an upper case character and a number',
       'client_portal_tasks': 'Client Portal Tasks',
       'client_portal_dashboard': 'Client Portal Dashboard',
       'please_enter_a_value': 'Please enter a value',
@@ -26024,6 +28672,8 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'days': 'Días',
       'invoice_email': 'Correo de Factura',
       'payment_email': 'Correo de Pago',
+      'partial_payment': 'Partial Payment',
+      'partial_payment_email': 'Partial Payment Email',
       'quote_email': 'Correo de Cotizacion',
       'endless_reminder': 'Endless Reminder',
       'filtered_by_user': 'Filtered by User',
@@ -26094,8 +28744,6 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'company': 'Company',
       'generated_numbers': 'Números Generados',
       'charge_taxes': 'Cargar Impuestos',
-      'credit': 'Crédito',
-      'credits': 'Créditos',
       'next_reset': 'Siguiente Reinicio',
       'reset_counter': 'Reiniciar Contador',
       'recurring_prefix': 'Prefijo Recurrente',
@@ -26138,9 +28786,6 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'enable_portal_password': 'Proteger Facturas con Contraseña',
       'enable_portal_password_help':
           'Permite establecer una contraseña para cada contacto. Si una contraseña es establecida, se le será solicitada al contacto para acceder a sus facturas.',
-      'send_portal_password': 'Generar Automáticamente',
-      'send_portal_password_help':
-          'Si no se establece una contraseña, será generada automáticamente con la primer factura.',
       'authorization': 'Autorización',
       'subdomain': 'Subdominio',
       'domain': 'Dominio',
@@ -26429,6 +29074,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'custom': 'Personalizado',
       'clone_to_invoice': 'Clone to Invoice',
       'clone_to_quote': 'Clone to Quote',
+      'clone_to_credit': 'Clone to Credit',
       'view_invoice': 'Ver Factura',
       'convert': 'Convert',
       'more': 'More',
@@ -26441,7 +29087,6 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'edit_expense': 'Editar Gasto',
       'edit_vendor': 'Editar Proveedor',
       'edit_project': 'Editar Proyecto',
-      'edit_credit': 'Editar Crédito',
       'edit_recurring_invoice': 'Edit Recurring Invoice',
       'edit_recurring_expense': 'Editar Gasto Recurrente',
       'edit_recurring_quote': 'Edit Recurring Quote',
@@ -26592,15 +29237,11 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'approved': 'Approved',
       'partial': 'Parcial/Depósito',
       'paid': 'Pagado',
-      'invoice_status_1': 'Draft',
-      'invoice_status_2': 'Sent',
-      'invoice_status_3': 'Viewed',
-      'invoice_status_4': 'Approved',
       'mark_sent': 'Marcar como enviado',
       'marked_invoice_as_sent': 'Successfully marked invoice as sent',
-      'marked_invoice_as_paid': 'Successfully marked invoice as sent',
+      'marked_invoice_as_paid': 'Successfully marked invoice as paid',
       'marked_invoices_as_sent': 'Successfully marked invoices as sent',
-      'marked_invoices_as_paid': 'Successfully marked invoices as sent',
+      'marked_invoices_as_paid': 'Successfully marked invoices as paid',
       'done': 'Hecho',
       'please_enter_a_client_or_contact_name':
           'Please enter a client or contact name',
@@ -26674,7 +29315,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'vendors': 'Proveedores',
       'task': 'Task',
       'tasks': 'Tareas',
-      'project': 'Projecto',
+      'project': 'Proyecto',
       'projects': 'Proyectos',
       'activity_1': ':user creó el cliente :client',
       'activity_2': ':user archivó el cliente :client',
@@ -26736,7 +29377,9 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'activity_57': 'System failed to email invoice :invoice',
       'one_time_password': 'Contraseña de una sola vez',
       'emailed_quote': 'Cotización enviada con éxito',
+      'emailed_credit': 'Successfully emailed credit',
       'marked_quote_as_sent': 'Successfully marked quote as sent',
+      'marked_credit_as_sent': 'Successfully marked credit as sent',
       'expired': 'Vencida',
       'all': 'All',
       'select': 'Seleccionar',
@@ -26782,6 +29425,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'email_subject_invoice': 'Email Invoice Subject',
       'email_subject_quote': 'Email Quote Subject',
       'email_subject_payment': 'Email Payment Subject',
+      'email_subject_payment_partial': 'Email Partial Payment Subject',
       'switch_list_table': 'Switch List Table',
       'client_city': 'Client City',
       'client_state': 'Client State',
@@ -26813,8 +29457,114 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'vendor_city': 'Vendor City',
       'vendor_state': 'Vendor State',
       'vendor_country': 'Vendor Country',
+      'is_approved': 'Is Approved',
+      'tax_name': 'Nombre de Impuesto',
+      'tax_amount': 'Tax Amount',
+      'tax_paid': 'Tax Paid',
+      'payment_amount': 'Valor del Pago',
+      'age': 'Edad',
     },
     'es_ES': {
+      'full_name': 'Nombre completo',
+      'city_state_postal': 'Ciudad / Provincia / C.Postal',
+      'postal_city_state': 'C.Postal / Ciudad / Provincia',
+      'custom1': 'Primera personalización',
+      'custom2': 'Segunda personalización',
+      'custom3': 'Third Custom',
+      'custom4': 'Fourth Custom',
+      'optional': 'Optional',
+      'license': 'License',
+      'purge_data': 'Purgar Datos',
+      'purge_successful': 'Datos de la empresa purgados correctamente',
+      'purge_data_message':
+          'Advertencia: Esto borrará definitivamente sus datos, no hay deshacer.',
+      'invoice_balance': 'Invoice Balance',
+      'age_group_0': '0 - 30 Días',
+      'age_group_30': '30 - 60 Días',
+      'age_group_60': '60 - 90 Días',
+      'age_group_90': '90 - 120 Días',
+      'age_group_120': '120+ Días',
+      'refresh': 'Refrescar',
+      'saved_design': 'Successfully saved design',
+      'client_details': 'Client Details',
+      'company_address': 'Company Address',
+      'invoice_details': 'Detalles de Factura',
+      'quote_details': 'Quote Details',
+      'credit_details': 'Credit Details',
+      'product_columns': 'Product Columns',
+      'task_columns': 'Task Columns',
+      'add_field': 'Add Field',
+      'all_events': 'All Events',
+      'permissions': 'Permisos',
+      'none': 'Ninguno',
+      'owned': 'Owned',
+      'payment_success': 'Payment Success',
+      'payment_failure': 'Payment Failure',
+      'invoice_sent': 'Factura :count enviada',
+      'quote_sent': 'Quote Sent',
+      'credit_sent': 'Credit Sent',
+      'invoice_viewed': 'Invoice Viewed',
+      'quote_viewed': 'Quote Viewed',
+      'credit_viewed': 'Credit Viewed',
+      'quote_approved': 'Quote Approved',
+      'receive_all_notifications': 'Receive All Notifications',
+      'purchase_license': 'Purchase License',
+      'apply_license': 'Renovar licencia',
+      'cancel_account': 'Cancelar Cuenta',
+      'cancel_account_message':
+          'Atención: Esta acción eliminará permanentemente tu cuenta y no se podrá deshacer.',
+      'delete_company': 'Borrar Compañía',
+      'delete_company_message':
+          'Advertencia: esto eliminará definitivamente su empresa, no hay deshacer.',
+      'enable_modules': 'Enable Modules',
+      'converted_quote': 'Successfully converted quote',
+      'credit_design': 'Credit Design',
+      'includes': 'Includes',
+      'header': 'Cabecera',
+      'load_design': 'Cargar diseño',
+      'css_framework': 'CSS Framework',
+      'custom_designs': 'Custom Designs',
+      'designs': 'Designs',
+      'new_design': 'New Design',
+      'edit_design': 'Edit Design',
+      'created_design': 'Successfully created design',
+      'updated_design': 'Successfully updated design',
+      'archived_design': 'Successfully archived design',
+      'deleted_design': 'Successfully deleted design',
+      'removed_design': 'Successfully removed design',
+      'restored_design': 'Successfully restored design',
+      'proposals': 'Propuestas',
+      'tickets': 'Tickets',
+      'recurring_invoices': 'Facturas Recurrentes',
+      'recurring_quotes': 'Presupuestos Recurrentes',
+      'recurring_tasks': 'Recurring Tasks',
+      'recurring_expenses': 'Gastos Periódicos',
+      'account_management': 'Administración de la Cuenta',
+      'credit_date': 'Fecha de Crédito',
+      'credit': 'Crédito',
+      'credits': 'Créditos',
+      'new_credit': 'Introducir el Crédito',
+      'edit_credit': 'Editar Crédito',
+      'created_credit': 'Crédito creado correctamente',
+      'updated_credit': 'Crédito actualizado correctamente',
+      'archived_credit': 'Crédito archivado correctamente',
+      'deleted_credit': 'Créditos eliminados correctamente',
+      'removed_credit': 'Successfully removed credit',
+      'restored_credit': 'Crédito restaurado correctamente',
+      'current_version': 'Versión Actual',
+      'latest_version': 'Latest Version',
+      'update_now': 'Update Now',
+      'a_new_version_is_available': 'A new version of the web app is available',
+      'update_available': 'Update Available',
+      'app_updated': 'Update successfully completed',
+      'learn_more': 'Saber más',
+      'integrations': 'Integrations',
+      'tracking_id': 'Tracking Id',
+      'slack_webhook_url': 'Slack Webhook URL',
+      'credit_footer': 'Credit Footer',
+      'credit_terms': 'Credit Terms',
+      'untitled_company': 'Untitled Company',
+      'added_company': 'Successfully added company',
       'company1': 'Custom Company 1',
       'company2': 'Custom Company 2',
       'company3': 'Custom Company 3',
@@ -26824,9 +29574,9 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'product3': 'Custom Product 3',
       'product4': 'Custom Product 4',
       'client1': 'Custom Client 1',
-      'client2': 'Custom Client 1',
-      'client3': 'Custom Client 1',
-      'client4': 'Custom Client 1',
+      'client2': 'Custom Client 2',
+      'client3': 'Custom Client 3',
+      'client4': 'Custom Client 4',
       'contact1': 'Custom Contact 1',
       'contact2': 'Custom Contact 2',
       'contact3': 'Custom Contact 3',
@@ -26903,7 +29653,6 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'reports': 'Informes',
       'report': 'Informe',
       'add_company': 'Añadir Compañía',
-      'to_learn_about_gogle_fonts': 'to learn about Google Fonts',
       'unpaid_invoice': 'Factura Impagada',
       'paid_invoice': 'Factura Pagada',
       'unapproved_quote': 'Presupuesto No Aprobado',
@@ -26939,9 +29688,9 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'credit_email': 'Credit Email',
       'iframe_url': 'Website',
       'domain_url': 'Domain URL',
-      'password_is_too_short': 'Password is too short',
+      'password_is_too_short': 'La contraseña es demasiado corta',
       'password_is_too_easy':
-          'Password msut contain an upper case character and a number',
+          'Password must contain an upper case character and a number',
       'client_portal_tasks': 'Client Portal Tasks',
       'client_portal_dashboard': 'Client Portal Dashboard',
       'please_enter_a_value': 'Please enter a value',
@@ -27005,16 +29754,18 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'recover_password': 'Recuperar Contraseña',
       'late_fees': 'Late Fees',
       'credit_number': 'Código de Crédito',
-      'payment_number': 'Payment Number',
+      'payment_number': 'Nº de Pago',
       'late_fee_amount': 'Cargo por pago atrasado',
       'late_fee_percent': 'Porcentaje por pago atrasado',
       'schedule': 'Programar',
-      'before_due_date': 'Before the due date',
+      'before_due_date': 'Antes de la fecha de vencimiento',
       'after_due_date': 'After the due date',
       'after_invoice_date': 'After the invoice date',
       'days': 'Días',
       'invoice_email': 'Email de Facturas',
       'payment_email': 'Email de Pagos',
+      'partial_payment': 'Partial Payment',
+      'partial_payment_email': 'Partial Payment Email',
       'quote_email': 'Email de Presupuestos',
       'endless_reminder': 'Recordatorio Sin Fín',
       'filtered_by_user': 'Filtered by User',
@@ -27043,8 +29794,8 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'first_page': 'Primera página',
       'all_pages': 'Todas las páginas',
       'last_page': 'Última página',
-      'primary_font': 'Primary Font',
-      'secondary_font': 'Secondary Font',
+      'primary_font': 'Fuente primaria',
+      'secondary_font': 'Fuente secundaria',
       'primary_color': 'Color Primario',
       'secondary_color': 'Color Secundario',
       'page_size': 'Tamaño de Pagina',
@@ -27085,8 +29836,6 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'company': 'Empresa',
       'generated_numbers': 'Números Generados',
       'charge_taxes': 'Cargar Impuestos',
-      'credit': 'Crédito',
-      'credits': 'Créditos',
       'next_reset': 'Proximo Reinicio',
       'reset_counter': 'Reiniciar Contador',
       'recurring_prefix': 'Prefijo Recurrente',
@@ -27131,9 +29880,6 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'enable_portal_password': 'Proteger Facturas con Contraseña',
       'enable_portal_password_help':
           'Habilite para seleccionar una contraseña para cada contacto. Si una contraseña esta especificada, se le será solicitada al contacto para acceder a sus facturas.',
-      'send_portal_password': 'Generada Automaticamente',
-      'send_portal_password_help':
-          'Si no se especifica password, se generará una y se enviará junto con la primera Factura.',
       'authorization': 'Autorización',
       'subdomain': 'Subdominio',
       'domain': 'Dominio',
@@ -27145,14 +29891,14 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'light': 'Claro',
       'dark': 'Oscuro',
       'email_design': 'Diseño de Correo',
-      'attach_pdf': 'Attach PDF',
+      'attach_pdf': 'Adjuntar PDF',
       'attach_documents': 'Attach Documents',
       'attach_ubl': 'Attach UBL',
       'email_style': 'Email Style',
       'enable_email_markup': 'Habilitar Markup',
       'reply_to_email': 'Direccion Email de Respuesta',
       'bcc_email': 'BCC Email',
-      'processed': 'Processed',
+      'processed': 'Procesado',
       'credit_card': 'Tarjeta de Crédito',
       'bank_transfer': 'Transferencia bancaria',
       'priority': 'Prioridad',
@@ -27195,23 +29941,23 @@ mixin LocalizationsProvider on LocaleCodeAware {
           'Convertir automáticamente los precios de los productos a la divisa del cliente',
       'fees': 'Cargos',
       'limits': 'Limites',
-      'provider': 'Provider',
-      'company_gateway': 'Payment Gateway',
-      'company_gateways': 'Payment Gateways',
-      'new_company_gateway': 'New Gateway',
-      'edit_company_gateway': 'Edit Gateway',
+      'provider': 'Proveedor',
+      'company_gateway': 'Pasarela de pago',
+      'company_gateways': 'Pasarelas de pago',
+      'new_company_gateway': 'Nueva pasarela',
+      'edit_company_gateway': 'Editar pasarela',
       'created_company_gateway': 'Successfully created gateway',
       'updated_company_gateway': 'Successfully updated gateway',
       'archived_company_gateway': 'Successfully archived gateway',
       'deleted_company_gateway': 'Successfully deleted gateway',
       'restored_company_gateway': 'Successfully restored gateway',
-      'continue_editing': 'Continue Editing',
+      'continue_editing': 'Seguir editando',
       'discard_changes': 'Descartar los cambios',
-      'default_value': 'Default value',
+      'default_value': 'Valor por defecto',
       'disabled': 'Deshabilitado',
-      'currency_format': 'Currency Format',
-      'first_day_of_the_week': 'First Day of the Week',
-      'first_month_of_the_year': 'First Month of the Year',
+      'currency_format': 'Formato de moneda',
+      'first_day_of_the_week': 'Primer día de la semana',
+      'first_month_of_the_year': 'Primer mes del año',
       'sunday': 'Domingo',
       'monday': 'Lunes',
       'tuesday': 'Martes',
@@ -27231,32 +29977,32 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'october': 'Octubre',
       'november': 'Noviembre',
       'december': 'Diciembre',
-      'symbol': 'Symbol',
-      'ocde': 'Code',
-      'date_format': 'Date Format',
+      'symbol': 'Símbolo',
+      'ocde': 'Código',
+      'date_format': 'Formato de fecha',
       'datetime_format': 'Datetime Format',
       'military_time': '24 Horas',
       'military_time_help': '24 Hour Display',
-      'send_reminders': 'Send Reminders',
-      'timezone': 'Timezone',
-      'filtered_by_group': 'Filtered by Group',
-      'filtered_by_invoice': 'Filtered by Invoice',
-      'filtered_by_client': 'Filtered by Client',
+      'send_reminders': 'Enviar recordatorios',
+      'timezone': 'Zona horaria',
+      'filtered_by_group': 'Filtrado por Grupo',
+      'filtered_by_invoice': 'Filtrado por Factura',
+      'filtered_by_client': 'Filtrado por Cliente',
       'filtered_by_vendor': 'Filtered by Vendor',
       'group_settings': 'Group Settings',
       'group': 'Grupo',
-      'groups': 'Groups',
-      'new_group': 'New Group',
-      'edit_group': 'Edit Group',
+      'groups': 'Grupos',
+      'new_group': 'Nuevo grupo',
+      'edit_group': 'Editar grupo',
       'created_group': 'Successfully created group',
       'updated_group': 'Successfully updated group',
       'archived_group': 'Successfully archived group',
       'deleted_group': 'Successfully deleted group',
       'restored_group': 'Successfully restored group',
-      'upload_logo': 'Upload Logo',
-      'uploaded_logo': 'Successfully uploaded logo',
+      'upload_logo': 'Subir Logo',
+      'uploaded_logo': 'Logo subido',
       'logo': 'Logo',
-      'saved_settings': 'Successfully saved settings',
+      'saved_settings': 'Ajustes guardados',
       'product_settings': 'Configuración de Producto',
       'device_settings': 'Device Settings',
       'defaults': 'Ajustes Predefinidos',
@@ -27276,55 +30022,55 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'templates_and_reminders': 'Plantillas & Recordatorios',
       'credit_cards_and_banks': 'Credit Cards & Banks',
       'data_visualizations': 'Visualización de Datos',
-      'price': 'Price',
-      'email_sign_up': 'Email Sign Up',
-      'google_sign_up': 'Google Sign Up',
-      'thank_you_for_your_purchase': 'Thank you for your purchase!',
-      'redeem': 'Redeem',
-      'sign_up_with_google': 'Sign Up With Google',
-      'back': 'Back',
-      'past_purchases': 'Past Purchases',
-      'annual_subscription': 'Annual Subscription',
-      'pro_plan': 'Pro Plan',
-      'enterprise_plan': 'Enterprise Plan',
-      'count_users': ':count users',
-      'upgrade': 'Upgrade',
-      'please_enter_a_first_name': 'Please enter a first name',
-      'please_enter_a_last_name': 'Please enter a last name',
+      'price': 'Precio',
+      'email_sign_up': 'Registrarse con Email',
+      'google_sign_up': 'Registrarse con Google',
+      'thank_you_for_your_purchase': '¡Gracias por su compra!',
+      'redeem': 'Redimir',
+      'sign_up_with_google': 'Registrarse con Google',
+      'back': 'Atrás',
+      'past_purchases': 'Compras Pasadas',
+      'annual_subscription': 'Suscripción anual',
+      'pro_plan': 'Plan Pro',
+      'enterprise_plan': 'Plan Enterprise',
+      'count_users': ':count usuarios',
+      'upgrade': 'Mejorar',
+      'please_enter_a_first_name': 'Introduce tu nombre',
+      'please_enter_a_last_name': 'Introduce tu apellido',
       'please_agree_to_terms_and_privacy':
-          'Please agree to the terms of service and privacy policy to create an account.',
+          'Por favor, acepta los términos de servicio y la política de privacidad para crear una cuenta',
       'i_agree_to_the': 'I agree to the',
-      'terms_of_service_link': 'terms of service',
-      'privacy_policy_link': 'privacy policy',
+      'terms_of_service_link': 'términos de servicio',
+      'privacy_policy_link': 'política de privacidad',
       'terms_of_service': 'Términos de servicio',
       'privacy_policy': 'Política de Privacidad',
       'sign_up': 'Registrarse',
       'account_login': 'Inicio de Sesión con su Cuenta',
-      'view_website': 'View Website',
-      'create_account': 'Create Account',
+      'view_website': 'Ver Sitio Web',
+      'create_account': 'Crear Cuenta',
       'email_login': 'Email Login',
       'create_new': 'Crear Nuevo',
-      'no_record_selected': 'No record selected',
-      'error_unsaved_changes': 'Please save or cancel your changes',
+      'no_record_selected': 'No se han seleccionado registros',
+      'error_unsaved_changes': 'Guarda o cancela tus cambios',
       'download': 'Descargar',
-      'requires_an_enterprise_plan': 'Requires an enterprise plan',
-      'take_picture': 'Take Picture',
-      'upload_file': 'Upload File',
+      'requires_an_enterprise_plan': 'Requiere plan \'enterprise\'',
+      'take_picture': 'Tomar foto',
+      'upload_file': 'Subir archivo',
       'document': 'Documento',
       'documents': 'Documentos',
-      'new_document': 'New Document',
-      'edit_document': 'Edit Document',
-      'uploaded_document': 'Successfully uploaded document',
-      'updated_document': 'Successfully updated document',
-      'archived_document': 'Successfully archived document',
-      'deleted_document': 'Successfully deleted document',
-      'restored_document': 'Successfully restored document',
+      'new_document': 'Nuevo documento',
+      'edit_document': 'Editar documento',
+      'uploaded_document': 'Documento subido satisfactoriamente',
+      'updated_document': 'Documento actualizado satisfactoriamente',
+      'archived_document': 'Documento archivado satisfactoriamente',
+      'deleted_document': 'Documento borrado satisfactoriamente',
+      'restored_document': 'Documento restaurado satisfactoriamente',
       'no_history': 'No History',
       'expense_date': 'Fecha',
       'pending': 'Pendiente',
       'expense_status_1': 'Logged',
-      'expense_status_2': 'Pending',
-      'expense_status_3': 'Invoiced',
+      'expense_status_2': 'Pendiente',
+      'expense_status_3': 'Facturado',
       'converted': 'Modificada',
       'add_documents_to_invoice': 'Agregar documentos a la factura',
       'exchange_rate': 'Tipo de Cambio',
@@ -27347,8 +30093,8 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'restored_expense': 'Gasto restaurado correctamente',
       'copy_shipping': 'Copiar Envío',
       'copy_billing': 'Copia Facturación',
-      'design': 'Design',
-      'failed_to_find_record': 'Failed to find record',
+      'design': 'Diseño',
+      'failed_to_find_record': 'Fallo al buscar registro',
       'invoiced': 'Facturado',
       'logged': 'Registrado',
       'running': 'Ejecutando',
@@ -27422,6 +30168,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'custom': 'Personalizado',
       'clone_to_invoice': 'Clonar a Factura',
       'clone_to_quote': 'Clonar a Presupuesto',
+      'clone_to_credit': 'Clone to Credit',
       'view_invoice': 'Ver Factura',
       'convert': 'Convertir',
       'more': 'Más',
@@ -27434,7 +30181,6 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'edit_expense': 'Editar Gasto',
       'edit_vendor': 'Editar Proveedor',
       'edit_project': 'Editar Proyecto',
-      'edit_credit': 'Editar Crédito',
       'edit_recurring_invoice': 'Editar Factura Recurrente',
       'edit_recurring_expense': 'Editar Gasto Periódico',
       'edit_recurring_quote': 'Editar Presupuesto Recurrente',
@@ -27534,7 +30280,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'invoice_number': 'Número de Factura',
       'invoice_date': 'Fecha de Factura',
       'discount': 'Descuento',
-      'po_number': 'Número de Orden',
+      'po_number': 'Número de Pedido',
       'terms': 'Términos',
       'public_notes': 'Notas',
       'private_notes': 'Notas Privadas',
@@ -27554,7 +30300,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'work_phone': 'Teléfono',
       'total_amount': 'Cantidad Total',
       'pdf': 'PDF',
-      'due_date': 'Límite de Pago',
+      'due_date': 'Vencimiento',
       'partial_due_date': 'Fecha de vencimiento parcial',
       'status': 'Estado',
       'invoice_status_id': 'Estado de Factura',
@@ -27587,15 +30333,11 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'approved': 'Aprobadas',
       'partial': 'Parcial/Depósito',
       'paid': 'Pagado',
-      'invoice_status_1': 'Borrador',
-      'invoice_status_2': 'Enviadas',
-      'invoice_status_3': 'Vistas',
-      'invoice_status_4': 'Aprobadas',
       'mark_sent': 'Marcar como Enviado',
       'marked_invoice_as_sent': 'Factura marcada como enviada correctamente',
-      'marked_invoice_as_paid': 'Successfully marked invoice as sent',
+      'marked_invoice_as_paid': 'Successfully marked invoice as paid',
       'marked_invoices_as_sent': 'Successfully marked invoices as sent',
-      'marked_invoices_as_paid': 'Successfully marked invoices as sent',
+      'marked_invoices_as_paid': 'Successfully marked invoices as paid',
       'done': 'Hecho',
       'please_enter_a_client_or_contact_name':
           'Por favor introduce un cliente o nombre de contacto',
@@ -27675,8 +30417,9 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'activity_3': ':user borró el cliente :client',
       'activity_4': ':user archivó la factura :invoice',
       'activity_5': ':user actualizó la factura :invoice',
-      'activity_6': ':user emailed invoice :invoice for :client to :contact',
-      'activity_7': ':contact viewed invoice :invoice for :client',
+      'activity_6':
+          ':user ha enviado por mail la factura :invoice de :client a :contact',
+      'activity_7': ':contact ha visto la factura :invoice: de :client',
       'activity_8': ':user archivó la factura :invoice',
       'activity_9': ':user borró la factura :invoice',
       'activity_10':
@@ -27699,7 +30442,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'activity_26': ':user restauró el cliente :client',
       'activity_27': ':user restauró el pago :payment',
       'activity_28': ':user restauró :credit credito',
-      'activity_29': ':contact approved quote :quote for :client',
+      'activity_29': ':contact ha aprovado el presupuesto :quote para :client',
       'activity_30': ':user creó al vendedor :vendor',
       'activity_31': ':user archivó al vendedor :vendor',
       'activity_32': ':user eliminó al vendedor :vendor',
@@ -27730,7 +30473,9 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'activity_57': 'System failed to email invoice :invoice',
       'one_time_password': 'Password de un solo uso',
       'emailed_quote': 'Presupuesto enviado correctamente',
+      'emailed_credit': 'Successfully emailed credit',
       'marked_quote_as_sent': 'Presupuesto marcado como enviado correctamente',
+      'marked_credit_as_sent': 'Successfully marked credit as sent',
       'expired': 'Expirada',
       'all': 'Todo',
       'select': 'Seleccionar',
@@ -27776,6 +30521,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'email_subject_invoice': 'Email Invoice Subject',
       'email_subject_quote': 'Email Quote Subject',
       'email_subject_payment': 'Email Payment Subject',
+      'email_subject_payment_partial': 'Email Partial Payment Subject',
       'switch_list_table': 'Switch List Table',
       'client_city': 'Client City',
       'client_state': 'Client State',
@@ -27807,8 +30553,114 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'vendor_city': 'Vendor City',
       'vendor_state': 'Vendor State',
       'vendor_country': 'Vendor Country',
+      'is_approved': 'Is Approved',
+      'tax_name': 'Nombre de Impuesto',
+      'tax_amount': 'Total Impuestos',
+      'tax_paid': 'Impuestos Pagados',
+      'payment_amount': 'Valor del Pago',
+      'age': 'Edad',
     },
     'sv': {
+      'full_name': 'Hela namnet',
+      'city_state_postal': 'Stad/Län/Postnummer',
+      'postal_city_state': 'Postadress/Stad/Stat',
+      'custom1': 'First Custom',
+      'custom2': 'Second Custom',
+      'custom3': 'Third Custom',
+      'custom4': 'Fourth Custom',
+      'optional': 'Optional',
+      'license': 'License',
+      'purge_data': 'Rensa uppgifter.',
+      'purge_successful': 'Rensade utan problem företags data',
+      'purge_data_message':
+          'Varning: Detta kommer permanent ta bort din information, det finns ingen återvända.',
+      'invoice_balance': 'Invoice Balance',
+      'age_group_0': '0 - 30 Dagar',
+      'age_group_30': '30 - 60 Dagar',
+      'age_group_60': '60 - 90 Dagar',
+      'age_group_90': '90 - 120 Dagar',
+      'age_group_120': '120+ Dagar',
+      'refresh': 'Uppdatera',
+      'saved_design': 'Successfully saved design',
+      'client_details': 'Client Details',
+      'company_address': 'Company Address',
+      'invoice_details': 'Faktura detaljer',
+      'quote_details': 'Quote Details',
+      'credit_details': 'Credit Details',
+      'product_columns': 'Product Columns',
+      'task_columns': 'Task Columns',
+      'add_field': 'Add Field',
+      'all_events': 'All Events',
+      'permissions': 'Behörigheter',
+      'none': 'None',
+      'owned': 'Owned',
+      'payment_success': 'Payment Success',
+      'payment_failure': 'Payment Failure',
+      'invoice_sent': ':count fakturor skickade',
+      'quote_sent': 'Quote Sent',
+      'credit_sent': 'Credit Sent',
+      'invoice_viewed': 'Invoice Viewed',
+      'quote_viewed': 'Quote Viewed',
+      'credit_viewed': 'Credit Viewed',
+      'quote_approved': 'Quote Approved',
+      'receive_all_notifications': 'Receive All Notifications',
+      'purchase_license': 'Purchase License',
+      'apply_license': 'Uppge Licens',
+      'cancel_account': 'Avsluta konto',
+      'cancel_account_message':
+          'Varning: Detta kommer permanent ta bort ditt konto, detta går inte att ångra.',
+      'delete_company': 'Ta bort företag',
+      'delete_company_message':
+          'Varning: Detta kommer permanent ta bort till bolag, det finns ingen återvändo.',
+      'enable_modules': 'Enable Modules',
+      'converted_quote': 'Successfully converted quote',
+      'credit_design': 'Credit Design',
+      'includes': 'Includes',
+      'header': 'Rubrik',
+      'load_design': 'Ladda design',
+      'css_framework': 'CSS Framework',
+      'custom_designs': 'Custom Designs',
+      'designs': 'Designs',
+      'new_design': 'New Design',
+      'edit_design': 'Edit Design',
+      'created_design': 'Successfully created design',
+      'updated_design': 'Successfully updated design',
+      'archived_design': 'Successfully archived design',
+      'deleted_design': 'Successfully deleted design',
+      'removed_design': 'Successfully removed design',
+      'restored_design': 'Successfully restored design',
+      'proposals': 'Proposals',
+      'tickets': 'Tickets',
+      'recurring_invoices': 'Återkommande fakturor',
+      'recurring_quotes': 'Återkommande offerter',
+      'recurring_tasks': 'Recurring Tasks',
+      'recurring_expenses': 'Återkommande utgifter',
+      'account_management': 'Kontohantering',
+      'credit_date': 'Kreditdatum',
+      'credit': 'Kredit',
+      'credits': 'Kreditfakturor',
+      'new_credit': 'Ange Kredit',
+      'edit_credit': 'Redigera Kreditfaktura',
+      'created_credit': 'Kreditfaktura skapad',
+      'updated_credit': 'Kreditfaktura uppdaterad',
+      'archived_credit': 'Kreditfaktura arkiverad',
+      'deleted_credit': 'Kreditfaktura borttagen',
+      'removed_credit': 'Successfully removed credit',
+      'restored_credit': 'Kreditfaktura återställd',
+      'current_version': 'Nuvarande version',
+      'latest_version': 'Latest Version',
+      'update_now': 'Update Now',
+      'a_new_version_is_available': 'A new version of the web app is available',
+      'update_available': 'Update Available',
+      'app_updated': 'Update successfully completed',
+      'learn_more': 'Hjälp',
+      'integrations': 'Integrations',
+      'tracking_id': 'Tracking Id',
+      'slack_webhook_url': 'Slack Webhook URL',
+      'credit_footer': 'Credit Footer',
+      'credit_terms': 'Credit Terms',
+      'untitled_company': 'Untitled Company',
+      'added_company': 'Successfully added company',
       'company1': 'Custom Company 1',
       'company2': 'Custom Company 2',
       'company3': 'Custom Company 3',
@@ -27818,9 +30670,9 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'product3': 'Custom Product 3',
       'product4': 'Custom Product 4',
       'client1': 'Custom Client 1',
-      'client2': 'Custom Client 1',
-      'client3': 'Custom Client 1',
-      'client4': 'Custom Client 1',
+      'client2': 'Custom Client 2',
+      'client3': 'Custom Client 3',
+      'client4': 'Custom Client 4',
       'contact1': 'Custom Contact 1',
       'contact2': 'Custom Contact 2',
       'contact3': 'Custom Contact 3',
@@ -27897,7 +30749,6 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'reports': 'Rapporter',
       'report': 'Rapport',
       'add_company': 'Lägg till företag',
-      'to_learn_about_gogle_fonts': 'to learn about Google Fonts',
       'unpaid_invoice': 'Unpaid Invoice',
       'paid_invoice': 'Paid Invoice',
       'unapproved_quote': 'Unapproved Quote',
@@ -27934,7 +30785,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'domain_url': 'Domain URL',
       'password_is_too_short': 'Password is too short',
       'password_is_too_easy':
-          'Password msut contain an upper case character and a number',
+          'Password must contain an upper case character and a number',
       'client_portal_tasks': 'Client Portal Tasks',
       'client_portal_dashboard': 'Client Portal Dashboard',
       'please_enter_a_value': 'Please enter a value',
@@ -28008,6 +30859,8 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'days': 'Dagar',
       'invoice_email': 'Faktura e-post',
       'payment_email': 'Betalnings e-post',
+      'partial_payment': 'Partial Payment',
+      'partial_payment_email': 'Partial Payment Email',
       'quote_email': 'Offert e-post',
       'endless_reminder': 'Oändlig påminnelse',
       'filtered_by_user': 'Filtered by User',
@@ -28078,8 +30931,6 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'company': 'Företag',
       'generated_numbers': 'Genererade nummer',
       'charge_taxes': 'Inkludera moms',
-      'credit': 'Kredit',
-      'credits': 'Kreditfakturor',
       'next_reset': 'Nästa återställning',
       'reset_counter': 'Återställ räknare',
       'recurring_prefix': 'Återkommande prefix',
@@ -28120,9 +30971,6 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'enable_portal_password': 'Lösenordsskydda fakturor',
       'enable_portal_password_help':
           'Tillåter dig att sätta ett lösenord för varje kontakt. Om ett lösenord är valt kommer kontakten vara tvungen att skriva in lösenordet innan den kan se fakturan.',
-      'send_portal_password': 'Skapa automatiskt',
-      'send_portal_password_help':
-          'Om inget lösenord är satt, kommer ett bli genererat och skickat med första fakturan.',
       'authorization': 'Tillstånd',
       'subdomain': 'Underdomän',
       'domain': 'Domän',
@@ -28410,6 +31258,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'custom': 'Utforma',
       'clone_to_invoice': 'Clone to Invoice',
       'clone_to_quote': 'Clone to Quote',
+      'clone_to_credit': 'Clone to Credit',
       'view_invoice': 'Visa faktura',
       'convert': 'Convert',
       'more': 'More',
@@ -28422,7 +31271,6 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'edit_expense': 'Redigera kostnad',
       'edit_vendor': 'Ändra leverantör',
       'edit_project': 'Ändra Produkt',
-      'edit_credit': 'Redigera Kreditfaktura',
       'edit_recurring_invoice': 'Edit Recurring Invoice',
       'edit_recurring_expense': 'Ändra återkommande utgift',
       'edit_recurring_quote': 'Edit Recurring Quote',
@@ -28573,15 +31421,11 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'approved': 'Approved',
       'partial': 'delinsättning',
       'paid': 'Betald',
-      'invoice_status_1': 'Draft',
-      'invoice_status_2': 'Sent',
-      'invoice_status_3': 'Viewed',
-      'invoice_status_4': 'Approved',
       'mark_sent': 'Markera skickad',
       'marked_invoice_as_sent': 'Successfully marked invoice as sent',
-      'marked_invoice_as_paid': 'Successfully marked invoice as sent',
+      'marked_invoice_as_paid': 'Successfully marked invoice as paid',
       'marked_invoices_as_sent': 'Successfully marked invoices as sent',
-      'marked_invoices_as_paid': 'Successfully marked invoices as sent',
+      'marked_invoices_as_paid': 'Successfully marked invoices as paid',
       'done': 'Klar',
       'please_enter_a_client_or_contact_name':
           'Please enter a client or contact name',
@@ -28716,7 +31560,9 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'activity_57': 'System failed to email invoice :invoice',
       'one_time_password': 'Engångs lösenord',
       'emailed_quote': 'Offert e-postad',
+      'emailed_credit': 'Successfully emailed credit',
       'marked_quote_as_sent': 'Successfully marked quote as sent',
+      'marked_credit_as_sent': 'Successfully marked credit as sent',
       'expired': 'Utgått',
       'all': 'Alla',
       'select': 'Välj',
@@ -28762,6 +31608,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'email_subject_invoice': 'Email Invoice Subject',
       'email_subject_quote': 'Email Quote Subject',
       'email_subject_payment': 'Email Payment Subject',
+      'email_subject_payment_partial': 'Email Partial Payment Subject',
       'switch_list_table': 'Switch List Table',
       'client_city': 'Client City',
       'client_state': 'Client State',
@@ -28793,8 +31640,114 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'vendor_city': 'Vendor City',
       'vendor_state': 'Vendor State',
       'vendor_country': 'Vendor Country',
+      'is_approved': 'Is Approved',
+      'tax_name': 'Skattenamn',
+      'tax_amount': 'Moms summa',
+      'tax_paid': 'Moms betalad',
+      'payment_amount': 'Betald summa',
+      'age': 'Ålder',
     },
     'th': {
+      'full_name': 'ชื่อเต็ม',
+      'city_state_postal': 'เมือง / รัฐ / ไปรษณีย์',
+      'postal_city_state': 'ไปรษณีย์ / เมือง / รัฐ',
+      'custom1': 'กำหนดเองครั้งแรก',
+      'custom2': 'กำหนดเองครั้งที่สอง',
+      'custom3': 'Third Custom',
+      'custom4': 'Fourth Custom',
+      'optional': 'Optional',
+      'license': 'License',
+      'purge_data': 'ล้างข้อมูล',
+      'purge_successful': 'Successfully purged company data',
+      'purge_data_message':
+          'คำเตือน: การดำเนินการนี้จะลบข้อมูลของคุณอย่างถาวรและไม่สามารถนำคืนกลับมาได้',
+      'invoice_balance': 'Invoice Balance',
+      'age_group_0': '0 - 30 วัน',
+      'age_group_30': '30 - 60 วัน',
+      'age_group_60': '60 - 90 วัน',
+      'age_group_90': '90 - 120 วัน',
+      'age_group_120': '120+ วัน',
+      'refresh': 'Refresh',
+      'saved_design': 'Successfully saved design',
+      'client_details': 'Client Details',
+      'company_address': 'Company Address',
+      'invoice_details': 'รายละเอียดใบแจ้งหนี้',
+      'quote_details': 'Quote Details',
+      'credit_details': 'Credit Details',
+      'product_columns': 'Product Columns',
+      'task_columns': 'Task Columns',
+      'add_field': 'Add Field',
+      'all_events': 'All Events',
+      'permissions': 'สิทธิ์',
+      'none': 'None',
+      'owned': 'Owned',
+      'payment_success': 'Payment Success',
+      'payment_failure': 'Payment Failure',
+      'invoice_sent': ':count ส่งใบแจ้งหนี้',
+      'quote_sent': 'Quote Sent',
+      'credit_sent': 'Credit Sent',
+      'invoice_viewed': 'Invoice Viewed',
+      'quote_viewed': 'Quote Viewed',
+      'credit_viewed': 'Credit Viewed',
+      'quote_approved': 'Quote Approved',
+      'receive_all_notifications': 'Receive All Notifications',
+      'purchase_license': 'Purchase License',
+      'apply_license': 'สมัครไลเซนต์',
+      'cancel_account': 'ลบบัญชี',
+      'cancel_account_message':
+          'คำเตือน: การดำเนินการนี้จะลบบัญชีของคุณอย่างถาวรและไม่สามารถนำกลับมาได้',
+      'delete_company': 'Delete Company',
+      'delete_company_message':
+          'Warning: This will permanently delete your company, there is no undo.',
+      'enable_modules': 'Enable Modules',
+      'converted_quote': 'Successfully converted quote',
+      'credit_design': 'Credit Design',
+      'includes': 'Includes',
+      'header': 'ส่วนหัว',
+      'load_design': 'โหลดการออกแบบ',
+      'css_framework': 'CSS Framework',
+      'custom_designs': 'Custom Designs',
+      'designs': 'Designs',
+      'new_design': 'New Design',
+      'edit_design': 'Edit Design',
+      'created_design': 'Successfully created design',
+      'updated_design': 'Successfully updated design',
+      'archived_design': 'Successfully archived design',
+      'deleted_design': 'Successfully deleted design',
+      'removed_design': 'Successfully removed design',
+      'restored_design': 'Successfully restored design',
+      'proposals': 'Proposals',
+      'tickets': 'Tickets',
+      'recurring_invoices': 'ทำใบแจ้งหนี้ซ้ำ',
+      'recurring_quotes': 'Recurring Quotes',
+      'recurring_tasks': 'Recurring Tasks',
+      'recurring_expenses': 'ค่าใช้จ่ายที่เกิดขึ้นประจำ',
+      'account_management': 'การจัดการบัญชี',
+      'credit_date': 'วันที่เครดิต',
+      'credit': 'เครดิต',
+      'credits': 'เครดิต',
+      'new_credit': 'ป้อนเครดิต',
+      'edit_credit': 'แก้ไขเครดิต',
+      'created_credit': 'สร้างเครดิตเรียบร้อยแล้ว',
+      'updated_credit': 'อัปเดตเครดิตแล้ว',
+      'archived_credit': 'เก็บเครดิตเรียบร้อยแล้ว',
+      'deleted_credit': 'ลบเครดิตเรียบร้อยแล้ว',
+      'removed_credit': 'Successfully removed credit',
+      'restored_credit': 'กู้คืนเครดิตเรียบร้อยแล้ว',
+      'current_version': 'รุ่นปัจจุบัน',
+      'latest_version': 'Latest Version',
+      'update_now': 'Update Now',
+      'a_new_version_is_available': 'A new version of the web app is available',
+      'update_available': 'Update Available',
+      'app_updated': 'Update successfully completed',
+      'learn_more': 'อ่านต่อ',
+      'integrations': 'Integrations',
+      'tracking_id': 'Tracking Id',
+      'slack_webhook_url': 'Slack Webhook URL',
+      'credit_footer': 'Credit Footer',
+      'credit_terms': 'Credit Terms',
+      'untitled_company': 'Untitled Company',
+      'added_company': 'Successfully added company',
       'company1': 'Custom Company 1',
       'company2': 'Custom Company 2',
       'company3': 'Custom Company 3',
@@ -28804,9 +31757,9 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'product3': 'Custom Product 3',
       'product4': 'Custom Product 4',
       'client1': 'Custom Client 1',
-      'client2': 'Custom Client 1',
-      'client3': 'Custom Client 1',
-      'client4': 'Custom Client 1',
+      'client2': 'Custom Client 2',
+      'client3': 'Custom Client 3',
+      'client4': 'Custom Client 4',
       'contact1': 'Custom Contact 1',
       'contact2': 'Custom Contact 2',
       'contact3': 'Custom Contact 3',
@@ -28883,7 +31836,6 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'reports': 'รายงาน',
       'report': 'รายงาน',
       'add_company': 'เพิ่ม บริษัท',
-      'to_learn_about_gogle_fonts': 'to learn about Google Fonts',
       'unpaid_invoice': 'Unpaid Invoice',
       'paid_invoice': 'Paid Invoice',
       'unapproved_quote': 'Unapproved Quote',
@@ -28920,7 +31872,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'domain_url': 'Domain URL',
       'password_is_too_short': 'รหัสผ่านสั้นเกินไป',
       'password_is_too_easy':
-          'Password msut contain an upper case character and a number',
+          'Password must contain an upper case character and a number',
       'client_portal_tasks': 'Client Portal Tasks',
       'client_portal_dashboard': 'Client Portal Dashboard',
       'please_enter_a_value': 'Please enter a value',
@@ -28994,6 +31946,8 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'days': 'วัน',
       'invoice_email': 'อีเมลใบแจ้งหนี้',
       'payment_email': 'อีเมลการชำระเงิน',
+      'partial_payment': 'Partial Payment',
+      'partial_payment_email': 'Partial Payment Email',
       'quote_email': 'อีเมล์ใบเสนอราคา',
       'endless_reminder': 'Endless Reminder',
       'filtered_by_user': 'Filtered by User',
@@ -29064,8 +32018,6 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'company': 'Company',
       'generated_numbers': 'ตัวเลขที่สร้างขึ้น',
       'charge_taxes': 'ภาษีค่าบริการ',
-      'credit': 'เครดิต',
-      'credits': 'เครดิต',
       'next_reset': 'รีเซ็ตครั้งต่อไป',
       'reset_counter': 'รีเซ็ตตัวนับ',
       'recurring_prefix': 'คำนำหน้า ที่เกิดขึ้นประจำ',
@@ -29107,9 +32059,6 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'enable_portal_password': 'รหัสผ่านป้องกันใบแจ้งหนี้',
       'enable_portal_password_help':
           'ช่วยให้คุณสามารถตั้งรหัสผ่านสำหรับแต่ละรายชื่อ หากมีการตั้งรหัสผ่านผู้ติดต่อจะต้องป้อนรหัสผ่านก่อนดูใบแจ้งหนี้',
-      'send_portal_password': 'Generate Automatically',
-      'send_portal_password_help':
-          'หากไม่มีการตั้งค่ารหัสผ่าน ระบบจะสร้างและส่งใบแจ้งหนี้ฉบับแรก',
       'authorization': 'การอนุญาต',
       'subdomain': 'Subdomain',
       'domain': 'โดเมน',
@@ -29396,6 +32345,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'custom': 'กำหนดเอง',
       'clone_to_invoice': 'Clone to Invoice',
       'clone_to_quote': 'Clone to Quote',
+      'clone_to_credit': 'Clone to Credit',
       'view_invoice': 'ดูใบแจ้งหนี้',
       'convert': 'Convert',
       'more': 'More',
@@ -29408,7 +32358,6 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'edit_expense': 'แก้ไขค่าใช้จ่าย',
       'edit_vendor': 'แก้ไขผู้ขาย',
       'edit_project': 'แก้ไขโครงการ',
-      'edit_credit': 'แก้ไขเครดิต',
       'edit_recurring_invoice': 'Edit Recurring Invoice',
       'edit_recurring_expense': 'แก้ไขค่าใช้จ่ายที่เกิดประจำ',
       'edit_recurring_quote': 'Edit Recurring Quote',
@@ -29559,15 +32508,11 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'approved': 'Approved',
       'partial': 'บางส่วน / เงินฝาก',
       'paid': 'จ่ายเงิน',
-      'invoice_status_1': 'Draft',
-      'invoice_status_2': 'Sent',
-      'invoice_status_3': 'Viewed',
-      'invoice_status_4': 'Approved',
       'mark_sent': 'ทำเครื่องหมายไว้',
       'marked_invoice_as_sent': 'Successfully marked invoice as sent',
-      'marked_invoice_as_paid': 'Successfully marked invoice as sent',
+      'marked_invoice_as_paid': 'Successfully marked invoice as paid',
       'marked_invoices_as_sent': 'Successfully marked invoices as sent',
-      'marked_invoices_as_paid': 'Successfully marked invoices as sent',
+      'marked_invoices_as_paid': 'Successfully marked invoices as paid',
       'done': 'เรียบร้อย',
       'please_enter_a_client_or_contact_name':
           'Please enter a client or contact name',
@@ -29702,7 +32647,9 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'activity_57': 'System failed to email invoice :invoice',
       'one_time_password': 'One Time Password',
       'emailed_quote': 'อีเมล์ใบเสนอราคาเรียบร้อย',
+      'emailed_credit': 'Successfully emailed credit',
       'marked_quote_as_sent': 'Successfully marked quote as sent',
+      'marked_credit_as_sent': 'Successfully marked credit as sent',
       'expired': 'หมดอายุ',
       'all': 'ทั้งหมด',
       'select': 'เลือก',
@@ -29748,6 +32695,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'email_subject_invoice': 'Email Invoice Subject',
       'email_subject_quote': 'Email Quote Subject',
       'email_subject_payment': 'Email Payment Subject',
+      'email_subject_payment_partial': 'Email Partial Payment Subject',
       'switch_list_table': 'Switch List Table',
       'client_city': 'Client City',
       'client_state': 'Client State',
@@ -29779,8 +32727,114 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'vendor_city': 'Vendor City',
       'vendor_state': 'Vendor State',
       'vendor_country': 'Vendor Country',
+      'is_approved': 'Is Approved',
+      'tax_name': 'ชื่อภาษี',
+      'tax_amount': 'Tax Amount',
+      'tax_paid': 'Tax Paid',
+      'payment_amount': 'ยอดจ่าย',
+      'age': 'อายุ',
     },
     'tr_TR': {
+      'full_name': 'Full Name',
+      'city_state_postal': 'City/State/Postal',
+      'postal_city_state': 'Postal/City/State',
+      'custom1': 'First Custom',
+      'custom2': 'Second Custom',
+      'custom3': 'Third Custom',
+      'custom4': 'Fourth Custom',
+      'optional': 'Optional',
+      'license': 'License',
+      'purge_data': 'Purge Data',
+      'purge_successful': 'Successfully purged company data',
+      'purge_data_message':
+          'Warning: This will permanently erase your data, there is no undo.',
+      'invoice_balance': 'Invoice Balance',
+      'age_group_0': '0 - 30 Days',
+      'age_group_30': '30 - 60 Days',
+      'age_group_60': '60 - 90 Days',
+      'age_group_90': '90 - 120 Days',
+      'age_group_120': '120+ Days',
+      'refresh': 'Refresh',
+      'saved_design': 'Successfully saved design',
+      'client_details': 'Client Details',
+      'company_address': 'Company Address',
+      'invoice_details': 'Invoice Details',
+      'quote_details': 'Quote Details',
+      'credit_details': 'Credit Details',
+      'product_columns': 'Product Columns',
+      'task_columns': 'Task Columns',
+      'add_field': 'Add Field',
+      'all_events': 'All Events',
+      'permissions': 'Permissions',
+      'none': 'None',
+      'owned': 'Owned',
+      'payment_success': 'Payment Success',
+      'payment_failure': 'Payment Failure',
+      'invoice_sent': ':count fatura gönderildi',
+      'quote_sent': 'Quote Sent',
+      'credit_sent': 'Credit Sent',
+      'invoice_viewed': 'Invoice Viewed',
+      'quote_viewed': 'Quote Viewed',
+      'credit_viewed': 'Credit Viewed',
+      'quote_approved': 'Quote Approved',
+      'receive_all_notifications': 'Receive All Notifications',
+      'purchase_license': 'Purchase License',
+      'apply_license': 'Apply License',
+      'cancel_account': 'Hesabı Sil',
+      'cancel_account_message':
+          'Warning: This will permanently delete your account, there is no undo.',
+      'delete_company': 'Delete Company',
+      'delete_company_message':
+          'Warning: This will permanently delete your company, there is no undo.',
+      'enable_modules': 'Enable Modules',
+      'converted_quote': 'Successfully converted quote',
+      'credit_design': 'Credit Design',
+      'includes': 'Includes',
+      'header': 'Üstbilgi',
+      'load_design': 'Load Design',
+      'css_framework': 'CSS Framework',
+      'custom_designs': 'Custom Designs',
+      'designs': 'Designs',
+      'new_design': 'New Design',
+      'edit_design': 'Edit Design',
+      'created_design': 'Successfully created design',
+      'updated_design': 'Successfully updated design',
+      'archived_design': 'Successfully archived design',
+      'deleted_design': 'Successfully deleted design',
+      'removed_design': 'Successfully removed design',
+      'restored_design': 'Successfully restored design',
+      'proposals': 'Proposals',
+      'tickets': 'Tickets',
+      'recurring_invoices': 'Tekrarlayan Faturalar',
+      'recurring_quotes': 'Tekrarlayan Fiyat Teklifleri',
+      'recurring_tasks': 'Recurring Tasks',
+      'recurring_expenses': 'Recurring Expenses',
+      'account_management': 'Account Management',
+      'credit_date': 'Kredi Tarihi',
+      'credit': 'Kredi',
+      'credits': 'Krediler',
+      'new_credit': 'Kredi Gir',
+      'edit_credit': 'Edit Credit',
+      'created_credit': 'Kredi başarıyla oluşturuldu',
+      'updated_credit': 'Successfully updated credit',
+      'archived_credit': 'Kredi başarıyla arşivlendi',
+      'deleted_credit': 'Kredi başarıyla silindi',
+      'removed_credit': 'Successfully removed credit',
+      'restored_credit': 'Kredi Başarıyla Geri Yüklendi',
+      'current_version': 'Mevcut version',
+      'latest_version': 'Latest Version',
+      'update_now': 'Update Now',
+      'a_new_version_is_available': 'A new version of the web app is available',
+      'update_available': 'Update Available',
+      'app_updated': 'Update successfully completed',
+      'learn_more': 'Daha fazla bilgi edin',
+      'integrations': 'Integrations',
+      'tracking_id': 'Tracking Id',
+      'slack_webhook_url': 'Slack Webhook URL',
+      'credit_footer': 'Credit Footer',
+      'credit_terms': 'Credit Terms',
+      'untitled_company': 'Untitled Company',
+      'added_company': 'Successfully added company',
       'company1': 'Custom Company 1',
       'company2': 'Custom Company 2',
       'company3': 'Custom Company 3',
@@ -29790,9 +32844,9 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'product3': 'Custom Product 3',
       'product4': 'Custom Product 4',
       'client1': 'Custom Client 1',
-      'client2': 'Custom Client 1',
-      'client3': 'Custom Client 1',
-      'client4': 'Custom Client 1',
+      'client2': 'Custom Client 2',
+      'client3': 'Custom Client 3',
+      'client4': 'Custom Client 4',
       'contact1': 'Custom Contact 1',
       'contact2': 'Custom Contact 2',
       'contact3': 'Custom Contact 3',
@@ -29869,7 +32923,6 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'reports': 'Reports',
       'report': 'Rapor',
       'add_company': 'Firma Ekle',
-      'to_learn_about_gogle_fonts': 'to learn about Google Fonts',
       'unpaid_invoice': 'Unpaid Invoice',
       'paid_invoice': 'Paid Invoice',
       'unapproved_quote': 'Unapproved Quote',
@@ -29906,7 +32959,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'domain_url': 'Domain URL',
       'password_is_too_short': 'Password is too short',
       'password_is_too_easy':
-          'Password msut contain an upper case character and a number',
+          'Password must contain an upper case character and a number',
       'client_portal_tasks': 'Client Portal Tasks',
       'client_portal_dashboard': 'Client Portal Dashboard',
       'please_enter_a_value': 'Please enter a value',
@@ -29980,6 +33033,8 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'days': 'Days',
       'invoice_email': 'Fatura E-postası',
       'payment_email': 'Ödeme E-postası',
+      'partial_payment': 'Partial Payment',
+      'partial_payment_email': 'Partial Payment Email',
       'quote_email': 'Teklif E-postası',
       'endless_reminder': 'Endless Reminder',
       'filtered_by_user': 'Filtered by User',
@@ -30050,8 +33105,6 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'company': 'Şirket',
       'generated_numbers': 'Generated Numbers',
       'charge_taxes': 'Vergi masrafları',
-      'credit': 'Kredi',
-      'credits': 'Krediler',
       'next_reset': 'Next Reset',
       'reset_counter': 'Reset Counter',
       'recurring_prefix': 'Recurring Prefix',
@@ -30094,9 +33147,6 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'enable_portal_password': 'Password Protect Invoices',
       'enable_portal_password_help':
           'Allows you to set a password for each contact. If a password is set, the contact will be required to enter a password before viewing invoices.',
-      'send_portal_password': 'Generate Automatically',
-      'send_portal_password_help':
-          'If no password is set, one will be generated and sent with the first invoice.',
       'authorization': 'Authorization',
       'subdomain': 'Alt etki alanı',
       'domain': 'Domain',
@@ -30384,6 +33434,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'custom': 'Özel',
       'clone_to_invoice': 'Clone to Invoice',
       'clone_to_quote': 'Clone to Quote',
+      'clone_to_credit': 'Clone to Credit',
       'view_invoice': 'Fatura Görüntüle',
       'convert': 'Convert',
       'more': 'More',
@@ -30396,7 +33447,6 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'edit_expense': 'Gideri Düzenle',
       'edit_vendor': 'Tedarikçiyi Düzenle',
       'edit_project': 'Edit Project',
-      'edit_credit': 'Edit Credit',
       'edit_recurring_invoice': 'Edit Recurring Invoice',
       'edit_recurring_expense': 'Edit Recurring Expense',
       'edit_recurring_quote': 'Edit Recurring Quote',
@@ -30547,15 +33597,11 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'approved': 'Approved',
       'partial': 'Kısmi / Mevduat',
       'paid': 'Ödenen',
-      'invoice_status_1': 'Draft',
-      'invoice_status_2': 'Sent',
-      'invoice_status_3': 'Viewed',
-      'invoice_status_4': 'Approved',
       'mark_sent': 'Gönderilmiş Olarak İşaretle',
       'marked_invoice_as_sent': 'Successfully marked invoice as sent',
-      'marked_invoice_as_paid': 'Successfully marked invoice as sent',
+      'marked_invoice_as_paid': 'Successfully marked invoice as paid',
       'marked_invoices_as_sent': 'Successfully marked invoices as sent',
-      'marked_invoices_as_paid': 'Successfully marked invoices as sent',
+      'marked_invoices_as_paid': 'Successfully marked invoices as paid',
       'done': 'Tamam',
       'please_enter_a_client_or_contact_name':
           'Please enter a client or contact name',
@@ -30690,7 +33736,9 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'activity_57': 'System failed to email invoice :invoice',
       'one_time_password': 'One Time Password',
       'emailed_quote': 'Teklif başarıyla e-posta ile gönderildi',
+      'emailed_credit': 'Successfully emailed credit',
       'marked_quote_as_sent': 'Successfully marked quote as sent',
+      'marked_credit_as_sent': 'Successfully marked credit as sent',
       'expired': 'Expired',
       'all': 'All',
       'select': 'Seç',
@@ -30736,6 +33784,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'email_subject_invoice': 'Email Invoice Subject',
       'email_subject_quote': 'Email Quote Subject',
       'email_subject_payment': 'Email Payment Subject',
+      'email_subject_payment_partial': 'Email Partial Payment Subject',
       'switch_list_table': 'Switch List Table',
       'client_city': 'Client City',
       'client_state': 'Client State',
@@ -30767,2328 +33816,2582 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'vendor_city': 'Vendor City',
       'vendor_state': 'Vendor State',
       'vendor_country': 'Vendor Country',
+      'is_approved': 'Is Approved',
+      'tax_name': 'Vergi Adı',
+      'tax_amount': 'Tax Amount',
+      'tax_paid': 'Tax Paid',
+      'payment_amount': 'Ödeme Tutarı',
+      'age': 'Age',
     },
   };
 
-  String get createdProject => _localizedValues[localeCode]['created_project'];
+  String get createdProject =>
+      _localizedValues[localeCode]['created_project'] ?? '';
 
-  String get updatedProject => _localizedValues[localeCode]['updated_project'];
+  String get updatedProject =>
+      _localizedValues[localeCode]['updated_project'] ?? '';
 
   String get archivedProject =>
-      _localizedValues[localeCode]['archived_project'];
+      _localizedValues[localeCode]['archived_project'] ?? '';
 
-  String get deletedProject => _localizedValues[localeCode]['deleted_project'];
+  String get deletedProject =>
+      _localizedValues[localeCode]['deleted_project'] ?? '';
 
   String get restoredProject =>
-      _localizedValues[localeCode]['restored_project'];
+      _localizedValues[localeCode]['restored_project'] ?? '';
 
-  String get newProject => _localizedValues[localeCode]['new_project'];
+  String get newProject => _localizedValues[localeCode]['new_project'] ?? '';
 
   String get thankYouForUsingOurApp =>
-      _localizedValues[localeCode]['thank_you_for_using_our_app'];
+      _localizedValues[localeCode]['thank_you_for_using_our_app'] ?? '';
 
-  String get ifYouLikeIt => _localizedValues[localeCode]['if_you_like_it'];
+  String get ifYouLikeIt =>
+      _localizedValues[localeCode]['if_you_like_it'] ?? '';
 
-  String get clickHere => _localizedValues[localeCode]['click_here'];
+  String get clickHere => _localizedValues[localeCode]['click_here'] ?? '';
 
   String get clickHereCapital =>
-      _localizedValues[localeCode]['click_here_capital'];
+      _localizedValues[localeCode]['click_here_capital'] ?? '';
 
-  String get toRateIt => _localizedValues[localeCode]['to_rate_it'];
+  String get toRateIt => _localizedValues[localeCode]['to_rate_it'] ?? '';
 
-  String get average => _localizedValues[localeCode]['average'];
+  String get average => _localizedValues[localeCode]['average'] ?? '';
 
-  String get unapproved => _localizedValues[localeCode]['unapproved'];
+  String get unapproved => _localizedValues[localeCode]['unapproved'] ?? '';
 
   String get authenticateToChangeSetting =>
-      _localizedValues[localeCode]['authenticate_to_change_setting'];
+      _localizedValues[localeCode]['authenticate_to_change_setting'] ?? '';
 
-  String get locked => _localizedValues[localeCode]['locked'];
+  String get locked => _localizedValues[localeCode]['locked'] ?? '';
 
-  String get authenticate => _localizedValues[localeCode]['authenticate'];
+  String get authenticate => _localizedValues[localeCode]['authenticate'] ?? '';
 
   String get pleaseAuthenticate =>
-      _localizedValues[localeCode]['please_authenticate'];
+      _localizedValues[localeCode]['please_authenticate'] ?? '';
 
   String get biometricAuthentication =>
-      _localizedValues[localeCode]['biometric_authentication'];
+      _localizedValues[localeCode]['biometric_authentication'] ?? '';
 
-  String get footer => _localizedValues[localeCode]['footer'];
+  String get footer => _localizedValues[localeCode]['footer'] ?? '';
 
-  String get compare => _localizedValues[localeCode]['compare'];
+  String get compare => _localizedValues[localeCode]['compare'] ?? '';
 
-  String get hostedLogin => _localizedValues[localeCode]['hosted_login'];
+  String get hostedLogin => _localizedValues[localeCode]['hosted_login'] ?? '';
 
-  String get selfhostLogin => _localizedValues[localeCode]['selfhost_login'];
+  String get selfhostLogin =>
+      _localizedValues[localeCode]['selfhost_login'] ?? '';
 
-  String get googleLogin => _localizedValues[localeCode]['google_login'];
+  String get googleLogin => _localizedValues[localeCode]['google_login'] ?? '';
 
-  String get today => _localizedValues[localeCode]['today'];
+  String get today => _localizedValues[localeCode]['today'] ?? '';
 
-  String get customRange => _localizedValues[localeCode]['custom_range'];
+  String get customRange => _localizedValues[localeCode]['custom_range'] ?? '';
 
-  String get dateRange => _localizedValues[localeCode]['date_range'];
+  String get dateRange => _localizedValues[localeCode]['date_range'] ?? '';
 
-  String get current => _localizedValues[localeCode]['current'];
+  String get current => _localizedValues[localeCode]['current'] ?? '';
 
-  String get previous => _localizedValues[localeCode]['previous'];
+  String get previous => _localizedValues[localeCode]['previous'] ?? '';
 
-  String get currentPeriod => _localizedValues[localeCode]['current_period'];
+  String get currentPeriod =>
+      _localizedValues[localeCode]['current_period'] ?? '';
 
   String get comparisonPeriod =>
-      _localizedValues[localeCode]['comparison_period'];
+      _localizedValues[localeCode]['comparison_period'] ?? '';
 
-  String get previousPeriod => _localizedValues[localeCode]['previous_period'];
+  String get previousPeriod =>
+      _localizedValues[localeCode]['previous_period'] ?? '';
 
-  String get previousYear => _localizedValues[localeCode]['previous_year'];
+  String get previousYear =>
+      _localizedValues[localeCode]['previous_year'] ?? '';
 
-  String get compareTo => _localizedValues[localeCode]['compare_to'];
+  String get compareTo => _localizedValues[localeCode]['compare_to'] ?? '';
 
-  String get last7Days => _localizedValues[localeCode]['last7_days'];
+  String get last7Days => _localizedValues[localeCode]['last7_days'] ?? '';
 
-  String get lastWeek => _localizedValues[localeCode]['last_week'];
+  String get lastWeek => _localizedValues[localeCode]['last_week'] ?? '';
 
-  String get last30Days => _localizedValues[localeCode]['last30_days'];
+  String get last30Days => _localizedValues[localeCode]['last30_days'] ?? '';
 
-  String get thisMonth => _localizedValues[localeCode]['this_month'];
+  String get thisMonth => _localizedValues[localeCode]['this_month'] ?? '';
 
-  String get lastMonth => _localizedValues[localeCode]['last_month'];
+  String get lastMonth => _localizedValues[localeCode]['last_month'] ?? '';
 
-  String get thisYear => _localizedValues[localeCode]['this_year'];
+  String get thisYear => _localizedValues[localeCode]['this_year'] ?? '';
 
-  String get lastYear => _localizedValues[localeCode]['last_year'];
+  String get lastYear => _localizedValues[localeCode]['last_year'] ?? '';
 
-  String get custom => _localizedValues[localeCode]['custom'];
+  String get custom => _localizedValues[localeCode]['custom'] ?? '';
 
-  String get cloneToInvoice => _localizedValues[localeCode]['clone_to_invoice'];
+  String get cloneToInvoice =>
+      _localizedValues[localeCode]['clone_to_invoice'] ?? '';
 
-  String get cloneToQuote => _localizedValues[localeCode]['clone_to_quote'];
+  String get cloneToQuote =>
+      _localizedValues[localeCode]['clone_to_quote'] ?? '';
 
-  String get viewInvoice => _localizedValues[localeCode]['view_invoice'];
+  String get viewInvoice => _localizedValues[localeCode]['view_invoice'] ?? '';
 
-  String get convert => _localizedValues[localeCode]['convert'];
+  String get convert => _localizedValues[localeCode]['convert'] ?? '';
 
-  String get more => _localizedValues[localeCode]['more'];
+  String get more => _localizedValues[localeCode]['more'] ?? '';
 
-  String get editClient => _localizedValues[localeCode]['edit_client'];
+  String get editClient => _localizedValues[localeCode]['edit_client'] ?? '';
 
-  String get editProduct => _localizedValues[localeCode]['edit_product'];
+  String get editProduct => _localizedValues[localeCode]['edit_product'] ?? '';
 
-  String get editInvoice => _localizedValues[localeCode]['edit_invoice'];
+  String get editInvoice => _localizedValues[localeCode]['edit_invoice'] ?? '';
 
-  String get editQuote => _localizedValues[localeCode]['edit_quote'];
+  String get editQuote => _localizedValues[localeCode]['edit_quote'] ?? '';
 
-  String get editPayment => _localizedValues[localeCode]['edit_payment'];
+  String get editPayment => _localizedValues[localeCode]['edit_payment'] ?? '';
 
-  String get editTask => _localizedValues[localeCode]['edit_task'];
+  String get editTask => _localizedValues[localeCode]['edit_task'] ?? '';
 
-  String get editExpense => _localizedValues[localeCode]['edit_expense'];
+  String get editExpense => _localizedValues[localeCode]['edit_expense'] ?? '';
 
-  String get editVendor => _localizedValues[localeCode]['edit_vendor'];
+  String get editVendor => _localizedValues[localeCode]['edit_vendor'] ?? '';
 
-  String get editProject => _localizedValues[localeCode]['edit_project'];
+  String get editProject => _localizedValues[localeCode]['edit_project'] ?? '';
 
-  String get editCredit => _localizedValues[localeCode]['edit_credit'];
+  String get editCredit => _localizedValues[localeCode]['edit_credit'] ?? '';
 
   String get editRecurringInvoice =>
-      _localizedValues[localeCode]['edit_recurring_invoice'];
+      _localizedValues[localeCode]['edit_recurring_invoice'] ?? '';
 
   String get editRecurringExpense =>
-      _localizedValues[localeCode]['edit_recurring_expense'];
+      _localizedValues[localeCode]['edit_recurring_expense'] ?? '';
 
   String get editRecurringQuote =>
-      _localizedValues[localeCode]['edit_recurring_quote'];
+      _localizedValues[localeCode]['edit_recurring_quote'] ?? '';
 
-  String get billingAddress => _localizedValues[localeCode]['billing_address'];
+  String get billingAddress =>
+      _localizedValues[localeCode]['billing_address'] ?? '';
 
   String get shippingAddress =>
-      _localizedValues[localeCode]['shipping_address'];
+      _localizedValues[localeCode]['shipping_address'] ?? '';
 
-  String get totalRevenue => _localizedValues[localeCode]['total_revenue'];
+  String get totalRevenue =>
+      _localizedValues[localeCode]['total_revenue'] ?? '';
 
-  String get averageInvoice => _localizedValues[localeCode]['average_invoice'];
+  String get averageInvoice =>
+      _localizedValues[localeCode]['average_invoice'] ?? '';
 
-  String get outstanding => _localizedValues[localeCode]['outstanding'];
+  String get outstanding => _localizedValues[localeCode]['outstanding'] ?? '';
 
-  String get invoicesSent => _localizedValues[localeCode]['invoices_sent'];
+  String get invoicesSent =>
+      _localizedValues[localeCode]['invoices_sent'] ?? '';
 
-  String get activeClients => _localizedValues[localeCode]['active_clients'];
+  String get activeClients =>
+      _localizedValues[localeCode]['active_clients'] ?? '';
 
-  String get close => _localizedValues[localeCode]['close'];
+  String get close => _localizedValues[localeCode]['close'] ?? '';
 
-  String get email => _localizedValues[localeCode]['email'];
+  String get email => _localizedValues[localeCode]['email'] ?? '';
 
-  String get password => _localizedValues[localeCode]['password'];
+  String get password => _localizedValues[localeCode]['password'] ?? '';
 
-  String get url => _localizedValues[localeCode]['url'];
+  String get url => _localizedValues[localeCode]['url'] ?? '';
 
-  String get secret => _localizedValues[localeCode]['secret'];
+  String get secret => _localizedValues[localeCode]['secret'] ?? '';
 
-  String get name => _localizedValues[localeCode]['name'];
+  String get name => _localizedValues[localeCode]['name'] ?? '';
 
-  String get logout => _localizedValues[localeCode]['logout'];
+  String get logout => _localizedValues[localeCode]['logout'] ?? '';
 
-  String get login => _localizedValues[localeCode]['login'];
+  String get login => _localizedValues[localeCode]['login'] ?? '';
 
-  String get filter => _localizedValues[localeCode]['filter'];
+  String get filter => _localizedValues[localeCode]['filter'] ?? '';
 
-  String get sort => _localizedValues[localeCode]['sort'];
+  String get sort => _localizedValues[localeCode]['sort'] ?? '';
 
-  String get search => _localizedValues[localeCode]['search'];
+  String get search => _localizedValues[localeCode]['search'] ?? '';
 
-  String get active => _localizedValues[localeCode]['active'];
+  String get active => _localizedValues[localeCode]['active'] ?? '';
 
-  String get archived => _localizedValues[localeCode]['archived'];
+  String get archived => _localizedValues[localeCode]['archived'] ?? '';
 
-  String get deleted => _localizedValues[localeCode]['deleted'];
+  String get deleted => _localizedValues[localeCode]['deleted'] ?? '';
 
-  String get dashboard => _localizedValues[localeCode]['dashboard'];
+  String get dashboard => _localizedValues[localeCode]['dashboard'] ?? '';
 
-  String get archive => _localizedValues[localeCode]['archive'];
+  String get archive => _localizedValues[localeCode]['archive'] ?? '';
 
-  String get delete => _localizedValues[localeCode]['delete'];
+  String get delete => _localizedValues[localeCode]['delete'] ?? '';
 
-  String get restore => _localizedValues[localeCode]['restore'];
+  String get restore => _localizedValues[localeCode]['restore'] ?? '';
 
   String get refreshComplete =>
-      _localizedValues[localeCode]['refresh_complete'];
+      _localizedValues[localeCode]['refresh_complete'] ?? '';
 
   String get pleaseEnterYourEmail =>
-      _localizedValues[localeCode]['please_enter_your_email'];
+      _localizedValues[localeCode]['please_enter_your_email'] ?? '';
 
   String get pleaseEnterYourPassword =>
-      _localizedValues[localeCode]['please_enter_your_password'];
+      _localizedValues[localeCode]['please_enter_your_password'] ?? '';
 
   String get pleaseEnterYourUrl =>
-      _localizedValues[localeCode]['please_enter_your_url'];
+      _localizedValues[localeCode]['please_enter_your_url'] ?? '';
 
   String get pleaseEnterAProductKey =>
-      _localizedValues[localeCode]['please_enter_a_product_key'];
+      _localizedValues[localeCode]['please_enter_a_product_key'] ?? '';
 
   String get pleaseEnterAFirstName =>
-      _localizedValues[localeCode]['please_enter_a_last_name'];
+      _localizedValues[localeCode]['please_enter_a_last_name'] ?? '';
 
   String get pleaseEnterALastName =>
-      _localizedValues[localeCode]['please_enter_a_first_name'];
+      _localizedValues[localeCode]['please_enter_a_first_name'] ?? '';
 
-  String get ascending => _localizedValues[localeCode]['ascending'];
+  String get ascending => _localizedValues[localeCode]['ascending'] ?? '';
 
-  String get descending => _localizedValues[localeCode]['descending'];
+  String get descending => _localizedValues[localeCode]['descending'] ?? '';
 
-  String get save => _localizedValues[localeCode]['save'];
+  String get save => _localizedValues[localeCode]['save'] ?? '';
 
   String get anErrorOccurred =>
-      _localizedValues[localeCode]['an_error_occurred'];
+      _localizedValues[localeCode]['an_error_occurred'] ?? '';
 
-  String get paidToDate => _localizedValues[localeCode]['paid_to_date'];
+  String get paidToDate => _localizedValues[localeCode]['paid_to_date'] ?? '';
 
-  String get balanceDue => _localizedValues[localeCode]['balance_due'];
+  String get balanceDue => _localizedValues[localeCode]['balance_due'] ?? '';
 
-  String get balance => _localizedValues[localeCode]['balance'];
+  String get balance => _localizedValues[localeCode]['balance'] ?? '';
 
-  String get overview => _localizedValues[localeCode]['overview'];
+  String get overview => _localizedValues[localeCode]['overview'] ?? '';
 
-  String get details => _localizedValues[localeCode]['details'];
+  String get details => _localizedValues[localeCode]['details'] ?? '';
 
-  String get phone => _localizedValues[localeCode]['phone'];
+  String get phone => _localizedValues[localeCode]['phone'] ?? '';
 
-  String get website => _localizedValues[localeCode]['website'];
+  String get website => _localizedValues[localeCode]['website'] ?? '';
 
-  String get vatNumber => _localizedValues[localeCode]['vat_number'];
+  String get vatNumber => _localizedValues[localeCode]['vat_number'] ?? '';
 
-  String get idNumber => _localizedValues[localeCode]['id_number'];
+  String get idNumber => _localizedValues[localeCode]['id_number'] ?? '';
 
-  String get create => _localizedValues[localeCode]['create'];
+  String get create => _localizedValues[localeCode]['create'] ?? '';
 
   String get copiedToClipboard =>
-      _localizedValues[localeCode]['copied_to_clipboard'];
+      _localizedValues[localeCode]['copied_to_clipboard'] ?? '';
 
-  String get error => _localizedValues[localeCode]['error'];
+  String get error => _localizedValues[localeCode]['error'] ?? '';
 
-  String get couldNotLaunch => _localizedValues[localeCode]['could_not_launch'];
+  String get couldNotLaunch =>
+      _localizedValues[localeCode]['could_not_launch'] ?? '';
 
-  String get contacts => _localizedValues[localeCode]['contacts'];
+  String get contacts => _localizedValues[localeCode]['contacts'] ?? '';
 
-  String get additional => _localizedValues[localeCode]['additional'];
+  String get additional => _localizedValues[localeCode]['additional'] ?? '';
 
-  String get firstName => _localizedValues[localeCode]['first_name'];
+  String get firstName => _localizedValues[localeCode]['first_name'] ?? '';
 
-  String get lastName => _localizedValues[localeCode]['last_name'];
+  String get lastName => _localizedValues[localeCode]['last_name'] ?? '';
 
-  String get addContact => _localizedValues[localeCode]['add_contact'];
+  String get addContact => _localizedValues[localeCode]['add_contact'] ?? '';
 
-  String get areYouSure => _localizedValues[localeCode]['are_you_sure'];
+  String get areYouSure => _localizedValues[localeCode]['are_you_sure'] ?? '';
 
-  String get cancel => _localizedValues[localeCode]['cancel'];
+  String get cancel => _localizedValues[localeCode]['cancel'] ?? '';
 
-  String get ok => _localizedValues[localeCode]['ok'];
+  String get ok => _localizedValues[localeCode]['ok'] ?? '';
 
-  String get remove => _localizedValues[localeCode]['remove'];
+  String get remove => _localizedValues[localeCode]['remove'] ?? '';
 
-  String get emailIsInvalid => _localizedValues[localeCode]['email_is_invalid'];
+  String get emailIsInvalid =>
+      _localizedValues[localeCode]['email_is_invalid'] ?? '';
 
-  String get product => _localizedValues[localeCode]['product'];
+  String get product => _localizedValues[localeCode]['product'] ?? '';
 
-  String get products => _localizedValues[localeCode]['products'];
+  String get products => _localizedValues[localeCode]['products'] ?? '';
 
-  String get newProduct => _localizedValues[localeCode]['new_product'];
+  String get newProduct => _localizedValues[localeCode]['new_product'] ?? '';
 
-  String get createdProduct => _localizedValues[localeCode]['created_product'];
+  String get createdProduct =>
+      _localizedValues[localeCode]['created_product'] ?? '';
 
-  String get updatedProduct => _localizedValues[localeCode]['updated_product'];
+  String get updatedProduct =>
+      _localizedValues[localeCode]['updated_product'] ?? '';
 
   String get archivedProduct =>
-      _localizedValues[localeCode]['archived_product'];
+      _localizedValues[localeCode]['archived_product'] ?? '';
 
-  String get deletedProduct => _localizedValues[localeCode]['deleted_product'];
+  String get deletedProduct =>
+      _localizedValues[localeCode]['deleted_product'] ?? '';
 
   String get restoredProduct =>
-      _localizedValues[localeCode]['restored_product'];
+      _localizedValues[localeCode]['restored_product'] ?? '';
 
-  String get newVendor => _localizedValues[localeCode]['new_vendor'];
+  String get newVendor => _localizedValues[localeCode]['new_vendor'] ?? '';
 
-  String get createdVendor => _localizedValues[localeCode]['created_vendor'];
+  String get createdVendor =>
+      _localizedValues[localeCode]['created_vendor'] ?? '';
 
-  String get updatedVendor => _localizedValues[localeCode]['updated_vendor'];
+  String get updatedVendor =>
+      _localizedValues[localeCode]['updated_vendor'] ?? '';
 
-  String get archivedVendor => _localizedValues[localeCode]['archived_vendor'];
+  String get archivedVendor =>
+      _localizedValues[localeCode]['archived_vendor'] ?? '';
 
-  String get deletedVendor => _localizedValues[localeCode]['deleted_vendor'];
+  String get deletedVendor =>
+      _localizedValues[localeCode]['deleted_vendor'] ?? '';
 
-  String get restoredVendor => _localizedValues[localeCode]['restored_vendor'];
+  String get restoredVendor =>
+      _localizedValues[localeCode]['restored_vendor'] ?? '';
 
-  String get document => _localizedValues[localeCode]['document'];
+  String get document => _localizedValues[localeCode]['document'] ?? '';
 
-  String get documents => _localizedValues[localeCode]['documents'];
+  String get documents => _localizedValues[localeCode]['documents'] ?? '';
 
-  String get newDocument => _localizedValues[localeCode]['new_document'];
+  String get newDocument => _localizedValues[localeCode]['new_document'] ?? '';
 
-  String get editDocument => _localizedValues[localeCode]['edit_document'];
+  String get editDocument =>
+      _localizedValues[localeCode]['edit_document'] ?? '';
 
   String get uploadedDocument =>
-      _localizedValues[localeCode]['uploaded_document'];
+      _localizedValues[localeCode]['uploaded_document'] ?? '';
 
   String get updatedDocument =>
-      _localizedValues[localeCode]['updated_document'];
+      _localizedValues[localeCode]['updated_document'] ?? '';
 
   String get archivedDocument =>
-      _localizedValues[localeCode]['archived_document'];
+      _localizedValues[localeCode]['archived_document'] ?? '';
 
   String get deletedDocument =>
-      _localizedValues[localeCode]['deleted_document'];
+      _localizedValues[localeCode]['deleted_document'] ?? '';
 
   String get restoredDocument =>
-      _localizedValues[localeCode]['restored_document'];
+      _localizedValues[localeCode]['restored_document'] ?? '';
 
-  String get newExpense => _localizedValues[localeCode]['new_expense'];
+  String get newExpense => _localizedValues[localeCode]['new_expense'] ?? '';
 
-  String get createdExpense => _localizedValues[localeCode]['created_expense'];
+  String get createdExpense =>
+      _localizedValues[localeCode]['created_expense'] ?? '';
 
-  String get updatedExpense => _localizedValues[localeCode]['updated_expense'];
+  String get updatedExpense =>
+      _localizedValues[localeCode]['updated_expense'] ?? '';
 
   String get archivedExpense =>
-      _localizedValues[localeCode]['archived_expense'];
+      _localizedValues[localeCode]['archived_expense'] ?? '';
 
-  String get deletedExpense => _localizedValues[localeCode]['deleted_expense'];
+  String get deletedExpense =>
+      _localizedValues[localeCode]['deleted_expense'] ?? '';
 
   String get restoredExpense =>
-      _localizedValues[localeCode]['restored_expense'];
+      _localizedValues[localeCode]['restored_expense'] ?? '';
 
-  String get productKey => _localizedValues[localeCode]['product_key'];
+  String get productKey => _localizedValues[localeCode]['product_key'] ?? '';
 
-  String get notes => _localizedValues[localeCode]['notes'];
+  String get notes => _localizedValues[localeCode]['notes'] ?? '';
 
-  String get cost => _localizedValues[localeCode]['cost'];
+  String get cost => _localizedValues[localeCode]['cost'] ?? '';
 
-  String get client => _localizedValues[localeCode]['client'];
+  String get client => _localizedValues[localeCode]['client'] ?? '';
 
-  String get clients => _localizedValues[localeCode]['clients'];
+  String get clients => _localizedValues[localeCode]['clients'] ?? '';
 
-  String get newClient => _localizedValues[localeCode]['new_client'];
+  String get newClient => _localizedValues[localeCode]['new_client'] ?? '';
 
-  String get createdClient => _localizedValues[localeCode]['created_client'];
+  String get createdClient =>
+      _localizedValues[localeCode]['created_client'] ?? '';
 
-  String get updatedClient => _localizedValues[localeCode]['updated_client'];
+  String get updatedClient =>
+      _localizedValues[localeCode]['updated_client'] ?? '';
 
-  String get archivedClient => _localizedValues[localeCode]['archived_client'];
+  String get archivedClient =>
+      _localizedValues[localeCode]['archived_client'] ?? '';
 
-  String get deletedClient => _localizedValues[localeCode]['deleted_client'];
+  String get deletedClient =>
+      _localizedValues[localeCode]['deleted_client'] ?? '';
 
-  String get restoredClient => _localizedValues[localeCode]['restored_client'];
+  String get restoredClient =>
+      _localizedValues[localeCode]['restored_client'] ?? '';
 
-  String get address1 => _localizedValues[localeCode]['address1'];
+  String get address1 => _localizedValues[localeCode]['address1'] ?? '';
 
-  String get address2 => _localizedValues[localeCode]['address2'];
+  String get address2 => _localizedValues[localeCode]['address2'] ?? '';
 
-  String get city => _localizedValues[localeCode]['city'];
+  String get city => _localizedValues[localeCode]['city'] ?? '';
 
-  String get state => _localizedValues[localeCode]['state'];
+  String get state => _localizedValues[localeCode]['state'] ?? '';
 
-  String get postalCode => _localizedValues[localeCode]['postal_code'];
+  String get postalCode => _localizedValues[localeCode]['postal_code'] ?? '';
 
-  String get country => _localizedValues[localeCode]['country'];
+  String get country => _localizedValues[localeCode]['country'] ?? '';
 
-  String get invoice => _localizedValues[localeCode]['invoice'];
+  String get invoice => _localizedValues[localeCode]['invoice'] ?? '';
 
-  String get invoices => _localizedValues[localeCode]['invoices'];
+  String get invoices => _localizedValues[localeCode]['invoices'] ?? '';
 
-  String get newInvoice => _localizedValues[localeCode]['new_invoice'];
+  String get newInvoice => _localizedValues[localeCode]['new_invoice'] ?? '';
 
-  String get createdInvoice => _localizedValues[localeCode]['created_invoice'];
+  String get createdInvoice =>
+      _localizedValues[localeCode]['created_invoice'] ?? '';
 
-  String get updatedInvoice => _localizedValues[localeCode]['updated_invoice'];
+  String get updatedInvoice =>
+      _localizedValues[localeCode]['updated_invoice'] ?? '';
 
   String get archivedInvoice =>
-      _localizedValues[localeCode]['archived_invoice'];
+      _localizedValues[localeCode]['archived_invoice'] ?? '';
 
-  String get deletedInvoice => _localizedValues[localeCode]['deleted_invoice'];
+  String get deletedInvoice =>
+      _localizedValues[localeCode]['deleted_invoice'] ?? '';
 
   String get restoredInvoice =>
-      _localizedValues[localeCode]['restored_invoice'];
+      _localizedValues[localeCode]['restored_invoice'] ?? '';
 
-  String get emailedInvoice => _localizedValues[localeCode]['emailed_invoice'];
+  String get emailedInvoice =>
+      _localizedValues[localeCode]['emailed_invoice'] ?? '';
 
-  String get emailedPayment => _localizedValues[localeCode]['emailed_payment'];
+  String get emailedPayment =>
+      _localizedValues[localeCode]['emailed_payment'] ?? '';
 
-  String get amount => _localizedValues[localeCode]['amount'];
+  String get amount => _localizedValues[localeCode]['amount'] ?? '';
 
-  String get invoiceNumber => _localizedValues[localeCode]['invoice_number'];
+  String get invoiceNumber =>
+      _localizedValues[localeCode]['invoice_number'] ?? '';
 
-  String get invoiceDate => _localizedValues[localeCode]['invoice_date'];
+  String get invoiceDate => _localizedValues[localeCode]['invoice_date'] ?? '';
 
-  String get discount => _localizedValues[localeCode]['discount'];
+  String get discount => _localizedValues[localeCode]['discount'] ?? '';
 
-  String get poNumber => _localizedValues[localeCode]['po_number'];
+  String get poNumber => _localizedValues[localeCode]['po_number'] ?? '';
 
-  String get terms => _localizedValues[localeCode]['terms'];
+  String get terms => _localizedValues[localeCode]['terms'] ?? '';
 
-  String get publicNotes => _localizedValues[localeCode]['public_notes'];
+  String get publicNotes => _localizedValues[localeCode]['public_notes'] ?? '';
 
-  String get privateNotes => _localizedValues[localeCode]['private_notes'];
+  String get privateNotes =>
+      _localizedValues[localeCode]['private_notes'] ?? '';
 
-  String get frequency => _localizedValues[localeCode]['frequency'];
+  String get frequency => _localizedValues[localeCode]['frequency'] ?? '';
 
-  String get startDate => _localizedValues[localeCode]['start_date'];
+  String get startDate => _localizedValues[localeCode]['start_date'] ?? '';
 
-  String get endDate => _localizedValues[localeCode]['end_date'];
+  String get endDate => _localizedValues[localeCode]['end_date'] ?? '';
 
-  String get quoteNumber => _localizedValues[localeCode]['quote_number'];
+  String get quoteNumber => _localizedValues[localeCode]['quote_number'] ?? '';
 
-  String get quoteDate => _localizedValues[localeCode]['quote_date'];
+  String get quoteDate => _localizedValues[localeCode]['quote_date'] ?? '';
 
-  String get validUntil => _localizedValues[localeCode]['valid_until'];
+  String get validUntil => _localizedValues[localeCode]['valid_until'] ?? '';
 
-  String get items => _localizedValues[localeCode]['items'];
+  String get items => _localizedValues[localeCode]['items'] ?? '';
 
-  String get partialDeposit => _localizedValues[localeCode]['partial_deposit'];
+  String get partialDeposit =>
+      _localizedValues[localeCode]['partial_deposit'] ?? '';
 
-  String get description => _localizedValues[localeCode]['description'];
+  String get description => _localizedValues[localeCode]['description'] ?? '';
 
-  String get unitCost => _localizedValues[localeCode]['unit_cost'];
+  String get unitCost => _localizedValues[localeCode]['unit_cost'] ?? '';
 
-  String get quantity => _localizedValues[localeCode]['quantity'];
+  String get quantity => _localizedValues[localeCode]['quantity'] ?? '';
 
-  String get addItem => _localizedValues[localeCode]['add_item'];
+  String get addItem => _localizedValues[localeCode]['add_item'] ?? '';
 
-  String get contact => _localizedValues[localeCode]['contact'];
+  String get contact => _localizedValues[localeCode]['contact'] ?? '';
 
-  String get workPhone => _localizedValues[localeCode]['work_phone'];
+  String get workPhone => _localizedValues[localeCode]['work_phone'] ?? '';
 
-  String get totalAmount => _localizedValues[localeCode]['total_amount'];
+  String get totalAmount => _localizedValues[localeCode]['total_amount'] ?? '';
 
-  String get pdf => _localizedValues[localeCode]['pdf'];
+  String get pdf => _localizedValues[localeCode]['pdf'] ?? '';
 
-  String get dueDate => _localizedValues[localeCode]['due_date'];
+  String get dueDate => _localizedValues[localeCode]['due_date'] ?? '';
 
-  String get partialDueDate => _localizedValues[localeCode]['partial_due_date'];
+  String get partialDueDate =>
+      _localizedValues[localeCode]['partial_due_date'] ?? '';
 
-  String get status => _localizedValues[localeCode]['status'];
+  String get status => _localizedValues[localeCode]['status'] ?? '';
 
   String get invoiceStatusId =>
-      _localizedValues[localeCode]['invoice_status_id'];
+      _localizedValues[localeCode]['invoice_status_id'] ?? '';
 
-  String get quoteStatusId => _localizedValues[localeCode]['quote_status'];
+  String get quoteStatusId =>
+      _localizedValues[localeCode]['quote_status'] ?? '';
 
   String get clickPlusToAddItem =>
-      _localizedValues[localeCode]['click_plus_to_add_item'];
+      _localizedValues[localeCode]['click_plus_to_add_item'] ?? '';
 
   String get clickPlusToAddTime =>
-      _localizedValues[localeCode]['click_plus_to_add_time'];
+      _localizedValues[localeCode]['click_plus_to_add_time'] ?? '';
 
-  String get countSelected => _localizedValues[localeCode]['count_selected'];
+  String get countSelected =>
+      _localizedValues[localeCode]['count_selected'] ?? '';
 
-  String get total => _localizedValues[localeCode]['total'];
+  String get total => _localizedValues[localeCode]['total'] ?? '';
 
-  String get totals => _localizedValues[localeCode]['totals'];
+  String get totals => _localizedValues[localeCode]['totals'] ?? '';
 
-  String get percent => _localizedValues[localeCode]['percent'];
+  String get percent => _localizedValues[localeCode]['percent'] ?? '';
 
-  String get edit => _localizedValues[localeCode]['edit'];
+  String get edit => _localizedValues[localeCode]['edit'] ?? '';
 
-  String get dismiss => _localizedValues[localeCode]['dismiss'];
+  String get dismiss => _localizedValues[localeCode]['dismiss'] ?? '';
 
   String get pleaseSelectADate =>
-      _localizedValues[localeCode]['please_select_a_date'];
+      _localizedValues[localeCode]['please_select_a_date'] ?? '';
 
   String get pleaseSelectAClient =>
-      _localizedValues[localeCode]['please_select_a_client'];
+      _localizedValues[localeCode]['please_select_a_client'] ?? '';
 
   String get pleaseSelectAnInvoice =>
-      _localizedValues[localeCode]['please_select_an_invoice'];
+      _localizedValues[localeCode]['please_select_an_invoice'] ?? '';
 
-  String get taskRate => _localizedValues[localeCode]['task_rate'];
+  String get taskRate => _localizedValues[localeCode]['task_rate'] ?? '';
 
-  String get settings => _localizedValues[localeCode]['settings'];
+  String get settings => _localizedValues[localeCode]['settings'] ?? '';
 
-  String get language => _localizedValues[localeCode]['language'];
+  String get language => _localizedValues[localeCode]['language'] ?? '';
 
-  String get currency => _localizedValues[localeCode]['currency'];
+  String get currency => _localizedValues[localeCode]['currency'] ?? '';
 
-  String get createdAt => _localizedValues[localeCode]['created_at'];
+  String get createdAt => _localizedValues[localeCode]['created_at'] ?? '';
 
-  String get updatedAt => _localizedValues[localeCode]['updated_at'];
+  String get updatedAt => _localizedValues[localeCode]['updated_at'] ?? '';
 
-  String get tax => _localizedValues[localeCode]['tax'];
+  String get tax => _localizedValues[localeCode]['tax'] ?? '';
 
   String get pleaseEnterAnInvoiceNumber =>
-      _localizedValues[localeCode]['please_enter_an_invoice_number'];
+      _localizedValues[localeCode]['please_enter_an_invoice_number'] ?? '';
 
   String get pleaseEnterAQuoteNumber =>
-      _localizedValues[localeCode]['please_enter_a_quote_number'];
+      _localizedValues[localeCode]['please_enter_a_quote_number'] ?? '';
 
-  String get pastDue => _localizedValues[localeCode]['past_due'];
+  String get pastDue => _localizedValues[localeCode]['past_due'] ?? '';
 
-  String get draft => _localizedValues[localeCode]['draft'];
+  String get draft => _localizedValues[localeCode]['draft'] ?? '';
 
-  String get sent => _localizedValues[localeCode]['sent'];
+  String get sent => _localizedValues[localeCode]['sent'] ?? '';
 
-  String get viewed => _localizedValues[localeCode]['viewed'];
+  String get viewed => _localizedValues[localeCode]['viewed'] ?? '';
 
-  String get approved => _localizedValues[localeCode]['approved'];
+  String get approved => _localizedValues[localeCode]['approved'] ?? '';
 
-  String get partial => _localizedValues[localeCode]['partial'];
+  String get partial => _localizedValues[localeCode]['partial'] ?? '';
 
-  String get paid => _localizedValues[localeCode]['paid'];
+  String get paid => _localizedValues[localeCode]['paid'] ?? '';
 
-  String get markSent => _localizedValues[localeCode]['mark_sent'];
+  String get markSent => _localizedValues[localeCode]['mark_sent'] ?? '';
 
   String get markedInvoiceAsSent =>
-      _localizedValues[localeCode]['marked_invoice_as_sent'];
+      _localizedValues[localeCode]['marked_invoice_as_sent'] ?? '';
 
   String get markedInvoiceAsPaid =>
-      _localizedValues[localeCode]['marked_invoice_as_paid'];
+      _localizedValues[localeCode]['marked_invoice_as_paid'] ?? '';
 
   String get markedInvoicesAsSent =>
-      _localizedValues[localeCode]['marked_invoices_as_sent'];
+      _localizedValues[localeCode]['marked_invoices_as_sent'] ?? '';
 
   String get markedInvoicesAsPaid =>
-      _localizedValues[localeCode]['marked_invoices_as_paid'];
+      _localizedValues[localeCode]['marked_invoices_as_paid'] ?? '';
 
-  String get done => _localizedValues[localeCode]['done'];
+  String get done => _localizedValues[localeCode]['done'] ?? '';
 
   String get pleaseEnterAClientOrContactName =>
-      _localizedValues[localeCode]['please_enter_a_client_or_contact_name'];
+      _localizedValues[localeCode]['please_enter_a_client_or_contact_name'] ??
+      '';
 
-  String get darkMode => _localizedValues[localeCode]['dark_mode'];
+  String get darkMode => _localizedValues[localeCode]['dark_mode'] ?? '';
 
   String get restartAppToApplyChange =>
-      _localizedValues[localeCode]['restart_app_to_apply_change'];
+      _localizedValues[localeCode]['restart_app_to_apply_change'] ?? '';
 
-  String get refreshData => _localizedValues[localeCode]['refresh_data'];
+  String get refreshData => _localizedValues[localeCode]['refresh_data'] ?? '';
 
-  String get blankContact => _localizedValues[localeCode]['blank_contact'];
+  String get blankContact =>
+      _localizedValues[localeCode]['blank_contact'] ?? '';
 
-  String get activity => _localizedValues[localeCode]['activity'];
+  String get activity => _localizedValues[localeCode]['activity'] ?? '';
 
-  String get noRecordsFound => _localizedValues[localeCode]['no_records_found'];
+  String get noRecordsFound =>
+      _localizedValues[localeCode]['no_records_found'] ?? '';
 
-  String get clone => _localizedValues[localeCode]['clone'];
+  String get clone => _localizedValues[localeCode]['clone'] ?? '';
 
-  String get loading => _localizedValues[localeCode]['loading'];
+  String get loading => _localizedValues[localeCode]['loading'] ?? '';
 
-  String get industry => _localizedValues[localeCode]['industry'];
+  String get industry => _localizedValues[localeCode]['industry'] ?? '';
 
-  String get size => _localizedValues[localeCode]['size'];
+  String get size => _localizedValues[localeCode]['size'] ?? '';
 
-  String get paymentTerms => _localizedValues[localeCode]['payment_terms'];
+  String get paymentTerms =>
+      _localizedValues[localeCode]['payment_terms'] ?? '';
 
-  String get paymentDate => _localizedValues[localeCode]['payment_date'];
+  String get paymentDate => _localizedValues[localeCode]['payment_date'] ?? '';
 
-  String get paymentStatus => _localizedValues[localeCode]['payment_status'];
+  String get paymentStatus =>
+      _localizedValues[localeCode]['payment_status'] ?? '';
 
-  String get net => _localizedValues[localeCode]['net'];
+  String get net => _localizedValues[localeCode]['net'] ?? '';
 
-  String get clientPortal => _localizedValues[localeCode]['client_portal'];
+  String get clientPortal =>
+      _localizedValues[localeCode]['client_portal'] ?? '';
 
-  String get showTasks => _localizedValues[localeCode]['show_tasks'];
+  String get showTasks => _localizedValues[localeCode]['show_tasks'] ?? '';
 
-  String get emailReminders => _localizedValues[localeCode]['email_reminders'];
+  String get emailReminders =>
+      _localizedValues[localeCode]['email_reminders'] ?? '';
 
-  String get enabled => _localizedValues[localeCode]['enabled'];
+  String get enabled => _localizedValues[localeCode]['enabled'] ?? '';
 
-  String get recipients => _localizedValues[localeCode]['recipients'];
+  String get recipients => _localizedValues[localeCode]['recipients'] ?? '';
 
-  String get initialEmail => _localizedValues[localeCode]['initial_email'];
+  String get initialEmail =>
+      _localizedValues[localeCode]['initial_email'] ?? '';
 
-  String get firstReminder => _localizedValues[localeCode]['first_reminder'];
+  String get firstReminder =>
+      _localizedValues[localeCode]['first_reminder'] ?? '';
 
-  String get secondReminder => _localizedValues[localeCode]['second_reminder'];
+  String get secondReminder =>
+      _localizedValues[localeCode]['second_reminder'] ?? '';
 
-  String get thirdReminder => _localizedValues[localeCode]['third_reminder'];
+  String get thirdReminder =>
+      _localizedValues[localeCode]['third_reminder'] ?? '';
 
-  String get template => _localizedValues[localeCode]['template'];
+  String get template => _localizedValues[localeCode]['template'] ?? '';
 
-  String get send => _localizedValues[localeCode]['send'];
+  String get send => _localizedValues[localeCode]['send'] ?? '';
 
-  String get subject => _localizedValues[localeCode]['subject'];
+  String get subject => _localizedValues[localeCode]['subject'] ?? '';
 
-  String get body => _localizedValues[localeCode]['body'];
+  String get body => _localizedValues[localeCode]['body'] ?? '';
 
-  String get sendEmail => _localizedValues[localeCode]['send_email'];
+  String get sendEmail => _localizedValues[localeCode]['send_email'] ?? '';
 
-  String get emailReceipt => _localizedValues[localeCode]['email_receipt'];
+  String get emailReceipt =>
+      _localizedValues[localeCode]['email_receipt'] ?? '';
 
-  String get autoBilling => _localizedValues[localeCode]['auto_billing'];
+  String get autoBilling => _localizedValues[localeCode]['auto_billing'] ?? '';
 
-  String get button => _localizedValues[localeCode]['button'];
+  String get button => _localizedValues[localeCode]['button'] ?? '';
 
-  String get preview => _localizedValues[localeCode]['preview'];
+  String get preview => _localizedValues[localeCode]['preview'] ?? '';
 
-  String get customize => _localizedValues[localeCode]['customize'];
+  String get customize => _localizedValues[localeCode]['customize'] ?? '';
 
-  String get history => _localizedValues[localeCode]['history'];
+  String get history => _localizedValues[localeCode]['history'] ?? '';
 
-  String get payment => _localizedValues[localeCode]['payment'];
+  String get payment => _localizedValues[localeCode]['payment'] ?? '';
 
-  String get payments => _localizedValues[localeCode]['payments'];
+  String get payments => _localizedValues[localeCode]['payments'] ?? '';
 
-  String get refunded => _localizedValues[localeCode]['refunded'];
+  String get refunded => _localizedValues[localeCode]['refunded'] ?? '';
 
-  String get paymentType => _localizedValues[localeCode]['payment_type'];
+  String get paymentType => _localizedValues[localeCode]['payment_type'] ?? '';
 
   String get transactionReference =>
-      _localizedValues[localeCode]['transaction_reference'];
+      _localizedValues[localeCode]['transaction_reference'] ?? '';
 
-  String get enterPayment => _localizedValues[localeCode]['enter_payment'];
+  String get enterPayment =>
+      _localizedValues[localeCode]['enter_payment'] ?? '';
 
-  String get createdPayment => _localizedValues[localeCode]['created_payment'];
+  String get createdPayment =>
+      _localizedValues[localeCode]['created_payment'] ?? '';
 
-  String get updatedPayment => _localizedValues[localeCode]['updated_payment'];
+  String get updatedPayment =>
+      _localizedValues[localeCode]['updated_payment'] ?? '';
 
   String get archivedPayment =>
-      _localizedValues[localeCode]['archived_payment'];
+      _localizedValues[localeCode]['archived_payment'] ?? '';
 
-  String get deletedPayment => _localizedValues[localeCode]['deleted_payment'];
+  String get deletedPayment =>
+      _localizedValues[localeCode]['deleted_payment'] ?? '';
 
   String get restoredPayment =>
-      _localizedValues[localeCode]['restored_payment'];
+      _localizedValues[localeCode]['restored_payment'] ?? '';
 
-  String get quote => _localizedValues[localeCode]['quote'];
+  String get quote => _localizedValues[localeCode]['quote'] ?? '';
 
-  String get quotes => _localizedValues[localeCode]['quotes'];
+  String get quotes => _localizedValues[localeCode]['quotes'] ?? '';
 
-  String get newQuote => _localizedValues[localeCode]['new_quote'];
+  String get newQuote => _localizedValues[localeCode]['new_quote'] ?? '';
 
-  String get createdQuote => _localizedValues[localeCode]['created_quote'];
+  String get createdQuote =>
+      _localizedValues[localeCode]['created_quote'] ?? '';
 
-  String get updatedQuote => _localizedValues[localeCode]['updated_quote'];
+  String get updatedQuote =>
+      _localizedValues[localeCode]['updated_quote'] ?? '';
 
-  String get archivedQuote => _localizedValues[localeCode]['archived_quote'];
+  String get archivedQuote =>
+      _localizedValues[localeCode]['archived_quote'] ?? '';
 
-  String get deletedQuote => _localizedValues[localeCode]['deleted_quote'];
+  String get deletedQuote =>
+      _localizedValues[localeCode]['deleted_quote'] ?? '';
 
-  String get restoredQuote => _localizedValues[localeCode]['restored_quote'];
+  String get restoredQuote =>
+      _localizedValues[localeCode]['restored_quote'] ?? '';
 
-  String get expense => _localizedValues[localeCode]['expense'];
+  String get expense => _localizedValues[localeCode]['expense'] ?? '';
 
-  String get expenses => _localizedValues[localeCode]['expenses'];
+  String get expenses => _localizedValues[localeCode]['expenses'] ?? '';
 
-  String get vendor => _localizedValues[localeCode]['vendor'];
+  String get vendor => _localizedValues[localeCode]['vendor'] ?? '';
 
-  String get vendors => _localizedValues[localeCode]['vendors'];
+  String get vendors => _localizedValues[localeCode]['vendors'] ?? '';
 
-  String get task => _localizedValues[localeCode]['task'];
+  String get task => _localizedValues[localeCode]['task'] ?? '';
 
-  String get tasks => _localizedValues[localeCode]['tasks'];
+  String get tasks => _localizedValues[localeCode]['tasks'] ?? '';
 
-  String get project => _localizedValues[localeCode]['project'];
+  String get project => _localizedValues[localeCode]['project'] ?? '';
 
-  String get projects => _localizedValues[localeCode]['projects'];
+  String get projects => _localizedValues[localeCode]['projects'] ?? '';
 
-  String get activity_1 => _localizedValues[localeCode]['activity_1'];
+  String get activity_1 => _localizedValues[localeCode]['activity_1'] ?? '';
 
-  String get activity_2 => _localizedValues[localeCode]['activity_2'];
+  String get activity_2 => _localizedValues[localeCode]['activity_2'] ?? '';
 
-  String get activity_3 => _localizedValues[localeCode]['activity_3'];
+  String get activity_3 => _localizedValues[localeCode]['activity_3'] ?? '';
 
-  String get activity_4 => _localizedValues[localeCode]['activity_4'];
+  String get activity_4 => _localizedValues[localeCode]['activity_4'] ?? '';
 
-  String get activity_5 => _localizedValues[localeCode]['activity_5'];
+  String get activity_5 => _localizedValues[localeCode]['activity_5'] ?? '';
 
-  String get activity_6 => _localizedValues[localeCode]['activity_6'];
+  String get activity_6 => _localizedValues[localeCode]['activity_6'] ?? '';
 
-  String get activity_7 => _localizedValues[localeCode]['activity_7'];
+  String get activity_7 => _localizedValues[localeCode]['activity_7'] ?? '';
 
-  String get activity_8 => _localizedValues[localeCode]['activity_8'];
+  String get activity_8 => _localizedValues[localeCode]['activity_8'] ?? '';
 
-  String get activity_9 => _localizedValues[localeCode]['activity_9'];
+  String get activity_9 => _localizedValues[localeCode]['activity_9'] ?? '';
 
-  String get activity_10 => _localizedValues[localeCode]['activity_10'];
+  String get activity_10 => _localizedValues[localeCode]['activity_10'] ?? '';
 
-  String get activity_11 => _localizedValues[localeCode]['activity_11'];
+  String get activity_11 => _localizedValues[localeCode]['activity_11'] ?? '';
 
-  String get activity_12 => _localizedValues[localeCode]['activity_12'];
+  String get activity_12 => _localizedValues[localeCode]['activity_12'] ?? '';
 
-  String get activity_13 => _localizedValues[localeCode]['activity_13'];
+  String get activity_13 => _localizedValues[localeCode]['activity_13'] ?? '';
 
-  String get activity_14 => _localizedValues[localeCode]['activity_14'];
+  String get activity_14 => _localizedValues[localeCode]['activity_14'] ?? '';
 
-  String get activity_15 => _localizedValues[localeCode]['activity_15'];
+  String get activity_15 => _localizedValues[localeCode]['activity_15'] ?? '';
 
-  String get activity_16 => _localizedValues[localeCode]['activity_16'];
+  String get activity_16 => _localizedValues[localeCode]['activity_16'] ?? '';
 
-  String get activity_17 => _localizedValues[localeCode]['activity_17'];
+  String get activity_17 => _localizedValues[localeCode]['activity_17'] ?? '';
 
-  String get activity_18 => _localizedValues[localeCode]['activity_18'];
+  String get activity_18 => _localizedValues[localeCode]['activity_18'] ?? '';
 
-  String get activity_19 => _localizedValues[localeCode]['activity_19'];
+  String get activity_19 => _localizedValues[localeCode]['activity_19'] ?? '';
 
-  String get activity_20 => _localizedValues[localeCode]['activity_20'];
+  String get activity_20 => _localizedValues[localeCode]['activity_20'] ?? '';
 
-  String get activity_21 => _localizedValues[localeCode]['activity_21'];
+  String get activity_21 => _localizedValues[localeCode]['activity_21'] ?? '';
 
-  String get activity_22 => _localizedValues[localeCode]['activity_22'];
+  String get activity_22 => _localizedValues[localeCode]['activity_22'] ?? '';
 
-  String get activity_23 => _localizedValues[localeCode]['activity_23'];
+  String get activity_23 => _localizedValues[localeCode]['activity_23'] ?? '';
 
-  String get activity_24 => _localizedValues[localeCode]['activity_24'];
+  String get activity_24 => _localizedValues[localeCode]['activity_24'] ?? '';
 
-  String get activity_25 => _localizedValues[localeCode]['activity_25'];
+  String get activity_25 => _localizedValues[localeCode]['activity_25'] ?? '';
 
-  String get activity_26 => _localizedValues[localeCode]['activity_26'];
+  String get activity_26 => _localizedValues[localeCode]['activity_26'] ?? '';
 
-  String get activity_27 => _localizedValues[localeCode]['activity_27'];
+  String get activity_27 => _localizedValues[localeCode]['activity_27'] ?? '';
 
-  String get activity_28 => _localizedValues[localeCode]['activity_28'];
+  String get activity_28 => _localizedValues[localeCode]['activity_28'] ?? '';
 
-  String get activity_29 => _localizedValues[localeCode]['activity_29'];
+  String get activity_29 => _localizedValues[localeCode]['activity_29'] ?? '';
 
-  String get activity_30 => _localizedValues[localeCode]['activity_30'];
+  String get activity_30 => _localizedValues[localeCode]['activity_30'] ?? '';
 
-  String get activity_31 => _localizedValues[localeCode]['activity_31'];
+  String get activity_31 => _localizedValues[localeCode]['activity_31'] ?? '';
 
-  String get activity_32 => _localizedValues[localeCode]['activity_32'];
+  String get activity_32 => _localizedValues[localeCode]['activity_32'] ?? '';
 
-  String get activity_33 => _localizedValues[localeCode]['activity_33'];
+  String get activity_33 => _localizedValues[localeCode]['activity_33'] ?? '';
 
-  String get activity_34 => _localizedValues[localeCode]['activity_34'];
+  String get activity_34 => _localizedValues[localeCode]['activity_34'] ?? '';
 
-  String get activity_35 => _localizedValues[localeCode]['activity_35'];
+  String get activity_35 => _localizedValues[localeCode]['activity_35'] ?? '';
 
-  String get activity_36 => _localizedValues[localeCode]['activity_36'];
+  String get activity_36 => _localizedValues[localeCode]['activity_36'] ?? '';
 
-  String get activity_37 => _localizedValues[localeCode]['activity_37'];
+  String get activity_37 => _localizedValues[localeCode]['activity_37'] ?? '';
 
-  String get activity_38 => _localizedValues[localeCode]['activity_38'];
+  String get activity_38 => _localizedValues[localeCode]['activity_38'] ?? '';
 
-  String get activity_39 => _localizedValues[localeCode]['activity_39'];
+  String get activity_39 => _localizedValues[localeCode]['activity_39'] ?? '';
 
-  String get activity_40 => _localizedValues[localeCode]['activity_40'];
+  String get activity_40 => _localizedValues[localeCode]['activity_40'] ?? '';
 
-  String get activity_41 => _localizedValues[localeCode]['activity_41'];
+  String get activity_41 => _localizedValues[localeCode]['activity_41'] ?? '';
 
-  String get activity_42 => _localizedValues[localeCode]['activity_42'];
+  String get activity_42 => _localizedValues[localeCode]['activity_42'] ?? '';
 
-  String get activity_43 => _localizedValues[localeCode]['activity_43'];
+  String get activity_43 => _localizedValues[localeCode]['activity_43'] ?? '';
 
-  String get activity_44 => _localizedValues[localeCode]['activity_44'];
+  String get activity_44 => _localizedValues[localeCode]['activity_44'] ?? '';
 
-  String get activity_45 => _localizedValues[localeCode]['activity_45'];
+  String get activity_45 => _localizedValues[localeCode]['activity_45'] ?? '';
 
-  String get activity_46 => _localizedValues[localeCode]['activity_46'];
+  String get activity_46 => _localizedValues[localeCode]['activity_46'] ?? '';
 
-  String get activity_47 => _localizedValues[localeCode]['activity_47'];
+  String get activity_47 => _localizedValues[localeCode]['activity_47'] ?? '';
 
-  String get activity_48 => _localizedValues[localeCode]['activity_48'];
+  String get activity_48 => _localizedValues[localeCode]['activity_48'] ?? '';
 
-  String get activity_79 => _localizedValues[localeCode]['activity_49'];
+  String get activity_79 => _localizedValues[localeCode]['activity_49'] ?? '';
 
-  String get activity_50 => _localizedValues[localeCode]['activity_50'];
+  String get activity_50 => _localizedValues[localeCode]['activity_50'] ?? '';
 
-  String get activity_51 => _localizedValues[localeCode]['activity_51'];
+  String get activity_51 => _localizedValues[localeCode]['activity_51'] ?? '';
 
-  String get activity_52 => _localizedValues[localeCode]['activity_52'];
+  String get activity_52 => _localizedValues[localeCode]['activity_52'] ?? '';
 
-  String get activity_53 => _localizedValues[localeCode]['activity_53'];
+  String get activity_53 => _localizedValues[localeCode]['activity_53'] ?? '';
 
-  String get activity_54 => _localizedValues[localeCode]['activity_54'];
+  String get activity_54 => _localizedValues[localeCode]['activity_54'] ?? '';
 
-  String get activity_55 => _localizedValues[localeCode]['activity_55'];
+  String get activity_55 => _localizedValues[localeCode]['activity_55'] ?? '';
 
-  String get activity_56 => _localizedValues[localeCode]['activity_56'];
+  String get activity_56 => _localizedValues[localeCode]['activity_56'] ?? '';
 
-  String get activity_57 => _localizedValues[localeCode]['activity_57'];
+  String get activity_57 => _localizedValues[localeCode]['activity_57'] ?? '';
 
   String get oneTimePassword =>
-      _localizedValues[localeCode]['one_time_password'];
+      _localizedValues[localeCode]['one_time_password'] ?? '';
 
-  String get emailedQuote => _localizedValues[localeCode]['emailed_quote'];
+  String get emailedQuote =>
+      _localizedValues[localeCode]['emailed_quote'] ?? '';
 
-  String get emailedCredit => _localizedValues[localeCode]['emailed_credit'];
+  String get emailedCredit =>
+      _localizedValues[localeCode]['emailed_credit'] ?? '';
 
   String get markedQuoteAsSent =>
-      _localizedValues[localeCode]['marked_quote_as_sent'];
+      _localizedValues[localeCode]['marked_quote_as_sent'] ?? '';
 
   String get markedCreditAsSent =>
-      _localizedValues[localeCode]['marked_credit_as_sent'];
+      _localizedValues[localeCode]['marked_credit_as_sent'] ?? '';
 
-  String get expired => _localizedValues[localeCode]['expired'];
+  String get expired => _localizedValues[localeCode]['expired'] ?? '';
 
-  String get budgetedHours => _localizedValues[localeCode]['budgeted_hours'];
+  String get budgetedHours =>
+      _localizedValues[localeCode]['budgeted_hours'] ?? '';
 
   String get pleaseEnterAName =>
-      _localizedValues[localeCode]['please_enter_a_name'];
+      _localizedValues[localeCode]['please_enter_a_name'] ?? '';
 
-  String get createdTask => _localizedValues[localeCode]['created_task'];
+  String get createdTask => _localizedValues[localeCode]['created_task'] ?? '';
 
-  String get updatedTask => _localizedValues[localeCode]['updated_task'];
+  String get updatedTask => _localizedValues[localeCode]['updated_task'] ?? '';
 
-  String get archivedTask => _localizedValues[localeCode]['archived_task'];
+  String get archivedTask =>
+      _localizedValues[localeCode]['archived_task'] ?? '';
 
-  String get deletedTask => _localizedValues[localeCode]['deleted_task'];
+  String get deletedTask => _localizedValues[localeCode]['deleted_task'] ?? '';
 
-  String get restoredTask => _localizedValues[localeCode]['restored_task'];
+  String get restoredTask =>
+      _localizedValues[localeCode]['restored_task'] ?? '';
 
-  String get newTask => _localizedValues[localeCode]['new_task'];
+  String get newTask => _localizedValues[localeCode]['new_task'] ?? '';
 
-  String get duration => _localizedValues[localeCode]['duration'];
+  String get duration => _localizedValues[localeCode]['duration'] ?? '';
 
-  String get times => _localizedValues[localeCode]['times'];
+  String get times => _localizedValues[localeCode]['times'] ?? '';
 
-  String get date => _localizedValues[localeCode]['date'];
+  String get date => _localizedValues[localeCode]['date'] ?? '';
 
-  String get startTime => _localizedValues[localeCode]['start_time'];
+  String get startTime => _localizedValues[localeCode]['start_time'] ?? '';
 
-  String get endTime => _localizedValues[localeCode]['end_time'];
+  String get endTime => _localizedValues[localeCode]['end_time'] ?? '';
 
-  String get budgeted => _localizedValues[localeCode]['budgeted'];
+  String get budgeted => _localizedValues[localeCode]['budgeted'] ?? '';
 
-  String get timer => _localizedValues[localeCode]['timer'];
+  String get timer => _localizedValues[localeCode]['timer'] ?? '';
 
-  String get manual => _localizedValues[localeCode]['manual'];
+  String get manual => _localizedValues[localeCode]['manual'] ?? '';
 
-  String get autoStartTasks => _localizedValues[localeCode]['auto_start_tasks'];
+  String get autoStartTasks =>
+      _localizedValues[localeCode]['auto_start_tasks'] ?? '';
 
-  String get now => _localizedValues[localeCode]['now'];
+  String get now => _localizedValues[localeCode]['now'] ?? '';
 
-  String get startedTask => _localizedValues[localeCode]['started_task'];
+  String get startedTask => _localizedValues[localeCode]['started_task'] ?? '';
 
-  String get stoppedTask => _localizedValues[localeCode]['stopped_task'];
+  String get stoppedTask => _localizedValues[localeCode]['stopped_task'] ?? '';
 
-  String get resumedTask => _localizedValues[localeCode]['resumed_task'];
+  String get resumedTask => _localizedValues[localeCode]['resumed_task'] ?? '';
 
-  String get start => _localizedValues[localeCode]['start'];
+  String get start => _localizedValues[localeCode]['start'] ?? '';
 
-  String get stop => _localizedValues[localeCode]['stop'];
+  String get stop => _localizedValues[localeCode]['stop'] ?? '';
 
-  String get taskErrors => _localizedValues[localeCode]['task_errors'];
+  String get taskErrors => _localizedValues[localeCode]['task_errors'] ?? '';
 
-  String get resume => _localizedValues[localeCode]['resume'];
+  String get resume => _localizedValues[localeCode]['resume'] ?? '';
 
-  String get running => _localizedValues[localeCode]['running'];
+  String get running => _localizedValues[localeCode]['running'] ?? '';
 
-  String get invoiced => _localizedValues[localeCode]['invoiced'];
+  String get invoiced => _localizedValues[localeCode]['invoiced'] ?? '';
 
-  String get logged => _localizedValues[localeCode]['logged'];
+  String get logged => _localizedValues[localeCode]['logged'] ?? '';
 
   String get failedToFindRecord =>
-      _localizedValues[localeCode]['failed_to_find_record'];
+      _localizedValues[localeCode]['failed_to_find_record'] ?? '';
 
   String get passwordIsTooShort =>
-      _localizedValues[localeCode]['password_is_too_short'];
+      _localizedValues[localeCode]['password_is_too_short'] ?? '';
 
-  String get design => _localizedValues[localeCode]['design'];
+  String get design => _localizedValues[localeCode]['design'] ?? '';
 
-  String get copyShipping => _localizedValues[localeCode]['copy_shipping'];
+  String get copyShipping =>
+      _localizedValues[localeCode]['copy_shipping'] ?? '';
 
-  String get copyBilling => _localizedValues[localeCode]['copy_billing'];
+  String get copyBilling => _localizedValues[localeCode]['copy_billing'] ?? '';
 
-  String get address => _localizedValues[localeCode]['address'];
+  String get address => _localizedValues[localeCode]['address'] ?? '';
 
-  String get category => _localizedValues[localeCode]['category'];
+  String get category => _localizedValues[localeCode]['category'] ?? '';
 
-  String get markBillable => _localizedValues[localeCode]['mark_billable'];
+  String get markBillable =>
+      _localizedValues[localeCode]['mark_billable'] ?? '';
 
-  String get markPaid => _localizedValues[localeCode]['mark_paid'];
+  String get markPaid => _localizedValues[localeCode]['mark_paid'] ?? '';
 
   String get convertCurrency =>
-      _localizedValues[localeCode]['convert_currency'];
+      _localizedValues[localeCode]['convert_currency'] ?? '';
 
-  String get exchangeRate => _localizedValues[localeCode]['exchange_rate'];
+  String get exchangeRate =>
+      _localizedValues[localeCode]['exchange_rate'] ?? '';
 
   String get addDocumentsToInvoice =>
-      _localizedValues[localeCode]['add_documents_to_invoice'];
+      _localizedValues[localeCode]['add_documents_to_invoice'] ?? '';
 
-  String get pending => _localizedValues[localeCode]['pending'];
+  String get pending => _localizedValues[localeCode]['pending'] ?? '';
 
-  String get converted => _localizedValues[localeCode]['converted'];
+  String get converted => _localizedValues[localeCode]['converted'] ?? '';
 
-  String get expenseStatus1 => _localizedValues[localeCode]['expense_status_1'];
+  String get expenseStatus1 =>
+      _localizedValues[localeCode]['expense_status_1'] ?? '';
 
-  String get expenseStatus2 => _localizedValues[localeCode]['expense_status_2'];
+  String get expenseStatus2 =>
+      _localizedValues[localeCode]['expense_status_2'] ?? '';
 
-  String get expenseStatus3 => _localizedValues[localeCode]['expense_status_3'];
+  String get expenseStatus3 =>
+      _localizedValues[localeCode]['expense_status_3'] ?? '';
 
-  String get expenseDate => _localizedValues[localeCode]['expense_date'];
+  String get expenseDate => _localizedValues[localeCode]['expense_date'] ?? '';
 
-  String get noHistory => _localizedValues[localeCode]['no_history'];
+  String get noHistory => _localizedValues[localeCode]['no_history'] ?? '';
 
-  String get takePicture => _localizedValues[localeCode]['take_picture'];
+  String get takePicture => _localizedValues[localeCode]['take_picture'] ?? '';
 
-  String get uploadFile => _localizedValues[localeCode]['upload_file'];
+  String get uploadFile => _localizedValues[localeCode]['upload_file'] ?? '';
 
-  String get download => _localizedValues[localeCode]['download'];
+  String get download => _localizedValues[localeCode]['download'] ?? '';
 
   String get noRecordSelected =>
-      _localizedValues[localeCode]['no_record_selected'];
+      _localizedValues[localeCode]['no_record_selected'] ?? '';
 
   String get requiresAnEnterprisePlan =>
-      _localizedValues[localeCode]['requires_an_enterprise_plan'];
+      _localizedValues[localeCode]['requires_an_enterprise_plan'] ?? '';
 
   String get errorUnsavedChanges =>
-      _localizedValues[localeCode]['error_unsaved_changes'];
+      _localizedValues[localeCode]['error_unsaved_changes'] ?? '';
 
-  String get createNew => _localizedValues[localeCode]['create_new'];
+  String get createNew => _localizedValues[localeCode]['create_new'] ?? '';
 
-  String get emailLogin => _localizedValues[localeCode]['email_login'];
+  String get emailLogin => _localizedValues[localeCode]['email_login'] ?? '';
 
-  String get createAccount => _localizedValues[localeCode]['create_account'];
+  String get createAccount =>
+      _localizedValues[localeCode]['create_account'] ?? '';
 
-  String get viewWebsite => _localizedValues[localeCode]['view_website'];
+  String get viewWebsite => _localizedValues[localeCode]['view_website'] ?? '';
 
-  String get accountLogin => _localizedValues[localeCode]['account_login'];
+  String get accountLogin =>
+      _localizedValues[localeCode]['account_login'] ?? '';
 
-  String get signUp => _localizedValues[localeCode]['sign_up'];
+  String get signUp => _localizedValues[localeCode]['sign_up'] ?? '';
 
   String get signUpWithGoogle =>
-      _localizedValues[localeCode]['sign_up_with_google'];
+      _localizedValues[localeCode]['sign_up_with_google'] ?? '';
 
   String get pleaseAgreeToTermsAndPrivacy =>
-      _localizedValues[localeCode]['please_agree_to_terms_and_privacy'];
+      _localizedValues[localeCode]['please_agree_to_terms_and_privacy'] ?? '';
 
-  String get iAgreeToThe => _localizedValues[localeCode]['i_agree_to_the'];
+  String get iAgreeToThe =>
+      _localizedValues[localeCode]['i_agree_to_the'] ?? '';
 
   String get termsOfServiceLink =>
-      _localizedValues[localeCode]['terms_of_service_link'];
+      _localizedValues[localeCode]['terms_of_service_link'] ?? '';
 
   String get privacyPolicyLink =>
-      _localizedValues[localeCode]['privacy_policy_link'];
+      _localizedValues[localeCode]['privacy_policy_link'] ?? '';
 
-  String get termsOfService => _localizedValues[localeCode]['terms_of_service'];
+  String get termsOfService =>
+      _localizedValues[localeCode]['terms_of_service'] ?? '';
 
-  String get privacyPolicy => _localizedValues[localeCode]['privacy_policy'];
+  String get privacyPolicy =>
+      _localizedValues[localeCode]['privacy_policy'] ?? '';
 
-  String get upgrade => _localizedValues[localeCode]['upgrade'];
+  String get upgrade => _localizedValues[localeCode]['upgrade'] ?? '';
 
-  String get proPlan => _localizedValues[localeCode]['pro_plan'];
+  String get proPlan => _localizedValues[localeCode]['pro_plan'] ?? '';
 
-  String get enterprisePlan => _localizedValues[localeCode]['enterprise_plan'];
+  String get enterprisePlan =>
+      _localizedValues[localeCode]['enterprise_plan'] ?? '';
 
-  String get countUsers => _localizedValues[localeCode]['count_users'];
+  String get countUsers => _localizedValues[localeCode]['count_users'] ?? '';
 
   String get annualSubscription =>
-      _localizedValues[localeCode]['annual_subscription'];
+      _localizedValues[localeCode]['annual_subscription'] ?? '';
 
-  String get pastPurchases => _localizedValues[localeCode]['past_purchases'];
+  String get pastPurchases =>
+      _localizedValues[localeCode]['past_purchases'] ?? '';
 
-  String get back => _localizedValues[localeCode]['back'];
+  String get back => _localizedValues[localeCode]['back'] ?? '';
 
-  String get redeem => _localizedValues[localeCode]['redeem'];
+  String get redeem => _localizedValues[localeCode]['redeem'] ?? '';
 
   String get thankYouForYourPurchase =>
-      _localizedValues[localeCode]['thank_you_for_your_purchase'];
+      _localizedValues[localeCode]['thank_you_for_your_purchase'] ?? '';
 
-  String get select => _localizedValues[localeCode]['select'];
+  String get select => _localizedValues[localeCode]['select'] ?? '';
 
   String get longPressSelectionIsDefault =>
-      _localizedValues[localeCode]['long_press_multiselect'];
+      _localizedValues[localeCode]['long_press_multiselect'] ?? '';
 
-  String get all => _localizedValues[localeCode]['all'];
+  String get all => _localizedValues[localeCode]['all'] ?? '';
 
-  String get emailSignUp => _localizedValues[localeCode]['email_sign_up'];
+  String get emailSignUp => _localizedValues[localeCode]['email_sign_up'] ?? '';
 
-  String get googleSignUp => _localizedValues[localeCode]['google_sign_up'];
+  String get googleSignUp =>
+      _localizedValues[localeCode]['google_sign_up'] ?? '';
 
-  String get price => _localizedValues[localeCode]['price'];
+  String get price => _localizedValues[localeCode]['price'] ?? '';
 
-  String get companyDetails => _localizedValues[localeCode]['company_details'];
+  String get companyDetails =>
+      _localizedValues[localeCode]['company_details'] ?? '';
 
-  String get userDetails => _localizedValues[localeCode]['user_details'];
+  String get userDetails => _localizedValues[localeCode]['user_details'] ?? '';
 
-  String get localization => _localizedValues[localeCode]['localization'];
+  String get localization => _localizedValues[localeCode]['localization'] ?? '';
 
-  String get onlinePayments => _localizedValues[localeCode]['online_payments'];
+  String get onlinePayments =>
+      _localizedValues[localeCode]['online_payments'] ?? '';
 
-  String get taxRates => _localizedValues[localeCode]['tax_rates'];
+  String get taxRates => _localizedValues[localeCode]['tax_rates'] ?? '';
 
-  String get notifications => _localizedValues[localeCode]['notifications'];
+  String get notifications =>
+      _localizedValues[localeCode]['notifications'] ?? '';
 
-  String get importExport => _localizedValues[localeCode]['import_export'];
+  String get importExport =>
+      _localizedValues[localeCode]['import_export'] ?? '';
 
-  String get customFields => _localizedValues[localeCode]['custom_fields'];
+  String get customFields =>
+      _localizedValues[localeCode]['custom_fields'] ?? '';
 
-  String get invoiceDesign => _localizedValues[localeCode]['invoice_design'];
+  String get invoiceDesign =>
+      _localizedValues[localeCode]['invoice_design'] ?? '';
 
-  String get buyNowButtons => _localizedValues[localeCode]['buy_now_buttons'];
+  String get buyNowButtons =>
+      _localizedValues[localeCode]['buy_now_buttons'] ?? '';
 
-  String get emailSettings => _localizedValues[localeCode]['email_settings'];
+  String get emailSettings =>
+      _localizedValues[localeCode]['email_settings'] ?? '';
 
   String get templatesAndReminders =>
-      _localizedValues[localeCode]['templates_and_reminders'];
+      _localizedValues[localeCode]['templates_and_reminders'] ?? '';
 
   String get creditCardsAndBanks =>
-      _localizedValues[localeCode]['credit_cards_and_banks'];
+      _localizedValues[localeCode]['credit_cards_and_banks'] ?? '';
 
   String get dataVisualizations =>
-      _localizedValues[localeCode]['data_visualizations'];
+      _localizedValues[localeCode]['data_visualizations'] ?? '';
 
-  String get basicSettings => _localizedValues[localeCode]['basic_settings'];
+  String get basicSettings =>
+      _localizedValues[localeCode]['basic_settings'] ?? '';
 
   String get advancedSettings =>
-      _localizedValues[localeCode]['advanced_settings'];
+      _localizedValues[localeCode]['advanced_settings'] ?? '';
 
-  String get defaults => _localizedValues[localeCode]['defaults'];
+  String get defaults => _localizedValues[localeCode]['defaults'] ?? '';
 
-  String get deviceSettings => _localizedValues[localeCode]['device_settings'];
+  String get deviceSettings =>
+      _localizedValues[localeCode]['device_settings'] ?? '';
 
   String get productSettings =>
-      _localizedValues[localeCode]['product_settings'];
+      _localizedValues[localeCode]['product_settings'] ?? '';
 
-  String get savedSettings => _localizedValues[localeCode]['saved_settings'];
+  String get savedSettings =>
+      _localizedValues[localeCode]['saved_settings'] ?? '';
 
-  String get logo => _localizedValues[localeCode]['logo'];
+  String get logo => _localizedValues[localeCode]['logo'] ?? '';
 
-  String get uploadLogo => _localizedValues[localeCode]['upload_logo'];
+  String get uploadLogo => _localizedValues[localeCode]['upload_logo'] ?? '';
 
-  String get uploadedLogo => _localizedValues[localeCode]['uploaded_logo'];
+  String get uploadedLogo =>
+      _localizedValues[localeCode]['uploaded_logo'] ?? '';
 
-  String get newGroup => _localizedValues[localeCode]['new_group'];
+  String get newGroup => _localizedValues[localeCode]['new_group'] ?? '';
 
-  String get createdGroup => _localizedValues[localeCode]['created_group'];
+  String get createdGroup =>
+      _localizedValues[localeCode]['created_group'] ?? '';
 
-  String get updatedGroup => _localizedValues[localeCode]['updated_group'];
+  String get updatedGroup =>
+      _localizedValues[localeCode]['updated_group'] ?? '';
 
-  String get archivedGroup => _localizedValues[localeCode]['archived_group'];
+  String get archivedGroup =>
+      _localizedValues[localeCode]['archived_group'] ?? '';
 
-  String get deletedGroup => _localizedValues[localeCode]['deleted_group'];
+  String get deletedGroup =>
+      _localizedValues[localeCode]['deleted_group'] ?? '';
 
-  String get restoredGroup => _localizedValues[localeCode]['restored_group'];
+  String get restoredGroup =>
+      _localizedValues[localeCode]['restored_group'] ?? '';
 
-  String get editGroup => _localizedValues[localeCode]['edit_group'];
+  String get editGroup => _localizedValues[localeCode]['edit_group'] ?? '';
 
-  String get groups => _localizedValues[localeCode]['groups'];
+  String get groups => _localizedValues[localeCode]['groups'] ?? '';
 
-  String get groupSettings => _localizedValues[localeCode]['group_settings'];
+  String get groupSettings =>
+      _localizedValues[localeCode]['group_settings'] ?? '';
 
   String get filteredByGroup =>
-      _localizedValues[localeCode]['filtered_by_group'];
+      _localizedValues[localeCode]['filtered_by_group'] ?? '';
 
   String get filteredByClient =>
-      _localizedValues[localeCode]['filtered_by_client'];
+      _localizedValues[localeCode]['filtered_by_client'] ?? '';
 
   String get filteredByVendor =>
-      _localizedValues[localeCode]['filtered_by_vendor'];
+      _localizedValues[localeCode]['filtered_by_vendor'] ?? '';
 
   String get filteredByInvoice =>
-      _localizedValues[localeCode]['filtered_by_invoice'];
+      _localizedValues[localeCode]['filtered_by_invoice'] ?? '';
 
   String get filteredByProject =>
-      _localizedValues[localeCode]['filtered_by_project'];
+      _localizedValues[localeCode]['filtered_by_project'] ?? '';
 
-  String get group => _localizedValues[localeCode]['group'];
+  String get group => _localizedValues[localeCode]['group'] ?? '';
 
-  String get timezone => _localizedValues[localeCode]['timezone'];
+  String get timezone => _localizedValues[localeCode]['timezone'] ?? '';
 
-  String get dateFormat => _localizedValues[localeCode]['date_format'];
+  String get dateFormat => _localizedValues[localeCode]['date_format'] ?? '';
 
-  String get datetimeFormat => _localizedValues[localeCode]['datetime_format'];
+  String get datetimeFormat =>
+      _localizedValues[localeCode]['datetime_format'] ?? '';
 
-  String get militaryTime => _localizedValues[localeCode]['military_time'];
+  String get militaryTime =>
+      _localizedValues[localeCode]['military_time'] ?? '';
 
   String get militaryTimeHelp =>
-      _localizedValues[localeCode]['military_time_help'];
+      _localizedValues[localeCode]['military_time_help'] ?? '';
 
-  String get sendReminders => _localizedValues[localeCode]['send_reminders'];
+  String get sendReminders =>
+      _localizedValues[localeCode]['send_reminders'] ?? '';
 
-  String get symbol => _localizedValues[localeCode]['symbol'];
+  String get symbol => _localizedValues[localeCode]['symbol'] ?? '';
 
-  String get code => _localizedValues[localeCode]['ocde'];
+  String get code => _localizedValues[localeCode]['ocde'] ?? '';
 
-  String get sunday => _localizedValues[localeCode]['sunday'];
+  String get sunday => _localizedValues[localeCode]['sunday'] ?? '';
 
-  String get monday => _localizedValues[localeCode]['monday'];
+  String get monday => _localizedValues[localeCode]['monday'] ?? '';
 
-  String get tuesday => _localizedValues[localeCode]['tuesday'];
+  String get tuesday => _localizedValues[localeCode]['tuesday'] ?? '';
 
-  String get wednesday => _localizedValues[localeCode]['wednesday'];
+  String get wednesday => _localizedValues[localeCode]['wednesday'] ?? '';
 
-  String get thursday => _localizedValues[localeCode]['thursday'];
+  String get thursday => _localizedValues[localeCode]['thursday'] ?? '';
 
-  String get friday => _localizedValues[localeCode]['friday'];
+  String get friday => _localizedValues[localeCode]['friday'] ?? '';
 
-  String get saturday => _localizedValues[localeCode]['saturday'];
+  String get saturday => _localizedValues[localeCode]['saturday'] ?? '';
 
-  String get january => _localizedValues[localeCode]['january'];
+  String get january => _localizedValues[localeCode]['january'] ?? '';
 
-  String get february => _localizedValues[localeCode]['february'];
+  String get february => _localizedValues[localeCode]['february'] ?? '';
 
-  String get march => _localizedValues[localeCode]['march'];
+  String get march => _localizedValues[localeCode]['march'] ?? '';
 
-  String get april => _localizedValues[localeCode]['april'];
+  String get april => _localizedValues[localeCode]['april'] ?? '';
 
-  String get may => _localizedValues[localeCode]['may'];
+  String get may => _localizedValues[localeCode]['may'] ?? '';
 
-  String get june => _localizedValues[localeCode]['june'];
+  String get june => _localizedValues[localeCode]['june'] ?? '';
 
-  String get july => _localizedValues[localeCode]['july'];
+  String get july => _localizedValues[localeCode]['july'] ?? '';
 
-  String get august => _localizedValues[localeCode]['august'];
+  String get august => _localizedValues[localeCode]['august'] ?? '';
 
-  String get september => _localizedValues[localeCode]['september'];
+  String get september => _localizedValues[localeCode]['september'] ?? '';
 
-  String get october => _localizedValues[localeCode]['october'];
+  String get october => _localizedValues[localeCode]['october'] ?? '';
 
-  String get november => _localizedValues[localeCode]['november'];
+  String get november => _localizedValues[localeCode]['november'] ?? '';
 
-  String get december => _localizedValues[localeCode]['december'];
+  String get december => _localizedValues[localeCode]['december'] ?? '';
 
   String get firstDayOfTheWeek =>
-      _localizedValues[localeCode]['first_day_of_the_week'];
+      _localizedValues[localeCode]['first_day_of_the_week'] ?? '';
 
   String get firstMonthOfTheYear =>
-      _localizedValues[localeCode]['first_month_of_the_year'];
+      _localizedValues[localeCode]['first_month_of_the_year'] ?? '';
 
-  String get currencyFormat => _localizedValues[localeCode]['currency_format'];
+  String get currencyFormat =>
+      _localizedValues[localeCode]['currency_format'] ?? '';
 
-  String get disabled => _localizedValues[localeCode]['disabled'];
+  String get disabled => _localizedValues[localeCode]['disabled'] ?? '';
 
-  String get defaultValue => _localizedValues[localeCode]['default_value'];
+  String get defaultValue =>
+      _localizedValues[localeCode]['default_value'] ?? '';
 
-  String get discardChanges => _localizedValues[localeCode]['discard_changes'];
+  String get discardChanges =>
+      _localizedValues[localeCode]['discard_changes'] ?? '';
 
   String get continueEditing =>
-      _localizedValues[localeCode]['continue_editing'];
+      _localizedValues[localeCode]['continue_editing'] ?? '';
 
   String get editCompanyGateway =>
-      _localizedValues[localeCode]['edit_company_gateway'];
+      _localizedValues[localeCode]['edit_company_gateway'] ?? '';
 
   String get newCompanyGateway =>
-      _localizedValues[localeCode]['new_company_gateway'];
+      _localizedValues[localeCode]['new_company_gateway'] ?? '';
 
   String get createdCompanyGateway =>
-      _localizedValues[localeCode]['created_company_gateway'];
+      _localizedValues[localeCode]['created_company_gateway'] ?? '';
 
   String get updatedCompanyGateway =>
-      _localizedValues[localeCode]['updated_company_gateway'];
+      _localizedValues[localeCode]['updated_company_gateway'] ?? '';
 
   String get archivedCompanyGateway =>
-      _localizedValues[localeCode]['archived_company_gateway'];
+      _localizedValues[localeCode]['archived_company_gateway'] ?? '';
 
   String get deletedCompanyGateway =>
-      _localizedValues[localeCode]['deleted_company_gateway'];
+      _localizedValues[localeCode]['deleted_company_gateway'] ?? '';
 
   String get restoredCompanyGateway =>
-      _localizedValues[localeCode]['restored_company_gateway'];
+      _localizedValues[localeCode]['restored_company_gateway'] ?? '';
 
   String get companyGateways =>
-      _localizedValues[localeCode]['company_gateways'];
+      _localizedValues[localeCode]['company_gateways'] ?? '';
 
-  String get companyGateway => _localizedValues[localeCode]['company_gateway'];
+  String get companyGateway =>
+      _localizedValues[localeCode]['company_gateway'] ?? '';
 
-  String get provider => _localizedValues[localeCode]['provider'];
+  String get provider => _localizedValues[localeCode]['provider'] ?? '';
 
-  String get fees => _localizedValues[localeCode]['fees'];
+  String get fees => _localizedValues[localeCode]['fees'] ?? '';
 
-  String get limits => _localizedValues[localeCode]['limits'];
+  String get limits => _localizedValues[localeCode]['limits'] ?? '';
 
-  String get fillProducts => _localizedValues[localeCode]['fill_products'];
+  String get fillProducts =>
+      _localizedValues[localeCode]['fill_products'] ?? '';
 
   String get fillProductsHelp =>
-      _localizedValues[localeCode]['fill_products_help'];
+      _localizedValues[localeCode]['fill_products_help'] ?? '';
 
-  String get updateProducts => _localizedValues[localeCode]['update_products'];
+  String get updateProducts =>
+      _localizedValues[localeCode]['update_products'] ?? '';
 
   String get updateProductsHelp =>
-      _localizedValues[localeCode]['update_products_help'];
+      _localizedValues[localeCode]['update_products_help'] ?? '';
 
   String get convertProducts =>
-      _localizedValues[localeCode]['convert_products'];
+      _localizedValues[localeCode]['convert_products'] ?? '';
 
   String get convertProductsHelp =>
-      _localizedValues[localeCode]['convert_products_help'];
+      _localizedValues[localeCode]['convert_products_help'] ?? '';
 
-  String get newTaxRate => _localizedValues[localeCode]['new_tax_rate'];
+  String get newTaxRate => _localizedValues[localeCode]['new_tax_rate'] ?? '';
 
-  String get createdTaxRate => _localizedValues[localeCode]['created_tax_rate'];
+  String get createdTaxRate =>
+      _localizedValues[localeCode]['created_tax_rate'] ?? '';
 
-  String get updatedTaxRate => _localizedValues[localeCode]['updated_tax_rate'];
+  String get updatedTaxRate =>
+      _localizedValues[localeCode]['updated_tax_rate'] ?? '';
 
   String get archivedTaxRate =>
-      _localizedValues[localeCode]['archived_tax_rate'];
+      _localizedValues[localeCode]['archived_tax_rate'] ?? '';
 
-  String get deletedTaxRate => _localizedValues[localeCode]['deleted_tax_rate'];
+  String get deletedTaxRate =>
+      _localizedValues[localeCode]['deleted_tax_rate'] ?? '';
 
   String get restoredTaxRate =>
-      _localizedValues[localeCode]['restored_tax_rate'];
+      _localizedValues[localeCode]['restored_tax_rate'] ?? '';
 
-  String get editTaxRate => _localizedValues[localeCode]['edit_tax_rate'];
+  String get editTaxRate => _localizedValues[localeCode]['edit_tax_rate'] ?? '';
 
-  String get taxRate => _localizedValues[localeCode]['tax_rate'];
+  String get taxRate => _localizedValues[localeCode]['tax_rate'] ?? '';
 
-  String get rate => _localizedValues[localeCode]['rate'];
+  String get rate => _localizedValues[localeCode]['rate'] ?? '';
 
   String get requireBillingAddressHelp =>
-      _localizedValues[localeCode]['require_billing_address_help'];
+      _localizedValues[localeCode]['require_billing_address_help'] ?? '';
 
   String get requireShippingAddressHelp =>
-      _localizedValues[localeCode]['require_shipping_address_help'];
+      _localizedValues[localeCode]['require_shipping_address_help'] ?? '';
 
-  String get updateAddress => _localizedValues[localeCode]['update_address'];
+  String get updateAddress =>
+      _localizedValues[localeCode]['update_address'] ?? '';
 
   String get updateAddressHelp =>
-      _localizedValues[localeCode]['update_address_help'];
+      _localizedValues[localeCode]['update_address_help'] ?? '';
 
-  String get credentials => _localizedValues[localeCode]['credentials'];
+  String get credentials => _localizedValues[localeCode]['credentials'] ?? '';
 
   String get acceptedCardLogos =>
-      _localizedValues[localeCode]['accepted_card_logos'];
+      _localizedValues[localeCode]['accepted_card_logos'] ?? '';
 
-  String get min => _localizedValues[localeCode]['min'];
+  String get min => _localizedValues[localeCode]['min'] ?? '';
 
-  String get max => _localizedValues[localeCode]['max'];
+  String get max => _localizedValues[localeCode]['max'] ?? '';
 
-  String get minLimit => _localizedValues[localeCode]['min_limit'];
+  String get minLimit => _localizedValues[localeCode]['min_limit'] ?? '';
 
-  String get maxLimit => _localizedValues[localeCode]['max_limit'];
+  String get maxLimit => _localizedValues[localeCode]['max_limit'] ?? '';
 
-  String get enableMin => _localizedValues[localeCode]['enable_min'];
+  String get enableMin => _localizedValues[localeCode]['enable_min'] ?? '';
 
-  String get enableMax => _localizedValues[localeCode]['enable_max'];
+  String get enableMax => _localizedValues[localeCode]['enable_max'] ?? '';
 
-  String get limitsAndFees => _localizedValues[localeCode]['limits_and_fees'];
+  String get limitsAndFees =>
+      _localizedValues[localeCode]['limits_and_fees'] ?? '';
 
-  String get feeAmount => _localizedValues[localeCode]['fee_amount'];
+  String get feeAmount => _localizedValues[localeCode]['fee_amount'] ?? '';
 
-  String get feePercent => _localizedValues[localeCode]['fee_percent'];
+  String get feePercent => _localizedValues[localeCode]['fee_percent'] ?? '';
 
-  String get feeCap => _localizedValues[localeCode]['fee_cap'];
+  String get feeCap => _localizedValues[localeCode]['fee_cap'] ?? '';
 
-  String get priority => _localizedValues[localeCode]['priority'];
+  String get priority => _localizedValues[localeCode]['priority'] ?? '';
 
-  String get creditCard => _localizedValues[localeCode]['credit_card'];
+  String get creditCard => _localizedValues[localeCode]['credit_card'] ?? '';
 
-  String get bankTransfer => _localizedValues[localeCode]['bank_transfer'];
+  String get bankTransfer =>
+      _localizedValues[localeCode]['bank_transfer'] ?? '';
 
-  String get processed => _localizedValues[localeCode]['processed'];
+  String get processed => _localizedValues[localeCode]['processed'] ?? '';
 
-  String get replyToEmail => _localizedValues[localeCode]['reply_to_email'];
+  String get replyToEmail =>
+      _localizedValues[localeCode]['reply_to_email'] ?? '';
 
-  String get bccEmail => _localizedValues[localeCode]['bcc_email'];
+  String get bccEmail => _localizedValues[localeCode]['bcc_email'] ?? '';
 
-  String get attachPdf => _localizedValues[localeCode]['attach_pdf'];
+  String get attachPdf => _localizedValues[localeCode]['attach_pdf'] ?? '';
 
   String get attachDocuments =>
-      _localizedValues[localeCode]['attach_documents'];
+      _localizedValues[localeCode]['attach_documents'] ?? '';
 
-  String get attachUbl => _localizedValues[localeCode]['attach_ubl'];
+  String get attachUbl => _localizedValues[localeCode]['attach_ubl'] ?? '';
 
-  String get emailStyle => _localizedValues[localeCode]['email_style'];
+  String get emailStyle => _localizedValues[localeCode]['email_style'] ?? '';
 
   String get enableMarkup =>
-      _localizedValues[localeCode]['enable_email_markup'];
+      _localizedValues[localeCode]['enable_email_markup'] ?? '';
 
   String get enableMarkupHelp =>
-      _localizedValues[localeCode]['enable_email_markup_help'];
+      _localizedValues[localeCode]['enable_email_markup_help'] ?? '';
 
-  String get emailDesign => _localizedValues[localeCode]['email_design'];
+  String get emailDesign => _localizedValues[localeCode]['email_design'] ?? '';
 
-  String get plain => _localizedValues[localeCode]['plain'];
+  String get plain => _localizedValues[localeCode]['plain'] ?? '';
 
-  String get light => _localizedValues[localeCode]['light'];
+  String get light => _localizedValues[localeCode]['light'] ?? '';
 
-  String get dark => _localizedValues[localeCode]['dark'];
+  String get dark => _localizedValues[localeCode]['dark'] ?? '';
 
-  String get emailSignature => _localizedValues[localeCode]['email_signature'];
+  String get emailSignature =>
+      _localizedValues[localeCode]['email_signature'] ?? '';
 
-  String get portalMode => _localizedValues[localeCode]['portal_mode'];
+  String get portalMode => _localizedValues[localeCode]['portal_mode'] ?? '';
 
-  String get domain => _localizedValues[localeCode]['domain'];
+  String get domain => _localizedValues[localeCode]['domain'] ?? '';
 
-  String get subdomain => _localizedValues[localeCode]['subdomain'];
+  String get subdomain => _localizedValues[localeCode]['subdomain'] ?? '';
 
-  String get authorization => _localizedValues[localeCode]['authorization'];
+  String get authorization =>
+      _localizedValues[localeCode]['authorization'] ?? '';
 
   String get enablePortalPassword =>
-      _localizedValues[localeCode]['enable_portal_password'];
+      _localizedValues[localeCode]['enable_portal_password'] ?? '';
 
   String get enablePortalPasswordHelp =>
-      _localizedValues[localeCode]['enable_portal_password_help'];
+      _localizedValues[localeCode]['enable_portal_password_help'] ?? '';
 
   String get showAcceptInvoiceTerms =>
-      _localizedValues[localeCode]['show_accept_invoice_terms'];
+      _localizedValues[localeCode]['show_accept_invoice_terms'] ?? '';
 
   String get showAcceptInvoiceTermsHelp =>
-      _localizedValues[localeCode]['show_accept_invoice_terms_help'];
+      _localizedValues[localeCode]['show_accept_invoice_terms_help'] ?? '';
 
   String get showAcceptQuoteTerms =>
-      _localizedValues[localeCode]['show_accept_quote_terms'];
+      _localizedValues[localeCode]['show_accept_quote_terms'] ?? '';
 
   String get showAcceptQuoteTermsHelp =>
-      _localizedValues[localeCode]['show_accept_quote_terms_help'];
+      _localizedValues[localeCode]['show_accept_quote_terms_help'] ?? '';
 
   String get requireInvoiceSignature =>
-      _localizedValues[localeCode]['require_invoice_signature'];
+      _localizedValues[localeCode]['require_invoice_signature'] ?? '';
 
   String get requireInvoiceSignatureHelp =>
-      _localizedValues[localeCode]['require_invoice_signature_help'];
+      _localizedValues[localeCode]['require_invoice_signature_help'] ?? '';
 
   String get requireQuoteSignature =>
-      _localizedValues[localeCode]['require_quote_signature'];
+      _localizedValues[localeCode]['require_quote_signature'] ?? '';
 
-  String get signatureOnPdf => _localizedValues[localeCode]['signature_on_pdf'];
+  String get signatureOnPdf =>
+      _localizedValues[localeCode]['signature_on_pdf'] ?? '';
 
   String get signatureOnPdfHelp =>
-      _localizedValues[localeCode]['signature_on_pdf_help'];
+      _localizedValues[localeCode]['signature_on_pdf_help'] ?? '';
 
-  String get customCss => _localizedValues[localeCode]['custom_css'];
+  String get customCss => _localizedValues[localeCode]['custom_css'] ?? '';
 
   String get customJavascript =>
-      _localizedValues[localeCode]['custom_javascript'];
+      _localizedValues[localeCode]['custom_javascript'] ?? '';
 
-  String get messages => _localizedValues[localeCode]['messages'];
+  String get messages => _localizedValues[localeCode]['messages'] ?? '';
 
-  String get prefix => _localizedValues[localeCode]['prefix'];
+  String get prefix => _localizedValues[localeCode]['prefix'] ?? '';
 
-  String get numberPattern => _localizedValues[localeCode]['number_pattern'];
+  String get numberPattern =>
+      _localizedValues[localeCode]['number_pattern'] ?? '';
 
-  String get numberCounter => _localizedValues[localeCode]['number_counter'];
+  String get numberCounter =>
+      _localizedValues[localeCode]['number_counter'] ?? '';
 
-  String get creditField => _localizedValues[localeCode]['credit_field'];
+  String get creditField => _localizedValues[localeCode]['credit_field'] ?? '';
 
-  String get invoiceField => _localizedValues[localeCode]['invoice_field'];
+  String get invoiceField =>
+      _localizedValues[localeCode]['invoice_field'] ?? '';
 
-  String get clientField => _localizedValues[localeCode]['client_field'];
+  String get clientField => _localizedValues[localeCode]['client_field'] ?? '';
 
-  String get productField => _localizedValues[localeCode]['product_field'];
+  String get productField =>
+      _localizedValues[localeCode]['product_field'] ?? '';
 
-  String get paymentField => _localizedValues[localeCode]['payment_field'];
+  String get paymentField =>
+      _localizedValues[localeCode]['payment_field'] ?? '';
 
-  String get contactField => _localizedValues[localeCode]['contact_field'];
+  String get contactField =>
+      _localizedValues[localeCode]['contact_field'] ?? '';
 
-  String get vendorField => _localizedValues[localeCode]['vendor_field'];
+  String get vendorField => _localizedValues[localeCode]['vendor_field'] ?? '';
 
-  String get expenseField => _localizedValues[localeCode]['expense_field'];
+  String get expenseField =>
+      _localizedValues[localeCode]['expense_field'] ?? '';
 
-  String get projectField => _localizedValues[localeCode]['project_field'];
+  String get projectField =>
+      _localizedValues[localeCode]['project_field'] ?? '';
 
-  String get taskField => _localizedValues[localeCode]['task_field'];
+  String get taskField => _localizedValues[localeCode]['task_field'] ?? '';
 
-  String get groupField => _localizedValues[localeCode]['group_field'];
+  String get groupField => _localizedValues[localeCode]['group_field'] ?? '';
 
-  String get general => _localizedValues[localeCode]['general'];
+  String get general => _localizedValues[localeCode]['general'] ?? '';
 
-  String get numberPadding => _localizedValues[localeCode]['number_padding'];
+  String get numberPadding =>
+      _localizedValues[localeCode]['number_padding'] ?? '';
 
   String get recurringPrefix =>
-      _localizedValues[localeCode]['recurring_prefix'];
+      _localizedValues[localeCode]['recurring_prefix'] ?? '';
 
-  String get resetCounter => _localizedValues[localeCode]['reset_counter'];
+  String get resetCounter =>
+      _localizedValues[localeCode]['reset_counter'] ?? '';
 
-  String get nextReset => _localizedValues[localeCode]['next_reset'];
+  String get nextReset => _localizedValues[localeCode]['next_reset'] ?? '';
 
-  String get credit => _localizedValues[localeCode]['credit'];
+  String get credit => _localizedValues[localeCode]['credit'] ?? '';
 
-  String get credits => _localizedValues[localeCode]['credits'];
+  String get credits => _localizedValues[localeCode]['credits'] ?? '';
 
   String get customSurcharge =>
-      _localizedValues[localeCode]['invoice_surcharge'];
+      _localizedValues[localeCode]['invoice_surcharge'] ?? '';
 
-  String get chargeTaxes => _localizedValues[localeCode]['charge_taxes'];
+  String get chargeTaxes => _localizedValues[localeCode]['charge_taxes'] ?? '';
 
-  String get companyField => _localizedValues[localeCode]['company_field'];
+  String get companyField =>
+      _localizedValues[localeCode]['company_field'] ?? '';
 
-  String get companyValue => _localizedValues[localeCode]['company_value'];
+  String get companyValue =>
+      _localizedValues[localeCode]['company_value'] ?? '';
 
   String get generatedNumbers =>
-      _localizedValues[localeCode]['generated_numbers'];
+      _localizedValues[localeCode]['generated_numbers'] ?? '';
 
-  String get company => _localizedValues[localeCode]['company'];
+  String get company => _localizedValues[localeCode]['company'] ?? '';
 
-  String get surchargeField => _localizedValues[localeCode]['surcharge_field'];
+  String get surchargeField =>
+      _localizedValues[localeCode]['surcharge_field'] ?? '';
 
-  String get never => _localizedValues[localeCode]['never'];
+  String get never => _localizedValues[localeCode]['never'] ?? '';
 
-  String get freqDaily => _localizedValues[localeCode]['freq_daily'];
+  String get freqDaily => _localizedValues[localeCode]['freq_daily'] ?? '';
 
-  String get freqWeekly => _localizedValues[localeCode]['freq_weekly'];
+  String get freqWeekly => _localizedValues[localeCode]['freq_weekly'] ?? '';
 
-  String get freqTwoWeeks => _localizedValues[localeCode]['freq_two_weeks'];
+  String get freqTwoWeeks =>
+      _localizedValues[localeCode]['freq_two_weeks'] ?? '';
 
-  String get freqFourWeeks => _localizedValues[localeCode]['freq_four_weeks'];
+  String get freqFourWeeks =>
+      _localizedValues[localeCode]['freq_four_weeks'] ?? '';
 
-  String get freqMonthly => _localizedValues[localeCode]['freq_monthly'];
+  String get freqMonthly => _localizedValues[localeCode]['freq_monthly'] ?? '';
 
-  String get freqTwoMonths => _localizedValues[localeCode]['freq_two_months'];
+  String get freqTwoMonths =>
+      _localizedValues[localeCode]['freq_two_months'] ?? '';
 
   String get freqThreeMonths =>
-      _localizedValues[localeCode]['freq_three_months'];
+      _localizedValues[localeCode]['freq_three_months'] ?? '';
 
-  String get freqFourMonths => _localizedValues[localeCode]['freq_four_months'];
+  String get freqFourMonths =>
+      _localizedValues[localeCode]['freq_four_months'] ?? '';
 
-  String get freqSixMonths => _localizedValues[localeCode]['freq_six_months'];
+  String get freqSixMonths =>
+      _localizedValues[localeCode]['freq_six_months'] ?? '';
 
-  String get freqAnnually => _localizedValues[localeCode]['freq_annually'];
+  String get freqAnnually =>
+      _localizedValues[localeCode]['freq_annually'] ?? '';
 
-  String get freqTwoYears => _localizedValues[localeCode]['freq_two_years'];
+  String get freqTwoYears =>
+      _localizedValues[localeCode]['freq_two_years'] ?? '';
 
-  String get freqThreeYears => _localizedValues[localeCode]['freq_three_years'];
+  String get freqThreeYears =>
+      _localizedValues[localeCode]['freq_three_years'] ?? '';
 
   String get workflowSettings =>
-      _localizedValues[localeCode]['workflow_settings'];
+      _localizedValues[localeCode]['workflow_settings'] ?? '';
 
   String get autoEmailInvoice =>
-      _localizedValues[localeCode]['auto_email_invoice'];
+      _localizedValues[localeCode]['auto_email_invoice'] ?? '';
 
   String get autoEmailInvoiceHelp =>
-      _localizedValues[localeCode]['auto_email_invoice_help'];
+      _localizedValues[localeCode]['auto_email_invoice_help'] ?? '';
 
   String get autoArchiveInvoice =>
-      _localizedValues[localeCode]['auto_archive_invoice'];
+      _localizedValues[localeCode]['auto_archive_invoice'] ?? '';
 
   String get autoArchiveInvoiceHelp =>
-      _localizedValues[localeCode]['auto_archive_invoice_help'];
+      _localizedValues[localeCode]['auto_archive_invoice_help'] ?? '';
 
   String get autoArchiveQuote =>
-      _localizedValues[localeCode]['auto_archive_quote'];
+      _localizedValues[localeCode]['auto_archive_quote'] ?? '';
 
   String get autoArchiveQuoteHelp =>
-      _localizedValues[localeCode]['auto_archive_quote_help'];
+      _localizedValues[localeCode]['auto_archive_quote_help'] ?? '';
 
   String get autoConvertQuote =>
-      _localizedValues[localeCode]['auto_convert_quote'];
+      _localizedValues[localeCode]['auto_convert_quote'] ?? '';
 
   String get autoConvertQuoteHelp =>
-      _localizedValues[localeCode]['auto_convert_quote_help'];
+      _localizedValues[localeCode]['auto_convert_quote_help'] ?? '';
 
-  String get invoiceTerms => _localizedValues[localeCode]['invoice_terms'];
+  String get invoiceTerms =>
+      _localizedValues[localeCode]['invoice_terms'] ?? '';
 
-  String get invoiceFooter => _localizedValues[localeCode]['invoice_footer'];
+  String get invoiceFooter =>
+      _localizedValues[localeCode]['invoice_footer'] ?? '';
 
-  String get quoteTerms => _localizedValues[localeCode]['quote_terms'];
+  String get quoteTerms => _localizedValues[localeCode]['quote_terms'] ?? '';
 
-  String get quoteFooter => _localizedValues[localeCode]['quote_footer'];
+  String get quoteFooter => _localizedValues[localeCode]['quote_footer'] ?? '';
 
-  String get invoiceFields => _localizedValues[localeCode]['invoice_fields'];
+  String get invoiceFields =>
+      _localizedValues[localeCode]['invoice_fields'] ?? '';
 
-  String get productFields => _localizedValues[localeCode]['product_fields'];
+  String get productFields =>
+      _localizedValues[localeCode]['product_fields'] ?? '';
 
-  String get quoteDesign => _localizedValues[localeCode]['quote_design'];
+  String get quoteDesign => _localizedValues[localeCode]['quote_design'] ?? '';
 
-  String get pageSize => _localizedValues[localeCode]['page_size'];
+  String get pageSize => _localizedValues[localeCode]['page_size'] ?? '';
 
-  String get fontSize => _localizedValues[localeCode]['font_size'];
+  String get fontSize => _localizedValues[localeCode]['font_size'] ?? '';
 
-  String get primaryColor => _localizedValues[localeCode]['primary_color'];
+  String get primaryColor =>
+      _localizedValues[localeCode]['primary_color'] ?? '';
 
-  String get secondaryColor => _localizedValues[localeCode]['secondary_color'];
+  String get secondaryColor =>
+      _localizedValues[localeCode]['secondary_color'] ?? '';
 
-  String get primaryFont => _localizedValues[localeCode]['primary_font'];
+  String get primaryFont => _localizedValues[localeCode]['primary_font'] ?? '';
 
-  String get secondaryFont => _localizedValues[localeCode]['secondary_font'];
+  String get secondaryFont =>
+      _localizedValues[localeCode]['secondary_font'] ?? '';
 
   String get hidePaidToDate =>
-      _localizedValues[localeCode]['hide_paid_to_date'];
+      _localizedValues[localeCode]['hide_paid_to_date'] ?? '';
 
   String get hidePaidToDateHelp =>
-      _localizedValues[localeCode]['hide_paid_to_date_help'];
+      _localizedValues[localeCode]['hide_paid_to_date_help'] ?? '';
 
   String get invoiceEmbedDocuments =>
-      _localizedValues[localeCode]['invoice_embed_documents'];
+      _localizedValues[localeCode]['invoice_embed_documents'] ?? '';
 
   String get invoiceEmbedDocumentsHelp =>
-      _localizedValues[localeCode]['invoice_embed_documents_help'];
+      _localizedValues[localeCode]['invoice_embed_documents_help'] ?? '';
 
-  String get allPagesHeader => _localizedValues[localeCode]['all_pages_header'];
+  String get allPagesHeader =>
+      _localizedValues[localeCode]['all_pages_header'] ?? '';
 
-  String get allPagesFooter => _localizedValues[localeCode]['all_pages_footer'];
+  String get allPagesFooter =>
+      _localizedValues[localeCode]['all_pages_footer'] ?? '';
 
-  String get firstPage => _localizedValues[localeCode]['first_page'];
+  String get firstPage => _localizedValues[localeCode]['first_page'] ?? '';
 
-  String get allPages => _localizedValues[localeCode]['all_pages'];
+  String get allPages => _localizedValues[localeCode]['all_pages'] ?? '';
 
-  String get lastPage => _localizedValues[localeCode]['last_page'];
+  String get lastPage => _localizedValues[localeCode]['last_page'] ?? '';
 
   String get generalSettings =>
-      _localizedValues[localeCode]['general_settings'];
+      _localizedValues[localeCode]['general_settings'] ?? '';
 
-  String get invoiceOptions => _localizedValues[localeCode]['invoice_options'];
+  String get invoiceOptions =>
+      _localizedValues[localeCode]['invoice_options'] ?? '';
 
-  String get newUser => _localizedValues[localeCode]['new_user'];
+  String get newUser => _localizedValues[localeCode]['new_user'] ?? '';
 
-  String get createdUser => _localizedValues[localeCode]['created_user'];
+  String get createdUser => _localizedValues[localeCode]['created_user'] ?? '';
 
-  String get updatedUser => _localizedValues[localeCode]['updated_user'];
+  String get updatedUser => _localizedValues[localeCode]['updated_user'] ?? '';
 
-  String get archivedUser => _localizedValues[localeCode]['archived_user'];
+  String get archivedUser =>
+      _localizedValues[localeCode]['archived_user'] ?? '';
 
-  String get deletedUser => _localizedValues[localeCode]['deleted_user'];
+  String get deletedUser => _localizedValues[localeCode]['deleted_user'] ?? '';
 
-  String get removedUser => _localizedValues[localeCode]['removed_user'];
+  String get removedUser => _localizedValues[localeCode]['removed_user'] ?? '';
 
-  String get restoredUser => _localizedValues[localeCode]['restored_user'];
+  String get restoredUser =>
+      _localizedValues[localeCode]['restored_user'] ?? '';
 
-  String get editUser => _localizedValues[localeCode]['edit_user'];
+  String get editUser => _localizedValues[localeCode]['edit_user'] ?? '';
 
-  String get users => _localizedValues[localeCode]['users'];
+  String get users => _localizedValues[localeCode]['users'] ?? '';
 
-  String get userManagement => _localizedValues[localeCode]['user_management'];
+  String get userManagement =>
+      _localizedValues[localeCode]['user_management'] ?? '';
 
-  String get administrator => _localizedValues[localeCode]['administrator'];
+  String get administrator =>
+      _localizedValues[localeCode]['administrator'] ?? '';
 
   String get administratorHelp =>
-      _localizedValues[localeCode]['administrator_help'];
+      _localizedValues[localeCode]['administrator_help'] ?? '';
 
-  String get filteredByUser => _localizedValues[localeCode]['filtered_by_user'];
+  String get filteredByUser =>
+      _localizedValues[localeCode]['filtered_by_user'] ?? '';
 
   String get endlessReminder =>
-      _localizedValues[localeCode]['endless_reminder'];
+      _localizedValues[localeCode]['endless_reminder'] ?? '';
 
-  String get invoiceEmail => _localizedValues[localeCode]['invoice_email'];
+  String get invoiceEmail =>
+      _localizedValues[localeCode]['invoice_email'] ?? '';
 
-  String get paymentEmail => _localizedValues[localeCode]['payment_email'];
+  String get paymentEmail =>
+      _localizedValues[localeCode]['payment_email'] ?? '';
 
-  String get quoteEmail => _localizedValues[localeCode]['quote_email'];
+  String get quoteEmail => _localizedValues[localeCode]['quote_email'] ?? '';
 
-  String get days => _localizedValues[localeCode]['days'];
+  String get days => _localizedValues[localeCode]['days'] ?? '';
 
-  String get beforeDueDate => _localizedValues[localeCode]['before_due_date'];
+  String get beforeDueDate =>
+      _localizedValues[localeCode]['before_due_date'] ?? '';
 
-  String get afterDueDate => _localizedValues[localeCode]['after_due_date'];
+  String get afterDueDate =>
+      _localizedValues[localeCode]['after_due_date'] ?? '';
 
   String get afterInvoiceDate =>
-      _localizedValues[localeCode]['after_invoice_date'];
+      _localizedValues[localeCode]['after_invoice_date'] ?? '';
 
-  String get schedule => _localizedValues[localeCode]['schedule'];
+  String get schedule => _localizedValues[localeCode]['schedule'] ?? '';
 
-  String get lateFeeAmount => _localizedValues[localeCode]['late_fee_amount'];
+  String get lateFeeAmount =>
+      _localizedValues[localeCode]['late_fee_amount'] ?? '';
 
-  String get lateFeePercent => _localizedValues[localeCode]['late_fee_percent'];
+  String get lateFeePercent =>
+      _localizedValues[localeCode]['late_fee_percent'] ?? '';
 
-  String get creditNumber => _localizedValues[localeCode]['credit_number'];
+  String get creditNumber =>
+      _localizedValues[localeCode]['credit_number'] ?? '';
 
-  String get paymentNumber => _localizedValues[localeCode]['payment_number'];
+  String get paymentNumber =>
+      _localizedValues[localeCode]['payment_number'] ?? '';
 
-  String get lateFees => _localizedValues[localeCode]['late_fees'];
+  String get lateFees => _localizedValues[localeCode]['late_fees'] ?? '';
 
   String get recoverPassword =>
-      _localizedValues[localeCode]['recover_password'];
+      _localizedValues[localeCode]['recover_password'] ?? '';
 
-  String get submit => _localizedValues[localeCode]['submit'];
+  String get submit => _localizedValues[localeCode]['submit'] ?? '';
 
   String get recoverPasswordEmailSent =>
-      _localizedValues[localeCode]['recover_password_email_sent'];
+      _localizedValues[localeCode]['recover_password_email_sent'] ?? '';
 
-  String get fieldType => _localizedValues[localeCode]['field_type'];
+  String get fieldType => _localizedValues[localeCode]['field_type'] ?? '';
 
-  String get singleLineText => _localizedValues[localeCode]['single_line_text'];
+  String get singleLineText =>
+      _localizedValues[localeCode]['single_line_text'] ?? '';
 
-  String get multiLineText => _localizedValues[localeCode]['multi_line_text'];
+  String get multiLineText =>
+      _localizedValues[localeCode]['multi_line_text'] ?? '';
 
-  String get dropdown => _localizedValues[localeCode]['dropdown'];
+  String get dropdown => _localizedValues[localeCode]['dropdown'] ?? '';
 
-  String get options => _localizedValues[localeCode]['options'];
+  String get options => _localizedValues[localeCode]['options'] ?? '';
 
   String get commaSeparatedList =>
-      _localizedValues[localeCode]['comma_sparated_list'];
+      _localizedValues[localeCode]['comma_sparated_list'] ?? '';
 
-  String get switchLabel => _localizedValues[localeCode]['switch'];
+  String get switchLabel => _localizedValues[localeCode]['switch'] ?? '';
 
-  String get accentColor => _localizedValues[localeCode]['accent_color'];
+  String get accentColor => _localizedValues[localeCode]['accent_color'] ?? '';
 
-  String get taxSettings => _localizedValues[localeCode]['tax_settings'];
+  String get taxSettings => _localizedValues[localeCode]['tax_settings'] ?? '';
 
-  String get configureRates => _localizedValues[localeCode]['configure_rates'];
+  String get configureRates =>
+      _localizedValues[localeCode]['configure_rates'] ?? '';
 
   String get taxSettingsRates =>
-      _localizedValues[localeCode]['tax_settings_rates'];
+      _localizedValues[localeCode]['tax_settings_rates'] ?? '';
 
   String get noClientSelected =>
-      _localizedValues[localeCode]['no_client_selected'];
+      _localizedValues[localeCode]['no_client_selected'] ?? '';
 
-  String get invoiceTax => _localizedValues[localeCode]['invoice_tax'];
+  String get invoiceTax => _localizedValues[localeCode]['invoice_tax'] ?? '';
 
-  String get lineItemTax => _localizedValues[localeCode]['line_item_tax'];
+  String get lineItemTax => _localizedValues[localeCode]['line_item_tax'] ?? '';
 
-  String get inclusiveTaxes => _localizedValues[localeCode]['inclusive_taxes'];
+  String get inclusiveTaxes =>
+      _localizedValues[localeCode]['inclusive_taxes'] ?? '';
 
   String get invoiceTaxRates =>
-      _localizedValues[localeCode]['invoice_tax_rates'];
+      _localizedValues[localeCode]['invoice_tax_rates'] ?? '';
 
-  String get itemTaxRates => _localizedValues[localeCode]['item_tax_rates'];
+  String get itemTaxRates =>
+      _localizedValues[localeCode]['item_tax_rates'] ?? '';
 
-  String get user => _localizedValues[localeCode]['user'];
+  String get user => _localizedValues[localeCode]['user'] ?? '';
 
-  String get defaultTaxRate => _localizedValues[localeCode]['default_tax_rate'];
+  String get defaultTaxRate =>
+      _localizedValues[localeCode]['default_tax_rate'] ?? '';
 
-  String get oneTaxRate => _localizedValues[localeCode]['one_tax_rate'];
+  String get oneTaxRate => _localizedValues[localeCode]['one_tax_rate'] ?? '';
 
-  String get twoTaxRates => _localizedValues[localeCode]['two_tax_rates'];
+  String get twoTaxRates => _localizedValues[localeCode]['two_tax_rates'] ?? '';
 
-  String get threeTaxRates => _localizedValues[localeCode]['three_tax_rates'];
+  String get threeTaxRates =>
+      _localizedValues[localeCode]['three_tax_rates'] ?? '';
 
-  String get customValue1 => _localizedValues[localeCode]['custom_value1'];
+  String get customValue1 =>
+      _localizedValues[localeCode]['custom_value1'] ?? '';
 
-  String get customValue2 => _localizedValues[localeCode]['custom_value2'];
+  String get customValue2 =>
+      _localizedValues[localeCode]['custom_value2'] ?? '';
 
-  String get customValue3 => _localizedValues[localeCode]['custom_value3'];
+  String get customValue3 =>
+      _localizedValues[localeCode]['custom_value3'] ?? '';
 
-  String get customValue4 => _localizedValues[localeCode]['custom_value4'];
+  String get customValue4 =>
+      _localizedValues[localeCode]['custom_value4'] ?? '';
 
   String get emailStyleCustom =>
-      _localizedValues[localeCode]['email_style_custom'];
+      _localizedValues[localeCode]['email_style_custom'] ?? '';
 
   String get customMessageDashboard =>
-      _localizedValues[localeCode]['custom_message_dashboard'];
+      _localizedValues[localeCode]['custom_message_dashboard'] ?? '';
 
   String get customMessageUnpaidInvoice =>
-      _localizedValues[localeCode]['custom_message_unpaid_invoice'];
+      _localizedValues[localeCode]['custom_message_unpaid_invoice'] ?? '';
 
   String get customMessagePaidInvoice =>
-      _localizedValues[localeCode]['custom_message_paid_invoice'];
+      _localizedValues[localeCode]['custom_message_paid_invoice'] ?? '';
 
   String get customMessageUnapprovedQuote =>
-      _localizedValues[localeCode]['custom_message_unapproved_quote'];
+      _localizedValues[localeCode]['custom_message_unapproved_quote'] ?? '';
 
   String get lockSentInvoices =>
-      _localizedValues[localeCode]['lock_sent_invoices'];
+      _localizedValues[localeCode]['lock_sent_invoices'] ?? '';
 
-  String get translations => _localizedValues[localeCode]['translations'];
+  String get translations => _localizedValues[localeCode]['translations'] ?? '';
 
   String get taskNumberPattern =>
-      _localizedValues[localeCode]['task_number_pattern'];
+      _localizedValues[localeCode]['task_number_pattern'] ?? '';
 
   String get taskNumberCounter =>
-      _localizedValues[localeCode]['task_number_counter'];
+      _localizedValues[localeCode]['task_number_counter'] ?? '';
 
   String get expenseNumberPattern =>
-      _localizedValues[localeCode]['expense_number_pattern'];
+      _localizedValues[localeCode]['expense_number_pattern'] ?? '';
 
   String get expenseNumberCounter =>
-      _localizedValues[localeCode]['expense_number_counter'];
+      _localizedValues[localeCode]['expense_number_counter'] ?? '';
 
   String get vendorNumberPattern =>
-      _localizedValues[localeCode]['vendor_number_pattern'];
+      _localizedValues[localeCode]['vendor_number_pattern'] ?? '';
 
   String get vendorNumberCounter =>
-      _localizedValues[localeCode]['vendor_number_counter'];
+      _localizedValues[localeCode]['vendor_number_counter'] ?? '';
 
   String get ticketNumberPattern =>
-      _localizedValues[localeCode]['ticket_number_pattern'];
+      _localizedValues[localeCode]['ticket_number_pattern'] ?? '';
 
   String get ticketNumberCounter =>
-      _localizedValues[localeCode]['ticket_number_counter'];
+      _localizedValues[localeCode]['ticket_number_counter'] ?? '';
 
   String get paymentNumberPattern =>
-      _localizedValues[localeCode]['payment_number_pattern'];
+      _localizedValues[localeCode]['payment_number_pattern'] ?? '';
 
   String get paymentNumberCounter =>
-      _localizedValues[localeCode]['payment_number_counter'];
+      _localizedValues[localeCode]['payment_number_counter'] ?? '';
 
   String get invoiceNumberPattern =>
-      _localizedValues[localeCode]['invoice_number_pattern'];
+      _localizedValues[localeCode]['invoice_number_pattern'] ?? '';
 
   String get invoiceNumberCounter =>
-      _localizedValues[localeCode]['invoice_number_counter'];
+      _localizedValues[localeCode]['invoice_number_counter'] ?? '';
 
   String get quoteNumberPattern =>
-      _localizedValues[localeCode]['quote_number_pattern'];
+      _localizedValues[localeCode]['quote_number_pattern'] ?? '';
 
   String get quoteNumberCounter =>
-      _localizedValues[localeCode]['quote_number_counter'];
+      _localizedValues[localeCode]['quote_number_counter'] ?? '';
 
   String get clientNumberPattern =>
-      _localizedValues[localeCode]['client_number_pattern'];
+      _localizedValues[localeCode]['client_number_pattern'] ?? '';
 
   String get clientNumberCounter =>
-      _localizedValues[localeCode]['client_number_counter'];
+      _localizedValues[localeCode]['client_number_counter'] ?? '';
 
   String get creditNumberPattern =>
-      _localizedValues[localeCode]['credit_number_pattern'];
+      _localizedValues[localeCode]['credit_number_pattern'] ?? '';
 
   String get creditNumberCounter =>
-      _localizedValues[localeCode]['credit_number_counter'];
+      _localizedValues[localeCode]['credit_number_counter'] ?? '';
 
   String get resetCounterDate =>
-      _localizedValues[localeCode]['reset_counter_date'];
+      _localizedValues[localeCode]['reset_counter_date'] ?? '';
 
-  String get counterPadding => _localizedValues[localeCode]['counter_padding'];
+  String get counterPadding =>
+      _localizedValues[localeCode]['counter_padding'] ?? '';
 
   String get sharedInvoiceQuoteCounter =>
-      _localizedValues[localeCode]['shared_invoice_quote_counter'];
+      _localizedValues[localeCode]['shared_invoice_quote_counter'] ?? '';
 
-  String get invoiceLabels => _localizedValues[localeCode]['invoice_labels'];
+  String get invoiceLabels =>
+      _localizedValues[localeCode]['invoice_labels'] ?? '';
 
   String get defaultTaxName1 =>
-      _localizedValues[localeCode]['default_tax_name_1'];
+      _localizedValues[localeCode]['default_tax_name_1'] ?? '';
 
   String get defaultTaxRate1 =>
-      _localizedValues[localeCode]['default_tax_rate_1'];
+      _localizedValues[localeCode]['default_tax_rate_1'] ?? '';
 
   String get defaultTaxName2 =>
-      _localizedValues[localeCode]['default_tax_name_2'];
+      _localizedValues[localeCode]['default_tax_name_2'] ?? '';
 
   String get defaultTaxRate2 =>
-      _localizedValues[localeCode]['default_tax_rate_2'];
+      _localizedValues[localeCode]['default_tax_rate_2'] ?? '';
 
   String get defaultTaxName3 =>
-      _localizedValues[localeCode]['default_tax_name_3'];
+      _localizedValues[localeCode]['default_tax_name_3'] ?? '';
 
   String get defaultTaxRate3 =>
-      _localizedValues[localeCode]['default_tax_rate_3'];
+      _localizedValues[localeCode]['default_tax_rate_3'] ?? '';
 
   String get emailSubjectInvoice =>
-      _localizedValues[localeCode]['email_subject_invoice'];
+      _localizedValues[localeCode]['email_subject_invoice'] ?? '';
 
   String get emailSubjectQuote =>
-      _localizedValues[localeCode]['email_subject_quote'];
+      _localizedValues[localeCode]['email_subject_quote'] ?? '';
 
   String get emailSubjectPayment =>
-      _localizedValues[localeCode]['email_subject_payment'];
+      _localizedValues[localeCode]['email_subject_payment'] ?? '';
 
   String get emailSubjectPaymentPartial =>
-      _localizedValues[localeCode]['email_subject_payment_partial'];
+      _localizedValues[localeCode]['email_subject_payment_partial'] ?? '';
 
-  String get showCost => _localizedValues[localeCode]['show_cost'];
+  String get showCost => _localizedValues[localeCode]['show_cost'] ?? '';
 
-  String get showCostHelp => _localizedValues[localeCode]['show_cost_help'];
+  String get showCostHelp =>
+      _localizedValues[localeCode]['show_cost_help'] ?? '';
 
   String get showInvoiceQuantity =>
-      _localizedValues[localeCode]['show_invoice_quantity'];
+      _localizedValues[localeCode]['show_invoice_quantity'] ?? '';
 
   String get showProductQuantityHelp =>
-      _localizedValues[localeCode]['show_product_quantity_help'];
+      _localizedValues[localeCode]['show_product_quantity_help'] ?? '';
 
   String get showProductQuantity =>
-      _localizedValues[localeCode]['show_product_quantity'];
+      _localizedValues[localeCode]['show_product_quantity'] ?? '';
 
   String get showInvoiceQuantityHelp =>
-      _localizedValues[localeCode]['show_invoice_quantity_help'];
+      _localizedValues[localeCode]['show_invoice_quantity_help'] ?? '';
 
   String get defaultQuantity =>
-      _localizedValues[localeCode]['default_quantity'];
+      _localizedValues[localeCode]['default_quantity'] ?? '';
 
   String get defaultQuantityHelp =>
-      _localizedValues[localeCode]['default_quantity_help'];
+      _localizedValues[localeCode]['default_quantity_help'] ?? '';
 
-  String get firstCustom => _localizedValues[localeCode]['first_custom'];
+  String get firstCustom => _localizedValues[localeCode]['first_custom'] ?? '';
 
-  String get secondCustom => _localizedValues[localeCode]['second_custom'];
+  String get secondCustom =>
+      _localizedValues[localeCode]['second_custom'] ?? '';
 
-  String get thirdCustom => _localizedValues[localeCode]['third_custom'];
+  String get thirdCustom => _localizedValues[localeCode]['third_custom'] ?? '';
 
-  String get module => _localizedValues[localeCode]['module'];
+  String get module => _localizedValues[localeCode]['module'] ?? '';
 
-  String get view => _localizedValues[localeCode]['view'];
+  String get view => _localizedValues[localeCode]['view'] ?? '';
 
-  String get layout => _localizedValues[localeCode]['layout'];
+  String get layout => _localizedValues[localeCode]['layout'] ?? '';
 
-  String get mobile => _localizedValues[localeCode]['mobile'];
+  String get mobile => _localizedValues[localeCode]['mobile'] ?? '';
 
-  String get desktop => _localizedValues[localeCode]['desktop'];
+  String get desktop => _localizedValues[localeCode]['desktop'] ?? '';
 
-  String get tablet => _localizedValues[localeCode]['tablet'];
+  String get tablet => _localizedValues[localeCode]['tablet'] ?? '';
 
-  String get float => _localizedValues[localeCode]['float'];
+  String get float => _localizedValues[localeCode]['float'] ?? '';
 
-  String get collapse => _localizedValues[localeCode]['collapse'];
+  String get collapse => _localizedValues[localeCode]['collapse'] ?? '';
 
-  String get showOrHide => _localizedValues[localeCode]['show_or_hide'];
+  String get showOrHide => _localizedValues[localeCode]['show_or_hide'] ?? '';
 
-  String get menuSidebar => _localizedValues[localeCode]['menu_sidebar'];
+  String get menuSidebar => _localizedValues[localeCode]['menu_sidebar'] ?? '';
 
-  String get historySidebar => _localizedValues[localeCode]['history_sidebar'];
+  String get historySidebar =>
+      _localizedValues[localeCode]['history_sidebar'] ?? '';
 
-  String get selectCompany => _localizedValues[localeCode]['select_company'];
+  String get selectCompany =>
+      _localizedValues[localeCode]['select_company'] ?? '';
 
-  String get newPayment => _localizedValues[localeCode]['new_payment'];
+  String get newPayment => _localizedValues[localeCode]['new_payment'] ?? '';
 
   String get switchListTable =>
-      _localizedValues[localeCode]['switch_list_table'];
+      _localizedValues[localeCode]['switch_list_table'] ?? '';
 
-  String get whenSaved => _localizedValues[localeCode]['when_saved'];
+  String get whenSaved => _localizedValues[localeCode]['when_saved'] ?? '';
 
-  String get whenSent => _localizedValues[localeCode]['when_sent'];
+  String get whenSent => _localizedValues[localeCode]['when_sent'] ?? '';
 
-  String get generateNumber => _localizedValues[localeCode]['generate_number'];
+  String get generateNumber =>
+      _localizedValues[localeCode]['generate_number'] ?? '';
 
-  String get yes => _localizedValues[localeCode]['yes'];
+  String get yes => _localizedValues[localeCode]['yes'] ?? '';
 
-  String get no => _localizedValues[localeCode]['no'];
+  String get no => _localizedValues[localeCode]['no'] ?? '';
 
-  String get deletedLogo => _localizedValues[localeCode]['deleted_logo'];
+  String get deletedLogo => _localizedValues[localeCode]['deleted_logo'] ?? '';
 
   String get pleaseEnterAValue =>
-      _localizedValues[localeCode]['please_enter_a_value'];
+      _localizedValues[localeCode]['please_enter_a_value'] ?? '';
 
   String get clientPortalTasks =>
-      _localizedValues[localeCode]['client_portal_tasks'];
+      _localizedValues[localeCode]['client_portal_tasks'] ?? '';
 
   String get clientPortalDashboard =>
-      _localizedValues[localeCode]['client_portal_dashboard'];
+      _localizedValues[localeCode]['client_portal_dashboard'] ?? '';
 
   String get passwordIsTooEasy =>
-      _localizedValues[localeCode]['password_is_too_easy'];
+      _localizedValues[localeCode]['password_is_too_easy'] ?? '';
 
-  String get iFrameUrl => _localizedValues[localeCode]['iframe_url'];
+  String get iFrameUrl => _localizedValues[localeCode]['iframe_url'] ?? '';
 
-  String get domainUrl => _localizedValues[localeCode]['domain_url'];
+  String get domainUrl => _localizedValues[localeCode]['domain_url'] ?? '';
 
-  String get creditEmail => _localizedValues[localeCode]['credit_email'];
+  String get creditEmail => _localizedValues[localeCode]['credit_email'] ?? '';
 
-  String get item => _localizedValues[localeCode]['item'];
+  String get item => _localizedValues[localeCode]['item'] ?? '';
 
-  String get lineTotal => _localizedValues[localeCode]['line_total'];
+  String get lineTotal => _localizedValues[localeCode]['line_total'] ?? '';
 
-  String get subtotal => _localizedValues[localeCode]['subtotal'];
+  String get subtotal => _localizedValues[localeCode]['subtotal'] ?? '';
 
-  String get contactUs => _localizedValues[localeCode]['contact_us'];
+  String get contactUs => _localizedValues[localeCode]['contact_us'] ?? '';
 
-  String get documentation => _localizedValues[localeCode]['documentation'];
+  String get documentation =>
+      _localizedValues[localeCode]['documentation'] ?? '';
 
-  String get about => _localizedValues[localeCode]['about'];
+  String get about => _localizedValues[localeCode]['about'] ?? '';
 
-  String get supportForum => _localizedValues[localeCode]['support_forum'];
+  String get supportForum =>
+      _localizedValues[localeCode]['support_forum'] ?? '';
 
   String get configureSettings =>
-      _localizedValues[localeCode]['configure_settings'];
+      _localizedValues[localeCode]['configure_settings'] ?? '';
 
   String get adjustFeePercent =>
-      _localizedValues[localeCode]['adjust_fee_percent'];
+      _localizedValues[localeCode]['adjust_fee_percent'] ?? '';
 
   String get adjustFeePercentHelp =>
-      _localizedValues[localeCode]['adjust_fee_percent_help'];
+      _localizedValues[localeCode]['adjust_fee_percent_help'] ?? '';
 
   String get pdfMinRequirements =>
-      _localizedValues[localeCode]['pdf_min_requirements'];
+      _localizedValues[localeCode]['pdf_min_requirements'] ?? '';
 
   String get showProductDetails =>
-      _localizedValues[localeCode]['show_product_details'];
+      _localizedValues[localeCode]['show_product_details'] ?? '';
 
   String get showProductDetailsHelp =>
-      _localizedValues[localeCode]['show_product_details_help'];
+      _localizedValues[localeCode]['show_product_details_help'] ?? '';
 
-  String get from => _localizedValues[localeCode]['from'];
+  String get from => _localizedValues[localeCode]['from'] ?? '';
 
-  String get message => _localizedValues[localeCode]['message'];
+  String get message => _localizedValues[localeCode]['message'] ?? '';
 
   String get yourMessageHasBeenReceived =>
-      _localizedValues[localeCode]['your_message_has_been_received'];
+      _localizedValues[localeCode]['your_message_has_been_received'] ?? '';
 
   String get includeRecentErrors =>
-      _localizedValues[localeCode]['include_recent_errors'];
+      _localizedValues[localeCode]['include_recent_errors'] ?? '';
 
-  String get applied => _localizedValues[localeCode]['applied'];
+  String get applied => _localizedValues[localeCode]['applied'] ?? '';
 
-  String get verifyPassword => _localizedValues[localeCode]['verify_password'];
+  String get verifyPassword =>
+      _localizedValues[localeCode]['verify_password'] ?? '';
 
-  String get entityState => _localizedValues[localeCode]['entity_state'];
+  String get entityState => _localizedValues[localeCode]['entity_state'] ?? '';
 
-  String get multiselect => _localizedValues[localeCode]['multiselect'];
+  String get multiselect => _localizedValues[localeCode]['multiselect'] ?? '';
 
-  String get contactEmail => _localizedValues[localeCode]['contact_email'];
+  String get contactEmail =>
+      _localizedValues[localeCode]['contact_email'] ?? '';
 
-  String get filteredBy => _localizedValues[localeCode]['filtered_by'];
+  String get filteredBy => _localizedValues[localeCode]['filtered_by'] ?? '';
 
-  String get refund => _localizedValues[localeCode]['refund'];
+  String get refund => _localizedValues[localeCode]['refund'] ?? '';
 
-  String get refundDate => _localizedValues[localeCode]['refund_date'];
+  String get refundDate => _localizedValues[localeCode]['refund_date'] ?? '';
 
-  String get help => _localizedValues[localeCode]['help'];
+  String get help => _localizedValues[localeCode]['help'] ?? '';
 
-  String get unpaidInvoice => _localizedValues[localeCode]['unpaid_invoice'];
+  String get unpaidInvoice =>
+      _localizedValues[localeCode]['unpaid_invoice'] ?? '';
 
-  String get paidInvoice => _localizedValues[localeCode]['paid_invoice'];
+  String get paidInvoice => _localizedValues[localeCode]['paid_invoice'] ?? '';
 
   String get unapprovedQuote =>
-      _localizedValues[localeCode]['unapproved_quote'];
+      _localizedValues[localeCode]['unapproved_quote'] ?? '';
 
-  String get addCompany => _localizedValues[localeCode]['add_company'];
+  String get addCompany => _localizedValues[localeCode]['add_company'] ?? '';
 
-  String get reports => _localizedValues[localeCode]['reports'];
+  String get reports => _localizedValues[localeCode]['reports'] ?? '';
 
-  String get report => _localizedValues[localeCode]['report'];
+  String get report => _localizedValues[localeCode]['report'] ?? '';
 
-  String get aging => _localizedValues[localeCode]['aging'];
+  String get aging => _localizedValues[localeCode]['aging'] ?? '';
 
-  String get columns => _localizedValues[localeCode]['columns'];
+  String get columns => _localizedValues[localeCode]['columns'] ?? '';
 
-  String get profitAndLoss => _localizedValues[localeCode]['profit_and_loss'];
+  String get profitAndLoss =>
+      _localizedValues[localeCode]['profit_and_loss'] ?? '';
 
-  String get editColumns => _localizedValues[localeCode]['edit_columns'];
+  String get editColumns => _localizedValues[localeCode]['edit_columns'] ?? '';
 
-  String get addColumn => _localizedValues[localeCode]['add_column'];
+  String get addColumn => _localizedValues[localeCode]['add_column'] ?? '';
 
-  String get assignedTo => _localizedValues[localeCode]['assigned_to'];
+  String get assignedTo => _localizedValues[localeCode]['assigned_to'] ?? '';
 
-  String get createdBy => _localizedValues[localeCode]['created_by'];
+  String get createdBy => _localizedValues[localeCode]['created_by'] ?? '';
 
-  String get assignedTId => _localizedValues[localeCode]['assigned_to_id'];
+  String get assignedTId =>
+      _localizedValues[localeCode]['assigned_to_id'] ?? '';
 
-  String get createdById => _localizedValues[localeCode]['created_by_id'];
+  String get createdById => _localizedValues[localeCode]['created_by_id'] ?? '';
 
-  String get clientId => _localizedValues[localeCode]['client_id'];
+  String get clientId => _localizedValues[localeCode]['client_id'] ?? '';
 
   String get shippingAddress1 =>
-      _localizedValues[localeCode]['shipping_address1'];
+      _localizedValues[localeCode]['shipping_address1'] ?? '';
 
   String get shippingAddress2 =>
-      _localizedValues[localeCode]['shipping_address2'];
+      _localizedValues[localeCode]['shipping_address2'] ?? '';
 
-  String get shippingCity => _localizedValues[localeCode]['shipping_city'];
+  String get shippingCity =>
+      _localizedValues[localeCode]['shipping_city'] ?? '';
 
-  String get shippingState => _localizedValues[localeCode]['shipping_state'];
+  String get shippingState =>
+      _localizedValues[localeCode]['shipping_state'] ?? '';
 
   String get shippingPostalCode =>
-      _localizedValues[localeCode]['shipping_postal_code'];
+      _localizedValues[localeCode]['shipping_postal_code'] ?? '';
 
   String get shippingCountry =>
-      _localizedValues[localeCode]['shipping_country'];
+      _localizedValues[localeCode]['shipping_country'] ?? '';
 
   String get contactFullName =>
-      _localizedValues[localeCode]['contact_full_name'];
+      _localizedValues[localeCode]['contact_full_name'] ?? '';
 
-  String get contactPhone => _localizedValues[localeCode]['contact_phone'];
+  String get contactPhone =>
+      _localizedValues[localeCode]['contact_phone'] ?? '';
 
   String get contactCustomValue1 =>
-      _localizedValues[localeCode]['contact_custom_value1'];
+      _localizedValues[localeCode]['contact_custom_value1'] ?? '';
 
   String get contactCustomValue2 =>
-      _localizedValues[localeCode]['contact_custom_value2'];
+      _localizedValues[localeCode]['contact_custom_value2'] ?? '';
 
   String get contactCustomValue3 =>
-      _localizedValues[localeCode]['contact_custom_value3'];
+      _localizedValues[localeCode]['contact_custom_value3'] ?? '';
 
   String get contactCustomValue4 =>
-      _localizedValues[localeCode]['contact_custom_value4'];
+      _localizedValues[localeCode]['contact_custom_value4'] ?? '';
 
-  String get creditBalance => _localizedValues[localeCode]['credit_balance'];
+  String get creditBalance =>
+      _localizedValues[localeCode]['credit_balance'] ?? '';
 
   String get contactLastLogin =>
-      _localizedValues[localeCode]['contact_last_login'];
+      _localizedValues[localeCode]['contact_last_login'] ?? '';
 
-  String get groupBy => _localizedValues[localeCode]['group_by'];
+  String get groupBy => _localizedValues[localeCode]['group_by'] ?? '';
 
-  String get isActive => _localizedValues[localeCode]['is_active'];
+  String get isActive => _localizedValues[localeCode]['is_active'] ?? '';
 
-  String get subgroup => _localizedValues[localeCode]['subgroup'];
+  String get subgroup => _localizedValues[localeCode]['subgroup'] ?? '';
 
-  String get day => _localizedValues[localeCode]['day'];
+  String get day => _localizedValues[localeCode]['day'] ?? '';
 
-  String get month => _localizedValues[localeCode]['month'];
+  String get month => _localizedValues[localeCode]['month'] ?? '';
 
-  String get year => _localizedValues[localeCode]['year'];
+  String get year => _localizedValues[localeCode]['year'] ?? '';
 
-  String get blank => _localizedValues[localeCode]['blank'];
+  String get blank => _localizedValues[localeCode]['blank'] ?? '';
 
-  String get count => _localizedValues[localeCode]['count'];
+  String get count => _localizedValues[localeCode]['count'] ?? '';
 
-  String get chart => _localizedValues[localeCode]['chart'];
+  String get chart => _localizedValues[localeCode]['chart'] ?? '';
 
-  String get export => _localizedValues[localeCode]['export'];
+  String get export => _localizedValues[localeCode]['export'] ?? '';
 
-  String get number => _localizedValues[localeCode]['number'];
+  String get number => _localizedValues[localeCode]['number'] ?? '';
 
-  String get reset => _localizedValues[localeCode]['reset'];
+  String get reset => _localizedValues[localeCode]['reset'] ?? '';
 
-  String get client1 => _localizedValues[localeCode]['client1'];
+  String get client1 => _localizedValues[localeCode]['client1'] ?? '';
 
-  String get client2 => _localizedValues[localeCode]['client2'];
+  String get client2 => _localizedValues[localeCode]['client2'] ?? '';
 
-  String get client3 => _localizedValues[localeCode]['client3'];
+  String get client3 => _localizedValues[localeCode]['client3'] ?? '';
 
-  String get client4 => _localizedValues[localeCode]['client4'];
+  String get client4 => _localizedValues[localeCode]['client4'] ?? '';
 
-  String get company1 => _localizedValues[localeCode]['company1'];
+  String get company1 => _localizedValues[localeCode]['company1'] ?? '';
 
-  String get company2 => _localizedValues[localeCode]['company2'];
+  String get company2 => _localizedValues[localeCode]['company2'] ?? '';
 
-  String get company3 => _localizedValues[localeCode]['company3'];
+  String get company3 => _localizedValues[localeCode]['company3'] ?? '';
 
-  String get company4 => _localizedValues[localeCode]['company4'];
+  String get company4 => _localizedValues[localeCode]['company4'] ?? '';
 
-  String get product1 => _localizedValues[localeCode]['product1'];
+  String get product1 => _localizedValues[localeCode]['product1'] ?? '';
 
-  String get product2 => _localizedValues[localeCode]['product2'];
+  String get product2 => _localizedValues[localeCode]['product2'] ?? '';
 
-  String get product3 => _localizedValues[localeCode]['product3'];
+  String get product3 => _localizedValues[localeCode]['product3'] ?? '';
 
-  String get product4 => _localizedValues[localeCode]['product4'];
+  String get product4 => _localizedValues[localeCode]['product4'] ?? '';
 
-  String get contact1 => _localizedValues[localeCode]['contact1'];
+  String get contact1 => _localizedValues[localeCode]['contact1'] ?? '';
 
-  String get contact2 => _localizedValues[localeCode]['contact2'];
+  String get contact2 => _localizedValues[localeCode]['contact2'] ?? '';
 
-  String get contact3 => _localizedValues[localeCode]['contact3'];
+  String get contact3 => _localizedValues[localeCode]['contact3'] ?? '';
 
-  String get contact4 => _localizedValues[localeCode]['contact4'];
+  String get contact4 => _localizedValues[localeCode]['contact4'] ?? '';
 
-  String get task1 => _localizedValues[localeCode]['task1'];
+  String get task1 => _localizedValues[localeCode]['task1'] ?? '';
 
-  String get task2 => _localizedValues[localeCode]['task2'];
+  String get task2 => _localizedValues[localeCode]['task2'] ?? '';
 
-  String get task3 => _localizedValues[localeCode]['task3'];
+  String get task3 => _localizedValues[localeCode]['task3'] ?? '';
 
-  String get task4 => _localizedValues[localeCode]['task4'];
+  String get task4 => _localizedValues[localeCode]['task4'] ?? '';
 
-  String get project1 => _localizedValues[localeCode]['project1'];
+  String get project1 => _localizedValues[localeCode]['project1'] ?? '';
 
-  String get project2 => _localizedValues[localeCode]['project2'];
+  String get project2 => _localizedValues[localeCode]['project2'] ?? '';
 
-  String get project3 => _localizedValues[localeCode]['project3'];
+  String get project3 => _localizedValues[localeCode]['project3'] ?? '';
 
-  String get project4 => _localizedValues[localeCode]['project4'];
+  String get project4 => _localizedValues[localeCode]['project4'] ?? '';
 
-  String get expense1 => _localizedValues[localeCode]['expense1'];
+  String get expense1 => _localizedValues[localeCode]['expense1'] ?? '';
 
-  String get expense2 => _localizedValues[localeCode]['expense2'];
+  String get expense2 => _localizedValues[localeCode]['expense2'] ?? '';
 
-  String get expense3 => _localizedValues[localeCode]['expense3'];
+  String get expense3 => _localizedValues[localeCode]['expense3'] ?? '';
 
-  String get expense4 => _localizedValues[localeCode]['expense4'];
+  String get expense4 => _localizedValues[localeCode]['expense4'] ?? '';
 
-  String get vendor1 => _localizedValues[localeCode]['vendor1'];
+  String get vendor1 => _localizedValues[localeCode]['vendor1'] ?? '';
 
-  String get vendor2 => _localizedValues[localeCode]['vendor2'];
+  String get vendor2 => _localizedValues[localeCode]['vendor2'] ?? '';
 
-  String get vendor3 => _localizedValues[localeCode]['vendor3'];
+  String get vendor3 => _localizedValues[localeCode]['vendor3'] ?? '';
 
-  String get vendor4 => _localizedValues[localeCode]['vendor4'];
+  String get vendor4 => _localizedValues[localeCode]['vendor4'] ?? '';
 
-  String get invoice1 => _localizedValues[localeCode]['invoice1'];
+  String get invoice1 => _localizedValues[localeCode]['invoice1'] ?? '';
 
-  String get invoice2 => _localizedValues[localeCode]['invoice2'];
+  String get invoice2 => _localizedValues[localeCode]['invoice2'] ?? '';
 
-  String get invoice3 => _localizedValues[localeCode]['invoice3'];
+  String get invoice3 => _localizedValues[localeCode]['invoice3'] ?? '';
 
-  String get invoice4 => _localizedValues[localeCode]['invoice4'];
+  String get invoice4 => _localizedValues[localeCode]['invoice4'] ?? '';
 
-  String get payment1 => _localizedValues[localeCode]['payment1'];
+  String get payment1 => _localizedValues[localeCode]['payment1'] ?? '';
 
-  String get payment2 => _localizedValues[localeCode]['payment2'];
+  String get payment2 => _localizedValues[localeCode]['payment2'] ?? '';
 
-  String get payment3 => _localizedValues[localeCode]['payment3'];
+  String get payment3 => _localizedValues[localeCode]['payment3'] ?? '';
 
-  String get payment4 => _localizedValues[localeCode]['payment4'];
+  String get payment4 => _localizedValues[localeCode]['payment4'] ?? '';
 
-  String get surcharge1 => _localizedValues[localeCode]['surcharge1'];
+  String get surcharge1 => _localizedValues[localeCode]['surcharge1'] ?? '';
 
-  String get surcharge2 => _localizedValues[localeCode]['surcharge2'];
+  String get surcharge2 => _localizedValues[localeCode]['surcharge2'] ?? '';
 
-  String get surcharge3 => _localizedValues[localeCode]['surcharge3'];
+  String get surcharge3 => _localizedValues[localeCode]['surcharge3'] ?? '';
 
-  String get surcharge4 => _localizedValues[localeCode]['surcharge4'];
+  String get surcharge4 => _localizedValues[localeCode]['surcharge4'] ?? '';
 
-  String get group1 => _localizedValues[localeCode]['group1'];
+  String get group1 => _localizedValues[localeCode]['group1'] ?? '';
 
-  String get group2 => _localizedValues[localeCode]['group2'];
+  String get group2 => _localizedValues[localeCode]['group2'] ?? '';
 
-  String get group3 => _localizedValues[localeCode]['group3'];
+  String get group3 => _localizedValues[localeCode]['group3'] ?? '';
 
-  String get group4 => _localizedValues[localeCode]['group4'];
+  String get group4 => _localizedValues[localeCode]['group4'] ?? '';
 
-  String get addedCompany => _localizedValues[localeCode]['added_company'];
+  String get addedCompany =>
+      _localizedValues[localeCode]['added_company'] ?? '';
 
   String get untitledCompany =>
-      _localizedValues[localeCode]['untitled_company'];
+      _localizedValues[localeCode]['untitled_company'] ?? '';
 
-  String get creditFooter => _localizedValues[localeCode]['credit_footer'];
+  String get creditFooter =>
+      _localizedValues[localeCode]['credit_footer'] ?? '';
 
-  String get creditTerms => _localizedValues[localeCode]['credit_terms'];
+  String get creditTerms => _localizedValues[localeCode]['credit_terms'] ?? '';
 
   String get slackWebhookUrl =>
-      _localizedValues[localeCode]['slack_webhook_url'];
+      _localizedValues[localeCode]['slack_webhook_url'] ?? '';
 
-  String get trackingId => _localizedValues[localeCode]['tracking_id'];
+  String get trackingId => _localizedValues[localeCode]['tracking_id'] ?? '';
 
-  String get integrations => _localizedValues[localeCode]['integrations'];
+  String get integrations => _localizedValues[localeCode]['integrations'] ?? '';
 
-  String get learnMore => _localizedValues[localeCode]['learn_more'];
+  String get learnMore => _localizedValues[localeCode]['learn_more'] ?? '';
 
   String get updateAvailable =>
-      _localizedValues[localeCode]['update_available'];
+      _localizedValues[localeCode]['update_available'] ?? '';
 
   String get aNewVersionIsAvailable =>
-      _localizedValues[localeCode]['a_new_version_is_available'];
+      _localizedValues[localeCode]['a_new_version_is_available'] ?? '';
 
-  String get updateNow => _localizedValues[localeCode]['update_now'];
+  String get updateNow => _localizedValues[localeCode]['update_now'] ?? '';
 
-  String get currentVersion => _localizedValues[localeCode]['current_version'];
+  String get currentVersion =>
+      _localizedValues[localeCode]['current_version'] ?? '';
 
-  String get latestVersion => _localizedValues[localeCode]['latest_version'];
+  String get latestVersion =>
+      _localizedValues[localeCode]['latest_version'] ?? '';
 
-  String get appUpdated => _localizedValues[localeCode]['app_updated'];
+  String get appUpdated => _localizedValues[localeCode]['app_updated'] ?? '';
 
   // STARTER: lang field - do not remove comment
-  String get designs => _localizedValues[localeCode]['designs'];
+  String get designs => _localizedValues[localeCode]['designs'] ?? '';
 
-  String get newDesign => _localizedValues[localeCode]['new_design'];
+  String get newDesign => _localizedValues[localeCode]['new_design'] ?? '';
 
-  String get createdDesign => _localizedValues[localeCode]['created_design'];
+  String get createdDesign =>
+      _localizedValues[localeCode]['created_design'] ?? '';
 
-  String get updatedDesign => _localizedValues[localeCode]['updated_design'];
+  String get updatedDesign =>
+      _localizedValues[localeCode]['updated_design'] ?? '';
 
-  String get archivedDesign => _localizedValues[localeCode]['archived_design'];
+  String get archivedDesign =>
+      _localizedValues[localeCode]['archived_design'] ?? '';
 
-  String get deletedDesign => _localizedValues[localeCode]['deleted_design'];
+  String get deletedDesign =>
+      _localizedValues[localeCode]['deleted_design'] ?? '';
 
-  String get restoredDesign => _localizedValues[localeCode]['restored_design'];
+  String get restoredDesign =>
+      _localizedValues[localeCode]['restored_design'] ?? '';
 
-  String get editDesign => _localizedValues[localeCode]['edit_design'];
+  String get editDesign => _localizedValues[localeCode]['edit_design'] ?? '';
 
-  String get newCredit => _localizedValues[localeCode]['new_credit'];
+  String get newCredit => _localizedValues[localeCode]['new_credit'] ?? '';
 
-  String get createdCredit => _localizedValues[localeCode]['created_credit'];
+  String get createdCredit =>
+      _localizedValues[localeCode]['created_credit'] ?? '';
 
-  String get updatedCredit => _localizedValues[localeCode]['updated_credit'];
+  String get updatedCredit =>
+      _localizedValues[localeCode]['updated_credit'] ?? '';
 
-  String get archivedCredit => _localizedValues[localeCode]['archived_credit'];
+  String get archivedCredit =>
+      _localizedValues[localeCode]['archived_credit'] ?? '';
 
-  String get deletedCredit => _localizedValues[localeCode]['deleted_credit'];
+  String get deletedCredit =>
+      _localizedValues[localeCode]['deleted_credit'] ?? '';
 
-  String get restoredCredit => _localizedValues[localeCode]['restored_credit'];
+  String get restoredCredit =>
+      _localizedValues[localeCode]['restored_credit'] ?? '';
 
-  String get creditDate => _localizedValues[localeCode]['credit_date'];
+  String get creditDate => _localizedValues[localeCode]['credit_date'] ?? '';
 
   String get accountManagement =>
-      _localizedValues[localeCode]['account_management'];
+      _localizedValues[localeCode]['account_management'] ?? '';
 
-  String get proposals => _localizedValues[localeCode]['proposals'];
+  String get proposals => _localizedValues[localeCode]['proposals'] ?? '';
 
-  String get tickets => _localizedValues[localeCode]['tickets'];
+  String get tickets => _localizedValues[localeCode]['tickets'] ?? '';
 
   String get recurringInvoices =>
-      _localizedValues[localeCode]['recurring_invoices'];
+      _localizedValues[localeCode]['recurring_invoices'] ?? '';
 
   String get recurringQuotes =>
-      _localizedValues[localeCode]['recurring_quotes'];
+      _localizedValues[localeCode]['recurring_quotes'] ?? '';
 
-  String get recurringTasks => _localizedValues[localeCode]['recurring_tasks'];
+  String get recurringTasks =>
+      _localizedValues[localeCode]['recurring_tasks'] ?? '';
 
   String get recurringExpenses =>
-      _localizedValues[localeCode]['recurring_expenses'];
+      _localizedValues[localeCode]['recurring_expenses'] ?? '';
 
-  String get customDesigns => _localizedValues[localeCode]['custom_designs'];
+  String get customDesigns =>
+      _localizedValues[localeCode]['custom_designs'] ?? '';
 
-  String get cssFramework => _localizedValues[localeCode]['css_framework'];
+  String get cssFramework =>
+      _localizedValues[localeCode]['css_framework'] ?? '';
 
-  String get loadDesign => _localizedValues[localeCode]['load_design'];
+  String get loadDesign => _localizedValues[localeCode]['load_design'] ?? '';
 
-  String get header => _localizedValues[localeCode]['header'];
+  String get header => _localizedValues[localeCode]['header'] ?? '';
 
-  String get includes => _localizedValues[localeCode]['includes'];
+  String get includes => _localizedValues[localeCode]['includes'] ?? '';
 
-  String get creditDesign => _localizedValues[localeCode]['credit_design'];
+  String get creditDesign =>
+      _localizedValues[localeCode]['credit_design'] ?? '';
 
   String get partialPaymentEmail =>
-      _localizedValues[localeCode]['partial_payment_email'];
+      _localizedValues[localeCode]['partial_payment_email'] ?? '';
 
-  String get partialPayment => _localizedValues[localeCode]['partial_payment'];
+  String get partialPayment =>
+      _localizedValues[localeCode]['partial_payment'] ?? '';
 
-  String get convertedQuote => _localizedValues[localeCode]['converted_quote'];
+  String get convertedQuote =>
+      _localizedValues[localeCode]['converted_quote'] ?? '';
 
-  String get enableModules => _localizedValues[localeCode]['enable_modules'];
+  String get enableModules =>
+      _localizedValues[localeCode]['enable_modules'] ?? '';
 
-  String get cancelAccount => _localizedValues[localeCode]['cancel_account'];
+  String get cancelAccount =>
+      _localizedValues[localeCode]['cancel_account'] ?? '';
 
   String get cancelAccountMessage =>
-      _localizedValues[localeCode]['cancel_account_message'];
+      _localizedValues[localeCode]['cancel_account_message'] ?? '';
 
-  String get deleteCompany => _localizedValues[localeCode]['delete_company'];
+  String get deleteCompany =>
+      _localizedValues[localeCode]['delete_company'] ?? '';
 
   String get deleteCompanyMessage =>
-      _localizedValues[localeCode]['delete_company_message'];
+      _localizedValues[localeCode]['delete_company_message'] ?? '';
 
   String get purchaseLicense =>
-      _localizedValues[localeCode]['purchase_license'];
+      _localizedValues[localeCode]['purchase_license'] ?? '';
 
-  String get applyLicense => _localizedValues[localeCode]['apply_license'];
+  String get applyLicense =>
+      _localizedValues[localeCode]['apply_license'] ?? '';
 
   String get receiveAllNotifications =>
-      _localizedValues[localeCode]['receive_all_notifications'];
+      _localizedValues[localeCode]['receive_all_notifications'] ?? '';
 
-  String get invoiceSent => _localizedValues[localeCode]['invoice_sent'];
+  String get invoiceSent => _localizedValues[localeCode]['invoice_sent'] ?? '';
 
-  String get invoiceViewed => _localizedValues[localeCode]['invoice_viewed'];
+  String get invoiceViewed =>
+      _localizedValues[localeCode]['invoice_viewed'] ?? '';
 
-  String get paymentSuccess => _localizedValues[localeCode]['payment_success'];
+  String get paymentSuccess =>
+      _localizedValues[localeCode]['payment_success'] ?? '';
 
-  String get paymentFailure => _localizedValues[localeCode]['payment_failure'];
+  String get paymentFailure =>
+      _localizedValues[localeCode]['payment_failure'] ?? '';
 
-  String get quoteSent => _localizedValues[localeCode]['quote_sent'];
+  String get quoteSent => _localizedValues[localeCode]['quote_sent'] ?? '';
 
-  String get quoteViewed => _localizedValues[localeCode]['quote_viewed'];
+  String get quoteViewed => _localizedValues[localeCode]['quote_viewed'] ?? '';
 
-  String get quoteApproved => _localizedValues[localeCode]['quote_approved'];
+  String get quoteApproved =>
+      _localizedValues[localeCode]['quote_approved'] ?? '';
 
-  String get creditSent => _localizedValues[localeCode]['credit_sent'];
+  String get creditSent => _localizedValues[localeCode]['credit_sent'] ?? '';
 
-  String get creditViewed => _localizedValues[localeCode]['credit_viewed'];
+  String get creditViewed =>
+      _localizedValues[localeCode]['credit_viewed'] ?? '';
 
-  String get none => _localizedValues[localeCode]['none'];
+  String get none => _localizedValues[localeCode]['none'] ?? '';
 
-  String get owned => _localizedValues[localeCode]['owned'];
+  String get owned => _localizedValues[localeCode]['owned'] ?? '';
 
-  String get permissions => _localizedValues[localeCode]['permissions'];
+  String get permissions => _localizedValues[localeCode]['permissions'] ?? '';
 
-  String get allEvents => _localizedValues[localeCode]['all_events'];
+  String get allEvents => _localizedValues[localeCode]['all_events'] ?? '';
 
-  String get addField => _localizedValues[localeCode]['add_field'];
+  String get addField => _localizedValues[localeCode]['add_field'] ?? '';
 
-  String get clientDetails => _localizedValues[localeCode]['client_details'];
+  String get clientDetails =>
+      _localizedValues[localeCode]['client_details'] ?? '';
 
-  String get companyAddress => _localizedValues[localeCode]['company_address'];
+  String get companyAddress =>
+      _localizedValues[localeCode]['company_address'] ?? '';
 
-  String get invoiceDetails => _localizedValues[localeCode]['invoice_details'];
+  String get invoiceDetails =>
+      _localizedValues[localeCode]['invoice_details'] ?? '';
 
-  String get quoteDetails => _localizedValues[localeCode]['quote_details'];
+  String get quoteDetails =>
+      _localizedValues[localeCode]['quote_details'] ?? '';
 
-  String get creditDetails => _localizedValues[localeCode]['credit_details'];
+  String get creditDetails =>
+      _localizedValues[localeCode]['credit_details'] ?? '';
 
-  String get productColumns => _localizedValues[localeCode]['product_columns'];
+  String get productColumns =>
+      _localizedValues[localeCode]['product_columns'] ?? '';
 
-  String get taskColumns => _localizedValues[localeCode]['task_columns'];
+  String get taskColumns => _localizedValues[localeCode]['task_columns'] ?? '';
 
-  String get cloneToCredit => _localizedValues[localeCode]['clone_to_credit'];
+  String get cloneToCredit =>
+      _localizedValues[localeCode]['clone_to_credit'] ?? '';
 
-  String get savedDesign => _localizedValues[localeCode]['saved_design'];
+  String get savedDesign => _localizedValues[localeCode]['saved_design'] ?? '';
 
-  String get refresh => _localizedValues[localeCode]['refresh'];
+  String get refresh => _localizedValues[localeCode]['refresh'] ?? '';
 
-  String get clientCity => _localizedValues[localeCode]['client_city'];
+  String get clientCity => _localizedValues[localeCode]['client_city'] ?? '';
 
-  String get clientState => _localizedValues[localeCode]['client_state'];
+  String get clientState => _localizedValues[localeCode]['client_state'] ?? '';
 
-  String get clientCountry => _localizedValues[localeCode]['client_country'];
+  String get clientCountry =>
+      _localizedValues[localeCode]['client_country'] ?? '';
 
-  String get clientIsActive => _localizedValues[localeCode]['client_is_active'];
+  String get clientIsActive =>
+      _localizedValues[localeCode]['client_is_active'] ?? '';
 
-  String get clientBalance => _localizedValues[localeCode]['client_balance'];
+  String get clientBalance =>
+      _localizedValues[localeCode]['client_balance'] ?? '';
 
-  String get clientAddress1 => _localizedValues[localeCode]['client_address1'];
+  String get clientAddress1 =>
+      _localizedValues[localeCode]['client_address1'] ?? '';
 
-  String get clientAddress2 => _localizedValues[localeCode]['client_address2'];
+  String get clientAddress2 =>
+      _localizedValues[localeCode]['client_address2'] ?? '';
 
   String get clientShippingAddress1 =>
-      _localizedValues[localeCode]['client_shipping_address1'];
+      _localizedValues[localeCode]['client_shipping_address1'] ?? '';
 
   String get clientShippingAddress2 =>
-      _localizedValues[localeCode]['client_shipping_address2'];
+      _localizedValues[localeCode]['client_shipping_address2'] ?? '';
 
-  String get type => _localizedValues[localeCode]['type'];
+  String get type => _localizedValues[localeCode]['type'] ?? '';
 
-  String get invoiceAmount => _localizedValues[localeCode]['invoice_amount'];
+  String get invoiceAmount =>
+      _localizedValues[localeCode]['invoice_amount'] ?? '';
 
-  String get invoiceDueDate => _localizedValues[localeCode]['invoice_due_date'];
+  String get invoiceDueDate =>
+      _localizedValues[localeCode]['invoice_due_date'] ?? '';
 
-  String get taxRate1 => _localizedValues[localeCode]['tax_rate1'];
+  String get taxRate1 => _localizedValues[localeCode]['tax_rate1'] ?? '';
 
-  String get taxRate2 => _localizedValues[localeCode]['tax_rate2'];
+  String get taxRate2 => _localizedValues[localeCode]['tax_rate2'] ?? '';
 
-  String get taxRate3 => _localizedValues[localeCode]['tax_rate3'];
+  String get taxRate3 => _localizedValues[localeCode]['tax_rate3'] ?? '';
 
-  String get autoBill => _localizedValues[localeCode]['auto_bill'];
+  String get autoBill => _localizedValues[localeCode]['auto_bill'] ?? '';
 
-  String get archivedAt => _localizedValues[localeCode]['archived_at'];
+  String get archivedAt => _localizedValues[localeCode]['archived_at'] ?? '';
 
-  String get hasExpenses => _localizedValues[localeCode]['has_expenses'];
+  String get hasExpenses => _localizedValues[localeCode]['has_expenses'] ?? '';
 
-  String get customTaxes1 => _localizedValues[localeCode]['custom_taxes1'];
+  String get customTaxes1 =>
+      _localizedValues[localeCode]['custom_taxes1'] ?? '';
 
-  String get customTaxes2 => _localizedValues[localeCode]['custom_taxes2'];
+  String get customTaxes2 =>
+      _localizedValues[localeCode]['custom_taxes2'] ?? '';
 
-  String get customTaxes3 => _localizedValues[localeCode]['custom_taxes3'];
+  String get customTaxes3 =>
+      _localizedValues[localeCode]['custom_taxes3'] ?? '';
 
-  String get customTaxes4 => _localizedValues[localeCode]['custom_taxes4'];
+  String get customTaxes4 =>
+      _localizedValues[localeCode]['custom_taxes4'] ?? '';
 
   String get customSurcharge1 =>
-      _localizedValues[localeCode]['custom_surcharge1'];
+      _localizedValues[localeCode]['custom_surcharge1'] ?? '';
 
   String get customSurcharge2 =>
-      _localizedValues[localeCode]['custom_surcharge2'];
+      _localizedValues[localeCode]['custom_surcharge2'] ?? '';
 
   String get customSurcharge3 =>
-      _localizedValues[localeCode]['custom_surcharge3'];
+      _localizedValues[localeCode]['custom_surcharge3'] ?? '';
 
   String get customSurcharge4 =>
-      _localizedValues[localeCode]['custom_surcharge4'];
+      _localizedValues[localeCode]['custom_surcharge4'] ?? '';
 
-  String get isDeleted => _localizedValues[localeCode]['is_deleted'];
+  String get isDeleted => _localizedValues[localeCode]['is_deleted'] ?? '';
 
-  String get vendorCity => _localizedValues[localeCode]['vendor_city'];
+  String get vendorCity => _localizedValues[localeCode]['vendor_city'] ?? '';
 
-  String get vendorState => _localizedValues[localeCode]['vendor_state'];
+  String get vendorState => _localizedValues[localeCode]['vendor_state'] ?? '';
 
-  String get vendorCountry => _localizedValues[localeCode]['vendor_country'];
+  String get vendorCountry =>
+      _localizedValues[localeCode]['vendor_country'] ?? '';
 
-  String get isApproved => _localizedValues[localeCode]['is_approved'];
+  String get isApproved => _localizedValues[localeCode]['is_approved'] ?? '';
 
-  String get taxName => _localizedValues[localeCode]['tax_name'];
+  String get taxName => _localizedValues[localeCode]['tax_name'] ?? '';
 
-  String get taxAmount => _localizedValues[localeCode]['tax_amount'];
+  String get taxAmount => _localizedValues[localeCode]['tax_amount'] ?? '';
 
-  String get taxPaid => _localizedValues[localeCode]['tax_paid'];
+  String get taxPaid => _localizedValues[localeCode]['tax_paid'] ?? '';
 
-  String get paymentAmount => _localizedValues[localeCode]['payment_amount'];
+  String get paymentAmount =>
+      _localizedValues[localeCode]['payment_amount'] ?? '';
 
-  String get age => _localizedValues[localeCode]['age'];
+  String get age => _localizedValues[localeCode]['age'] ?? '';
 
-  String get ageGroup0 => _localizedValues[localeCode]['age_group_0'];
+  String get ageGroup0 => _localizedValues[localeCode]['age_group_0'] ?? '';
 
-  String get ageGroup30 => _localizedValues[localeCode]['age_group_30'];
+  String get ageGroup30 => _localizedValues[localeCode]['age_group_30'] ?? '';
 
-  String get ageGroup60 => _localizedValues[localeCode]['age_group_60'];
+  String get ageGroup60 => _localizedValues[localeCode]['age_group_60'] ?? '';
 
-  String get ageGroup90 => _localizedValues[localeCode]['age_group_90'];
+  String get ageGroup90 => _localizedValues[localeCode]['age_group_90'] ?? '';
 
-  String get ageGroup120 => _localizedValues[localeCode]['age_group_120'];
+  String get ageGroup120 => _localizedValues[localeCode]['age_group_120'] ?? '';
 
-  String get invoiceBalance => _localizedValues[localeCode]['invoice_balance'];
+  String get invoiceBalance =>
+      _localizedValues[localeCode]['invoice_balance'] ?? '';
 
-  String get purgeData => _localizedValues[localeCode]['purge_data'];
+  String get purgeData => _localizedValues[localeCode]['purge_data'] ?? '';
 
   String get purgeSuccessful =>
-      _localizedValues[localeCode]['purge_successful'];
+      _localizedValues[localeCode]['purge_successful'] ?? '';
 
   String get purgeDataMessage =>
-      _localizedValues[localeCode]['purge_data_message'];
+      _localizedValues[localeCode]['purge_data_message'] ?? '';
 
-  String get license => _localizedValues[localeCode]['license'];
+  String get license => _localizedValues[localeCode]['license'] ?? '';
 
-  String get optional => _localizedValues[localeCode]['optional'];
+  String get optional => _localizedValues[localeCode]['optional'] ?? '';
 
-  String get custom1 => _localizedValues[localeCode]['custom1'];
+  String get custom1 => _localizedValues[localeCode]['custom1'] ?? '';
 
-  String get custom2 => _localizedValues[localeCode]['custom2'];
+  String get custom2 => _localizedValues[localeCode]['custom2'] ?? '';
 
-  String get custom3 => _localizedValues[localeCode]['custom3'];
+  String get custom3 => _localizedValues[localeCode]['custom3'] ?? '';
 
-  String get custom4 => _localizedValues[localeCode]['custom4'];
+  String get custom4 => _localizedValues[localeCode]['custom4'] ?? '';
 
-  String get fullName => _localizedValues[localeCode]['full_name'];
+  String get fullName => _localizedValues[localeCode]['full_name'] ?? '';
 
-  String get cityStatePostal => _localizedValues[localeCode]['city_state_postal'];
+  String get cityStatePostal =>
+      _localizedValues[localeCode]['city_state_postal'] ?? '';
 
-  String get postalCityState => _localizedValues[localeCode]['postal_city_state'];
+  String get postalCityState =>
+      _localizedValues[localeCode]['postal_city_state'] ?? '';
 
   String lookup(String key) {
     final lookupKey = toSnakeCase(key);

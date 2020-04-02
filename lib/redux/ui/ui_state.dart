@@ -40,9 +40,7 @@ abstract class UIState implements Built<UIState, UIStateBuilder> {
       invoiceUIState: InvoiceUIState(),
       // STARTER: constructor - do not remove comment
       designUIState: DesignUIState(),
-
       creditUIState: CreditUIState(),
-
       userUIState: UserUIState(),
       taxRateUIState: TaxRateUIState(),
       companyGatewayUIState: CompanyGatewayUIState(),
