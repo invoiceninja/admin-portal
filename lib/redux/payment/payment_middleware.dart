@@ -243,7 +243,7 @@ Middleware<AppState> _refundPayment(PaymentRepository repository) {
         .then((PaymentEntity payment) {
       store.dispatch(SavePaymentSuccess(payment));
       store.dispatch(RefundPaymentSuccess(payment));
-      //store.dispatch(LoadInvoice(invoiceId: payment.invoiceId, force: true));
+      store.dispatch(LoadInvoices(force: true));
       action.completer.complete(payment);
     }).catchError((Object error) {
       print(error);

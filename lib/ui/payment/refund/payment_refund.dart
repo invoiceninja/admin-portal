@@ -251,10 +251,14 @@ class _PaymentableEditorState extends State<PaymentableEditor> {
                 .toList(),
             onSelected: (selected) {
               final invoice = selected as InvoiceEntity;
+              /*
               _amountController.text = formatNumber(invoice.balance, context,
                   formatNumberType: FormatNumberType.input);
-              _invoiceId = invoice.id;
+               */
               _onChanged(invoice.clientId);
+              setState(() {
+                _invoiceId = invoice.id;
+              });
             },
           ),
         ),
@@ -263,6 +267,7 @@ class _PaymentableEditorState extends State<PaymentableEditor> {
         ),
         Expanded(
           child: DecoratedFormField(
+            enabled: (_invoiceId ?? '').isNotEmpty,
             controller: _amountController,
             label: localization.amount,
           ),
