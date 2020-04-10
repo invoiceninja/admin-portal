@@ -252,6 +252,44 @@ class MarkInvoicesPaidFailure implements StopSaving {
   final dynamic error;
 }
 
+class ReverseInvoicesRequest implements StartSaving {
+  ReverseInvoicesRequest(this.completer, this.invoiceIds);
+
+  final Completer completer;
+  final List<String> invoiceIds;
+}
+
+class ReverseInvoicesSuccess implements StopSaving, PersistData {
+  ReverseInvoicesSuccess(this.invoices);
+
+  final List<InvoiceEntity> invoices;
+}
+
+class ReverseInvoicesFailure implements StopSaving {
+  ReverseInvoicesFailure(this.invoices);
+
+  final List<InvoiceEntity> invoices;
+}
+
+class CancelInvoicesRequest implements StartSaving {
+  CancelInvoicesRequest(this.completer, this.invoiceIds);
+
+  final Completer completer;
+  final List<String> invoiceIds;
+}
+
+class CancelInvoicesSuccess implements StopSaving, PersistData {
+  CancelInvoicesSuccess(this.invoices);
+
+  final List<InvoiceEntity> invoices;
+}
+
+class CancelInvoicesFailure implements StopSaving {
+  CancelInvoicesFailure(this.invoices);
+
+  final List<InvoiceEntity> invoices;
+}
+
 class ArchiveInvoicesRequest implements StartSaving {
   ArchiveInvoicesRequest(this.completer, this.invoiceIds);
 
@@ -402,6 +440,24 @@ void handleInvoiceAction(BuildContext context, List<BaseEntity> invoices,
               invoiceIds.length == 1
                   ? localization.markedInvoiceAsSent
                   : localization.markedInvoicesAsSent),
+          invoiceIds));
+      break;
+    case EntityAction.reverse:
+      store.dispatch(ReverseInvoicesRequest(
+          snackBarCompleter<Null>(
+              context,
+              invoiceIds.length == 1
+                  ? localization.reversedInvoice
+                  : localization.reversedInvoices),
+          invoiceIds));
+      break;
+    case EntityAction.cancel:
+      store.dispatch(CancelInvoicesRequest(
+          snackBarCompleter<Null>(
+              context,
+              invoiceIds.length == 1
+                  ? localization.cancelledInvoice
+                  : localization.cancelledInvoices),
           invoiceIds));
       break;
     case EntityAction.markPaid:

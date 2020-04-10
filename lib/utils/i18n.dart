@@ -15,6 +15,11 @@ mixin LocalizationsProvider on LocaleCodeAware {
   static final Map<String, Map<String, String>> _localizedValues = {
     'en': {
       // STARTER: lang key - do not remove comment
+      'cancelled_invoice': 'Successfully cancelled invoice',
+      'cancelled_invoices': 'Successfully cancelled invoices',
+      'reversed_invoice': 'Successfully reversed invoice',
+      'reversed_invoices': 'Successfully reversed invoices',
+      'reverse': 'Reverse',
       'full_name': 'Full Name',
       'city_state_postal': 'City/State/Postal',
       'postal_city_state': 'Postal/City/State',
@@ -1015,6 +1020,8 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'activity_55': '',
       'activity_56': '',
       'activity_57': 'System failed to email invoice :invoice',
+      'activity_58': ':user reversed invoice :invoice',
+      'activity_59': ':user cancelled invoice :invoice',
       'one_time_password': 'One Time Password',
       'emailed_quote': 'Successfully emailed quote',
       'emailed_credit': 'Successfully emailed credit',
@@ -34650,6 +34657,10 @@ mixin LocalizationsProvider on LocaleCodeAware {
 
   String get activity_57 => _localizedValues[localeCode]['activity_57'] ?? '';
 
+  String get activity_58 => _localizedValues[localeCode]['activity_58'] ?? '';
+
+  String get activity_59 => _localizedValues[localeCode]['activity_59'] ?? '';
+
   String get oneTimePassword =>
       _localizedValues[localeCode]['one_time_password'] ?? '';
 
@@ -36392,6 +36403,20 @@ mixin LocalizationsProvider on LocaleCodeAware {
 
   String get postalCityState =>
       _localizedValues[localeCode]['postal_city_state'] ?? '';
+
+  String get reverse => _localizedValues[localeCode]['reverse'] ?? '';
+
+  String get cancelledInvoice =>
+      _localizedValues[localeCode]['cancelled_invoice'] ?? '';
+
+  String get cancelledInvoices =>
+      _localizedValues[localeCode]['cancelled_invoices'] ?? '';
+
+  String get reversedInvoice =>
+      _localizedValues[localeCode]['reversed_invoice'] ?? '';
+
+  String get reversedInvoices =>
+      _localizedValues[localeCode]['reversed_invoices'] ?? '';
 
   String lookup(String key) {
     final lookupKey = toSnakeCase(key);
