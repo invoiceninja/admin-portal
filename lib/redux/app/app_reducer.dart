@@ -40,7 +40,6 @@ AppState appReducer(AppState state, dynamic action) {
     ..isLoading = loadingReducer(state.isLoading, action)
     ..isSaving = savingReducer(state.isSaving, action)
     ..lastError = lastErrorReducer(state.lastError, action)
-    ..serverVersion = serverVersionReducer(state.serverVersion, action)
     ..authState.replace(authReducer(state.authState, action))
     ..staticState.replace(staticReducer(state.staticState, action))
     ..userCompanyStates[state.uiState.selectedCompanyIndex] = companyReducer(
@@ -49,11 +48,6 @@ AppState appReducer(AppState state, dynamic action) {
     ..prefState.replace(prefReducer(
         state.prefState, action, state.uiState.selectedCompanyIndex)));
 }
-
-final serverVersionReducer = combineReducers<String>([
-  // TODO re-enable this
-  //TypedReducer<String, LoadStaticSuccess>(_loadStaticSuccess),
-]);
 
 final lastErrorReducer = combineReducers<String>([
   TypedReducer<String, ClearLastError>((state, action) {

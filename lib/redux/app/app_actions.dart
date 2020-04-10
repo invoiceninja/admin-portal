@@ -67,6 +67,11 @@ class StartSaving {}
 
 class StopSaving {}
 
+class ServerVersionUpdated {
+  ServerVersionUpdated({this.version});
+  final String version;
+}
+
 class LoadStaticSuccess implements PersistStatic {
   LoadStaticSuccess({this.data});
 
