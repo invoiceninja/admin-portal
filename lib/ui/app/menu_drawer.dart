@@ -459,7 +459,8 @@ class SidebarFooter extends StatelessWidget {
           if (state.prefState.isMenuCollapsed) ...[
             Expanded(child: SizedBox())
           ] else ...[
-            if (account.currentVersion != account.latestVersion)
+            if (account.currentVersion != account.latestVersion &&
+                account.latestVersion != '0.0.0')
               IconButton(
                 icon: Icon(
                   Icons.warning,
@@ -628,6 +629,8 @@ void _showUpdate(BuildContext context) {
 
 void _showAbout(BuildContext context) async {
   //final packageInfo = await PackageInfo.fromPlatform();
+  final Store<AppState> store = StoreProvider.of<AppState>(context);
+  final state = store.state;
   final localization = AppLocalization.of(context);
   final ThemeData themeData = Theme.of(context);
   final TextStyle aboutTextStyle = themeData.textTheme.bodyText2;
@@ -643,7 +646,7 @@ void _showAbout(BuildContext context) async {
       height: 40.0,
     ),
     //applicationVersion: 'Version: ${packageInfo.version}',
-    applicationVersion: 'Version: $kAppVersion',
+    applicationVersion: 'Version: ${state.appVersion}',
     applicationLegalese: '© ${DateTime.now().year} Invoice Ninja',
     children: <Widget>[
       Padding(

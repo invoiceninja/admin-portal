@@ -51,7 +51,7 @@ class _IntegrationSettingsState extends State<IntegrationSettings> {
         .forEach((dynamic controller) => controller.removeListener(_onChanged));
 
     final company = widget.viewModel.state.company;
-    _googleAnalyticsController.text = company.googleAnalyticsUrl;
+    _googleAnalyticsController.text = company.googleAnalyticsKey;
     _slackWebhookController.text = company.slackWebhookUrl;
 
     _controllers
@@ -65,7 +65,7 @@ class _IntegrationSettingsState extends State<IntegrationSettings> {
       final state = widget.viewModel.state;
       final company = state.company.rebuild((b) => b
         ..slackWebhookUrl = _slackWebhookController.text.trim()
-        ..googleAnalyticsUrl = _googleAnalyticsController.text.trim());
+        ..googleAnalyticsKey = _googleAnalyticsController.text.trim());
       if (state.company != company) {
         widget.viewModel.onCompanyChanged(company);
       }

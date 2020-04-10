@@ -41,6 +41,8 @@ const EntityAction _$resume = const EntityAction._('resume');
 const EntityAction _$stop = const EntityAction._('stop');
 const EntityAction _$toggleMultiselect =
     const EntityAction._('toggleMultiselect');
+const EntityAction _$reverse = const EntityAction._('reverse');
+const EntityAction _$cancel = const EntityAction._('cancel');
 
 EntityAction _$valueOf(String name) {
   switch (name) {
@@ -112,6 +114,10 @@ EntityAction _$valueOf(String name) {
       return _$stop;
     case 'toggleMultiselect':
       return _$toggleMultiselect;
+    case 'reverse':
+      return _$reverse;
+    case 'cancel':
+      return _$cancel;
     default:
       throw new ArgumentError(name);
   }
@@ -153,6 +159,8 @@ final BuiltSet<EntityAction> _$values =
   _$resume,
   _$stop,
   _$toggleMultiselect,
+  _$reverse,
+  _$cancel,
 ]);
 
 Serializer<EntityAction> _$entityActionSerializer =

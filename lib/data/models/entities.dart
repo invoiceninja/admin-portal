@@ -463,7 +463,7 @@ abstract class ActivityEntity
   EntityType get entityType {
     if (['1', '2', '3', '26'].contains(activityTypeId)) {
       return EntityType.client;
-    } else if (['4', '5', '6', '7', '8', '9', '25', '53']
+    } else if (['4', '5', '6', '7', '8', '9', '25', '53', '58', '59']
         .contains(activityTypeId)) {
       return EntityType.invoice;
     } else if (['10', '11', '12', '13', '27'].contains(activityTypeId)) {

@@ -1,9 +1,11 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:invoiceninja_flutter/constants.dart';
 import 'package:invoiceninja_flutter/ui/app/form_card.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/app_dropdown_button.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/app_form.dart';
+import 'package:invoiceninja_flutter/ui/app/forms/bool_dropdown_button.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/decorated_form_field.dart';
 import 'package:invoiceninja_flutter/ui/settings/email_settings_vm.dart';
 import 'package:invoiceninja_flutter/ui/app/edit_scaffold.dart';
@@ -136,7 +138,6 @@ class _EmailSettingsState extends State<EmailSettings> {
               ]
             ],
           ),
-          /*
           FormCard(
             children: <Widget>[
               DecoratedFormField(
@@ -149,6 +150,7 @@ class _EmailSettingsState extends State<EmailSettings> {
                 controller: _bccEmailController,
                 keyboardType: TextInputType.emailAddress,
               ),
+              /*
               SizedBox(height: 10),
               BoolDropdownButton(
                 label: localization.enableMarkup,
@@ -158,6 +160,7 @@ class _EmailSettingsState extends State<EmailSettings> {
                 onChanged: (value) => viewModel.onSettingsChanged(
                     settings.rebuild((b) => b..enableEmailMarkup = value)),
               ),
+               */
             ],
           ),
           FormCard(
@@ -194,7 +197,6 @@ class _EmailSettingsState extends State<EmailSettings> {
               ),
             ],
           ),
-           */
         ],
       ),
     );

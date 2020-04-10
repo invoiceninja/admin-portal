@@ -252,6 +252,44 @@ class MarkInvoicesPaidFailure implements StopSaving {
   final dynamic error;
 }
 
+class ReverseInvoicesRequest implements StartSaving {
+  ReverseInvoicesRequest(this.completer, this.invoiceIds);
+
+  final Completer completer;
+  final List<String> invoiceIds;
+}
+
+class ReverseInvoicesSuccess implements StopSaving, PersistData {
+  ReverseInvoicesSuccess(this.invoices);
+
+  final List<InvoiceEntity> invoices;
+}
+
+class ReverseInvoicesFailure implements StopSaving {
+  ReverseInvoicesFailure(this.error);
+
+  final Object error;
+}
+
+class CancelInvoicesRequest implements StartSaving {
+  CancelInvoicesRequest(this.completer, this.invoiceIds);
+
+  final Completer completer;
+  final List<String> invoiceIds;
+}
+
+class CancelInvoicesSuccess implements StopSaving, PersistData {
+  CancelInvoicesSuccess(this.invoices);
+
+  final List<InvoiceEntity> invoices;
+}
+
+class CancelInvoicesFailure implements StopSaving {
+  CancelInvoicesFailure(this.error);
+
+  final Object error;
+}
+
 class ArchiveInvoicesRequest implements StartSaving {
   ArchiveInvoicesRequest(this.completer, this.invoiceIds);
 
@@ -370,6 +408,22 @@ class FilterInvoicesByCustom4 implements PersistUI {
   final String value;
 }
 
+class StartInvoiceMultiselect {}
+
+class AddToInvoiceMultiselect {
+  AddToInvoiceMultiselect({@required this.entity});
+
+  final BaseEntity entity;
+}
+
+class RemoveFromInvoiceMultiselect {
+  RemoveFromInvoiceMultiselect({@required this.entity});
+
+  final BaseEntity entity;
+}
+
+class ClearInvoiceMultiselect {}
+
 void handleInvoiceAction(BuildContext context, List<BaseEntity> invoices,
     EntityAction action) async {
   if (invoices.isEmpty) {
@@ -402,6 +456,24 @@ void handleInvoiceAction(BuildContext context, List<BaseEntity> invoices,
               invoiceIds.length == 1
                   ? localization.markedInvoiceAsSent
                   : localization.markedInvoicesAsSent),
+          invoiceIds));
+      break;
+    case EntityAction.reverse:
+      store.dispatch(ReverseInvoicesRequest(
+          snackBarCompleter<Null>(
+              context,
+              invoiceIds.length == 1
+                  ? localization.reversedInvoice
+                  : localization.reversedInvoices),
+          invoiceIds));
+      break;
+    case EntityAction.cancel:
+      store.dispatch(CancelInvoicesRequest(
+          snackBarCompleter<Null>(
+              context,
+              invoiceIds.length == 1
+                  ? localization.cancelledInvoice
+                  : localization.cancelledInvoices),
           invoiceIds));
       break;
     case EntityAction.markPaid:
@@ -478,19 +550,3 @@ void handleInvoiceAction(BuildContext context, List<BaseEntity> invoices,
       break;
   }
 }
-
-class StartInvoiceMultiselect {}
-
-class AddToInvoiceMultiselect {
-  AddToInvoiceMultiselect({@required this.entity});
-
-  final BaseEntity entity;
-}
-
-class RemoveFromInvoiceMultiselect {
-  RemoveFromInvoiceMultiselect({@required this.entity});
-
-  final BaseEntity entity;
-}
-
-class ClearInvoiceMultiselect {}

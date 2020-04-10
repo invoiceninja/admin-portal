@@ -30,9 +30,6 @@ class _$AppStateSerializer implements StructuredSerializer<AppState> {
       'lastError',
       serializers.serialize(object.lastError,
           specifiedType: const FullType(String)),
-      'serverVersion',
-      serializers.serialize(object.serverVersion,
-          specifiedType: const FullType(String)),
       'authState',
       serializers.serialize(object.authState,
           specifiedType: const FullType(AuthState)),
@@ -81,10 +78,6 @@ class _$AppStateSerializer implements StructuredSerializer<AppState> {
           result.lastError = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String;
           break;
-        case 'serverVersion':
-          result.serverVersion = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String;
-          break;
         case 'authState':
           result.authState.replace(serializers.deserialize(value,
               specifiedType: const FullType(AuthState)) as AuthState);
@@ -124,8 +117,6 @@ class _$AppState extends AppState {
   @override
   final String lastError;
   @override
-  final String serverVersion;
-  @override
   final AuthState authState;
   @override
   final StaticState staticState;
@@ -144,7 +135,6 @@ class _$AppState extends AppState {
       this.isSaving,
       this.isTesting,
       this.lastError,
-      this.serverVersion,
       this.authState,
       this.staticState,
       this.prefState,
@@ -162,9 +152,6 @@ class _$AppState extends AppState {
     }
     if (lastError == null) {
       throw new BuiltValueNullFieldError('AppState', 'lastError');
-    }
-    if (serverVersion == null) {
-      throw new BuiltValueNullFieldError('AppState', 'serverVersion');
     }
     if (authState == null) {
       throw new BuiltValueNullFieldError('AppState', 'authState');
@@ -198,7 +185,6 @@ class _$AppState extends AppState {
         isSaving == other.isSaving &&
         isTesting == other.isTesting &&
         lastError == other.lastError &&
-        serverVersion == other.serverVersion &&
         authState == other.authState &&
         staticState == other.staticState &&
         prefState == other.prefState &&
@@ -215,12 +201,10 @@ class _$AppState extends AppState {
                     $jc(
                         $jc(
                             $jc(
-                                $jc(
-                                    $jc($jc(0, isLoading.hashCode),
-                                        isSaving.hashCode),
-                                    isTesting.hashCode),
-                                lastError.hashCode),
-                            serverVersion.hashCode),
+                                $jc($jc(0, isLoading.hashCode),
+                                    isSaving.hashCode),
+                                isTesting.hashCode),
+                            lastError.hashCode),
                         authState.hashCode),
                     staticState.hashCode),
                 prefState.hashCode),
@@ -247,11 +231,6 @@ class AppStateBuilder implements Builder<AppState, AppStateBuilder> {
   String _lastError;
   String get lastError => _$this._lastError;
   set lastError(String lastError) => _$this._lastError = lastError;
-
-  String _serverVersion;
-  String get serverVersion => _$this._serverVersion;
-  set serverVersion(String serverVersion) =>
-      _$this._serverVersion = serverVersion;
 
   AuthStateBuilder _authState;
   AuthStateBuilder get authState =>
@@ -287,7 +266,6 @@ class AppStateBuilder implements Builder<AppState, AppStateBuilder> {
       _isSaving = _$v.isSaving;
       _isTesting = _$v.isTesting;
       _lastError = _$v.lastError;
-      _serverVersion = _$v.serverVersion;
       _authState = _$v.authState?.toBuilder();
       _staticState = _$v.staticState?.toBuilder();
       _prefState = _$v.prefState?.toBuilder();
@@ -321,7 +299,6 @@ class AppStateBuilder implements Builder<AppState, AppStateBuilder> {
               isSaving: isSaving,
               isTesting: isTesting,
               lastError: lastError,
-              serverVersion: serverVersion,
               authState: authState.build(),
               staticState: staticState.build(),
               prefState: prefState.build(),

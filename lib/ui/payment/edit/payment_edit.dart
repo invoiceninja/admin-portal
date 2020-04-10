@@ -383,6 +383,8 @@ class _PaymentableEditorState extends State<PaymentableEditor> {
           child: DecoratedFormField(
             controller: _amountController,
             label: localization.applied,
+            enabled:
+                (_creditId ?? '').isNotEmpty || (_invoiceId ?? '').isNotEmpty,
           ),
         ),
         SizedBox(

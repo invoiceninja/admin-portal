@@ -518,6 +518,11 @@ abstract class InvoiceEntity extends Object
           actions.add(EntityAction.markPaid);
         }
 
+        if (!isQuote && !isCredit && isSent) {
+          actions.add(EntityAction.cancel);
+          actions.add(EntityAction.reverse);
+        }
+
         if (isQuote && !isApproved) {
           actions.add(EntityAction.convert);
         }

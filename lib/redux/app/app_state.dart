@@ -66,7 +66,6 @@ abstract class AppState implements Built<AppState, AppStateBuilder> {
       isLoading: false,
       isSaving: false,
       isTesting: false,
-      serverVersion: '',
       lastError: '',
       authState: AuthState(),
       staticState: StaticState(),
@@ -88,8 +87,6 @@ abstract class AppState implements Built<AppState, AppStateBuilder> {
   bool get isTesting;
 
   String get lastError;
-
-  String get serverVersion;
 
   AuthState get authState;
 
@@ -140,6 +137,9 @@ abstract class AppState implements Built<AppState, AppStateBuilder> {
 
   String get accentColor =>
       user?.userCompany?.settings?.accentColor ?? kDefaultAccentColor;
+
+  String get appVersion =>
+      '${account.currentVersion}-${kAppVersion.split('.').last}';
 
   List<HistoryRecord> get historyList =>
       prefState.companyPrefs[uiState.selectedCompanyIndex].historyList
@@ -477,7 +477,7 @@ abstract class AppState implements Built<AppState, AppStateBuilder> {
     final int patch = int.parse(parts[2]);
 
     try {
-      final serverParts = serverVersion.split('.');
+      final serverParts = account.currentVersion.split('.');
       final int serverMajor = int.parse(serverParts[0]);
       final int serverMinor = int.parse(serverParts[1]);
       final int serverPatch = int.parse(serverParts[2]);
@@ -490,7 +490,7 @@ abstract class AppState implements Built<AppState, AppStateBuilder> {
     }
   }
 
-  bool get reportErrors => isHosted && authState.isAuthenticated;
+  bool get reportErrors => account?.reportErrors ?? false;
 
   bool get isHosted => authState.isHosted ?? false;
 
@@ -529,6 +529,7 @@ abstract class AppState implements Built<AppState, AppStateBuilder> {
     //return 'URL: ${authState.url}';
     //return 'PLAN: ${account.plan}';
     //return 'Invoice ${invoiceUIState.editing}';
+    return 'Account: $account';
     return 'Layout: ${prefState.appLayout}, Route: ${uiState.currentRoute} Prev: ${uiState.previousRoute}';
   }
 }

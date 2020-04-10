@@ -67,7 +67,7 @@ abstract class CompanyEntity extends Object
       enableProductQuantity: true,
       defaultQuantity: true,
       slackWebhookUrl: '',
-      googleAnalyticsUrl: '',
+      googleAnalyticsKey: '',
       convertProductExchangeRate: false,
       enableCustomSurchargeTaxes1: false,
       enableCustomSurchargeTaxes2: false,
@@ -218,8 +218,8 @@ abstract class CompanyEntity extends Object
   @BuiltValueField(wireName: 'slack_webhook_url')
   String get slackWebhookUrl;
 
-  @BuiltValueField(wireName: 'google_analytics_url')
-  String get googleAnalyticsUrl;
+  @BuiltValueField(wireName: 'google_analytics_key')
+  String get googleAnalyticsKey;
 
   SettingsEntity get settings;
 
