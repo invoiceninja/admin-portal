@@ -266,9 +266,9 @@ class ReverseInvoicesSuccess implements StopSaving, PersistData {
 }
 
 class ReverseInvoicesFailure implements StopSaving {
-  ReverseInvoicesFailure(this.invoices);
+  ReverseInvoicesFailure(this.error);
 
-  final List<InvoiceEntity> invoices;
+  final Object error;
 }
 
 class CancelInvoicesRequest implements StartSaving {
@@ -285,9 +285,9 @@ class CancelInvoicesSuccess implements StopSaving, PersistData {
 }
 
 class CancelInvoicesFailure implements StopSaving {
-  CancelInvoicesFailure(this.invoices);
+  CancelInvoicesFailure(this.error);
 
-  final List<InvoiceEntity> invoices;
+  final Object error;
 }
 
 class ArchiveInvoicesRequest implements StartSaving {
@@ -407,6 +407,22 @@ class FilterInvoicesByCustom4 implements PersistUI {
 
   final String value;
 }
+
+class StartInvoiceMultiselect {}
+
+class AddToInvoiceMultiselect {
+  AddToInvoiceMultiselect({@required this.entity});
+
+  final BaseEntity entity;
+}
+
+class RemoveFromInvoiceMultiselect {
+  RemoveFromInvoiceMultiselect({@required this.entity});
+
+  final BaseEntity entity;
+}
+
+class ClearInvoiceMultiselect {}
 
 void handleInvoiceAction(BuildContext context, List<BaseEntity> invoices,
     EntityAction action) async {
@@ -534,19 +550,3 @@ void handleInvoiceAction(BuildContext context, List<BaseEntity> invoices,
       break;
   }
 }
-
-class StartInvoiceMultiselect {}
-
-class AddToInvoiceMultiselect {
-  AddToInvoiceMultiselect({@required this.entity});
-
-  final BaseEntity entity;
-}
-
-class RemoveFromInvoiceMultiselect {
-  RemoveFromInvoiceMultiselect({@required this.entity});
-
-  final BaseEntity entity;
-}
-
-class ClearInvoiceMultiselect {}

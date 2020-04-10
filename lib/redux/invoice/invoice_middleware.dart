@@ -35,6 +35,8 @@ List<Middleware<AppState>> createStoreInvoicesMiddleware([
   final emailInvoice = _emailInvoice(repository);
   final markInvoiceSent = _markInvoiceSent(repository);
   final markInvoicePaid = _markInvoicePaid(repository);
+  final reverseInvoices = _reverseInvoices(repository);
+  final cancelInvoices = _cancelInvoices(repository);
 
   return [
     TypedMiddleware<AppState, ViewInvoiceList>(viewInvoiceList),
@@ -50,6 +52,8 @@ List<Middleware<AppState>> createStoreInvoicesMiddleware([
     TypedMiddleware<AppState, EmailInvoiceRequest>(emailInvoice),
     TypedMiddleware<AppState, MarkInvoicesSentRequest>(markInvoiceSent),
     TypedMiddleware<AppState, MarkInvoicesPaidRequest>(markInvoicePaid),
+    TypedMiddleware<AppState, ReverseInvoicesRequest>(reverseInvoices),
+    TypedMiddleware<AppState, CancelInvoicesRequest>(cancelInvoices),
   ];
 }
 
@@ -133,6 +137,52 @@ Middleware<AppState> _showEmailInvoice() {
         action.completer.complete(null);
       }
     }
+  };
+}
+
+Middleware<AppState> _cancelInvoices(InvoiceRepository repository) {
+  return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
+    final action = dynamicAction as CancelInvoicesRequest;
+    repository
+        .bulkAction(
+            store.state.credentials, action.invoiceIds, EntityAction.cancel)
+        .then((List<InvoiceEntity> invoices) {
+      store.dispatch(CancelInvoicesSuccess(invoices));
+      if (action.completer != null) {
+        action.completer.complete(null);
+      }
+    }).catchError((Object error) {
+      print(error);
+      store.dispatch(CancelInvoicesFailure(error));
+      if (action.completer != null) {
+        action.completer.completeError(error);
+      }
+    });
+
+    next(action);
+  };
+}
+
+Middleware<AppState> _reverseInvoices(InvoiceRepository repository) {
+  return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
+    final action = dynamicAction as ReverseInvoicesRequest;
+    repository
+        .bulkAction(
+            store.state.credentials, action.invoiceIds, EntityAction.cancel)
+        .then((List<InvoiceEntity> invoices) {
+      store.dispatch(ReverseInvoicesSuccess(invoices));
+      if (action.completer != null) {
+        action.completer.complete(null);
+      }
+    }).catchError((Object error) {
+      print(error);
+      store.dispatch(ReverseInvoicesFailure(error));
+      if (action.completer != null) {
+        action.completer.completeError(error);
+      }
+    });
+
+    next(action);
   };
 }
 
