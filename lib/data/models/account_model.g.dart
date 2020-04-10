@@ -33,7 +33,12 @@ class _$AccountEntitySerializer implements StructuredSerializer<AccountEntity> {
       serializers.serialize(object.currentVersion,
           specifiedType: const FullType(String)),
     ];
-
+    if (object.reportErrors != null) {
+      result
+        ..add('report_errors')
+        ..add(serializers.serialize(object.reportErrors,
+            specifiedType: const FullType(bool)));
+    }
     return result;
   }
 
@@ -56,6 +61,10 @@ class _$AccountEntitySerializer implements StructuredSerializer<AccountEntity> {
         case 'default_url':
           result.defaultUrl = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String;
+          break;
+        case 'report_errors':
+          result.reportErrors = serializers.deserialize(value,
+              specifiedType: const FullType(bool)) as bool;
           break;
         case 'plan':
           result.plan = serializers.deserialize(value,
@@ -82,6 +91,8 @@ class _$AccountEntity extends AccountEntity {
   @override
   final String defaultUrl;
   @override
+  final bool reportErrors;
+  @override
   final String plan;
   @override
   final String latestVersion;
@@ -94,6 +105,7 @@ class _$AccountEntity extends AccountEntity {
   _$AccountEntity._(
       {this.id,
       this.defaultUrl,
+      this.reportErrors,
       this.plan,
       this.latestVersion,
       this.currentVersion})
@@ -128,6 +140,7 @@ class _$AccountEntity extends AccountEntity {
     return other is AccountEntity &&
         id == other.id &&
         defaultUrl == other.defaultUrl &&
+        reportErrors == other.reportErrors &&
         plan == other.plan &&
         latestVersion == other.latestVersion &&
         currentVersion == other.currentVersion;
@@ -136,7 +149,11 @@ class _$AccountEntity extends AccountEntity {
   @override
   int get hashCode {
     return $jf($jc(
-        $jc($jc($jc($jc(0, id.hashCode), defaultUrl.hashCode), plan.hashCode),
+        $jc(
+            $jc(
+                $jc($jc($jc(0, id.hashCode), defaultUrl.hashCode),
+                    reportErrors.hashCode),
+                plan.hashCode),
             latestVersion.hashCode),
         currentVersion.hashCode));
   }
@@ -146,6 +163,7 @@ class _$AccountEntity extends AccountEntity {
     return (newBuiltValueToStringHelper('AccountEntity')
           ..add('id', id)
           ..add('defaultUrl', defaultUrl)
+          ..add('reportErrors', reportErrors)
           ..add('plan', plan)
           ..add('latestVersion', latestVersion)
           ..add('currentVersion', currentVersion))
@@ -164,6 +182,10 @@ class AccountEntityBuilder
   String _defaultUrl;
   String get defaultUrl => _$this._defaultUrl;
   set defaultUrl(String defaultUrl) => _$this._defaultUrl = defaultUrl;
+
+  bool _reportErrors;
+  bool get reportErrors => _$this._reportErrors;
+  set reportErrors(bool reportErrors) => _$this._reportErrors = reportErrors;
 
   String _plan;
   String get plan => _$this._plan;
@@ -185,6 +207,7 @@ class AccountEntityBuilder
     if (_$v != null) {
       _id = _$v.id;
       _defaultUrl = _$v.defaultUrl;
+      _reportErrors = _$v.reportErrors;
       _plan = _$v.plan;
       _latestVersion = _$v.latestVersion;
       _currentVersion = _$v.currentVersion;
@@ -212,6 +235,7 @@ class AccountEntityBuilder
         new _$AccountEntity._(
             id: id,
             defaultUrl: defaultUrl,
+            reportErrors: reportErrors,
             plan: plan,
             latestVersion: latestVersion,
             currentVersion: currentVersion);

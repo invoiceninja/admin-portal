@@ -490,7 +490,7 @@ abstract class AppState implements Built<AppState, AppStateBuilder> {
     }
   }
 
-  bool get reportErrors => isHosted && authState.isAuthenticated;
+  bool get reportErrors => account?.reportErrors ?? false;
 
   bool get isHosted => authState.isHosted ?? false;
 
@@ -529,6 +529,7 @@ abstract class AppState implements Built<AppState, AppStateBuilder> {
     //return 'URL: ${authState.url}';
     //return 'PLAN: ${account.plan}';
     //return 'Invoice ${invoiceUIState.editing}';
+    return 'Account: $account';
     return 'Layout: ${prefState.appLayout}, Route: ${uiState.currentRoute} Prev: ${uiState.previousRoute}';
   }
 }
