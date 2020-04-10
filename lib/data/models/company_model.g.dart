@@ -186,8 +186,8 @@ class _$CompanyEntitySerializer implements StructuredSerializer<CompanyEntity> {
       'slack_webhook_url',
       serializers.serialize(object.slackWebhookUrl,
           specifiedType: const FullType(String)),
-      'google_analytics_url',
-      serializers.serialize(object.googleAnalyticsUrl,
+      'google_analytics_key',
+      serializers.serialize(object.googleAnalyticsKey,
           specifiedType: const FullType(String)),
       'settings',
       serializers.serialize(object.settings,
@@ -500,8 +500,8 @@ class _$CompanyEntitySerializer implements StructuredSerializer<CompanyEntity> {
           result.slackWebhookUrl = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String;
           break;
-        case 'google_analytics_url':
-          result.googleAnalyticsUrl = serializers.deserialize(value,
+        case 'google_analytics_key':
+          result.googleAnalyticsKey = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String;
           break;
         case 'settings':
@@ -2777,7 +2777,7 @@ class _$CompanyEntity extends CompanyEntity {
   @override
   final String slackWebhookUrl;
   @override
-  final String googleAnalyticsUrl;
+  final String googleAnalyticsKey;
   @override
   final SettingsEntity settings;
   @override
@@ -2849,7 +2849,7 @@ class _$CompanyEntity extends CompanyEntity {
       this.userMap,
       this.customFields,
       this.slackWebhookUrl,
-      this.googleAnalyticsUrl,
+      this.googleAnalyticsKey,
       this.settings,
       this.enabledModules,
       this.isChanged,
@@ -2994,8 +2994,8 @@ class _$CompanyEntity extends CompanyEntity {
     if (slackWebhookUrl == null) {
       throw new BuiltValueNullFieldError('CompanyEntity', 'slackWebhookUrl');
     }
-    if (googleAnalyticsUrl == null) {
-      throw new BuiltValueNullFieldError('CompanyEntity', 'googleAnalyticsUrl');
+    if (googleAnalyticsKey == null) {
+      throw new BuiltValueNullFieldError('CompanyEntity', 'googleAnalyticsKey');
     }
     if (settings == null) {
       throw new BuiltValueNullFieldError('CompanyEntity', 'settings');
@@ -3057,7 +3057,7 @@ class _$CompanyEntity extends CompanyEntity {
         userMap == other.userMap &&
         customFields == other.customFields &&
         slackWebhookUrl == other.slackWebhookUrl &&
-        googleAnalyticsUrl == other.googleAnalyticsUrl &&
+        googleAnalyticsKey == other.googleAnalyticsKey &&
         settings == other.settings &&
         enabledModules == other.enabledModules &&
         isChanged == other.isChanged &&
@@ -3099,7 +3099,7 @@ class _$CompanyEntity extends CompanyEntity {
                                                                 userMap.hashCode),
                                                             customFields.hashCode),
                                                         slackWebhookUrl.hashCode),
-                                                    googleAnalyticsUrl.hashCode),
+                                                    googleAnalyticsKey.hashCode),
                                                 settings.hashCode),
                                             enabledModules.hashCode),
                                         isChanged.hashCode),
@@ -3160,7 +3160,7 @@ class _$CompanyEntity extends CompanyEntity {
           ..add('userMap', userMap)
           ..add('customFields', customFields)
           ..add('slackWebhookUrl', slackWebhookUrl)
-          ..add('googleAnalyticsUrl', googleAnalyticsUrl)
+          ..add('googleAnalyticsKey', googleAnalyticsKey)
           ..add('settings', settings)
           ..add('enabledModules', enabledModules)
           ..add('isChanged', isChanged)
@@ -3407,10 +3407,10 @@ class CompanyEntityBuilder
   set slackWebhookUrl(String slackWebhookUrl) =>
       _$this._slackWebhookUrl = slackWebhookUrl;
 
-  String _googleAnalyticsUrl;
-  String get googleAnalyticsUrl => _$this._googleAnalyticsUrl;
-  set googleAnalyticsUrl(String googleAnalyticsUrl) =>
-      _$this._googleAnalyticsUrl = googleAnalyticsUrl;
+  String _googleAnalyticsKey;
+  String get googleAnalyticsKey => _$this._googleAnalyticsKey;
+  set googleAnalyticsKey(String googleAnalyticsKey) =>
+      _$this._googleAnalyticsKey = googleAnalyticsKey;
 
   SettingsEntityBuilder _settings;
   SettingsEntityBuilder get settings =>
@@ -3509,7 +3509,7 @@ class CompanyEntityBuilder
       _userMap = _$v.userMap?.toBuilder();
       _customFields = _$v.customFields?.toBuilder();
       _slackWebhookUrl = _$v.slackWebhookUrl;
-      _googleAnalyticsUrl = _$v.googleAnalyticsUrl;
+      _googleAnalyticsKey = _$v.googleAnalyticsKey;
       _settings = _$v.settings?.toBuilder();
       _enabledModules = _$v.enabledModules;
       _isChanged = _$v.isChanged;
@@ -3589,7 +3589,7 @@ class CompanyEntityBuilder
               userMap: userMap.build(),
               customFields: customFields.build(),
               slackWebhookUrl: slackWebhookUrl,
-              googleAnalyticsUrl: googleAnalyticsUrl,
+              googleAnalyticsKey: googleAnalyticsKey,
               settings: settings.build(),
               enabledModules: enabledModules,
               isChanged: isChanged,
