@@ -17,7 +17,7 @@ IconData getEntityActionIcon(EntityAction entityAction) {
     case EntityAction.cloneToCredit:
       return Icons.control_point_duplicate;
     case EntityAction.markSent:
-      return Icons.publish;
+      return Icons.public;
     case EntityAction.markPaid:
       return Icons.payment;
     case EntityAction.sendEmail:
@@ -52,11 +52,10 @@ IconData getEntityActionIcon(EntityAction entityAction) {
     case EntityAction.settings:
       return Icons.settings;
     case EntityAction.refund:
+    case EntityAction.cancel:
       return Icons.remove_circle_outline;
     case EntityAction.reverse:
       return Icons.undo;
-    case EntityAction.cancel:
-      return Icons.stop;
     default:
       return null;
   }

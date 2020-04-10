@@ -148,6 +148,7 @@ Middleware<AppState> _cancelInvoices(InvoiceRepository repository) {
             store.state.credentials, action.invoiceIds, EntityAction.cancel)
         .then((List<InvoiceEntity> invoices) {
       store.dispatch(CancelInvoicesSuccess(invoices));
+      store.dispatch(LoadClients(force: true));
       if (action.completer != null) {
         action.completer.complete(null);
       }
@@ -171,6 +172,7 @@ Middleware<AppState> _reverseInvoices(InvoiceRepository repository) {
             store.state.credentials, action.invoiceIds, EntityAction.cancel)
         .then((List<InvoiceEntity> invoices) {
       store.dispatch(ReverseInvoicesSuccess(invoices));
+      store.dispatch(LoadClients(force: true));
       if (action.completer != null) {
         action.completer.complete(null);
       }
