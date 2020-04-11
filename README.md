@@ -14,6 +14,14 @@ Note: the mobile app requires the latest version of the web app.
     <img src="https://github.com/invoiceninja/flutter-mobile/blob/master/samples/screenshots/screenshot_04.png" alt="Edit Product" width="200"/>
 </p>
 
+## Install Flutter
+
+The current code set doesn't work on the latest version of flutter. Please install version 1.15.17
+
+- Run `git clone https://github.com/flutter/flutter.git -b v1.15.17` to get this version
+- Run `flutter doctor` to install required packages
+- Run `flutter config --enable-web` to enable web support
+  
 ## Setting up the app
 - Run `cp lib/.env.dart.example lib/.env.dart` to create the config file.
 - Run `cp android/app/build.gradle.dev android/app/build.gradle` to support running the code unsigned.
