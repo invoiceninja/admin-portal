@@ -322,13 +322,17 @@ void handlePaymentAction(
   final store = StoreProvider.of<AppState>(context);
   final localization = AppLocalization.of(context);
   final paymentIds = payments.map((payment) => payment.id).toList();
-  final payment = payments.first;
+  var payment = payments.first as PaymentEntity;
 
   switch (action) {
     case EntityAction.edit:
       editEntity(context: context, entity: payment);
       break;
     case EntityAction.refund:
+      if (payment.invoicePaymentables.length == 1) {
+        payment = payment.rebuild((b) =>
+            b..invoices.add(PaymentableEntity(invoiceId: payment.invoiceId)));
+      }
       store.dispatch(ViewRefundPayment(
         navigator: Navigator.of(context),
         payment: payment,

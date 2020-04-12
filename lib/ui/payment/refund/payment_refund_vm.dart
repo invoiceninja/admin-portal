@@ -74,9 +74,6 @@ class PaymentRefundVM {
         store.dispatch(UpdatePayment(payment));
       },
       onEmailChanged: (value) async {
-        if (payment.isOld) {
-          return;
-        }
         final SharedPreferences prefs = await SharedPreferences.getInstance();
         prefs.setBool(kSharedPrefEmailPayment, value);
         store.dispatch(UserSettingsChanged(emailPayment: value));

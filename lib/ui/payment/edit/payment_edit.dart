@@ -263,8 +263,15 @@ class _PaymentableEditorState extends State<PaymentableEditor> {
 
     _controllers.forEach((controller) => controller.removeListener(_onChanged));
 
-    _amountController.text = formatNumber(widget.paymentable.amount, context,
+    final paymentable = widget.paymentable;
+    _amountController.text = formatNumber(paymentable.amount, context,
         formatNumberType: FormatNumberType.input);
+    if (paymentable.entityType == EntityType.invoice) {
+      _invoiceId = paymentable.invoiceId;
+    } else {
+      _creditId = paymentable.creditId;
+    }
+
 
     _controllers.forEach((controller) => controller.addListener(_onChanged));
 
