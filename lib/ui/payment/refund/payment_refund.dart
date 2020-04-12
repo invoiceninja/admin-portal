@@ -305,6 +305,7 @@ class _PaymentableEditorState extends State<PaymentableEditor> {
             enabled: (_invoiceId ?? '').isNotEmpty,
             controller: _amountController,
             label: localization.amount,
+            autofocus: !hasMultipleInvoices,
           ),
         ),
         if (hasMultipleInvoices) ...[
