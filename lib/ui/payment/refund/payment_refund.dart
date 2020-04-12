@@ -162,6 +162,7 @@ class _PaymentRefundState extends State<PaymentRefund> {
       return AlertDialog(
         backgroundColor: Theme.of(context).canvasColor,
         contentPadding: const EdgeInsets.all(0),
+        actionsPadding: const EdgeInsets.only(right: 4),
         title: Text(localization.refundPayment),
         content: SingleChildScrollView(
           child: body,
