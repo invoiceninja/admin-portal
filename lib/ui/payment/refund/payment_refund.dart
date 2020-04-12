@@ -13,6 +13,7 @@ import 'package:invoiceninja_flutter/utils/completers.dart';
 import 'package:invoiceninja_flutter/utils/formatting.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:invoiceninja_flutter/ui/app/entity_dropdown.dart';
+import 'package:invoiceninja_flutter/utils/platforms.dart';
 
 class PaymentRefund extends StatefulWidget {
   const PaymentRefund({
@@ -84,75 +85,102 @@ class _PaymentRefundState extends State<PaymentRefund> {
       paymentables.add(PaymentableEntity());
     }
 
-    return EditScaffold(
-      entity: payment,
-      title: localization.refund,
-      saveLabel: localization.refund,
-      onCancelPressed: (context) => viewModel.onCancelPressed(context),
-      onSavePressed: (context) {
-        final bool isValid = _formKey.currentState.validate();
-
-        setState(() {
-          autoValidate = !isValid;
-        });
-
-        if (!isValid) {
-          return;
-        }
-
-        viewModel.onRefundPressed(context);
-      },
-      body: Form(
-        key: _formKey,
-        child: ListView(
-          key: ValueKey(viewModel.payment.id),
-          children: <Widget>[
-            FormCard(
-              children: <Widget>[
-                if (payment.paymentables.isEmpty)
-                  DecoratedFormField(
-                    controller: _amountController,
-                    autocorrect: false,
-                    keyboardType:
-                        TextInputType.numberWithOptions(decimal: true),
-                    label: localization.amount,
-                  ),
-                if (payment.paymentables.isNotEmpty)
-                  for (var index = 0; index < paymentables.length; index++)
-                    PaymentableEditor(
-                      key: ValueKey(
-                          '__paymentable_${index}_${paymentables[index].id}__'),
-                      viewModel: viewModel,
-                      paymentable: paymentables[index],
-                      index: index,
-                      onChanged: () {},
-                    ),
-                DatePicker(
-                  validator: (String val) => val.trim().isEmpty
-                      ? AppLocalization.of(context).pleaseSelectADate
-                      : null,
-                  autoValidate: autoValidate,
-                  labelText: localization.refundDate,
-                  selectedDate: payment.date,
-                  onSelected: (date) {
-                    viewModel.onChanged(payment.rebuild((b) => b..date = date));
-                  },
+    final body = Form(
+      key: _formKey,
+      child: Column(
+        key: ValueKey(viewModel.payment.id),
+        children: <Widget>[
+          FormCard(
+            children: <Widget>[
+              if (payment.paymentables.isEmpty)
+                DecoratedFormField(
+                  controller: _amountController,
+                  autocorrect: false,
+                  keyboardType: TextInputType.numberWithOptions(decimal: true),
+                  label: localization.amount,
                 ),
-              ],
-            ),
-            FormCard(children: <Widget>[
-              SwitchListTile(
-                activeColor: Theme.of(context).accentColor,
-                title: Text(localization.sendEmail),
-                value: viewModel.prefState.emailPayment,
-                subtitle: Text(localization.emailReceipt),
-                onChanged: (value) => viewModel.onEmailChanged(value),
+              if (payment.paymentables.isNotEmpty)
+                for (var index = 0; index < paymentables.length; index++)
+                  PaymentableEditor(
+                    key: ValueKey(
+                        '__paymentable_${index}_${paymentables[index].id}__'),
+                    viewModel: viewModel,
+                    paymentable: paymentables[index],
+                    index: index,
+                    onChanged: () {},
+                  ),
+              DatePicker(
+                validator: (String val) => val.trim().isEmpty
+                    ? AppLocalization.of(context).pleaseSelectADate
+                    : null,
+                autoValidate: autoValidate,
+                labelText: localization.refundDate,
+                selectedDate: payment.date,
+                onSelected: (date) {
+                  viewModel.onChanged(payment.rebuild((b) => b..date = date));
+                },
               ),
-            ]),
-          ],
-        ),
+            ],
+          ),
+          FormCard(children: <Widget>[
+            SwitchListTile(
+              activeColor: Theme.of(context).accentColor,
+              title: Text(localization.sendEmail),
+              value: viewModel.prefState.emailPayment,
+              subtitle: Text(localization.emailReceipt),
+              onChanged: (value) => viewModel.onEmailChanged(value),
+            ),
+          ]),
+        ],
       ),
     );
+
+    void onSavePressed(BuildContext context) {
+      final bool isValid = _formKey.currentState.validate();
+
+      setState(() {
+        autoValidate = !isValid;
+      });
+
+      if (!isValid) {
+        return;
+      }
+
+      viewModel.onRefundPressed(context);
+    }
+
+    if (isMobile(context)) {
+      return EditScaffold(
+        entity: payment,
+        title: localization.refund,
+        saveLabel: localization.refund,
+        onCancelPressed: (context) => viewModel.onCancelPressed(context),
+        onSavePressed: (context) => onSavePressed(context),
+        body: body,
+      );
+    } else {
+      return AlertDialog(
+        backgroundColor: Theme.of(context).canvasColor,
+        contentPadding: const EdgeInsets.all(0),
+        title: Text(localization.refundPayment),
+        content: SingleChildScrollView(
+          child: body,
+        ),
+        actions: <Widget>[
+          FlatButton(
+            child: Text(localization.cancel.toUpperCase()),
+            onPressed: () => Navigator.of(context).pop(),
+          ),
+          FlatButton(
+            child: Text(localization.refund.toUpperCase()),
+            onPressed: () {
+              onSavePressed(context);
+              Navigator.of(context).pop();
+            },
+          ),
+        ],
+      );
+    }
   }
 }
 

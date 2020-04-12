@@ -77,10 +77,16 @@ Middleware<AppState> _viewRefundPayment() {
 
     next(action);
 
-    store.dispatch(UpdateCurrentRoute(PaymentRefundScreen.route));
-
     if (isMobile(action.context)) {
+      store.dispatch(UpdateCurrentRoute(PaymentRefundScreen.route));
       action.navigator.pushNamed(PaymentRefundScreen.route);
+    } else {
+      showDialog<PaymentRefundScreen>(
+          context: action.context,
+          useRootNavigator: true,
+          builder: (BuildContext context) {
+            return PaymentRefundScreen();
+          });
     }
   };
 }
