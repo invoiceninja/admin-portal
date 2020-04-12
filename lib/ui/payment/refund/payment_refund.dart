@@ -156,7 +156,7 @@ class _PaymentRefundState extends State<PaymentRefund> {
     if (isMobile(context)) {
       return EditScaffold(
         entity: payment,
-        title: localization.refund,
+        title: localization.refundPayment,
         saveLabel: localization.refund,
         onCancelPressed: (context) => viewModel.onCancelPressed(context),
         onSavePressed: (context) => onSavePressed(context),
