@@ -1,13 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
+import 'package:invoiceninja_flutter/constants.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/ui/app/presenters/entity_presenter.dart';
 import 'package:invoiceninja_flutter/utils/formatting.dart';
+import 'package:invoiceninja_flutter/utils/localization.dart';
 
 class InvoicePresenter extends EntityPresenter {
   static List<String> getTableFields(UserCompanyEntity userCompany) {
     return [
+      InvoiceFields.status,
       InvoiceFields.invoiceNumber,
       InvoiceFields.client,
       InvoiceFields.invoiceDate,
@@ -20,10 +23,21 @@ class InvoicePresenter extends EntityPresenter {
 
   @override
   Widget getField({String field, BuildContext context}) {
+    final localization = AppLocalization.of(context);
     final state = StoreProvider.of<AppState>(context).state;
     final invoice = entity as InvoiceEntity;
 
     switch (field) {
+      case InvoiceFields.status:
+        return Text(
+            invoice.isPastDue
+                ? localization.pastDue
+                : localization.lookup(kInvoiceStatuses[invoice.statusId]),
+            style: TextStyle(
+              color: invoice.isPastDue
+                  ? Colors.red
+                  : InvoiceStatusColors.colors[invoice.statusId],
+            ));
       case InvoiceFields.invoiceNumber:
         return Text(invoice.number);
       case InvoiceFields.client:
