@@ -33,12 +33,9 @@ class ProductRepository {
 
   Future<List<ProductEntity>> bulkAction(
       Credentials credentials, List<String> ids, EntityAction action) async {
-    var url = credentials.url + '/products/bulk?';
-    if (action != null) {
-      url += '&action=' + action.toString();
-    }
+    final url = credentials.url + '/products/bulk';
     final dynamic response = await webClient.post(url, credentials.token,
-        data: json.encode({'ids': ids}));
+        data: json.encode({'ids': ids, 'action': '$action'}));
 
     final ProductListResponse productResponse =
         serializers.deserializeWith(ProductListResponse.serializer, response);

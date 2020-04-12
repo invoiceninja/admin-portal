@@ -33,12 +33,10 @@ class PaymentRepository {
 
   Future<List<PaymentEntity>> bulkAction(
       Credentials credentials, List<String> ids, EntityAction action) async {
-    var url = credentials.url + '/payments/bulk?include=paymentables';
-    if (action != null) {
-      url += '&action=' + action.toString();
-    }
+    final url = credentials.url + '/payments/bulk?include=paymentables';
     final dynamic response = await webClient.post(url, credentials.token,
-        data: json.encode({'ids': ids}));
+        data: json.encode({'ids': ids, 'action': '$action'}));
+
     final PaymentListResponse paymentResponse =
         serializers.deserializeWith(PaymentListResponse.serializer, response);
 

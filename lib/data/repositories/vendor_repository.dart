@@ -44,12 +44,9 @@ class VendorRepository {
 
   Future<List<VendorEntity>> bulkAction(
       Credentials credentials, List<String> ids, EntityAction action) async {
-    var url = credentials.url + '/vendors/bulk?';
-    if (action != null) {
-      url += '&action=' + action.toString();
-    }
+    final url = credentials.url + '/vendors/bulk';
     final dynamic response = await webClient.post(url, credentials.token,
-        data: json.encode({'ids': ids}));
+        data: json.encode({'ids': ids, 'action': '$action'}));
 
     final VendorListResponse vendorResponse =
         serializers.deserializeWith(VendorListResponse.serializer, response);

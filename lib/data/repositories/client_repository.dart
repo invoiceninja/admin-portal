@@ -46,13 +46,9 @@ class ClientRepository {
 
   Future<List<ClientEntity>> bulkAction(
       Credentials credentials, List<String> ids, EntityAction action) async {
-    var url =
-        credentials.url + '/clients/bulk?include=gateway_tokens,activities';
-    if (action != null) {
-      url += '&action=' + action.toString();
-    }
+    final url = credentials.url + '/clients/bulk?include=gateway_tokens,activities';
     final dynamic response = await webClient.post(url, credentials.token,
-        data: json.encode({'ids': ids}));
+        data: json.encode({'ids': ids, 'action': '$action'}));
 
     final ClientListResponse clientResponse =
         serializers.deserializeWith(ClientListResponse.serializer, response);

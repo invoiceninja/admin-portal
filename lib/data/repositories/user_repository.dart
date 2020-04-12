@@ -44,12 +44,9 @@ class UserRepository {
 
   Future<List<UserEntity>> bulkAction(
       Credentials credentials, List<String> ids, EntityAction action, String password) async {
-    var url = credentials.url + '/users/bulk?include=company_user';
-    if (action != null) {
-      url += '&action=' + action.toString();
-    }
+    final url = credentials.url + '/users/bulk?include=company_user';
     final dynamic response = await webClient.post(url, credentials.token,
-        password: password, data: json.encode({'ids': ids}));
+        data: json.encode({'ids': ids, 'action': '$action'}));
 
     final UserListResponse userResponse =
         serializers.deserializeWith(UserListResponse.serializer, response);
