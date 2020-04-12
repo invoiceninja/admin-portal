@@ -327,6 +327,12 @@ abstract class PaymentEntity extends Object
   @override
   double get listDisplayAmount => amount;
 
+  List<PaymentableEntity> get invoicePaymentables =>
+      paymentables.where((p) => p.entityType == EntityType.invoice).toList();
+
+  List<PaymentableEntity> get creditPaymentables =>
+      paymentables.where((p) => p.entityType == EntityType.credit).toList();
+
   String get invoiceId {
     final invoicePaymentables =
         paymentables.firstWhere((p) => p.entityType == EntityType.invoice);

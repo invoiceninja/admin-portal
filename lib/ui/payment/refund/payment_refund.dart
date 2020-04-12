@@ -81,7 +81,10 @@ class _PaymentRefundState extends State<PaymentRefund> {
     final localization = AppLocalization.of(context);
 
     final paymentables = payment.invoices.toList();
-    if (paymentables.where((paymentable) => paymentable.isEmpty).isEmpty) {
+    final needsEmpty =
+        paymentables.where((paymentable) => paymentable.isEmpty).isEmpty;
+    final hasMultipleInvoices = payment.invoicePaymentables.length > 1;
+    if (needsEmpty && hasMultipleInvoices) {
       paymentables.add(PaymentableEntity());
     }
 
@@ -216,6 +219,7 @@ class _PaymentableEditorState extends State<PaymentableEditor> {
 
     _controllers.forEach((controller) => controller.removeListener(_onChanged));
 
+    _invoiceId = widget.paymentable.invoiceId;
     _amountController.text = formatNumber(widget.paymentable.amount, context,
         formatNumberType: FormatNumberType.input);
 
