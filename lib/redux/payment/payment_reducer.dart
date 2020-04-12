@@ -35,7 +35,7 @@ final editingReducer = combineReducers<PaymentEntity>([
     return action.payments[0];
   }),
   TypedReducer<PaymentEntity, EditPayment>(_updateEditing),
-  TypedReducer<PaymentEntity, RefundPayment>(_updateEditing),
+  TypedReducer<PaymentEntity, ViewRefundPayment>(_updateEditing),
   TypedReducer<PaymentEntity, UpdatePayment>((payment, action) {
     return action.payment.rebuild((b) => b..isChanged = true);
   }),

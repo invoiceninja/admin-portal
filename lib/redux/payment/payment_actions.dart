@@ -43,9 +43,9 @@ class EditPayment extends AbstractNavigatorAction
   final bool force;
 }
 
-class RefundPayment extends AbstractNavigatorAction
+class ViewRefundPayment extends AbstractNavigatorAction
     implements PersistUI, PersistPrefs {
-  RefundPayment(
+  ViewRefundPayment(
       {@required this.payment,
       @required NavigatorState navigator,
       this.completer,
@@ -297,6 +297,22 @@ class FilterPaymentsByEntity implements PersistUI {
   final EntityType entityType;
 }
 
+class StartPaymentMultiselect {}
+
+class AddToPaymentMultiselect {
+  AddToPaymentMultiselect({@required this.entity});
+
+  final BaseEntity entity;
+}
+
+class RemoveFromPaymentMultiselect {
+  RemoveFromPaymentMultiselect({@required this.entity});
+
+  final BaseEntity entity;
+}
+
+class ClearPaymentMultiselect {}
+
 void handlePaymentAction(
     BuildContext context, List<BaseEntity> payments, EntityAction action) {
   if (payments.isEmpty) {
@@ -313,7 +329,7 @@ void handlePaymentAction(
       editEntity(context: context, entity: payment);
       break;
     case EntityAction.refund:
-      store.dispatch(RefundPayment(
+      store.dispatch(ViewRefundPayment(
         navigator: Navigator.of(context),
         payment: payment,
       ));
@@ -357,19 +373,3 @@ void handlePaymentAction(
       break;
   }
 }
-
-class StartPaymentMultiselect {}
-
-class AddToPaymentMultiselect {
-  AddToPaymentMultiselect({@required this.entity});
-
-  final BaseEntity entity;
-}
-
-class RemoveFromPaymentMultiselect {
-  RemoveFromPaymentMultiselect({@required this.entity});
-
-  final BaseEntity entity;
-}
-
-class ClearPaymentMultiselect {}

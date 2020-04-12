@@ -21,7 +21,7 @@ List<Middleware<AppState>> createStorePaymentsMiddleware([
   final viewPaymentList = _viewPaymentList();
   final viewPayment = _viewPayment();
   final editPayment = _editPayment();
-  final showRefundPayment = _showRefundPayment();
+  final viewRefundPayment = _viewRefundPayment();
   final loadPayments = _loadPayments(repository);
   //final loadPayment = _loadPayment(repository);
   final savePayment = _savePayment(repository);
@@ -35,7 +35,7 @@ List<Middleware<AppState>> createStorePaymentsMiddleware([
     TypedMiddleware<AppState, ViewPaymentList>(viewPaymentList),
     TypedMiddleware<AppState, ViewPayment>(viewPayment),
     TypedMiddleware<AppState, EditPayment>(editPayment),
-    TypedMiddleware<AppState, RefundPayment>(showRefundPayment),
+    TypedMiddleware<AppState, ViewRefundPayment>(viewRefundPayment),
     TypedMiddleware<AppState, LoadPayments>(loadPayments),
     //TypedMiddleware<AppState, LoadPayment>(loadPayment),
     TypedMiddleware<AppState, SavePaymentRequest>(savePayment),
@@ -66,9 +66,9 @@ Middleware<AppState> _editPayment() {
   };
 }
 
-Middleware<AppState> _showRefundPayment() {
+Middleware<AppState> _viewRefundPayment() {
   return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
-    final action = dynamicAction as RefundPayment;
+    final action = dynamicAction as ViewRefundPayment;
 
     if (!action.force &&
         hasChanges(store: store, context: action.context, action: action)) {
