@@ -169,7 +169,7 @@ Middleware<AppState> _reverseInvoices(InvoiceRepository repository) {
     final action = dynamicAction as ReverseInvoicesRequest;
     repository
         .bulkAction(
-            store.state.credentials, action.invoiceIds, EntityAction.cancel)
+            store.state.credentials, action.invoiceIds, EntityAction.reverse)
         .then((List<InvoiceEntity> invoices) {
       store.dispatch(ReverseInvoicesSuccess(invoices));
       store.dispatch(LoadClients(force: true));
