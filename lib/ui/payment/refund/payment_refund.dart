@@ -84,7 +84,8 @@ class _PaymentRefundState extends State<PaymentRefund> {
     final needsEmpty =
         paymentables.where((paymentable) => paymentable.isEmpty).isEmpty;
     final hasMultipleInvoices = payment.invoicePaymentables.length > 1;
-    if (needsEmpty && hasMultipleInvoices) {
+    final addBlank = needsEmpty && hasMultipleInvoices;
+    if (addBlank) {
       paymentables.add(PaymentableEntity());
     }
 
@@ -270,6 +271,7 @@ class _PaymentableEditorState extends State<PaymentableEditor> {
     final payment = viewModel.payment;
     final paymentable = widget.paymentable;
     final localization = AppLocalization.of(context);
+    final hasMultipleInvoices = payment.invoicePaymentables.length > 1;
 
     return Row(
       children: <Widget>[
@@ -305,19 +307,21 @@ class _PaymentableEditorState extends State<PaymentableEditor> {
             label: localization.amount,
           ),
         ),
-        SizedBox(
-          width: kTableColumnGap,
-        ),
-        IconButton(
-          icon: Icon(Icons.clear),
-          tooltip: localization.remove,
-          onPressed: paymentable.isEmpty
-              ? null
-              : () {
-                  viewModel.onChanged(payment
-                      .rebuild((b) => b..invoices.removeAt(widget.index)));
-                },
-        ),
+        if (hasMultipleInvoices) ...[
+          SizedBox(
+            width: kTableColumnGap,
+          ),
+          IconButton(
+            icon: Icon(Icons.clear),
+            tooltip: localization.remove,
+            onPressed: paymentable.isEmpty
+                ? null
+                : () {
+                    viewModel.onChanged(payment
+                        .rebuild((b) => b..invoices.removeAt(widget.index)));
+                  },
+          ),
+        ]
       ],
     );
   }
