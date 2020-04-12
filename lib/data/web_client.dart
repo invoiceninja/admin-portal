@@ -167,6 +167,8 @@ void _checkResponse(http.Response response) {
   //debugPrint('response: ${response.statusCode} ${response.body}');
   print('headers: ${response.headers}');
 
+  print('CODE: ${response.statusCode}, >400 ${response.statusCode >= 400 ? 'YES' : 'NON'}');
+
   final version = response.headers['x-app-version'];
 
   if (version != null && !_isVersionSupported(version)) {

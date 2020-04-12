@@ -44,12 +44,9 @@ class DocumentRepository {
 
   Future<List<DocumentEntity>> bulkAction(
       Credentials credentials, List<String> ids, EntityAction action) async {
-    var url = credentials.url + '/documents/bulk?';
-    if (action != null) {
-      url += '&action=' + action.toString();
-    }
+    final url = credentials.url + '/documents/bulk';
     final dynamic response = await webClient.post(url, credentials.token,
-        data: json.encode({'ids': ids}));
+        data: json.encode({'ids': ids, 'action': '$action'}));
 
     final DocumentListResponse documentResponse =
         serializers.deserializeWith(DocumentListResponse.serializer, response);

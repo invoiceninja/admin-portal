@@ -46,13 +46,10 @@ class StubRepository {
   
     Future<List<StubEntity>> bulkAction(
         Credentials credentials, List<String> ids, EntityAction action) async {
-      var url = credentials.url + '/stubs/bulk?';
-      if (action != null) {
-        url += '&action=' + action.toString();
-      }
-      final dynamic response = await webClient.post(url, credentials.token,
-          data: json.encode({'ids': ids}));
-    
+        final url = credentials.url + '/stubs/bulk';
+        final dynamic response = await webClient.post(url, credentials.token,
+            data: json.encode({'ids': ids, 'action': '$action'}));
+
       final StubListResponse stubResponse =
       serializers.deserializeWith(StubListResponse.serializer, response);
     

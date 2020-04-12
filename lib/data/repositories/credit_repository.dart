@@ -44,12 +44,9 @@ class CreditRepository {
 
   Future<List<InvoiceEntity>> bulkAction(
       Credentials credentials, List<String> ids, EntityAction action) async {
-    var url = credentials.url + '/credits/bulk?';
-    if (action != null) {
-      url += '&action=' + action.toString();
-    }
+    final url = credentials.url + '/credits/bulk';
     final dynamic response = await webClient.post(url, credentials.token,
-        data: json.encode({'ids': ids}));
+        data: json.encode({'ids': ids, 'action': '$action'}));
 
     final InvoiceListResponse invoiceResponse =
         serializers.deserializeWith(InvoiceListResponse.serializer, response);

@@ -44,12 +44,9 @@ class DesignRepository {
 
   Future<List<DesignEntity>> bulkAction(
       Credentials credentials, List<String> ids, EntityAction action) async {
-    var url = credentials.url + '/designs/bulk?';
-    if (action != null) {
-      url += '&action=' + action.toString();
-    }
+    final url = credentials.url + '/designs/bulk';
     final dynamic response = await webClient.post(url, credentials.token,
-        data: json.encode({'ids': ids}));
+        data: json.encode({'ids': ids, 'action': '$action'}));
 
     final DesignListResponse designResponse =
         serializers.deserializeWith(DesignListResponse.serializer, response);

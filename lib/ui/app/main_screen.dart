@@ -19,7 +19,6 @@ import 'package:invoiceninja_flutter/ui/credit/view/credit_view_vm.dart';
 import 'package:invoiceninja_flutter/ui/design/design_screen_vm.dart';
 import 'package:invoiceninja_flutter/ui/design/edit/design_edit_vm.dart';
 import 'package:invoiceninja_flutter/ui/design/view/design_view_vm.dart';
-import 'package:invoiceninja_flutter/ui/payment/refund/payment_refund_vm.dart';
 import 'package:invoiceninja_flutter/ui/reports/reports_screen.dart';
 import 'package:invoiceninja_flutter/ui/reports/reports_screen_vm.dart';
 import 'package:invoiceninja_flutter/ui/settings/account_management_vm.dart';
@@ -123,7 +122,6 @@ class MainScreen extends StatelessWidget {
                   listWidget: PaymentScreenBuilder(),
                   viewWidget: PaymentViewScreen(),
                   editWidget: PaymentEditScreen(),
-                  refundWidget: PaymentRefundScreen(),
                 );
                 break;
               case QuoteScreen.route:
@@ -389,14 +387,12 @@ class EntityScreens extends StatelessWidget {
     @required this.viewWidget,
     @required this.entityType,
     this.emailWidget,
-    this.refundWidget,
   });
 
   final Widget listWidget;
   final Widget viewWidget;
   final Widget editWidget;
   final Widget emailWidget;
-  final Widget refundWidget;
   final EntityType entityType;
 
   @override
@@ -424,8 +420,6 @@ class EntityScreens extends StatelessWidget {
     Widget child;
     if (subRoute == 'email') {
       child = emailWidget;
-    } else if (subRoute == 'refund') {
-      child = refundWidget;
     } else if (subRoute == 'edit') {
       child = editWidget;
     } else if ((entityUIState.selectedId ?? '').isNotEmpty &&
