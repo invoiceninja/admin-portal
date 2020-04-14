@@ -1,7 +1,7 @@
-import 'package:built_collection/built_collection.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:invoiceninja_flutter/constants.dart';
 import 'package:invoiceninja_flutter/data/models/client_model.dart';
 import 'package:invoiceninja_flutter/data/models/company_model.dart';
@@ -14,7 +14,9 @@ import 'package:invoiceninja_flutter/redux/settings/settings_actions.dart';
 import 'package:invoiceninja_flutter/ui/app/buttons/elevated_button.dart';
 import 'package:invoiceninja_flutter/ui/app/dialogs/multiselect_dialog.dart';
 import 'package:invoiceninja_flutter/ui/app/form_card.dart';
+import 'package:invoiceninja_flutter/ui/app/forms/app_dropdown_button.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/app_form.dart';
+import 'package:invoiceninja_flutter/ui/app/forms/bool_dropdown_button.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/design_picker.dart';
 import 'package:invoiceninja_flutter/ui/settings/invoice_design_vm.dart';
 import 'package:invoiceninja_flutter/ui/app/edit_scaffold.dart';
@@ -44,7 +46,7 @@ class _InvoiceDesignState extends State<InvoiceDesign>
   void initState() {
     super.initState();
     _focusNode = FocusScopeNode();
-    _controller = TabController(vsync: this, length: 6);
+    _controller = TabController(vsync: this, length: 7);
   }
 
   @override
@@ -74,11 +76,9 @@ class _InvoiceDesignState extends State<InvoiceDesign>
           Tab(
             text: localization.generalSettings,
           ),
-          /*
           Tab(
             text: localization.invoiceOptions,
           ),
-           */
           Tab(
             text: localization.clientDetails,
           ),
@@ -168,23 +168,23 @@ class _InvoiceDesignState extends State<InvoiceDesign>
                           ))
                       .toList(),
                 ),
-                AppDropdownButton(
-                  labelText: localization.fontSize,
-                  value:
-                      settings.fontSize == null ? '' : '${settings.fontSize}',
-                  // TODO remove this and 0 from options
-                  showBlank: true,
-                  onChanged: (dynamic value) => viewModel.onSettingsChanged(
-                      settings.rebuild((b) => b..fontSize = int.parse(value))),
-                  items: [0, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16]
-                      .map((fontSize) => DropdownMenuItem<String>(
-                            value: '$fontSize',
-                            child:
-                                fontSize == 0 ? SizedBox() : Text('$fontSize'),
-                          ))
-                      .toList(),
-                ),                
-                 */
+                */
+                  AppDropdownButton(
+                    labelText: localization.fontSize,
+                    value:
+                        settings.fontSize == null ? '' : '${settings.fontSize}',
+                    onChanged: (dynamic value) => viewModel.onSettingsChanged(
+                        settings
+                            .rebuild((b) => b..fontSize = int.parse(value))),
+                    items: [5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16]
+                        .map((fontSize) => DropdownMenuItem<String>(
+                              value: '$fontSize',
+                              child: fontSize == 0
+                                  ? SizedBox()
+                                  : Text('$fontSize'),
+                            ))
+                        .toList(),
+                  ),
                 ],
               ),
               /*
@@ -231,7 +231,6 @@ class _InvoiceDesignState extends State<InvoiceDesign>
              */
             ],
           ),
-          /*
           ListView(
             padding: const EdgeInsets.all(10),
             children: <Widget>[
@@ -257,6 +256,7 @@ class _InvoiceDesignState extends State<InvoiceDesign>
                   ),
                 ],
               ),
+              /*
               FormCard(
                 children: <Widget>[
                   BoolDropdownButton(
@@ -276,10 +276,10 @@ class _InvoiceDesignState extends State<InvoiceDesign>
                         settings.rebuild((b) => b..embedDocuments = value)),
                   ),
                 ],
-              ),              
+              ),
+               */
             ],
           ),
-               */
           FormCard(
             child: MultiSelectList(
               options: [
@@ -323,10 +323,10 @@ class _InvoiceDesignState extends State<InvoiceDesign>
                   ContactFields.email,
                 ].map((field) => '\$contact.$field'),
               ],
-              selected: settings.pdfVariables[kPdfFieldsClientDetails].toList(),
+              selected: settings.getFieldsForSection(kPdfFieldsClientDetails),
               onSelected: (values) {
-                viewModel.onSettingsChanged(settings.rebuild((b) => b
-                  ..pdfVariables[kPdfFieldsClientDetails] = BuiltList(values)));
+                viewModel.onSettingsChanged(settings.setFieldsForSection(
+                    kPdfFieldsClientDetails, values));
               },
               addTitle: localization.addField,
               liveChanges: true,
@@ -360,12 +360,10 @@ class _InvoiceDesignState extends State<InvoiceDesign>
                 CompanyFields.email,
                 CompanyFields.phone,
               ].map((field) => '\$company.$field').toList(),
-              selected:
-                  settings.pdfVariables[kPdfFieldsCompanyDetails].toList(),
+              selected: settings.getFieldsForSection(kPdfFieldsCompanyDetails),
               onSelected: (values) {
-                viewModel.onSettingsChanged(settings.rebuild((b) => b
-                  ..pdfVariables[kPdfFieldsCompanyDetails] =
-                      BuiltList(values)));
+                viewModel.onSettingsChanged(settings.setFieldsForSection(
+                    kPdfFieldsCompanyDetails, values));
               },
               addTitle: localization.addField,
               liveChanges: true,
@@ -397,12 +395,10 @@ class _InvoiceDesignState extends State<InvoiceDesign>
                 CompanyFields.cityStatePostal,
                 CompanyFields.country,
               ].map((field) => '\$company.$field').toList(),
-              selected:
-                  settings.pdfVariables[kPdfFieldsCompanyAddress].toList(),
+              selected: settings.getFieldsForSection(kPdfFieldsCompanyAddress),
               onSelected: (values) {
-                viewModel.onSettingsChanged(settings.rebuild((b) => b
-                  ..pdfVariables[kPdfFieldsCompanyAddress] =
-                      BuiltList(values)));
+                viewModel.onSettingsChanged(settings.setFieldsForSection(
+                    kPdfFieldsCompanyAddress, values));
               },
               addTitle: localization.addField,
               liveChanges: true,
@@ -435,12 +431,10 @@ class _InvoiceDesignState extends State<InvoiceDesign>
                 InvoiceFields.dueDate,
                 InvoiceFields.balance,
               ],
-              selected:
-                  settings.pdfVariables[kPdfFieldsInvoiceDetails].toList(),
+              selected: settings.getFieldsForSection(kPdfFieldsInvoiceDetails),
               onSelected: (values) {
-                viewModel.onSettingsChanged(settings.rebuild((b) => b
-                  ..pdfVariables[kPdfFieldsInvoiceDetails] =
-                      BuiltList(values)));
+                viewModel.onSettingsChanged(settings.setFieldsForSection(
+                    kPdfFieldsInvoiceDetails, values));
               },
               addTitle: localization.addField,
               liveChanges: true,
@@ -473,10 +467,11 @@ class _InvoiceDesignState extends State<InvoiceDesign>
                 QuoteFields.validUntil,
                 QuoteFields.amount,
               ],
-              selected: settings.pdfVariables[kPdfFieldsQuoteDetails].toList(),
+              selected: settings.getFieldsForSection(kPdfFieldsQuoteDetails),
               onSelected: (values) {
-                viewModel.onSettingsChanged(settings.rebuild((b) => b
-                  ..pdfVariables[kPdfFieldsQuoteDetails] = BuiltList(values)));
+                viewModel.onSettingsChanged(settings.setFieldsForSection(
+                    kPdfFieldsQuoteDetails, values));
+
               },
               addTitle: localization.addField,
               liveChanges: true,
@@ -507,10 +502,10 @@ class _InvoiceDesignState extends State<InvoiceDesign>
                 CreditFields.date,
                 CreditFields.balance,
               ],
-              selected: settings.pdfVariables[kPdfFieldsCreditDetails].toList(),
+              selected: settings.getFieldsForSection(kPdfFieldsCreditDetails),
               onSelected: (values) {
-                viewModel.onSettingsChanged(settings.rebuild((b) => b
-                  ..pdfVariables[kPdfFieldsCreditDetails] = BuiltList(values)));
+                   viewModel.onSettingsChanged(settings.setFieldsForSection(
+                    kPdfFieldsCreditDetails, values));
               },
               addTitle: localization.addField,
               liveChanges: true,
@@ -539,12 +534,10 @@ class _InvoiceDesignState extends State<InvoiceDesign>
                 ProductItemFields.cost,
                 ProductItemFields.lineTotal,
               ].map((field) => '\$product.$field').toList(),
-              selected:
-                  settings.pdfVariables[kPdfFieldsProductColumns].toList(),
+              selected: settings.getFieldsForSection(kPdfFieldsProductColumns),
               onSelected: (values) {
-                viewModel.onSettingsChanged(settings.rebuild((b) => b
-                  ..pdfVariables[kPdfFieldsProductColumns] =
-                      BuiltList(values)));
+                viewModel.onSettingsChanged(settings.setFieldsForSection(
+                    kPdfFieldsProductColumns, values));
               },
               addTitle: localization.addField,
               liveChanges: true,
@@ -556,10 +549,10 @@ class _InvoiceDesignState extends State<InvoiceDesign>
             child: MultiSelectList(
               options: [],
               defaultSelected: [],
-              selected: settings.pdfVariables[kPdfFieldsTaskColumns].toList(),
+              selected: settings.getFieldsForSection(kPdfFieldsTaskColumns),
               onSelected: (values) {
-                viewModel.onSettingsChanged(settings.rebuild((b) => b
-                  ..pdfVariables[kPdfFieldsTaskColumns] = BuiltList(values)));
+                    viewModel.onSettingsChanged(settings.setFieldsForSection(
+                    kPdfFieldsTaskColumns, values));
               },
               addTitle: localization.addField,
               liveChanges: true,

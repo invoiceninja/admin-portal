@@ -176,9 +176,9 @@ class _AccountManagementState extends State<AccountManagement>
               FormCard(
                   // TODO change to kModules.keys
                   children: kModules.keys.map((module) {
-                final implementedModules = <String>[
+                final implementedModules = <int>[
                   //kModuleQuotes,
-                  //kModuleCredits,
+                  kModuleCredits,
                 ];
                 final isImplemented = implementedModules.contains(module);
                 return CheckboxListTile(
