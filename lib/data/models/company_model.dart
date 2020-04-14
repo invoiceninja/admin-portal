@@ -345,7 +345,6 @@ abstract class CompanyEntity extends Object
       EntityType.expense,
       EntityType.vendor,
       EntityType.quote,
-      EntityType.credit,
     ].contains(entityType)) {
       return false;
     }
