@@ -1784,6 +1784,14 @@ abstract class SettingsEntity
           ? pdfVariables[section].toList()
           : [];
 
+  SettingsEntity setFieldsForSection(String section, List<String> fields) {
+    if (pdfVariables == null) {
+      return rebuild((b) => b..pdfVariables.replace({section: fields}));
+    } else {
+      return rebuild((b) => b..pdfVariables[section] = BuiltList(fields));
+    }
+  }
+
   String getEmailSubject(EmailTemplate emailTemplate) {
     switch (emailTemplate) {
       case EmailTemplate.invoice:

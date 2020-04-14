@@ -1,4 +1,3 @@
-import 'package:built_collection/built_collection.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
@@ -326,8 +325,8 @@ class _InvoiceDesignState extends State<InvoiceDesign>
               ],
               selected: settings.getFieldsForSection(kPdfFieldsClientDetails),
               onSelected: (values) {
-                viewModel.onSettingsChanged(settings.rebuild((b) => b
-                  ..pdfVariables[kPdfFieldsClientDetails] = BuiltList(values)));
+                viewModel.onSettingsChanged(settings.setFieldsForSection(
+                    kPdfFieldsClientDetails, values));
               },
               addTitle: localization.addField,
               liveChanges: true,
@@ -363,9 +362,8 @@ class _InvoiceDesignState extends State<InvoiceDesign>
               ].map((field) => '\$company.$field').toList(),
               selected: settings.getFieldsForSection(kPdfFieldsCompanyDetails),
               onSelected: (values) {
-                viewModel.onSettingsChanged(settings.rebuild((b) => b
-                  ..pdfVariables[kPdfFieldsCompanyDetails] =
-                      BuiltList(values)));
+                viewModel.onSettingsChanged(settings.setFieldsForSection(
+                    kPdfFieldsCompanyDetails, values));
               },
               addTitle: localization.addField,
               liveChanges: true,
@@ -399,9 +397,8 @@ class _InvoiceDesignState extends State<InvoiceDesign>
               ].map((field) => '\$company.$field').toList(),
               selected: settings.getFieldsForSection(kPdfFieldsCompanyAddress),
               onSelected: (values) {
-                viewModel.onSettingsChanged(settings.rebuild((b) => b
-                  ..pdfVariables[kPdfFieldsCompanyAddress] =
-                      BuiltList(values)));
+                viewModel.onSettingsChanged(settings.setFieldsForSection(
+                    kPdfFieldsCompanyAddress, values));
               },
               addTitle: localization.addField,
               liveChanges: true,
@@ -436,9 +433,8 @@ class _InvoiceDesignState extends State<InvoiceDesign>
               ],
               selected: settings.getFieldsForSection(kPdfFieldsInvoiceDetails),
               onSelected: (values) {
-                viewModel.onSettingsChanged(settings.rebuild((b) => b
-                  ..pdfVariables[kPdfFieldsInvoiceDetails] =
-                      BuiltList(values)));
+                viewModel.onSettingsChanged(settings.setFieldsForSection(
+                    kPdfFieldsInvoiceDetails, values));
               },
               addTitle: localization.addField,
               liveChanges: true,
@@ -473,8 +469,9 @@ class _InvoiceDesignState extends State<InvoiceDesign>
               ],
               selected: settings.getFieldsForSection(kPdfFieldsQuoteDetails),
               onSelected: (values) {
-                viewModel.onSettingsChanged(settings.rebuild((b) => b
-                  ..pdfVariables[kPdfFieldsQuoteDetails] = BuiltList(values)));
+                viewModel.onSettingsChanged(settings.setFieldsForSection(
+                    kPdfFieldsQuoteDetails, values));
+
               },
               addTitle: localization.addField,
               liveChanges: true,
@@ -507,8 +504,8 @@ class _InvoiceDesignState extends State<InvoiceDesign>
               ],
               selected: settings.getFieldsForSection(kPdfFieldsCreditDetails),
               onSelected: (values) {
-                viewModel.onSettingsChanged(settings.rebuild((b) => b
-                  ..pdfVariables[kPdfFieldsCreditDetails] = BuiltList(values)));
+                   viewModel.onSettingsChanged(settings.setFieldsForSection(
+                    kPdfFieldsCreditDetails, values));
               },
               addTitle: localization.addField,
               liveChanges: true,
@@ -539,9 +536,8 @@ class _InvoiceDesignState extends State<InvoiceDesign>
               ].map((field) => '\$product.$field').toList(),
               selected: settings.getFieldsForSection(kPdfFieldsProductColumns),
               onSelected: (values) {
-                viewModel.onSettingsChanged(settings.rebuild((b) => b
-                  ..pdfVariables[kPdfFieldsProductColumns] =
-                      BuiltList(values)));
+                viewModel.onSettingsChanged(settings.setFieldsForSection(
+                    kPdfFieldsProductColumns, values));
               },
               addTitle: localization.addField,
               liveChanges: true,
@@ -555,8 +551,8 @@ class _InvoiceDesignState extends State<InvoiceDesign>
               defaultSelected: [],
               selected: settings.getFieldsForSection(kPdfFieldsTaskColumns),
               onSelected: (values) {
-                viewModel.onSettingsChanged(settings.rebuild((b) => b
-                  ..pdfVariables[kPdfFieldsTaskColumns] = BuiltList(values)));
+                    viewModel.onSettingsChanged(settings.setFieldsForSection(
+                    kPdfFieldsTaskColumns, values));
               },
               addTitle: localization.addField,
               liveChanges: true,
