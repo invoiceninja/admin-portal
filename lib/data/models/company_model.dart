@@ -309,19 +309,19 @@ abstract class CompanyEntity extends Object
 
   // TODO make sure to clear everything
   CompanyEntity get coreCompany => rebuild((b) => b
-    ..clients.clear()
-    ..products.clear()
-    ..invoices.clear()
-    ..payments.clear()
-    ..quotes.clear()
-    ..credits.clear()
-    ..tasks.clear()
-    ..projects.clear()
-    ..vendors.clear()
-    ..expenses.clear()
-    //..designs.clear()
-    //..companyGateways.clear()
-  );
+        ..clients.clear()
+        ..products.clear()
+        ..invoices.clear()
+        ..payments.clear()
+        ..quotes.clear()
+        ..credits.clear()
+        ..tasks.clear()
+        ..projects.clear()
+        ..vendors.clear()
+        ..expenses.clear()
+      //..designs.clear()
+      //..companyGateways.clear()
+      );
 
   bool isModuleEnabled(EntityType entityType) {
     if (Config.DEMO_MODE) {
@@ -1778,6 +1778,11 @@ abstract class SettingsEntity
 
   bool get hasDefaultPaymentTypeId =>
       defaultPaymentTypeId != null && defaultPaymentTypeId.isNotEmpty;
+
+  List<String> getFieldsForSection(String section) =>
+      pdfVariables != null && pdfVariables.containsKey(section)
+          ? pdfVariables[section].toList()
+          : [];
 
   String getEmailSubject(EmailTemplate emailTemplate) {
     switch (emailTemplate) {
