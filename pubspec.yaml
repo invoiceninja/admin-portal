@@ -46,6 +46,10 @@ dependencies:
   device_info: ^0.4.2+1
   #quick_actions: ^0.2.1
 
+dependency_overrides:
+  # Error: No named parameter with the name 'animation'
+  extended_image: 0.7.3-dev
+
 dev_dependencies:
   flutter_driver:
     sdk: flutter

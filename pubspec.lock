@@ -205,12 +205,12 @@ packages:
     source: hosted
     version: "0.4.2+2"
   extended_image:
-    dependency: transitive
+    dependency: "direct overridden"
     description:
       name: extended_image
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.7.2"
+    version: "0.7.3-dev"
   extended_image_library:
     dependency: transitive
     description:
