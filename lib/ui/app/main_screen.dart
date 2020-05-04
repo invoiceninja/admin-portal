@@ -27,6 +27,7 @@ import 'package:invoiceninja_flutter/ui/settings/tax_settings_vm.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:invoiceninja_flutter/utils/platforms.dart';
 import 'package:redux/redux.dart';
+import 'package:invoiceninja_flutter/ui/app/app_border.dart';
 
 class MainScreen extends StatelessWidget {
   static const String route = '/main';
@@ -232,15 +233,19 @@ class MainScreen extends StatelessWidget {
 
               return false;
             },
-            child: FocusTraversalGroup(
-              policy: WidgetOrderTraversalPolicy(),
-              child: Row(children: <Widget>[
-                if (prefState.showMenu) ...[
-                  MenuDrawerBuilder(),
-                  _CustomDivider(),
-                ],
-                Expanded(child: screen),
-              ]),
+            child: SafeArea(
+              child: AppBorder(
+                child: FocusTraversalGroup(
+                  policy: WidgetOrderTraversalPolicy(),
+                  child: Row(children: <Widget>[
+                    if (prefState.showMenu) ...[
+                      MenuDrawerBuilder(),
+                      _CustomDivider(),
+                    ],
+                    Expanded(child: screen),
+                  ]),
+                ),
+              ),
             ),
           );
         });
@@ -432,18 +437,28 @@ class EntityScreens extends StatelessWidget {
     return Row(
       children: <Widget>[
         Expanded(
-          child: listWidget,
+          child: AppBorder(
+            child: listWidget,
+            isLeft:
+                state.prefState.isNotMobile && !state.prefState.isMenuFloated,
+          ),
           flex: listFlex,
         ),
         _CustomDivider(),
         if (prefState.isModuleList || isPreviewShown)
           Expanded(
             flex: previewFlex,
-            child: child,
+            child: AppBorder(
+              child: child,
+              isLeft: true,
+            ),
           ),
         if (prefState.showHistory) ...[
           _CustomDivider(),
-          HistoryDrawerBuilder(),
+          AppBorder(
+            child: HistoryDrawerBuilder(),
+            isLeft: true,
+          ),
         ],
       ],
     );

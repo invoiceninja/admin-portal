@@ -6,25 +6,48 @@ class AppBorder extends StatelessWidget {
   const AppBorder({
     @required this.child,
     this.isTop = false,
+    this.isLeft = false,
   });
 
   final Widget child;
   final bool isTop;
+  final bool isLeft;
 
   @override
   Widget build(BuildContext context) {
+    const borderWidth = 1.5;
+
     return Container(
         decoration: BoxDecoration(
-          border: isTop
+          border: isTop || isLeft
               ? Border(
                   top: isTop
                       ? BorderSide(
-                          width: 1,
+                          width: borderWidth,
                           color: convertHexStringToColor(kDefaultBorderColor),
                         )
-                      : null)
+                      : BorderSide.none,
+                  right: false
+                      ? BorderSide(
+                          width: borderWidth,
+                          color: convertHexStringToColor(kDefaultBorderColor),
+                        )
+                      : BorderSide.none,
+                  bottom: false
+                      ? BorderSide(
+                          width: borderWidth,
+                          color: convertHexStringToColor(kDefaultBorderColor),
+                        )
+                      : BorderSide.none,
+                  left: isLeft
+                      ? BorderSide(
+                          width: borderWidth,
+                          color: convertHexStringToColor(kDefaultBorderColor),
+                        )
+                      : BorderSide.none,
+                )
               : Border.all(
-                  width: 1.5,
+                  width: borderWidth,
                   color: convertHexStringToColor(kDefaultBorderColor),
                 ),
         ),
