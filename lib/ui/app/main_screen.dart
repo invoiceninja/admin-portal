@@ -242,7 +242,11 @@ class MainScreen extends StatelessWidget {
                       MenuDrawerBuilder(),
                       _CustomDivider(),
                     ],
-                    Expanded(child: screen),
+                    Expanded(
+                        child: AppBorder(
+                      child: screen,
+                      isLeft: true,
+                    )),
                   ]),
                 ),
               ),
@@ -437,11 +441,7 @@ class EntityScreens extends StatelessWidget {
     return Row(
       children: <Widget>[
         Expanded(
-          child: AppBorder(
-            child: listWidget,
-            isLeft:
-                state.prefState.isNotMobile && !state.prefState.isMenuFloated,
-          ),
+          child: listWidget,
           flex: listFlex,
         ),
         _CustomDivider(),
