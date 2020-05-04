@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
-import 'package:invoiceninja_flutter/constants.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/ui/app/presenters/entity_presenter.dart';
@@ -24,18 +23,13 @@ class PaymentPresenter extends EntityPresenter {
 
   @override
   Widget getField({String field, BuildContext context}) {
-    final localization = AppLocalization.of(context);
+    //final localization = AppLocalization.of(context);
     final state = StoreProvider.of<AppState>(context).state;
     final payment = entity as PaymentEntity;
 
     switch (field) {
       case PaymentFields.paymentNumber:
         return Text(payment.number);
-      case PaymentFields.paymentStatus:
-        return Text(localization.lookup('payment_status_${payment.statusId}'),
-            style: TextStyle(
-              color: PaymentStatusColors.colors[payment.statusId],
-            ));
       case PaymentFields.invoiceNumber:
         return Text(payment.paymentables
             .map((paymentable) =>
