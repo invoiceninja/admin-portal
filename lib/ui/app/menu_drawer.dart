@@ -459,8 +459,7 @@ class SidebarFooter extends StatelessWidget {
           if (state.prefState.isMenuCollapsed) ...[
             Expanded(child: SizedBox())
           ] else ...[
-            if (account.currentVersion != account.latestVersion &&
-                account.latestVersion != '0.0.0')
+            if (account.isUpdateAvailable)
               IconButton(
                 icon: Icon(
                   Icons.warning,
