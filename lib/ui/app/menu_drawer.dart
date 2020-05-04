@@ -21,6 +21,7 @@ import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/redux/dashboard/dashboard_actions.dart';
 import 'package:invoiceninja_flutter/redux/settings/settings_actions.dart';
 import 'package:invoiceninja_flutter/ui/app/menu_drawer_vm.dart';
+import 'package:invoiceninja_flutter/ui/app/app_border.dart';
 import 'package:invoiceninja_flutter/ui/app/lists/selected_indicator.dart';
 import 'package:invoiceninja_flutter/utils/icons.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
@@ -196,17 +197,11 @@ class MenuDrawer extends StatelessWidget {
           ));
   */
 
-    return SizedBox(
-      width: state.prefState.isMenuCollapsed ? 65 : kDrawerWidth,
-      child: Drawer(
-        child: SafeArea(
-          child: Container(
-            decoration: BoxDecoration(
-              border: Border.all(
-                width: 1,
-                color: convertHexStringToColor(kDefaultBorderColor),
-              ),
-            ),
+    return AppBorder(
+      child: SizedBox(
+        width: state.prefState.isMenuCollapsed ? 65 : kDrawerWidth,
+        child: Drawer(
+          child: SafeArea(
             child: Column(
               mainAxisSize: MainAxisSize.max,
               children: <Widget>[
