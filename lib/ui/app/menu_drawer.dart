@@ -200,128 +200,149 @@ class MenuDrawer extends StatelessWidget {
       width: state.prefState.isMenuCollapsed ? 65 : kDrawerWidth,
       child: Drawer(
         child: SafeArea(
-          child: Column(
-            mainAxisSize: MainAxisSize.max,
-            children: <Widget>[
-              // Hide options while refreshing data
-              state.credentials.token.isEmpty
-                  ? Expanded(child: SizedBox())
-                  : Container(
-                      padding:
-                          EdgeInsets.symmetric(horizontal: 14, vertical: 3),
-                      color: enableDarkMode ? Colors.white10 : Theme.of(context).cardColor,
-                      child: state.prefState.isMenuCollapsed
-                          ? _collapsedCompanySelector
-                          : _expandedCompanySelector),
-              state.credentials.token.isEmpty
-                  ? SizedBox()
-                  : Expanded(
-                      child: Container(
+          child: Container(
+            decoration: BoxDecoration(
+              border: Border.all(
+                width: 1,
+                color: convertHexStringToColor(kDefaultBorderColor),
+              ),
+            ),
+            child: Column(
+              mainAxisSize: MainAxisSize.max,
+              children: <Widget>[
+                // Hide options while refreshing data
+                state.credentials.token.isEmpty
+                    ? Expanded(child: SizedBox())
+                    : Container(
+                        padding:
+                            EdgeInsets.symmetric(horizontal: 14, vertical: 3),
+                        color: enableDarkMode
+                            ? Colors.white10
+                            : Theme.of(context).cardColor,
+                        child: state.prefState.isMenuCollapsed
+                            ? _collapsedCompanySelector
+                            : _expandedCompanySelector),
+                state.credentials.token.isEmpty
+                    ? SizedBox()
+                    : Expanded(
+                        child: Container(
                         color: Theme.of(context).cardColor,
                         child: ListView(
-                        shrinkWrap: true,
-                        children: <Widget>[
-                          DrawerTile(
-                            company: company,
-                            icon: getEntityIcon(EntityType.dashboard),
-                            title: localization.dashboard,
-                            onTap: () => store.dispatch(
-                                ViewDashboard(navigator: Navigator.of(context))),
-                            onLongPress: () => store.dispatch(ViewDashboard(
-                                navigator: Navigator.of(context), filter: '')),
-                          ),
-                          DrawerTile(
-                            company: company,
-                            entityType: EntityType.client,
-                            icon: getEntityIcon(EntityType.client),
-                            title: localization.clients,
-                          ),
-                          DrawerTile(
-                            company: company,
-                            entityType: EntityType.product,
-                            icon: getEntityIcon(EntityType.product),
-                            title: localization.products,
-                          ),
-                          DrawerTile(
-                            company: company,
-                            entityType: EntityType.invoice,
-                            icon: getEntityIcon(EntityType.invoice),
-                            title: localization.invoices,
-                          ),
-                          DrawerTile(
-                            company: company,
-                            entityType: EntityType.payment,
-                            icon: getEntityIcon(EntityType.payment),
-                            title: localization.payments,
-                          ),
-                          DrawerTile(
-                            company: company,
-                            entityType: EntityType.quote,
-                            icon: getEntityIcon(EntityType.quote),
-                            title: localization.quotes,
-                          ),
-                          DrawerTile(
-                            company: company,
-                            entityType: EntityType.credit,
-                            icon: getEntityIcon(EntityType.credit),
-                            title: localization.credits,
-                          ),
-                          DrawerTile(
-                            company: company,
-                            entityType: EntityType.project,
-                            icon: getEntityIcon(EntityType.project),
-                            title: localization.projects,
-                          ),
-                          DrawerTile(
-                            company: company,
-                            entityType: EntityType.task,
-                            icon: getEntityIcon(EntityType.task),
-                            title: localization.tasks,
-                          ),
-                          DrawerTile(
-                            company: company,
-                            entityType: EntityType.vendor,
-                            icon: getEntityIcon(EntityType.vendor),
-                            title: localization.vendors,
-                          ),
-                          DrawerTile(
-                            company: company,
-                            entityType: EntityType.expense,
-                            icon: getEntityIcon(EntityType.expense),
-                            title: localization.expenses,
-                          ),
-                          // STARTER: menu - do not remove comment
-                          DrawerTile(
-                            company: company,
-                            icon: getEntityIcon(EntityType.reports),
-                            title: localization.reports,
-                            onTap: () {
-                              store.dispatch(
-                                  ViewReports(navigator: Navigator.of(context)));
-                            },
-                          ),
-                          DrawerTile(
-                            company: company,
-                            icon: getEntityIcon(EntityType.settings),
-                            title: localization.settings,
-                            onTap: () {
-                              store.dispatch(ViewSettings(
+                          shrinkWrap: true,
+                          children: <Widget>[
+                            DrawerTile(
+                              company: company,
+                              icon: getEntityIcon(EntityType.dashboard),
+                              title: localization.dashboard,
+                              onTap: () => store.dispatch(ViewDashboard(
+                                  navigator: Navigator.of(context))),
+                              onLongPress: () => store.dispatch(ViewDashboard(
                                   navigator: Navigator.of(context),
-                                  company: state.company));
-                            },
-                          ),
-                        ],
-                    ),
+                                  filter: '')),
+                            ),
+                            DrawerTile(
+                              company: company,
+                              entityType: EntityType.client,
+                              icon: getEntityIcon(EntityType.client),
+                              title: localization.clients,
+                            ),
+                            DrawerTile(
+                              company: company,
+                              entityType: EntityType.product,
+                              icon: getEntityIcon(EntityType.product),
+                              title: localization.products,
+                            ),
+                            DrawerTile(
+                              company: company,
+                              entityType: EntityType.invoice,
+                              icon: getEntityIcon(EntityType.invoice),
+                              title: localization.invoices,
+                            ),
+                            DrawerTile(
+                              company: company,
+                              entityType: EntityType.payment,
+                              icon: getEntityIcon(EntityType.payment),
+                              title: localization.payments,
+                            ),
+                            DrawerTile(
+                              company: company,
+                              entityType: EntityType.quote,
+                              icon: getEntityIcon(EntityType.quote),
+                              title: localization.quotes,
+                            ),
+                            DrawerTile(
+                              company: company,
+                              entityType: EntityType.credit,
+                              icon: getEntityIcon(EntityType.credit),
+                              title: localization.credits,
+                            ),
+                            DrawerTile(
+                              company: company,
+                              entityType: EntityType.project,
+                              icon: getEntityIcon(EntityType.project),
+                              title: localization.projects,
+                            ),
+                            DrawerTile(
+                              company: company,
+                              entityType: EntityType.task,
+                              icon: getEntityIcon(EntityType.task),
+                              title: localization.tasks,
+                            ),
+                            DrawerTile(
+                              company: company,
+                              entityType: EntityType.vendor,
+                              icon: getEntityIcon(EntityType.vendor),
+                              title: localization.vendors,
+                            ),
+                            DrawerTile(
+                              company: company,
+                              entityType: EntityType.expense,
+                              icon: getEntityIcon(EntityType.expense),
+                              title: localization.expenses,
+                            ),
+                            // STARTER: menu - do not remove comment
+                            DrawerTile(
+                              company: company,
+                              icon: getEntityIcon(EntityType.reports),
+                              title: localization.reports,
+                              onTap: () {
+                                store.dispatch(ViewReports(
+                                    navigator: Navigator.of(context)));
+                              },
+                            ),
+                            DrawerTile(
+                              company: company,
+                              icon: getEntityIcon(EntityType.settings),
+                              title: localization.settings,
+                              onTap: () {
+                                store.dispatch(ViewSettings(
+                                    navigator: Navigator.of(context),
+                                    company: state.company));
+                              },
+                            ),
+                          ],
+                        ),
                       )),
-              Align(
-                child: state.prefState.isMenuCollapsed
-                    ? SidebarFooterCollapsed(
-                        isUpdateAvailable: state.account.isUpdateAvailable,
-                      )
-                    : SidebarFooter(),
-                alignment: Alignment(0, 1),
-              ),
-            ],
+                Container(
+                  decoration: BoxDecoration(
+                    color: Theme.of(context).bottomAppBarColor,
+                    border: Border(
+                        top: BorderSide(
+                      width: 1,
+                      color: convertHexStringToColor(kDefaultBorderColor),
+                    )),
+                  ),
+                  child: Align(
+                    child: state.prefState.isMenuCollapsed
+                        ? SidebarFooterCollapsed(
+                            isUpdateAvailable: state.account.isUpdateAvailable,
+                          )
+                        : SidebarFooter(),
+                    alignment: Alignment(0, 1),
+                  ),
+                ),
+              ],
+            ),
           ),
         ),
       ),
