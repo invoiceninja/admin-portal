@@ -379,7 +379,10 @@ class SettingsScreens extends StatelessWidget {
       _CustomDivider(),
       Expanded(
         flex: 3,
-        child: screen,
+        child: AppBorder(
+          child: screen,
+          isLeft: true,
+        ),
       ),
       if (prefState.showHistory) ...[
         _CustomDivider(),
