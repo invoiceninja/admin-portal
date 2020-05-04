@@ -318,15 +318,8 @@ class MenuDrawer extends StatelessWidget {
                           ],
                         ),
                       )),
-                Container(
-                  decoration: BoxDecoration(
-                    color: Theme.of(context).bottomAppBarColor,
-                    border: Border(
-                        top: BorderSide(
-                      width: 1,
-                      color: convertHexStringToColor(kDefaultBorderColor),
-                    )),
-                  ),
+                AppBorder(
+                  isTop: true,
                   child: Align(
                     child: state.prefState.isMenuCollapsed
                         ? SidebarFooterCollapsed(
