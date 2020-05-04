@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:invoiceninja_flutter/constants.dart';
 import 'package:invoiceninja_flutter/utils/platforms.dart';
+import 'package:invoiceninja_flutter/utils/colors.dart';
 
 class SelectedIndicator extends StatelessWidget {
   const SelectedIndicator({this.child, this.isSelected});
@@ -10,7 +12,8 @@ class SelectedIndicator extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      color: null,
+      color: isSelected ? convertHexStringToColor(kDefaultSelectedColor) : null,
+
       child: Row(
         children: <Widget>[
           Container(

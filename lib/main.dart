@@ -288,6 +288,10 @@ class InvoiceNinjaAppState extends State<InvoiceNinjaApp> {
                   accentColor: accentColor,
                   textSelectionHandleColor: accentColor,
                   fontFamily: fontFamily,
+                  backgroundColor: Colors.black,
+                  //canvasColor: const Color(0xFF1B1C1E),
+                  canvasColor: Colors.black,
+                  cardColor: const Color(0xFF1B1C1E),
                 )
               : ThemeData(fontFamily: fontFamily).copyWith(
                   pageTransitionsTheme: pageTransitionsTheme,
