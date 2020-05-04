@@ -381,9 +381,6 @@ class InvoiceNinjaAppState extends State<InvoiceNinjaApp> {
                       DeviceSettingsScreen(),
                   AccountManagementScreen.route: (context) =>
                       AccountManagementScreen(),
-                  GroupSettingsScreen.route: (context) => GroupScreenBuilder(),
-                  GroupEditScreen.route: (context) => GroupEditScreen(),
-                  GroupViewScreen.route: (context) => GroupViewScreen(),
                   CustomFieldsScreen.route: (context) => CustomFieldsScreen(),
                   GeneratedNumbersScreen.route: (context) =>
                       GeneratedNumbersScreen(),
