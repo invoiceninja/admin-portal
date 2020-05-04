@@ -252,7 +252,7 @@ class DocumentPreview extends StatelessWidget {
                     child: CircularProgressIndicator(),
                   ),
                 ),
-            errorWidget: (context, url, error) => Text(
+            errorWidget: (context, url, Object error) => Text(
                   '$error: $url',
                   maxLines: 6,
                   overflow: TextOverflow.ellipsis,
