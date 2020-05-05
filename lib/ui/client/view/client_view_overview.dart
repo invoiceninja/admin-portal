@@ -1,4 +1,5 @@
 import 'package:flutter_redux/flutter_redux.dart';
+import 'package:invoiceninja_flutter/constants.dart';
 import 'package:invoiceninja_flutter/data/models/client_model.dart';
 import 'package:invoiceninja_flutter/data/models/entities.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
@@ -13,6 +14,7 @@ import 'package:invoiceninja_flutter/ui/app/FieldGrid.dart';
 import 'package:invoiceninja_flutter/ui/app/entities/entity_state_title.dart';
 import 'package:invoiceninja_flutter/ui/app/lists/list_divider.dart';
 import 'package:invoiceninja_flutter/ui/client/view/client_view_vm.dart';
+import 'package:invoiceninja_flutter/utils/colors.dart';
 import 'package:invoiceninja_flutter/utils/formatting.dart';
 import 'package:flutter/material.dart';
 import 'package:invoiceninja_flutter/ui/app/icon_message.dart';
@@ -92,7 +94,7 @@ class ClientOverview extends StatelessWidget {
             : Container(),
         if (client.hasGroup) ...[
           Material(
-            color: Theme.of(context).canvasColor,
+            color: Theme.of(context).cardColor,
             child: ListTile(
               title: EntityStateTitle(entity: group),
               leading: Icon(getEntityIcon(EntityType.group), size: 18.0),
@@ -106,9 +108,7 @@ class ClientOverview extends StatelessWidget {
           ),
         ],
         FieldGrid(fields),
-        Divider(
-          height: 1.0,
-        ),
+        ListDivider(),
         EntityListTile(
           bottomPadding: 1,
           icon: getEntityIcon(EntityType.invoice),
@@ -216,7 +216,7 @@ class EntityListTile extends StatelessWidget {
     return Column(
       children: <Widget>[
         Material(
-          color: Theme.of(context).canvasColor,
+          color: Theme.of(context).cardColor,
           child: ListTile(
             title: Text(title),
             subtitle: Text(subtitle),

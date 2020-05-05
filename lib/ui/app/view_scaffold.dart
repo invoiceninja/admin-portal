@@ -53,7 +53,10 @@ class ViewScaffold extends StatelessWidget {
                 )
               : isMobile(context)
                   ? null
-                  : Icon(getEntityIcon(entity.entityType)),
+                  : Icon(
+                      getEntityIcon(entity.entityType),
+                      size: 20,
+                    ),
           automaticallyImplyLeading: isMobile(context) || isSettings,
           title: EntityStateTitle(
             entity: entity,

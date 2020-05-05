@@ -65,25 +65,28 @@ class _ClientViewState extends State<ClientView>
           ),
         ],
       ),
-      body: TabBarView(
-        controller: _controller,
-        children: <Widget>[
-          RefreshIndicator(
-            onRefresh: () => viewModel.onRefreshed(context),
-            child: ClientOverview(viewModel: viewModel),
-          ),
-          RefreshIndicator(
-            onRefresh: () => viewModel.onRefreshed(context),
-            child: ClientViewDetails(client: viewModel.client),
-          ),
-          RefreshIndicator(
-            onRefresh: () => viewModel.onRefreshed(context),
-            child: ClientViewActivity(
-              viewModel: viewModel,
-              key: ValueKey(viewModel.client.id),
+      body: Container(
+        color: Theme.of(context).cardColor,
+        child: TabBarView(
+          controller: _controller,
+          children: <Widget>[
+            RefreshIndicator(
+              onRefresh: () => viewModel.onRefreshed(context),
+              child: ClientOverview(viewModel: viewModel),
             ),
-          ),
-        ],
+            RefreshIndicator(
+              onRefresh: () => viewModel.onRefreshed(context),
+              child: ClientViewDetails(client: viewModel.client),
+            ),
+            RefreshIndicator(
+              onRefresh: () => viewModel.onRefreshed(context),
+              child: ClientViewActivity(
+                viewModel: viewModel,
+                key: ValueKey(viewModel.client.id),
+              ),
+            ),
+          ],
+        ),
       ),
       floatingActionButton: FloatingActionButton(
         heroTag: 'client_view_fab',
