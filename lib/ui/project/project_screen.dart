@@ -51,7 +51,6 @@ class ProjectScreen extends StatelessWidget {
       },
       appBarTitle: ListFilter(
         title: localization.projects,
-        key: ValueKey(store.state.projectListState.filterClearedAt),
         filter: state.projectListState.filter,
         onFilterChanged: (value) {
           store.dispatch(FilterProjects(value));

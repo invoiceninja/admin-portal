@@ -67,7 +67,6 @@ class _DashboardScreenState extends State<DashboardScreen>
                 ),
           title: ListFilter(
             title: AppLocalization.of(context).dashboard,
-            key: ValueKey(state.uiState.filterClearedAt),
             filter: state.uiState.filter,
             onFilterChanged: (value) {
               store.dispatch(FilterCompany(value));
@@ -97,9 +96,7 @@ class _DashboardScreenState extends State<DashboardScreen>
                 ),
               ),
           ],
-          bottom: store.state.uiState.filter != null
-              ? null
-              : TabBar(
+          bottom: TabBar(
                   controller: _controller,
                   tabs: [
                     Tab(
@@ -131,7 +128,7 @@ class CustomTabBarView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    if (viewModel.filter != null) {
+    if ((viewModel.filter ?? '').isNotEmpty) {
       return ListView.builder(
           itemCount: viewModel.filteredList.length,
           itemBuilder: (BuildContext context, index) {
