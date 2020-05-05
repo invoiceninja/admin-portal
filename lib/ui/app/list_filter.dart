@@ -15,18 +15,27 @@ class ListFilter extends StatefulWidget {
   final String filter;
   final Function(String) onFilterChanged;
 
-
   @override
   _ListFilterState createState() => new _ListFilterState();
 }
 
 class _ListFilterState extends State<ListFilter> {
   TextEditingController _filterController;
+  FocusNode _focusNode;
+  String _placeholder = '';
 
   @override
   void initState() {
     super.initState();
     _filterController = TextEditingController();
+    _focusNode = FocusNode()..addListener(onFocusChanged);
+    _placeholder = widget.placeholder;
+  }
+
+  void onFocusChanged() {
+    setState(() {
+      _placeholder = _focusNode.hasFocus ? '' : widget.placeholder;
+    });
   }
 
   @override
@@ -38,6 +47,8 @@ class _ListFilterState extends State<ListFilter> {
   @override
   void dispose() {
     _filterController.dispose();
+    _focusNode.removeListener(onFocusChanged);
+    _focusNode.dispose();
     super.dispose();
   }
 
@@ -58,24 +69,25 @@ class _ListFilterState extends State<ListFilter> {
         borderRadius: BorderRadius.all(Radius.circular(5)),
       ),
       child: TextField(
+        focusNode: _focusNode,
+        textAlign: _focusNode.hasFocus ? TextAlign.start : TextAlign.center,
+        textAlignVertical: TextAlignVertical.center,
         decoration: InputDecoration(
-          suffixIcon: Padding(
-            padding: EdgeInsets.only(right: 8.0),
-            child: isFilterSet
-                ? IconButton(
-                    icon: Icon(
-                      Icons.clear,
-                      color: textColor,
-                    ),
-                    onPressed: () {
-                      widget.onFilterChanged(null);
-                      _filterController.text = '';
-                    },
-                  )
-                : Icon(Icons.search, color: textColor),
-          ),
+          contentPadding: EdgeInsets.symmetric(horizontal: 8),
+          suffixIcon: _focusNode.hasFocus
+              ? IconButton(
+                  icon: Icon(
+                    Icons.clear,
+                    color: textColor,
+                  ),
+                  onPressed: () {
+                    widget.onFilterChanged(null);
+                    _filterController.text = '';
+                  },
+                )
+              : Icon(Icons.search, color: textColor),
           border: InputBorder.none,
-          hintText: widget.placeholder ?? localization.search,
+          hintText: _placeholder,
         ),
         autocorrect: false,
         onChanged: (value) {
