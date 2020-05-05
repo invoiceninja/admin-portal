@@ -217,13 +217,16 @@ class EntityListTile extends StatelessWidget {
       children: <Widget>[
         Material(
           color: Theme.of(context).cardColor,
-          child: ListTile(
-            title: Text(title),
-            subtitle: Text(subtitle),
-            leading: Icon(icon, size: 18.0),
-            trailing: Icon(Icons.navigate_next),
-            onTap: onTap,
-            onLongPress: onLongPress,
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 10),
+            child: ListTile(
+              title: Text(title),
+              subtitle: Text(subtitle),
+              leading: Icon(icon, size: 18.0),
+              trailing: Icon(Icons.navigate_next),
+              onTap: onTap,
+              onLongPress: onLongPress,
+            ),
           ),
         ),
         ListDivider(),

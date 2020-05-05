@@ -24,7 +24,7 @@ class AppListTile extends StatelessWidget {
     return Material(
       color: Theme.of(context).cardColor,
       child: ListTile(
-        contentPadding: EdgeInsets.only(left: 12.0, top: 8.0, bottom: 8.0),
+        contentPadding: EdgeInsets.symmetric(horizontal: 25, vertical: 10),
         leading: Icon(icon),
         title: Text(title),
         subtitle: subtitle == null ? Container() : Text(subtitle),

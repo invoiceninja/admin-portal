@@ -68,23 +68,16 @@ class EntityHeader extends StatelessWidget {
 
     return Container(
       child: Padding(
-        padding: EdgeInsets.all(8.0),
-        child: Card(
-          elevation: 2.0,
-          child: Padding(
-              padding: EdgeInsets.all(16.0),
-              child: Flex(
-                direction: value.length > 12 || (secondValue ?? '').length > 12
-                    ? Axis.vertical
-                    : Axis.horizontal,
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: <Widget>[
-                  Expanded(child: _value1()),
-                  if (secondValue != null) Expanded(child: _value2()),
-                ],
-              )
-              //child: _headerRow(),
-              ),
+        padding: EdgeInsets.only(left: 25, top: 30, right: 25, bottom: 25),
+        child: Flex(
+          direction: value.length > 12 || (secondValue ?? '').length > 12
+              ? Axis.vertical
+              : Axis.horizontal,
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: <Widget>[
+            Expanded(child: _value1()),
+            if (secondValue != null) Expanded(child: _value2()),
+          ],
         ),
       ),
     );

@@ -10,6 +10,7 @@ import 'package:invoiceninja_flutter/ui/app/FieldGrid.dart';
 import 'package:invoiceninja_flutter/ui/app/entities/entity_state_title.dart';
 import 'package:invoiceninja_flutter/ui/app/icon_message.dart';
 import 'package:invoiceninja_flutter/ui/app/entity_header.dart';
+import 'package:invoiceninja_flutter/ui/app/lists/list_divider.dart';
 import 'package:invoiceninja_flutter/ui/app/view_scaffold.dart';
 import 'package:invoiceninja_flutter/ui/payment/view/payment_view_vm.dart';
 import 'package:invoiceninja_flutter/utils/formatting.dart';
@@ -73,8 +74,9 @@ class _PaymentViewState extends State<PaymentView> {
                 secondValue:
                     formatNumber(payment.applied, context, clientId: client.id),
               ),
+              ListDivider(),
               Material(
-                color: Theme.of(context).canvasColor,
+                color: Theme.of(context).cardColor,
                 child: ListTile(
                   title: EntityStateTitle(entity: client),
                   leading: Icon(FontAwesomeIcons.users, size: 18.0),
@@ -83,13 +85,10 @@ class _PaymentViewState extends State<PaymentView> {
                   onLongPress: () => viewModel.onClientPressed(context, true),
                 ),
               ),
-              Container(
-                color: Theme.of(context).backgroundColor,
-                height: 12.0,
-              ),
+              ListDivider(),
               for (final paymentable in payment.paymentables)
                 Material(
-                  color: Theme.of(context).canvasColor,
+                  color: Theme.of(context).cardColor,
                   child: ListTile(
                     title: EntityStateTitle(
                       entity: state.invoiceState.map[paymentable.invoiceId],
@@ -109,16 +108,13 @@ class _PaymentViewState extends State<PaymentView> {
                         context, paymentable.invoiceId, true),
                   ),
                 ),
-              Container(
-                color: Theme.of(context).backgroundColor,
-                height: 12.0,
-              ),
+              ListDivider(),
               payment.privateNotes != null && payment.privateNotes.isNotEmpty
                   ? Column(
                       children: <Widget>[
                         IconMessage(payment.privateNotes),
                         Container(
-                          color: Theme.of(context).backgroundColor,
+                          color: Theme.of(context).cardColor,
                           height: 12.0,
                         ),
                       ],
