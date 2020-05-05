@@ -105,7 +105,7 @@ class ClientListItem extends StatelessWidget {
         : null;
     final showCheckbox = onCheckboxChanged != null || isInMultiselect;
     final textStyle = TextStyle(
-        fontSize: 18,
+      fontSize: 18,
     );
 
     return InkWell(
@@ -116,6 +116,8 @@ class ClientListItem extends StatelessWidget {
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 32, vertical: 20),
         child: Row(
+          mainAxisAlignment: MainAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
             SizedBox(
               child: Text(
@@ -125,7 +127,22 @@ class ClientListItem extends StatelessWidget {
               ),
               width: 120,
             ),
-            Text(client.displayName, style: textStyle),
+            Expanded(
+                child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: <Widget>[
+                Text(client.displayName, style: textStyle),
+                if (filterMatch != null)
+                  Text(
+                    filterMatch,
+                    maxLines: 3,
+                    overflow: TextOverflow.ellipsis,
+                    style: Theme.of(context).textTheme.subtitle2,
+                  )
+              ],
+            )),
+            Text(formatNumber(client.balance, context, clientId: client.id),
+                style: textStyle),
           ],
         ),
       ),

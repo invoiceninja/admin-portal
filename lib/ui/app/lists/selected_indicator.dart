@@ -12,22 +12,10 @@ class SelectedIndicator extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      color: isSelected ? convertHexStringToColor(kDefaultSelectedColorDark) : null,
-
-      child: Row(
-        children: <Widget>[
-          Container(
-            width: 3,
-            height: 48,
-            color: isSelected && !isMobile(context)
-                ? Theme.of(context).accentColor
-                : null,
-          ),
-          Expanded(
-            child: child,
-          ),
-        ],
-      ),
+      color: isSelected
+          ? convertHexStringToColor(kDefaultSelectedColorDark)
+          : null,
+      child: child,
     );
   }
 }

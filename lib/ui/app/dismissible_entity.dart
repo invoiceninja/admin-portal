@@ -83,7 +83,10 @@ class DismissibleEntity extends StatelessWidget {
                 onTap: () => onEntityAction(EntityAction.delete),
               ),
       ],
-      child: child,
+      child: SelectedIndicator(
+        isSelected: isSelected,
+        child: child,
+      ),
     );
   }
 }
