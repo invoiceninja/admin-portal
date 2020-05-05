@@ -344,6 +344,15 @@ const String kPaymentStatusCompleted = '4';
 const String kPaymentStatusPartiallyRefunded = '5';
 const String kPaymentStatusRefunded = '6';
 
+const kPaymentStatuses = {
+  kPaymentStatusPending: 'pending',
+  kPaymentStatusVoided: 'voided',
+  kPaymentStatusFailed: 'failed',
+  kPaymentStatusCompleted: 'completed',
+  kPaymentStatusPartiallyRefunded: 'partially_refunded',
+  kPaymentStatusRefunded: 'refunded',
+};
+
 const String kExpenseStatusLogged = '1';
 const String kExpenseStatusPending = '2';
 const String kExpenseStatusInvoiced = '3';

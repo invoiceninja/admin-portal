@@ -1,6 +1,8 @@
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:invoiceninja_flutter/constants.dart';
+import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
+import 'package:invoiceninja_flutter/ui/app/actions_menu_button.dart';
 import 'package:invoiceninja_flutter/ui/app/entity_state_label.dart';
 import 'package:invoiceninja_flutter/utils/formatting.dart';
 import 'package:flutter/foundation.dart';
@@ -40,9 +42,8 @@ class PaymentListItem extends StatelessWidget {
     final listUIState = paymentUIState.listUIState;
     final isInMultiselect = listUIState.isInMultiselect();
     final showCheckbox = onCheckboxChanged != null || isInMultiselect;
-
+    final textStyle = TextStyle(fontSize: 17);
     final client = state.clientState.map[payment.clientId];
-
     final localization = AppLocalization.of(context);
     final filterMatch = filter != null && filter.isNotEmpty
         ? payment.matchesFilterValue(filter)
@@ -50,15 +51,11 @@ class PaymentListItem extends StatelessWidget {
     final subtitle = filterMatch ??
         (payment.number ?? '') + ' • ' + formatDate(payment.date, context);
 
-    return DismissibleEntity(
-      isSelected: payment.id ==
-          (uiState.isEditing
-              ? paymentUIState.editing.id
-              : paymentUIState.selectedId),
-      userCompany: state.userCompany,
-      entity: payment,
-      onEntityAction: onEntityAction,
-      child: ListTile(
+    final statusLabel = localization.lookup(kPaymentStatuses[payment.statusId]);
+    final statusColor = PaymentStatusColors.colors[payment.statusId];
+
+    Widget _buildMobile() {
+      return ListTile(
         onTap: isInMultiselect
             ? () => onEntityAction(EntityAction.toggleMultiselect)
             : onTap,
@@ -112,7 +109,130 @@ class PaymentListItem extends StatelessWidget {
             EntityStateLabel(payment),
           ],
         ),
-      ),
+      );
+    }
+
+    Widget _buildDesktop() {
+      String subtitle = '';
+      if (payment.date.isNotEmpty) {
+        subtitle = formatDate(payment.date, context);
+      }
+      if (payment.transactionReference.isNotEmpty) {
+        if (subtitle.isNotEmpty) {
+          subtitle += ' • ';
+        }
+        subtitle += payment.transactionReference;
+      }
+
+      return InkWell(
+        onTap: isInMultiselect
+            ? () => onEntityAction(EntityAction.toggleMultiselect)
+            : onTap,
+        onLongPress: onLongPress,
+        child: Padding(
+          padding: const EdgeInsets.only(
+            left: 12,
+            right: 28,
+            top: 4,
+            bottom: 4,
+          ),
+          child: Row(
+            children: <Widget>[
+              Padding(
+                  padding: const EdgeInsets.only(right: 15),
+                  child: showCheckbox
+                      ? IgnorePointer(
+                          ignoring: listUIState.isInMultiselect(),
+                          child: Checkbox(
+                            value: isChecked,
+                            materialTapTargetSize:
+                                MaterialTapTargetSize.shrinkWrap,
+                            onChanged: (value) => onCheckboxChanged(value),
+                            activeColor: Theme.of(context).accentColor,
+                          ),
+                        )
+                      : ActionMenuButton(
+                          entityActions: payment.getActions(
+                              userCompany: state.userCompany,
+                              includeEdit: true,
+                              client: client),
+                          isSaving: false,
+                          entity: payment,
+                          onSelected: (context, action) =>
+                              handleEntityAction(context, payment, action),
+                        )),
+              ConstrainedBox(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: <Widget>[
+                    Text(
+                      payment.number,
+                      style: textStyle,
+                      overflow: TextOverflow.ellipsis,
+                    ),
+                    if (!payment.isActive) EntityStateLabel(payment)
+                  ],
+                ),
+                constraints: BoxConstraints(
+                  minWidth: 80,
+                ),
+              ),
+              SizedBox(width: 10),
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: <Widget>[
+                    Text(client.displayName, style: textStyle),
+                    Text(
+                      filterMatch ?? subtitle,
+                      maxLines: 3,
+                      overflow: TextOverflow.ellipsis,
+                      style: Theme.of(context).textTheme.subtitle2,
+                    ),
+                  ],
+                ),
+              ),
+              SizedBox(width: 10),
+              Text(
+                formatNumber(payment.amount, context, clientId: client.id),
+                style: textStyle,
+                textAlign: TextAlign.end,
+              ),
+              SizedBox(width: 25),
+              DecoratedBox(
+                decoration: BoxDecoration(
+                  color: statusColor,
+                  borderRadius: BorderRadius.all(Radius.circular(5)),
+                ),
+                child: ConstrainedBox(
+                  constraints: BoxConstraints(
+                    minWidth: 80,
+                  ),
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(vertical: 8),
+                    child: Text(
+                      statusLabel.toUpperCase(),
+                      style: TextStyle(fontSize: 14),
+                      textAlign: TextAlign.center,
+                    ),
+                  ),
+                ),
+              )
+            ],
+          ),
+        ),
+      );
+    }
+
+    return DismissibleEntity(
+      isSelected: payment.id ==
+          (uiState.isEditing
+              ? paymentUIState.editing.id
+              : paymentUIState.selectedId),
+      userCompany: state.userCompany,
+      entity: payment,
+      onEntityAction: onEntityAction,
+      child: state.prefState.isMobile ? _buildMobile() : _buildDesktop(),
     );
   }
 }
