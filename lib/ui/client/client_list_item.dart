@@ -121,35 +121,39 @@ class ClientListItem extends StatelessWidget {
           children: <Widget>[
             SizedBox(
               child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
                   Text(
                     client.idNumber,
                     style: textStyle,
                     overflow: TextOverflow.ellipsis,
                   ),
-                  if (!client.isActive)
-                    EntityStateLabel(client)
+                  if (!client.isActive) EntityStateLabel(client)
                 ],
               ),
               width: 120,
             ),
             SizedBox(width: 10),
             Expanded(
-                child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: <Widget>[
-                Text(client.displayName, style: textStyle),
-                if (filterMatch != null)
-                  Text(
-                    filterMatch,
-                    maxLines: 3,
-                    overflow: TextOverflow.ellipsis,
-                    style: Theme.of(context).textTheme.subtitle2,
-                  ),
-              ],
-            )),
-            Text(formatNumber(client.balance, context, clientId: client.id),
-                style: textStyle),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: <Widget>[
+                  Text(client.displayName, style: textStyle),
+                  if (filterMatch != null)
+                    Text(
+                      filterMatch,
+                      maxLines: 3,
+                      overflow: TextOverflow.ellipsis,
+                      style: Theme.of(context).textTheme.subtitle2,
+                    ),
+                ],
+              ),
+            ),
+            Text(
+              formatNumber(client.balance, context, clientId: client.id),
+              style: textStyle,
+              textAlign: TextAlign.end,
+            ),
           ],
         ),
       ),
