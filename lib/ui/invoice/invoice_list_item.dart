@@ -45,7 +45,7 @@ class InvoiceListItem extends StatelessWidget {
     final listUIState = state.getUIState(invoice.entityType).listUIState;
     final isInMultiselect = listUIState.isInMultiselect();
     final showCheckbox = onCheckboxChanged != null || isInMultiselect;
-    final textStyle = TextStyle(fontSize: 18);
+    final textStyle = TextStyle(fontSize: 17);
     final localization = AppLocalization.of(context);
     final filterMatch = filter != null && filter.isNotEmpty
         ? (invoice.matchesFilterValue(filter) ??
@@ -129,6 +129,20 @@ class InvoiceListItem extends StatelessWidget {
     }
 
     Widget _buildDesktop() {
+      String subtitle = '';
+      if (invoice.date.isNotEmpty) {
+        subtitle = formatDate(invoice.date, context);
+      }
+      if (invoice.dueDate.isNotEmpty) {
+        if (subtitle.isNotEmpty) {
+          subtitle += ' • ';
+        }
+        subtitle += formatDate(invoice.dueDate, context);
+      }
+      if (hasDocuments) {
+        subtitle += '  📎';
+      }
+
       return InkWell(
         onTap: isInMultiselect
             ? () => onEntityAction(EntityAction.toggleMultiselect)
@@ -166,19 +180,21 @@ class InvoiceListItem extends StatelessWidget {
                           onSelected: (context, action) =>
                               handleEntityAction(context, invoice, action),
                         )),
-              SizedBox(
+              ConstrainedBox(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
                     Text(
-                      invoice.number,
+                      invoice.number ?? localization.pending,
                       style: textStyle,
                       overflow: TextOverflow.ellipsis,
                     ),
                     if (!invoice.isActive) EntityStateLabel(invoice)
                   ],
                 ),
-                width: 120,
+                constraints: BoxConstraints(
+                  minWidth: 80,
+                ),
               ),
               SizedBox(width: 10),
               Expanded(
@@ -186,13 +202,12 @@ class InvoiceListItem extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
                     Text(client.displayName, style: textStyle),
-                    if (filterMatch != null)
-                      Text(
-                        filterMatch,
-                        maxLines: 3,
-                        overflow: TextOverflow.ellipsis,
-                        style: Theme.of(context).textTheme.subtitle2,
-                      ),
+                    Text(
+                      filterMatch ?? subtitle,
+                      maxLines: 3,
+                      overflow: TextOverflow.ellipsis,
+                      style: Theme.of(context).textTheme.subtitle2,
+                    ),
                   ],
                 ),
               ),
