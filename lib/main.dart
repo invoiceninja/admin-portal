@@ -289,7 +289,6 @@ class InvoiceNinjaAppState extends State<InvoiceNinjaApp> {
                   textSelectionHandleColor: accentColor,
                   fontFamily: fontFamily,
                   backgroundColor: Colors.black,
-                  //canvasColor: const Color(0xFF1B1C1E),
                   canvasColor: Colors.black,
                   cardColor: const Color(0xFF1B1C1E),
                   bottomAppBarColor: const Color(0xFF1B1C1E),

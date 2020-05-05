@@ -26,8 +26,8 @@ import 'package:invoiceninja_flutter/ui/settings/settings_screen_vm.dart';
 import 'package:invoiceninja_flutter/ui/settings/tax_settings_vm.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:invoiceninja_flutter/utils/platforms.dart';
-import 'package:redux/redux.dart';
 import 'package:invoiceninja_flutter/ui/app/app_border.dart';
+import 'package:redux/redux.dart';
 
 class MainScreen extends StatelessWidget {
   static const String route = '/main';
@@ -234,21 +234,19 @@ class MainScreen extends StatelessWidget {
               return false;
             },
             child: SafeArea(
-              child: AppBorder(
-                child: FocusTraversalGroup(
-                  policy: WidgetOrderTraversalPolicy(),
-                  child: Row(children: <Widget>[
-                    if (prefState.showMenu) ...[
-                      MenuDrawerBuilder(),
-                      _CustomDivider(),
-                    ],
-                    Expanded(
-                        child: AppBorder(
-                      child: screen,
-                      isLeft: true,
-                    )),
-                  ]),
-                ),
+              child: FocusTraversalGroup(
+                policy: WidgetOrderTraversalPolicy(),
+                child: Row(children: <Widget>[
+                  if (prefState.showMenu) ...[
+                    MenuDrawerBuilder(),
+                    _CustomDivider(),
+                  ],
+                  Expanded(
+                      child: AppBorder(
+                    child: screen,
+                    isLeft: true,
+                  )),
+                ]),
               ),
             ),
           );
@@ -420,12 +418,9 @@ class EntityScreens extends StatelessWidget {
         isPreviewVisible || (subRoute != 'view' && subRoute.isNotEmpty);
 
     int listFlex = 3;
-    int previewFlex = 2;
+    const previewFlex = 2;
 
-    if (prefState.isModuleList || subRoute == 'email') {
-      listFlex = 2;
-      previewFlex = 3;
-    } else if (!isPreviewShown) {
+    if (prefState.isModuleTable && !isPreviewShown) {
       listFlex = 5;
     }
 

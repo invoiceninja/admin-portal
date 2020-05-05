@@ -135,7 +135,7 @@ class _EntityListState extends State<EntityList> {
       } else {
         return SingleChildScrollView(
           child: Padding(
-            padding: const EdgeInsets.all(12),
+            padding: const EdgeInsets.symmetric(vertical: 24),
             child: PaginatedDataTable(
               onSelectAll: (value) {
                 final entities = entityList
