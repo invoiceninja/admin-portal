@@ -55,9 +55,8 @@ class InvoiceListItem extends StatelessWidget {
     final statusLabel = invoice.isPastDue
         ? localization.pastDue
         : localization.lookup(kInvoiceStatuses[invoice.statusId]);
-    final statusColor = invoice.isPastDue
-        ? Colors.red
-        : InvoiceStatusColors.colors[invoice.statusId];
+    final statusColor = InvoiceStatusColors
+        .colors[invoice.isPastDue ? kInvoiceStatusPastDue : invoice.statusId];
 
     Widget _buildMobile() {
       return ListTile(
@@ -194,27 +193,34 @@ class InvoiceListItem extends StatelessWidget {
                 textAlign: TextAlign.end,
               ),
               SizedBox(width: 25),
-              DecoratedBox(
-                decoration: BoxDecoration(
-                  color: statusColor,
-                  borderRadius: BorderRadius.all(Radius.circular(5)),
-                ),
-                child: ConstrainedBox(
-                  constraints: BoxConstraints(
-                    minWidth: 80,
-                  ),
-                  child: Padding(
-                    padding: const EdgeInsets.symmetric(vertical: 8 ),
-                    child: Text(
-                      statusLabel.toUpperCase(),
-                      style: TextStyle(
-                        fontSize: 16
+              invoice.isSent
+                  ? DecoratedBox(
+                      decoration: BoxDecoration(
+                        color: statusColor,
+                        borderRadius: BorderRadius.all(Radius.circular(5)),
                       ),
-                      textAlign: TextAlign.center,
+                      child: ConstrainedBox(
+                        constraints: BoxConstraints(
+                          minWidth: 80,
+                        ),
+                        child: Padding(
+                          padding: const EdgeInsets.symmetric(vertical: 8),
+                          child: Text(
+                            statusLabel.toUpperCase(),
+                            style: TextStyle(fontSize: 16),
+                            textAlign: TextAlign.center,
+                          ),
+                        ),
+                      ),
+                    )
+                  : SizedBox(
+                      child: Text(
+                        localization.draft.toUpperCase(),
+                        style: TextStyle(fontSize: 16),
+                        textAlign: TextAlign.center,
+                      ),
+                      width: 80,
                     ),
-                  ),
-                ),
-              ),
               SizedBox(width: 10),
               ActionMenuButton(
                 entityActions: invoice.getActions(

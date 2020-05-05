@@ -4,7 +4,8 @@ import 'package:flutter/foundation.dart';
 import 'package:invoiceninja_flutter/utils/colors.dart';
 
 class Constants {
-  static String get hostedApiUrl => kReleaseMode ? kAppProductionUrl : kAppStagingUrl;
+  static String get hostedApiUrl =>
+      kReleaseMode ? kAppProductionUrl : kAppStagingUrl;
 }
 
 // TODO remove version once #46609 is fixed
@@ -392,51 +393,52 @@ const Map<int, String> kModules = {
 
 class InvoiceStatusColors {
   static var colors = {
-    kInvoiceStatusDraft: Colors.grey,
+    kInvoiceStatusDraft: convertHexStringToColor('#505F73'),
     kInvoiceStatusSent: Colors.blue,
     //kInvoiceStatusViewed: Colors.orange,
     //kInvoiceStatusApproved: Colors.green,
     kInvoiceStatusPartial: Colors.deepPurple,
     kInvoiceStatusPaid: convertHexStringToColor('#407535'),
+    kInvoiceStatusPastDue: convertHexStringToColor('#8D3E3F'),
   };
 }
 
 class CreditStatusColors {
-  static const colors = {
-    kCreditStatusDraft: Colors.grey,
+  static var colors = {
+    kCreditStatusDraft: convertHexStringToColor('#505F73'),
     kCreditStatusSent: Colors.blue,
     //kInvoiceStatusViewed: Colors.orange,
     //kInvoiceStatusApproved: Colors.green,
     kCreditStatusPartial: Colors.deepPurple,
-    kCreditStatusApplied: Colors.green,
+    kCreditStatusApplied: convertHexStringToColor('#407535'),
   };
 }
 
 class QuoteStatusColors {
-  static const colors = {
-    kQuoteStatusDraft: Colors.grey,
+  static var colors = {
+    kQuoteStatusDraft: convertHexStringToColor('#505F73'),
     kQuoteStatusSent: Colors.blue,
-    kQuoteStatusApproved: Colors.green,
-    kQuoteStatusExpired: Colors.red,
+    kQuoteStatusApproved: convertHexStringToColor('#407535'),
+    kQuoteStatusExpired: convertHexStringToColor('#8D3E3F'),
   };
 }
 
 class PaymentStatusColors {
-  static const colors = {
-    kPaymentStatusPending: Colors.grey,
+  static var colors = {
+    kPaymentStatusPending: convertHexStringToColor('#505F73'),
     kPaymentStatusVoided: Colors.red,
     kPaymentStatusFailed: Colors.red,
-    kPaymentStatusCompleted: Colors.green,
+    kPaymentStatusCompleted: convertHexStringToColor('#407535'),
     kPaymentStatusPartiallyRefunded: Colors.purple,
     kPaymentStatusRefunded: Colors.red,
   };
 }
 
 class ExpenseStatusColors {
-  static const colors = {
-    kExpenseStatusLogged: Colors.grey,
+  static var colors = {
+    kExpenseStatusLogged: convertHexStringToColor('#505F73'),
     kExpenseStatusPending: Colors.orange,
-    kExpenseStatusInvoiced: Colors.green,
+    kExpenseStatusInvoiced: convertHexStringToColor('#407535'),
   };
 }
 
