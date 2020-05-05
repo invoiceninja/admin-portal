@@ -54,46 +54,49 @@ class _ListFilterState extends State<ListFilter> {
 
   @override
   Widget build(BuildContext context) {
-    final localization = AppLocalization.of(context);
     final textColor = Theme.of(context).primaryTextTheme.bodyText1.color;
     final isFilterSet = (widget.filter ?? '').isNotEmpty;
-    return Container(
-      padding: const EdgeInsets.only(left: 8.0),
-      height: 44,
-      margin: EdgeInsets.only(bottom: 2.0),
-      decoration: BoxDecoration(
-        color: isFilterSet
-            ? convertHexStringToColor(
-                kDefaultBorderColor) // TODO set color here
-            : convertHexStringToColor(kDefaultBorderColor),
-        borderRadius: BorderRadius.all(Radius.circular(5)),
-      ),
-      child: TextField(
-        focusNode: _focusNode,
-        textAlign: _focusNode.hasFocus ? TextAlign.start : TextAlign.center,
-        textAlignVertical: TextAlignVertical.center,
-        decoration: InputDecoration(
-          contentPadding: EdgeInsets.symmetric(horizontal: 8),
-          suffixIcon: _focusNode.hasFocus
-              ? IconButton(
-                  icon: Icon(
-                    Icons.clear,
-                    color: textColor,
-                  ),
-                  onPressed: () {
-                    widget.onFilterChanged(null);
-                    _filterController.text = '';
-                  },
-                )
-              : Icon(Icons.search, color: textColor),
-          border: InputBorder.none,
-          hintText: _placeholder,
+
+    return Padding(
+      padding: const EdgeInsets.only(top: 2),
+      child: Container(
+        padding: const EdgeInsets.only(left: 8.0),
+        height: 40,
+        margin: EdgeInsets.only(bottom: 2.0),
+        decoration: BoxDecoration(
+          color: isFilterSet
+              ? convertHexStringToColor(
+                  kDefaultBorderColor) // TODO set color here
+              : convertHexStringToColor(kDefaultBorderColor),
+          borderRadius: BorderRadius.all(Radius.circular(5)),
         ),
-        autocorrect: false,
-        onChanged: (value) {
-          widget.onFilterChanged(value);
-        },
-        controller: _filterController,
+        child: TextField(
+          focusNode: _focusNode,
+          textAlign: _focusNode.hasFocus ? TextAlign.start : TextAlign.center,
+          textAlignVertical: TextAlignVertical.center,
+          decoration: InputDecoration(
+            contentPadding: EdgeInsets.only(left: 8, right: 8, bottom: 6),
+            suffixIcon: _focusNode.hasFocus
+                ? IconButton(
+                    icon: Icon(
+                      Icons.clear,
+                      color: textColor,
+                    ),
+                    onPressed: () {
+                      widget.onFilterChanged(null);
+                      _filterController.text = '';
+                    },
+                  )
+                : Icon(Icons.search, color: textColor),
+            border: InputBorder.none,
+            hintText: _placeholder,
+          ),
+          autocorrect: false,
+          onChanged: (value) {
+            widget.onFilterChanged(value);
+          },
+          controller: _filterController,
+        ),
       ),
     );
   }
