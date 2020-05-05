@@ -11,6 +11,7 @@ import 'package:invoiceninja_flutter/ui/app/lists/list_filter.dart';
 import 'package:invoiceninja_flutter/ui/app/loading_indicator.dart';
 import 'package:invoiceninja_flutter/ui/app/presenters/entity_presenter.dart';
 import 'package:invoiceninja_flutter/ui/app/tables/entity_datatable.dart';
+import 'package:invoiceninja_flutter/utils/colors.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 
 class EntityList extends StatefulWidget {
@@ -122,14 +123,25 @@ class _EntityListState extends State<EntityList> {
               onPressed: widget.onViewEntityFilterPressed,
               onClearPressed: widget.onClearEntityFilterPressed,
             ),
-          Expanded(
+          SizedBox(
+            height: 32,
+          ),
+          Flexible(
               child: entityList.isEmpty
                   ? HelpText(AppLocalization.of(context).noRecordsFound)
-                  : ListView.separated(
-                      shrinkWrap: true,
-                      separatorBuilder: (context, index) => ListDivider(),
-                      itemCount: entityList.length,
-                      itemBuilder: widget.itemBuilder,
+                  : ColoredBox(
+                      color: Theme.of(context).cardColor,
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(vertical: 32),
+                        child: ListView.separated(
+                          shrinkWrap: true,
+                          separatorBuilder: (context, index) => Divider(
+                            color: convertHexStringToColor(kDefaultBorderColor),
+                          ),
+                          itemCount: entityList.length,
+                          itemBuilder: widget.itemBuilder,
+                        ),
+                      ),
                     )),
         ]);
       } else {

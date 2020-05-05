@@ -96,7 +96,7 @@ class ClientListItem extends StatelessWidget {
   Widget _buildDesktop(BuildContext context) {
     final textTheme = Theme.of(context).textTheme;
     return Padding(
-      padding: const EdgeInsets.all(16),
+      padding: const EdgeInsets.symmetric(horizontal: 32, vertical: 12),
       child: Row(
         children: <Widget>[
           SizedBox(
