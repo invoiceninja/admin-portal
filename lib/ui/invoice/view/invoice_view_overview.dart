@@ -10,6 +10,7 @@ import 'package:invoiceninja_flutter/ui/app/FieldGrid.dart';
 import 'package:invoiceninja_flutter/ui/app/entities/entity_state_title.dart';
 import 'package:invoiceninja_flutter/ui/app/invoice/invoice_item_view.dart';
 import 'package:invoiceninja_flutter/ui/app/entity_header.dart';
+import 'package:invoiceninja_flutter/ui/app/lists/list_divider.dart';
 import 'package:invoiceninja_flutter/ui/invoice/view/invoice_view_vm.dart';
 import 'package:invoiceninja_flutter/utils/formatting.dart';
 import 'package:flutter/material.dart';
@@ -62,6 +63,7 @@ class InvoiceOverview extends StatelessWidget {
         secondValue:
             formatNumber(invoice.balance, context, clientId: invoice.clientId),
       ),
+      ListDivider(),
     ];
 
     String dueDateField = InvoiceFields.dueDate;
@@ -104,7 +106,7 @@ class InvoiceOverview extends StatelessWidget {
 
     widgets.addAll([
       Material(
-        color: Theme.of(context).canvasColor,
+        color: Theme.of(context).cardColor,
         child: ListTile(
           title: EntityStateTitle(entity: client),
           leading: Icon(getEntityIcon(EntityType.client), size: 18.0),
@@ -113,10 +115,7 @@ class InvoiceOverview extends StatelessWidget {
           onLongPress: () => viewModel.onClientPressed(context, true),
         ),
       ),
-      Container(
-        color: Theme.of(context).backgroundColor,
-        height: 12.0,
-      ),
+      ListDivider(),
     ]);
 
     if (payments.isNotEmpty) {
@@ -124,7 +123,7 @@ class InvoiceOverview extends StatelessWidget {
         final payment = payments.first;
         widgets.addAll([
           Material(
-            color: Theme.of(context).canvasColor,
+            color: Theme.of(context).cardColor,
             child: ListTile(
               title: EntityStateTitle(entity: payment),
               subtitle: Text(
@@ -154,10 +153,7 @@ class InvoiceOverview extends StatelessWidget {
       }
 
       widgets.addAll([
-        Container(
-          color: Theme.of(context).backgroundColor,
-          height: 12.0,
-        ),
+        ListDivider(),
       ]);
     }
 
@@ -168,10 +164,7 @@ class InvoiceOverview extends StatelessWidget {
     if (invoice.privateNotes != null && invoice.privateNotes.isNotEmpty) {
       widgets.addAll([
         IconMessage(invoice.privateNotes),
-        Container(
-          color: Theme.of(context).backgroundColor,
-          height: 12.0,
-        ),
+        ListDivider(),
       ]);
     }
 
@@ -194,16 +187,13 @@ class InvoiceOverview extends StatelessWidget {
       });
 
       widgets.addAll([
-        Container(
-          color: Theme.of(context).backgroundColor,
-          height: 12.0,
-        ),
+        ListDivider(),
       ]);
     }
 
     Widget surchargeRow(String label, double amount) {
       return Container(
-        color: Theme.of(context).canvasColor,
+        color: Theme.of(context).cardColor,
         child: Padding(
           padding: const EdgeInsets.only(
               left: 16.0, top: 12.0, right: 16.0, bottom: 12.0),
