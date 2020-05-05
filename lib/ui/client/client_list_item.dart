@@ -120,13 +120,20 @@ class ClientListItem extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
             SizedBox(
-              child: Text(
-                client.idNumber,
-                style: textStyle,
-                overflow: TextOverflow.ellipsis,
+              child: Column(
+                children: <Widget>[
+                  Text(
+                    client.idNumber,
+                    style: textStyle,
+                    overflow: TextOverflow.ellipsis,
+                  ),
+                  if (!client.isActive)
+                    EntityStateLabel(client)
+                ],
               ),
               width: 120,
             ),
+            SizedBox(width: 10),
             Expanded(
                 child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -138,7 +145,7 @@ class ClientListItem extends StatelessWidget {
                     maxLines: 3,
                     overflow: TextOverflow.ellipsis,
                     style: Theme.of(context).textTheme.subtitle2,
-                  )
+                  ),
               ],
             )),
             Text(formatNumber(client.balance, context, clientId: client.id),
