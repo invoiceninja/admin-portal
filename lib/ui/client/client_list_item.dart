@@ -117,7 +117,12 @@ class ClientListItem extends StatelessWidget {
           : onTap,
       onLongPress: onLongPress,
       child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 4),
+        padding: const EdgeInsets.only(
+          left: 24,
+          right: 10,
+          top: 4,
+          bottom: 4,
+        ),
         child: Row(
           children: <Widget>[
             if (showCheckbox)
