@@ -53,7 +53,6 @@ class TaxRateSettingsScreen extends StatelessWidget {
       },
       appBarTitle: ListFilter(
         placeholder: localization.searchTaxRates,
-        key: ValueKey(state.taxRateListState.filterClearedAt),
         filter: state.taxRateListState.filter,
         onFilterChanged: (value) {
           store.dispatch(FilterTaxRates(value));

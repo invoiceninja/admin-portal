@@ -51,7 +51,6 @@ class TaskScreen extends StatelessWidget {
       },
       appBarTitle: ListFilter(
         placeholder: localization.searchTasks,
-        key: ValueKey(store.state.taskListState.filterClearedAt),
         filter: state.taskListState.filter,
         onFilterChanged: (value) {
           store.dispatch(FilterTasks(value));

@@ -27,7 +27,6 @@ class SettingsScreen extends StatelessWidget {
     return ListScaffold(
       appBarTitle: ListFilter(
         placeholder: localization.searchSettings,
-        key: ValueKey(state.settingsUIState.filterClearedAt),
         filter: state.settingsUIState.filter,
         onFilterChanged: (value) {
           store.dispatch(FilterSettings(value));

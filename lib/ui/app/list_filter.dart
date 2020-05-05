@@ -1,15 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:invoiceninja_flutter/utils/colors.dart';
 import 'package:invoiceninja_flutter/constants.dart';
 
 class ListFilter extends StatefulWidget {
   const ListFilter({
-    Key key,
     @required this.placeholder,
     @required this.filter,
     @required this.onFilterChanged,
-  }) : super(key: key);
+  });
 
   final String placeholder;
   final String filter;
@@ -85,6 +83,7 @@ class _ListFilterState extends State<ListFilter> {
                     onPressed: () {
                       widget.onFilterChanged(null);
                       _filterController.text = '';
+                      _focusNode.unfocus();
                     },
                   )
                 : Icon(Icons.search, color: textColor),

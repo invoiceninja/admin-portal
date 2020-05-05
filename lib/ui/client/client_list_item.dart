@@ -33,9 +33,7 @@ class ClientListItem extends StatelessWidget {
 
   static final clientItemKey = (int id) => Key('__client_item_${id}__');
 
-  @override
-  Widget build(BuildContext context) {
-    //var localization = AppLocalization.of(context);
+  Widget _buildMobile(BuildContext context) {
     final store = StoreProvider.of<AppState>(context);
     final uiState = store.state.uiState;
     final clientUIState = uiState.clientUIState;
@@ -46,6 +44,81 @@ class ClientListItem extends StatelessWidget {
     final isInMultiselect = listUIState.isInMultiselect();
     final showCheckbox = onCheckboxChanged != null || isInMultiselect;
 
+    return ListTile(
+      onTap: isInMultiselect
+          ? () => onEntityAction(EntityAction.toggleMultiselect)
+          : onTap,
+      onLongPress: onLongPress,
+      leading: showCheckbox
+          ? IgnorePointer(
+              ignoring: listUIState.isInMultiselect(),
+              child: Checkbox(
+                value: isChecked,
+                materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                onChanged: (value) => onCheckboxChanged(value),
+                activeColor: Theme.of(context).accentColor,
+              ),
+            )
+          : null,
+      title: Container(
+        width: MediaQuery.of(context).size.width,
+        child: Row(
+          children: <Widget>[
+            Expanded(
+              child: Text(
+                client.displayName,
+                style: Theme.of(context).textTheme.headline6,
+              ),
+            ),
+            Text(formatNumber(client.balance, context, clientId: client.id),
+                style: Theme.of(context).textTheme.headline6),
+          ],
+        ),
+      ),
+      subtitle: (filterMatch == null && client.isActive)
+          ? null
+          : Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: <Widget>[
+                filterMatch != null
+                    ? Text(
+                        filterMatch,
+                        maxLines: 3,
+                        overflow: TextOverflow.ellipsis,
+                      )
+                    : SizedBox(),
+                EntityStateLabel(client),
+              ],
+            ),
+    );
+  }
+
+  Widget _buildDesktop(BuildContext context) {
+    final textTheme = Theme.of(context).textTheme;
+    return Padding(
+      padding: const EdgeInsets.all(16),
+      child: Row(
+        children: <Widget>[
+          SizedBox(
+            child: Text(
+              client.idNumber,
+              style: textTheme.headline6,
+              overflow: TextOverflow.ellipsis,
+            ),
+            width: 100,
+          ),
+          Text(client.displayName, style: textTheme.headline6),
+        ],
+      ),
+    );
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final store = StoreProvider.of<AppState>(context);
+    final uiState = store.state.uiState;
+    final clientUIState = uiState.clientUIState;
+
     return DismissibleEntity(
       isSelected: client.id ==
           (uiState.isEditing
@@ -54,54 +127,9 @@ class ClientListItem extends StatelessWidget {
       userCompany: store.state.userCompany,
       onEntityAction: onEntityAction,
       entity: client,
-      //entityKey: clientItemKey,
-      child: ListTile(
-        onTap: isInMultiselect
-            ? () => onEntityAction(EntityAction.toggleMultiselect)
-            : onTap,
-        onLongPress: onLongPress,
-        leading: showCheckbox
-            ? IgnorePointer(
-                ignoring: listUIState.isInMultiselect(),
-                child: Checkbox(
-                  value: isChecked,
-                  materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
-                  onChanged: (value) => onCheckboxChanged(value),
-                  activeColor: Theme.of(context).accentColor,
-                ),
-              )
-            : null,
-        title: Container(
-          width: MediaQuery.of(context).size.width,
-          child: Row(
-            children: <Widget>[
-              Expanded(
-                child: Text(
-                  client.displayName,
-                  style: Theme.of(context).textTheme.headline6,
-                ),
-              ),
-              Text(formatNumber(client.balance, context, clientId: client.id),
-                  style: Theme.of(context).textTheme.headline6),
-            ],
-          ),
-        ),
-        subtitle: (filterMatch == null && client.isActive)
-            ? null
-            : Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: <Widget>[
-                  filterMatch != null
-                      ? Text(
-                          filterMatch,
-                          maxLines: 3,
-                          overflow: TextOverflow.ellipsis,
-                        )
-                      : SizedBox(),
-                  EntityStateLabel(client),
-                ],
-              ),
-      ),
+      child: store.state.prefState.isMobile
+          ? _buildMobile(context)
+          : _buildDesktop(context),
     );
   }
 }

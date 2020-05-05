@@ -50,7 +50,6 @@ class VendorScreen extends StatelessWidget {
       },
       appBarTitle: ListFilter(
         placeholder: localization.searchVendors,
-        key: ValueKey(store.state.vendorListState.filterClearedAt),
         filter: state.vendorListState.filter,
         onFilterChanged: (value) {
           store.dispatch(FilterVendors(value));

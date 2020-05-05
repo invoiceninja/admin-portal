@@ -51,7 +51,6 @@ class CreditScreen extends StatelessWidget {
       },
       appBarTitle: ListFilter(
         placeholder: localization.searchCredits,
-        key: ValueKey(state.creditListState.filterClearedAt),
         filter: state.creditListState.filter,
         onFilterChanged: (value) {
           store.dispatch(FilterCredits(value));

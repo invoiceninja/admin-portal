@@ -49,7 +49,6 @@ class ProductScreen extends StatelessWidget {
       },
       appBarTitle: ListFilter(
         placeholder: localization.searchProducts,
-        key: ValueKey(store.state.productListState.filterClearedAt),
         filter: state.productListState.filter,
         onFilterChanged: (value) {
           store.dispatch(FilterProducts(value));

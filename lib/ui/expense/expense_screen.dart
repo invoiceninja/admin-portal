@@ -52,7 +52,6 @@ class ExpenseScreen extends StatelessWidget {
       },
       appBarTitle: ListFilter(
         placeholder: localization.searchExpenses,
-        key: ValueKey(store.state.expenseListState.filterClearedAt),
         filter: state.expenseListState.filter,
         onFilterChanged: (value) {
           store.dispatch(FilterExpenses(value));

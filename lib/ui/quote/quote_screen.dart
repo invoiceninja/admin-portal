@@ -52,7 +52,6 @@ class QuoteScreen extends StatelessWidget {
       },
       appBarTitle: ListFilter(
         placeholder: localization.searchQuotes,
-        key: ValueKey(store.state.quoteListState.filterClearedAt),
         filter: state.quoteListState.filter,
         onFilterChanged: (value) {
           store.dispatch(FilterQuotes(value));

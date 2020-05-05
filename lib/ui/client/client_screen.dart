@@ -51,7 +51,6 @@ class ClientScreen extends StatelessWidget {
       },
       appBarTitle: ListFilter(
         placeholder: localization.searchClients,
-        key: ValueKey(state.clientListState.filterClearedAt),
         filter: state.clientListState.filter,
         onFilterChanged: (value) {
           store.dispatch(FilterClients(value));

@@ -52,7 +52,6 @@ class DocumentScreen extends StatelessWidget {
       },
       appBarTitle: ListFilter(
         placeholder: localization.searchDocuments,
-        key: ValueKey(state.documentListState.filterClearedAt),
         filter: state.documentListState.filter,
         onFilterChanged: (value) {
           store.dispatch(FilterDocuments(value));

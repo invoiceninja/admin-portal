@@ -52,7 +52,6 @@ class InvoiceScreen extends StatelessWidget {
       },
       appBarTitle: ListFilter(
         placeholder: localization.searchInvoices,
-        key: ValueKey(store.state.invoiceListState.filterClearedAt),
         filter: state.invoiceListState.filter,
         onFilterChanged: (value) {
           store.dispatch(FilterInvoices(value));

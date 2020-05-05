@@ -55,7 +55,6 @@ class UserScreen extends StatelessWidget {
       },
       appBarTitle: ListFilter(
         placeholder: localization.searchUsers,
-        key: ValueKey(state.userListState.filterClearedAt),
         filter: state.userListState.filter,
         onFilterChanged: (value) {
           store.dispatch(FilterUsers(value));

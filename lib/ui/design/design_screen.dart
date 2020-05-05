@@ -52,7 +52,6 @@ class DesignScreen extends StatelessWidget {
       },
       appBarTitle: ListFilter(
         placeholder: localization.searchDesigns,
-        key: ValueKey(state.designListState.filterClearedAt),
         filter: state.designListState.filter,
         onFilterChanged: (value) {
           store.dispatch(FilterDesigns(value));

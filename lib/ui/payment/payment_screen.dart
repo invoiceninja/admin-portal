@@ -48,7 +48,6 @@ class PaymentScreen extends StatelessWidget {
       },
       appBarTitle: ListFilter(
         placeholder: localization.searchPayments,
-        key: ValueKey(store.state.paymentListState.filterClearedAt),
         filter: state.paymentListState.filter,
         onFilterChanged: (value) {
           store.dispatch(FilterPayments(value));

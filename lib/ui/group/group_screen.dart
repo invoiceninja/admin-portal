@@ -53,7 +53,6 @@ class GroupSettingsScreen extends StatelessWidget {
       isSettings: true,
       appBarTitle: ListFilter(
         placeholder: localization.searchGroups,
-        key: ValueKey(state.groupListState.filterClearedAt),
         filter: state.groupListState.filter,
         onFilterChanged: (value) {
           store.dispatch(FilterGroups(value));
