@@ -227,6 +227,7 @@ class InvoiceListItem extends StatelessWidget {
                       child: ConstrainedBox(
                         constraints: BoxConstraints(
                           minWidth: 80,
+                          maxWidth: 80,
                         ),
                         child: Padding(
                           padding: const EdgeInsets.symmetric(vertical: 8),

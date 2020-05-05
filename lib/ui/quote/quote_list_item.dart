@@ -197,6 +197,7 @@ class QuoteListItem extends StatelessWidget {
                 ),
                 constraints: BoxConstraints(
                   minWidth: 80,
+                  maxWidth: 80,
                 ),
               ),
               SizedBox(width: 10),

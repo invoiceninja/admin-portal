@@ -199,6 +199,7 @@ class PaymentListItem extends StatelessWidget {
                 textAlign: TextAlign.end,
               ),
               SizedBox(width: 25),
+
               DecoratedBox(
                 decoration: BoxDecoration(
                   color: statusColor,
@@ -206,7 +207,8 @@ class PaymentListItem extends StatelessWidget {
                 ),
                 child: ConstrainedBox(
                   constraints: BoxConstraints(
-                    minWidth: 80,
+                    minWidth: 100,
+                    maxWidth: 100,
                   ),
                   child: Padding(
                     padding: const EdgeInsets.symmetric(vertical: 8),
@@ -214,6 +216,7 @@ class PaymentListItem extends StatelessWidget {
                       statusLabel.toUpperCase(),
                       style: TextStyle(fontSize: 14),
                       textAlign: TextAlign.center,
+                      overflow: TextOverflow.ellipsis,
                     ),
                   ),
                 ),
