@@ -103,26 +103,35 @@ class ProductListItem extends StatelessWidget {
         onLongPress: onLongPress,
         child: Padding(
           padding: const EdgeInsets.only(
-            left: 28,
-            right: 12,
+            left: 12,
+            right: 28,
             top: 4,
             bottom: 4,
           ),
           child: Row(
             children: <Widget>[
-              if (showCheckbox)
-                Padding(
-                  padding: const EdgeInsets.only(right: 20),
-                  child: IgnorePointer(
-                    ignoring: listUIState.isInMultiselect(),
-                    child: Checkbox(
-                      value: isChecked,
-                      materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
-                      onChanged: (value) => onCheckboxChanged(value),
-                      activeColor: Theme.of(context).accentColor,
-                    ),
-                  ),
-                ),
+              Padding(
+                  padding: const EdgeInsets.only(right: 15),
+                  child: showCheckbox
+                      ? IgnorePointer(
+                          ignoring: listUIState.isInMultiselect(),
+                          child: Checkbox(
+                            value: isChecked,
+                            materialTapTargetSize:
+                                MaterialTapTargetSize.shrinkWrap,
+                            onChanged: (value) => onCheckboxChanged(value),
+                            activeColor: Theme.of(context).accentColor,
+                          ),
+                        )
+                      : ActionMenuButton(
+                          entityActions: product.getActions(
+                              userCompany: state.userCompany,
+                              includeEdit: true),
+                          isSaving: false,
+                          entity: product,
+                          onSelected: (context, action) =>
+                              handleEntityAction(context, product, action),
+                        )),
               SizedBox(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -158,15 +167,6 @@ class ProductListItem extends StatelessWidget {
                 formatNumber(product.price, context),
                 style: textStyle,
                 textAlign: TextAlign.end,
-              ),
-              SizedBox(width: 10),
-              ActionMenuButton(
-                entityActions: product.getActions(
-                    userCompany: state.userCompany, includeEdit: true),
-                isSaving: false,
-                entity: product,
-                onSelected: (context, action) =>
-                    handleEntityAction(context, product, action),
               ),
             ],
           ),
