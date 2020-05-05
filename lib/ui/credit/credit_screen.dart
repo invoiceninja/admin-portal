@@ -50,7 +50,7 @@ class CreditScreen extends StatelessWidget {
         handleCreditAction(context, credits, EntityAction.toggleMultiselect);
       },
       appBarTitle: ListFilter(
-        title: localization.credits,
+        placeholder: localization.searchCredits,
         key: ValueKey(state.creditListState.filterClearedAt),
         filter: state.creditListState.filter,
         onFilterChanged: (value) {

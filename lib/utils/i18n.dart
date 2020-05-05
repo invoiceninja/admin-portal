@@ -15,6 +15,24 @@ mixin LocalizationsProvider on LocaleCodeAware {
   static final Map<String, Map<String, String>> _localizedValues = {
     'en': {
       // STARTER: lang key - do not remove comment
+      'search_documents': 'Search Documents',
+      'search_designs': 'Search Designs',
+      'search_invoices': 'Search Invoices',
+      'search_clients': 'Search Clients',
+      'search_products': 'Search Products',
+      'search_quotes': 'Search Quotes',
+      'search_credits': 'Search Credits',
+      'search_vendors': 'Search Vendors',
+      'search_users': 'Search Users',
+      'search_tax_rates': 'Search Tax Rates',
+      'search_tasks': 'Search Tasks',
+      'search_settings': 'Search Settings',
+      'search_projects': 'Search Projects',
+      'search_expenses': 'Search Expenses',
+      'search_payments': 'Search Payments',
+      'search_groups': 'Search Groups',
+      'search_company': 'Search Company',
+
       'refund_payment': 'Refund Payment',
       'cancelled_invoice': 'Successfully cancelled invoice',
       'cancelled_invoices': 'Successfully cancelled invoices',
@@ -36417,6 +36435,55 @@ mixin LocalizationsProvider on LocaleCodeAware {
 
   String get refundPayment =>
       _localizedValues[localeCode]['refund_payment'] ?? '';
+
+  String get searchInvoices =>
+      _localizedValues[localeCode]['search_invoices'] ?? '';
+
+  String get searchClients =>
+      _localizedValues[localeCode]['search_clients'] ?? '';
+
+  String get searchProducts =>
+      _localizedValues[localeCode]['search_products'] ?? '';
+
+  String get searchQuotes =>
+      _localizedValues[localeCode]['search_quotes'] ?? '';
+
+  String get searchCredits =>
+      _localizedValues[localeCode]['search_credits'] ?? '';
+
+  String get searchVendors =>
+      _localizedValues[localeCode]['search_vendors'] ?? '';
+
+  String get searchUsers => _localizedValues[localeCode]['search_users'] ?? '';
+
+  String get searchTaxRates =>
+      _localizedValues[localeCode]['search_tax_rates'] ?? '';
+
+  String get searchTasks => _localizedValues[localeCode]['search_tasks'] ?? '';
+
+  String get searchSettings =>
+      _localizedValues[localeCode]['search_settings'] ?? '';
+
+  String get searchProjects =>
+      _localizedValues[localeCode]['search_projects'] ?? '';
+
+  String get searchExpenses =>
+      _localizedValues[localeCode]['search_expenses'] ?? '';
+
+  String get searchPayments =>
+      _localizedValues[localeCode]['search_payments'] ?? '';
+
+  String get searchGroups =>
+      _localizedValues[localeCode]['search_groups'] ?? '';
+
+  String get searchCompany =>
+      _localizedValues[localeCode]['search_company'] ?? '';
+
+  String get searchDocuments =>
+      _localizedValues[localeCode]['search_documents'] ?? '';
+
+  String get searchDesigns =>
+      _localizedValues[localeCode]['search_designs'] ?? '';
 
   String lookup(String key) {
     final lookupKey = toSnakeCase(key);

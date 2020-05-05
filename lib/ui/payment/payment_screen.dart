@@ -47,7 +47,7 @@ class PaymentScreen extends StatelessWidget {
         handlePaymentAction(context, payments, EntityAction.toggleMultiselect);
       },
       appBarTitle: ListFilter(
-        title: localization.payments,
+        placeholder: localization.searchPayments,
         key: ValueKey(store.state.paymentListState.filterClearedAt),
         filter: state.paymentListState.filter,
         onFilterChanged: (value) {

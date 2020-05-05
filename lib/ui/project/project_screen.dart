@@ -49,7 +49,7 @@ class ProjectScreen extends StatelessWidget {
         handleProjectAction(context, projects, EntityAction.toggleMultiselect);
       },
       appBarTitle: ListFilter(
-        title: localization.projects,
+        placeholder: localization.searchProjects,
         filter: state.projectListState.filter,
         onFilterChanged: (value) {
           store.dispatch(FilterProjects(value));

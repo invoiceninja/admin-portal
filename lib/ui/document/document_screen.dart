@@ -51,7 +51,7 @@ class DocumentScreen extends StatelessWidget {
             context, documents, EntityAction.toggleMultiselect);
       },
       appBarTitle: ListFilter(
-        title: localization.documents,
+        placeholder: localization.searchDocuments,
         key: ValueKey(state.documentListState.filterClearedAt),
         filter: state.documentListState.filter,
         onFilterChanged: (value) {

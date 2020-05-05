@@ -6,16 +6,15 @@ import 'package:invoiceninja_flutter/constants.dart';
 class ListFilter extends StatefulWidget {
   const ListFilter({
     Key key,
+    @required this.placeholder,
     @required this.filter,
-    @required this.title,
     @required this.onFilterChanged,
-    this.filterLabel,
   }) : super(key: key);
 
+  final String placeholder;
   final String filter;
-  final String title;
   final Function(String) onFilterChanged;
-  final String filterLabel;
+
 
   @override
   _ListFilterState createState() => new _ListFilterState();
@@ -45,32 +44,38 @@ class _ListFilterState extends State<ListFilter> {
   @override
   Widget build(BuildContext context) {
     final localization = AppLocalization.of(context);
-
+    final textColor = Theme.of(context).primaryTextTheme.bodyText1.color;
+    final isFilterSet = (widget.filter ?? '').isNotEmpty;
     return Container(
       padding: const EdgeInsets.only(left: 8.0),
       height: 44,
       margin: EdgeInsets.only(bottom: 2.0),
       decoration: BoxDecoration(
-        color: convertHexStringToColor(kDefaultBorderColor),
+        color: isFilterSet
+            ? convertHexStringToColor(
+                kDefaultBorderColor) // TODO set color here
+            : convertHexStringToColor(kDefaultBorderColor),
         borderRadius: BorderRadius.all(Radius.circular(5)),
       ),
       child: TextField(
         decoration: InputDecoration(
           suffixIcon: Padding(
             padding: EdgeInsets.only(right: 8.0),
-            child: (widget.filter ?? '').isNotEmpty
+            child: isFilterSet
                 ? IconButton(
-                    icon: Icon(Icons.clear),
+                    icon: Icon(
+                      Icons.clear,
+                      color: textColor,
+                    ),
                     onPressed: () {
                       widget.onFilterChanged(null);
                       _filterController.text = '';
                     },
                   )
-                : Icon(Icons.search,
-                    color: Theme.of(context).primaryTextTheme.bodyText1.color),
+                : Icon(Icons.search, color: textColor),
           ),
           border: InputBorder.none,
-          hintText: widget.filterLabel ?? localization.filter,
+          hintText: widget.placeholder ?? localization.search,
         ),
         autocorrect: false,
         onChanged: (value) {

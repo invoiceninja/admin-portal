@@ -49,7 +49,7 @@ class VendorScreen extends StatelessWidget {
         handleVendorAction(context, vendors, EntityAction.toggleMultiselect);
       },
       appBarTitle: ListFilter(
-        title: localization.vendors,
+        placeholder: localization.searchVendors,
         key: ValueKey(store.state.vendorListState.filterClearedAt),
         filter: state.vendorListState.filter,
         onFilterChanged: (value) {

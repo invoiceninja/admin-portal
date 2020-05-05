@@ -50,7 +50,7 @@ class TaskScreen extends StatelessWidget {
         handleTaskAction(context, tasks, EntityAction.toggleMultiselect);
       },
       appBarTitle: ListFilter(
-        title: localization.tasks,
+        placeholder: localization.searchTasks,
         key: ValueKey(store.state.taskListState.filterClearedAt),
         filter: state.taskListState.filter,
         onFilterChanged: (value) {

@@ -65,12 +65,11 @@ class _DashboardScreenState extends State<DashboardScreen>
                       .dispatch(UserSettingsChanged(sidebar: AppSidebar.menu)),
                 ),
           title: ListFilter(
-            title: AppLocalization.of(context).dashboard,
+            placeholder: localization.searchCompany,
             filter: state.uiState.filter,
             onFilterChanged: (value) {
               store.dispatch(FilterCompany(value));
             },
-            filterLabel: localization.search,
           ),
           actions: [
             if (isMobile(context) || !state.prefState.isHistoryVisible)

@@ -51,7 +51,7 @@ class ExpenseScreen extends StatelessWidget {
         handleExpenseAction(context, expenses, EntityAction.toggleMultiselect);
       },
       appBarTitle: ListFilter(
-        title: localization.expenses,
+        placeholder: localization.searchExpenses,
         key: ValueKey(store.state.expenseListState.filterClearedAt),
         filter: state.expenseListState.filter,
         onFilterChanged: (value) {
