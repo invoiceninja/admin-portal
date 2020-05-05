@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:invoiceninja_flutter/ui/app/lists/list_divider.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 
 class FieldGrid extends StatelessWidget {
@@ -9,6 +10,7 @@ class FieldGrid extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final localization = AppLocalization.of(context);
+    final textColor = Theme.of(context).primaryTextTheme.bodyText1.color;
     final List<Widget> fieldWidgets = [];
 
     fields.forEach((field, value) {
@@ -21,14 +23,17 @@ class FieldGrid extends StatelessWidget {
                 localization.lookup(field),
                 style: TextStyle(
                   fontWeight: FontWeight.w300,
+                  color: textColor.withOpacity(.65),
                 ),
               ),
             ),
+            SizedBox(height: 6),
             Flexible(
                 child: Text(
               value,
               style: TextStyle(
                 fontWeight: FontWeight.w600,
+                fontSize: 18,
               ),
             )),
           ],
@@ -43,9 +48,9 @@ class FieldGrid extends StatelessWidget {
     return Column(
       children: <Widget>[
         Container(
-          color: Theme.of(context).canvasColor,
+          color: Theme.of(context).cardColor,
           child: Padding(
-            padding: EdgeInsets.only(left: 16.0, top: 16.0, right: 16.0),
+            padding: EdgeInsets.all(16),
             child: GridView.count(
               physics: NeverScrollableScrollPhysics(),
               shrinkWrap: true,
@@ -56,10 +61,7 @@ class FieldGrid extends StatelessWidget {
             ),
           ),
         ),
-        Container(
-          color: Theme.of(context).backgroundColor,
-          height: 12.0,
-        ),
+        ListDivider(),
       ],
     );
   }

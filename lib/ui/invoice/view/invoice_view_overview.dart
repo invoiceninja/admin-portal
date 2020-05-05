@@ -141,7 +141,7 @@ class InvoiceOverview extends StatelessWidget {
       } else {
         widgets.addAll([
           Material(
-            color: Theme.of(context).canvasColor,
+            color: Theme.of(context).cardColor,
             child: ListTile(
               title: Text(localization.payments),
               leading: Icon(FontAwesomeIcons.creditCard, size: 18.0),

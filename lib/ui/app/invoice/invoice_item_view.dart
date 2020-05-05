@@ -70,9 +70,9 @@ class InvoiceItemListTile extends StatelessWidget {
     }
 
     return Material(
-        color: Theme.of(context).canvasColor,
+        color: Theme.of(context).cardColor,
         child: Padding(
-          padding: const EdgeInsets.only(top: 4.0, bottom: 4.0),
+          padding: const EdgeInsets.only(top: 10, bottom: 10),
           child: Column(
             children: <Widget>[
               ListTile(
