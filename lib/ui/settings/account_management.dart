@@ -177,7 +177,7 @@ class _AccountManagementState extends State<AccountManagement>
                   // TODO change to kModules.keys
                   children: kModules.keys.map((module) {
                 final implementedModules = <int>[
-                  //kModuleQuotes,
+                  kModuleQuotes,
                   kModuleCredits,
                 ];
                 final isImplemented = implementedModules.contains(module);
