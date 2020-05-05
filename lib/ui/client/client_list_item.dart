@@ -2,7 +2,9 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
+import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
+import 'package:invoiceninja_flutter/ui/app/actions_menu_button.dart';
 import 'package:invoiceninja_flutter/ui/app/dismissible_entity.dart';
 import 'package:invoiceninja_flutter/ui/app/entity_state_label.dart';
 import 'package:invoiceninja_flutter/utils/formatting.dart';
@@ -95,7 +97,8 @@ class ClientListItem extends StatelessWidget {
 
   Widget _buildDesktop(BuildContext context) {
     final store = StoreProvider.of<AppState>(context);
-    final uiState = store.state.uiState;
+    final state = store.state;
+    final uiState = state.uiState;
     final clientUIState = uiState.clientUIState;
     final listUIState = clientUIState.listUIState;
     final isInMultiselect = listUIState.isInMultiselect();
@@ -114,11 +117,22 @@ class ClientListItem extends StatelessWidget {
           : onTap,
       onLongPress: onLongPress,
       child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 32, vertical: 20),
+        padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 4),
         child: Row(
-          mainAxisAlignment: MainAxisAlignment.start,
-          crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
+            if (showCheckbox)
+              Padding(
+                padding: const EdgeInsets.only(right: 20),
+                child: IgnorePointer(
+                  ignoring: listUIState.isInMultiselect(),
+                  child: Checkbox(
+                    value: isChecked,
+                    materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                    onChanged: (value) => onCheckboxChanged(value),
+                    activeColor: Theme.of(context).accentColor,
+                  ),
+                ),
+              ),
             SizedBox(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -149,10 +163,20 @@ class ClientListItem extends StatelessWidget {
                 ],
               ),
             ),
+            SizedBox(width: 10),
             Text(
               formatNumber(client.balance, context, clientId: client.id),
               style: textStyle,
               textAlign: TextAlign.end,
+            ),
+            SizedBox(width: 10),
+            ActionMenuButton(
+              entityActions: client.getActions(
+                  userCompany: state.userCompany, includeEdit: true),
+              isSaving: false,
+              entity: client,
+              onSelected: (context, action) =>
+                  handleEntityAction(context, client, action),
             ),
           ],
         ),
