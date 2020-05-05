@@ -35,165 +35,148 @@ class ClientListItem extends StatelessWidget {
 
   static final clientItemKey = (int id) => Key('__client_item_${id}__');
 
-  Widget _buildMobile(BuildContext context) {
-    final store = StoreProvider.of<AppState>(context);
-    final uiState = store.state.uiState;
-    final clientUIState = uiState.clientUIState;
-    final filterMatch = filter != null && filter.isNotEmpty
-        ? client.matchesFilterValue(filter)
-        : null;
-    final listUIState = clientUIState.listUIState;
-    final isInMultiselect = listUIState.isInMultiselect();
-    final showCheckbox = onCheckboxChanged != null || isInMultiselect;
-
-    return ListTile(
-      onTap: isInMultiselect
-          ? () => onEntityAction(EntityAction.toggleMultiselect)
-          : onTap,
-      onLongPress: onLongPress,
-      leading: showCheckbox
-          ? IgnorePointer(
-              ignoring: listUIState.isInMultiselect(),
-              child: Checkbox(
-                value: isChecked,
-                materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
-                onChanged: (value) => onCheckboxChanged(value),
-                activeColor: Theme.of(context).accentColor,
-              ),
-            )
-          : null,
-      title: Container(
-        width: MediaQuery.of(context).size.width,
-        child: Row(
-          children: <Widget>[
-            Expanded(
-              child: Text(
-                client.displayName,
-                style: Theme.of(context).textTheme.headline6,
-              ),
-            ),
-            Text(formatNumber(client.balance, context, clientId: client.id),
-                style: Theme.of(context).textTheme.headline6),
-          ],
-        ),
-      ),
-      subtitle: (filterMatch == null && client.isActive)
-          ? null
-          : Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: <Widget>[
-                filterMatch != null
-                    ? Text(
-                        filterMatch,
-                        maxLines: 3,
-                        overflow: TextOverflow.ellipsis,
-                      )
-                    : SizedBox(),
-                EntityStateLabel(client),
-              ],
-            ),
-    );
-  }
-
-  Widget _buildDesktop(BuildContext context) {
+  @override
+  Widget build(BuildContext context) {
     final store = StoreProvider.of<AppState>(context);
     final state = store.state;
     final uiState = state.uiState;
     final clientUIState = uiState.clientUIState;
-    final listUIState = clientUIState.listUIState;
-    final isInMultiselect = listUIState.isInMultiselect();
-    final textTheme = Theme.of(context).textTheme;
     final filterMatch = filter != null && filter.isNotEmpty
         ? client.matchesFilterValue(filter)
         : null;
+    final listUIState = clientUIState.listUIState;
+    final isInMultiselect = listUIState.isInMultiselect();
     final showCheckbox = onCheckboxChanged != null || isInMultiselect;
-    final textStyle = TextStyle(
-      fontSize: 18,
-    );
+    final textStyle = TextStyle(fontSize: 18);
 
-    return InkWell(
-      onTap: isInMultiselect
-          ? () => onEntityAction(EntityAction.toggleMultiselect)
-          : onTap,
-      onLongPress: onLongPress,
-      child: Padding(
-        padding: const EdgeInsets.only(
-          left: 28,
-          right: 12,
-          top: 4,
-          bottom: 4,
-        ),
-        child: Row(
-          children: <Widget>[
-            if (showCheckbox)
-              Padding(
-                padding: const EdgeInsets.only(right: 20),
-                child: IgnorePointer(
-                  ignoring: listUIState.isInMultiselect(),
-                  child: Checkbox(
-                    value: isChecked,
-                    materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
-                    onChanged: (value) => onCheckboxChanged(value),
-                    activeColor: Theme.of(context).accentColor,
-                  ),
+    Widget _buildMobile() {
+      return ListTile(
+        onTap: isInMultiselect
+            ? () => onEntityAction(EntityAction.toggleMultiselect)
+            : onTap,
+        onLongPress: onLongPress,
+        leading: showCheckbox
+            ? IgnorePointer(
+                ignoring: listUIState.isInMultiselect(),
+                child: Checkbox(
+                  value: isChecked,
+                  materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                  onChanged: (value) => onCheckboxChanged(value),
+                  activeColor: Theme.of(context).accentColor,
+                ),
+              )
+            : null,
+        title: Container(
+          width: MediaQuery.of(context).size.width,
+          child: Row(
+            children: <Widget>[
+              Expanded(
+                child: Text(
+                  client.displayName,
+                  style: Theme.of(context).textTheme.headline6,
                 ),
               ),
-            SizedBox(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: <Widget>[
-                  Text(
-                    client.idNumber,
-                    style: textStyle,
-                    overflow: TextOverflow.ellipsis,
-                  ),
-                  if (!client.isActive) EntityStateLabel(client)
-                ],
-              ),
-              width: 120,
-            ),
-            SizedBox(width: 10),
-            Expanded(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: <Widget>[
-                  Text(client.displayName, style: textStyle),
-                  if (filterMatch != null)
-                    Text(
-                      filterMatch,
-                      maxLines: 3,
-                      overflow: TextOverflow.ellipsis,
-                      style: Theme.of(context).textTheme.subtitle2,
-                    ),
-                ],
-              ),
-            ),
-            SizedBox(width: 10),
-            Text(
-              formatNumber(client.balance, context, clientId: client.id),
-              style: textStyle,
-              textAlign: TextAlign.end,
-            ),
-            SizedBox(width: 10),
-            ActionMenuButton(
-              entityActions: client.getActions(
-                  userCompany: state.userCompany, includeEdit: true),
-              isSaving: false,
-              entity: client,
-              onSelected: (context, action) =>
-                  handleEntityAction(context, client, action),
-            ),
-          ],
+              Text(formatNumber(client.balance, context, clientId: client.id),
+                  style: Theme.of(context).textTheme.headline6),
+            ],
+          ),
         ),
-      ),
-    );
-  }
+        subtitle: (filterMatch == null && client.isActive)
+            ? null
+            : Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: <Widget>[
+                  filterMatch != null
+                      ? Text(
+                          filterMatch,
+                          maxLines: 3,
+                          overflow: TextOverflow.ellipsis,
+                        )
+                      : SizedBox(),
+                  EntityStateLabel(client),
+                ],
+              ),
+      );
+    }
 
-  @override
-  Widget build(BuildContext context) {
-    final store = StoreProvider.of<AppState>(context);
-    final uiState = store.state.uiState;
-    final clientUIState = uiState.clientUIState;
+    Widget _buildDesktop() {
+      return InkWell(
+        onTap: isInMultiselect
+            ? () => onEntityAction(EntityAction.toggleMultiselect)
+            : onTap,
+        onLongPress: onLongPress,
+        child: Padding(
+          padding: const EdgeInsets.only(
+            left: 28,
+            right: 12,
+            top: 4,
+            bottom: 4,
+          ),
+          child: Row(
+            children: <Widget>[
+              if (showCheckbox)
+                Padding(
+                  padding: const EdgeInsets.only(right: 20),
+                  child: IgnorePointer(
+                    ignoring: listUIState.isInMultiselect(),
+                    child: Checkbox(
+                      value: isChecked,
+                      materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                      onChanged: (value) => onCheckboxChanged(value),
+                      activeColor: Theme.of(context).accentColor,
+                    ),
+                  ),
+                ),
+              SizedBox(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: <Widget>[
+                    Text(
+                      client.idNumber,
+                      style: textStyle,
+                      overflow: TextOverflow.ellipsis,
+                    ),
+                    if (!client.isActive) EntityStateLabel(client)
+                  ],
+                ),
+                width: 120,
+              ),
+              SizedBox(width: 10),
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: <Widget>[
+                    Text(client.displayName, style: textStyle),
+                    if (filterMatch != null)
+                      Text(
+                        filterMatch,
+                        maxLines: 3,
+                        overflow: TextOverflow.ellipsis,
+                        style: Theme.of(context).textTheme.subtitle2,
+                      ),
+                  ],
+                ),
+              ),
+              SizedBox(width: 10),
+              Text(
+                formatNumber(client.balance, context, clientId: client.id),
+                style: textStyle,
+                textAlign: TextAlign.end,
+              ),
+              SizedBox(width: 10),
+              ActionMenuButton(
+                entityActions: client.getActions(
+                    userCompany: state.userCompany, includeEdit: true),
+                isSaving: false,
+                entity: client,
+                onSelected: (context, action) =>
+                    handleEntityAction(context, client, action),
+              ),
+            ],
+          ),
+        ),
+      );
+    }
 
     return DismissibleEntity(
       isSelected: client.id ==
@@ -203,9 +186,7 @@ class ClientListItem extends StatelessWidget {
       userCompany: store.state.userCompany,
       onEntityAction: onEntityAction,
       entity: client,
-      child: store.state.prefState.isMobile
-          ? _buildMobile(context)
-          : _buildDesktop(context),
+      child: store.state.prefState.isMobile ? _buildMobile() : _buildDesktop(),
     );
   }
 }

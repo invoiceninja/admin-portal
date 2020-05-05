@@ -2,7 +2,9 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
+import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
+import 'package:invoiceninja_flutter/ui/app/actions_menu_button.dart';
 import 'package:invoiceninja_flutter/ui/app/dismissible_entity.dart';
 import 'package:invoiceninja_flutter/ui/app/entity_state_label.dart';
 import 'package:invoiceninja_flutter/utils/formatting.dart';
@@ -39,21 +41,16 @@ class ProductListItem extends StatelessWidget {
         : null;
     final subtitle = filterMatch ?? product.notes;
     final store = StoreProvider.of<AppState>(context);
+    final state = store.state;
     final uiState = store.state.uiState;
     final productUIState = uiState.productUIState;
     final listUIState = productUIState.listUIState;
     final isInMultiselect = listUIState.isInMultiselect();
     final showCheckbox = onCheckboxChanged != null || isInMultiselect;
+    final textStyle = TextStyle(fontSize: 18);
 
-    return DismissibleEntity(
-      isSelected: product.id ==
-          (uiState.isEditing
-              ? productUIState.editing.id
-              : productUIState.selectedId),
-      userCompany: userCompany,
-      entity: product,
-      onEntityAction: onEntityAction,
-      child: ListTile(
+    Widget _buildMobile() {
+      return ListTile(
         onTap: onTap,
         onLongPress: onLongPress,
         leading: showCheckbox
@@ -95,7 +92,97 @@ class ProductListItem extends StatelessWidget {
             EntityStateLabel(product),
           ],
         ),
-      ),
+      );
+    }
+
+    Widget _buildDesktop() {
+      return InkWell(
+        onTap: isInMultiselect
+            ? () => onEntityAction(EntityAction.toggleMultiselect)
+            : onTap,
+        onLongPress: onLongPress,
+        child: Padding(
+          padding: const EdgeInsets.only(
+            left: 28,
+            right: 12,
+            top: 4,
+            bottom: 4,
+          ),
+          child: Row(
+            children: <Widget>[
+              if (showCheckbox)
+                Padding(
+                  padding: const EdgeInsets.only(right: 20),
+                  child: IgnorePointer(
+                    ignoring: listUIState.isInMultiselect(),
+                    child: Checkbox(
+                      value: isChecked,
+                      materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                      onChanged: (value) => onCheckboxChanged(value),
+                      activeColor: Theme.of(context).accentColor,
+                    ),
+                  ),
+                ),
+              SizedBox(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: <Widget>[
+                    Text(
+                      product.productKey,
+                      style: textStyle,
+                      overflow: TextOverflow.ellipsis,
+                    ),
+                    if (!product.isActive) EntityStateLabel(product)
+                  ],
+                ),
+                width: 120,
+              ),
+              SizedBox(width: 10),
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: <Widget>[
+                    Text(product.notes, style: textStyle),
+                    if (filterMatch != null)
+                      Text(
+                        filterMatch,
+                        maxLines: 3,
+                        overflow: TextOverflow.ellipsis,
+                        style: Theme.of(context).textTheme.subtitle2,
+                      ),
+                  ],
+                ),
+              ),
+              SizedBox(width: 10),
+              Text(
+                formatNumber(product.price, context),
+                style: textStyle,
+                textAlign: TextAlign.end,
+              ),
+              SizedBox(width: 10),
+              ActionMenuButton(
+                entityActions: product.getActions(
+                    userCompany: state.userCompany, includeEdit: true),
+                isSaving: false,
+                entity: product,
+                onSelected: (context, action) =>
+                    handleEntityAction(context, product, action),
+              ),
+            ],
+          ),
+        ),
+      );
+    }
+
+    return DismissibleEntity(
+      isSelected: product.id ==
+          (uiState.isEditing
+              ? productUIState.editing.id
+              : productUIState.selectedId),
+      userCompany: userCompany,
+      entity: product,
+      onEntityAction: onEntityAction,
+      child: store.state.prefState.isMobile ? _buildMobile() : _buildDesktop(),
     );
   }
 }
