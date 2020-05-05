@@ -50,7 +50,7 @@ class FieldGrid extends StatelessWidget {
         Container(
           color: Theme.of(context).cardColor,
           child: Padding(
-            padding: EdgeInsets.all(16),
+            padding: EdgeInsets.all(20),
             child: GridView.count(
               physics: NeverScrollableScrollPhysics(),
               shrinkWrap: true,

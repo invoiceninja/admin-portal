@@ -77,35 +77,41 @@ class _PaymentViewState extends State<PaymentView> {
               ListDivider(),
               Material(
                 color: Theme.of(context).cardColor,
-                child: ListTile(
-                  title: EntityStateTitle(entity: client),
-                  leading: Icon(FontAwesomeIcons.users, size: 18.0),
-                  trailing: Icon(Icons.navigate_next),
-                  onTap: () => viewModel.onClientPressed(context),
-                  onLongPress: () => viewModel.onClientPressed(context, true),
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 10),
+                  child: ListTile(
+                    title: EntityStateTitle(entity: client),
+                    leading: Icon(FontAwesomeIcons.users, size: 18.0),
+                    trailing: Icon(Icons.navigate_next),
+                    onTap: () => viewModel.onClientPressed(context),
+                    onLongPress: () => viewModel.onClientPressed(context, true),
+                  ),
                 ),
               ),
               ListDivider(),
               for (final paymentable in payment.paymentables)
                 Material(
                   color: Theme.of(context).cardColor,
-                  child: ListTile(
-                    title: EntityStateTitle(
-                      entity: state.invoiceState.map[paymentable.invoiceId],
-                      title:
-                          '${localization.invoice} ${state.invoiceState.map[paymentable.invoiceId]?.number ?? ''}',
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 10),
+                    child: ListTile(
+                      title: EntityStateTitle(
+                        entity: state.invoiceState.map[paymentable.invoiceId],
+                        title:
+                            '${localization.invoice} ${state.invoiceState.map[paymentable.invoiceId]?.number ?? ''}',
+                      ),
+                      subtitle: Text(formatNumber(paymentable.amount, context) +
+                          ' • ' +
+                          formatDate(
+                              convertTimestampToDateString(paymentable.createdAt),
+                              context)),
+                      leading: Icon(FontAwesomeIcons.filePdf, size: 18.0),
+                      trailing: Icon(Icons.navigate_next),
+                      onTap: () => viewModel.onInvoicePressed(
+                          context, paymentable.invoiceId),
+                      onLongPress: () => viewModel.onInvoicePressed(
+                          context, paymentable.invoiceId, true),
                     ),
-                    subtitle: Text(formatNumber(paymentable.amount, context) +
-                        ' • ' +
-                        formatDate(
-                            convertTimestampToDateString(paymentable.createdAt),
-                            context)),
-                    leading: Icon(FontAwesomeIcons.filePdf, size: 18.0),
-                    trailing: Icon(Icons.navigate_next),
-                    onTap: () => viewModel.onInvoicePressed(
-                        context, paymentable.invoiceId),
-                    onLongPress: () => viewModel.onInvoicePressed(
-                        context, paymentable.invoiceId, true),
                   ),
                 ),
               ListDivider(),

@@ -107,12 +107,15 @@ class InvoiceOverview extends StatelessWidget {
     widgets.addAll([
       Material(
         color: Theme.of(context).cardColor,
-        child: ListTile(
-          title: EntityStateTitle(entity: client),
-          leading: Icon(getEntityIcon(EntityType.client), size: 18.0),
-          trailing: Icon(Icons.navigate_next),
-          onTap: () => viewModel.onClientPressed(context),
-          onLongPress: () => viewModel.onClientPressed(context, true),
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 10),
+          child: ListTile(
+            title: EntityStateTitle(entity: client),
+            leading: Icon(getEntityIcon(EntityType.client), size: 18.0),
+            trailing: Icon(Icons.navigate_next),
+            onTap: () => viewModel.onClientPressed(context),
+            onLongPress: () => viewModel.onClientPressed(context, true),
+          ),
         ),
       ),
       ListDivider(),
@@ -124,17 +127,20 @@ class InvoiceOverview extends StatelessWidget {
         widgets.addAll([
           Material(
             color: Theme.of(context).cardColor,
-            child: ListTile(
-              title: EntityStateTitle(entity: payment),
-              subtitle: Text(
-                  formatNumber(payment.amount, context, clientId: client.id) +
-                      ' • ' +
-                      formatDate(payment.date, context)),
-              leading: Icon(FontAwesomeIcons.creditCard, size: 18.0),
-              trailing: Icon(Icons.navigate_next),
-              onTap: () => viewModel.onPaymentPressed(context, payment),
-              onLongPress: () =>
-                  viewModel.onPaymentPressed(context, payment, true),
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 10),
+              child: ListTile(
+                title: EntityStateTitle(entity: payment),
+                subtitle: Text(
+                    formatNumber(payment.amount, context, clientId: client.id) +
+                        ' • ' +
+                        formatDate(payment.date, context)),
+                leading: Icon(FontAwesomeIcons.creditCard, size: 18.0),
+                trailing: Icon(Icons.navigate_next),
+                onTap: () => viewModel.onPaymentPressed(context, payment),
+                onLongPress: () =>
+                    viewModel.onPaymentPressed(context, payment, true),
+              ),
             ),
           ),
         ]);
@@ -142,11 +148,14 @@ class InvoiceOverview extends StatelessWidget {
         widgets.addAll([
           Material(
             color: Theme.of(context).cardColor,
-            child: ListTile(
-              title: Text(localization.payments),
-              leading: Icon(FontAwesomeIcons.creditCard, size: 18.0),
-              trailing: Icon(Icons.navigate_next),
-              onTap: () => viewModel.onPaymentsPressed(context),
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 10),
+              child: ListTile(
+                title: Text(localization.payments),
+                leading: Icon(FontAwesomeIcons.creditCard, size: 18.0),
+                trailing: Icon(Icons.navigate_next),
+                onTap: () => viewModel.onPaymentsPressed(context),
+              ),
             ),
           ),
         ]);
@@ -196,7 +205,7 @@ class InvoiceOverview extends StatelessWidget {
         color: Theme.of(context).cardColor,
         child: Padding(
           padding: const EdgeInsets.only(
-              left: 16.0, top: 12.0, right: 16.0, bottom: 12.0),
+              left: 20, top: 12, right: 20, bottom: 12),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.end,
             children: <Widget>[

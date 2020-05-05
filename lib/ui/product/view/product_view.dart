@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:invoiceninja_flutter/data/models/entities.dart';
 import 'package:invoiceninja_flutter/ui/app/FieldGrid.dart';
 import 'package:invoiceninja_flutter/ui/app/entity_header.dart';
+import 'package:invoiceninja_flutter/ui/app/lists/list_divider.dart';
 import 'package:invoiceninja_flutter/ui/app/view_scaffold.dart';
 import 'package:invoiceninja_flutter/ui/product/view/product_view_vm.dart';
 import 'package:invoiceninja_flutter/utils/formatting.dart';
@@ -90,12 +91,10 @@ class _ProductViewState extends State<ProductView>
                 ? formatNumber(product.cost, context)
                 : null,
           ),
+          ListDivider(),
           FieldGrid(fields),
-          Divider(
-            height: 1.0,
-          ),
           Padding(
-            padding: EdgeInsets.all(16),
+            padding: EdgeInsets.all(20),
             child: Text(
               product.notes,
               style: TextStyle(fontSize: 16),
