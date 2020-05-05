@@ -118,8 +118,8 @@ class ClientListItem extends StatelessWidget {
       onLongPress: onLongPress,
       child: Padding(
         padding: const EdgeInsets.only(
-          left: 24,
-          right: 10,
+          left: 28,
+          right: 12,
           top: 4,
           bottom: 4,
         ),
