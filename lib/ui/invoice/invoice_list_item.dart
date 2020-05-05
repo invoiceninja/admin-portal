@@ -52,6 +52,13 @@ class InvoiceListItem extends StatelessWidget {
             client.matchesFilterValue(filter))
         : null;
 
+    final statusLabel = invoice.isPastDue
+        ? localization.pastDue
+        : localization.lookup(kInvoiceStatuses[invoice.statusId]);
+    final statusColor = invoice.isPastDue
+        ? Colors.red
+        : InvoiceStatusColors.colors[invoice.statusId];
+
     Widget _buildMobile() {
       return ListTile(
         onTap: isInMultiselect
@@ -110,15 +117,9 @@ class InvoiceListItem extends StatelessWidget {
                           overflow: TextOverflow.ellipsis,
                         ),
                 ),
-                Text(
-                    invoice.isPastDue
-                        ? localization.pastDue
-                        : localization
-                            .lookup(kInvoiceStatuses[invoice.statusId]),
+                Text(statusLabel,
                     style: TextStyle(
-                      color: invoice.isPastDue
-                          ? Colors.red
-                          : InvoiceStatusColors.colors[invoice.statusId],
+                      color: statusColor,
                     )),
               ],
             ),
@@ -191,6 +192,28 @@ class InvoiceListItem extends StatelessWidget {
                 formatNumber(invoice.balance, context, clientId: client.id),
                 style: textStyle,
                 textAlign: TextAlign.end,
+              ),
+              SizedBox(width: 25),
+              DecoratedBox(
+                decoration: BoxDecoration(
+                  color: statusColor,
+                  borderRadius: BorderRadius.all(Radius.circular(5)),
+                ),
+                child: ConstrainedBox(
+                  constraints: BoxConstraints(
+                    minWidth: 80,
+                  ),
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(vertical: 8 ),
+                    child: Text(
+                      statusLabel.toUpperCase(),
+                      style: TextStyle(
+                        fontSize: 16
+                      ),
+                      textAlign: TextAlign.center,
+                    ),
+                  ),
+                ),
               ),
               SizedBox(width: 10),
               ActionMenuButton(

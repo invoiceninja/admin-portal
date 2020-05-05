@@ -9,7 +9,7 @@ class EntityHeader extends StatelessWidget {
     this.backgroundColor,
   });
 
-  final MaterialColor backgroundColor;
+  final Color backgroundColor;
   final String label;
   final String value;
   final String secondLabel;
@@ -66,20 +66,6 @@ class EntityHeader extends StatelessWidget {
     }
 
     return Container(
-      decoration: BoxDecoration(
-        gradient: LinearGradient(
-          begin: Alignment.topRight,
-          end: Alignment.bottomLeft,
-          stops: [0.1, 0.3, 0.5, 0.9],
-          transform: GradientRotation(45),
-          colors: [
-            (backgroundColor ?? Colors.grey)[300],
-            (backgroundColor ?? Colors.grey)[400],
-            (backgroundColor ?? Colors.grey)[500],
-            (backgroundColor ?? Colors.grey)[600],
-          ],
-        ),
-      ),
       child: Padding(
         padding: EdgeInsets.all(8.0),
         child: Card(

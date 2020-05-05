@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:invoiceninja_flutter/data/models/entities.dart';
 import 'package:flutter/foundation.dart';
+import 'package:invoiceninja_flutter/utils/colors.dart';
 
 class Constants {
   static String get hostedApiUrl => kReleaseMode ? kAppProductionUrl : kAppStagingUrl;
@@ -390,13 +391,13 @@ const Map<int, String> kModules = {
 };
 
 class InvoiceStatusColors {
-  static const colors = {
+  static var colors = {
     kInvoiceStatusDraft: Colors.grey,
     kInvoiceStatusSent: Colors.blue,
     //kInvoiceStatusViewed: Colors.orange,
     //kInvoiceStatusApproved: Colors.green,
     kInvoiceStatusPartial: Colors.deepPurple,
-    kInvoiceStatusPaid: Colors.green,
+    kInvoiceStatusPaid: convertHexStringToColor('#407535'),
   };
 }
 

@@ -37,7 +37,7 @@ class InvoiceOverview extends StatelessWidget {
         invoice.id, state.paymentState.map, state.paymentState.list);
 
     Map<String, String> stauses;
-    Map<String, MaterialColor> colors;
+    Map<String, Color> colors;
     if (invoice.entityType == EntityType.quote) {
       stauses = kQuoteStatuses;
       colors = QuoteStatusColors.colors;
