@@ -423,7 +423,7 @@ class _DrawerTileState extends State<DrawerTile> {
     }
 
     Widget child = Container(
-      color: isSelected ? convertHexStringToColor(kDefaultSelectedColor) : null,
+      color: isSelected ? convertHexStringToColor(kDefaultSelectedColorLight) : null,
       child: ListTile(
         dense: true,
         leading: Icon(

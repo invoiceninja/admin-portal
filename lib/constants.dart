@@ -349,7 +349,8 @@ const String kExpenseStatusInvoiced = '3';
 const String kDefaultCurrencyId = '1';
 const String kDefaultDateFormat = '5';
 const String kDefaultAccentColor = '#0091EA';
-const String kDefaultSelectedColor = '#1E252F';
+const String kDefaultSelectedColorLight = '#1E252F';
+const String kDefaultSelectedColorDark = '#253750';
 const String kDefaultBorderColor = '#393A3C';
 
 const String kReportGroupDay = 'day';

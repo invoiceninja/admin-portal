@@ -94,21 +94,40 @@ class ClientListItem extends StatelessWidget {
   }
 
   Widget _buildDesktop(BuildContext context) {
+    final store = StoreProvider.of<AppState>(context);
+    final uiState = store.state.uiState;
+    final clientUIState = uiState.clientUIState;
+    final listUIState = clientUIState.listUIState;
+    final isInMultiselect = listUIState.isInMultiselect();
     final textTheme = Theme.of(context).textTheme;
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 32, vertical: 12),
-      child: Row(
-        children: <Widget>[
-          SizedBox(
-            child: Text(
-              client.idNumber,
-              style: textTheme.headline6,
-              overflow: TextOverflow.ellipsis,
+    final filterMatch = filter != null && filter.isNotEmpty
+        ? client.matchesFilterValue(filter)
+        : null;
+    final showCheckbox = onCheckboxChanged != null || isInMultiselect;
+    final textStyle = TextStyle(
+        fontSize: 18,
+    );
+
+    return InkWell(
+      onTap: isInMultiselect
+          ? () => onEntityAction(EntityAction.toggleMultiselect)
+          : onTap,
+      onLongPress: onLongPress,
+      child: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 32, vertical: 20),
+        child: Row(
+          children: <Widget>[
+            SizedBox(
+              child: Text(
+                client.idNumber,
+                style: textStyle,
+                overflow: TextOverflow.ellipsis,
+              ),
+              width: 120,
             ),
-            width: 100,
-          ),
-          Text(client.displayName, style: textTheme.headline6),
-        ],
+            Text(client.displayName, style: textStyle),
+          ],
+        ),
       ),
     );
   }

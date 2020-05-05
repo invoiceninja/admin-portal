@@ -129,7 +129,7 @@ class _EntityListState extends State<EntityList> {
           Flexible(
               child: entityList.isEmpty
                   ? HelpText(AppLocalization.of(context).noRecordsFound)
-                  : ColoredBox(
+                  : Material(
                       color: Theme.of(context).cardColor,
                       child: Padding(
                         padding: const EdgeInsets.symmetric(vertical: 32),
@@ -137,6 +137,8 @@ class _EntityListState extends State<EntityList> {
                           shrinkWrap: true,
                           separatorBuilder: (context, index) => Divider(
                             color: convertHexStringToColor(kDefaultBorderColor),
+                            height: 1.5,
+                            thickness: 1.5,
                           ),
                           itemCount: entityList.length,
                           itemBuilder: widget.itemBuilder,
