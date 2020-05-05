@@ -42,6 +42,7 @@ class ViewScaffold extends StatelessWidget {
         return true;
       },
       child: Scaffold(
+        backgroundColor: Theme.of(context).cardColor,
         appBar: AppBar(
           leading: !isMobile(context) && isSettings
               ? IconButton(

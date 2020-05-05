@@ -17,24 +17,26 @@ class EntityHeader extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final textColor = Theme.of(context).primaryTextTheme.bodyText1.color;
+
     Widget _value1() {
       return Column(
-        crossAxisAlignment: CrossAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisSize: MainAxisSize.min,
         children: <Widget>[
           Text(label,
               style: TextStyle(
                 fontSize: 16.0,
-                fontWeight: FontWeight.w300,
+                color: textColor.withOpacity(.65),
               )),
           SizedBox(
-            height: 6.0,
+            height: 8,
           ),
           Text(
             value ?? '',
             style: TextStyle(
-              fontSize: 22.0,
-              fontWeight: FontWeight.bold,
+              fontSize: 30.0,
+              //fontWeight: FontWeight.bold,
             ),
           )
         ],
@@ -43,22 +45,21 @@ class EntityHeader extends StatelessWidget {
 
     Widget _value2() {
       return Column(
-        crossAxisAlignment: CrossAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisSize: MainAxisSize.min,
         children: <Widget>[
           Text(secondLabel,
               style: TextStyle(
                 fontSize: 16.0,
-                fontWeight: FontWeight.w300,
+                color: textColor.withOpacity(.65),
               )),
           SizedBox(
-            height: 6.0,
+            height: 8,
           ),
           Text(
             secondValue ?? '',
             style: TextStyle(
-              fontSize: 22.0,
-              fontWeight: FontWeight.bold,
+              fontSize: 30.0,
             ),
           )
         ],
@@ -76,10 +77,10 @@ class EntityHeader extends StatelessWidget {
                 direction: value.length > 12 || (secondValue ?? '').length > 12
                     ? Axis.vertical
                     : Axis.horizontal,
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                mainAxisAlignment: MainAxisAlignment.start,
                 children: <Widget>[
-                  _value1(),
-                  if (secondValue != null) _value2(),
+                  Expanded(child: _value1()),
+                  if (secondValue != null) Expanded(child: _value2()),
                 ],
               )
               //child: _headerRow(),

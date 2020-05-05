@@ -22,7 +22,7 @@ class AppListTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Material(
-      color: Theme.of(context).canvasColor,
+      color: Theme.of(context).cardColor,
       child: ListTile(
         contentPadding: EdgeInsets.only(left: 12.0, top: 8.0, bottom: 8.0),
         leading: Icon(icon),
