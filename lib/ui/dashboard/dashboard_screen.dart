@@ -6,7 +6,6 @@ import 'package:invoiceninja_flutter/redux/ui/pref_state.dart';
 import 'package:invoiceninja_flutter/ui/app/history_drawer_vm.dart';
 import 'package:invoiceninja_flutter/ui/app/menu_drawer_vm.dart';
 import 'package:invoiceninja_flutter/ui/app/list_filter.dart';
-import 'package:invoiceninja_flutter/ui/app/list_filter_button.dart';
 import 'package:invoiceninja_flutter/ui/dashboard/dashboard_activity.dart';
 import 'package:invoiceninja_flutter/ui/dashboard/dashboard_panels.dart';
 import 'package:invoiceninja_flutter/ui/dashboard/dashboard_screen_vm.dart';
@@ -74,13 +73,6 @@ class _DashboardScreenState extends State<DashboardScreen>
             filterLabel: localization.search,
           ),
           actions: [
-            ListFilterButton(
-              filter: state.uiState.filter,
-              onFilterPressed: (String value) {
-                store.dispatch(FilterCompany(value));
-              },
-              filterLabel: localization.search,
-            ),
             if (isMobile(context) || !state.prefState.isHistoryVisible)
               Builder(
                 builder: (context) => IconButton(
@@ -97,16 +89,16 @@ class _DashboardScreenState extends State<DashboardScreen>
               ),
           ],
           bottom: TabBar(
-                  controller: _controller,
-                  tabs: [
-                    Tab(
-                      text: localization.overview,
-                    ),
-                    Tab(
-                      text: localization.activity,
-                    ),
-                  ],
-                ),
+            controller: _controller,
+            tabs: [
+              Tab(
+                text: localization.overview,
+              ),
+              Tab(
+                text: localization.activity,
+              ),
+            ],
+          ),
         ),
         body: CustomTabBarView(
           viewModel: widget.viewModel,

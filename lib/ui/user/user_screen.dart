@@ -8,7 +8,6 @@ import 'package:invoiceninja_flutter/ui/app/forms/save_cancel_buttons.dart';
 import 'package:invoiceninja_flutter/ui/app/list_scaffold.dart';
 import 'package:invoiceninja_flutter/data/models/user_model.dart';
 import 'package:invoiceninja_flutter/ui/app/list_filter.dart';
-import 'package:invoiceninja_flutter/ui/app/list_filter_button.dart';
 import 'package:invoiceninja_flutter/ui/user/user_screen_vm.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
@@ -63,13 +62,6 @@ class UserScreen extends StatelessWidget {
         },
       ),
       appBarActions: [
-        if (!viewModel.isInMultiselect)
-          ListFilterButton(
-            filter: state.userListState.filter,
-            onFilterPressed: (String value) {
-              store.dispatch(FilterUsers(value));
-            },
-          ),
         if (viewModel.isInMultiselect)
           SaveCancelButtons(
             saveLabel: localization.done,

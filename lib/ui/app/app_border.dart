@@ -27,6 +27,7 @@ class AppBorder extends StatelessWidget {
                           color: convertHexStringToColor(kDefaultBorderColor),
                         )
                       : BorderSide.none,
+                  /*
                   right: false
                       ? BorderSide(
                           width: borderWidth,
@@ -39,6 +40,7 @@ class AppBorder extends StatelessWidget {
                           color: convertHexStringToColor(kDefaultBorderColor),
                         )
                       : BorderSide.none,
+                   */
                   left: isLeft
                       ? BorderSide(
                           width: borderWidth,

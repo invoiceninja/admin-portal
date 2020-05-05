@@ -1,8 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_redux/flutter_redux.dart';
-import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
-import 'package:redux/redux.dart';
 import 'package:invoiceninja_flutter/utils/colors.dart';
 import 'package:invoiceninja_flutter/constants.dart';
 
@@ -61,8 +58,16 @@ class _ListFilterState extends State<ListFilter> {
         decoration: InputDecoration(
           suffixIcon: Padding(
             padding: EdgeInsets.only(right: 8.0),
-            child: Icon(Icons.search,
-                color: Theme.of(context).primaryTextTheme.bodyText1.color),
+            child: (widget.filter ?? '').isNotEmpty
+                ? IconButton(
+                    icon: Icon(Icons.clear),
+                    onPressed: () {
+                      widget.onFilterChanged(null);
+                      _filterController.text = '';
+                    },
+                  )
+                : Icon(Icons.search,
+                    color: Theme.of(context).primaryTextTheme.bodyText1.color),
           ),
           border: InputBorder.none,
           hintText: widget.filterLabel ?? localization.filter,

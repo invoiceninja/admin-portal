@@ -9,7 +9,6 @@ import 'package:invoiceninja_flutter/ui/app/forms/save_cancel_buttons.dart';
 import 'package:invoiceninja_flutter/ui/app/list_scaffold.dart';
 import 'package:invoiceninja_flutter/ui/app/entities/entity_actions_dialog.dart';
 import 'package:invoiceninja_flutter/ui/app/list_filter.dart';
-import 'package:invoiceninja_flutter/ui/app/list_filter_button.dart';
 import 'package:invoiceninja_flutter/ui/tax_rate/tax_rate_screen_vm.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
@@ -61,13 +60,6 @@ class TaxRateSettingsScreen extends StatelessWidget {
         },
       ),
       appBarActions: [
-        if (!viewModel.isInMultiselect)
-          ListFilterButton(
-            filter: state.taxRateListState.filter,
-            onFilterPressed: (String value) {
-              store.dispatch(FilterTaxRates(value));
-            },
-          ),
         if (viewModel.isInMultiselect)
           SaveCancelButtons(
             saveLabel: localization.done,
