@@ -60,6 +60,7 @@ class ViewScaffold extends StatelessWidget {
           title: EntityStateTitle(
             entity: entity,
             title: title,
+            showStatus: true,
           ),
           bottom: appBarBottom,
           actions: entity.isNew

@@ -1,39 +1,50 @@
 import 'package:flutter/material.dart';
 import 'package:invoiceninja_flutter/constants.dart';
 import 'package:invoiceninja_flutter/data/models/entities.dart';
+import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 
 class EntityStatusChip extends StatelessWidget {
   const EntityStatusChip({
-    @required this.entityType,
-    @required this.statusId,
+    @required this.entity,
   });
 
-  final EntityType entityType;
-  final String statusId;
+  final BaseEntity entity;
 
   @override
   Widget build(BuildContext context) {
     final localization = AppLocalization.of(context);
     String label = '';
     Color color;
+    double width = 80;
 
-    switch (entityType) {
+    switch (entity.entityType) {
       case EntityType.payment:
-        label = kPaymentStatuses[statusId];
-        color = PaymentStatusColors.colors[statusId];
+        width = 100;
+        final payment = entity as PaymentEntity;
+        label = kPaymentStatuses[payment.statusId];
+        color = PaymentStatusColors.colors[payment.statusId];
         break;
       case EntityType.invoice:
+        final invoice = entity as InvoiceEntity;
+        final statusId =
+            invoice.isPastDue ? kInvoiceStatusPastDue : invoice.statusId;
         label = kInvoiceStatuses[statusId];
         color = InvoiceStatusColors.colors[statusId];
         break;
       case EntityType.quote:
+        final quote = entity as InvoiceEntity;
+        final statusId = quote.isPastDue ? kQuoteStatusExpired : quote.statusId;
         label = kQuoteStatuses[statusId];
         color = QuoteStatusColors.colors[statusId];
         break;
       case EntityType.credit:
-        label = kCreditStatuses[statusId];
-        color = CreditStatusColors.colors[statusId];
+        final credit = entity as InvoiceEntity;
+        label = kCreditStatuses[credit.statusId];
+        color = CreditStatusColors.colors[credit.statusId];
+        break;
+      default:
+        return SizedBox();
         break;
     }
 
@@ -44,11 +55,11 @@ class EntityStatusChip extends StatelessWidget {
       ),
       child: ConstrainedBox(
         constraints: BoxConstraints(
-          minWidth: 100,
-          maxWidth: 100,
+          minWidth: width,
+          maxWidth: width,
         ),
         child: Padding(
-          padding: const EdgeInsets.symmetric(vertical: 8),
+          padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 8),
           child: Text(
             localization.lookup(label).toUpperCase(),
             style: TextStyle(fontSize: 14),

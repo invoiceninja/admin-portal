@@ -197,10 +197,7 @@ class PaymentListItem extends StatelessWidget {
                 textAlign: TextAlign.end,
               ),
               SizedBox(width: 25),
-              EntityStatusChip(
-                entityType: EntityType.payment,
-                statusId: payment.statusId,
-              )
+              EntityStatusChip(entity: payment)
             ],
           ),
         ),

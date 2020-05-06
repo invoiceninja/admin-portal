@@ -220,19 +220,14 @@ class InvoiceListItem extends StatelessWidget {
               ),
               SizedBox(width: 25),
               invoice.isSent
-                  ? EntityStatusChip(
-                      statusId: invoice.isPastDue
-                          ? kInvoiceStatusPastDue
-                          : invoice.statusId,
-                      entityType: invoice.subEntityType,
-                    )
+                  ? EntityStatusChip(entity: invoice)
                   : SizedBox(
                       child: Text(
                         localization.draft.toUpperCase(),
                         style: TextStyle(fontSize: 14),
                         textAlign: TextAlign.center,
                       ),
-                      width: 100,
+                      width: 80,
                     ),
             ],
           ),

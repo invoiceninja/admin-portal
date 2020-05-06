@@ -405,7 +405,7 @@ const Map<int, String> kModules = {
 
 class InvoiceStatusColors {
   static var colors = {
-    kInvoiceStatusDraft: Colors.blue,
+    kInvoiceStatusDraft: Colors.transparent,
     kInvoiceStatusSent: convertHexStringToColor('#505F73'),
     //kInvoiceStatusViewed: Colors.orange,
     //kInvoiceStatusApproved: Colors.green,
@@ -417,7 +417,7 @@ class InvoiceStatusColors {
 
 class CreditStatusColors {
   static var colors = {
-    kCreditStatusDraft: Colors.blue,
+    kCreditStatusDraft: Colors.transparent,
     kCreditStatusSent: convertHexStringToColor('#505F73'),
     //kInvoiceStatusViewed: Colors.orange,
     //kInvoiceStatusApproved: Colors.green,
@@ -428,7 +428,7 @@ class CreditStatusColors {
 
 class QuoteStatusColors {
   static var colors = {
-    kQuoteStatusDraft: Colors.blue,
+    kQuoteStatusDraft: Colors.transparent,
     kQuoteStatusSent: convertHexStringToColor('#505F73'),
     kQuoteStatusApproved: convertHexStringToColor('#407535'),
     kQuoteStatusExpired: convertHexStringToColor('#8D3E3F'),
