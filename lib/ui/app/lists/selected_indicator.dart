@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:invoiceninja_flutter/constants.dart';
-import 'package:invoiceninja_flutter/utils/platforms.dart';
 import 'package:invoiceninja_flutter/utils/colors.dart';
 
 class SelectedIndicator extends StatelessWidget {

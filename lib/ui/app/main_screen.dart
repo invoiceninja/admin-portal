@@ -473,8 +473,12 @@ class BlankScreen extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         automaticallyImplyLeading: isMobile(context),
+        backgroundColor: Theme.of(context).cardColor,
       ),
-      body: HelpText(message ?? ''),
+      body: Container(
+        color: Theme.of(context).cardColor,
+        child: HelpText(message ?? ''),
+      ),
     );
   }
 }
