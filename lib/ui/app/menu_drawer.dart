@@ -388,7 +388,12 @@ class _DrawerTileState extends State<DrawerTile> {
                 : widget.entityType.name;
 
     final isSelected = uiState.currentRoute.startsWith('/$route');
-    final textColor = isSelected ? Colors.white : Colors.white.withOpacity(.6);
+
+    final textColor = Theme.of(context)
+        .textTheme
+        .bodyText1
+        .color
+        .withOpacity(isSelected ? 1 : .6);
 
     Widget trailingWidget;
     if (!state.prefState.isMenuCollapsed) {
@@ -431,7 +436,7 @@ class _DrawerTileState extends State<DrawerTile> {
         leading: Icon(
           widget.icon,
           size: 20,
-          color: isSelected ? Colors.white : Colors.white.withOpacity(.8),
+          color: textColor,
         ),
         title: state.prefState.isMenuCollapsed
             ? null
@@ -613,8 +618,7 @@ class SidebarFooterCollapsed extends StatelessWidget {
         icon: Icon(Icons.chevron_right),
         tooltip: localization.showMenu,
         onPressed: () {
-          store.dispatch(
-              UserSettingsChanged(sidebar: AppSidebar.menu));
+          store.dispatch(UserSettingsChanged(sidebar: AppSidebar.menu));
         },
       ),
     );

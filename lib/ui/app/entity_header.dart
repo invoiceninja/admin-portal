@@ -17,7 +17,7 @@ class EntityHeader extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final textColor = Theme.of(context).primaryTextTheme.bodyText1.color;
+    final textColor = Theme.of(context).textTheme.bodyText1.color;
 
     Widget _value1() {
       return Column(

@@ -52,7 +52,7 @@ class _ListFilterState extends State<ListFilter> {
 
   @override
   Widget build(BuildContext context) {
-    final textColor = Theme.of(context).primaryTextTheme.bodyText1.color;
+    final textColor = Theme.of(context).textTheme.bodyText1.color;
     final isFilterSet = (widget.filter ?? '').isNotEmpty;
 
     return Padding(
