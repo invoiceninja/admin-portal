@@ -3,6 +3,7 @@ import 'package:invoiceninja_flutter/constants.dart';
 import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/ui/app/actions_menu_button.dart';
+import 'package:invoiceninja_flutter/ui/app/entities/entity_status_chip.dart';
 import 'package:invoiceninja_flutter/ui/app/entity_state_label.dart';
 import 'package:invoiceninja_flutter/utils/formatting.dart';
 import 'package:flutter/foundation.dart';
@@ -50,9 +51,6 @@ class PaymentListItem extends StatelessWidget {
         : null;
     final subtitle = filterMatch ??
         (payment.number ?? '') + ' • ' + formatDate(payment.date, context);
-
-    final statusLabel = localization.lookup(kPaymentStatuses[payment.statusId]);
-    final statusColor = PaymentStatusColors.colors[payment.statusId];
 
     Widget _buildMobile() {
       return ListTile(
@@ -199,27 +197,9 @@ class PaymentListItem extends StatelessWidget {
                 textAlign: TextAlign.end,
               ),
               SizedBox(width: 25),
-
-              DecoratedBox(
-                decoration: BoxDecoration(
-                  color: statusColor,
-                  borderRadius: BorderRadius.all(Radius.circular(5)),
-                ),
-                child: ConstrainedBox(
-                  constraints: BoxConstraints(
-                    minWidth: 100,
-                    maxWidth: 100,
-                  ),
-                  child: Padding(
-                    padding: const EdgeInsets.symmetric(vertical: 8),
-                    child: Text(
-                      statusLabel.toUpperCase(),
-                      style: TextStyle(fontSize: 14),
-                      textAlign: TextAlign.center,
-                      overflow: TextOverflow.ellipsis,
-                    ),
-                  ),
-                ),
+              EntityStatusChip(
+                entityType: EntityType.payment,
+                statusId: payment.statusId,
               )
             ],
           ),

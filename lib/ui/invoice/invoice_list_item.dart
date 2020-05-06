@@ -3,6 +3,7 @@ import 'package:invoiceninja_flutter/constants.dart';
 import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/ui/app/actions_menu_button.dart';
+import 'package:invoiceninja_flutter/ui/app/entities/entity_status_chip.dart';
 import 'package:invoiceninja_flutter/ui/app/entity_state_label.dart';
 import 'package:invoiceninja_flutter/utils/formatting.dart';
 import 'package:flutter/foundation.dart';
@@ -219,25 +220,11 @@ class InvoiceListItem extends StatelessWidget {
               ),
               SizedBox(width: 25),
               invoice.isSent
-                  ? DecoratedBox(
-                      decoration: BoxDecoration(
-                        color: statusColor,
-                        borderRadius: BorderRadius.all(Radius.circular(5)),
-                      ),
-                      child: ConstrainedBox(
-                        constraints: BoxConstraints(
-                          minWidth: 80,
-                          maxWidth: 80,
-                        ),
-                        child: Padding(
-                          padding: const EdgeInsets.symmetric(vertical: 8),
-                          child: Text(
-                            statusLabel.toUpperCase(),
-                            style: TextStyle(fontSize: 14),
-                            textAlign: TextAlign.center,
-                          ),
-                        ),
-                      ),
+                  ? EntityStatusChip(
+                      statusId: invoice.isPastDue
+                          ? kInvoiceStatusPastDue
+                          : invoice.statusId,
+                      entityType: invoice.subEntityType,
                     )
                   : SizedBox(
                       child: Text(
@@ -245,7 +232,7 @@ class InvoiceListItem extends StatelessWidget {
                         style: TextStyle(fontSize: 14),
                         textAlign: TextAlign.center,
                       ),
-                      width: 80,
+                      width: 100,
                     ),
             ],
           ),
