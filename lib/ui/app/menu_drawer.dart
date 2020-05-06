@@ -378,6 +378,7 @@ class _DrawerTileState extends State<DrawerTile> {
       }
     }
 
+    final enableDarkMode = state.prefState.enableDarkMode;
     final localization = AppLocalization.of(context);
     final route = widget.title == localization.dashboard
         ? kDashboard
@@ -429,7 +430,9 @@ class _DrawerTileState extends State<DrawerTile> {
 
     Widget child = Container(
       color: isSelected
-          ? convertHexStringToColor(kDefaultSelectedColorLight)
+          ? convertHexStringToColor(enableDarkMode
+              ? kDefaultDarkSelectedColorMenu
+              : kDefaultLightSelectedColorMenu)
           : null,
       child: ListTile(
         dense: true,

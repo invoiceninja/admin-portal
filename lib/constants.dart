@@ -360,9 +360,12 @@ const String kExpenseStatusInvoiced = '3';
 const String kDefaultCurrencyId = '1';
 const String kDefaultDateFormat = '5';
 const String kDefaultAccentColor = '#0091EA';
-const String kDefaultSelectedColorLight = '#1E252F';
-const String kDefaultSelectedColorDark = '#253750';
-const String kDefaultBorderColor = '#393A3C';
+const String kDefaultDarkSelectedColorMenu = '#1E252F';
+const String kDefaultDarkSelectedColor = '#253750';
+const String kDefaultDarkBorderColor = '#393A3C';
+const String kDefaultLightSelectedColorMenu = '#DDDDDD';
+const String kDefaultLightSelectedColor = '#EEEEEE';
+const String kDefaultLightBorderColor = '#C6C5C3';
 
 const String kReportGroupDay = 'day';
 const String kReportGroupMonth = 'month';

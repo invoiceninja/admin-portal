@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:invoiceninja_flutter/utils/colors.dart';
 import 'package:invoiceninja_flutter/constants.dart';
+import 'package:redux/redux.dart';
+import 'package:flutter_redux/flutter_redux.dart';
+import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 
 class AppBorder extends StatelessWidget {
   const AppBorder({
@@ -15,7 +18,12 @@ class AppBorder extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final Store<AppState> store = StoreProvider.of<AppState>(context);
+    final state = store.state;
+    final enableDarkMode = state.prefState.enableDarkMode;
     const borderWidth = 1.5;
+    final color = convertHexStringToColor(
+        enableDarkMode ? kDefaultDarkBorderColor : kDefaultLightBorderColor);
 
     return Container(
         decoration: BoxDecoration(
@@ -24,7 +32,7 @@ class AppBorder extends StatelessWidget {
                   top: isTop
                       ? BorderSide(
                           width: borderWidth,
-                          color: convertHexStringToColor(kDefaultBorderColor),
+                          color: color,
                         )
                       : BorderSide.none,
                   /*
@@ -44,13 +52,13 @@ class AppBorder extends StatelessWidget {
                   left: isLeft
                       ? BorderSide(
                           width: borderWidth,
-                          color: convertHexStringToColor(kDefaultBorderColor),
+                          color: color,
                         )
                       : BorderSide.none,
                 )
               : Border.all(
                   width: borderWidth,
-                  color: convertHexStringToColor(kDefaultBorderColor),
+                  color: color,
                 ),
         ),
         child: child);

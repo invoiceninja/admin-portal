@@ -64,8 +64,8 @@ class _ListFilterState extends State<ListFilter> {
         decoration: BoxDecoration(
           color: isFilterSet
               ? convertHexStringToColor(
-                  kDefaultBorderColor) // TODO set color here
-              : convertHexStringToColor(kDefaultBorderColor),
+                  kDefaultDarkBorderColor) // TODO set color here
+              : convertHexStringToColor(kDefaultDarkBorderColor),
           borderRadius: BorderRadius.all(Radius.circular(5)),
         ),
         child: TextField(

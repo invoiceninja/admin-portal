@@ -135,7 +135,7 @@ class _EntityListState extends State<EntityList> {
                         child: ListView.separated(
                           shrinkWrap: true,
                           separatorBuilder: (context, index) => Divider(
-                            color: convertHexStringToColor(kDefaultBorderColor),
+                            color: convertHexStringToColor(kDefaultDarkBorderColor),
                             height: 1.5,
                             thickness: 1.5,
                           ),
