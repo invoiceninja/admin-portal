@@ -32,8 +32,7 @@ class FieldGrid extends StatelessWidget {
                 child: Text(
               value,
               style: TextStyle(
-                fontWeight: FontWeight.w600,
-                fontSize: 18,
+                fontSize: 19,
               ),
             )),
           ],

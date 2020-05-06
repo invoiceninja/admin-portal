@@ -6,6 +6,7 @@ import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/redux/ui/pref_state.dart';
 import 'package:invoiceninja_flutter/ui/app/help_text.dart';
+import 'package:invoiceninja_flutter/ui/app/lists/list_divider.dart';
 import 'package:invoiceninja_flutter/ui/app/lists/list_filter.dart';
 import 'package:invoiceninja_flutter/ui/app/loading_indicator.dart';
 import 'package:invoiceninja_flutter/ui/app/presenters/entity_presenter.dart';
@@ -134,11 +135,7 @@ class _EntityListState extends State<EntityList> {
                         padding: const EdgeInsets.symmetric(vertical: 32),
                         child: ListView.separated(
                           shrinkWrap: true,
-                          separatorBuilder: (context, index) => Divider(
-                            color: convertHexStringToColor(kDefaultDarkBorderColor),
-                            height: 1.5,
-                            thickness: 1.5,
-                          ),
+                          separatorBuilder: (context, index) => ListDivider(),
                           itemCount: entityList.length,
                           itemBuilder: widget.itemBuilder,
                         ),

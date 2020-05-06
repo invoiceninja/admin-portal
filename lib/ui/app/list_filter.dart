@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:invoiceninja_flutter/utils/colors.dart';
 import 'package:invoiceninja_flutter/constants.dart';
+import 'package:redux/redux.dart';
+import 'package:flutter_redux/flutter_redux.dart';
+import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 
 class ListFilter extends StatefulWidget {
   const ListFilter({
@@ -54,6 +57,18 @@ class _ListFilterState extends State<ListFilter> {
   Widget build(BuildContext context) {
     final textColor = Theme.of(context).textTheme.bodyText1.color;
     final isFilterSet = (widget.filter ?? '').isNotEmpty;
+    final Store<AppState> store = StoreProvider.of<AppState>(context);
+    final state = store.state;
+    final enableDarkMode = state.prefState.enableDarkMode;
+
+    Color color;
+    if (enableDarkMode) {
+      color = convertHexStringToColor(
+          isFilterSet ? kDefaultDarkBorderColor : kDefaultDarkBorderColor);
+    } else {
+      color = convertHexStringToColor(
+          isFilterSet ? kDefaultLightBorderColor : kDefaultLightBorderColor);
+    }
 
     return Padding(
       padding: const EdgeInsets.only(top: 2),
@@ -62,10 +77,7 @@ class _ListFilterState extends State<ListFilter> {
         height: 40,
         margin: EdgeInsets.only(bottom: 2.0),
         decoration: BoxDecoration(
-          color: isFilterSet
-              ? convertHexStringToColor(
-                  kDefaultDarkBorderColor) // TODO set color here
-              : convertHexStringToColor(kDefaultDarkBorderColor),
+          color: color,
           borderRadius: BorderRadius.all(Radius.circular(5)),
         ),
         child: TextField(

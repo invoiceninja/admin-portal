@@ -394,7 +394,7 @@ class _DrawerTileState extends State<DrawerTile> {
         .textTheme
         .bodyText1
         .color
-        .withOpacity(isSelected ? 1 : .6);
+        .withOpacity(isSelected ? 1 : .7);
 
     Widget trailingWidget;
     if (!state.prefState.isMenuCollapsed) {
