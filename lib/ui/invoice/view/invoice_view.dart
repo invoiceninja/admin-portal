@@ -49,6 +49,23 @@ class _InvoiceViewState extends State<InvoiceView>
     final documents = memoizedInvoiceDocumentsSelector(
         documentState.map, viewModel.state.expenseState.map, invoice);
 
+    EntityAction secondAction;
+    if (invoice.isCredit) {
+      secondAction = EntityAction.cloneToCredit;
+    } else if (invoice.isQuote) {
+      if (invoice.hasInvoice) {
+        secondAction = EntityAction.cloneToQuote;
+      } else {
+        secondAction = EntityAction.convert;
+      }
+    } else {
+      if (invoice.isPaid) {
+        secondAction = EntityAction.cloneToInvoice;
+      } else {
+        secondAction = EntityAction.newPayment;
+      }
+    }
+
     return ViewScaffold(
       entity: invoice,
       title: '${invoice.number ?? '• ${localization.pending}'}',
@@ -65,14 +82,6 @@ class _InvoiceViewState extends State<InvoiceView>
           ),
         ],
       ),
-      secondaryWidget: isNotMobile(context) && !Config.DEMO_MODE
-          ? FlatButton(
-              child: Text(localization.pdf.toUpperCase()),
-              textColor: Colors.white,
-              onPressed: () =>
-                  handleInvoiceAction(context, [invoice], EntityAction.pdf),
-            )
-          : null,
       body: Builder(
         builder: (BuildContext context) {
           return RefreshIndicator(
@@ -98,7 +107,7 @@ class _InvoiceViewState extends State<InvoiceView>
                 BottomButtons(
                   entity: invoice,
                   action1: EntityAction.pdf,
-                  action2: EntityAction.newPayment,
+                  action2: secondAction,
                 ),
               ],
             ),
