@@ -63,11 +63,9 @@ const dynamic kMockLogin = '''
                 "show_product_details": true,
                 "enable_product_quantity": true,
                 "default_quantity": true,
-                "custom_fields": {
-                    "invoice1": "1",
-                    "invoice2": "2",
-                    "client1": "3"
-                },
+                "google_analytics_key": "",
+                "slack_webhook_url": "",
+                "custom_fields": {},
                 "size_id": "",
                 "industry_id": "",
                 "first_month_of_year": "",
