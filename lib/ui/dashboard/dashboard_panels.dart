@@ -49,7 +49,7 @@ class DashboardPanels extends StatelessWidget {
         memoizedHasMultipleCurrencies(company, clientMap, groupMap);
 
     return Material(
-      color: Theme.of(context).backgroundColor,
+      color: Theme.of(context).cardColor,
       elevation: 6.0,
       child: Padding(
         padding: const EdgeInsets.only(top: 16),

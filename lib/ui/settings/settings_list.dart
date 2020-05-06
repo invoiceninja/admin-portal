@@ -65,7 +65,7 @@ class SettingsList extends StatelessWidget {
             ),
           ),
         Container(
-          color: Theme.of(context).bottomAppBarColor,
+          color: Theme.of(context).backgroundColor,
           padding: const EdgeInsets.only(left: 19, top: 16, bottom: 16),
           child: Text(
             localization.basicSettings,
@@ -126,7 +126,7 @@ class SettingsList extends StatelessWidget {
             viewModel: viewModel,
           ),
         Container(
-          color: Theme.of(context).bottomAppBarColor,
+          color: Theme.of(context).backgroundColor,
           padding: const EdgeInsets.only(left: 19, top: 16, bottom: 16),
           child: Text(
             localization.advancedSettings,
@@ -218,25 +218,28 @@ class SettingsListTile extends StatelessWidget {
       icon = getSettingIcon(section);
     }
 
-    return SelectedIndicator(
-      isSelected: viewModel.state.uiState.containsRoute('/$section'),
-      child: ListTile(
-        leading: Padding(
-          padding: const EdgeInsets.only(left: 6, top: 2),
-          child: Icon(icon ?? icon, size: 20),
+    return Container(
+      color: Theme.of(context).cardColor,
+      child: SelectedIndicator(
+        isSelected: viewModel.state.uiState.containsRoute('/$section'),
+        child: ListTile(
+          leading: Padding(
+            padding: const EdgeInsets.only(left: 6, top: 2),
+            child: Icon(icon ?? icon, size: 20),
+          ),
+          title: Text(localization.lookup(section)),
+          onTap: () {
+            if (section == kSettingsOnlinePayments &&
+                state.companyGatewayState.list.isEmpty) {
+              viewModel.loadSection(context, kSettingsOnlinePaymentsEdit);
+            } else if (section == kSettingsGroupSettings &&
+                state.groupState.list.isEmpty) {
+              viewModel.loadSection(context, kSettingsGroupSettingsEdit);
+            } else {
+              viewModel.loadSection(context, section);
+            }
+          },
         ),
-        title: Text(localization.lookup(section)),
-        onTap: () {
-          if (section == kSettingsOnlinePayments &&
-              state.companyGatewayState.list.isEmpty) {
-            viewModel.loadSection(context, kSettingsOnlinePaymentsEdit);
-          } else if (section == kSettingsGroupSettings &&
-              state.groupState.list.isEmpty) {
-            viewModel.loadSection(context, kSettingsGroupSettingsEdit);
-          } else {
-            viewModel.loadSection(context, section);
-          }
-        },
       ),
     );
   }
