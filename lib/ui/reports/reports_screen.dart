@@ -68,12 +68,7 @@ class ReportsScreen extends StatelessWidget {
         appBar: AppBar(
           leading: isMobile(context) || state.prefState.isMenuFloated
               ? null
-              : IconButton(
-            icon: Icon(Icons.menu),
-            onPressed: () =>
-                store
-                    .dispatch(UserSettingsChanged(sidebar: AppSidebar.menu)),
-          ),
+              : SizedBox(),
           title: Row(
             mainAxisSize: MainAxisSize.min,
             children: <Widget>[
@@ -280,7 +275,8 @@ class ReportsScreen extends StatelessWidget {
             )
           ],
         ),
-      ),
+      )
+      ,
     );
   }
 }

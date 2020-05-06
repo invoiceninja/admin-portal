@@ -59,11 +59,7 @@ class _DashboardScreenState extends State<DashboardScreen>
         appBar: AppBar(
           leading: isMobile(context) || state.prefState.isMenuFloated
               ? null
-              : IconButton(
-                  icon: Icon(Icons.menu),
-                  onPressed: () => store
-                      .dispatch(UserSettingsChanged(sidebar: AppSidebar.menu)),
-                ),
+              : SizedBox(),
           title: ListFilter(
             placeholder: localization.searchCompany,
             filter: state.uiState.filter,

@@ -6,6 +6,7 @@ import 'package:flutter/rendering.dart';
 import 'package:invoiceninja_flutter/data/web_client.dart';
 import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:invoiceninja_flutter/redux/reports/reports_actions.dart';
+import 'package:invoiceninja_flutter/redux/ui/pref_state.dart';
 import 'package:invoiceninja_flutter/ui/app/dialogs/alert_dialog.dart';
 import 'package:invoiceninja_flutter/ui/app/dialogs/error_dialog.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/app_dropdown_button.dart';
@@ -230,8 +231,7 @@ class MenuDrawer extends StatelessWidget {
                             onTap: () => store.dispatch(ViewDashboard(
                                 navigator: Navigator.of(context))),
                             onLongPress: () => store.dispatch(ViewDashboard(
-                                navigator: Navigator.of(context),
-                                filter: '')),
+                                navigator: Navigator.of(context), filter: '')),
                           ),
                           DrawerTile(
                             company: company,
@@ -423,7 +423,9 @@ class _DrawerTileState extends State<DrawerTile> {
     }
 
     Widget child = Container(
-      color: isSelected ? convertHexStringToColor(kDefaultSelectedColorLight) : null,
+      color: isSelected
+          ? convertHexStringToColor(kDefaultSelectedColorLight)
+          : null,
       child: ListTile(
         dense: true,
         leading: Icon(
@@ -480,7 +482,8 @@ class _DrawerTileState extends State<DrawerTile> {
 class SidebarFooter extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    final state = StoreProvider.of<AppState>(context).state;
+    final store = StoreProvider.of<AppState>(context);
+    final state = store.state;
     final localization = AppLocalization.of(context);
     final account = state.userCompany.account;
 
@@ -571,6 +574,21 @@ class SidebarFooter extends StatelessWidget {
             SizedBox(width: 14)
           ],
            */
+            if (isNotMobile(context) &&
+                state.prefState.menuSidebarMode == AppSidebarMode.collapse)
+              Expanded(
+                child: Align(
+                  alignment: Alignment.centerRight,
+                  child: IconButton(
+                    tooltip: localization.hideMenu,
+                    icon: Icon(Icons.chevron_left),
+                    onPressed: () {
+                      store.dispatch(
+                          UserSettingsChanged(sidebar: AppSidebar.menu));
+                    },
+                  ),
+                ),
+              ),
           ],
         ],
       ),
@@ -585,7 +603,23 @@ class SidebarFooterCollapsed extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final Store<AppState> store = StoreProvider.of<AppState>(context);
     final localization = AppLocalization.of(context);
+
+    return Container(
+      width: double.infinity,
+      color: Theme.of(context).cardColor,
+      child: IconButton(
+        icon: Icon(Icons.chevron_right),
+        tooltip: localization.showMenu,
+        onPressed: () {
+          store.dispatch(
+              UserSettingsChanged(sidebar: AppSidebar.menu));
+        },
+      ),
+    );
+
+    /*
     return PopupMenuButton<String>(
       icon: isUpdateAvailable
           ? Icon(Icons.warning, color: Theme.of(context).accentColor)
@@ -641,6 +675,7 @@ class SidebarFooterCollapsed extends StatelessWidget {
         ),
       ],
     );
+     */
   }
 }
 
