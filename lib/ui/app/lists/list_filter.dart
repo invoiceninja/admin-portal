@@ -5,6 +5,36 @@ import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/utils/icons.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 
+class ListFilterMessage extends StatelessWidget {
+  const ListFilterMessage({
+    @required this.filterEntityId,
+    @required this.filterEntityType,
+    @required this.onPressed,
+    @required this.onClearPressed,
+  });
+
+  final String filterEntityId;
+  final EntityType filterEntityType;
+  final Function(BuildContext) onPressed;
+  final Function() onClearPressed;
+
+  @override
+  Widget build(BuildContext context) {
+    final state = StoreProvider.of<AppState>(context).state;
+    final filteredEntity = state.getEntityMap(filterEntityType)[filterEntityId];
+
+    return Material(
+      color: Colors.orange,
+      elevation: 6.0,
+      child: FilterListTile(
+          entityType: filterEntityType,
+          entity: filteredEntity,
+          onPressed: onPressed,
+          onClearPressed: onClearPressed),
+    );
+  }
+}
+
 class FilterListTile extends StatelessWidget {
   const FilterListTile({
     @required this.entityType,
@@ -35,7 +65,7 @@ class FilterListTile extends StatelessWidget {
           child: LayoutBuilder(
               builder: (BuildContext context, BoxConstraints constraints) {
             return ListTile(
-              leading: constraints.minWidth > 250
+              leading: constraints.maxWidth > 250
                   ? Icon(getEntityIcon(entityType))
                   : null,
               title: Text(localization.filteredBy
@@ -50,36 +80,6 @@ class FilterListTile extends StatelessWidget {
           }),
         ),
       ),
-    );
-  }
-}
-
-class ListFilterMessage extends StatelessWidget {
-  const ListFilterMessage({
-    @required this.filterEntityId,
-    @required this.filterEntityType,
-    @required this.onPressed,
-    @required this.onClearPressed,
-  });
-
-  final String filterEntityId;
-  final EntityType filterEntityType;
-  final Function(BuildContext) onPressed;
-  final Function() onClearPressed;
-
-  @override
-  Widget build(BuildContext context) {
-    final state = StoreProvider.of<AppState>(context).state;
-    final filteredEntity = state.getEntityMap(filterEntityType)[filterEntityId];
-
-    return Material(
-      color: Colors.orangeAccent,
-      elevation: 6.0,
-      child: FilterListTile(
-          entityType: filterEntityType,
-          entity: filteredEntity,
-          onPressed: onPressed,
-          onClearPressed: onClearPressed),
     );
   }
 }
