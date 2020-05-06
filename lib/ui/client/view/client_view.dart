@@ -5,6 +5,7 @@ import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/redux/client/client_actions.dart';
+import 'package:invoiceninja_flutter/ui/app/buttons/bottom_buttons.dart';
 import 'package:invoiceninja_flutter/ui/app/view_scaffold.dart';
 import 'package:invoiceninja_flutter/ui/client/view/client_view_activity.dart';
 import 'package:invoiceninja_flutter/ui/client/view/client_view_details.dart';
@@ -65,23 +66,34 @@ class _ClientViewState extends State<ClientView>
           ),
         ],
       ),
-      body: TabBarView(
-        controller: _controller,
+      body: Column(
         children: <Widget>[
-          RefreshIndicator(
-            onRefresh: () => viewModel.onRefreshed(context),
-            child: ClientOverview(viewModel: viewModel),
-          ),
-          RefreshIndicator(
-            onRefresh: () => viewModel.onRefreshed(context),
-            child: ClientViewDetails(client: viewModel.client),
-          ),
-          RefreshIndicator(
-            onRefresh: () => viewModel.onRefreshed(context),
-            child: ClientViewActivity(
-              viewModel: viewModel,
-              key: ValueKey(viewModel.client.id),
+          Expanded(
+            child: TabBarView(
+              controller: _controller,
+              children: <Widget>[
+                RefreshIndicator(
+                  onRefresh: () => viewModel.onRefreshed(context),
+                  child: ClientOverview(viewModel: viewModel),
+                ),
+                RefreshIndicator(
+                  onRefresh: () => viewModel.onRefreshed(context),
+                  child: ClientViewDetails(client: viewModel.client),
+                ),
+                RefreshIndicator(
+                  onRefresh: () => viewModel.onRefreshed(context),
+                  child: ClientViewActivity(
+                    viewModel: viewModel,
+                    key: ValueKey(viewModel.client.id),
+                  ),
+                ),
+              ],
             ),
+          ),
+          BottomButtons(
+            entity: client,
+            action1: EntityAction.settings,
+            action2: EntityAction.newInvoice,
           ),
         ],
       ),
