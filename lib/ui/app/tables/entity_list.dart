@@ -131,14 +131,12 @@ class _EntityListState extends State<EntityList> {
                   ? HelpText(AppLocalization.of(context).noRecordsFound)
                   : Material(
                       color: Theme.of(context).cardColor,
-                      child: Padding(
+                      child: ListView.separated(
                         padding: const EdgeInsets.symmetric(vertical: 32),
-                        child: ListView.separated(
-                          shrinkWrap: true,
-                          separatorBuilder: (context, index) => ListDivider(),
-                          itemCount: entityList.length,
-                          itemBuilder: widget.itemBuilder,
-                        ),
+                        shrinkWrap: true,
+                        separatorBuilder: (context, index) => ListDivider(),
+                        itemCount: entityList.length,
+                        itemBuilder: widget.itemBuilder,
                       ),
                     )),
         ]);
