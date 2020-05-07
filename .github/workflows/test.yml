@@ -26,7 +26,7 @@ jobs:
       - uses: subosito/flutter-action@v1
         with:
           channel: 'beta'
-          flutter-version: '1.15.17' # TODO: REMOVE THIS
+          #flutter-version: '1.15.17' # TODO: REMOVE THIS
       - run: flutter pub get
       - run: |
           cp android/app/build.gradle.prod android/app/build.gradle
