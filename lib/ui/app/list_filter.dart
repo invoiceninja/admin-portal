@@ -82,7 +82,7 @@ class _ListFilterState extends State<ListFilter> {
         ),
         child: TextField(
           focusNode: _focusNode,
-          textAlign: _filterController.text.isNotEmpty
+          textAlign: _focusNode.hasFocus || _filterController.text.isNotEmpty
               ? TextAlign.start
               : TextAlign.center,
           textAlignVertical: TextAlignVertical.center,
