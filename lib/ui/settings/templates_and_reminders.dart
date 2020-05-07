@@ -196,7 +196,7 @@ class _TemplatesAndRemindersState extends State<TemplatesAndReminders>
     final localization = AppLocalization.of(context);
     final viewModel = widget.viewModel;
     final state = viewModel.state;
-    //final settings = viewModel.settings;
+    final settings = viewModel.settings;
 
     return EditScaffold(
       title: localization.templatesAndReminders,
@@ -247,7 +247,6 @@ class _TemplatesAndRemindersState extends State<TemplatesAndReminders>
                   maxLines: 8,
                 ),
               ]),
-              /*
               if (_template == EmailTemplate.reminder1)
                 ReminderSettings(
                   key: ValueKey('__reminder1_${_template}__'),
@@ -330,7 +329,6 @@ class _TemplatesAndRemindersState extends State<TemplatesAndReminders>
                             .toList()),
                   ],
                 ),                
-               */
             ],
           ),
           EmailPreview(
