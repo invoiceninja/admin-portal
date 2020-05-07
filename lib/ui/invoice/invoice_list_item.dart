@@ -215,7 +215,10 @@ class InvoiceListItem extends StatelessWidget {
               ),
               SizedBox(width: 10),
               Text(
-                formatNumber(invoice.balance, context, clientId: client.id),
+                formatNumber(
+                    invoice.balance > 0 ? invoice.balance : invoice.amount,
+                    context,
+                    clientId: client.id),
                 style: textStyle,
                 textAlign: TextAlign.end,
               ),

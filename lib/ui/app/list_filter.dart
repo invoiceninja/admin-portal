@@ -82,20 +82,25 @@ class _ListFilterState extends State<ListFilter> {
         ),
         child: TextField(
           focusNode: _focusNode,
-          textAlign: _focusNode.hasFocus ? TextAlign.start : TextAlign.center,
+          textAlign: _filterController.text.isNotEmpty
+              ? TextAlign.start
+              : TextAlign.center,
           textAlignVertical: TextAlignVertical.center,
           decoration: InputDecoration(
             contentPadding: EdgeInsets.only(left: 8, right: 8, bottom: 6),
-            suffixIcon: _focusNode.hasFocus
+            suffixIcon: _filterController.text.isNotEmpty
                 ? IconButton(
                     icon: Icon(
                       Icons.clear,
                       color: textColor,
                     ),
                     onPressed: () {
-                      widget.onFilterChanged(null);
                       _filterController.text = '';
                       _focusNode.unfocus();
+                      widget.onFilterChanged(null);
+                      setState(() {
+                        _placeholder = widget.placeholder;
+                      });
                     },
                   )
                 : Icon(Icons.search, color: textColor),

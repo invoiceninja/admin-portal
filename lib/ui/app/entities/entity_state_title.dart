@@ -25,13 +25,17 @@ class EntityStateTitle extends StatelessWidget {
       return Row(
         mainAxisSize: MainAxisSize.min,
         children: <Widget>[
-          Text(title ?? entity.listDisplayName),
-          if (showStatus) ...[
-            SizedBox(width: 16),
+          Expanded(
+            child: Text(
+              title ?? entity.listDisplayName,
+              overflow: TextOverflow.ellipsis,
+            ),
+          ),
+          if (showStatus)
             EntityStatusChip(
               entity: entity,
+              addGap: true,
             ),
-          ]
         ],
       );
     }

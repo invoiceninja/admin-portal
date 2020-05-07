@@ -7,9 +7,11 @@ import 'package:invoiceninja_flutter/utils/localization.dart';
 class EntityStatusChip extends StatelessWidget {
   const EntityStatusChip({
     @required this.entity,
+    this.addGap = false,
   });
 
   final BaseEntity entity;
+  final bool addGap;
 
   @override
   Widget build(BuildContext context) {
@@ -48,23 +50,26 @@ class EntityStatusChip extends StatelessWidget {
         break;
     }
 
-    return DecoratedBox(
-      decoration: BoxDecoration(
-        color: color,
-        borderRadius: BorderRadius.all(Radius.circular(5)),
-      ),
-      child: ConstrainedBox(
-        constraints: BoxConstraints(
-          minWidth: width,
-          maxWidth: width,
+    return Padding(
+      padding: EdgeInsets.only(left: addGap ? 16 : 0),
+      child: DecoratedBox(
+        decoration: BoxDecoration(
+          color: color,
+          borderRadius: BorderRadius.all(Radius.circular(5)),
         ),
-        child: Padding(
-          padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 8),
-          child: Text(
-            localization.lookup(label).toUpperCase(),
-            style: TextStyle(fontSize: 14),
-            textAlign: TextAlign.center,
-            overflow: TextOverflow.ellipsis,
+        child: ConstrainedBox(
+          constraints: BoxConstraints(
+            minWidth: width,
+            maxWidth: width,
+          ),
+          child: Padding(
+            padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 8),
+            child: Text(
+              localization.lookup(label).toUpperCase(),
+              style: TextStyle(fontSize: 14, color: Colors.white),
+              textAlign: TextAlign.center,
+              overflow: TextOverflow.ellipsis,
+            ),
           ),
         ),
       ),
