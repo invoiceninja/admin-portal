@@ -441,6 +441,8 @@ abstract class InvoiceEntity extends Object
       return true;
     }
 
+    filter = filter.toLowerCase();
+
     if (number != null && number.toLowerCase().contains(filter)) {
       return true;
     } else if (customValue1.isNotEmpty &&

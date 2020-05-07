@@ -465,6 +465,8 @@ abstract class GatewayEntity extends Object
       return true;
     }
 
+    filter = filter.toLowerCase();
+
     return name.toLowerCase().contains(filter);
   }
 

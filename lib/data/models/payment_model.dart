@@ -235,6 +235,8 @@ abstract class PaymentEntity extends Object
       return true;
     }
 
+    filter = filter.toLowerCase();
+
     if (transactionReference.toLowerCase().contains(filter)) {
       return true;
     } else if (privateNotes.toLowerCase().contains(filter)) {

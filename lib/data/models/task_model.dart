@@ -442,7 +442,11 @@ abstract class TaskEntity extends Object
   bool matchesFilter(String filter) {
     if (filter == null || filter.isEmpty) {
       return true;
-    } else if (customValue1.toLowerCase().contains(filter)) {
+    }
+
+    filter = filter.toLowerCase();
+
+    if (customValue1.toLowerCase().contains(filter)) {
       return true;
     } else if (customValue2.toLowerCase().contains(filter)) {
       return true;
