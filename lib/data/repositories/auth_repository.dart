@@ -10,6 +10,7 @@ import 'package:invoiceninja_flutter/data/mock/mock_login.dart';
 import 'package:invoiceninja_flutter/data/models/serializers.dart';
 import 'package:invoiceninja_flutter/data/models/entities.dart';
 import 'package:invoiceninja_flutter/data/web_client.dart';
+import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/utils/formatting.dart';
 
 class AuthRepository {
@@ -90,20 +91,24 @@ class AuthRepository {
     return sendRequest(url: url, data: credentials);
   }
 
-  Future<dynamic> addCompany({String token}) async {
+  Future<dynamic> addCompany({
+    @required Credentials credentials,
+  }) async {
+    final url = formatApiUrl(credentials.url) + '/companies';
     final data = {
       'token_name': _tokenName,
     };
 
-    return webClient.post('/companies', token, data: json.encode(data));
+    return webClient.post(url, credentials.token, data: json.encode(data));
   }
 
   Future<dynamic> deleteCompany({
-    @required String token,
+    @required Credentials credentials,
     @required String companyId,
     @required String password,
   }) async {
-    return webClient.delete('/companies/$companyId', token, password: password);
+    final url = formatApiUrl(credentials.url) + '/companies/$companyId';
+    return webClient.delete(url, credentials.token, password: password);
   }
 
   Future<dynamic> purgeData({

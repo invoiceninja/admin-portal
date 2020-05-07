@@ -239,7 +239,7 @@ Middleware<AppState> _createCompany(AuthRepository repository) {
     final action = dynamicAction as AddCompany;
     final state = store.state;
 
-    repository.addCompany(token: state.credentials.token).then((dynamic value) {
+    repository.addCompany(credentials: state.credentials).then((dynamic value) {
       store.dispatch(RefreshData(
         completer: Completer<Null>()
           ..future.then<Null>((_) {
@@ -263,7 +263,7 @@ Middleware<AppState> _deleteCompany(AuthRepository repository) {
 
     repository
         .deleteCompany(
-            token: state.credentials.token,
+            credentials: state.credentials,
             password: action.password,
             companyId: state.company.id)
         .then((dynamic value) {
