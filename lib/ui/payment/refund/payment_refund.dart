@@ -139,7 +139,7 @@ class _PaymentRefundState extends State<PaymentRefund> {
       ),
     );
 
-    void onSavePressed(BuildContext context) {
+    bool onSavePressed(BuildContext context) {
       final bool isValid = _formKey.currentState.validate();
 
       setState(() {
@@ -147,10 +147,12 @@ class _PaymentRefundState extends State<PaymentRefund> {
       });
 
       if (!isValid) {
-        return;
+        return false;
       }
 
       viewModel.onRefundPressed(context);
+
+      return true;
     }
 
     if (isMobile(context)) {
@@ -179,8 +181,9 @@ class _PaymentRefundState extends State<PaymentRefund> {
           FlatButton(
             child: Text(localization.refund.toUpperCase()),
             onPressed: () {
-              onSavePressed(context);
-              Navigator.of(context).pop();
+              if (onSavePressed(context)) {
+                Navigator.of(context).pop();
+              }
             },
           ),
         ],
@@ -306,6 +309,10 @@ class _PaymentableEditorState extends State<PaymentableEditor> {
             controller: _amountController,
             label: localization.amount,
             autofocus: !hasMultipleInvoices,
+            validator: (value) => !hasMultipleInvoices &&
+                    (value.trim().isEmpty || parseDouble(value) == 0)
+                ? localization.pleaseEnterAValue
+                : null,
           ),
         ),
         if (hasMultipleInvoices) ...[
