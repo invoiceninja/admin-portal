@@ -49,93 +49,96 @@ class DashboardPanels extends StatelessWidget {
         memoizedHasMultipleCurrencies(company, clientMap, groupMap);
 
     return Material(
-      color: Theme.of(context).backgroundColor,
+      color: Theme.of(context).cardColor,
       elevation: 6.0,
-      child: Row(
-        children: <Widget>[
-          SizedBox(width: 8.0),
-          IconButton(
-            icon: Icon(Icons.navigate_before),
-            onPressed: () => viewModel.onOffsetChanged(1),
-          ),
-          SizedBox(width: 8.0),
-          IconButton(
-            icon: Icon(Icons.navigate_next),
-            onPressed: viewModel.isNextEnabled
-                ? () => viewModel.onOffsetChanged(-1)
-                : null,
-          ),
-          SizedBox(width: 15),
-          Expanded(
-            child: InkWell(
-              child: Row(
-                mainAxisSize: MainAxisSize.min,
+      child: Padding(
+        padding: const EdgeInsets.only(top: 16),
+        child: Row(
+          children: <Widget>[
+            SizedBox(width: 8.0),
+            IconButton(
+              icon: Icon(Icons.navigate_before),
+              onPressed: () => viewModel.onOffsetChanged(1),
+            ),
+            SizedBox(width: 8.0),
+            IconButton(
+              icon: Icon(Icons.navigate_next),
+              onPressed: viewModel.isNextEnabled
+                  ? () => viewModel.onOffsetChanged(-1)
+                  : null,
+            ),
+            SizedBox(width: 15),
+            Expanded(
+              child: InkWell(
+                child: Row(
+                  mainAxisSize: MainAxisSize.min,
+                  children: <Widget>[
+                    Flexible(
+                      child: Text(
+                        formatDateRange(uiState.startDate(company),
+                            uiState.endDate(company), context),
+                        style: Theme.of(context)
+                            .textTheme
+                            .headline6
+                            .copyWith(fontSize: 18),
+                      ),
+                    ),
+                    SizedBox(width: 6.0),
+                    Icon(Icons.arrow_drop_down),
+                  ],
+                ),
+                onTap: () => _showDateOptions(context),
+              ),
+            ),
+            if (hasMultipleCurrencies) ...[
+              SizedBox(
+                width: 12,
+              ),
+              DropdownButtonHideUnderline(
+                child: DropdownButton<String>(
+                  items: memoizedGetCurrencyIds(company, clientMap, groupMap)
+                      .map((currencyId) => DropdownMenuItem<String>(
+                            child: Text(currencyId == kCurrencyAll
+                                ? localization.all
+                                : viewModel.currencyMap[currencyId]?.code),
+                            value: currencyId,
+                          ))
+                      .toList(),
+                  onChanged: (currencyId) =>
+                      viewModel.onCurrencyChanged(currencyId),
+                  value: state.dashboardUIState.currencyId,
+                ),
+              ),
+              SizedBox(
+                width: 12,
+              ),
+            ]
+            /*
+              Row(
+                mainAxisSize: MainAxisSize.max,
                 children: <Widget>[
-                  Flexible(
-                    child: Text(
-                      formatDateRange(uiState.startDate(company),
-                          uiState.endDate(company), context),
-                      style: Theme.of(context)
-                          .textTheme
-                          .headline6
-                          .copyWith(fontSize: 18),
+                  SizedBox(width: 8.0),
+                  DropdownButtonHideUnderline(
+                    child: DropdownButton<String>(
+                      items: memoizedGetCurrencyIds(company, clientMap, groupMap)
+                          .map((currencyId) => DropdownMenuItem<String>(
+                                child: Text(currencyId == kCurrencyAll
+                                    ? localization.all
+                                    : viewModel.currencyMap[currencyId]?.code),
+                                value: currencyId,
+                              ))
+                          .toList(),
+                      onChanged: (currencyId) =>
+                          viewModel.onCurrencyChanged(currencyId),
+                      value: state.dashboardUIState.currencyId,
                     ),
                   ),
-                  SizedBox(width: 6.0),
-                  Icon(Icons.arrow_drop_down),
+                  SizedBox(width: 16.0),
                 ],
               ),
-              onTap: () => _showDateOptions(context),
-            ),
-          ),
-          if (hasMultipleCurrencies) ...[
-            SizedBox(
-              width: 12,
-            ),
-            DropdownButtonHideUnderline(
-              child: DropdownButton<String>(
-                items: memoizedGetCurrencyIds(company, clientMap, groupMap)
-                    .map((currencyId) => DropdownMenuItem<String>(
-                          child: Text(currencyId == kCurrencyAll
-                              ? localization.all
-                              : viewModel.currencyMap[currencyId]?.code),
-                          value: currencyId,
-                        ))
-                    .toList(),
-                onChanged: (currencyId) =>
-                    viewModel.onCurrencyChanged(currencyId),
-                value: state.dashboardUIState.currencyId,
-              ),
-            ),
-            SizedBox(
-              width: 12,
-            ),
-          ]
-          /*
-            Row(
-              mainAxisSize: MainAxisSize.max,
-              children: <Widget>[
-                SizedBox(width: 8.0),
-                DropdownButtonHideUnderline(
-                  child: DropdownButton<String>(
-                    items: memoizedGetCurrencyIds(company, clientMap, groupMap)
-                        .map((currencyId) => DropdownMenuItem<String>(
-                              child: Text(currencyId == kCurrencyAll
-                                  ? localization.all
-                                  : viewModel.currencyMap[currencyId]?.code),
-                              value: currencyId,
-                            ))
-                        .toList(),
-                    onChanged: (currencyId) =>
-                        viewModel.onCurrencyChanged(currencyId),
-                    value: state.dashboardUIState.currencyId,
-                  ),
-                ),
-                SizedBox(width: 16.0),
-              ],
-            ),            
-             */
-        ],
+               */
+          ],
+        ),
       ),
     );
   }

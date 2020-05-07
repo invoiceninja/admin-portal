@@ -11,7 +11,7 @@ abstract class PrefState implements Built<PrefState, PrefStateBuilder> {
   factory PrefState() {
     return _$PrefState._(
       appLayout: AppLayout.desktop,
-      moduleLayout: ModuleLayout.table,
+      moduleLayout: ModuleLayout.list,
       isPreviewVisible: true,
       menuSidebarMode: AppSidebarMode.collapse,
       historySidebarMode: AppSidebarMode.float,

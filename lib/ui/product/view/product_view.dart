@@ -1,8 +1,11 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:invoiceninja_flutter/data/models/entities.dart';
+import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/ui/app/FieldGrid.dart';
+import 'package:invoiceninja_flutter/ui/app/buttons/bottom_buttons.dart';
 import 'package:invoiceninja_flutter/ui/app/entity_header.dart';
+import 'package:invoiceninja_flutter/ui/app/lists/list_divider.dart';
 import 'package:invoiceninja_flutter/ui/app/view_scaffold.dart';
 import 'package:invoiceninja_flutter/ui/product/view/product_view_vm.dart';
 import 'package:invoiceninja_flutter/utils/formatting.dart';
@@ -80,26 +83,35 @@ class _ProductViewState extends State<ProductView>
 
     return ViewScaffold(
       entity: product,
-      body: ListView(
+      body: Column(
         children: <Widget>[
-          EntityHeader(
-            label: localization.price,
-            value: formatNumber(product.price, context),
-            secondLabel: localization.cost,
-            secondValue: company.enableProductCost
-                ? formatNumber(product.cost, context)
-                : null,
-          ),
-          FieldGrid(fields),
-          Divider(
-            height: 1.0,
-          ),
-          Padding(
-            padding: EdgeInsets.all(16),
-            child: Text(
-              product.notes,
-              style: TextStyle(fontSize: 16),
+          Expanded(
+            child: ListView(
+              children: <Widget>[
+                EntityHeader(
+                  label: localization.price,
+                  value: formatNumber(product.price, context),
+                  secondLabel: localization.cost,
+                  secondValue: company.enableProductCost
+                      ? formatNumber(product.cost, context)
+                      : null,
+                ),
+                ListDivider(),
+                FieldGrid(fields),
+                Padding(
+                  padding: EdgeInsets.all(20),
+                  child: Text(
+                    product.notes,
+                    style: TextStyle(fontSize: 16),
+                  ),
+                ),
+              ],
             ),
+          ),
+          BottomButtons(
+            entity: product,
+            action1: EntityAction.clone,
+            action2: EntityAction.newInvoice,
           ),
         ],
       ),

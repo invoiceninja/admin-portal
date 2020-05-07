@@ -1,6 +1,9 @@
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:invoiceninja_flutter/constants.dart';
+import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
+import 'package:invoiceninja_flutter/ui/app/actions_menu_button.dart';
+import 'package:invoiceninja_flutter/ui/app/entities/entity_status_chip.dart';
 import 'package:invoiceninja_flutter/ui/app/entity_state_label.dart';
 import 'package:invoiceninja_flutter/utils/formatting.dart';
 import 'package:flutter/foundation.dart';
@@ -36,28 +39,28 @@ class InvoiceListItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final state = StoreProvider.of<AppState>(context).state;
+    final store = StoreProvider.of<AppState>(context);
+    final state = store.state;
     final uiState = state.uiState;
     final invoiceUIState = uiState.invoiceUIState;
     final listUIState = state.getUIState(invoice.entityType).listUIState;
     final isInMultiselect = listUIState.isInMultiselect();
     final showCheckbox = onCheckboxChanged != null || isInMultiselect;
-
+    final textStyle = TextStyle(fontSize: 17);
     final localization = AppLocalization.of(context);
     final filterMatch = filter != null && filter.isNotEmpty
         ? (invoice.matchesFilterValue(filter) ??
             client.matchesFilterValue(filter))
         : null;
 
-    return DismissibleEntity(
-      isSelected: invoice.id ==
-          (uiState.isEditing
-              ? invoiceUIState.editing.id
-              : invoiceUIState.selectedId),
-      userCompany: state.userCompany,
-      entity: invoice,
-      onEntityAction: onEntityAction,
-      child: ListTile(
+    final statusLabel = invoice.isPastDue
+        ? localization.pastDue
+        : localization.lookup(kInvoiceStatuses[invoice.statusId]);
+    final statusColor = InvoiceStatusColors
+        .colors[invoice.isPastDue ? kInvoiceStatusPastDue : invoice.statusId];
+
+    Widget _buildMobile() {
+      return ListTile(
         onTap: isInMultiselect
             ? () => onEntityAction(EntityAction.toggleMultiselect)
             : onTap,
@@ -114,22 +117,137 @@ class InvoiceListItem extends StatelessWidget {
                           overflow: TextOverflow.ellipsis,
                         ),
                 ),
-                Text(
-                    invoice.isPastDue
-                        ? localization.pastDue
-                        : localization
-                            .lookup(kInvoiceStatuses[invoice.statusId]),
+                Text(statusLabel,
                     style: TextStyle(
-                      color: invoice.isPastDue
-                          ? Colors.red
-                          : InvoiceStatusColors.colors[invoice.statusId],
+                      color: statusColor,
                     )),
               ],
             ),
             EntityStateLabel(invoice),
           ],
         ),
-      ),
+      );
+    }
+
+    Widget _buildDesktop() {
+      String subtitle = '';
+      if (invoice.date.isNotEmpty) {
+        subtitle = formatDate(invoice.date, context);
+      }
+      if (invoice.dueDate.isNotEmpty) {
+        if (subtitle.isNotEmpty) {
+          subtitle += ' • ';
+        }
+        subtitle += formatDate(invoice.dueDate, context);
+      }
+      if (hasDocuments) {
+        subtitle += '  📎';
+      }
+
+      return InkWell(
+        onTap: isInMultiselect
+            ? () => onEntityAction(EntityAction.toggleMultiselect)
+            : onTap,
+        onLongPress: onLongPress,
+        child: Padding(
+          padding: const EdgeInsets.only(
+            left: 12,
+            right: 28,
+            top: 4,
+            bottom: 4,
+          ),
+          child: Row(
+            children: <Widget>[
+              Padding(
+                  padding: const EdgeInsets.only(right: 15),
+                  child: showCheckbox
+                      ? IgnorePointer(
+                          ignoring: listUIState.isInMultiselect(),
+                          child: Checkbox(
+                            value: isChecked,
+                            materialTapTargetSize:
+                                MaterialTapTargetSize.shrinkWrap,
+                            onChanged: (value) => onCheckboxChanged(value),
+                            activeColor: Theme.of(context).accentColor,
+                          ),
+                        )
+                      : ActionMenuButton(
+                          entityActions: invoice.getActions(
+                              userCompany: state.userCompany,
+                              includeEdit: true,
+                              client: client),
+                          isSaving: false,
+                          entity: invoice,
+                          onSelected: (context, action) =>
+                              handleEntityAction(context, invoice, action),
+                        )),
+              ConstrainedBox(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: <Widget>[
+                    Text(
+                      invoice.number ?? localization.pending,
+                      style: textStyle,
+                      overflow: TextOverflow.ellipsis,
+                    ),
+                    if (!invoice.isActive) EntityStateLabel(invoice)
+                  ],
+                ),
+                constraints: BoxConstraints(
+                  minWidth: 80,
+                  maxWidth: 80,
+                ),
+              ),
+              SizedBox(width: 10),
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: <Widget>[
+                    Text(client.displayName, style: textStyle),
+                    Text(
+                      filterMatch ?? subtitle,
+                      maxLines: 3,
+                      overflow: TextOverflow.ellipsis,
+                      style: Theme.of(context).textTheme.subtitle2,
+                    ),
+                  ],
+                ),
+              ),
+              SizedBox(width: 10),
+              Text(
+                formatNumber(
+                    invoice.balance > 0 ? invoice.balance : invoice.amount,
+                    context,
+                    clientId: client.id),
+                style: textStyle,
+                textAlign: TextAlign.end,
+              ),
+              SizedBox(width: 25),
+              invoice.isSent
+                  ? EntityStatusChip(entity: invoice)
+                  : SizedBox(
+                      child: Text(
+                        localization.draft.toUpperCase(),
+                        style: TextStyle(fontSize: 14),
+                        textAlign: TextAlign.center,
+                      ),
+                      width: 80,
+                    ),
+            ],
+          ),
+        ),
+      );
+    }
+
+    return DismissibleEntity(
+      isSelected: invoice.id ==
+          (uiState.isEditing
+              ? invoiceUIState.editing.id
+              : invoiceUIState.selectedId),
+      userCompany: state.userCompany,
+      entity: invoice,
+      onEntityAction: onEntityAction,
+      child: store.state.prefState.isMobile ? _buildMobile() : _buildDesktop(),
     );
   }
 }

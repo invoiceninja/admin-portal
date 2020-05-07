@@ -288,6 +288,11 @@ class InvoiceNinjaAppState extends State<InvoiceNinjaApp> {
                   accentColor: accentColor,
                   textSelectionHandleColor: accentColor,
                   fontFamily: fontFamily,
+                  backgroundColor: Colors.black,
+                  canvasColor: Colors.black,
+                  cardColor: const Color(0xFF1B1C1E),
+                  bottomAppBarColor: const Color(0xFF1B1C1E),
+                  primaryColorDark: Colors.black,
                 )
               : ThemeData(fontFamily: fontFamily).copyWith(
                   pageTransitionsTheme: pageTransitionsTheme,
@@ -296,10 +301,14 @@ class InvoiceNinjaAppState extends State<InvoiceNinjaApp> {
                   primaryColor: const Color(0xFF117cc1),
                   primaryColorLight: const Color(0xFF5dabf4),
                   primaryColorDark: const Color(0xFF0D5D91),
-                  indicatorColor: Colors.white,
-                  bottomAppBarColor: Colors.grey.shade300,
-                  backgroundColor: Colors.grey.shade200,
                   buttonColor: const Color(0xFF0D5D91),
+                  indicatorColor: Colors.white,
+                  backgroundColor: const Color(0xFFFAFAFA),
+                  cardColor: Colors.white,
+                  canvasColor: const Color(0xFFFAFAFA),
+                  bottomAppBarColor: const Color(0xFFFAFAFA),
+                  //bottomAppBarColor: Colors.grey.shade300,
+                  //backgroundColor: Colors.grey.shade200,
                 ),
           title: 'Invoice Ninja',
           onGenerateRoute: isMobile(context) ? null : generateRoute,
@@ -367,8 +376,6 @@ class InvoiceNinjaAppState extends State<InvoiceNinjaApp> {
                       CompanyGatewayViewScreen(),
                   CompanyGatewayEditScreen.route: (context) =>
                       CompanyGatewayEditScreen(),
-                  OnlinePaymentsScreen.route: (context) =>
-                      OnlinePaymentsScreen(),
                   TaxSettingsScreen.route: (context) => TaxSettingsScreen(),
                   TaxRateSettingsScreen.route: (context) =>
                       TaxRateScreenBuilder(),
@@ -383,9 +390,6 @@ class InvoiceNinjaAppState extends State<InvoiceNinjaApp> {
                       DeviceSettingsScreen(),
                   AccountManagementScreen.route: (context) =>
                       AccountManagementScreen(),
-                  GroupSettingsScreen.route: (context) => GroupScreenBuilder(),
-                  GroupEditScreen.route: (context) => GroupEditScreen(),
-                  GroupViewScreen.route: (context) => GroupViewScreen(),
                   CustomFieldsScreen.route: (context) => CustomFieldsScreen(),
                   GeneratedNumbersScreen.route: (context) =>
                       GeneratedNumbersScreen(),

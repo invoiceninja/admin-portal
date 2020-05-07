@@ -14,7 +14,6 @@ class ViewScaffold extends StatelessWidget {
   const ViewScaffold({
     @required this.body,
     @required this.entity,
-    this.secondaryWidget,
     this.title,
     this.floatingActionButton,
     this.appBarBottom,
@@ -24,7 +23,6 @@ class ViewScaffold extends StatelessWidget {
 
   final bool isSettings;
   final BaseEntity entity;
-  final Widget secondaryWidget;
   final String title;
   final Widget body;
   final Function onBackPressed;
@@ -42,6 +40,7 @@ class ViewScaffold extends StatelessWidget {
         return true;
       },
       child: Scaffold(
+        backgroundColor: Theme.of(context).cardColor,
         appBar: AppBar(
           leading: !isMobile(context) && isSettings
               ? IconButton(
@@ -53,17 +52,20 @@ class ViewScaffold extends StatelessWidget {
                 )
               : isMobile(context)
                   ? null
-                  : Icon(getEntityIcon(entity.entityType)),
+                  : Icon(
+                      getEntityIcon(entity.entityType),
+                      size: 20,
+                    ),
           automaticallyImplyLeading: isMobile(context) || isSettings,
           title: EntityStateTitle(
             entity: entity,
             title: title,
+            showStatus: true,
           ),
           bottom: appBarBottom,
           actions: entity.isNew
               ? []
               : [
-                  if (secondaryWidget != null) secondaryWidget,
                   userCompany.canEditEntity(entity)
                       ? EditIconButton(
                           isVisible: !(entity.isDeleted ?? false),

@@ -1,6 +1,8 @@
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:invoiceninja_flutter/constants.dart';
+import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
+import 'package:invoiceninja_flutter/ui/app/actions_menu_button.dart';
 import 'package:invoiceninja_flutter/ui/app/entity_state_label.dart';
 import 'package:invoiceninja_flutter/utils/formatting.dart';
 import 'package:flutter/foundation.dart';
@@ -42,22 +44,21 @@ class QuoteListItem extends StatelessWidget {
     final listUIState = state.getUIState(quote.entityType).listUIState;
     final isInMultiselect = listUIState.isInMultiselect();
     final showCheckbox = onCheckboxChanged != null || isInMultiselect;
-
+    final textStyle = TextStyle(fontSize: 17);
     final localization = AppLocalization.of(context);
     final filterMatch = filter != null && filter.isNotEmpty
         ? (quote.matchesFilterValue(filter) ??
             client.matchesFilterValue(filter))
         : null;
 
-    return DismissibleEntity(
-      isSelected: quote.id ==
-          (uiState.isEditing
-              ? quoteUIState.editing.id
-              : quoteUIState.selectedId),
-      userCompany: state.userCompany,
-      entity: quote,
-      onEntityAction: onEntityAction,
-      child: ListTile(
+    final statusLabel = quote.isPastDue
+        ? localization.expired
+        : localization.lookup(kQuoteStatuses[quote.statusId]);
+    final statusColor = QuoteStatusColors
+        .colors[quote.isPastDue ? kInvoiceStatusPastDue : quote.statusId];
+
+    Widget _buildMobile() {
+      return ListTile(
         onTap: isInMultiselect
             ? () => onEntityAction(EntityAction.toggleMultiselect)
             : onTap,
@@ -127,7 +128,143 @@ class QuoteListItem extends StatelessWidget {
             EntityStateLabel(quote),
           ],
         ),
-      ),
+      );
+    }
+
+    Widget _buildDesktop() {
+      String subtitle = '';
+      if (quote.date.isNotEmpty) {
+        subtitle = formatDate(quote.date, context);
+      }
+      if (quote.dueDate.isNotEmpty) {
+        if (subtitle.isNotEmpty) {
+          subtitle += ' • ';
+        }
+        subtitle += formatDate(quote.dueDate, context);
+      }
+      if (hasDocuments) {
+        subtitle += '  📎';
+      }
+
+      return InkWell(
+        onTap: isInMultiselect
+            ? () => onEntityAction(EntityAction.toggleMultiselect)
+            : onTap,
+        onLongPress: onLongPress,
+        child: Padding(
+          padding: const EdgeInsets.only(
+            left: 12,
+            right: 28,
+            top: 4,
+            bottom: 4,
+          ),
+          child: Row(
+            children: <Widget>[
+              Padding(
+                  padding: const EdgeInsets.only(right: 15),
+                  child: showCheckbox
+                      ? IgnorePointer(
+                          ignoring: listUIState.isInMultiselect(),
+                          child: Checkbox(
+                            value: isChecked,
+                            materialTapTargetSize:
+                                MaterialTapTargetSize.shrinkWrap,
+                            onChanged: (value) => onCheckboxChanged(value),
+                            activeColor: Theme.of(context).accentColor,
+                          ),
+                        )
+                      : ActionMenuButton(
+                          entityActions: quote.getActions(
+                              userCompany: state.userCompany,
+                              includeEdit: true,
+                              client: client),
+                          isSaving: false,
+                          entity: quote,
+                          onSelected: (context, action) =>
+                              handleEntityAction(context, quote, action),
+                        )),
+              ConstrainedBox(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: <Widget>[
+                    Text(
+                      quote.number ?? localization.pending,
+                      style: textStyle,
+                      overflow: TextOverflow.ellipsis,
+                    ),
+                    if (!quote.isActive) EntityStateLabel(quote)
+                  ],
+                ),
+                constraints: BoxConstraints(
+                  minWidth: 80,
+                  maxWidth: 80,
+                ),
+              ),
+              SizedBox(width: 10),
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: <Widget>[
+                    Text(client.displayName, style: textStyle),
+                    Text(
+                      filterMatch ?? subtitle,
+                      maxLines: 3,
+                      overflow: TextOverflow.ellipsis,
+                      style: Theme.of(context).textTheme.subtitle2,
+                    ),
+                  ],
+                ),
+              ),
+              SizedBox(width: 10),
+              Text(
+                formatNumber(quote.balance, context, clientId: client.id),
+                style: textStyle,
+                textAlign: TextAlign.end,
+              ),
+              SizedBox(width: 25),
+              quote.isSent
+                  ? DecoratedBox(
+                      decoration: BoxDecoration(
+                        color: statusColor,
+                        borderRadius: BorderRadius.all(Radius.circular(5)),
+                      ),
+                      child: ConstrainedBox(
+                        constraints: BoxConstraints(
+                          minWidth: 80,
+                        ),
+                        child: Padding(
+                          padding: const EdgeInsets.symmetric(vertical: 8),
+                          child: Text(
+                            statusLabel.toUpperCase(),
+                            style: TextStyle(fontSize: 14),
+                            textAlign: TextAlign.center,
+                          ),
+                        ),
+                      ),
+                    )
+                  : SizedBox(
+                      child: Text(
+                        localization.draft.toUpperCase(),
+                        style: TextStyle(fontSize: 14),
+                        textAlign: TextAlign.center,
+                      ),
+                      width: 80,
+                    ),
+            ],
+          ),
+        ),
+      );
+    }
+
+    return DismissibleEntity(
+      isSelected: quote.id ==
+          (uiState.isEditing
+              ? quoteUIState.editing.id
+              : quoteUIState.selectedId),
+      userCompany: state.userCompany,
+      entity: quote,
+      onEntityAction: onEntityAction,
+      child: state.prefState.isMobile ? _buildMobile() : _buildDesktop(),
     );
   }
 }

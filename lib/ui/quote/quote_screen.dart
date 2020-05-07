@@ -9,7 +9,6 @@ import 'package:invoiceninja_flutter/ui/app/forms/save_cancel_buttons.dart';
 import 'package:invoiceninja_flutter/ui/app/list_scaffold.dart';
 import 'package:invoiceninja_flutter/ui/app/entities/entity_actions_dialog.dart';
 import 'package:invoiceninja_flutter/ui/app/list_filter.dart';
-import 'package:invoiceninja_flutter/ui/app/list_filter_button.dart';
 import 'package:invoiceninja_flutter/ui/quote/quote_screen_vm.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
@@ -52,21 +51,13 @@ class QuoteScreen extends StatelessWidget {
         handleQuoteAction(context, quotes, EntityAction.toggleMultiselect);
       },
       appBarTitle: ListFilter(
-        title: localization.quotes,
-        key: ValueKey(store.state.quoteListState.filterClearedAt),
+        placeholder: localization.searchQuotes,
         filter: state.quoteListState.filter,
         onFilterChanged: (value) {
           store.dispatch(FilterQuotes(value));
         },
       ),
       appBarActions: [
-        if (!viewModel.isInMultiselect)
-          ListFilterButton(
-            filter: state.quoteListState.filter,
-            onFilterPressed: (String value) {
-              store.dispatch(FilterQuotes(value));
-            },
-          ),
         if (viewModel.isInMultiselect)
           SaveCancelButtons(
             saveLabel: localization.done,

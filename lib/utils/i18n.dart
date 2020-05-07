@@ -15,6 +15,27 @@ mixin LocalizationsProvider on LocaleCodeAware {
   static final Map<String, Map<String, String>> _localizedValues = {
     'en': {
       // STARTER: lang key - do not remove comment
+      'hide_menu': 'Hide Menu',
+      'show_menu': 'Show Menu',
+      'partially_refunded': 'Partially Refunded',
+      'search_documents': 'Search Documents',
+      'search_designs': 'Search Designs',
+      'search_invoices': 'Search Invoices',
+      'search_clients': 'Search Clients',
+      'search_products': 'Search Products',
+      'search_quotes': 'Search Quotes',
+      'search_credits': 'Search Credits',
+      'search_vendors': 'Search Vendors',
+      'search_users': 'Search Users',
+      'search_tax_rates': 'Search Tax Rates',
+      'search_tasks': 'Search Tasks',
+      'search_settings': 'Search Settings',
+      'search_projects': 'Search Projects',
+      'search_expenses': 'Search Expenses',
+      'search_payments': 'Search Payments',
+      'search_groups': 'Search Groups',
+      'search_company': 'Search Company',
+
       'refund_payment': 'Refund Payment',
       'cancelled_invoice': 'Successfully cancelled invoice',
       'cancelled_invoices': 'Successfully cancelled invoices',
@@ -391,8 +412,6 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'company': 'Company',
       'generated_numbers': 'Generated Numbers',
       'charge_taxes': 'Charge Taxes',
-      'credit': 'Credit',
-      'credits': 'Credits',
       'next_reset': 'Next Reset',
       'reset_counter': 'Reset Counter',
       'recurring_prefix': 'Recurring Prefix',
@@ -539,7 +558,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'military_time_help': '24 Hour Display',
       'send_reminders': 'Send Reminders',
       'timezone': 'Timezone',
-      'filtered_by_group': 'Filtered by Project',
+      'filtered_by_project': 'Filtered by Project',
       'filtered_by_group': 'Filtered by Group',
       'filtered_by_invoice': 'Filtered by Invoice',
       'filtered_by_client': 'Filtered by Client',
@@ -735,7 +754,6 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'edit_expense': 'Edit Expense',
       'edit_vendor': 'Edit Vendor',
       'edit_project': 'Edit Project',
-      'edit_credit': 'Edit Credit',
       'edit_recurring_invoice': 'Edit Recurring Invoice',
       'edit_recurring_expense': 'Edit Recurring Expense',
       'edit_recurring_quote': 'Edit Recurring Quote',
@@ -1086,7 +1104,6 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'client_shipping_address2': 'Client Shipping Address 2',
       'type': 'Type',
       'invoice_amount': 'Invoice Amount',
-      'invoice_date': 'Invoice Date',
       'invoice_due_date': 'Invoice Due Date',
       'tax_rate1': 'Tax Rate 1',
       'tax_rate2': 'Tax Rate 2',
@@ -36421,6 +36438,62 @@ mixin LocalizationsProvider on LocaleCodeAware {
 
   String get refundPayment =>
       _localizedValues[localeCode]['refund_payment'] ?? '';
+
+  String get searchInvoices =>
+      _localizedValues[localeCode]['search_invoices'] ?? '';
+
+  String get searchClients =>
+      _localizedValues[localeCode]['search_clients'] ?? '';
+
+  String get searchProducts =>
+      _localizedValues[localeCode]['search_products'] ?? '';
+
+  String get searchQuotes =>
+      _localizedValues[localeCode]['search_quotes'] ?? '';
+
+  String get searchCredits =>
+      _localizedValues[localeCode]['search_credits'] ?? '';
+
+  String get searchVendors =>
+      _localizedValues[localeCode]['search_vendors'] ?? '';
+
+  String get searchUsers => _localizedValues[localeCode]['search_users'] ?? '';
+
+  String get searchTaxRates =>
+      _localizedValues[localeCode]['search_tax_rates'] ?? '';
+
+  String get searchTasks => _localizedValues[localeCode]['search_tasks'] ?? '';
+
+  String get searchSettings =>
+      _localizedValues[localeCode]['search_settings'] ?? '';
+
+  String get searchProjects =>
+      _localizedValues[localeCode]['search_projects'] ?? '';
+
+  String get searchExpenses =>
+      _localizedValues[localeCode]['search_expenses'] ?? '';
+
+  String get searchPayments =>
+      _localizedValues[localeCode]['search_payments'] ?? '';
+
+  String get searchGroups =>
+      _localizedValues[localeCode]['search_groups'] ?? '';
+
+  String get searchCompany =>
+      _localizedValues[localeCode]['search_company'] ?? '';
+
+  String get searchDocuments =>
+      _localizedValues[localeCode]['search_documents'] ?? '';
+
+  String get searchDesigns =>
+      _localizedValues[localeCode]['search_designs'] ?? '';
+
+  String get partiallyRefunded =>
+      _localizedValues[localeCode]['partially_refunded'] ?? '';
+
+  String get hideMenu => _localizedValues[localeCode]['hide_menu'] ?? '';
+
+  String get showMenu => _localizedValues[localeCode]['show_menu'] ?? '';
 
   String lookup(String key) {
     final lookupKey = toSnakeCase(key);

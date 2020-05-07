@@ -1,88 +1,119 @@
 import 'package:flutter/material.dart';
+import 'package:invoiceninja_flutter/utils/colors.dart';
+import 'package:invoiceninja_flutter/constants.dart';
+import 'package:redux/redux.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
-import 'package:invoiceninja_flutter/utils/localization.dart';
-import 'package:redux/redux.dart';
 
 class ListFilter extends StatefulWidget {
   const ListFilter({
-    Key key,
+    @required this.placeholder,
     @required this.filter,
-    @required this.title,
     @required this.onFilterChanged,
-    this.filterLabel,
-  }) : super(key: key);
+  });
 
+  final String placeholder;
   final String filter;
-  final String title;
   final Function(String) onFilterChanged;
-  final String filterLabel;
 
   @override
   _ListFilterState createState() => new _ListFilterState();
 }
 
 class _ListFilterState extends State<ListFilter> {
-  final _filterController = TextEditingController();
+  TextEditingController _filterController;
+  FocusNode _focusNode;
+  String _placeholder = '';
+
+  @override
+  void initState() {
+    super.initState();
+    _filterController = TextEditingController();
+    _focusNode = FocusNode()..addListener(onFocusChanged);
+    _placeholder = widget.placeholder;
+  }
+
+  void onFocusChanged() {
+    setState(() {
+      _placeholder = _focusNode.hasFocus ? '' : widget.placeholder;
+    });
+  }
 
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
-
     _filterController.text = widget.filter;
   }
 
   @override
   void dispose() {
     _filterController.dispose();
+    _focusNode.removeListener(onFocusChanged);
+    _focusNode.dispose();
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
-    final localization = AppLocalization.of(context);
+    final textColor = Theme.of(context).textTheme.bodyText1.color;
+    final isFilterSet = (widget.filter ?? '').isNotEmpty;
+    final Store<AppState> store = StoreProvider.of<AppState>(context);
+    final state = store.state;
+    final enableDarkMode = state.prefState.enableDarkMode;
 
-    return StoreConnector<AppState, AppState>(
-      converter: (Store<AppState> store) => store.state,
-      builder: (BuildContext context, state) {
-        final bool enableDarkMode = state.prefState.enableDarkMode;
-        return widget.filter == null
-            ? Text('${widget.title ?? ''}')
-            : Container(
-                padding: const EdgeInsets.only(left: 8.0),
-                height: 44,
-                margin: EdgeInsets.only(bottom: 2.0),
-                decoration: BoxDecoration(
-                    color: widget.filter != null && widget.filter.isNotEmpty
-                        ? enableDarkMode
-                            ? Colors.yellow.shade900
-                            : Colors.yellow.shade200
-                        : Theme.of(context).backgroundColor,
-                    border: Border.all(
-                        color: enableDarkMode
-                            ? Colors.grey.shade600
-                            : Colors.grey.shade400,
-                        width: 1.0),
-                    borderRadius: BorderRadius.circular(6.0)),
-                child: TextField(
-                  decoration: InputDecoration(
-                      /*
-                      prefixIcon: Padding(
-                        padding: EdgeInsets.only(right: 8.0),
-                        child: Icon(Icons.search),
-                      ),
-                     */
-                      border: InputBorder.none,
-                      hintText: widget.filterLabel ?? localization.filter),
-                  autofocus: true,
-                  autocorrect: false,
-                  onChanged: (value) {
-                    widget.onFilterChanged(value);
-                  },
-                  controller: _filterController,
-                ),
-              );
-      },
+    Color color;
+    if (enableDarkMode) {
+      color = convertHexStringToColor(
+          isFilterSet ? kDefaultDarkBorderColor : kDefaultDarkBorderColor);
+    } else {
+      color = convertHexStringToColor(
+          isFilterSet ? kDefaultLightBorderColor : kDefaultLightBorderColor);
+    }
+
+    return Padding(
+      padding: const EdgeInsets.only(top: 2),
+      child: Container(
+        padding: const EdgeInsets.only(left: 8.0),
+        height: 40,
+        margin: EdgeInsets.only(bottom: 2.0),
+        decoration: BoxDecoration(
+          color: color,
+          borderRadius: BorderRadius.all(Radius.circular(5)),
+        ),
+        child: TextField(
+          focusNode: _focusNode,
+          textAlign: _focusNode.hasFocus || _filterController.text.isNotEmpty
+              ? TextAlign.start
+              : TextAlign.center,
+          textAlignVertical: TextAlignVertical.center,
+          decoration: InputDecoration(
+            contentPadding: EdgeInsets.only(left: 8, right: 8, bottom: 6),
+            suffixIcon: _filterController.text.isNotEmpty
+                ? IconButton(
+                    icon: Icon(
+                      Icons.clear,
+                      color: textColor,
+                    ),
+                    onPressed: () {
+                      _filterController.text = '';
+                      _focusNode.unfocus();
+                      widget.onFilterChanged(null);
+                      setState(() {
+                        _placeholder = widget.placeholder;
+                      });
+                    },
+                  )
+                : Icon(Icons.search, color: textColor),
+            border: InputBorder.none,
+            hintText: _placeholder,
+          ),
+          autocorrect: false,
+          onChanged: (value) {
+            widget.onFilterChanged(value);
+          },
+          controller: _filterController,
+        ),
+      ),
     );
   }
 }

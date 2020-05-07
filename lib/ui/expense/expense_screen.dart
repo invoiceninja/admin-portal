@@ -12,7 +12,6 @@ import 'package:invoiceninja_flutter/ui/app/forms/save_cancel_buttons.dart';
 import 'package:invoiceninja_flutter/ui/app/list_scaffold.dart';
 import 'package:invoiceninja_flutter/ui/app/entities/entity_actions_dialog.dart';
 import 'package:invoiceninja_flutter/ui/app/list_filter.dart';
-import 'package:invoiceninja_flutter/ui/app/list_filter_button.dart';
 import 'package:invoiceninja_flutter/ui/expense/expense_list_vm.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 
@@ -52,21 +51,13 @@ class ExpenseScreen extends StatelessWidget {
         handleExpenseAction(context, expenses, EntityAction.toggleMultiselect);
       },
       appBarTitle: ListFilter(
-        title: localization.expenses,
-        key: ValueKey(store.state.expenseListState.filterClearedAt),
+        placeholder: localization.searchExpenses,
         filter: state.expenseListState.filter,
         onFilterChanged: (value) {
           store.dispatch(FilterExpenses(value));
         },
       ),
       appBarActions: [
-        if (!viewModel.isInMultiselect)
-          ListFilterButton(
-            filter: state.expenseListState.filter,
-            onFilterPressed: (String value) {
-              store.dispatch(FilterExpenses(value));
-            },
-          ),
         if (viewModel.isInMultiselect)
           SaveCancelButtons(
             saveLabel: localization.done,

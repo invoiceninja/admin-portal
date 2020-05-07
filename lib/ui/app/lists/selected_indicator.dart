@@ -1,5 +1,9 @@
+import 'package:redux/redux.dart';
 import 'package:flutter/material.dart';
-import 'package:invoiceninja_flutter/utils/platforms.dart';
+import 'package:flutter_redux/flutter_redux.dart';
+import 'package:invoiceninja_flutter/constants.dart';
+import 'package:invoiceninja_flutter/redux/app/app_state.dart';
+import 'package:invoiceninja_flutter/utils/colors.dart';
 
 class SelectedIndicator extends StatelessWidget {
   const SelectedIndicator({this.child, this.isSelected});
@@ -9,22 +13,17 @@ class SelectedIndicator extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final Store<AppState> store = StoreProvider.of<AppState>(context);
+    final state = store.state;
+    final enableDarkMode = state.prefState.enableDarkMode;
+
     return Container(
-      color: null,
-      child: Row(
-        children: <Widget>[
-          Container(
-            width: 3,
-            height: 48,
-            color: isSelected && !isMobile(context)
-                ? Theme.of(context).accentColor
-                : null,
-          ),
-          Expanded(
-            child: child,
-          ),
-        ],
-      ),
+      color: isSelected
+          ? convertHexStringToColor(enableDarkMode
+              ? kDefaultDarkSelectedColor
+              : kDefaultLightSelectedColor)
+          : null,
+      child: child,
     );
   }
 }

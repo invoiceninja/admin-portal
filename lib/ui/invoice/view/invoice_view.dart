@@ -1,15 +1,13 @@
-import 'package:invoiceninja_flutter/data/models/models.dart';
-import 'package:invoiceninja_flutter/redux/document/document_selectors.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:invoiceninja_flutter/.env.dart';
-import 'package:invoiceninja_flutter/redux/invoice/invoice_actions.dart';
+import 'package:invoiceninja_flutter/data/models/models.dart';
+import 'package:invoiceninja_flutter/redux/document/document_selectors.dart';
+import 'package:invoiceninja_flutter/ui/app/buttons/bottom_buttons.dart';
 import 'package:invoiceninja_flutter/ui/app/view_scaffold.dart';
 import 'package:invoiceninja_flutter/ui/invoice/view/invoice_view_documents.dart';
 import 'package:invoiceninja_flutter/ui/invoice/view/invoice_view_overview.dart';
 import 'package:invoiceninja_flutter/ui/invoice/view/invoice_view_vm.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
-import 'package:invoiceninja_flutter/utils/platforms.dart';
 
 class InvoiceView extends StatefulWidget {
   const InvoiceView({
@@ -48,6 +46,23 @@ class _InvoiceViewState extends State<InvoiceView>
     final documents = memoizedInvoiceDocumentsSelector(
         documentState.map, viewModel.state.expenseState.map, invoice);
 
+    EntityAction secondAction;
+    if (invoice.isCredit) {
+      secondAction = EntityAction.cloneToCredit;
+    } else if (invoice.isQuote) {
+      if (invoice.hasInvoice) {
+        secondAction = EntityAction.cloneToQuote;
+      } else {
+        secondAction = EntityAction.convert;
+      }
+    } else {
+      if (invoice.isPaid) {
+        secondAction = EntityAction.cloneToInvoice;
+      } else {
+        secondAction = EntityAction.newPayment;
+      }
+    }
+
     return ViewScaffold(
       entity: invoice,
       title: '${invoice.number ?? '• ${localization.pending}'}',
@@ -64,29 +79,32 @@ class _InvoiceViewState extends State<InvoiceView>
           ),
         ],
       ),
-      secondaryWidget: isNotMobile(context) && !Config.DEMO_MODE
-          ? FlatButton(
-              child: Text(localization.pdf.toUpperCase()),
-              textColor: Colors.white,
-              onPressed: () =>
-                  handleInvoiceAction(context, [invoice], EntityAction.pdf),
-            )
-          : null,
       body: Builder(
         builder: (BuildContext context) {
           return RefreshIndicator(
             onRefresh: () => viewModel.onRefreshed(context),
-            child: TabBarView(
-              controller: _controller,
+            child: Column(
               children: <Widget>[
-                RefreshIndicator(
-                  onRefresh: () => viewModel.onRefreshed(context),
-                  child: InvoiceOverview(viewModel: viewModel),
+                Expanded(
+                  child: TabBarView(
+                    controller: _controller,
+                    children: <Widget>[
+                      RefreshIndicator(
+                        onRefresh: () => viewModel.onRefreshed(context),
+                        child: InvoiceOverview(viewModel: viewModel),
+                      ),
+                      RefreshIndicator(
+                        onRefresh: () => viewModel.onRefreshed(context),
+                        child: InvoiceViewDocuments(
+                            viewModel: viewModel, invoice: viewModel.invoice),
+                      ),
+                    ],
+                  ),
                 ),
-                RefreshIndicator(
-                  onRefresh: () => viewModel.onRefreshed(context),
-                  child: InvoiceViewDocuments(
-                      viewModel: viewModel, invoice: viewModel.invoice),
+                BottomButtons(
+                  entity: invoice,
+                  action1: EntityAction.pdf,
+                  action2: secondAction,
                 ),
               ],
             ),

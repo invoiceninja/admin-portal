@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:invoiceninja_flutter/data/models/entities.dart';
 import 'package:flutter/foundation.dart';
+import 'package:invoiceninja_flutter/utils/colors.dart';
 
 class Constants {
-  static String get hostedApiUrl => kReleaseMode ? kAppProductionUrl : kAppStagingUrl;
+  static String get hostedApiUrl =>
+      kReleaseMode ? kAppProductionUrl : kAppStagingUrl;
 }
 
 // TODO remove version once #46609 is fixed
@@ -342,6 +344,15 @@ const String kPaymentStatusCompleted = '4';
 const String kPaymentStatusPartiallyRefunded = '5';
 const String kPaymentStatusRefunded = '6';
 
+const kPaymentStatuses = {
+  kPaymentStatusPending: 'pending',
+  kPaymentStatusVoided: 'voided',
+  kPaymentStatusFailed: 'failed',
+  kPaymentStatusCompleted: 'completed',
+  kPaymentStatusPartiallyRefunded: 'partially_refunded',
+  kPaymentStatusRefunded: 'refunded',
+};
+
 const String kExpenseStatusLogged = '1';
 const String kExpenseStatusPending = '2';
 const String kExpenseStatusInvoiced = '3';
@@ -349,6 +360,12 @@ const String kExpenseStatusInvoiced = '3';
 const String kDefaultCurrencyId = '1';
 const String kDefaultDateFormat = '5';
 const String kDefaultAccentColor = '#0091EA';
+const String kDefaultDarkSelectedColorMenu = '#1E252F';
+const String kDefaultDarkSelectedColor = '#253750';
+const String kDefaultDarkBorderColor = '#393A3C';
+const String kDefaultLightSelectedColorMenu = '#EEEEEE';
+const String kDefaultLightSelectedColor = '#EEEEEE';
+const String kDefaultLightBorderColor = '#DDDDDD';
 
 const String kReportGroupDay = 'day';
 const String kReportGroupMonth = 'month';
@@ -387,52 +404,53 @@ const Map<int, String> kModules = {
 };
 
 class InvoiceStatusColors {
-  static const colors = {
-    kInvoiceStatusDraft: Colors.grey,
-    kInvoiceStatusSent: Colors.blue,
+  static var colors = {
+    kInvoiceStatusDraft: Colors.transparent,
+    kInvoiceStatusSent: convertHexStringToColor('#505F73'),
     //kInvoiceStatusViewed: Colors.orange,
     //kInvoiceStatusApproved: Colors.green,
     kInvoiceStatusPartial: Colors.deepPurple,
-    kInvoiceStatusPaid: Colors.green,
+    kInvoiceStatusPaid: convertHexStringToColor('#407535'),
+    kInvoiceStatusPastDue: convertHexStringToColor('#8D3E3F'),
   };
 }
 
 class CreditStatusColors {
-  static const colors = {
-    kCreditStatusDraft: Colors.grey,
-    kCreditStatusSent: Colors.blue,
+  static var colors = {
+    kCreditStatusDraft: Colors.transparent,
+    kCreditStatusSent: convertHexStringToColor('#505F73'),
     //kInvoiceStatusViewed: Colors.orange,
     //kInvoiceStatusApproved: Colors.green,
     kCreditStatusPartial: Colors.deepPurple,
-    kCreditStatusApplied: Colors.green,
+    kCreditStatusApplied: convertHexStringToColor('#407535'),
   };
 }
 
 class QuoteStatusColors {
-  static const colors = {
-    kQuoteStatusDraft: Colors.grey,
-    kQuoteStatusSent: Colors.blue,
-    kQuoteStatusApproved: Colors.green,
-    kQuoteStatusExpired: Colors.red,
+  static var colors = {
+    kQuoteStatusDraft: Colors.transparent,
+    kQuoteStatusSent: convertHexStringToColor('#505F73'),
+    kQuoteStatusApproved: convertHexStringToColor('#407535'),
+    kQuoteStatusExpired: convertHexStringToColor('#8D3E3F'),
   };
 }
 
 class PaymentStatusColors {
-  static const colors = {
-    kPaymentStatusPending: Colors.grey,
+  static var colors = {
+    kPaymentStatusPending: convertHexStringToColor('#505F73'),
     kPaymentStatusVoided: Colors.red,
     kPaymentStatusFailed: Colors.red,
-    kPaymentStatusCompleted: Colors.green,
+    kPaymentStatusCompleted: convertHexStringToColor('#407535'),
     kPaymentStatusPartiallyRefunded: Colors.purple,
     kPaymentStatusRefunded: Colors.red,
   };
 }
 
 class ExpenseStatusColors {
-  static const colors = {
-    kExpenseStatusLogged: Colors.grey,
+  static var colors = {
+    kExpenseStatusLogged: convertHexStringToColor('#505F73'),
     kExpenseStatusPending: Colors.orange,
-    kExpenseStatusInvoiced: Colors.green,
+    kExpenseStatusInvoiced: convertHexStringToColor('#407535'),
   };
 }
 

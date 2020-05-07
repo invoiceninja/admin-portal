@@ -6,7 +6,6 @@ import 'package:invoiceninja_flutter/redux/ui/pref_state.dart';
 import 'package:invoiceninja_flutter/ui/app/history_drawer_vm.dart';
 import 'package:invoiceninja_flutter/ui/app/menu_drawer_vm.dart';
 import 'package:invoiceninja_flutter/ui/app/list_filter.dart';
-import 'package:invoiceninja_flutter/ui/app/list_filter_button.dart';
 import 'package:invoiceninja_flutter/ui/dashboard/dashboard_activity.dart';
 import 'package:invoiceninja_flutter/ui/dashboard/dashboard_panels.dart';
 import 'package:invoiceninja_flutter/ui/dashboard/dashboard_screen_vm.dart';
@@ -60,28 +59,15 @@ class _DashboardScreenState extends State<DashboardScreen>
         appBar: AppBar(
           leading: isMobile(context) || state.prefState.isMenuFloated
               ? null
-              : IconButton(
-                  icon: Icon(Icons.menu),
-                  onPressed: () => store
-                      .dispatch(UserSettingsChanged(sidebar: AppSidebar.menu)),
-                ),
+              : SizedBox(),
           title: ListFilter(
-            title: AppLocalization.of(context).dashboard,
-            key: ValueKey(state.uiState.filterClearedAt),
+            placeholder: localization.searchCompany,
             filter: state.uiState.filter,
             onFilterChanged: (value) {
               store.dispatch(FilterCompany(value));
             },
-            filterLabel: localization.search,
           ),
           actions: [
-            ListFilterButton(
-              filter: state.uiState.filter,
-              onFilterPressed: (String value) {
-                store.dispatch(FilterCompany(value));
-              },
-              filterLabel: localization.search,
-            ),
             if (isMobile(context) || !state.prefState.isHistoryVisible)
               Builder(
                 builder: (context) => IconButton(
@@ -97,19 +83,17 @@ class _DashboardScreenState extends State<DashboardScreen>
                 ),
               ),
           ],
-          bottom: store.state.uiState.filter != null
-              ? null
-              : TabBar(
-                  controller: _controller,
-                  tabs: [
-                    Tab(
-                      text: localization.overview,
-                    ),
-                    Tab(
-                      text: localization.activity,
-                    ),
-                  ],
-                ),
+          bottom: TabBar(
+            controller: _controller,
+            tabs: [
+              Tab(
+                text: localization.overview,
+              ),
+              Tab(
+                text: localization.activity,
+              ),
+            ],
+          ),
         ),
         body: CustomTabBarView(
           viewModel: widget.viewModel,
@@ -131,7 +115,7 @@ class CustomTabBarView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    if (viewModel.filter != null) {
+    if ((viewModel.filter ?? '').isNotEmpty) {
       return ListView.builder(
           itemCount: viewModel.filteredList.length,
           itemBuilder: (BuildContext context, index) {

@@ -70,28 +70,26 @@ class InvoiceItemListTile extends StatelessWidget {
     }
 
     return Material(
-        color: Theme.of(context).canvasColor,
-        child: Padding(
-          padding: const EdgeInsets.only(top: 4.0, bottom: 4.0),
-          child: Column(
-            children: <Widget>[
-              ListTile(
-                onTap: onTap,
-                title: Row(
-                  children: <Widget>[
-                    Expanded(child: Text(invoiceItem.productKey)),
-                    Text(formatNumber(invoiceItem.total, context,
-                        clientId: invoice.clientId)),
-                  ],
-                ),
-                subtitle: Text(subtitle),
-                trailing: onTap != null ? Icon(Icons.navigate_next) : null,
+        color: Theme.of(context).cardColor,
+        child: Column(
+          children: <Widget>[
+            ListTile(
+              contentPadding: const EdgeInsets.symmetric(horizontal: 20, vertical: 15),
+              onTap: onTap,
+              title: Row(
+                children: <Widget>[
+                  Expanded(child: Text(invoiceItem.productKey)),
+                  Text(formatNumber(invoiceItem.total, context,
+                      clientId: invoice.clientId)),
+                ],
               ),
-              Divider(
-                height: 1.0,
-              ),
-            ],
-          ),
+              subtitle: Text(subtitle),
+              trailing: onTap != null ? Icon(Icons.navigate_next) : null,
+            ),
+            Divider(
+              height: 1.0,
+            ),
+          ],
         ));
   }
 }

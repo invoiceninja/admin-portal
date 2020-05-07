@@ -332,6 +332,8 @@ abstract class InvoiceEntity extends Object
 
   bool get hasClient => '${clientId ?? ''}'.isNotEmpty;
 
+  bool get hasInvoice => '${invoiceId ?? ''}'.isNotEmpty;
+
   int get age {
     int ageInDays = 0;
     if (isPastDue) {
@@ -497,9 +499,7 @@ abstract class InvoiceEntity extends Object
       }
 
       if (invitations.isNotEmpty && !multiselect) {
-        if (includeEdit) {
-          actions.add(EntityAction.pdf);
-        }
+        actions.add(EntityAction.pdf);
       }
 
       if (userCompany.canEditEntity(this)) {

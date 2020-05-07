@@ -1,10 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:invoiceninja_flutter/data/models/entities.dart';
-import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/redux/settings/settings_actions.dart';
-import 'package:invoiceninja_flutter/redux/ui/pref_state.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/save_cancel_buttons.dart';
 import 'package:invoiceninja_flutter/ui/app/menu_drawer_vm.dart';
 import 'package:invoiceninja_flutter/utils/icons.dart';
@@ -43,20 +41,18 @@ class EditScaffold extends StatelessWidget {
 
     Widget leading;
     if (isFullscreen) {
-      leading = Builder(
-        builder: (context) => GestureDetector(
-          child: IconButton(
-            icon: Icon(Icons.menu),
-            onPressed: () {
-              if (isMobile(context) || state.prefState.isMenuFloated) {
+      if (isMobile(context) || state.prefState.isMenuFloated) {
+        leading = Builder(
+          builder: (context) => GestureDetector(
+            child: IconButton(
+              icon: Icon(Icons.menu),
+              onPressed: () {
                 Scaffold.of(context).openDrawer();
-              } else {
-                store.dispatch(UserSettingsChanged(sidebar: AppSidebar.menu));
-              }
-            },
+              },
+            ),
           ),
-        ),
-      );
+        );
+      }
     } else if (isNotMobile(context) && entity != null) {
       leading = Icon(getEntityIcon(entity.entityType));
     }

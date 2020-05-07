@@ -11,7 +11,6 @@ import 'package:invoiceninja_flutter/ui/app/forms/save_cancel_buttons.dart';
 import 'package:invoiceninja_flutter/ui/app/list_scaffold.dart';
 import 'package:invoiceninja_flutter/ui/app/entities/entity_actions_dialog.dart';
 import 'package:invoiceninja_flutter/ui/app/list_filter.dart';
-import 'package:invoiceninja_flutter/ui/app/list_filter_button.dart';
 import 'package:invoiceninja_flutter/ui/document/document_list_vm.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 
@@ -52,21 +51,13 @@ class DocumentScreen extends StatelessWidget {
             context, documents, EntityAction.toggleMultiselect);
       },
       appBarTitle: ListFilter(
-        title: localization.documents,
-        key: ValueKey(state.documentListState.filterClearedAt),
+        placeholder: localization.searchDocuments,
         filter: state.documentListState.filter,
         onFilterChanged: (value) {
           store.dispatch(FilterDocuments(value));
         },
       ),
       appBarActions: [
-        if (!viewModel.isInMultiselect)
-          ListFilterButton(
-            filter: state.documentListState.filter,
-            onFilterPressed: (String value) {
-              store.dispatch(FilterDocuments(value));
-            },
-          ),
         if (viewModel.isInMultiselect)
           SaveCancelButtons(
             saveLabel: localization.done,

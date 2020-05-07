@@ -42,7 +42,7 @@ class ListScaffold extends StatelessWidget {
     final store = StoreProvider.of<AppState>(context);
     final state = store.state;
 
-    Widget leading;
+    Widget leading = SizedBox();
     if (showCheckbox && state.prefState.isModuleList) {
       leading = Checkbox(
           materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
@@ -63,18 +63,14 @@ class ListScaffold extends StatelessWidget {
               )
             : null;
       }
-    } else {
+    } else if (isMobile(context) || state.prefState.isMenuFloated) {
       leading = Builder(
         builder: (context) => GestureDetector(
           onLongPress: onHamburgerLongPress,
           child: IconButton(
             icon: Icon(Icons.menu),
             onPressed: () {
-              if (isMobile(context) || state.prefState.isMenuFloated) {
-                Scaffold.of(context).openDrawer();
-              } else {
-                store.dispatch(UserSettingsChanged(sidebar: AppSidebar.menu));
-              }
+              Scaffold.of(context).openDrawer();
             },
           ),
         ),
