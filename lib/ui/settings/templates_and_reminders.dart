@@ -328,7 +328,7 @@ class _TemplatesAndRemindersState extends State<TemplatesAndReminders>
                             .values
                             .toList()),
                   ],
-                ),                
+                ),
             ],
           ),
           EmailPreview(
@@ -492,6 +492,55 @@ class _ReminderSettingsState extends State<ReminderSettings> {
   }
 }
 
+class EmailPreview extends StatelessWidget {
+  const EmailPreview({
+    @required this.subject,
+    @required this.body,
+    @required this.isLoading,
+  });
+
+  final String subject;
+  final String body;
+  final bool isLoading;
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      color: Colors.white,
+      child: Stack(
+        alignment: Alignment.topCenter,
+        children: <Widget>[
+          if (isLoading)
+            SizedBox(
+              child: LinearProgressIndicator(),
+            ),
+          Column(
+            mainAxisSize: MainAxisSize.max,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: <Widget>[
+              Padding(
+                padding: const EdgeInsets.all(14),
+                child: Text(
+                  subject,
+                  style: Theme.of(context).textTheme.bodyText1.copyWith(
+                        color: Colors.black,
+                        fontWeight: FontWeight.w700,
+                      ),
+                ),
+              ),
+              Expanded(
+                child: TemplatePreview(
+                  html: body,
+                ),
+              ),
+            ],
+          )
+        ],
+      ),
+    );
+  }
+}
+
 class TemplatePreview extends StatefulWidget {
   const TemplatePreview({Key key, this.html}) : super(key: key);
 
@@ -523,8 +572,14 @@ class _TemplatePreviewState extends State<TemplatePreview>
     super.build(context);
 
     if (kIsWeb) {
-      registerWebView(widget.html);
-      return HtmlElementView(viewType: widget.html);
+      final html =
+          'data:text/html;charset=utf-8,' + Uri.encodeComponent(widget.html);
+      registerWebView(html);
+      return AbsorbPointer(
+        child: RepaintBoundary(
+          child: HtmlElementView(viewType: html),
+        ),
+      );
     } else {
       return WebView(
         //debuggingEnabled: true,
@@ -536,54 +591,5 @@ class _TemplatePreviewState extends State<TemplatePreview>
         javascriptMode: JavascriptMode.disabled,
       );
     }
-  }
-}
-
-class EmailPreview extends StatelessWidget {
-  const EmailPreview({
-    @required this.subject,
-    @required this.body,
-    @required this.isLoading,
-  });
-
-  final String subject;
-  final String body;
-  final bool isLoading;
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      color: Colors.white,
-      child: Stack(
-        alignment: Alignment.topCenter,
-        children: <Widget>[
-          if (isLoading)
-            SizedBox(
-              child: LinearProgressIndicator(),
-            ),
-          Column(
-            mainAxisSize: MainAxisSize.max,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: <Widget>[
-              Padding(
-                padding: const EdgeInsets.all(14),
-                child: Text(
-                  subject,
-                  style: Theme.of(context).textTheme.headline6.copyWith(
-                        color: Colors.black,
-                        fontWeight: FontWeight.w700,
-                      ),
-                ),
-              ),
-              Expanded(
-                child: TemplatePreview(
-                  html: body,
-                ),
-              ),
-            ],
-          )
-        ],
-      ),
-    );
   }
 }
