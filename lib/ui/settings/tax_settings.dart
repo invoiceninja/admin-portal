@@ -75,6 +75,8 @@ class _TaxSettingsState extends State<TaxSettings> {
                 value: settings.enableInclusiveTaxes,
                 onChanged: (value) => viewModel.onSettingsChanged(
                     settings.rebuild((b) => b..enableInclusiveTaxes = value)),
+                helpLabel:
+                    '${localization.exclusive}: 100 + 10% = 100 + 10\n${localization.inclusive}: 100 + 10% = 90.91 + 9.09',
               ),
             ],
           ),
