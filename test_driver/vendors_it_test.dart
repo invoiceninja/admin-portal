@@ -26,7 +26,7 @@ void runTestSuite({bool batchMode = false}) {
       await login(driver, retype: batchMode);
 
       print('View vendors');
-      viewSection(driver: driver, name: localization.vendors);
+      await viewSection(driver: driver, name: localization.vendors);
     });
 
     tearDownAll(() async {

@@ -8,6 +8,7 @@ import 'package:invoiceninja_flutter/ui/app/app_bottom_bar.dart';
 import 'package:invoiceninja_flutter/ui/app/history_drawer_vm.dart';
 import 'package:invoiceninja_flutter/utils/platforms.dart';
 
+import '../../constants.dart';
 import 'menu_drawer_vm.dart';
 
 class ListScaffold extends StatelessWidget {
@@ -68,6 +69,7 @@ class ListScaffold extends StatelessWidget {
         builder: (context) => GestureDetector(
           onLongPress: onHamburgerLongPress,
           child: IconButton(
+            key: Key(kDrawerKey),
             icon: Icon(Icons.menu),
             onPressed: () {
               Scaffold.of(context).openDrawer();

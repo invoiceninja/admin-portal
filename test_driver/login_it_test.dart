@@ -35,7 +35,7 @@ void main() {
       });
 
       test('Logout from a logged in user', () async {
-        await logout(driver, localization);
+        await logout(driver, localization, fromDashboard: true);
       });
     });
   });

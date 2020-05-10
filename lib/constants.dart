@@ -580,3 +580,5 @@ const kPageSizes = [
   'Letter',
   'Tabloid',
 ];
+
+const String kDrawerKey = 'drawer_key';

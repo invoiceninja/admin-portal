@@ -17,7 +17,7 @@ EntityUIState clientUIReducer(ClientUIState state, dynamic action) {
     ..editingContact
         .replace(editingContactReducer(state.editingContact, action))
     ..selectedId = selectedIdReducer(state.selectedId, action)
-    ..saveCompleter = saveCompleterReducer(state.saveCompleter, action)
+    //..saveCompleter = saveCompleterReducer(state.saveCompleter, action)
     ..cancelCompleter = cancelCompleterReducer(state.cancelCompleter, action));
 }
 
