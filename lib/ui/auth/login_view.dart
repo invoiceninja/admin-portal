@@ -270,8 +270,7 @@ class _LoginState extends State<LoginView> {
     final TextStyle aboutTextStyle = themeData.textTheme.bodyText2;
     final TextStyle linkStyle = themeData.textTheme.bodyText2
         .copyWith(color: convertHexStringToColor(kDefaultAccentColor));
-    //final showHostedOptions = viewModel.authState.isHosted || !kIsWeb;
-    final showHostedOptions = !kReleaseMode;
+    final showHostedOptions = viewModel.authState.isHosted || !kIsWeb;
 
     return Stack(
       children: <Widget>[
