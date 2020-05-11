@@ -43,7 +43,7 @@ import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:invoiceninja_flutter/utils/platforms.dart';
 import 'package:local_auth/local_auth.dart';
 import 'package:redux/redux.dart';
-
+// STARTER: import - do not remove comment
 
 class InvoiceNinjaApp extends StatefulWidget {
   const InvoiceNinjaApp({Key key, this.store}) : super(key: key);
