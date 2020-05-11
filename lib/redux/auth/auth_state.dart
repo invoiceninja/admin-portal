@@ -7,11 +7,11 @@ import 'package:invoiceninja_flutter/.env.dart';
 part 'auth_state.g.dart';
 
 abstract class AuthState implements Built<AuthState, AuthStateBuilder> {
-  factory AuthState() {
+  factory AuthState({String url}) {
     return _$AuthState._(
       email: '',
       password: '',
-      url: '',
+      url: url ?? '',
       secret: '',
       isAuthenticated: false,
       isInitialized: false,
@@ -48,8 +48,23 @@ abstract class AuthState implements Built<AuthState, AuthStateBuilder> {
         kMillisecondsToReenterPassword;
   }
 
-  bool get isHosted =>
-      cleanApiUrl(url).isEmpty || cleanApiUrl(url) == kAppProductionUrl;
+  bool get isHosted {
+    final cleanUrl = cleanApiUrl(url);
+
+    if (cleanUrl.isEmpty) {
+      return true;
+    }
+
+    if (cleanUrl == kAppProductionUrl || cleanUrl == kAppStagingUrl) {
+      return true;
+    }
+
+    if (cleanUrl.startsWith('http://localhost')) {
+      return true;
+    }
+
+    return false;
+  }
 
   bool get isSelfHost => !isHosted;
 

@@ -36,6 +36,8 @@ import 'package:redux/redux.dart';
 import 'package:redux_logging/redux_logging.dart';
 import 'package:sentry/sentry.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:invoiceninja_flutter/utils/web_stub.dart'
+    if (dart.library.html) 'package:invoiceninja_flutter/utils/web.dart';
 // STARTER: import - do not remove comment
 
 void main({bool isTesting = false}) async {
@@ -136,6 +138,6 @@ Future<AppState> _initialState(bool isTesting) async {
   return AppState(
     prefState: prefState,
     currentRoute: currentRoute,
+    url: getBrowserUrl(),
   );
 }
-

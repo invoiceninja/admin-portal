@@ -70,7 +70,7 @@ class _LoginState extends State<LoginView> {
     ];
 
     _controllers
-        .forEach((dynamic controller) => controller.addListener(_onChanged));
+        .forEach((dynamic controller) => controller.removeListener(_onChanged));
 
     if (!kReleaseMode) {
       _urlController.text = Config.TEST_URL;
@@ -83,6 +83,13 @@ class _LoginState extends State<LoginView> {
       _termsChecked = true;
       _emailLogin = true;
     }
+
+    if (_urlController.text.isEmpty) {
+      _urlController.text = widget.viewModel.authState.url;
+    }
+
+    _controllers
+        .forEach((dynamic controller) => controller.addListener(_onChanged));
 
     /*
     if (cleanApiUrl(state.url).isNotEmpty) {
@@ -427,7 +434,8 @@ class _LoginState extends State<LoginView> {
                               textInputAction: TextInputAction.done,
                               autocorrect: false,
                               decoration: InputDecoration(
-                                  labelText: '${localization.secret} (${localization.optional})'),
+                                  labelText:
+                                      '${localization.secret} (${localization.optional})'),
                               obscureText: true,
                               onFieldSubmitted: (String value) =>
                                   FocusScope.of(context).nextFocus(),
@@ -597,7 +605,9 @@ class _LoginState extends State<LoginView> {
                                 ],
                               ),
                             ),
-                          if (!_createAccount && !_recoverPassword && showHostedOptions)
+                          if (!_createAccount &&
+                              !_recoverPassword &&
+                              showHostedOptions)
                             Padding(
                               padding: const EdgeInsets.all(6),
                               child: Row(
