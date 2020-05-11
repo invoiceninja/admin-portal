@@ -197,7 +197,7 @@ Middleware<AppState> _createOAuthSignUpRequest(AuthRepository repository) {
       store.dispatch(
           LoadAccountSuccess(completer: action.completer, loginResponse: data));
     }).catchError((Object error) {
-      print('Signup error: $error');
+      print('OAuth signup error: $error');
       if (action.completer != null) {
         action.completer.completeError(error);
       }
