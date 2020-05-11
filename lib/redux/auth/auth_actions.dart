@@ -103,8 +103,6 @@ class UserSignUpRequest implements StartLoading {
     this.lastName,
     this.email,
     this.password,
-    this.photoUrl,
-    this.oauthId,
     this.secret,
     this.url,
   });
@@ -114,10 +112,27 @@ class UserSignUpRequest implements StartLoading {
   final String lastName;
   final String email;
   final String password;
-  final String photoUrl;
-  final String oauthId;
   final String secret;
   final String url;
+}
+
+
+class OAuthSignUpRequest implements StartLoading {
+  OAuthSignUpRequest({
+    this.completer,
+    this.firstName,
+    this.lastName,
+    this.email,
+    this.photoUrl,
+    this.oauthId,
+  });
+
+  final Completer completer;
+  final String firstName;
+  final String lastName;
+  final String email;
+  final String photoUrl;
+  final String oauthId;
 }
 
 class UserVerifiedPassword {}

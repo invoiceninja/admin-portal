@@ -46,6 +46,30 @@ class AuthRepository {
         url: formatApiUrl(url) + '/signup', data: credentials, secret: secret);
   }
 
+  Future<LoginResponse> oauthSignUp({
+    @required String firstName,
+    @required String lastName,
+    @required String email,
+    @required String oauthId,
+    @required String photoUrl,
+  }) async {
+    final credentials = {
+      'email': email,
+      'first_name': firstName,
+      'last_name': lastName,
+      'terms_of_service': true,
+      'privacy_policy': true,
+      'token_name': _tokenName,
+      'oauth_id': oauthId,
+      'photo_url': photoUrl,
+    };
+
+    return sendRequest(
+        url: formatApiUrl(Constants.hostedApiUrl) + '/signup',
+        data: credentials,
+        secret: Config.API_SECRET);
+  }
+
   Future<LoginResponse> login(
       {String email,
       String password,

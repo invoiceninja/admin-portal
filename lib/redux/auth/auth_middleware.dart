@@ -21,8 +21,9 @@ List<Middleware<AppState>> createStoreAuthMiddleware([
 ]) {
   final userLogout = _createUserLogout();
   final loginRequest = _createLoginRequest(repository);
+  final oauthLoginRequest = _createOAuthLoginRequest(repository);
   final signUpRequest = _createSignUpRequest(repository);
-  final oauthRequest = _createOAuthRequest(repository);
+  final oauthSignUpRequest = _createOAuthSignUpRequest(repository);
   final refreshRequest = _createRefreshRequest(repository);
   final recoverRequest = _createRecoverRequest(repository);
   final addCompany = _createCompany(repository);
@@ -32,8 +33,9 @@ List<Middleware<AppState>> createStoreAuthMiddleware([
   return [
     TypedMiddleware<AppState, UserLogout>(userLogout),
     TypedMiddleware<AppState, UserLoginRequest>(loginRequest),
+    TypedMiddleware<AppState, OAuthLoginRequest>(oauthLoginRequest),
     TypedMiddleware<AppState, UserSignUpRequest>(signUpRequest),
-    TypedMiddleware<AppState, OAuthLoginRequest>(oauthRequest),
+    TypedMiddleware<AppState, OAuthSignUpRequest>(oauthSignUpRequest),
     TypedMiddleware<AppState, RefreshData>(refreshRequest),
     TypedMiddleware<AppState, RecoverPasswordRequest>(recoverRequest),
     TypedMiddleware<AppState, AddCompany>(addCompany),
@@ -147,7 +149,7 @@ Middleware<AppState> _createSignUpRequest(AuthRepository repository) {
   };
 }
 
-Middleware<AppState> _createOAuthRequest(AuthRepository repository) {
+Middleware<AppState> _createOAuthLoginRequest(AuthRepository repository) {
   return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
     final action = dynamicAction as OAuthLoginRequest;
 
@@ -168,6 +170,34 @@ Middleware<AppState> _createOAuthRequest(AuthRepository repository) {
           LoadAccountSuccess(completer: action.completer, loginResponse: data));
     }).catchError((Object error) {
       print('Oauth login error: $error');
+      if (action.completer != null) {
+        action.completer.completeError(error);
+      }
+      store.dispatch(UserLoginFailure(error));
+    });
+
+    next(action);
+  };
+}
+
+Middleware<AppState> _createOAuthSignUpRequest(AuthRepository repository) {
+  return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
+    final action = dynamicAction as OAuthSignUpRequest;
+
+    repository
+        .oauthSignUp(
+            email: action.email,
+            firstName: action.firstName,
+            lastName: action.lastName,
+            oauthId: action.oauthId,
+            photoUrl: action.photoUrl)
+        .then((data) {
+      _saveAuthLocal(email: action.email, secret: '', url: '');
+
+      store.dispatch(
+          LoadAccountSuccess(completer: action.completer, loginResponse: data));
+    }).catchError((Object error) {
+      print('Signup error: $error');
       if (action.completer != null) {
         action.completer.completeError(error);
       }

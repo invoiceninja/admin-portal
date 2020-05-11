@@ -143,7 +143,7 @@ class LoginVM {
 
             if (account != null) {
               account.authentication.then((GoogleSignInAuthentication value) {
-                store.dispatch(UserSignUpRequest(
+                store.dispatch(OAuthSignUpRequest(
                   completer: completer,
                   email: account.email,
                   firstName: getFirstName(account.displayName),
