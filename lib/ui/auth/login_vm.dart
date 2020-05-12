@@ -8,7 +8,6 @@ import 'package:invoiceninja_flutter/redux/dashboard/dashboard_actions.dart';
 import 'package:invoiceninja_flutter/redux/ui/pref_state.dart';
 import 'package:invoiceninja_flutter/ui/app/app_builder.dart';
 import 'package:invoiceninja_flutter/utils/platforms.dart';
-import 'package:invoiceninja_flutter/utils/strings.dart';
 import 'package:redux/redux.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/redux/auth/auth_actions.dart';
@@ -145,10 +144,6 @@ class LoginVM {
               account.authentication.then((GoogleSignInAuthentication value) {
                 store.dispatch(OAuthSignUpRequest(
                   completer: completer,
-                  email: account.email,
-                  firstName: getFirstName(account.displayName),
-                  lastName: getLastName(account.displayName),
-                  photoUrl: account.photoUrl,
                   oauthId: value.idToken,
                 ));
                 completer.future.then((_) => _handleLogin(context));

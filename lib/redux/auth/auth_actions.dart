@@ -120,18 +120,10 @@ class UserSignUpRequest implements StartLoading {
 class OAuthSignUpRequest implements StartLoading {
   OAuthSignUpRequest({
     this.completer,
-    this.firstName,
-    this.lastName,
-    this.email,
-    this.photoUrl,
     this.oauthId,
   });
 
   final Completer completer;
-  final String firstName;
-  final String lastName;
-  final String email;
-  final String photoUrl;
   final String oauthId;
 }
 

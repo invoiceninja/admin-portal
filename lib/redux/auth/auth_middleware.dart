@@ -184,15 +184,8 @@ Middleware<AppState> _createOAuthSignUpRequest(AuthRepository repository) {
   return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
     final action = dynamicAction as OAuthSignUpRequest;
 
-    repository
-        .oauthSignUp(
-            email: action.email,
-            firstName: action.firstName,
-            lastName: action.lastName,
-            oauthId: action.oauthId,
-            photoUrl: action.photoUrl)
-        .then((data) {
-      _saveAuthLocal(email: action.email, secret: '', url: '');
+    repository.oauthSignUp(oauthId: action.oauthId).then((data) {
+      _saveAuthLocal(email: '', secret: '', url: '');
 
       store.dispatch(
           LoadAccountSuccess(completer: action.completer, loginResponse: data));

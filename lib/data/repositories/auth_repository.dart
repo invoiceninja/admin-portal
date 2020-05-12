@@ -47,21 +47,13 @@ class AuthRepository {
   }
 
   Future<LoginResponse> oauthSignUp({
-    @required String firstName,
-    @required String lastName,
-    @required String email,
     @required String oauthId,
-    @required String photoUrl,
   }) async {
     final credentials = {
-      'email': email,
-      'first_name': firstName,
-      'last_name': lastName,
       'terms_of_service': true,
       'privacy_policy': true,
       'token_name': _tokenName,
       'token': oauthId,
-      'photo_url': photoUrl,
       'provider': 'google',
     };
 
