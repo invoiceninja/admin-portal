@@ -16,7 +16,6 @@ import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:invoiceninja_flutter/ui/app/form_card.dart';
 import 'package:invoiceninja_flutter/utils/platforms.dart';
 import 'package:invoiceninja_flutter/.env.dart';
-import 'package:url_launcher/url_launcher.dart';
 
 class LoginView extends StatefulWidget {
   const LoginView({
@@ -51,7 +50,7 @@ class _LoginState extends State<LoginView> {
   bool _emailLogin = false;
   bool _isSelfHosted = false;
 
-  bool _createAccount = false;
+  bool _createAccount = true;
   bool _recoverPassword = false;
   bool _autoValidate = false;
   bool _termsChecked = false;
@@ -73,6 +72,7 @@ class _LoginState extends State<LoginView> {
     _controllers
         .forEach((dynamic controller) => controller.removeListener(_onChanged));
 
+    /*
     if (!kReleaseMode) {
       _urlController.text = Config.TEST_URL;
       _secretController.text = Config.TEST_SECRET;
@@ -84,6 +84,8 @@ class _LoginState extends State<LoginView> {
       _termsChecked = true;
       _emailLogin = true;
     }
+
+     */
 
     if (_urlController.text.isEmpty) {
       _urlController.text = widget.viewModel.authState.url;
@@ -274,14 +276,10 @@ class _LoginState extends State<LoginView> {
     final isOneTimePassword = _loginError.contains(OTP_ERROR) ||
         _oneTimePasswordController.text.isNotEmpty;
 
-    final bool isDesktop = calculateLayout(context) != AppLayout.mobile;
-    final width = MediaQuery.of(context).size.width;
-
     final ThemeData themeData = Theme.of(context);
     final TextStyle aboutTextStyle = themeData.textTheme.bodyText2;
     final TextStyle linkStyle = themeData.textTheme.bodyText2
         .copyWith(color: convertHexStringToColor(kDefaultAccentColor));
-    final showHostedOptions = viewModel.authState.isHosted || !kIsWeb;
 
     return Stack(
       children: <Widget>[
@@ -316,7 +314,7 @@ class _LoginState extends State<LoginView> {
               child: Form(
                 key: _formKey,
                 child: FormCard(
-                  forceNarrow: isDesktop,
+                  forceNarrow: calculateLayout(context) != AppLayout.mobile,
                   children: <Widget>[
                     if (isOneTimePassword)
                       DecoratedFormField(
@@ -327,40 +325,50 @@ class _LoginState extends State<LoginView> {
                       Column(
                         children: <Widget>[
                           SizedBox(height: 10),
-                          Padding(
-                            padding: const EdgeInsets.only(bottom: 10),
-                            child: ToggleButtons(
-                              constraints: BoxConstraints(),
-                              children: [
-                                Container(
-                                  width: isDesktop ? 178 : (width - 70) / 2,
-                                  height: 40,
-                                  child: Center(
-                                      child: Text(
-                                          localization.hosted.toUpperCase())),
-                                ),
-                                Container(
-                                  width: isDesktop ? 178 : (width - 70) / 2,
-                                  height: 40,
-                                  child: Center(
-                                      child: Text(localization.selfhosted
-                                          .toUpperCase())),
-                                ),
+                          _ToggleButtons(
+                            tabLabels: [
+                              localization.hosted,
+                              localization.selfhosted,
+                            ],
+                            selectedIndex: _isSelfHosted ? 1 : 0,
+                            onTabChanged: (index) {
+                              setState(() {
+                                _isSelfHosted = index == 1;
+                                _loginError = '';
+                                _emailLogin = _isSelfHosted;
+                                _createAccount = !_isSelfHosted;
+                              });
+                            },
+                          ),
+                          if (!_isSelfHosted)
+                            _ToggleButtons(
+                              tabLabels: [
+                                localization.signUp,
+                                localization.login,
                               ],
-                              isSelected:
-                                  _isSelfHosted ? [false, true] : [true, false],
-                              onPressed: (index) {
+                              selectedIndex: _createAccount ? 0 : 1,
+                              onTabChanged: (index) {
                                 setState(() {
-                                  _isSelfHosted = index == 1;
+                                  _createAccount = index == 0;
                                   _loginError = '';
-                                  if (_isSelfHosted) {
-                                    _emailLogin = true;
-                                    _createAccount = false;
-                                  }
                                 });
                               },
                             ),
-                          ),
+                          if (!_isSelfHosted)
+                            _ToggleButtons(
+                              tabLabels: [
+                                'Google',
+                                localization.email,
+                              ],
+                              selectedIndex: _emailLogin ? 1 : 0,
+                              onTabChanged: (index) {
+                                setState(() {
+                                  _emailLogin = index == 1;
+                                  _loginError = '';
+                                });
+                              },
+                            ),
+                          SizedBox(height: 10),
                           if (_createAccount && _emailLogin)
                             DecoratedFormField(
                               label: localization.firstName,
@@ -583,68 +591,6 @@ class _LoginState extends State<LoginView> {
                         mainAxisAlignment: MainAxisAlignment.center,
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: <Widget>[
-                          if (!_recoverPassword &&
-                              showHostedOptions &&
-                              !_isSelfHosted)
-                            Padding(
-                              padding: const EdgeInsets.all(6),
-                              child: Row(
-                                mainAxisSize: MainAxisSize.max,
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: <Widget>[
-                                  Icon(FontAwesomeIcons.solidEnvelope,
-                                      size: 16),
-                                  _emailLogin
-                                      ? FlatButton(
-                                          onPressed: () => setState(() {
-                                                _emailLogin = false;
-                                                _loginError = '';
-                                              }),
-                                          child: Text(_createAccount
-                                              ? localization.googleSignUp
-                                              : localization.googleLogin))
-                                      : FlatButton(
-                                          key:
-                                              ValueKey(localization.emailLogin),
-                                          onPressed: () => setState(() {
-                                                _emailLogin = true;
-                                                _loginError = '';
-                                              }),
-                                          child: Text(_createAccount
-                                              ? localization.emailSignUp
-                                              : localization.emailLogin)),
-                                ],
-                              ),
-                            ),
-                          if (!_recoverPassword && !_isSelfHosted)
-                            Padding(
-                              padding: const EdgeInsets.all(6),
-                              child: Row(
-                                mainAxisSize: MainAxisSize.max,
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: <Widget>[
-                                  Icon(FontAwesomeIcons.user, size: 16),
-                                  _createAccount
-                                      ? FlatButton(
-                                          onPressed: () => setState(() {
-                                                _createAccount = false;
-                                                _loginError = '';
-                                              }),
-                                          child:
-                                              Text(localization.accountLogin))
-                                      : FlatButton(
-                                          key: ValueKey(
-                                              localization.createAccount),
-                                          onPressed: () => setState(() {
-                                                _createAccount = true;
-                                                //_isSelfHosted = false;
-                                                _loginError = '';
-                                              }),
-                                          child:
-                                              Text(localization.createAccount)),
-                                ],
-                              ),
-                            ),
                           if (!_createAccount && _emailLogin)
                             Padding(
                               padding: const EdgeInsets.all(6),
@@ -666,26 +612,6 @@ class _LoginState extends State<LoginView> {
                                         }),
                                   ]),
                             ),
-                          Padding(
-                            padding: const EdgeInsets.all(6),
-                            child: Row(
-                                mainAxisSize: MainAxisSize.max,
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: <Widget>[
-                                  Icon(FontAwesomeIcons.externalLinkAlt,
-                                      size: 16),
-                                  FlatButton(
-                                    child: Text(localization.viewWebsite),
-                                    onPressed: () async {
-                                      if (await canLaunch(kSiteUrl)) {
-                                        await launch(kSiteUrl,
-                                            forceSafariVC: false,
-                                            forceWebView: false);
-                                      }
-                                    },
-                                  ),
-                                ]),
-                          ),
                         ],
                       ),
                     if (isOneTimePassword && !viewModel.isLoading)
@@ -738,4 +664,44 @@ class ArcClipper extends CustomClipper<Path> {
 
   @override
   bool shouldReclip(CustomClipper<Path> oldClipper) => false;
+}
+
+class _ToggleButtons extends StatelessWidget {
+  const _ToggleButtons({
+    @required this.selectedIndex,
+    @required this.onTabChanged,
+    @required this.tabLabels,
+  });
+
+  final List<String> tabLabels;
+  final int selectedIndex;
+  final Function(int) onTabChanged;
+
+  @override
+  Widget build(BuildContext context) {
+    final bool isDesktop = calculateLayout(context) != AppLayout.mobile;
+    final width = MediaQuery.of(context).size.width;
+    final double toggleWidth = isDesktop ? 178 : (width - 70) / 2;
+
+    return Padding(
+      padding: const EdgeInsets.only(bottom: 20),
+      child: ToggleButtons(
+        constraints: BoxConstraints(),
+        children: [
+          Container(
+            width: toggleWidth,
+            height: 40,
+            child: Center(child: Text(tabLabels[0].toUpperCase())),
+          ),
+          Container(
+            width: toggleWidth,
+            height: 40,
+            child: Center(child: Text(tabLabels[1].toUpperCase())),
+          ),
+        ],
+        isSelected: selectedIndex == 0 ? [true, false] : [false, true],
+        onPressed: (index) => onTabChanged(index),
+      ),
+    );
+  }
 }

@@ -16,7 +16,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
     'en': {
       // STARTER: lang key - do not remove comment
       'hosted': 'Hosted',
-      'selfhosted': 'Selfhosted',
+      'selfhosted': 'Self-Hosted',
       'exclusive': 'Exclusive',
       'inclusive': 'Inclusive',
       'hide_menu': 'Hide Menu',
