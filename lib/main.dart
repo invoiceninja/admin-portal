@@ -115,6 +115,7 @@ Future<AppState> _initialState(bool isTesting) async {
   final prefString = prefs?.getString(kSharedPrefs);
 
   var prefState = PrefState();
+
   if (prefString != null) {
     try {
       prefState = serializers.deserializeWith(
