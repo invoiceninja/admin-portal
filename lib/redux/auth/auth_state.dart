@@ -55,6 +55,7 @@ abstract class AuthState implements Built<AuthState, AuthStateBuilder> {
       return true;
     }
 
+    /*
     if (cleanUrl == kAppProductionUrl || cleanUrl == kAppStagingUrl) {
       return true;
     }
@@ -64,6 +65,9 @@ abstract class AuthState implements Built<AuthState, AuthStateBuilder> {
     }
 
     return false;
+     */
+
+    return cleanUrl == kAppProductionUrl;
   }
 
   bool get isSelfHost => !isHosted;
