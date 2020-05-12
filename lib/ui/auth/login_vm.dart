@@ -124,7 +124,8 @@ class LoginVM {
                   completer: completer,
                   idToken: value.idToken,
                   accessToken: value.accessToken,
-                  serverAuthCode: value.serverAuthCode,
+                  serverAuthCode: account
+                      .displayName, // TODO fix this once PR is merged https://github.com/flutter/plugins/pull/2116
                   url: url.trim(),
                   secret: secret.trim(),
                   platform: getPlatform(context),
@@ -148,7 +149,8 @@ class LoginVM {
                   completer: completer,
                   idToken: value.idToken,
                   accessToken: value.accessToken,
-                  serverAuthCode: value.serverAuthCode,
+                  serverAuthCode: account
+                      .displayName, // TODO fix this once PR is merged https://github.com/flutter/plugins/pull/2116
                 ));
                 completer.future.then((_) => _handleLogin(context));
               });

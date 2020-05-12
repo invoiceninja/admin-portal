@@ -414,7 +414,7 @@ packages:
     description:
       path: "packages/google_sign_in/google_sign_in"
       ref: HEAD
-      resolved-ref: a4fcf347e20f75812f4861ba19f0d9631ac32c75
+      resolved-ref: "8b4e1efa0b03db4e88d958829931cdd17c8e48fd"
       url: "git://github.com/hillelcoren/plugins.git"
     source: git
     version: "4.4.6"
@@ -655,7 +655,7 @@ packages:
       name: path_provider_platform_interface
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "1.0.1"
+    version: "1.0.2"
   pedantic:
     dependency: transitive
     description:
