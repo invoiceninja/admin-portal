@@ -352,7 +352,7 @@ class _LoginState extends State<LoginView> {
                               onPressed: (index) {
                                 setState(() {
                                   _isSelfHosted = index == 1;
-
+                                  _loginError = '';
                                   if (_isSelfHosted) {
                                     _emailLogin = true;
                                     _createAccount = false;
@@ -583,7 +583,7 @@ class _LoginState extends State<LoginView> {
                         mainAxisAlignment: MainAxisAlignment.center,
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: <Widget>[
-                          if (!_recoverPassword && showHostedOptions)
+                          if (!_recoverPassword && showHostedOptions && !_isSelfHosted)
                             Padding(
                               padding: const EdgeInsets.all(6),
                               child: Row(
@@ -642,37 +642,6 @@ class _LoginState extends State<LoginView> {
                                               Text(localization.createAccount)),
                                 ],
                               ),
-                            ),
-                          if (!_createAccount &&
-                              !_recoverPassword &&
-                              showHostedOptions)
-                            Padding(
-                              padding: const EdgeInsets.all(6),
-                              child: Row(
-                                  mainAxisSize: MainAxisSize.max,
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: <Widget>[
-                                    Icon(FontAwesomeIcons.userCog, size: 16),
-                                    _isSelfHosted
-                                        ? FlatButton(
-                                            onPressed: () => setState(() {
-                                                  _isSelfHosted = false;
-                                                  _loginError = '';
-                                                }),
-                                            child:
-                                                Text(localization.hostedLogin))
-                                        : FlatButton(
-                                            key: ValueKey(
-                                                localization.selfhostLogin),
-                                            onPressed: () => setState(() {
-                                                  _isSelfHosted = true;
-                                                  _createAccount = false;
-                                                  _emailLogin = true;
-                                                  _loginError = '';
-                                                }),
-                                            child: Text(
-                                                localization.selfhostLogin)),
-                                  ]),
                             ),
                           if (!_createAccount && _emailLogin)
                             Padding(
