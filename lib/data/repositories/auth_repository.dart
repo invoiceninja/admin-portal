@@ -62,10 +62,11 @@ class AuthRepository {
       'token_name': _tokenName,
       'oauth_id': oauthId,
       'photo_url': photoUrl,
+      'provider': 'google',
     };
 
     return sendRequest(
-        url: formatApiUrl(Constants.hostedApiUrl) + '/signup',
+        url: formatApiUrl(Constants.hostedApiUrl) + '/oauth_login?create=true',
         data: credentials,
         secret: Config.API_SECRET);
   }
