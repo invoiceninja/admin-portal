@@ -333,14 +333,14 @@ class _LoginState extends State<LoginView> {
                               constraints: BoxConstraints(),
                               children: [
                                 Container(
-                                  width: isDesktop ? 178 : (width - 44) / 2,
+                                  width: isDesktop ? 178 : (width - 80) / 2,
                                   height: 40,
                                   child: Center(
                                       child: Text(
                                           localization.hosted.toUpperCase())),
                                 ),
                                 Container(
-                                  width: isDesktop ? 178 : (width - 44) / 2,
+                                  width: isDesktop ? 178 : (width - 80) / 2,
                                   height: 40,
                                   child: Center(
                                       child: Text(localization.selfhosted
@@ -583,7 +583,9 @@ class _LoginState extends State<LoginView> {
                         mainAxisAlignment: MainAxisAlignment.center,
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: <Widget>[
-                          if (!_recoverPassword && showHostedOptions && !_isSelfHosted)
+                          if (!_recoverPassword &&
+                              showHostedOptions &&
+                              !_isSelfHosted)
                             Padding(
                               padding: const EdgeInsets.all(6),
                               child: Row(
@@ -664,6 +666,7 @@ class _LoginState extends State<LoginView> {
                                         }),
                                   ]),
                             ),
+                          /*
                           if (_createAccount)
                             Padding(
                               padding: const EdgeInsets.all(6),
@@ -684,7 +687,8 @@ class _LoginState extends State<LoginView> {
                                       },
                                     ),
                                   ]),
-                            ),
+                            ),                            
+                           */
                         ],
                       ),
                     if (isOneTimePassword && !viewModel.isLoading)

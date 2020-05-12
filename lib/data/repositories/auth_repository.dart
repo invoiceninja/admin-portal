@@ -60,7 +60,7 @@ class AuthRepository {
       'terms_of_service': true,
       'privacy_policy': true,
       'token_name': _tokenName,
-      'oauth_id': oauthId,
+      'token': oauthId,
       'photo_url': photoUrl,
       'provider': 'google',
     };
