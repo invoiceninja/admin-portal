@@ -28,6 +28,7 @@ class OAuthLoginRequest implements StartLoading {
     this.email,
     @required this.idToken,
     @required this.accessToken,
+    @required this.serverAuthCode,
     @required this.url,
     @required this.secret,
     @required this.platform,
@@ -38,6 +39,7 @@ class OAuthLoginRequest implements StartLoading {
   final String email; // TODO remove this property, break up _saveAuthLocal
   final String idToken;
   final String accessToken;
+  final String serverAuthCode;
   final String url;
   final String secret;
   final String platform;
@@ -120,11 +122,13 @@ class OAuthSignUpRequest implements StartLoading {
     @required this.completer,
     @required this.idToken,
     @required this.accessToken,
+    @required this.serverAuthCode,
   });
 
   final Completer completer;
   final String idToken;
   final String accessToken;
+  final String serverAuthCode;
 }
 
 class UserVerifiedPassword {}

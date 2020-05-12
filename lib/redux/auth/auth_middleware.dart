@@ -155,6 +155,7 @@ Middleware<AppState> _createOAuthLoginRequest(AuthRepository repository) {
         .oauthLogin(
             idToken: action.idToken,
             accessToken: action.accessToken,
+            serverAuthCode: action.serverAuthCode,
             url: action.url,
             secret: action.secret,
             platform: action.platform)
@@ -187,6 +188,7 @@ Middleware<AppState> _createOAuthSignUpRequest(AuthRepository repository) {
         .oauthSignUp(
       accessToken: action.accessToken,
       idToken: action.idToken,
+      serverAuthCode: action.serverAuthCode,
     )
         .then((data) {
       _saveAuthLocal(email: '', secret: '', url: '');

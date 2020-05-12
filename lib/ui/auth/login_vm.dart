@@ -124,6 +124,7 @@ class LoginVM {
                   completer: completer,
                   idToken: value.idToken,
                   accessToken: value.accessToken,
+                  serverAuthCode: value.serverAuthCode,
                   url: url.trim(),
                   secret: secret.trim(),
                   platform: getPlatform(context),
@@ -147,6 +148,7 @@ class LoginVM {
                   completer: completer,
                   idToken: value.idToken,
                   accessToken: value.accessToken,
+                  serverAuthCode: value.serverAuthCode,
                 ));
                 completer.future.then((_) => _handleLogin(context));
               });
