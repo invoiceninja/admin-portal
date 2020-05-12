@@ -414,7 +414,7 @@ packages:
     description:
       path: "packages/google_sign_in/google_sign_in"
       ref: HEAD
-      resolved-ref: "5d797d5416770a4b11f5c873893c69eeced410ec"
+      resolved-ref: a4fcf347e20f75812f4861ba19f0d9631ac32c75
       url: "git://github.com/hillelcoren/plugins.git"
     source: git
     version: "4.4.6"

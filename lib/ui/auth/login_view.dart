@@ -365,7 +365,6 @@ class _LoginState extends State<LoginView> {
                                 });
                               },
                             ),
-                          SizedBox(height: 10),
                           if (_createAccount && _emailLogin)
                             DecoratedFormField(
                               label: localization.firstName,
