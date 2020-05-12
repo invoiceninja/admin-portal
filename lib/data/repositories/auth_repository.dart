@@ -47,13 +47,15 @@ class AuthRepository {
   }
 
   Future<LoginResponse> oauthSignUp({
-    @required String oauthId,
+    @required String idToken,
+    @required String accessToken,
   }) async {
     final credentials = {
       'terms_of_service': true,
       'privacy_policy': true,
       'token_name': _tokenName,
-      'token': oauthId,
+      'id_token': idToken,
+      'access_token': accessToken,
       'provider': 'google',
     };
 
@@ -82,9 +84,14 @@ class AuthRepository {
   }
 
   Future<LoginResponse> oauthLogin(
-      {String token, String url, String secret, String platform}) async {
+      {@required String idToken,
+      @required String accessToken,
+      @required String url,
+      @required String secret,
+      @required String platform}) async {
     final credentials = {
-      'token': token,
+      'id_token': idToken,
+      'access_token': accessToken,
       'provider': 'google',
     };
     url = formatApiUrl(url) + '/oauth_login';

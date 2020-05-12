@@ -72,8 +72,7 @@ class _LoginState extends State<LoginView> {
     _controllers
         .forEach((dynamic controller) => controller.removeListener(_onChanged));
 
-    /*
-    if (!kReleaseMode) {
+    if (!kReleaseMode && Config.TEST_EMAIL.isNotEmpty) {
       _urlController.text = Config.TEST_URL;
       _secretController.text = Config.TEST_SECRET;
       _emailController.text = Config.TEST_EMAIL;
@@ -84,8 +83,6 @@ class _LoginState extends State<LoginView> {
       _termsChecked = true;
       _emailLogin = true;
     }
-
-     */
 
     if (_urlController.text.isEmpty) {
       _urlController.text = widget.viewModel.authState.url;

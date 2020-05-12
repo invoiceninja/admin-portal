@@ -125,12 +125,10 @@ Middleware<AppState> _createSignUpRequest(AuthRepository repository) {
 
     repository
         .signUp(
-      url: action.url,
       email: action.email,
       password: action.password,
       firstName: action.firstName,
       lastName: action.lastName,
-      secret: action.secret,
     )
         .then((data) {
       _saveAuthLocal(email: action.email, secret: '', url: '');
@@ -155,7 +153,8 @@ Middleware<AppState> _createOAuthLoginRequest(AuthRepository repository) {
 
     repository
         .oauthLogin(
-            token: action.token,
+            idToken: action.idToken,
+            accessToken: action.accessToken,
             url: action.url,
             secret: action.secret,
             platform: action.platform)
@@ -184,7 +183,12 @@ Middleware<AppState> _createOAuthSignUpRequest(AuthRepository repository) {
   return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
     final action = dynamicAction as OAuthSignUpRequest;
 
-    repository.oauthSignUp(oauthId: action.oauthId).then((data) {
+    repository
+        .oauthSignUp(
+      accessToken: action.accessToken,
+      idToken: action.idToken,
+    )
+        .then((data) {
       _saveAuthLocal(email: '', secret: '', url: '');
 
       store.dispatch(

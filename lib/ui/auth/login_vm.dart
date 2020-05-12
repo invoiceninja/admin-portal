@@ -122,7 +122,8 @@ class LoginVM {
               account.authentication.then((GoogleSignInAuthentication value) {
                 store.dispatch(OAuthLoginRequest(
                   completer: completer,
-                  token: value.idToken,
+                  idToken: value.idToken,
+                  accessToken: value.accessToken,
                   url: url.trim(),
                   secret: secret.trim(),
                   platform: getPlatform(context),
@@ -144,7 +145,8 @@ class LoginVM {
               account.authentication.then((GoogleSignInAuthentication value) {
                 store.dispatch(OAuthSignUpRequest(
                   completer: completer,
-                  oauthId: value.idToken,
+                  idToken: value.idToken,
+                  accessToken: value.accessToken,
                 ));
                 completer.future.then((_) => _handleLogin(context));
               });
