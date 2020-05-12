@@ -605,7 +605,6 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'google_sign_up': 'Google Sign Up',
       'thank_you_for_your_purchase': 'Thank you for your purchase!',
       'redeem': 'Redeem',
-      'sign_up_with_google': 'Sign Up With Google',
       'back': 'Back',
       'past_purchases': 'Past Purchases',
       'annual_subscription': 'Annual Subscription',
@@ -34838,8 +34837,8 @@ mixin LocalizationsProvider on LocaleCodeAware {
 
   String get signUp => _localizedValues[localeCode]['sign_up'] ?? '';
 
-  String get signUpWithGoogle =>
-      _localizedValues[localeCode]['sign_up_with_google'] ?? '';
+  String get googleSignUp =>
+      _localizedValues[localeCode]['google_sign_up'] ?? '';
 
   String get pleaseAgreeToTermsAndPrivacy =>
       _localizedValues[localeCode]['please_agree_to_terms_and_privacy'] ?? '';
@@ -34889,9 +34888,6 @@ mixin LocalizationsProvider on LocaleCodeAware {
   String get all => _localizedValues[localeCode]['all'] ?? '';
 
   String get emailSignUp => _localizedValues[localeCode]['email_sign_up'] ?? '';
-
-  String get googleSignUp =>
-      _localizedValues[localeCode]['google_sign_up'] ?? '';
 
   String get price => _localizedValues[localeCode]['price'] ?? '';
 

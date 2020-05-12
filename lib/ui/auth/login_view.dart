@@ -489,7 +489,7 @@ class _LoginState extends State<LoginView> {
                             ),
                           if (_createAccount)
                             Padding(
-                              padding: EdgeInsets.only(top: 22),
+                              padding: EdgeInsets.only(top: 10),
                               child: Column(
                                 children: <Widget>[
                                   CheckboxListTile(
@@ -564,20 +564,20 @@ class _LoginState extends State<LoginView> {
                         ),
                       ),
                     Padding(
-                        padding: EdgeInsets.only(top: 20, bottom: 10),
+                        padding: EdgeInsets.only(top: 25, bottom: 10),
                         child: viewModel.isLoading
                             ? LoadingIndicator(height: 48)
                             : _createAccount
                                 ? ElevatedButton(
-                                    width: 280,
+                                    width: double.infinity,
                                     label: (_emailLogin
                                             ? localization.signUp
-                                            : localization.signUpWithGoogle)
+                                            : localization.googleSignUp)
                                         .toUpperCase(),
                                     onPressed: () => _submitSignUpForm(),
                                   )
                                 : ElevatedButton(
-                                    width: 280,
+                                    width: double.infinity,
                                     label: (_emailLogin
                                             ? (_recoverPassword
                                                 ? localization.submit
