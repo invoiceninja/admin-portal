@@ -15,6 +15,8 @@ mixin LocalizationsProvider on LocaleCodeAware {
   static final Map<String, Map<String, String>> _localizedValues = {
     'en': {
       // STARTER: lang key - do not remove comment
+      'hosted': 'Hosted',
+      'selfhosted': 'Selfhosted',
       'exclusive': 'Exclusive',
       'inclusive': 'Inclusive',
       'hide_menu': 'Hide Menu',
@@ -36500,6 +36502,10 @@ mixin LocalizationsProvider on LocaleCodeAware {
   String get exclusive => _localizedValues[localeCode]['exclusive'] ?? '';
 
   String get inclusive => _localizedValues[localeCode]['inclusive'] ?? '';
+
+  String get hosted => _localizedValues[localeCode]['hosted'] ?? '';
+
+  String get selfhosted => _localizedValues[localeCode]['selfhosted'] ?? '';
 
   String lookup(String key) {
     final lookupKey = toSnakeCase(key);

@@ -4,7 +4,7 @@ import 'package:invoiceninja_flutter/constants.dart';
 class FormCard extends StatelessWidget {
   const FormCard({
     Key key,
-    this.isResponsive = false,
+    this.forceNarrow = false,
     this.children,
     this.child,
     this.crossAxisAlignment,
@@ -14,17 +14,17 @@ class FormCard extends StatelessWidget {
   final Widget child;
   final List<Widget> children;
   final CrossAxisAlignment crossAxisAlignment;
-  final bool isResponsive;
+  final bool forceNarrow;
   final EdgeInsets padding;
 
   @override
   Widget build(BuildContext context) {
     return Padding(
       padding: padding ??
-          (isResponsive
-              ? const EdgeInsets.symmetric(
+          (forceNarrow
+              ? EdgeInsets.symmetric(
                   vertical: kMobileDialogPadding,
-                  horizontal: kTabletDialogPadding,
+                  horizontal: (MediaQuery.of(context).size.width - 400) / 2,
                 )
               : const EdgeInsets.all(kMobileDialogPadding)),
       child: Card(

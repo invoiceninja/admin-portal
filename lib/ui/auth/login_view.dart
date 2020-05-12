@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:invoiceninja_flutter/constants.dart';
 import 'package:invoiceninja_flutter/redux/ui/pref_state.dart';
@@ -47,8 +48,8 @@ class _LoginState extends State<LoginView> {
 
   String _loginError = '';
 
-  bool _emailLogin = true; // TODO stable - change to false
-  bool _isSelfHosted = true;
+  bool _emailLogin = false;
+  bool _isSelfHosted = false;
 
   bool _createAccount = false;
   bool _recoverPassword = false;
@@ -273,6 +274,9 @@ class _LoginState extends State<LoginView> {
     final isOneTimePassword = _loginError.contains(OTP_ERROR) ||
         _oneTimePasswordController.text.isNotEmpty;
 
+    final bool isDesktop = calculateLayout(context) != AppLayout.mobile;
+    final width = MediaQuery.of(context).size.width;
+
     final ThemeData themeData = Theme.of(context);
     final TextStyle aboutTextStyle = themeData.textTheme.bodyText2;
     final TextStyle linkStyle = themeData.textTheme.bodyText2
@@ -312,7 +316,7 @@ class _LoginState extends State<LoginView> {
               child: Form(
                 key: _formKey,
                 child: FormCard(
-                  isResponsive: calculateLayout(context) != AppLayout.mobile,
+                  forceNarrow: isDesktop,
                   children: <Widget>[
                     if (isOneTimePassword)
                       DecoratedFormField(
@@ -323,6 +327,40 @@ class _LoginState extends State<LoginView> {
                       Column(
                         children: <Widget>[
                           SizedBox(height: 10),
+                          Padding(
+                            padding: const EdgeInsets.only(bottom: 10),
+                            child: ToggleButtons(
+                              constraints: BoxConstraints(),
+                              children: [
+                                Container(
+                                  width: isDesktop ? 178 : (width - 44) / 2,
+                                  height: 40,
+                                  child: Center(
+                                      child: Text(
+                                          localization.hosted.toUpperCase())),
+                                ),
+                                Container(
+                                  width: isDesktop ? 178 : (width - 44) / 2,
+                                  height: 40,
+                                  child: Center(
+                                      child: Text(localization.selfhosted
+                                          .toUpperCase())),
+                                ),
+                              ],
+                              isSelected:
+                                  _isSelfHosted ? [false, true] : [true, false],
+                              onPressed: (index) {
+                                setState(() {
+                                  _isSelfHosted = index == 1;
+
+                                  if (_isSelfHosted) {
+                                    _emailLogin = true;
+                                    _createAccount = false;
+                                  }
+                                });
+                              },
+                            ),
+                          ),
                           if (_createAccount && _emailLogin)
                             DecoratedFormField(
                               label: localization.firstName,
