@@ -333,14 +333,14 @@ class _LoginState extends State<LoginView> {
                               constraints: BoxConstraints(),
                               children: [
                                 Container(
-                                  width: isDesktop ? 178 : (width - 80) / 2,
+                                  width: isDesktop ? 178 : (width - 70) / 2,
                                   height: 40,
                                   child: Center(
                                       child: Text(
                                           localization.hosted.toUpperCase())),
                                 ),
                                 Container(
-                                  width: isDesktop ? 178 : (width - 80) / 2,
+                                  width: isDesktop ? 178 : (width - 70) / 2,
                                   height: 40,
                                   child: Center(
                                       child: Text(localization.selfhosted

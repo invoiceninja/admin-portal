@@ -149,7 +149,7 @@ class LoginVM {
                   firstName: getFirstName(account.displayName),
                   lastName: getLastName(account.displayName),
                   photoUrl: account.photoUrl,
-                  oauthId: account.id,
+                  oauthId: value.idToken,
                 ));
                 completer.future.then((_) => _handleLogin(context));
               });
