@@ -8,7 +8,6 @@ import 'localizations.dart';
 
 class Keys {
   static const String openAppDrawer = 'Open navigation menu';
-  static const String drawerKey = 'drawer_key';
   static const String clientPickerEmptyKey = '__client___';
 }
 
@@ -67,7 +66,7 @@ Future<void> logout(FlutterDriver driver, TestLocalization localization,
   if (await isMobile(driver)) {
     await driver.tap(fromDashboard
         ? find.byTooltip(Keys.openAppDrawer)
-        : find.byValueKey(Keys.drawerKey));
+        : find.byTooltip(localization.menuSidebar));
   }
 
 //await driver.scrollUntilVisible(find.byType('Drawer'), find.text(localization.settings));

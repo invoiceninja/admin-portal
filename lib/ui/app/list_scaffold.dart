@@ -6,9 +6,9 @@ import 'package:invoiceninja_flutter/redux/dashboard/dashboard_actions.dart';
 import 'package:invoiceninja_flutter/redux/ui/pref_state.dart';
 import 'package:invoiceninja_flutter/ui/app/app_bottom_bar.dart';
 import 'package:invoiceninja_flutter/ui/app/history_drawer_vm.dart';
+import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:invoiceninja_flutter/utils/platforms.dart';
 
-import '../../constants.dart';
 import 'menu_drawer_vm.dart';
 
 class ListScaffold extends StatelessWidget {
@@ -42,6 +42,7 @@ class ListScaffold extends StatelessWidget {
   Widget build(BuildContext context) {
     final store = StoreProvider.of<AppState>(context);
     final state = store.state;
+    final localization = AppLocalization.of(context);
 
     Widget leading = SizedBox();
     if (showCheckbox && state.prefState.isModuleList) {
@@ -69,7 +70,7 @@ class ListScaffold extends StatelessWidget {
         builder: (context) => GestureDetector(
           onLongPress: onHamburgerLongPress,
           child: IconButton(
-            key: Key(kDrawerKey),
+            tooltip: localization.menuSidebar,
             icon: Icon(Icons.menu),
             onPressed: () {
               Scaffold.of(context).openDrawer();
