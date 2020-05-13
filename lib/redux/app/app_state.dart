@@ -61,13 +61,14 @@ abstract class AppState implements Built<AppState, AppStateBuilder> {
   factory AppState({
     @required PrefState prefState,
     String currentRoute,
+    String url,
   }) {
     return _$AppState._(
       isLoading: false,
       isSaving: false,
       isTesting: false,
       lastError: '',
-      authState: AuthState(),
+      authState: AuthState(url: url),
       staticState: StaticState(),
       userCompanyStates: BuiltList(
           List<int>.generate(kMaxNumberOfCompanies, (i) => i + 1)

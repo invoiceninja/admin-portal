@@ -46,6 +46,27 @@ class AuthRepository {
         url: formatApiUrl(url) + '/signup', data: credentials, secret: secret);
   }
 
+  Future<LoginResponse> oauthSignUp({
+    @required String idToken,
+    @required String accessToken,
+    @required String serverAuthCode,
+  }) async {
+    final credentials = {
+      'terms_of_service': true,
+      'privacy_policy': true,
+      'token_name': _tokenName,
+      'id_token': idToken,
+      'access_token': accessToken,
+      'server_auth_code': serverAuthCode,
+      'provider': 'google',
+    };
+
+    return sendRequest(
+        url: formatApiUrl(Constants.hostedApiUrl) + '/oauth_login?create=true',
+        data: credentials,
+        secret: Config.API_SECRET);
+  }
+
   Future<LoginResponse> login(
       {String email,
       String password,
@@ -65,9 +86,16 @@ class AuthRepository {
   }
 
   Future<LoginResponse> oauthLogin(
-      {String token, String url, String secret, String platform}) async {
+      {@required String idToken,
+      @required String accessToken,
+      @required String serverAuthCode,
+      @required String url,
+      @required String secret,
+      @required String platform}) async {
     final credentials = {
-      'token': token,
+      'id_token': idToken,
+      'access_token': accessToken,
+      'server_auth_code': serverAuthCode,
       'provider': 'google',
     };
     url = formatApiUrl(url) + '/oauth_login';
@@ -121,7 +149,13 @@ class AuthRepository {
 
   Future<LoginResponse> sendRequest(
       {String url, dynamic data, String token, String secret}) async {
-    url += '?first_load=true&include_static=true';
+    if (url.contains('?')) {
+      url += '&';
+    } else {
+      url += '?';
+    }
+
+    url += 'first_load=true&include_static=true';
 
     dynamic response;
 

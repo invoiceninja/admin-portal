@@ -1,6 +1,6 @@
 name: invoiceninja_flutter
 description: Client for Invoice Ninja
-version: 2.0.8+8
+version: 2.0.9+9
 author: Hillel Coren
 homepage: https://invoiceninja.com
 documentation: http://docs.invoiceninja.com
@@ -30,8 +30,12 @@ dependencies:
   intl: any
   flutter_slidable: ^0.5.4
   charts_flutter: ^0.8.1
-  google_sign_in: ^4.1.4
   firebase_auth: ^0.15.4
+  #google_sign_in: ^4.1.4
+  google_sign_in:
+    git:
+      url: git://github.com/hillelcoren/plugins.git
+      path: packages/google_sign_in/google_sign_in
   local_auth: ^0.6.1+3
   sentry: ^3.0.1
   image_picker: ^0.6.3+4

@@ -8,6 +8,7 @@ import 'localizations.dart';
 
 class Keys {
   static const String openAppDrawer = 'Open navigation menu';
+  static const String clientPickerEmptyKey = '__client___';
 }
 
 Future<bool> isTablet(FlutterDriver driver) async {
@@ -55,28 +56,31 @@ Future<void> login(FlutterDriver driver,
   await driver.tap(find.text(localization.login.toUpperCase()));
 
   if (loginEmail.isNotEmpty) {
-    await driver.waitFor(find.text(localization.dashboard),
+    await driver.waitFor(find.text(localization.overview),
         timeout: new Duration(seconds: 60));
   }
 }
 
-Future<void> logout(FlutterDriver driver, TestLocalization localization) async {
+Future<void> logout(FlutterDriver driver, TestLocalization localization,
+    {bool fromDashboard = false}) async {
   if (await isMobile(driver)) {
-    await driver.tap(find.byTooltip(Keys.openAppDrawer));
+    await driver.tap(fromDashboard
+        ? find.byTooltip(Keys.openAppDrawer)
+        : find.byTooltip(localization.menuSidebar));
   }
 
-  //await driver.scrollUntilVisible(find.byType('Drawer'), find.text(localization.settings));
+//await driver.scrollUntilVisible(find.byType('Drawer'), find.text(localization.settings));
   await driver.tap(find.text(localization.settings));
   await driver.tap(find.text(localization.deviceSettings));
 
-  // Tap on Log Out
+// Tap on Log Out
   await driver.tap(find.text(localization.logout));
 
-  // Confirm log out
+// Confirm log out
   await driver.waitFor(find.text(localization.areYouSure));
   await driver.tap(find.text(localization.ok.toUpperCase()));
 
-  // Should be in the login screen now
+// Should be in the login screen now
   await driver.waitFor(find.text(localization.login.toUpperCase()));
 }
 
@@ -85,7 +89,7 @@ Future<void> viewSection({FlutterDriver driver, String name}) async {
     await driver.tap(find.byTooltip(Keys.openAppDrawer));
   }
 
-  await driver.tap(find.byTooltip(name));
+  await driver.tap(find.text(name));
 }
 
 Future<void> fillTextField(
@@ -119,6 +123,9 @@ Future<void> fillAndSaveForm(FlutterDriver driver, Map<String, dynamic> values,
   print('Fill in form');
   await fillTextFields(driver, values);
 
+  // Await for Debouncer
+  await Future<dynamic>.delayed(Duration(milliseconds: 400));
+
   print('Tap save');
   await driver.tap(find.text(localization.save));
 
@@ -138,22 +145,22 @@ Future<void> testArchiveAndDelete(
   final localization = TestLocalization('en');
 
   print('Archive record');
-  selectAction(driver, localization.archive);
+  await selectAction(driver, localization.archive);
   await driver.waitFor(find.text(archivedMessage));
   await driver.waitFor(find.text(localization.archived));
 
   print('Restore record');
-  selectAction(driver, localization.restore);
+  await selectAction(driver, localization.restore);
   await driver.waitFor(find.text(restoredMessage));
   await driver.waitForAbsent(find.text(localization.archived));
 
   print('Delete record');
-  selectAction(driver, localization.delete);
+  await selectAction(driver, localization.delete);
   await driver.waitFor(find.text(deletedMessage));
   await driver.waitFor(find.text(localization.deleted));
 
   print('Restore record');
-  selectAction(driver, localization.restore);
+  await selectAction(driver, localization.restore);
   await driver.waitFor(find.text(restoredMessage));
   await driver.waitForAbsent(find.text(localization.deleted));
 }

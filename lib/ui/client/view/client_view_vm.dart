@@ -92,6 +92,16 @@ class ClientViewVM {
                   filterEntity: client);
             }
             break;
+          case EntityType.credit:
+            if (longPress && client.isActive) {
+              handleClientAction(context, [client], EntityAction.newCredit);
+            } else {
+              viewEntitiesByType(
+                  context: context,
+                  entityType: EntityType.credit,
+                  filterEntity: client);
+            }
+            break;
           case EntityType.payment:
             if (longPress && client.isActive) {
               handleClientAction(context, [client], EntityAction.newPayment);

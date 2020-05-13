@@ -33,7 +33,7 @@ void runTestSuite({bool batchMode = false}) {
       await login(driver, retype: batchMode);
 
       print('View invoices');
-      viewSection(driver: driver, name: localization.invoices);
+      await viewSection(driver: driver, name: localization.invoices);
     });
 
     tearDownAll(() async {
@@ -71,13 +71,16 @@ void runTestSuite({bool batchMode = false}) {
       await driver.tap(find.byTooltip(localization.newInvoice));
 
       print('Create new client: $clientName');
-      await driver.tap(find.byValueKey(localization.client));
+      await driver.tap(find.byValueKey(Keys.clientPickerEmptyKey));
       await driver.tap(find.byTooltip(localization.createNew));
 
       print('Fill the client form');
       await fillTextField(
           driver: driver, field: localization.name, value: clientName);
+      // Await for Debouncer
+      await Future<dynamic>.delayed(Duration(milliseconds: 500));
       await driver.tap(find.text(localization.save));
+      await driver.tap(find.byTooltip(localization.back));
 
       print('Fill the invoice form');
       await driver.tap(find.byTooltip(localization.addItem));
@@ -90,6 +93,8 @@ void runTestSuite({bool batchMode = false}) {
         localization.quantity: '1',
       });
 
+      // Await for Debouncer
+      await Future<dynamic>.delayed(Duration(milliseconds: 500));
       await driver.tap(find.text(localization.done));
       await driver.tap(find.text(localization.details));
 

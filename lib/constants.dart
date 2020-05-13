@@ -9,7 +9,7 @@ class Constants {
 }
 
 // TODO remove version once #46609 is fixed
-const String kAppVersion = '2.0.8';
+const String kAppVersion = '2.0.9';
 
 const String kSiteUrl = 'https://invoiceninja.com';
 const String kAppProductionUrl = 'https://invoicing.co';
@@ -580,3 +580,5 @@ const kPageSizes = [
   'Letter',
   'Tabloid',
 ];
+
+const String kDrawerKey = 'drawer_key';

@@ -67,11 +67,13 @@ class ViewScaffold extends StatelessWidget {
               ? []
               : [
                   userCompany.canEditEntity(entity)
-                      ? EditIconButton(
-                          isVisible: !(entity.isDeleted ?? false),
-                          onPressed: () =>
-                              editEntity(context: context, entity: entity),
-                        )
+                      ? Builder(builder: (context) {
+                          return EditIconButton(
+                            isVisible: !(entity.isDeleted ?? false),
+                            onPressed: () =>
+                                editEntity(context: context, entity: entity),
+                          );
+                        })
                       : Container(),
                   ActionMenuButton(
                     isSaving: state.isSaving,

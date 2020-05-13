@@ -33,7 +33,7 @@ class ClientPresenter extends EntityPresenter {
       case ClientFields.idNumber:
         return Text(client.idNumber);
       case ClientFields.balance:
-        return Text(formatNumber(client.balance, context));
+        return Text(formatNumber(client.balance, context, clientId: client.id));
     }
 
     return super.getField(field: field, context: context);

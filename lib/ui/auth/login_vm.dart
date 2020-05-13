@@ -8,7 +8,6 @@ import 'package:invoiceninja_flutter/redux/dashboard/dashboard_actions.dart';
 import 'package:invoiceninja_flutter/redux/ui/pref_state.dart';
 import 'package:invoiceninja_flutter/ui/app/app_builder.dart';
 import 'package:invoiceninja_flutter/utils/platforms.dart';
-import 'package:invoiceninja_flutter/utils/strings.dart';
 import 'package:redux/redux.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/redux/auth/auth_actions.dart';
@@ -123,7 +122,10 @@ class LoginVM {
               account.authentication.then((GoogleSignInAuthentication value) {
                 store.dispatch(OAuthLoginRequest(
                   completer: completer,
-                  token: value.idToken,
+                  idToken: value.idToken,
+                  accessToken: value.accessToken,
+                  serverAuthCode: account
+                      .displayName, // TODO fix this once PR is merged https://github.com/flutter/plugins/pull/2116
                   url: url.trim(),
                   secret: secret.trim(),
                   platform: getPlatform(context),
@@ -143,13 +145,12 @@ class LoginVM {
 
             if (account != null) {
               account.authentication.then((GoogleSignInAuthentication value) {
-                store.dispatch(UserSignUpRequest(
+                store.dispatch(OAuthSignUpRequest(
                   completer: completer,
-                  email: account.email,
-                  firstName: getFirstName(account.displayName),
-                  lastName: getLastName(account.displayName),
-                  photoUrl: account.photoUrl,
-                  oauthId: account.id,
+                  idToken: value.idToken,
+                  accessToken: value.accessToken,
+                  serverAuthCode: account
+                      .displayName, // TODO fix this once PR is merged https://github.com/flutter/plugins/pull/2116
                 ));
                 completer.future.then((_) => _handleLogin(context));
               });

@@ -24,7 +24,7 @@ import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 class QuoteListBuilder extends StatelessWidget {
   const QuoteListBuilder({Key key}) : super(key: key);
 
-  static const String route = '/quote/edit';
+  static const String route = '/quotes/edit';
 
   @override
   Widget build(BuildContext context) {

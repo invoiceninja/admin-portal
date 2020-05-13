@@ -142,7 +142,8 @@ class _AccountManagementState extends State<AccountManagement>
                 ),
               ),
               Padding(
-                padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 16),
+                padding:
+                    const EdgeInsets.symmetric(vertical: 20, horizontal: 16),
                 child: Divider(),
               ),
               Padding(
@@ -171,37 +172,36 @@ class _AccountManagementState extends State<AccountManagement>
               ),
             ],
           ),
-          ListView(
-            children: <Widget>[
-              FormCard(
-                  // TODO change to kModules.keys
-                  children: kModules.keys.map((module) {
-                final implementedModules = <int>[
+          if (kReleaseMode)
+            SizedBox()
+          else
+            ListView(
+              children: <Widget>[
+                FormCard(
+                    // TODO change to kModules.keys
+                    children: [
                   kModuleQuotes,
                   kModuleCredits,
-                ];
-                final isImplemented = implementedModules.contains(module);
-                return CheckboxListTile(
-                  controlAffinity: ListTileControlAffinity.leading,
-                  title: Text(localization.lookup(kModules[module])),
-                  value: company.enabledModules & module != 0,
-                  activeColor: Theme.of(context).accentColor,
-                  onChanged: isImplemented
-                      ? (value) {
-                          int enabledModules = company.enabledModules;
-                          if (value) {
-                            enabledModules = enabledModules | module;
-                          } else {
-                            enabledModules = enabledModules ^ module;
-                          }
-                          viewModel.onCompanyChanged(company.rebuild(
-                              (b) => b..enabledModules = enabledModules));
-                        }
-                      : null,
-                );
-              }).toList()),
-            ],
-          ),
+                ].map((module) {
+                  return CheckboxListTile(
+                    controlAffinity: ListTileControlAffinity.leading,
+                    title: Text(localization.lookup(kModules[module])),
+                    value: company.enabledModules & module != 0,
+                    activeColor: Theme.of(context).accentColor,
+                    onChanged: (value) {
+                      int enabledModules = company.enabledModules;
+                      if (value) {
+                        enabledModules = enabledModules | module;
+                      } else {
+                        enabledModules = enabledModules ^ module;
+                      }
+                      viewModel.onCompanyChanged(company
+                          .rebuild((b) => b..enabledModules = enabledModules));
+                    },
+                  );
+                }).toList()),
+              ],
+            ),
         ],
       ),
     );

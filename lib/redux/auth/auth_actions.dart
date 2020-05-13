@@ -23,18 +23,23 @@ class UserLoginLoaded {
 }
 
 class OAuthLoginRequest implements StartLoading {
-  OAuthLoginRequest(
-      {this.completer,
-      this.email,
-      this.token,
-      this.url,
-      this.secret,
-      this.platform,
-      this.oneTimePassword});
+  OAuthLoginRequest({
+    @required this.completer,
+    this.email,
+    @required this.idToken,
+    @required this.accessToken,
+    @required this.serverAuthCode,
+    @required this.url,
+    @required this.secret,
+    @required this.platform,
+    @required this.oneTimePassword,
+  });
 
   final Completer completer;
   final String email; // TODO remove this property, break up _saveAuthLocal
-  final String token;
+  final String idToken;
+  final String accessToken;
+  final String serverAuthCode;
   final String url;
   final String secret;
   final String platform;
@@ -43,13 +48,13 @@ class OAuthLoginRequest implements StartLoading {
 
 class UserLoginRequest implements StartLoading {
   UserLoginRequest(
-      {this.completer,
-      this.email,
-      this.password,
-      this.url,
-      this.secret,
-      this.platform,
-      this.oneTimePassword});
+      {@required this.completer,
+      @required this.email,
+      @required this.password,
+      @required this.url,
+      @required this.secret,
+      @required this.platform,
+      @required this.oneTimePassword});
 
   final Completer completer;
   final String email;
@@ -70,10 +75,10 @@ class UserLoginFailure implements StopLoading {
 
 class RecoverPasswordRequest implements StartLoading {
   RecoverPasswordRequest({
-    this.completer,
-    this.email,
-    this.url,
-    this.secret,
+    @required this.completer,
+    @required this.email,
+    @required this.url,
+    @required this.secret,
   });
 
   final Completer completer;
@@ -98,15 +103,11 @@ class UserLogout implements PersistData, PersistUI {
 
 class UserSignUpRequest implements StartLoading {
   UserSignUpRequest({
-    this.completer,
-    this.firstName,
-    this.lastName,
-    this.email,
-    this.password,
-    this.photoUrl,
-    this.oauthId,
-    this.secret,
-    this.url,
+    @required this.completer,
+    @required this.firstName,
+    @required this.lastName,
+    @required this.email,
+    @required this.password,
   });
 
   final Completer completer;
@@ -114,10 +115,20 @@ class UserSignUpRequest implements StartLoading {
   final String lastName;
   final String email;
   final String password;
-  final String photoUrl;
-  final String oauthId;
-  final String secret;
-  final String url;
+}
+
+class OAuthSignUpRequest implements StartLoading {
+  OAuthSignUpRequest({
+    @required this.completer,
+    @required this.idToken,
+    @required this.accessToken,
+    @required this.serverAuthCode,
+  });
+
+  final Completer completer;
+  final String idToken;
+  final String accessToken;
+  final String serverAuthCode;
 }
 
 class UserVerifiedPassword {}

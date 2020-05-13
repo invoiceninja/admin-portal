@@ -419,7 +419,7 @@ Middleware<AppState> _createAccountLoaded() {
           store.dispatch(LoadInvoicesSuccess(company.invoices));
           store.dispatch(LoadPaymentsSuccess(company.payments));
           store.dispatch(LoadQuotesSuccess(company.quotes));
-          store.dispatch(LoadCreditsSuccess(company.quotes));
+          store.dispatch(LoadCreditsSuccess(company.credits));
           store.dispatch(LoadDesignsSuccess(company.designs));
           if (Config.DEMO_MODE) {
             store.dispatch(LoadTasksSuccess(company.tasks));

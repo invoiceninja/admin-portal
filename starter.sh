@@ -314,11 +314,18 @@ else
     code="..addAll(createStore${Module}sMiddleware())${lineBreak}"
     sed -i -e "s/$comment/$comment${lineBreak}$code/g" ./lib/main.dart
 
+    comment="STARTER: import - do not remove comment"
+    code="import 'package:${package}\/ui\/${module_snake}\/${module_snake}_screen.dart';${lineBreak}"
+    code="${code}import 'package:${package}\/ui\/${module_snake}\/edit\/${module_snake}_edit_vm.dart';${lineBreak}"
+    code="${code}import 'package:${package}\/ui\/${module_snake}\/view\/${module_snake}_view_vm.dart';${lineBreak}"
+    code="${code}import 'package:${package}\/ui\/${module_snake}\/${module_snake}_screen_vm.dart';${lineBreak}"
+    sed -i -e "s/$comment/$comment${lineBreak}$code/g" ./lib/main.dart
+
     comment="STARTER: routes - do not remove comment"
     code="${Module}Screen.route: (context) => ${Module}ScreenBuilder(),${lineBreak}"
     code="${code}${Module}ViewScreen.route: (context) => ${Module}ViewScreen(),${lineBreak}"
     code="${code}${Module}EditScreen.route: (context) => ${Module}EditScreen(),${lineBreak}"
-    sed -i -e "s/$comment/$comment${lineBreak}$code/g" ./lib/main.dart
+    sed -i -e "s/$comment/$comment${lineBreak}$code/g" ./lib/main_app.dart
 
     comment="STARTER: import - do not remove comment"
     code="import 'package:${package}\/data\/models\/${module_snake}_model.dart';${lineBreak}"

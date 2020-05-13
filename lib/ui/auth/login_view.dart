@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:invoiceninja_flutter/constants.dart';
 import 'package:invoiceninja_flutter/redux/ui/pref_state.dart';
@@ -15,7 +16,6 @@ import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:invoiceninja_flutter/ui/app/form_card.dart';
 import 'package:invoiceninja_flutter/utils/platforms.dart';
 import 'package:invoiceninja_flutter/.env.dart';
-import 'package:url_launcher/url_launcher.dart';
 
 class LoginView extends StatefulWidget {
   const LoginView({
@@ -47,10 +47,10 @@ class _LoginState extends State<LoginView> {
 
   String _loginError = '';
 
-  bool _emailLogin = true; // TODO stable - change to false
-  bool _isSelfHosted = true;
+  bool _emailLogin = false;
+  bool _isSelfHosted = false;
 
-  bool _createAccount = false;
+  bool _createAccount = true;
   bool _recoverPassword = false;
   bool _autoValidate = false;
   bool _termsChecked = false;
@@ -70,9 +70,9 @@ class _LoginState extends State<LoginView> {
     ];
 
     _controllers
-        .forEach((dynamic controller) => controller.addListener(_onChanged));
+        .forEach((dynamic controller) => controller.removeListener(_onChanged));
 
-    if (!kReleaseMode) {
+    if (!kReleaseMode && Config.TEST_EMAIL.isNotEmpty) {
       _urlController.text = Config.TEST_URL;
       _secretController.text = Config.TEST_SECRET;
       _emailController.text = Config.TEST_EMAIL;
@@ -83,6 +83,17 @@ class _LoginState extends State<LoginView> {
       _termsChecked = true;
       _emailLogin = true;
     }
+
+    if (kIsWeb) {
+      _isSelfHosted = widget.viewModel.authState.isSelfHost;
+    }
+
+    if (_urlController.text.isEmpty) {
+      _urlController.text = widget.viewModel.authState.url;
+    }
+
+    _controllers
+        .forEach((dynamic controller) => controller.addListener(_onChanged));
 
     /*
     if (cleanApiUrl(state.url).isNotEmpty) {
@@ -270,8 +281,6 @@ class _LoginState extends State<LoginView> {
     final TextStyle aboutTextStyle = themeData.textTheme.bodyText2;
     final TextStyle linkStyle = themeData.textTheme.bodyText2
         .copyWith(color: convertHexStringToColor(kDefaultAccentColor));
-    //final showHostedOptions = viewModel.authState.isHosted || !kIsWeb;
-    final showHostedOptions = !kReleaseMode;
 
     return Stack(
       children: <Widget>[
@@ -306,7 +315,7 @@ class _LoginState extends State<LoginView> {
               child: Form(
                 key: _formKey,
                 child: FormCard(
-                  isResponsive: calculateLayout(context) != AppLayout.mobile,
+                  forceNarrow: calculateLayout(context) != AppLayout.mobile,
                   children: <Widget>[
                     if (isOneTimePassword)
                       DecoratedFormField(
@@ -317,6 +326,50 @@ class _LoginState extends State<LoginView> {
                       Column(
                         children: <Widget>[
                           SizedBox(height: 10),
+                          if (!kIsWeb)
+                            _ToggleButtons(
+                              tabLabels: [
+                                localization.hosted,
+                                localization.selfhosted,
+                              ],
+                              selectedIndex: _isSelfHosted ? 1 : 0,
+                              onTabChanged: (index) {
+                                setState(() {
+                                  _isSelfHosted = index == 1;
+                                  _loginError = '';
+                                  _emailLogin = _isSelfHosted;
+                                  _createAccount = !_isSelfHosted;
+                                });
+                              },
+                            ),
+                          if (!_isSelfHosted)
+                            _ToggleButtons(
+                              tabLabels: [
+                                localization.signUp,
+                                localization.login,
+                              ],
+                              selectedIndex: _createAccount ? 0 : 1,
+                              onTabChanged: (index) {
+                                setState(() {
+                                  _createAccount = index == 0;
+                                  _loginError = '';
+                                });
+                              },
+                            ),
+                          if (!_isSelfHosted)
+                            _ToggleButtons(
+                              tabLabels: [
+                                'Google',
+                                localization.email,
+                              ],
+                              selectedIndex: _emailLogin ? 1 : 0,
+                              onTabChanged: (index) {
+                                setState(() {
+                                  _emailLogin = index == 1;
+                                  _loginError = '';
+                                });
+                              },
+                            ),
                           if (_createAccount && _emailLogin)
                             DecoratedFormField(
                               label: localization.firstName,
@@ -428,14 +481,15 @@ class _LoginState extends State<LoginView> {
                               textInputAction: TextInputAction.done,
                               autocorrect: false,
                               decoration: InputDecoration(
-                                  labelText: '${localization.secret} (${localization.optional})'),
+                                  labelText:
+                                      '${localization.secret} (${localization.optional})'),
                               obscureText: true,
                               onFieldSubmitted: (String value) =>
                                   FocusScope.of(context).nextFocus(),
                             ),
                           if (_createAccount)
                             Padding(
-                              padding: EdgeInsets.only(top: 22),
+                              padding: EdgeInsets.only(top: 10),
                               child: Column(
                                 children: <Widget>[
                                   CheckboxListTile(
@@ -510,20 +564,20 @@ class _LoginState extends State<LoginView> {
                         ),
                       ),
                     Padding(
-                        padding: EdgeInsets.only(top: 30, bottom: 10),
+                        padding: EdgeInsets.only(top: 25, bottom: 10),
                         child: viewModel.isLoading
                             ? LoadingIndicator(height: 48)
                             : _createAccount
                                 ? ElevatedButton(
-                                    width: 280,
+                                    width: double.infinity,
                                     label: (_emailLogin
                                             ? localization.signUp
-                                            : localization.signUpWithGoogle)
+                                            : localization.googleSignUp)
                                         .toUpperCase(),
                                     onPressed: () => _submitSignUpForm(),
                                   )
                                 : ElevatedButton(
-                                    width: 280,
+                                    width: double.infinity,
                                     label: (_emailLogin
                                             ? (_recoverPassword
                                                 ? localization.submit
@@ -532,101 +586,11 @@ class _LoginState extends State<LoginView> {
                                         .toUpperCase(),
                                     onPressed: () => _submitLoginForm(),
                                   )),
-                    SizedBox(height: 6),
                     if (!isOneTimePassword)
                       Column(
                         mainAxisAlignment: MainAxisAlignment.center,
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: <Widget>[
-                          if (!_recoverPassword && showHostedOptions)
-                            Padding(
-                              padding: const EdgeInsets.all(6),
-                              child: Row(
-                                mainAxisSize: MainAxisSize.max,
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: <Widget>[
-                                  Icon(FontAwesomeIcons.solidEnvelope,
-                                      size: 16),
-                                  _emailLogin
-                                      ? FlatButton(
-                                          onPressed: () => setState(() {
-                                                _emailLogin = false;
-                                                _loginError = '';
-                                              }),
-                                          child: Text(_createAccount
-                                              ? localization.googleSignUp
-                                              : localization.googleLogin))
-                                      : FlatButton(
-                                          key:
-                                              ValueKey(localization.emailLogin),
-                                          onPressed: () => setState(() {
-                                                _emailLogin = true;
-                                                _loginError = '';
-                                              }),
-                                          child: Text(_createAccount
-                                              ? localization.emailSignUp
-                                              : localization.emailLogin)),
-                                ],
-                              ),
-                            ),
-                          if (!_recoverPassword && !_isSelfHosted)
-                            Padding(
-                              padding: const EdgeInsets.all(6),
-                              child: Row(
-                                mainAxisSize: MainAxisSize.max,
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: <Widget>[
-                                  Icon(FontAwesomeIcons.user, size: 16),
-                                  _createAccount
-                                      ? FlatButton(
-                                          onPressed: () => setState(() {
-                                                _createAccount = false;
-                                                _loginError = '';
-                                              }),
-                                          child:
-                                              Text(localization.accountLogin))
-                                      : FlatButton(
-                                          key: ValueKey(
-                                              localization.createAccount),
-                                          onPressed: () => setState(() {
-                                                _createAccount = true;
-                                                //_isSelfHosted = false;
-                                                _loginError = '';
-                                              }),
-                                          child:
-                                              Text(localization.createAccount)),
-                                ],
-                              ),
-                            ),
-                          if (!_createAccount && !_recoverPassword && showHostedOptions)
-                            Padding(
-                              padding: const EdgeInsets.all(6),
-                              child: Row(
-                                  mainAxisSize: MainAxisSize.max,
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: <Widget>[
-                                    Icon(FontAwesomeIcons.userCog, size: 16),
-                                    _isSelfHosted
-                                        ? FlatButton(
-                                            onPressed: () => setState(() {
-                                                  _isSelfHosted = false;
-                                                  _loginError = '';
-                                                }),
-                                            child:
-                                                Text(localization.hostedLogin))
-                                        : FlatButton(
-                                            key: ValueKey(
-                                                localization.selfhostLogin),
-                                            onPressed: () => setState(() {
-                                                  _isSelfHosted = true;
-                                                  _createAccount = false;
-                                                  _emailLogin = true;
-                                                  _loginError = '';
-                                                }),
-                                            child: Text(
-                                                localization.selfhostLogin)),
-                                  ]),
-                            ),
                           if (!_createAccount && _emailLogin)
                             Padding(
                               padding: const EdgeInsets.all(6),
@@ -646,27 +610,6 @@ class _LoginState extends State<LoginView> {
                                                 !_recoverPassword;
                                           });
                                         }),
-                                  ]),
-                            ),
-                          if (_createAccount)
-                            Padding(
-                              padding: const EdgeInsets.all(6),
-                              child: Row(
-                                  mainAxisSize: MainAxisSize.max,
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: <Widget>[
-                                    Icon(FontAwesomeIcons.externalLinkAlt,
-                                        size: 16),
-                                    FlatButton(
-                                      child: Text(localization.viewWebsite),
-                                      onPressed: () async {
-                                        if (await canLaunch(kSiteUrl)) {
-                                          await launch(kSiteUrl,
-                                              forceSafariVC: false,
-                                              forceWebView: false);
-                                        }
-                                      },
-                                    ),
                                   ]),
                             ),
                         ],
@@ -691,6 +634,46 @@ class _LoginState extends State<LoginView> {
           ],
         ),
       ],
+    );
+  }
+}
+
+class _ToggleButtons extends StatelessWidget {
+  const _ToggleButtons({
+    @required this.selectedIndex,
+    @required this.onTabChanged,
+    @required this.tabLabels,
+  });
+
+  final List<String> tabLabels;
+  final int selectedIndex;
+  final Function(int) onTabChanged;
+
+  @override
+  Widget build(BuildContext context) {
+    final bool isDesktop = calculateLayout(context) != AppLayout.mobile;
+    final width = MediaQuery.of(context).size.width;
+    final double toggleWidth = isDesktop ? 178 : (width - 70) / 2;
+
+    return Padding(
+      padding: const EdgeInsets.only(bottom: 20),
+      child: ToggleButtons(
+        constraints: BoxConstraints(),
+        children: [
+          Container(
+            width: toggleWidth,
+            height: 40,
+            child: Center(child: Text(tabLabels[0].toUpperCase())),
+          ),
+          Container(
+            width: toggleWidth,
+            height: 40,
+            child: Center(child: Text(tabLabels[1].toUpperCase())),
+          ),
+        ],
+        isSelected: selectedIndex == 0 ? [true, false] : [false, true],
+        onPressed: (index) => onTabChanged(index),
+      ),
     );
   }
 }

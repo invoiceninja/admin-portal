@@ -24,7 +24,7 @@ import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 class CreditListBuilder extends StatelessWidget {
   const CreditListBuilder({Key key}) : super(key: key);
 
-  static const String route = '/credit/edit';
+  static const String route = '/credits/edit';
 
   @override
   Widget build(BuildContext context) {
