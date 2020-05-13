@@ -39,7 +39,7 @@ abstract class InvoiceItemResponse
 }
 
 class InvoiceFields {
-  static const String amount = 'invoice_total';
+  static const String amount = 'invoice_amount';
   static const String balance = 'balance_due';
   static const String clientId = 'client_id';
   static const String client = 'client';
