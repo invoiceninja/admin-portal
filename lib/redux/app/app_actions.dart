@@ -69,6 +69,7 @@ class StopSaving {}
 
 class ServerVersionUpdated {
   ServerVersionUpdated({this.version});
+
   final String version;
 }
 
@@ -438,9 +439,6 @@ void viewEntityById({
       break;
     //case EntityType.expenseCategory:
     //store.dispatch(ViewExpenseCategory(taxRateId: entityId, navigator: navigator));
-    //break;
-    //case EntityType.credit:
-    //store.dispatch(ViewCredit(creditId: entityId, navigator: navigator));
     //break;
     case EntityType.payment:
       store.dispatch(ViewPayment(
