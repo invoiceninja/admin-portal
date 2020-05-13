@@ -172,33 +172,36 @@ class _AccountManagementState extends State<AccountManagement>
               ),
             ],
           ),
-          ListView(
-            children: <Widget>[
-              FormCard(
-                  // TODO change to kModules.keys
-                  children: [
-                kModuleQuotes,
-                kModuleCredits,
-              ].map((module) {
-                return CheckboxListTile(
-                  controlAffinity: ListTileControlAffinity.leading,
-                  title: Text(localization.lookup(kModules[module])),
-                  value: company.enabledModules & module != 0,
-                  activeColor: Theme.of(context).accentColor,
-                  onChanged: (value) {
-                    int enabledModules = company.enabledModules;
-                    if (value) {
-                      enabledModules = enabledModules | module;
-                    } else {
-                      enabledModules = enabledModules ^ module;
-                    }
-                    viewModel.onCompanyChanged(company
-                        .rebuild((b) => b..enabledModules = enabledModules));
-                  },
-                );
-              }).toList()),
-            ],
-          ),
+          if (kReleaseMode)
+            SizedBox()
+          else
+            ListView(
+              children: <Widget>[
+                FormCard(
+                    // TODO change to kModules.keys
+                    children: [
+                  kModuleQuotes,
+                  kModuleCredits,
+                ].map((module) {
+                  return CheckboxListTile(
+                    controlAffinity: ListTileControlAffinity.leading,
+                    title: Text(localization.lookup(kModules[module])),
+                    value: company.enabledModules & module != 0,
+                    activeColor: Theme.of(context).accentColor,
+                    onChanged: (value) {
+                      int enabledModules = company.enabledModules;
+                      if (value) {
+                        enabledModules = enabledModules | module;
+                      } else {
+                        enabledModules = enabledModules ^ module;
+                      }
+                      viewModel.onCompanyChanged(company
+                          .rebuild((b) => b..enabledModules = enabledModules));
+                    },
+                  );
+                }).toList()),
+              ],
+            ),
         ],
       ),
     );
