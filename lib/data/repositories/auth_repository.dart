@@ -149,7 +149,13 @@ class AuthRepository {
 
   Future<LoginResponse> sendRequest(
       {String url, dynamic data, String token, String secret}) async {
-    url += '?first_load=true&include_static=true';
+    if (url.contains('?')) {
+      url += '&';
+    } else {
+      url += '?';
+    }
+
+    url += 'first_load=true&include_static=true';
 
     dynamic response;
 
