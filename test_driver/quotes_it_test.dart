@@ -33,7 +33,7 @@ void runTestSuite({bool batchMode = false}) {
       await login(driver, retype: batchMode);
 
       print('View quotes');
-      viewSection(driver: driver, name: localization.quotes);
+      await viewSection(driver: driver, name: localization.quotes);
     });
 
     tearDownAll(() async {

@@ -31,7 +31,7 @@ void runTestSuite({bool batchMode = false}) {
       await login(driver, retype: batchMode);
 
       print('View products');
-      viewSection(driver: driver, name: localization.products);
+      await viewSection(driver: driver, name: localization.products);
     });
 
     tearDownAll(() async {
@@ -72,9 +72,11 @@ void runTestSuite({bool batchMode = false}) {
       await fillAndSaveForm(driver, <String, dynamic>{
         localization.product: productKey,
         localization.description: description,
-        localization.cost: cost,
+        //localization.cost: cost,
       }, skipCheckFor: [
-        localization.cost
+        localization.product,
+        localization.description
+        //localization.cost
       ]);
 
       if (await isMobile(driver)) {
@@ -100,9 +102,10 @@ void runTestSuite({bool batchMode = false}) {
       await fillAndSaveForm(driver, <String, dynamic>{
         localization.product: updatedProductKey,
         localization.description: updatedDescription,
-        localization.cost: updatedCost,
+        //localization.cost: updatedCost,
       }, skipCheckFor: [
-        localization.cost
+        localization.product,
+        localization.description
       ]);
     });
 
