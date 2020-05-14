@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:invoiceninja_flutter/data/models/company_gateway_model.dart';
@@ -20,6 +21,7 @@ import 'package:invoiceninja_flutter/redux/quote/quote_actions.dart';
 import 'package:invoiceninja_flutter/redux/task/task_actions.dart';
 import 'package:invoiceninja_flutter/redux/tax_rate/tax_rate_actions.dart';
 import 'package:invoiceninja_flutter/redux/ui/pref_state.dart';
+import 'package:invoiceninja_flutter/redux/ui/ui_actions.dart';
 import 'package:invoiceninja_flutter/redux/user/user_actions.dart';
 import 'package:invoiceninja_flutter/redux/vendor/vendor_actions.dart';
 import 'package:invoiceninja_flutter/utils/completers.dart';
@@ -30,6 +32,7 @@ import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:invoiceninja_flutter/redux/design/design_actions.dart';
 
 import 'package:invoiceninja_flutter/redux/credit/credit_actions.dart';
+import 'package:invoiceninja_flutter/utils/platforms.dart';
 
 class PersistUI {}
 
@@ -262,6 +265,7 @@ void viewEntitiesByType({
 }) {
   final store = StoreProvider.of<AppState>(context);
   final navigator = Navigator.of(context);
+  dynamic action;
 
   if (filterEntity != null) {
     filterEntitiesByType(
@@ -273,61 +277,63 @@ void viewEntitiesByType({
 
   switch (entityType) {
     case EntityType.client:
-      store.dispatch(ViewClientList(navigator: navigator));
+      action = ViewClientList(navigator: navigator);
       break;
     case EntityType.user:
-      store.dispatch(ViewUserList(navigator: navigator));
+      action = ViewUserList(navigator: navigator);
+
       break;
     case EntityType.project:
-      store.dispatch(ViewProjectList(navigator: navigator));
+      action = ViewProjectList(navigator: navigator);
       break;
     case EntityType.taxRate:
-      store.dispatch(ViewTaxRateList(navigator: navigator));
+      action = ViewTaxRateList(navigator: navigator);
       break;
     case EntityType.companyGateway:
-      store.dispatch(ViewCompanyGatewayList(navigator: navigator));
+      action = ViewCompanyGatewayList(navigator: navigator);
       break;
     case EntityType.invoice:
-      store.dispatch(ViewInvoiceList(navigator: navigator));
+      action = ViewInvoiceList(navigator: navigator);
       break;
-    //case EntityType.recurringInvoice:
-    //store.dispatch(ViewRecurringInvoice(recurringInvoiceId: entityId, navigator: navigator));
-    //break;
     case EntityType.quote:
-      store.dispatch(ViewQuoteList(navigator: navigator));
+      action = ViewQuoteList(navigator: navigator);
       break;
     case EntityType.vendor:
-      store.dispatch(ViewVendorList(navigator: navigator));
+      action = ViewVendorList(navigator: navigator);
       break;
     case EntityType.product:
-      store.dispatch(ViewProductList(navigator: navigator));
+      action = ViewProductList(navigator: navigator);
       break;
     case EntityType.task:
-      store.dispatch(ViewTaskList(navigator: navigator));
+      action = ViewTaskList(navigator: navigator);
       break;
     case EntityType.expense:
-      store.dispatch(ViewExpenseList(navigator: navigator));
+      action = ViewExpenseList(navigator: navigator);
       break;
-    //case EntityType.expenseCategory:
-    //store.dispatch(ViewExpenseCategory(taxRateId: entityId, navigator: navigator));
-    //break;
-    //case EntityType.credit:
-    //store.dispatch(ViewCredit(creditId: entityId, navigator: navigator));
-    //break;
     case EntityType.payment:
-      store.dispatch(ViewPaymentList(navigator: navigator));
+      action = ViewPaymentList(navigator: navigator);
       break;
     case EntityType.group:
-      store.dispatch(ViewGroupList(navigator: navigator));
+      action = ViewGroupList(navigator: navigator);
       break;
     // STARTER: view list - do not remove comment
     case EntityType.design:
-      store.dispatch(ViewDesignList(navigator: navigator));
+      action = ViewDesignList(navigator: navigator);
       break;
-
     case EntityType.credit:
-      store.dispatch(ViewCreditList(navigator: navigator));
+      action = ViewCreditList(navigator: navigator);
       break;
+  }
+
+  if (action != null) {
+    if (kIsWeb && !isNotMobile(context)) {
+      store.dispatch(UpdateCurrentRoute('/blank'));
+      WidgetsBinding.instance.addPostFrameCallback((duration) {
+        store.dispatch(action);
+      });
+    } else {
+      store.dispatch(action);
+    }
   }
 }
 
