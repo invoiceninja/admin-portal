@@ -55,19 +55,17 @@ abstract class AuthState implements Built<AuthState, AuthStateBuilder> {
       return true;
     }
 
-    /*
     if (cleanUrl == kAppProductionUrl || cleanUrl == kAppStagingUrl) {
       return true;
     }
 
+    /*
     if (cleanUrl.startsWith('http://localhost')) {
       return true;
     }
+    */
 
     return false;
-     */
-
-    return cleanUrl == kAppProductionUrl;
   }
 
   bool get isSelfHost => !isHosted;
