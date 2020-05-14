@@ -67,6 +67,7 @@ class _LoginState extends State<LoginView> {
       _isSelfHosted = authState.isSelfHost;
       if (_isSelfHosted) {
         _emailLogin = true;
+        _createAccount = false;
       }
     }
   }
