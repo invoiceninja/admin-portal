@@ -11,7 +11,7 @@ import 'package:invoiceninja_flutter/utils/completers.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 
 class ViewCompanyGatewayList extends AbstractNavigatorAction
-    implements PersistUI {
+    implements PersistUI, StopLoading {
   ViewCompanyGatewayList(
       {@required NavigatorState navigator, this.force = false})
       : super(navigator: navigator);

@@ -281,7 +281,6 @@ void viewEntitiesByType({
       break;
     case EntityType.user:
       action = ViewUserList(navigator: navigator);
-
       break;
     case EntityType.project:
       action = ViewProjectList(navigator: navigator);
@@ -326,8 +325,8 @@ void viewEntitiesByType({
   }
 
   if (action != null) {
-    if (kIsWeb && !isNotMobile(context)) {
-      store.dispatch(UpdateCurrentRoute('/blank'));
+    if (kIsWeb && isNotMobile(context)) {
+      store.dispatch(StartLoading());
       WidgetsBinding.instance.addPostFrameCallback((duration) {
         store.dispatch(action);
       });

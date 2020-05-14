@@ -10,7 +10,8 @@ import 'package:invoiceninja_flutter/redux/product/product_selectors.dart';
 import 'package:invoiceninja_flutter/utils/completers.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 
-class ViewProductList extends AbstractNavigatorAction implements PersistUI {
+class ViewProductList extends AbstractNavigatorAction
+    implements PersistUI, StopLoading {
   ViewProductList({@required NavigatorState navigator, this.force = false})
       : super(navigator: navigator);
 
