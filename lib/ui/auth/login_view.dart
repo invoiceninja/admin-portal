@@ -59,6 +59,19 @@ class _LoginState extends State<LoginView> {
   bool _isFormComplete = false;
 
   @override
+  void initState() {
+    super.initState();
+
+    if (kIsWeb) {
+      final authState = widget.viewModel.authState;
+      _isSelfHosted = authState.isSelfHost;
+      if (_isSelfHosted) {
+        _emailLogin = true;
+      }
+    }
+  }
+
+  @override
   void didChangeDependencies() {
     _controllers = [
       _firstNameController,
@@ -82,10 +95,6 @@ class _LoginState extends State<LoginView> {
       _privacyChecked = true;
       _termsChecked = true;
       _emailLogin = true;
-    }
-
-    if (kIsWeb) {
-      _isSelfHosted = widget.viewModel.authState.isSelfHost;
     }
 
     if (_urlController.text.isEmpty) {
