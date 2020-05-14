@@ -34,7 +34,7 @@ class DismissibleEntity extends StatelessWidget {
 
     return Slidable(
       actionPane: SlidableDrawerActionPane(),
-      key: Key(entity.entityKey + Random().nextInt(100000).toString()),
+      key: Key('__${entity.entityKey}_${entity.entityState}__'),
       actions: <Widget>[
         IconSlideAction(
           caption: localization.select,
