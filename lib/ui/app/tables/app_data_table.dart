@@ -9,6 +9,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/widgets.dart';
 
+// TODO remove this class, it's needed to fix this issue:
+// https://github.com/flutter/flutter/issues/21864
+
 /// Signature for [DataColumn.onSort] callback.
 typedef DataColumnSortCallback = void Function(int columnIndex, bool ascending);
 
@@ -435,7 +438,9 @@ class AppDataTable extends StatelessWidget {
     for (int index = 0; index < columns.length; index += 1) {
       final DataColumn column = columns[index];
       if (!column.numeric) {
-        if (result != null) return null;
+        if (result != null) {
+          return null;
+        }
         result = index;
       }
     }
@@ -824,7 +829,9 @@ class TableRowInkWell extends InkResponse {
         // TableRowInkWell's coordinate space.
         table.applyPaintTransform(cell, transform);
         final Offset offset = MatrixUtils.getAsTranslation(transform);
-        if (offset != null) return rect.shift(-offset);
+        if (offset != null) {
+          return rect.shift(-offset);
+        }
       }
       return Rect.zero;
     };
@@ -887,7 +894,9 @@ class _SortArrowState extends State<_SortArrow> with TickerProviderStateMixin {
     _orientationAnimation = _orientationController.drive(_turnTween)
       ..addListener(_rebuild)
       ..addStatusListener(_resetOrientationAnimation);
-    if (widget.visible) _orientationOffset = widget.down ? 0.0 : math.pi;
+    if (widget.visible) {
+      _orientationOffset = widget.down ? 0.0 : math.pi;
+    }
   }
 
   void _rebuild() {

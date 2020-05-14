@@ -12,6 +12,9 @@ import 'package:invoiceninja_flutter/ui/app/tables/app_data_table.dart';
 import 'package:invoiceninja_flutter/ui/app/tables/app_data_table_source.dart';
 
 
+// TODO remove this class, it's needed to fix this issue:
+// https://github.com/flutter/flutter/issues/21864
+
 /// A material design data table that shows data using multiple pages.
 ///
 /// A paginated data table shows [rowsPerPage] rows of data per page and
