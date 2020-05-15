@@ -53,7 +53,7 @@ The architecture is based off these two projects:
     - Download "google-services.json" and put it in `android/app` directory.
 
 ## Credits
-* [Hillel Coren](https://hillel.dev)
+* [Hillel Coren](https://github.com/hillelcoren) 
 * [David Bomba](https://github.com/turbo124)
 * [All contributors](https://github.com/invoiceninja/flutter-mobile/graphs/contributors)
 
