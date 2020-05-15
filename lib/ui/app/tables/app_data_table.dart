@@ -707,17 +707,21 @@ class AppDataTable extends StatelessWidget {
         dataColumnIndex += 1) {
       final DataColumn column = columns[dataColumnIndex];
 
+      // MAKE THE FIRST COLUMN NARROWER
       double paddingStart;
-      if (dataColumnIndex == 0 && displayCheckboxColumn) {
+      if (dataColumnIndex == 0) {
         paddingStart = horizontalMargin / 2.0;
-      } else if (dataColumnIndex == 0 && !displayCheckboxColumn) {
-        paddingStart = horizontalMargin;
+      } else if (dataColumnIndex == 1 && !displayCheckboxColumn) {
+        paddingStart = horizontalMargin / 2.0;
       } else {
         paddingStart = columnSpacing / 2.0;
       }
 
+      // MAKE THE FIRST COLUMN NARROWER
       double paddingEnd;
-      if (dataColumnIndex == columns.length - 1) {
+      if (dataColumnIndex == 0) {
+        paddingEnd = horizontalMargin / 2.0;
+      } else if (dataColumnIndex == columns.length - 1) {
         paddingEnd = horizontalMargin;
       } else {
         paddingEnd = columnSpacing / 2.0;
@@ -743,7 +747,10 @@ class AppDataTable extends StatelessWidget {
             ? () => column.onSort(dataColumnIndex,
                 sortColumnIndex != dataColumnIndex || !sortAscending)
             : null,
-        sorted: dataColumnIndex == sortColumnIndex,
+        // IGNORE SORTING ON FIRST COLUMN
+        sorted: displayCheckboxColumn
+            ? dataColumnIndex == sortColumnIndex
+            : (dataColumnIndex - 1) == sortColumnIndex,
         ascending: sortAscending,
       );
       rowIndex = 1;
