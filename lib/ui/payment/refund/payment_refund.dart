@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:invoiceninja_flutter/constants.dart';
@@ -139,7 +141,7 @@ class _PaymentRefundState extends State<PaymentRefund> {
       ),
     );
 
-    bool onSavePressed(BuildContext context) {
+    void onSavePressed(BuildContext context) {
       final bool isValid = _formKey.currentState.validate();
 
       setState(() {
@@ -147,12 +149,18 @@ class _PaymentRefundState extends State<PaymentRefund> {
       });
 
       if (!isValid) {
-        return false;
+        return;
       }
 
-      viewModel.onRefundPressed(context);
+      final Completer<PaymentEntity> completer = Completer<PaymentEntity>();
 
-      return true;
+      completer.future.then((value) {
+        Navigator.of(context).pop();
+      }).catchError((Object error) {
+        print('## ERROR: $error');
+      });
+
+      viewModel.onRefundPressed(context, completer);
     }
 
     if (isMobile(context)) {
@@ -180,11 +188,7 @@ class _PaymentRefundState extends State<PaymentRefund> {
           ),
           FlatButton(
             child: Text(localization.refund.toUpperCase()),
-            onPressed: () {
-              if (onSavePressed(context)) {
-                Navigator.of(context).pop();
-              }
-            },
+            onPressed: () => onSavePressed(context),
           ),
         ],
       );
