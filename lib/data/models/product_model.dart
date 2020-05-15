@@ -174,6 +174,9 @@ abstract class ProductEntity extends Object
       case ProductFields.cost:
         response = productA.cost.compareTo(productB.cost);
         break;
+      case ProductFields.quantity:
+        response = productA.quantity.compareTo(productB.quantity);
+        break;
       case ProductFields.updatedAt:
         response = productA.updatedAt.compareTo(productB.updatedAt);
         break;

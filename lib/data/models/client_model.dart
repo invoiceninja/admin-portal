@@ -325,6 +325,16 @@ abstract class ClientEntity extends Object
             .toLowerCase()
             .compareTo(clientB.displayName.toLowerCase());
         break;
+      case ClientFields.contact:
+        response = clientA.primaryContact.fullName
+            .toLowerCase()
+            .compareTo(clientB.primaryContact.fullName.toLowerCase());
+        break;
+      case ClientFields.contactEmail:
+        response = clientA.primaryContact.email
+            .toLowerCase()
+            .compareTo(clientB.primaryContact.email.toLowerCase());
+        break;
       case ClientFields.balance:
         response = clientA.balance.compareTo(clientB.balance);
         break;

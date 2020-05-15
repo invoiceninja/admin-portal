@@ -182,7 +182,7 @@ class _EntityListState extends State<EntityList> {
                 onRefreshPressed: () => widget.onRefreshed(context),
               ),
               sortColumnIndex:
-                  widget.tableColumns.indexOf(listUIState.sortField) + 1,
+                  widget.tableColumns.indexOf(listUIState.sortField),
               sortAscending: listUIState.sortAscending,
             ),
           ),
