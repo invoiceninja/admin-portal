@@ -3,6 +3,9 @@ import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/ui/app/lists/selected_indicator.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
+import 'package:flutter_redux/flutter_redux.dart';
+import 'package:invoiceninja_flutter/data/models/entities.dart';
+import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 
 class DismissibleEntity extends StatelessWidget {
   const DismissibleEntity({
@@ -30,6 +33,9 @@ class DismissibleEntity extends StatelessWidget {
     }
 
     final localization = AppLocalization.of(context);
+    final store = StoreProvider.of<AppState>(context);
+    final isMultiselect =
+        store.state.getListState(entity.entityType).isInMultiselect();
 
     return Slidable(
       actionPane: SlidableDrawerActionPane(),
@@ -83,7 +89,7 @@ class DismissibleEntity extends StatelessWidget {
               ),
       ],
       child: SelectedIndicator(
-        isSelected: isSelected,
+        isSelected: isSelected && !isMultiselect,
         child: child,
       ),
     );

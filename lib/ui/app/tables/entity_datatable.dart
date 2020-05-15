@@ -64,7 +64,8 @@ class EntityDataTableSource extends AppDataTableSource {
     }
 
     bool isSelected = false;
-    if (state.prefState.isPreviewVisible || state.uiState.isEditing) {
+    if (!listState.isInMultiselect() &&
+        (state.prefState.isPreviewVisible || state.uiState.isEditing)) {
       if (state.uiState.isEditing
           ? entity.id == editingId
           : entity.id == uIState.selectedId) {
