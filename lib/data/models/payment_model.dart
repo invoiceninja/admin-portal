@@ -176,7 +176,8 @@ abstract class PaymentEntity extends Object
       {PaymentEntity payment,
       String sortField,
       bool sortAscending,
-      BuiltMap<String, InvoiceEntity> invoiceMap}) {
+      BuiltMap<String, InvoiceEntity> invoiceMap,
+      BuiltMap<String, ClientEntity> clientMap}) {
     int response = 0;
     final PaymentEntity paymentA = sortAscending ? this : payment;
     final PaymentEntity paymentB = sortAscending ? payment : this;
@@ -229,6 +230,13 @@ abstract class PaymentEntity extends Object
         response = invoiceA.number
             .toLowerCase()
             .compareTo(invoiceB.number.toLowerCase());
+        break;
+      case PaymentFields.client:
+        final clientA = clientMap[paymentA.clientId] ?? ClientEntity();
+        final clientB = clientMap[paymentB.clientId] ?? ClientEntity();
+        response = clientA.displayName
+            .toLowerCase()
+            .compareTo(clientB.displayName.toLowerCase());
         break;
       default:
         print('## ERROR: sort by payment.$sortField is not implemented');
