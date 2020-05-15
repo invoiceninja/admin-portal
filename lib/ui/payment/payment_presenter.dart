@@ -10,12 +10,12 @@ class PaymentPresenter extends EntityPresenter {
   static List<String> getTableFields(UserCompanyEntity userCompany) {
     return [
       PaymentFields.paymentNumber,
+      PaymentFields.client,
+      PaymentFields.amount,
       PaymentFields.paymentStatus,
       PaymentFields.invoiceNumber,
-      PaymentFields.client,
-      PaymentFields.transactionReference,
-      PaymentFields.amount,
       PaymentFields.paymentDate,
+      PaymentFields.transactionReference,
       PaymentFields.paymentStatus,
       EntityFields.state,
     ];

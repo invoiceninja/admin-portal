@@ -299,7 +299,7 @@ Middleware<AppState> _markInvoicePaid(InvoiceRepository repository) {
         .bulkAction(
             store.state.credentials, action.invoiceIds, EntityAction.markPaid)
         .then((invoices) {
-      store.dispatch(MarkInvoicesSentSuccess(invoices));
+      store.dispatch(MarkInvoicesPaidSuccess(invoices));
       final Completer<Null> completer = Completer<Null>();
       completer.future.then((_) {
         store.dispatch(LoadPayments(force: true));

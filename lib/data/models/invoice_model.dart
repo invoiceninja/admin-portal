@@ -365,17 +365,23 @@ abstract class InvoiceEntity extends Object
 
     switch (sortField) {
       case InvoiceFields.invoiceNumber:
+      case QuoteFields.quoteNumber:
+      case CreditFields.creditNumber:
         response = (invoiceA.number ?? '')
             .toLowerCase()
             .compareTo((invoiceB.number ?? '').toLowerCase());
         break;
       case InvoiceFields.amount:
+      case QuoteFields.amount:
+      case CreditFields.amount:
         response = invoiceA.amount.compareTo(invoiceB.amount);
         break;
       case InvoiceFields.updatedAt:
         response = invoiceA.updatedAt.compareTo(invoiceB.updatedAt);
         break;
       case InvoiceFields.invoiceDate:
+      case QuoteFields.date:
+      case CreditFields.date:
         response = invoiceA.date.compareTo(invoiceB.date);
         break;
       case InvoiceFields.balance:

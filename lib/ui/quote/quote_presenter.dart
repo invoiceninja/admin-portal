@@ -5,15 +5,17 @@ import 'package:invoiceninja_flutter/data/models/quote_model.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/ui/app/presenters/entity_presenter.dart';
 import 'package:invoiceninja_flutter/utils/formatting.dart';
+import 'package:invoiceninja_flutter/utils/localization.dart';
+import 'package:invoiceninja_flutter/constants.dart';
 
 class QuotePresenter extends EntityPresenter {
   static List<String> getTableFields(UserCompanyEntity userCompany) {
     return [
       QuoteFields.quoteNumber,
       QuoteFields.client,
-      QuoteFields.date,
       QuoteFields.amount,
-      QuoteFields.balance,
+      QuoteFields.status,
+      QuoteFields.date,
       QuoteFields.validUntil,
       EntityFields.state,
     ];
@@ -21,10 +23,17 @@ class QuotePresenter extends EntityPresenter {
 
   @override
   Widget getField({String field, BuildContext context}) {
+    final localization = AppLocalization.of(context);
     final state = StoreProvider.of<AppState>(context).state;
     final quote = entity as InvoiceEntity;
 
     switch (field) {
+      case QuoteFields.status:
+        return Text(
+          quote.isPastDue
+              ? localization.expired
+              : localization.lookup(kQuoteStatuses[quote.statusId]),
+        );
       case QuoteFields.quoteNumber:
         return Text(quote.number);
       case QuoteFields.client:
@@ -35,8 +44,6 @@ class QuotePresenter extends EntityPresenter {
         return Text(formatDate(quote.date, context));
       case QuoteFields.amount:
         return Text(formatNumber(quote.amount, context));
-      case QuoteFields.balance:
-        return Text(formatNumber(quote.balance, context));
       case QuoteFields.validUntil:
         return Text(formatDate(quote.dueDate, context));
     }

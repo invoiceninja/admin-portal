@@ -10,12 +10,12 @@ import 'package:invoiceninja_flutter/utils/localization.dart';
 class InvoicePresenter extends EntityPresenter {
   static List<String> getTableFields(UserCompanyEntity userCompany) {
     return [
-      InvoiceFields.status,
       InvoiceFields.invoiceNumber,
       InvoiceFields.client,
-      InvoiceFields.invoiceDate,
       InvoiceFields.amount,
       InvoiceFields.balance,
+      InvoiceFields.status,
+      InvoiceFields.invoiceDate,
       InvoiceFields.dueDate,
       EntityFields.state,
     ];
