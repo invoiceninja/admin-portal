@@ -228,7 +228,6 @@ class _InvoiceEditItemsDesktopState extends State<InvoiceEditItemsDesktop> {
                             index);
                       }),
                       autoFlipDirection: true,
-                      //direction: AxisDirection.up,
                       animationStart: 1,
                       debounceDuration: Duration(seconds: 0),
                     ),

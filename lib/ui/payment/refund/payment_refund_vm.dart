@@ -43,6 +43,7 @@ class PaymentRefundScreen extends StatelessWidget {
 
 class PaymentRefundVM {
   PaymentRefundVM({
+    @required this.state,
     @required this.payment,
     @required this.origPayment,
     @required this.onChanged,
@@ -62,6 +63,7 @@ class PaymentRefundVM {
     final payment = state.paymentUIState.editing;
 
     return PaymentRefundVM(
+      state: state,
       isSaving: state.isSaving,
       isDirty: payment.isNew,
       origPayment: state.paymentState.map[payment.id],
@@ -82,8 +84,7 @@ class PaymentRefundVM {
         createEntity(context: context, entity: PaymentEntity(), force: true);
         store.dispatch(UpdateCurrentRoute(state.uiState.previousRoute));
       },
-      onRefundPressed: (BuildContext context) {
-        final Completer<PaymentEntity> completer = Completer<PaymentEntity>();
+      onRefundPressed: (BuildContext context, Completer<PaymentEntity> completer) {
         store.dispatch(
             RefundPaymentRequest(completer: completer, payment: payment));
         return completer.future.then((savedPayment) {
@@ -109,10 +110,11 @@ class PaymentRefundVM {
     );
   }
 
+  final AppState state;
   final PaymentEntity payment;
   final PaymentEntity origPayment;
   final Function(PaymentEntity) onChanged;
-  final Function(BuildContext) onRefundPressed;
+  final Function(BuildContext, Completer<PaymentEntity>) onRefundPressed;
   final Function(BuildContext) onCancelPressed;
   final Function(bool) onEmailChanged;
   final BuiltMap<String, InvoiceEntity> invoiceMap;
