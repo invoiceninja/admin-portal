@@ -325,14 +325,7 @@ void viewEntitiesByType({
   }
 
   if (action != null) {
-    if (kIsWeb && isNotMobile(context)) {
-      store.dispatch(StartLoading());
-      WidgetsBinding.instance.addPostFrameCallback((duration) {
-        store.dispatch(action);
-      });
-    } else {
-      store.dispatch(action);
-    }
+    store.dispatch(action);
   }
 }
 

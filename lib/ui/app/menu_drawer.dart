@@ -428,47 +428,50 @@ class _DrawerTileState extends State<DrawerTile> {
       }
     }
 
-    Widget child = Container(
-      color: isSelected
-          ? convertHexStringToColor(enableDarkMode
-              ? kDefaultDarkSelectedColorMenu
-              : kDefaultLightSelectedColorMenu)
-          : null,
-      child: ListTile(
-        dense: true,
-        leading: Icon(
-          widget.icon,
-          size: 20,
-          color: textColor,
-        ),
-        title: state.prefState.isMenuCollapsed
-            ? null
-            : Text(
-                widget.title,
-                style: Theme.of(context).textTheme.bodyText1.copyWith(
-                      fontWeight: FontWeight.w100,
-                      fontSize: 16,
-                      color: textColor,
-                    ),
-              ),
-        onTap: () => widget.entityType != null
-            ? viewEntitiesByType(
-                context: context, entityType: widget.entityType)
-            : widget.onTap(),
-        onLongPress: () => widget.onLongPress != null
-            ? widget.onLongPress()
-            : widget.entityType != null
-                ? createEntityByType(
-                    context: context, entityType: widget.entityType)
-                : null,
-        /*
-            trailing: _isHovered ||
-                    !RendererBinding.instance.mouseTracker.mouseIsConnected
-                ? trailingWidget
-                : null,
+    Widget child = Material(
+      color: Colors.transparent,
+      child: Container(
+        color: isSelected
+            ? convertHexStringToColor(enableDarkMode
+                ? kDefaultDarkSelectedColorMenu
+                : kDefaultLightSelectedColorMenu)
+            : Colors.transparent,
+        child: ListTile(
+          dense: true,
+          leading: Icon(
+            widget.icon,
+            size: 20,
+            color: textColor,
+          ),
+          title: state.prefState.isMenuCollapsed
+              ? null
+              : Text(
+                  widget.title,
+                  style: Theme.of(context).textTheme.bodyText1.copyWith(
+                        fontWeight: FontWeight.w100,
+                        fontSize: 16,
+                        color: textColor,
+                      ),
+                ),
+          onTap: () => widget.entityType != null
+              ? viewEntitiesByType(
+                  context: context, entityType: widget.entityType)
+              : widget.onTap(),
+          onLongPress: () => widget.onLongPress != null
+              ? widget.onLongPress()
+              : widget.entityType != null
+                  ? createEntityByType(
+                      context: context, entityType: widget.entityType)
+                  : null,
+          /*
+              trailing: _isHovered ||
+                      !RendererBinding.instance.mouseTracker.mouseIsConnected
+                  ? trailingWidget
+                  : null,
 
-             */
-        trailing: trailingWidget,
+               */
+          trailing: trailingWidget,
+        ),
       ),
     );
 
