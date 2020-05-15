@@ -749,8 +749,8 @@ class AppDataTable extends StatelessWidget {
             : null,
         // IGNORE SORTING ON FIRST COLUMN
         sorted: displayCheckboxColumn
-            ? dataColumnIndex == sortColumnIndex
-            : (dataColumnIndex - 1) == sortColumnIndex,
+            ? (dataColumnIndex + 1) == sortColumnIndex
+            : dataColumnIndex == sortColumnIndex,
         ascending: sortAscending,
       );
       rowIndex = 1;

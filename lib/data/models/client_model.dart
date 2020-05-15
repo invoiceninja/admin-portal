@@ -323,6 +323,9 @@ abstract class ClientEntity extends Object
       case ClientFields.balance:
         response = clientA.balance.compareTo(clientB.balance);
         break;
+      case ClientFields.paidToDate:
+        response = clientA.paidToDate.compareTo(clientB.paidToDate);
+        break;
       case ClientFields.updatedAt:
         response = clientA.updatedAt.compareTo(clientB.updatedAt);
         break;
@@ -351,6 +354,9 @@ abstract class ClientEntity extends Object
         response = clientA.customValue4
             .toLowerCase()
             .compareTo(clientB.customValue4.toLowerCase());
+        break;
+      default:
+        print('## ERROR: sort by $sortField not implemented');
         break;
     }
 

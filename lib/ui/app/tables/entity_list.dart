@@ -171,8 +171,9 @@ class _EntityListState extends State<EntityList> {
                       ),
                     ),
                     numeric: EntityPresenter.isFieldNumeric(field),
-                    onSort: (int columnIndex, bool ascending) =>
-                        widget.onSortColumn(field))),
+                    onSort: (int columnIndex, bool ascending) {
+                      widget.onSortColumn(field);
+                    })),
               ],
               source: dataTableSource,
               header: DatatableHeader(
