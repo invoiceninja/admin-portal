@@ -10,6 +10,7 @@ import 'package:invoiceninja_flutter/ui/app/form_card.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/date_picker.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/decorated_form_field.dart';
 import 'package:invoiceninja_flutter/ui/app/edit_scaffold.dart';
+import 'package:invoiceninja_flutter/ui/app/loading_indicator.dart';
 import 'package:invoiceninja_flutter/ui/payment/refund/payment_refund_vm.dart';
 import 'package:invoiceninja_flutter/utils/completers.dart';
 import 'package:invoiceninja_flutter/utils/formatting.dart';
@@ -128,15 +129,17 @@ class _PaymentRefundState extends State<PaymentRefund> {
               ),
             ],
           ),
-          FormCard(children: <Widget>[
-            SwitchListTile(
-              activeColor: Theme.of(context).accentColor,
-              title: Text(localization.sendEmail),
-              value: viewModel.prefState.emailPayment,
-              subtitle: Text(localization.emailReceipt),
-              onChanged: (value) => viewModel.onEmailChanged(value),
-            ),
-          ]),
+          FormCard(
+            children: <Widget>[
+              SwitchListTile(
+                activeColor: Theme.of(context).accentColor,
+                title: Text(localization.sendEmail),
+                value: viewModel.prefState.emailPayment,
+                subtitle: Text(localization.emailReceipt),
+                onChanged: (value) => viewModel.onEmailChanged(value),
+              ),
+            ],
+          ),
         ],
       ),
     );
@@ -153,11 +156,8 @@ class _PaymentRefundState extends State<PaymentRefund> {
       }
 
       final Completer<PaymentEntity> completer = Completer<PaymentEntity>();
-
       completer.future.then((value) {
         Navigator.of(context).pop();
-      }).catchError((Object error) {
-        print('## ERROR: $error');
       });
 
       viewModel.onRefundPressed(context, completer);
@@ -174,24 +174,34 @@ class _PaymentRefundState extends State<PaymentRefund> {
       );
     } else {
       return AlertDialog(
-        backgroundColor: Theme.of(context).canvasColor,
-        contentPadding: const EdgeInsets.all(0),
-        actionsPadding: const EdgeInsets.only(right: 4),
-        title: Text(localization.refundPayment),
-        content: SingleChildScrollView(
-          child: body,
-        ),
-        actions: <Widget>[
-          FlatButton(
-            child: Text(localization.cancel.toUpperCase()),
-            onPressed: () => Navigator.of(context).pop(),
+          backgroundColor: Theme.of(context).canvasColor,
+          contentPadding: const EdgeInsets.all(0),
+          actionsPadding: const EdgeInsets.only(right: 4),
+          title: Text(localization.refundPayment),
+          content: SingleChildScrollView(
+            child: body,
           ),
-          FlatButton(
-            child: Text(localization.refund.toUpperCase()),
-            onPressed: () => onSavePressed(context),
-          ),
-        ],
-      );
+          actions: <Widget>[
+            if (viewModel.state.isSaving)
+              Padding(
+                padding: const EdgeInsets.only(right: 15),
+                child: SizedBox(
+                  child: CircularProgressIndicator(),
+                  height: 30,
+                  width: 30,
+                ),
+              )
+            else ...[
+              FlatButton(
+                child: Text(localization.cancel.toUpperCase()),
+                onPressed: () => Navigator.of(context).pop(),
+              ),
+              FlatButton(
+                child: Text(localization.refund.toUpperCase()),
+                onPressed: () => onSavePressed(context),
+              ),
+            ],
+          ]);
     }
   }
 }

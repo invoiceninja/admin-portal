@@ -43,6 +43,7 @@ class PaymentRefundScreen extends StatelessWidget {
 
 class PaymentRefundVM {
   PaymentRefundVM({
+    @required this.state,
     @required this.payment,
     @required this.origPayment,
     @required this.onChanged,
@@ -62,6 +63,7 @@ class PaymentRefundVM {
     final payment = state.paymentUIState.editing;
 
     return PaymentRefundVM(
+      state: state,
       isSaving: state.isSaving,
       isDirty: payment.isNew,
       origPayment: state.paymentState.map[payment.id],
@@ -108,6 +110,7 @@ class PaymentRefundVM {
     );
   }
 
+  final AppState state;
   final PaymentEntity payment;
   final PaymentEntity origPayment;
   final Function(PaymentEntity) onChanged;
