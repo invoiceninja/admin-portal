@@ -185,6 +185,11 @@ abstract class PaymentEntity extends Object
       case PaymentFields.amount:
         response = paymentA.amount.compareTo(paymentB.amount);
         break;
+      case PaymentFields.paymentNumber:
+        response = paymentA.number
+            .toLowerCase()
+            .compareTo(paymentB.number.toLowerCase());
+        break;
       case PaymentFields.transactionReference:
         response = paymentA.transactionReference
             .compareTo(paymentB.transactionReference);

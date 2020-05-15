@@ -365,7 +365,9 @@ abstract class InvoiceEntity extends Object
 
     switch (sortField) {
       case InvoiceFields.invoiceNumber:
-        response = (invoiceA.number ?? '').compareTo(invoiceB.number ?? '');
+        response = (invoiceA.number ?? '')
+            .toLowerCase()
+            .compareTo((invoiceB.number ?? '').toLowerCase());
         break;
       case InvoiceFields.amount:
         response = invoiceA.amount.compareTo(invoiceB.amount);
@@ -378,6 +380,9 @@ abstract class InvoiceEntity extends Object
         break;
       case InvoiceFields.balance:
         response = invoiceA.balance.compareTo(invoiceB.balance);
+        break;
+      case InvoiceFields.statusId:
+        response = invoiceA.statusId.compareTo(invoiceB.statusId);
         break;
       case InvoiceFields.dueDate:
       case QuoteFields.validUntil:
@@ -413,7 +418,6 @@ abstract class InvoiceEntity extends Object
       default:
         print('## ERROR: sort by invoice.$sortField is not implemented');
         break;
-
     }
 
     return response;
