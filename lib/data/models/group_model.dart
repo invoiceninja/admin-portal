@@ -86,21 +86,21 @@ abstract class GroupEntity extends Object
   String get languageId => settings.languageId;
 
   int compareTo(GroupEntity group, String sortField, bool sortAscending) {
-    const int response = 0;
+    int response = 0;
     final GroupEntity groupA = sortAscending ? this : group;
     final GroupEntity groupB = sortAscending ? group : this;
 
     switch (sortField) {
       case GroupFields.name:
-      //response = groupA.balance.compareTo(groupB.balance);
-      //break;
+        response =
+            groupA.name.toLowerCase().compareTo(groupB.name.toLowerCase());
+        break;
+      default:
+        print('## ERROR: sort by group.$sortField is not implemented');
+        break;
     }
 
-    if (response == 0) {
-      return groupA.name.toLowerCase().compareTo(groupB.name.toLowerCase());
-    } else {
-      return response;
-    }
+    return response;
   }
 
   @override

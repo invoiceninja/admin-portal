@@ -174,6 +174,9 @@ abstract class DocumentEntity extends Object
       case DocumentFields.updatedAt:
         response = documentA.updatedAt.compareTo(documentB.updatedAt);
         break;
+      default:
+        print('## ERROR: sort by documents.$sortField is not implemented');
+        break;
     }
 
     /*

@@ -163,6 +163,11 @@ abstract class ProductEntity extends Object
     final ProductEntity productB = sortAscending ? product : this;
 
     switch (sortField) {
+      case ProductFields.productKey:
+        response = productA.productKey
+            .toLowerCase()
+            .compareTo(productB.productKey.toLowerCase());
+        break;
       case ProductFields.price:
         response = productA.price.compareTo(productB.price);
         break;
@@ -197,15 +202,12 @@ abstract class ProductEntity extends Object
             .toLowerCase()
             .compareTo(productB.customValue4.toLowerCase());
         break;
+      default:
+        print('## ERROR: sort by product.$sortField is not implemented');
+        break;
     }
 
-    if (response == 0) {
-      return productA.productKey
-          .toLowerCase()
-          .compareTo(productB.productKey.toLowerCase());
-    } else {
-      return response;
-    }
+    return response;
   }
 
   @override

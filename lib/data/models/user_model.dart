@@ -135,21 +135,21 @@ abstract class UserEntity extends Object
     final UserEntity userB = sortAscending ? user : this;
 
     switch (sortField) {
+      case UserFields.lastName:
+        response = userA.lastName.toLowerCase().compareTo(userB.lastName.toLowerCase());
+        break;
       case UserFields.firstName:
-        response = userA.firstName.compareTo(userB.firstName);
+        response = userA.firstName.toLowerCase().compareTo(userB.firstName.toLowerCase());
         break;
       case UserFields.email:
         response = userA.email.compareTo(userB.email);
         break;
+      default:
+        print('## ERROR: sort by user.$sortField is not implemented');
+        break;
     }
 
-    if (response == 0) {
-      return userA.lastName
-          .toLowerCase()
-          .compareTo(userB.lastName.toLowerCase());
-    } else {
-      return response;
-    }
+    return response;
   }
 
   @override

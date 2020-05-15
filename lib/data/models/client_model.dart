@@ -320,6 +320,11 @@ abstract class ClientEntity extends Object
     final ClientEntity clientB = sortAscending ? client : this;
 
     switch (sortField) {
+      case ClientFields.name:
+        response = clientA.displayName
+            .toLowerCase()
+            .compareTo(clientB.displayName.toLowerCase());
+        break;
       case ClientFields.balance:
         response = clientA.balance.compareTo(clientB.balance);
         break;
@@ -360,13 +365,7 @@ abstract class ClientEntity extends Object
         break;
     }
 
-    if (response == 0) {
-      return clientA.displayName
-          .toLowerCase()
-          .compareTo(clientB.displayName.toLowerCase());
-    } else {
-      return response;
-    }
+    return response;
   }
 
   @override

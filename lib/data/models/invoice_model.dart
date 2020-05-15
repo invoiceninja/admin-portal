@@ -364,6 +364,9 @@ abstract class InvoiceEntity extends Object
     final InvoiceEntity invoiceB = sortAscending ? invoice : this;
 
     switch (sortField) {
+      case InvoiceFields.invoiceNumber:
+        response = (invoiceA.number ?? '').compareTo(invoiceB.number ?? '');
+        break;
       case InvoiceFields.amount:
         response = invoiceA.amount.compareTo(invoiceB.amount);
         break;
@@ -407,13 +410,13 @@ abstract class InvoiceEntity extends Object
             .toLowerCase()
             .compareTo(clientB.listDisplayName.toLowerCase());
         break;
+      default:
+        print('## ERROR: sort by invoice.$sortField is not implemented');
+        break;
+
     }
 
-    if (response == 0) {
-      return (invoiceA.number ?? '').compareTo(invoiceB.number ?? '');
-    } else {
-      return response;
-    }
+    return response;
   }
 
   @override
