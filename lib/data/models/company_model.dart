@@ -454,6 +454,10 @@ abstract class GatewayEntity extends Object
     switch (sortField) {
       case CreditFields.amount:
         response = gatewayA.name.compareTo(gatewayB.name);
+        break;
+      default:
+        print('## ERROR: sort by gateway.$sortField is not implemented');
+        break;
     }
 
     return response;

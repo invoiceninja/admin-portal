@@ -13,7 +13,7 @@ import 'package:invoiceninja_flutter/ui/app/snackbar_row.dart';
 import 'package:invoiceninja_flutter/utils/completers.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 
-class ViewTaskList extends AbstractNavigatorAction implements PersistUI {
+class ViewTaskList extends AbstractNavigatorAction implements PersistUI, StopLoading {
   ViewTaskList({@required NavigatorState navigator, this.force = false})
       : super(navigator: navigator);
 

@@ -37,6 +37,7 @@ abstract class TaxRateItemResponse
 
 class TaxRateFields {
   static const String name = 'name';
+  static const String rate = 'rate';
   static const String updatedAt = 'updated_at';
   static const String archivedAt = 'archived_at';
   static const String isDeleted = 'is_deleted';
@@ -79,20 +80,24 @@ abstract class TaxRateEntity extends Object
   bool get isEmpty => rate == 0 && name.isEmpty;
 
   int compareTo(TaxRateEntity taxRate, String sortField, bool sortAscending) {
-    const int response = 0;
+    int response = 0;
     final TaxRateEntity taxRateA = sortAscending ? this : taxRate;
     final TaxRateEntity taxRateB = sortAscending ? taxRate : this;
 
     switch (sortField) {
-      //response = taxRateA.balance.compareTo(taxRateB.balance);
-      //break;
+      case TaxRateFields.name:
+        response =
+            taxRateA.name.toLowerCase().compareTo(taxRateB.name.toLowerCase());
+        break;
+      case TaxRateFields.rate:
+        response = taxRateA.rate.compareTo(taxRateB.rate);
+        break;
+      default:
+        print('## ERROR: sort by .$sortField is not implemented');
+        break;
     }
 
-    if (response == 0) {
-      return taxRateA.name.toLowerCase().compareTo(taxRateB.name.toLowerCase());
-    } else {
-      return response;
-    }
+    return response;
   }
 
   @override

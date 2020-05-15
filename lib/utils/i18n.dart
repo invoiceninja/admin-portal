@@ -16,6 +16,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
     'en': {
       // STARTER: lang key - do not remove comment
       'credit_amount': 'Credit Amount',
+      'quote_amount': 'Quote Amount',
       'hosted': 'Hosted',
       'selfhosted': 'Self-Hosted',
       'exclusive': 'Exclusive',
@@ -36506,6 +36507,9 @@ mixin LocalizationsProvider on LocaleCodeAware {
 
   String get creditAmount =>
       _localizedValues[localeCode]['credit_amount'] ?? '';
+
+  String get quoteAmount =>
+      _localizedValues[localeCode]['quote_amount'] ?? '';
 
 
   String lookup(String key) {

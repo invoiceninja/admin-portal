@@ -10,7 +10,7 @@ import 'package:invoiceninja_flutter/utils/dialogs.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:invoiceninja_flutter/utils/completers.dart';
 
-class ViewUserList extends AbstractNavigatorAction implements PersistUI {
+class ViewUserList extends AbstractNavigatorAction implements PersistUI, StopLoading {
   ViewUserList({@required NavigatorState navigator, this.force = false})
       : super(navigator: navigator);
 

@@ -87,6 +87,10 @@ abstract class StubEntity extends Object with BaseEntity implements Built<StubEn
 
     switch (sortField) {
       // STARTER: sort switch - do not remove comment
+            default:
+              print('## ERROR: sort by stub.$sortField is not implemented');
+              break;
+
     }
 
     if (response == 0) {

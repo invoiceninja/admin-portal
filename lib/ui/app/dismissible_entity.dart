@@ -1,9 +1,11 @@
-import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/ui/app/lists/selected_indicator.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
+import 'package:flutter_redux/flutter_redux.dart';
+import 'package:invoiceninja_flutter/data/models/entities.dart';
+import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 
 class DismissibleEntity extends StatelessWidget {
   const DismissibleEntity({
@@ -31,10 +33,13 @@ class DismissibleEntity extends StatelessWidget {
     }
 
     final localization = AppLocalization.of(context);
+    final store = StoreProvider.of<AppState>(context);
+    final isMultiselect =
+        store.state.getListState(entity.entityType).isInMultiselect();
 
     return Slidable(
       actionPane: SlidableDrawerActionPane(),
-      key: Key(entity.entityKey + Random().nextInt(100000).toString()),
+      key: Key('__${entity.entityKey}_${entity.entityState}__'),
       actions: <Widget>[
         IconSlideAction(
           caption: localization.select,
@@ -84,8 +89,13 @@ class DismissibleEntity extends StatelessWidget {
               ),
       ],
       child: SelectedIndicator(
-        isSelected: isSelected,
-        child: child,
+        isSelected: isSelected && !isMultiselect,
+        child: ConstrainedBox(
+          constraints: BoxConstraints(
+            minHeight: 60,
+          ),
+          child: child,
+        ),
       ),
     );
   }

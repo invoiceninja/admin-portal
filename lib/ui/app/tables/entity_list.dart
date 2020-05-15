@@ -1,5 +1,5 @@
 import 'package:flutter/foundation.dart';
-import 'package:flutter/material.dart';
+import 'package:flutter/material.dart' hide DataRow, DataCell, DataColumn;
 import 'package:invoiceninja_flutter/constants.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
@@ -10,6 +10,8 @@ import 'package:invoiceninja_flutter/ui/app/lists/list_divider.dart';
 import 'package:invoiceninja_flutter/ui/app/lists/list_filter.dart';
 import 'package:invoiceninja_flutter/ui/app/loading_indicator.dart';
 import 'package:invoiceninja_flutter/ui/app/presenters/entity_presenter.dart';
+import 'package:invoiceninja_flutter/ui/app/tables/app_data_table.dart';
+import 'package:invoiceninja_flutter/ui/app/tables/app_paginated_data_table.dart';
 import 'package:invoiceninja_flutter/ui/app/tables/entity_datatable.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 
@@ -143,7 +145,7 @@ class _EntityListState extends State<EntityList> {
         return SingleChildScrollView(
           child: Padding(
             padding: const EdgeInsets.symmetric(vertical: 24),
-            child: PaginatedDataTable(
+            child: AppPaginatedDataTable(
               onSelectAll: (value) {
                 final entities = entityList
                     .map((String entityId) => entityMap[entityId])
@@ -169,8 +171,9 @@ class _EntityListState extends State<EntityList> {
                       ),
                     ),
                     numeric: EntityPresenter.isFieldNumeric(field),
-                    onSort: (int columnIndex, bool ascending) =>
-                        widget.onSortColumn(field))),
+                    onSort: (int columnIndex, bool ascending) {
+                      widget.onSortColumn(field);
+                    })),
               ],
               source: dataTableSource,
               header: DatatableHeader(
@@ -179,7 +182,7 @@ class _EntityListState extends State<EntityList> {
                 onRefreshPressed: () => widget.onRefreshed(context),
               ),
               sortColumnIndex:
-                  widget.tableColumns.indexOf(listUIState.sortField) + 1,
+                  widget.tableColumns.indexOf(listUIState.sortField),
               sortAscending: listUIState.sortAscending,
             ),
           ),

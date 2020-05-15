@@ -32,10 +32,11 @@ abstract class QuoteItemResponse
 }
 
 class QuoteFields {
-  static const String amount = 'quote_total';
+  static const String amount = 'quote_amount';
   static const String balance = 'balance_due';
   static const String clientId = 'client_id';
   static const String client = 'client';
+  static const String status = 'status';
   static const String statusId = 'status_id';
   static const String quoteNumber = 'quote_number';
   static const String discount = 'discount';

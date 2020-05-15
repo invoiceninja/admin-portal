@@ -11,7 +11,7 @@ import 'package:invoiceninja_flutter/redux/expense/expense_selectors.dart';
 import 'package:invoiceninja_flutter/utils/completers.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 
-class ViewExpenseList extends AbstractNavigatorAction implements PersistUI {
+class ViewExpenseList extends AbstractNavigatorAction implements PersistUI, StopLoading {
   ViewExpenseList({@required NavigatorState navigator, this.force = false})
       : super(navigator: navigator);
 

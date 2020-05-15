@@ -12,7 +12,7 @@ import 'package:invoiceninja_flutter/redux/settings/settings_actions.dart';
 import 'package:invoiceninja_flutter/utils/completers.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 
-class ViewGroupList extends AbstractNavigatorAction implements PersistUI {
+class ViewGroupList extends AbstractNavigatorAction implements PersistUI, StopLoading {
   ViewGroupList({@required NavigatorState navigator, this.force = false})
       : super(navigator: navigator);
 

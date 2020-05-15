@@ -139,6 +139,6 @@ Future<AppState> _initialState(bool isTesting) async {
   return AppState(
     prefState: prefState,
     currentRoute: currentRoute,
-    url: getBrowserUrl(),
+    url: Config.DEMO_MODE ? '' : getBrowserUrl(),
   );
 }

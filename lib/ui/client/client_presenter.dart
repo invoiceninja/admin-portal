@@ -6,13 +6,14 @@ import 'package:invoiceninja_flutter/utils/formatting.dart';
 class ClientPresenter extends EntityPresenter {
   static List<String> getTableFields(UserCompanyEntity userCompany) {
     return [
+      ClientFields.idNumber,
       ClientFields.name,
+      ClientFields.balance,
+      ClientFields.paidToDate,
       ClientFields.contact,
       ClientFields.contactEmail,
-      ClientFields.idNumber,
       EntityFields.createdAt,
       //ClientFields.contactLastLogin,
-      ClientFields.balance,
       EntityFields.state,
     ];
   }
@@ -34,6 +35,9 @@ class ClientPresenter extends EntityPresenter {
         return Text(client.idNumber);
       case ClientFields.balance:
         return Text(formatNumber(client.balance, context, clientId: client.id));
+      case ClientFields.paidToDate:
+        return Text(
+            formatNumber(client.paidToDate, context, clientId: client.id));
     }
 
     return super.getField(field: field, context: context);

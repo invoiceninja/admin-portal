@@ -429,13 +429,13 @@ abstract class TaskEntity extends Object
     switch (sortField) {
       case TaskFields.duration:
         response = taskA.clientId.compareTo(taskB.clientId);
+        break;
+      default:
+        print('## ERROR: sort by task.$sortField is not implemented');
+        break;
     }
 
-    if (response == 0) {
-      return taskA.projectId.compareTo(taskB.projectId);
-    } else {
-      return response;
-    }
+    return response;
   }
 
   @override

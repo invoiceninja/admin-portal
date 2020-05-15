@@ -274,6 +274,9 @@ abstract class ExpenseEntity extends Object
       case ExpenseFields.updatedAt:
         response = expenseA.updatedAt.compareTo(expenseB.updatedAt);
         break;
+      default:
+        print('## ERROR: sort by expense.$sortField is not implemented');
+        break;
     }
 
     return response;
@@ -487,6 +490,10 @@ abstract class ExpenseCategoryEntity extends Object
         response = categoryA.name
             .toLowerCase()
             .compareTo(categoryB.name.toLowerCase());
+        break;
+      default:
+        print('## ERROR: sort by expoense_category.$sortField is not implemented');
+        break;
     }
 
     return response;

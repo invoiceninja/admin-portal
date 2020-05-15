@@ -14,6 +14,10 @@ class WebClient {
   const WebClient();
 
   Future<dynamic> get(String url, String token) async {
+    if (Config.DEMO_MODE) {
+      throw 'Server requests are not supported in the demo';
+    }
+
     url = _checkUrl(url);
     print('GET: $url');
 
@@ -47,6 +51,10 @@ class WebClient {
     String password,
     bool rawResponse = false,
   }) async {
+    if (Config.DEMO_MODE) {
+      throw 'Server requests are not supported in the demo';
+    }
+
     url = _checkUrl(url);
     print('POST: $url');
     debugPrint('Data: $data', wrapWidth: 1000);
@@ -81,6 +89,10 @@ class WebClient {
     String fileIndex = 'file',
     String password,
   }) async {
+    if (Config.DEMO_MODE) {
+      throw 'Server requests are not supported in the demo';
+    }
+
     url = _checkUrl(url);
     print('PUT: $url');
     debugPrint('Data: $data', wrapWidth: 1000);
@@ -104,6 +116,10 @@ class WebClient {
   }
 
   Future<dynamic> delete(String url, String token, {String password}) async {
+    if (Config.DEMO_MODE) {
+      throw 'Server requests are not supported in the demo';
+    }
+
     url = _checkUrl(url);
     print('Delete: $url');
 
@@ -157,17 +173,11 @@ Map<String, String> _getHeaders(String url, String token,
 }
 
 void _checkResponse(http.Response response) {
-  if (Config.DEMO_MODE) {
-    throw 'Server requests are not supported in the demo';
-  }
-
   debugPrint(
       'response: ${response.statusCode} ${response.body.substring(0, min(response.body.length, 30000))}',
       wrapWidth: 1000);
   //debugPrint('response: ${response.statusCode} ${response.body}');
   print('headers: ${response.headers}');
-
-  print('CODE: ${response.statusCode}, >400 ${response.statusCode >= 400 ? 'YES' : 'NON'}');
 
   final version = response.headers['x-app-version'];
 

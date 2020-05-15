@@ -320,8 +320,26 @@ abstract class ClientEntity extends Object
     final ClientEntity clientB = sortAscending ? client : this;
 
     switch (sortField) {
+      case ClientFields.name:
+        response = clientA.displayName
+            .toLowerCase()
+            .compareTo(clientB.displayName.toLowerCase());
+        break;
+      case ClientFields.contact:
+        response = clientA.primaryContact.fullName
+            .toLowerCase()
+            .compareTo(clientB.primaryContact.fullName.toLowerCase());
+        break;
+      case ClientFields.contactEmail:
+        response = clientA.primaryContact.email
+            .toLowerCase()
+            .compareTo(clientB.primaryContact.email.toLowerCase());
+        break;
       case ClientFields.balance:
         response = clientA.balance.compareTo(clientB.balance);
+        break;
+      case ClientFields.paidToDate:
+        response = clientA.paidToDate.compareTo(clientB.paidToDate);
         break;
       case ClientFields.updatedAt:
         response = clientA.updatedAt.compareTo(clientB.updatedAt);
@@ -352,15 +370,12 @@ abstract class ClientEntity extends Object
             .toLowerCase()
             .compareTo(clientB.customValue4.toLowerCase());
         break;
+      default:
+        print('## ERROR: sort by client.$sortField not implemented');
+        break;
     }
 
-    if (response == 0) {
-      return clientA.displayName
-          .toLowerCase()
-          .compareTo(clientB.displayName.toLowerCase());
-    } else {
-      return response;
-    }
+    return response;
   }
 
   @override

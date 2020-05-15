@@ -49,6 +49,7 @@ AppState appReducer(AppState state, dynamic action) {
         state.prefState, action, state.uiState.selectedCompanyIndex)));
 }
 
+
 final lastErrorReducer = combineReducers<String>([
   TypedReducer<String, ClearLastError>((state, action) {
     return '';

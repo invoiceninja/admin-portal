@@ -9,7 +9,7 @@ import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/utils/completers.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 
-class ViewDocumentList extends AbstractNavigatorAction implements PersistUI {
+class ViewDocumentList extends AbstractNavigatorAction implements PersistUI, StopLoading {
   ViewDocumentList({@required NavigatorState navigator, this.force = false})
       : super(navigator: navigator);
 

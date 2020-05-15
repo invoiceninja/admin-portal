@@ -364,17 +364,31 @@ abstract class InvoiceEntity extends Object
     final InvoiceEntity invoiceB = sortAscending ? invoice : this;
 
     switch (sortField) {
+      case InvoiceFields.invoiceNumber:
+      case QuoteFields.quoteNumber:
+      case CreditFields.creditNumber:
+        response = (invoiceA.number ?? '')
+            .toLowerCase()
+            .compareTo((invoiceB.number ?? '').toLowerCase());
+        break;
       case InvoiceFields.amount:
+      case QuoteFields.amount:
+      case CreditFields.amount:
         response = invoiceA.amount.compareTo(invoiceB.amount);
         break;
       case InvoiceFields.updatedAt:
         response = invoiceA.updatedAt.compareTo(invoiceB.updatedAt);
         break;
       case InvoiceFields.invoiceDate:
+      case QuoteFields.date:
+      case CreditFields.date:
         response = invoiceA.date.compareTo(invoiceB.date);
         break;
       case InvoiceFields.balance:
         response = invoiceA.balance.compareTo(invoiceB.balance);
+        break;
+      case InvoiceFields.statusId:
+        response = invoiceA.statusId.compareTo(invoiceB.statusId);
         break;
       case InvoiceFields.dueDate:
       case QuoteFields.validUntil:
@@ -407,13 +421,12 @@ abstract class InvoiceEntity extends Object
             .toLowerCase()
             .compareTo(clientB.listDisplayName.toLowerCase());
         break;
+      default:
+        print('## ERROR: sort by invoice.$sortField is not implemented');
+        break;
     }
 
-    if (response == 0) {
-      return (invoiceA.number ?? '').compareTo(invoiceB.number ?? '');
-    } else {
-      return response;
-    }
+    return response;
   }
 
   @override

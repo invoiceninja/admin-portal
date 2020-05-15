@@ -158,15 +158,19 @@ abstract class ProjectEntity extends Object
     final ProjectEntity projectB = sortAscending ? project : this;
 
     switch (sortField) {
+      case ProjectFields.name:
+        response =
+            projectA.name.toLowerCase().compareTo(projectB.name.toLowerCase());
+        break;
       case ProjectFields.taskRate:
         response = projectA.taskRate.compareTo(projectB.taskRate);
+        break;
+      default:
+        print('## ERROR: sort by project.$sortField is not implemented');
+        break;
     }
 
-    if (response == 0) {
-      return projectA.name.compareTo(projectB.name);
-    } else {
-      return response;
-    }
+    return response;
   }
 
   @override

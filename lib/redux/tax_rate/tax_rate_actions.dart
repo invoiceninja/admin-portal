@@ -9,7 +9,7 @@ import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:invoiceninja_flutter/utils/completers.dart';
 
-class ViewTaxRateList extends AbstractNavigatorAction implements PersistUI {
+class ViewTaxRateList extends AbstractNavigatorAction implements PersistUI, StopLoading {
   ViewTaxRateList({@required NavigatorState navigator, this.force = false})
       : super(navigator: navigator);
 
