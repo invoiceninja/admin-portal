@@ -194,6 +194,9 @@ abstract class VendorEntity extends Object
       case VendorFields.updatedAt:
         response = vendorA.updatedAt.compareTo(vendorB.updatedAt);
         break;
+      default:
+        print('## ERROR: sort by vendor.$sortField is not implemented');
+        break;
     }
 
     return response;

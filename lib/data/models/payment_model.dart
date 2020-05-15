@@ -224,6 +224,10 @@ abstract class PaymentEntity extends Object
         response = invoiceA.number
             .toLowerCase()
             .compareTo(invoiceB.number.toLowerCase());
+        break;
+      default:
+        print('## ERROR: sort by payment.$sortField is not implemented');
+        break;
     }
 
     return response;

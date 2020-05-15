@@ -356,7 +356,7 @@ abstract class ClientEntity extends Object
             .compareTo(clientB.customValue4.toLowerCase());
         break;
       default:
-        print('## ERROR: sort by $sortField not implemented');
+        print('## ERROR: sort by client.$sortField not implemented');
         break;
     }
 

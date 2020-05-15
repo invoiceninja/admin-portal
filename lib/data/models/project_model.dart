@@ -160,6 +160,10 @@ abstract class ProjectEntity extends Object
     switch (sortField) {
       case ProjectFields.taskRate:
         response = projectA.taskRate.compareTo(projectB.taskRate);
+        break;
+      default:
+        print('## ERROR: sort by project.$sortField is not implemented');
+        break;
     }
 
     if (response == 0) {
