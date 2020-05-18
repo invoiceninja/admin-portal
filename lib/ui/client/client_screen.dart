@@ -122,7 +122,6 @@ class ClientScreen extends StatelessWidget {
       floatingActionButton: userCompany.canCreate(EntityType.client)
           ? FloatingActionButton(
               heroTag: 'client_fab',
-              backgroundColor: Theme.of(context).primaryColorDark,
               onPressed: () {
                 createEntityByType(
                     context: context, entityType: EntityType.client);

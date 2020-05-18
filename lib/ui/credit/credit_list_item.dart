@@ -44,7 +44,7 @@ class CreditListItem extends StatelessWidget {
     final listUIState = state.getUIState(credit.entityType).listUIState;
     final isInMultiselect = listUIState.isInMultiselect();
     final showCheckbox = onCheckboxChanged != null || isInMultiselect;
-    final textStyle = TextStyle(fontSize: 17);
+    final textStyle = TextStyle(fontSize: 16);
     final localization = AppLocalization.of(context);
     final filterMatch = filter != null && filter.isNotEmpty
         ? (credit.matchesFilterValue(filter) ??
