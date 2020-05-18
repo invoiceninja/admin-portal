@@ -51,6 +51,7 @@ class PaymentListItem extends StatelessWidget {
         : null;
     final subtitle = filterMatch ??
         (payment.number ?? '') + ' • ' + formatDate(payment.date, context);
+    final textColor = Theme.of(context).textTheme.bodyText1.color;
 
     Widget _buildMobile() {
       return ListTile(
@@ -185,7 +186,9 @@ class PaymentListItem extends StatelessWidget {
                       filterMatch ?? subtitle,
                       maxLines: 3,
                       overflow: TextOverflow.ellipsis,
-                      style: Theme.of(context).textTheme.subtitle2,
+                      style: Theme.of(context).textTheme.subtitle2.copyWith(
+                        color: textColor.withOpacity(0.65),
+                      ),
                     ),
                   ],
                 ),

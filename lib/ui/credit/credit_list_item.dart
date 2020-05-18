@@ -50,6 +50,7 @@ class CreditListItem extends StatelessWidget {
         ? (credit.matchesFilterValue(filter) ??
             client.matchesFilterValue(filter))
         : null;
+    final textColor = Theme.of(context).textTheme.bodyText1.color;
 
     final statusLabel = localization.lookup(kCreditStatuses[credit.statusId]);
     final statusColor = CreditStatusColors.colors[credit.statusId];
@@ -193,7 +194,9 @@ class CreditListItem extends StatelessWidget {
                       filterMatch ?? subtitle,
                       maxLines: 3,
                       overflow: TextOverflow.ellipsis,
-                      style: Theme.of(context).textTheme.subtitle2,
+                      style: Theme.of(context).textTheme.subtitle2.copyWith(
+                            color: textColor.withOpacity(0.65),
+                          ),
                     ),
                   ],
                 ),
