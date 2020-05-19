@@ -70,5 +70,17 @@ List<String> userList(BuiltMap<String, UserEntity> userMap) {
   return list;
 }
 
+var memoizedGmailUserList =
+    memo1((BuiltMap<String, UserEntity> userMap) => gmailUserList(userMap));
+
+List<String> gmailUserList(BuiltMap<String, UserEntity> userMap) {
+  return userList(userMap).where((userId) {
+    final user = (userMap[userId] ?? UserEntity) as UserEntity;
+
+    // TODO add check for GMail
+    return user.isActive;
+  }).toList();
+}
+
 bool hasUserChanges(UserEntity user, BuiltMap<String, UserEntity> userMap) =>
     user.isNew ? user.isChanged : user != userMap[user.id];

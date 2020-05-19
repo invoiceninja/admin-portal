@@ -70,13 +70,13 @@ class _TaxSettingsState extends State<TaxSettings> {
               ),
               SizedBox(height: 15),
               BoolDropdownButton(
-                iconData: kIsWeb ? Icons.add : FontAwesomeIcons.percent,
+                iconData: FontAwesomeIcons.percent,
                 label: localization.inclusiveTaxes,
                 value: settings.enableInclusiveTaxes,
                 onChanged: (value) => viewModel.onSettingsChanged(
                     settings.rebuild((b) => b..enableInclusiveTaxes = value)),
                 helpLabel:
-                    '${localization.exclusive}: 100 + 10% = 100 + 10\n${localization.inclusive}: 100 + 10% = 90.91 + 9.09',
+                    '\n${localization.exclusive}: 100 + 10% = 100 + 10\n${localization.inclusive}: 100 + 10% = 90.91 + 9.09',
               ),
             ],
           ),
