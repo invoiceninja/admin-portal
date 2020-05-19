@@ -43,30 +43,60 @@ List<String> dropdownInvoiceSelector(
   return list;
 }
 
-var memoizedFilteredInvoiceList = memo4(
+var memoizedFilteredInvoiceList = memo5(
     (BuiltMap<String, InvoiceEntity> invoiceMap,
             BuiltList<String> invoiceList,
             BuiltMap<String, ClientEntity> clientMap,
+            BuiltMap<String, PaymentEntity> paymentMap,
             ListUIState invoiceListState) =>
         filteredInvoicesSelector(
-            invoiceMap, invoiceList, clientMap, invoiceListState));
+            invoiceMap, invoiceList, clientMap, paymentMap, invoiceListState));
 
 List<String> filteredInvoicesSelector(
     BuiltMap<String, InvoiceEntity> invoiceMap,
     BuiltList<String> invoiceList,
     BuiltMap<String, ClientEntity> clientMap,
+    BuiltMap<String, PaymentEntity> paymentMap,
     ListUIState invoiceListState) {
+  final Map<String, List<String>> invoicePaymentMap = {};
+
+  if (invoiceListState.filterEntityType == EntityType.payment) {
+    paymentMap.forEach((paymentId, payment) {
+      payment.invoicePaymentables.forEach((invoicePaymentable) {
+        final List<String> paymentIds =
+            invoicePaymentMap[invoicePaymentable.invoiceId] ?? [];
+        paymentIds.add(payment.id);
+        invoicePaymentMap[invoicePaymentable.invoiceId] = paymentIds;
+      });
+    });
+  }
+  print('## PAYMENT MAP: $invoicePaymentMap');
   final list = invoiceList.where((invoiceId) {
     final invoice = invoiceMap[invoiceId];
     final client =
         clientMap[invoice.clientId] ?? ClientEntity(id: invoice.clientId);
 
+    print(
+        '## invoiceListState.filterEntityType: ${invoiceListState.filterEntityType}');
     if (invoiceListState.filterEntityType == EntityType.client) {
       if (!invoiceListState.entityMatchesFilter(client)) {
         return false;
       }
     } else if (invoiceListState.filterEntityType == EntityType.user) {
       if (!invoice.userCanAccess(invoiceListState.filterEntityId)) {
+        return false;
+      }
+    } else if (invoiceListState.filterEntityType == EntityType.payment) {
+      bool isMatch = false;
+      print('## invoiceListState.filterEntityId : ${invoiceListState.filterEntityId }');
+      print('## paymentIds: ${invoicePaymentMap[invoiceId]}');
+      (invoicePaymentMap[invoiceId] ?? []).forEach((paymentId) {
+        if (invoiceListState.filterEntityId == paymentId) {
+          isMatch = true;
+        }
+      });
+
+      if (!isMatch) {
         return false;
       }
     }
