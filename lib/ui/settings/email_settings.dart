@@ -2,11 +2,14 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:invoiceninja_flutter/constants.dart';
+import 'package:invoiceninja_flutter/data/models/company_model.dart';
+import 'package:invoiceninja_flutter/redux/user/user_selectors.dart';
 import 'package:invoiceninja_flutter/ui/app/form_card.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/app_dropdown_button.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/app_form.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/bool_dropdown_button.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/decorated_form_field.dart';
+import 'package:invoiceninja_flutter/ui/app/forms/user_picker.dart';
 import 'package:invoiceninja_flutter/ui/settings/email_settings_vm.dart';
 import 'package:invoiceninja_flutter/ui/app/edit_scaffold.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
@@ -102,6 +105,54 @@ class _EmailSettingsState extends State<EmailSettings> {
         formKey: _formKey,
         focusNode: _focusNode,
         children: <Widget>[
+          if (viewModel.state.authState.isHosted) ...[
+            FormCard(children: <Widget>[
+              BoolDropdownButton(
+                label: localization.sendFromGmail,
+                value: settings.emailSendingMethod ==
+                    SettingsEntity.EMAIL_SENDING_METHOD_GMAIL,
+                iconData: FontAwesomeIcons.solidEnvelope,
+                onChanged: (value) => viewModel.onSettingsChanged(
+                    settings.rebuild((b) => b
+                      ..emailSendingMethod = (value
+                          ? SettingsEntity.EMAIL_SENDING_METHOD_GMAIL
+                          : SettingsEntity.EMAIL_SENDING_METHOD_DEFAULT))),
+              ),
+              if (settings.emailSendingMethod ==
+                  SettingsEntity.EMAIL_SENDING_METHOD_GMAIL)
+                UserPicker(
+                  userIds: memoizedGmailUserList(viewModel.state.userState.map),
+                  userId: settings.gmailSendingUserId,
+                  onChanged: (userId) => viewModel.onSettingsChanged(
+                      settings.rebuild((b) => b..gmailSendingUserId = userId)),
+                ),
+            ]),
+          ],
+          FormCard(
+            children: <Widget>[
+              DecoratedFormField(
+                label: localization.replyToEmail,
+                controller: _replyToEmailController,
+                keyboardType: TextInputType.emailAddress,
+              ),
+              DecoratedFormField(
+                label: localization.bccEmail,
+                controller: _bccEmailController,
+                keyboardType: TextInputType.emailAddress,
+              ),
+              /*
+              SizedBox(height: 10),
+              BoolDropdownButton(
+                label: localization.enableMarkup,
+                helpLabel: localization.enableMarkupHelp,
+                value: settings.enableEmailMarkup,
+                iconData: kIsWeb ? Icons.email : FontAwesomeIcons.solidEnvelope,
+                onChanged: (value) => viewModel.onSettingsChanged(
+                    settings.rebuild((b) => b..enableEmailMarkup = value)),
+              ),
+               */
+            ],
+          ),
           FormCard(
             children: <Widget>[
               AppDropdownButton<String>(
@@ -135,36 +186,7 @@ class _EmailSettingsState extends State<EmailSettings> {
                   controller: _emailStyleCustomController,
                   maxLines: 6,
                 ),
-              ]
-            ],
-          ),
-          FormCard(
-            children: <Widget>[
-              DecoratedFormField(
-                label: localization.replyToEmail,
-                controller: _replyToEmailController,
-                keyboardType: TextInputType.emailAddress,
-              ),
-              DecoratedFormField(
-                label: localization.bccEmail,
-                controller: _bccEmailController,
-                keyboardType: TextInputType.emailAddress,
-              ),
-              /*
-              SizedBox(height: 10),
-              BoolDropdownButton(
-                label: localization.enableMarkup,
-                helpLabel: localization.enableMarkupHelp,
-                value: settings.enableEmailMarkup,
-                iconData: kIsWeb ? Icons.email : FontAwesomeIcons.solidEnvelope,
-                onChanged: (value) => viewModel.onSettingsChanged(
-                    settings.rebuild((b) => b..enableEmailMarkup = value)),
-              ),
-               */
-            ],
-          ),
-          FormCard(
-            children: <Widget>[
+              ],
               DecoratedFormField(
                 label: localization.emailSignature,
                 controller: _emailFooterController,

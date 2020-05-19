@@ -15,6 +15,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
   static final Map<String, Map<String, String>> _localizedValues = {
     'en': {
       // STARTER: lang key - do not remove comment
+      'send_from_gmail': 'Send from Gmail',
       'reversed': 'Reversed',
       'cancelled': 'Cancelled',
       'credit_amount': 'Credit Amount',
@@ -36518,6 +36519,10 @@ mixin LocalizationsProvider on LocaleCodeAware {
 
   String get cancelled =>
       _localizedValues[localeCode]['cancelled'] ?? '';
+
+  String get sendFromGmail =>
+      _localizedValues[localeCode]['send_from_gmail'] ?? '';
+
 
   String lookup(String key) {
     final lookupKey = toSnakeCase(key);
