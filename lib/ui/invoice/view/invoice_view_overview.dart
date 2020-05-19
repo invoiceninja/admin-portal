@@ -7,7 +7,7 @@ import 'package:invoiceninja_flutter/data/models/quote_model.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/redux/payment/payment_selectors.dart';
 import 'package:invoiceninja_flutter/ui/app/FieldGrid.dart';
-import 'package:invoiceninja_flutter/ui/app/entities/entity_state_title.dart';
+import 'package:invoiceninja_flutter/ui/app/entities/entity_list_tile.dart';
 import 'package:invoiceninja_flutter/ui/app/invoice/invoice_item_view.dart';
 import 'package:invoiceninja_flutter/ui/app/entity_header.dart';
 import 'package:invoiceninja_flutter/ui/app/lists/list_divider.dart';
@@ -15,7 +15,6 @@ import 'package:invoiceninja_flutter/ui/invoice/view/invoice_view_vm.dart';
 import 'package:invoiceninja_flutter/utils/formatting.dart';
 import 'package:flutter/material.dart';
 import 'package:invoiceninja_flutter/ui/app/icon_message.dart';
-import 'package:invoiceninja_flutter/utils/icons.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 
 class InvoiceOverview extends StatelessWidget {
@@ -104,61 +103,37 @@ class InvoiceOverview extends StatelessWidget {
           value: invoice.customValue2);
     }
 
-    widgets.addAll([
-      Material(
-        color: Theme.of(context).cardColor,
-        child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 10),
-          child: ListTile(
-            title: EntityStateTitle(entity: client),
-            leading: Icon(getEntityIcon(EntityType.client), size: 18.0),
-            trailing: Icon(Icons.navigate_next),
-            onTap: () => viewModel.onClientPressed(context),
-            onLongPress: () => viewModel.onClientPressed(context, true),
-          ),
-        ),
+    widgets.add(
+      EntityListTile(
+        entity: client,
+        onTap: () => viewModel.onClientPressed(context),
+        onLongPress: () => viewModel.onClientPressed(context, true),
       ),
-      ListDivider(),
-    ]);
+    );
 
     if (payments.isNotEmpty) {
       if (payments.length == 1) {
         final payment = payments.first;
-        widgets.addAll([
-          Material(
-            color: Theme.of(context).cardColor,
-            child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 10),
-              child: ListTile(
-                title: EntityStateTitle(entity: payment),
-                subtitle: Text(
-                    formatNumber(payment.amount, context, clientId: client.id) +
-                        ' • ' +
-                        formatDate(payment.date, context)),
-                leading: Icon(FontAwesomeIcons.creditCard, size: 18.0),
-                trailing: Icon(Icons.navigate_next),
-                onTap: () => viewModel.onPaymentPressed(context, payment),
-                onLongPress: () =>
-                    viewModel.onPaymentPressed(context, payment, true),
-              ),
-            ),
+        widgets.add(
+          EntityListTile(
+            entity: payment,
+            onTap: () => viewModel.onPaymentPressed(context, payment),
+            onLongPress: () =>
+                viewModel.onPaymentPressed(context, payment, true),
+            subtitle:
+                formatNumber(payment.amount, context, clientId: client.id) +
+                    ' • ' +
+                    formatDate(payment.date, context),
           ),
-        ]);
+        );
       } else {
-        widgets.addAll([
-          Material(
-            color: Theme.of(context).cardColor,
-            child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 10),
-              child: ListTile(
-                title: Text(localization.payments),
-                leading: Icon(FontAwesomeIcons.creditCard, size: 18.0),
-                trailing: Icon(Icons.navigate_next),
-                onTap: () => viewModel.onPaymentsPressed(context),
-              ),
-            ),
+        widgets.add(
+          EntitiesListTile(
+            icon: FontAwesomeIcons.creditCard,
+            title: localization.payments,
+            onTap: () => viewModel.onPaymentsPressed(context),
           ),
-        ]);
+        );
       }
 
       widgets.addAll([
@@ -204,8 +179,8 @@ class InvoiceOverview extends StatelessWidget {
       return Container(
         color: Theme.of(context).cardColor,
         child: Padding(
-          padding: const EdgeInsets.only(
-              left: 20, top: 12, right: 20, bottom: 12),
+          padding:
+              const EdgeInsets.only(left: 20, top: 12, right: 20, bottom: 12),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.end,
             children: <Widget>[

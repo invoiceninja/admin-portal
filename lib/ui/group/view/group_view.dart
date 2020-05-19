@@ -52,7 +52,7 @@ class _GroupViewState extends State<GroupView> {
             ),
           ),
           ListDivider(),
-          EntityListTile(
+          EntitiesListTile(
             icon: getEntityIcon(EntityType.client),
             title: localization.clients,
             onTap: () => viewModel.onClientsPressed(context),

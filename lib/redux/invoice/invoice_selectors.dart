@@ -70,14 +70,12 @@ List<String> filteredInvoicesSelector(
       });
     });
   }
-  print('## PAYMENT MAP: $invoicePaymentMap');
+
   final list = invoiceList.where((invoiceId) {
     final invoice = invoiceMap[invoiceId];
     final client =
         clientMap[invoice.clientId] ?? ClientEntity(id: invoice.clientId);
 
-    print(
-        '## invoiceListState.filterEntityType: ${invoiceListState.filterEntityType}');
     if (invoiceListState.filterEntityType == EntityType.client) {
       if (!invoiceListState.entityMatchesFilter(client)) {
         return false;
@@ -88,8 +86,6 @@ List<String> filteredInvoicesSelector(
       }
     } else if (invoiceListState.filterEntityType == EntityType.payment) {
       bool isMatch = false;
-      print('## invoiceListState.filterEntityId : ${invoiceListState.filterEntityId }');
-      print('## paymentIds: ${invoicePaymentMap[invoiceId]}');
       (invoicePaymentMap[invoiceId] ?? []).forEach((paymentId) {
         if (invoiceListState.filterEntityId == paymentId) {
           isMatch = true;
