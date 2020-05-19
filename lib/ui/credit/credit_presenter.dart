@@ -39,7 +39,7 @@ class CreditPresenter extends EntityPresenter {
       case CreditFields.date:
         return Text(formatDate(credit.date, context));
       case CreditFields.amount:
-        return Text(formatNumber(credit.amount, context));
+        return Text(formatNumber(credit.amount, context, clientId: credit.clientId));
       case CreditFields.balance:
         return Text(formatNumber(credit.balance, context));
     }
