@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_redux/flutter_redux.dart';
 import 'package:invoiceninja_flutter/data/models/entities.dart';
+import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/ui/app/entities/entity_state_title.dart';
 import 'package:invoiceninja_flutter/ui/app/lists/list_divider.dart';
 import 'package:invoiceninja_flutter/utils/icons.dart';
+import 'package:invoiceninja_flutter/utils/platforms.dart';
 
 class EntityListTile extends StatelessWidget {
   const EntityListTile({
@@ -19,6 +22,16 @@ class EntityListTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final store = StoreProvider.of<AppState>(context);
+    final state = store.state;
+
+    Widget trailingIcon = Icon(Icons.navigate_next);
+    if (isNotMobile(context) &&
+        state.uiState.filterEntityId == entity.id &&
+        state.uiState.filterEntityType == entity.entityType) {
+      trailingIcon = SizedBox();
+    }
+
     return Column(
       mainAxisSize: MainAxisSize.min,
       children: <Widget>[
@@ -32,7 +45,7 @@ class EntityListTile extends StatelessWidget {
                   ? Text(subtitle)
                   : null,
               leading: Icon(getEntityIcon(entity.entityType), size: 18.0),
-              trailing: Icon(Icons.navigate_next),
+              trailing: trailingIcon,
               onTap: onTap,
               onLongPress: onLongPress,
             ),
