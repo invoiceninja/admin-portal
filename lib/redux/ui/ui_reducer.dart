@@ -13,7 +13,6 @@ import 'package:invoiceninja_flutter/redux/payment/payment_actions.dart';
 import 'package:invoiceninja_flutter/redux/quote/quote_actions.dart';
 import 'package:invoiceninja_flutter/redux/reports/reports_reducer.dart';
 import 'package:invoiceninja_flutter/redux/settings/settings_actions.dart';
-import 'package:invoiceninja_flutter/redux/task/task_actions.dart';
 import 'package:invoiceninja_flutter/redux/ui/ui_actions.dart';
 import 'package:invoiceninja_flutter/redux/ui/ui_state.dart';
 import 'package:invoiceninja_flutter/redux/product/product_reducer.dart';
@@ -43,9 +42,13 @@ UIState uiReducer(UIState state, dynamic action) {
       action is FilterPaymentsByEntity ||
       action is FilterQuotesByEntity ||
       action is FilterCreditsByEntity) {
-    return state.rebuild((b) => b
+    state = state.rebuild((b) => b
       ..filterEntityType = action.entityType
       ..filterEntityId = action.entityId);
+  } else if (action is ClearEntityFilter) {
+    state = state.rebuild((b) => b
+      ..filterEntityType = null
+      ..filterEntityId = null);
   }
 
   final currentRoute = currentRouteReducer(state.currentRoute, action);

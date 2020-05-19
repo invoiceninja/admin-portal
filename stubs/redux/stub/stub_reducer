@@ -66,6 +66,11 @@ final stubListReducer = combineReducers<ListUIState>([
   TypedReducer<ListUIState, RemoveFromStubMultiselect>(
       _removeFromListMultiselect),
   TypedReducer<ListUIState, ClearStubMultiselect>(_clearListMultiselect),
+    TypedReducer<ListUIState, ClearEntityFilter>(
+        (state, action) => state.rebuild((b) => b
+          ..filterEntityId = null
+          ..filterEntityType = null)),
+
 ]);
 
 ListUIState _filterStubsByClient(

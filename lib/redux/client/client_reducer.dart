@@ -114,6 +114,11 @@ final clientListReducer = combineReducers<ListUIState>([
   TypedReducer<ListUIState, RemoveFromClientMultiselect>(
       _removeFromListMultiselect),
   TypedReducer<ListUIState, ClearClientMultiselect>(_clearListMultiselect),
+  TypedReducer<ListUIState, ClearEntityFilter>(
+          (state, action) => state.rebuild((b) => b
+        ..filterEntityId = null
+        ..filterEntityType = null)),
+
 ]);
 
 ListUIState _filterClientsByCustom1(

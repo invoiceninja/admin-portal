@@ -1,5 +1,6 @@
 import 'package:built_collection/built_collection.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
+import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:invoiceninja_flutter/redux/company/company_actions.dart';
 import 'package:invoiceninja_flutter/redux/document/document_actions.dart';
 import 'package:invoiceninja_flutter/redux/document/document_state.dart';
@@ -56,6 +57,11 @@ final documentListReducer = combineReducers<ListUIState>([
   TypedReducer<ListUIState, RemoveFromDocumentMultiselect>(
       _removeFromListMultiselect),
   TypedReducer<ListUIState, ClearDocumentMultiselect>(_clearListMultiselect),
+  TypedReducer<ListUIState, ClearEntityFilter>(
+          (state, action) => state.rebuild((b) => b
+        ..filterEntityId = null
+        ..filterEntityType = null)),
+
 ]);
 
 ListUIState _filterDocumentsByClient(

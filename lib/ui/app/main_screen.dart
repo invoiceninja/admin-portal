@@ -79,13 +79,13 @@ class MainScreen extends StatelessWidget {
                 }
             }
           } else {
-            bool forceView = false;
+            bool editingFilterEntity = false;
             final entityType =
                 EntityType.valueOf(mainRoute.replaceFirst('/', ''));
             if (uiState.filterEntityId != null && subRoute == '/edit') {
               if (entityType == uiState.filterEntityType) {
                 mainRoute = '/' + uiState.previousMainRoute;
-                forceView = true;
+                editingFilterEntity = true;
               }
             }
 
@@ -110,7 +110,7 @@ class MainScreen extends StatelessWidget {
                   listWidget: ClientScreenBuilder(),
                   viewWidget: ClientViewScreen(),
                   editWidget: ClientEditScreen(),
-                  forceView: forceView,
+                  editingFIlterEntity: editingFilterEntity,
                 );
                 break;
               case ProductScreen.route:
@@ -119,7 +119,7 @@ class MainScreen extends StatelessWidget {
                   listWidget: ProductScreenBuilder(),
                   viewWidget: ProductViewScreen(),
                   editWidget: ProductEditScreen(),
-                  forceView: forceView,
+                  editingFIlterEntity: editingFilterEntity,
                 );
                 break;
               case InvoiceScreen.route:
@@ -129,7 +129,7 @@ class MainScreen extends StatelessWidget {
                   viewWidget: InvoiceViewScreen(),
                   editWidget: InvoiceEditScreen(),
                   emailWidget: InvoiceEmailScreen(),
-                  forceView: forceView,
+                  editingFIlterEntity: editingFilterEntity,
                 );
                 break;
               case PaymentScreen.route:
@@ -138,7 +138,7 @@ class MainScreen extends StatelessWidget {
                   listWidget: PaymentScreenBuilder(),
                   viewWidget: PaymentViewScreen(),
                   editWidget: PaymentEditScreen(),
-                  forceView: forceView,
+                  editingFIlterEntity: editingFilterEntity,
                 );
                 break;
               case QuoteScreen.route:
@@ -147,7 +147,7 @@ class MainScreen extends StatelessWidget {
                   listWidget: QuoteScreenBuilder(),
                   viewWidget: QuoteViewScreen(),
                   editWidget: QuoteEditScreen(),
-                  forceView: forceView,
+                  editingFIlterEntity: editingFilterEntity,
                 );
                 break;
               case CreditScreen.route:
@@ -156,7 +156,7 @@ class MainScreen extends StatelessWidget {
                   listWidget: CreditScreenBuilder(),
                   viewWidget: CreditViewScreen(),
                   editWidget: CreditEditScreen(),
-                  forceView: forceView,
+                  editingFIlterEntity: editingFilterEntity,
                 );
                 break;
               case ProjectScreen.route:
@@ -165,7 +165,7 @@ class MainScreen extends StatelessWidget {
                   listWidget: ProjectScreenBuilder(),
                   viewWidget: ProjectViewScreen(),
                   editWidget: ProjectEditScreen(),
-                  forceView: forceView,
+                  editingFIlterEntity: editingFilterEntity,
                 );
                 break;
               case TaskScreen.route:
@@ -174,7 +174,7 @@ class MainScreen extends StatelessWidget {
                   listWidget: TaskScreenBuilder(),
                   viewWidget: TaskViewScreen(),
                   editWidget: TaskEditScreen(),
-                  forceView: forceView,
+                  editingFIlterEntity: editingFilterEntity,
                 );
                 break;
               case VendorScreen.route:
@@ -183,7 +183,7 @@ class MainScreen extends StatelessWidget {
                   listWidget: VendorScreenBuilder(),
                   viewWidget: VendorViewScreen(),
                   editWidget: VendorEditScreen(),
-                  forceView: forceView,
+                  editingFIlterEntity: editingFilterEntity,
                 );
                 break;
               case ExpenseScreen.route:
@@ -192,7 +192,7 @@ class MainScreen extends StatelessWidget {
                   listWidget: ExpenseScreenBuilder(),
                   viewWidget: ExpenseViewScreen(),
                   editWidget: ExpenseEditScreen(),
-                  forceView: forceView,
+                  editingFIlterEntity: editingFilterEntity,
                 );
                 break;
 
@@ -419,7 +419,7 @@ class EntityScreens extends StatelessWidget {
     @required this.viewWidget,
     @required this.entityType,
     this.emailWidget,
-    this.forceView,
+    this.editingFIlterEntity,
   });
 
   final Widget listWidget;
@@ -427,7 +427,7 @@ class EntityScreens extends StatelessWidget {
   final Widget editWidget;
   final Widget emailWidget;
   final EntityType entityType;
-  final bool forceView;
+  final bool editingFIlterEntity;
 
   @override
   Widget build(BuildContext context) {
@@ -451,7 +451,7 @@ class EntityScreens extends StatelessWidget {
     Widget child;
     if (subRoute == 'email') {
       child = emailWidget;
-    } else if (subRoute == 'edit' && !forceView) {
+    } else if (subRoute == 'edit' && !editingFIlterEntity) {
       child = editWidget;
     } else if ((entityUIState.selectedId ?? '').isNotEmpty &&
         state.getEntityMap(entityType).containsKey(entityUIState.selectedId)) {
@@ -462,16 +462,15 @@ class EntityScreens extends StatelessWidget {
 
     Widget filterChild;
     if (uiState.filterEntityId != null) {
-      print('## uiState.filterEntityId: ${uiState.filterEntityId }, ${uiState.filterEntityType}');
       switch (uiState.filterEntityType) {
         case EntityType.client:
-          filterChild = forceView ? ClientEditScreen() : ClientViewScreen();
+          filterChild = editingFIlterEntity ? ClientEditScreen() : ClientViewScreen();
           break;
         case EntityType.user:
-          filterChild = forceView ? UserEditScreen() : UserViewScreen();
+          filterChild = editingFIlterEntity ? UserEditScreen() : UserViewScreen();
           break;
         case EntityType.group:
-          filterChild = forceView ? GroupEditScreen() : GroupViewScreen();
+          filterChild = editingFIlterEntity ? GroupEditScreen() : GroupViewScreen();
           break;
       }
     }

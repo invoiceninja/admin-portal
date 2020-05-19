@@ -146,6 +146,10 @@ final invoiceListReducer = combineReducers<ListUIState>([
   TypedReducer<ListUIState, RemoveFromInvoiceMultiselect>(
       _removeFromListMultiselect),
   TypedReducer<ListUIState, ClearInvoiceMultiselect>(_clearListMultiselect),
+  TypedReducer<ListUIState, ClearEntityFilter>(
+          (state, action) => state.rebuild((b) => b
+        ..filterEntityId = null
+        ..filterEntityType = null)),
 ]);
 
 ListUIState _filterInvoicesByCustom1(
