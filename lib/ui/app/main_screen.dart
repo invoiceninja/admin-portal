@@ -462,15 +462,16 @@ class EntityScreens extends StatelessWidget {
 
     Widget filterChild;
     if (uiState.filterEntityId != null) {
+      print('## uiState.filterEntityId: ${uiState.filterEntityId }, ${uiState.filterEntityType}');
       switch (uiState.filterEntityType) {
         case EntityType.client:
-          filterChild = ClientViewScreen();
+          filterChild = forceView ? ClientEditScreen() : ClientViewScreen();
           break;
         case EntityType.user:
-          filterChild = UserViewScreen();
+          filterChild = forceView ? UserEditScreen() : UserViewScreen();
           break;
         case EntityType.group:
-          filterChild = GroupViewScreen();
+          filterChild = forceView ? GroupEditScreen() : GroupViewScreen();
           break;
       }
     }
