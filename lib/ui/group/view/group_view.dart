@@ -9,10 +9,10 @@ import 'package:invoiceninja_flutter/redux/group/group_selectors.dart';
 import 'package:invoiceninja_flutter/ui/app/FieldGrid.dart';
 import 'package:invoiceninja_flutter/ui/app/buttons/elevated_button.dart';
 import 'package:invoiceninja_flutter/ui/app/entities/entity_list_tile.dart';
+import 'package:invoiceninja_flutter/ui/app/lists/list_divider.dart';
 import 'package:invoiceninja_flutter/ui/app/view_scaffold.dart';
 import 'package:invoiceninja_flutter/ui/group/view/group_view_vm.dart';
 import 'package:invoiceninja_flutter/utils/formatting.dart';
-import 'package:invoiceninja_flutter/utils/icons.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 
 class GroupView extends StatefulWidget {
@@ -50,12 +50,9 @@ class _GroupViewState extends State<GroupView> {
                   handleGroupAction(context, [group], EntityAction.settings),
             ),
           ),
-          Container(
-            color: Theme.of(context).backgroundColor,
-            height: 12.0,
-          ),
-          EntityListTile(
-            icon: getEntityIcon(EntityType.client),
+          ListDivider(),
+          EntitiesListTile(
+            entityType: EntityType.client,
             title: localization.clients,
             onTap: () => viewModel.onClientsPressed(context),
             onLongPress: () => viewModel.onClientsPressed(context, true),
@@ -63,10 +60,7 @@ class _GroupViewState extends State<GroupView> {
                 memoizedClientStatsForGroup(state.clientState.map, group.id)
                     .present(localization.active, localization.archived),
           ),
-          Container(
-            color: Theme.of(context).backgroundColor,
-            height: 12.0,
-          ),
+          ListDivider(),
           SettingsViewer(
             settings: group.settings,
             state: state,

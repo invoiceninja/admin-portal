@@ -14,6 +14,7 @@ import 'package:invoiceninja_flutter/ui/app/tables/app_data_table.dart';
 import 'package:invoiceninja_flutter/ui/app/tables/app_paginated_data_table.dart';
 import 'package:invoiceninja_flutter/ui/app/tables/entity_datatable.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
+import 'package:invoiceninja_flutter/utils/platforms.dart';
 
 class EntityList extends StatefulWidget {
   const EntityList({
@@ -117,7 +118,7 @@ class _EntityListState extends State<EntityList> {
     final listOrTable = () {
       if (isList) {
         return Column(children: <Widget>[
-          if (listState.filterEntityId != null)
+          if (listState.filterEntityId != null && isMobile(context))
             ListFilterMessage(
               filterEntityId: listState.filterEntityId,
               filterEntityType: listState.filterEntityType,

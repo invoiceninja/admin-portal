@@ -15,6 +15,7 @@ import 'package:invoiceninja_flutter/ui/invoice/view/invoice_view.dart';
 import 'package:invoiceninja_flutter/ui/invoice/view/invoice_view_vm.dart';
 import 'package:invoiceninja_flutter/utils/completers.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
+import 'package:invoiceninja_flutter/utils/platforms.dart';
 import 'package:redux/redux.dart';
 
 class QuoteViewScreen extends StatelessWidget {
@@ -109,9 +110,13 @@ class QuoteViewVM extends EntityViewVM {
             context: context,
             entities: [client],
           );
-        } else {
+        } else if (isMobile(context)) {
           viewEntity(context: context, entity: client);
+        } else {
+          store.dispatch(FilterQuotesByEntity(
+              entityType: EntityType.client, entityId: client.id));
         }
+
       },
       onEntityAction: (BuildContext context, EntityAction action) =>
           handleQuoteAction(context, [quote], action),

@@ -75,6 +75,11 @@ final taskListReducer = combineReducers<ListUIState>([
   TypedReducer<ListUIState, RemoveFromTaskMultiselect>(
       _removeFromListMultiselect),
   TypedReducer<ListUIState, ClearTaskMultiselect>(_clearListMultiselect),
+  TypedReducer<ListUIState, ClearEntityFilter>(
+          (state, action) => state.rebuild((b) => b
+        ..filterEntityId = null
+        ..filterEntityType = null)),
+
 ]);
 
 ListUIState _filterTasksByClient(

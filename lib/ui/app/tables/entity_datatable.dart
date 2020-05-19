@@ -6,7 +6,6 @@ import 'package:invoiceninja_flutter/data/models/entities.dart';
 import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/ui/app/actions_menu_button.dart';
-import 'package:invoiceninja_flutter/ui/app/lists/list_filter.dart';
 import 'package:invoiceninja_flutter/ui/app/presenters/entity_presenter.dart';
 import 'package:invoiceninja_flutter/ui/app/tables/app_data_table.dart';
 import 'package:invoiceninja_flutter/ui/app/tables/app_data_table_source.dart';
@@ -133,10 +132,9 @@ class DatatableHeader extends StatelessWidget {
   Widget build(BuildContext context) {
     final localization = AppLocalization.of(context);
     final state = StoreProvider.of<AppState>(context).state;
+    /*
     final listUIState = state.getListState(entityType);
-
     Widget message = SizedBox();
-
     if (onClearPressed != null && listUIState.filterEntityId != null) {
       final entity = state.getEntityMap(
           listUIState.filterEntityType)[listUIState.filterEntityId];
@@ -151,6 +149,7 @@ class DatatableHeader extends StatelessWidget {
         entity: entity,
       );
     }
+    */
 
     return Row(
       children: <Widget>[
@@ -159,7 +158,7 @@ class DatatableHeader extends StatelessWidget {
           onPressed: onRefreshPressed,
         ),
         SizedBox(width: 20),
-        Expanded(child: message),
+        Expanded(child: SizedBox()),
       ],
     );
   }

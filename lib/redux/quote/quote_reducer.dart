@@ -133,6 +133,11 @@ final quoteListReducer = combineReducers<ListUIState>([
   TypedReducer<ListUIState, RemoveFromQuoteMultiselect>(
       _removeFromListMultiselect),
   TypedReducer<ListUIState, ClearQuoteMultiselect>(_clearListMultiselect),
+  TypedReducer<ListUIState, ClearEntityFilter>(
+          (state, action) => state.rebuild((b) => b
+        ..filterEntityId = null
+        ..filterEntityType = null)),
+
 ]);
 
 ListUIState _filterQuotesByCustom1(

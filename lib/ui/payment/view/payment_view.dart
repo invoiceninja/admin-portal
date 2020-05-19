@@ -1,14 +1,13 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:invoiceninja_flutter/constants.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/data/models/payment_model.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/ui/app/FieldGrid.dart';
 import 'package:invoiceninja_flutter/ui/app/buttons/bottom_buttons.dart';
-import 'package:invoiceninja_flutter/ui/app/entities/entity_state_title.dart';
+import 'package:invoiceninja_flutter/ui/app/entities/entity_list_tile.dart';
 import 'package:invoiceninja_flutter/ui/app/icon_message.dart';
 import 'package:invoiceninja_flutter/ui/app/entity_header.dart';
 import 'package:invoiceninja_flutter/ui/app/lists/list_divider.dart';
@@ -70,56 +69,38 @@ class _PaymentViewState extends State<PaymentView> {
                 child: ListView(
                   children: <Widget>[
                     EntityHeader(
-                      backgroundColor: PaymentStatusColors.colors[payment.statusId],
+                      backgroundColor:
+                          PaymentStatusColors.colors[payment.statusId],
                       label: localization.amount,
-                      value:
-                          formatNumber(payment.amount, context, clientId: client.id),
+                      value: formatNumber(payment.amount, context,
+                          clientId: client.id),
                       secondLabel: localization.applied,
-                      secondValue:
-                          formatNumber(payment.applied, context, clientId: client.id),
+                      secondValue: formatNumber(payment.applied, context,
+                          clientId: client.id),
                     ),
                     ListDivider(),
-                    Material(
-                      color: Theme.of(context).cardColor,
-                      child: Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 10),
-                        child: ListTile(
-                          title: EntityStateTitle(entity: client),
-                          leading: Icon(FontAwesomeIcons.users, size: 18.0),
-                          trailing: Icon(Icons.navigate_next),
-                          onTap: () => viewModel.onClientPressed(context),
-                          onLongPress: () => viewModel.onClientPressed(context, true),
-                        ),
-                      ),
+                    EntityListTile(
+                      entity: client,
+                      onTap: () => viewModel.onClientPressed(context),
+                      onLongPress: () =>
+                          viewModel.onClientPressed(context, true),
                     ),
-                    ListDivider(),
                     for (final paymentable in payment.paymentables)
-                      Material(
-                        color: Theme.of(context).cardColor,
-                        child: Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 10),
-                          child: ListTile(
-                            title: EntityStateTitle(
-                              entity: state.invoiceState.map[paymentable.invoiceId],
-                              title:
-                                  '${localization.invoice} ${state.invoiceState.map[paymentable.invoiceId]?.number ?? ''}',
-                            ),
-                            subtitle: Text(formatNumber(paymentable.amount, context) +
-                                ' • ' +
-                                formatDate(
-                                    convertTimestampToDateString(paymentable.createdAt),
-                                    context)),
-                            leading: Icon(FontAwesomeIcons.filePdf, size: 18.0),
-                            trailing: Icon(Icons.navigate_next),
-                            onTap: () => viewModel.onInvoicePressed(
-                                context, paymentable.invoiceId),
-                            onLongPress: () => viewModel.onInvoicePressed(
-                                context, paymentable.invoiceId, true),
-                          ),
-                        ),
+                      EntityListTile(
+                        entity: state.invoiceState.map[paymentable.invoiceId],
+                        subtitle: formatNumber(paymentable.amount, context) +
+                            ' • ' +
+                            formatDate(
+                                convertTimestampToDateString(
+                                    paymentable.createdAt),
+                                context),
+                        onTap: () => viewModel.onInvoicePressed(
+                            context, paymentable.invoiceId),
+                        onLongPress: () => viewModel.onInvoicePressed(
+                            context, paymentable.invoiceId, true),
                       ),
-                    ListDivider(),
-                    payment.privateNotes != null && payment.privateNotes.isNotEmpty
+                    payment.privateNotes != null &&
+                            payment.privateNotes.isNotEmpty
                         ? Column(
                             children: <Widget>[
                               IconMessage(payment.privateNotes),

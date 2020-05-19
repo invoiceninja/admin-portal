@@ -135,6 +135,8 @@ class ClearLastError {}
 
 class DiscardChanges {}
 
+class ClearEntityFilter {}
+
 class FilterCompany implements PersistUI {
   FilterCompany(this.filter);
 

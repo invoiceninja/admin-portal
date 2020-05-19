@@ -63,6 +63,10 @@ final designListReducer = combineReducers<ListUIState>([
   TypedReducer<ListUIState, RemoveFromDesignMultiselect>(
       _removeFromListMultiselect),
   TypedReducer<ListUIState, ClearDesignMultiselect>(_clearListMultiselect),
+  TypedReducer<ListUIState, ClearEntityFilter>(
+          (state, action) => state.rebuild((b) => b
+        ..filterEntityId = null
+        ..filterEntityType = null)),
 ]);
 
 ListUIState _filterDesignsByClient(

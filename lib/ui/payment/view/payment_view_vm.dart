@@ -8,6 +8,7 @@ import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/redux/payment/payment_actions.dart';
 import 'package:invoiceninja_flutter/ui/app/entities/entity_actions_dialog.dart';
 import 'package:invoiceninja_flutter/ui/payment/view/payment_view.dart';
+import 'package:invoiceninja_flutter/utils/platforms.dart';
 import 'package:redux/redux.dart';
 
 class PaymentViewScreen extends StatelessWidget {
@@ -60,8 +61,11 @@ class PaymentViewVM {
       onClientPressed: (context, [bool longPress = false]) {
         if (longPress) {
           showEntityActionsDialog(context: context, entities: [client]);
-        } else {
+        } else if (isMobile(context)) {
           viewEntity(context: context, entity: client);
+        } else {
+          store.dispatch(FilterPaymentsByEntity(
+              entityType: EntityType.client, entityId: client.id));
         }
       },
       onInvoicePressed: (context, invoiceId, [bool longPress = false]) {
@@ -72,8 +76,11 @@ class PaymentViewVM {
             entities: [invoice],
             client: client,
           );
-        } else {
+        } else if (isMobile(context)) {
           viewEntity(context: context, entity: invoice);
+        } else {
+          store.dispatch(FilterPaymentsByEntity(
+              entityType: EntityType.invoice, entityId: invoice.id));
         }
       },
       onEntityAction: (BuildContext context, EntityAction action) =>

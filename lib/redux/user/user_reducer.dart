@@ -62,6 +62,11 @@ final userListReducer = combineReducers<ListUIState>([
   TypedReducer<ListUIState, RemoveFromUserMultiselect>(
       _removeFromListMultiselect),
   TypedReducer<ListUIState, ClearUserMultiselect>(_clearListMultiselect),
+  TypedReducer<ListUIState, ClearEntityFilter>(
+          (state, action) => state.rebuild((b) => b
+        ..filterEntityId = null
+        ..filterEntityType = null)),
+
 ]);
 
 ListUIState _filterUsersByClient(

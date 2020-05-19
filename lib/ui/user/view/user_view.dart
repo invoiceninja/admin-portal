@@ -4,12 +4,11 @@ import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/redux/invoice/invoice_selectors.dart';
 import 'package:invoiceninja_flutter/redux/payment/payment_selectors.dart';
 import 'package:invoiceninja_flutter/redux/quote/quote_selectors.dart';
+import 'package:invoiceninja_flutter/ui/app/entities/entity_list_tile.dart';
 import 'package:invoiceninja_flutter/ui/app/entity_header.dart';
-import 'package:invoiceninja_flutter/ui/app/lists/list_divider.dart';
 import 'package:invoiceninja_flutter/ui/app/view_scaffold.dart';
 import 'package:invoiceninja_flutter/ui/user/view/user_view_vm.dart';
 import 'package:flutter/material.dart';
-import 'package:invoiceninja_flutter/utils/icons.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 
 class UserView extends StatelessWidget {
@@ -40,9 +39,7 @@ class UserView extends StatelessWidget {
           Divider(
             height: 1.0,
           ),
-          EntityListTile(
-            bottomPadding: 1,
-            icon: getEntityIcon(EntityType.invoice),
+          EntitiesListTile(
             title: localization.invoices,
             onTap: () => viewModel.onEntityPressed(context, EntityType.invoice),
             onLongPress: () =>
@@ -51,9 +48,8 @@ class UserView extends StatelessWidget {
                 memoizedInvoiceStatsForUser(user.id, state.invoiceState.map)
                     .present(localization.active, localization.archived),
           ),
-          EntityListTile(
-            bottomPadding: 1,
-            icon: getEntityIcon(EntityType.payment),
+          EntitiesListTile(
+            entityType: EntityType.payment,
             title: localization.payments,
             onTap: () => viewModel.onEntityPressed(context, EntityType.payment),
             onLongPress: () =>
@@ -63,9 +59,8 @@ class UserView extends StatelessWidget {
                 .present(localization.active, localization.archived),
           ),
           company.isModuleEnabled(EntityType.quote)
-              ? EntityListTile(
-                  bottomPadding: 1,
-                  icon: getEntityIcon(EntityType.quote),
+              ? EntitiesListTile(
+                  entityType: EntityType.quote,
                   title: localization.quotes,
                   onTap: () =>
                       viewModel.onEntityPressed(context, EntityType.quote),
@@ -129,43 +124,6 @@ class UserView extends StatelessWidget {
          */
         ],
       ),
-    );
-  }
-}
-
-class EntityListTile extends StatelessWidget {
-  const EntityListTile(
-      {this.icon,
-      this.onTap,
-      this.onLongPress,
-      this.title,
-      this.subtitle,
-      this.bottomPadding = 12});
-
-  final Function onTap;
-  final Function onLongPress;
-  final IconData icon;
-  final String title;
-  final String subtitle;
-  final double bottomPadding;
-
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-      children: <Widget>[
-        Material(
-          color: Theme.of(context).canvasColor,
-          child: ListTile(
-            title: Text(title),
-            subtitle: Text(subtitle),
-            leading: Icon(icon, size: 18.0),
-            trailing: Icon(Icons.navigate_next),
-            onTap: onTap,
-            onLongPress: onLongPress,
-          ),
-        ),
-        ListDivider(),
-      ],
     );
   }
 }

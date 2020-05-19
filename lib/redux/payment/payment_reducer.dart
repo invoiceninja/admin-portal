@@ -65,6 +65,10 @@ final paymentListReducer = combineReducers<ListUIState>([
   TypedReducer<ListUIState, RemoveFromPaymentMultiselect>(
       _removeFromListMultiselect),
   TypedReducer<ListUIState, ClearPaymentMultiselect>(_clearListMultiselect),
+  TypedReducer<ListUIState, ClearEntityFilter>(
+      (state, action) => state.rebuild((b) => b
+        ..filterEntityId = null
+        ..filterEntityType = null)),
 ]);
 
 ListUIState _filterPaymentsByEntity(

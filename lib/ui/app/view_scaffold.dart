@@ -5,7 +5,6 @@ import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/redux/ui/ui_actions.dart';
 import 'package:invoiceninja_flutter/ui/app/actions_menu_button.dart';
-import 'package:invoiceninja_flutter/utils/icons.dart';
 import 'package:invoiceninja_flutter/utils/platforms.dart';
 import 'buttons/edit_icon_button.dart';
 import 'entities/entity_state_title.dart';
@@ -35,6 +34,23 @@ class ViewScaffold extends StatelessWidget {
     final state = store.state;
     final userCompany = state.userCompany;
 
+    Widget leading;
+    if (!isMobile(context)) {
+      if (isSettings) {
+        leading = IconButton(
+          icon: Icon(Icons.arrow_back),
+          onPressed: () => onBackPressed != null
+              ? onBackPressed()
+              : store.dispatch(UpdateCurrentRoute(state.uiState.previousRoute)),
+        );
+      } else if (entity.entityType == state.uiState.filterEntityType) {
+        leading = IconButton(
+          icon: Icon(Icons.clear),
+          onPressed: () => store.dispatch(ClearEntityFilter()),
+        );
+      }
+    }
+
     return WillPopScope(
       onWillPop: () async {
         return true;
@@ -42,15 +58,7 @@ class ViewScaffold extends StatelessWidget {
       child: Scaffold(
         backgroundColor: Theme.of(context).cardColor,
         appBar: AppBar(
-          leading: !isMobile(context) && isSettings
-              ? IconButton(
-                  icon: Icon(Icons.arrow_back),
-                  onPressed: () => onBackPressed != null
-                      ? onBackPressed()
-                      : store.dispatch(
-                          UpdateCurrentRoute(state.uiState.previousRoute)),
-                )
-              : null,
+          leading: leading,
           automaticallyImplyLeading: isMobile(context) || isSettings,
           title: EntityStateTitle(
             entity: entity,

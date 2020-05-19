@@ -11,6 +11,7 @@ import 'package:invoiceninja_flutter/redux/project/project_selectors.dart';
 import 'package:invoiceninja_flutter/redux/quote/quote_selectors.dart';
 import 'package:invoiceninja_flutter/redux/task/task_selectors.dart';
 import 'package:invoiceninja_flutter/ui/app/FieldGrid.dart';
+import 'package:invoiceninja_flutter/ui/app/entities/entity_list_tile.dart';
 import 'package:invoiceninja_flutter/ui/app/entities/entity_state_title.dart';
 import 'package:invoiceninja_flutter/ui/app/entity_header.dart';
 import 'package:invoiceninja_flutter/ui/app/icon_message.dart';
@@ -87,6 +88,7 @@ class ClientOverview extends StatelessWidget {
           secondValue:
               formatNumber(client.balance, context, clientId: client.id),
         ),
+        ListDivider(),
         client.privateNotes != null && client.privateNotes.isNotEmpty
             ? IconMessage(client.privateNotes)
             : Container(),
@@ -100,16 +102,12 @@ class ClientOverview extends StatelessWidget {
               onTap: () => viewModel.onGroupPressed(context),
             ),
           ),
-          Container(
-            color: Theme.of(context).backgroundColor,
-            height: 12.0,
-          ),
+          ListDivider(),
         ],
         FieldGrid(fields),
         ListDivider(),
-        EntityListTile(
-          bottomPadding: 1,
-          icon: getEntityIcon(EntityType.invoice),
+        EntitiesListTile(
+          entityType: EntityType.invoice,
           title: localization.invoices,
           onTap: () => viewModel.onEntityPressed(context, EntityType.invoice),
           onLongPress: () =>
@@ -118,9 +116,8 @@ class ClientOverview extends StatelessWidget {
               memoizedInvoiceStatsForClient(client.id, state.invoiceState.map)
                   .present(localization.active, localization.archived),
         ),
-        EntityListTile(
-          bottomPadding: 1,
-          icon: getEntityIcon(EntityType.payment),
+        EntitiesListTile(
+          entityType: EntityType.payment,
           title: localization.payments,
           onTap: () => viewModel.onEntityPressed(context, EntityType.payment),
           onLongPress: () =>
@@ -130,9 +127,8 @@ class ClientOverview extends StatelessWidget {
               .present(localization.active, localization.archived),
         ),
         if (company.isModuleEnabled(EntityType.quote))
-          EntityListTile(
-            bottomPadding: 1,
-            icon: getEntityIcon(EntityType.quote),
+          EntitiesListTile(
+            entityType: EntityType.quote,
             title: localization.quotes,
             onTap: () => viewModel.onEntityPressed(context, EntityType.quote),
             onLongPress: () =>
@@ -142,9 +138,8 @@ class ClientOverview extends StatelessWidget {
                     .present(localization.active, localization.archived),
           ),
         if (company.isModuleEnabled(EntityType.credit))
-          EntityListTile(
-            bottomPadding: 1,
-            icon: getEntityIcon(EntityType.credit),
+          EntitiesListTile(
+            entityType: EntityType.credit,
             title: localization.credits,
             onTap: () => viewModel.onEntityPressed(context, EntityType.credit),
             onLongPress: () =>
@@ -154,9 +149,8 @@ class ClientOverview extends StatelessWidget {
                     .present(localization.active, localization.archived),
           ),
         if (company.isModuleEnabled(EntityType.project))
-          EntityListTile(
-            bottomPadding: 1,
-            icon: getEntityIcon(EntityType.project),
+          EntitiesListTile(
+            entityType: EntityType.project,
             title: localization.projects,
             onTap: () => viewModel.onEntityPressed(context, EntityType.project),
             onLongPress: () =>
@@ -166,9 +160,8 @@ class ClientOverview extends StatelessWidget {
                     .present(localization.active, localization.archived),
           ),
         if (company.isModuleEnabled(EntityType.task))
-          EntityListTile(
-            bottomPadding: 1,
-            icon: getEntityIcon(EntityType.task),
+          EntitiesListTile(
+            entityType: EntityType.task,
             title: localization.tasks,
             onTap: () => viewModel.onEntityPressed(context, EntityType.task),
             onLongPress: () =>
@@ -177,9 +170,8 @@ class ClientOverview extends StatelessWidget {
                 .present(localization.active, localization.archived),
           ),
         if (company.isModuleEnabled(EntityType.expense))
-          EntityListTile(
-            bottomPadding: 1,
-            icon: getEntityIcon(EntityType.expense),
+          EntitiesListTile(
+            entityType: EntityType.expense,
             title: localization.expenses,
             onTap: () => viewModel.onEntityPressed(context, EntityType.expense),
             onLongPress: () =>
@@ -193,42 +185,3 @@ class ClientOverview extends StatelessWidget {
   }
 }
 
-class EntityListTile extends StatelessWidget {
-  const EntityListTile(
-      {this.icon,
-      this.onTap,
-      this.onLongPress,
-      this.title,
-      this.subtitle,
-      this.bottomPadding = 12});
-
-  final Function onTap;
-  final Function onLongPress;
-  final IconData icon;
-  final String title;
-  final String subtitle;
-  final double bottomPadding;
-
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-      children: <Widget>[
-        Material(
-          color: Theme.of(context).cardColor,
-          child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 10),
-            child: ListTile(
-              title: Text(title),
-              subtitle: Text(subtitle),
-              leading: Icon(icon, size: 18.0),
-              trailing: Icon(Icons.navigate_next),
-              onTap: onTap,
-              onLongPress: onLongPress,
-            ),
-          ),
-        ),
-        ListDivider(),
-      ],
-    );
-  }
-}

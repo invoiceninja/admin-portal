@@ -80,6 +80,11 @@ final projectListReducer = combineReducers<ListUIState>([
   TypedReducer<ListUIState, RemoveFromProjectMultiselect>(
       _removeFromListMultiselect),
   TypedReducer<ListUIState, ClearProjectMultiselect>(_clearListMultiselect),
+  TypedReducer<ListUIState, ClearEntityFilter>(
+          (state, action) => state.rebuild((b) => b
+        ..filterEntityId = null
+        ..filterEntityType = null)),
+
 ]);
 
 ListUIState _filterProjectsByClient(
