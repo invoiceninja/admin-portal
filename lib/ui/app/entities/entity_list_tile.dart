@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:invoiceninja_flutter/data/models/entities.dart';
+import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/ui/app/entities/entity_state_title.dart';
 import 'package:invoiceninja_flutter/ui/app/lists/list_divider.dart';
@@ -25,11 +26,12 @@ class EntityListTile extends StatelessWidget {
     final store = StoreProvider.of<AppState>(context);
     final state = store.state;
 
+    final isFilteredBy = state.uiState.filterEntityId == entity.id &&
+        state.uiState.filterEntityType == entity.entityType;
     Widget trailingIcon = Icon(Icons.navigate_next);
-    if (isNotMobile(context) &&
-        state.uiState.filterEntityId == entity.id &&
-        state.uiState.filterEntityType == entity.entityType) {
-      trailingIcon = SizedBox();
+    if (isNotMobile(context)) {
+      trailingIcon = Icon(Icons.filter_list,
+          color: isFilteredBy ? Theme.of(context).accentColor : null);
     }
 
     return Column(
@@ -46,7 +48,9 @@ class EntityListTile extends StatelessWidget {
                   : null,
               leading: Icon(getEntityIcon(entity.entityType), size: 18.0),
               trailing: trailingIcon,
-              onTap: onTap,
+              onTap: () => isFilteredBy && isNotMobile(context)
+                  ? store.dispatch(ClearEntityFilter())
+                  : onTap(),
               onLongPress: onLongPress,
             ),
           ),
