@@ -88,6 +88,18 @@ class _$UIStateSerializer implements StructuredSerializer<UIState> {
       serializers.serialize(object.reportsUIState,
           specifiedType: const FullType(ReportsUIState)),
     ];
+    if (object.filterEntityId != null) {
+      result
+        ..add('filterEntityId')
+        ..add(serializers.serialize(object.filterEntityId,
+            specifiedType: const FullType(String)));
+    }
+    if (object.filterEntityType != null) {
+      result
+        ..add('filterEntityType')
+        ..add(serializers.serialize(object.filterEntityType,
+            specifiedType: const FullType(EntityType)));
+    }
     if (object.filter != null) {
       result
         ..add('filter')
@@ -119,6 +131,14 @@ class _$UIStateSerializer implements StructuredSerializer<UIState> {
         case 'previousRoute':
           result.previousRoute = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String;
+          break;
+        case 'filterEntityId':
+          result.filterEntityId = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String;
+          break;
+        case 'filterEntityType':
+          result.filterEntityType = serializers.deserialize(value,
+              specifiedType: const FullType(EntityType)) as EntityType;
           break;
         case 'filter':
           result.filter = serializers.deserialize(value,
@@ -223,6 +243,10 @@ class _$UIState extends UIState {
   @override
   final String previousRoute;
   @override
+  final String filterEntityId;
+  @override
+  final EntityType filterEntityType;
+  @override
   final String filter;
   @override
   final int filterClearedAt;
@@ -272,6 +296,8 @@ class _$UIState extends UIState {
       {this.selectedCompanyIndex,
       this.currentRoute,
       this.previousRoute,
+      this.filterEntityId,
+      this.filterEntityType,
       this.filter,
       this.filterClearedAt,
       this.dashboardUIState,
@@ -379,6 +405,8 @@ class _$UIState extends UIState {
         selectedCompanyIndex == other.selectedCompanyIndex &&
         currentRoute == other.currentRoute &&
         previousRoute == other.previousRoute &&
+        filterEntityId == other.filterEntityId &&
+        filterEntityType == other.filterEntityType &&
         filter == other.filter &&
         filterClearedAt == other.filterClearedAt &&
         dashboardUIState == other.dashboardUIState &&
@@ -422,7 +450,7 @@ class _$UIState extends UIState {
                                                                 $jc(
                                                                     $jc(
                                                                         $jc(
-                                                                            $jc($jc($jc($jc($jc($jc(0, selectedCompanyIndex.hashCode), currentRoute.hashCode), previousRoute.hashCode), filter.hashCode), filterClearedAt.hashCode),
+                                                                            $jc($jc($jc($jc($jc($jc($jc($jc(0, selectedCompanyIndex.hashCode), currentRoute.hashCode), previousRoute.hashCode), filterEntityId.hashCode), filterEntityType.hashCode), filter.hashCode), filterClearedAt.hashCode),
                                                                                 dashboardUIState.hashCode),
                                                                             productUIState.hashCode),
                                                                         clientUIState.hashCode),
@@ -450,6 +478,8 @@ class _$UIState extends UIState {
           ..add('selectedCompanyIndex', selectedCompanyIndex)
           ..add('currentRoute', currentRoute)
           ..add('previousRoute', previousRoute)
+          ..add('filterEntityId', filterEntityId)
+          ..add('filterEntityType', filterEntityType)
           ..add('filter', filter)
           ..add('filterClearedAt', filterClearedAt)
           ..add('dashboardUIState', dashboardUIState)
@@ -491,6 +521,16 @@ class UIStateBuilder implements Builder<UIState, UIStateBuilder> {
   String get previousRoute => _$this._previousRoute;
   set previousRoute(String previousRoute) =>
       _$this._previousRoute = previousRoute;
+
+  String _filterEntityId;
+  String get filterEntityId => _$this._filterEntityId;
+  set filterEntityId(String filterEntityId) =>
+      _$this._filterEntityId = filterEntityId;
+
+  EntityType _filterEntityType;
+  EntityType get filterEntityType => _$this._filterEntityType;
+  set filterEntityType(EntityType filterEntityType) =>
+      _$this._filterEntityType = filterEntityType;
 
   String _filter;
   String get filter => _$this._filter;
@@ -623,6 +663,8 @@ class UIStateBuilder implements Builder<UIState, UIStateBuilder> {
       _selectedCompanyIndex = _$v.selectedCompanyIndex;
       _currentRoute = _$v.currentRoute;
       _previousRoute = _$v.previousRoute;
+      _filterEntityId = _$v.filterEntityId;
+      _filterEntityType = _$v.filterEntityType;
       _filter = _$v.filter;
       _filterClearedAt = _$v.filterClearedAt;
       _dashboardUIState = _$v.dashboardUIState?.toBuilder();
@@ -671,6 +713,8 @@ class UIStateBuilder implements Builder<UIState, UIStateBuilder> {
               selectedCompanyIndex: selectedCompanyIndex,
               currentRoute: currentRoute,
               previousRoute: previousRoute,
+              filterEntityId: filterEntityId,
+              filterEntityType: filterEntityType,
               filter: filter,
               filterClearedAt: filterClearedAt,
               dashboardUIState: dashboardUIState.build(),

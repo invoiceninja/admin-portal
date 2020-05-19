@@ -37,10 +37,11 @@ class MainScreen extends StatelessWidget {
     return StoreBuilder(
         onInit: (Store<AppState> store) => store.dispatch(LoadClients()),
         builder: (BuildContext context, Store<AppState> store) {
-          final uiState = store.state.uiState;
-          final prefState = store.state.prefState;
-          final mainRoute = '/' + uiState.mainRoute;
+          final state = store.state;
+          final uiState = state.uiState;
+          final prefState = state.prefState;
           final subRoute = '/' + uiState.subRoute;
+          String mainRoute = '/' + uiState.mainRoute;
           Widget screen = BlankScreen();
 
           bool isFullScreen = false;
@@ -78,6 +79,16 @@ class MainScreen extends StatelessWidget {
                 }
             }
           } else {
+            bool forceView = false;
+            final entityType =
+                EntityType.valueOf(mainRoute.replaceFirst('/', ''));
+            if (uiState.filterEntityId != null && subRoute == '/edit') {
+              if (entityType == uiState.filterEntityType) {
+                mainRoute = '/' + uiState.previousMainRoute;
+                forceView = true;
+              }
+            }
+
             switch (mainRoute) {
               case DashboardScreenBuilder.route:
                 screen = Row(
@@ -95,10 +106,12 @@ class MainScreen extends StatelessWidget {
                 break;
               case ClientScreen.route:
                 screen = EntityScreens(
-                    entityType: EntityType.client,
-                    listWidget: ClientScreenBuilder(),
-                    viewWidget: ClientViewScreen(),
-                    editWidget: ClientEditScreen());
+                  entityType: EntityType.client,
+                  listWidget: ClientScreenBuilder(),
+                  viewWidget: ClientViewScreen(),
+                  editWidget: ClientEditScreen(),
+                  forceView: forceView,
+                );
                 break;
               case ProductScreen.route:
                 screen = EntityScreens(
@@ -106,6 +119,7 @@ class MainScreen extends StatelessWidget {
                   listWidget: ProductScreenBuilder(),
                   viewWidget: ProductViewScreen(),
                   editWidget: ProductEditScreen(),
+                  forceView: forceView,
                 );
                 break;
               case InvoiceScreen.route:
@@ -115,6 +129,7 @@ class MainScreen extends StatelessWidget {
                   viewWidget: InvoiceViewScreen(),
                   editWidget: InvoiceEditScreen(),
                   emailWidget: InvoiceEmailScreen(),
+                  forceView: forceView,
                 );
                 break;
               case PaymentScreen.route:
@@ -123,6 +138,7 @@ class MainScreen extends StatelessWidget {
                   listWidget: PaymentScreenBuilder(),
                   viewWidget: PaymentViewScreen(),
                   editWidget: PaymentEditScreen(),
+                  forceView: forceView,
                 );
                 break;
               case QuoteScreen.route:
@@ -131,6 +147,7 @@ class MainScreen extends StatelessWidget {
                   listWidget: QuoteScreenBuilder(),
                   viewWidget: QuoteViewScreen(),
                   editWidget: QuoteEditScreen(),
+                  forceView: forceView,
                 );
                 break;
               case CreditScreen.route:
@@ -139,6 +156,7 @@ class MainScreen extends StatelessWidget {
                   listWidget: CreditScreenBuilder(),
                   viewWidget: CreditViewScreen(),
                   editWidget: CreditEditScreen(),
+                  forceView: forceView,
                 );
                 break;
               case ProjectScreen.route:
@@ -147,6 +165,7 @@ class MainScreen extends StatelessWidget {
                   listWidget: ProjectScreenBuilder(),
                   viewWidget: ProjectViewScreen(),
                   editWidget: ProjectEditScreen(),
+                  forceView: forceView,
                 );
                 break;
               case TaskScreen.route:
@@ -155,6 +174,7 @@ class MainScreen extends StatelessWidget {
                   listWidget: TaskScreenBuilder(),
                   viewWidget: TaskViewScreen(),
                   editWidget: TaskEditScreen(),
+                  forceView: forceView,
                 );
                 break;
               case VendorScreen.route:
@@ -163,6 +183,7 @@ class MainScreen extends StatelessWidget {
                   listWidget: VendorScreenBuilder(),
                   viewWidget: VendorViewScreen(),
                   editWidget: VendorEditScreen(),
+                  forceView: forceView,
                 );
                 break;
               case ExpenseScreen.route:
@@ -171,6 +192,7 @@ class MainScreen extends StatelessWidget {
                   listWidget: ExpenseScreenBuilder(),
                   viewWidget: ExpenseViewScreen(),
                   editWidget: ExpenseEditScreen(),
+                  forceView: forceView,
                 );
                 break;
 
@@ -397,6 +419,7 @@ class EntityScreens extends StatelessWidget {
     @required this.viewWidget,
     @required this.entityType,
     this.emailWidget,
+    this.forceView,
   });
 
   final Widget listWidget;
@@ -404,6 +427,7 @@ class EntityScreens extends StatelessWidget {
   final Widget editWidget;
   final Widget emailWidget;
   final EntityType entityType;
+  final bool forceView;
 
   @override
   Widget build(BuildContext context) {
@@ -413,7 +437,6 @@ class EntityScreens extends StatelessWidget {
     final prefState = state.prefState;
     final subRoute = uiState.subRoute;
     final entityUIState = state.getUIState(entityType);
-    final listState = state.getListState(entityType);
     final isPreviewVisible = prefState.isPreviewVisible;
     final isPreviewShown =
         isPreviewVisible || (subRoute != 'view' && subRoute.isNotEmpty);
@@ -428,7 +451,7 @@ class EntityScreens extends StatelessWidget {
     Widget child;
     if (subRoute == 'email') {
       child = emailWidget;
-    } else if (subRoute == 'edit') {
+    } else if (subRoute == 'edit' && !forceView) {
       child = editWidget;
     } else if ((entityUIState.selectedId ?? '').isNotEmpty &&
         state.getEntityMap(entityType).containsKey(entityUIState.selectedId)) {
@@ -438,8 +461,8 @@ class EntityScreens extends StatelessWidget {
     }
 
     Widget filterChild;
-    if (listState.filterEntityId != null) {
-      switch (listState.filterEntityType) {
+    if (uiState.filterEntityId != null) {
+      switch (uiState.filterEntityType) {
         case EntityType.client:
           filterChild = ClientViewScreen();
           break;

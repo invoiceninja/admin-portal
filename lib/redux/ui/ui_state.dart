@@ -1,5 +1,6 @@
 import 'package:built_value/built_value.dart';
 import 'package:built_value/serializer.dart';
+import 'package:invoiceninja_flutter/data/models/entities.dart';
 import 'package:invoiceninja_flutter/redux/client/client_state.dart';
 import 'package:invoiceninja_flutter/redux/company/company_state.dart';
 import 'package:invoiceninja_flutter/redux/dashboard/dashboard_state.dart';
@@ -66,6 +67,12 @@ abstract class UIState implements Built<UIState, UIStateBuilder> {
   String get previousRoute;
 
   @nullable
+  String get filterEntityId;
+
+  @nullable
+  EntityType get filterEntityType;
+
+  @nullable
   String get filter;
 
   int get filterClearedAt;
@@ -128,6 +135,12 @@ abstract class UIState implements Built<UIState, UIStateBuilder> {
     final parts =
         currentRoute.split('/').where((part) => part.isNotEmpty).toList();
     return parts.length > 1 ? parts[1] : '';
+  }
+
+  String get previousMainRoute {
+    final parts =
+        previousRoute.split('/').where((part) => part.isNotEmpty).toList();
+    return parts.isNotEmpty ? parts[0] : '';
   }
 
   String get previousSubRoute {
