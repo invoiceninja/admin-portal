@@ -6,15 +6,10 @@ import 'package:invoiceninja_flutter/redux/user/user_selectors.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/dynamic_selector.dart';
 
 class UserPicker extends StatelessWidget {
-  const UserPicker({
-    @required this.userId,
-    @required this.onChanged,
-    this.userIds,
-  });
+  const UserPicker({this.userId, this.onChanged});
 
   final String userId;
   final Function(String) onChanged;
-  final List<String> userIds;
 
   @override
   Widget build(BuildContext context) {
@@ -24,22 +19,15 @@ class UserPicker extends StatelessWidget {
       return SizedBox();
     }
 
-    List<String> ids;
-    if (userIds == null) {
-      ids = memoizedUserList(state.userState.map);
-
-      if (ids.length == 1) {
-        return SizedBox();
-      }
-    } else {
-      ids = userIds;
+    if (state.userState.list.length == 1) {
+      return SizedBox();
     }
 
     return DynamicSelector(
       onChanged: onChanged,
       entityType: EntityType.user,
       entityId: userId,
-      entityIds: ids,
+      entityIds: memoizedUserList(state.userState.map),
     );
   }
 }

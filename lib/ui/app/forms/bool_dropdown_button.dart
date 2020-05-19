@@ -67,11 +67,11 @@ class BoolDropdownButton extends StatelessWidget {
                       value: null,
                     ),
                     DropdownMenuItem(
-                      child: Text(trueLabel),
+                      child: Text(falseLabel),
                       value: false,
                     ),
                     DropdownMenuItem(
-                      child: Text(falseLabel),
+                      child: Text(trueLabel),
                       value: true,
                     ),
                   ].toList(),
