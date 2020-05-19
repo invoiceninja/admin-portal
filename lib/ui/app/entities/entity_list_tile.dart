@@ -5,6 +5,7 @@ import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/ui/app/entities/entity_state_title.dart';
 import 'package:invoiceninja_flutter/ui/app/lists/list_divider.dart';
+import 'package:invoiceninja_flutter/ui/app/lists/selected_indicator.dart';
 import 'package:invoiceninja_flutter/utils/icons.dart';
 import 'package:invoiceninja_flutter/utils/platforms.dart';
 
@@ -80,25 +81,29 @@ class EntitiesListTile extends StatelessWidget {
   Widget build(BuildContext context) {
     final store = StoreProvider.of<AppState>(context);
     final state = store.state;
-    /*
-    final isFilteredBy = state.uiState.filterEntityId == entity.id &&
-        state.uiState.filterEntityType == entity.entityType;
-    */
+    final mainRoute = state.uiState.mainRoute;
+    final isFiltered =
+        isNotMobile(context) && state.uiState.filterEntityType != null;
+    final isFIlterMatch =
+        isFiltered && entityType.toString() == mainRoute.replaceFirst('/', '');
 
     return Column(
       mainAxisSize: MainAxisSize.min,
       children: <Widget>[
         Material(
           color: Theme.of(context).cardColor,
-          child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 10),
-            child: ListTile(
-              title: Text(title),
-              subtitle: Text(subtitle ?? ''),
-              leading: Icon(getEntityIcon(entityType), size: 18.0),
-              trailing: Icon(Icons.navigate_next),
-              onTap: onTap,
-              onLongPress: onLongPress,
+          child: SelectedIndicator(
+            isSelected: isFIlterMatch,
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 10),
+              child: ListTile(
+                title: Text(title),
+                subtitle: Text(subtitle ?? ''),
+                leading: Icon(getEntityIcon(entityType), size: 18.0),
+                trailing: isFiltered ? null : Icon(Icons.navigate_next),
+                onTap: onTap,
+                onLongPress: onLongPress,
+              ),
             ),
           ),
         ),
