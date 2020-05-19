@@ -497,6 +497,9 @@ abstract class AppState implements Built<AppState, AppStateBuilder> {
 
   bool get isSelfHosted => authState.isSelfHost ?? false;
 
+  bool get isMenuCollapsed =>
+      uiState.filterEntityType != null || prefState.isMenuCollapsed;
+
   @override
   String toString() {
     //return 'Permissions: ${uiState.userUIState.editing.userCompany.permissions}';

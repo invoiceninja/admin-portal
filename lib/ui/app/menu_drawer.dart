@@ -198,7 +198,7 @@ class MenuDrawer extends StatelessWidget {
   */
 
     return SizedBox(
-      width: state.prefState.isMenuCollapsed ? 65 : kDrawerWidth,
+      width: state.isMenuCollapsed ? 65 : kDrawerWidth,
       child: Drawer(
         child: SafeArea(
           child: Column(
@@ -213,7 +213,7 @@ class MenuDrawer extends StatelessWidget {
                       color: enableDarkMode
                           ? Colors.white10
                           : Theme.of(context).cardColor,
-                      child: state.prefState.isMenuCollapsed
+                      child: state.isMenuCollapsed
                           ? _collapsedCompanySelector
                           : _expandedCompanySelector),
               state.credentials.token.isEmpty
@@ -319,7 +319,7 @@ class MenuDrawer extends StatelessWidget {
               AppBorder(
                 isTop: true,
                 child: Align(
-                  child: state.prefState.isMenuCollapsed
+                  child: state.isMenuCollapsed
                       ? SidebarFooterCollapsed(
                           isUpdateAvailable: state.account.isUpdateAvailable,
                         )
@@ -397,7 +397,7 @@ class _DrawerTileState extends State<DrawerTile> {
         .withOpacity(isSelected ? 1 : .7);
 
     Widget trailingWidget;
-    if (!state.prefState.isMenuCollapsed) {
+    if (!state.isMenuCollapsed) {
       if (widget.title == localization.dashboard) {
         trailingWidget = IconButton(
           icon: Icon(
@@ -443,7 +443,7 @@ class _DrawerTileState extends State<DrawerTile> {
             size: 20,
             color: textColor,
           ),
-          title: state.prefState.isMenuCollapsed
+          title: state.isMenuCollapsed
               ? null
               : Text(
                   widget.title,
@@ -480,7 +480,7 @@ class _DrawerTileState extends State<DrawerTile> {
       ),
     );
 
-    if (state.prefState.isMenuCollapsed) {
+    if (state.isMenuCollapsed) {
       child = Tooltip(
         message: widget.title,
         child: child,
@@ -508,7 +508,7 @@ class SidebarFooter extends StatelessWidget {
       child: Row(
         mainAxisSize: MainAxisSize.max,
         children: <Widget>[
-          if (state.prefState.isMenuCollapsed) ...[
+          if (state.isMenuCollapsed) ...[
             Expanded(child: SizedBox())
           ] else ...[
             if (account.isUpdateAvailable)
