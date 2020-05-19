@@ -135,6 +135,7 @@ class WebClient {
 }
 
 String _checkUrl(String url) {
+  print('## _checkUrl (PRE): $url');
   if (!url.contains('/api/v1')) {
     url = '/api/v1' + url;
   }
@@ -147,6 +148,7 @@ String _checkUrl(String url) {
     url += '?';
   }
 
+  print('## _checkUrl (POST): $url');
   return url;
 }
 

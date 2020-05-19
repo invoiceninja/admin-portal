@@ -77,10 +77,12 @@ class _ContactListTile extends StatelessWidget {
           : AppLocalization.of(context).blankContact),
       subtitle: contact.email != null ? Text(contact.email) : null,
       onTap: onTap,
-      leading: Checkbox(
-        activeColor: Theme.of(context).accentColor,
-        value: invitation != null,
-        onChanged: (value) => null,
+      leading: IgnorePointer(
+        child: Checkbox(
+          activeColor: Theme.of(context).accentColor,
+          value: invitation != null,
+          onChanged: (value) => null,
+        ),
       ),
     );
   }

@@ -44,12 +44,13 @@ class CreditListItem extends StatelessWidget {
     final listUIState = state.getUIState(credit.entityType).listUIState;
     final isInMultiselect = listUIState.isInMultiselect();
     final showCheckbox = onCheckboxChanged != null || isInMultiselect;
-    final textStyle = TextStyle(fontSize: 17);
+    final textStyle = TextStyle(fontSize: 16);
     final localization = AppLocalization.of(context);
     final filterMatch = filter != null && filter.isNotEmpty
         ? (credit.matchesFilterValue(filter) ??
             client.matchesFilterValue(filter))
         : null;
+    final textColor = Theme.of(context).textTheme.bodyText1.color;
 
     final statusLabel = localization.lookup(kCreditStatuses[credit.statusId]);
     final statusColor = CreditStatusColors.colors[credit.statusId];
@@ -193,7 +194,9 @@ class CreditListItem extends StatelessWidget {
                       filterMatch ?? subtitle,
                       maxLines: 3,
                       overflow: TextOverflow.ellipsis,
-                      style: Theme.of(context).textTheme.subtitle2,
+                      style: Theme.of(context).textTheme.subtitle2.copyWith(
+                            color: textColor.withOpacity(0.65),
+                          ),
                     ),
                   ],
                 ),

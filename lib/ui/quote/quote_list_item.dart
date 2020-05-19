@@ -44,7 +44,7 @@ class QuoteListItem extends StatelessWidget {
     final listUIState = state.getUIState(quote.entityType).listUIState;
     final isInMultiselect = listUIState.isInMultiselect();
     final showCheckbox = onCheckboxChanged != null || isInMultiselect;
-    final textStyle = TextStyle(fontSize: 17);
+    final textStyle = TextStyle(fontSize: 16);
     final localization = AppLocalization.of(context);
     final filterMatch = filter != null && filter.isNotEmpty
         ? (quote.matchesFilterValue(filter) ??
@@ -56,6 +56,7 @@ class QuoteListItem extends StatelessWidget {
         : localization.lookup(kQuoteStatuses[quote.statusId]);
     final statusColor = QuoteStatusColors
         .colors[quote.isPastDue ? kInvoiceStatusPastDue : quote.statusId];
+    final textColor = Theme.of(context).textTheme.bodyText1.color;
 
     Widget _buildMobile() {
       return ListTile(
@@ -210,7 +211,9 @@ class QuoteListItem extends StatelessWidget {
                       filterMatch ?? subtitle,
                       maxLines: 3,
                       overflow: TextOverflow.ellipsis,
-                      style: Theme.of(context).textTheme.subtitle2,
+                      style: Theme.of(context).textTheme.subtitle2.copyWith(
+                            color: textColor.withOpacity(0.65),
+                          ),
                     ),
                   ],
                 ),

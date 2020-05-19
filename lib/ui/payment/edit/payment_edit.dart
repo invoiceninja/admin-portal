@@ -340,6 +340,7 @@ class _PaymentableEditorState extends State<PaymentableEditor> {
     final localization = AppLocalization.of(context);
 
     return Row(
+      crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
         if (widget.entityType == EntityType.invoice)
           Expanded(

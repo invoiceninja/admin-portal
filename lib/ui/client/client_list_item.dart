@@ -47,7 +47,7 @@ class ClientListItem extends StatelessWidget {
     final listUIState = clientUIState.listUIState;
     final isInMultiselect = listUIState.isInMultiselect();
     final showCheckbox = onCheckboxChanged != null || isInMultiselect;
-    final textStyle = TextStyle(fontSize: 17);
+    final textStyle = TextStyle(fontSize: 16);
 
     Widget _buildMobile() {
       return ListTile(

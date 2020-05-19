@@ -13,7 +13,8 @@ const String kAppVersion = '2.0.9';
 
 const String kSiteUrl = 'https://invoiceninja.com';
 //const String kAppProductionUrl = 'https://invoicing.co';
-const String kAppProductionUrl = 'https://staging.invoicing.co'; // TODO remove staging
+const String kAppProductionUrl =
+    'https://staging.invoicing.co'; // TODO remove staging
 const String kAppStagingUrl = 'https://staging.invoicing.co';
 const String kWhiteLabelUrl =
     'https://app.invoiceninja.com/buy_now/?account_key=AsFmBAeLXF0IKf7tmi0eiyZfmWW9hxMT&product_id=3';
@@ -110,6 +111,8 @@ const String kInvoiceStatusDraft = '1';
 const String kInvoiceStatusSent = '2';
 const String kInvoiceStatusPartial = '3';
 const String kInvoiceStatusPaid = '4';
+const String kInvoiceStatusCancelled = '5';
+const String kInvoiceStatusReversed = '6';
 
 const kInvoiceStatuses = {
   kInvoiceStatusPastDue: 'past_due',
@@ -117,6 +120,8 @@ const kInvoiceStatuses = {
   kInvoiceStatusSent: 'sent',
   kInvoiceStatusPartial: 'partial',
   kInvoiceStatusPaid: 'paid',
+  kInvoiceStatusCancelled: 'cancelled',
+  kInvoiceStatusReversed: 'reversed',
 };
 
 const String kQuoteStatusExpired = '-1';
@@ -413,6 +418,8 @@ class InvoiceStatusColors {
     kInvoiceStatusPartial: Colors.deepPurple,
     kInvoiceStatusPaid: convertHexStringToColor('#407535'),
     kInvoiceStatusPastDue: convertHexStringToColor('#8D3E3F'),
+    kInvoiceStatusCancelled: Colors.red,
+    kInvoiceStatusReversed: Colors.red,
   };
 }
 

@@ -344,7 +344,7 @@ class _InvoiceEditItemsDesktopState extends State<InvoiceEditItemsDesktop> {
                     child: TextFormField(
                       textAlign: TextAlign.right,
                       initialValue: formatNumber(lineItems[index].cost, context,
-                          formatNumberType: FormatNumberType.input),
+                          formatNumberType: FormatNumberType.input, clientId: invoice.clientId),
                       onChanged: (value) => viewModel.onChangedInvoiceItem(
                           lineItems[index]
                               .rebuild((b) => b..cost = parseDouble(value)),
@@ -359,7 +359,7 @@ class _InvoiceEditItemsDesktopState extends State<InvoiceEditItemsDesktop> {
                       textAlign: TextAlign.right,
                       initialValue: formatNumber(
                           lineItems[index].quantity, context,
-                          formatNumberType: FormatNumberType.input),
+                          formatNumberType: FormatNumberType.input, clientId: invoice.clientId),
                       onChanged: (value) => viewModel.onChangedInvoiceItem(
                           lineItems[index]
                               .rebuild((b) => b..quantity = parseDouble(value)),
@@ -376,7 +376,7 @@ class _InvoiceEditItemsDesktopState extends State<InvoiceEditItemsDesktop> {
                       readOnly: true,
                       enabled: false,
                       initialValue:
-                          formatNumber(lineItems[index].total, context),
+                          formatNumber(lineItems[index].total, context, clientId: invoice.clientId),
                       textAlign: TextAlign.right,
                     ),
                   ),

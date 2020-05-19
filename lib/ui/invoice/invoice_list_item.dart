@@ -46,7 +46,7 @@ class InvoiceListItem extends StatelessWidget {
     final listUIState = state.getUIState(invoice.entityType).listUIState;
     final isInMultiselect = listUIState.isInMultiselect();
     final showCheckbox = onCheckboxChanged != null || isInMultiselect;
-    final textStyle = TextStyle(fontSize: 17);
+    final textStyle = TextStyle(fontSize: 16);
     final localization = AppLocalization.of(context);
     final filterMatch = filter != null && filter.isNotEmpty
         ? (invoice.matchesFilterValue(filter) ??
@@ -58,6 +58,7 @@ class InvoiceListItem extends StatelessWidget {
         : localization.lookup(kInvoiceStatuses[invoice.statusId]);
     final statusColor = InvoiceStatusColors
         .colors[invoice.isPastDue ? kInvoiceStatusPastDue : invoice.statusId];
+    final textColor = Theme.of(context).textTheme.bodyText1.color;
 
     Widget _buildMobile() {
       return ListTile(
@@ -102,15 +103,20 @@ class InvoiceListItem extends StatelessWidget {
               children: <Widget>[
                 Expanded(
                   child: filterMatch == null
-                      ? Text(((invoice.number ?? localization.pending) +
-                              ' • ' +
-                              formatDate(
-                                  invoice.dueDate.isNotEmpty
-                                      ? invoice.dueDate
-                                      : invoice.date,
-                                  context) +
-                              (hasDocuments ? '  📎' : ''))
-                          .trim())
+                      ? Text(
+                          ((invoice.number ?? localization.pending) +
+                                  ' • ' +
+                                  formatDate(
+                                      invoice.dueDate.isNotEmpty
+                                          ? invoice.dueDate
+                                          : invoice.date,
+                                      context) +
+                                  (hasDocuments ? '  📎' : ''))
+                              .trim(),
+                          style: TextStyle(
+                            color: textColor.withOpacity(0.65),
+                          ),
+                        )
                       : Text(
                           filterMatch,
                           maxLines: 3,
@@ -208,7 +214,9 @@ class InvoiceListItem extends StatelessWidget {
                       filterMatch ?? subtitle,
                       maxLines: 3,
                       overflow: TextOverflow.ellipsis,
-                      style: Theme.of(context).textTheme.subtitle2,
+                      style: Theme.of(context).textTheme.subtitle2.copyWith(
+                            color: textColor.withOpacity(0.65),
+                          ),
                     ),
                   ],
                 ),
