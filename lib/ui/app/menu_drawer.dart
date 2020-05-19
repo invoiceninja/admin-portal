@@ -454,8 +454,8 @@ class _DrawerTileState extends State<DrawerTile> {
                       ),
                 ),
           onTap: () {
+            store.dispatch(ClearEntityFilter());
             if (widget.entityType != null) {
-              store.dispatch(ClearEntityFilter());
               viewEntitiesByType(
                   context: context, entityType: widget.entityType);
             } else {
@@ -621,6 +621,10 @@ class SidebarFooterCollapsed extends StatelessWidget {
   Widget build(BuildContext context) {
     final Store<AppState> store = StoreProvider.of<AppState>(context);
     final localization = AppLocalization.of(context);
+
+    if (store.state.uiState.filterEntityType != null) {
+      return SizedBox();
+    }
 
     return Container(
       width: double.infinity,
