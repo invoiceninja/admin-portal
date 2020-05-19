@@ -453,10 +453,15 @@ class _DrawerTileState extends State<DrawerTile> {
                         color: textColor,
                       ),
                 ),
-          onTap: () => widget.entityType != null
-              ? viewEntitiesByType(
-                  context: context, entityType: widget.entityType)
-              : widget.onTap(),
+          onTap: () {
+            if (widget.entityType != null) {
+              store.dispatch(ClearEntityFilter());
+              viewEntitiesByType(
+                  context: context, entityType: widget.entityType);
+            } else {
+              widget.onTap();
+            }
+          },
           onLongPress: () => widget.onLongPress != null
               ? widget.onLongPress()
               : widget.entityType != null
