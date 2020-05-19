@@ -14,6 +14,7 @@ import 'package:invoiceninja_flutter/ui/app/snackbar_row.dart';
 import 'package:invoiceninja_flutter/ui/invoice/view/invoice_view.dart';
 import 'package:invoiceninja_flutter/utils/completers.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
+import 'package:invoiceninja_flutter/utils/platforms.dart';
 import 'package:redux/redux.dart';
 
 class InvoiceViewScreen extends StatelessWidget {
@@ -140,8 +141,11 @@ class InvoiceViewVM extends EntityViewVM {
             context: context,
             entities: [client],
           );
-        } else {
+        } else if (isMobile(context)) {
           viewEntity(context: context, entity: client);
+        } else {
+          store.dispatch(FilterInvoicesByEntity(
+              entityType: EntityType.client, entityId: client.id));
         }
       },
       onPaymentPressed: (BuildContext context, payment,
@@ -152,8 +156,11 @@ class InvoiceViewVM extends EntityViewVM {
             client: client,
             entities: [payment],
           );
-        } else {
+        } else if (isMobile(context)) {
           viewEntity(context: context, entity: payment);
+        } else {
+          store.dispatch(FilterInvoicesByEntity(
+              entityType: EntityType.payment, entityId: payment.id));
         }
       },
       onPaymentsPressed: (BuildContext context) {
