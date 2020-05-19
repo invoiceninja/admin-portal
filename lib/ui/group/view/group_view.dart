@@ -13,7 +13,6 @@ import 'package:invoiceninja_flutter/ui/app/lists/list_divider.dart';
 import 'package:invoiceninja_flutter/ui/app/view_scaffold.dart';
 import 'package:invoiceninja_flutter/ui/group/view/group_view_vm.dart';
 import 'package:invoiceninja_flutter/utils/formatting.dart';
-import 'package:invoiceninja_flutter/utils/icons.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 
 class GroupView extends StatefulWidget {
@@ -53,7 +52,7 @@ class _GroupViewState extends State<GroupView> {
           ),
           ListDivider(),
           EntitiesListTile(
-            icon: getEntityIcon(EntityType.client),
+            entityType: EntityType.client,
             title: localization.clients,
             onTap: () => viewModel.onClientsPressed(context),
             onLongPress: () => viewModel.onClientsPressed(context, true),

@@ -8,14 +8,13 @@ import 'package:invoiceninja_flutter/data/models/project_model.dart';
 import 'package:invoiceninja_flutter/redux/project/project_selectors.dart';
 import 'package:invoiceninja_flutter/ui/app/FieldGrid.dart';
 import 'package:invoiceninja_flutter/redux/task/task_selectors.dart';
+import 'package:invoiceninja_flutter/ui/app/entities/entity_list_tile.dart';
 import 'package:invoiceninja_flutter/ui/app/entities/entity_state_title.dart';
 import 'package:invoiceninja_flutter/ui/app/icon_message.dart';
 import 'package:invoiceninja_flutter/ui/app/entity_header.dart';
 import 'package:invoiceninja_flutter/ui/app/view_scaffold.dart';
-import 'package:invoiceninja_flutter/ui/client/view/client_view_overview.dart';
 import 'package:invoiceninja_flutter/ui/project/view/project_view_vm.dart';
 import 'package:invoiceninja_flutter/utils/formatting.dart';
-import 'package:invoiceninja_flutter/utils/icons.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 
 class ProjectView extends StatefulWidget {
@@ -105,8 +104,8 @@ class _ProjectViewState extends State<ProjectView> {
                 color: Theme.of(context).backgroundColor,
                 height: 12.0,
               ),
-              EntityListTile(
-                icon: getEntityIcon(EntityType.task),
+              EntitiesListTile(
+                entityType: EntityType.task,
                 title: localization.tasks,
                 onTap: () => viewModel.onTasksPressed(context),
                 onLongPress: () =>

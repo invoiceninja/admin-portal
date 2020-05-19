@@ -9,7 +9,6 @@ import 'package:invoiceninja_flutter/ui/app/entity_header.dart';
 import 'package:invoiceninja_flutter/ui/app/view_scaffold.dart';
 import 'package:invoiceninja_flutter/ui/user/view/user_view_vm.dart';
 import 'package:flutter/material.dart';
-import 'package:invoiceninja_flutter/utils/icons.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 
 class UserView extends StatelessWidget {
@@ -50,7 +49,7 @@ class UserView extends StatelessWidget {
                     .present(localization.active, localization.archived),
           ),
           EntitiesListTile(
-            icon: getEntityIcon(EntityType.payment),
+            entityType: EntityType.payment,
             title: localization.payments,
             onTap: () => viewModel.onEntityPressed(context, EntityType.payment),
             onLongPress: () =>
@@ -61,7 +60,7 @@ class UserView extends StatelessWidget {
           ),
           company.isModuleEnabled(EntityType.quote)
               ? EntitiesListTile(
-                  icon: getEntityIcon(EntityType.quote),
+                  entityType: EntityType.quote,
                   title: localization.quotes,
                   onTap: () =>
                       viewModel.onEntityPressed(context, EntityType.quote),

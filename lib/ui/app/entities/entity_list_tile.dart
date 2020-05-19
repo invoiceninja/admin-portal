@@ -25,9 +25,9 @@ class EntityListTile extends StatelessWidget {
   Widget build(BuildContext context) {
     final store = StoreProvider.of<AppState>(context);
     final state = store.state;
-
     final isFilteredBy = state.uiState.filterEntityId == entity.id &&
         state.uiState.filterEntityType == entity.entityType;
+
     Widget trailingIcon = Icon(Icons.navigate_next);
     if (isNotMobile(context)) {
       trailingIcon = Icon(Icons.filter_list,
@@ -63,7 +63,7 @@ class EntityListTile extends StatelessWidget {
 
 class EntitiesListTile extends StatelessWidget {
   const EntitiesListTile({
-    this.icon,
+    this.entityType,
     this.onTap,
     this.onLongPress,
     this.title,
@@ -72,12 +72,19 @@ class EntitiesListTile extends StatelessWidget {
 
   final Function onTap;
   final Function onLongPress;
-  final IconData icon;
+  final EntityType entityType;
   final String title;
   final String subtitle;
 
   @override
   Widget build(BuildContext context) {
+    final store = StoreProvider.of<AppState>(context);
+    final state = store.state;
+    /*
+    final isFilteredBy = state.uiState.filterEntityId == entity.id &&
+        state.uiState.filterEntityType == entity.entityType;
+    */
+
     return Column(
       mainAxisSize: MainAxisSize.min,
       children: <Widget>[
@@ -87,10 +94,8 @@ class EntitiesListTile extends StatelessWidget {
             padding: const EdgeInsets.symmetric(horizontal: 10),
             child: ListTile(
               title: Text(title),
-              subtitle: subtitle != null && subtitle.isNotEmpty
-                  ? Text(subtitle)
-                  : null,
-              leading: Icon(icon, size: 18.0),
+              subtitle: Text(subtitle ?? ''),
+              leading: Icon(getEntityIcon(entityType), size: 18.0),
               trailing: Icon(Icons.navigate_next),
               onTap: onTap,
               onLongPress: onLongPress,

@@ -1,5 +1,4 @@
 import 'package:flutter_redux/flutter_redux.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:invoiceninja_flutter/constants.dart';
 import 'package:invoiceninja_flutter/data/models/entities.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
@@ -129,7 +128,7 @@ class InvoiceOverview extends StatelessWidget {
       } else {
         widgets.add(
           EntitiesListTile(
-            icon: FontAwesomeIcons.creditCard,
+            entityType: EntityType.payment,
             title: localization.payments,
             onTap: () => viewModel.onPaymentsPressed(context),
           ),
