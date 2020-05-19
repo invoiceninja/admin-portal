@@ -133,10 +133,9 @@ class DatatableHeader extends StatelessWidget {
   Widget build(BuildContext context) {
     final localization = AppLocalization.of(context);
     final state = StoreProvider.of<AppState>(context).state;
+    /*
     final listUIState = state.getListState(entityType);
-
     Widget message = SizedBox();
-
     if (onClearPressed != null && listUIState.filterEntityId != null) {
       final entity = state.getEntityMap(
           listUIState.filterEntityType)[listUIState.filterEntityId];
@@ -151,6 +150,7 @@ class DatatableHeader extends StatelessWidget {
         entity: entity,
       );
     }
+    */
 
     return Row(
       children: <Widget>[
@@ -159,7 +159,7 @@ class DatatableHeader extends StatelessWidget {
           onPressed: onRefreshPressed,
         ),
         SizedBox(width: 20),
-        Expanded(child: message),
+        Expanded(child: SizedBox()),
       ],
     );
   }
