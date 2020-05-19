@@ -87,6 +87,7 @@ class ClientOverview extends StatelessWidget {
           secondValue:
               formatNumber(client.balance, context, clientId: client.id),
         ),
+        ListDivider(),
         client.privateNotes != null && client.privateNotes.isNotEmpty
             ? IconMessage(client.privateNotes)
             : Container(),
@@ -100,10 +101,7 @@ class ClientOverview extends StatelessWidget {
               onTap: () => viewModel.onGroupPressed(context),
             ),
           ),
-          Container(
-            color: Theme.of(context).backgroundColor,
-            height: 12.0,
-          ),
+          ListDivider(),
         ],
         FieldGrid(fields),
         ListDivider(),

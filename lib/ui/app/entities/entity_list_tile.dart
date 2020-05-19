@@ -16,7 +16,7 @@ class EntityListTile extends StatelessWidget {
       mainAxisSize: MainAxisSize.min,
       children: <Widget>[
         Material(
-          color: Theme.of(context).canvasColor,
+          color: Theme.of(context).cardColor,
           child: ListTile(
             title: Text(title),
             subtitle:

@@ -413,6 +413,7 @@ class EntityScreens extends StatelessWidget {
     final prefState = state.prefState;
     final subRoute = uiState.subRoute;
     final entityUIState = state.getUIState(entityType);
+    final listState = state.getListState(entityType);
     final isPreviewVisible = prefState.isPreviewVisible;
     final isPreviewShown =
         isPreviewVisible || (subRoute != 'view' && subRoute.isNotEmpty);
@@ -436,10 +437,33 @@ class EntityScreens extends StatelessWidget {
       child = BlankScreen(AppLocalization.of(context).noRecordSelected);
     }
 
+    Widget filterChild;
+    if (listState.filterEntityId != null) {
+      switch (listState.filterEntityType) {
+        case EntityType.client:
+          filterChild = ClientViewScreen();
+          break;
+        case EntityType.user:
+          filterChild = UserViewScreen();
+          break;
+        case EntityType.group:
+          filterChild = GroupViewScreen();
+          break;
+      }
+    }
+
     return Row(
       children: <Widget>[
+        if (filterChild != null)
+          Expanded(
+            child: filterChild,
+            flex: previewFlex,
+          ),
         Expanded(
-          child: listWidget,
+          child: AppBorder(
+            child: listWidget,
+            isLeft: filterChild != null,
+          ),
           flex: listFlex,
         ),
         _CustomDivider(),
