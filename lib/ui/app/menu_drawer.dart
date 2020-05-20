@@ -625,6 +625,7 @@ class SidebarFooterCollapsed extends StatelessWidget {
 
     return Container(
       width: double.infinity,
+      height: 44,
       color: Theme.of(context).cardColor,
       child: store.state.uiState.filterEntityType != null
           ? PopupMenuButton<String>(
