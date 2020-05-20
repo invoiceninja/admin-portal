@@ -388,7 +388,8 @@ class _DrawerTileState extends State<DrawerTile> {
                 ? kReports
                 : widget.entityType.name;
 
-    final isSelected = uiState.currentRoute.startsWith('/$route');
+    final isSelected = uiState.currentRoute.startsWith('/$route') &&
+        state.uiState.filterEntityType == null;
 
     final textColor = Theme.of(context)
         .textTheme
@@ -431,7 +432,7 @@ class _DrawerTileState extends State<DrawerTile> {
     Widget child = Material(
       color: Colors.transparent,
       child: Container(
-        color: isSelected
+        color: (isSelected && state.uiState.filterEntityType == null)
             ? convertHexStringToColor(enableDarkMode
                 ? kDefaultDarkSelectedColorMenu
                 : kDefaultLightSelectedColorMenu)

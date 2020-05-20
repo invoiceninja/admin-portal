@@ -6,10 +6,11 @@ import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/utils/colors.dart';
 
 class SelectedIndicator extends StatelessWidget {
-  const SelectedIndicator({this.child, this.isSelected});
+  const SelectedIndicator({this.child, this.isSelected, this.isMenu = false});
 
   final Widget child;
   final bool isSelected;
+  final bool isMenu;
 
   @override
   Widget build(BuildContext context) {
@@ -20,8 +21,12 @@ class SelectedIndicator extends StatelessWidget {
     return Container(
       color: isSelected
           ? convertHexStringToColor(enableDarkMode
-              ? kDefaultDarkSelectedColor
-              : kDefaultLightSelectedColor)
+              ? (isMenu
+                  ? kDefaultDarkSelectedColorMenu
+                  : kDefaultDarkSelectedColor)
+              : (isMenu
+                  ? kDefaultLightSelectedColorMenu
+                  : kDefaultLightSelectedColor))
           : null,
       child: child,
     );

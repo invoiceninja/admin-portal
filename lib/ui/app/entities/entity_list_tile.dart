@@ -94,6 +94,7 @@ class EntitiesListTile extends StatelessWidget {
           color: Theme.of(context).cardColor,
           child: SelectedIndicator(
             isSelected: isFIlterMatch,
+            isMenu: true,
             child: Padding(
               padding: const EdgeInsets.symmetric(horizontal: 10),
               child: ListTile(
