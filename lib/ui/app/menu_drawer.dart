@@ -439,10 +439,13 @@ class _DrawerTileState extends State<DrawerTile> {
             : Colors.transparent,
         child: ListTile(
           dense: true,
-          leading: Icon(
-            widget.icon,
-            size: 20,
-            color: textColor,
+          leading: Padding(
+            padding: const EdgeInsets.only(left: 3),
+            child: Icon(
+              widget.icon,
+              size: 20,
+              color: textColor,
+            ),
           ),
           title: state.isMenuCollapsed
               ? null
