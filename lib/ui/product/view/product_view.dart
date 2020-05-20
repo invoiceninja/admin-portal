@@ -15,9 +15,11 @@ class ProductView extends StatefulWidget {
   const ProductView({
     Key key,
     @required this.viewModel,
+    @required this.isFilter,
   }) : super(key: key);
 
   final ProductViewVM viewModel;
+  final bool isFilter;
 
   @override
   _ProductViewState createState() => _ProductViewState();
@@ -82,6 +84,7 @@ class _ProductViewState extends State<ProductView>
     }
 
     return ViewScaffold(
+      isFilter: widget.isFilter,
       entity: product,
       body: Column(
         children: <Widget>[

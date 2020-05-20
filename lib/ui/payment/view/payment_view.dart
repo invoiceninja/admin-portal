@@ -20,9 +20,11 @@ class PaymentView extends StatefulWidget {
   const PaymentView({
     Key key,
     @required this.viewModel,
+    @required this.isFilter,
   }) : super(key: key);
 
   final PaymentViewVM viewModel;
+  final bool isFilter;
 
   @override
   _PaymentViewState createState() => new _PaymentViewState();
@@ -59,6 +61,7 @@ class _PaymentViewState extends State<PaymentView> {
     }
 
     return ViewScaffold(
+      isFilter: widget.isFilter,
       entity: payment,
       title: payment.number,
       body: Builder(

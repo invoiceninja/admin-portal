@@ -13,7 +13,11 @@ import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:redux/redux.dart';
 
 class ProjectViewScreen extends StatelessWidget {
-  const ProjectViewScreen({Key key}) : super(key: key);
+  const ProjectViewScreen({
+    Key key,
+    this.isFilter = false,
+  }) : super(key: key);
+  final bool isFilter;
   static const String route = '/project/view';
 
   @override
@@ -25,6 +29,7 @@ class ProjectViewScreen extends StatelessWidget {
       builder: (context, vm) {
         return ProjectView(
           viewModel: vm,
+          isFilter: isFilter,
         );
       },
     );

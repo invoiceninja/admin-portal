@@ -16,7 +16,11 @@ import 'package:invoiceninja_flutter/ui/user/view/user_view.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 
 class UserViewScreen extends StatelessWidget {
-  const UserViewScreen({Key key}) : super(key: key);
+  const UserViewScreen({
+    Key key,
+    this.isFilter = false,
+  }) : super(key: key);
+  final bool isFilter;
   static const String route = '/$kSettings/$kSettingsUserManagementView';
 
   @override
@@ -28,6 +32,7 @@ class UserViewScreen extends StatelessWidget {
       builder: (context, vm) {
         return UserView(
           viewModel: vm,
+          isFilter: isFilter,
         );
       },
     );

@@ -15,7 +15,11 @@ import 'package:invoiceninja_flutter/ui/tax_rate/view/tax_rate_view.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 
 class TaxRateViewScreen extends StatelessWidget {
-  const TaxRateViewScreen({Key key}) : super(key: key);
+  const TaxRateViewScreen({
+    Key key,
+    this.isFilter = false,
+  }) : super(key: key);
+  final bool isFilter;
   static const String route = '/$kSettings/$kSettingsTaxRatesView';
 
   @override
@@ -27,6 +31,7 @@ class TaxRateViewScreen extends StatelessWidget {
       builder: (context, vm) {
         return TaxRateView(
           viewModel: vm,
+          isFilter: isFilter,
         );
       },
     );

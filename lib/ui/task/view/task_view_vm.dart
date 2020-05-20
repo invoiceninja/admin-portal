@@ -17,7 +17,8 @@ import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:redux/redux.dart';
 
 class TaskViewScreen extends StatelessWidget {
-  const TaskViewScreen({Key key}) : super(key: key);
+  const TaskViewScreen({Key key,this.isFilter = false,}) : super(key: key);
+  final bool isFilter;
   static const String route = '/task/view';
 
   @override
@@ -29,6 +30,7 @@ class TaskViewScreen extends StatelessWidget {
       builder: (context, vm) {
         return TaskView(
           viewModel: vm,
+          isFilter: isFilter,
         );
       },
     );

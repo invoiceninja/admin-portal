@@ -18,9 +18,11 @@ class TaskView extends StatefulWidget {
   const TaskView({
     Key key,
     @required this.viewModel,
+    @required this.isFilter,
   }) : super(key: key);
 
   final TaskViewVM viewModel;
+  final bool isFilter;
 
   @override
   _TaskViewState createState() => new _TaskViewState();
@@ -50,6 +52,7 @@ class _TaskViewState extends State<TaskView> {
     final localization = AppLocalization.of(context);
 
     return ViewScaffold(
+      isFilter: widget.isFilter,
       entity: task,
       body: Builder(
         builder: (BuildContext context) {

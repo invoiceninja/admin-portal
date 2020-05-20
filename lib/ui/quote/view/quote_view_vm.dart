@@ -19,8 +19,11 @@ import 'package:invoiceninja_flutter/utils/platforms.dart';
 import 'package:redux/redux.dart';
 
 class QuoteViewScreen extends StatelessWidget {
-  const QuoteViewScreen({Key key}) : super(key: key);
-
+  const QuoteViewScreen({
+    Key key,
+    this.isFilter = false,
+  }) : super(key: key);
+  final bool isFilter;
   static const String route = '/quote/view';
 
   @override
@@ -33,6 +36,7 @@ class QuoteViewScreen extends StatelessWidget {
       builder: (context, viewModel) {
         return InvoiceView(
           viewModel: viewModel,
+          isFilter: isFilter,
         );
       },
     );
@@ -116,7 +120,6 @@ class QuoteViewVM extends EntityViewVM {
           store.dispatch(FilterQuotesByEntity(
               entityType: EntityType.client, entityId: client.id));
         }
-
       },
       onEntityAction: (BuildContext context, EntityAction action) =>
           handleQuoteAction(context, [quote], action),

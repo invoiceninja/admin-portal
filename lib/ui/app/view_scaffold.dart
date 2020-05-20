@@ -17,10 +17,12 @@ class ViewScaffold extends StatelessWidget {
     this.floatingActionButton,
     this.appBarBottom,
     this.isSettings = false,
+    @required this.isFilter,
     this.onBackPressed,
   });
 
   final bool isSettings;
+  final bool isFilter;
   final BaseEntity entity;
   final String title;
   final Widget body;
@@ -43,7 +45,8 @@ class ViewScaffold extends StatelessWidget {
               ? onBackPressed()
               : store.dispatch(UpdateCurrentRoute(state.uiState.previousRoute)),
         );
-      } else if (entity.entityType == state.uiState.filterEntityType) {
+      } else if (isFilter &&
+          entity.entityType == state.uiState.filterEntityType) {
         leading = IconButton(
           icon: Icon(Icons.clear),
           onPressed: () => store.dispatch(ClearEntityFilter()),

@@ -11,9 +11,11 @@ class StubView extends StatefulWidget {
   const StubView({
     Key key,
     @required this.viewModel,
+    @required this.isFilter,
   }) : super(key: key);
 
   final StubViewVM viewModel;
+  final bool isFilter;
 
   @override
   _StubViewState createState() => new _StubViewState();
@@ -27,6 +29,7 @@ class _StubViewState extends State<StubView> {
     final stub = viewModel.stub;
 
     return ViewScaffold(
+      isFilter: widget.isFilter,
       entity: stub,
       body: ListView(
         children: <Widget>[

@@ -464,19 +464,29 @@ class EntityScreens extends StatelessWidget {
     if (uiState.filterEntityId != null) {
       switch (uiState.filterEntityType) {
         case EntityType.client:
-          filterChild = editingFIlterEntity ? ClientEditScreen() : ClientViewScreen();
+          filterChild = editingFIlterEntity
+              ? ClientEditScreen()
+              : ClientViewScreen(isFilter: true);
           break;
         case EntityType.invoice:
-          filterChild = editingFIlterEntity ? InvoiceViewScreen() : InvoiceViewScreen();
+          filterChild = editingFIlterEntity
+              ? InvoiceViewScreen()
+              : InvoiceViewScreen(isFilter: true);
           break;
         case EntityType.payment:
-          filterChild = editingFIlterEntity ? PaymentEditScreen() : PaymentViewScreen();
+          filterChild = editingFIlterEntity
+              ? PaymentEditScreen()
+              : PaymentViewScreen(isFilter: true);
           break;
         case EntityType.user:
-          filterChild = editingFIlterEntity ? UserEditScreen() : UserViewScreen();
+          filterChild = editingFIlterEntity
+              ? UserEditScreen()
+              : UserViewScreen(isFilter: true);
           break;
         case EntityType.group:
-          filterChild = editingFIlterEntity ? GroupEditScreen() : GroupViewScreen();
+          filterChild = editingFIlterEntity
+              ? GroupEditScreen()
+              : GroupViewScreen(isFilter: true);
           break;
       }
     }

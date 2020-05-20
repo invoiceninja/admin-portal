@@ -15,7 +15,9 @@ import 'package:invoiceninja_flutter/ui/company_gateway/view/company_gateway_vie
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 
 class CompanyGatewayViewScreen extends StatelessWidget {
-  const CompanyGatewayViewScreen({Key key}) : super(key: key);
+  const CompanyGatewayViewScreen({Key key, this.isFilter,}) : super(key: key);
+  final bool isFilter;
+
   static const String route = '/$kSettings/$kSettingsOnlinePaymentsView';
 
   @override
@@ -27,6 +29,7 @@ class CompanyGatewayViewScreen extends StatelessWidget {
       builder: (context, vm) {
         return CompanyGatewayView(
           viewModel: vm,
+          isFilter: isFilter,
         );
       },
     );
@@ -54,7 +57,9 @@ class CompanyGatewayViewVM {
 
     Future<Null> _handleRefresh(BuildContext context) {
       final completer = snackBarCompleter<Null>(
-          context, AppLocalization.of(context).refreshComplete);
+          context, AppLocalization
+          .of(context)
+          .refreshComplete);
       store.dispatch(LoadCompanyGateway(
           completer: completer, companyGatewayId: companyGateway.id));
       return completer.future;

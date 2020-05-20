@@ -10,9 +10,11 @@ class TaxRateView extends StatefulWidget {
   const TaxRateView({
     Key key,
     @required this.viewModel,
+    @required this.isFilter,
   }) : super(key: key);
 
   final TaxRateViewVM viewModel;
+  final bool isFilter;
 
   @override
   _TaxRateViewState createState() => new _TaxRateViewState();
@@ -26,6 +28,7 @@ class _TaxRateViewState extends State<TaxRateView> {
     final localization = AppLocalization.of(context);
 
     return ViewScaffold(
+      isFilter: widget.isFilter,
       entity: taxRate,
       isSettings: true,
       onBackPressed: () => viewModel.onBackPressed(),

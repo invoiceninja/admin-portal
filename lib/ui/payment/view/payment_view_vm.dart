@@ -12,8 +12,8 @@ import 'package:invoiceninja_flutter/utils/platforms.dart';
 import 'package:redux/redux.dart';
 
 class PaymentViewScreen extends StatelessWidget {
-  const PaymentViewScreen({Key key}) : super(key: key);
-
+  const PaymentViewScreen({Key key,this.isFilter = false,}) : super(key: key);
+  final bool isFilter;
   static const String route = '/payment/view';
 
   @override
@@ -25,6 +25,7 @@ class PaymentViewScreen extends StatelessWidget {
       builder: (context, vm) {
         return PaymentView(
           viewModel: vm,
+          isFilter: isFilter,
         );
       },
     );

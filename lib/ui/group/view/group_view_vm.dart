@@ -17,7 +17,11 @@ import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:redux/redux.dart';
 
 class GroupViewScreen extends StatelessWidget {
-  const GroupViewScreen({Key key}) : super(key: key);
+  const GroupViewScreen({
+    Key key,
+    this.isFilter = false,
+  }) : super(key: key);
+  final bool isFilter;
   static const String route = '/$kSettings/$kSettingsGroupSettingsView';
 
   @override
@@ -29,6 +33,7 @@ class GroupViewScreen extends StatelessWidget {
       builder: (context, vm) {
         return GroupView(
           viewModel: vm,
+          isFilter: isFilter,
         );
       },
     );

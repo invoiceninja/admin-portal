@@ -21,9 +21,11 @@ class ProjectView extends StatefulWidget {
   const ProjectView({
     Key key,
     @required this.viewModel,
+    @required this.isFilter,
   }) : super(key: key);
 
   final ProjectViewVM viewModel;
+  final bool isFilter;
 
   @override
   _ProjectViewState createState() => new _ProjectViewState();
@@ -76,6 +78,7 @@ class _ProjectViewState extends State<ProjectView> {
     }
 
     return ViewScaffold(
+      isFilter: widget.isFilter,
       entity: project,
       body: Builder(
         builder: (BuildContext context) {

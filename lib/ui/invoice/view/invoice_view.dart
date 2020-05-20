@@ -13,9 +13,11 @@ class InvoiceView extends StatefulWidget {
   const InvoiceView({
     Key key,
     @required this.viewModel,
+    @required this.isFilter,
   }) : super(key: key);
 
   final EntityViewVM viewModel;
+  final bool isFilter;
 
   @override
   _InvoiceViewState createState() => new _InvoiceViewState();
@@ -64,6 +66,7 @@ class _InvoiceViewState extends State<InvoiceView>
     }
 
     return ViewScaffold(
+      isFilter: widget.isFilter,
       entity: invoice,
       title: '${invoice.number ?? '• ${localization.pending}'}',
       appBarBottom: TabBar(

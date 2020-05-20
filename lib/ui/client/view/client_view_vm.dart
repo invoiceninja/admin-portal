@@ -13,7 +13,11 @@ import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:redux/redux.dart';
 
 class ClientViewScreen extends StatelessWidget {
-  const ClientViewScreen({Key key}) : super(key: key);
+  const ClientViewScreen({
+    Key key,
+    this.isFilter = false,
+  }) : super(key: key);
+  final bool isFilter;
 
   static const String route = '/client/view';
 
@@ -27,6 +31,7 @@ class ClientViewScreen extends StatelessWidget {
       builder: (context, vm) {
         return ClientView(
           viewModel: vm,
+          isFilter: isFilter,
         );
       },
     );

@@ -15,9 +15,11 @@ class UserView extends StatelessWidget {
   const UserView({
     Key key,
     @required this.viewModel,
+    @required this.isFilter,
   }) : super(key: key);
 
   final UserViewVM viewModel;
+  final bool isFilter;
 
   @override
   Widget build(BuildContext context) {
@@ -27,6 +29,7 @@ class UserView extends StatelessWidget {
     final company = state.company;
 
     return ViewScaffold(
+      isFilter: isFilter,
       entity: user,
       isSettings: true,
       onBackPressed: () => viewModel.onBackPressed(),
