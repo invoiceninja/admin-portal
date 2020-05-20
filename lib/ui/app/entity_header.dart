@@ -1,15 +1,21 @@
 import 'package:flutter/material.dart';
+import 'package:invoiceninja_flutter/data/models/entities.dart';
+import 'package:invoiceninja_flutter/ui/app/entities/entity_status_chip.dart';
 
 class EntityHeader extends StatelessWidget {
   const EntityHeader({
+    @required this.entity,
     @required this.label,
     @required this.value,
     this.secondLabel,
     this.secondValue,
-    this.backgroundColor,
+    this.statusLabel,
+    this.statusColor,
   });
 
-  final Color backgroundColor;
+  final BaseEntity entity;
+  final Color statusColor;
+  final String statusLabel;
   final String label;
   final String value;
   final String secondLabel;
@@ -69,14 +75,27 @@ class EntityHeader extends StatelessWidget {
     return Container(
       child: Padding(
         padding: EdgeInsets.only(left: 20, top: 30, right: 20, bottom: 25),
-        child: Flex(
-          direction: value.length > 12 || (secondValue ?? '').length > 12
-              ? Axis.vertical
-              : Axis.horizontal,
-          mainAxisAlignment: MainAxisAlignment.start,
-          children: <Widget>[
-            Expanded(child: _value1()),
-            if (secondValue != null) Expanded(child: _value2()),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Flex(
+              direction: value.length > 12 || (secondValue ?? '').length > 12
+                  ? Axis.vertical
+                  : Axis.horizontal,
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: <Widget>[
+                Expanded(child: _value1()),
+                if (secondValue != null) Expanded(child: _value2()),
+              ],
+            ),
+            if (statusLabel != null)
+              Padding(
+                padding: const EdgeInsets.only(top: 25, bottom: 5),
+                child: EntityStatusChip(
+                  entity: entity,
+                  width: 120,
+                ),
+              ),
           ],
         ),
       ),

@@ -239,7 +239,7 @@ class InvoiceListItem extends StatelessWidget {
                         style: TextStyle(fontSize: 14),
                         textAlign: TextAlign.center,
                       ),
-                      width: 80,
+                      width: 100,
                     ),
             ],
           ),

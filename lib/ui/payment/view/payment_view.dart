@@ -41,8 +41,10 @@ class _PaymentViewState extends State<PaymentView> {
     final localization = AppLocalization.of(context);
 
     final fields = <String, String>{};
+    /*
     fields[PaymentFields.paymentStatusId] =
         localization.lookup('payment_status_${payment.statusId}');
+     */
     if (payment.date.isNotEmpty) {
       fields[PaymentFields.paymentDate] = formatDate(payment.date, context);
     }
@@ -72,8 +74,10 @@ class _PaymentViewState extends State<PaymentView> {
                 child: ListView(
                   children: <Widget>[
                     EntityHeader(
-                      backgroundColor:
+                      entity: payment,
+                      statusColor:
                           PaymentStatusColors.colors[payment.statusId],
+                      statusLabel: localization.lookup('payment_status_${payment.statusId}'),
                       label: localization.amount,
                       value: formatNumber(payment.amount, context,
                           clientId: client.id),

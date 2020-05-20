@@ -36,6 +36,7 @@ class UserView extends StatelessWidget {
       body: ListView(
         children: <Widget>[
           EntityHeader(
+            entity: user,
             value: user.email,
             label: localization.email,
           ),

@@ -82,6 +82,7 @@ class ClientOverview extends StatelessWidget {
     return ListView(
       children: <Widget>[
         EntityHeader(
+          entity: client,
           label: localization.paidToDate,
           value: formatNumber(client.paidToDate, context, clientId: client.id),
           secondLabel: localization.balanceDue,

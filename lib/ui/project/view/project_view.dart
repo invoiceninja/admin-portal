@@ -85,6 +85,7 @@ class _ProjectViewState extends State<ProjectView> {
           List<Widget> _buildView() {
             final widgets = <Widget>[
               EntityHeader(
+                entity: project,
                 label: localization.total,
                 value: formatDuration(taskDurationForProject(
                     project, viewModel.state.taskState.map)),

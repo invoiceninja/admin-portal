@@ -92,6 +92,7 @@ class _ProductViewState extends State<ProductView>
             child: ListView(
               children: <Widget>[
                 EntityHeader(
+                  entity: product,
                   label: localization.price,
                   value: formatNumber(product.price, context),
                   secondLabel: localization.cost,

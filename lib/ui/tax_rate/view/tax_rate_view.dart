@@ -34,6 +34,7 @@ class _TaxRateViewState extends State<TaxRateView> {
       onBackPressed: () => viewModel.onBackPressed(),
       body: ListView(children: [
         EntityHeader(
+          entity: taxRate,
           label: localization.name,
           value: taxRate.name,
           secondLabel: localization.rate,

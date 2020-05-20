@@ -55,6 +55,7 @@ class VendorOverview extends StatelessWidget {
     return ListView(
       children: <Widget>[
         EntityHeader(
+          entity: vendor,
           label: localization.total,
           value: formatNumber(
               memoizedCalculateVendorBalance(vendor.id, vendor.currencyId,

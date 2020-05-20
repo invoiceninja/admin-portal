@@ -5,6 +5,7 @@ import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/redux/ui/ui_actions.dart';
 import 'package:invoiceninja_flutter/ui/app/actions_menu_button.dart';
+import 'package:invoiceninja_flutter/utils/icons.dart';
 import 'package:invoiceninja_flutter/utils/platforms.dart';
 import 'buttons/edit_icon_button.dart';
 import 'entities/entity_state_title.dart';
@@ -51,6 +52,8 @@ class ViewScaffold extends StatelessWidget {
           icon: Icon(Icons.clear),
           onPressed: () => store.dispatch(ClearEntityFilter()),
         );
+      } else if (isNotMobile(context)) {
+        leading = Icon(getEntityIcon(entity.entityType));
       }
     }
 
@@ -66,7 +69,7 @@ class ViewScaffold extends StatelessWidget {
           title: EntityStateTitle(
             entity: entity,
             title: title,
-            showStatus: true,
+            showStatus: false,
           ),
           bottom: appBarBottom,
           actions: entity.isNew
