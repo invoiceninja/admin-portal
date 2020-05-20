@@ -10,15 +10,20 @@ class BottomButtons extends StatelessWidget {
     @required this.entity,
     @required this.action1,
     @required this.action2,
+    this.action1Enabled = true,
+    this.action2Enabled = true,
   });
 
   final BaseEntity entity;
   final EntityAction action1;
   final EntityAction action2;
+  final bool action1Enabled;
+  final bool action2Enabled;
 
   @override
   Widget build(BuildContext context) {
     final localization = AppLocalization.of(context);
+    final textColor = Theme.of(context).textTheme.bodyText1.color;
 
     return AppBorder(
       isTop: true,
@@ -26,15 +31,19 @@ class BottomButtons extends StatelessWidget {
         children: <Widget>[
           Expanded(
             child: InkWell(
-              onTap: () {
-                handleEntityAction(context, entity, action1);
-              },
+              onTap: action1Enabled
+                  ? () {
+                      handleEntityAction(context, entity, action1);
+                    }
+                  : null,
               child: SizedBox(
                 height: 44,
                 child: Center(
                   child: Text(
                     localization.lookup('$action1'),
                     textAlign: TextAlign.center,
+                    style: TextStyle(
+                        color: textColor.withOpacity(action1Enabled ? 1 : .5)),
                   ),
                 ),
               ),
@@ -44,15 +53,20 @@ class BottomButtons extends StatelessWidget {
             child: AppBorder(
               isLeft: true,
               child: InkWell(
-                onTap: () {
-                  handleEntityAction(context, entity, action2);
-                },
+                onTap: action2Enabled
+                    ? () {
+                        handleEntityAction(context, entity, action2);
+                      }
+                    : null,
                 child: SizedBox(
                   height: 44,
                   child: Center(
                     child: Text(
                       localization.lookup('$action2'),
                       textAlign: TextAlign.center,
+                      style: TextStyle(
+                          color:
+                              textColor.withOpacity(action2Enabled ? 1 : .6)),
                     ),
                   ),
                 ),
