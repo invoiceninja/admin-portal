@@ -77,7 +77,10 @@ class _ClientViewState extends State<ClientView>
               children: <Widget>[
                 RefreshIndicator(
                   onRefresh: () => viewModel.onRefreshed(context),
-                  child: ClientOverview(viewModel: viewModel),
+                  child: ClientOverview(
+                    viewModel: viewModel,
+                    isFilter: widget.isFilter,
+                  ),
                 ),
                 RefreshIndicator(
                   onRefresh: () => viewModel.onRefreshed(context),

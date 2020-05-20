@@ -25,9 +25,11 @@ class ClientOverview extends StatelessWidget {
   const ClientOverview({
     Key key,
     @required this.viewModel,
+    @required this.isFilter,
   }) : super(key: key);
 
   final ClientViewVM viewModel;
+  final bool isFilter;
 
   @override
   Widget build(BuildContext context) {
@@ -94,16 +96,11 @@ class ClientOverview extends StatelessWidget {
             ? IconMessage(client.privateNotes)
             : Container(),
         if (client.hasGroup) ...[
-          Material(
-            color: Theme.of(context).cardColor,
-            child: ListTile(
-              title: EntityStateTitle(entity: group),
-              leading: Icon(getEntityIcon(EntityType.group), size: 18.0),
-              trailing: Icon(Icons.navigate_next),
-              onTap: () => viewModel.onGroupPressed(context),
-            ),
+          EntityListTile(
+            entity: group,
+            onTap: () => viewModel.onGroupPressed(context),
+            isFilter: isFilter,
           ),
-          ListDivider(),
         ],
         FieldGrid(fields),
         ListDivider(),

@@ -10,6 +10,7 @@ import 'package:invoiceninja_flutter/redux/client/client_actions.dart';
 import 'package:invoiceninja_flutter/ui/client/view/client_view.dart';
 import 'package:invoiceninja_flutter/utils/completers.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
+import 'package:invoiceninja_flutter/utils/platforms.dart';
 import 'package:redux/redux.dart';
 
 class ClientViewScreen extends StatelessWidget {
@@ -151,10 +152,15 @@ class ClientViewVM {
       },
       onRefreshed: (context) => _handleRefresh(context),
       onGroupPressed: (context) {
-        viewEntityById(
-            context: context,
-            entityId: client.groupId,
-            entityType: EntityType.group);
+        if (isMobile(context)) {
+          viewEntityById(
+              context: context,
+              entityId: client.groupId,
+              entityType: EntityType.group);
+        } else {
+          store.dispatch(FilterClientsByEntity(
+              entityType: EntityType.group, entityId: client.groupId));
+        }
       },
       onEntityAction: (BuildContext context, EntityAction action) =>
           handleClientAction(context, [client], action),
