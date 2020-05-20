@@ -338,6 +338,7 @@ class AppPaginatedDataTableState extends State<AppPaginatedDataTable> {
     final MaterialLocalizations localizations =
         MaterialLocalizations.of(context);
     // HEADER
+    /*
     final List<Widget> headerWidgets = <Widget>[];
     double startPadding = 24.0;
     if (_selectedRowCount == 0) {
@@ -364,6 +365,7 @@ class AppPaginatedDataTableState extends State<AppPaginatedDataTable> {
         );
       }).toList());
     }
+     */
 
     // FOOTER
     final TextStyle footerTextStyle = themeData.textTheme.caption;
