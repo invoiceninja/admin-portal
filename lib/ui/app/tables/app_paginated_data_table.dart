@@ -439,6 +439,7 @@ class AppPaginatedDataTableState extends State<AppPaginatedDataTable> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: <Widget>[
+              SizedBox(height: 4),
               /*
               Semantics(
                 container: true,
