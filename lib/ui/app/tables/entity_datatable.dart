@@ -131,8 +131,8 @@ class DatatableHeader extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final localization = AppLocalization.of(context);
-    final state = StoreProvider.of<AppState>(context).state;
     /*
+    final state = StoreProvider.of<AppState>(context).state;
     final listUIState = state.getListState(entityType);
     Widget message = SizedBox();
     if (onClearPressed != null && listUIState.filterEntityId != null) {
