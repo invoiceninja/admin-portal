@@ -155,19 +155,17 @@ abstract class AppState implements Built<AppState, AppStateBuilder> {
         return true;
       }).toList();
 
-  bool shouldSelectEntity({EntityType entityType, bool hasRecords}) {
-    final entityList = getEntityList(entityType);
-    final entityMap = getEntityMap(entityType);
+  bool shouldSelectEntity({EntityType entityType, List<String> entityList}) {
     final entityUIState = getUIState(entityType);
 
     if (prefState.isMobile || entityList.isEmpty || uiState.isEditing) {
       return false;
     }
 
-    if (entityUIState.selectedId == null && !hasRecords) {
-      return false;
+    if ((entityUIState.selectedId ?? '').isNotEmpty && entityList.isEmpty) {
+      return true;
     } else if ((entityUIState.selectedId ?? '').isEmpty ||
-        !entityMap.containsKey(entityUIState.selectedId)) {
+        !entityList.contains(entityUIState.selectedId)) {
       return true;
     }
 

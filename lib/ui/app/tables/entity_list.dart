@@ -103,9 +103,8 @@ class _EntityListState extends State<EntityList> {
       return LoadingIndicator();
     }
 
-    if (!isList &&
-        state.shouldSelectEntity(
-            entityType: entityType, hasRecords: entityList.isNotEmpty)) {
+    if (state.shouldSelectEntity(
+        entityType: entityType, entityList: entityList)) {
       WidgetsBinding.instance.addPostFrameCallback((duration) {
         viewEntityById(
           context: context,
