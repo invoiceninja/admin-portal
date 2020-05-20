@@ -66,7 +66,12 @@ class ListScaffold extends StatelessWidget {
                 icon: Icon(Icons.arrow_back),
                 onPressed: () => Navigator.pop(context),
               )
-            : null;
+            : IconButton(
+                icon: Icon(Icons.add),
+                onPressed: () {
+                  createEntityByType(entityType: entityType, context: context);
+                },
+              );
       }
     } else if (isMobile(context) || state.prefState.isMenuFloated) {
       leading = Builder(
@@ -99,7 +104,8 @@ class ListScaffold extends StatelessWidget {
           drawer: isMobile(context) || state.prefState.isMenuFloated
               ? MenuDrawerBuilder()
               : null,
-          endDrawer: isMobile(context) || state.prefState.isHistoryFloated
+          endDrawer: isMobile(context) ||
+                  (state.prefState.isHistoryFloated && !isSettings)
               ? HistoryDrawerBuilder()
               : null,
           appBar: AppBar(
