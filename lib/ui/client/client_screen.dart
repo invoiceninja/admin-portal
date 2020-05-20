@@ -86,6 +86,7 @@ class ClientScreen extends StatelessWidget {
       body: ClientListBuilder(),
       bottomNavigationBar: AppBottomBar(
         entityType: EntityType.client,
+        onRefreshPressed: () => store.dispatch(LoadClients(force: true)),
         onSelectedSortField: (value) {
           store.dispatch(SortClients(value));
         },

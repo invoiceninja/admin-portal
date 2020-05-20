@@ -87,6 +87,7 @@ class InvoiceScreen extends StatelessWidget {
       body: InvoiceListBuilder(),
       bottomNavigationBar: AppBottomBar(
         entityType: EntityType.invoice,
+        onRefreshPressed: () => store.dispatch(LoadInvoices(force: true)),
         onSelectedSortField: (value) {
           store.dispatch(SortInvoices(value));
         },

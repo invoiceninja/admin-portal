@@ -90,6 +90,7 @@ class UserScreen extends StatelessWidget {
       bottomNavigationBar: AppBottomBar(
         entityType: EntityType.user,
         onlyList: true,
+        onRefreshPressed: () => store.dispatch(LoadUsers(force: true)),
         onSelectedSortField: (value) => store.dispatch(SortUsers(value)),
         onSelectedCustom1: (value) =>
             store.dispatch(FilterUsersByCustom1(value)),

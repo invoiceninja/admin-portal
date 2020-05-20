@@ -87,6 +87,7 @@ class ExpenseScreen extends StatelessWidget {
       body: ExpenseListBuilder(),
       bottomNavigationBar: AppBottomBar(
         entityType: EntityType.expense,
+        onRefreshPressed: () => store.dispatch(LoadExpenses(force: true)),
         onSelectedSortField: (value) => store.dispatch(SortExpenses(value)),
         customValues1: company.getCustomFieldValues(CustomFieldType.expense1,
             excludeBlank: true),

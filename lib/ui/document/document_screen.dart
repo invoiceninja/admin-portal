@@ -87,6 +87,7 @@ class DocumentScreen extends StatelessWidget {
       body: DocumentListBuilder(),
       bottomNavigationBar: AppBottomBar(
         entityType: EntityType.document,
+        onRefreshPressed: () => store.dispatch(LoadDocuments(force: true)),
         onSelectedSortField: (value) => store.dispatch(SortDocuments(value)),
         onSelectedCustom1: (value) =>
             store.dispatch(FilterDocumentsByCustom1(value)),

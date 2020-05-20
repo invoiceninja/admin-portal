@@ -83,6 +83,7 @@ class PaymentScreen extends StatelessWidget {
       body: PaymentListBuilder(),
       bottomNavigationBar: AppBottomBar(
         entityType: EntityType.payment,
+        onRefreshPressed: () => store.dispatch(LoadPayments(force: true)),
         onSelectedSortField: (value) => store.dispatch(SortPayments(value)),
         customValues1: company.getCustomFieldValues(CustomFieldType.payment1,
             excludeBlank: true),

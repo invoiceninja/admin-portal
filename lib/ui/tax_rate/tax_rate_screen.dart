@@ -88,6 +88,7 @@ class TaxRateSettingsScreen extends StatelessWidget {
       bottomNavigationBar: AppBottomBar(
         entityType: EntityType.taxRate,
         onlyList: true,
+        onRefreshPressed: () => store.dispatch(LoadTaxRates(force: true)),
         onSelectedSortField: (value) => store.dispatch(SortTaxRates(value)),
         sortFields: [
           TaxRateFields.updatedAt,

@@ -88,6 +88,7 @@ class QuoteScreen extends StatelessWidget {
       bottomNavigationBar: AppBottomBar(
         entityType: EntityType.quote,
         onSelectedSortField: (value) => store.dispatch(SortQuotes(value)),
+        onRefreshPressed: () => store.dispatch(LoadQuotes(force: true)),
         customValues1: company.getCustomFieldValues(CustomFieldType.invoice1,
             excludeBlank: true),
         customValues2: company.getCustomFieldValues(CustomFieldType.invoice2,

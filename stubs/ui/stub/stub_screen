@@ -85,6 +85,7 @@ class StubScreen extends StatelessWidget {
       body: StubListBuilder(),
       bottomNavigationBar: AppBottomBar(
         entityType: EntityType.stub,
+        onRefreshPressed: () => store.dispatch(LoadStubs(force: true)),
         onSelectedSortField: (value) {
           store.dispatch(SortStubs(value));
         },

@@ -177,11 +177,13 @@ class _EntityListState extends State<EntityList> {
                     })),
               ],
               source: dataTableSource,
+              /*
               header: DatatableHeader(
                 entityType: widget.entityType,
                 onClearPressed: widget.onClearEntityFilterPressed,
                 onRefreshPressed: () => widget.onRefreshed(context),
               ),
+               */
               sortColumnIndex:
                   widget.tableColumns.indexOf(listUIState.sortField),
               sortAscending: listUIState.sortAscending,

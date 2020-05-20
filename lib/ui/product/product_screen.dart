@@ -83,6 +83,7 @@ class ProductScreen extends StatelessWidget {
       body: ProductListBuilder(),
       bottomNavigationBar: AppBottomBar(
         entityType: EntityType.product,
+        onRefreshPressed: () => store.dispatch(LoadProducts(force: true)),
         onSelectedSortField: (value) => store.dispatch(SortProducts(value)),
         customValues1: company.getCustomFieldValues(CustomFieldType.product1,
             excludeBlank: true),

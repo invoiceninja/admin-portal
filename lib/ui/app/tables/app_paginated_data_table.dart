@@ -56,7 +56,7 @@ class AppPaginatedDataTable extends StatefulWidget {
   /// both have defaults, though, so don't have to be specified).
   AppPaginatedDataTable({
     Key key,
-    @required this.header,
+    this.header,
     this.actions,
     @required this.columns,
     this.sortColumnIndex,
@@ -79,8 +79,7 @@ class AppPaginatedDataTable extends StatefulWidget {
     this.onRowsPerPageChanged,
     this.dragStartBehavior = DragStartBehavior.start,
     @required this.source,
-  })  : assert(header != null),
-        assert(columns != null),
+  })  : assert(columns != null),
         assert(dragStartBehavior != null),
         assert(columns.isNotEmpty),
         assert(sortColumnIndex == null ||
@@ -440,6 +439,7 @@ class AppPaginatedDataTableState extends State<AppPaginatedDataTable> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: <Widget>[
+              /*
               Semantics(
                 container: true,
                 child: DefaultTextStyle(
@@ -470,6 +470,7 @@ class AppPaginatedDataTableState extends State<AppPaginatedDataTable> {
                   ),
                 ),
               ),
+               */
               SingleChildScrollView(
                 scrollDirection: Axis.horizontal,
                 dragStartBehavior: widget.dragStartBehavior,

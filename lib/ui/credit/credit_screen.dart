@@ -86,6 +86,7 @@ class CreditScreen extends StatelessWidget {
       body: CreditListBuilder(),
       bottomNavigationBar: AppBottomBar(
         entityType: EntityType.credit,
+        onRefreshPressed: () => store.dispatch(LoadCredits(force: true)),
         onSelectedSortField: (value) {
           store.dispatch(SortCredits(value));
         },

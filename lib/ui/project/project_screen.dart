@@ -85,6 +85,7 @@ class ProjectScreen extends StatelessWidget {
       body: ProjectListBuilder(),
       bottomNavigationBar: AppBottomBar(
         entityType: EntityType.project,
+        onRefreshPressed: () => store.dispatch(LoadProjects(force: true)),
         onSelectedSortField: (value) => store.dispatch(SortProjects(value)),
         customValues1: company.getCustomFieldValues(CustomFieldType.project1,
             excludeBlank: true),

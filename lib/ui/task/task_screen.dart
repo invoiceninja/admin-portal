@@ -85,6 +85,7 @@ class TaskScreen extends StatelessWidget {
       body: TaskListBuilder(),
       bottomNavigationBar: AppBottomBar(
         entityType: EntityType.task,
+        onRefreshPressed: () => store.dispatch(LoadTasks(force: true)),
         onSelectedSortField: (value) => store.dispatch(SortTasks(value)),
         onSelectedStatus: (EntityStatus status, value) {
           store.dispatch(FilterTasksByStatus(status));
