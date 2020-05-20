@@ -388,7 +388,8 @@ class _DrawerTileState extends State<DrawerTile> {
                 ? kReports
                 : widget.entityType.name;
 
-    final isSelected = uiState.currentRoute.startsWith('/$route');
+    final isSelected = uiState.currentRoute.startsWith('/$route') &&
+        state.uiState.filterEntityType == null;
 
     final textColor = Theme.of(context)
         .textTheme
@@ -431,17 +432,20 @@ class _DrawerTileState extends State<DrawerTile> {
     Widget child = Material(
       color: Colors.transparent,
       child: Container(
-        color: isSelected
+        color: (isSelected && state.uiState.filterEntityType == null)
             ? convertHexStringToColor(enableDarkMode
                 ? kDefaultDarkSelectedColorMenu
                 : kDefaultLightSelectedColorMenu)
             : Colors.transparent,
         child: ListTile(
           dense: true,
-          leading: Icon(
-            widget.icon,
-            size: 20,
-            color: textColor,
+          leading: Padding(
+            padding: const EdgeInsets.only(left: 3),
+            child: Icon(
+              widget.icon,
+              size: 20,
+              color: textColor,
+            ),
           ),
           title: state.isMenuCollapsed
               ? null
@@ -622,79 +626,74 @@ class SidebarFooterCollapsed extends StatelessWidget {
     final Store<AppState> store = StoreProvider.of<AppState>(context);
     final localization = AppLocalization.of(context);
 
-    if (store.state.uiState.filterEntityType != null) {
-      return SizedBox();
-    }
-
     return Container(
       width: double.infinity,
+      height: 44,
       color: Theme.of(context).cardColor,
-      child: IconButton(
-        icon: Icon(Icons.chevron_right),
-        tooltip: localization.showMenu,
-        onPressed: () {
-          store.dispatch(UserSettingsChanged(sidebar: AppSidebar.menu));
-        },
-      ),
-    );
-
-    /*
-    return PopupMenuButton<String>(
-      icon: isUpdateAvailable
-          ? Icon(Icons.warning, color: Theme.of(context).accentColor)
-          : Icon(Icons.info_outline),
-      onSelected: (value) {
-        if (value == localization.updateAvailable) {
-          _showUpdate(context);
-        } else if (value == localization.about) {
-          _showAbout(context);
-        } else if (value == localization.contactUs) {
-          _showContactUs(context);
-        }
-      },
-      itemBuilder: (BuildContext context) => [
-        if (isUpdateAvailable)
-          PopupMenuItem<String>(
-            child: ListTile(
-              leading: Icon(
-                Icons.warning,
-                color: Theme.of(context).accentColor,
-              ),
-              title: Text(localization.updateAvailable),
+      child: store.state.uiState.filterEntityType != null
+          ? PopupMenuButton<String>(
+              icon: isUpdateAvailable
+                  ? Icon(Icons.warning, color: Theme.of(context).accentColor)
+                  : Icon(Icons.info_outline),
+              onSelected: (value) {
+                if (value == localization.updateAvailable) {
+                  _showUpdate(context);
+                } else if (value == localization.about) {
+                  _showAbout(context);
+                } else if (value == localization.contactUs) {
+                  _showContactUs(context);
+                }
+              },
+              itemBuilder: (BuildContext context) => [
+                if (isUpdateAvailable)
+                  PopupMenuItem<String>(
+                    child: ListTile(
+                      leading: Icon(
+                        Icons.warning,
+                        color: Theme.of(context).accentColor,
+                      ),
+                      title: Text(localization.updateAvailable),
+                    ),
+                    value: localization.updateAvailable,
+                  ),
+                PopupMenuItem<String>(
+                  child: ListTile(
+                    leading: Icon(Icons.mail),
+                    title: Text(localization.contactUs),
+                  ),
+                  value: localization.contactUs,
+                ),
+                PopupMenuItem<String>(
+                  child: ListTile(
+                    leading: Icon(Icons.help_outline),
+                    title: Text(localization.documentation),
+                  ),
+                  value: localization.documentation,
+                ),
+                PopupMenuItem<String>(
+                  child: ListTile(
+                    leading: Icon(Icons.forum),
+                    title: Text(localization.supportForum),
+                  ),
+                  value: localization.supportForum,
+                ),
+                PopupMenuItem<String>(
+                  child: ListTile(
+                    leading: Icon(Icons.info_outline),
+                    title: Text(localization.about),
+                  ),
+                  value: localization.about,
+                ),
+              ],
+            )
+          : IconButton(
+              icon: Icon(Icons.chevron_right),
+              tooltip: localization.showMenu,
+              onPressed: () {
+                store.dispatch(UserSettingsChanged(sidebar: AppSidebar.menu));
+              },
             ),
-            value: localization.updateAvailable,
-          ),
-        PopupMenuItem<String>(
-          child: ListTile(
-            leading: Icon(Icons.mail),
-            title: Text(localization.contactUs),
-          ),
-          value: localization.contactUs,
-        ),
-        PopupMenuItem<String>(
-          child: ListTile(
-            leading: Icon(Icons.help_outline),
-            title: Text(localization.documentation),
-          ),
-          value: localization.documentation,
-        ),
-        PopupMenuItem<String>(
-          child: ListTile(
-            leading: Icon(Icons.forum),
-            title: Text(localization.supportForum),
-          ),
-          value: localization.supportForum,
-        ),
-        PopupMenuItem<String>(
-          child: ListTile(
-            leading: Icon(Icons.info_outline),
-            title: Text(localization.about),
-          ),
-          value: localization.about,
-        ),
-      ],
     );
-     */
   }
 }
 

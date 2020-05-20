@@ -6,6 +6,13 @@ import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:invoiceninja_flutter/redux/client/client_actions.dart';
 import 'package:invoiceninja_flutter/redux/client/client_state.dart';
 import 'package:invoiceninja_flutter/redux/company/company_actions.dart';
+import 'package:invoiceninja_flutter/redux/credit/credit_actions.dart';
+import 'package:invoiceninja_flutter/redux/expense/expense_actions.dart';
+import 'package:invoiceninja_flutter/redux/invoice/invoice_actions.dart';
+import 'package:invoiceninja_flutter/redux/payment/payment_actions.dart';
+import 'package:invoiceninja_flutter/redux/project/project_actions.dart';
+import 'package:invoiceninja_flutter/redux/quote/quote_actions.dart';
+import 'package:invoiceninja_flutter/redux/task/task_actions.dart';
 import 'package:invoiceninja_flutter/redux/ui/entity_ui_state.dart';
 import 'package:invoiceninja_flutter/redux/ui/list_ui_state.dart';
 import 'package:redux/redux.dart';
@@ -49,9 +56,21 @@ final selectedIdReducer = combineReducers<String>([
   TypedReducer<String, AddClientSuccess>((selectedId, action) {
     return action.client.id;
   }),
-  TypedReducer<String, FilterClientsByEntity>(
-      (selectedId, action) => action.entityId == null ? selectedId : ''),
   TypedReducer<String, SelectCompany>((selectedId, action) => ''),
+  TypedReducer<String, FilterInvoicesByEntity>((selectedId, action) =>
+      action.entityType == EntityType.client ? action.entityId : selectedId),
+  TypedReducer<String, FilterPaymentsByEntity>((selectedId, action) =>
+      action.entityType == EntityType.client ? action.entityId : selectedId),
+  TypedReducer<String, FilterQuotesByEntity>((selectedId, action) =>
+      action.entityType == EntityType.client ? action.entityId : selectedId),
+  TypedReducer<String, FilterCreditsByEntity>((selectedId, action) =>
+      action.entityType == EntityType.client ? action.entityId : selectedId),
+  TypedReducer<String, FilterTasksByEntity>((selectedId, action) =>
+      action.entityType == EntityType.client ? action.entityId : selectedId),
+  TypedReducer<String, FilterProjectsByEntity>((selectedId, action) =>
+      action.entityType == EntityType.client ? action.entityId : selectedId),
+  TypedReducer<String, FilterExpensesByEntity>((selectedId, action) =>
+      action.entityType == EntityType.client ? action.entityId : selectedId),
 ]);
 
 final editingReducer = combineReducers<ClientEntity>([
@@ -115,10 +134,9 @@ final clientListReducer = combineReducers<ListUIState>([
       _removeFromListMultiselect),
   TypedReducer<ListUIState, ClearClientMultiselect>(_clearListMultiselect),
   TypedReducer<ListUIState, ClearEntityFilter>(
-          (state, action) => state.rebuild((b) => b
+      (state, action) => state.rebuild((b) => b
         ..filterEntityId = null
         ..filterEntityType = null)),
-
 ]);
 
 ListUIState _filterClientsByCustom1(

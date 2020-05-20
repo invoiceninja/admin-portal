@@ -21,9 +21,11 @@ class ProjectView extends StatefulWidget {
   const ProjectView({
     Key key,
     @required this.viewModel,
+    @required this.isFilter,
   }) : super(key: key);
 
   final ProjectViewVM viewModel;
+  final bool isFilter;
 
   @override
   _ProjectViewState createState() => new _ProjectViewState();
@@ -76,12 +78,14 @@ class _ProjectViewState extends State<ProjectView> {
     }
 
     return ViewScaffold(
+      isFilter: widget.isFilter,
       entity: project,
       body: Builder(
         builder: (BuildContext context) {
           List<Widget> _buildView() {
             final widgets = <Widget>[
               EntityHeader(
+                entity: project,
                 label: localization.total,
                 value: formatDuration(taskDurationForProject(
                     project, viewModel.state.taskState.map)),
@@ -105,6 +109,7 @@ class _ProjectViewState extends State<ProjectView> {
                 height: 12.0,
               ),
               EntitiesListTile(
+                isFilter: widget.isFilter,
                 entityType: EntityType.task,
                 title: localization.tasks,
                 onTap: () => viewModel.onTasksPressed(context),

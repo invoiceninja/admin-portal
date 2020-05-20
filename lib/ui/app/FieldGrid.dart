@@ -57,7 +57,7 @@ class FieldGrid extends StatelessWidget {
               primary: true,
               crossAxisCount: 2,
               children: fieldWidgets,
-              childAspectRatio: 3.5,
+              childAspectRatio: 2.5,
             ),
           ),
         ),

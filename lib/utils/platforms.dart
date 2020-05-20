@@ -33,12 +33,15 @@ String getPlatform(BuildContext context) =>
 String getAppURL(BuildContext context) =>
     isAndroid(context) ? kGoogleStoreUrl : kAppleStoreUrl;
 
-AppLayout calculateLayout(BuildContext context) {
-  final size = MediaQuery.of(context).size.shortestSide;
+AppLayout calculateLayout(BuildContext context, {bool breakOutTablet = false}) {
+  final size = MediaQuery.of(context).size.width;
 
   if (size < kMobileLayoutWidth) {
     return AppLayout.mobile;
   } else {
+    if (breakOutTablet && size < kTabletLayoutWidth) {
+      return AppLayout.tablet;
+    }
     return AppLayout.desktop;
   }
 }

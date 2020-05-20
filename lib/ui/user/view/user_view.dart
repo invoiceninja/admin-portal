@@ -15,9 +15,11 @@ class UserView extends StatelessWidget {
   const UserView({
     Key key,
     @required this.viewModel,
+    @required this.isFilter,
   }) : super(key: key);
 
   final UserViewVM viewModel;
+  final bool isFilter;
 
   @override
   Widget build(BuildContext context) {
@@ -27,12 +29,14 @@ class UserView extends StatelessWidget {
     final company = state.company;
 
     return ViewScaffold(
+      isFilter: isFilter,
       entity: user,
       isSettings: true,
       onBackPressed: () => viewModel.onBackPressed(),
       body: ListView(
         children: <Widget>[
           EntityHeader(
+            entity: user,
             value: user.email,
             label: localization.email,
           ),
@@ -40,6 +44,7 @@ class UserView extends StatelessWidget {
             height: 1.0,
           ),
           EntitiesListTile(
+            isFilter: isFilter,
             title: localization.invoices,
             onTap: () => viewModel.onEntityPressed(context, EntityType.invoice),
             onLongPress: () =>
@@ -49,6 +54,7 @@ class UserView extends StatelessWidget {
                     .present(localization.active, localization.archived),
           ),
           EntitiesListTile(
+            isFilter: isFilter,
             entityType: EntityType.payment,
             title: localization.payments,
             onTap: () => viewModel.onEntityPressed(context, EntityType.payment),
@@ -60,6 +66,7 @@ class UserView extends StatelessWidget {
           ),
           company.isModuleEnabled(EntityType.quote)
               ? EntitiesListTile(
+                  isFilter: isFilter,
                   entityType: EntityType.quote,
                   title: localization.quotes,
                   onTap: () =>

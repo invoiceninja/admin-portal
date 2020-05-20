@@ -74,7 +74,7 @@ class DocumentRepository {
           serializers.serializeWith(DocumentEntity.serializer, document);
       final url = '${credentials.url}/documents/${document.id}?';
       response =
-      await webClient.put(url, credentials.token, data: json.encode(data));
+          await webClient.put(url, credentials.token, data: json.encode(data));
 
       /*
       if (action == EntityAction.delete) {

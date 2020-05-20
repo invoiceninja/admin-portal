@@ -2,7 +2,9 @@ import 'package:flutter_redux/flutter_redux.dart';
 import 'package:invoiceninja_flutter/constants.dart';
 import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
+import 'package:invoiceninja_flutter/redux/ui/pref_state.dart';
 import 'package:invoiceninja_flutter/ui/app/actions_menu_button.dart';
+import 'package:invoiceninja_flutter/ui/app/entities/entity_status_chip.dart';
 import 'package:invoiceninja_flutter/ui/app/entity_state_label.dart';
 import 'package:invoiceninja_flutter/utils/formatting.dart';
 import 'package:flutter/foundation.dart';
@@ -10,6 +12,7 @@ import 'package:flutter/material.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/ui/app/dismissible_entity.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
+import 'package:invoiceninja_flutter/utils/platforms.dart';
 
 class CreditListItem extends StatelessWidget {
   const CreditListItem({
@@ -51,9 +54,6 @@ class CreditListItem extends StatelessWidget {
             client.matchesFilterValue(filter))
         : null;
     final textColor = Theme.of(context).textTheme.bodyText1.color;
-
-    final statusLabel = localization.lookup(kCreditStatuses[credit.statusId]);
-    final statusColor = CreditStatusColors.colors[credit.statusId];
 
     Widget _buildMobile() {
       return ListTile(
@@ -208,34 +208,7 @@ class CreditListItem extends StatelessWidget {
                 textAlign: TextAlign.end,
               ),
               SizedBox(width: 25),
-              credit.isSent
-                  ? DecoratedBox(
-                      decoration: BoxDecoration(
-                        color: statusColor,
-                        borderRadius: BorderRadius.all(Radius.circular(5)),
-                      ),
-                      child: ConstrainedBox(
-                        constraints: BoxConstraints(
-                          minWidth: 80,
-                        ),
-                        child: Padding(
-                          padding: const EdgeInsets.symmetric(vertical: 8),
-                          child: Text(
-                            statusLabel.toUpperCase(),
-                            style: TextStyle(fontSize: 14),
-                            textAlign: TextAlign.center,
-                          ),
-                        ),
-                      ),
-                    )
-                  : SizedBox(
-                      child: Text(
-                        localization.draft.toUpperCase(),
-                        style: TextStyle(fontSize: 14),
-                        textAlign: TextAlign.center,
-                      ),
-                      width: 80,
-                    ),
+              EntityStatusChip(entity: credit),
             ],
           ),
         ),
@@ -250,7 +223,9 @@ class CreditListItem extends StatelessWidget {
       userCompany: state.userCompany,
       entity: credit,
       onEntityAction: onEntityAction,
-      child: state.prefState.isMobile ? _buildMobile() : _buildDesktop(),
+      child: calculateLayout(context, breakOutTablet: true) == AppLayout.desktop
+          ? _buildDesktop()
+          : _buildMobile(),
     );
   }
 }

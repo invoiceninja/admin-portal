@@ -46,7 +46,8 @@ class ClientRepository {
 
   Future<List<ClientEntity>> bulkAction(
       Credentials credentials, List<String> ids, EntityAction action) async {
-    final url = credentials.url + '/clients/bulk?include=gateway_tokens,activities';
+    final url =
+        credentials.url + '/clients/bulk?include=gateway_tokens,activities';
     final dynamic response = await webClient.post(url, credentials.token,
         data: json.encode({'ids': ids, 'action': '$action'}));
 

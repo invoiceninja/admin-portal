@@ -8,7 +8,10 @@ import 'package:invoiceninja_flutter/redux/client/client_actions.dart';
 import 'package:invoiceninja_flutter/redux/dashboard/dashboard_actions.dart';
 import 'package:invoiceninja_flutter/redux/reports/reports_actions.dart';
 import 'package:invoiceninja_flutter/redux/settings/settings_actions.dart';
+import 'package:invoiceninja_flutter/redux/ui/pref_state.dart';
+import 'package:invoiceninja_flutter/ui/app/app_builder.dart';
 import 'package:invoiceninja_flutter/ui/app/history_drawer_vm.dart';
+import 'package:invoiceninja_flutter/ui/app/icon_text.dart';
 import 'package:invoiceninja_flutter/ui/app/menu_drawer_vm.dart';
 import 'package:invoiceninja_flutter/ui/app/help_text.dart';
 import 'package:invoiceninja_flutter/ui/app/screen_imports.dart';
@@ -29,11 +32,20 @@ import 'package:invoiceninja_flutter/utils/platforms.dart';
 import 'package:invoiceninja_flutter/ui/app/app_border.dart';
 import 'package:redux/redux.dart';
 
-class MainScreen extends StatelessWidget {
+class MainScreen extends StatefulWidget {
   static const String route = '/main';
 
   @override
+  _MainScreenState createState() => _MainScreenState();
+}
+
+class _MainScreenState extends State<MainScreen> {
+  bool _dismissedChangeToMobile;
+
+  @override
   Widget build(BuildContext context) {
+    final localization = AppLocalization.of(context);
+
     return StoreBuilder(
         onInit: (Store<AppState> store) => store.dispatch(LoadClients()),
         builder: (BuildContext context, Store<AppState> store) {
@@ -258,17 +270,63 @@ class MainScreen extends StatelessWidget {
             child: SafeArea(
               child: FocusTraversalGroup(
                 policy: WidgetOrderTraversalPolicy(),
-                child: Row(children: <Widget>[
-                  if (prefState.showMenu) ...[
-                    MenuDrawerBuilder(),
-                    _CustomDivider(),
+                child: Column(
+                  mainAxisSize: MainAxisSize.max,
+                  children: [
+                    if (calculateLayout(context) == AppLayout.mobile &&
+                        !_dismissedChangeToMobile)
+                      Material(
+                        color: Colors.orange,
+                        child: Padding(
+                          padding: const EdgeInsets.only(left: 10),
+                          child: Row(
+                            children: [
+                              Expanded(
+                                child: IconText(
+                                  icon: Icons.info_outline,
+                                  text: localization.changeToMobileLayout,
+                                ),
+                              ),
+                              FlatButton(
+                                child: Text(localization.change.toUpperCase()),
+                                onPressed: () {
+                                  store.dispatch(UserSettingsChanged(
+                                      layout: AppLayout.mobile));
+                                  AppBuilder.of(context).rebuild();
+                                  WidgetsBinding.instance
+                                      .addPostFrameCallback((duration) {
+                                    store.dispatch(ViewDashboard(
+                                        navigator: Navigator.of(context),
+                                        force: true));
+                                  });
+                                },
+                              ),
+                              FlatButton(
+                                child: Text(localization.dismiss.toUpperCase()),
+                                onPressed: () {
+                                  setState(
+                                      () => _dismissedChangeToMobile = true);
+                                },
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                    Expanded(
+                      child: Row(children: <Widget>[
+                        if (prefState.showMenu) ...[
+                          MenuDrawerBuilder(),
+                          _CustomDivider(),
+                        ],
+                        Expanded(
+                            child: AppBorder(
+                          child: screen,
+                          isLeft: true,
+                        )),
+                      ]),
+                    ),
                   ],
-                  Expanded(
-                      child: AppBorder(
-                    child: screen,
-                    isLeft: true,
-                  )),
-                ]),
+                ),
               ),
             ),
           );
@@ -464,19 +522,29 @@ class EntityScreens extends StatelessWidget {
     if (uiState.filterEntityId != null) {
       switch (uiState.filterEntityType) {
         case EntityType.client:
-          filterChild = editingFIlterEntity ? ClientEditScreen() : ClientViewScreen();
+          filterChild = editingFIlterEntity
+              ? ClientEditScreen()
+              : ClientViewScreen(isFilter: true);
           break;
         case EntityType.invoice:
-          filterChild = editingFIlterEntity ? InvoiceViewScreen() : InvoiceViewScreen();
+          filterChild = editingFIlterEntity
+              ? InvoiceViewScreen()
+              : InvoiceViewScreen(isFilter: true);
           break;
         case EntityType.payment:
-          filterChild = editingFIlterEntity ? PaymentEditScreen() : PaymentViewScreen();
+          filterChild = editingFIlterEntity
+              ? PaymentEditScreen()
+              : PaymentViewScreen(isFilter: true);
           break;
         case EntityType.user:
-          filterChild = editingFIlterEntity ? UserEditScreen() : UserViewScreen();
+          filterChild = editingFIlterEntity
+              ? UserEditScreen()
+              : UserViewScreen(isFilter: true);
           break;
         case EntityType.group:
-          filterChild = editingFIlterEntity ? GroupEditScreen() : GroupViewScreen();
+          filterChild = editingFIlterEntity
+              ? GroupEditScreen()
+              : GroupViewScreen(isFilter: true);
           break;
       }
     }

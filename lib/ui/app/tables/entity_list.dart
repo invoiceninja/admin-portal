@@ -103,9 +103,9 @@ class _EntityListState extends State<EntityList> {
       return LoadingIndicator();
     }
 
-    if (!isList &&
-        state.shouldSelectEntity(
-            entityType: entityType, hasRecords: entityList.isNotEmpty)) {
+    if (state.shouldSelectEntity(
+        entityType: entityType, entityList: entityList)) {
+      print('## AUTO-SELECTING: $entityType');
       WidgetsBinding.instance.addPostFrameCallback((duration) {
         viewEntityById(
           context: context,
@@ -177,11 +177,13 @@ class _EntityListState extends State<EntityList> {
                     })),
               ],
               source: dataTableSource,
+              /*
               header: DatatableHeader(
                 entityType: widget.entityType,
                 onClearPressed: widget.onClearEntityFilterPressed,
                 onRefreshPressed: () => widget.onRefreshed(context),
               ),
+               */
               sortColumnIndex:
                   widget.tableColumns.indexOf(listUIState.sortField),
               sortAscending: listUIState.sortAscending,

@@ -16,6 +16,7 @@ import 'package:invoiceninja_flutter/ui/user/user_list_vm.dart';
 import 'package:invoiceninja_flutter/redux/user/user_actions.dart';
 import 'package:invoiceninja_flutter/ui/app/app_bottom_bar.dart';
 import 'package:invoiceninja_flutter/ui/app/entities/entity_actions_dialog.dart';
+import 'package:invoiceninja_flutter/utils/platforms.dart';
 
 class UserScreen extends StatelessWidget {
   const UserScreen({
@@ -37,6 +38,7 @@ class UserScreen extends StatelessWidget {
     final isInMultiselect = listUIState.isInMultiselect();
 
     return ListScaffold(
+      entityType: EntityType.user,
       isSettings: true,
       isChecked: isInMultiselect &&
           listUIState.selectedIds.length == viewModel.userList.length,
@@ -88,6 +90,7 @@ class UserScreen extends StatelessWidget {
       bottomNavigationBar: AppBottomBar(
         entityType: EntityType.user,
         onlyList: true,
+        onRefreshPressed: () => store.dispatch(LoadUsers(force: true)),
         onSelectedSortField: (value) => store.dispatch(SortUsers(value)),
         onSelectedCustom1: (value) =>
             store.dispatch(FilterUsersByCustom1(value)),
@@ -109,21 +112,22 @@ class UserScreen extends StatelessWidget {
           }
         },
       ),
-      floatingActionButton: userCompany.canCreate(EntityType.user)
-          ? FloatingActionButton(
-              heroTag: 'user_fab',
-              backgroundColor: Theme.of(context).primaryColorDark,
-              onPressed: () {
-                createEntityByType(
-                    context: context, entityType: EntityType.user);
-              },
-              child: Icon(
-                Icons.add,
-                color: Colors.white,
-              ),
-              tooltip: localization.newUser,
-            )
-          : null,
+      floatingActionButton:
+          isMobile(context) && userCompany.canCreate(EntityType.user)
+              ? FloatingActionButton(
+                  heroTag: 'user_fab',
+                  backgroundColor: Theme.of(context).primaryColorDark,
+                  onPressed: () {
+                    createEntityByType(
+                        context: context, entityType: EntityType.user);
+                  },
+                  child: Icon(
+                    Icons.add,
+                    color: Colors.white,
+                  ),
+                  tooltip: localization.newUser,
+                )
+              : null,
     );
   }
 }

@@ -18,7 +18,12 @@ import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:redux/redux.dart';
 
 class ExpenseViewScreen extends StatelessWidget {
-  const ExpenseViewScreen({Key key}) : super(key: key);
+  const ExpenseViewScreen({
+    Key key,
+    this.isFilter = false,
+  }) : super(key: key);
+
+  final bool isFilter;
   static const String route = '/expense/view';
 
   @override
@@ -30,6 +35,7 @@ class ExpenseViewScreen extends StatelessWidget {
       builder: (context, vm) {
         return ExpenseView(
           viewModel: vm,
+          isFilter: isFilter,
         );
       },
     );

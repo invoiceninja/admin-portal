@@ -17,9 +17,11 @@ class ClientView extends StatefulWidget {
   const ClientView({
     Key key,
     @required this.viewModel,
+    @required this.isFilter,
   }) : super(key: key);
 
   final ClientViewVM viewModel;
+  final bool isFilter;
 
   @override
   _ClientViewState createState() => _ClientViewState();
@@ -51,6 +53,7 @@ class _ClientViewState extends State<ClientView>
     final userCompany = viewModel.state.userCompany;
 
     return ViewScaffold(
+      isFilter: widget.isFilter,
       entity: client,
       appBarBottom: TabBar(
         controller: _controller,
@@ -74,7 +77,10 @@ class _ClientViewState extends State<ClientView>
               children: <Widget>[
                 RefreshIndicator(
                   onRefresh: () => viewModel.onRefreshed(context),
-                  child: ClientOverview(viewModel: viewModel),
+                  child: ClientOverview(
+                    viewModel: viewModel,
+                    isFilter: widget.isFilter,
+                  ),
                 ),
                 RefreshIndicator(
                   onRefresh: () => viewModel.onRefreshed(context),

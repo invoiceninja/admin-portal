@@ -14,6 +14,7 @@ import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/ui/project/project_list_vm.dart';
 import 'package:invoiceninja_flutter/redux/project/project_actions.dart';
 import 'package:invoiceninja_flutter/ui/app/app_bottom_bar.dart';
+import 'package:invoiceninja_flutter/utils/platforms.dart';
 
 class ProjectScreen extends StatelessWidget {
   const ProjectScreen({
@@ -36,6 +37,7 @@ class ProjectScreen extends StatelessWidget {
     final isInMultiselect = listUIState.isInMultiselect();
 
     return ListScaffold(
+      entityType: EntityType.project,
       isChecked: isInMultiselect &&
           listUIState.selectedIds.length == viewModel.projectList.length,
       showCheckbox: isInMultiselect,
@@ -83,6 +85,7 @@ class ProjectScreen extends StatelessWidget {
       body: ProjectListBuilder(),
       bottomNavigationBar: AppBottomBar(
         entityType: EntityType.project,
+        onRefreshPressed: () => store.dispatch(LoadProjects(force: true)),
         onSelectedSortField: (value) => store.dispatch(SortProjects(value)),
         customValues1: company.getCustomFieldValues(CustomFieldType.project1,
             excludeBlank: true),
@@ -115,19 +118,20 @@ class ProjectScreen extends StatelessWidget {
           }
         },
       ),
-      floatingActionButton: userCompany.canCreate(EntityType.project)
-          ? FloatingActionButton(
-              heroTag: 'project_fab',
-              backgroundColor: Theme.of(context).primaryColorDark,
-              onPressed: () => createEntityByType(
-                  context: context, entityType: EntityType.project),
-              child: Icon(
-                Icons.add,
-                color: Colors.white,
-              ),
-              tooltip: localization.newProject,
-            )
-          : null,
+      floatingActionButton:
+          isMobile(context) && userCompany.canCreate(EntityType.project)
+              ? FloatingActionButton(
+                  heroTag: 'project_fab',
+                  backgroundColor: Theme.of(context).primaryColorDark,
+                  onPressed: () => createEntityByType(
+                      context: context, entityType: EntityType.project),
+                  child: Icon(
+                    Icons.add,
+                    color: Colors.white,
+                  ),
+                  tooltip: localization.newProject,
+                )
+              : null,
     );
   }
 }

@@ -38,6 +38,7 @@ class GroupSettingsScreen extends StatelessWidget {
     final isInMultiselect = listUIState.isInMultiselect();
 
     return ListScaffold(
+      entityType: EntityType.group,
       isChecked: isInMultiselect &&
           listUIState.selectedIds.length == viewModel.groupList.length,
       showCheckbox: isInMultiselect,
@@ -87,6 +88,7 @@ class GroupSettingsScreen extends StatelessWidget {
       bottomNavigationBar: AppBottomBar(
         entityType: EntityType.group,
         onlyList: true,
+        onRefreshPressed: () => store.dispatch(LoadGroups(force: true)),
         onSelectedSortField: (value) => store.dispatch(SortGroups(value)),
         customValues1: company.getCustomFieldValues(CustomFieldType.group1,
             excludeBlank: true),

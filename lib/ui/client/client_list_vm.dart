@@ -152,5 +152,5 @@ class ClientListVM {
       tableColumns: ClientPresenter.getTableFields(state.userCompany),
       onSortColumn: (field) => store.dispatch(SortClients(field)),
     );
-  }//
+  } //
 }

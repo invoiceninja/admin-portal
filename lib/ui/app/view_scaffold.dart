@@ -5,6 +5,7 @@ import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/redux/ui/ui_actions.dart';
 import 'package:invoiceninja_flutter/ui/app/actions_menu_button.dart';
+import 'package:invoiceninja_flutter/utils/icons.dart';
 import 'package:invoiceninja_flutter/utils/platforms.dart';
 import 'buttons/edit_icon_button.dart';
 import 'entities/entity_state_title.dart';
@@ -17,10 +18,12 @@ class ViewScaffold extends StatelessWidget {
     this.floatingActionButton,
     this.appBarBottom,
     this.isSettings = false,
+    @required this.isFilter,
     this.onBackPressed,
   });
 
   final bool isSettings;
+  final bool isFilter;
   final BaseEntity entity;
   final String title;
   final Widget body;
@@ -36,18 +39,20 @@ class ViewScaffold extends StatelessWidget {
 
     Widget leading;
     if (!isMobile(context)) {
-      if (isSettings) {
+      if (isFilter && entity.entityType == state.uiState.filterEntityType) {
+        leading = IconButton(
+          icon: Icon(Icons.clear),
+          onPressed: () => store.dispatch(ClearEntityFilter()),
+        );
+      } else if (isSettings) {
         leading = IconButton(
           icon: Icon(Icons.arrow_back),
           onPressed: () => onBackPressed != null
               ? onBackPressed()
               : store.dispatch(UpdateCurrentRoute(state.uiState.previousRoute)),
         );
-      } else if (entity.entityType == state.uiState.filterEntityType) {
-        leading = IconButton(
-          icon: Icon(Icons.clear),
-          onPressed: () => store.dispatch(ClearEntityFilter()),
-        );
+      } else if (isNotMobile(context)) {
+        leading = Icon(getEntityIcon(entity.entityType));
       }
     }
 
@@ -63,7 +68,7 @@ class ViewScaffold extends StatelessWidget {
           title: EntityStateTitle(
             entity: entity,
             title: title,
-            showStatus: true,
+            showStatus: false,
           ),
           bottom: appBarBottom,
           actions: entity.isNew
@@ -79,7 +84,7 @@ class ViewScaffold extends StatelessWidget {
                         })
                       : Container(),
                   ActionMenuButton(
-                    isSaving: state.isSaving,
+                    isSaving: state.isSaving && isMobile(context),
                     entity: entity,
                     onSelected: (context, action) =>
                         handleEntityAction(context, entity, action),

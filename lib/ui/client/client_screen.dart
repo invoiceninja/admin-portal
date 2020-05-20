@@ -13,6 +13,7 @@ import 'package:invoiceninja_flutter/ui/app/entities/entity_actions_dialog.dart'
 import 'package:invoiceninja_flutter/ui/app/list_filter.dart';
 import 'package:invoiceninja_flutter/ui/client/client_list_vm.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
+import 'package:invoiceninja_flutter/utils/platforms.dart';
 
 import 'client_screen_vm.dart';
 
@@ -37,6 +38,7 @@ class ClientScreen extends StatelessWidget {
     final isInMultiselect = listUIState.isInMultiselect();
 
     return ListScaffold(
+      entityType: EntityType.client,
       isChecked: isInMultiselect &&
           listUIState.selectedIds.length == viewModel.clientList.length,
       showCheckbox: isInMultiselect,
@@ -84,6 +86,7 @@ class ClientScreen extends StatelessWidget {
       body: ClientListBuilder(),
       bottomNavigationBar: AppBottomBar(
         entityType: EntityType.client,
+        onRefreshPressed: () => store.dispatch(LoadClients(force: true)),
         onSelectedSortField: (value) {
           store.dispatch(SortClients(value));
         },
@@ -119,21 +122,22 @@ class ClientScreen extends StatelessWidget {
         onSelectedCustom4: (value) =>
             store.dispatch(FilterClientsByCustom4(value)),
       ),
-      floatingActionButton: userCompany.canCreate(EntityType.client)
-          ? FloatingActionButton(
-              heroTag: 'client_fab',
-              backgroundColor: Theme.of(context).primaryColorDark,
-              onPressed: () {
-                createEntityByType(
-                    context: context, entityType: EntityType.client);
-              },
-              child: Icon(
-                Icons.add,
-                color: Colors.white,
-              ),
-              tooltip: localization.newClient,
-            )
-          : null,
+      floatingActionButton:
+          isMobile(context) && userCompany.canCreate(EntityType.client)
+              ? FloatingActionButton(
+                  heroTag: 'client_fab',
+                  backgroundColor: Theme.of(context).primaryColorDark,
+                  onPressed: () {
+                    createEntityByType(
+                        context: context, entityType: EntityType.client);
+                  },
+                  child: Icon(
+                    Icons.add,
+                    color: Colors.white,
+                  ),
+                  tooltip: localization.newClient,
+                )
+              : null,
     );
   }
 }

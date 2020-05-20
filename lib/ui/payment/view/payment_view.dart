@@ -20,9 +20,11 @@ class PaymentView extends StatefulWidget {
   const PaymentView({
     Key key,
     @required this.viewModel,
+    @required this.isFilter,
   }) : super(key: key);
 
   final PaymentViewVM viewModel;
+  final bool isFilter;
 
   @override
   _PaymentViewState createState() => new _PaymentViewState();
@@ -39,8 +41,10 @@ class _PaymentViewState extends State<PaymentView> {
     final localization = AppLocalization.of(context);
 
     final fields = <String, String>{};
+    /*
     fields[PaymentFields.paymentStatusId] =
         localization.lookup('payment_status_${payment.statusId}');
+     */
     if (payment.date.isNotEmpty) {
       fields[PaymentFields.paymentDate] = formatDate(payment.date, context);
     }
@@ -59,6 +63,7 @@ class _PaymentViewState extends State<PaymentView> {
     }
 
     return ViewScaffold(
+      isFilter: widget.isFilter,
       entity: payment,
       title: payment.number,
       body: Builder(
@@ -69,8 +74,10 @@ class _PaymentViewState extends State<PaymentView> {
                 child: ListView(
                   children: <Widget>[
                     EntityHeader(
-                      backgroundColor:
-                          PaymentStatusColors.colors[payment.statusId],
+                      entity: payment,
+                      statusColor: PaymentStatusColors.colors[payment.statusId],
+                      statusLabel: localization
+                          .lookup('payment_status_${payment.statusId}'),
                       label: localization.amount,
                       value: formatNumber(payment.amount, context,
                           clientId: client.id),
@@ -80,6 +87,7 @@ class _PaymentViewState extends State<PaymentView> {
                     ),
                     ListDivider(),
                     EntityListTile(
+                      isFilter: widget.isFilter,
                       entity: client,
                       onTap: () => viewModel.onClientPressed(context),
                       onLongPress: () =>
@@ -87,6 +95,7 @@ class _PaymentViewState extends State<PaymentView> {
                     ),
                     for (final paymentable in payment.paymentables)
                       EntityListTile(
+                        isFilter: widget.isFilter,
                         entity: state.invoiceState.map[paymentable.invoiceId],
                         subtitle: formatNumber(paymentable.amount, context) +
                             ' • ' +
@@ -118,6 +127,7 @@ class _PaymentViewState extends State<PaymentView> {
               BottomButtons(
                 entity: payment,
                 action1: EntityAction.refund,
+                action1Enabled: payment.refunded < payment.amount,
                 action2: EntityAction.archive,
               ),
             ],

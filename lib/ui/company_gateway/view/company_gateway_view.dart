@@ -10,9 +10,11 @@ class CompanyGatewayView extends StatefulWidget {
   const CompanyGatewayView({
     Key key,
     @required this.viewModel,
+    @required this.isFilter,
   }) : super(key: key);
 
   final CompanyGatewayViewVM viewModel;
+  final bool isFilter;
 
   @override
   _CompanyGatewayViewState createState() => new _CompanyGatewayViewState();
@@ -49,6 +51,7 @@ class _CompanyGatewayViewState extends State<CompanyGatewayView> {
       }
 
     return ViewScaffold(
+      isFilter: widget.isFilter,
       entity: companyGateway,
       onBackPressed: () => viewModel.onBackPressed(),
       isSettings: true,

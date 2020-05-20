@@ -1,6 +1,8 @@
 import 'package:built_collection/built_collection.dart';
+import 'package:invoiceninja_flutter/data/models/entities.dart';
 import 'package:invoiceninja_flutter/data/models/group_model.dart';
 import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
+import 'package:invoiceninja_flutter/redux/client/client_actions.dart';
 import 'package:invoiceninja_flutter/redux/company/company_actions.dart';
 import 'package:invoiceninja_flutter/redux/group/group_actions.dart';
 import 'package:invoiceninja_flutter/redux/group/group_state.dart';
@@ -21,6 +23,8 @@ Reducer<String> selectedIdReducer = combineReducers([
   TypedReducer<String, AddGroupSuccess>(
       (String selectedId, action) => action.group.id),
   TypedReducer<String, SelectCompany>((selectedId, action) => ''),
+  TypedReducer<String, FilterClientsByEntity>((selectedId, action) =>
+      action.entityType == EntityType.group ? action.entityId : selectedId),
 ]);
 
 final editingReducer = combineReducers<GroupEntity>([
@@ -64,7 +68,7 @@ final groupListReducer = combineReducers<ListUIState>([
       _removeFromListMultiselect),
   TypedReducer<ListUIState, ClearGroupMultiselect>(_clearListMultiselect),
   TypedReducer<ListUIState, ClearEntityFilter>(
-          (state, action) => state.rebuild((b) => b
+      (state, action) => state.rebuild((b) => b
         ..filterEntityId = null
         ..filterEntityType = null)),
 ]);

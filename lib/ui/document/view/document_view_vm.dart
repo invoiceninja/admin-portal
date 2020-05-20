@@ -13,7 +13,12 @@ import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:redux/redux.dart';
 
 class DocumentViewScreen extends StatelessWidget {
-  const DocumentViewScreen({Key key}) : super(key: key);
+  const DocumentViewScreen({
+    Key key,
+    this.isFilter = false,
+  }) : super(key: key);
+  final bool isFilter;
+
   static const String route = '/document/view';
 
   @override
@@ -24,6 +29,7 @@ class DocumentViewScreen extends StatelessWidget {
       },
       builder: (context, vm) {
         return DocumentView(
+          isFilter: isFilter,
           viewModel: vm,
         );
       },

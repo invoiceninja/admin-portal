@@ -54,7 +54,8 @@ class ProjectRepository {
     return projectResponse.data.toList();
   }
 
-  Future<ProjectEntity> saveData(Credentials credentials, ProjectEntity project) async {
+  Future<ProjectEntity> saveData(
+      Credentials credentials, ProjectEntity project) async {
     final data = serializers.serializeWith(ProjectEntity.serializer, project);
     dynamic response;
 

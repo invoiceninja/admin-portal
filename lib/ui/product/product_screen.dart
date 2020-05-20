@@ -14,6 +14,7 @@ import 'package:invoiceninja_flutter/ui/app/list_filter.dart';
 import 'package:invoiceninja_flutter/ui/product/product_list_vm.dart';
 import 'package:invoiceninja_flutter/ui/product/product_screen_vm.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
+import 'package:invoiceninja_flutter/utils/platforms.dart';
 
 class ProductScreen extends StatelessWidget {
   const ProductScreen({
@@ -36,6 +37,7 @@ class ProductScreen extends StatelessWidget {
     final isInMultiselect = listUIState.isInMultiselect();
 
     return ListScaffold(
+      entityType: EntityType.product,
       isChecked: isInMultiselect &&
           listUIState.selectedIds.length == viewModel.productList.length,
       showCheckbox: isInMultiselect,
@@ -81,6 +83,7 @@ class ProductScreen extends StatelessWidget {
       body: ProductListBuilder(),
       bottomNavigationBar: AppBottomBar(
         entityType: EntityType.product,
+        onRefreshPressed: () => store.dispatch(LoadProducts(force: true)),
         onSelectedSortField: (value) => store.dispatch(SortProducts(value)),
         customValues1: company.getCustomFieldValues(CustomFieldType.product1,
             excludeBlank: true),
@@ -114,21 +117,22 @@ class ProductScreen extends StatelessWidget {
           }
         },
       ),
-      floatingActionButton: userCompany.canCreate(EntityType.product)
-          ? FloatingActionButton(
-              heroTag: 'product_fab',
-              backgroundColor: Theme.of(context).primaryColorDark,
-              onPressed: () {
-                createEntityByType(
-                    context: context, entityType: EntityType.product);
-              },
-              child: Icon(
-                Icons.add,
-                color: Colors.white,
-              ),
-              tooltip: localization.newProduct,
-            )
-          : null,
+      floatingActionButton:
+          isMobile(context) && userCompany.canCreate(EntityType.product)
+              ? FloatingActionButton(
+                  heroTag: 'product_fab',
+                  backgroundColor: Theme.of(context).primaryColorDark,
+                  onPressed: () {
+                    createEntityByType(
+                        context: context, entityType: EntityType.product);
+                  },
+                  child: Icon(
+                    Icons.add,
+                    color: Colors.white,
+                  ),
+                  tooltip: localization.newProduct,
+                )
+              : null,
     );
   }
 }

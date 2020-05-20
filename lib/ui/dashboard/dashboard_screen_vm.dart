@@ -62,8 +62,7 @@ class DashboardVM {
           context, AppLocalization.of(context).refreshComplete);
 
       // TODO just reload activities
-      store.dispatch(
-          RefreshData(completer: completer));
+      store.dispatch(RefreshData(completer: completer));
 
       return completer.future;
     }

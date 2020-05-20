@@ -10,7 +10,8 @@ import 'package:invoiceninja_flutter/utils/dialogs.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:invoiceninja_flutter/utils/completers.dart';
 
-class ViewUserList extends AbstractNavigatorAction implements PersistUI, StopLoading {
+class ViewUserList extends AbstractNavigatorAction
+    implements PersistUI, StopLoading {
   ViewUserList({@required NavigatorState navigator, this.force = false})
       : super(navigator: navigator);
 
@@ -290,28 +291,34 @@ void handleUserAction(
       break;
     case EntityAction.restore:
       final dispatch = ([String password]) => store.dispatch(RestoreUserRequest(
-          completer: snackBarCompleter<Null>(context, localization.restoredUser),
+          completer:
+              snackBarCompleter<Null>(context, localization.restoredUser),
           userIds: userIds,
           password: password));
       if (state.authState.hasRecentlyEnteredPassword) {
         dispatch();
       } else {
-        passwordCallback(context: context, callback: (password) {
-          dispatch(password);
-        });
+        passwordCallback(
+            context: context,
+            callback: (password) {
+              dispatch(password);
+            });
       }
       break;
     case EntityAction.archive:
       final dispatch = ([String password]) => store.dispatch(ArchiveUserRequest(
-          completer: snackBarCompleter<Null>(context, localization.archivedUser),
+          completer:
+              snackBarCompleter<Null>(context, localization.archivedUser),
           userIds: userIds,
           password: password));
       if (state.authState.hasRecentlyEnteredPassword) {
         dispatch();
       } else {
-        passwordCallback(context: context, callback: (password) {
-          dispatch(password);
-        });
+        passwordCallback(
+            context: context,
+            callback: (password) {
+              dispatch(password);
+            });
       }
       break;
     case EntityAction.delete:
@@ -322,9 +329,11 @@ void handleUserAction(
       if (state.authState.hasRecentlyEnteredPassword) {
         dispatch();
       } else {
-        passwordCallback(context: context, callback: (password) {
-          dispatch(password);
-        });
+        passwordCallback(
+            context: context,
+            callback: (password) {
+              dispatch(password);
+            });
       }
       break;
     case EntityAction.remove:
@@ -335,9 +344,11 @@ void handleUserAction(
       if (state.authState.hasRecentlyEnteredPassword) {
         dispatch();
       } else {
-        passwordCallback(context: context, callback: (password) {
-          dispatch(password);
-        });
+        passwordCallback(
+            context: context,
+            callback: (password) {
+              dispatch(password);
+            });
       }
       break;
     case EntityAction.toggleMultiselect:

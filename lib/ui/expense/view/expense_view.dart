@@ -13,9 +13,11 @@ class ExpenseView extends StatefulWidget {
   const ExpenseView({
     Key key,
     @required this.viewModel,
+    @required this.isFilter,
   }) : super(key: key);
 
   final ExpenseViewVM viewModel;
+  final bool isFilter;
 
   @override
   _ExpenseViewState createState() => _ExpenseViewState();
@@ -48,6 +50,7 @@ class _ExpenseViewState extends State<ExpenseView>
         memoizedExpenseDocumentsSelector(documentState.map, viewModel.expense);
 
     return ViewScaffold(
+      isFilter: widget.isFilter,
       entity: expense,
       appBarBottom: TabBar(
         controller: _controller,

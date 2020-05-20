@@ -19,9 +19,11 @@ class GroupView extends StatefulWidget {
   const GroupView({
     Key key,
     @required this.viewModel,
+    @required this.isFilter,
   }) : super(key: key);
 
   final GroupViewVM viewModel;
+  final bool isFilter;
 
   @override
   _GroupViewState createState() => new _GroupViewState();
@@ -36,6 +38,7 @@ class _GroupViewState extends State<GroupView> {
     final group = viewModel.group;
 
     return ViewScaffold(
+      isFilter: widget.isFilter,
       entity: group,
       isSettings: true,
       onBackPressed: () => viewModel.onBackPressed(),
@@ -52,6 +55,7 @@ class _GroupViewState extends State<GroupView> {
           ),
           ListDivider(),
           EntitiesListTile(
+            isFilter: widget.isFilter,
             entityType: EntityType.client,
             title: localization.clients,
             onTap: () => viewModel.onClientsPressed(context),

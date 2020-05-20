@@ -14,6 +14,7 @@ import 'package:invoiceninja_flutter/ui/app/entities/entity_actions_dialog.dart'
 import 'package:invoiceninja_flutter/ui/app/list_filter.dart';
 import 'package:invoiceninja_flutter/ui/expense/expense_list_vm.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
+import 'package:invoiceninja_flutter/utils/platforms.dart';
 
 import 'expense_screen_vm.dart';
 
@@ -38,6 +39,7 @@ class ExpenseScreen extends StatelessWidget {
     final isInMultiselect = listUIState.isInMultiselect();
 
     return ListScaffold(
+      entityType: EntityType.expense,
       isChecked: isInMultiselect &&
           listUIState.selectedIds.length == viewModel.expenseList.length,
       showCheckbox: isInMultiselect,
@@ -85,6 +87,7 @@ class ExpenseScreen extends StatelessWidget {
       body: ExpenseListBuilder(),
       bottomNavigationBar: AppBottomBar(
         entityType: EntityType.expense,
+        onRefreshPressed: () => store.dispatch(LoadExpenses(force: true)),
         onSelectedSortField: (value) => store.dispatch(SortExpenses(value)),
         customValues1: company.getCustomFieldValues(CustomFieldType.expense1,
             excludeBlank: true),
@@ -136,21 +139,22 @@ class ExpenseScreen extends StatelessWidget {
           }
         },
       ),
-      floatingActionButton: userCompany.canCreate(EntityType.expense)
-          ? FloatingActionButton(
-              heroTag: 'expense_fab',
-              backgroundColor: Theme.of(context).primaryColorDark,
-              onPressed: () {
-                createEntityByType(
-                    context: context, entityType: EntityType.expense);
-              },
-              child: Icon(
-                Icons.add,
-                color: Colors.white,
-              ),
-              tooltip: localization.newExpense,
-            )
-          : null,
+      floatingActionButton:
+          isMobile(context) && userCompany.canCreate(EntityType.expense)
+              ? FloatingActionButton(
+                  heroTag: 'expense_fab',
+                  backgroundColor: Theme.of(context).primaryColorDark,
+                  onPressed: () {
+                    createEntityByType(
+                        context: context, entityType: EntityType.expense);
+                  },
+                  child: Icon(
+                    Icons.add,
+                    color: Colors.white,
+                  ),
+                  tooltip: localization.newExpense,
+                )
+              : null,
     );
   }
 }

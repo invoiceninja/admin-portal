@@ -20,9 +20,11 @@ class InvoiceOverview extends StatelessWidget {
   const InvoiceOverview({
     Key key,
     @required this.viewModel,
+    @required this.isFilter,
   }) : super(key: key);
 
   final EntityViewVM viewModel;
+  final bool isFilter;
 
   @override
   Widget build(BuildContext context) {
@@ -53,7 +55,11 @@ class InvoiceOverview extends StatelessWidget {
 
     final widgets = <Widget>[
       EntityHeader(
-        backgroundColor: color,
+        entity: invoice,
+        statusColor: color,
+        statusLabel: invoice.isPastDue
+                ? localization.pastDue
+                : localization.lookup(stauses[invoice.statusId]),
         label: localization.totalAmount,
         value:
             formatNumber(invoice.amount, context, clientId: invoice.clientId),
@@ -70,9 +76,11 @@ class InvoiceOverview extends StatelessWidget {
     }
 
     final Map<String, String> fields = {
+      /*
       InvoiceFields.statusId: invoice.isPastDue
           ? localization.pastDue
           : localization.lookup(stauses[invoice.statusId]),
+       */
       InvoiceFields.invoiceDate: formatDate(invoice.date, context),
       dueDateField: formatDate(invoice.dueDate, context),
       InvoiceFields.partial: formatNumber(invoice.partial, context,
@@ -104,6 +112,7 @@ class InvoiceOverview extends StatelessWidget {
 
     widgets.add(
       EntityListTile(
+        isFilter: isFilter,
         entity: client,
         onTap: () => viewModel.onClientPressed(context),
         onLongPress: () => viewModel.onClientPressed(context, true),
@@ -111,10 +120,10 @@ class InvoiceOverview extends StatelessWidget {
     );
 
     if (payments.isNotEmpty) {
-      if (payments.length == 1) {
-        final payment = payments.first;
+      payments.forEach((payment) {
         widgets.add(
           EntityListTile(
+            isFilter: isFilter,
             entity: payment,
             onTap: () => viewModel.onPaymentPressed(context, payment),
             onLongPress: () =>
@@ -125,15 +134,7 @@ class InvoiceOverview extends StatelessWidget {
                     formatDate(payment.date, context),
           ),
         );
-      } else {
-        widgets.add(
-          EntitiesListTile(
-            entityType: EntityType.payment,
-            title: localization.payments,
-            onTap: () => viewModel.onPaymentsPressed(context),
-          ),
-        );
-      }
+      });
 
       widgets.addAll([
         ListDivider(),

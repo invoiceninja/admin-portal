@@ -42,8 +42,8 @@ class UserRepository {
     return userResponse.data;
   }
 
-  Future<List<UserEntity>> bulkAction(
-      Credentials credentials, List<String> ids, EntityAction action, String password) async {
+  Future<List<UserEntity>> bulkAction(Credentials credentials, List<String> ids,
+      EntityAction action, String password) async {
     final url = credentials.url + '/users/bulk?include=company_user';
     final dynamic response = await webClient.post(url, credentials.token,
         data: json.encode({'ids': ids, 'action': '$action'}));
@@ -78,8 +78,7 @@ class UserRepository {
         password: password,
       );
     } else {
-      final url = credentials.url +
-          '/users/${user.id}?include=company_user';
+      final url = credentials.url + '/users/${user.id}?include=company_user';
       response = await webClient.put(
         url,
         credentials.token,

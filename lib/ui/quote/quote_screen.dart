@@ -16,6 +16,7 @@ import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/ui/quote/quote_list_vm.dart';
 import 'package:invoiceninja_flutter/redux/quote/quote_actions.dart';
 import 'package:invoiceninja_flutter/ui/app/app_bottom_bar.dart';
+import 'package:invoiceninja_flutter/utils/platforms.dart';
 
 class QuoteScreen extends StatelessWidget {
   const QuoteScreen({
@@ -38,6 +39,7 @@ class QuoteScreen extends StatelessWidget {
     final isInMultiselect = listUIState.isInMultiselect();
 
     return ListScaffold(
+      entityType: EntityType.quote,
       isChecked: isInMultiselect &&
           listUIState.selectedIds.length == viewModel.quoteList.length,
       showCheckbox: isInMultiselect,
@@ -86,6 +88,7 @@ class QuoteScreen extends StatelessWidget {
       bottomNavigationBar: AppBottomBar(
         entityType: EntityType.quote,
         onSelectedSortField: (value) => store.dispatch(SortQuotes(value)),
+        onRefreshPressed: () => store.dispatch(LoadQuotes(force: true)),
         customValues1: company.getCustomFieldValues(CustomFieldType.invoice1,
             excludeBlank: true),
         customValues2: company.getCustomFieldValues(CustomFieldType.invoice2,
@@ -144,21 +147,22 @@ class QuoteScreen extends StatelessWidget {
           }
         },
       ),
-      floatingActionButton: userCompany.canCreate(EntityType.quote)
-          ? FloatingActionButton(
-              heroTag: 'quote_fab',
-              backgroundColor: Theme.of(context).primaryColorDark,
-              onPressed: () {
-                createEntityByType(
-                    context: context, entityType: EntityType.quote);
-              },
-              child: Icon(
-                Icons.add,
-                color: Colors.white,
-              ),
-              tooltip: localization.newQuote,
-            )
-          : null,
+      floatingActionButton:
+          isMobile(context) && userCompany.canCreate(EntityType.quote)
+              ? FloatingActionButton(
+                  heroTag: 'quote_fab',
+                  backgroundColor: Theme.of(context).primaryColorDark,
+                  onPressed: () {
+                    createEntityByType(
+                        context: context, entityType: EntityType.quote);
+                  },
+                  child: Icon(
+                    Icons.add,
+                    color: Colors.white,
+                  ),
+                  tooltip: localization.newQuote,
+                )
+              : null,
     );
   }
 }

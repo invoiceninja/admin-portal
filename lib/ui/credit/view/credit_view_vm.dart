@@ -19,8 +19,11 @@ import 'package:invoiceninja_flutter/utils/platforms.dart';
 import 'package:redux/redux.dart';
 
 class CreditViewScreen extends StatelessWidget {
-  const CreditViewScreen({Key key}) : super(key: key);
-
+  const CreditViewScreen({
+    Key key,
+    this.isFilter = false,
+  }) : super(key: key);
+  final bool isFilter;
   static const String route = '/credit/view';
 
   @override
@@ -33,6 +36,7 @@ class CreditViewScreen extends StatelessWidget {
       builder: (context, viewModel) {
         return InvoiceView(
           viewModel: viewModel,
+          isFilter: isFilter,
         );
       },
     );

@@ -492,7 +492,8 @@ abstract class ExpenseCategoryEntity extends Object
             .compareTo(categoryB.name.toLowerCase());
         break;
       default:
-        print('## ERROR: sort by expoense_category.$sortField is not implemented');
+        print(
+            '## ERROR: sort by expoense_category.$sortField is not implemented');
         break;
     }
 

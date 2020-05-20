@@ -59,6 +59,13 @@ class EntityType extends EnumClass {
     return toString() + 's';
   }
 
+  bool get isSetting => [
+    EntityType.taxRate,
+    EntityType.companyGateway,
+    EntityType.user,
+    EntityType.group,
+  ].contains(this);
+
   static BuiltSet<EntityType> get values => _$typeValues;
 
   static EntityType valueOf(String name) => _$typeValueOf(name);

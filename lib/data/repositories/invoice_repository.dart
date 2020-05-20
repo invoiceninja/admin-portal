@@ -86,10 +86,8 @@ class InvoiceRepository {
     };
 
     final List<dynamic> response = await webClient.post(
-        credentials.url + '/emails',
-        credentials.token,
+        credentials.url + '/emails', credentials.token,
         data: json.encode(data));
-
 
     final InvoiceItemResponse invoiceResponse =
         serializers.deserializeWith(InvoiceItemResponse.serializer, response);

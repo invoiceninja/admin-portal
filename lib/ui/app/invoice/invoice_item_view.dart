@@ -74,7 +74,8 @@ class InvoiceItemListTile extends StatelessWidget {
         child: Column(
           children: <Widget>[
             ListTile(
-              contentPadding: const EdgeInsets.symmetric(horizontal: 20, vertical: 15),
+              contentPadding:
+                  const EdgeInsets.symmetric(horizontal: 20, vertical: 15),
               onTap: onTap,
               title: Row(
                 children: <Widget>[

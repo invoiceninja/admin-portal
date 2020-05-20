@@ -54,7 +54,8 @@ class TaxRateRepository {
     return taxRateResponse.data.toList();
   }
 
-  Future<TaxRateEntity> saveData(Credentials credentials, TaxRateEntity taxRate) async {
+  Future<TaxRateEntity> saveData(
+      Credentials credentials, TaxRateEntity taxRate) async {
     final data = serializers.serializeWith(TaxRateEntity.serializer, taxRate);
     dynamic response;
 

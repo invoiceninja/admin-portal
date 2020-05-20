@@ -15,6 +15,7 @@ import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/ui/task/task_list_vm.dart';
 import 'package:invoiceninja_flutter/redux/task/task_actions.dart';
 import 'package:invoiceninja_flutter/ui/app/app_bottom_bar.dart';
+import 'package:invoiceninja_flutter/utils/platforms.dart';
 
 class TaskScreen extends StatelessWidget {
   const TaskScreen({
@@ -37,6 +38,7 @@ class TaskScreen extends StatelessWidget {
     final isInMultiselect = listUIState.isInMultiselect();
 
     return ListScaffold(
+      entityType: EntityType.task,
       isChecked: isInMultiselect &&
           listUIState.selectedIds.length == viewModel.taskList.length,
       showCheckbox: isInMultiselect,
@@ -83,6 +85,7 @@ class TaskScreen extends StatelessWidget {
       body: TaskListBuilder(),
       bottomNavigationBar: AppBottomBar(
         entityType: EntityType.task,
+        onRefreshPressed: () => store.dispatch(LoadTasks(force: true)),
         onSelectedSortField: (value) => store.dispatch(SortTasks(value)),
         onSelectedStatus: (EntityStatus status, value) {
           store.dispatch(FilterTasksByStatus(status));
@@ -134,21 +137,22 @@ class TaskScreen extends StatelessWidget {
           }
         },
       ),
-      floatingActionButton: userCompany.canCreate(EntityType.task)
-          ? FloatingActionButton(
-              heroTag: 'task_fab',
-              backgroundColor: Theme.of(context).primaryColorDark,
-              onPressed: () {
-                createEntityByType(
-                    context: context, entityType: EntityType.task);
-              },
-              child: Icon(
-                Icons.add,
-                color: Colors.white,
-              ),
-              tooltip: localization.newTask,
-            )
-          : null,
+      floatingActionButton:
+          isMobile(context) && userCompany.canCreate(EntityType.task)
+              ? FloatingActionButton(
+                  heroTag: 'task_fab',
+                  backgroundColor: Theme.of(context).primaryColorDark,
+                  onPressed: () {
+                    createEntityByType(
+                        context: context, entityType: EntityType.task);
+                  },
+                  child: Icon(
+                    Icons.add,
+                    color: Colors.white,
+                  ),
+                  tooltip: localization.newTask,
+                )
+              : null,
     );
   }
 }

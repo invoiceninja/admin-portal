@@ -54,7 +54,8 @@ class ExpenseRepository {
     return expenseResponse.data.toList();
   }
 
-  Future<ExpenseEntity> saveData(Credentials credentials, ExpenseEntity expense) async {
+  Future<ExpenseEntity> saveData(
+      Credentials credentials, ExpenseEntity expense) async {
     final data = serializers.serializeWith(ExpenseEntity.serializer, expense);
     dynamic response;
 

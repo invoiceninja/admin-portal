@@ -53,7 +53,10 @@ class ExpenseOverview extends StatelessWidget {
       children: <Widget>[
         expense.isConverted
             ? EntityHeader(
-                backgroundColor: ExpenseStatusColors.colors[expense.statusId],
+                entity: expense,
+                statusColor: ExpenseStatusColors.colors[expense.statusId],
+                statusLabel:
+                    localization.lookup('expense_status_${expense.statusId}'),
                 label: localization.amount,
                 value: formatNumber(expense.amountWithTax, context,
                     currencyId: expense.expenseCurrencyId),
@@ -63,7 +66,10 @@ class ExpenseOverview extends StatelessWidget {
                     currencyId: expense.invoiceCurrencyId),
               )
             : EntityHeader(
-                backgroundColor: ExpenseStatusColors.colors[expense.statusId],
+                entity: expense,
+                statusColor: ExpenseStatusColors.colors[expense.statusId],
+                statusLabel:
+                    localization.lookup('expense_status_${expense.statusId}'),
                 label: localization.amount,
                 value: formatNumber(expense.amountWithTax, context,
                     currencyId: expense.expenseCurrencyId),

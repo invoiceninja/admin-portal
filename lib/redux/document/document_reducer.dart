@@ -58,10 +58,9 @@ final documentListReducer = combineReducers<ListUIState>([
       _removeFromListMultiselect),
   TypedReducer<ListUIState, ClearDocumentMultiselect>(_clearListMultiselect),
   TypedReducer<ListUIState, ClearEntityFilter>(
-          (state, action) => state.rebuild((b) => b
+      (state, action) => state.rebuild((b) => b
         ..filterEntityId = null
         ..filterEntityType = null)),
-
 ]);
 
 ListUIState _filterDocumentsByClient(

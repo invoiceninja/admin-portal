@@ -13,6 +13,7 @@ import 'package:invoiceninja_flutter/ui/app/entities/entity_actions_dialog.dart'
 import 'package:invoiceninja_flutter/ui/app/list_filter.dart';
 import 'package:invoiceninja_flutter/ui/credit/credit_list_vm.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
+import 'package:invoiceninja_flutter/utils/platforms.dart';
 
 import 'credit_screen_vm.dart';
 
@@ -37,6 +38,7 @@ class CreditScreen extends StatelessWidget {
     final isInMultiselect = listUIState.isInMultiselect();
 
     return ListScaffold(
+      entityType: EntityType.credit,
       isChecked: isInMultiselect &&
           listUIState.selectedIds.length == viewModel.creditList.length,
       showCheckbox: isInMultiselect,
@@ -84,6 +86,7 @@ class CreditScreen extends StatelessWidget {
       body: CreditListBuilder(),
       bottomNavigationBar: AppBottomBar(
         entityType: EntityType.credit,
+        onRefreshPressed: () => store.dispatch(LoadCredits(force: true)),
         onSelectedSortField: (value) {
           store.dispatch(SortCredits(value));
         },
@@ -119,21 +122,22 @@ class CreditScreen extends StatelessWidget {
         onSelectedCustom4: (value) =>
             store.dispatch(FilterCreditsByCustom4(value)),
       ),
-      floatingActionButton: userCompany.canCreate(EntityType.credit)
-          ? FloatingActionButton(
-              heroTag: 'credit_fab',
-              backgroundColor: Theme.of(context).primaryColorDark,
-              onPressed: () {
-                createEntityByType(
-                    context: context, entityType: EntityType.credit);
-              },
-              child: Icon(
-                Icons.add,
-                color: Colors.white,
-              ),
-              tooltip: localization.newCredit,
-            )
-          : null,
+      floatingActionButton:
+          isMobile(context) && userCompany.canCreate(EntityType.credit)
+              ? FloatingActionButton(
+                  heroTag: 'credit_fab',
+                  backgroundColor: Theme.of(context).primaryColorDark,
+                  onPressed: () {
+                    createEntityByType(
+                        context: context, entityType: EntityType.credit);
+                  },
+                  child: Icon(
+                    Icons.add,
+                    color: Colors.white,
+                  ),
+                  tooltip: localization.newCredit,
+                )
+              : null,
     );
   }
 }

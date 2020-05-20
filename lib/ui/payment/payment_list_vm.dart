@@ -48,12 +48,11 @@ class PaymentListBuilder extends StatelessWidget {
               final listState = state.getListState(EntityType.client);
               final isInMultiselect = listState.isInMultiselect();
 
-
               void showDialog() => showEntityActionsDialog(
-                entities: [payment],
-                context: context,
-                client: client,
-              );
+                    entities: [payment],
+                    context: context,
+                    client: client,
+                  );
 
               return PaymentListItem(
                 user: viewModel.user,
@@ -77,8 +76,7 @@ class PaymentListBuilder extends StatelessWidget {
                     showDialog();
                   }
                 },
-                isChecked:
-                isInMultiselect && listState.isSelected(payment.id),
+                isChecked: isInMultiselect && listState.isSelected(payment.id),
               );
             });
       },

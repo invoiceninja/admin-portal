@@ -12,6 +12,7 @@ import 'package:invoiceninja_flutter/utils/platforms.dart';
 class EntityListTile extends StatelessWidget {
   const EntityListTile({
     @required this.entity,
+    @required this.isFilter,
     this.onTap,
     this.onLongPress,
     this.subtitle,
@@ -21,6 +22,7 @@ class EntityListTile extends StatelessWidget {
   final Function onLongPress;
   final String subtitle;
   final BaseEntity entity;
+  final bool isFilter;
 
   @override
   Widget build(BuildContext context) {
@@ -30,7 +32,7 @@ class EntityListTile extends StatelessWidget {
         state.uiState.filterEntityType == entity.entityType;
 
     Widget trailingIcon = Icon(Icons.navigate_next);
-    if (isNotMobile(context)) {
+    if (isNotMobile(context) && !isFilter) {
       trailingIcon = Icon(Icons.filter_list,
           color: isFilteredBy ? Theme.of(context).accentColor : null);
     }
@@ -45,7 +47,7 @@ class EntityListTile extends StatelessWidget {
             child: ListTile(
               title: EntityStateTitle(entity: entity),
               subtitle: subtitle != null && subtitle.isNotEmpty
-                  ? Text(subtitle)
+                  ? Text(subtitle ?? '')
                   : null,
               leading: Icon(getEntityIcon(entity.entityType), size: 18.0),
               trailing: trailingIcon,
@@ -69,6 +71,7 @@ class EntitiesListTile extends StatelessWidget {
     this.onLongPress,
     this.title,
     this.subtitle,
+    @required this.isFilter,
   });
 
   final Function onTap;
@@ -76,16 +79,15 @@ class EntitiesListTile extends StatelessWidget {
   final EntityType entityType;
   final String title;
   final String subtitle;
+  final bool isFilter;
 
   @override
   Widget build(BuildContext context) {
     final store = StoreProvider.of<AppState>(context);
     final state = store.state;
     final mainRoute = state.uiState.mainRoute;
-    final isFiltered =
-        isNotMobile(context) && state.uiState.filterEntityType != null;
-    final isFIlterMatch =
-        isFiltered && entityType.toString() == mainRoute.replaceFirst('/', '');
+    final isFilterMatch =
+        isFilter && entityType.toString() == mainRoute.replaceFirst('/', '');
 
     return Column(
       mainAxisSize: MainAxisSize.min,
@@ -93,14 +95,20 @@ class EntitiesListTile extends StatelessWidget {
         Material(
           color: Theme.of(context).cardColor,
           child: SelectedIndicator(
-            isSelected: isFIlterMatch,
+            isSelected: isFilterMatch,
+            isMenu: true,
             child: Padding(
               padding: const EdgeInsets.symmetric(horizontal: 10),
               child: ListTile(
                 title: Text(title),
                 subtitle: Text(subtitle ?? ''),
                 leading: Icon(getEntityIcon(entityType), size: 18.0),
-                trailing: isFiltered ? null : Icon(Icons.navigate_next),
+                trailing: isFilter
+                    ? IconButton(
+                        icon: Icon(Icons.add_circle_outline),
+                        onPressed: onLongPress,
+                      )
+                    : Icon(Icons.navigate_next),
                 onTap: onTap,
                 onLongPress: onLongPress,
               ),

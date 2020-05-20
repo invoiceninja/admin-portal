@@ -84,7 +84,8 @@ class PaymentRefundVM {
         createEntity(context: context, entity: PaymentEntity(), force: true);
         store.dispatch(UpdateCurrentRoute(state.uiState.previousRoute));
       },
-      onRefundPressed: (BuildContext context, Completer<PaymentEntity> completer) {
+      onRefundPressed:
+          (BuildContext context, Completer<PaymentEntity> completer) {
         store.dispatch(
             RefundPaymentRequest(completer: completer, payment: payment));
         return completer.future.then((savedPayment) {

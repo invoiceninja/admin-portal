@@ -66,7 +66,7 @@ final expenseListReducer = combineReducers<ListUIState>([
       _removeFromListMultiselect),
   TypedReducer<ListUIState, ClearExpenseMultiselect>(_clearListMultiselect),
   TypedReducer<ListUIState, ClearEntityFilter>(
-          (state, action) => state.rebuild((b) => b
+      (state, action) => state.rebuild((b) => b
         ..filterEntityId = null
         ..filterEntityType = null)),
 ]);

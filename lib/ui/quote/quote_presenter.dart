@@ -43,7 +43,8 @@ class QuotePresenter extends EntityPresenter {
       case QuoteFields.date:
         return Text(formatDate(quote.date, context));
       case QuoteFields.amount:
-        return Text(formatNumber(quote.amount, context, clientId: quote.clientId));
+        return Text(
+            formatNumber(quote.amount, context, clientId: quote.clientId));
       case QuoteFields.validUntil:
         return Text(formatDate(quote.dueDate, context));
     }

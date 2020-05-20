@@ -7,9 +7,11 @@ class DesignView extends StatefulWidget {
   const DesignView({
     Key key,
     @required this.viewModel,
+    @required this.isFilter,
   }) : super(key: key);
 
   final DesignViewVM viewModel;
+  final bool isFilter;
 
   @override
   _DesignViewState createState() => new _DesignViewState();
@@ -22,6 +24,7 @@ class _DesignViewState extends State<DesignView> {
     final design = viewModel.design;
 
     return ViewScaffold(
+      isFilter: widget.isFilter,
       entity: design,
       isSettings: true,
       onBackPressed: () => viewModel.onBackPressed(),

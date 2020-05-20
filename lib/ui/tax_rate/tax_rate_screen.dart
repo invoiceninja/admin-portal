@@ -36,6 +36,7 @@ class TaxRateSettingsScreen extends StatelessWidget {
     final isInMultiselect = listUIState.isInMultiselect();
 
     return ListScaffold(
+      entityType: EntityType.taxRate,
       isSettings: true,
       isChecked: isInMultiselect &&
           listUIState.selectedIds.length == viewModel.taxRateList.length,
@@ -87,6 +88,7 @@ class TaxRateSettingsScreen extends StatelessWidget {
       bottomNavigationBar: AppBottomBar(
         entityType: EntityType.taxRate,
         onlyList: true,
+        onRefreshPressed: () => store.dispatch(LoadTaxRates(force: true)),
         onSelectedSortField: (value) => store.dispatch(SortTaxRates(value)),
         sortFields: [
           TaxRateFields.updatedAt,

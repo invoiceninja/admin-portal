@@ -36,6 +36,7 @@ class CompanyGatewayScreen extends StatelessWidget {
     final isInMultiselect = listUIState.isInMultiselect();
 
     return ListScaffold(
+      entityType: EntityType.companyGateway,
       isChecked: isInMultiselect &&
           listUIState.selectedIds.length == viewModel.companyGatewayList.length,
       showCheckbox: isInMultiselect,
@@ -87,6 +88,7 @@ class CompanyGatewayScreen extends StatelessWidget {
       body: CompanyGatewayListBuilder(),
       bottomNavigationBar: AppBottomBar(
         sortFields: [],
+        onRefreshPressed: () => store.dispatch(LoadCompanyGateways(force: true)),
         onSelectedSortField: null,
         onlyList: true,
         entityType: EntityType.companyGateway,

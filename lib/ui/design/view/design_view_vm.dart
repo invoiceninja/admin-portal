@@ -15,7 +15,12 @@ import 'package:invoiceninja_flutter/ui/design/view/design_view.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 
 class DesignViewScreen extends StatelessWidget {
-  const DesignViewScreen({Key key}) : super(key: key);
+  const DesignViewScreen({
+    Key key,
+    this.isFilter = false,
+  }) : super(key: key);
+  final bool isFilter;
+
   static const String route = '/$kSettings/$kSettingsCustomDesignsView';
 
   @override
@@ -27,6 +32,7 @@ class DesignViewScreen extends StatelessWidget {
       builder: (context, vm) {
         return DesignView(
           viewModel: vm,
+          isFilter: isFilter,
         );
       },
     );

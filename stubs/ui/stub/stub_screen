@@ -13,6 +13,7 @@ import 'package:invoiceninja_flutter/ui/app/entities/entity_actions_dialog.dart'
 import 'package:invoiceninja_flutter/ui/app/list_filter.dart';
 import 'package:invoiceninja_flutter/ui/stub/stub_list_vm.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
+import 'package:invoiceninja_flutter/utils/platforms.dart';
 
 import 'stub_screen_vm.dart';
 
@@ -84,6 +85,7 @@ class StubScreen extends StatelessWidget {
       body: StubListBuilder(),
       bottomNavigationBar: AppBottomBar(
         entityType: EntityType.stub,
+        onRefreshPressed: () => store.dispatch(LoadStubs(force: true)),
         onSelectedSortField: (value) {
           store.dispatch(SortStubs(value));
         },
@@ -119,7 +121,7 @@ class StubScreen extends StatelessWidget {
         onSelectedCustom4: (value) =>
             store.dispatch(FilterStubsByCustom4(value)),
       ),
-      floatingActionButton: userCompany.canCreate(EntityType.stub)
+      floatingActionButton: isMobile(context) && userCompany.canCreate(EntityType.stub)
           ? FloatingActionButton(
               heroTag: 'stub_fab',
               backgroundColor: Theme.of(context).primaryColorDark,

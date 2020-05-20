@@ -14,6 +14,7 @@ import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/ui/payment/payment_list_vm.dart';
 import 'package:invoiceninja_flutter/redux/payment/payment_actions.dart';
 import 'package:invoiceninja_flutter/ui/app/app_bottom_bar.dart';
+import 'package:invoiceninja_flutter/utils/platforms.dart';
 
 class PaymentScreen extends StatelessWidget {
   const PaymentScreen({
@@ -34,6 +35,7 @@ class PaymentScreen extends StatelessWidget {
     final isInMultiselect = listUIState.isInMultiselect();
 
     return ListScaffold(
+      entityType: EntityType.payment,
       isChecked: isInMultiselect &&
           listUIState.selectedIds.length == viewModel.paymentList.length,
       showCheckbox: isInMultiselect,
@@ -81,6 +83,7 @@ class PaymentScreen extends StatelessWidget {
       body: PaymentListBuilder(),
       bottomNavigationBar: AppBottomBar(
         entityType: EntityType.payment,
+        onRefreshPressed: () => store.dispatch(LoadPayments(force: true)),
         onSelectedSortField: (value) => store.dispatch(SortPayments(value)),
         customValues1: company.getCustomFieldValues(CustomFieldType.payment1,
             excludeBlank: true),
@@ -114,21 +117,22 @@ class PaymentScreen extends StatelessWidget {
           }
         },
       ),
-      floatingActionButton: userCompany.canCreate(EntityType.payment)
-          ? FloatingActionButton(
-              heroTag: 'payment_fab',
-              backgroundColor: Theme.of(context).primaryColorDark,
-              onPressed: () {
-                createEntityByType(
-                    context: context, entityType: EntityType.payment);
-              },
-              child: Icon(
-                Icons.add,
-                color: Colors.white,
-              ),
-              tooltip: localization.enterPayment,
-            )
-          : null,
+      floatingActionButton:
+          isMobile(context) && userCompany.canCreate(EntityType.payment)
+              ? FloatingActionButton(
+                  heroTag: 'payment_fab',
+                  backgroundColor: Theme.of(context).primaryColorDark,
+                  onPressed: () {
+                    createEntityByType(
+                        context: context, entityType: EntityType.payment);
+                  },
+                  child: Icon(
+                    Icons.add,
+                    color: Colors.white,
+                  ),
+                  tooltip: localization.enterPayment,
+                )
+              : null,
     );
   }
 

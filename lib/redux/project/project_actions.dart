@@ -11,7 +11,8 @@ import 'package:invoiceninja_flutter/redux/project/project_selectors.dart';
 import 'package:invoiceninja_flutter/utils/completers.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 
-class ViewProjectList extends AbstractNavigatorAction implements PersistUI, StopLoading {
+class ViewProjectList extends AbstractNavigatorAction
+    implements PersistUI, StopLoading {
   ViewProjectList({@required NavigatorState navigator, this.force = false})
       : super(navigator: navigator);
 

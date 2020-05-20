@@ -17,6 +17,7 @@ class AppBottomBar extends StatefulWidget {
     @required this.entityType,
     @required this.onSelectedState,
     @required this.onCheckboxPressed,
+    @required this.onRefreshPressed,
     this.onSelectedStatus,
     this.onSelectedCustom1,
     this.onSelectedCustom2,
@@ -41,6 +42,7 @@ class AppBottomBar extends StatefulWidget {
   final Function(String) onSelectedCustom2;
   final Function(String) onSelectedCustom3;
   final Function(String) onSelectedCustom4;
+  final Function onRefreshPressed;
   final List<String> customValues1;
   final List<String> customValues2;
   final List<String> customValues3;
@@ -420,6 +422,12 @@ class _AppBottomBarState extends State<AppBottomBar> {
                         .hasCustom4Filters
                     ? Theme.of(context).accentColor
                     : null,
+              ),
+            Spacer(),
+            if (!widget.entityType.isSetting)
+              IconButton(
+                icon: Icon(Icons.refresh),
+                onPressed: widget.onRefreshPressed,
               ),
           ],
         ),

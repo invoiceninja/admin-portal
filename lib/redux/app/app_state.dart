@@ -155,19 +155,17 @@ abstract class AppState implements Built<AppState, AppStateBuilder> {
         return true;
       }).toList();
 
-  bool shouldSelectEntity({EntityType entityType, bool hasRecords}) {
-    final entityList = getEntityList(entityType);
-    final entityMap = getEntityMap(entityType);
+  bool shouldSelectEntity({EntityType entityType, List<String> entityList}) {
     final entityUIState = getUIState(entityType);
 
-    if (prefState.isMobile || entityList.isEmpty || uiState.isEditing) {
+    if (prefState.isMobile || uiState.isEditing) {
       return false;
     }
 
-    if (entityUIState.selectedId == null && !hasRecords) {
-      return false;
+    if (entityList.isEmpty) {
+      return (entityUIState.selectedId ?? '').isNotEmpty;
     } else if ((entityUIState.selectedId ?? '').isEmpty ||
-        !entityMap.containsKey(entityUIState.selectedId)) {
+        !entityList.contains(entityUIState.selectedId)) {
       return true;
     }
 
@@ -498,7 +496,8 @@ abstract class AppState implements Built<AppState, AppStateBuilder> {
   bool get isSelfHosted => authState.isSelfHost ?? false;
 
   bool get isMenuCollapsed =>
-      uiState.filterEntityType != null || prefState.isMenuCollapsed;
+      (uiState.filterEntityType != null && prefState.isNotMobile) ||
+      prefState.isMenuCollapsed;
 
   @override
   String toString() {
@@ -534,6 +533,7 @@ abstract class AppState implements Built<AppState, AppStateBuilder> {
     //return 'PLAN: ${account.plan}';
     //return 'Invoice ${invoiceUIState.editing}';
     //return 'Account: $account';
+    return 'Selected client: ${uiState.clientUIState.selectedId}, Filter: ${uiState.filterEntityType} ${uiState.filterEntityId}';
     return 'Layout: ${prefState.appLayout}, Route: ${uiState.currentRoute} Prev: ${uiState.previousRoute}';
   }
 }

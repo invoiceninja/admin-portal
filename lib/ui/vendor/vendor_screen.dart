@@ -14,6 +14,7 @@ import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/ui/vendor/vendor_list_vm.dart';
 import 'package:invoiceninja_flutter/redux/vendor/vendor_actions.dart';
 import 'package:invoiceninja_flutter/ui/app/app_bottom_bar.dart';
+import 'package:invoiceninja_flutter/utils/platforms.dart';
 
 class VendorScreen extends StatelessWidget {
   const VendorScreen({
@@ -36,6 +37,7 @@ class VendorScreen extends StatelessWidget {
     final isInMultiselect = listUIState.isInMultiselect();
 
     return ListScaffold(
+      entityType: EntityType.vendor,
       isChecked: isInMultiselect &&
           listUIState.selectedIds.length == viewModel.vendorList.length,
       showCheckbox: isInMultiselect,
@@ -83,6 +85,7 @@ class VendorScreen extends StatelessWidget {
       body: VendorListBuilder(),
       bottomNavigationBar: AppBottomBar(
         entityType: EntityType.vendor,
+        onRefreshPressed: () => store.dispatch(LoadVendors(force: true)),
         onSelectedSortField: (value) => store.dispatch(SortVendors(value)),
         customValues1: company.getCustomFieldValues(CustomFieldType.vendor1,
             excludeBlank: true),
@@ -115,21 +118,22 @@ class VendorScreen extends StatelessWidget {
           }
         },
       ),
-      floatingActionButton: userCompany.canCreate(EntityType.vendor)
-          ? FloatingActionButton(
-              heroTag: 'vendor_fab',
-              backgroundColor: Theme.of(context).primaryColorDark,
-              onPressed: () {
-                createEntityByType(
-                    context: context, entityType: EntityType.vendor);
-              },
-              child: Icon(
-                Icons.add,
-                color: Colors.white,
-              ),
-              tooltip: localization.newVendor,
-            )
-          : null,
+      floatingActionButton:
+          isMobile(context) && userCompany.canCreate(EntityType.vendor)
+              ? FloatingActionButton(
+                  heroTag: 'vendor_fab',
+                  backgroundColor: Theme.of(context).primaryColorDark,
+                  onPressed: () {
+                    createEntityByType(
+                        context: context, entityType: EntityType.vendor);
+                  },
+                  child: Icon(
+                    Icons.add,
+                    color: Colors.white,
+                  ),
+                  tooltip: localization.newVendor,
+                )
+              : null,
     );
   }
 }

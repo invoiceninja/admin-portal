@@ -8,21 +8,21 @@ class EntityStatusChip extends StatelessWidget {
   const EntityStatusChip({
     @required this.entity,
     this.addGap = false,
+    this.width = 100,
   });
 
   final BaseEntity entity;
   final bool addGap;
+  final double width;
 
   @override
   Widget build(BuildContext context) {
     final localization = AppLocalization.of(context);
     String label = '';
     Color color;
-    double width = 80;
 
     switch (entity.entityType) {
       case EntityType.payment:
-        width = 100;
         final payment = entity as PaymentEntity;
         label = kPaymentStatuses[payment.statusId];
         color = PaymentStatusColors.colors[payment.statusId];
@@ -65,7 +65,7 @@ class EntityStatusChip extends StatelessWidget {
           child: Padding(
             padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 8),
             child: Text(
-              localization.lookup(label).toUpperCase(),
+              (localization.lookup(label) ?? '').toUpperCase(),
               style: TextStyle(fontSize: 14, color: Colors.white),
               textAlign: TextAlign.center,
               overflow: TextOverflow.ellipsis,

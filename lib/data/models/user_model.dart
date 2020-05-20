@@ -60,7 +60,8 @@ class UserFields {
 abstract class UserEntity extends Object
     with BaseEntity, SelectableEntity
     implements Built<UserEntity, UserEntityBuilder> {
-  factory UserEntity({String id, AppState state, UserCompanyEntity userCompany}) {
+  factory UserEntity(
+      {String id, AppState state, UserCompanyEntity userCompany}) {
     return _$UserEntity._(
       id: id ?? BaseEntity.nextId,
       isChanged: false,
@@ -136,10 +137,14 @@ abstract class UserEntity extends Object
 
     switch (sortField) {
       case UserFields.lastName:
-        response = userA.lastName.toLowerCase().compareTo(userB.lastName.toLowerCase());
+        response = userA.lastName
+            .toLowerCase()
+            .compareTo(userB.lastName.toLowerCase());
         break;
       case UserFields.firstName:
-        response = userA.firstName.toLowerCase().compareTo(userB.firstName.toLowerCase());
+        response = userA.firstName
+            .toLowerCase()
+            .compareTo(userB.firstName.toLowerCase());
         break;
       case UserFields.email:
         response = userA.email.compareTo(userB.email);

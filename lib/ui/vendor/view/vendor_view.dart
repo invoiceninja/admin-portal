@@ -10,9 +10,11 @@ class VendorView extends StatefulWidget {
   const VendorView({
     Key key,
     @required this.viewModel,
+    @required this.isFilter,
   }) : super(key: key);
 
   final VendorViewVM viewModel;
+  final bool isFilter;
 
   @override
   _VendorViewState createState() => _VendorViewState();
@@ -41,6 +43,7 @@ class _VendorViewState extends State<VendorView>
     final vendor = viewModel.vendor;
 
     return ViewScaffold(
+      isFilter: widget.isFilter,
       entity: vendor,
       appBarBottom: TabBar(
         controller: _controller,

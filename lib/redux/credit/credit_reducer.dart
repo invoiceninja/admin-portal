@@ -135,10 +135,9 @@ final creditListReducer = combineReducers<ListUIState>([
       _removeFromListMultiselect),
   TypedReducer<ListUIState, ClearCreditMultiselect>(_clearListMultiselect),
   TypedReducer<ListUIState, ClearEntityFilter>(
-          (state, action) => state.rebuild((b) => b
+      (state, action) => state.rebuild((b) => b
         ..filterEntityId = null
         ..filterEntityType = null)),
-
 ]);
 
 ListUIState _filterCreditsByCustom1(

@@ -10,7 +10,8 @@ import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/utils/completers.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 
-class ViewPaymentList extends AbstractNavigatorAction implements PersistUI, StopLoading {
+class ViewPaymentList extends AbstractNavigatorAction
+    implements PersistUI, StopLoading {
   ViewPaymentList({@required NavigatorState navigator, this.force = false})
       : super(navigator: navigator);
 
