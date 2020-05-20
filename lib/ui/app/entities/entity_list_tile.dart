@@ -103,7 +103,12 @@ class EntitiesListTile extends StatelessWidget {
                 title: Text(title),
                 subtitle: Text(subtitle ?? ''),
                 leading: Icon(getEntityIcon(entityType), size: 18.0),
-                trailing: isFilter ? null : Icon(Icons.navigate_next),
+                trailing: isFilter
+                    ? IconButton(
+                        icon: Icon(Icons.add_circle_outline),
+                        onPressed: onLongPress,
+                      )
+                    : Icon(Icons.navigate_next),
                 onTap: onTap,
                 onLongPress: onLongPress,
               ),
