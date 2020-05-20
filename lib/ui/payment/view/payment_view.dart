@@ -83,6 +83,7 @@ class _PaymentViewState extends State<PaymentView> {
                     ),
                     ListDivider(),
                     EntityListTile(
+                      isFilter: widget.isFilter,
                       entity: client,
                       onTap: () => viewModel.onClientPressed(context),
                       onLongPress: () =>
@@ -90,6 +91,7 @@ class _PaymentViewState extends State<PaymentView> {
                     ),
                     for (final paymentable in payment.paymentables)
                       EntityListTile(
+                        isFilter: widget.isFilter,
                         entity: state.invoiceState.map[paymentable.invoiceId],
                         subtitle: formatNumber(paymentable.amount, context) +
                             ' • ' +

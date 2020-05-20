@@ -20,9 +20,11 @@ class InvoiceOverview extends StatelessWidget {
   const InvoiceOverview({
     Key key,
     @required this.viewModel,
+    @required this.isFilter,
   }) : super(key: key);
 
   final EntityViewVM viewModel;
+  final bool isFilter;
 
   @override
   Widget build(BuildContext context) {
@@ -104,6 +106,7 @@ class InvoiceOverview extends StatelessWidget {
 
     widgets.add(
       EntityListTile(
+        isFilter: isFilter,
         entity: client,
         onTap: () => viewModel.onClientPressed(context),
         onLongPress: () => viewModel.onClientPressed(context, true),
@@ -115,6 +118,7 @@ class InvoiceOverview extends StatelessWidget {
         final payment = payments.first;
         widgets.add(
           EntityListTile(
+            isFilter: isFilter,
             entity: payment,
             onTap: () => viewModel.onPaymentPressed(context, payment),
             onLongPress: () =>

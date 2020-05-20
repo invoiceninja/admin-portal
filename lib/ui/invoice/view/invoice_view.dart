@@ -94,7 +94,10 @@ class _InvoiceViewState extends State<InvoiceView>
                     children: <Widget>[
                       RefreshIndicator(
                         onRefresh: () => viewModel.onRefreshed(context),
-                        child: InvoiceOverview(viewModel: viewModel),
+                        child: InvoiceOverview(
+                          viewModel: viewModel,
+                          isFilter: widget.isFilter,
+                        ),
                       ),
                       RefreshIndicator(
                         onRefresh: () => viewModel.onRefreshed(context),

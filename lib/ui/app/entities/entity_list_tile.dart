@@ -12,6 +12,7 @@ import 'package:invoiceninja_flutter/utils/platforms.dart';
 class EntityListTile extends StatelessWidget {
   const EntityListTile({
     @required this.entity,
+    @required this.isFilter,
     this.onTap,
     this.onLongPress,
     this.subtitle,
@@ -21,6 +22,7 @@ class EntityListTile extends StatelessWidget {
   final Function onLongPress;
   final String subtitle;
   final BaseEntity entity;
+  final bool isFilter;
 
   @override
   Widget build(BuildContext context) {
@@ -30,7 +32,7 @@ class EntityListTile extends StatelessWidget {
         state.uiState.filterEntityType == entity.entityType;
 
     Widget trailingIcon = Icon(Icons.navigate_next);
-    if (isNotMobile(context)) {
+    if (isNotMobile(context) && !isFilter) {
       trailingIcon = Icon(Icons.filter_list,
           color: isFilteredBy ? Theme.of(context).accentColor : null);
     }
