@@ -38,6 +38,7 @@ class InvoiceScreen extends StatelessWidget {
     final isInMultiselect = listUIState.isInMultiselect();
 
     return ListScaffold(
+      entityType: EntityType.invoice,
       isChecked: isInMultiselect &&
           listUIState.selectedIds.length == viewModel.invoiceList.length,
       showCheckbox: isInMultiselect,

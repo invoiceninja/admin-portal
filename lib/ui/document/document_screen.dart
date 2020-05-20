@@ -36,6 +36,7 @@ class DocumentScreen extends StatelessWidget {
     final isInMultiselect = listUIState.isInMultiselect();
 
     return ListScaffold(
+      entityType: EntityType.document,
       isChecked: isInMultiselect &&
           listUIState.selectedIds.length == viewModel.documentList.length,
       showCheckbox: isInMultiselect,

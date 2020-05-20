@@ -36,6 +36,7 @@ class ProjectScreen extends StatelessWidget {
     final isInMultiselect = listUIState.isInMultiselect();
 
     return ListScaffold(
+      entityType: EntityType.project,
       isChecked: isInMultiselect &&
           listUIState.selectedIds.length == viewModel.projectList.length,
       showCheckbox: isInMultiselect,

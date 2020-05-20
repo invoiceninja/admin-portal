@@ -37,6 +37,7 @@ class TaskScreen extends StatelessWidget {
     final isInMultiselect = listUIState.isInMultiselect();
 
     return ListScaffold(
+      entityType: EntityType.task,
       isChecked: isInMultiselect &&
           listUIState.selectedIds.length == viewModel.taskList.length,
       showCheckbox: isInMultiselect,

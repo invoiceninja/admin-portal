@@ -34,6 +34,7 @@ class PaymentScreen extends StatelessWidget {
     final isInMultiselect = listUIState.isInMultiselect();
 
     return ListScaffold(
+      entityType: EntityType.payment,
       isChecked: isInMultiselect &&
           listUIState.selectedIds.length == viewModel.paymentList.length,
       showCheckbox: isInMultiselect,

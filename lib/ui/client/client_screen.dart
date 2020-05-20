@@ -37,6 +37,7 @@ class ClientScreen extends StatelessWidget {
     final isInMultiselect = listUIState.isInMultiselect();
 
     return ListScaffold(
+      entityType: EntityType.client,
       isChecked: isInMultiselect &&
           listUIState.selectedIds.length == viewModel.clientList.length,
       showCheckbox: isInMultiselect,

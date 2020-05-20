@@ -37,6 +37,7 @@ class CreditScreen extends StatelessWidget {
     final isInMultiselect = listUIState.isInMultiselect();
 
     return ListScaffold(
+      entityType: EntityType.credit,
       isChecked: isInMultiselect &&
           listUIState.selectedIds.length == viewModel.creditList.length,
       showCheckbox: isInMultiselect,

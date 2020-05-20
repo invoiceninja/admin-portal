@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
+import 'package:invoiceninja_flutter/data/models/entities.dart';
 import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/redux/dashboard/dashboard_actions.dart';
@@ -15,6 +16,7 @@ class ListScaffold extends StatelessWidget {
   const ListScaffold({
     @required this.appBarTitle,
     @required this.body,
+    this.entityType,
     this.appBarActions,
     this.bottomNavigationBar,
     this.floatingActionButton,
@@ -26,6 +28,7 @@ class ListScaffold extends StatelessWidget {
     this.showCheckbox = false,
   });
 
+  final EntityType entityType;
   final Widget body;
   final AppBottomBar bottomNavigationBar;
   final FloatingActionButton floatingActionButton;
@@ -77,6 +80,13 @@ class ListScaffold extends StatelessWidget {
             },
           ),
         ),
+      );
+    } else if (entityType != null) {
+      leading = IconButton(
+        icon: Icon(Icons.add),
+        onPressed: () {
+          createEntityByType(entityType: entityType, context: context);
+        },
       );
     }
 

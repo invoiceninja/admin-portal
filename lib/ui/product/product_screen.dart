@@ -36,6 +36,7 @@ class ProductScreen extends StatelessWidget {
     final isInMultiselect = listUIState.isInMultiselect();
 
     return ListScaffold(
+      entityType: EntityType.product,
       isChecked: isInMultiselect &&
           listUIState.selectedIds.length == viewModel.productList.length,
       showCheckbox: isInMultiselect,

@@ -36,6 +36,7 @@ class VendorScreen extends StatelessWidget {
     final isInMultiselect = listUIState.isInMultiselect();
 
     return ListScaffold(
+      entityType: EntityType.vendor,
       isChecked: isInMultiselect &&
           listUIState.selectedIds.length == viewModel.vendorList.length,
       showCheckbox: isInMultiselect,

@@ -36,6 +36,7 @@ class CompanyGatewayScreen extends StatelessWidget {
     final isInMultiselect = listUIState.isInMultiselect();
 
     return ListScaffold(
+      entityType: EntityType.companyGateway,
       isChecked: isInMultiselect &&
           listUIState.selectedIds.length == viewModel.companyGatewayList.length,
       showCheckbox: isInMultiselect,

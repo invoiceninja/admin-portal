@@ -38,6 +38,7 @@ class ExpenseScreen extends StatelessWidget {
     final isInMultiselect = listUIState.isInMultiselect();
 
     return ListScaffold(
+      entityType: EntityType.expense,
       isChecked: isInMultiselect &&
           listUIState.selectedIds.length == viewModel.expenseList.length,
       showCheckbox: isInMultiselect,

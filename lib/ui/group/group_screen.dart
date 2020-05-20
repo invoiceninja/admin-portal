@@ -38,6 +38,7 @@ class GroupSettingsScreen extends StatelessWidget {
     final isInMultiselect = listUIState.isInMultiselect();
 
     return ListScaffold(
+      entityType: EntityType.group,
       isChecked: isInMultiselect &&
           listUIState.selectedIds.length == viewModel.groupList.length,
       showCheckbox: isInMultiselect,

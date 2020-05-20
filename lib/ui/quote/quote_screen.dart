@@ -38,6 +38,7 @@ class QuoteScreen extends StatelessWidget {
     final isInMultiselect = listUIState.isInMultiselect();
 
     return ListScaffold(
+      entityType: EntityType.quote,
       isChecked: isInMultiselect &&
           listUIState.selectedIds.length == viewModel.quoteList.length,
       showCheckbox: isInMultiselect,
