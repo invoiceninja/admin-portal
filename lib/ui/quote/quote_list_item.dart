@@ -233,7 +233,7 @@ class QuoteListItem extends StatelessWidget {
                       ),
                       child: ConstrainedBox(
                         constraints: BoxConstraints(
-                          minWidth: 80,
+                          minWidth: 100,
                         ),
                         child: Padding(
                           padding: const EdgeInsets.symmetric(vertical: 8),

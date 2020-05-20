@@ -39,18 +39,18 @@ class ViewScaffold extends StatelessWidget {
 
     Widget leading;
     if (!isMobile(context)) {
-      if (isSettings) {
+      if (isFilter &&
+          entity.entityType == state.uiState.filterEntityType) {
+        leading = IconButton(
+          icon: Icon(Icons.clear),
+          onPressed: () => store.dispatch(ClearEntityFilter()),
+        );
+      } else if (isSettings) {
         leading = IconButton(
           icon: Icon(Icons.arrow_back),
           onPressed: () => onBackPressed != null
               ? onBackPressed()
               : store.dispatch(UpdateCurrentRoute(state.uiState.previousRoute)),
-        );
-      } else if (isFilter &&
-          entity.entityType == state.uiState.filterEntityType) {
-        leading = IconButton(
-          icon: Icon(Icons.clear),
-          onPressed: () => store.dispatch(ClearEntityFilter()),
         );
       } else if (isNotMobile(context)) {
         leading = Icon(getEntityIcon(entity.entityType));
