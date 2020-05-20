@@ -16,6 +16,7 @@ import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/ui/quote/quote_list_vm.dart';
 import 'package:invoiceninja_flutter/redux/quote/quote_actions.dart';
 import 'package:invoiceninja_flutter/ui/app/app_bottom_bar.dart';
+import 'package:invoiceninja_flutter/utils/platforms.dart';
 
 class QuoteScreen extends StatelessWidget {
   const QuoteScreen({
@@ -145,7 +146,7 @@ class QuoteScreen extends StatelessWidget {
           }
         },
       ),
-      floatingActionButton: userCompany.canCreate(EntityType.quote)
+      floatingActionButton: isMobile(context) && userCompany.canCreate(EntityType.quote)
           ? FloatingActionButton(
               heroTag: 'quote_fab',
               backgroundColor: Theme.of(context).primaryColorDark,

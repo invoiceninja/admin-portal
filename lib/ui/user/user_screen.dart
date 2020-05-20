@@ -16,6 +16,7 @@ import 'package:invoiceninja_flutter/ui/user/user_list_vm.dart';
 import 'package:invoiceninja_flutter/redux/user/user_actions.dart';
 import 'package:invoiceninja_flutter/ui/app/app_bottom_bar.dart';
 import 'package:invoiceninja_flutter/ui/app/entities/entity_actions_dialog.dart';
+import 'package:invoiceninja_flutter/utils/platforms.dart';
 
 class UserScreen extends StatelessWidget {
   const UserScreen({
@@ -110,7 +111,7 @@ class UserScreen extends StatelessWidget {
           }
         },
       ),
-      floatingActionButton: userCompany.canCreate(EntityType.user)
+      floatingActionButton: isMobile(context) && userCompany.canCreate(EntityType.user)
           ? FloatingActionButton(
               heroTag: 'user_fab',
               backgroundColor: Theme.of(context).primaryColorDark,

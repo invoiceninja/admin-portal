@@ -13,6 +13,7 @@ import 'package:invoiceninja_flutter/ui/app/entities/entity_actions_dialog.dart'
 import 'package:invoiceninja_flutter/ui/app/list_filter.dart';
 import 'package:invoiceninja_flutter/ui/client/client_list_vm.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
+import 'package:invoiceninja_flutter/utils/platforms.dart';
 
 import 'client_screen_vm.dart';
 
@@ -120,7 +121,7 @@ class ClientScreen extends StatelessWidget {
         onSelectedCustom4: (value) =>
             store.dispatch(FilterClientsByCustom4(value)),
       ),
-      floatingActionButton: userCompany.canCreate(EntityType.client)
+      floatingActionButton: isMobile(context) && userCompany.canCreate(EntityType.client)
           ? FloatingActionButton(
               heroTag: 'client_fab',
               backgroundColor: Theme.of(context).primaryColorDark,

@@ -13,6 +13,7 @@ import 'package:invoiceninja_flutter/ui/app/entities/entity_actions_dialog.dart'
 import 'package:invoiceninja_flutter/ui/app/list_filter.dart';
 import 'package:invoiceninja_flutter/ui/document/document_list_vm.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
+import 'package:invoiceninja_flutter/utils/platforms.dart';
 
 import 'document_screen_vm.dart';
 
@@ -109,7 +110,7 @@ class DocumentScreen extends StatelessWidget {
           }
         },
       ),
-      floatingActionButton: userCompany.canCreate(EntityType.document)
+      floatingActionButton: isMobile(context) && userCompany.canCreate(EntityType.document)
           ? FloatingActionButton(
               heroTag: 'document_fab',
               backgroundColor: Theme.of(context).primaryColorDark,

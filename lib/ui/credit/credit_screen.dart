@@ -13,6 +13,7 @@ import 'package:invoiceninja_flutter/ui/app/entities/entity_actions_dialog.dart'
 import 'package:invoiceninja_flutter/ui/app/list_filter.dart';
 import 'package:invoiceninja_flutter/ui/credit/credit_list_vm.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
+import 'package:invoiceninja_flutter/utils/platforms.dart';
 
 import 'credit_screen_vm.dart';
 
@@ -120,7 +121,7 @@ class CreditScreen extends StatelessWidget {
         onSelectedCustom4: (value) =>
             store.dispatch(FilterCreditsByCustom4(value)),
       ),
-      floatingActionButton: userCompany.canCreate(EntityType.credit)
+      floatingActionButton: isMobile(context) && userCompany.canCreate(EntityType.credit)
           ? FloatingActionButton(
               heroTag: 'credit_fab',
               backgroundColor: Theme.of(context).primaryColorDark,
