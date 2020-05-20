@@ -39,8 +39,7 @@ class ViewScaffold extends StatelessWidget {
 
     Widget leading;
     if (!isMobile(context)) {
-      if (isFilter &&
-          entity.entityType == state.uiState.filterEntityType) {
+      if (isFilter && entity.entityType == state.uiState.filterEntityType) {
         leading = IconButton(
           icon: Icon(Icons.clear),
           onPressed: () => store.dispatch(ClearEntityFilter()),

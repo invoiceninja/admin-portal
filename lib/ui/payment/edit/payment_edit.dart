@@ -272,7 +272,6 @@ class _PaymentableEditorState extends State<PaymentableEditor> {
       _creditId = paymentable.creditId;
     }
 
-
     _controllers.forEach((controller) => controller.addListener(_onChanged));
 
     super.didChangeDependencies();

@@ -136,21 +136,22 @@ class TaskScreen extends StatelessWidget {
           }
         },
       ),
-      floatingActionButton: isMobile(context) && userCompany.canCreate(EntityType.task)
-          ? FloatingActionButton(
-              heroTag: 'task_fab',
-              backgroundColor: Theme.of(context).primaryColorDark,
-              onPressed: () {
-                createEntityByType(
-                    context: context, entityType: EntityType.task);
-              },
-              child: Icon(
-                Icons.add,
-                color: Colors.white,
-              ),
-              tooltip: localization.newTask,
-            )
-          : null,
+      floatingActionButton:
+          isMobile(context) && userCompany.canCreate(EntityType.task)
+              ? FloatingActionButton(
+                  heroTag: 'task_fab',
+                  backgroundColor: Theme.of(context).primaryColorDark,
+                  onPressed: () {
+                    createEntityByType(
+                        context: context, entityType: EntityType.task);
+                  },
+                  child: Icon(
+                    Icons.add,
+                    color: Colors.white,
+                  ),
+                  tooltip: localization.newTask,
+                )
+              : null,
     );
   }
 }

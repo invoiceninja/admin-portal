@@ -8,7 +8,10 @@ import 'package:invoiceninja_flutter/ui/product/view/product_view.dart';
 import 'package:redux/redux.dart';
 
 class ProductViewScreen extends StatelessWidget {
-  const ProductViewScreen({Key key,this.isFilter = false,}) : super(key: key);
+  const ProductViewScreen({
+    Key key,
+    this.isFilter = false,
+  }) : super(key: key);
   final bool isFilter;
   static const String route = '/product/view';
 

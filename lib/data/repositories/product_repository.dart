@@ -43,7 +43,8 @@ class ProductRepository {
     return productResponse.data.toList();
   }
 
-  Future<ProductEntity> saveData(Credentials credentials, ProductEntity product) async {
+  Future<ProductEntity> saveData(
+      Credentials credentials, ProductEntity product) async {
     final data = serializers.serializeWith(ProductEntity.serializer, product);
     dynamic response;
 

@@ -8,7 +8,8 @@ import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/utils/completers.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 
-class ViewDesignList extends AbstractNavigatorAction implements PersistUI, StopLoading {
+class ViewDesignList extends AbstractNavigatorAction
+    implements PersistUI, StopLoading {
   ViewDesignList({
     @required NavigatorState navigator,
     this.force = false,

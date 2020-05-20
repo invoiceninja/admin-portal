@@ -111,21 +111,22 @@ class UserScreen extends StatelessWidget {
           }
         },
       ),
-      floatingActionButton: isMobile(context) && userCompany.canCreate(EntityType.user)
-          ? FloatingActionButton(
-              heroTag: 'user_fab',
-              backgroundColor: Theme.of(context).primaryColorDark,
-              onPressed: () {
-                createEntityByType(
-                    context: context, entityType: EntityType.user);
-              },
-              child: Icon(
-                Icons.add,
-                color: Colors.white,
-              ),
-              tooltip: localization.newUser,
-            )
-          : null,
+      floatingActionButton:
+          isMobile(context) && userCompany.canCreate(EntityType.user)
+              ? FloatingActionButton(
+                  heroTag: 'user_fab',
+                  backgroundColor: Theme.of(context).primaryColorDark,
+                  onPressed: () {
+                    createEntityByType(
+                        context: context, entityType: EntityType.user);
+                  },
+                  child: Icon(
+                    Icons.add,
+                    color: Colors.white,
+                  ),
+                  tooltip: localization.newUser,
+                )
+              : null,
     );
   }
 }

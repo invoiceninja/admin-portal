@@ -54,7 +54,8 @@ class DesignRepository {
     return designResponse.data.toList();
   }
 
-  Future<DesignEntity> saveData(Credentials credentials, DesignEntity design) async {
+  Future<DesignEntity> saveData(
+      Credentials credentials, DesignEntity design) async {
     final data = serializers.serializeWith(DesignEntity.serializer, design);
     dynamic response;
 

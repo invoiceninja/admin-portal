@@ -5,7 +5,6 @@ import 'package:flutter/material.dart';
 import 'package:invoiceninja_flutter/data/models/company_model.dart';
 import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 
-
 class SelectCompany {
   SelectCompany(this.companyIndex);
 
@@ -64,7 +63,6 @@ class DeleteCompanyFailure implements StopSaving {
 
   final Object error;
 }
-
 
 class PurgeDataRequest implements StartSaving {
   PurgeDataRequest({@required this.completer, @required this.password});

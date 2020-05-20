@@ -116,21 +116,22 @@ class PaymentScreen extends StatelessWidget {
           }
         },
       ),
-      floatingActionButton: isMobile(context) && userCompany.canCreate(EntityType.payment)
-          ? FloatingActionButton(
-              heroTag: 'payment_fab',
-              backgroundColor: Theme.of(context).primaryColorDark,
-              onPressed: () {
-                createEntityByType(
-                    context: context, entityType: EntityType.payment);
-              },
-              child: Icon(
-                Icons.add,
-                color: Colors.white,
-              ),
-              tooltip: localization.enterPayment,
-            )
-          : null,
+      floatingActionButton:
+          isMobile(context) && userCompany.canCreate(EntityType.payment)
+              ? FloatingActionButton(
+                  heroTag: 'payment_fab',
+                  backgroundColor: Theme.of(context).primaryColorDark,
+                  onPressed: () {
+                    createEntityByType(
+                        context: context, entityType: EntityType.payment);
+                  },
+                  child: Icon(
+                    Icons.add,
+                    color: Colors.white,
+                  ),
+                  tooltip: localization.enterPayment,
+                )
+              : null,
     );
   }
 

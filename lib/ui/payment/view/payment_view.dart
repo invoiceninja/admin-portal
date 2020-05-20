@@ -75,9 +75,9 @@ class _PaymentViewState extends State<PaymentView> {
                   children: <Widget>[
                     EntityHeader(
                       entity: payment,
-                      statusColor:
-                          PaymentStatusColors.colors[payment.statusId],
-                      statusLabel: localization.lookup('payment_status_${payment.statusId}'),
+                      statusColor: PaymentStatusColors.colors[payment.statusId],
+                      statusLabel: localization
+                          .lookup('payment_status_${payment.statusId}'),
                       label: localization.amount,
                       value: formatNumber(payment.amount, context,
                           clientId: client.id),

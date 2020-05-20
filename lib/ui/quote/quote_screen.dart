@@ -146,21 +146,22 @@ class QuoteScreen extends StatelessWidget {
           }
         },
       ),
-      floatingActionButton: isMobile(context) && userCompany.canCreate(EntityType.quote)
-          ? FloatingActionButton(
-              heroTag: 'quote_fab',
-              backgroundColor: Theme.of(context).primaryColorDark,
-              onPressed: () {
-                createEntityByType(
-                    context: context, entityType: EntityType.quote);
-              },
-              child: Icon(
-                Icons.add,
-                color: Colors.white,
-              ),
-              tooltip: localization.newQuote,
-            )
-          : null,
+      floatingActionButton:
+          isMobile(context) && userCompany.canCreate(EntityType.quote)
+              ? FloatingActionButton(
+                  heroTag: 'quote_fab',
+                  backgroundColor: Theme.of(context).primaryColorDark,
+                  onPressed: () {
+                    createEntityByType(
+                        context: context, entityType: EntityType.quote);
+                  },
+                  child: Icon(
+                    Icons.add,
+                    color: Colors.white,
+                  ),
+                  tooltip: localization.newQuote,
+                )
+              : null,
     );
   }
 }

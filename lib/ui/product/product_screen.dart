@@ -116,21 +116,22 @@ class ProductScreen extends StatelessWidget {
           }
         },
       ),
-      floatingActionButton: isMobile(context) && userCompany.canCreate(EntityType.product)
-          ? FloatingActionButton(
-              heroTag: 'product_fab',
-              backgroundColor: Theme.of(context).primaryColorDark,
-              onPressed: () {
-                createEntityByType(
-                    context: context, entityType: EntityType.product);
-              },
-              child: Icon(
-                Icons.add,
-                color: Colors.white,
-              ),
-              tooltip: localization.newProduct,
-            )
-          : null,
+      floatingActionButton:
+          isMobile(context) && userCompany.canCreate(EntityType.product)
+              ? FloatingActionButton(
+                  heroTag: 'product_fab',
+                  backgroundColor: Theme.of(context).primaryColorDark,
+                  onPressed: () {
+                    createEntityByType(
+                        context: context, entityType: EntityType.product);
+                  },
+                  child: Icon(
+                    Icons.add,
+                    color: Colors.white,
+                  ),
+                  tooltip: localization.newProduct,
+                )
+              : null,
     );
   }
 }

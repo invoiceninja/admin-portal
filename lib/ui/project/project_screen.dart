@@ -117,19 +117,20 @@ class ProjectScreen extends StatelessWidget {
           }
         },
       ),
-      floatingActionButton: isMobile(context) && userCompany.canCreate(EntityType.project)
-          ? FloatingActionButton(
-              heroTag: 'project_fab',
-              backgroundColor: Theme.of(context).primaryColorDark,
-              onPressed: () => createEntityByType(
-                  context: context, entityType: EntityType.project),
-              child: Icon(
-                Icons.add,
-                color: Colors.white,
-              ),
-              tooltip: localization.newProject,
-            )
-          : null,
+      floatingActionButton:
+          isMobile(context) && userCompany.canCreate(EntityType.project)
+              ? FloatingActionButton(
+                  heroTag: 'project_fab',
+                  backgroundColor: Theme.of(context).primaryColorDark,
+                  onPressed: () => createEntityByType(
+                      context: context, entityType: EntityType.project),
+                  child: Icon(
+                    Icons.add,
+                    color: Colors.white,
+                  ),
+                  tooltip: localization.newProject,
+                )
+              : null,
     );
   }
 }

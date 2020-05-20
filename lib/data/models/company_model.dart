@@ -686,7 +686,6 @@ abstract class TokenEntity implements Built<TokenEntity, TokenEntityBuilder> {
 
 abstract class SettingsEntity
     implements Built<SettingsEntity, SettingsEntityBuilder> {
-
   factory SettingsEntity({
     SettingsEntity companySettings,
     SettingsEntity groupSettings,
@@ -1137,7 +1136,6 @@ abstract class SettingsEntity
 
   static const EMAIL_SENDING_METHOD_DEFAULT = 'default';
   static const EMAIL_SENDING_METHOD_GMAIL = 'gmail';
-
 
   @nullable
   @BuiltValueField(wireName: 'timezone_id')
@@ -1754,7 +1752,6 @@ abstract class SettingsEntity
   @nullable
   @BuiltValueField(wireName: 'gmail_sending_user_id')
   String get gmailSendingUserId;
-
 
   // TODO remove this field
   @nullable

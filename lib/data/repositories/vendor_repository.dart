@@ -54,7 +54,8 @@ class VendorRepository {
     return vendorResponse.data.toList();
   }
 
-  Future<VendorEntity> saveData(Credentials credentials, VendorEntity vendor) async {
+  Future<VendorEntity> saveData(
+      Credentials credentials, VendorEntity vendor) async {
     final data = serializers.serializeWith(VendorEntity.serializer, vendor);
     dynamic response;
 

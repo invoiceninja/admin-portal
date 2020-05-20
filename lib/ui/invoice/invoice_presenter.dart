@@ -43,9 +43,11 @@ class InvoicePresenter extends EntityPresenter {
       case InvoiceFields.invoiceDate:
         return Text(formatDate(invoice.date, context));
       case InvoiceFields.amount:
-        return Text(formatNumber(invoice.amount, context, clientId: invoice.clientId));
+        return Text(
+            formatNumber(invoice.amount, context, clientId: invoice.clientId));
       case InvoiceFields.balance:
-        return Text(formatNumber(invoice.balance, context, clientId: invoice.clientId));
+        return Text(
+            formatNumber(invoice.balance, context, clientId: invoice.clientId));
       case InvoiceFields.dueDate:
         return Text(formatDate(invoice.dueDate, context));
     }

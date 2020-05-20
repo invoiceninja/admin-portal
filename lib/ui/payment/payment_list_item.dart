@@ -187,8 +187,8 @@ class PaymentListItem extends StatelessWidget {
                       maxLines: 3,
                       overflow: TextOverflow.ellipsis,
                       style: Theme.of(context).textTheme.subtitle2.copyWith(
-                        color: textColor.withOpacity(0.65),
-                      ),
+                            color: textColor.withOpacity(0.65),
+                          ),
                     ),
                   ],
                 ),

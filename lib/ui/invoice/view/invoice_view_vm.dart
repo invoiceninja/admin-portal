@@ -18,7 +18,10 @@ import 'package:invoiceninja_flutter/utils/platforms.dart';
 import 'package:redux/redux.dart';
 
 class InvoiceViewScreen extends StatelessWidget {
-  const InvoiceViewScreen({Key key,this.isFilter = false,}) : super(key: key);
+  const InvoiceViewScreen({
+    Key key,
+    this.isFilter = false,
+  }) : super(key: key);
   final bool isFilter;
   static const String route = '/invoice/view';
 

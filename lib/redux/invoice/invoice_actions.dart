@@ -11,7 +11,8 @@ import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:invoiceninja_flutter/utils/pdf.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-class ViewInvoiceList extends AbstractNavigatorAction implements PersistUI, StopLoading {
+class ViewInvoiceList extends AbstractNavigatorAction
+    implements PersistUI, StopLoading {
   ViewInvoiceList({@required NavigatorState navigator, this.force = false})
       : super(navigator: navigator);
 

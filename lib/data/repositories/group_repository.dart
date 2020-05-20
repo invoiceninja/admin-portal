@@ -54,7 +54,8 @@ class GroupRepository {
     return groupResponse.data.toList();
   }
 
-  Future<GroupEntity> saveData(Credentials credentials, GroupEntity group) async {
+  Future<GroupEntity> saveData(
+      Credentials credentials, GroupEntity group) async {
     final data = serializers.serializeWith(GroupEntity.serializer, group);
     dynamic response;
 

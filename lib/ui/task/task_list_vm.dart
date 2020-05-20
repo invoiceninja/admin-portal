@@ -58,10 +58,8 @@ class TaskListBuilder extends StatelessWidget {
                 userCompany: viewModel.state.userCompany,
                 filter: viewModel.filter,
                 task: task,
-                client:
-                    viewModel.clientMap[task.clientId] ?? ClientEntity(),
-                project:
-                    viewModel.state.projectState.map[task.projectId],
+                client: viewModel.clientMap[task.clientId] ?? ClientEntity(),
+                project: viewModel.state.projectState.map[task.projectId],
                 onTap: () => viewModel.onTaskTap(context, task),
                 onEntityAction: (EntityAction action) {
                   if (action == EntityAction.more) {
@@ -72,7 +70,8 @@ class TaskListBuilder extends StatelessWidget {
                 },
                 onLongPress: () async {
                   final longPressIsSelection =
-                      viewModel.state.prefState.longPressSelectionIsDefault ?? true;
+                      viewModel.state.prefState.longPressSelectionIsDefault ??
+                          true;
                   if (longPressIsSelection && !isInMultiselect) {
                     handleTaskAction(
                         context, [task], EntityAction.toggleMultiselect);

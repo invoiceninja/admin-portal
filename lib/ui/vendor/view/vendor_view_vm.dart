@@ -14,7 +14,10 @@ import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:redux/redux.dart';
 
 class VendorViewScreen extends StatelessWidget {
-  const VendorViewScreen({Key key,this.isFilter = false,}) : super(key: key);
+  const VendorViewScreen({
+    Key key,
+    this.isFilter = false,
+  }) : super(key: key);
   final bool isFilter;
   static const String route = '/vendor/view';
 
