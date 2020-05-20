@@ -207,6 +207,7 @@ class _HistoryListTileState extends State<HistoryListTile> {
 
          */
         onTap: () {
+          store.dispatch(ClearEntityFilter());
           if (state.prefState.isHistoryFloated) {
             Navigator.pop(context);
           }
@@ -236,7 +237,9 @@ class _HistoryListTileState extends State<HistoryListTile> {
                   client: state.clientState.map[clientId],
                   completer: state.prefState.isHistoryFloated
                       ? (Completer<Null>()
-                        ..future.then((value) => Navigator.pop(context)))
+                        ..future.then((value) {
+                          Navigator.pop(context);
+                        }))
                       : null,
                 );
               },
