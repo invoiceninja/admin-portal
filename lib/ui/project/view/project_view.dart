@@ -109,6 +109,7 @@ class _ProjectViewState extends State<ProjectView> {
                 height: 12.0,
               ),
               EntitiesListTile(
+                isFilter: widget.isFilter,
                 entityType: EntityType.task,
                 title: localization.tasks,
                 onTap: () => viewModel.onTasksPressed(context),

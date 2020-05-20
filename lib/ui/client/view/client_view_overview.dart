@@ -12,13 +12,11 @@ import 'package:invoiceninja_flutter/redux/quote/quote_selectors.dart';
 import 'package:invoiceninja_flutter/redux/task/task_selectors.dart';
 import 'package:invoiceninja_flutter/ui/app/FieldGrid.dart';
 import 'package:invoiceninja_flutter/ui/app/entities/entity_list_tile.dart';
-import 'package:invoiceninja_flutter/ui/app/entities/entity_state_title.dart';
 import 'package:invoiceninja_flutter/ui/app/entity_header.dart';
 import 'package:invoiceninja_flutter/ui/app/icon_message.dart';
 import 'package:invoiceninja_flutter/ui/app/lists/list_divider.dart';
 import 'package:invoiceninja_flutter/ui/client/view/client_view_vm.dart';
 import 'package:invoiceninja_flutter/utils/formatting.dart';
-import 'package:invoiceninja_flutter/utils/icons.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 
 class ClientOverview extends StatelessWidget {
@@ -105,6 +103,7 @@ class ClientOverview extends StatelessWidget {
         FieldGrid(fields),
         ListDivider(),
         EntitiesListTile(
+          isFilter: isFilter,
           entityType: EntityType.invoice,
           title: localization.invoices,
           onTap: () => viewModel.onEntityPressed(context, EntityType.invoice),
@@ -115,6 +114,7 @@ class ClientOverview extends StatelessWidget {
                   .present(localization.active, localization.archived),
         ),
         EntitiesListTile(
+          isFilter: isFilter,
           entityType: EntityType.payment,
           title: localization.payments,
           onTap: () => viewModel.onEntityPressed(context, EntityType.payment),
@@ -126,6 +126,7 @@ class ClientOverview extends StatelessWidget {
         ),
         if (company.isModuleEnabled(EntityType.quote))
           EntitiesListTile(
+            isFilter: isFilter,
             entityType: EntityType.quote,
             title: localization.quotes,
             onTap: () => viewModel.onEntityPressed(context, EntityType.quote),
@@ -137,6 +138,7 @@ class ClientOverview extends StatelessWidget {
           ),
         if (company.isModuleEnabled(EntityType.credit))
           EntitiesListTile(
+            isFilter: isFilter,
             entityType: EntityType.credit,
             title: localization.credits,
             onTap: () => viewModel.onEntityPressed(context, EntityType.credit),
@@ -148,6 +150,7 @@ class ClientOverview extends StatelessWidget {
           ),
         if (company.isModuleEnabled(EntityType.project))
           EntitiesListTile(
+            isFilter: isFilter,
             entityType: EntityType.project,
             title: localization.projects,
             onTap: () => viewModel.onEntityPressed(context, EntityType.project),
@@ -159,6 +162,7 @@ class ClientOverview extends StatelessWidget {
           ),
         if (company.isModuleEnabled(EntityType.task))
           EntitiesListTile(
+            isFilter: isFilter,
             entityType: EntityType.task,
             title: localization.tasks,
             onTap: () => viewModel.onEntityPressed(context, EntityType.task),
@@ -169,6 +173,7 @@ class ClientOverview extends StatelessWidget {
           ),
         if (company.isModuleEnabled(EntityType.expense))
           EntitiesListTile(
+            isFilter: isFilter,
             entityType: EntityType.expense,
             title: localization.expenses,
             onTap: () => viewModel.onEntityPressed(context, EntityType.expense),

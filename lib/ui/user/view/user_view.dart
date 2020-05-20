@@ -44,6 +44,7 @@ class UserView extends StatelessWidget {
             height: 1.0,
           ),
           EntitiesListTile(
+            isFilter: isFilter,
             title: localization.invoices,
             onTap: () => viewModel.onEntityPressed(context, EntityType.invoice),
             onLongPress: () =>
@@ -53,6 +54,7 @@ class UserView extends StatelessWidget {
                     .present(localization.active, localization.archived),
           ),
           EntitiesListTile(
+            isFilter: isFilter,
             entityType: EntityType.payment,
             title: localization.payments,
             onTap: () => viewModel.onEntityPressed(context, EntityType.payment),
@@ -64,6 +66,7 @@ class UserView extends StatelessWidget {
           ),
           company.isModuleEnabled(EntityType.quote)
               ? EntitiesListTile(
+                  isFilter: isFilter,
                   entityType: EntityType.quote,
                   title: localization.quotes,
                   onTap: () =>

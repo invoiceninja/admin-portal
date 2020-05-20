@@ -55,6 +55,7 @@ class _GroupViewState extends State<GroupView> {
           ),
           ListDivider(),
           EntitiesListTile(
+            isFilter: widget.isFilter,
             entityType: EntityType.client,
             title: localization.clients,
             onTap: () => viewModel.onClientsPressed(context),

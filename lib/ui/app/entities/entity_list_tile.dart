@@ -71,6 +71,7 @@ class EntitiesListTile extends StatelessWidget {
     this.onLongPress,
     this.title,
     this.subtitle,
+    @required this.isFilter,
   });
 
   final Function onTap;
@@ -78,16 +79,15 @@ class EntitiesListTile extends StatelessWidget {
   final EntityType entityType;
   final String title;
   final String subtitle;
+  final bool isFilter;
 
   @override
   Widget build(BuildContext context) {
     final store = StoreProvider.of<AppState>(context);
     final state = store.state;
     final mainRoute = state.uiState.mainRoute;
-    final isFiltered =
-        isNotMobile(context) && state.uiState.filterEntityType != null;
-    final isFIlterMatch =
-        isFiltered && entityType.toString() == mainRoute.replaceFirst('/', '');
+    final isFilterMatch =
+        isFilter && entityType.toString() == mainRoute.replaceFirst('/', '');
 
     return Column(
       mainAxisSize: MainAxisSize.min,
@@ -95,7 +95,7 @@ class EntitiesListTile extends StatelessWidget {
         Material(
           color: Theme.of(context).cardColor,
           child: SelectedIndicator(
-            isSelected: isFIlterMatch,
+            isSelected: isFilterMatch,
             isMenu: true,
             child: Padding(
               padding: const EdgeInsets.symmetric(horizontal: 10),
@@ -103,7 +103,7 @@ class EntitiesListTile extends StatelessWidget {
                 title: Text(title),
                 subtitle: Text(subtitle ?? ''),
                 leading: Icon(getEntityIcon(entityType), size: 18.0),
-                trailing: isFiltered ? null : Icon(Icons.navigate_next),
+                trailing: isFilter ? null : Icon(Icons.navigate_next),
                 onTap: onTap,
                 onLongPress: onLongPress,
               ),
