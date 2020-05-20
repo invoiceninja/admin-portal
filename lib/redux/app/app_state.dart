@@ -158,12 +158,12 @@ abstract class AppState implements Built<AppState, AppStateBuilder> {
   bool shouldSelectEntity({EntityType entityType, List<String> entityList}) {
     final entityUIState = getUIState(entityType);
 
-    if (prefState.isMobile || entityList.isEmpty || uiState.isEditing) {
+    if (prefState.isMobile || uiState.isEditing) {
       return false;
     }
 
-    if ((entityUIState.selectedId ?? '').isNotEmpty && entityList.isEmpty) {
-      return true;
+    if (entityList.isEmpty) {
+      return (entityUIState.selectedId ?? '').isNotEmpty;
     } else if ((entityUIState.selectedId ?? '').isEmpty ||
         !entityList.contains(entityUIState.selectedId)) {
       return true;
