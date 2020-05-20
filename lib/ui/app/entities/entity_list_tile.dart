@@ -47,7 +47,7 @@ class EntityListTile extends StatelessWidget {
             child: ListTile(
               title: EntityStateTitle(entity: entity),
               subtitle: subtitle != null && subtitle.isNotEmpty
-                  ? Text(subtitle)
+                  ? Text(subtitle ?? '')
                   : null,
               leading: Icon(getEntityIcon(entity.entityType), size: 18.0),
               trailing: trailingIcon,
