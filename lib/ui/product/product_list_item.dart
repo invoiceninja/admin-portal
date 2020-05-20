@@ -4,10 +4,12 @@ import 'package:flutter_redux/flutter_redux.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
+import 'package:invoiceninja_flutter/redux/ui/pref_state.dart';
 import 'package:invoiceninja_flutter/ui/app/actions_menu_button.dart';
 import 'package:invoiceninja_flutter/ui/app/dismissible_entity.dart';
 import 'package:invoiceninja_flutter/ui/app/entity_state_label.dart';
 import 'package:invoiceninja_flutter/utils/formatting.dart';
+import 'package:invoiceninja_flutter/utils/platforms.dart';
 
 class ProductListItem extends StatelessWidget {
   const ProductListItem({
@@ -182,7 +184,9 @@ class ProductListItem extends StatelessWidget {
       userCompany: userCompany,
       entity: product,
       onEntityAction: onEntityAction,
-      child: store.state.prefState.isMobile ? _buildMobile() : _buildDesktop(),
+      child: calculateLayout(context, breakOutTablet: true) == AppLayout.desktop
+          ? _buildDesktop()
+          : _buildMobile(),
     );
   }
 }

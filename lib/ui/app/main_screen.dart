@@ -258,17 +258,24 @@ class MainScreen extends StatelessWidget {
             child: SafeArea(
               child: FocusTraversalGroup(
                 policy: WidgetOrderTraversalPolicy(),
-                child: Row(children: <Widget>[
-                  if (prefState.showMenu) ...[
-                    MenuDrawerBuilder(),
-                    _CustomDivider(),
+                child: Column(
+                  mainAxisSize: MainAxisSize.max,
+                  children: [
+                    Expanded(
+                      child: Row(children: <Widget>[
+                        if (prefState.showMenu) ...[
+                          MenuDrawerBuilder(),
+                          _CustomDivider(),
+                        ],
+                        Expanded(
+                            child: AppBorder(
+                          child: screen,
+                          isLeft: true,
+                        )),
+                      ]),
+                    ),
                   ],
-                  Expanded(
-                      child: AppBorder(
-                    child: screen,
-                    isLeft: true,
-                  )),
-                ]),
+                ),
               ),
             ),
           );

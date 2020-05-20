@@ -59,7 +59,7 @@ const double kMobileDialogPadding = 12;
 const double kDrawerWidth = 300;
 const double kTableColumnGap = 20;
 
-const double kTabletLayoutWidth = 1000;
+const double kTabletLayoutWidth = 1100;
 const double kTabletDialogPadding = 250;
 
 const double kTableColumnWidthMin = 50;
