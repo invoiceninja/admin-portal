@@ -424,10 +424,11 @@ class _AppBottomBarState extends State<AppBottomBar> {
                     : null,
               ),
             Spacer(),
-            IconButton(
-              icon: Icon(Icons.refresh),
-              onPressed: widget.onRefreshPressed,
-            ),
+            if (!widget.entityType.isSetting)
+              IconButton(
+                icon: Icon(Icons.refresh),
+                onPressed: widget.onRefreshPressed,
+              ),
           ],
         ),
       );
