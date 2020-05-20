@@ -106,7 +106,6 @@ class _EntityListState extends State<EntityList> {
     if (state.shouldSelectEntity(
         entityType: entityType, entityList: entityList)) {
       WidgetsBinding.instance.addPostFrameCallback((duration) {
-        print('## viewEntityById: $entityType, ${entityList.isEmpty ? null : entityList.first}');
         viewEntityById(
           context: context,
           entityType: entityType,
