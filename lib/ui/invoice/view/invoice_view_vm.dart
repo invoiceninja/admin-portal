@@ -160,6 +160,7 @@ class InvoiceViewVM extends EntityViewVM {
         } else if (isMobile(context)) {
           viewEntity(context: context, entity: payment);
         } else {
+          print('## FILTER PAYMENT: ${payment.id}');
           store.dispatch(FilterInvoicesByEntity(
               entityType: EntityType.payment, entityId: payment.id));
         }

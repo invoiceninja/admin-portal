@@ -114,8 +114,7 @@ class InvoiceOverview extends StatelessWidget {
     );
 
     if (payments.isNotEmpty) {
-      if (payments.length == 1) {
-        final payment = payments.first;
+      payments.forEach((payment) {
         widgets.add(
           EntityListTile(
             isFilter: isFilter,
@@ -129,15 +128,7 @@ class InvoiceOverview extends StatelessWidget {
                     formatDate(payment.date, context),
           ),
         );
-      } else {
-        widgets.add(
-          EntitiesListTile(
-            entityType: EntityType.payment,
-            title: localization.payments,
-            onTap: () => viewModel.onPaymentsPressed(context),
-          ),
-        );
-      }
+      });
 
       widgets.addAll([
         ListDivider(),
