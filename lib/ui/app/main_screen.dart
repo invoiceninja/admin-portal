@@ -32,20 +32,11 @@ import 'package:invoiceninja_flutter/utils/platforms.dart';
 import 'package:invoiceninja_flutter/ui/app/app_border.dart';
 import 'package:redux/redux.dart';
 
-class MainScreen extends StatefulWidget {
+class MainScreen extends StatelessWidget {
   static const String route = '/main';
 
   @override
-  _MainScreenState createState() => _MainScreenState();
-}
-
-class _MainScreenState extends State<MainScreen> {
-  bool _dismissedChangeToMobile;
-
-  @override
   Widget build(BuildContext context) {
-    final localization = AppLocalization.of(context);
-
     return StoreBuilder(
         onInit: (Store<AppState> store) => store.dispatch(LoadClients()),
         builder: (BuildContext context, Store<AppState> store) {
@@ -270,62 +261,18 @@ class _MainScreenState extends State<MainScreen> {
             child: SafeArea(
               child: FocusTraversalGroup(
                 policy: WidgetOrderTraversalPolicy(),
-                child: Column(
-                  mainAxisSize: MainAxisSize.max,
-                  children: [
-                    if (calculateLayout(context) == AppLayout.mobile &&
-                        !_dismissedChangeToMobile)
-                      Material(
-                        color: Colors.orange,
-                        child: Padding(
-                          padding: const EdgeInsets.only(left: 10),
-                          child: Row(
-                            children: [
-                              Expanded(
-                                child: IconText(
-                                  icon: Icons.info_outline,
-                                  text: localization.changeToMobileLayout,
-                                ),
-                              ),
-                              FlatButton(
-                                child: Text(localization.change.toUpperCase()),
-                                onPressed: () {
-                                  store.dispatch(UserSettingsChanged(
-                                      layout: AppLayout.mobile));
-                                  AppBuilder.of(context).rebuild();
-                                  WidgetsBinding.instance
-                                      .addPostFrameCallback((duration) {
-                                    store.dispatch(ViewDashboard(
-                                        navigator: Navigator.of(context),
-                                        force: true));
-                                  });
-                                },
-                              ),
-                              FlatButton(
-                                child: Text(localization.dismiss.toUpperCase()),
-                                onPressed: () {
-                                  setState(
-                                      () => _dismissedChangeToMobile = true);
-                                },
-                              ),
-                            ],
-                          ),
-                        ),
-                      ),
+                child: ChangeLayoutBanner(
+                  child: Row(children: <Widget>[
+                    if (prefState.showMenu) ...[
+                      MenuDrawerBuilder(),
+                      _CustomDivider(),
+                    ],
                     Expanded(
-                      child: Row(children: <Widget>[
-                        if (prefState.showMenu) ...[
-                          MenuDrawerBuilder(),
-                          _CustomDivider(),
-                        ],
-                        Expanded(
-                            child: AppBorder(
-                          child: screen,
-                          isLeft: true,
-                        )),
-                      ]),
-                    ),
-                  ],
+                        child: AppBorder(
+                      child: screen,
+                      isLeft: true,
+                    )),
+                  ]),
                 ),
               ),
             ),
@@ -612,6 +559,83 @@ class _CustomDivider extends StatelessWidget {
       width: .5,
       height: double.infinity,
       color: Colors.black38,
+    );
+  }
+}
+
+class ChangeLayoutBanner extends StatefulWidget {
+  const ChangeLayoutBanner({this.child});
+
+  final Widget child;
+
+  @override
+  _ChangeLayoutBannerState createState() => _ChangeLayoutBannerState();
+}
+
+class _ChangeLayoutBannerState extends State<ChangeLayoutBanner> {
+  bool _dismissedChange = false;
+
+  @override
+  Widget build(BuildContext context) {
+    final store = StoreProvider.of<AppState>(context);
+    final localization = AppLocalization.of(context);
+
+    final layout = store.state.prefState.appLayout;
+    final calculatedLayout = calculateLayout(context, breakOutTablet: true);
+    String message;
+
+    if (!_dismissedChange) {
+      if (layout == AppLayout.mobile && calculatedLayout == AppLayout.desktop) {
+        message = localization.changeToDekstopLayout;
+      } else if (layout == AppLayout.desktop && calculatedLayout == AppLayout.mobile) {
+        message = localization.changeToMobileLayout;
+      }
+    }
+
+    if (message == null) {
+      return widget.child;
+    }
+
+    return Column(
+      children: [
+        Material(
+          color: Colors.orange,
+          child: Padding(
+            padding: const EdgeInsets.only(left: 10),
+            child: Row(
+              children: [
+                Expanded(
+                  child: IconText(
+                    icon: Icons.info_outline,
+                    text: message,
+                  ),
+                ),
+                FlatButton(
+                  child: Text(localization.change.toUpperCase()),
+                  onPressed: () {
+                    store.dispatch(
+                        UserSettingsChanged(layout: AppLayout.mobile));
+                    AppBuilder.of(context).rebuild();
+                    WidgetsBinding.instance.addPostFrameCallback((duration) {
+                      store.dispatch(ViewDashboard(
+                          navigator: Navigator.of(context), force: true));
+                    });
+                  },
+                ),
+                FlatButton(
+                  child: Text(localization.dismiss.toUpperCase()),
+                  onPressed: () {
+                    setState(() => _dismissedChange = true);
+                  },
+                ),
+              ],
+            ),
+          ),
+        ),
+        Expanded(
+          child: widget.child,
+        )
+      ],
     );
   }
 }
