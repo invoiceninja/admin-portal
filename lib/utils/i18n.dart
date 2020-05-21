@@ -17,6 +17,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       // STARTER: lang key - do not remove comment
       'change': 'Change',
       'change_to_mobile_layout': 'Change to the mobile layout?',
+      'change_to_desktop_layout': 'Change to the desktop layout?',
       'send_from_gmail': 'Send from Gmail',
       'reversed': 'Reversed',
       'cancelled': 'Cancelled',
@@ -36524,6 +36525,9 @@ mixin LocalizationsProvider on LocaleCodeAware {
 
   String get changeToMobileLayout =>
       _localizedValues[localeCode]['change_to_mobile_layout'] ?? '';
+
+  String get changeToDekstopLayout =>
+      _localizedValues[localeCode]['change_to_desktop_layout'] ?? '';
 
   String get change =>
       _localizedValues[localeCode]['change'] ?? '';
