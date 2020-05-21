@@ -16,6 +16,7 @@ import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:invoiceninja_flutter/ui/app/form_card.dart';
 import 'package:invoiceninja_flutter/utils/platforms.dart';
 import 'package:invoiceninja_flutter/.env.dart';
+import 'package:flutter_auth_buttons/flutter_auth_buttons.dart';
 
 class LoginView extends StatefulWidget {
   const LoginView({
@@ -577,24 +578,26 @@ class _LoginState extends State<LoginView> {
                         padding: EdgeInsets.only(top: 25, bottom: 10),
                         child: viewModel.isLoading
                             ? LoadingIndicator(height: 48)
-                            : _createAccount
-                                ? ElevatedButton(
-                                    width: double.infinity,
-                                    label: (_emailLogin
-                                            ? localization.signUp
-                                            : localization.googleSignUp)
-                                        .toUpperCase(),
-                                    onPressed: () => _submitSignUpForm(),
+                            : _emailLogin
+                                ? RaisedButton.icon(
+                                    icon: Icon(Icons.mail),
+                                    color: convertHexStringToColor('#4285F4'),
+                                    label: Padding(
+                                      padding: const EdgeInsets.only(left: 4),
+                                      child: Text(
+                                        localization.emailSignIn,
+                                        style: TextStyle(fontSize: 18),
+                                      ),
+                                    ),
+                                    onPressed: () => _createAccount
+                                        ? _submitSignUpForm()
+                                        : _submitLoginForm(),
                                   )
-                                : ElevatedButton(
-                                    width: double.infinity,
-                                    label: (_emailLogin
-                                            ? (_recoverPassword
-                                                ? localization.submit
-                                                : localization.login)
-                                            : localization.googleLogin)
-                                        .toUpperCase(),
-                                    onPressed: () => _submitLoginForm(),
+                                : GoogleSignInButton(
+                                    onPressed: () => _createAccount
+                                        ? _submitSignUpForm()
+                                        : _submitLoginForm(),
+                                    darkMode: true,
                                   )),
                     if (!isOneTimePassword)
                       Column(
