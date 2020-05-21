@@ -60,11 +60,11 @@ class EntityType extends EnumClass {
   }
 
   bool get isSetting => [
-    EntityType.taxRate,
-    EntityType.companyGateway,
-    EntityType.user,
-    EntityType.group,
-  ].contains(this);
+        EntityType.taxRate,
+        EntityType.companyGateway,
+        EntityType.user,
+        EntityType.group,
+      ].contains(this);
 
   static BuiltSet<EntityType> get values => _$typeValues;
 
