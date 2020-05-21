@@ -11,6 +11,10 @@ abstract class CountryListResponse
       _$CountryListResponse;
   CountryListResponse._();
 
+  @override
+  @memoized
+  int get hashCode;
+
   BuiltList<CountryEntity> get data;
 
   static Serializer<CountryListResponse> get serializer =>
@@ -22,6 +26,10 @@ abstract class CountryItemResponse
   factory CountryItemResponse([void updates(CountryItemResponseBuilder b)]) =
       _$CountryItemResponse;
   CountryItemResponse._();
+
+  @override
+  @memoized
+  int get hashCode;
 
   CountryEntity get data;
 
@@ -53,6 +61,10 @@ abstract class CountryEntity extends Object
     );
   }
   CountryEntity._();
+
+  @override
+  @memoized
+  int get hashCode;
 
   String get name;
 

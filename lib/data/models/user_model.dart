@@ -16,6 +16,10 @@ abstract class UserListResponse
 
   UserListResponse._();
 
+  @override
+  @memoized
+  int get hashCode;
+
   BuiltList<UserEntity> get data;
 
   static Serializer<UserListResponse> get serializer =>
@@ -28,6 +32,10 @@ abstract class UserItemResponse
       _$UserItemResponse;
 
   UserItemResponse._();
+
+  @override
+  @memoized
+  int get hashCode;
 
   UserEntity get data;
 
@@ -42,6 +50,10 @@ abstract class UserCompanyItemResponse
       _$UserCompanyItemResponse;
 
   UserCompanyItemResponse._();
+
+  @override
+  @memoized
+  int get hashCode;
 
   UserCompanyEntity get data;
 
@@ -84,6 +96,10 @@ abstract class UserEntity extends Object
   }
 
   UserEntity._();
+
+  @override
+  @memoized
+  int get hashCode;
 
   @override
   EntityType get entityType {

@@ -198,9 +198,10 @@ class _$DashboardUIState extends DashboardUIState {
         currencyId == other.currencyId;
   }
 
+  int __hashCode;
   @override
   int get hashCode {
-    return $jf($jc(
+    return __hashCode ??= $jf($jc(
         $jc(
             $jc(
                 $jc(

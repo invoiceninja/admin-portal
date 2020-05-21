@@ -22,6 +22,10 @@ abstract class ProjectState
   }
   ProjectState._();
 
+  @override
+  @memoized
+  int get hashCode;
+
   @nullable
   int get lastUpdated;
 
@@ -66,6 +70,10 @@ abstract class ProjectUIState extends Object
     );
   }
   ProjectUIState._();
+
+  @override
+  @memoized
+  int get hashCode;
 
   @nullable
   ProjectEntity get editing;

@@ -60,6 +60,10 @@ abstract class UIState implements Built<UIState, UIStateBuilder> {
 
   UIState._();
 
+  @override
+  @memoized
+  int get hashCode;
+
   int get selectedCompanyIndex;
 
   String get currentRoute;

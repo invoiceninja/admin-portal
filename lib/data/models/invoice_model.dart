@@ -19,6 +19,10 @@ abstract class InvoiceListResponse
 
   InvoiceListResponse._();
 
+  @override
+  @memoized
+  int get hashCode;
+
   BuiltList<InvoiceEntity> get data;
 
   static Serializer<InvoiceListResponse> get serializer =>
@@ -31,6 +35,10 @@ abstract class InvoiceItemResponse
       _$InvoiceItemResponse;
 
   InvoiceItemResponse._();
+
+  @override
+  @memoized
+  int get hashCode;
 
   InvoiceEntity get data;
 
@@ -142,6 +150,10 @@ abstract class InvoiceEntity extends Object
   }
 
   InvoiceEntity._();
+
+  @override
+  @memoized
+  int get hashCode;
 
   InvoiceEntity get clone => rebuild((b) => b
     ..id = BaseEntity.nextId
@@ -783,6 +795,10 @@ abstract class InvoiceItemEntity
 
   InvoiceItemEntity._();
 
+  @override
+  @memoized
+  int get hashCode;
+
   @BuiltValueField(wireName: 'product_key')
   String get productKey;
 
@@ -899,6 +915,10 @@ abstract class InvitationEntity extends Object
   }
 
   InvitationEntity._();
+
+  @override
+  @memoized
+  int get hashCode;
 
   String get key;
 

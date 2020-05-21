@@ -20,6 +20,10 @@ abstract class GroupState implements Built<GroupState, GroupStateBuilder> {
   }
   GroupState._();
 
+  @override
+  @memoized
+  int get hashCode;
+
   @nullable
   int get lastUpdated;
 
@@ -51,6 +55,10 @@ abstract class GroupUIState extends Object
     );
   }
   GroupUIState._();
+
+  @override
+  @memoized
+  int get hashCode;
 
   @nullable
   GroupEntity get editing;

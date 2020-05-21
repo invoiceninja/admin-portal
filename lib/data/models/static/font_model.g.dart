@@ -84,9 +84,10 @@ class _$FontEntity extends FontEntity {
     return other is FontEntity && name == other.name && id == other.id;
   }
 
+  int __hashCode;
   @override
   int get hashCode {
-    return $jf($jc($jc(0, name.hashCode), id.hashCode));
+    return __hashCode ??= $jf($jc($jc(0, name.hashCode), id.hashCode));
   }
 
   @override

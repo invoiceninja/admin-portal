@@ -11,6 +11,10 @@ abstract class IndustryListResponse
       _$IndustryListResponse;
   IndustryListResponse._();
 
+  @override
+  @memoized
+  int get hashCode;
+
   BuiltList<IndustryEntity> get data;
 
   static Serializer<IndustryListResponse> get serializer =>
@@ -22,6 +26,10 @@ abstract class IndustryItemResponse
   factory IndustryItemResponse([void updates(IndustryItemResponseBuilder b)]) =
       _$IndustryItemResponse;
   IndustryItemResponse._();
+
+  @override
+  @memoized
+  int get hashCode;
 
   IndustryEntity get data;
 
@@ -43,6 +51,10 @@ abstract class IndustryEntity extends Object
     );
   }
   IndustryEntity._();
+
+  @override
+  @memoized
+  int get hashCode;
 
   String get name;
 

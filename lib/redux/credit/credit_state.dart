@@ -20,6 +20,10 @@ abstract class CreditState implements Built<CreditState, CreditStateBuilder> {
   }
   CreditState._();
 
+  @override
+  @memoized
+  int get hashCode;
+
   @nullable
   int get lastUpdated;
 
@@ -64,6 +68,10 @@ abstract class CreditUIState extends Object
     );
   }
   CreditUIState._();
+
+  @override
+  @memoized
+  int get hashCode;
 
   @nullable
   InvoiceEntity get editing;

@@ -377,9 +377,10 @@ class _$UserListResponse extends UserListResponse {
     return other is UserListResponse && data == other.data;
   }
 
+  int __hashCode;
   @override
   int get hashCode {
-    return $jf($jc(0, data.hashCode));
+    return __hashCode ??= $jf($jc(0, data.hashCode));
   }
 
   @override
@@ -470,9 +471,10 @@ class _$UserItemResponse extends UserItemResponse {
     return other is UserItemResponse && data == other.data;
   }
 
+  int __hashCode;
   @override
   int get hashCode {
-    return $jf($jc(0, data.hashCode));
+    return __hashCode ??= $jf($jc(0, data.hashCode));
   }
 
   @override
@@ -563,9 +565,10 @@ class _$UserCompanyItemResponse extends UserCompanyItemResponse {
     return other is UserCompanyItemResponse && data == other.data;
   }
 
+  int __hashCode;
   @override
   int get hashCode {
-    return $jf($jc(0, data.hashCode));
+    return __hashCode ??= $jf($jc(0, data.hashCode));
   }
 
   @override
@@ -736,9 +739,10 @@ class _$UserEntity extends UserEntity {
         id == other.id;
   }
 
+  int __hashCode;
   @override
   int get hashCode {
-    return $jf($jc(
+    return __hashCode ??= $jf($jc(
         $jc(
             $jc(
                 $jc(

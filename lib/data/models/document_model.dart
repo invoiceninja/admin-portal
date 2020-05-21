@@ -15,6 +15,10 @@ abstract class DocumentListResponse
 
   DocumentListResponse._();
 
+  @override
+  @memoized
+  int get hashCode;
+
   BuiltList<DocumentEntity> get data;
 
   static Serializer<DocumentListResponse> get serializer =>
@@ -27,6 +31,10 @@ abstract class DocumentItemResponse
       _$DocumentItemResponse;
 
   DocumentItemResponse._();
+
+  @override
+  @memoized
+  int get hashCode;
 
   DocumentEntity get data;
 
@@ -75,6 +83,10 @@ abstract class DocumentEntity extends Object
   }
 
   DocumentEntity._();
+
+  @override
+  @memoized
+  int get hashCode;
 
   String get name;
 

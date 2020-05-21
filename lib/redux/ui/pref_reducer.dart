@@ -102,15 +102,6 @@ Reducer<AppLayout> layoutReducer = combineReducers([
 ]);
 
 Reducer<ModuleLayout> moduleLayoutReducer = combineReducers([
-  TypedReducer<ModuleLayout, UserSettingsChanged>((moduleLayout, action) {
-    if (action.layout == null) {
-      return moduleLayout;
-    } else if (action.layout == AppLayout.mobile) {
-      return ModuleLayout.list;
-    } else {
-      return ModuleLayout.table;
-    }
-  }),
   TypedReducer<ModuleLayout, SwitchListTableLayout>((moduleLayout, action) {
     if (moduleLayout == ModuleLayout.list) {
       return ModuleLayout.table;

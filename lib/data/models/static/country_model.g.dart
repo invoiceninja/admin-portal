@@ -232,9 +232,10 @@ class _$CountryListResponse extends CountryListResponse {
     return other is CountryListResponse && data == other.data;
   }
 
+  int __hashCode;
   @override
   int get hashCode {
-    return $jf($jc(0, data.hashCode));
+    return __hashCode ??= $jf($jc(0, data.hashCode));
   }
 
   @override
@@ -327,9 +328,10 @@ class _$CountryItemResponse extends CountryItemResponse {
     return other is CountryItemResponse && data == other.data;
   }
 
+  int __hashCode;
   @override
   int get hashCode {
-    return $jf($jc(0, data.hashCode));
+    return __hashCode ??= $jf($jc(0, data.hashCode));
   }
 
   @override
@@ -461,9 +463,10 @@ class _$CountryEntity extends CountryEntity {
         id == other.id;
   }
 
+  int __hashCode;
   @override
   int get hashCode {
-    return $jf($jc(
+    return __hashCode ??= $jf($jc(
         $jc(
             $jc(
                 $jc(

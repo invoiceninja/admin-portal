@@ -3091,9 +3091,10 @@ class _$CompanyEntity extends CompanyEntity {
         id == other.id;
   }
 
+  int __hashCode;
   @override
   int get hashCode {
-    return $jf($jc(
+    return __hashCode ??= $jf($jc(
         $jc(
             $jc(
                 $jc(
@@ -3713,9 +3714,10 @@ class _$PaymentTermEntity extends PaymentTermEntity {
         id == other.id;
   }
 
+  int __hashCode;
   @override
   int get hashCode {
-    return $jf(
+    return __hashCode ??= $jf(
         $jc($jc($jc(0, numDays.hashCode), archivedAt.hashCode), id.hashCode));
   }
 
@@ -3831,9 +3833,10 @@ class _$GatewayEntity extends GatewayEntity {
         fields == other.fields;
   }
 
+  int __hashCode;
   @override
   int get hashCode {
-    return $jf($jc(
+    return __hashCode ??= $jf($jc(
         $jc($jc($jc($jc(0, id.hashCode), name.hashCode), sortOrder.hashCode),
             defaultGatewayTypeId.hashCode),
         fields.hashCode));
@@ -3986,9 +3989,10 @@ class _$UserCompanyEntity extends UserCompanyEntity {
         settings == other.settings;
   }
 
+  int __hashCode;
   @override
   int get hashCode {
-    return $jf($jc(
+    return __hashCode ??= $jf($jc(
         $jc(
             $jc(
                 $jc(
@@ -4180,9 +4184,11 @@ class _$UserSettingsEntity extends UserSettingsEntity {
         reportSettings == other.reportSettings;
   }
 
+  int __hashCode;
   @override
   int get hashCode {
-    return $jf($jc($jc($jc(0, accentColor.hashCode), tableColumns.hashCode),
+    return __hashCode ??= $jf($jc(
+        $jc($jc(0, accentColor.hashCode), tableColumns.hashCode),
         reportSettings.hashCode));
   }
 
@@ -4316,9 +4322,10 @@ class _$ReportSettingsEntity extends ReportSettingsEntity {
         columns == other.columns;
   }
 
+  int __hashCode;
   @override
   int get hashCode {
-    return $jf($jc(
+    return __hashCode ??= $jf($jc(
         $jc(
             $jc($jc($jc(0, sortColumn.hashCode), sortAscending.hashCode),
                 sortTotalsIndex.hashCode),
@@ -4451,9 +4458,10 @@ class _$TokenEntity extends TokenEntity {
     return other is TokenEntity && token == other.token && name == other.name;
   }
 
+  int __hashCode;
   @override
   int get hashCode {
-    return $jf($jc($jc(0, token.hashCode), name.hashCode));
+    return __hashCode ??= $jf($jc($jc(0, token.hashCode), name.hashCode));
   }
 
   @override
@@ -5172,9 +5180,10 @@ class _$SettingsEntity extends SettingsEntity {
         hasCustomDesign3 == other.hasCustomDesign3;
   }
 
+  int __hashCode;
   @override
   int get hashCode {
-    return $jf($jc(
+    return __hashCode ??= $jf($jc(
         $jc(
             $jc(
                 $jc(
@@ -6562,9 +6571,10 @@ class _$CompanyItemResponse extends CompanyItemResponse {
     return other is CompanyItemResponse && data == other.data;
   }
 
+  int __hashCode;
   @override
   int get hashCode {
-    return $jf($jc(0, data.hashCode));
+    return __hashCode ??= $jf($jc(0, data.hashCode));
   }
 
   @override

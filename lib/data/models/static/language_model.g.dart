@@ -194,9 +194,10 @@ class _$LanguageListResponse extends LanguageListResponse {
     return other is LanguageListResponse && data == other.data;
   }
 
+  int __hashCode;
   @override
   int get hashCode {
-    return $jf($jc(0, data.hashCode));
+    return __hashCode ??= $jf($jc(0, data.hashCode));
   }
 
   @override
@@ -289,9 +290,10 @@ class _$LanguageItemResponse extends LanguageItemResponse {
     return other is LanguageItemResponse && data == other.data;
   }
 
+  int __hashCode;
   @override
   int get hashCode {
-    return $jf($jc(0, data.hashCode));
+    return __hashCode ??= $jf($jc(0, data.hashCode));
   }
 
   @override
@@ -392,9 +394,11 @@ class _$LanguageEntity extends LanguageEntity {
         id == other.id;
   }
 
+  int __hashCode;
   @override
   int get hashCode {
-    return $jf($jc($jc($jc(0, name.hashCode), locale.hashCode), id.hashCode));
+    return __hashCode ??=
+        $jf($jc($jc($jc(0, name.hashCode), locale.hashCode), id.hashCode));
   }
 
   @override

@@ -36529,9 +36529,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
   String get changeToDekstopLayout =>
       _localizedValues[localeCode]['change_to_desktop_layout'] ?? '';
 
-  String get change =>
-      _localizedValues[localeCode]['change'] ?? '';
-
+  String get change => _localizedValues[localeCode]['change'] ?? '';
 
   String lookup(String key) {
     final lookupKey = toSnakeCase(key);

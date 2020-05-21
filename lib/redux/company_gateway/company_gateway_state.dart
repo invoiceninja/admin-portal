@@ -21,6 +21,10 @@ abstract class CompanyGatewayState
   }
   CompanyGatewayState._();
 
+  @override
+  @memoized
+  int get hashCode;
+
   @nullable
   int get lastUpdated;
 
@@ -53,6 +57,10 @@ abstract class CompanyGatewayUIState extends Object
     );
   }
   CompanyGatewayUIState._();
+
+  @override
+  @memoized
+  int get hashCode;
 
   @nullable
   CompanyGatewayEntity get editing;

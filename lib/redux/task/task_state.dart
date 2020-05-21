@@ -21,6 +21,10 @@ abstract class TaskState implements Built<TaskState, TaskStateBuilder> {
   }
   TaskState._();
 
+  @override
+  @memoized
+  int get hashCode;
+
   @nullable
   int get lastUpdated;
 
@@ -66,6 +70,10 @@ abstract class TaskUIState extends Object
     );
   }
   TaskUIState._();
+
+  @override
+  @memoized
+  int get hashCode;
 
   @nullable
   TaskEntity get editing;

@@ -58,8 +58,8 @@ class InvoiceOverview extends StatelessWidget {
         entity: invoice,
         statusColor: color,
         statusLabel: invoice.isPastDue
-                ? localization.pastDue
-                : localization.lookup(stauses[invoice.statusId]),
+            ? localization.pastDue
+            : localization.lookup(stauses[invoice.statusId]),
         label: localization.totalAmount,
         value:
             formatNumber(invoice.amount, context, clientId: invoice.clientId),

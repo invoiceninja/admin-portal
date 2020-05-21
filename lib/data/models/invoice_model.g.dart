@@ -926,9 +926,10 @@ class _$InvoiceListResponse extends InvoiceListResponse {
     return other is InvoiceListResponse && data == other.data;
   }
 
+  int __hashCode;
   @override
   int get hashCode {
-    return $jf($jc(0, data.hashCode));
+    return __hashCode ??= $jf($jc(0, data.hashCode));
   }
 
   @override
@@ -1021,9 +1022,10 @@ class _$InvoiceItemResponse extends InvoiceItemResponse {
     return other is InvoiceItemResponse && data == other.data;
   }
 
+  int __hashCode;
   @override
   int get hashCode {
-    return $jf($jc(0, data.hashCode));
+    return __hashCode ??= $jf($jc(0, data.hashCode));
   }
 
   @override
@@ -1424,9 +1426,10 @@ class _$InvoiceEntity extends InvoiceEntity {
         id == other.id;
   }
 
+  int __hashCode;
   @override
   int get hashCode {
-    return $jf($jc(
+    return __hashCode ??= $jf($jc(
         $jc(
             $jc(
                 $jc(
@@ -2046,9 +2049,10 @@ class _$InvoiceItemEntity extends InvoiceItemEntity {
         createdAt == other.createdAt;
   }
 
+  int __hashCode;
   @override
   int get hashCode {
-    return $jf($jc(
+    return __hashCode ??= $jf($jc(
         $jc(
             $jc(
                 $jc(
@@ -2364,9 +2368,10 @@ class _$InvitationEntity extends InvitationEntity {
         id == other.id;
   }
 
+  int __hashCode;
   @override
   int get hashCode {
-    return $jf($jc(
+    return __hashCode ??= $jf($jc(
         $jc(
             $jc(
                 $jc(

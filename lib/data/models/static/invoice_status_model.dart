@@ -13,6 +13,10 @@ abstract class InvoiceStatusListResponse
       _$InvoiceStatusListResponse;
   InvoiceStatusListResponse._();
 
+  @override
+  @memoized
+  int get hashCode;
+
   BuiltList<InvoiceStatusEntity> get data;
 
   static Serializer<InvoiceStatusListResponse> get serializer =>
@@ -26,6 +30,10 @@ abstract class InvoiceStatusItemResponse
           [void updates(InvoiceStatusItemResponseBuilder b)]) =
       _$InvoiceStatusItemResponse;
   InvoiceStatusItemResponse._();
+
+  @override
+  @memoized
+  int get hashCode;
 
   InvoiceStatusEntity get data;
 
@@ -48,6 +56,10 @@ abstract class InvoiceStatusEntity extends Object
   }
 
   InvoiceStatusEntity._();
+
+  @override
+  @memoized
+  int get hashCode;
 
   static Serializer<InvoiceStatusEntity> get serializer =>
       _$invoiceStatusEntitySerializer;

@@ -15,6 +15,10 @@ abstract class ProjectListResponse
 
   ProjectListResponse._();
 
+  @override
+  @memoized
+  int get hashCode;
+
   BuiltList<ProjectEntity> get data;
 
   static Serializer<ProjectListResponse> get serializer =>
@@ -27,6 +31,10 @@ abstract class ProjectItemResponse
       _$ProjectItemResponse;
 
   ProjectItemResponse._();
+
+  @override
+  @memoized
+  int get hashCode;
 
   ProjectEntity get data;
 
@@ -78,6 +86,10 @@ abstract class ProjectEntity extends Object
   }
 
   ProjectEntity._();
+
+  @override
+  @memoized
+  int get hashCode;
 
   ProjectEntity get clone => rebuild((b) => b
     ..id = BaseEntity.nextId

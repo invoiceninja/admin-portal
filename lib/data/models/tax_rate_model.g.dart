@@ -272,9 +272,10 @@ class _$TaxRateListResponse extends TaxRateListResponse {
     return other is TaxRateListResponse && data == other.data;
   }
 
+  int __hashCode;
   @override
   int get hashCode {
-    return $jf($jc(0, data.hashCode));
+    return __hashCode ??= $jf($jc(0, data.hashCode));
   }
 
   @override
@@ -367,9 +368,10 @@ class _$TaxRateItemResponse extends TaxRateItemResponse {
     return other is TaxRateItemResponse && data == other.data;
   }
 
+  int __hashCode;
   @override
   int get hashCode {
-    return $jf($jc(0, data.hashCode));
+    return __hashCode ??= $jf($jc(0, data.hashCode));
   }
 
   @override
@@ -504,9 +506,10 @@ class _$TaxRateEntity extends TaxRateEntity {
         id == other.id;
   }
 
+  int __hashCode;
   @override
   int get hashCode {
-    return $jf($jc(
+    return __hashCode ??= $jf($jc(
         $jc(
             $jc(
                 $jc(

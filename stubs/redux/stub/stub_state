@@ -21,6 +21,10 @@ abstract class StubState implements Built<StubState, StubStateBuilder> {
   }
   StubState._();
 
+  @override
+@memoized
+  int get hashCode;
+
   @nullable
   int get lastUpdated;
 
@@ -64,6 +68,10 @@ abstract class StubUIState extends Object with EntityUIState implements Built<St
     );
   }
   StubUIState._();
+
+  @override
+@memoized
+  int get hashCode;
 
   @nullable
   StubEntity get editing;

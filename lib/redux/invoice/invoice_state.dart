@@ -22,6 +22,10 @@ abstract class InvoiceState
 
   InvoiceState._();
 
+  @override
+  @memoized
+  int get hashCode;
+
   @nullable
   int get lastUpdated;
 
@@ -77,6 +81,10 @@ abstract class InvoiceUIState extends Object
   }
 
   InvoiceUIState._();
+
+  @override
+  @memoized
+  int get hashCode;
 
   @nullable
   InvoiceEntity get editing;

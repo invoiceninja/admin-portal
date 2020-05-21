@@ -477,9 +477,10 @@ class _$TaskListResponse extends TaskListResponse {
     return other is TaskListResponse && data == other.data;
   }
 
+  int __hashCode;
   @override
   int get hashCode {
-    return $jf($jc(0, data.hashCode));
+    return __hashCode ??= $jf($jc(0, data.hashCode));
   }
 
   @override
@@ -570,9 +571,10 @@ class _$TaskItemResponse extends TaskItemResponse {
     return other is TaskItemResponse && data == other.data;
   }
 
+  int __hashCode;
   @override
   int get hashCode {
-    return $jf($jc(0, data.hashCode));
+    return __hashCode ??= $jf($jc(0, data.hashCode));
   }
 
   @override
@@ -664,9 +666,11 @@ class _$TaskTime extends TaskTime {
         endDate == other.endDate;
   }
 
+  int __hashCode;
   @override
   int get hashCode {
-    return $jf($jc($jc(0, startDate.hashCode), endDate.hashCode));
+    return __hashCode ??=
+        $jf($jc($jc(0, startDate.hashCode), endDate.hashCode));
   }
 
   @override
@@ -854,9 +858,10 @@ class _$TaskEntity extends TaskEntity {
         id == other.id;
   }
 
+  int __hashCode;
   @override
   int get hashCode {
-    return $jf($jc(
+    return __hashCode ??= $jf($jc(
         $jc(
             $jc(
                 $jc(
@@ -1143,10 +1148,11 @@ class _$TaskStatusEntity extends TaskStatusEntity {
         name == other.name;
   }
 
+  int __hashCode;
   @override
   int get hashCode {
-    return $jf(
-        $jc($jc($jc(0, sortOrder.hashCode), id.hashCode), name.hashCode));
+    return __hashCode ??=
+        $jf($jc($jc($jc(0, sortOrder.hashCode), id.hashCode), name.hashCode));
   }
 
   @override

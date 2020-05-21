@@ -16,6 +16,10 @@ abstract class GroupListResponse
 
   GroupListResponse._();
 
+  @override
+  @memoized
+  int get hashCode;
+
   BuiltList<GroupEntity> get data;
 
   static Serializer<GroupListResponse> get serializer =>
@@ -28,6 +32,10 @@ abstract class GroupItemResponse
       _$GroupItemResponse;
 
   GroupItemResponse._();
+
+  @override
+  @memoized
+  int get hashCode;
 
   GroupEntity get data;
 
@@ -60,6 +68,10 @@ abstract class GroupEntity extends Object
   }
 
   GroupEntity._();
+
+  @override
+  @memoized
+  int get hashCode;
 
   @override
   EntityType get entityType {

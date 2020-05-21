@@ -223,7 +223,6 @@ class AppPaginatedDataTableState extends State<AppPaginatedDataTable> {
   int _firstRowIndex;
   int _rowCount;
   bool _rowCountApproximate;
-  int _selectedRowCount;
   final Map<int, DataRow> _rows = <int, DataRow>{};
 
   @override
@@ -256,7 +255,6 @@ class AppPaginatedDataTableState extends State<AppPaginatedDataTable> {
     setState(() {
       _rowCount = widget.source.rowCount;
       _rowCountApproximate = widget.source.isRowCountApproximate;
-      _selectedRowCount = widget.source.selectedRowCount;
       _rows.clear();
     });
   }

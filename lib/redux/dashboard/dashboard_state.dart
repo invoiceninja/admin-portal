@@ -26,6 +26,10 @@ abstract class DashboardUIState
 
   DashboardUIState._();
 
+  @override
+  @memoized
+  int get hashCode;
+
   DateRange get dateRange;
 
   String get customStartDate;

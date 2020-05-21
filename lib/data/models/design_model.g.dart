@@ -335,9 +335,10 @@ class _$DesignListResponse extends DesignListResponse {
     return other is DesignListResponse && data == other.data;
   }
 
+  int __hashCode;
   @override
   int get hashCode {
-    return $jf($jc(0, data.hashCode));
+    return __hashCode ??= $jf($jc(0, data.hashCode));
   }
 
   @override
@@ -430,9 +431,10 @@ class _$DesignItemResponse extends DesignItemResponse {
     return other is DesignItemResponse && data == other.data;
   }
 
+  int __hashCode;
   @override
   int get hashCode {
-    return $jf($jc(0, data.hashCode));
+    return __hashCode ??= $jf($jc(0, data.hashCode));
   }
 
   @override
@@ -538,9 +540,10 @@ class _$DesignPreviewRequest extends DesignPreviewRequest {
         design == other.design;
   }
 
+  int __hashCode;
   @override
   int get hashCode {
-    return $jf($jc(
+    return __hashCode ??= $jf($jc(
         $jc($jc(0, entityType.hashCode), entityId.hashCode), design.hashCode));
   }
 
@@ -700,9 +703,10 @@ class _$DesignEntity extends DesignEntity {
         id == other.id;
   }
 
+  int __hashCode;
   @override
   int get hashCode {
-    return $jf($jc(
+    return __hashCode ??= $jf($jc(
         $jc(
             $jc(
                 $jc(

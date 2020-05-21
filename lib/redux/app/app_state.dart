@@ -81,6 +81,10 @@ abstract class AppState implements Built<AppState, AppStateBuilder> {
 
   AppState._();
 
+  @override
+  @memoized
+  int get hashCode;
+
   bool get isLoading;
 
   bool get isSaving;

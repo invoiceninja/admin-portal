@@ -192,9 +192,10 @@ class _$AppState extends AppState {
         userCompanyStates == other.userCompanyStates;
   }
 
+  int __hashCode;
   @override
   int get hashCode {
-    return $jf($jc(
+    return __hashCode ??= $jf($jc(
         $jc(
             $jc(
                 $jc(

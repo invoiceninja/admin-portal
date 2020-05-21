@@ -21,6 +21,10 @@ abstract class ProductState
   }
   ProductState._();
 
+  @override
+  @memoized
+  int get hashCode;
+
   @nullable
   int get lastUpdated;
 
@@ -65,6 +69,10 @@ abstract class ProductUIState extends Object
     );
   }
   ProductUIState._();
+
+  @override
+  @memoized
+  int get hashCode;
 
   @nullable
   ProductEntity get editing;

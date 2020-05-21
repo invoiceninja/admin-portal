@@ -181,9 +181,10 @@ class _$ReportsUIState extends ReportsUIState {
         filters == other.filters;
   }
 
+  int __hashCode;
   @override
   int get hashCode {
-    return $jf($jc(
+    return __hashCode ??= $jf($jc(
         $jc(
             $jc(
                 $jc(

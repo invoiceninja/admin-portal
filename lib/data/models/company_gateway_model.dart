@@ -20,6 +20,10 @@ abstract class CompanyGatewayListResponse
 
   CompanyGatewayListResponse._();
 
+  @override
+  @memoized
+  int get hashCode;
+
   BuiltList<CompanyGatewayEntity> get data;
 
   static Serializer<CompanyGatewayListResponse> get serializer =>
@@ -34,6 +38,10 @@ abstract class CompanyGatewayItemResponse
       _$CompanyGatewayItemResponse;
 
   CompanyGatewayItemResponse._();
+
+  @override
+  @memoized
+  int get hashCode;
 
   CompanyGatewayEntity get data;
 
@@ -75,6 +83,10 @@ abstract class CompanyGatewayEntity extends Object
   }
 
   CompanyGatewayEntity._();
+
+  @override
+  @memoized
+  int get hashCode;
 
   @override
   EntityType get entityType {
@@ -224,6 +236,10 @@ abstract class FeesAndLimitsSettings
   }
 
   FeesAndLimitsSettings._();
+
+  @override
+  @memoized
+  int get hashCode;
 
   @BuiltValueField(wireName: 'min_limit')
   double get minLimit;

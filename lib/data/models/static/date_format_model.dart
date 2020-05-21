@@ -14,6 +14,10 @@ abstract class DateFormatListResponse
 
   DateFormatListResponse._();
 
+  @override
+  @memoized
+  int get hashCode;
+
   BuiltList<DateFormatEntity> get data;
 
   static Serializer<DateFormatListResponse> get serializer =>
@@ -27,6 +31,10 @@ abstract class DateFormatItemResponse
       _$DateFormatItemResponse;
 
   DateFormatItemResponse._();
+
+  @override
+  @memoized
+  int get hashCode;
 
   DateFormatEntity get data;
 
@@ -51,6 +59,10 @@ abstract class DateFormatEntity extends Object
   }
 
   DateFormatEntity._();
+
+  @override
+  @memoized
+  int get hashCode;
 
   @BuiltValueField(wireName: 'format_dart')
   String get format;

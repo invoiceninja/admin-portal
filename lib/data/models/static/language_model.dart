@@ -11,6 +11,10 @@ abstract class LanguageListResponse
       _$LanguageListResponse;
   LanguageListResponse._();
 
+  @override
+  @memoized
+  int get hashCode;
+
   BuiltList<LanguageEntity> get data;
 
   static Serializer<LanguageListResponse> get serializer =>
@@ -22,6 +26,10 @@ abstract class LanguageItemResponse
   factory LanguageItemResponse([void updates(LanguageItemResponseBuilder b)]) =
       _$LanguageItemResponse;
   LanguageItemResponse._();
+
+  @override
+  @memoized
+  int get hashCode;
 
   LanguageEntity get data;
 
@@ -45,6 +53,10 @@ abstract class LanguageEntity extends Object
     );
   }
   LanguageEntity._();
+
+  @override
+  @memoized
+  int get hashCode;
 
   String get name;
   String get locale;

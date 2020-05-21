@@ -165,9 +165,10 @@ class _$UserState extends UserState {
         list == other.list;
   }
 
+  int __hashCode;
   @override
   int get hashCode {
-    return $jf(
+    return __hashCode ??= $jf(
         $jc($jc($jc(0, lastUpdated.hashCode), map.hashCode), list.hashCode));
   }
 
@@ -292,9 +293,10 @@ class _$UserUIState extends UserUIState {
         cancelCompleter == other.cancelCompleter;
   }
 
+  int __hashCode;
   @override
   int get hashCode {
-    return $jf($jc(
+    return __hashCode ??= $jf($jc(
         $jc(
             $jc($jc($jc(0, editing.hashCode), listUIState.hashCode),
                 selectedId.hashCode),

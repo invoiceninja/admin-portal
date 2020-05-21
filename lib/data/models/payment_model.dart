@@ -16,6 +16,10 @@ abstract class PaymentListResponse
 
   PaymentListResponse._();
 
+  @override
+  @memoized
+  int get hashCode;
+
   BuiltList<PaymentEntity> get data;
 
   static Serializer<PaymentListResponse> get serializer =>
@@ -28,6 +32,10 @@ abstract class PaymentItemResponse
       _$PaymentItemResponse;
 
   PaymentItemResponse._();
+
+  @override
+  @memoized
+  int get hashCode;
 
   PaymentEntity get data;
 
@@ -104,6 +112,10 @@ abstract class PaymentEntity extends Object
   }
 
   PaymentEntity._();
+
+  @override
+  @memoized
+  int get hashCode;
 
   @override
   EntityType get entityType {
@@ -398,6 +410,10 @@ abstract class PaymentableEntity extends Object
   }
 
   PaymentableEntity._();
+
+  @override
+  @memoized
+  int get hashCode;
 
   @nullable
   @BuiltValueField(wireName: 'created_at')

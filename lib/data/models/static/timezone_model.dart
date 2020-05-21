@@ -12,6 +12,10 @@ abstract class TimezoneListResponse
 
   TimezoneListResponse._();
 
+  @override
+  @memoized
+  int get hashCode;
+
   BuiltList<TimezoneEntity> get data;
 
   static Serializer<TimezoneListResponse> get serializer =>
@@ -24,6 +28,10 @@ abstract class TimezoneItemResponse
       _$TimezoneItemResponse;
 
   TimezoneItemResponse._();
+
+  @override
+  @memoized
+  int get hashCode;
 
   TimezoneEntity get data;
 
@@ -48,6 +56,10 @@ abstract class TimezoneEntity extends Object
   }
 
   TimezoneEntity._();
+
+  @override
+  @memoized
+  int get hashCode;
 
   String get name;
 

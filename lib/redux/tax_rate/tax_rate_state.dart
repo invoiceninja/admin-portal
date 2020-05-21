@@ -21,6 +21,10 @@ abstract class TaxRateState
   }
   TaxRateState._();
 
+  @override
+  @memoized
+  int get hashCode;
+
   @nullable
   int get lastUpdated;
 
@@ -52,6 +56,10 @@ abstract class TaxRateUIState extends Object
     );
   }
   TaxRateUIState._();
+
+  @override
+  @memoized
+  int get hashCode;
 
   @nullable
   TaxRateEntity get editing;

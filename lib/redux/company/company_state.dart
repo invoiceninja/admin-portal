@@ -54,6 +54,10 @@ abstract class UserCompanyState
 
   UserCompanyState._();
 
+  @override
+  @memoized
+  int get hashCode;
+
   @nullable
   UserCompanyEntity get userCompany;
 
@@ -133,6 +137,10 @@ abstract class SettingsUIState extends Object
   }
 
   SettingsUIState._();
+
+  @override
+  @memoized
+  int get hashCode;
 
   CompanyEntity get company;
 

@@ -19,6 +19,10 @@ abstract class TaskListResponse
 
   TaskListResponse._();
 
+  @override
+  @memoized
+  int get hashCode;
+
   BuiltList<TaskEntity> get data;
 
   static Serializer<TaskListResponse> get serializer =>
@@ -31,6 +35,10 @@ abstract class TaskItemResponse
       _$TaskItemResponse;
 
   TaskItemResponse._();
+
+  @override
+  @memoized
+  int get hashCode;
 
   TaskEntity get data;
 
@@ -68,6 +76,10 @@ abstract class TaskTime implements Built<TaskTime, TaskTimeBuilder> {
   }
 
   TaskTime._();
+
+  @override
+  @memoized
+  int get hashCode;
 
   DateTime get startDate;
 
@@ -161,6 +173,10 @@ abstract class TaskEntity extends Object
   }
 
   TaskEntity._();
+
+  @override
+  @memoized
+  int get hashCode;
 
   TaskEntity get clone => rebuild((b) => b
     ..id = BaseEntity.nextId
@@ -523,6 +539,10 @@ abstract class TaskStatusEntity extends Object
   }
 
   TaskStatusEntity._();
+
+  @override
+  @memoized
+  int get hashCode;
 
   @BuiltValueField(wireName: 'sort_order')
   int get sortOrder;

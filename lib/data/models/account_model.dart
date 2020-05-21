@@ -19,6 +19,10 @@ abstract class AccountEntity
 
   AccountEntity._();
 
+  @override
+  @memoized
+  int get hashCode;
+
   String get id;
 
   @BuiltValueField(wireName: 'default_url')

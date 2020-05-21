@@ -445,9 +445,10 @@ class _$UserCompanyState extends UserCompanyState {
         groupState == other.groupState;
   }
 
+  int __hashCode;
   @override
   int get hashCode {
-    return $jf($jc(
+    return __hashCode ??= $jf($jc(
         $jc(
             $jc(
                 $jc(
@@ -844,9 +845,10 @@ class _$SettingsUIState extends SettingsUIState {
         filterClearedAt == other.filterClearedAt;
   }
 
+  int __hashCode;
   @override
   int get hashCode {
-    return $jf($jc(
+    return __hashCode ??= $jf($jc(
         $jc(
             $jc(
                 $jc(

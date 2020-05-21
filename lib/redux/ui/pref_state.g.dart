@@ -531,9 +531,10 @@ class _$PrefState extends PrefState {
         companyPrefs == other.companyPrefs;
   }
 
+  int __hashCode;
   @override
   int get hashCode {
-    return $jf($jc(
+    return __hashCode ??= $jf($jc(
         $jc(
             $jc(
                 $jc(
@@ -756,9 +757,10 @@ class _$CompanyPrefState extends CompanyPrefState {
     return other is CompanyPrefState && historyList == other.historyList;
   }
 
+  int __hashCode;
   @override
   int get hashCode {
-    return $jf($jc(0, historyList.hashCode));
+    return __hashCode ??= $jf($jc(0, historyList.hashCode));
   }
 
   @override
@@ -860,9 +862,10 @@ class _$HistoryRecord extends HistoryRecord {
         timestamp == other.timestamp;
   }
 
+  int __hashCode;
   @override
   int get hashCode {
-    return $jf(
+    return __hashCode ??= $jf(
         $jc($jc($jc(0, id.hashCode), entityType.hashCode), timestamp.hashCode));
   }
 

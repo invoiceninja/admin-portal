@@ -21,6 +21,10 @@ abstract class DesignState implements Built<DesignState, DesignStateBuilder> {
 
   DesignState._();
 
+  @override
+  @memoized
+  int get hashCode;
+
   @nullable
   int get lastUpdated;
 
@@ -77,6 +81,10 @@ abstract class DesignUIState extends Object
   }
 
   DesignUIState._();
+
+  @override
+  @memoized
+  int get hashCode;
 
   @nullable
   DesignEntity get editing;

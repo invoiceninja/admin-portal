@@ -15,6 +15,10 @@ abstract class DesignListResponse
 
   DesignListResponse._();
 
+  @override
+  @memoized
+  int get hashCode;
+
   BuiltList<DesignEntity> get data;
 
   static Serializer<DesignListResponse> get serializer =>
@@ -27,6 +31,10 @@ abstract class DesignItemResponse
       _$DesignItemResponse;
 
   DesignItemResponse._();
+
+  @override
+  @memoized
+  int get hashCode;
 
   DesignEntity get data;
 
@@ -49,6 +57,10 @@ abstract class DesignPreviewRequest
   }
 
   DesignPreviewRequest._();
+
+  @override
+  @memoized
+  int get hashCode;
 
   @BuiltValueField(wireName: 'entity_type')
   EntityType get entityType;
@@ -90,6 +102,10 @@ abstract class DesignEntity extends Object
   }
 
   DesignEntity._();
+
+  @override
+  @memoized
+  int get hashCode;
 
   @override
   EntityType get entityType => EntityType.design;

@@ -127,9 +127,10 @@ class _$CreditListResponse extends CreditListResponse {
     return other is CreditListResponse && data == other.data;
   }
 
+  int __hashCode;
   @override
   int get hashCode {
-    return $jf($jc(0, data.hashCode));
+    return __hashCode ??= $jf($jc(0, data.hashCode));
   }
 
   @override
@@ -222,9 +223,10 @@ class _$CreditItemResponse extends CreditItemResponse {
     return other is CreditItemResponse && data == other.data;
   }
 
+  int __hashCode;
   @override
   int get hashCode {
-    return $jf($jc(0, data.hashCode));
+    return __hashCode ??= $jf($jc(0, data.hashCode));
   }
 
   @override
