@@ -19,6 +19,10 @@ abstract class FontEntity extends Object
   }
   FontEntity._();
 
+  @override
+  @memoized
+  int get hashCode;
+
   String get name;
 
   @override

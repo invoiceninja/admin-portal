@@ -146,9 +146,10 @@ class _$AccountEntity extends AccountEntity {
         currentVersion == other.currentVersion;
   }
 
+  int __hashCode;
   @override
   int get hashCode {
-    return $jf($jc(
+    return __hashCode ??= $jf($jc(
         $jc(
             $jc(
                 $jc($jc($jc(0, id.hashCode), defaultUrl.hashCode),

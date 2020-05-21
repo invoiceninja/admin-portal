@@ -663,9 +663,10 @@ class _$ExpenseListResponse extends ExpenseListResponse {
     return other is ExpenseListResponse && data == other.data;
   }
 
+  int __hashCode;
   @override
   int get hashCode {
-    return $jf($jc(0, data.hashCode));
+    return __hashCode ??= $jf($jc(0, data.hashCode));
   }
 
   @override
@@ -758,9 +759,10 @@ class _$ExpenseItemResponse extends ExpenseItemResponse {
     return other is ExpenseItemResponse && data == other.data;
   }
 
+  int __hashCode;
   @override
   int get hashCode {
-    return $jf($jc(0, data.hashCode));
+    return __hashCode ??= $jf($jc(0, data.hashCode));
   }
 
   @override
@@ -1060,9 +1062,10 @@ class _$ExpenseEntity extends ExpenseEntity {
         id == other.id;
   }
 
+  int __hashCode;
   @override
   int get hashCode {
-    return $jf($jc(
+    return __hashCode ??= $jf($jc(
         $jc(
             $jc(
                 $jc(
@@ -1481,9 +1484,10 @@ class _$ExpenseCategoryEntity extends ExpenseCategoryEntity {
         id == other.id;
   }
 
+  int __hashCode;
   @override
   int get hashCode {
-    return $jf($jc(
+    return __hashCode ??= $jf($jc(
         $jc(
             $jc(
                 $jc(
@@ -1652,9 +1656,10 @@ class _$ExpenseStatusEntity extends ExpenseStatusEntity {
     return other is ExpenseStatusEntity && id == other.id && name == other.name;
   }
 
+  int __hashCode;
   @override
   int get hashCode {
-    return $jf($jc($jc(0, id.hashCode), name.hashCode));
+    return __hashCode ??= $jf($jc($jc(0, id.hashCode), name.hashCode));
   }
 
   @override

@@ -16,6 +16,10 @@ abstract class ExpenseListResponse
 
   ExpenseListResponse._();
 
+  @override
+  @memoized
+  int get hashCode;
+
   BuiltList<ExpenseEntity> get data;
 
   static Serializer<ExpenseListResponse> get serializer =>
@@ -28,6 +32,10 @@ abstract class ExpenseItemResponse
       _$ExpenseItemResponse;
 
   ExpenseItemResponse._();
+
+  @override
+  @memoized
+  int get hashCode;
 
   ExpenseEntity get data;
 
@@ -118,6 +126,10 @@ abstract class ExpenseEntity extends Object
   }
 
   ExpenseEntity._();
+
+  @override
+  @memoized
+  int get hashCode;
 
   ExpenseEntity get clone => rebuild((b) => b
     ..id = BaseEntity.nextId
@@ -444,6 +456,10 @@ abstract class ExpenseCategoryEntity extends Object
   ExpenseCategoryEntity._();
 
   @override
+  @memoized
+  int get hashCode;
+
+  @override
   bool matchesFilter(String filter) {
     if (filter == null || filter.isEmpty) {
       return true;
@@ -515,6 +531,10 @@ abstract class ExpenseStatusEntity extends Object
   }
 
   ExpenseStatusEntity._();
+
+  @override
+  @memoized
+  int get hashCode;
 
   @override
   String get listDisplayName => name;

@@ -81,6 +81,10 @@ abstract class AppState implements Built<AppState, AppStateBuilder> {
 
   AppState._();
 
+  @override
+  @memoized
+  int get hashCode;
+
   bool get isLoading;
 
   bool get isSaving;
@@ -522,7 +526,7 @@ abstract class AppState implements Built<AppState, AppStateBuilder> {
     //return 'History: $historyList';
     //return 'Use inclusive: ${invoiceUIState.editing.usesInclusiveTaxes}';
     //return 'Invitations: ${invoiceUIState.editing.invitations}';
-    //return 'Token: ${userCompanyStates.map((state) => state.token.token).where((name) => name.isNotEmpty).toList().join(', ')}';
+    return 'Token: ${userCompanyStates.map((state) => state.token.token).where((name) => name.isNotEmpty).toList().join(', ')}';
     //return 'Settings: ${company.settings.companyLogo}';
     //return 'Designs: ${designState.list.map((id) => id + ' ' + designState.map[id].name).toList()}';
     //return 'PDF Variables: ${uiState.settingsUIState.settings.pdfVariables}';

@@ -20,6 +20,10 @@ abstract class ClientListResponse
 
   ClientListResponse._();
 
+  @override
+  @memoized
+  int get hashCode;
+
   BuiltList<ClientEntity> get data;
 
   static Serializer<ClientListResponse> get serializer =>
@@ -32,6 +36,10 @@ abstract class ClientItemResponse
       _$ClientItemResponse;
 
   ClientItemResponse._();
+
+  @override
+  @memoized
+  int get hashCode;
 
   ClientEntity get data;
 
@@ -126,6 +134,10 @@ abstract class ClientEntity extends Object
   }
 
   ClientEntity._();
+
+  @override
+  @memoized
+  int get hashCode;
 
   ClientEntity get clone => rebuild((b) => b
     ..id = BaseEntity.nextId
@@ -603,6 +615,10 @@ abstract class ContactEntity extends Object
   }
 
   ContactEntity._();
+
+  @override
+  @memoized
+  int get hashCode;
 
   @BuiltValueField(wireName: 'first_name')
   String get firstName;

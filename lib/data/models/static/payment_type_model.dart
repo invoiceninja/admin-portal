@@ -12,6 +12,10 @@ abstract class PaymentTypeListResponse
       _$PaymentTypeListResponse;
   PaymentTypeListResponse._();
 
+  @override
+  @memoized
+  int get hashCode;
+
   BuiltList<PaymentTypeEntity> get data;
 
   static Serializer<PaymentTypeListResponse> get serializer =>
@@ -24,6 +28,10 @@ abstract class PaymentTypeItemResponse
           [void updates(PaymentTypeItemResponseBuilder b)]) =
       _$PaymentTypeItemResponse;
   PaymentTypeItemResponse._();
+
+  @override
+  @memoized
+  int get hashCode;
 
   PaymentTypeEntity get data;
 
@@ -46,6 +54,10 @@ abstract class PaymentTypeEntity extends Object
     );
   }
   PaymentTypeEntity._();
+
+  @override
+  @memoized
+  int get hashCode;
 
   String get name;
 

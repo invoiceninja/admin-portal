@@ -100,6 +100,10 @@ abstract class CompanyEntity extends Object
 
   CompanyEntity._();
 
+  @override
+  @memoized
+  int get hashCode;
+
   @BuiltValueField(wireName: 'custom_surcharge_taxes1')
   bool get enableCustomSurchargeTaxes1;
 
@@ -385,6 +389,10 @@ abstract class PaymentTermEntity extends Object
 
   PaymentTermEntity._();
 
+  @override
+  @memoized
+  int get hashCode;
+
   static Serializer<PaymentTermEntity> get serializer =>
       _$paymentTermEntitySerializer;
 
@@ -421,6 +429,10 @@ abstract class GatewayEntity extends Object
   }
 
   GatewayEntity._();
+
+  @override
+  @memoized
+  int get hashCode;
 
   static Serializer<GatewayEntity> get serializer => _$gatewayEntitySerializer;
 
@@ -511,6 +523,10 @@ abstract class UserCompanyEntity
   }
 
   UserCompanyEntity._();
+
+  @override
+  @memoized
+  int get hashCode;
 
   @BuiltValueField(wireName: 'is_admin')
   bool get isAdmin;
@@ -608,6 +624,10 @@ abstract class UserSettingsEntity
 
   UserSettingsEntity._();
 
+  @override
+  @memoized
+  int get hashCode;
+
   // TODO remove this
   @nullable
   @BuiltValueField(wireName: 'accent_color')
@@ -643,6 +663,10 @@ abstract class ReportSettingsEntity
 
   ReportSettingsEntity._();
 
+  @override
+  @memoized
+  int get hashCode;
+
   @nullable
   @BuiltValueField(wireName: 'sort_column')
   String get sortColumn;
@@ -676,6 +700,10 @@ abstract class TokenEntity implements Built<TokenEntity, TokenEntityBuilder> {
   }
 
   TokenEntity._();
+
+  @override
+  @memoized
+  int get hashCode;
 
   String get token;
 
@@ -1133,6 +1161,10 @@ abstract class SettingsEntity
   }
 
   SettingsEntity._();
+
+  @override
+  @memoized
+  int get hashCode;
 
   static const EMAIL_SENDING_METHOD_DEFAULT = 'default';
   static const EMAIL_SENDING_METHOD_GMAIL = 'gmail';
@@ -1888,6 +1920,10 @@ abstract class CompanyItemResponse
       _$CompanyItemResponse;
 
   CompanyItemResponse._();
+
+  @override
+  @memoized
+  int get hashCode;
 
   CompanyEntity get data;
 

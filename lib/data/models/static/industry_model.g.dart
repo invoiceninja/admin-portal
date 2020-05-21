@@ -187,9 +187,10 @@ class _$IndustryListResponse extends IndustryListResponse {
     return other is IndustryListResponse && data == other.data;
   }
 
+  int __hashCode;
   @override
   int get hashCode {
-    return $jf($jc(0, data.hashCode));
+    return __hashCode ??= $jf($jc(0, data.hashCode));
   }
 
   @override
@@ -282,9 +283,10 @@ class _$IndustryItemResponse extends IndustryItemResponse {
     return other is IndustryItemResponse && data == other.data;
   }
 
+  int __hashCode;
   @override
   int get hashCode {
-    return $jf($jc(0, data.hashCode));
+    return __hashCode ??= $jf($jc(0, data.hashCode));
   }
 
   @override
@@ -377,9 +379,10 @@ class _$IndustryEntity extends IndustryEntity {
     return other is IndustryEntity && name == other.name && id == other.id;
   }
 
+  int __hashCode;
   @override
   int get hashCode {
-    return $jf($jc($jc(0, name.hashCode), id.hashCode));
+    return __hashCode ??= $jf($jc($jc(0, name.hashCode), id.hashCode));
   }
 
   @override

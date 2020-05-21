@@ -21,6 +21,10 @@ abstract class ClientState implements Built<ClientState, ClientStateBuilder> {
 
   ClientState._();
 
+  @override
+  @memoized
+  int get hashCode;
+
   @nullable
   int get lastUpdated;
 
@@ -76,6 +80,10 @@ abstract class ClientUIState extends Object
   }
 
   ClientUIState._();
+
+  @override
+  @memoized
+  int get hashCode;
 
   @nullable
   ClientEntity get editing;

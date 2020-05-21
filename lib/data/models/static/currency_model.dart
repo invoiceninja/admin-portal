@@ -11,6 +11,10 @@ abstract class CurrencyListResponse
       _$CurrencyListResponse;
   CurrencyListResponse._();
 
+  @override
+  @memoized
+  int get hashCode;
+
   BuiltList<CurrencyEntity> get data;
 
   static Serializer<CurrencyListResponse> get serializer =>
@@ -22,6 +26,10 @@ abstract class CurrencyItemResponse
   factory CurrencyItemResponse([void updates(CurrencyItemResponseBuilder b)]) =
       _$CurrencyItemResponse;
   CurrencyItemResponse._();
+
+  @override
+  @memoized
+  int get hashCode;
 
   CurrencyEntity get data;
 
@@ -57,6 +65,10 @@ abstract class CurrencyEntity extends Object
     );
   }
   CurrencyEntity._();
+
+  @override
+  @memoized
+  int get hashCode;
 
   String get name;
 

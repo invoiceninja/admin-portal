@@ -12,6 +12,10 @@ abstract class QuoteListResponse
 
   QuoteListResponse._();
 
+  @override
+  @memoized
+  int get hashCode;
+
   BuiltList<InvoiceEntity> get data;
 
   static Serializer<QuoteListResponse> get serializer =>
@@ -24,6 +28,10 @@ abstract class QuoteItemResponse
       _$QuoteItemResponse;
 
   QuoteItemResponse._();
+
+  @override
+  @memoized
+  int get hashCode;
 
   InvoiceEntity get data;
 

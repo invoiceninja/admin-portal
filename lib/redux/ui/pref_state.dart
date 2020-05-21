@@ -32,6 +32,10 @@ abstract class PrefState implements Built<PrefState, PrefStateBuilder> {
 
   PrefState._();
 
+  @override
+  @memoized
+  int get hashCode;
+
   AppLayout get appLayout;
 
   ModuleLayout get moduleLayout;
@@ -108,6 +112,10 @@ abstract class CompanyPrefState
 
   CompanyPrefState._();
 
+  @override
+  @memoized
+  int get hashCode;
+
   BuiltList<HistoryRecord> get historyList;
 
   static Serializer<CompanyPrefState> get serializer =>
@@ -182,6 +190,10 @@ abstract class HistoryRecord
   }
 
   HistoryRecord._();
+
+  @override
+  @memoized
+  int get hashCode;
 
   @nullable
   String get id;

@@ -126,9 +126,10 @@ class _$QuoteListResponse extends QuoteListResponse {
     return other is QuoteListResponse && data == other.data;
   }
 
+  int __hashCode;
   @override
   int get hashCode {
-    return $jf($jc(0, data.hashCode));
+    return __hashCode ??= $jf($jc(0, data.hashCode));
   }
 
   @override
@@ -219,9 +220,10 @@ class _$QuoteItemResponse extends QuoteItemResponse {
     return other is QuoteItemResponse && data == other.data;
   }
 
+  int __hashCode;
   @override
   int get hashCode {
-    return $jf($jc(0, data.hashCode));
+    return __hashCode ??= $jf($jc(0, data.hashCode));
   }
 
   @override

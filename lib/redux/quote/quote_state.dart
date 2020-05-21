@@ -23,6 +23,10 @@ abstract class QuoteState implements Built<QuoteState, QuoteStateBuilder> {
 
   QuoteState._();
 
+  @override
+  @memoized
+  int get hashCode;
+
   @nullable
   int get lastUpdated;
 
@@ -69,6 +73,10 @@ abstract class QuoteUIState extends Object
   }
 
   QuoteUIState._();
+
+  @override
+  @memoized
+  int get hashCode;
 
   @nullable
   InvoiceEntity get editing;

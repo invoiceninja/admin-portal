@@ -83,10 +83,8 @@ class MainScreen extends StatelessWidget {
             }
           } else {
             bool editingFilterEntity = false;
-            final entityType =
-                EntityType.valueOf(mainRoute.replaceFirst('/', ''));
             if (uiState.filterEntityId != null && subRoute == '/edit') {
-              if (entityType == uiState.filterEntityType) {
+              if (mainRoute == '/${uiState.filterEntityType}') {
                 mainRoute = '/' + uiState.previousMainRoute;
                 editingFilterEntity = true;
               }
@@ -587,7 +585,8 @@ class _ChangeLayoutBannerState extends State<ChangeLayoutBanner> {
     if (!_dismissedChange) {
       if (layout == AppLayout.mobile && calculatedLayout == AppLayout.desktop) {
         message = localization.changeToDekstopLayout;
-      } else if (layout == AppLayout.desktop && calculatedLayout == AppLayout.mobile) {
+      } else if (layout == AppLayout.desktop &&
+          calculatedLayout == AppLayout.mobile) {
         message = localization.changeToMobileLayout;
       }
     }

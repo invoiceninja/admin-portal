@@ -15,6 +15,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
   static final Map<String, Map<String, String>> _localizedValues = {
     'en': {
       // STARTER: lang key - do not remove comment
+      'email_sign_in': 'Sign in with email',
       'change': 'Change',
       'change_to_mobile_layout': 'Change to the mobile layout?',
       'change_to_desktop_layout': 'Change to the desktop layout?',
@@ -36529,9 +36530,9 @@ mixin LocalizationsProvider on LocaleCodeAware {
   String get changeToDekstopLayout =>
       _localizedValues[localeCode]['change_to_desktop_layout'] ?? '';
 
-  String get change =>
-      _localizedValues[localeCode]['change'] ?? '';
+  String get change => _localizedValues[localeCode]['change'] ?? '';
 
+  String get emailSignIn => _localizedValues[localeCode]['email_sign_in'] ?? '';
 
   String lookup(String key) {
     final lookupKey = toSnakeCase(key);

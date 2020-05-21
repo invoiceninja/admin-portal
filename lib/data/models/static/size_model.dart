@@ -11,6 +11,10 @@ abstract class SizeListResponse
       _$SizeListResponse;
   SizeListResponse._();
 
+  @override
+  @memoized
+  int get hashCode;
+
   BuiltList<SizeEntity> get data;
 
   static Serializer<SizeListResponse> get serializer =>
@@ -22,6 +26,10 @@ abstract class SizeItemResponse
   factory SizeItemResponse([void updates(SizeItemResponseBuilder b)]) =
       _$SizeItemResponse;
   SizeItemResponse._();
+
+  @override
+  @memoized
+  int get hashCode;
 
   SizeEntity get data;
 
@@ -43,6 +51,10 @@ abstract class SizeEntity extends Object
     );
   }
   SizeEntity._();
+
+  @override
+  @memoized
+  int get hashCode;
 
   String get name;
 

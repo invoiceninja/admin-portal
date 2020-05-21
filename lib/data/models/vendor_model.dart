@@ -15,6 +15,10 @@ abstract class VendorListResponse
 
   VendorListResponse._();
 
+  @override
+  @memoized
+  int get hashCode;
+
   BuiltList<VendorEntity> get data;
 
   static Serializer<VendorListResponse> get serializer =>
@@ -27,6 +31,10 @@ abstract class VendorItemResponse
       _$VendorItemResponse;
 
   VendorItemResponse._();
+
+  @override
+  @memoized
+  int get hashCode;
 
   VendorEntity get data;
 
@@ -97,6 +105,10 @@ abstract class VendorEntity extends Object
   }
 
   VendorEntity._();
+
+  @override
+  @memoized
+  int get hashCode;
 
   VendorEntity get clone => rebuild((b) => b
     ..id = BaseEntity.nextId
@@ -321,6 +333,10 @@ abstract class VendorContactEntity extends Object
   }
 
   VendorContactEntity._();
+
+  @override
+  @memoized
+  int get hashCode;
 
   @override
   EntityType get entityType {

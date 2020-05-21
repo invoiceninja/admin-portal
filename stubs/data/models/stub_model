@@ -14,6 +14,10 @@ abstract class StubListResponse
 
   StubListResponse._();
 
+  @override
+@memoized
+  int get hashCode;
+
   BuiltList<StubEntity> get data;
 
   static Serializer<StubListResponse> get serializer =>
@@ -26,6 +30,10 @@ abstract class StubItemResponse
       _$StubItemResponse;
 
   StubItemResponse._();
+
+  @override
+@memoized
+  int get hashCode;
 
   StubEntity get data;
 
@@ -50,6 +58,10 @@ abstract class StubEntity extends Object with BaseEntity implements Built<StubEn
   }
 
   StubEntity._();
+
+  @override
+@memoized
+  int get hashCode;
 
   @override
   EntityType get entityType => EntityType.stub;

@@ -188,9 +188,10 @@ class _$PaymentTypeListResponse extends PaymentTypeListResponse {
     return other is PaymentTypeListResponse && data == other.data;
   }
 
+  int __hashCode;
   @override
   int get hashCode {
-    return $jf($jc(0, data.hashCode));
+    return __hashCode ??= $jf($jc(0, data.hashCode));
   }
 
   @override
@@ -284,9 +285,10 @@ class _$PaymentTypeItemResponse extends PaymentTypeItemResponse {
     return other is PaymentTypeItemResponse && data == other.data;
   }
 
+  int __hashCode;
   @override
   int get hashCode {
-    return $jf($jc(0, data.hashCode));
+    return __hashCode ??= $jf($jc(0, data.hashCode));
   }
 
   @override
@@ -381,9 +383,10 @@ class _$PaymentTypeEntity extends PaymentTypeEntity {
     return other is PaymentTypeEntity && name == other.name && id == other.id;
   }
 
+  int __hashCode;
   @override
   int get hashCode {
-    return $jf($jc($jc(0, name.hashCode), id.hashCode));
+    return __hashCode ??= $jf($jc($jc(0, name.hashCode), id.hashCode));
   }
 
   @override

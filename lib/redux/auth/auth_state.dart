@@ -21,6 +21,10 @@ abstract class AuthState implements Built<AuthState, AuthStateBuilder> {
 
   AuthState._();
 
+  @override
+  @memoized
+  int get hashCode;
+
   String get email;
 
   String get password;

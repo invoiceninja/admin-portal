@@ -49,17 +49,11 @@ class QuoteListItem extends StatelessWidget {
     final showCheckbox = onCheckboxChanged != null || isInMultiselect;
     final textStyle = TextStyle(fontSize: 16);
     final localization = AppLocalization.of(context);
+    final textColor = Theme.of(context).textTheme.bodyText1.color;
     final filterMatch = filter != null && filter.isNotEmpty
         ? (quote.matchesFilterValue(filter) ??
             client.matchesFilterValue(filter))
         : null;
-
-    final statusLabel = quote.isPastDue
-        ? localization.expired
-        : localization.lookup(kQuoteStatuses[quote.statusId]);
-    final statusColor = QuoteStatusColors
-        .colors[quote.isPastDue ? kInvoiceStatusPastDue : quote.statusId];
-    final textColor = Theme.of(context).textTheme.bodyText1.color;
 
     Widget _buildMobile() {
       return ListTile(

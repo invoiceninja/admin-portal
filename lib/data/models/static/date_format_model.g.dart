@@ -189,9 +189,10 @@ class _$DateFormatListResponse extends DateFormatListResponse {
     return other is DateFormatListResponse && data == other.data;
   }
 
+  int __hashCode;
   @override
   int get hashCode {
-    return $jf($jc(0, data.hashCode));
+    return __hashCode ??= $jf($jc(0, data.hashCode));
   }
 
   @override
@@ -284,9 +285,10 @@ class _$DateFormatItemResponse extends DateFormatItemResponse {
     return other is DateFormatItemResponse && data == other.data;
   }
 
+  int __hashCode;
   @override
   int get hashCode {
-    return $jf($jc(0, data.hashCode));
+    return __hashCode ??= $jf($jc(0, data.hashCode));
   }
 
   @override
@@ -382,9 +384,10 @@ class _$DateFormatEntity extends DateFormatEntity {
         id == other.id;
   }
 
+  int __hashCode;
   @override
   int get hashCode {
-    return $jf($jc($jc(0, format.hashCode), id.hashCode));
+    return __hashCode ??= $jf($jc($jc(0, format.hashCode), id.hashCode));
   }
 
   @override

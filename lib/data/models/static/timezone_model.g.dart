@@ -194,9 +194,10 @@ class _$TimezoneListResponse extends TimezoneListResponse {
     return other is TimezoneListResponse && data == other.data;
   }
 
+  int __hashCode;
   @override
   int get hashCode {
-    return $jf($jc(0, data.hashCode));
+    return __hashCode ??= $jf($jc(0, data.hashCode));
   }
 
   @override
@@ -289,9 +290,10 @@ class _$TimezoneItemResponse extends TimezoneItemResponse {
     return other is TimezoneItemResponse && data == other.data;
   }
 
+  int __hashCode;
   @override
   int get hashCode {
-    return $jf($jc(0, data.hashCode));
+    return __hashCode ??= $jf($jc(0, data.hashCode));
   }
 
   @override
@@ -392,9 +394,11 @@ class _$TimezoneEntity extends TimezoneEntity {
         id == other.id;
   }
 
+  int __hashCode;
   @override
   int get hashCode {
-    return $jf($jc($jc($jc(0, name.hashCode), location.hashCode), id.hashCode));
+    return __hashCode ??=
+        $jf($jc($jc($jc(0, name.hashCode), location.hashCode), id.hashCode));
   }
 
   @override

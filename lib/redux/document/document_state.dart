@@ -22,6 +22,10 @@ abstract class DocumentState
   }
   DocumentState._();
 
+  @override
+  @memoized
+  int get hashCode;
+
   @nullable
   int get lastUpdated;
 
@@ -53,6 +57,10 @@ abstract class DocumentUIState extends Object
     );
   }
   DocumentUIState._();
+
+  @override
+  @memoized
+  int get hashCode;
 
   @nullable
   DocumentEntity get editing;

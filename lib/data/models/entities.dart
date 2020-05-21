@@ -60,11 +60,11 @@ class EntityType extends EnumClass {
   }
 
   bool get isSetting => [
-    EntityType.taxRate,
-    EntityType.companyGateway,
-    EntityType.user,
-    EntityType.group,
-  ].contains(this);
+        EntityType.taxRate,
+        EntityType.companyGateway,
+        EntityType.user,
+        EntityType.group,
+      ].contains(this);
 
   static BuiltSet<EntityType> get values => _$typeValues;
 
@@ -312,6 +312,10 @@ abstract class ErrorMessage
 
   ErrorMessage._();
 
+  @override
+  @memoized
+  int get hashCode;
+
   String get message;
 
   static Serializer<ErrorMessage> get serializer => _$errorMessageSerializer;
@@ -323,6 +327,10 @@ abstract class LoginResponse
       _$LoginResponse;
 
   LoginResponse._();
+
+  @override
+  @memoized
+  int get hashCode;
 
   @BuiltValueField(wireName: 'data')
   BuiltList<UserCompanyEntity> get userCompanies;
@@ -412,6 +420,10 @@ abstract class ActivityEntity
       _$ActivityEntity;
 
   ActivityEntity._();
+
+  @override
+  @memoized
+  int get hashCode;
 
   String get notes;
 

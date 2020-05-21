@@ -238,9 +238,10 @@ class _$CurrencyListResponse extends CurrencyListResponse {
     return other is CurrencyListResponse && data == other.data;
   }
 
+  int __hashCode;
   @override
   int get hashCode {
-    return $jf($jc(0, data.hashCode));
+    return __hashCode ??= $jf($jc(0, data.hashCode));
   }
 
   @override
@@ -333,9 +334,10 @@ class _$CurrencyItemResponse extends CurrencyItemResponse {
     return other is CurrencyItemResponse && data == other.data;
   }
 
+  int __hashCode;
   @override
   int get hashCode {
-    return $jf($jc(0, data.hashCode));
+    return __hashCode ??= $jf($jc(0, data.hashCode));
   }
 
   @override
@@ -480,9 +482,10 @@ class _$CurrencyEntity extends CurrencyEntity {
         id == other.id;
   }
 
+  int __hashCode;
   @override
   int get hashCode {
-    return $jf($jc(
+    return __hashCode ??= $jf($jc(
         $jc(
             $jc(
                 $jc(

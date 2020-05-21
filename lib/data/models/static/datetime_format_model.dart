@@ -12,6 +12,10 @@ abstract class DatetimeFormatListResponse
       _$DatetimeFormatListResponse;
   DatetimeFormatListResponse._();
 
+  @override
+  @memoized
+  int get hashCode;
+
   BuiltList<DatetimeFormatEntity> get data;
 
   static Serializer<DatetimeFormatListResponse> get serializer =>
@@ -25,6 +29,10 @@ abstract class DatetimeFormatItemResponse
           [void updates(DatetimeFormatItemResponseBuilder b)]) =
       _$DatetimeFormatItemResponse;
   DatetimeFormatItemResponse._();
+
+  @override
+  @memoized
+  int get hashCode;
 
   DatetimeFormatEntity get data;
 
@@ -46,6 +54,10 @@ abstract class DatetimeFormatEntity
     );
   }
   DatetimeFormatEntity._();
+
+  @override
+  @memoized
+  int get hashCode;
 
   String get id;
 

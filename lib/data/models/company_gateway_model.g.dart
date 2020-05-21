@@ -481,9 +481,10 @@ class _$CompanyGatewayListResponse extends CompanyGatewayListResponse {
     return other is CompanyGatewayListResponse && data == other.data;
   }
 
+  int __hashCode;
   @override
   int get hashCode {
-    return $jf($jc(0, data.hashCode));
+    return __hashCode ??= $jf($jc(0, data.hashCode));
   }
 
   @override
@@ -577,9 +578,10 @@ class _$CompanyGatewayItemResponse extends CompanyGatewayItemResponse {
     return other is CompanyGatewayItemResponse && data == other.data;
   }
 
+  int __hashCode;
   @override
   int get hashCode {
-    return $jf($jc(0, data.hashCode));
+    return __hashCode ??= $jf($jc(0, data.hashCode));
   }
 
   @override
@@ -798,9 +800,10 @@ class _$CompanyGatewayEntity extends CompanyGatewayEntity {
         id == other.id;
   }
 
+  int __hashCode;
   @override
   int get hashCode {
-    return $jf($jc(
+    return __hashCode ??= $jf($jc(
         $jc(
             $jc(
                 $jc(
@@ -1167,9 +1170,10 @@ class _$FeesAndLimitsSettings extends FeesAndLimitsSettings {
         adjustFeePercent == other.adjustFeePercent;
   }
 
+  int __hashCode;
   @override
   int get hashCode {
-    return $jf($jc(
+    return __hashCode ??= $jf($jc(
         $jc(
             $jc(
                 $jc(

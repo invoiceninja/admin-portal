@@ -21,6 +21,10 @@ abstract class VendorState implements Built<VendorState, VendorStateBuilder> {
   }
   VendorState._();
 
+  @override
+  @memoized
+  int get hashCode;
+
   @nullable
   int get lastUpdated;
 
@@ -66,6 +70,10 @@ abstract class VendorUIState extends Object
     );
   }
   VendorUIState._();
+
+  @override
+  @memoized
+  int get hashCode;
 
   @nullable
   VendorEntity get editing;

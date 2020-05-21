@@ -24,6 +24,10 @@ abstract class ListUIState implements Built<ListUIState, ListUIStateBuilder> {
 
   ListUIState._();
 
+  @override
+  @memoized
+  int get hashCode;
+
   @nullable
   String get filter;
 

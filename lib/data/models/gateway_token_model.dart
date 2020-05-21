@@ -17,6 +17,10 @@ abstract class GatewayTokenListResponse
 
   GatewayTokenListResponse._();
 
+  @override
+  @memoized
+  int get hashCode;
+
   BuiltList<GatewayTokenEntity> get data;
 
   static Serializer<GatewayTokenListResponse> get serializer =>
@@ -31,6 +35,10 @@ abstract class GatewayTokenItemResponse
       _$GatewayTokenItemResponse;
 
   GatewayTokenItemResponse._();
+
+  @override
+  @memoized
+  int get hashCode;
 
   GatewayTokenEntity get data;
 
@@ -62,6 +70,10 @@ abstract class GatewayTokenEntity extends Object
   }
 
   GatewayTokenEntity._();
+
+  @override
+  @memoized
+  int get hashCode;
 
   @override
   EntityType get entityType {

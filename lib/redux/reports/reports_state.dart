@@ -22,6 +22,10 @@ abstract class ReportsUIState
 
   ReportsUIState._();
 
+  @override
+  @memoized
+  int get hashCode;
+
   String get report;
 
   String get group;

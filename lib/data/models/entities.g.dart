@@ -648,9 +648,10 @@ class _$ErrorMessage extends ErrorMessage {
     return other is ErrorMessage && message == other.message;
   }
 
+  int __hashCode;
   @override
   int get hashCode {
-    return $jf($jc(0, message.hashCode));
+    return __hashCode ??= $jf($jc(0, message.hashCode));
   }
 
   @override
@@ -733,9 +734,11 @@ class _$LoginResponse extends LoginResponse {
         static == other.static;
   }
 
+  int __hashCode;
   @override
   int get hashCode {
-    return $jf($jc($jc(0, userCompanies.hashCode), static.hashCode));
+    return __hashCode ??=
+        $jf($jc($jc(0, userCompanies.hashCode), static.hashCode));
   }
 
   @override
@@ -909,9 +912,10 @@ class _$ActivityEntity extends ActivityEntity {
         vendorId == other.vendorId;
   }
 
+  int __hashCode;
   @override
   int get hashCode {
-    return $jf($jc(
+    return __hashCode ??= $jf($jc(
         $jc(
             $jc(
                 $jc(

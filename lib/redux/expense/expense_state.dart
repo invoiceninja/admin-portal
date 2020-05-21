@@ -22,6 +22,10 @@ abstract class ExpenseState
   }
   ExpenseState._();
 
+  @override
+  @memoized
+  int get hashCode;
+
   @nullable
   int get lastUpdated;
 
@@ -66,6 +70,10 @@ abstract class ExpenseUIState extends Object
     );
   }
   ExpenseUIState._();
+
+  @override
+  @memoized
+  int get hashCode;
 
   @nullable
   ExpenseEntity get editing;

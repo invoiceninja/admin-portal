@@ -24,6 +24,10 @@ abstract class StaticState implements Built<StaticState, StaticStateBuilder> {
 
   StaticState._();
 
+  @override
+  @memoized
+  int get hashCode;
+
   @nullable
   int get updatedAt;
 

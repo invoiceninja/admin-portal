@@ -16,6 +16,10 @@ abstract class TaxRateListResponse
 
   TaxRateListResponse._();
 
+  @override
+  @memoized
+  int get hashCode;
+
   BuiltList<TaxRateEntity> get data;
 
   static Serializer<TaxRateListResponse> get serializer =>
@@ -28,6 +32,10 @@ abstract class TaxRateItemResponse
       _$TaxRateItemResponse;
 
   TaxRateItemResponse._();
+
+  @override
+  @memoized
+  int get hashCode;
 
   TaxRateEntity get data;
 
@@ -62,6 +70,10 @@ abstract class TaxRateEntity extends Object
   }
 
   TaxRateEntity._();
+
+  @override
+  @memoized
+  int get hashCode;
 
   @override
   EntityType get entityType {

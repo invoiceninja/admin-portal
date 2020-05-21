@@ -189,9 +189,10 @@ class _$InvoiceStatusListResponse extends InvoiceStatusListResponse {
     return other is InvoiceStatusListResponse && data == other.data;
   }
 
+  int __hashCode;
   @override
   int get hashCode {
-    return $jf($jc(0, data.hashCode));
+    return __hashCode ??= $jf($jc(0, data.hashCode));
   }
 
   @override
@@ -285,9 +286,10 @@ class _$InvoiceStatusItemResponse extends InvoiceStatusItemResponse {
     return other is InvoiceStatusItemResponse && data == other.data;
   }
 
+  int __hashCode;
   @override
   int get hashCode {
-    return $jf($jc(0, data.hashCode));
+    return __hashCode ??= $jf($jc(0, data.hashCode));
   }
 
   @override
@@ -386,9 +388,10 @@ class _$InvoiceStatusEntity extends InvoiceStatusEntity {
     return other is InvoiceStatusEntity && id == other.id && name == other.name;
   }
 
+  int __hashCode;
   @override
   int get hashCode {
-    return $jf($jc($jc(0, id.hashCode), name.hashCode));
+    return __hashCode ??= $jf($jc($jc(0, id.hashCode), name.hashCode));
   }
 
   @override

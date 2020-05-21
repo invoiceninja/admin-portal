@@ -12,6 +12,10 @@ abstract class CreditListResponse
 
   CreditListResponse._();
 
+  @override
+  @memoized
+  int get hashCode;
+
   BuiltList<InvoiceEntity> get data;
 
   static Serializer<CreditListResponse> get serializer =>
@@ -24,6 +28,10 @@ abstract class CreditItemResponse
       _$CreditItemResponse;
 
   CreditItemResponse._();
+
+  @override
+  @memoized
+  int get hashCode;
 
   InvoiceEntity get data;
 

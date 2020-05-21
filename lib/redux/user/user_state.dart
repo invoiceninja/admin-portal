@@ -20,6 +20,10 @@ abstract class UserState implements Built<UserState, UserStateBuilder> {
   }
   UserState._();
 
+  @override
+  @memoized
+  int get hashCode;
+
   @nullable
   int get lastUpdated;
 
@@ -51,6 +55,10 @@ abstract class UserUIState extends Object
     );
   }
   UserUIState._();
+
+  @override
+  @memoized
+  int get hashCode;
 
   @nullable
   UserEntity get editing;

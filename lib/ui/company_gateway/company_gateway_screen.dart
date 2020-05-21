@@ -88,7 +88,8 @@ class CompanyGatewayScreen extends StatelessWidget {
       body: CompanyGatewayListBuilder(),
       bottomNavigationBar: AppBottomBar(
         sortFields: [],
-        onRefreshPressed: () => store.dispatch(LoadCompanyGateways(force: true)),
+        onRefreshPressed: () =>
+            store.dispatch(LoadCompanyGateways(force: true)),
         onSelectedSortField: null,
         onlyList: true,
         entityType: EntityType.companyGateway,

@@ -23,6 +23,10 @@ abstract class PaymentState
 
   PaymentState._();
 
+  @override
+  @memoized
+  int get hashCode;
+
   @nullable
   int get lastUpdated;
 
@@ -69,6 +73,10 @@ abstract class PaymentUIState extends Object
   }
 
   PaymentUIState._();
+
+  @override
+  @memoized
+  int get hashCode;
 
   @nullable
   PaymentEntity get editing;

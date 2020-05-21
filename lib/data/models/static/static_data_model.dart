@@ -22,6 +22,10 @@ abstract class StaticDataListResponse
       _$StaticDataListResponse;
   StaticDataListResponse._();
 
+  @override
+  @memoized
+  int get hashCode;
+
   BuiltList<StaticDataEntity> get data;
 
   static Serializer<StaticDataListResponse> get serializer =>
@@ -34,6 +38,10 @@ abstract class StaticDataItemResponse
           [void updates(StaticDataItemResponseBuilder b)]) =
       _$StaticDataItemResponse;
   StaticDataItemResponse._();
+
+  @override
+  @memoized
+  int get hashCode;
 
   StaticDataEntity get data;
 
@@ -78,6 +86,10 @@ abstract class StaticDataEntity
     );
   }
   StaticDataEntity._();
+
+  @override
+  @memoized
+  int get hashCode;
 
   BuiltList<CurrencyEntity> get currencies;
 

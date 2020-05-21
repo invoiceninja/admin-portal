@@ -15,6 +15,10 @@ abstract class ProductListResponse
 
   ProductListResponse._();
 
+  @override
+  @memoized
+  int get hashCode;
+
   BuiltList<ProductEntity> get data;
 
   static Serializer<ProductListResponse> get serializer =>
@@ -27,6 +31,10 @@ abstract class ProductItemResponse
       _$ProductItemResponse;
 
   ProductItemResponse._();
+
+  @override
+  @memoized
+  int get hashCode;
 
   ProductEntity get data;
 
@@ -83,6 +91,10 @@ abstract class ProductEntity extends Object
   }
 
   ProductEntity._();
+
+  @override
+  @memoized
+  int get hashCode;
 
   ProductEntity get clone => rebuild((b) => b
     ..id = BaseEntity.nextId
