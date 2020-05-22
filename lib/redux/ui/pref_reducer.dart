@@ -44,7 +44,7 @@ PrefState prefReducer(
     ..isMenuVisible = menuVisibleReducer(state.isMenuVisible, action)
     ..isHistoryVisible = historyVisibleReducer(state.isHistoryVisible, action)
     ..enableDarkMode = darkModeReducer(state.enableDarkMode, action)
-    ..fullWidthEditor = fullWidthEditorReducer(state.fullHeightFilter, action)
+    ..fullWidthEditor = fullWidthEditorReducer(state.fullWidthEditor, action)
     ..fullHeightFilter = fullHeightFilterReducer(state.fullHeightFilter, action)
     ..longPressSelectionIsDefault =
         longPressReducer(state.longPressSelectionIsDefault, action)
