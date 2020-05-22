@@ -109,6 +109,7 @@ class _DeviceSettingsState extends State<DeviceSettings> {
               ),
               FormCard(
                 children: [
+                  /*
                   SwitchListTile(
                     title: Text(localization.fullWidthEditor),
                     value: prefState.fullWidthEditor,
@@ -117,6 +118,7 @@ class _DeviceSettingsState extends State<DeviceSettings> {
                     secondary: Icon(getEntityIcon(EntityType.invoice)),
                     activeColor: Theme.of(context).accentColor,
                   ),
+                   */
                   SwitchListTile(
                     title: Text(localization.fullHeightFilter),
                     value: prefState.fullHeightFilter,

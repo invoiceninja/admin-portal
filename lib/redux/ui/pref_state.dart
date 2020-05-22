@@ -21,7 +21,7 @@ abstract class PrefState implements Built<PrefState, PrefStateBuilder> {
       requireAuthentication: false,
       emailPayment: false,
       autoStartTasks: false,
-      fullHeightFilter: true,
+      fullHeightFilter: false,
       fullWidthEditor: true,
       longPressSelectionIsDefault: false,
       addDocumentsToInvoice: false,
