@@ -268,7 +268,7 @@ class MainScreen extends StatelessWidget {
                     Expanded(
                         child: AppBorder(
                       child: screen,
-                      isLeft: true,
+                      isLeft: prefState.showMenu,
                     )),
                   ]),
                 ),
@@ -510,21 +510,23 @@ class EntityScreens extends StatelessWidget {
             flex: previewFlex,
           ),
         Expanded(
-          child: AppBorder(
-            child: topFilterChild == null
-                ? listWidget
-                : Column(
-                    children: [
-                      topFilterChild,
-                      Expanded(
-                        child: AppBorder(
-                          child: listWidget,
-                          isTop: uiState.filterEntityType != null,
-                        ),
-                      )
-                    ],
-                  ),
-            isLeft: true,
+          child: ClipRRect(
+            child: AppBorder(
+              isLeft: leftFilterChild != null,
+              child: topFilterChild == null
+                  ? listWidget
+                  : Column(
+                      children: [
+                        topFilterChild,
+                        Expanded(
+                          child: AppBorder(
+                            isTop: uiState.filterEntityType != null,
+                            child: listWidget,
+                          ),
+                        )
+                      ],
+                    ),
+            ),
           ),
           flex: listFlex,
         ),
