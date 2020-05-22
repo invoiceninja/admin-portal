@@ -667,6 +667,7 @@ class _EntityFilter extends StatelessWidget {
     final prefState = state.prefState;
 
     final entityType = uiState.filterEntityType;
+    final filterEntity = state.getEntityMap(entityType)[uiState.filterEntityId];
 
     return Material(
       color: Theme.of(context).cardColor,
@@ -675,10 +676,20 @@ class _EntityFilter extends StatelessWidget {
         child: Row(
           children: [
             FlatButton(
-              child: Text(localization.lookup('${entityType.plural}')),
+              child: Text(
+                '${localization.lookup(entityType.plural)}  ›  ${filterEntity.listDisplayName}',
+                style: TextStyle(fontSize: 17),
+              ),
+              onPressed: () =>
+                  viewEntitiesByType(context: context, entityType: entityType),
             ),
-            Icon(Icons.chevron_right),
-            Text('name'),
+            Spacer(),
+            IconButton(
+              icon: Icon(Icons.clear),
+              onPressed: () {
+                //
+              },
+            ),
           ],
         ),
       ),
