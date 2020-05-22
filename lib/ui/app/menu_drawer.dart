@@ -197,11 +197,14 @@ class MenuDrawer extends StatelessWidget {
           ));
   */
 
-    return SizedBox(
+    return AnimatedContainer(
       width: state.isMenuCollapsed ? 65 : kDrawerWidth,
+      duration: Duration(milliseconds: kDefaultAnimationDuration),
+      curve: Curves.easeInOutCubic,
       child: Drawer(
         child: SafeArea(
           child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
             mainAxisSize: MainAxisSize.max,
             children: <Widget>[
               // Hide options while refreshing data
@@ -448,16 +451,16 @@ class _DrawerTileState extends State<DrawerTile> {
               color: textColor,
             ),
           ),
-          title: state.isMenuCollapsed
-              ? null
-              : Text(
-                  widget.title,
-                  style: Theme.of(context).textTheme.bodyText1.copyWith(
-                        fontWeight: FontWeight.w100,
-                        fontSize: 16,
-                        color: textColor,
-                      ),
+          title: Text(
+            widget.title,
+            style: Theme.of(context).textTheme.bodyText1.copyWith(
+                  fontWeight: FontWeight.w100,
+                  fontSize: 16,
+                  color: textColor,
                 ),
+            overflow: TextOverflow.clip,
+            maxLines: 1,
+          ),
           onTap: () {
             store.dispatch(ClearEntityFilter());
             if (widget.entityType != null) {
@@ -480,7 +483,7 @@ class _DrawerTileState extends State<DrawerTile> {
                   : null,
 
                */
-          trailing: trailingWidget,
+          trailing: state.isMenuCollapsed ? null : trailingWidget,
         ),
       ),
     );
@@ -836,33 +839,36 @@ class _ContactUsDialogState extends State<ContactUsDialog> {
       content: SingleChildScrollView(
         child: Container(
           width: isMobile(context) ? null : 500,
-          child: Column(mainAxisSize: MainAxisSize.min, children: <Widget>[
-            TextFormField(
-              enabled: false,
-              decoration: InputDecoration(
-                labelText: localization.from,
-              ),
-              initialValue: '${user.fullName} <${user.email}>',
-            ),
-            SizedBox(height: 10),
-            TextFormField(
-              decoration: InputDecoration(
-                labelText: localization.message,
-              ),
-              minLines: 4,
-              maxLines: 4,
-              onChanged: (value) => _message = value,
-            ),
-            SizedBox(height: 10),
-            SwitchListTile(
-              value: _includeLogs,
-              onChanged: (value) {
-                setState(() => _includeLogs = value);
-              },
-              title: Text(localization.includeRecentErrors),
-              activeColor: Theme.of(context).accentColor,
-            ),
-          ]),
+          child: Column(
+              mainAxisSize: MainAxisSize.min,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: <Widget>[
+                TextFormField(
+                  enabled: false,
+                  decoration: InputDecoration(
+                    labelText: localization.from,
+                  ),
+                  initialValue: '${user.fullName} <${user.email}>',
+                ),
+                SizedBox(height: 10),
+                TextFormField(
+                  decoration: InputDecoration(
+                    labelText: localization.message,
+                  ),
+                  minLines: 4,
+                  maxLines: 4,
+                  onChanged: (value) => _message = value,
+                ),
+                SizedBox(height: 10),
+                SwitchListTile(
+                  value: _includeLogs,
+                  onChanged: (value) {
+                    setState(() => _includeLogs = value);
+                  },
+                  title: Text(localization.includeRecentErrors),
+                  activeColor: Theme.of(context).accentColor,
+                ),
+              ]),
         ),
       ),
     );

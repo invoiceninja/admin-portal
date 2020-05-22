@@ -681,7 +681,7 @@ class _EntityFilter extends StatelessWidget {
       color: Theme.of(context).cardColor,
       child: AnimatedContainer(
         height: show ? kTopBottomBarHeight : 0,
-        duration: Duration(milliseconds: 500),
+        duration: Duration(milliseconds: kDefaultAnimationDuration ),
         curve: Curves.easeInOutCubic,
         child: Row(
           children: filterEntity == null
