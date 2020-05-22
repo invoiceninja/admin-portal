@@ -22,6 +22,7 @@ import 'package:invoiceninja_flutter/redux/ui/pref_state.dart';
 import 'package:invoiceninja_flutter/redux/ui/ui_actions.dart';
 import 'package:invoiceninja_flutter/redux/user/user_actions.dart';
 import 'package:invoiceninja_flutter/redux/vendor/vendor_actions.dart';
+
 // STARTER: import - do not remove comment
 import 'package:invoiceninja_flutter/redux/design/design_actions.dart';
 
@@ -43,6 +44,8 @@ PrefState prefReducer(
     ..isMenuVisible = menuVisibleReducer(state.isMenuVisible, action)
     ..isHistoryVisible = historyVisibleReducer(state.isHistoryVisible, action)
     ..enableDarkMode = darkModeReducer(state.enableDarkMode, action)
+    ..fullWidthEditor = fullWidthEditorReducer(state.fullHeightFilter, action)
+    ..fullHeightFilter = fullHeightFilterReducer(state.fullHeightFilter, action)
     ..longPressSelectionIsDefault =
         longPressReducer(state.longPressSelectionIsDefault, action)
     ..autoStartTasks = autoStartTasksReducer(state.autoStartTasks, action)
@@ -132,6 +135,18 @@ Reducer<bool> emailPaymentReducer = combineReducers([
 Reducer<bool> darkModeReducer = combineReducers([
   TypedReducer<bool, UserPreferencesChanged>((enableDarkMode, action) {
     return action.enableDarkMode ?? enableDarkMode;
+  }),
+]);
+
+Reducer<bool> fullWidthEditorReducer = combineReducers([
+  TypedReducer<bool, UserPreferencesChanged>((value, action) {
+    return action.fullWidthEditor ?? value;
+  }),
+]);
+
+Reducer<bool> fullHeightFilterReducer = combineReducers([
+  TypedReducer<bool, UserPreferencesChanged>((value, action) {
+    return action.fullHeightFilter ?? value;
   }),
 ]);
 
