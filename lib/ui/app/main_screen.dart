@@ -260,7 +260,6 @@ class MainScreen extends StatelessWidget {
               child: FocusTraversalGroup(
                 policy: WidgetOrderTraversalPolicy(),
                 child: ChangeLayoutBanner(
-                  key: ValueKey(prefState.appLayout),
                   appLayout: prefState.appLayout,
                   child: Row(children: <Widget>[
                     if (prefState.showMenu) ...[
@@ -613,7 +612,7 @@ class _ChangeLayoutBannerState extends State<ChangeLayoutBanner> {
     if (!_dismissedChange) {
       if (widget.appLayout == AppLayout.mobile &&
           calculatedLayout == AppLayout.desktop) {
-        message = localization.changeToDekstopLayout;
+        //message = localization.changeToDekstopLayout;
       } else if (widget.appLayout == AppLayout.desktop &&
           calculatedLayout == AppLayout.mobile) {
         message = localization.changeToMobileLayout;
