@@ -10,6 +10,7 @@ import 'package:invoiceninja_flutter/redux/reports/reports_actions.dart';
 import 'package:invoiceninja_flutter/redux/settings/settings_actions.dart';
 import 'package:invoiceninja_flutter/redux/ui/pref_state.dart';
 import 'package:invoiceninja_flutter/ui/app/app_builder.dart';
+import 'package:invoiceninja_flutter/ui/app/forms/app_dropdown_button.dart';
 import 'package:invoiceninja_flutter/ui/app/history_drawer_vm.dart';
 import 'package:invoiceninja_flutter/ui/app/icon_text.dart';
 import 'package:invoiceninja_flutter/ui/app/menu_drawer_vm.dart';
@@ -678,7 +679,6 @@ class _EntityFilter extends StatelessWidget {
     final store = StoreProvider.of<AppState>(context);
     final state = store.state;
     final uiState = state.uiState;
-    final prefState = state.prefState;
 
     final entityType = uiState.filterEntityType;
     final entityMap = state.getEntityMap(entityType);
@@ -704,6 +704,25 @@ class _EntityFilter extends StatelessWidget {
                         context: context, entityType: entityType),
                   ),
                   Spacer(),
+                  DropdownButtonHideUnderline(
+                    child: DropdownButton<EntityType>(
+                      onChanged: (value) {
+                        print('## SELCTED: $value');
+                      },
+                      items: [entityType, ...entityType.relatedTypes]
+                          .where((element) =>
+                              state.company.isModuleEnabled(element))
+                          .map((type) => DropdownMenuItem<EntityType>(
+                                child: Text(type == entityType
+                                    ? localization.overview
+                                    : '${localization.lookup(type.plural)}'),
+                                onTap: () {
+                                  print('## TAPPED: $type');
+                                },
+                              ))
+                          .toList(),
+                    ),
+                  ),
                   IconButton(
                     icon: Icon(Icons.clear),
                     onPressed: () => store.dispatch(ClearEntityFilter()),
