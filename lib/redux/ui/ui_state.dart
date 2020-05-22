@@ -129,6 +129,9 @@ abstract class UIState implements Built<UIState, UIStateBuilder> {
     return currentRoute.contains(route);
   }
 
+  EntityType get entityTypeRoute =>
+      EntityType.valueOf(mainRoute.replaceFirst('/', ''));
+
   String get mainRoute {
     final parts =
         currentRoute.split('/').where((part) => part.isNotEmpty).toList();

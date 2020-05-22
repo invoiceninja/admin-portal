@@ -680,8 +680,10 @@ class _EntityFilter extends StatelessWidget {
     final state = store.state;
     final uiState = state.uiState;
 
-    final entityType = uiState.filterEntityType;
-    final entityMap = state.getEntityMap(entityType);
+    final filterEntityType = uiState.filterEntityType;
+    final routeEntityType = uiState.entityTypeRoute;
+
+    final entityMap = state.getEntityMap(filterEntityType);
     final filterEntity =
         entityMap != null ? entityMap[uiState.filterEntityId] : null;
 
@@ -697,23 +699,28 @@ class _EntityFilter extends StatelessWidget {
               : [
                   FlatButton(
                     child: Text(
-                      '${localization.lookup(entityType.plural)}  ›  ${filterEntity.listDisplayName}',
+                      '${localization.lookup(filterEntityType.plural)}  ›  ${filterEntity.listDisplayName}',
                       style: TextStyle(fontSize: 17),
                     ),
                     onPressed: () => viewEntitiesByType(
-                        context: context, entityType: entityType),
+                        context: context, entityType: filterEntityType),
                   ),
                   Spacer(),
                   DropdownButtonHideUnderline(
                     child: DropdownButton<EntityType>(
+                      value: routeEntityType,
                       onChanged: (value) {
                         print('## SELCTED: $value');
                       },
-                      items: [entityType, ...entityType.relatedTypes]
+                      items: [
+                        filterEntityType,
+                        ...filterEntityType.relatedTypes
+                      ]
                           .where((element) =>
                               state.company.isModuleEnabled(element))
                           .map((type) => DropdownMenuItem<EntityType>(
-                                child: Text(type == entityType
+                                value: type,
+                                child: Text(type == filterEntityType
                                     ? localization.overview
                                     : '${localization.lookup(type.plural)}'),
                                 onTap: () {
