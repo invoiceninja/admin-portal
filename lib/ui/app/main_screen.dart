@@ -706,9 +706,7 @@ class _EntityFilter extends StatelessWidget {
                   Spacer(),
                   IconButton(
                     icon: Icon(Icons.clear),
-                    onPressed: () {
-                      //
-                    },
+                    onPressed: () => store.dispatch(ClearEntityFilter()),
                   ),
                 ],
         ),
