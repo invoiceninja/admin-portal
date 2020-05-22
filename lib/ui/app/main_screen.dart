@@ -702,15 +702,22 @@ class _EntityFilter extends StatelessWidget {
                 ? []
                 : [
                     SizedBox(width: 4),
-                    FlatButton(
-                      child: Text(
-                        '${localization.lookup('$filterEntityType')}  ›  ${filterEntity.listDisplayName}',
-                        style: TextStyle(fontSize: 17),
+                    Expanded(
+                      child: Align(
+                        alignment: Alignment.centerLeft,
+                        child: FlatButton(
+                          child: Text(
+                            '${localization.lookup('$filterEntityType')}  ›  ${filterEntity.listDisplayName}',
+                            style: TextStyle(fontSize: 17),
+                            overflow: TextOverflow.ellipsis,
+                            textAlign: TextAlign.start,
+                            maxLines: 1,
+                          ),
+                          onPressed: () => viewEntitiesByType(
+                              context: context, entityType: filterEntityType),
+                        ),
                       ),
-                      onPressed: () => viewEntitiesByType(
-                          context: context, entityType: filterEntityType),
                     ),
-                    Spacer(),
                     PopupMenuButton<EntityType>(
                       child: Row(
                         children: [
@@ -725,14 +732,14 @@ class _EntityFilter extends StatelessWidget {
                         ],
                       ),
                       initialValue: routeEntityType,
-                      onSelected: (EntityType value) =>
-                          viewEntitiesByType(context: context, entityType: value),
+                      onSelected: (EntityType value) => viewEntitiesByType(
+                          context: context, entityType: value),
                       itemBuilder: (BuildContext context) => [
                         filterEntityType,
                         ...filterEntityType.relatedTypes
                       ]
-                          .where(
-                              (element) => state.company.isModuleEnabled(element))
+                          .where((element) =>
+                              state.company.isModuleEnabled(element))
                           .map((type) => PopupMenuItem<EntityType>(
                                 value: type,
                                 child: ConstrainedBox(
