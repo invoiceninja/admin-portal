@@ -74,7 +74,7 @@ class PaymentEditVM {
         }
         final SharedPreferences prefs = await SharedPreferences.getInstance();
         prefs.setBool(kSharedPrefEmailPayment, value);
-        store.dispatch(UserSettingsChanged(emailPayment: value));
+        store.dispatch(UserPreferencesChanged(emailPayment: value));
       },
       onCancelPressed: (BuildContext context) {
         createEntity(context: context, entity: PaymentEntity(), force: true);

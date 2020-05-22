@@ -7,6 +7,7 @@ import 'package:invoiceninja_flutter/redux/ui/pref_state.dart';
 import 'package:invoiceninja_flutter/ui/app/form_card.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/app_dropdown_button.dart';
 import 'package:invoiceninja_flutter/ui/settings/device_settings_list_vm.dart';
+import 'package:invoiceninja_flutter/utils/icons.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:invoiceninja_flutter/utils/platforms.dart';
 
@@ -107,9 +108,29 @@ class _DeviceSettingsState extends State<DeviceSettings> {
                 ],
               ),
               FormCard(
+                children: [
+                  SwitchListTile(
+                    title: Text(localization.fullWidthEditor),
+                    value: prefState.fullWidthEditor,
+                    onChanged: (value) =>
+                        viewModel.onFullWidthEditorChanged(context, value),
+                    secondary: Icon(getEntityIcon(EntityType.invoice)),
+                    activeColor: Theme.of(context).accentColor,
+                  ),
+                  SwitchListTile(
+                    title: Text(localization.fullHeightFilter),
+                    value: prefState.fullHeightFilter,
+                    onChanged: (value) =>
+                        viewModel.onFullHeightFilterChanged(context, value),
+                    secondary: Icon(Icons.filter_list),
+                    activeColor: Theme.of(context).accentColor,
+                  ),
+                ],
+              ),
+              FormCard(
                 children: <Widget>[
                   SwitchListTile(
-                    title: Text(AppLocalization.of(context).darkMode),
+                    title: Text(localization.darkMode),
                     value: prefState.enableDarkMode,
                     onChanged: (value) =>
                         viewModel.onDarkModeChanged(context, value),
@@ -119,8 +140,7 @@ class _DeviceSettingsState extends State<DeviceSettings> {
                     activeColor: Theme.of(context).accentColor,
                   ),
                   SwitchListTile(
-                    title: Text(AppLocalization.of(context)
-                        .longPressSelectionIsDefault),
+                    title: Text(localization.longPressSelectionIsDefault),
                     value: prefState.longPressSelectionIsDefault,
                     onChanged: (value) =>
                         viewModel.onLongPressSelectionIsDefault(context, value),

@@ -360,7 +360,7 @@ class _AppBottomBarState extends State<AppBottomBar> {
                   tooltip: localization.preview,
                   icon: Icon(Icons.chrome_reader_mode),
                   onPressed: () {
-                    store.dispatch(UserSettingsChanged(
+                    store.dispatch(UserPreferencesChanged(
                         isPreviewVisible: !state.prefState.isPreviewVisible));
                   },
                 ),

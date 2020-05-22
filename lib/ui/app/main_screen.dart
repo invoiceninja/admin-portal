@@ -260,6 +260,8 @@ class MainScreen extends StatelessWidget {
               child: FocusTraversalGroup(
                 policy: WidgetOrderTraversalPolicy(),
                 child: ChangeLayoutBanner(
+                  key: ValueKey(prefState.appLayout),
+                  appLayout: prefState.appLayout,
                   child: Row(children: <Widget>[
                     if (prefState.showMenu) ...[
                       MenuDrawerBuilder(),
@@ -584,9 +586,14 @@ class _CustomDivider extends StatelessWidget {
 }
 
 class ChangeLayoutBanner extends StatefulWidget {
-  const ChangeLayoutBanner({this.child});
+  const ChangeLayoutBanner({
+    Key key,
+    @required this.child,
+    @required this.appLayout,
+  }) : super(key: key);
 
   final Widget child;
+  final AppLayout appLayout;
 
   @override
   _ChangeLayoutBannerState createState() => _ChangeLayoutBannerState();
@@ -600,14 +607,14 @@ class _ChangeLayoutBannerState extends State<ChangeLayoutBanner> {
     final store = StoreProvider.of<AppState>(context);
     final localization = AppLocalization.of(context);
 
-    final layout = store.state.prefState.appLayout;
     final calculatedLayout = calculateLayout(context, breakOutTablet: true);
     String message;
 
     if (!_dismissedChange) {
-      if (layout == AppLayout.mobile && calculatedLayout == AppLayout.desktop) {
+      if (widget.appLayout == AppLayout.mobile &&
+          calculatedLayout == AppLayout.desktop) {
         message = localization.changeToDekstopLayout;
-      } else if (layout == AppLayout.desktop &&
+      } else if (widget.appLayout == AppLayout.desktop &&
           calculatedLayout == AppLayout.mobile) {
         message = localization.changeToMobileLayout;
       }
@@ -635,7 +642,7 @@ class _ChangeLayoutBannerState extends State<ChangeLayoutBanner> {
                   child: Text(localization.change.toUpperCase()),
                   onPressed: () {
                     store.dispatch(
-                        UserSettingsChanged(layout: AppLayout.mobile));
+                        UserPreferencesChanged(layout: AppLayout.mobile));
                     AppBuilder.of(context).rebuild();
                     WidgetsBinding.instance.addPostFrameCallback((duration) {
                       store.dispatch(ViewDashboard(
@@ -683,7 +690,7 @@ class _EntityFilter extends StatelessWidget {
       color: Theme.of(context).cardColor,
       child: AnimatedContainer(
         height: show ? kTopBottomBarHeight : 0,
-        duration: Duration(milliseconds: kDefaultAnimationDuration ),
+        duration: Duration(milliseconds: kDefaultAnimationDuration),
         curve: Curves.easeInOutCubic,
         child: Row(
           children: filterEntity == null

@@ -15,6 +15,8 @@ mixin LocalizationsProvider on LocaleCodeAware {
   static final Map<String, Map<String, String>> _localizedValues = {
     'en': {
       // STARTER: lang key - do not remove comment
+      'full_width_editor': 'Full Width Editor',
+      'full_height_filter': 'Full Height Filter',
       'email_sign_in': 'Sign in with email',
       'change': 'Change',
       'change_to_mobile_layout': 'Change to the mobile layout?',
@@ -36533,6 +36535,12 @@ mixin LocalizationsProvider on LocaleCodeAware {
   String get change => _localizedValues[localeCode]['change'] ?? '';
 
   String get emailSignIn => _localizedValues[localeCode]['email_sign_in'] ?? '';
+
+  String get fullWidthEditor =>
+      _localizedValues[localeCode]['full_width_editor'] ?? '';
+
+  String get fullHeightFilter =>
+      _localizedValues[localeCode]['full_height_filter'] ?? '';
 
   String lookup(String key) {
     final lookupKey = toSnakeCase(key);

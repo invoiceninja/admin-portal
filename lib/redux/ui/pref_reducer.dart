@@ -54,10 +54,10 @@ PrefState prefReducer(
 }
 
 Reducer<bool> menuVisibleReducer = combineReducers([
-  TypedReducer<bool, UserSettingsChanged>((value, action) {
+  TypedReducer<bool, UserPreferencesChanged>((value, action) {
     return action.sidebar == AppSidebar.menu ? !value : value;
   }),
-  TypedReducer<bool, UserSettingsChanged>((value, action) {
+  TypedReducer<bool, UserPreferencesChanged>((value, action) {
     switch (action.menuMode) {
       case AppSidebarMode.visible:
         return true;
@@ -71,10 +71,10 @@ Reducer<bool> menuVisibleReducer = combineReducers([
 ]);
 
 Reducer<bool> historyVisibleReducer = combineReducers([
-  TypedReducer<bool, UserSettingsChanged>((value, action) {
+  TypedReducer<bool, UserPreferencesChanged>((value, action) {
     return action.sidebar == AppSidebar.history ? !value : value;
   }),
-  TypedReducer<bool, UserSettingsChanged>((value, action) {
+  TypedReducer<bool, UserPreferencesChanged>((value, action) {
     return action.historyMode == AppSidebarMode.visible
         ? true
         : action.historyMode == AppSidebarMode.float ? false : value;
@@ -96,7 +96,7 @@ Reducer<int> filterClearedAtReducer = combineReducers([
 ]);
 
 Reducer<AppLayout> layoutReducer = combineReducers([
-  TypedReducer<AppLayout, UserSettingsChanged>((layout, action) {
+  TypedReducer<AppLayout, UserPreferencesChanged>((layout, action) {
     return action.layout ?? layout;
   }),
 ]);
@@ -112,56 +112,56 @@ Reducer<ModuleLayout> moduleLayoutReducer = combineReducers([
 ]);
 
 Reducer<AppSidebarMode> manuSidebarReducer = combineReducers([
-  TypedReducer<AppSidebarMode, UserSettingsChanged>((mode, action) {
+  TypedReducer<AppSidebarMode, UserPreferencesChanged>((mode, action) {
     return action.menuMode ?? mode;
   }),
 ]);
 
 Reducer<AppSidebarMode> historySidebarReducer = combineReducers([
-  TypedReducer<AppSidebarMode, UserSettingsChanged>((mode, action) {
+  TypedReducer<AppSidebarMode, UserPreferencesChanged>((mode, action) {
     return action.historyMode ?? mode;
   }),
 ]);
 
 Reducer<bool> emailPaymentReducer = combineReducers([
-  TypedReducer<bool, UserSettingsChanged>((emailPayment, action) {
+  TypedReducer<bool, UserPreferencesChanged>((emailPayment, action) {
     return action.emailPayment ?? emailPayment;
   }),
 ]);
 
 Reducer<bool> darkModeReducer = combineReducers([
-  TypedReducer<bool, UserSettingsChanged>((enableDarkMode, action) {
+  TypedReducer<bool, UserPreferencesChanged>((enableDarkMode, action) {
     return action.enableDarkMode ?? enableDarkMode;
   }),
 ]);
 
 Reducer<bool> longPressReducer = combineReducers([
-  TypedReducer<bool, UserSettingsChanged>(
+  TypedReducer<bool, UserPreferencesChanged>(
       (longPressSelectionIsDefault, action) {
     return action.longPressSelectionIsDefault ?? longPressSelectionIsDefault;
   }),
 ]);
 
 Reducer<bool> autoStartTasksReducer = combineReducers([
-  TypedReducer<bool, UserSettingsChanged>((autoStartTasks, action) {
+  TypedReducer<bool, UserPreferencesChanged>((autoStartTasks, action) {
     return action.autoStartTasks ?? autoStartTasks;
   }),
 ]);
 
 Reducer<bool> isPreviewVisibleReducer = combineReducers([
-  TypedReducer<bool, UserSettingsChanged>((isPreviewVisible, action) {
+  TypedReducer<bool, UserPreferencesChanged>((isPreviewVisible, action) {
     return action.isPreviewVisible ?? isPreviewVisible;
   }),
 ]);
 
 Reducer<bool> addDocumentsToInvoiceReducer = combineReducers([
-  TypedReducer<bool, UserSettingsChanged>((addDocumentsToInvoice, action) {
+  TypedReducer<bool, UserPreferencesChanged>((addDocumentsToInvoice, action) {
     return action.addDocumentsToInvoice ?? addDocumentsToInvoice;
   }),
 ]);
 
 Reducer<bool> requireAuthenticationReducer = combineReducers([
-  TypedReducer<bool, UserSettingsChanged>((requireAuthentication, action) {
+  TypedReducer<bool, UserPreferencesChanged>((requireAuthentication, action) {
     return action.requireAuthentication ?? requireAuthentication;
   }),
 ]);
