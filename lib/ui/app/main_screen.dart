@@ -504,7 +504,7 @@ class EntityScreens extends StatelessWidget {
         Expanded(
           child: AppBorder(
             child: listWidget,
-            isLeft: filterChild != null,
+            isLeft: true,
           ),
           flex: listFlex,
         ),

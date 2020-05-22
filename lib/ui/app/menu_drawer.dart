@@ -440,7 +440,7 @@ class _DrawerTileState extends State<DrawerTile> {
         child: ListTile(
           dense: true,
           leading: Padding(
-            padding: const EdgeInsets.only(left: 3),
+            padding: const EdgeInsets.only(left: 4),
             child: Icon(
               widget.icon,
               size: 20,
