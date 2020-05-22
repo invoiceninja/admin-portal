@@ -50,10 +50,10 @@ class MainScreen extends StatelessWidget {
           bool isFullScreen = false;
           if (prefState.isDesktop) {
             if ([
-                  InvoiceScreen.route,
-                  QuoteScreen.route,
-                  CreditScreen.route,
-                ].contains(mainRoute) &&
+              InvoiceScreen.route,
+              QuoteScreen.route,
+              CreditScreen.route,
+            ].contains(mainRoute) &&
                 subRoute == '/edit') {
               isFullScreen = true;
             }
@@ -267,9 +267,9 @@ class MainScreen extends StatelessWidget {
                     ],
                     Expanded(
                         child: AppBorder(
-                      child: screen,
-                      isLeft: true,
-                    )),
+                          child: screen,
+                          isLeft: true,
+                        )),
                   ]),
                 ),
               ),
@@ -460,50 +460,65 @@ class EntityScreens extends StatelessWidget {
         state.getEntityMap(entityType).containsKey(entityUIState.selectedId)) {
       child = viewWidget;
     } else {
-      child = BlankScreen(AppLocalization.of(context).noRecordSelected);
+      child = BlankScreen(AppLocalization
+          .of(context)
+          .noRecordSelected);
     }
 
-    Widget filterChild;
-    if (uiState.filterEntityId != null) {
-      switch (uiState.filterEntityType) {
-        case EntityType.client:
-          filterChild = editingFIlterEntity
-              ? ClientEditScreen()
-              : ClientViewScreen(isFilter: true);
-          break;
-        case EntityType.invoice:
-          filterChild = editingFIlterEntity
-              ? InvoiceViewScreen()
-              : InvoiceViewScreen(isFilter: true);
-          break;
-        case EntityType.payment:
-          filterChild = editingFIlterEntity
-              ? PaymentEditScreen()
-              : PaymentViewScreen(isFilter: true);
-          break;
-        case EntityType.user:
-          filterChild = editingFIlterEntity
-              ? UserEditScreen()
-              : UserViewScreen(isFilter: true);
-          break;
-        case EntityType.group:
-          filterChild = editingFIlterEntity
-              ? GroupEditScreen()
-              : GroupViewScreen(isFilter: true);
-          break;
+    Widget leftFilterChild;
+    Widget topFilterChild;
+
+    if (uiState.filterEntityType != null) {
+      if (prefState.fullHeightFilter) {
+        switch (uiState.filterEntityType) {
+          case EntityType.client:
+            leftFilterChild = editingFIlterEntity
+                ? ClientEditScreen()
+                : ClientViewScreen(isFilter: true);
+            break;
+          case EntityType.invoice:
+            leftFilterChild = editingFIlterEntity
+                ? InvoiceViewScreen()
+                : InvoiceViewScreen(isFilter: true);
+            break;
+          case EntityType.payment:
+            leftFilterChild = editingFIlterEntity
+                ? PaymentEditScreen()
+                : PaymentViewScreen(isFilter: true);
+            break;
+          case EntityType.user:
+            leftFilterChild = editingFIlterEntity
+                ? UserEditScreen()
+                : UserViewScreen(isFilter: true);
+            break;
+          case EntityType.group:
+            leftFilterChild = editingFIlterEntity
+                ? GroupEditScreen()
+                : GroupViewScreen(isFilter: true);
+            break;
+        }
+      } else {
+        topFilterChild = _EntityFilter();
       }
     }
 
     return Row(
       children: <Widget>[
-        if (filterChild != null)
+        if (leftFilterChild != null)
           Expanded(
-            child: filterChild,
+            child: leftFilterChild,
             flex: previewFlex,
           ),
         Expanded(
           child: AppBorder(
-            child: listWidget,
+            child: topFilterChild == null ? listWidget : Column(
+              children: [
+                topFilterChild,
+                Expanded(
+                  child: listWidget,
+                )
+              ],
+            ),
             isLeft: true,
           ),
           flex: listFlex,
@@ -539,10 +554,14 @@ class BlankScreen extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         automaticallyImplyLeading: isMobile(context),
-        backgroundColor: Theme.of(context).cardColor,
+        backgroundColor: Theme
+            .of(context)
+            .cardColor,
       ),
       body: Container(
-        color: Theme.of(context).cardColor,
+        color: Theme
+            .of(context)
+            .cardColor,
         child: HelpText(message ?? ''),
       ),
     );
@@ -635,6 +654,19 @@ class _ChangeLayoutBannerState extends State<ChangeLayoutBanner> {
           child: widget.child,
         )
       ],
+    );
+  }
+}
+
+class _EntityFilter extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Material(
+      child: Row(
+        children: [
+          Text('filter'),
+        ],
+      ),
     );
   }
 }
