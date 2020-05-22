@@ -693,61 +693,66 @@ class _EntityFilter extends StatelessWidget {
         height: show ? kTopBottomBarHeight : 0,
         duration: Duration(milliseconds: kDefaultAnimationDuration),
         curve: Curves.easeInOutCubic,
-        child: Row(
-          children: filterEntity == null
-              ? []
-              : [
-                  SizedBox(width: 4),
-                  FlatButton(
-                    child: Text(
-                      '${localization.lookup('$filterEntityType')}  ›  ${filterEntity.listDisplayName}',
-                      style: TextStyle(fontSize: 17),
+        child: AnimatedOpacity(
+          opacity: show ? 1 : 0,
+          duration: Duration(milliseconds: kDefaultAnimationDuration),
+          curve: Curves.easeInOutCubic,
+          child: Row(
+            children: filterEntity == null
+                ? []
+                : [
+                    SizedBox(width: 4),
+                    FlatButton(
+                      child: Text(
+                        '${localization.lookup('$filterEntityType')}  ›  ${filterEntity.listDisplayName}',
+                        style: TextStyle(fontSize: 17),
+                      ),
+                      onPressed: () => viewEntitiesByType(
+                          context: context, entityType: filterEntityType),
                     ),
-                    onPressed: () => viewEntitiesByType(
-                        context: context, entityType: filterEntityType),
-                  ),
-                  Spacer(),
-                  PopupMenuButton<EntityType>(
-                    child: Row(
-                      children: [
-                        Text(
-                          routeEntityType == filterEntityType
-                              ? localization.overview
-                              : '${localization.lookup(routeEntityType.plural)}',
-                          style: TextStyle(fontSize: 17),
-                        ),
-                        SizedBox(width: 4),
-                        Icon(Icons.arrow_drop_down),
-                      ],
-                    ),
-                    initialValue: routeEntityType,
-                    onSelected: (EntityType value) =>
-                        viewEntitiesByType(context: context, entityType: value),
-                    itemBuilder: (BuildContext context) => [
-                      filterEntityType,
-                      ...filterEntityType.relatedTypes
-                    ]
-                        .where(
-                            (element) => state.company.isModuleEnabled(element))
-                        .map((type) => PopupMenuItem<EntityType>(
-                              value: type,
-                              child: ConstrainedBox(
-                                constraints: BoxConstraints(
-                                  minWidth: 75,
+                    Spacer(),
+                    PopupMenuButton<EntityType>(
+                      child: Row(
+                        children: [
+                          Text(
+                            routeEntityType == filterEntityType
+                                ? localization.overview
+                                : '${localization.lookup(routeEntityType.plural)}',
+                            style: TextStyle(fontSize: 17),
+                          ),
+                          SizedBox(width: 4),
+                          Icon(Icons.arrow_drop_down),
+                        ],
+                      ),
+                      initialValue: routeEntityType,
+                      onSelected: (EntityType value) =>
+                          viewEntitiesByType(context: context, entityType: value),
+                      itemBuilder: (BuildContext context) => [
+                        filterEntityType,
+                        ...filterEntityType.relatedTypes
+                      ]
+                          .where(
+                              (element) => state.company.isModuleEnabled(element))
+                          .map((type) => PopupMenuItem<EntityType>(
+                                value: type,
+                                child: ConstrainedBox(
+                                  constraints: BoxConstraints(
+                                    minWidth: 75,
+                                  ),
+                                  child: Text(type == filterEntityType
+                                      ? localization.overview
+                                      : '${localization.lookup(type.plural)}'),
                                 ),
-                                child: Text(type == filterEntityType
-                                    ? localization.overview
-                                    : '${localization.lookup(type.plural)}'),
-                              ),
-                            ))
-                        .toList(),
-                  ),
-                  SizedBox(width: 4),
-                  IconButton(
-                    icon: Icon(Icons.clear),
-                    onPressed: () => store.dispatch(ClearEntityFilter()),
-                  ),
-                ],
+                              ))
+                          .toList(),
+                    ),
+                    SizedBox(width: 4),
+                    IconButton(
+                      icon: Icon(Icons.clear),
+                      onPressed: () => store.dispatch(ClearEntityFilter()),
+                    ),
+                  ],
+          ),
         ),
       ),
     );
