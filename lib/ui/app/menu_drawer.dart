@@ -629,14 +629,16 @@ class SidebarFooterCollapsed extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final Store<AppState> store = StoreProvider.of<AppState>(context);
     final localization = AppLocalization.of(context);
+    final Store<AppState> store = StoreProvider.of<AppState>(context);
+    final state = store.state;
 
     return Container(
       width: double.infinity,
       height: 44,
       color: Theme.of(context).cardColor,
-      child: store.state.uiState.filterEntityType != null
+      child: state.uiState.filterEntityType != null &&
+              state.prefState.fullHeightFilter
           ? PopupMenuButton<String>(
               icon: isUpdateAvailable
                   ? Icon(Icons.warning, color: Theme.of(context).accentColor)
@@ -696,7 +698,8 @@ class SidebarFooterCollapsed extends StatelessWidget {
               icon: Icon(Icons.chevron_right),
               tooltip: localization.showMenu,
               onPressed: () {
-                store.dispatch(UserPreferencesChanged(sidebar: AppSidebar.menu));
+                store
+                    .dispatch(UserPreferencesChanged(sidebar: AppSidebar.menu));
               },
             ),
     );
