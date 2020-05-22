@@ -389,7 +389,8 @@ class _DrawerTileState extends State<DrawerTile> {
                 : widget.entityType.name;
 
     final isSelected = uiState.currentRoute.startsWith('/$route') &&
-        state.uiState.filterEntityType == null;
+        (state.uiState.filterEntityType == null ||
+            !state.prefState.fullHeightFilter);
 
     final textColor = Theme.of(context)
         .textTheme
@@ -432,7 +433,7 @@ class _DrawerTileState extends State<DrawerTile> {
     Widget child = Material(
       color: Colors.transparent,
       child: Container(
-        color: (isSelected && state.uiState.filterEntityType == null)
+        color: isSelected
             ? convertHexStringToColor(enableDarkMode
                 ? kDefaultDarkSelectedColorMenu
                 : kDefaultLightSelectedColorMenu)
