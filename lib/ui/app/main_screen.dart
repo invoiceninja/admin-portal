@@ -10,6 +10,7 @@ import 'package:invoiceninja_flutter/redux/reports/reports_actions.dart';
 import 'package:invoiceninja_flutter/redux/settings/settings_actions.dart';
 import 'package:invoiceninja_flutter/redux/ui/pref_state.dart';
 import 'package:invoiceninja_flutter/ui/app/app_builder.dart';
+import 'package:invoiceninja_flutter/ui/app/forms/app_dropdown_button.dart';
 import 'package:invoiceninja_flutter/ui/app/history_drawer_vm.dart';
 import 'package:invoiceninja_flutter/ui/app/icon_text.dart';
 import 'package:invoiceninja_flutter/ui/app/menu_drawer_vm.dart';
@@ -260,6 +261,7 @@ class MainScreen extends StatelessWidget {
               child: FocusTraversalGroup(
                 policy: WidgetOrderTraversalPolicy(),
                 child: ChangeLayoutBanner(
+                  appLayout: prefState.appLayout,
                   child: Row(children: <Widget>[
                     if (prefState.showMenu) ...[
                       MenuDrawerBuilder(),
@@ -268,7 +270,7 @@ class MainScreen extends StatelessWidget {
                     Expanded(
                         child: AppBorder(
                       child: screen,
-                      isLeft: true,
+                      isLeft: prefState.showMenu,
                     )),
                   ]),
                 ),
@@ -463,48 +465,70 @@ class EntityScreens extends StatelessWidget {
       child = BlankScreen(AppLocalization.of(context).noRecordSelected);
     }
 
-    Widget filterChild;
-    if (uiState.filterEntityId != null) {
-      switch (uiState.filterEntityType) {
-        case EntityType.client:
-          filterChild = editingFIlterEntity
-              ? ClientEditScreen()
-              : ClientViewScreen(isFilter: true);
-          break;
-        case EntityType.invoice:
-          filterChild = editingFIlterEntity
-              ? InvoiceViewScreen()
-              : InvoiceViewScreen(isFilter: true);
-          break;
-        case EntityType.payment:
-          filterChild = editingFIlterEntity
-              ? PaymentEditScreen()
-              : PaymentViewScreen(isFilter: true);
-          break;
-        case EntityType.user:
-          filterChild = editingFIlterEntity
-              ? UserEditScreen()
-              : UserViewScreen(isFilter: true);
-          break;
-        case EntityType.group:
-          filterChild = editingFIlterEntity
-              ? GroupEditScreen()
-              : GroupViewScreen(isFilter: true);
-          break;
+    Widget leftFilterChild;
+    Widget topFilterChild;
+
+    if (prefState.fullHeightFilter) {
+      if (uiState.filterEntityType != null) {
+        switch (uiState.filterEntityType) {
+          case EntityType.client:
+            leftFilterChild = editingFIlterEntity
+                ? ClientEditScreen()
+                : ClientViewScreen(isFilter: true);
+            break;
+          case EntityType.invoice:
+            leftFilterChild = editingFIlterEntity
+                ? InvoiceViewScreen()
+                : InvoiceViewScreen(isFilter: true);
+            break;
+          case EntityType.payment:
+            leftFilterChild = editingFIlterEntity
+                ? PaymentEditScreen()
+                : PaymentViewScreen(isFilter: true);
+            break;
+          case EntityType.user:
+            leftFilterChild = editingFIlterEntity
+                ? UserEditScreen()
+                : UserViewScreen(isFilter: true);
+            break;
+          case EntityType.group:
+            leftFilterChild = editingFIlterEntity
+                ? GroupEditScreen()
+                : GroupViewScreen(isFilter: true);
+            break;
+        }
       }
+    } else {
+      topFilterChild = _EntityFilter(
+        show: uiState.filterEntityType != null,
+      );
     }
 
     return Row(
       children: <Widget>[
-        if (filterChild != null)
+        if (leftFilterChild != null)
           Expanded(
-            child: filterChild,
+            child: leftFilterChild,
             flex: previewFlex,
           ),
         Expanded(
-          child: AppBorder(
-            child: listWidget,
-            isLeft: filterChild != null,
+          child: ClipRRect(
+            child: AppBorder(
+              isLeft: leftFilterChild != null,
+              child: topFilterChild == null
+                  ? listWidget
+                  : Column(
+                      children: [
+                        topFilterChild,
+                        Expanded(
+                          child: AppBorder(
+                            isTop: uiState.filterEntityType != null,
+                            child: listWidget,
+                          ),
+                        )
+                      ],
+                    ),
+            ),
           ),
           flex: listFlex,
         ),
@@ -562,9 +586,14 @@ class _CustomDivider extends StatelessWidget {
 }
 
 class ChangeLayoutBanner extends StatefulWidget {
-  const ChangeLayoutBanner({this.child});
+  const ChangeLayoutBanner({
+    Key key,
+    @required this.child,
+    @required this.appLayout,
+  }) : super(key: key);
 
   final Widget child;
+  final AppLayout appLayout;
 
   @override
   _ChangeLayoutBannerState createState() => _ChangeLayoutBannerState();
@@ -578,14 +607,14 @@ class _ChangeLayoutBannerState extends State<ChangeLayoutBanner> {
     final store = StoreProvider.of<AppState>(context);
     final localization = AppLocalization.of(context);
 
-    final layout = store.state.prefState.appLayout;
     final calculatedLayout = calculateLayout(context, breakOutTablet: true);
     String message;
 
     if (!_dismissedChange) {
-      if (layout == AppLayout.mobile && calculatedLayout == AppLayout.desktop) {
-        message = localization.changeToDekstopLayout;
-      } else if (layout == AppLayout.desktop &&
+      if (widget.appLayout == AppLayout.mobile &&
+          calculatedLayout == AppLayout.desktop) {
+        //message = localization.changeToDekstopLayout;
+      } else if (widget.appLayout == AppLayout.desktop &&
           calculatedLayout == AppLayout.mobile) {
         message = localization.changeToMobileLayout;
       }
@@ -613,7 +642,7 @@ class _ChangeLayoutBannerState extends State<ChangeLayoutBanner> {
                   child: Text(localization.change.toUpperCase()),
                   onPressed: () {
                     store.dispatch(
-                        UserSettingsChanged(layout: AppLayout.mobile));
+                        UserPreferencesChanged(layout: AppLayout.mobile));
                     AppBuilder.of(context).rebuild();
                     WidgetsBinding.instance.addPostFrameCallback((duration) {
                       store.dispatch(ViewDashboard(
@@ -635,6 +664,104 @@ class _ChangeLayoutBannerState extends State<ChangeLayoutBanner> {
           child: widget.child,
         )
       ],
+    );
+  }
+}
+
+class _EntityFilter extends StatelessWidget {
+  const _EntityFilter({@required this.show});
+
+  final bool show;
+
+  @override
+  Widget build(BuildContext context) {
+    final localization = AppLocalization.of(context);
+    final store = StoreProvider.of<AppState>(context);
+    final state = store.state;
+    final uiState = state.uiState;
+
+    final filterEntityType = uiState.filterEntityType;
+    final routeEntityType = uiState.entityTypeRoute;
+
+    final entityMap = state.getEntityMap(filterEntityType);
+    final filterEntity =
+        entityMap != null ? entityMap[uiState.filterEntityId] : null;
+
+    return Material(
+      color: Theme.of(context).cardColor,
+      child: AnimatedContainer(
+        height: show ? kTopBottomBarHeight : 0,
+        duration: Duration(milliseconds: kDefaultAnimationDuration),
+        curve: Curves.easeInOutCubic,
+        child: AnimatedOpacity(
+          opacity: show ? 1 : 0,
+          duration: Duration(milliseconds: kDefaultAnimationDuration),
+          curve: Curves.easeInOutCubic,
+          child: Row(
+            children: filterEntity == null
+                ? []
+                : [
+                    SizedBox(width: 4),
+                    Expanded(
+                      child: Align(
+                        alignment: Alignment.centerLeft,
+                        child: FlatButton(
+                          child: Text(
+                            '${localization.lookup('$filterEntityType')}  ›  ${filterEntity.listDisplayName}',
+                            style: TextStyle(fontSize: 17),
+                            overflow: TextOverflow.ellipsis,
+                            textAlign: TextAlign.start,
+                            maxLines: 1,
+                          ),
+                          onPressed: () => viewEntitiesByType(
+                              context: context, entityType: filterEntityType),
+                        ),
+                      ),
+                    ),
+                    PopupMenuButton<EntityType>(
+                      child: Row(
+                        children: [
+                          Text(
+                            routeEntityType == filterEntityType
+                                ? localization.overview
+                                : '${localization.lookup(routeEntityType.plural)}',
+                            style: TextStyle(fontSize: 17),
+                          ),
+                          SizedBox(width: 4),
+                          Icon(Icons.arrow_drop_down),
+                        ],
+                      ),
+                      initialValue: routeEntityType,
+                      onSelected: (EntityType value) => viewEntitiesByType(
+                          context: context, entityType: value),
+                      itemBuilder: (BuildContext context) => [
+                        filterEntityType,
+                        ...filterEntityType.relatedTypes
+                      ]
+                          .where((element) =>
+                              state.company.isModuleEnabled(element))
+                          .map((type) => PopupMenuItem<EntityType>(
+                                value: type,
+                                child: ConstrainedBox(
+                                  constraints: BoxConstraints(
+                                    minWidth: 75,
+                                  ),
+                                  child: Text(type == filterEntityType
+                                      ? localization.overview
+                                      : '${localization.lookup(type.plural)}'),
+                                ),
+                              ))
+                          .toList(),
+                    ),
+                    SizedBox(width: 4),
+                    IconButton(
+                      icon: Icon(Icons.clear),
+                      onPressed: () => store.dispatch(ClearEntityFilter()),
+                    ),
+                  ],
+          ),
+        ),
+      ),
     );
   }
 }

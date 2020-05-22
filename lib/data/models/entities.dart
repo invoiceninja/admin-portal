@@ -66,6 +66,46 @@ class EntityType extends EnumClass {
         EntityType.group,
       ].contains(this);
 
+  List<EntityType> get relatedTypes {
+    switch (this) {
+      case EntityType.client:
+        return [
+          EntityType.invoice,
+          EntityType.payment,
+          EntityType.quote,
+          EntityType.credit,
+          EntityType.task,
+          EntityType.project,
+          EntityType.expense,
+        ];
+      case EntityType.invoice:
+        return [
+          EntityType.payment,
+        ];
+      case EntityType.payment:
+        return [
+          EntityType.invoice,
+        ];
+      case EntityType.group:
+        return [
+          EntityType.client,
+        ];
+      case EntityType.user:
+        return [
+          EntityType.invoice,
+          EntityType.payment,
+          EntityType.quote,
+          EntityType.credit,
+          EntityType.task,
+          EntityType.project,
+          EntityType.expense,
+          EntityType.vendor,
+        ];
+      default:
+        return [];
+    }
+  }
+
   static BuiltSet<EntityType> get values => _$typeValues;
 
   static EntityType valueOf(String name) => _$typeValueOf(name);

@@ -58,12 +58,15 @@ const double kMobileLayoutWidth = 700;
 const double kMobileDialogPadding = 12;
 const double kDrawerWidth = 300;
 const double kTableColumnGap = 20;
+const double kTopBottomBarHeight = 50;
 
 const double kTabletLayoutWidth = 1100;
 const double kTabletDialogPadding = 250;
 
 const double kTableColumnWidthMin = 50;
 const double kTableColumnWidthMax = 120;
+
+const int kDefaultAnimationDuration = 500;
 
 const int kCardTypeVisa = 1;
 const int kCardTypeMasterCard = 2;

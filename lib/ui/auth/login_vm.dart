@@ -93,7 +93,7 @@ class LoginVM {
     void _handleLogin(BuildContext context) {
       final layout = calculateLayout(context);
 
-      store.dispatch(UserSettingsChanged(layout: layout));
+      store.dispatch(UserPreferencesChanged(layout: layout));
       AppBuilder.of(context).rebuild();
 
       WidgetsBinding.instance.addPostFrameCallback((duration) {

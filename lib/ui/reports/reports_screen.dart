@@ -119,7 +119,7 @@ class ReportsScreen extends StatelessWidget {
                           Scaffold.of(context).openEndDrawer();
                         } else {
                           store.dispatch(
-                              UserSettingsChanged(sidebar: AppSidebar.history));
+                              UserPreferencesChanged(sidebar: AppSidebar.history));
                         }
                       },
                     ),

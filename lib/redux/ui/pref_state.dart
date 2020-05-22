@@ -21,12 +21,15 @@ abstract class PrefState implements Built<PrefState, PrefStateBuilder> {
       requireAuthentication: false,
       emailPayment: false,
       autoStartTasks: false,
+      fullHeightFilter: false,
+      fullWidthEditor: true,
       longPressSelectionIsDefault: false,
       addDocumentsToInvoice: false,
       companyPrefs: BuiltList(
-          List<int>.generate(kMaxNumberOfCompanies, (i) => i + 1)
-              .map((index) => CompanyPrefState())
-              .toList()),
+        List<int>.generate(kMaxNumberOfCompanies, (i) => i + 1)
+            .map((index) => CompanyPrefState())
+            .toList(),
+      ),
     );
   }
 
@@ -51,6 +54,10 @@ abstract class PrefState implements Built<PrefState, PrefStateBuilder> {
   bool get isHistoryVisible;
 
   bool get enableDarkMode;
+
+  bool get fullHeightFilter;
+
+  bool get fullWidthEditor;
 
   bool get longPressSelectionIsDefault;
 

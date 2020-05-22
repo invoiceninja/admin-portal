@@ -79,8 +79,8 @@ class LoadStaticSuccess implements PersistStatic {
   final StaticDataEntity data;
 }
 
-class UserSettingsChanged implements PersistPrefs {
-  UserSettingsChanged({
+class UserPreferencesChanged implements PersistPrefs {
+  UserPreferencesChanged({
     this.layout,
     this.sidebar,
     this.enableDarkMode,
@@ -93,6 +93,8 @@ class UserSettingsChanged implements PersistPrefs {
     this.accentColor,
     this.menuMode,
     this.historyMode,
+    this.fullHeightFilter,
+    this.fullWidthEditor,
   });
 
   final AppLayout layout;
@@ -106,6 +108,8 @@ class UserSettingsChanged implements PersistPrefs {
   final bool autoStartTasks;
   final bool isPreviewVisible;
   final bool addDocumentsToInvoice;
+  final bool fullWidthEditor;
+  final bool fullHeightFilter;
   final String accentColor;
 }
 
@@ -350,7 +354,7 @@ void viewEntityById({
 
   if (!state.prefState.isPreviewVisible &&
       state.prefState.moduleLayout == ModuleLayout.table) {
-    store.dispatch(UserSettingsChanged(isPreviewVisible: true));
+    store.dispatch(UserPreferencesChanged(isPreviewVisible: true));
   }
 
   switch (entityType) {

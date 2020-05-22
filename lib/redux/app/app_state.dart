@@ -500,7 +500,10 @@ abstract class AppState implements Built<AppState, AppStateBuilder> {
   bool get isSelfHosted => authState.isSelfHost ?? false;
 
   bool get isMenuCollapsed =>
-      (uiState.filterEntityType != null && prefState.isNotMobile) ||
+      (prefState.isNotMobile &&
+          prefState.fullHeightFilter &&
+          prefState.showMenu &&
+          uiState.filterEntityType != null) ||
       prefState.isMenuCollapsed;
 
   @override

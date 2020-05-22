@@ -133,7 +133,7 @@ class ExpenseEditVM {
         }
         final SharedPreferences prefs = await SharedPreferences.getInstance();
         prefs.setBool(kSharedPrefEmailPayment, value);
-        store.dispatch(UserSettingsChanged(addDocumentsToInvoice: value));
+        store.dispatch(UserPreferencesChanged(addDocumentsToInvoice: value));
       },
     );
   }

@@ -197,11 +197,16 @@ class MenuDrawer extends StatelessWidget {
           ));
   */
 
-    return SizedBox(
+    return AnimatedContainer(
       width: state.isMenuCollapsed ? 65 : kDrawerWidth,
+      duration: Duration(
+          milliseconds:
+              state.prefState.fullHeightFilter ? 0 : kDefaultAnimationDuration),
+      curve: Curves.easeInOutCubic,
       child: Drawer(
         child: SafeArea(
           child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
             mainAxisSize: MainAxisSize.max,
             children: <Widget>[
               // Hide options while refreshing data
@@ -389,7 +394,8 @@ class _DrawerTileState extends State<DrawerTile> {
                 : widget.entityType.name;
 
     final isSelected = uiState.currentRoute.startsWith('/$route') &&
-        state.uiState.filterEntityType == null;
+        (state.uiState.filterEntityType == null ||
+            !state.prefState.fullHeightFilter);
 
     final textColor = Theme.of(context)
         .textTheme
@@ -432,7 +438,7 @@ class _DrawerTileState extends State<DrawerTile> {
     Widget child = Material(
       color: Colors.transparent,
       child: Container(
-        color: (isSelected && state.uiState.filterEntityType == null)
+        color: isSelected
             ? convertHexStringToColor(enableDarkMode
                 ? kDefaultDarkSelectedColorMenu
                 : kDefaultLightSelectedColorMenu)
@@ -440,23 +446,23 @@ class _DrawerTileState extends State<DrawerTile> {
         child: ListTile(
           dense: true,
           leading: Padding(
-            padding: const EdgeInsets.only(left: 3),
+            padding: const EdgeInsets.only(left: 4),
             child: Icon(
               widget.icon,
               size: 20,
               color: textColor,
             ),
           ),
-          title: state.isMenuCollapsed
-              ? null
-              : Text(
-                  widget.title,
-                  style: Theme.of(context).textTheme.bodyText1.copyWith(
-                        fontWeight: FontWeight.w100,
-                        fontSize: 16,
-                        color: textColor,
-                      ),
+          title: Text(
+            widget.title,
+            style: Theme.of(context).textTheme.bodyText1.copyWith(
+                  fontWeight: FontWeight.w100,
+                  fontSize: 16,
+                  color: textColor,
                 ),
+            overflow: TextOverflow.clip,
+            maxLines: 1,
+          ),
           onTap: () {
             store.dispatch(ClearEntityFilter());
             if (widget.entityType != null) {
@@ -479,7 +485,7 @@ class _DrawerTileState extends State<DrawerTile> {
                   : null,
 
                */
-          trailing: trailingWidget,
+          trailing: state.isMenuCollapsed ? null : trailingWidget,
         ),
       ),
     );
@@ -604,7 +610,7 @@ class SidebarFooter extends StatelessWidget {
                     icon: Icon(Icons.chevron_left),
                     onPressed: () {
                       store.dispatch(
-                          UserSettingsChanged(sidebar: AppSidebar.menu));
+                          UserPreferencesChanged(sidebar: AppSidebar.menu));
                     },
                   ),
                 ),
@@ -623,14 +629,16 @@ class SidebarFooterCollapsed extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final Store<AppState> store = StoreProvider.of<AppState>(context);
     final localization = AppLocalization.of(context);
+    final Store<AppState> store = StoreProvider.of<AppState>(context);
+    final state = store.state;
 
     return Container(
       width: double.infinity,
       height: 44,
       color: Theme.of(context).cardColor,
-      child: store.state.uiState.filterEntityType != null
+      child: state.uiState.filterEntityType != null &&
+              state.prefState.fullHeightFilter
           ? PopupMenuButton<String>(
               icon: isUpdateAvailable
                   ? Icon(Icons.warning, color: Theme.of(context).accentColor)
@@ -690,7 +698,8 @@ class SidebarFooterCollapsed extends StatelessWidget {
               icon: Icon(Icons.chevron_right),
               tooltip: localization.showMenu,
               onPressed: () {
-                store.dispatch(UserSettingsChanged(sidebar: AppSidebar.menu));
+                store
+                    .dispatch(UserPreferencesChanged(sidebar: AppSidebar.menu));
               },
             ),
     );
@@ -835,33 +844,36 @@ class _ContactUsDialogState extends State<ContactUsDialog> {
       content: SingleChildScrollView(
         child: Container(
           width: isMobile(context) ? null : 500,
-          child: Column(mainAxisSize: MainAxisSize.min, children: <Widget>[
-            TextFormField(
-              enabled: false,
-              decoration: InputDecoration(
-                labelText: localization.from,
-              ),
-              initialValue: '${user.fullName} <${user.email}>',
-            ),
-            SizedBox(height: 10),
-            TextFormField(
-              decoration: InputDecoration(
-                labelText: localization.message,
-              ),
-              minLines: 4,
-              maxLines: 4,
-              onChanged: (value) => _message = value,
-            ),
-            SizedBox(height: 10),
-            SwitchListTile(
-              value: _includeLogs,
-              onChanged: (value) {
-                setState(() => _includeLogs = value);
-              },
-              title: Text(localization.includeRecentErrors),
-              activeColor: Theme.of(context).accentColor,
-            ),
-          ]),
+          child: Column(
+              mainAxisSize: MainAxisSize.min,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: <Widget>[
+                TextFormField(
+                  enabled: false,
+                  decoration: InputDecoration(
+                    labelText: localization.from,
+                  ),
+                  initialValue: '${user.fullName} <${user.email}>',
+                ),
+                SizedBox(height: 10),
+                TextFormField(
+                  decoration: InputDecoration(
+                    labelText: localization.message,
+                  ),
+                  minLines: 4,
+                  maxLines: 4,
+                  onChanged: (value) => _message = value,
+                ),
+                SizedBox(height: 10),
+                SwitchListTile(
+                  value: _includeLogs,
+                  onChanged: (value) {
+                    setState(() => _includeLogs = value);
+                  },
+                  title: Text(localization.includeRecentErrors),
+                  activeColor: Theme.of(context).accentColor,
+                ),
+              ]),
         ),
       ),
     );
