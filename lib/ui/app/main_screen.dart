@@ -50,10 +50,10 @@ class MainScreen extends StatelessWidget {
           bool isFullScreen = false;
           if (prefState.isDesktop) {
             if ([
-              InvoiceScreen.route,
-              QuoteScreen.route,
-              CreditScreen.route,
-            ].contains(mainRoute) &&
+                  InvoiceScreen.route,
+                  QuoteScreen.route,
+                  CreditScreen.route,
+                ].contains(mainRoute) &&
                 subRoute == '/edit') {
               isFullScreen = true;
             }
@@ -267,9 +267,9 @@ class MainScreen extends StatelessWidget {
                     ],
                     Expanded(
                         child: AppBorder(
-                          child: screen,
-                          isLeft: true,
-                        )),
+                      child: screen,
+                      isLeft: true,
+                    )),
                   ]),
                 ),
               ),
@@ -460,9 +460,7 @@ class EntityScreens extends StatelessWidget {
         state.getEntityMap(entityType).containsKey(entityUIState.selectedId)) {
       child = viewWidget;
     } else {
-      child = BlankScreen(AppLocalization
-          .of(context)
-          .noRecordSelected);
+      child = BlankScreen(AppLocalization.of(context).noRecordSelected);
     }
 
     Widget leftFilterChild;
@@ -511,14 +509,19 @@ class EntityScreens extends StatelessWidget {
           ),
         Expanded(
           child: AppBorder(
-            child: topFilterChild == null ? listWidget : Column(
-              children: [
-                topFilterChild,
-                Expanded(
-                  child: listWidget,
-                )
-              ],
-            ),
+            child: topFilterChild == null
+                ? listWidget
+                : Column(
+                    children: [
+                      topFilterChild,
+                      Expanded(
+                        child: AppBorder(
+                          child: listWidget,
+                          isTop: true,
+                        ),
+                      )
+                    ],
+                  ),
             isLeft: true,
           ),
           flex: listFlex,
@@ -554,14 +557,10 @@ class BlankScreen extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         automaticallyImplyLeading: isMobile(context),
-        backgroundColor: Theme
-            .of(context)
-            .cardColor,
+        backgroundColor: Theme.of(context).cardColor,
       ),
       body: Container(
-        color: Theme
-            .of(context)
-            .cardColor,
+        color: Theme.of(context).cardColor,
         child: HelpText(message ?? ''),
       ),
     );
@@ -661,11 +660,27 @@ class _ChangeLayoutBannerState extends State<ChangeLayoutBanner> {
 class _EntityFilter extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    final localization = AppLocalization.of(context);
+    final store = StoreProvider.of<AppState>(context);
+    final state = store.state;
+    final uiState = state.uiState;
+    final prefState = state.prefState;
+
+    final entityType = uiState.filterEntityType;
+
     return Material(
-      child: Row(
-        children: [
-          Text('filter'),
-        ],
+      color: Theme.of(context).cardColor,
+      child: SizedBox(
+        height: kTopBottomBarHeight,
+        child: Row(
+          children: [
+            FlatButton(
+              child: Text(localization.lookup('${entityType.plural}')),
+            ),
+            Icon(Icons.chevron_right),
+            Text('name'),
+          ],
+        ),
       ),
     );
   }
