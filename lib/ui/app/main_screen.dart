@@ -466,8 +466,8 @@ class EntityScreens extends StatelessWidget {
     Widget leftFilterChild;
     Widget topFilterChild;
 
-    if (uiState.filterEntityType != null) {
-      if (prefState.fullHeightFilter) {
+    if (prefState.fullHeightFilter) {
+      if (uiState.filterEntityType != null) {
         switch (uiState.filterEntityType) {
           case EntityType.client:
             leftFilterChild = editingFIlterEntity
@@ -495,9 +495,11 @@ class EntityScreens extends StatelessWidget {
                 : GroupViewScreen(isFilter: true);
             break;
         }
-      } else {
-        topFilterChild = _EntityFilter();
       }
+    } else {
+      topFilterChild = _EntityFilter(
+        show: uiState.filterEntityType != null,
+      );
     }
 
     return Row(
@@ -517,7 +519,7 @@ class EntityScreens extends StatelessWidget {
                       Expanded(
                         child: AppBorder(
                           child: listWidget,
-                          isTop: true,
+                          isTop: uiState.filterEntityType != null,
                         ),
                       )
                     ],
@@ -658,6 +660,10 @@ class _ChangeLayoutBannerState extends State<ChangeLayoutBanner> {
 }
 
 class _EntityFilter extends StatelessWidget {
+  const _EntityFilter({@required this.show});
+
+  final bool show;
+
   @override
   Widget build(BuildContext context) {
     final localization = AppLocalization.of(context);
@@ -667,30 +673,36 @@ class _EntityFilter extends StatelessWidget {
     final prefState = state.prefState;
 
     final entityType = uiState.filterEntityType;
-    final filterEntity = state.getEntityMap(entityType)[uiState.filterEntityId];
+    final entityMap = state.getEntityMap(entityType);
+    final filterEntity =
+        entityMap != null ? entityMap[uiState.filterEntityId] : null;
 
     return Material(
       color: Theme.of(context).cardColor,
-      child: SizedBox(
-        height: kTopBottomBarHeight,
+      child: AnimatedContainer(
+        height: show ? kTopBottomBarHeight : 0,
+        duration: Duration(milliseconds: 500),
+        curve: Curves.easeInOutCubic,
         child: Row(
-          children: [
-            FlatButton(
-              child: Text(
-                '${localization.lookup(entityType.plural)}  ›  ${filterEntity.listDisplayName}',
-                style: TextStyle(fontSize: 17),
-              ),
-              onPressed: () =>
-                  viewEntitiesByType(context: context, entityType: entityType),
-            ),
-            Spacer(),
-            IconButton(
-              icon: Icon(Icons.clear),
-              onPressed: () {
-                //
-              },
-            ),
-          ],
+          children: filterEntity == null
+              ? []
+              : [
+                  FlatButton(
+                    child: Text(
+                      '${localization.lookup(entityType.plural)}  ›  ${filterEntity.listDisplayName}',
+                      style: TextStyle(fontSize: 17),
+                    ),
+                    onPressed: () => viewEntitiesByType(
+                        context: context, entityType: entityType),
+                  ),
+                  Spacer(),
+                  IconButton(
+                    icon: Icon(Icons.clear),
+                    onPressed: () {
+                      //
+                    },
+                  ),
+                ],
         ),
       ),
     );

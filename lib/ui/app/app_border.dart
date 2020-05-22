@@ -8,8 +8,8 @@ import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 class AppBorder extends StatelessWidget {
   const AppBorder({
     @required this.child,
-    this.isTop = false,
-    this.isLeft = false,
+    this.isTop,
+    this.isLeft,
   });
 
   final Widget child;
@@ -27,9 +27,9 @@ class AppBorder extends StatelessWidget {
 
     return Container(
         decoration: BoxDecoration(
-          border: isTop || isLeft
+          border: isTop != null || isLeft != null
               ? Border(
-                  top: isTop
+                  top: isTop == true
                       ? BorderSide(
                           width: borderWidth,
                           color: color,
@@ -49,7 +49,7 @@ class AppBorder extends StatelessWidget {
                         )
                       : BorderSide.none,
                    */
-                  left: isLeft
+                  left: isLeft == true
                       ? BorderSide(
                           width: borderWidth,
                           color: color,
