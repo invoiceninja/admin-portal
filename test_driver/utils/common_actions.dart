@@ -40,6 +40,9 @@ Future<void> login(FlutterDriver driver,
     await driver.tap(find.byValueKey(localization.selfhostLogin));
   }
    */
+  if (selfHosted) {
+    await driver.tap(find.text(localization.selfhosted.toUpperCase()));
+  }
 
   await fillTextFields(driver, <String, dynamic>{
     localization.email: loginEmail,
@@ -53,7 +56,7 @@ Future<void> login(FlutterDriver driver,
     });
   }
 
-  await driver.tap(find.text(localization.login.toUpperCase()));
+  await driver.tap(find.text(localization.emailSignIn));
 
   if (loginEmail.isNotEmpty) {
     await driver.waitFor(find.text(localization.overview),
