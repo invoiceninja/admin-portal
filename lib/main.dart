@@ -39,6 +39,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:invoiceninja_flutter/utils/web_stub.dart'
     if (dart.library.html) 'package:invoiceninja_flutter/utils/web.dart';
 // STARTER: import - do not remove comment
+import 'package:invoiceninja_flutter/redux/payment_term/payment_term_middleware.dart';
 
 void main({bool isTesting = false}) async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -68,6 +69,7 @@ void main({bool isTesting = false}) async {
         ..addAll(createStoreSettingsMiddleware())
         ..addAll(createStoreReportsMiddleware())
         // STARTER: middleware - do not remove comment
+        ..addAll(createStorePaymentTermsMiddleware())
         ..addAll(createStoreDesignsMiddleware())
         ..addAll(createStoreCreditsMiddleware())
         ..addAll(createStoreUsersMiddleware())

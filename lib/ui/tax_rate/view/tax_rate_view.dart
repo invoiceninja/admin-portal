@@ -30,7 +30,6 @@ class _TaxRateViewState extends State<TaxRateView> {
     return ViewScaffold(
       isFilter: widget.isFilter,
       entity: taxRate,
-      isSettings: true,
       onBackPressed: () => viewModel.onBackPressed(),
       body: ListView(children: [
         EntityHeader(

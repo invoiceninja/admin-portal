@@ -16,7 +16,7 @@ class ListScaffold extends StatelessWidget {
   const ListScaffold({
     @required this.appBarTitle,
     @required this.body,
-    this.entityType,
+    @required this.entityType,
     this.appBarActions,
     this.bottomNavigationBar,
     this.floatingActionButton,
@@ -24,7 +24,6 @@ class ListScaffold extends StatelessWidget {
     this.onCheckboxChanged,
     this.onHamburgerLongPress,
     this.onBackPressed,
-    this.isSettings = false,
     this.showCheckbox = false,
   });
 
@@ -34,7 +33,6 @@ class ListScaffold extends StatelessWidget {
   final FloatingActionButton floatingActionButton;
   final Widget appBarTitle;
   final List<Widget> appBarActions;
-  final bool isSettings;
   final bool showCheckbox;
   final Function(bool) onCheckboxChanged;
   final Function() onHamburgerLongPress;
@@ -46,6 +44,7 @@ class ListScaffold extends StatelessWidget {
     final store = StoreProvider.of<AppState>(context);
     final state = store.state;
     final localization = AppLocalization.of(context);
+    final isSettings = entityType.isSetting;
 
     Widget leading = SizedBox();
     if (showCheckbox && state.prefState.isModuleList) {
@@ -125,8 +124,8 @@ class ListScaffold extends StatelessWidget {
                           state.prefState.isHistoryFloated) {
                         Scaffold.of(context).openEndDrawer();
                       } else {
-                        store.dispatch(
-                            UserPreferencesChanged(sidebar: AppSidebar.history));
+                        store.dispatch(UserPreferencesChanged(
+                            sidebar: AppSidebar.history));
                       }
                     },
                   ),

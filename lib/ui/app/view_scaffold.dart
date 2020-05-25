@@ -17,12 +17,10 @@ class ViewScaffold extends StatelessWidget {
     this.title,
     this.floatingActionButton,
     this.appBarBottom,
-    this.isSettings = false,
-    @required this.isFilter,
+    this.isFilter = false,
     this.onBackPressed,
   });
 
-  final bool isSettings;
   final bool isFilter;
   final BaseEntity entity;
   final String title;
@@ -36,6 +34,7 @@ class ViewScaffold extends StatelessWidget {
     final store = StoreProvider.of<AppState>(context);
     final state = store.state;
     final userCompany = state.userCompany;
+    final isSettings = entity.entityType.isSetting;
 
     Widget leading;
     if (!isMobile(context)) {

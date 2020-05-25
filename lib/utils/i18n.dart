@@ -15,6 +15,17 @@ mixin LocalizationsProvider on LocaleCodeAware {
   static final Map<String, Map<String, String>> _localizedValues = {
     'en': {
       // STARTER: lang key - do not remove comment
+      'number_of_days': 'Number of days',
+      'configure_payment_terms': 'Configure Payment Terms',
+      'payment_term': 'Payment Term',
+      'new_payment_term': 'New Payment Term',
+      'edit_payment_term': 'Edit Payment Term',
+      'created_payment_term': 'Successfully created payment term',
+      'updated_payment_term': 'Successfully updated payment term',
+      'archived_payment_term': 'Successfully archived payment term',
+      'deleted_payment_term': 'Successfully deleted payment term',
+      'removed_payment_term': 'Successfully removed payment term',
+      'restored_payment_term': 'Successfully restored payment term',
       'full_width_editor': 'Full Width Editor',
       'full_height_filter': 'Full Height Filter',
       'email_sign_in': 'Sign in with email',
@@ -36152,6 +36163,28 @@ mixin LocalizationsProvider on LocaleCodeAware {
   String get appUpdated => _localizedValues[localeCode]['app_updated'] ?? '';
 
   // STARTER: lang field - do not remove comment
+  String get paymentTerm => _localizedValues[localeCode]['payment_term'];
+
+  String get newPaymentTerm => _localizedValues[localeCode]['new_payment_term'];
+
+  String get createdPaymentTerm =>
+      _localizedValues[localeCode]['created_payment_term'];
+
+  String get updatedPaymentTerm =>
+      _localizedValues[localeCode]['updated_payment_term'];
+
+  String get archivedPaymentTerm =>
+      _localizedValues[localeCode]['archived_payment_term'];
+
+  String get deletedPaymentTerm =>
+      _localizedValues[localeCode]['deleted_payment_term'];
+
+  String get restoredPaymentTerm =>
+      _localizedValues[localeCode]['restored_payment_term'];
+
+  String get editPaymentTerm =>
+      _localizedValues[localeCode]['edit_payment_term'];
+
   String get designs => _localizedValues[localeCode]['designs'] ?? '';
 
   String get newDesign => _localizedValues[localeCode]['new_design'] ?? '';
@@ -36559,6 +36592,12 @@ mixin LocalizationsProvider on LocaleCodeAware {
 
   String get fullHeightFilter =>
       _localizedValues[localeCode]['full_height_filter'] ?? '';
+
+  String get configurePaymentTerms =>
+      _localizedValues[localeCode]['configure_payment_terms'] ?? '';
+
+  String get numberOfDays =>
+      _localizedValues[localeCode]['number_of_days'] ?? '';
 
   String lookup(String key) {
     final lookupKey = toSnakeCase(key);

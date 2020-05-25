@@ -26,7 +26,6 @@ class _DesignViewState extends State<DesignView> {
     return ViewScaffold(
       isFilter: widget.isFilter,
       entity: design,
-      isSettings: true,
       onBackPressed: () => viewModel.onBackPressed(),
       body: Placeholder(),
     );

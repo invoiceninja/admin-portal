@@ -43,6 +43,7 @@ class CompanyDetailsVM {
     @required this.onSavePressed,
     @required this.onUploadLogo,
     @required this.onDeleteLogo,
+    @required this.onConfigurePaymentTermsPressed,
   });
 
   static CompanyDetailsVM fromStore(Store<AppState> store) {
@@ -118,6 +119,17 @@ class CompanyDetailsVM {
         store.dispatch(
             UploadLogoRequest(completer: completer, path: path, type: type));
       },
+      onConfigurePaymentTermsPressed: (context) {
+        if (state.paymentTermState.list.isEmpty) {
+          store.dispatch(ViewSettings(
+              navigator: Navigator.of(context),
+              section: kSettingsPaymentTermEdit));
+        } else {
+          store.dispatch(ViewSettings(
+              navigator: Navigator.of(context),
+              section: kSettingsPaymentTerms));
+        }
+      },
     );
   }
 
@@ -129,4 +141,5 @@ class CompanyDetailsVM {
   final Function(BuildContext) onSavePressed;
   final Function(BuildContext, String) onUploadLogo;
   final Function(BuildContext) onDeleteLogo;
+  final Function(BuildContext) onConfigurePaymentTermsPressed;
 }

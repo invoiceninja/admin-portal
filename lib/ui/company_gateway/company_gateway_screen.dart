@@ -53,7 +53,6 @@ class CompanyGatewayScreen extends StatelessWidget {
         handleCompanyGatewayAction(
             context, companyGateways, EntityAction.toggleMultiselect);
       },
-      isSettings: true,
       appBarTitle: Text(localization.companyGateways),
       appBarActions: [
         if (viewModel.isInMultiselect)
@@ -91,7 +90,6 @@ class CompanyGatewayScreen extends StatelessWidget {
         onRefreshPressed: () =>
             store.dispatch(LoadCompanyGateways(force: true)),
         onSelectedSortField: null,
-        onlyList: true,
         entityType: EntityType.companyGateway,
         onSelectedCustom1: (value) =>
             store.dispatch(FilterCompanyGatewaysByCustom1(value)),

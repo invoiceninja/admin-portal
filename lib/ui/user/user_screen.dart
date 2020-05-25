@@ -39,7 +39,6 @@ class UserScreen extends StatelessWidget {
 
     return ListScaffold(
       entityType: EntityType.user,
-      isSettings: true,
       isChecked: isInMultiselect &&
           listUIState.selectedIds.length == viewModel.userList.length,
       showCheckbox: isInMultiselect,
@@ -89,7 +88,6 @@ class UserScreen extends StatelessWidget {
       body: UserListBuilder(),
       bottomNavigationBar: AppBottomBar(
         entityType: EntityType.user,
-        onlyList: true,
         onRefreshPressed: () => store.dispatch(LoadUsers(force: true)),
         onSelectedSortField: (value) => store.dispatch(SortUsers(value)),
         onSelectedCustom1: (value) =>

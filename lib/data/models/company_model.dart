@@ -10,6 +10,7 @@ import 'package:invoiceninja_flutter/data/models/company_gateway_model.dart';
 import 'package:invoiceninja_flutter/data/models/entities.dart';
 import 'package:invoiceninja_flutter/data/models/group_model.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
+import 'package:invoiceninja_flutter/data/models/payment_term_model.dart';
 import 'package:invoiceninja_flutter/data/models/task_model.dart';
 import 'package:invoiceninja_flutter/utils/formatting.dart';
 import 'package:invoiceninja_flutter/.env.dart';
@@ -95,6 +96,7 @@ abstract class CompanyEntity extends Object
       projects: BuiltList<ProjectEntity>(),
       vendors: BuiltList<VendorEntity>(),
       designs: BuiltList<DesignEntity>(),
+      paymentTerms: BuiltList<PaymentTermEntity>(),
     );
   }
 
@@ -213,6 +215,8 @@ abstract class CompanyEntity extends Object
   BuiltList<VendorEntity> get vendors;
 
   BuiltList<DesignEntity> get designs;
+
+  BuiltList<PaymentTermEntity> get paymentTerms;
 
   BuiltMap<String, UserEntity> get userMap;
 
@@ -362,44 +366,6 @@ abstract class CompanyEntity extends Object
   String get currencyId => settings.currencyId ?? kDefaultCurrencyId;
 
   static Serializer<CompanyEntity> get serializer => _$companyEntitySerializer;
-}
-
-abstract class PaymentTermEntity extends Object
-    with SelectableEntity
-    implements Built<PaymentTermEntity, PaymentTermEntityBuilder> {
-  factory PaymentTermEntity() {
-    return _$PaymentTermEntity._(
-      id: BaseEntity.nextId,
-      numDays: 0,
-    );
-  }
-
-  PaymentTermEntity._();
-
-  @override
-  @memoized
-  int get hashCode;
-
-  static Serializer<PaymentTermEntity> get serializer =>
-      _$paymentTermEntitySerializer;
-
-  String getPaymentTerm(String netLabel) {
-    if (numDays == 0) {
-      return '';
-    } else if (numDays == -1) {
-      return '$netLabel 0';
-    } else {
-      return '$netLabel $numDays';
-    }
-  }
-
-  @nullable
-  @BuiltValueField(wireName: 'num_days')
-  int get numDays;
-
-  @nullable
-  @BuiltValueField(wireName: 'archived_at')
-  int get archivedAt;
 }
 
 abstract class GatewayEntity extends Object

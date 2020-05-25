@@ -8,8 +8,6 @@ part of 'company_model.dart';
 
 Serializer<CompanyEntity> _$companyEntitySerializer =
     new _$CompanyEntitySerializer();
-Serializer<PaymentTermEntity> _$paymentTermEntitySerializer =
-    new _$PaymentTermEntitySerializer();
 Serializer<GatewayEntity> _$gatewayEntitySerializer =
     new _$GatewayEntitySerializer();
 Serializer<UserCompanyEntity> _$userCompanyEntitySerializer =
@@ -175,6 +173,10 @@ class _$CompanyEntitySerializer implements StructuredSerializer<CompanyEntity> {
       serializers.serialize(object.designs,
           specifiedType:
               const FullType(BuiltList, const [const FullType(DesignEntity)])),
+      'paymentTerms',
+      serializers.serialize(object.paymentTerms,
+          specifiedType: const FullType(
+              BuiltList, const [const FullType(PaymentTermEntity)])),
       'userMap',
       serializers.serialize(object.userMap,
           specifiedType: const FullType(BuiltMap,
@@ -486,6 +488,12 @@ class _$CompanyEntitySerializer implements StructuredSerializer<CompanyEntity> {
                       BuiltList, const [const FullType(DesignEntity)]))
               as BuiltList<Object>);
           break;
+        case 'paymentTerms':
+          result.paymentTerms.replace(serializers.deserialize(value,
+                  specifiedType: const FullType(
+                      BuiltList, const [const FullType(PaymentTermEntity)]))
+              as BuiltList<Object>);
+          break;
         case 'userMap':
           result.userMap.replace(serializers.deserialize(value,
               specifiedType: const FullType(BuiltMap,
@@ -543,69 +551,6 @@ class _$CompanyEntitySerializer implements StructuredSerializer<CompanyEntity> {
         case 'entity_type':
           result.subEntityType = serializers.deserialize(value,
               specifiedType: const FullType(EntityType)) as EntityType;
-          break;
-        case 'id':
-          result.id = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String;
-          break;
-      }
-    }
-
-    return result.build();
-  }
-}
-
-class _$PaymentTermEntitySerializer
-    implements StructuredSerializer<PaymentTermEntity> {
-  @override
-  final Iterable<Type> types = const [PaymentTermEntity, _$PaymentTermEntity];
-  @override
-  final String wireName = 'PaymentTermEntity';
-
-  @override
-  Iterable<Object> serialize(Serializers serializers, PaymentTermEntity object,
-      {FullType specifiedType = FullType.unspecified}) {
-    final result = <Object>[];
-    if (object.numDays != null) {
-      result
-        ..add('num_days')
-        ..add(serializers.serialize(object.numDays,
-            specifiedType: const FullType(int)));
-    }
-    if (object.archivedAt != null) {
-      result
-        ..add('archived_at')
-        ..add(serializers.serialize(object.archivedAt,
-            specifiedType: const FullType(int)));
-    }
-    if (object.id != null) {
-      result
-        ..add('id')
-        ..add(serializers.serialize(object.id,
-            specifiedType: const FullType(String)));
-    }
-    return result;
-  }
-
-  @override
-  PaymentTermEntity deserialize(
-      Serializers serializers, Iterable<Object> serialized,
-      {FullType specifiedType = FullType.unspecified}) {
-    final result = new PaymentTermEntityBuilder();
-
-    final iterator = serialized.iterator;
-    while (iterator.moveNext()) {
-      final key = iterator.current as String;
-      iterator.moveNext();
-      final dynamic value = iterator.current;
-      switch (key) {
-        case 'num_days':
-          result.numDays = serializers.deserialize(value,
-              specifiedType: const FullType(int)) as int;
-          break;
-        case 'archived_at':
-          result.archivedAt = serializers.deserialize(value,
-              specifiedType: const FullType(int)) as int;
           break;
         case 'id':
           result.id = serializers.deserialize(value,
@@ -2791,6 +2736,8 @@ class _$CompanyEntity extends CompanyEntity {
   @override
   final BuiltList<DesignEntity> designs;
   @override
+  final BuiltList<PaymentTermEntity> paymentTerms;
+  @override
   final BuiltMap<String, UserEntity> userMap;
   @override
   final BuiltMap<String, String> customFields;
@@ -2866,6 +2813,7 @@ class _$CompanyEntity extends CompanyEntity {
       this.expenses,
       this.vendors,
       this.designs,
+      this.paymentTerms,
       this.userMap,
       this.customFields,
       this.slackWebhookUrl,
@@ -3005,6 +2953,9 @@ class _$CompanyEntity extends CompanyEntity {
     if (designs == null) {
       throw new BuiltValueNullFieldError('CompanyEntity', 'designs');
     }
+    if (paymentTerms == null) {
+      throw new BuiltValueNullFieldError('CompanyEntity', 'paymentTerms');
+    }
     if (userMap == null) {
       throw new BuiltValueNullFieldError('CompanyEntity', 'userMap');
     }
@@ -3074,6 +3025,7 @@ class _$CompanyEntity extends CompanyEntity {
         expenses == other.expenses &&
         vendors == other.vendors &&
         designs == other.designs &&
+        paymentTerms == other.paymentTerms &&
         userMap == other.userMap &&
         customFields == other.customFields &&
         slackWebhookUrl == other.slackWebhookUrl &&
@@ -3112,11 +3064,11 @@ class _$CompanyEntity extends CompanyEntity {
                                                                 $jc(
                                                                     $jc(
                                                                         $jc(
-                                                                            $jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc(0, enableCustomSurchargeTaxes1.hashCode), enableCustomSurchargeTaxes2.hashCode), enableCustomSurchargeTaxes3.hashCode), enableCustomSurchargeTaxes4.hashCode), sizeId.hashCode), industryId.hashCode), subdomain.hashCode), portalMode.hashCode), portalDomain.hashCode), updateProducts.hashCode), convertProductExchangeRate.hashCode), fillProducts.hashCode), enableProductCost.hashCode), enableProductQuantity.hashCode), defaultQuantity.hashCode), showProductDetails.hashCode), plan.hashCode), companyKey.hashCode), appUrl.hashCode), firstDayOfWeek.hashCode), firstMonthOfYear.hashCode), groups.hashCode), activities.hashCode), taxRates.hashCode), taskStatuses.hashCode), taskStatusMap.hashCode), companyGateways.hashCode), expenseCategories.hashCode), expenseCategoryMap.hashCode), users.hashCode), clients.hashCode), products.hashCode), invoices.hashCode), payments.hashCode), quotes.hashCode), credits.hashCode), tasks.hashCode),
-                                                                                projects.hashCode),
-                                                                            expenses.hashCode),
-                                                                        vendors.hashCode),
-                                                                    designs.hashCode),
+                                                                            $jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc(0, enableCustomSurchargeTaxes1.hashCode), enableCustomSurchargeTaxes2.hashCode), enableCustomSurchargeTaxes3.hashCode), enableCustomSurchargeTaxes4.hashCode), sizeId.hashCode), industryId.hashCode), subdomain.hashCode), portalMode.hashCode), portalDomain.hashCode), updateProducts.hashCode), convertProductExchangeRate.hashCode), fillProducts.hashCode), enableProductCost.hashCode), enableProductQuantity.hashCode), defaultQuantity.hashCode), showProductDetails.hashCode), plan.hashCode), companyKey.hashCode), appUrl.hashCode), firstDayOfWeek.hashCode), firstMonthOfYear.hashCode), groups.hashCode), activities.hashCode), taxRates.hashCode), taskStatuses.hashCode), taskStatusMap.hashCode), companyGateways.hashCode), expenseCategories.hashCode), expenseCategoryMap.hashCode), users.hashCode), clients.hashCode), products.hashCode), invoices.hashCode), payments.hashCode), quotes.hashCode), credits.hashCode), tasks.hashCode), projects.hashCode),
+                                                                                expenses.hashCode),
+                                                                            vendors.hashCode),
+                                                                        designs.hashCode),
+                                                                    paymentTerms.hashCode),
                                                                 userMap.hashCode),
                                                             customFields.hashCode),
                                                         slackWebhookUrl.hashCode),
@@ -3178,6 +3130,7 @@ class _$CompanyEntity extends CompanyEntity {
           ..add('expenses', expenses)
           ..add('vendors', vendors)
           ..add('designs', designs)
+          ..add('paymentTerms', paymentTerms)
           ..add('userMap', userMap)
           ..add('customFields', customFields)
           ..add('slackWebhookUrl', slackWebhookUrl)
@@ -3411,6 +3364,12 @@ class CompanyEntityBuilder
       _$this._designs ??= new ListBuilder<DesignEntity>();
   set designs(ListBuilder<DesignEntity> designs) => _$this._designs = designs;
 
+  ListBuilder<PaymentTermEntity> _paymentTerms;
+  ListBuilder<PaymentTermEntity> get paymentTerms =>
+      _$this._paymentTerms ??= new ListBuilder<PaymentTermEntity>();
+  set paymentTerms(ListBuilder<PaymentTermEntity> paymentTerms) =>
+      _$this._paymentTerms = paymentTerms;
+
   MapBuilder<String, UserEntity> _userMap;
   MapBuilder<String, UserEntity> get userMap =>
       _$this._userMap ??= new MapBuilder<String, UserEntity>();
@@ -3527,6 +3486,7 @@ class CompanyEntityBuilder
       _expenses = _$v.expenses?.toBuilder();
       _vendors = _$v.vendors?.toBuilder();
       _designs = _$v.designs?.toBuilder();
+      _paymentTerms = _$v.paymentTerms?.toBuilder();
       _userMap = _$v.userMap?.toBuilder();
       _customFields = _$v.customFields?.toBuilder();
       _slackWebhookUrl = _$v.slackWebhookUrl;
@@ -3607,6 +3567,7 @@ class CompanyEntityBuilder
               expenses: expenses.build(),
               vendors: vendors.build(),
               designs: designs.build(),
+              paymentTerms: paymentTerms.build(),
               userMap: userMap.build(),
               customFields: customFields.build(),
               slackWebhookUrl: slackWebhookUrl,
@@ -3665,6 +3626,8 @@ class CompanyEntityBuilder
         vendors.build();
         _$failedField = 'designs';
         designs.build();
+        _$failedField = 'paymentTerms';
+        paymentTerms.build();
         _$failedField = 'userMap';
         userMap.build();
         _$failedField = 'customFields';
@@ -3678,105 +3641,6 @@ class CompanyEntityBuilder
       }
       rethrow;
     }
-    replace(_$result);
-    return _$result;
-  }
-}
-
-class _$PaymentTermEntity extends PaymentTermEntity {
-  @override
-  final int numDays;
-  @override
-  final int archivedAt;
-  @override
-  final String id;
-
-  factory _$PaymentTermEntity(
-          [void Function(PaymentTermEntityBuilder) updates]) =>
-      (new PaymentTermEntityBuilder()..update(updates)).build();
-
-  _$PaymentTermEntity._({this.numDays, this.archivedAt, this.id}) : super._();
-
-  @override
-  PaymentTermEntity rebuild(void Function(PaymentTermEntityBuilder) updates) =>
-      (toBuilder()..update(updates)).build();
-
-  @override
-  PaymentTermEntityBuilder toBuilder() =>
-      new PaymentTermEntityBuilder()..replace(this);
-
-  @override
-  bool operator ==(Object other) {
-    if (identical(other, this)) return true;
-    return other is PaymentTermEntity &&
-        numDays == other.numDays &&
-        archivedAt == other.archivedAt &&
-        id == other.id;
-  }
-
-  int __hashCode;
-  @override
-  int get hashCode {
-    return __hashCode ??= $jf(
-        $jc($jc($jc(0, numDays.hashCode), archivedAt.hashCode), id.hashCode));
-  }
-
-  @override
-  String toString() {
-    return (newBuiltValueToStringHelper('PaymentTermEntity')
-          ..add('numDays', numDays)
-          ..add('archivedAt', archivedAt)
-          ..add('id', id))
-        .toString();
-  }
-}
-
-class PaymentTermEntityBuilder
-    implements Builder<PaymentTermEntity, PaymentTermEntityBuilder> {
-  _$PaymentTermEntity _$v;
-
-  int _numDays;
-  int get numDays => _$this._numDays;
-  set numDays(int numDays) => _$this._numDays = numDays;
-
-  int _archivedAt;
-  int get archivedAt => _$this._archivedAt;
-  set archivedAt(int archivedAt) => _$this._archivedAt = archivedAt;
-
-  String _id;
-  String get id => _$this._id;
-  set id(String id) => _$this._id = id;
-
-  PaymentTermEntityBuilder();
-
-  PaymentTermEntityBuilder get _$this {
-    if (_$v != null) {
-      _numDays = _$v.numDays;
-      _archivedAt = _$v.archivedAt;
-      _id = _$v.id;
-      _$v = null;
-    }
-    return this;
-  }
-
-  @override
-  void replace(PaymentTermEntity other) {
-    if (other == null) {
-      throw new ArgumentError.notNull('other');
-    }
-    _$v = other as _$PaymentTermEntity;
-  }
-
-  @override
-  void update(void Function(PaymentTermEntityBuilder) updates) {
-    if (updates != null) updates(this);
-  }
-
-  @override
-  _$PaymentTermEntity build() {
-    final _$result = _$v ??
-        new _$PaymentTermEntity._(
-            numDays: numDays, archivedAt: archivedAt, id: id);
     replace(_$result);
     return _$result;
   }

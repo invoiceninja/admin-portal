@@ -54,7 +54,6 @@ class _CompanyGatewayViewState extends State<CompanyGatewayView> {
       isFilter: widget.isFilter,
       entity: companyGateway,
       onBackPressed: () => viewModel.onBackPressed(),
-      isSettings: true,
       body: ListView(
         children: <Widget>[
           /*

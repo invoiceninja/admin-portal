@@ -18,6 +18,8 @@ import 'package:invoiceninja_flutter/redux/payment/payment_reducer.dart';
 import 'package:invoiceninja_flutter/redux/quote/quote_reducer.dart';
 
 // STARTER: import - do not remove comment
+import 'package:invoiceninja_flutter/redux/payment_term/payment_term_reducer.dart';
+
 import 'package:invoiceninja_flutter/redux/design/design_reducer.dart';
 
 import 'package:invoiceninja_flutter/redux/credit/credit_reducer.dart';
@@ -42,6 +44,8 @@ UserCompanyState companyReducer(UserCompanyState state, dynamic action) {
     ..vendorState.replace(vendorsReducer(state.vendorState, action))
     ..taskState.replace(tasksReducer(state.taskState, action))
     // STARTER: reducer - do not remove comment
+    ..paymentTermState
+        .replace(paymentTermsReducer(state.paymentTermState, action))
     ..designState.replace(designsReducer(state.designState, action))
     ..creditState.replace(creditsReducer(state.creditState, action))
     ..userState.replace(usersReducer(state.userState, action))

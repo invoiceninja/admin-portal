@@ -96,6 +96,8 @@ IconData getEntityIcon(EntityType entityType) {
       return FontAwesomeIcons.solidFileAlt;
     case EntityType.design:
       return FontAwesomeIcons.stamp;
+    case EntityType.paymentTerm:
+      return FontAwesomeIcons.calendarCheck;
     default:
       return null;
   }

@@ -31,7 +31,6 @@ class UserView extends StatelessWidget {
     return ViewScaffold(
       isFilter: isFilter,
       entity: user,
-      isSettings: true,
       onBackPressed: () => viewModel.onBackPressed(),
       body: ListView(
         children: <Widget>[

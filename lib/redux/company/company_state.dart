@@ -7,6 +7,8 @@ import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:built_value/built_value.dart';
 import 'package:built_value/serializer.dart';
 // STARTER: import - do not remove comment
+import 'package:invoiceninja_flutter/redux/payment_term/payment_term_state.dart';
+
 import 'package:invoiceninja_flutter/redux/design/design_state.dart';
 
 import 'package:invoiceninja_flutter/redux/credit/credit_state.dart';
@@ -41,6 +43,8 @@ abstract class UserCompanyState
       paymentState: PaymentState(),
       quoteState: QuoteState(),
       // STARTER: constructor - do not remove comment
+      paymentTermState: PaymentTermState(),
+
       designState: DesignState(),
 
       creditState: CreditState(),
@@ -82,6 +86,8 @@ abstract class UserCompanyState
   QuoteState get quoteState;
 
   // STARTER: fields - do not remove comment
+  PaymentTermState get paymentTermState;
+
   DesignState get designState;
 
   CreditState get creditState;

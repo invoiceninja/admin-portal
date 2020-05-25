@@ -30,7 +30,6 @@ class AppBottomBar extends StatefulWidget {
     this.customValues2 = const [],
     this.customValues3 = const [],
     this.customValues4 = const [],
-    this.onlyList = false,
   });
 
   final EntityType entityType;
@@ -49,7 +48,6 @@ class AppBottomBar extends StatefulWidget {
   final List<String> customValues2;
   final List<String> customValues3;
   final List<String> customValues4;
-  final bool onlyList;
 
   @override
   _AppBottomBarState createState() => _AppBottomBarState();
@@ -329,7 +327,7 @@ class _AppBottomBarState extends State<AppBottomBar> {
       final localization = AppLocalization.of(context);
       final prefState = store.state.prefState;
       final isList =
-          prefState.moduleLayout == ModuleLayout.list || widget.onlyList;
+          prefState.moduleLayout == ModuleLayout.list || widget.entityType.isSetting;
 
       return BottomAppBar(
         shape: CircularNotchedRectangle(),
@@ -344,7 +342,7 @@ class _AppBottomBarState extends State<AppBottomBar> {
                   icon: Icon(Icons.check_box),
                   onPressed: () => widget.onCheckboxPressed(),
                 ),
-                if (!widget.onlyList)
+                if (!widget.entityType.isSetting)
                   IconButton(
                     tooltip: localization.switchListTable,
                     icon: Icon(isList ? Icons.table_chart : Icons.view_list),
@@ -371,7 +369,9 @@ class _AppBottomBarState extends State<AppBottomBar> {
                   tooltip: localization.filter,
                   icon: Icon(Icons.filter_list),
                   onPressed: _showFilterStateSheet,
-                  color: store.state.getListState(widget.entityType).hasStateFilters
+                  color: store.state
+                          .getListState(widget.entityType)
+                          .hasStateFilters
                       ? Theme.of(context).accentColor
                       : null,
                 ),
@@ -380,10 +380,11 @@ class _AppBottomBarState extends State<AppBottomBar> {
                     tooltip: localization.filter,
                     icon: Icon(Icons.filter),
                     onPressed: _showFilterStatusSheet,
-                    color:
-                        store.state.getListState(widget.entityType).hasStatusFilters
-                            ? Theme.of(context).accentColor
-                            : null,
+                    color: store.state
+                            .getListState(widget.entityType)
+                            .hasStatusFilters
+                        ? Theme.of(context).accentColor
+                        : null,
                   ),
                 if (widget.customValues1.isNotEmpty)
                   IconButton(

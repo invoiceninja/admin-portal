@@ -51,7 +51,6 @@ class GroupSettingsScreen extends StatelessWidget {
 
         handleGroupAction(context, groups, EntityAction.toggleMultiselect);
       },
-      isSettings: true,
       appBarTitle: ListFilter(
         placeholder: localization.searchGroups,
         filter: state.groupListState.filter,
@@ -87,7 +86,6 @@ class GroupSettingsScreen extends StatelessWidget {
       body: GroupListBuilder(),
       bottomNavigationBar: AppBottomBar(
         entityType: EntityType.group,
-        onlyList: true,
         onRefreshPressed: () => store.dispatch(LoadGroups(force: true)),
         onSelectedSortField: (value) => store.dispatch(SortGroups(value)),
         customValues1: company.getCustomFieldValues(CustomFieldType.group1,

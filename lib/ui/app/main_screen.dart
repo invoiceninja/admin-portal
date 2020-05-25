@@ -10,7 +10,6 @@ import 'package:invoiceninja_flutter/redux/reports/reports_actions.dart';
 import 'package:invoiceninja_flutter/redux/settings/settings_actions.dart';
 import 'package:invoiceninja_flutter/redux/ui/pref_state.dart';
 import 'package:invoiceninja_flutter/ui/app/app_builder.dart';
-import 'package:invoiceninja_flutter/ui/app/forms/app_dropdown_button.dart';
 import 'package:invoiceninja_flutter/ui/app/history_drawer_vm.dart';
 import 'package:invoiceninja_flutter/ui/app/icon_text.dart';
 import 'package:invoiceninja_flutter/ui/app/menu_drawer_vm.dart';
@@ -23,6 +22,8 @@ import 'package:invoiceninja_flutter/ui/credit/view/credit_view_vm.dart';
 import 'package:invoiceninja_flutter/ui/design/design_screen_vm.dart';
 import 'package:invoiceninja_flutter/ui/design/edit/design_edit_vm.dart';
 import 'package:invoiceninja_flutter/ui/design/view/design_view_vm.dart';
+import 'package:invoiceninja_flutter/ui/payment_term/edit/payment_term_edit_vm.dart';
+import 'package:invoiceninja_flutter/ui/payment_term/payment_term_screen_vm.dart';
 import 'package:invoiceninja_flutter/ui/reports/reports_screen.dart';
 import 'package:invoiceninja_flutter/ui/reports/reports_screen_vm.dart';
 import 'package:invoiceninja_flutter/ui/settings/account_management_vm.dart';
@@ -294,6 +295,12 @@ class SettingsScreens extends StatelessWidget {
     switch (uiState.subRoute) {
       case kSettingsCompanyDetails:
         screen = CompanyDetailsScreen();
+        break;
+      case kSettingsPaymentTerms:
+        screen = PaymentTermScreenBuilder();
+        break;
+      case kSettingsPaymentTermEdit:
+        screen = PaymentTermEditScreen();
         break;
       case kSettingsUserDetails:
         screen = UserDetailsScreen();
