@@ -186,7 +186,7 @@ else
     # Link in new module
     echo "app_state: import"
     comment="STARTER: import - do not remove comment"
-    code="import 'package:${package}\/redux\/${module_snake}\/${module_snake}_state.dart';import 'package:${package}/ui/${module_snake}/edit/${module_snake}_edit_vm.dart';import 'package:${package}/redux/${module_snake}/${module_snake}_state.dart';import 'package:${package}/ui/${module_snake}/edit/${module_snake}_edit_vm.dart';import 'package:${package}/redux/${module_snake}/${module_snake}_selectors.dart';${lineBreak}"
+    code="import 'package:${package}\/redux\/${module_snake}\/${module_snake}_state.dart';import 'package:${package}\/ui\/${module_snake}\/edit\/${module_snake}_edit_vm.dart';import 'package:${package}\/redux\/${module_snake}\/${module_snake}_state.dart';import 'package:${package}\/ui\/${module_snake}\/edit\/${module_snake}_edit_vm.dart';import 'package:${package}\/redux\/${module_snake}\/${module_snake}_selectors.dart';${lineBreak}"
     sed -i -e "s/$comment/$comment${lineBreak}$code/g" ./lib/redux/app/app_state.dart
 
     echo "app_state: list"
