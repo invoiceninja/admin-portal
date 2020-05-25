@@ -383,35 +383,42 @@ class _PaymentableEditorState extends State<PaymentableEditor> {
               },
             ),
           ),
-        SizedBox(
-          width: kTableColumnGap,
-        ),
-        Expanded(
-          child: DecoratedFormField(
-            controller: _amountController,
-            label: localization.applied,
-            enabled:
-                (_creditId ?? '').isNotEmpty || (_invoiceId ?? '').isNotEmpty,
+        if ((_creditId ?? '').isNotEmpty || (_invoiceId ?? '').isNotEmpty) ...[
+          SizedBox(
+            width: kTableColumnGap,
           ),
-        ),
-        SizedBox(
-          width: kTableColumnGap,
-        ),
-        IconButton(
-          icon: Icon(Icons.clear),
-          tooltip: localization.remove,
-          onPressed: paymentable.isEmpty
-              ? null
-              : () {
-                  if (widget.entityType == EntityType.invoice) {
-                    viewModel.onChanged(payment
-                        .rebuild((b) => b..invoices.removeAt(widget.index)));
-                  } else {
-                    viewModel.onChanged(payment
-                        .rebuild((b) => b..credits.removeAt(widget.index)));
-                  }
-                },
-        ),
+          Expanded(
+            child: DecoratedFormField(
+              controller: _amountController,
+              label: localization.applied,
+            ),
+          ),
+        ],
+        if ((widget.entityType == EntityType.invoice &&
+                payment.invoices.isNotEmpty &&
+                _invoiceId != null) ||
+            (widget.entityType == EntityType.credit &&
+                payment.credits.isNotEmpty &&
+                _creditId != null)) ...[
+          SizedBox(
+            width: kTableColumnGap,
+          ),
+          IconButton(
+            icon: Icon(Icons.clear),
+            tooltip: localization.remove,
+            onPressed: paymentable.isEmpty
+                ? null
+                : () {
+                    if (widget.entityType == EntityType.invoice) {
+                      viewModel.onChanged(payment
+                          .rebuild((b) => b..invoices.removeAt(widget.index)));
+                    } else {
+                      viewModel.onChanged(payment
+                          .rebuild((b) => b..credits.removeAt(widget.index)));
+                    }
+                  },
+          ),
+        ],
       ],
     );
   }

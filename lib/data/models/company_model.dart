@@ -328,19 +328,6 @@ abstract class CompanyEntity extends Object
       );
 
   bool isModuleEnabled(EntityType entityType) {
-    if (Config.DEMO_MODE) {
-      if ([
-        //EntityType.recurringInvoice,
-        //EntityType.credit,
-        EntityType.project,
-        EntityType.task,
-        EntityType.expense,
-        EntityType.vendor,
-      ].contains(entityType)) {
-        return true;
-      }
-    }
-
     // TODO remove this
     if ([
       EntityType.recurringInvoice,
