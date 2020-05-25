@@ -173,7 +173,7 @@ class _$CompanyEntitySerializer implements StructuredSerializer<CompanyEntity> {
       serializers.serialize(object.designs,
           specifiedType:
               const FullType(BuiltList, const [const FullType(DesignEntity)])),
-      'paymentTerms',
+      'payment_terms',
       serializers.serialize(object.paymentTerms,
           specifiedType: const FullType(
               BuiltList, const [const FullType(PaymentTermEntity)])),
@@ -488,7 +488,7 @@ class _$CompanyEntitySerializer implements StructuredSerializer<CompanyEntity> {
                       BuiltList, const [const FullType(DesignEntity)]))
               as BuiltList<Object>);
           break;
-        case 'paymentTerms':
+        case 'payment_terms':
           result.paymentTerms.replace(serializers.deserialize(value,
                   specifiedType: const FullType(
                       BuiltList, const [const FullType(PaymentTermEntity)]))

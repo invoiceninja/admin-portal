@@ -216,6 +216,7 @@ abstract class CompanyEntity extends Object
 
   BuiltList<DesignEntity> get designs;
 
+  @BuiltValueField(wireName: 'payment_terms')
   BuiltList<PaymentTermEntity> get paymentTerms;
 
   BuiltMap<String, UserEntity> get userMap;
