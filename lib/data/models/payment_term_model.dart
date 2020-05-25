@@ -92,4 +92,7 @@ abstract class PaymentTermEntity extends Object
   int compareTo(PaymentTermEntity paymentTerm, String sortField,
           bool sortAscending) =>
       numDays.compareTo(paymentTerm.numDays);
+
+  @override
+  String get listDisplayName => name;
 }
