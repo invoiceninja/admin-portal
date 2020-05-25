@@ -30,6 +30,7 @@ import 'package:invoiceninja_flutter/redux/vendor/vendor_actions.dart';
 import 'package:invoiceninja_flutter/utils/completers.dart';
 import 'package:invoiceninja_flutter/utils/dialogs.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
+
 // STARTER: import - do not remove comment
 import 'package:invoiceninja_flutter/redux/payment_term/payment_term_actions.dart';
 
@@ -331,7 +332,6 @@ void viewEntitiesByType({
     case EntityType.paymentTerm:
       store.dispatch(ViewPaymentTermList(navigator: navigator));
       break;
-
     case EntityType.design:
       action = ViewDesignList(navigator: navigator);
       break;
@@ -470,13 +470,9 @@ void viewEntityById({
       break;
     // STARTER: view - do not remove comment
     case EntityType.paymentTerm:
-      store.dispatch(ViewPaymentTerm(
-        paymentTermId: entityId,
-        navigator: navigator,
-        force: force,
-      ));
+      editEntityById(
+          context: context, entityId: entityId, entityType: entityType);
       break;
-
     case EntityType.design:
       store.dispatch(ViewDesign(
         designId: entityId,

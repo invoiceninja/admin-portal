@@ -8,7 +8,6 @@ import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/redux/ui/ui_actions.dart';
 import 'package:invoiceninja_flutter/ui/payment_term/payment_term_screen.dart';
 import 'package:invoiceninja_flutter/ui/payment_term/edit/payment_term_edit_vm.dart';
-import 'package:invoiceninja_flutter/ui/payment_term/view/payment_term_view_vm.dart';
 import 'package:invoiceninja_flutter/redux/payment_term/payment_term_actions.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/data/repositories/payment_term_repository.dart';
@@ -17,7 +16,6 @@ List<Middleware<AppState>> createStorePaymentTermsMiddleware([
   PaymentTermRepository repository = const PaymentTermRepository(),
 ]) {
   final viewPaymentTermList = _viewPaymentTermList();
-  final viewPaymentTerm = _viewPaymentTerm();
   final editPaymentTerm = _editPaymentTerm();
   final loadPaymentTerms = _loadPaymentTerms(repository);
   final loadPaymentTerm = _loadPaymentTerm(repository);
@@ -28,7 +26,6 @@ List<Middleware<AppState>> createStorePaymentTermsMiddleware([
 
   return [
     TypedMiddleware<AppState, ViewPaymentTermList>(viewPaymentTermList),
-    TypedMiddleware<AppState, ViewPaymentTerm>(viewPaymentTerm),
     TypedMiddleware<AppState, EditPaymentTerm>(editPaymentTerm),
     TypedMiddleware<AppState, LoadPaymentTerms>(loadPaymentTerms),
     TypedMiddleware<AppState, LoadPaymentTerm>(loadPaymentTerm),
@@ -54,26 +51,6 @@ Middleware<AppState> _editPaymentTerm() {
 
     if (isMobile(action.context)) {
       action.navigator.pushNamed(PaymentTermEditScreen.route);
-    }
-  };
-}
-
-Middleware<AppState> _viewPaymentTerm() {
-  return (Store<AppState> store, dynamic dynamicAction,
-      NextDispatcher next) async {
-    final action = dynamicAction as ViewPaymentTerm;
-
-    if (!action.force &&
-        hasChanges(store: store, context: action.context, action: action)) {
-      return;
-    }
-
-    next(action);
-
-    store.dispatch(UpdateCurrentRoute(PaymentTermViewScreen.route));
-
-    if (isMobile(action.context)) {
-      Navigator.of(action.context).pushNamed(PaymentTermViewScreen.route);
     }
   };
 }

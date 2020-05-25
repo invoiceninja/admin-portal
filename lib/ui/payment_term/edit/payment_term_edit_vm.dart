@@ -5,11 +5,11 @@ import 'package:flutter_redux/flutter_redux.dart';
 import 'package:invoiceninja_flutter/constants.dart';
 import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:invoiceninja_flutter/redux/ui/ui_actions.dart';
+import 'package:invoiceninja_flutter/ui/payment_term/payment_term_screen.dart';
 import 'package:invoiceninja_flutter/utils/platforms.dart';
 import 'package:redux/redux.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/ui/app/dialogs/error_dialog.dart';
-import 'package:invoiceninja_flutter/ui/payment_term/view/payment_term_view_vm.dart';
 import 'package:invoiceninja_flutter/redux/payment_term/payment_term_actions.dart';
 import 'package:invoiceninja_flutter/data/models/payment_term_model.dart';
 import 'package:invoiceninja_flutter/ui/payment_term/edit/payment_term_edit.dart';
@@ -74,10 +74,10 @@ class PaymentTermEditVM {
             completer: completer, paymentTerm: paymentTerm));
         return completer.future.then((savedPaymentTerm) {
           if (isMobile(context)) {
-            store.dispatch(UpdateCurrentRoute(PaymentTermViewScreen.route));
+            store.dispatch(UpdateCurrentRoute(PaymentTermScreen.route));
             if (paymentTerm.isNew) {
               Navigator.of(context)
-                  .pushReplacementNamed(PaymentTermViewScreen.route);
+                  .pushReplacementNamed(PaymentTermScreen.route);
             } else {
               Navigator.of(context).pop(savedPaymentTerm);
             }
