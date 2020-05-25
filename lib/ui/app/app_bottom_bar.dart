@@ -371,7 +371,9 @@ class _AppBottomBarState extends State<AppBottomBar> {
                   tooltip: localization.filter,
                   icon: Icon(Icons.filter_list),
                   onPressed: _showFilterStateSheet,
-                  color: store.state.getListState(widget.entityType).hasStateFilters
+                  color: store.state
+                          .getListState(widget.entityType)
+                          .hasStateFilters
                       ? Theme.of(context).accentColor
                       : null,
                 ),
@@ -380,10 +382,11 @@ class _AppBottomBarState extends State<AppBottomBar> {
                     tooltip: localization.filter,
                     icon: Icon(Icons.filter),
                     onPressed: _showFilterStatusSheet,
-                    color:
-                        store.state.getListState(widget.entityType).hasStatusFilters
-                            ? Theme.of(context).accentColor
-                            : null,
+                    color: store.state
+                            .getListState(widget.entityType)
+                            .hasStatusFilters
+                        ? Theme.of(context).accentColor
+                        : null,
                   ),
                 if (widget.customValues1.isNotEmpty)
                   IconButton(

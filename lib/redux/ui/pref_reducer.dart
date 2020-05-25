@@ -24,6 +24,8 @@ import 'package:invoiceninja_flutter/redux/user/user_actions.dart';
 import 'package:invoiceninja_flutter/redux/vendor/vendor_actions.dart';
 
 // STARTER: import - do not remove comment
+import 'package:invoiceninja_flutter/redux/payment_term/payment_term_actions.dart';
+
 import 'package:invoiceninja_flutter/redux/design/design_actions.dart';
 
 import 'package:invoiceninja_flutter/redux/credit/credit_actions.dart';
@@ -405,6 +407,17 @@ Reducer<BuiltList<HistoryRecord>> historyReducer = combineReducers([
       _addToHistory(historyList,
           HistoryRecord(id: action.group.id, entityType: EntityType.group))),
   // STARTER: history - do not remove comment
+  TypedReducer<BuiltList<HistoryRecord>, ViewPaymentTerm>(
+      (historyList, action) => _addToHistory(
+          historyList,
+          HistoryRecord(
+              id: action.paymentTermId, entityType: EntityType.paymentTerm))),
+  TypedReducer<BuiltList<HistoryRecord>, EditPaymentTerm>(
+      (historyList, action) => _addToHistory(
+          historyList,
+          HistoryRecord(
+              id: action.paymentTerm.id, entityType: EntityType.paymentTerm))),
+
   TypedReducer<BuiltList<HistoryRecord>, EditDesign>((historyList, action) =>
       _addToHistory(historyList,
           HistoryRecord(id: action.design.id, entityType: EntityType.design))),

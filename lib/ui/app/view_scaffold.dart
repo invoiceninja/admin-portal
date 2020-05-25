@@ -18,7 +18,7 @@ class ViewScaffold extends StatelessWidget {
     this.floatingActionButton,
     this.appBarBottom,
     this.isSettings = false,
-    @required this.isFilter,
+    this.isFilter = false,
     this.onBackPressed,
   });
 

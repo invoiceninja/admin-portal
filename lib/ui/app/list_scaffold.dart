@@ -125,8 +125,8 @@ class ListScaffold extends StatelessWidget {
                           state.prefState.isHistoryFloated) {
                         Scaffold.of(context).openEndDrawer();
                       } else {
-                        store.dispatch(
-                            UserPreferencesChanged(sidebar: AppSidebar.history));
+                        store.dispatch(UserPreferencesChanged(
+                            sidebar: AppSidebar.history));
                       }
                     },
                   ),

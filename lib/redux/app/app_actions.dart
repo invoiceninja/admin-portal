@@ -7,6 +7,7 @@ import 'package:invoiceninja_flutter/data/models/company_gateway_model.dart';
 import 'package:invoiceninja_flutter/data/models/entities.dart';
 import 'package:invoiceninja_flutter/data/models/group_model.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
+import 'package:invoiceninja_flutter/data/models/payment_term_model.dart';
 import 'package:invoiceninja_flutter/data/models/static/static_data_model.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/redux/client/client_actions.dart';
@@ -30,6 +31,7 @@ import 'package:invoiceninja_flutter/utils/completers.dart';
 import 'package:invoiceninja_flutter/utils/dialogs.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 // STARTER: import - do not remove comment
+import 'package:invoiceninja_flutter/redux/payment_term/payment_term_actions.dart';
 
 class PersistUI {}
 
@@ -245,6 +247,13 @@ void filterEntitiesByType({
       ));
       break;
     // STARTER: filter - do not remove comment
+    case EntityType.paymentTerm:
+      store.dispatch(FilterPaymentTermsByEntity(
+        entityId: filterEntity.id,
+        entityType: filterEntity.entityType,
+      ));
+      break;
+
     case EntityType.design:
       store.dispatch(FilterDesignsByEntity(
         entityId: filterEntity.id,
@@ -319,6 +328,10 @@ void viewEntitiesByType({
       action = ViewGroupList(navigator: navigator);
       break;
     // STARTER: view list - do not remove comment
+    case EntityType.paymentTerm:
+      store.dispatch(ViewPaymentTermList(navigator: navigator));
+      break;
+
     case EntityType.design:
       action = ViewDesignList(navigator: navigator);
       break;
@@ -456,6 +469,14 @@ void viewEntityById({
       ));
       break;
     // STARTER: view - do not remove comment
+    case EntityType.paymentTerm:
+      store.dispatch(ViewPaymentTerm(
+        paymentTermId: entityId,
+        navigator: navigator,
+        force: force,
+      ));
+      break;
+
     case EntityType.design:
       store.dispatch(ViewDesign(
         designId: entityId,
@@ -587,6 +608,14 @@ void createEntityByType(
       ));
       break;
     // STARTER: create type - do not remove comment
+    case EntityType.paymentTerm:
+      store.dispatch(EditPaymentTerm(
+        navigator: navigator,
+        force: force,
+        paymentTerm: PaymentTermEntity(state: state),
+      ));
+      break;
+
     case EntityType.design:
       store.dispatch(EditDesign(
         navigator: navigator,
@@ -736,6 +765,15 @@ void createEntity({
       ));
       break;
     // STARTER: create - do not remove comment
+    case EntityType.paymentTerm:
+      store.dispatch(EditPaymentTerm(
+        navigator: navigator,
+        paymentTerm: entity,
+        force: force,
+        completer: completer,
+      ));
+      break;
+
     case EntityType.design:
       store.dispatch(EditDesign(
         navigator: navigator,
@@ -935,6 +973,19 @@ void editEntityById(
       ));
       break;
     // STARTER: edit - do not remove comment
+    case EntityType.paymentTerm:
+      store.dispatch(EditPaymentTerm(
+        paymentTerm: map[entityId],
+        navigator: navigator,
+        completer: completer ??
+            snackBarCompleter<PaymentTermEntity>(
+                context,
+                entity.isNew
+                    ? localization.createdPaymentTerm
+                    : localization.updatedPaymentTerm),
+      ));
+      break;
+
     case EntityType.design:
       store.dispatch(EditDesign(
         design: map[entityId],
@@ -1030,6 +1081,10 @@ void handleEntitiesActions(
       handleDocumentAction(context, entities, action);
       break;
     // STARTER: actions - do not remove comment
+    case EntityType.paymentTerm:
+      handlePaymentTermAction(context, entities, action);
+      break;
+
     case EntityType.design:
       handleDesignAction(context, entities, action);
       break;

@@ -8,8 +8,6 @@ part of 'company_model.dart';
 
 Serializer<CompanyEntity> _$companyEntitySerializer =
     new _$CompanyEntitySerializer();
-Serializer<PaymentTermEntity> _$paymentTermEntitySerializer =
-    new _$PaymentTermEntitySerializer();
 Serializer<GatewayEntity> _$gatewayEntitySerializer =
     new _$GatewayEntitySerializer();
 Serializer<UserCompanyEntity> _$userCompanyEntitySerializer =
@@ -543,69 +541,6 @@ class _$CompanyEntitySerializer implements StructuredSerializer<CompanyEntity> {
         case 'entity_type':
           result.subEntityType = serializers.deserialize(value,
               specifiedType: const FullType(EntityType)) as EntityType;
-          break;
-        case 'id':
-          result.id = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String;
-          break;
-      }
-    }
-
-    return result.build();
-  }
-}
-
-class _$PaymentTermEntitySerializer
-    implements StructuredSerializer<PaymentTermEntity> {
-  @override
-  final Iterable<Type> types = const [PaymentTermEntity, _$PaymentTermEntity];
-  @override
-  final String wireName = 'PaymentTermEntity';
-
-  @override
-  Iterable<Object> serialize(Serializers serializers, PaymentTermEntity object,
-      {FullType specifiedType = FullType.unspecified}) {
-    final result = <Object>[];
-    if (object.numDays != null) {
-      result
-        ..add('num_days')
-        ..add(serializers.serialize(object.numDays,
-            specifiedType: const FullType(int)));
-    }
-    if (object.archivedAt != null) {
-      result
-        ..add('archived_at')
-        ..add(serializers.serialize(object.archivedAt,
-            specifiedType: const FullType(int)));
-    }
-    if (object.id != null) {
-      result
-        ..add('id')
-        ..add(serializers.serialize(object.id,
-            specifiedType: const FullType(String)));
-    }
-    return result;
-  }
-
-  @override
-  PaymentTermEntity deserialize(
-      Serializers serializers, Iterable<Object> serialized,
-      {FullType specifiedType = FullType.unspecified}) {
-    final result = new PaymentTermEntityBuilder();
-
-    final iterator = serialized.iterator;
-    while (iterator.moveNext()) {
-      final key = iterator.current as String;
-      iterator.moveNext();
-      final dynamic value = iterator.current;
-      switch (key) {
-        case 'num_days':
-          result.numDays = serializers.deserialize(value,
-              specifiedType: const FullType(int)) as int;
-          break;
-        case 'archived_at':
-          result.archivedAt = serializers.deserialize(value,
-              specifiedType: const FullType(int)) as int;
           break;
         case 'id':
           result.id = serializers.deserialize(value,
@@ -3678,105 +3613,6 @@ class CompanyEntityBuilder
       }
       rethrow;
     }
-    replace(_$result);
-    return _$result;
-  }
-}
-
-class _$PaymentTermEntity extends PaymentTermEntity {
-  @override
-  final int numDays;
-  @override
-  final int archivedAt;
-  @override
-  final String id;
-
-  factory _$PaymentTermEntity(
-          [void Function(PaymentTermEntityBuilder) updates]) =>
-      (new PaymentTermEntityBuilder()..update(updates)).build();
-
-  _$PaymentTermEntity._({this.numDays, this.archivedAt, this.id}) : super._();
-
-  @override
-  PaymentTermEntity rebuild(void Function(PaymentTermEntityBuilder) updates) =>
-      (toBuilder()..update(updates)).build();
-
-  @override
-  PaymentTermEntityBuilder toBuilder() =>
-      new PaymentTermEntityBuilder()..replace(this);
-
-  @override
-  bool operator ==(Object other) {
-    if (identical(other, this)) return true;
-    return other is PaymentTermEntity &&
-        numDays == other.numDays &&
-        archivedAt == other.archivedAt &&
-        id == other.id;
-  }
-
-  int __hashCode;
-  @override
-  int get hashCode {
-    return __hashCode ??= $jf(
-        $jc($jc($jc(0, numDays.hashCode), archivedAt.hashCode), id.hashCode));
-  }
-
-  @override
-  String toString() {
-    return (newBuiltValueToStringHelper('PaymentTermEntity')
-          ..add('numDays', numDays)
-          ..add('archivedAt', archivedAt)
-          ..add('id', id))
-        .toString();
-  }
-}
-
-class PaymentTermEntityBuilder
-    implements Builder<PaymentTermEntity, PaymentTermEntityBuilder> {
-  _$PaymentTermEntity _$v;
-
-  int _numDays;
-  int get numDays => _$this._numDays;
-  set numDays(int numDays) => _$this._numDays = numDays;
-
-  int _archivedAt;
-  int get archivedAt => _$this._archivedAt;
-  set archivedAt(int archivedAt) => _$this._archivedAt = archivedAt;
-
-  String _id;
-  String get id => _$this._id;
-  set id(String id) => _$this._id = id;
-
-  PaymentTermEntityBuilder();
-
-  PaymentTermEntityBuilder get _$this {
-    if (_$v != null) {
-      _numDays = _$v.numDays;
-      _archivedAt = _$v.archivedAt;
-      _id = _$v.id;
-      _$v = null;
-    }
-    return this;
-  }
-
-  @override
-  void replace(PaymentTermEntity other) {
-    if (other == null) {
-      throw new ArgumentError.notNull('other');
-    }
-    _$v = other as _$PaymentTermEntity;
-  }
-
-  @override
-  void update(void Function(PaymentTermEntityBuilder) updates) {
-    if (updates != null) updates(this);
-  }
-
-  @override
-  _$PaymentTermEntity build() {
-    final _$result = _$v ??
-        new _$PaymentTermEntity._(
-            numDays: numDays, archivedAt: archivedAt, id: id);
     replace(_$result);
     return _$result;
   }
