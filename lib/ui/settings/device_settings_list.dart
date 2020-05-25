@@ -107,28 +107,6 @@ class _DeviceSettingsState extends State<DeviceSettings> {
                 ],
               ),
               FormCard(
-                children: [
-                  /*
-                  SwitchListTile(
-                    title: Text(localization.fullWidthEditor),
-                    value: prefState.fullWidthEditor,
-                    onChanged: (value) =>
-                        viewModel.onFullWidthEditorChanged(context, value),
-                    secondary: Icon(getEntityIcon(EntityType.invoice)),
-                    activeColor: Theme.of(context).accentColor,
-                  ),
-                   */
-                  SwitchListTile(
-                    title: Text(localization.fullHeightFilter),
-                    value: prefState.fullHeightFilter,
-                    onChanged: (value) =>
-                        viewModel.onFullHeightFilterChanged(context, value),
-                    secondary: Icon(Icons.filter_list),
-                    activeColor: Theme.of(context).accentColor,
-                  ),
-                ],
-              ),
-              FormCard(
                 children: <Widget>[
                   SwitchListTile(
                     title: Text(localization.darkMode),
@@ -169,6 +147,24 @@ class _DeviceSettingsState extends State<DeviceSettings> {
                         return SizedBox();
                       }
                     },
+                  ),
+                  /*
+                  SwitchListTile(
+                    title: Text(localization.fullWidthEditor),
+                    value: prefState.fullWidthEditor,
+                    onChanged: (value) =>
+                        viewModel.onFullWidthEditorChanged(context, value),
+                    secondary: Icon(getEntityIcon(EntityType.invoice)),
+                    activeColor: Theme.of(context).accentColor,
+                  ),
+                   */
+                  SwitchListTile(
+                    title: Text(localization.fullHeightFilter),
+                    value: prefState.fullHeightFilter,
+                    onChanged: (value) =>
+                        viewModel.onFullHeightFilterChanged(context, value),
+                    secondary: Icon(Icons.filter_list),
+                    activeColor: Theme.of(context).accentColor,
                   ),
                   viewModel.state.company.isModuleEnabled(EntityType.task)
                       ? SwitchListTile(
