@@ -78,11 +78,11 @@ class PaymentTermListItem extends StatelessWidget {
               Expanded(
                 child: Text(
                   paymentTerm.name,
-                  style: Theme.of(context).textTheme.title,
+                  style: Theme.of(context).textTheme.headline6,
                 ),
               ),
               Text(formatNumber(paymentTerm.listDisplayAmount, context),
-                  style: Theme.of(context).textTheme.title),
+                  style: Theme.of(context).textTheme.headline6),
             ],
           ),
         ),

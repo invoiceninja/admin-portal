@@ -260,8 +260,8 @@ void handlePaymentTermAction(
   }
 
   final store = StoreProvider.of<AppState>(context);
-  final state = store.state;
-  final CompanyEntity company = state.company;
+  //final state = store.state;
+  //final CompanyEntity company = state.company;
   final localization = AppLocalization.of(context);
   final paymentTerm = paymentTerms.first as PaymentTermEntity;
   final paymentTermIds =

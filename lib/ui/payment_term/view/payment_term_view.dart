@@ -19,7 +19,7 @@ class _PaymentTermViewState extends State<PaymentTermView> {
   @override
   Widget build(BuildContext context) {
     final viewModel = widget.viewModel;
-    final userCompany = viewModel.state.userCompany;
+    //final userCompany = viewModel.state.userCompany;
     final paymentTerm = viewModel.paymentTerm;
 
     return ViewScaffold(

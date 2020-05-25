@@ -4,7 +4,6 @@ import 'package:invoiceninja_flutter/ui/app/entities/entity_actions_dialog.dart'
 import 'package:invoiceninja_flutter/ui/app/tables/entity_list.dart';
 import 'package:invoiceninja_flutter/ui/payment_term/payment_term_list_item.dart';
 import 'package:redux/redux.dart';
-import 'package:invoiceninja_flutter/ui/design/design_presenter.dart';
 import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/foundation.dart';

@@ -35,7 +35,7 @@ class _PaymentTermEditState extends State<PaymentTermEdit> {
 
     _controllers.forEach((controller) => controller.removeListener(_onChanged));
 
-    final paymentTerm = widget.viewModel.paymentTerm;
+    //final paymentTerm = widget.viewModel.paymentTerm;
     // STARTER: read value - do not remove comment
 
     _controllers.forEach((controller) => controller.addListener(_onChanged));
@@ -68,7 +68,6 @@ class _PaymentTermEditState extends State<PaymentTermEdit> {
   Widget build(BuildContext context) {
     final viewModel = widget.viewModel;
     final localization = AppLocalization.of(context);
-    final paymentTerm = viewModel.paymentTerm;
 
     return EditScaffold(
       title: localization.editPaymentTerm,

@@ -7,7 +7,6 @@ import 'package:invoiceninja_flutter/redux/ui/pref_state.dart';
 import 'package:invoiceninja_flutter/ui/app/form_card.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/app_dropdown_button.dart';
 import 'package:invoiceninja_flutter/ui/settings/device_settings_list_vm.dart';
-import 'package:invoiceninja_flutter/utils/icons.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:invoiceninja_flutter/utils/platforms.dart';
 

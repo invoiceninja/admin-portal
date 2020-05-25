@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_redux/flutter_redux.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
-import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/ui/app/presenters/entity_presenter.dart';
 
 class PaymentTermPresenter extends EntityPresenter {
@@ -11,8 +9,8 @@ class PaymentTermPresenter extends EntityPresenter {
 
   @override
   Widget getField({String field, BuildContext context}) {
-    final state = StoreProvider.of<AppState>(context).state;
-    final paymentTerm = entity as InvoiceEntity;
+    //final state = StoreProvider.of<AppState>(context).state;
+    //final paymentTerm = entity as InvoiceEntity;
 
     switch (field) {
     }

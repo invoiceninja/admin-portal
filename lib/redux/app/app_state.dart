@@ -45,16 +45,11 @@ import 'package:invoiceninja_flutter/ui/credit/edit/credit_edit_vm.dart';
 import 'package:invoiceninja_flutter/ui/design/edit/design_edit_vm.dart';
 import 'package:invoiceninja_flutter/ui/group/edit/group_edit_vm.dart';
 import 'package:invoiceninja_flutter/ui/product/edit/product_edit_vm.dart';
-
 // STARTER: import - do not remove comment
 import 'package:invoiceninja_flutter/redux/payment_term/payment_term_state.dart';
 import 'package:invoiceninja_flutter/ui/payment_term/edit/payment_term_edit_vm.dart';
-import 'package:invoiceninja_flutter/redux/payment_term/payment_term_state.dart';
-import 'package:invoiceninja_flutter/ui/payment_term/edit/payment_term_edit_vm.dart';
 import 'package:invoiceninja_flutter/redux/payment_term/payment_term_selectors.dart';
-
 import 'package:invoiceninja_flutter/redux/credit/credit_state.dart';
-
 import 'package:invoiceninja_flutter/redux/user/user_state.dart';
 import 'package:invoiceninja_flutter/redux/tax_rate/tax_rate_state.dart';
 import 'package:invoiceninja_flutter/redux/company_gateway/company_gateway_state.dart';

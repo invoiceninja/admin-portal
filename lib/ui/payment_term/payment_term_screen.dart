@@ -11,7 +11,6 @@ import 'package:invoiceninja_flutter/ui/app/app_bottom_bar.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/save_cancel_buttons.dart';
 import 'package:invoiceninja_flutter/ui/app/list_scaffold.dart';
 import 'package:invoiceninja_flutter/ui/app/entities/entity_actions_dialog.dart';
-import 'package:invoiceninja_flutter/ui/app/list_filter.dart';
 import 'package:invoiceninja_flutter/ui/payment_term/payment_term_list_vm.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:invoiceninja_flutter/utils/platforms.dart';
