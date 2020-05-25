@@ -11,6 +11,7 @@ import 'package:invoiceninja_flutter/redux/expense/expense_actions.dart';
 import 'package:invoiceninja_flutter/redux/group/group_actions.dart';
 import 'package:invoiceninja_flutter/redux/invoice/invoice_actions.dart';
 import 'package:invoiceninja_flutter/redux/payment/payment_actions.dart';
+import 'package:invoiceninja_flutter/redux/payment_term/payment_term_actions.dart';
 import 'package:invoiceninja_flutter/redux/product/product_actions.dart';
 import 'package:invoiceninja_flutter/redux/project/project_actions.dart';
 import 'package:invoiceninja_flutter/redux/quote/quote_actions.dart';
@@ -131,6 +132,9 @@ class EntityActionListTile extends StatelessWidget {
             break;
           case EntityType.design:
             handleDesignAction(mainContext, entities, action);
+            break;
+          case EntityType.paymentTerm:
+            handlePaymentTermAction(mainContext, entities, action);
             break;
           // TODO add to starter.sh
           default:

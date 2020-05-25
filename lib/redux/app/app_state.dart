@@ -561,8 +561,8 @@ abstract class AppState implements Built<AppState, AppStateBuilder> {
     //return 'PLAN: ${account.plan}';
     //return 'Invoice ${invoiceUIState.editing}';
     //return 'Account: $account';
-    return 'Payment Terms: ${paymentTermState.map}';
-    return 'Selected client: ${uiState.clientUIState.selectedId}, Filter: ${uiState.filterEntityType} ${uiState.filterEntityId}';
+    //return 'Payment Terms: ${paymentTermState.map}';
+    //return 'Selected client: ${uiState.clientUIState.selectedId}, Filter: ${uiState.filterEntityType} ${uiState.filterEntityId}';
     return 'Layout: ${prefState.appLayout}, Route: ${uiState.currentRoute} Prev: ${uiState.previousRoute}';
   }
 }
