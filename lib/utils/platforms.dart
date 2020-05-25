@@ -30,8 +30,16 @@ String getPdfRequirements(BuildContext context) {
 String getPlatform(BuildContext context) =>
     Theme.of(context).platform == TargetPlatform.iOS ? 'ios' : 'android';
 
-String getAppURL(BuildContext context) =>
-    isAndroid(context) ? kGoogleStoreUrl : kAppleStoreUrl;
+String getAppURL(BuildContext context) {
+  if (kIsWeb) {
+    return kCapterralUrl;
+  } else if (isAndroid(context)) {
+    return kGoogleStoreUrl;
+  } else {
+    return kAppleStoreUrl;
+  }
+}
+
 
 AppLayout calculateLayout(BuildContext context, {bool breakOutTablet = false}) {
   final size = MediaQuery.of(context).size.width;

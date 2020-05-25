@@ -28,6 +28,7 @@ const String kAppleStoreUrl =
     'https://itunes.apple.com/us/app/invoice-ninja/id1435514417?ls=1&mt=8';
 const String kGoogleStoreUrl =
     'https://play.google.com/store/apps/details?id=com.invoiceninja.flutter';
+const String kCapterralUrl = 'https://www.capterra.com/p/145215/Invoice-Ninja/';
 
 const String kSharedPrefs = 'shared_prefs';
 const String kSharedPrefAppVersion = 'app_version';
