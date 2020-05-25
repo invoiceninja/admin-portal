@@ -84,6 +84,7 @@ Middleware<AppState> _viewRefundPayment() {
       showDialog<PaymentRefundScreen>(
           context: action.context,
           useRootNavigator: true,
+          barrierDismissible: false,
           builder: (BuildContext context) {
             return PaymentRefundScreen();
           });
