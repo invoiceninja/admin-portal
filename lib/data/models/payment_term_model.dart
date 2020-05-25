@@ -53,12 +53,19 @@ abstract class PaymentTermEntity extends Object
   factory PaymentTermEntity({String id, AppState state}) {
     return _$PaymentTermEntity._(
       id: id ?? BaseEntity.nextId,
+      isChanged: false,
+      isDeleted: false,
       numDays: 0,
       name: '',
     );
   }
 
   PaymentTermEntity._();
+
+  @override
+  EntityType get entityType {
+    return EntityType.paymentTerm;
+  }
 
   @override
   @memoized

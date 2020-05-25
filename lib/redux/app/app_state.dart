@@ -45,6 +45,7 @@ import 'package:invoiceninja_flutter/ui/credit/edit/credit_edit_vm.dart';
 import 'package:invoiceninja_flutter/ui/design/edit/design_edit_vm.dart';
 import 'package:invoiceninja_flutter/ui/group/edit/group_edit_vm.dart';
 import 'package:invoiceninja_flutter/ui/product/edit/product_edit_vm.dart';
+
 // STARTER: import - do not remove comment
 import 'package:invoiceninja_flutter/redux/payment_term/payment_term_state.dart';
 import 'package:invoiceninja_flutter/ui/payment_term/edit/payment_term_edit_vm.dart';
@@ -355,8 +356,10 @@ abstract class AppState implements Built<AppState, AppStateBuilder> {
 
   // STARTER: state getters - do not remove comment
   PaymentTermState get paymentTermState => userCompanyState.paymentTermState;
+
   ListUIState get paymentTermListState =>
       uiState.paymentTermUIState.listUIState;
+
   PaymentTermUIState get paymentTermUIState => uiState.paymentTermUIState;
 
   DesignState get designState => userCompanyState.designState;
@@ -475,7 +478,6 @@ abstract class AppState implements Built<AppState, AppStateBuilder> {
       case PaymentTermEditScreen.route:
         return hasPaymentTermChanges(
             paymentTermUIState.editing, paymentTermState.map);
-
       case DesignEditScreen.route:
         return hasDesignChanges(designUIState.editing, designState.map);
     }
