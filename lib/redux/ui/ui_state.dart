@@ -157,7 +157,9 @@ abstract class UIState implements Built<UIState, UIStateBuilder> {
   }
 
   bool get isEditing =>
-      currentRoute.endsWith('edit') || currentRoute.endsWith('refund');
+      currentRoute.endsWith('_edit') ||
+      currentRoute.endsWith('/edit') ||
+      currentRoute.endsWith('refund');
 
   bool get isInSettings => currentRoute.contains('settings');
 }
