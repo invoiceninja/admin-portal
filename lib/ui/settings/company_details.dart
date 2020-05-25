@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:invoiceninja_flutter/constants.dart';
 import 'package:invoiceninja_flutter/data/models/entities.dart';
+import 'package:invoiceninja_flutter/data/models/payment_term_model.dart';
+import 'package:invoiceninja_flutter/redux/payment_term/payment_term_selectors.dart';
 import 'package:invoiceninja_flutter/redux/static/static_selectors.dart';
 import 'package:invoiceninja_flutter/ui/app/buttons/elevated_button.dart';
 import 'package:invoiceninja_flutter/ui/app/entity_dropdown.dart';
@@ -461,10 +463,21 @@ class _CompanyDetailsState extends State<CompanyDetails>
                             (b) => b..defaultPaymentTypeId = paymentType?.id)),
                     allowClearing: true,
                   ),
-                  DecoratedFormField(
-                    label: localization.paymentTerms,
-                    controller: _paymentTermsController,
-                    keyboardType: TextInputType.number,
+                  AppDropdownButton<String>(
+                    labelText: localization.paymentTerm,
+                    items: memoizedDropdownPaymentTermList(
+                            state.paymentTermState.map,
+                            state.paymentTermState.list)
+                        .map((paymentTermId) => DropdownMenuItem<String>(
+                              child: Text(state
+                                  .paymentTermState.map[paymentTermId].name),
+                              value: paymentTermId,
+                            ))
+                        .toList(),
+                    value: settings.defaultPaymentTerms,
+                    onChanged: (dynamic paymentTermId) =>
+                        viewModel.onSettingsChanged(settings.rebuild(
+                            (b) => b..defaultPaymentTerms = paymentTermId)),
                   ),
                   if (!state.uiState.settingsUIState.isFiltered)
                     Padding(
