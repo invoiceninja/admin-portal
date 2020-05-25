@@ -98,7 +98,9 @@ class CreditListItem extends StatelessWidget {
               children: <Widget>[
                 Expanded(
                   child: filterMatch == null
-                      ? Text(((credit.number ?? localization.pending) +
+                      ? Text((((credit.number ?? '').isEmpty
+                                  ? localization.pending
+                                  : credit.number) +
                               ' • ' +
                               formatDate(credit.date, context) +
                               (hasDocuments ? '  📎' : ''))
@@ -172,7 +174,9 @@ class CreditListItem extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
                     Text(
-                      credit.number ?? localization.pending,
+                        (credit.number ?? '').isEmpty
+                            ? localization.pending
+                            : credit.number,
                       style: textStyle,
                       overflow: TextOverflow.ellipsis,
                     ),

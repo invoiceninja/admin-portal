@@ -35,7 +35,9 @@ class InvoicePresenter extends EntityPresenter {
               : localization.lookup(kInvoiceStatuses[invoice.statusId]),
         );
       case InvoiceFields.invoiceNumber:
-        return Text(invoice.number);
+        return Text((invoice.number ?? '').isEmpty
+            ? localization.pending
+            : invoice.number);
       case InvoiceFields.client:
         return Text((state.clientState.map[invoice.clientId] ??
                 ClientEntity(id: invoice.clientId))

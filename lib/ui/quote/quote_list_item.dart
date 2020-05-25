@@ -97,7 +97,9 @@ class QuoteListItem extends StatelessWidget {
               children: <Widget>[
                 Expanded(
                   child: filterMatch == null
-                      ? Text(((quote.number ?? localization.pending) +
+                      ? Text((((quote.number ?? '').isEmpty
+                                  ? localization.pending
+                                  : quote.number) +
                               ' • ' +
                               formatDate(
                                   quote.dueDate.isNotEmpty
@@ -186,7 +188,9 @@ class QuoteListItem extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
                     Text(
-                      quote.number ?? localization.pending,
+                      (quote.number ?? '').isEmpty
+                          ? localization.pending
+                          : quote.number,
                       style: textStyle,
                       overflow: TextOverflow.ellipsis,
                     ),

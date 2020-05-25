@@ -106,7 +106,9 @@ class InvoiceListItem extends StatelessWidget {
                 Expanded(
                   child: filterMatch == null
                       ? Text(
-                          ((invoice.number ?? localization.pending) +
+                          (((invoice.number ?? '').isEmpty
+                                      ? localization.pending
+                                      : invoice.number) +
                                   ' • ' +
                                   formatDate(
                                       invoice.dueDate.isNotEmpty
@@ -194,7 +196,9 @@ class InvoiceListItem extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
                     Text(
-                      invoice.number ?? localization.pending,
+                      (invoice.number ?? '').isEmpty
+                          ? localization.pending
+                          : invoice.number,
                       style: textStyle,
                       overflow: TextOverflow.ellipsis,
                     ),
