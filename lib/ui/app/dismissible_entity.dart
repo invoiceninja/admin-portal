@@ -89,7 +89,8 @@ class DismissibleEntity extends StatelessWidget {
               ),
       ],
       child: SelectedIndicator(
-        isSelected: isSelected && !isMultiselect,
+        isSelected:
+            isSelected && !isMultiselect && !entity.entityType.isSetting,
         child: ConstrainedBox(
           constraints: BoxConstraints(
             minHeight: 60,
