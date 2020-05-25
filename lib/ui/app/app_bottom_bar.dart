@@ -1,6 +1,7 @@
 import 'package:built_collection/built_collection.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
+import 'package:invoiceninja_flutter/constants.dart';
 import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/redux/ui/list_ui_state.dart';
@@ -332,107 +333,110 @@ class _AppBottomBarState extends State<AppBottomBar> {
 
       return BottomAppBar(
         shape: CircularNotchedRectangle(),
-        child: AppBorder(
-          isTop: true,
-          child: Row(
-            children: <Widget>[
-              IconButton(
-                tooltip: localization.multiselect,
-                icon: Icon(Icons.check_box),
-                onPressed: () => widget.onCheckboxPressed(),
-              ),
-              if (!widget.onlyList)
+        child: SizedBox(
+          height: kTopBottomBarHeight,
+          child: AppBorder(
+            isTop: true,
+            child: Row(
+              children: <Widget>[
                 IconButton(
-                  tooltip: localization.switchListTable,
-                  icon: Icon(isList ? Icons.table_chart : Icons.view_list),
-                  onPressed: () {
-                    store.dispatch(SwitchListTableLayout());
-                  },
+                  tooltip: localization.multiselect,
+                  icon: Icon(Icons.check_box),
+                  onPressed: () => widget.onCheckboxPressed(),
                 ),
-              if (isList && widget.sortFields.isNotEmpty)
-                IconButton(
-                  tooltip: localization.sort,
-                  icon: Icon(Icons.sort_by_alpha),
-                  onPressed: _showSortSheet,
-                ),
-              if (!isList && isNotMobile(context))
-                IconButton(
-                  tooltip: localization.preview,
-                  icon: Icon(Icons.chrome_reader_mode),
-                  onPressed: () {
-                    store.dispatch(UserPreferencesChanged(
-                        isPreviewVisible: !state.prefState.isPreviewVisible));
-                  },
-                ),
-              IconButton(
-                tooltip: localization.filter,
-                icon: Icon(Icons.filter_list),
-                onPressed: _showFilterStateSheet,
-                color: store.state.getListState(widget.entityType).hasStateFilters
-                    ? Theme.of(context).accentColor
-                    : null,
-              ),
-              if (widget.statuses.isNotEmpty)
+                if (!widget.onlyList)
+                  IconButton(
+                    tooltip: localization.switchListTable,
+                    icon: Icon(isList ? Icons.table_chart : Icons.view_list),
+                    onPressed: () {
+                      store.dispatch(SwitchListTableLayout());
+                    },
+                  ),
+                if (isList && widget.sortFields.isNotEmpty)
+                  IconButton(
+                    tooltip: localization.sort,
+                    icon: Icon(Icons.sort_by_alpha),
+                    onPressed: _showSortSheet,
+                  ),
+                if (!isList && isNotMobile(context))
+                  IconButton(
+                    tooltip: localization.preview,
+                    icon: Icon(Icons.chrome_reader_mode),
+                    onPressed: () {
+                      store.dispatch(UserPreferencesChanged(
+                          isPreviewVisible: !state.prefState.isPreviewVisible));
+                    },
+                  ),
                 IconButton(
                   tooltip: localization.filter,
-                  icon: Icon(Icons.filter),
-                  onPressed: _showFilterStatusSheet,
-                  color:
-                      store.state.getListState(widget.entityType).hasStatusFilters
-                          ? Theme.of(context).accentColor
-                          : null,
-                ),
-              if (widget.customValues1.isNotEmpty)
-                IconButton(
-                  tooltip: localization.filter,
-                  icon: Icon(Icons.looks_one),
-                  onPressed: _showFilterCustom1Sheet,
-                  color: store.state
-                          .getListState(widget.entityType)
-                          .hasCustom1Filters
+                  icon: Icon(Icons.filter_list),
+                  onPressed: _showFilterStateSheet,
+                  color: store.state.getListState(widget.entityType).hasStateFilters
                       ? Theme.of(context).accentColor
                       : null,
                 ),
-              if (widget.customValues2.isNotEmpty)
-                IconButton(
-                  tooltip: localization.filter,
-                  icon: Icon(Icons.looks_two),
-                  onPressed: _showFilterCustom2Sheet,
-                  color: store.state
-                          .getListState(widget.entityType)
-                          .hasCustom2Filters
-                      ? Theme.of(context).accentColor
-                      : null,
-                ),
-              if (widget.customValues3.isNotEmpty)
-                IconButton(
-                  tooltip: localization.filter,
-                  icon: Icon(Icons.looks_two),
-                  onPressed: _showFilterCustom3Sheet,
-                  color: store.state
-                          .getListState(widget.entityType)
-                          .hasCustom3Filters
-                      ? Theme.of(context).accentColor
-                      : null,
-                ),
-              if (widget.customValues4.isNotEmpty)
-                IconButton(
-                  tooltip: localization.filter,
-                  icon: Icon(Icons.looks_two),
-                  onPressed: _showFilterCustom4Sheet,
-                  color: store.state
-                          .getListState(widget.entityType)
-                          .hasCustom4Filters
-                      ? Theme.of(context).accentColor
-                      : null,
-                ),
-              Spacer(),
-              if (!widget.entityType.isSetting)
-                IconButton(
-                  icon: Icon(Icons.refresh),
-                  onPressed: widget.onRefreshPressed,
-                ),
-            ],
+                if (widget.statuses.isNotEmpty)
+                  IconButton(
+                    tooltip: localization.filter,
+                    icon: Icon(Icons.filter),
+                    onPressed: _showFilterStatusSheet,
+                    color:
+                        store.state.getListState(widget.entityType).hasStatusFilters
+                            ? Theme.of(context).accentColor
+                            : null,
+                  ),
+                if (widget.customValues1.isNotEmpty)
+                  IconButton(
+                    tooltip: localization.filter,
+                    icon: Icon(Icons.looks_one),
+                    onPressed: _showFilterCustom1Sheet,
+                    color: store.state
+                            .getListState(widget.entityType)
+                            .hasCustom1Filters
+                        ? Theme.of(context).accentColor
+                        : null,
+                  ),
+                if (widget.customValues2.isNotEmpty)
+                  IconButton(
+                    tooltip: localization.filter,
+                    icon: Icon(Icons.looks_two),
+                    onPressed: _showFilterCustom2Sheet,
+                    color: store.state
+                            .getListState(widget.entityType)
+                            .hasCustom2Filters
+                        ? Theme.of(context).accentColor
+                        : null,
+                  ),
+                if (widget.customValues3.isNotEmpty)
+                  IconButton(
+                    tooltip: localization.filter,
+                    icon: Icon(Icons.looks_two),
+                    onPressed: _showFilterCustom3Sheet,
+                    color: store.state
+                            .getListState(widget.entityType)
+                            .hasCustom3Filters
+                        ? Theme.of(context).accentColor
+                        : null,
+                  ),
+                if (widget.customValues4.isNotEmpty)
+                  IconButton(
+                    tooltip: localization.filter,
+                    icon: Icon(Icons.looks_two),
+                    onPressed: _showFilterCustom4Sheet,
+                    color: store.state
+                            .getListState(widget.entityType)
+                            .hasCustom4Filters
+                        ? Theme.of(context).accentColor
+                        : null,
+                  ),
+                Spacer(),
+                if (!widget.entityType.isSetting)
+                  IconButton(
+                    icon: Icon(Icons.refresh),
+                    onPressed: widget.onRefreshPressed,
+                  ),
+              ],
+            ),
           ),
         ),
       );

@@ -314,22 +314,24 @@ class _PaymentableEditorState extends State<PaymentableEditor> {
             },
           ),
         ),
-        SizedBox(
-          width: kTableColumnGap,
-        ),
-        Expanded(
-          child: DecoratedFormField(
-            enabled: (_invoiceId ?? '').isNotEmpty,
-            controller: _amountController,
-            label: localization.amount,
-            autofocus: !hasMultipleInvoices,
-            validator: (value) => !hasMultipleInvoices &&
-                    (value.trim().isEmpty || parseDouble(value) == 0)
-                ? localization.pleaseEnterAValue
-                : null,
+        if ((_invoiceId ?? '').isNotEmpty) ...[
+          SizedBox(
+            width: kTableColumnGap,
           ),
-        ),
-        if (hasMultipleInvoices) ...[
+          Expanded(
+            child: DecoratedFormField(
+              enabled: (_invoiceId ?? '').isNotEmpty,
+              controller: _amountController,
+              label: localization.amount,
+              autofocus: !hasMultipleInvoices,
+              validator: (value) => !hasMultipleInvoices &&
+                      (value.trim().isEmpty || parseDouble(value) == 0)
+                  ? localization.pleaseEnterAValue
+                  : null,
+            ),
+          ),
+        ],
+        if (hasMultipleInvoices && _invoiceId != null) ...[
           SizedBox(
             width: kTableColumnGap,
           ),

@@ -733,7 +733,11 @@ class _EntityFilter extends StatelessWidget {
                       ),
                       initialValue: routeEntityType,
                       onSelected: (EntityType value) => viewEntitiesByType(
-                          context: context, entityType: value),
+                        context: context,
+                        entityType: value,
+                        filterEntity:
+                            value == filterEntityType ? null : filterEntity,
+                      ),
                       itemBuilder: (BuildContext context) => [
                         filterEntityType,
                         ...filterEntityType.relatedTypes

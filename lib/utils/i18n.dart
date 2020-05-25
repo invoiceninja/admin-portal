@@ -34460,6 +34460,24 @@ mixin LocalizationsProvider on LocaleCodeAware {
   String get paymentStatus =>
       _localizedValues[localeCode]['payment_status'] ?? '';
 
+  String get paymentStatus1 =>
+      _localizedValues[localeCode]['payment_status_1'] ?? '';
+
+  String get paymentStatus2 =>
+      _localizedValues[localeCode]['payment_status_2'] ?? '';
+
+  String get paymentStatus3 =>
+      _localizedValues[localeCode]['payment_status_3'] ?? '';
+
+  String get paymentStatus4 =>
+      _localizedValues[localeCode]['payment_status_4'] ?? '';
+
+  String get paymentStatus5 =>
+      _localizedValues[localeCode]['payment_status_5'] ?? '';
+
+  String get paymentStatus6 =>
+      _localizedValues[localeCode]['payment_status_6'] ?? '';
+
   String get net => _localizedValues[localeCode]['net'] ?? '';
 
   String get clientPortal =>

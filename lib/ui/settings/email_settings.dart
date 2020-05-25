@@ -98,6 +98,7 @@ class _EmailSettingsState extends State<EmailSettings> {
     final localization = AppLocalization.of(context);
     final viewModel = widget.viewModel;
     final settings = viewModel.settings;
+    final gmailUserIds = memoizedGmailUserList(viewModel.state.userState.map);
 
     return EditScaffold(
       title: localization.emailSettings,
@@ -128,8 +129,7 @@ class _EmailSettingsState extends State<EmailSettings> {
                         .rebuild((b) => b..gmailSendingUserId = userId)),
                     entityType: EntityType.user,
                     entityId: settings.gmailSendingUserId,
-                    entityIds:
-                        memoizedGmailUserList(viewModel.state.userState.map),
+                    entityIds: gmailUserIds,
                   ),
                 ),
             ]),
