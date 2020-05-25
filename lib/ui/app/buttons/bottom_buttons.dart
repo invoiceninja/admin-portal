@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:invoiceninja_flutter/constants.dart';
 import 'package:invoiceninja_flutter/data/models/entities.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
@@ -25,19 +26,19 @@ class BottomButtons extends StatelessWidget {
     final localization = AppLocalization.of(context);
     final textColor = Theme.of(context).textTheme.bodyText1.color;
 
-    return AppBorder(
-      isTop: true,
-      child: Row(
-        children: <Widget>[
-          Expanded(
-            child: InkWell(
-              onTap: action1Enabled
-                  ? () {
-                      handleEntityAction(context, entity, action1);
-                    }
-                  : null,
-              child: SizedBox(
-                height: 44,
+    return SizedBox(
+      height: kTopBottomBarHeight,
+      child: AppBorder(
+        isTop: true,
+        child: Row(
+          children: <Widget>[
+            Expanded(
+              child: InkWell(
+                onTap: action1Enabled
+                    ? () {
+                        handleEntityAction(context, entity, action1);
+                      }
+                    : null,
                 child: Center(
                   child: Text(
                     localization.lookup('$action1'),
@@ -48,18 +49,15 @@ class BottomButtons extends StatelessWidget {
                 ),
               ),
             ),
-          ),
-          Expanded(
-            child: AppBorder(
-              isLeft: true,
-              child: InkWell(
-                onTap: action2Enabled
-                    ? () {
-                        handleEntityAction(context, entity, action2);
-                      }
-                    : null,
-                child: SizedBox(
-                  height: 44,
+            Expanded(
+              child: AppBorder(
+                isLeft: true,
+                child: InkWell(
+                  onTap: action2Enabled
+                      ? () {
+                          handleEntityAction(context, entity, action2);
+                        }
+                      : null,
                   child: Center(
                     child: Text(
                       localization.lookup('$action2'),
@@ -72,8 +70,8 @@ class BottomButtons extends StatelessWidget {
                 ),
               ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }
