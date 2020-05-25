@@ -105,7 +105,6 @@ class _EntityListState extends State<EntityList> {
 
     if (state.shouldSelectEntity(
         entityType: entityType, entityList: entityList)) {
-      print('## AUTO-SELECTING: $entityType');
       WidgetsBinding.instance.addPostFrameCallback((duration) {
         viewEntityById(
           context: context,
