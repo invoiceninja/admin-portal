@@ -80,7 +80,6 @@ void runTestSuite({bool batchMode = false}) {
       // Await for Debouncer
       await Future<dynamic>.delayed(Duration(milliseconds: 500));
       await driver.tap(find.text(localization.save));
-      await driver.tap(find.byTooltip(localization.back));
 
       print('Fill the invoice form');
       await driver.tap(find.byTooltip(localization.addItem));
@@ -140,7 +139,8 @@ void runTestSuite({bool batchMode = false}) {
     test('Mark invoice as paid', () async {
       await selectAction(driver, localization.enterPayment);
       await driver.tap(find.text(localization.save));
-      await driver.waitFor(find.text(localization.paymentStatus));
+      // "Completed" status
+      await driver.waitFor(find.text(localization.paymentStatus4.toUpperCase()));
 
       if (await isMobile(driver)) {
         await driver.tap(find.pageBack());

@@ -16,12 +16,11 @@ void runTestSuite({bool batchMode = false}) {
 
     final productKey = makeUnique(faker.food.cuisine());
     final description = faker.food.dish();
-    final cost = faker.randomGenerator.decimal(min: 50).toStringAsFixed(2);
+    //final cost = faker.randomGenerator.decimal(min: 50).toStringAsFixed(2);
 
     final updatedProductKey = makeUnique(faker.food.cuisine());
     final updatedDescription = faker.food.dish();
-    final updatedCost =
-        faker.randomGenerator.decimal(min: 50).toStringAsFixed(2);
+    //final updatedCost = faker.randomGenerator.decimal(min: 50).toStringAsFixed(2);
 
     setUpAll(() async {
       localization = TestLocalization('en');
