@@ -89,7 +89,6 @@ class PaymentTermScreen extends StatelessWidget {
         },
         sortFields: [
           PaymentTermFields.name,
-          PaymentTermFields.numDays,
         ],
         onSelectedState: (EntityState state, value) {
           store.dispatch(FilterPaymentTermsByState(state));

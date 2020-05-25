@@ -87,7 +87,6 @@ class DesignScreen extends StatelessWidget {
       bottomNavigationBar: AppBottomBar(
         entityType: EntityType.design,
         onRefreshPressed: () => store.dispatch(LoadDesigns(force: true)),
-        onlyList: true,
         onSelectedSortField: (value) {
           store.dispatch(SortDesigns(value));
         },
