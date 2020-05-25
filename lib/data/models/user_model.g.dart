@@ -201,6 +201,12 @@ class _$UserEntitySerializer implements StructuredSerializer<UserEntity> {
         ..add(serializers.serialize(object.userCompany,
             specifiedType: const FullType(UserCompanyEntity)));
     }
+    if (object.oauthProvider != null) {
+      result
+        ..add('oauth_provider_id')
+        ..add(serializers.serialize(object.oauthProvider,
+            specifiedType: const FullType(String)));
+    }
     if (object.isChanged != null) {
       result
         ..add('isChanged')
@@ -305,6 +311,10 @@ class _$UserEntitySerializer implements StructuredSerializer<UserEntity> {
           result.userCompany.replace(serializers.deserialize(value,
                   specifiedType: const FullType(UserCompanyEntity))
               as UserCompanyEntity);
+          break;
+        case 'oauth_provider_id':
+          result.oauthProvider = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String;
           break;
         case 'isChanged':
           result.isChanged = serializers.deserialize(value,
@@ -653,6 +663,8 @@ class _$UserEntity extends UserEntity {
   @override
   final UserCompanyEntity userCompany;
   @override
+  final String oauthProvider;
+  @override
   final bool isChanged;
   @override
   final int createdAt;
@@ -684,6 +696,7 @@ class _$UserEntity extends UserEntity {
       this.customValue3,
       this.customValue4,
       this.userCompany,
+      this.oauthProvider,
       this.isChanged,
       this.createdAt,
       this.updatedAt,
@@ -728,6 +741,7 @@ class _$UserEntity extends UserEntity {
         customValue3 == other.customValue3 &&
         customValue4 == other.customValue4 &&
         userCompany == other.userCompany &&
+        oauthProvider == other.oauthProvider &&
         isChanged == other.isChanged &&
         createdAt == other.createdAt &&
         updatedAt == other.updatedAt &&
@@ -760,20 +774,24 @@ class _$UserEntity extends UserEntity {
                                                                 $jc(
                                                                     $jc(
                                                                         $jc(
-                                                                            0,
-                                                                            firstName
+                                                                            $jc(
+                                                                                0,
+                                                                                firstName
+                                                                                    .hashCode),
+                                                                            lastName
                                                                                 .hashCode),
-                                                                        lastName
+                                                                        email
                                                                             .hashCode),
-                                                                    email
+                                                                    phone
                                                                         .hashCode),
-                                                                phone.hashCode),
-                                                            customValue1
+                                                                customValue1
+                                                                    .hashCode),
+                                                            customValue2
                                                                 .hashCode),
-                                                        customValue2.hashCode),
-                                                    customValue3.hashCode),
-                                                customValue4.hashCode),
-                                            userCompany.hashCode),
+                                                        customValue3.hashCode),
+                                                    customValue4.hashCode),
+                                                userCompany.hashCode),
+                                            oauthProvider.hashCode),
                                         isChanged.hashCode),
                                     createdAt.hashCode),
                                 updatedAt.hashCode),
@@ -797,6 +815,7 @@ class _$UserEntity extends UserEntity {
           ..add('customValue3', customValue3)
           ..add('customValue4', customValue4)
           ..add('userCompany', userCompany)
+          ..add('oauthProvider', oauthProvider)
           ..add('isChanged', isChanged)
           ..add('createdAt', createdAt)
           ..add('updatedAt', updatedAt)
@@ -851,6 +870,11 @@ class UserEntityBuilder implements Builder<UserEntity, UserEntityBuilder> {
   set userCompany(UserCompanyEntityBuilder userCompany) =>
       _$this._userCompany = userCompany;
 
+  String _oauthProvider;
+  String get oauthProvider => _$this._oauthProvider;
+  set oauthProvider(String oauthProvider) =>
+      _$this._oauthProvider = oauthProvider;
+
   bool _isChanged;
   bool get isChanged => _$this._isChanged;
   set isChanged(bool isChanged) => _$this._isChanged = isChanged;
@@ -903,6 +927,7 @@ class UserEntityBuilder implements Builder<UserEntity, UserEntityBuilder> {
       _customValue3 = _$v.customValue3;
       _customValue4 = _$v.customValue4;
       _userCompany = _$v.userCompany?.toBuilder();
+      _oauthProvider = _$v.oauthProvider;
       _isChanged = _$v.isChanged;
       _createdAt = _$v.createdAt;
       _updatedAt = _$v.updatedAt;
@@ -945,6 +970,7 @@ class UserEntityBuilder implements Builder<UserEntity, UserEntityBuilder> {
               customValue3: customValue3,
               customValue4: customValue4,
               userCompany: _userCompany?.build(),
+              oauthProvider: oauthProvider,
               isChanged: isChanged,
               createdAt: createdAt,
               updatedAt: updatedAt,

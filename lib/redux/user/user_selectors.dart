@@ -77,8 +77,7 @@ List<String> gmailUserList(BuiltMap<String, UserEntity> userMap) {
   return userList(userMap).where((userId) {
     final user = (userMap[userId] ?? UserEntity) as UserEntity;
 
-    // TODO add check for GMail
-    return user.isActive;
+    return user.isActive && user.oauthProvider == UserEntity.OAUTH_PROVIDER_GOOGLE;
   }).toList();
 }
 

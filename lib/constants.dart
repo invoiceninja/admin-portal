@@ -9,7 +9,7 @@ class Constants {
 }
 
 // TODO remove version once #46609 is fixed
-const String kAppVersion = '2.0.9';
+const String kAppVersion = '2.0.9a';
 
 const String kSiteUrl = 'https://invoiceninja.com';
 //const String kAppProductionUrl = 'https://invoicing.co';

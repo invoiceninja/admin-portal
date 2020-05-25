@@ -97,6 +97,8 @@ abstract class UserEntity extends Object
 
   UserEntity._();
 
+  static const OAUTH_PROVIDER_GOOGLE = 'google';
+
   @override
   @memoized
   int get hashCode;
@@ -135,6 +137,10 @@ abstract class UserEntity extends Object
   @nullable
   @BuiltValueField(wireName: 'company_user')
   UserCompanyEntity get userCompany;
+
+  @nullable
+  @BuiltValueField(wireName: 'oauth_provider_id')
+  String get oauthProvider;
 
   String get fullName => (firstName + ' ' + lastName).trim();
 
