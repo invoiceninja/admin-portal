@@ -184,28 +184,34 @@ else
     done
 
     # Link in new module
+    echo "app_state: import"
     comment="STARTER: import - do not remove comment"
     code="import 'package:${package}\/redux\/${module_snake}\/${module_snake}_state.dart';import 'package:${package}/ui/${module_snake}/edit/${module_snake}_edit_vm.dart';import 'package:${package}/redux/${module_snake}/${module_snake}_state.dart';import 'package:${package}/ui/${module_snake}/edit/${module_snake}_edit_vm.dart';import 'package:${package}/redux/${module_snake}/${module_snake}_selectors.dart';${lineBreak}"
     sed -i -e "s/$comment/$comment${lineBreak}$code/g" ./lib/redux/app/app_state.dart
 
+    echo "app_state: list"
     comment="STARTER: states switch list - do not remove comment"
     code="case EntityType.${module_camel}:${lineBreak}return ${module_camel}State.list;${lineBreak}"
     sed -i -e "s/$comment/$comment${lineBreak}$code/g" ./lib/redux/app/app_state.dart
 
+    echo "app_state: map"
     comment="STARTER: states switch map - do not remove comment"
     code="case EntityType.${module_camel}:${lineBreak}return ${module_camel}State.map;${lineBreak}"
     sed -i -e "s/$comment/$comment${lineBreak}$code/g" ./lib/redux/app/app_state.dart
 
+    echo "app_state: switch"
     comment="STARTER: states switch - do not remove comment"
     code="case EntityType.${module_camel}:${lineBreak}return ${module_camel}UIState;${lineBreak}"
     sed -i -e "s/$comment/$comment${lineBreak}$code/g" ./lib/redux/app/app_state.dart
 
+    echo "app_state: getters"
     comment="STARTER: state getters - do not remove comment"
     code="${Module}State get ${module_camel}State => userCompanyState.${module_camel}State;${lineBreak}"
     code="${code}ListUIState get ${module_camel}ListState => uiState.${module_camel}UIState.listUIState;${lineBreak}"
     code="${code}${Module}UIState get ${module_camel}UIState => uiState.${module_camel}UIState;${lineBreak}${lineBreak}"
     sed -i -e "s/$comment/$comment${lineBreak}$code/g" ./lib/redux/app/app_state.dart
 
+    echo "app_state: has changes"
     comment="STARTER: has changes - do not remove comment"
     code="case ${Module}EditScreen.route: return has${Module}Changes(${module_camel}UIState.editing, ${module_camel}State.map);${lineBreak}"
     sed -i -e "s/$comment/$comment${lineBreak}$code/g" ./lib/redux/app/app_state.dart
@@ -241,6 +247,7 @@ else
         code="${element}: '',${lineBreak}"
         #sed -i -e "s/$comment/$comment${lineBreak}$code/g" "./lib/data/models/${module_snake}_model.dart"
 
+        echo "${module_snake}_edit"
         comment="STARTER: controllers - do not remove comment"
         code="final _${element}Controller = TextEditingController();${lineBreak}"
         sed -i -e "s/$comment/$comment${lineBreak}$code/g" "./lib/ui/${module_snake}/edit/${module_snake}_edit.dart"
@@ -301,6 +308,7 @@ else
     done
 
 
+    echo "main: import"
     comment="STARTER: import - do not remove comment"
     code="import 'package:${package}\/ui\/${module_snake}\/${module_snake}_screen.dart';${lineBreak}"
     code="${code}import 'package:${package}\/ui\/${module_snake}\/edit\/${module_snake}_edit_vm.dart';${lineBreak}"
