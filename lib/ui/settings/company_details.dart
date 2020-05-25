@@ -446,6 +446,7 @@ class _CompanyDetailsState extends State<CompanyDetails>
           ListView(
             children: <Widget>[
               FormCard(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: <Widget>[
                   EntityDropdown(
                     key: ValueKey(
@@ -465,6 +466,16 @@ class _CompanyDetailsState extends State<CompanyDetails>
                     controller: _paymentTermsController,
                     keyboardType: TextInputType.number,
                   ),
+                  if (!state.uiState.settingsUIState.isFiltered)
+                    Padding(
+                      padding: const EdgeInsets.only(top: 25, bottom: 10),
+                      child: ElevatedButton(
+                        iconData: Icons.settings,
+                        label: localization.configurePaymentTerms.toUpperCase(),
+                        onPressed: () =>
+                            viewModel.onConfigurePaymentTermsPressed(context),
+                      ),
+                    ),
                   /* TODO Re-enable with tasks
                   DecoratedFormField(
                     label: localization.taskRate,

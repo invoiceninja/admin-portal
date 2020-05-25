@@ -59,6 +59,7 @@ class EntityType extends EnumClass {
   }
 
   bool get isSetting => [
+        EntityType.paymentTerm,
         EntityType.taxRate,
         EntityType.companyGateway,
         EntityType.user,

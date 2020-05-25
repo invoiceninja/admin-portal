@@ -44,31 +44,32 @@ class TaxSettingsVM {
     final state = store.state;
 
     return TaxSettingsVM(
-        state: state,
-        settings: state.uiState.settingsUIState.settings,
-        company: state.uiState.settingsUIState.company,
-        onSettingsChanged: (settings) {
-          store.dispatch(UpdateSettings(settings: settings));
-        },
-        onCompanyChanged: (company) =>
-            store.dispatch(UpdateCompany(company: company)),
-        onSavePressed: (context) {
-          final settingsUIState = state.uiState.settingsUIState;
-          final completer = snackBarCompleter<Null>(
-              context, AppLocalization.of(context).savedSettings);
-          store.dispatch(SaveCompanyRequest(
-              completer: completer, company: settingsUIState.company));
-        },
-        onConfigureRatesPressed: (context) {
-          if (state.taxRateState.list.isEmpty) {
-            store.dispatch(ViewSettings(
-                navigator: Navigator.of(context),
-                section: kSettingsTaxRatesEdit));
-          } else {
-            store.dispatch(ViewSettings(
-                navigator: Navigator.of(context), section: kSettingsTaxRates));
-          }
-        });
+      state: state,
+      settings: state.uiState.settingsUIState.settings,
+      company: state.uiState.settingsUIState.company,
+      onSettingsChanged: (settings) {
+        store.dispatch(UpdateSettings(settings: settings));
+      },
+      onCompanyChanged: (company) =>
+          store.dispatch(UpdateCompany(company: company)),
+      onSavePressed: (context) {
+        final settingsUIState = state.uiState.settingsUIState;
+        final completer = snackBarCompleter<Null>(
+            context, AppLocalization.of(context).savedSettings);
+        store.dispatch(SaveCompanyRequest(
+            completer: completer, company: settingsUIState.company));
+      },
+      onConfigureRatesPressed: (context) {
+        if (state.taxRateState.list.isEmpty) {
+          store.dispatch(ViewSettings(
+              navigator: Navigator.of(context),
+              section: kSettingsTaxRatesEdit));
+        } else {
+          store.dispatch(ViewSettings(
+              navigator: Navigator.of(context), section: kSettingsTaxRates));
+        }
+      },
+    );
   }
 
   final AppState state;

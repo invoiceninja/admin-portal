@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:invoiceninja_flutter/constants.dart';
 import 'package:invoiceninja_flutter/utils/completers.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:redux/redux.dart';
@@ -13,7 +14,7 @@ import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 
 class PaymentTermViewScreen extends StatelessWidget {
   const PaymentTermViewScreen({Key key}) : super(key: key);
-  static const String route = '/payment_term/view';
+  static const String route = '/$kSettings/$kSettingsPaymentTermView';
 
   @override
   Widget build(BuildContext context) {
