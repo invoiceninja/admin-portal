@@ -39,7 +39,6 @@ class DesignScreen extends StatelessWidget {
 
     return ListScaffold(
       entityType: EntityType.design,
-      isSettings: true,
       isChecked: isInMultiselect &&
           listUIState.selectedIds.length == viewModel.designList.length,
       showCheckbox: isInMultiselect,

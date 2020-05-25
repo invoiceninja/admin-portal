@@ -160,6 +160,7 @@ final paymentTermsReducer = combineReducers<PaymentTermState>([
   TypedReducer<PaymentTermState, LoadPaymentTermsSuccess>(
       _setLoadedPaymentTerms),
   TypedReducer<PaymentTermState, LoadPaymentTermSuccess>(_setLoadedPaymentTerm),
+  TypedReducer<PaymentTermState, LoadCompanySuccess>(_setLoadedCompany),
   TypedReducer<PaymentTermState, ArchivePaymentTermsRequest>(
       _archivePaymentTermRequest),
   TypedReducer<PaymentTermState, ArchivePaymentTermsSuccess>(
@@ -306,3 +307,16 @@ PaymentTermState _setLoadedPaymentTerm(
 PaymentTermState _setLoadedPaymentTerms(
         PaymentTermState paymentTermState, LoadPaymentTermsSuccess action) =>
     paymentTermState.loadPaymentTerms(action.paymentTerms);
+
+PaymentTermState _setLoadedCompany(
+    PaymentTermState paymentTermState, LoadCompanySuccess action) {
+  final state = paymentTermState.rebuild((b) => b
+    ..lastUpdated = DateTime.now().millisecondsSinceEpoch
+    ..map.addAll(Map.fromIterable(
+      action.userCompany.company.paymentTerms,
+      key: (dynamic item) => item.id,
+      value: (dynamic item) => item,
+    )));
+
+  return state.rebuild((b) => b..list.replace(state.map.keys));
+}

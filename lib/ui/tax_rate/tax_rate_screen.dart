@@ -37,7 +37,6 @@ class TaxRateSettingsScreen extends StatelessWidget {
 
     return ListScaffold(
       entityType: EntityType.taxRate,
-      isSettings: true,
       isChecked: isInMultiselect &&
           listUIState.selectedIds.length == viewModel.taxRateList.length,
       showCheckbox: isInMultiselect,

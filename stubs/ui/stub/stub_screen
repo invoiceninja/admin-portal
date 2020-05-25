@@ -38,6 +38,7 @@ class StubScreen extends StatelessWidget {
     final isInMultiselect = listUIState.isInMultiselect();
 
     return ListScaffold(
+      entityType: EntityType.stub,
       isChecked: isInMultiselect &&
           listUIState.selectedIds.length == viewModel.stubList.length,
       showCheckbox: isInMultiselect,

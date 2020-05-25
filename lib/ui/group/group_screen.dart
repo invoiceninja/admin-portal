@@ -51,7 +51,6 @@ class GroupSettingsScreen extends StatelessWidget {
 
         handleGroupAction(context, groups, EntityAction.toggleMultiselect);
       },
-      isSettings: true,
       appBarTitle: ListFilter(
         placeholder: localization.searchGroups,
         filter: state.groupListState.filter,

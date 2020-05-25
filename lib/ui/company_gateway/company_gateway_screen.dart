@@ -53,7 +53,6 @@ class CompanyGatewayScreen extends StatelessWidget {
         handleCompanyGatewayAction(
             context, companyGateways, EntityAction.toggleMultiselect);
       },
-      isSettings: true,
       appBarTitle: Text(localization.companyGateways),
       appBarActions: [
         if (viewModel.isInMultiselect)

@@ -39,7 +39,6 @@ class UserScreen extends StatelessWidget {
 
     return ListScaffold(
       entityType: EntityType.user,
-      isSettings: true,
       isChecked: isInMultiselect &&
           listUIState.selectedIds.length == viewModel.userList.length,
       showCheckbox: isInMultiselect,
