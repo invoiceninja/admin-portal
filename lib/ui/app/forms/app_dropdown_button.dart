@@ -33,7 +33,6 @@ class AppDropdownButton<T> extends StatelessWidget {
     }
     final bool isEmpty =
         checkedValue == null || checkedValue == '';
-    print('## CHecked value $labelText: $checkedValue, $_showBlank $isEmpty');
 
     final dropDownButton = DropdownButtonHideUnderline(
       child: DropdownButton<T>(

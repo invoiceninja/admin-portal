@@ -67,6 +67,7 @@ const double kTabletDialogPadding = 250;
 const double kTableColumnWidthMin = 50;
 const double kTableColumnWidthMax = 120;
 
+const int kTableListWidthCutoff = 500;
 const int kDefaultAnimationDuration = 500;
 
 const int kCardTypeVisa = 1;

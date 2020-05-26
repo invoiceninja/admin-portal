@@ -38,11 +38,12 @@ class EntityHeader extends StatelessWidget {
           SizedBox(
             height: 8,
           ),
-          Text(
-            value ?? '',
-            style: TextStyle(
-              fontSize: 30.0,
-              //fontWeight: FontWeight.bold,
+          FittedBox(
+            child: Text(
+              value ?? '',
+              style: TextStyle(
+                fontSize: 30,
+              ),
             ),
           )
         ],
@@ -62,10 +63,12 @@ class EntityHeader extends StatelessWidget {
           SizedBox(
             height: 8,
           ),
-          Text(
-            secondValue ?? '',
-            style: TextStyle(
-              fontSize: 30.0,
+          FittedBox(
+            child: Text(
+              secondValue ?? '',
+              style: TextStyle(
+                fontSize: 30,
+              ),
             ),
           )
         ],
@@ -91,7 +94,10 @@ class EntityHeader extends StatelessWidget {
                 : Row(
                     children: [
                       Expanded(child: _value1()),
-                      if (secondValue != null) Expanded(child: _value2()),
+                      if (secondValue != null) ...[
+                        SizedBox(width: 8),
+                        Expanded(child: _value2()),
+                      ],
                     ],
                   ),
             if (statusLabel != null)
