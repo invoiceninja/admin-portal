@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:invoiceninja_flutter/data/models/payment_term_model.dart';
+import 'package:invoiceninja_flutter/ui/payment_term/view/payment_term_view_vm.dart';
 import 'package:redux/redux.dart';
 import 'package:invoiceninja_flutter/utils/platforms.dart';
 import 'package:invoiceninja_flutter/redux/app/app_middleware.dart';
@@ -16,6 +17,7 @@ List<Middleware<AppState>> createStorePaymentTermsMiddleware([
   PaymentTermRepository repository = const PaymentTermRepository(),
 ]) {
   final viewPaymentTermList = _viewPaymentTermList();
+  final viewPaymentTerm = _viewPaymentTerm();
   final editPaymentTerm = _editPaymentTerm();
   final loadPaymentTerms = _loadPaymentTerms(repository);
   final loadPaymentTerm = _loadPaymentTerm(repository);
@@ -26,6 +28,7 @@ List<Middleware<AppState>> createStorePaymentTermsMiddleware([
 
   return [
     TypedMiddleware<AppState, ViewPaymentTermList>(viewPaymentTermList),
+    TypedMiddleware<AppState, ViewPaymentTerm>(viewPaymentTerm),
     TypedMiddleware<AppState, EditPaymentTerm>(editPaymentTerm),
     TypedMiddleware<AppState, LoadPaymentTerms>(loadPaymentTerms),
     TypedMiddleware<AppState, LoadPaymentTerm>(loadPaymentTerm),
@@ -51,6 +54,26 @@ Middleware<AppState> _editPaymentTerm() {
 
     if (isMobile(action.context)) {
       action.navigator.pushNamed(PaymentTermEditScreen.route);
+    }
+  };
+}
+
+Middleware<AppState> _viewPaymentTerm() {
+  return (Store<AppState> store, dynamic dynamicAction,
+      NextDispatcher next) async {
+    final action = dynamicAction as ViewPaymentTerm;
+
+    if (!action.force &&
+        hasChanges(store: store, context: action.context, action: action)) {
+      return;
+    }
+
+    next(action);
+
+    store.dispatch(UpdateCurrentRoute(PaymentTermViewScreen.route));
+
+    if (isMobile(action.context)) {
+      action.navigator.pushNamed(PaymentTermViewScreen.route);
     }
   };
 }

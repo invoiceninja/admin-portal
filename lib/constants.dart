@@ -279,6 +279,7 @@ const String kReminderScheduleAfterDueDate = 'after_due_date';
 
 const String kSettingsCompanyDetails = 'company_details';
 const String kSettingsPaymentTerms = 'payment_terms';
+const String kSettingsPaymentTermView = 'payment_term_view';
 const String kSettingsPaymentTermEdit = 'payment_term_edit';
 const String kSettingsUserDetails = 'user_details';
 const String kSettingsLocalization = 'localization';

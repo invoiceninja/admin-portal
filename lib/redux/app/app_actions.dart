@@ -470,8 +470,11 @@ void viewEntityById({
       break;
     // STARTER: view - do not remove comment
     case EntityType.paymentTerm:
-      editEntityById(
-          context: context, entityId: entityId, entityType: entityType);
+      store.dispatch(ViewPaymentTerm(
+        paymentTermId: entityId,
+        navigator: navigator,
+        force: force,
+      ));
       break;
     case EntityType.design:
       store.dispatch(ViewDesign(

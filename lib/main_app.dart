@@ -30,6 +30,7 @@ import 'package:invoiceninja_flutter/ui/payment/refund/payment_refund_vm.dart';
 import 'package:invoiceninja_flutter/ui/payment_term/edit/payment_term_edit_vm.dart';
 import 'package:invoiceninja_flutter/ui/payment_term/payment_term_screen.dart';
 import 'package:invoiceninja_flutter/ui/payment_term/payment_term_screen_vm.dart';
+import 'package:invoiceninja_flutter/ui/payment_term/view/payment_term_view_vm.dart';
 import 'package:invoiceninja_flutter/ui/reports/reports_screen.dart';
 import 'package:invoiceninja_flutter/ui/reports/reports_screen_vm.dart';
 import 'package:invoiceninja_flutter/ui/settings/account_management_vm.dart';
@@ -228,6 +229,8 @@ class InvoiceNinjaAppState extends State<InvoiceNinjaApp> {
                       PaymentTermScreenBuilder(),
                   PaymentTermEditScreen.route: (context) =>
                       PaymentTermEditScreen(),
+                  PaymentTermViewScreen.route: (context) =>
+                      PaymentTermViewScreen(),
                   DesignScreen.route: (context) => DesignScreenBuilder(),
                   DesignViewScreen.route: (context) => DesignViewScreen(),
                   DesignEditScreen.route: (context) => DesignEditScreen(),
