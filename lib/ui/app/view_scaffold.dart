@@ -36,69 +36,73 @@ class ViewScaffold extends StatelessWidget {
     final userCompany = state.userCompany;
     final isSettings = entity.entityType.isSetting;
 
-    Widget leading;
-    if (!isMobile(context)) {
-      if (isFilter && entity.entityType == state.uiState.filterEntityType) {
-        leading = IconButton(
-          icon: Icon(Icons.clear),
-          onPressed: () => store.dispatch(ClearEntityFilter()),
-        );
-      } else if (isSettings) {
-        leading = IconButton(
-          icon: Icon(Icons.arrow_back),
-          onPressed: () => onBackPressed != null
-              ? onBackPressed()
-              : store.dispatch(UpdateCurrentRoute(state.uiState.previousRoute)),
-        );
-      } else if (isNotMobile(context)) {
-        leading = Icon(getEntityIcon(entity.entityType));
-      }
-    }
-
     return WillPopScope(
       onWillPop: () async {
         return true;
       },
-      child: Scaffold(
-        backgroundColor: Theme.of(context).cardColor,
-        appBar: AppBar(
-          leading: leading,
-          automaticallyImplyLeading: isMobile(context) || isSettings,
-          title: EntityStateTitle(
-            entity: entity,
-            title: title,
-            showStatus: false,
-          ),
-          bottom: appBarBottom,
-          actions: entity.isNew
-              ? []
-              : [
-                  userCompany.canEditEntity(entity)
-                      ? Builder(builder: (context) {
-                          return EditIconButton(
-                            isVisible: !(entity.isDeleted ?? false),
-                            onPressed: () =>
-                                editEntity(context: context, entity: entity),
-                          );
-                        })
-                      : Container(),
-                  ActionMenuButton(
-                    isSaving: state.isSaving,
-                    entity: entity,
-                    onSelected: (context, action) =>
-                        handleEntityAction(context, entity, action),
-                    entityActions: entity.getActions(
-                      userCompany: userCompany,
-                      client: entity is BelongsToClient
-                          ? state.clientState
-                              .map[(entity as BelongsToClient).clientId]
-                          : null,
+      child: LayoutBuilder(
+          builder: (BuildContext context, BoxConstraints constraints) {
+        Widget leading;
+        if (!isMobile(context)) {
+          if (isFilter && entity.entityType == state.uiState.filterEntityType) {
+            leading = IconButton(
+              icon: Icon(Icons.clear),
+              onPressed: () => store.dispatch(ClearEntityFilter()),
+            );
+          } else if (isSettings) {
+            leading = IconButton(
+              icon: Icon(Icons.arrow_back),
+              onPressed: () => onBackPressed != null
+                  ? onBackPressed()
+                  : store.dispatch(
+                      UpdateCurrentRoute(state.uiState.previousRoute)),
+            );
+          } else if (isNotMobile(context) && constraints.maxWidth > 300) {
+            leading = Icon(getEntityIcon(entity.entityType));
+          }
+        }
+
+        return Scaffold(
+          backgroundColor: Theme.of(context).cardColor,
+          appBar: AppBar(
+            leading: leading,
+            automaticallyImplyLeading: isMobile(context) || isSettings,
+            title: EntityStateTitle(
+              entity: entity,
+              title: title,
+              showStatus: false,
+            ),
+            bottom: appBarBottom,
+            actions: entity.isNew
+                ? []
+                : [
+                    userCompany.canEditEntity(entity)
+                        ? Builder(builder: (context) {
+                            return EditIconButton(
+                              isVisible: !(entity.isDeleted ?? false),
+                              onPressed: () =>
+                                  editEntity(context: context, entity: entity),
+                            );
+                          })
+                        : Container(),
+                    ActionMenuButton(
+                      isSaving: state.isSaving,
+                      entity: entity,
+                      onSelected: (context, action) =>
+                          handleEntityAction(context, entity, action),
+                      entityActions: entity.getActions(
+                        userCompany: userCompany,
+                        client: entity is BelongsToClient
+                            ? state.clientState
+                                .map[(entity as BelongsToClient).clientId]
+                            : null,
+                      ),
                     ),
-                  ),
-                ],
-        ),
-        body: body,
-      ),
+                  ],
+          ),
+          body: body,
+        );
+      }),
     );
   }
 }
