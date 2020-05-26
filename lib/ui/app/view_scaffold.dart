@@ -83,7 +83,7 @@ class ViewScaffold extends StatelessWidget {
                         })
                       : Container(),
                   ActionMenuButton(
-                    isSaving: state.isSaving && isMobile(context),
+                    isSaving: state.isSaving,
                     entity: entity,
                     onSelected: (context, action) =>
                         handleEntityAction(context, entity, action),

@@ -26,6 +26,10 @@ class EntityListTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    if (entity == null) {
+      return SizedBox();
+    }
+
     final store = StoreProvider.of<AppState>(context);
     final state = store.state;
     final isFilteredBy = state.uiState.filterEntityId == entity.id &&
