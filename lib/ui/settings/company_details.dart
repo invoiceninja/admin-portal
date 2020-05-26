@@ -451,6 +451,7 @@ class _CompanyDetailsState extends State<CompanyDetails>
                     allowClearing: true,
                   ),
                   AppDropdownButton<int>(
+                    showBlank: true,
                     blankValue: null,
                     labelText: localization.paymentTerm,
                     items: memoizedDropdownPaymentTermList(
@@ -465,9 +466,10 @@ class _CompanyDetailsState extends State<CompanyDetails>
                       );
                     }).toList(),
                     value: settings.defaultPaymentTerms,
-                    onChanged: (dynamic numDays) => viewModel.onSettingsChanged(
-                        settings
-                            .rebuild((b) => b..defaultPaymentTerms = numDays)),
+                    onChanged: (dynamic numDays) {
+                      viewModel.onSettingsChanged(settings
+                          .rebuild((b) => b..defaultPaymentTerms = numDays));
+                    },
                   ),
                   if (!state.uiState.settingsUIState.isFiltered)
                     Padding(
