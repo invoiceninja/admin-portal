@@ -34,8 +34,10 @@ class InvoiceOverview extends StatelessWidget {
     final company = viewModel.company;
 
     final state = StoreProvider.of<AppState>(context).state;
-    final payments = memoizedPaymentsByInvoice(
-        invoice.id, state.paymentState.map, state.paymentState.list);
+    final payments = invoice.subEntityType == EntityType.quote
+        ? <PaymentEntity>[]
+        : memoizedPaymentsByInvoice(
+            invoice.id, state.paymentState.map, state.paymentState.list);
 
     Map<String, String> stauses;
     Map<String, Color> colors;
