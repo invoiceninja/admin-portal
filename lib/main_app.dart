@@ -180,8 +180,20 @@ class InvoiceNinjaAppState extends State<InvoiceNinjaApp> {
                   canvasColor: const Color(0xFFE7EBEE),
                   cardColor: Colors.white,
                   bottomAppBarColor: Colors.white,
-                  //bottomAppBarColor: Colors.grey.shade300,
-                  //backgroundColor: Colors.grey.shade200,
+                  appBarTheme: AppBarTheme(
+                    color: Colors.white,
+                    iconTheme: IconThemeData(
+                      color: Colors.black,
+                    ),
+                    textTheme: TextTheme(
+                      headline6: TextStyle(
+                        color: Colors.black,
+                      ),
+                      button: TextStyle(
+                        color: Colors.black,
+                      ),
+                    ),
+                  ),
                 ),
           title: 'Invoice Ninja',
           onGenerateRoute: isMobile(context) ? null : generateRoute,
