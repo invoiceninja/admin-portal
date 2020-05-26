@@ -41,10 +41,15 @@ class CreditPresenter extends EntityPresenter {
       case CreditFields.date:
         return Text(formatDate(credit.date, context));
       case CreditFields.amount:
-        return Text(
-            formatNumber(credit.amount, context, clientId: credit.clientId));
+        return Align(
+          alignment: Alignment.centerRight,
+          child: Text(
+              formatNumber(credit.amount, context, clientId: credit.clientId)),
+        );
       case CreditFields.balance:
-        return Text(formatNumber(credit.balance, context));
+        return Align(
+            alignment: Alignment.centerRight,
+            child: Text(formatNumber(credit.balance, context)));
     }
 
     return super.getField(field: field, context: context);
