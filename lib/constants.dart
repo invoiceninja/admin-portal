@@ -386,8 +386,6 @@ const String kReportGroupYear = 'year';
 
 const String kActivityEmailInvoice = '6';
 
-const int kPaymentTermsOff = -1;
-
 const int kModuleRecurringInvoices = 1;
 const int kModuleCredits = 2;
 const int kModuleQuotes = 4;

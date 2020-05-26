@@ -307,17 +307,6 @@ abstract class ClientEntity extends Object
       contacts.firstWhere((contact) => contact.isPrimary,
           orElse: () => ContactEntity());
 
-  String getPaymentTerm(String netLabel) {
-    if (settings.defaultPaymentTerms == 0 ||
-        settings.defaultPaymentTerms == null) {
-      return '';
-    } else if (settings.defaultPaymentTerms == -1) {
-      return '$netLabel 0';
-    } else {
-      return '$netLabel ${settings.defaultPaymentTerms}';
-    }
-  }
-
   bool get hasGroup => groupId != null && groupId.isNotEmpty;
 
   bool get hasLanguage =>

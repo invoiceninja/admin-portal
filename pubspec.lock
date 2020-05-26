@@ -733,6 +733,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "0.4.0"
+  rounded_loading_button:
+    dependency: "direct main"
+    description:
+      name: rounded_loading_button
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "1.0.6"
   rxdart:
     dependency: transitive
     description:

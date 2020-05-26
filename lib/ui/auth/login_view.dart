@@ -9,13 +9,13 @@ import 'package:invoiceninja_flutter/ui/app/buttons/elevated_button.dart';
 import 'package:invoiceninja_flutter/ui/app/dialogs/alert_dialog.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/decorated_form_field.dart';
 import 'package:invoiceninja_flutter/ui/app/link_text.dart';
-import 'package:invoiceninja_flutter/ui/app/loading_indicator.dart';
 import 'package:invoiceninja_flutter/ui/auth/login_vm.dart';
 import 'package:invoiceninja_flutter/utils/colors.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:invoiceninja_flutter/ui/app/form_card.dart';
 import 'package:invoiceninja_flutter/utils/platforms.dart';
 import 'package:invoiceninja_flutter/.env.dart';
+import 'package:rounded_loading_button/rounded_loading_button.dart';
 
 class LoginView extends StatefulWidget {
   const LoginView({
@@ -574,28 +574,39 @@ class _LoginState extends State<LoginView> {
                         ),
                       ),
                     Padding(
-                        padding: EdgeInsets.only(top: 25, bottom: 10),
-                        child: viewModel.isLoading
-                            ? LoadingIndicator(height: 48)
-                            : _emailLogin
-                                ? RaisedButton.icon(
-                                    icon: Icon(Icons.mail),
-                                    color: convertHexStringToColor('#4285F4'),
-                                    label: Padding(
-                                      padding: const EdgeInsets.only(left: 4),
-                                      child: Text(
-                                        localization.emailSignIn,
-                                        style: TextStyle(fontSize: 18),
-                                      ),
-                                    ),
-                                    onPressed: () => _createAccount
-                                        ? _submitSignUpForm()
-                                        : _submitLoginForm(),
-                                  )
-                                : GestureDetector(
-                                    onTap: () => _createAccount
-                                        ? _submitSignUpForm()
-                                        : _submitLoginForm())),
+                      padding: EdgeInsets.only(top: 25, bottom: 10),
+                      child: RoundedLoadingButton(
+                        height: 38,
+                        width: 210,
+                        color: convertHexStringToColor('#4285F4'),
+                        onPressed: () => _createAccount
+                            ? _submitSignUpForm()
+                            : _submitLoginForm(),
+                        child: Row(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            if (_emailLogin)
+                              Icon(Icons.mail)
+                            else
+                              ClipOval(
+                                child: Image.asset('assets/images/google-icon.png',
+                                    width: 30, height: 30),
+                              ),
+                            SizedBox(width: 10),
+                            Text(
+                              _createAccount
+                                  ? (_emailLogin
+                                      ? localization.emailSignUp
+                                      : localization.googleSignUp)
+                                  : (_emailLogin
+                                      ? localization.emailSignIn
+                                      : localization.googleSignIn),
+                              style: TextStyle(fontSize: 18),
+                            )
+                          ],
+                        ),
+                      ),
+                    ),
                     if (!isOneTimePassword)
                       Column(
                         mainAxisAlignment: MainAxisAlignment.center,

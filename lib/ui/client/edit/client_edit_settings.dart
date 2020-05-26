@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:invoiceninja_flutter/constants.dart';
 import 'package:invoiceninja_flutter/data/models/entities.dart';
-import 'package:invoiceninja_flutter/data/models/payment_term_model.dart';
 import 'package:invoiceninja_flutter/redux/payment_term/payment_term_selectors.dart';
 import 'package:invoiceninja_flutter/ui/app/entity_dropdown.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/app_dropdown_button.dart';
@@ -48,7 +46,9 @@ class ClientEditSettingsState extends State<ClientEditSettings> {
     _taskRateController.text = formatNumber(
         client.settings.defaultTaskRate, context,
         formatNumberType: FormatNumberType.input);
-    _paymentTermsController.text = client.getPaymentTerm(localization.net);
+    _paymentTermsController.text = client.settings.defaultPaymentTerms != null
+        ? '$client.settings.defaultPaymentTerms'
+        : null;
 
     _controllers
         .forEach((dynamic controller) => controller.addListener(_onChanged));

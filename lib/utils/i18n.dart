@@ -623,8 +623,8 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'credit_cards_and_banks': 'Credit Cards & Banks',
       'data_visualizations': 'Data Visualizations',
       'price': 'Price',
-      'email_sign_up': 'Email Sign Up',
-      'google_sign_up': 'Google Sign Up',
+      'email_sign_up': 'Sign up with email',
+      'google_sign_up': 'Sign up with Google',
       'thank_you_for_your_purchase': 'Thank you for your purchase!',
       'redeem': 'Redeem',
       'back': 'Back',
@@ -745,7 +745,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'compare': 'Compare',
       'hosted_login': 'Hosted Login',
       'selfhost_login': 'Selfhost Login',
-      'google_login': 'Google Login',
+      'google_sign_in': 'Sign in with Google',
       'today': 'Today',
       'custom_range': 'Custom',
       'date_range': 'Date Range',
@@ -1711,8 +1711,8 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'credit_cards_and_banks': 'Credit Cards & Banks',
       'data_visualizations': 'Vizualizimi i të dhënave',
       'price': 'Price',
-      'email_sign_up': 'Email Sign Up',
-      'google_sign_up': 'Google Sign Up',
+      'email_sign_up': 'Sign up with email',
+      'google_sign_up': 'Sign up with Google',
       'thank_you_for_your_purchase': 'Thank you for your purchase!',
       'redeem': 'Redeem',
       'sign_up_with_google': 'Sign Up With Google',
@@ -33931,7 +33931,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
   String get selfhostLogin =>
       _localizedValues[localeCode]['selfhost_login'] ?? '';
 
-  String get googleLogin => _localizedValues[localeCode]['google_login'] ?? '';
+  String get googleSignIn => _localizedValues[localeCode]['google_sign_in'] ?? '';
 
   String get today => _localizedValues[localeCode]['today'] ?? '';
 
