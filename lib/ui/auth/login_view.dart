@@ -199,7 +199,7 @@ class _LoginState extends State<LoginView> {
     final Completer<Null> completer = Completer<Null>();
     completer.future.then((_) {
       setState(() {
-        _buttonController.reset();
+        //_buttonController.reset();
         _loginError = '';
       });
     }).catchError((Object error) {
@@ -215,8 +215,6 @@ class _LoginState extends State<LoginView> {
         completer,
         email: _emailController.text,
         password: _passwordController.text,
-        firstName: _firstNameController.text,
-        lastName: _lastNameController.text,
       );
     } else {
       viewModel.onGoogleSignUpPressed(context, completer);
@@ -241,7 +239,7 @@ class _LoginState extends State<LoginView> {
 
     completer.future.then((_) {
       setState(() {
-        _buttonController.reset();
+        //_buttonController.reset();
         _loginError = '';
         if (_recoverPassword) {
           _recoverPassword = false;
@@ -387,26 +385,6 @@ class _LoginState extends State<LoginView> {
                                   _loginError = '';
                                 });
                               },
-                            ),
-                          if (_createAccount && _emailLogin)
-                            DecoratedFormField(
-                              label: localization.firstName,
-                              controller: _firstNameController,
-                              //autovalidate: _autoValidate,
-                              validator: (val) =>
-                                  val.isEmpty || val.trim().isEmpty
-                                      ? localization.pleaseEnterAFirstName
-                                      : null,
-                            ),
-                          if (_createAccount && _emailLogin)
-                            DecoratedFormField(
-                              label: localization.lastName,
-                              controller: _lastNameController,
-                              //autovalidate: _autoValidate,
-                              validator: (val) =>
-                                  val.isEmpty || val.trim().isEmpty
-                                      ? localization.pleaseEnterALastName
-                                      : null,
                             ),
                           if (_emailLogin)
                             DecoratedFormField(
@@ -582,7 +560,7 @@ class _LoginState extends State<LoginView> {
                         ),
                       ),
                     Padding(
-                      padding: EdgeInsets.only(top: 25, bottom: 10),
+                      padding: EdgeInsets.only(top: 30, bottom: 10),
                       child: RoundedLoadingButton(
                         height: 38,
                         width: 210,

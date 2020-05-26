@@ -33,7 +33,6 @@ class ClientEditSettingsState extends State<ClientEditSettings> {
 
   @override
   void didChangeDependencies() {
-    final localization = AppLocalization.of(context);
     _controllers = [
       _taskRateController,
       _paymentTermsController,

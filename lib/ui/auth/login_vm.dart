@@ -70,8 +70,6 @@ class LoginVM {
   final Function(
     BuildContext,
     Completer<Null> completer, {
-    @required String firstName,
-    @required String lastName,
     @required String email,
     @required String password,
   }) onSignUpPressed;
@@ -164,8 +162,6 @@ class LoginVM {
         onSignUpPressed: (
           BuildContext context,
           Completer<Null> completer, {
-          @required String firstName,
-          @required String lastName,
           @required String email,
           @required String password,
         }) async {
@@ -175,8 +171,6 @@ class LoginVM {
 
           store.dispatch(UserSignUpRequest(
             completer: completer,
-            firstName: firstName.trim(),
-            lastName: lastName.trim(),
             email: email.trim(),
             password: password.trim(),
           ));
