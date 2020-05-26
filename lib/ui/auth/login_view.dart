@@ -42,6 +42,7 @@ class _LoginState extends State<LoginView> {
   final _oneTimePasswordController = TextEditingController();
 
   List<TextEditingController> _controllers;
+  final _buttonController = RoundedLoadingButtonController();
 
   static const String OTP_ERROR = 'OTP_REQUIRED';
 
@@ -167,10 +168,12 @@ class _LoginState extends State<LoginView> {
     });
 
     if (!isValid) {
+      _buttonController.reset();
       return;
     }
 
     if (_createAccount && (!_termsChecked || !_privacyChecked)) {
+      _buttonController.reset();
       showDialog<AlertDialog>(
           context: context,
           builder: (BuildContext context) {
@@ -196,10 +199,12 @@ class _LoginState extends State<LoginView> {
     final Completer<Null> completer = Completer<Null>();
     completer.future.then((_) {
       setState(() {
+        _buttonController.reset();
         _loginError = '';
       });
     }).catchError((Object error) {
       setState(() {
+        _buttonController.reset();
         _loginError = error.toString();
       });
     });
@@ -228,6 +233,7 @@ class _LoginState extends State<LoginView> {
     });
 
     if (!isValid) {
+      _buttonController.reset();
       return;
     }
 
@@ -235,6 +241,7 @@ class _LoginState extends State<LoginView> {
 
     completer.future.then((_) {
       setState(() {
+        _buttonController.reset();
         _loginError = '';
         if (_recoverPassword) {
           _recoverPassword = false;
@@ -248,6 +255,7 @@ class _LoginState extends State<LoginView> {
       });
     }).catchError((Object error) {
       setState(() {
+        _buttonController.reset();
         _loginError = error.toString();
       });
     });
@@ -578,6 +586,7 @@ class _LoginState extends State<LoginView> {
                       child: RoundedLoadingButton(
                         height: 38,
                         width: 210,
+                        controller: _buttonController,
                         color: convertHexStringToColor('#4285F4'),
                         onPressed: () => _createAccount
                             ? _submitSignUpForm()
@@ -589,8 +598,10 @@ class _LoginState extends State<LoginView> {
                               Icon(Icons.mail)
                             else
                               ClipOval(
-                                child: Image.asset('assets/images/google-icon.png',
-                                    width: 30, height: 30),
+                                child: Image.asset(
+                                    'assets/images/google-icon.png',
+                                    width: 30,
+                                    height: 30),
                               ),
                             SizedBox(width: 10),
                             Text(
