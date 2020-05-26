@@ -55,7 +55,6 @@ class _CompanyDetailsState extends State<CompanyDetails>
   final _cityController = TextEditingController();
   final _stateController = TextEditingController();
   final _postalCodeController = TextEditingController();
-  final _paymentTermsController = TextEditingController();
   final _taskRateController = TextEditingController();
   final _custom1Controller = TextEditingController();
   final _custom2Controller = TextEditingController();
@@ -101,7 +100,6 @@ class _CompanyDetailsState extends State<CompanyDetails>
       _stateController,
       _postalCodeController,
       _taskRateController,
-      _paymentTermsController,
       _custom1Controller,
       _custom2Controller,
       _custom3Controller,
@@ -133,11 +131,6 @@ class _CompanyDetailsState extends State<CompanyDetails>
     _postalCodeController.text = settings.postalCode;
     _taskRateController.text = formatNumber(settings.defaultTaskRate, context,
         formatNumberType: FormatNumberType.input);
-    _paymentTermsController.text =
-        settings.defaultPaymentTerms == kPaymentTermsOff
-            ? ''
-            : formatNumber(settings.defaultPaymentTerms?.toDouble(), context,
-                formatNumberType: FormatNumberType.input);
     _custom1Controller.text = settings.customValue1;
     _custom2Controller.text = settings.customValue2;
     _custom3Controller.text = settings.customValue3;
@@ -172,11 +165,6 @@ class _CompanyDetailsState extends State<CompanyDetails>
         ..postalCode = _postalCodeController.text.trim()
         ..defaultTaskRate =
             parseDouble(_taskRateController.text, zeroIsNull: true)
-        ..defaultPaymentTerms = _paymentTermsController.text.isEmpty
-            ? (state.settingsUIState.entityType == EntityType.company
-                ? -1
-                : null)
-            : parseInt(_paymentTermsController.text)
         ..customValue1 = _custom1Controller.text.trim()
         ..customValue2 = _custom2Controller.text.trim()
         ..customValue3 = _custom3Controller.text.trim()
@@ -462,21 +450,24 @@ class _CompanyDetailsState extends State<CompanyDetails>
                             (b) => b..defaultPaymentTypeId = paymentType?.id)),
                     allowClearing: true,
                   ),
-                  AppDropdownButton<String>(
+                  AppDropdownButton<int>(
+                    blankValue: null,
                     labelText: localization.paymentTerm,
                     items: memoizedDropdownPaymentTermList(
                             state.paymentTermState.map,
                             state.paymentTermState.list)
-                        .map((paymentTermId) => DropdownMenuItem<String>(
-                              child: Text(state
-                                  .paymentTermState.map[paymentTermId].name),
-                              value: paymentTermId,
-                            ))
-                        .toList(),
+                        .map((paymentTermId) {
+                      final paymentTerm =
+                          state.paymentTermState.map[paymentTermId];
+                      return DropdownMenuItem<int>(
+                        child: Text(paymentTerm.name),
+                        value: paymentTerm.numDays,
+                      );
+                    }).toList(),
                     value: settings.defaultPaymentTerms,
-                    onChanged: (dynamic paymentTermId) =>
-                        viewModel.onSettingsChanged(settings.rebuild(
-                            (b) => b..defaultPaymentTerms = paymentTermId)),
+                    onChanged: (dynamic numDays) => viewModel.onSettingsChanged(
+                        settings
+                            .rebuild((b) => b..defaultPaymentTerms = numDays)),
                   ),
                   if (!state.uiState.settingsUIState.isFiltered)
                     Padding(
