@@ -55,11 +55,9 @@ class InvoiceListItem extends StatelessWidget {
             client.matchesFilterValue(filter))
         : null;
 
-    final statusLabel = invoice.isPastDue
-        ? localization.pastDue
-        : localization.lookup(kInvoiceStatuses[invoice.statusId]);
-    final statusColor = InvoiceStatusColors
-        .colors[invoice.isPastDue ? kInvoiceStatusPastDue : invoice.statusId];
+    final statusLabel =
+        localization.lookup(kInvoiceStatuses[invoice.calculatedStatusId]);
+    final statusColor = InvoiceStatusColors.colors[invoice.calculatedStatusId];
     final textColor = Theme.of(context).textTheme.bodyText1.color;
 
     Widget _buildMobile() {

@@ -423,8 +423,8 @@ class InvoiceStatusColors {
     kInvoiceStatusPartial: Colors.deepPurple,
     kInvoiceStatusPaid: convertHexStringToColor('#407535'),
     kInvoiceStatusPastDue: convertHexStringToColor('#8D3E3F'),
-    kInvoiceStatusCancelled: Colors.red,
-    kInvoiceStatusReversed: Colors.red,
+    kInvoiceStatusCancelled: convertHexStringToColor('#8D3E3F'),
+    kInvoiceStatusReversed: convertHexStringToColor('#8D3E3F'),
   };
 }
 
@@ -451,11 +451,11 @@ class QuoteStatusColors {
 class PaymentStatusColors {
   static var colors = {
     kPaymentStatusPending: convertHexStringToColor('#505F73'),
-    kPaymentStatusVoided: Colors.red,
-    kPaymentStatusFailed: Colors.red,
+    kPaymentStatusVoided: convertHexStringToColor('#8D3E3F'),
+    kPaymentStatusFailed: convertHexStringToColor('#8D3E3F'),
     kPaymentStatusCompleted: convertHexStringToColor('#407535'),
     kPaymentStatusPartiallyRefunded: Colors.purple,
-    kPaymentStatusRefunded: Colors.red,
+    kPaymentStatusRefunded: convertHexStringToColor('#8D3E3F'),
   };
 }
 

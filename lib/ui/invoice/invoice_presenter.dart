@@ -30,9 +30,7 @@ class InvoicePresenter extends EntityPresenter {
     switch (field) {
       case InvoiceFields.status:
         return Text(
-          invoice.isPastDue
-              ? localization.pastDue
-              : localization.lookup(kInvoiceStatuses[invoice.statusId]),
+          localization.lookup(kInvoiceStatuses[invoice.calculatedStatusId]),
         );
       case InvoiceFields.invoiceNumber:
         return Text((invoice.number ?? '').isEmpty
