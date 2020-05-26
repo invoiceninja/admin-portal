@@ -233,14 +233,11 @@ class QuoteListItem extends StatelessWidget {
                                   ),
                           ),
                           Text(
-                              quote.isPastDue
-                                  ? localization.expired
-                                  : localization
-                                      .lookup(kQuoteStatuses[quote.statusId]),
+                              localization.lookup(
+                                  kQuoteStatuses[quote.calculatedStatusId]),
                               style: TextStyle(
-                                color: quote.isPastDue
-                                    ? Colors.red
-                                    : QuoteStatusColors.colors[quote.statusId],
+                                color: QuoteStatusColors
+                                    .colors[quote.calculatedStatusId],
                               )),
                         ],
                       ),
