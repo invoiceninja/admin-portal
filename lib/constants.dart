@@ -377,9 +377,9 @@ const String kDefaultAccentColor = '#0091EA';
 const String kDefaultDarkSelectedColorMenu = '#1E252F';
 const String kDefaultDarkSelectedColor = '#253750';
 const String kDefaultDarkBorderColor = '#393A3C';
-const String kDefaultLightSelectedColorMenu = '#EEEEEE';
-const String kDefaultLightSelectedColor = '#EEEEEE';
-const String kDefaultLightBorderColor = '#DDDDDD';
+const String kDefaultLightSelectedColorMenu = '#D3EAFD';
+const String kDefaultLightSelectedColor = '#D3EAFD';
+const String kDefaultLightBorderColor = '#E7EBEE';
 
 const String kReportGroupDay = 'day';
 const String kReportGroupMonth = 'month';
