@@ -37,6 +37,7 @@ class EntityType extends EnumClass {
   static const EntityType gatewayToken = _$gatewayToken;
   static const EntityType invoiceItem = _$invoiceItem;
   static const EntityType design = _$design;
+
   // STARTER: entity type - do not remove comment
   static const EntityType paymentTerm = _$paymentTerm;
   static const EntityType quoteItem = _$quoteItem;
@@ -262,7 +263,8 @@ abstract class BaseEntity implements SelectableEntity {
 
   bool get isActive => archivedAt == null || archivedAt == 0;
 
-  bool get isArchived => archivedAt != null && archivedAt > 0 && !(isDeleted ?? false);
+  bool get isArchived =>
+      archivedAt != null && archivedAt > 0 && !(isDeleted ?? false);
 
   bool userCanAccess(String userId) =>
       createdUserId == userId || assignedUserId == userId;
