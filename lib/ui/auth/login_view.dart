@@ -16,7 +16,6 @@ import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:invoiceninja_flutter/ui/app/form_card.dart';
 import 'package:invoiceninja_flutter/utils/platforms.dart';
 import 'package:invoiceninja_flutter/.env.dart';
-import 'package:flutter_auth_buttons/flutter_auth_buttons.dart';
 
 class LoginView extends StatefulWidget {
   const LoginView({
@@ -593,12 +592,10 @@ class _LoginState extends State<LoginView> {
                                         ? _submitSignUpForm()
                                         : _submitLoginForm(),
                                   )
-                                : GoogleSignInButton(
-                                    onPressed: () => _createAccount
+                                : GestureDetector(
+                                    onTap: () => _createAccount
                                         ? _submitSignUpForm()
-                                        : _submitLoginForm(),
-                                    darkMode: true,
-                                  )),
+                                        : _submitLoginForm())),
                     if (!isOneTimePassword)
                       Column(
                         mainAxisAlignment: MainAxisAlignment.center,

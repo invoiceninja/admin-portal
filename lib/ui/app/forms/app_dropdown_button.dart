@@ -31,7 +31,9 @@ class AppDropdownButton<T> extends StatelessWidget {
     if (!values.contains(value)) {
       checkedValue = blankValue;
     }
-    final bool isEmpty = checkedValue == null || checkedValue == '';
+    final bool isEmpty =
+        checkedValue == null || checkedValue == '';
+    print('## CHecked value $labelText: $checkedValue, $_showBlank $isEmpty');
 
     final dropDownButton = DropdownButtonHideUnderline(
       child: DropdownButton<T>(
@@ -41,7 +43,7 @@ class AppDropdownButton<T> extends StatelessWidget {
         onChanged: enabled ? onChanged : null,
         items: [
           if (_showBlank || isEmpty)
-            DropdownMenuItem(
+            DropdownMenuItem<T>(
               value: blankValue,
               child: SizedBox(),
             ),

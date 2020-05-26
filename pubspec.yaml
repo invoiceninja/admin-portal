@@ -48,7 +48,6 @@ dependencies:
   flutter_share: ^1.0.2+1
   package_info: ^0.4.0+16
   device_info: ^0.4.2+1
-  flutter_auth_buttons: ^0.8.0
   #quick_actions: ^0.2.1
 
 dependency_overrides:

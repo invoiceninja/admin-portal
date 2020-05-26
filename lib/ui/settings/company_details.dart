@@ -1,7 +1,6 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:invoiceninja_flutter/constants.dart';
 import 'package:invoiceninja_flutter/data/models/entities.dart';
 import 'package:invoiceninja_flutter/redux/payment_term/payment_term_selectors.dart';
 import 'package:invoiceninja_flutter/redux/static/static_selectors.dart';
@@ -149,7 +148,6 @@ class _CompanyDetailsState extends State<CompanyDetails>
   }
 
   void _onSettingsChanged() {
-    final state = widget.viewModel.state;
     _debouncer.run(() {
       final settings = widget.viewModel.settings.rebuild((b) => b
         ..name = _nameController.text.trim()
@@ -450,9 +448,8 @@ class _CompanyDetailsState extends State<CompanyDetails>
                             (b) => b..defaultPaymentTypeId = paymentType?.id)),
                     allowClearing: true,
                   ),
-                  AppDropdownButton<int>(
+                  AppDropdownButton<String>(
                     showBlank: true,
-                    blankValue: null,
                     labelText: localization.paymentTerm,
                     items: memoizedDropdownPaymentTermList(
                             state.paymentTermState.map,
@@ -460,15 +457,17 @@ class _CompanyDetailsState extends State<CompanyDetails>
                         .map((paymentTermId) {
                       final paymentTerm =
                           state.paymentTermState.map[paymentTermId];
-                      return DropdownMenuItem<int>(
+                      return DropdownMenuItem<String>(
                         child: Text(paymentTerm.name),
-                        value: paymentTerm.numDays,
+                        value: paymentTerm.numDays.toString(),
                       );
                     }).toList(),
-                    value: settings.defaultPaymentTerms,
+                    value: '${settings.defaultPaymentTerms}',
                     onChanged: (dynamic numDays) {
-                      viewModel.onSettingsChanged(settings
-                          .rebuild((b) => b..defaultPaymentTerms = numDays));
+                      print('## onChanged: $numDays');
+                      viewModel.onSettingsChanged(settings.rebuild((b) => b
+                        ..defaultPaymentTerms =
+                            numDays == null ? null : '$numDays'));
                     },
                   ),
                   if (!state.uiState.settingsUIState.isFiltered)

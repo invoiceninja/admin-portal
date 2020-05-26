@@ -126,8 +126,10 @@ class ClientEditSettingsState extends State<ClientEditSettings> {
                       ))
                   .toList(),
               onSelected: (paymentTerm) {
-                viewModel.onChanged(client.rebuild((b) =>
-                    b..settings.defaultPaymentTerms = paymentTerm.numDays));
+                viewModel.onChanged(client.rebuild((b) => b
+                  ..settings.defaultPaymentTerms = paymentTerm == null
+                      ? null
+                      : paymentTerm.numDays.toString()));
                 _paymentTermsController.text =
                     paymentTerm.getPaymentTerm(localization.net);
               },

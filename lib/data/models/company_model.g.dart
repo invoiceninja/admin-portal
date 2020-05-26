@@ -1037,7 +1037,7 @@ class _$SettingsEntitySerializer
       result
         ..add('payment_terms')
         ..add(serializers.serialize(object.defaultPaymentTerms,
-            specifiedType: const FullType(int)));
+            specifiedType: const FullType(String)));
     }
     if (object.companyGatewayIds != null) {
       result
@@ -1995,7 +1995,7 @@ class _$SettingsEntitySerializer
           break;
         case 'payment_terms':
           result.defaultPaymentTerms = serializers.deserialize(value,
-              specifiedType: const FullType(int)) as int;
+              specifiedType: const FullType(String)) as String;
           break;
         case 'company_gateway_ids':
           result.companyGatewayIds = serializers.deserialize(value,
@@ -4402,7 +4402,7 @@ class _$SettingsEntity extends SettingsEntity {
   @override
   final String customValue4;
   @override
-  final int defaultPaymentTerms;
+  final String defaultPaymentTerms;
   @override
   final String companyGatewayIds;
   @override
@@ -5302,9 +5302,9 @@ class SettingsEntityBuilder
   String get customValue4 => _$this._customValue4;
   set customValue4(String customValue4) => _$this._customValue4 = customValue4;
 
-  int _defaultPaymentTerms;
-  int get defaultPaymentTerms => _$this._defaultPaymentTerms;
-  set defaultPaymentTerms(int defaultPaymentTerms) =>
+  String _defaultPaymentTerms;
+  String get defaultPaymentTerms => _$this._defaultPaymentTerms;
+  set defaultPaymentTerms(String defaultPaymentTerms) =>
       _$this._defaultPaymentTerms = defaultPaymentTerms;
 
   String _companyGatewayIds;

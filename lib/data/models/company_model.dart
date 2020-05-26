@@ -1165,7 +1165,7 @@ abstract class SettingsEntity
 
   @nullable
   @BuiltValueField(wireName: 'payment_terms')
-  int get defaultPaymentTerms;
+  String get defaultPaymentTerms;
 
   @nullable
   @BuiltValueField(wireName: 'company_gateway_ids')
