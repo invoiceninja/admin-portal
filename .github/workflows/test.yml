@@ -36,4 +36,4 @@ jobs:
           sed -i -e 's/secret/${{secrets.staging_secret}}/g' lib/.env.dart
           echo ${{secrets.firebase_ios}} | base64 --decode > ios/Runner/GoogleService-Info.plist
       - name: Run Tests
-        run: flutter drive --target=test_driver/all_it.dart
+        run: flutter drive --target=test_driver/login_it.dart
