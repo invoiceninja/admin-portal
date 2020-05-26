@@ -72,8 +72,11 @@ class HistoryDrawer extends StatelessWidget {
                 )
             ],
           ),
-          body: ListView(
-            children: widgets,
+          body: ColoredBox(
+            color: Theme.of(context).cardColor,
+            child: ListView(
+              children: widgets,
+            ),
           ),
         ),
       ),
