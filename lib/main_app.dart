@@ -187,6 +187,9 @@ class InvoiceNinjaAppState extends State<InvoiceNinjaApp> {
                   ),
                   buttonTheme:
                       ButtonThemeData(textTheme: ButtonTextTheme.accent),
+                  iconTheme: IconThemeData(
+                    color: Colors.blue,
+                  ),
                   appBarTheme: AppBarTheme(
                     color: Colors.white,
                     iconTheme: IconThemeData(

@@ -36,11 +36,13 @@ class ViewScaffold extends StatelessWidget {
     final userCompany = state.userCompany;
     final isSettings = entity.entityType.isSetting;
 
-    final title = localization.lookup('${entity.entityType}') +
-        '  ›  ' +
-        ((entity.listDisplayName ?? '').isEmpty
-            ? localization.pending
-            : entity.listDisplayName);
+    String title = (entity.listDisplayName ?? '').isEmpty
+        ? localization.pending
+        : entity.listDisplayName;
+
+    if (!isFilter) {
+      title = localization.lookup('${entity.entityType}') + '  ›  ' + title;
+    }
 
     Widget leading;
     if (!isMobile(context)) {
@@ -68,7 +70,10 @@ class ViewScaffold extends StatelessWidget {
         appBar: AppBar(
           leading: leading,
           automaticallyImplyLeading: isMobile(context) || isSettings,
-          title: Text(title, maxLines: 2,),
+          title: Text(
+            title,
+            maxLines: 2,
+          ),
           bottom: appBarBottom,
           actions: entity.isNew
               ? []
