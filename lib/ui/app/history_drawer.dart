@@ -63,7 +63,7 @@ class HistoryDrawer extends StatelessWidget {
                 FlatButton(
                   child: Text(
                     localization.close,
-                    style: TextStyle(color: Colors.white),
+                    //style: TextStyle(color: Colors.white),
                   ),
                   onPressed: () {
                     store.dispatch(

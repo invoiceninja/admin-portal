@@ -36,7 +36,7 @@ class ActionFlatButton extends StatelessWidget {
     return FlatButton(
       child: Text(
         tooltip,
-        style: TextStyle(color: Colors.white),
+        //style: TextStyle(color: Colors.white),
       ),
       onPressed: onPressed,
     );
