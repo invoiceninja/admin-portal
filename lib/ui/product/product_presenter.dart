@@ -27,14 +27,23 @@ class ProductPresenter extends EntityPresenter {
       case ProductFields.notes:
         return Text(product.notes);
       case ProductFields.cost:
-        return Text(formatNumber(product.cost, context,
-            formatNumberType: FormatNumberType.money));
+        return Align(
+          alignment: Alignment.centerRight,
+          child: Text(formatNumber(product.cost, context,
+              formatNumberType: FormatNumberType.money)),
+        );
       case ProductFields.price:
-        return Text(formatNumber(product.price, context,
-            formatNumberType: FormatNumberType.money));
+        return Align(
+          alignment: Alignment.centerRight,
+          child: Text(formatNumber(product.price, context,
+              formatNumberType: FormatNumberType.money)),
+        );
       case ProductFields.quantity:
-        return Text(formatNumber(product.quantity, context,
-            formatNumberType: FormatNumberType.double));
+        return Align(
+          alignment: Alignment.centerRight,
+          child: Text(formatNumber(product.quantity, context,
+              formatNumberType: FormatNumberType.double)),
+        );
     }
 
     return super.getField(field: field, context: context);

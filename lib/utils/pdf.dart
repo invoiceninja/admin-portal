@@ -100,7 +100,7 @@ class _PDFScaffoldState extends State<PDFScaffold> {
           FlatButton(
             child: Text(
               localization.download,
-              style: TextStyle(color: Colors.white),
+              //style: TextStyle(color: Colors.white),
             ),
             onPressed: _response == null
                 ? null

@@ -631,6 +631,20 @@ abstract class InvoiceEntity extends Object
 
   bool get isPaid => statusId == kInvoiceStatusPaid;
 
+  String get calculatedStatusId {
+    if (isPastDue) {
+      return kInvoiceStatusPastDue;
+    }
+
+    /*
+    if (subEntityType == EntityType.quote && (invoiceId ?? '').isNotEmpty) {
+      return kQuoteStatusApproved;
+    }
+     */
+
+    return statusId;
+  }
+
   bool get isPastDue {
     if (dueDate.isEmpty) {
       return false;

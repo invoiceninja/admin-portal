@@ -5,7 +5,6 @@ import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/redux/settings/settings_actions.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/save_cancel_buttons.dart';
 import 'package:invoiceninja_flutter/ui/app/menu_drawer_vm.dart';
-import 'package:invoiceninja_flutter/utils/icons.dart';
 import 'package:invoiceninja_flutter/utils/platforms.dart';
 
 class EditScaffold extends StatelessWidget {
@@ -39,24 +38,6 @@ class EditScaffold extends StatelessWidget {
     final store = StoreProvider.of<AppState>(context);
     final state = store.state;
 
-    Widget leading;
-    if (isFullscreen) {
-      if (isMobile(context) || state.prefState.isMenuFloated) {
-        leading = Builder(
-          builder: (context) => GestureDetector(
-            child: IconButton(
-              icon: Icon(Icons.menu),
-              onPressed: () {
-                Scaffold.of(context).openDrawer();
-              },
-            ),
-          ),
-        );
-      }
-    } else if (isNotMobile(context) && entity != null) {
-      leading = Icon(getEntityIcon(entity.entityType));
-    }
-
     return WillPopScope(
       onWillPop: () async {
         return true;
@@ -65,7 +46,6 @@ class EditScaffold extends StatelessWidget {
         body: body,
         drawer: isDesktop(context) ? MenuDrawerBuilder() : null,
         appBar: AppBar(
-          leading: leading,
           automaticallyImplyLeading: isMobile(context),
           title: Text(title),
           actions: <Widget>[

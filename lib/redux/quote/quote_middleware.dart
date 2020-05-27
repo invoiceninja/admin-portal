@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/redux/app/app_middleware.dart';
 import 'package:invoiceninja_flutter/redux/credit/credit_actions.dart';
+import 'package:invoiceninja_flutter/redux/invoice/invoice_actions.dart';
 import 'package:invoiceninja_flutter/redux/quote/quote_actions.dart';
 import 'package:invoiceninja_flutter/redux/ui/ui_actions.dart';
 import 'package:invoiceninja_flutter/ui/quote/edit/quote_edit_vm.dart';
@@ -215,6 +216,7 @@ Middleware<AppState> _convertQuote(QuoteRepository repository) {
             store.state.credentials, action.quoteIds, EntityAction.convert)
         .then((quotes) {
       store.dispatch(ConvertQuoteSuccess(quotes: quotes));
+      store.dispatch(LoadInvoices(force: true));
       action.completer.complete(null);
     }).catchError((Object error) {
       print(error);

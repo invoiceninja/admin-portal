@@ -30,6 +30,7 @@ import 'package:invoiceninja_flutter/ui/payment/refund/payment_refund_vm.dart';
 import 'package:invoiceninja_flutter/ui/payment_term/edit/payment_term_edit_vm.dart';
 import 'package:invoiceninja_flutter/ui/payment_term/payment_term_screen.dart';
 import 'package:invoiceninja_flutter/ui/payment_term/payment_term_screen_vm.dart';
+import 'package:invoiceninja_flutter/ui/payment_term/view/payment_term_view_vm.dart';
 import 'package:invoiceninja_flutter/ui/reports/reports_screen.dart';
 import 'package:invoiceninja_flutter/ui/reports/reports_screen_vm.dart';
 import 'package:invoiceninja_flutter/ui/settings/account_management_vm.dart';
@@ -170,17 +171,36 @@ class InvoiceNinjaAppState extends State<InvoiceNinjaApp> {
                   pageTransitionsTheme: pageTransitionsTheme,
                   accentColor: accentColor,
                   textSelectionColor: accentColor,
-                  primaryColor: const Color(0xFF117cc1),
+                  primaryColor: Colors.white,
                   primaryColorLight: const Color(0xFF5dabf4),
                   primaryColorDark: const Color(0xFF0D5D91),
                   buttonColor: const Color(0xFF0D5D91),
                   indicatorColor: Colors.white,
-                  backgroundColor: const Color(0xFFFAFAFA),
+                  backgroundColor: Colors.white,
+                  canvasColor: Colors.white,
+                  scaffoldBackgroundColor: const Color(0xFFE7EBEE),
                   cardColor: Colors.white,
-                  canvasColor: const Color(0xFFFAFAFA),
-                  bottomAppBarColor: const Color(0xFFFAFAFA),
-                  //bottomAppBarColor: Colors.grey.shade300,
-                  //backgroundColor: Colors.grey.shade200,
+                  bottomAppBarColor: Colors.white,
+                  tabBarTheme: TabBarTheme(
+                    labelColor: Colors.black,
+                    unselectedLabelColor: Colors.black.withOpacity(.65),
+                  ),
+                  buttonTheme:
+                      ButtonThemeData(textTheme: ButtonTextTheme.accent),
+                  iconTheme: IconThemeData(
+                    color: Colors.blue,
+                  ),
+                  appBarTheme: AppBarTheme(
+                    color: Colors.white,
+                    iconTheme: IconThemeData(
+                      color: Colors.blue,
+                    ),
+                    textTheme: TextTheme(
+                      headline6: TextStyle(
+                        color: Colors.black,
+                      ),
+                    ),
+                  ),
                 ),
           title: 'Invoice Ninja',
           onGenerateRoute: isMobile(context) ? null : generateRoute,
@@ -228,6 +248,8 @@ class InvoiceNinjaAppState extends State<InvoiceNinjaApp> {
                       PaymentTermScreenBuilder(),
                   PaymentTermEditScreen.route: (context) =>
                       PaymentTermEditScreen(),
+                  PaymentTermViewScreen.route: (context) =>
+                      PaymentTermViewScreen(),
                   DesignScreen.route: (context) => DesignScreenBuilder(),
                   DesignViewScreen.route: (context) => DesignViewScreen(),
                   DesignEditScreen.route: (context) => DesignEditScreen(),

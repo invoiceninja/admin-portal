@@ -216,6 +216,7 @@ abstract class CompanyEntity extends Object
 
   BuiltList<DesignEntity> get designs;
 
+  @BuiltValueField(wireName: 'payment_terms')
   BuiltList<PaymentTermEntity> get paymentTerms;
 
   BuiltMap<String, UserEntity> get userMap;
@@ -1164,7 +1165,7 @@ abstract class SettingsEntity
 
   @nullable
   @BuiltValueField(wireName: 'payment_terms')
-  int get defaultPaymentTerms;
+  String get defaultPaymentTerms;
 
   @nullable
   @BuiltValueField(wireName: 'company_gateway_ids')

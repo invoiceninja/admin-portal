@@ -1,9 +1,7 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:invoiceninja_flutter/constants.dart';
 import 'package:invoiceninja_flutter/data/models/entities.dart';
-import 'package:invoiceninja_flutter/data/models/payment_term_model.dart';
 import 'package:invoiceninja_flutter/redux/payment_term/payment_term_selectors.dart';
 import 'package:invoiceninja_flutter/redux/static/static_selectors.dart';
 import 'package:invoiceninja_flutter/ui/app/buttons/elevated_button.dart';
@@ -56,7 +54,6 @@ class _CompanyDetailsState extends State<CompanyDetails>
   final _cityController = TextEditingController();
   final _stateController = TextEditingController();
   final _postalCodeController = TextEditingController();
-  final _paymentTermsController = TextEditingController();
   final _taskRateController = TextEditingController();
   final _custom1Controller = TextEditingController();
   final _custom2Controller = TextEditingController();
@@ -102,7 +99,6 @@ class _CompanyDetailsState extends State<CompanyDetails>
       _stateController,
       _postalCodeController,
       _taskRateController,
-      _paymentTermsController,
       _custom1Controller,
       _custom2Controller,
       _custom3Controller,
@@ -134,11 +130,6 @@ class _CompanyDetailsState extends State<CompanyDetails>
     _postalCodeController.text = settings.postalCode;
     _taskRateController.text = formatNumber(settings.defaultTaskRate, context,
         formatNumberType: FormatNumberType.input);
-    _paymentTermsController.text =
-        settings.defaultPaymentTerms == kPaymentTermsOff
-            ? ''
-            : formatNumber(settings.defaultPaymentTerms?.toDouble(), context,
-                formatNumberType: FormatNumberType.input);
     _custom1Controller.text = settings.customValue1;
     _custom2Controller.text = settings.customValue2;
     _custom3Controller.text = settings.customValue3;
@@ -157,7 +148,6 @@ class _CompanyDetailsState extends State<CompanyDetails>
   }
 
   void _onSettingsChanged() {
-    final state = widget.viewModel.state;
     _debouncer.run(() {
       final settings = widget.viewModel.settings.rebuild((b) => b
         ..name = _nameController.text.trim()
@@ -173,11 +163,6 @@ class _CompanyDetailsState extends State<CompanyDetails>
         ..postalCode = _postalCodeController.text.trim()
         ..defaultTaskRate =
             parseDouble(_taskRateController.text, zeroIsNull: true)
-        ..defaultPaymentTerms = _paymentTermsController.text.isEmpty
-            ? (state.settingsUIState.entityType == EntityType.company
-                ? -1
-                : null)
-            : parseInt(_paymentTermsController.text)
         ..customValue1 = _custom1Controller.text.trim()
         ..customValue2 = _custom2Controller.text.trim()
         ..customValue3 = _custom3Controller.text.trim()
@@ -464,20 +449,26 @@ class _CompanyDetailsState extends State<CompanyDetails>
                     allowClearing: true,
                   ),
                   AppDropdownButton<String>(
+                    showBlank: true,
                     labelText: localization.paymentTerm,
                     items: memoizedDropdownPaymentTermList(
                             state.paymentTermState.map,
                             state.paymentTermState.list)
-                        .map((paymentTermId) => DropdownMenuItem<String>(
-                              child: Text(state
-                                  .paymentTermState.map[paymentTermId].name),
-                              value: paymentTermId,
-                            ))
-                        .toList(),
-                    value: settings.defaultPaymentTerms,
-                    onChanged: (dynamic paymentTermId) =>
-                        viewModel.onSettingsChanged(settings.rebuild(
-                            (b) => b..defaultPaymentTerms = paymentTermId)),
+                        .map((paymentTermId) {
+                      final paymentTerm =
+                          state.paymentTermState.map[paymentTermId];
+                      return DropdownMenuItem<String>(
+                        child: Text(paymentTerm.name),
+                        value: paymentTerm.numDays.toString(),
+                      );
+                    }).toList(),
+                    value: '${settings.defaultPaymentTerms}',
+                    onChanged: (dynamic numDays) {
+                      print('## onChanged: $numDays');
+                      viewModel.onSettingsChanged(settings.rebuild((b) => b
+                        ..defaultPaymentTerms =
+                            numDays == null ? null : '$numDays'));
+                    },
                   ),
                   if (!state.uiState.settingsUIState.isFiltered)
                     Padding(

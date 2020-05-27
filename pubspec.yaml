@@ -48,7 +48,7 @@ dependencies:
   flutter_share: ^1.0.2+1
   package_info: ^0.4.0+16
   device_info: ^0.4.2+1
-  flutter_auth_buttons: ^0.8.0
+  rounded_loading_button: ^1.0.0
   #quick_actions: ^0.2.1
 
 dependency_overrides:
@@ -79,6 +79,7 @@ flutter:
   # To add assets to your application, add an assets section, like this:
   assets:
     - assets/images/logo.png
+    - assets/images/google-icon.png
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.io/assets-and-images/#resolution-aware.

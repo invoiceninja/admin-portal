@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_redux/flutter_redux.dart';
 import 'package:invoiceninja_flutter/constants.dart';
 import 'package:invoiceninja_flutter/data/models/entities.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
+import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/ui/app/app_border.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 
@@ -24,7 +26,11 @@ class BottomButtons extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final localization = AppLocalization.of(context);
-    final textColor = Theme.of(context).textTheme.bodyText1.color;
+    final store = StoreProvider.of<AppState>(context);
+    final state = store.state;
+    final textColor = state.prefState.enableDarkMode
+        ? Theme.of(context).textTheme.bodyText1.color
+        : Colors.blue;
 
     return SizedBox(
       height: kTopBottomBarHeight,

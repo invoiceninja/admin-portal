@@ -22,8 +22,6 @@ class AuthRepository {
 
   Future<LoginResponse> signUp({
     String url,
-    String firstName,
-    String lastName,
     String email,
     String password,
     String secret,
@@ -31,8 +29,6 @@ class AuthRepository {
     final credentials = {
       'email': email,
       'password': password,
-      'first_name': firstName,
-      'last_name': lastName,
       'terms_of_service': true,
       'privacy_policy': true,
       'token_name': _tokenName,

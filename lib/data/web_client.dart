@@ -8,6 +8,7 @@ import 'package:invoiceninja_flutter/.env.dart';
 import 'package:http/http.dart' as http;
 import 'package:invoiceninja_flutter/constants.dart';
 import 'package:async/async.dart';
+import 'package:invoiceninja_flutter/utils/strings.dart';
 import 'package:path/path.dart';
 
 class WebClient {
@@ -57,7 +58,7 @@ class WebClient {
 
     url = _checkUrl(url);
     print('POST: $url');
-    debugPrint('Data: $data', wrapWidth: 1000);
+    printWrapped('Data: $data');
     http.Response response;
 
     if (filePath != null) {
@@ -95,7 +96,7 @@ class WebClient {
 
     url = _checkUrl(url);
     print('PUT: $url');
-    debugPrint('Data: $data', wrapWidth: 1000);
+    printWrapped('Data: $data');
 
     http.Response response;
 

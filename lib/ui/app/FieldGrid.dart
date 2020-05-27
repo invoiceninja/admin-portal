@@ -21,6 +21,7 @@ class FieldGrid extends StatelessWidget {
             Flexible(
               child: Text(
                 localization.lookup(field),
+                overflow: TextOverflow.ellipsis,
                 style: TextStyle(
                   fontWeight: FontWeight.w300,
                   color: textColor.withOpacity(.65),
@@ -28,13 +29,13 @@ class FieldGrid extends StatelessWidget {
               ),
             ),
             SizedBox(height: 6),
-            Flexible(
-                child: Text(
+            Text(
               value,
+              overflow: TextOverflow.ellipsis,
               style: TextStyle(
                 fontSize: 19,
               ),
-            )),
+            ),
           ],
         ));
       }

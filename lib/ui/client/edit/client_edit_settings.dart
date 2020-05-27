@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:invoiceninja_flutter/constants.dart';
 import 'package:invoiceninja_flutter/data/models/entities.dart';
-import 'package:invoiceninja_flutter/data/models/payment_term_model.dart';
+import 'package:invoiceninja_flutter/redux/payment_term/payment_term_selectors.dart';
 import 'package:invoiceninja_flutter/ui/app/entity_dropdown.dart';
+import 'package:invoiceninja_flutter/ui/app/forms/app_dropdown_button.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/decorated_form_field.dart';
 import 'package:invoiceninja_flutter/ui/client/edit/client_edit_vm.dart';
 import 'package:invoiceninja_flutter/utils/completers.dart';
@@ -33,7 +33,6 @@ class ClientEditSettingsState extends State<ClientEditSettings> {
 
   @override
   void didChangeDependencies() {
-    final localization = AppLocalization.of(context);
     _controllers = [
       _taskRateController,
       _paymentTermsController,
@@ -46,7 +45,9 @@ class ClientEditSettingsState extends State<ClientEditSettings> {
     _taskRateController.text = formatNumber(
         client.settings.defaultTaskRate, context,
         formatNumberType: FormatNumberType.input);
-    _paymentTermsController.text = client.getPaymentTerm(localization.net);
+    _paymentTermsController.text = client.settings.defaultPaymentTerms != null
+        ? '$client.settings.defaultPaymentTerms'
+        : null;
 
     _controllers
         .forEach((dynamic controller) => controller.addListener(_onChanged));
@@ -80,6 +81,7 @@ class ClientEditSettingsState extends State<ClientEditSettings> {
   Widget build(BuildContext context) {
     final localization = AppLocalization.of(context);
     final viewModel = widget.viewModel;
+    final state = viewModel.state;
     final client = viewModel.client;
 
     return ListView(
@@ -109,39 +111,25 @@ class ClientEditSettingsState extends State<ClientEditSettings> {
               onSelected: (SelectableEntity language) => viewModel.onChanged(
                   client.rebuild((b) => b..settings.languageId = language?.id)),
             ),
-            PopupMenuButton<PaymentTermEntity>(
-              padding: EdgeInsets.zero,
-              initialValue: null,
-              itemBuilder: (BuildContext context) => (<int>[]
-                    ..addAll(kPaymentTerms)
-                    ..addAll(viewModel.company.settings.customPaymentTerms
-                        .map((paymentTerm) => paymentTerm.numDays))
-                    ..sort((a, b) => a.abs() - b.abs()))
-                  .map((int numDays) =>
-                      PaymentTermEntity().rebuild((b) => b..numDays = numDays))
-                  .map((paymentTerm) => PopupMenuItem<PaymentTermEntity>(
-                        value: paymentTerm,
-                        child:
-                            Text(paymentTerm.getPaymentTerm(localization.net)),
-                      ))
-                  .toList(),
-              onSelected: (paymentTerm) {
-                viewModel.onChanged(client.rebuild((b) =>
-                    b..settings.defaultPaymentTerms = paymentTerm.numDays));
-                _paymentTermsController.text =
-                    paymentTerm.getPaymentTerm(localization.net);
+            AppDropdownButton<String>(
+              showBlank: true,
+              labelText: localization.paymentTerm,
+              items: memoizedDropdownPaymentTermList(
+                      state.paymentTermState.map, state.paymentTermState.list)
+                  .map((paymentTermId) {
+                final paymentTerm = state.paymentTermState.map[paymentTermId];
+                return DropdownMenuItem<String>(
+                  child: Text(paymentTerm.name),
+                  value: paymentTerm.numDays.toString(),
+                );
+              }).toList(),
+              value: '${client.settings.defaultPaymentTerms}',
+              onChanged: (dynamic numDays) {
+                print('## onChanged: $numDays');
+                viewModel.onChanged(client.rebuild((b) => b
+                  ..settings.defaultPaymentTerms =
+                      numDays == null ? null : '$numDays'));
               },
-              child: InkWell(
-                child: IgnorePointer(
-                  child: TextFormField(
-                    controller: _paymentTermsController,
-                    decoration: InputDecoration(
-                      labelText: localization.paymentTerms,
-                      suffixIcon: const Icon(Icons.arrow_drop_down),
-                    ),
-                  ),
-                ),
-              ),
             ),
             DecoratedFormField(
               controller: _taskRateController,

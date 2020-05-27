@@ -3,17 +3,21 @@ import 'package:memoize/memoize.dart';
 import 'package:built_collection/built_collection.dart';
 import 'package:invoiceninja_flutter/redux/ui/list_ui_state.dart';
 
-var memoizedDropdownPaymentTermList = memo2((BuiltMap<String, PaymentTermEntity>
-            paymentTermMap,
-        BuiltList<String> paymentTermList) =>
-    dropdownPaymentTermsSelector(paymentTermMap, paymentTermList));
+var memoizedDropdownPaymentTermList = memo2(
+    (BuiltMap<String, PaymentTermEntity> paymentTermMap,
+            BuiltList<String> paymentTermList) =>
+        dropdownPaymentTermsSelector(paymentTermMap, paymentTermList));
 
 List<String> dropdownPaymentTermsSelector(
     BuiltMap<String, PaymentTermEntity> paymentTermMap,
     BuiltList<String> paymentTermList) {
+  final Map<int, bool> numDays = {};
   final list = paymentTermList.where((paymentTermId) {
     final paymentTerm = paymentTermMap[paymentTermId];
-
+    if (numDays.containsKey(paymentTerm.numDays)) {
+      return false;
+    }
+    numDays[paymentTerm.numDays] = true;
     return paymentTerm.isActive;
   }).toList();
 
@@ -22,6 +26,8 @@ List<String> dropdownPaymentTermsSelector(
     final paymentTermB = paymentTermMap[paymentTermBId];
     return paymentTermA.compareTo(paymentTermB, PaymentTermFields.name, true);
   });
+
+  print('## TERMS: ${list.map((id) => paymentTermMap[id].numDays).toList()}');
 
   return list;
 }

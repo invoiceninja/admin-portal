@@ -44,7 +44,9 @@ class PaymentPresenter extends EntityPresenter {
       case PaymentFields.paymentDate:
         return Text(formatDate(payment.date, context));
       case PaymentFields.amount:
-        return Text(formatNumber(payment.amount, context));
+        return Align(
+            alignment: Alignment.centerRight,
+            child: Text(formatNumber(payment.amount, context)));
       case PaymentFields.paymentStatus:
         return Text(AppLocalization.of(context)
             .lookup('payment_status_${payment.statusId}'));

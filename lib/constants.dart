@@ -28,6 +28,7 @@ const String kAppleStoreUrl =
     'https://itunes.apple.com/us/app/invoice-ninja/id1435514417?ls=1&mt=8';
 const String kGoogleStoreUrl =
     'https://play.google.com/store/apps/details?id=com.invoiceninja.flutter';
+const String kCapterralUrl = 'https://www.capterra.com/p/145215/Invoice-Ninja/';
 
 const String kSharedPrefs = 'shared_prefs';
 const String kSharedPrefAppVersion = 'app_version';
@@ -66,6 +67,7 @@ const double kTabletDialogPadding = 250;
 const double kTableColumnWidthMin = 50;
 const double kTableColumnWidthMax = 120;
 
+const int kTableListWidthCutoff = 500;
 const int kDefaultAnimationDuration = 500;
 
 const int kCardTypeVisa = 1;
@@ -278,6 +280,7 @@ const String kReminderScheduleAfterDueDate = 'after_due_date';
 
 const String kSettingsCompanyDetails = 'company_details';
 const String kSettingsPaymentTerms = 'payment_terms';
+const String kSettingsPaymentTermView = 'payment_term_view';
 const String kSettingsPaymentTermEdit = 'payment_term_edit';
 const String kSettingsUserDetails = 'user_details';
 const String kSettingsLocalization = 'localization';
@@ -374,17 +377,15 @@ const String kDefaultAccentColor = '#0091EA';
 const String kDefaultDarkSelectedColorMenu = '#1E252F';
 const String kDefaultDarkSelectedColor = '#253750';
 const String kDefaultDarkBorderColor = '#393A3C';
-const String kDefaultLightSelectedColorMenu = '#EEEEEE';
-const String kDefaultLightSelectedColor = '#EEEEEE';
-const String kDefaultLightBorderColor = '#DDDDDD';
+const String kDefaultLightSelectedColorMenu = '#D3EAFD';
+const String kDefaultLightSelectedColor = '#D3EAFD';
+const String kDefaultLightBorderColor = '#E7EBEE';
 
 const String kReportGroupDay = 'day';
 const String kReportGroupMonth = 'month';
 const String kReportGroupYear = 'year';
 
 const String kActivityEmailInvoice = '6';
-
-const int kPaymentTermsOff = -1;
 
 const int kModuleRecurringInvoices = 1;
 const int kModuleCredits = 2;
@@ -423,8 +424,8 @@ class InvoiceStatusColors {
     kInvoiceStatusPartial: Colors.deepPurple,
     kInvoiceStatusPaid: convertHexStringToColor('#407535'),
     kInvoiceStatusPastDue: convertHexStringToColor('#8D3E3F'),
-    kInvoiceStatusCancelled: Colors.red,
-    kInvoiceStatusReversed: Colors.red,
+    kInvoiceStatusCancelled: convertHexStringToColor('#8D3E3F'),
+    kInvoiceStatusReversed: convertHexStringToColor('#8D3E3F'),
   };
 }
 
@@ -451,11 +452,11 @@ class QuoteStatusColors {
 class PaymentStatusColors {
   static var colors = {
     kPaymentStatusPending: convertHexStringToColor('#505F73'),
-    kPaymentStatusVoided: Colors.red,
-    kPaymentStatusFailed: Colors.red,
+    kPaymentStatusVoided: convertHexStringToColor('#8D3E3F'),
+    kPaymentStatusFailed: convertHexStringToColor('#8D3E3F'),
     kPaymentStatusCompleted: convertHexStringToColor('#407535'),
     kPaymentStatusPartiallyRefunded: Colors.purple,
-    kPaymentStatusRefunded: Colors.red,
+    kPaymentStatusRefunded: convertHexStringToColor('#8D3E3F'),
   };
 }
 

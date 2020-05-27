@@ -9,14 +9,13 @@ import 'package:invoiceninja_flutter/ui/app/buttons/elevated_button.dart';
 import 'package:invoiceninja_flutter/ui/app/dialogs/alert_dialog.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/decorated_form_field.dart';
 import 'package:invoiceninja_flutter/ui/app/link_text.dart';
-import 'package:invoiceninja_flutter/ui/app/loading_indicator.dart';
 import 'package:invoiceninja_flutter/ui/auth/login_vm.dart';
 import 'package:invoiceninja_flutter/utils/colors.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:invoiceninja_flutter/ui/app/form_card.dart';
 import 'package:invoiceninja_flutter/utils/platforms.dart';
 import 'package:invoiceninja_flutter/.env.dart';
-import 'package:flutter_auth_buttons/flutter_auth_buttons.dart';
+import 'package:rounded_loading_button/rounded_loading_button.dart';
 
 class LoginView extends StatefulWidget {
   const LoginView({
@@ -43,6 +42,7 @@ class _LoginState extends State<LoginView> {
   final _oneTimePasswordController = TextEditingController();
 
   List<TextEditingController> _controllers;
+  final _buttonController = RoundedLoadingButtonController();
 
   static const String OTP_ERROR = 'OTP_REQUIRED';
 
@@ -168,10 +168,12 @@ class _LoginState extends State<LoginView> {
     });
 
     if (!isValid) {
+      _buttonController.reset();
       return;
     }
 
     if (_createAccount && (!_termsChecked || !_privacyChecked)) {
+      _buttonController.reset();
       showDialog<AlertDialog>(
           context: context,
           builder: (BuildContext context) {
@@ -197,10 +199,12 @@ class _LoginState extends State<LoginView> {
     final Completer<Null> completer = Completer<Null>();
     completer.future.then((_) {
       setState(() {
+        //_buttonController.reset();
         _loginError = '';
       });
     }).catchError((Object error) {
       setState(() {
+        _buttonController.reset();
         _loginError = error.toString();
       });
     });
@@ -211,8 +215,6 @@ class _LoginState extends State<LoginView> {
         completer,
         email: _emailController.text,
         password: _passwordController.text,
-        firstName: _firstNameController.text,
-        lastName: _lastNameController.text,
       );
     } else {
       viewModel.onGoogleSignUpPressed(context, completer);
@@ -229,6 +231,7 @@ class _LoginState extends State<LoginView> {
     });
 
     if (!isValid) {
+      _buttonController.reset();
       return;
     }
 
@@ -236,6 +239,7 @@ class _LoginState extends State<LoginView> {
 
     completer.future.then((_) {
       setState(() {
+        //_buttonController.reset();
         _loginError = '';
         if (_recoverPassword) {
           _recoverPassword = false;
@@ -249,6 +253,7 @@ class _LoginState extends State<LoginView> {
       });
     }).catchError((Object error) {
       setState(() {
+        _buttonController.reset();
         _loginError = error.toString();
       });
     });
@@ -380,26 +385,6 @@ class _LoginState extends State<LoginView> {
                                   _loginError = '';
                                 });
                               },
-                            ),
-                          if (_createAccount && _emailLogin)
-                            DecoratedFormField(
-                              label: localization.firstName,
-                              controller: _firstNameController,
-                              //autovalidate: _autoValidate,
-                              validator: (val) =>
-                                  val.isEmpty || val.trim().isEmpty
-                                      ? localization.pleaseEnterAFirstName
-                                      : null,
-                            ),
-                          if (_createAccount && _emailLogin)
-                            DecoratedFormField(
-                              label: localization.lastName,
-                              controller: _lastNameController,
-                              //autovalidate: _autoValidate,
-                              validator: (val) =>
-                                  val.isEmpty || val.trim().isEmpty
-                                      ? localization.pleaseEnterALastName
-                                      : null,
                             ),
                           if (_emailLogin)
                             DecoratedFormField(
@@ -575,30 +560,42 @@ class _LoginState extends State<LoginView> {
                         ),
                       ),
                     Padding(
-                        padding: EdgeInsets.only(top: 25, bottom: 10),
-                        child: viewModel.isLoading
-                            ? LoadingIndicator(height: 48)
-                            : _emailLogin
-                                ? RaisedButton.icon(
-                                    icon: Icon(Icons.mail),
-                                    color: convertHexStringToColor('#4285F4'),
-                                    label: Padding(
-                                      padding: const EdgeInsets.only(left: 4),
-                                      child: Text(
-                                        localization.emailSignIn,
-                                        style: TextStyle(fontSize: 18),
-                                      ),
-                                    ),
-                                    onPressed: () => _createAccount
-                                        ? _submitSignUpForm()
-                                        : _submitLoginForm(),
-                                  )
-                                : GoogleSignInButton(
-                                    onPressed: () => _createAccount
-                                        ? _submitSignUpForm()
-                                        : _submitLoginForm(),
-                                    darkMode: true,
-                                  )),
+                      padding: EdgeInsets.only(top: 30, bottom: 10),
+                      child: RoundedLoadingButton(
+                        height: 38,
+                        width: 210,
+                        controller: _buttonController,
+                        color: convertHexStringToColor('#4285F4'),
+                        onPressed: () => _createAccount
+                            ? _submitSignUpForm()
+                            : _submitLoginForm(),
+                        child: Row(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            if (_emailLogin)
+                              Icon(Icons.mail)
+                            else
+                              ClipOval(
+                                child: Image.asset(
+                                    'assets/images/google-icon.png',
+                                    width: 30,
+                                    height: 30),
+                              ),
+                            SizedBox(width: 10),
+                            Text(
+                              _createAccount
+                                  ? (_emailLogin
+                                      ? localization.emailSignUp
+                                      : localization.googleSignUp)
+                                  : (_emailLogin
+                                      ? localization.emailSignIn
+                                      : localization.googleSignIn),
+                              style: TextStyle(fontSize: 18),
+                            )
+                          ],
+                        ),
+                      ),
+                    ),
                     if (!isOneTimePassword)
                       Column(
                         mainAxisAlignment: MainAxisAlignment.center,

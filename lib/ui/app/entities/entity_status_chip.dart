@@ -29,14 +29,13 @@ class EntityStatusChip extends StatelessWidget {
         break;
       case EntityType.invoice:
         final invoice = entity as InvoiceEntity;
-        final statusId =
-            invoice.isPastDue ? kInvoiceStatusPastDue : invoice.statusId;
+        final statusId = invoice.calculatedStatusId;
         label = kInvoiceStatuses[statusId];
         color = InvoiceStatusColors.colors[statusId];
         break;
       case EntityType.quote:
         final quote = entity as InvoiceEntity;
-        final statusId = quote.isPastDue ? kQuoteStatusExpired : quote.statusId;
+        final statusId = quote.calculatedStatusId;
         label = kQuoteStatuses[statusId];
         color = QuoteStatusColors.colors[statusId];
         break;

@@ -35,7 +35,8 @@ class QuotePresenter extends EntityPresenter {
               : localization.lookup(kQuoteStatuses[quote.statusId]),
         );
       case QuoteFields.quoteNumber:
-        return Text(quote.number);
+        return Text(
+            (quote.number ?? '').isEmpty ? localization.pending : quote.number);
       case QuoteFields.client:
         return Text((state.clientState.map[quote.clientId] ??
                 ClientEntity(id: quote.clientId))
@@ -43,8 +44,11 @@ class QuotePresenter extends EntityPresenter {
       case QuoteFields.date:
         return Text(formatDate(quote.date, context));
       case QuoteFields.amount:
-        return Text(
-            formatNumber(quote.amount, context, clientId: quote.clientId));
+        return Align(
+          alignment: Alignment.centerRight,
+          child: Text(
+              formatNumber(quote.amount, context, clientId: quote.clientId)),
+        );
       case QuoteFields.validUntil:
         return Text(formatDate(quote.dueDate, context));
     }

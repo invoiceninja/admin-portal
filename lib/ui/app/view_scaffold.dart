@@ -5,10 +5,9 @@ import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/redux/ui/ui_actions.dart';
 import 'package:invoiceninja_flutter/ui/app/actions_menu_button.dart';
-import 'package:invoiceninja_flutter/utils/icons.dart';
+import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:invoiceninja_flutter/utils/platforms.dart';
 import 'buttons/edit_icon_button.dart';
-import 'entities/entity_state_title.dart';
 
 class ViewScaffold extends StatelessWidget {
   const ViewScaffold({
@@ -31,10 +30,19 @@ class ViewScaffold extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final localization = AppLocalization.of(context);
     final store = StoreProvider.of<AppState>(context);
     final state = store.state;
     final userCompany = state.userCompany;
     final isSettings = entity.entityType.isSetting;
+
+    String title = (entity.listDisplayName ?? '').isEmpty
+        ? localization.pending
+        : entity.listDisplayName;
+
+    if (!isFilter) {
+      title = localization.lookup('${entity.entityType}') + '  ›  ' + title;
+    }
 
     Widget leading;
     if (!isMobile(context)) {
@@ -50,8 +58,6 @@ class ViewScaffold extends StatelessWidget {
               ? onBackPressed()
               : store.dispatch(UpdateCurrentRoute(state.uiState.previousRoute)),
         );
-      } else if (isNotMobile(context)) {
-        leading = Icon(getEntityIcon(entity.entityType));
       }
     }
 
@@ -64,10 +70,9 @@ class ViewScaffold extends StatelessWidget {
         appBar: AppBar(
           leading: leading,
           automaticallyImplyLeading: isMobile(context) || isSettings,
-          title: EntityStateTitle(
-            entity: entity,
-            title: title,
-            showStatus: false,
+          title: Text(
+            title,
+            maxLines: 2,
           ),
           bottom: appBarBottom,
           actions: entity.isNew
@@ -83,7 +88,7 @@ class ViewScaffold extends StatelessWidget {
                         })
                       : Container(),
                   ActionMenuButton(
-                    isSaving: state.isSaving && isMobile(context),
+                    isSaving: state.isSaving,
                     entity: entity,
                     onSelected: (context, action) =>
                         handleEntityAction(context, entity, action),

@@ -30,12 +30,12 @@ class InvoicePresenter extends EntityPresenter {
     switch (field) {
       case InvoiceFields.status:
         return Text(
-          invoice.isPastDue
-              ? localization.pastDue
-              : localization.lookup(kInvoiceStatuses[invoice.statusId]),
+          localization.lookup(kInvoiceStatuses[invoice.calculatedStatusId]),
         );
       case InvoiceFields.invoiceNumber:
-        return Text(invoice.number);
+        return Text((invoice.number ?? '').isEmpty
+            ? localization.pending
+            : invoice.number);
       case InvoiceFields.client:
         return Text((state.clientState.map[invoice.clientId] ??
                 ClientEntity(id: invoice.clientId))
@@ -43,11 +43,18 @@ class InvoicePresenter extends EntityPresenter {
       case InvoiceFields.invoiceDate:
         return Text(formatDate(invoice.date, context));
       case InvoiceFields.amount:
-        return Text(
-            formatNumber(invoice.amount, context, clientId: invoice.clientId));
+        return Align(
+          alignment: Alignment.centerRight,
+          child: Text(
+            formatNumber(invoice.amount, context, clientId: invoice.clientId)
+          ),
+        );
       case InvoiceFields.balance:
-        return Text(
-            formatNumber(invoice.balance, context, clientId: invoice.clientId));
+        return Align(
+          alignment: Alignment.centerRight,
+          child: Text(formatNumber(invoice.balance, context,
+              clientId: invoice.clientId)),
+        );
       case InvoiceFields.dueDate:
         return Text(formatDate(invoice.dueDate, context));
     }

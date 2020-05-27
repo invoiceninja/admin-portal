@@ -2,7 +2,6 @@ import 'package:flutter_redux/flutter_redux.dart';
 import 'package:invoiceninja_flutter/constants.dart';
 import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
-import 'package:invoiceninja_flutter/redux/ui/pref_state.dart';
 import 'package:invoiceninja_flutter/ui/app/actions_menu_button.dart';
 import 'package:invoiceninja_flutter/ui/app/entities/entity_status_chip.dart';
 import 'package:invoiceninja_flutter/ui/app/entity_state_label.dart';
@@ -12,7 +11,6 @@ import 'package:flutter/material.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/ui/app/dismissible_entity.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
-import 'package:invoiceninja_flutter/utils/platforms.dart';
 
 class PaymentListItem extends StatelessWidget {
   const PaymentListItem({
@@ -51,162 +49,19 @@ class PaymentListItem extends StatelessWidget {
     final filterMatch = filter != null && filter.isNotEmpty
         ? payment.matchesFilterValue(filter)
         : null;
-    final subtitle = filterMatch ??
+    final mobileSubtitle = filterMatch ??
         (payment.number ?? '') + ' • ' + formatDate(payment.date, context);
     final textColor = Theme.of(context).textTheme.bodyText1.color;
 
-    Widget _buildMobile() {
-      return ListTile(
-        onTap: isInMultiselect
-            ? () => onEntityAction(EntityAction.toggleMultiselect)
-            : onTap,
-        onLongPress: onLongPress,
-        leading: showCheckbox
-            ? IgnorePointer(
-                ignoring: listUIState.isInMultiselect(),
-                child: Checkbox(
-                  value: isChecked,
-                  materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
-                  onChanged: (value) => onCheckboxChanged(value),
-                  activeColor: Theme.of(context).accentColor,
-                ),
-              )
-            : null,
-        title: Container(
-          width: MediaQuery.of(context).size.width,
-          child: Row(
-            children: <Widget>[
-              Expanded(
-                child: Text(
-                  client.displayName,
-                  style: Theme.of(context).textTheme.headline6,
-                ),
-              ),
-              Text(formatNumber(payment.amount, context),
-                  style: Theme.of(context).textTheme.headline6),
-            ],
-          ),
-        ),
-        subtitle: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: <Widget>[
-            Row(
-              children: <Widget>[
-                Expanded(
-                  child: subtitle != null && subtitle.isNotEmpty
-                      ? Text(
-                          subtitle,
-                          maxLines: 3,
-                          overflow: TextOverflow.ellipsis,
-                        )
-                      : Container(),
-                ),
-                Text(localization.lookup('payment_status_${payment.statusId}'),
-                    style: TextStyle(
-                      color: PaymentStatusColors.colors[payment.statusId],
-                    )),
-              ],
-            ),
-            EntityStateLabel(payment),
-          ],
-        ),
-      );
+    String desktopSubtitle = '';
+    if (payment.date.isNotEmpty) {
+      desktopSubtitle = formatDate(payment.date, context);
     }
-
-    Widget _buildDesktop() {
-      String subtitle = '';
-      if (payment.date.isNotEmpty) {
-        subtitle = formatDate(payment.date, context);
+    if (payment.transactionReference.isNotEmpty) {
+      if (desktopSubtitle.isNotEmpty) {
+        desktopSubtitle += ' • ';
       }
-      if (payment.transactionReference.isNotEmpty) {
-        if (subtitle.isNotEmpty) {
-          subtitle += ' • ';
-        }
-        subtitle += payment.transactionReference;
-      }
-
-      return InkWell(
-        onTap: isInMultiselect
-            ? () => onEntityAction(EntityAction.toggleMultiselect)
-            : onTap,
-        onLongPress: onLongPress,
-        child: Padding(
-          padding: const EdgeInsets.only(
-            left: 12,
-            right: 28,
-            top: 4,
-            bottom: 4,
-          ),
-          child: Row(
-            children: <Widget>[
-              Padding(
-                  padding: const EdgeInsets.only(right: 15),
-                  child: showCheckbox
-                      ? IgnorePointer(
-                          ignoring: listUIState.isInMultiselect(),
-                          child: Checkbox(
-                            value: isChecked,
-                            materialTapTargetSize:
-                                MaterialTapTargetSize.shrinkWrap,
-                            onChanged: (value) => onCheckboxChanged(value),
-                            activeColor: Theme.of(context).accentColor,
-                          ),
-                        )
-                      : ActionMenuButton(
-                          entityActions: payment.getActions(
-                              userCompany: state.userCompany,
-                              includeEdit: true,
-                              client: client),
-                          isSaving: false,
-                          entity: payment,
-                          onSelected: (context, action) =>
-                              handleEntityAction(context, payment, action),
-                        )),
-              ConstrainedBox(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: <Widget>[
-                    Text(
-                      payment.number,
-                      style: textStyle,
-                      overflow: TextOverflow.ellipsis,
-                    ),
-                    if (!payment.isActive) EntityStateLabel(payment)
-                  ],
-                ),
-                constraints: BoxConstraints(
-                  minWidth: 80,
-                ),
-              ),
-              SizedBox(width: 10),
-              Expanded(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: <Widget>[
-                    Text(client.displayName, style: textStyle),
-                    Text(
-                      filterMatch ?? subtitle,
-                      maxLines: 3,
-                      overflow: TextOverflow.ellipsis,
-                      style: Theme.of(context).textTheme.subtitle2.copyWith(
-                            color: textColor.withOpacity(0.65),
-                          ),
-                    ),
-                  ],
-                ),
-              ),
-              SizedBox(width: 10),
-              Text(
-                formatNumber(payment.amount, context, clientId: client.id),
-                style: textStyle,
-                textAlign: TextAlign.end,
-              ),
-              SizedBox(width: 25),
-              EntityStatusChip(entity: payment)
-            ],
-          ),
-        ),
-      );
+      desktopSubtitle += payment.transactionReference;
     }
 
     return DismissibleEntity(
@@ -217,9 +72,158 @@ class PaymentListItem extends StatelessWidget {
       userCompany: state.userCompany,
       entity: payment,
       onEntityAction: onEntityAction,
-      child: calculateLayout(context, breakOutTablet: true) == AppLayout.desktop
-          ? _buildDesktop()
-          : _buildMobile(),
+      child: LayoutBuilder(
+          builder: (BuildContext context, BoxConstraints constraints) {
+        return constraints.maxWidth > kTableListWidthCutoff
+            ? InkWell(
+                onTap: isInMultiselect
+                    ? () => onEntityAction(EntityAction.toggleMultiselect)
+                    : onTap,
+                onLongPress: onLongPress,
+                child: Padding(
+                  padding: const EdgeInsets.only(
+                    left: 12,
+                    right: 28,
+                    top: 4,
+                    bottom: 4,
+                  ),
+                  child: Row(
+                    children: <Widget>[
+                      Padding(
+                          padding: const EdgeInsets.only(right: 15),
+                          child: showCheckbox
+                              ? IgnorePointer(
+                                  ignoring: listUIState.isInMultiselect(),
+                                  child: Checkbox(
+                                    value: isChecked,
+                                    materialTapTargetSize:
+                                        MaterialTapTargetSize.shrinkWrap,
+                                    onChanged: (value) =>
+                                        onCheckboxChanged(value),
+                                    activeColor: Theme.of(context).accentColor,
+                                  ),
+                                )
+                              : ActionMenuButton(
+                                  entityActions: payment.getActions(
+                                      userCompany: state.userCompany,
+                                      includeEdit: true,
+                                      client: client),
+                                  isSaving: false,
+                                  entity: payment,
+                                  onSelected: (context, action) =>
+                                      handleEntityAction(
+                                          context, payment, action),
+                                )),
+                      ConstrainedBox(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: <Widget>[
+                            Text(
+                              payment.number,
+                              style: textStyle,
+                              overflow: TextOverflow.ellipsis,
+                            ),
+                            if (!payment.isActive) EntityStateLabel(payment)
+                          ],
+                        ),
+                        constraints: BoxConstraints(
+                          minWidth: 80,
+                        ),
+                      ),
+                      SizedBox(width: 10),
+                      Expanded(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: <Widget>[
+                            Text(client.displayName, style: textStyle),
+                            Text(
+                              filterMatch ?? desktopSubtitle,
+                              maxLines: 3,
+                              overflow: TextOverflow.ellipsis,
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .subtitle2
+                                  .copyWith(
+                                    color: textColor.withOpacity(0.65),
+                                  ),
+                            ),
+                          ],
+                        ),
+                      ),
+                      SizedBox(width: 10),
+                      Text(
+                        formatNumber(payment.amount, context,
+                            clientId: client.id),
+                        style: textStyle,
+                        textAlign: TextAlign.end,
+                      ),
+                      SizedBox(width: 25),
+                      EntityStatusChip(entity: payment)
+                    ],
+                  ),
+                ),
+              )
+            : ListTile(
+                onTap: isInMultiselect
+                    ? () => onEntityAction(EntityAction.toggleMultiselect)
+                    : onTap,
+                onLongPress: onLongPress,
+                leading: showCheckbox
+                    ? IgnorePointer(
+                        ignoring: listUIState.isInMultiselect(),
+                        child: Checkbox(
+                          value: isChecked,
+                          materialTapTargetSize:
+                              MaterialTapTargetSize.shrinkWrap,
+                          onChanged: (value) => onCheckboxChanged(value),
+                          activeColor: Theme.of(context).accentColor,
+                        ),
+                      )
+                    : null,
+                title: Container(
+                  width: MediaQuery.of(context).size.width,
+                  child: Row(
+                    children: <Widget>[
+                      Expanded(
+                        child: Text(
+                          client.displayName,
+                          style: Theme.of(context).textTheme.headline6,
+                        ),
+                      ),
+                      Text(formatNumber(payment.amount, context),
+                          style: Theme.of(context).textTheme.headline6),
+                    ],
+                  ),
+                ),
+                subtitle: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: <Widget>[
+                    Row(
+                      children: <Widget>[
+                        Expanded(
+                          child: mobileSubtitle != null &&
+                                  mobileSubtitle.isNotEmpty
+                              ? Text(
+                                  mobileSubtitle,
+                                  maxLines: 3,
+                                  overflow: TextOverflow.ellipsis,
+                                )
+                              : Container(),
+                        ),
+                        Text(
+                            localization
+                                .lookup('payment_status_${payment.statusId}'),
+                            style: TextStyle(
+                              color:
+                                  PaymentStatusColors.colors[payment.statusId],
+                            )),
+                      ],
+                    ),
+                    EntityStateLabel(payment),
+                  ],
+                ),
+              );
+      }),
     );
   }
 }
