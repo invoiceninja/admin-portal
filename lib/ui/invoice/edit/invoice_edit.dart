@@ -31,8 +31,10 @@ class _InvoiceEditState extends State<InvoiceEdit>
       GlobalKey<FormState>(debugLabel: '_invoiceEdit');
 
   static const kDetailsScreen = 0;
+
   //static const kContactScreen = 1;
   static const kItemScreen = 2;
+
   //static const kNotesScreen = 3;
 
   @override
@@ -124,7 +126,8 @@ class _InvoiceEditState extends State<InvoiceEdit>
             '${localization.total}: ${formatNumber(invoice.calculateTotal(viewModel.company.settings.enableInclusiveTaxes ?? false), context, clientId: viewModel.invoice.clientId)}',
             style: TextStyle(
               //color: Theme.of(context).selectedRowColor,
-              color: Colors.white,
+              color:
+                  state.prefState.enableDarkMode ? Colors.white : Colors.black,
               fontSize: 20.0,
             ),
           ),
