@@ -86,7 +86,9 @@ class MainScreen extends StatelessWidget {
             }
           } else {
             bool editingFilterEntity = false;
-            if (uiState.filterEntityId != null && subRoute == '/edit') {
+            if (prefState.fullHeightFilter &&
+                uiState.filterEntityId != null &&
+                subRoute == '/edit') {
               if (mainRoute == '/${uiState.filterEntityType}') {
                 mainRoute = '/' + uiState.previousMainRoute;
                 editingFilterEntity = true;
