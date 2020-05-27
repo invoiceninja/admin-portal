@@ -1,25 +1,23 @@
 import 'package:flutter/material.dart';
 import 'package:invoiceninja_flutter/constants.dart';
 import 'package:invoiceninja_flutter/data/models/entities.dart';
-import 'package:invoiceninja_flutter/ui/app/entities/entity_status_chip.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 
 class EntityStateTitle extends StatelessWidget {
   const EntityStateTitle({
     @required this.entity,
     this.title,
-    this.showStatus = false,
   });
 
   final BaseEntity entity;
   final String title;
-  final bool showStatus;
 
   @override
   Widget build(BuildContext context) {
     final localization = AppLocalization.of(context);
 
     final state = entity.entityState;
+    final titleText = title ?? entity.listDisplayName;
 
     if (state == kEntityStateActive) {
       return Row(
@@ -27,22 +25,17 @@ class EntityStateTitle extends StatelessWidget {
         children: <Widget>[
           Expanded(
             child: Text(
-              title ?? entity.listDisplayName,
+              titleText,
               overflow: TextOverflow.ellipsis,
             ),
           ),
-          if (showStatus)
-            EntityStatusChip(
-              entity: entity,
-              addGap: true,
-            ),
         ],
       );
     }
 
     return Row(
       children: <Widget>[
-        Expanded(child: Text(title ?? entity.listDisplayName)),
+        Expanded(child: Text(titleText)),
         SizedBox(width: 20),
         Container(
           height: 35,

@@ -185,7 +185,7 @@ class InvoiceNinjaAppState extends State<InvoiceNinjaApp> {
                     unselectedLabelColor: Colors.black.withOpacity(.65),
                   ),
                   buttonTheme: ButtonThemeData(
-                    buttonColor: Colors.red,
+                    textTheme: ButtonTextTheme.accent
                   ),
                   appBarTheme: AppBarTheme(
                     color: Colors.white,

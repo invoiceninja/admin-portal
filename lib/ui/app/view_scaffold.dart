@@ -5,10 +5,9 @@ import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/redux/ui/ui_actions.dart';
 import 'package:invoiceninja_flutter/ui/app/actions_menu_button.dart';
-import 'package:invoiceninja_flutter/utils/icons.dart';
+import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:invoiceninja_flutter/utils/platforms.dart';
 import 'buttons/edit_icon_button.dart';
-import 'entities/entity_state_title.dart';
 
 class ViewScaffold extends StatelessWidget {
   const ViewScaffold({
@@ -31,78 +30,75 @@ class ViewScaffold extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final localization = AppLocalization.of(context);
     final store = StoreProvider.of<AppState>(context);
     final state = store.state;
     final userCompany = state.userCompany;
     final isSettings = entity.entityType.isSetting;
 
+    final title = localization.lookup('${entity.entityType}') +
+        '  ›  ' +
+        ((entity.listDisplayName ?? '').isEmpty
+            ? localization.pending
+            : entity.listDisplayName);
+
+    Widget leading;
+    if (!isMobile(context)) {
+      if (isFilter && entity.entityType == state.uiState.filterEntityType) {
+        leading = IconButton(
+          icon: Icon(Icons.clear),
+          onPressed: () => store.dispatch(ClearEntityFilter()),
+        );
+      } else if (isSettings) {
+        leading = IconButton(
+          icon: Icon(Icons.arrow_back),
+          onPressed: () => onBackPressed != null
+              ? onBackPressed()
+              : store.dispatch(UpdateCurrentRoute(state.uiState.previousRoute)),
+        );
+      }
+    }
+
     return WillPopScope(
       onWillPop: () async {
         return true;
       },
-      child: LayoutBuilder(
-          builder: (BuildContext context, BoxConstraints constraints) {
-        Widget leading;
-        if (!isMobile(context)) {
-          if (isFilter && entity.entityType == state.uiState.filterEntityType) {
-            leading = IconButton(
-              icon: Icon(Icons.clear),
-              onPressed: () => store.dispatch(ClearEntityFilter()),
-            );
-          } else if (isSettings) {
-            leading = IconButton(
-              icon: Icon(Icons.arrow_back),
-              onPressed: () => onBackPressed != null
-                  ? onBackPressed()
-                  : store.dispatch(
-                      UpdateCurrentRoute(state.uiState.previousRoute)),
-            );
-          } else if (isNotMobile(context) && constraints.maxWidth > 300) {
-            leading = Icon(getEntityIcon(entity.entityType));
-          }
-        }
-
-        return Scaffold(
-          backgroundColor: Theme.of(context).cardColor,
-          appBar: AppBar(
-            leading: leading,
-            automaticallyImplyLeading: isMobile(context) || isSettings,
-            title: EntityStateTitle(
-              entity: entity,
-              title: title,
-              showStatus: false,
-            ),
-            bottom: appBarBottom,
-            actions: entity.isNew
-                ? []
-                : [
-                    userCompany.canEditEntity(entity)
-                        ? Builder(builder: (context) {
-                            return EditIconButton(
-                              isVisible: !(entity.isDeleted ?? false),
-                              onPressed: () =>
-                                  editEntity(context: context, entity: entity),
-                            );
-                          })
-                        : Container(),
-                    ActionMenuButton(
-                      isSaving: state.isSaving,
-                      entity: entity,
-                      onSelected: (context, action) =>
-                          handleEntityAction(context, entity, action),
-                      entityActions: entity.getActions(
-                        userCompany: userCompany,
-                        client: entity is BelongsToClient
-                            ? state.clientState
-                                .map[(entity as BelongsToClient).clientId]
-                            : null,
-                      ),
+      child: Scaffold(
+        backgroundColor: Theme.of(context).cardColor,
+        appBar: AppBar(
+          leading: leading,
+          automaticallyImplyLeading: isMobile(context) || isSettings,
+          title: FittedBox(child: Text(title)),
+          bottom: appBarBottom,
+          actions: entity.isNew
+              ? []
+              : [
+                  userCompany.canEditEntity(entity)
+                      ? Builder(builder: (context) {
+                          return EditIconButton(
+                            isVisible: !(entity.isDeleted ?? false),
+                            onPressed: () =>
+                                editEntity(context: context, entity: entity),
+                          );
+                        })
+                      : Container(),
+                  ActionMenuButton(
+                    isSaving: state.isSaving,
+                    entity: entity,
+                    onSelected: (context, action) =>
+                        handleEntityAction(context, entity, action),
+                    entityActions: entity.getActions(
+                      userCompany: userCompany,
+                      client: entity is BelongsToClient
+                          ? state.clientState
+                              .map[(entity as BelongsToClient).clientId]
+                          : null,
                     ),
-                  ],
-          ),
-          body: body,
-        );
-      }),
+                  ),
+                ],
+        ),
+        body: body,
+      ),
     );
   }
 }
