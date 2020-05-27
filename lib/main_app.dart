@@ -175,7 +175,7 @@ class InvoiceNinjaAppState extends State<InvoiceNinjaApp> {
                   primaryColorLight: const Color(0xFF5dabf4),
                   primaryColorDark: const Color(0xFF0D5D91),
                   buttonColor: const Color(0xFF0D5D91),
-                  indicatorColor: Colors.white,
+                  indicatorColor: Colors.blue,
                   backgroundColor: Colors.white,
                   canvasColor: Colors.white,
                   scaffoldBackgroundColor: const Color(0xFFE7EBEE),
