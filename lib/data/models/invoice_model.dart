@@ -548,7 +548,9 @@ abstract class InvoiceEntity extends Object
 
         if (!isQuote && !isCredit && isSent) {
           actions.add(EntityAction.cancel);
-          actions.add(EntityAction.reverse);
+          if (userCompany.company.isModuleEnabled(EntityType.credit)) {
+            actions.add(EntityAction.reverse);
+          }
         }
 
         if (isQuote && !isApproved) {

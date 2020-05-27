@@ -96,7 +96,7 @@ const dynamic kMockLogin = '''
                     "custom_value3": "",
                     "custom_value4": "",
                     "default_task_rate": 0,
-                    "payment_terms": 1,
+                    "payment_terms": "1",
                     "send_reminders": false,
                     "custom_message_dashboard": "",
                     "custom_message_unpaid_invoice": "",
