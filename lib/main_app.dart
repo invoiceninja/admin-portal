@@ -180,16 +180,20 @@ class InvoiceNinjaAppState extends State<InvoiceNinjaApp> {
                   canvasColor: const Color(0xFFE7EBEE),
                   cardColor: Colors.white,
                   bottomAppBarColor: Colors.white,
+                  tabBarTheme: TabBarTheme(
+                    labelColor: Colors.black,
+                    unselectedLabelColor: Colors.black.withOpacity(.65),
+                  ),
+                  buttonTheme: ButtonThemeData(
+                    buttonColor: Colors.red,
+                  ),
                   appBarTheme: AppBarTheme(
                     color: Colors.white,
                     iconTheme: IconThemeData(
-                      color: Colors.black,
+                      color: Colors.blue,
                     ),
                     textTheme: TextTheme(
                       headline6: TextStyle(
-                        color: Colors.black,
-                      ),
-                      button: TextStyle(
                         color: Colors.black,
                       ),
                     ),
