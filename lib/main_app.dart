@@ -178,15 +178,15 @@ class InvoiceNinjaAppState extends State<InvoiceNinjaApp> {
                   indicatorColor: Colors.white,
                   backgroundColor: const Color(0xFFE7EBEE),
                   canvasColor: const Color(0xFFE7EBEE),
+                  scaffoldBackgroundColor: const Color(0xFFE7EBEE),
                   cardColor: Colors.white,
                   bottomAppBarColor: Colors.white,
                   tabBarTheme: TabBarTheme(
                     labelColor: Colors.black,
                     unselectedLabelColor: Colors.black.withOpacity(.65),
                   ),
-                  buttonTheme: ButtonThemeData(
-                    textTheme: ButtonTextTheme.accent
-                  ),
+                  buttonTheme:
+                      ButtonThemeData(textTheme: ButtonTextTheme.accent),
                   appBarTheme: AppBarTheme(
                     color: Colors.white,
                     iconTheme: IconThemeData(

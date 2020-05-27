@@ -68,7 +68,7 @@ class ViewScaffold extends StatelessWidget {
         appBar: AppBar(
           leading: leading,
           automaticallyImplyLeading: isMobile(context) || isSettings,
-          title: FittedBox(child: Text(title)),
+          title: Text(title, maxLines: 2,),
           bottom: appBarBottom,
           actions: entity.isNew
               ? []
