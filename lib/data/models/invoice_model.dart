@@ -164,8 +164,7 @@ abstract class InvoiceEntity extends Object
     ..number = ''
     ..date = convertDateTimeToSqlDate()
     ..dueDate = ''
-    ..invitations.replace(
-        invitations.map((i) => i.rebuild((b) => b..link = '')).toList()));
+    ..invitations.clear());
 
   @override
   EntityType get entityType {
