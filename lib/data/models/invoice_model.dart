@@ -164,8 +164,7 @@ abstract class InvoiceEntity extends Object
     ..number = ''
     ..date = convertDateTimeToSqlDate()
     ..dueDate = ''
-    ..invitations.replace(
-        invitations.map((i) => i.rebuild((b) => b..link = '')).toList()));
+    ..invitations.clear());
 
   @override
   EntityType get entityType {
@@ -548,7 +547,9 @@ abstract class InvoiceEntity extends Object
 
         if (!isQuote && !isCredit && isSent) {
           actions.add(EntityAction.cancel);
-          actions.add(EntityAction.reverse);
+          if (userCompany.company.isModuleEnabled(EntityType.credit)) {
+            actions.add(EntityAction.reverse);
+          }
         }
 
         if (isQuote && !isApproved) {

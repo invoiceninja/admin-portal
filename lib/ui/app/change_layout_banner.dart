@@ -1,0 +1,104 @@
+import 'package:flutter/material.dart';
+import 'package:flutter_redux/flutter_redux.dart';
+import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
+import 'package:invoiceninja_flutter/redux/app/app_state.dart';
+import 'package:invoiceninja_flutter/redux/dashboard/dashboard_actions.dart';
+import 'package:invoiceninja_flutter/redux/ui/pref_state.dart';
+import 'package:invoiceninja_flutter/ui/app/app_builder.dart';
+import 'package:invoiceninja_flutter/ui/app/icon_text.dart';
+import 'package:invoiceninja_flutter/utils/localization.dart';
+import 'package:invoiceninja_flutter/utils/platforms.dart';
+
+class ChangeLayoutBanner extends StatefulWidget {
+  const ChangeLayoutBanner({
+    Key key,
+    @required this.child,
+    @required this.appLayout,
+    @required this.suggestedLayout,
+  }) : super(key: key);
+
+  final Widget child;
+  final AppLayout appLayout;
+  final AppLayout suggestedLayout;
+
+  @override
+  _ChangeLayoutBannerState createState() => _ChangeLayoutBannerState();
+}
+
+class _ChangeLayoutBannerState extends State<ChangeLayoutBanner> {
+  bool _dismissedChange = false;
+
+  @override
+  Widget build(BuildContext context) {
+    final store = StoreProvider.of<AppState>(context);
+    final localization = AppLocalization.of(context);
+
+    final calculatedLayout = calculateLayout(context, breakOutTablet: true);
+    String message;
+
+    if (!_dismissedChange) {
+      if (widget.appLayout == AppLayout.mobile &&
+          widget.suggestedLayout == AppLayout.mobile &&
+          calculatedLayout == AppLayout.desktop) {
+        message = localization.changeToDekstopLayout;
+      } else if (widget.appLayout == AppLayout.desktop &&
+          widget.suggestedLayout == AppLayout.desktop &&
+          calculatedLayout == AppLayout.mobile) {
+        message = localization.changeToMobileLayout;
+      }
+    }
+
+    if (message == null) {
+      return widget.child;
+    }
+
+    return Column(
+      children: [
+        Material(
+          color: Colors.orange,
+          child: Padding(
+            padding: const EdgeInsets.only(left: 10),
+            child: Row(
+              children: [
+                Expanded(
+                  child: IconText(
+                    icon: Icons.info_outline,
+                    text: message,
+                  ),
+                ),
+                FlatButton(
+                  child: Text(localization.dismiss.toUpperCase()),
+                  onPressed: () {
+                    setState(() => _dismissedChange = true);
+                  },
+                ),
+                FlatButton(
+                  child: Text(localization.change.toUpperCase()),
+                  onPressed: () {
+                    final layout = widget.suggestedLayout == AppLayout.desktop
+                        ? AppLayout.mobile
+                        : AppLayout.desktop;
+                    store.dispatch(UserPreferencesChanged(layout: layout));
+                    AppBuilder.of(context).rebuild();
+                    WidgetsBinding.instance.addPostFrameCallback((duration) {
+                      if (layout == AppLayout.mobile) {
+                        store.dispatch(
+                            ViewDashboard(navigator: Navigator.of(context)));
+                      } else {
+                        store.dispatch(ViewMainScreen(
+                            navigator: Navigator.of(context), addDelay: true));
+                      }
+                    });
+                  },
+                ),
+              ],
+            ),
+          ),
+        ),
+        Expanded(
+          child: widget.child,
+        )
+      ],
+    );
+  }
+}

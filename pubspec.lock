@@ -480,7 +480,7 @@ packages:
       name: image_picker
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.6.6+4"
+    version: "0.6.6+5"
   image_picker_platform_interface:
     dependency: transitive
     description:
@@ -856,7 +856,7 @@ packages:
       name: sqflite
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "1.3.0+1"
+    version: "1.3.0+2"
   sqflite_common:
     dependency: transitive
     description:
@@ -1045,7 +1045,7 @@ packages:
       name: webkit_inspection_protocol
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.7.2"
+    version: "0.7.3"
   webview_flutter:
     dependency: "direct main"
     description:

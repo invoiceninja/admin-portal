@@ -8,7 +8,9 @@ import 'package:intl/intl.dart';
 import 'package:invoiceninja_flutter/constants.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/redux/company/company_selectors.dart';
+import 'package:invoiceninja_flutter/redux/ui/pref_state.dart';
 import 'package:invoiceninja_flutter/ui/app/app_builder.dart';
+import 'package:invoiceninja_flutter/ui/app/change_layout_banner.dart';
 import 'package:invoiceninja_flutter/ui/app/main_screen.dart';
 import 'package:invoiceninja_flutter/ui/app/screen_imports.dart';
 import 'package:invoiceninja_flutter/ui/auth/init_screen.dart';
@@ -159,6 +161,7 @@ class InvoiceNinjaAppState extends State<InvoiceNinjaApp> {
                   pageTransitionsTheme: pageTransitionsTheme,
                   brightness: Brightness.dark,
                   accentColor: accentColor,
+                  indicatorColor: accentColor,
                   textSelectionHandleColor: accentColor,
                   fontFamily: fontFamily,
                   backgroundColor: Colors.black,
@@ -175,7 +178,7 @@ class InvoiceNinjaAppState extends State<InvoiceNinjaApp> {
                   primaryColorLight: const Color(0xFF5dabf4),
                   primaryColorDark: const Color(0xFF0D5D91),
                   buttonColor: const Color(0xFF0D5D91),
-                  indicatorColor: Colors.white,
+                  indicatorColor: accentColor,
                   backgroundColor: Colors.white,
                   canvasColor: Colors.white,
                   scaffoldBackgroundColor: const Color(0xFFE7EBEE),
@@ -208,8 +211,11 @@ class InvoiceNinjaAppState extends State<InvoiceNinjaApp> {
               ? {
                   LoginScreen.route: (context) => LoginScreen(),
                   MainScreen.route: (context) => MainScreen(),
-                  DashboardScreenBuilder.route: (context) =>
-                      DashboardScreenBuilder(),
+                  DashboardScreenBuilder.route: (context) => ChangeLayoutBanner(
+                        suggestedLayout: AppLayout.mobile,
+                        appLayout: state.prefState.appLayout,
+                        child: DashboardScreenBuilder(),
+                      ),
                   ProductScreen.route: (context) => ProductScreenBuilder(),
                   ProductViewScreen.route: (context) => ProductViewScreen(),
                   ProductEditScreen.route: (context) => ProductEditScreen(),

@@ -573,7 +573,7 @@ class _LoginState extends State<LoginView> {
                           mainAxisSize: MainAxisSize.min,
                           children: [
                             if (_emailLogin)
-                              Icon(Icons.mail)
+                              Icon(Icons.mail, color: Colors.white)
                             else
                               ClipOval(
                                 child: Image.asset(
@@ -590,7 +590,8 @@ class _LoginState extends State<LoginView> {
                                   : (_emailLogin
                                       ? localization.emailSignIn
                                       : localization.googleSignIn),
-                              style: TextStyle(fontSize: 18),
+                              style:
+                                  TextStyle(fontSize: 18, color: Colors.white),
                             )
                           ],
                         ),
