@@ -10,6 +10,7 @@ import 'package:invoiceninja_flutter/redux/reports/reports_actions.dart';
 import 'package:invoiceninja_flutter/redux/settings/settings_actions.dart';
 import 'package:invoiceninja_flutter/redux/ui/pref_state.dart';
 import 'package:invoiceninja_flutter/ui/app/app_builder.dart';
+import 'package:invoiceninja_flutter/ui/app/change_layout_banner.dart';
 import 'package:invoiceninja_flutter/ui/app/history_drawer_vm.dart';
 import 'package:invoiceninja_flutter/ui/app/icon_text.dart';
 import 'package:invoiceninja_flutter/ui/app/menu_drawer_vm.dart';
@@ -266,6 +267,7 @@ class MainScreen extends StatelessWidget {
                 policy: WidgetOrderTraversalPolicy(),
                 child: ChangeLayoutBanner(
                   appLayout: prefState.appLayout,
+                  suggestedLayout: AppLayout.desktop,
                   child: Row(children: <Widget>[
                     if (prefState.showMenu) ...[
                       MenuDrawerBuilder(),
@@ -594,89 +596,6 @@ class _CustomDivider extends StatelessWidget {
       width: .5,
       height: double.infinity,
       color: Colors.black38,
-    );
-  }
-}
-
-class ChangeLayoutBanner extends StatefulWidget {
-  const ChangeLayoutBanner({
-    Key key,
-    @required this.child,
-    @required this.appLayout,
-  }) : super(key: key);
-
-  final Widget child;
-  final AppLayout appLayout;
-
-  @override
-  _ChangeLayoutBannerState createState() => _ChangeLayoutBannerState();
-}
-
-class _ChangeLayoutBannerState extends State<ChangeLayoutBanner> {
-  bool _dismissedChange = false;
-
-  @override
-  Widget build(BuildContext context) {
-    final store = StoreProvider.of<AppState>(context);
-    final localization = AppLocalization.of(context);
-
-    final calculatedLayout = calculateLayout(context, breakOutTablet: true);
-    String message;
-
-    if (!_dismissedChange) {
-      if (widget.appLayout == AppLayout.mobile &&
-          calculatedLayout == AppLayout.desktop) {
-        //message = localization.changeToDekstopLayout;
-      } else if (widget.appLayout == AppLayout.desktop &&
-          calculatedLayout == AppLayout.mobile) {
-        message = localization.changeToMobileLayout;
-      }
-    }
-
-    if (message == null) {
-      return widget.child;
-    }
-
-    return Column(
-      children: [
-        Material(
-          color: Colors.orange,
-          child: Padding(
-            padding: const EdgeInsets.only(left: 10),
-            child: Row(
-              children: [
-                Expanded(
-                  child: IconText(
-                    icon: Icons.info_outline,
-                    text: message,
-                  ),
-                ),
-                FlatButton(
-                  child: Text(localization.change.toUpperCase()),
-                  onPressed: () {
-                    store.dispatch(
-                        UserPreferencesChanged(layout: AppLayout.mobile));
-                    AppBuilder.of(context).rebuild();
-                    WidgetsBinding.instance.addPostFrameCallback((duration) {
-                      store.dispatch(ViewDashboard(
-                          navigator: Navigator.of(context), force: true));
-                    });
-                  },
-                ),
-                FlatButton(
-                  child: Text(localization.dismiss.toUpperCase()),
-                  onPressed: () {
-                    setState(() => _dismissedChange = true);
-                  },
-                ),
-              ],
-            ),
-          ),
-        ),
-        Expanded(
-          child: widget.child,
-        )
-      ],
     );
   }
 }
