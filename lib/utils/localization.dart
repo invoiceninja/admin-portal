@@ -2,7 +2,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter/foundation.dart' show SynchronousFuture;
 import 'package:invoiceninja_flutter/constants.dart';
-import 'package:invoiceninja_flutter/utils/i18n_en.dart';
+import 'package:invoiceninja_flutter/utils/i18n.dart';
 
 class AppLocalization extends LocaleCodeAware with LocalizationsProvider {
   AppLocalization(this.locale) : super(locale.toString());
