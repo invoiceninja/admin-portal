@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_redux/flutter_redux.dart';
 import 'package:invoiceninja_flutter/data/models/client_model.dart';
 import 'package:invoiceninja_flutter/data/models/entities.dart';
-import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/redux/credit/credit_selectors.dart';
 import 'package:invoiceninja_flutter/redux/expense/expense_selectors.dart';
 import 'package:invoiceninja_flutter/redux/invoice/invoice_selectors.dart';
@@ -17,7 +15,7 @@ import 'package:invoiceninja_flutter/ui/app/icon_message.dart';
 import 'package:invoiceninja_flutter/ui/app/lists/list_divider.dart';
 import 'package:invoiceninja_flutter/ui/client/view/client_view_vm.dart';
 import 'package:invoiceninja_flutter/utils/formatting.dart';
-import 'package:invoiceninja_flutter/utils/localization.dart';
+import 'package:invoiceninja_flutter/utils/extensions.dart';
 
 class ClientOverview extends StatelessWidget {
   const ClientOverview({
@@ -31,10 +29,10 @@ class ClientOverview extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final localization = AppLocalization.of(context);
+    final localization = context.localization;
     final client = viewModel.client;
     final company = viewModel.company;
-    final state = StoreProvider.of<AppState>(context).state;
+    final state = context.state;
     final statics = state.staticState;
     final fields = <String, String>{};
     final group = client.hasGroup ? state.groupState.map[client.groupId] : null;
