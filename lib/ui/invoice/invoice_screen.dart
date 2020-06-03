@@ -14,7 +14,6 @@ import 'package:invoiceninja_flutter/ui/invoice/invoice_list_vm.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:invoiceninja_flutter/redux/invoice/invoice_actions.dart';
 import 'package:invoiceninja_flutter/ui/app/app_bottom_bar.dart';
-import 'package:invoiceninja_flutter/utils/platforms.dart';
 
 import 'invoice_screen_vm.dart';
 
