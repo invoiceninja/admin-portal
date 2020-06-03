@@ -174,7 +174,7 @@ class InvoiceNinjaAppState extends State<InvoiceNinjaApp> {
                   pageTransitionsTheme: pageTransitionsTheme,
                   accentColor: accentColor,
                   textSelectionColor: accentColor,
-                  primaryColor: Colors.white,
+                  //primaryColor: Colors.white,
                   primaryColorLight: const Color(0xFF5dabf4),
                   primaryColorDark: const Color(0xFF0D5D91),
                   buttonColor: const Color(0xFF0D5D91),

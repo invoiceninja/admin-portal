@@ -14,7 +14,6 @@ import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/ui/project/project_list_vm.dart';
 import 'package:invoiceninja_flutter/redux/project/project_actions.dart';
 import 'package:invoiceninja_flutter/ui/app/app_bottom_bar.dart';
-import 'package:invoiceninja_flutter/utils/platforms.dart';
 
 class ProjectScreen extends StatelessWidget {
   const ProjectScreen({

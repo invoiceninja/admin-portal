@@ -1,5 +1,7 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:invoiceninja_flutter/constants.dart';
+import 'package:invoiceninja_flutter/ui/app/app_border.dart';
 import 'package:invoiceninja_flutter/ui/invoice/edit/invoice_edit_contacts_vm.dart';
 import 'package:invoiceninja_flutter/ui/invoice/edit/invoice_edit_details_vm.dart';
 import 'package:invoiceninja_flutter/ui/invoice/edit/invoice_edit_items_vm.dart';
@@ -118,17 +120,23 @@ class _InvoiceEditState extends State<InvoiceEdit>
               ),
       ),
       bottomNavigationBar: BottomAppBar(
-        color: Theme.of(context).primaryColor,
+        color: Theme.of(context).cardColor,
         shape: CircularNotchedRectangle(),
-        child: Padding(
-          padding: const EdgeInsets.all(14.0),
-          child: Text(
-            '${localization.total}: ${formatNumber(invoice.calculateTotal(viewModel.company.settings.enableInclusiveTaxes ?? false), context, clientId: viewModel.invoice.clientId)}',
-            style: TextStyle(
-              //color: Theme.of(context).selectedRowColor,
-              color:
-                  state.prefState.enableDarkMode ? Colors.white : Colors.black,
-              fontSize: 20.0,
+        child: SizedBox(
+          height: kTopBottomBarHeight,
+          child: AppBorder(
+            isTop: true,
+            child: Padding(
+              padding: const EdgeInsets.all(14.0),
+              child: Text(
+                '${localization.total}: ${formatNumber(invoice.calculateTotal(viewModel.company.settings.enableInclusiveTaxes ?? false), context, clientId: viewModel.invoice.clientId)}',
+                style: TextStyle(
+                  //color: Theme.of(context).selectedRowColor,
+                  color:
+                      state.prefState.enableDarkMode ? Colors.white : Colors.black,
+                  fontSize: 20.0,
+                ),
+              ),
             ),
           ),
         ),

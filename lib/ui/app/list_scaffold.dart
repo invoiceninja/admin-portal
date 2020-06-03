@@ -85,7 +85,7 @@ class ListScaffold extends StatelessWidget {
           ),
         ),
       );
-    } else if (entityType != null) {
+    } else if (entityType != null && entityType != EntityType.settings) {
       leading = IconButton(
         icon: Icon(Icons.add),
         onPressed: () {

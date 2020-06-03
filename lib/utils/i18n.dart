@@ -15,6 +15,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
   static final Map<String, Map<String, String>> _localizedValues = {
     'en': {
       // STARTER: lang key - do not remove comment
+      'reminder_endless': 'Endless Reminders',
       'number_of_days': 'Number of days',
       'configure_payment_terms': 'Configure Payment Terms',
       'payment_term': 'Payment Term',
@@ -1213,7 +1214,8 @@ mixin LocalizationsProvider on LocaleCodeAware {
   String get selfhostLogin =>
       _localizedValues[localeCode]['selfhost_login'] ?? '';
 
-  String get googleSignIn => _localizedValues[localeCode]['google_sign_in'] ?? '';
+  String get googleSignIn =>
+      _localizedValues[localeCode]['google_sign_in'] ?? '';
 
   String get today => _localizedValues[localeCode]['today'] ?? '';
 
@@ -3880,6 +3882,9 @@ mixin LocalizationsProvider on LocaleCodeAware {
 
   String get numberOfDays =>
       _localizedValues[localeCode]['number_of_days'] ?? '';
+
+  String get reminderEndless =>
+      _localizedValues[localeCode]['reminder_endless'] ?? '';
 
   String lookup(String key) {
     final lookupKey = toSnakeCase(key);
