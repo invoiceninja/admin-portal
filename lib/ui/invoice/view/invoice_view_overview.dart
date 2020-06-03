@@ -3,6 +3,7 @@ import 'package:invoiceninja_flutter/constants.dart';
 import 'package:invoiceninja_flutter/data/models/entities.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/data/models/quote_model.dart';
+import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/redux/payment/payment_selectors.dart';
 import 'package:invoiceninja_flutter/ui/app/FieldGrid.dart';
@@ -113,6 +114,19 @@ class InvoiceOverview extends StatelessWidget {
         onLongPress: () => viewModel.onClientPressed(context, true),
       ),
     );
+
+    if (invoice.subEntityType == EntityType.quote ||
+        invoice.subEntityType == EntityType.credit) {
+      final relatedInvoice = state.invoiceState.map[invoice.invoiceId] ??
+          InvoiceEntity(id: invoice.invoiceId);
+      if ((invoice.invoiceId ?? '').isNotEmpty) {
+        widgets.add(EntityListTile(
+          isFilter: null,
+          entity: relatedInvoice,
+          onTap: () => viewEntity(context: context, entity: relatedInvoice),
+        ));
+      }
+    }
 
     if (payments.isNotEmpty) {
       payments.forEach((payment) {
