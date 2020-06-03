@@ -40,13 +40,14 @@ class ViewScaffold extends StatelessWidget {
         ? localization.pending
         : entity.listDisplayName;
 
-    if (!isFilter) {
+    if (!(isFilter ?? false)) {
       title = localization.lookup('${entity.entityType}') + '  ›  ' + title;
     }
 
     Widget leading;
     if (!isMobile(context)) {
-      if (isFilter && entity.entityType == state.uiState.filterEntityType) {
+      if ((isFilter ?? false) &&
+          entity.entityType == state.uiState.filterEntityType) {
         leading = IconButton(
           icon: Icon(Icons.clear),
           onPressed: () => store.dispatch(ClearEntityFilter()),
