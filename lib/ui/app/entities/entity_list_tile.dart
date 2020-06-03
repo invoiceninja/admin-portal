@@ -36,7 +36,7 @@ class EntityListTile extends StatelessWidget {
         state.uiState.filterEntityType == entity.entityType;
 
     Widget trailingIcon = Icon(Icons.navigate_next);
-    if (isNotMobile(context) && !isFilter) {
+    if (isNotMobile(context) && isFilter != null && !isFilter) {
       trailingIcon = Icon(Icons.filter_list,
           color: isFilteredBy ? Theme.of(context).accentColor : null);
     }

@@ -122,7 +122,7 @@ class StubScreen extends StatelessWidget {
         onSelectedCustom4: (value) =>
             store.dispatch(FilterStubsByCustom4(value)),
       ),
-      floatingActionButton: isMobile(context) && userCompany.canCreate(EntityType.stub)
+      floatingActionButton: state.prefState.isMenuFloated && userCompany.canCreate(EntityType.stub)
           ? FloatingActionButton(
               heroTag: 'stub_fab',
               backgroundColor: Theme.of(context).primaryColorDark,

@@ -154,19 +154,19 @@ class InvoiceScreen extends StatelessWidget {
           }
         },
       ),
-      floatingActionButton:
-          isMobile(context) && userCompany.canCreate(EntityType.invoice)
-              ? FloatingActionButton(
-                  heroTag: 'invoice_fab',
-                  backgroundColor: Theme.of(context).primaryColorDark,
-                  onPressed: () {
-                    createEntityByType(
-                        context: context, entityType: EntityType.invoice);
-                  },
-                  child: Icon(Icons.add, color: Colors.white),
-                  tooltip: localization.newInvoice,
-                )
-              : null,
+      floatingActionButton: state.prefState.isMenuFloated &&
+              userCompany.canCreate(EntityType.invoice)
+          ? FloatingActionButton(
+              heroTag: 'invoice_fab',
+              backgroundColor: Theme.of(context).primaryColorDark,
+              onPressed: () {
+                createEntityByType(
+                    context: context, entityType: EntityType.invoice);
+              },
+              child: Icon(Icons.add, color: Colors.white),
+              tooltip: localization.newInvoice,
+            )
+          : null,
     );
   }
 }

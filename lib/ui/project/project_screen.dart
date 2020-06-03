@@ -119,7 +119,7 @@ class ProjectScreen extends StatelessWidget {
         },
       ),
       floatingActionButton:
-          isMobile(context) && userCompany.canCreate(EntityType.project)
+          state.prefState.isMenuFloated && userCompany.canCreate(EntityType.project)
               ? FloatingActionButton(
                   heroTag: 'project_fab',
                   backgroundColor: Theme.of(context).primaryColorDark,

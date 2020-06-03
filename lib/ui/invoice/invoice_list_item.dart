@@ -248,7 +248,7 @@ class InvoiceListItem extends StatelessWidget {
                           ),
                           Text(statusLabel,
                               style: TextStyle(
-                                color: statusColor,
+                                color: !invoice.isSent ? textColor : statusColor,
                               )),
                         ],
                       ),

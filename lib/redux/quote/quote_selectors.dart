@@ -75,11 +75,9 @@ EntityStats quoteStatsForClient(
     String clientId, BuiltMap<String, InvoiceEntity> quoteMap) {
   int countActive = 0;
   int countArchived = 0;
-  print('## CLIENT ID: $clientId');
+
   quoteMap.forEach((quoteId, quote) {
-    print('## QUOTE ID: $quoteId, ${quote.number} ${quote.amount}');
     if (quote.clientId == clientId) {
-      print('## MATCH');
       if (quote.isActive) {
         countActive++;
       } else if (quote.isArchived) {

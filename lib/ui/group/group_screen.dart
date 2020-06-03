@@ -110,7 +110,8 @@ class GroupSettingsScreen extends StatelessWidget {
           }
         },
       ),
-      floatingActionButton: state.userCompany.canCreate(EntityType.group)
+      floatingActionButton: state.prefState.isMenuFloated &&
+              state.userCompany.canCreate(EntityType.group)
           ? FloatingActionButton(
               heroTag: 'group_fab',
               backgroundColor: Theme.of(context).primaryColorDark,

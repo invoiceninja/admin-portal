@@ -132,13 +132,15 @@ const kInvoiceStatuses = {
 const String kQuoteStatusExpired = '-1';
 const String kQuoteStatusDraft = '1';
 const String kQuoteStatusSent = '2';
-const String kQuoteStatusApproved = '4';
+const String kQuoteStatusApproved = '3';
+const String kQuoteStatusConverted = '4';
 
 const kQuoteStatuses = {
   kQuoteStatusExpired: 'expired',
   kQuoteStatusDraft: 'draft',
   kQuoteStatusSent: 'sent',
   kQuoteStatusApproved: 'approved',
+  kQuoteStatusConverted: 'converted',
 };
 
 const String kCreditStatusDraft = '1';
@@ -444,7 +446,8 @@ class QuoteStatusColors {
   static var colors = {
     kQuoteStatusDraft: Colors.black,
     kQuoteStatusSent: convertHexStringToColor('#505F73'),
-    kQuoteStatusApproved: convertHexStringToColor('#407535'),
+    kQuoteStatusApproved: Colors.deepPurple,
+    kQuoteStatusConverted: convertHexStringToColor('#407535'),
     kQuoteStatusExpired: convertHexStringToColor('#8D3E3F'),
   };
 }

@@ -138,7 +138,7 @@ class TaskScreen extends StatelessWidget {
         },
       ),
       floatingActionButton:
-          isMobile(context) && userCompany.canCreate(EntityType.task)
+          state.prefState.isMenuFloated && userCompany.canCreate(EntityType.task)
               ? FloatingActionButton(
                   heroTag: 'task_fab',
                   backgroundColor: Theme.of(context).primaryColorDark,

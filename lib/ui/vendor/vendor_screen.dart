@@ -119,7 +119,7 @@ class VendorScreen extends StatelessWidget {
         },
       ),
       floatingActionButton:
-          isMobile(context) && userCompany.canCreate(EntityType.vendor)
+          state.prefState.isMenuFloated && userCompany.canCreate(EntityType.vendor)
               ? FloatingActionButton(
                   heroTag: 'vendor_fab',
                   backgroundColor: Theme.of(context).primaryColorDark,

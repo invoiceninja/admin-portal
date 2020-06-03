@@ -122,22 +122,22 @@ class ClientScreen extends StatelessWidget {
         onSelectedCustom4: (value) =>
             store.dispatch(FilterClientsByCustom4(value)),
       ),
-      floatingActionButton:
-          isMobile(context) && userCompany.canCreate(EntityType.client)
-              ? FloatingActionButton(
-                  heroTag: 'client_fab',
-                  backgroundColor: Theme.of(context).primaryColorDark,
-                  onPressed: () {
-                    createEntityByType(
-                        context: context, entityType: EntityType.client);
-                  },
-                  child: Icon(
-                    Icons.add,
-                    color: Colors.white,
-                  ),
-                  tooltip: localization.newClient,
-                )
-              : null,
+      floatingActionButton: state.prefState.isMenuFloated &&
+              userCompany.canCreate(EntityType.client)
+          ? FloatingActionButton(
+              heroTag: 'client_fab',
+              backgroundColor: Theme.of(context).primaryColorDark,
+              onPressed: () {
+                createEntityByType(
+                    context: context, entityType: EntityType.client);
+              },
+              child: Icon(
+                Icons.add,
+                color: Colors.white,
+              ),
+              tooltip: localization.newClient,
+            )
+          : null,
     );
   }
 }

@@ -56,19 +56,21 @@ class _VendorViewState extends State<VendorView>
           ),
         ],
       ),
-      body: TabBarView(
-        controller: _controller,
-        children: <Widget>[
-          RefreshIndicator(
-            onRefresh: () => viewModel.onRefreshed(context),
-            child: VendorOverview(viewModel: viewModel),
-          ),
-          RefreshIndicator(
-            onRefresh: () => viewModel.onRefreshed(context),
-            child: VendorViewDetails(vendor: viewModel.vendor),
-          ),
-        ],
-      ),
+      body: Builder(builder: (context) {
+        return TabBarView(
+          controller: _controller,
+          children: <Widget>[
+            RefreshIndicator(
+              onRefresh: () => viewModel.onRefreshed(context),
+              child: VendorOverview(viewModel: viewModel),
+            ),
+            RefreshIndicator(
+              onRefresh: () => viewModel.onRefreshed(context),
+              child: VendorViewDetails(vendor: viewModel.vendor),
+            ),
+          ],
+        );
+      }),
       floatingActionButton: FloatingActionButton(
         heroTag: 'vendor_view_fab',
         backgroundColor: Theme.of(context).primaryColorDark,

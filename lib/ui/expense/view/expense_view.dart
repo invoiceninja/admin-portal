@@ -68,24 +68,26 @@ class _ExpenseViewState extends State<ExpenseView>
           ),
         ],
       ),
-      body: TabBarView(
-        controller: _controller,
-        children: <Widget>[
-          RefreshIndicator(
-            onRefresh: () => viewModel.onRefreshed(context),
-            child: ExpenseOverview(viewModel: viewModel),
-          ),
-          RefreshIndicator(
-            onRefresh: () => viewModel.onRefreshed(context),
-            child: ExpenseViewDetails(expense: viewModel.expense),
-          ),
-          RefreshIndicator(
-            onRefresh: () => viewModel.onRefreshed(context),
-            child: ExpenseViewDocuments(
-                viewModel: viewModel, expense: viewModel.expense),
-          ),
-        ],
-      ),
+      body: Builder(builder: (context) {
+        return TabBarView(
+          controller: _controller,
+          children: <Widget>[
+            RefreshIndicator(
+              onRefresh: () => viewModel.onRefreshed(context),
+              child: ExpenseOverview(viewModel: viewModel),
+            ),
+            RefreshIndicator(
+              onRefresh: () => viewModel.onRefreshed(context),
+              child: ExpenseViewDetails(expense: viewModel.expense),
+            ),
+            RefreshIndicator(
+              onRefresh: () => viewModel.onRefreshed(context),
+              child: ExpenseViewDocuments(
+                  viewModel: viewModel, expense: viewModel.expense),
+            ),
+          ],
+        );
+      }),
       floatingActionButton: company.isEnterprisePlan
           ? Builder(builder: (BuildContext context) {
               return FloatingActionButton(

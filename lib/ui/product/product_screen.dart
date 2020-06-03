@@ -118,7 +118,7 @@ class ProductScreen extends StatelessWidget {
         },
       ),
       floatingActionButton:
-          isMobile(context) && userCompany.canCreate(EntityType.product)
+          state.prefState.isMenuFloated && userCompany.canCreate(EntityType.product)
               ? FloatingActionButton(
                   heroTag: 'product_fab',
                   backgroundColor: Theme.of(context).primaryColorDark,
