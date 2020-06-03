@@ -112,7 +112,7 @@ class DocumentScreen extends StatelessWidget {
         },
       ),
       floatingActionButton:
-          isMobile(context) && userCompany.canCreate(EntityType.document)
+          state.prefState.isMenuFloated && userCompany.canCreate(EntityType.document)
               ? FloatingActionButton(
                   heroTag: 'document_fab',
                   backgroundColor: Theme.of(context).primaryColorDark,

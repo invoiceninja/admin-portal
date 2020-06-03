@@ -139,22 +139,22 @@ class ExpenseScreen extends StatelessWidget {
           }
         },
       ),
-      floatingActionButton:
-          isMobile(context) && userCompany.canCreate(EntityType.expense)
-              ? FloatingActionButton(
-                  heroTag: 'expense_fab',
-                  backgroundColor: Theme.of(context).primaryColorDark,
-                  onPressed: () {
-                    createEntityByType(
-                        context: context, entityType: EntityType.expense);
-                  },
-                  child: Icon(
-                    Icons.add,
-                    color: Colors.white,
-                  ),
-                  tooltip: localization.newExpense,
-                )
-              : null,
+      floatingActionButton: state.prefState.isMenuFloated &&
+              userCompany.canCreate(EntityType.expense)
+          ? FloatingActionButton(
+              heroTag: 'expense_fab',
+              backgroundColor: Theme.of(context).primaryColorDark,
+              onPressed: () {
+                createEntityByType(
+                    context: context, entityType: EntityType.expense);
+              },
+              child: Icon(
+                Icons.add,
+                color: Colors.white,
+              ),
+              tooltip: localization.newExpense,
+            )
+          : null,
     );
   }
 }

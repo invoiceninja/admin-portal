@@ -326,8 +326,8 @@ class _AppBottomBarState extends State<AppBottomBar> {
     return StoreBuilder(builder: (BuildContext context, Store<AppState> store) {
       final localization = AppLocalization.of(context);
       final prefState = store.state.prefState;
-      final isList =
-          prefState.moduleLayout == ModuleLayout.list || widget.entityType.isSetting;
+      final isList = prefState.moduleLayout == ModuleLayout.list ||
+          widget.entityType.isSetting;
 
       return BottomAppBar(
         shape: CircularNotchedRectangle(),
@@ -430,7 +430,7 @@ class _AppBottomBarState extends State<AppBottomBar> {
                         ? Theme.of(context).accentColor
                         : null,
                   ),
-                Spacer(),
+                if (!state.prefState.isMenuFloated) Spacer(),
                 if (!widget.entityType.isSetting)
                   IconButton(
                     icon: Icon(Icons.refresh),

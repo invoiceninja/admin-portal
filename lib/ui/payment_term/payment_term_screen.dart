@@ -109,22 +109,22 @@ class PaymentTermScreen extends StatelessWidget {
         onSelectedCustom4: (value) =>
             store.dispatch(FilterPaymentTermsByCustom4(value)),
       ),
-      floatingActionButton:
-          isMobile(context) && userCompany.canCreate(EntityType.paymentTerm)
-              ? FloatingActionButton(
-                  heroTag: 'payment_term_fab',
-                  backgroundColor: Theme.of(context).primaryColorDark,
-                  onPressed: () {
-                    createEntityByType(
-                        context: context, entityType: EntityType.paymentTerm);
-                  },
-                  child: Icon(
-                    Icons.add,
-                    color: Colors.white,
-                  ),
-                  tooltip: localization.newPaymentTerm,
-                )
-              : null,
+      floatingActionButton: state.prefState.isMenuFloated &&
+              userCompany.canCreate(EntityType.paymentTerm)
+          ? FloatingActionButton(
+              heroTag: 'payment_term_fab',
+              backgroundColor: Theme.of(context).primaryColorDark,
+              onPressed: () {
+                createEntityByType(
+                    context: context, entityType: EntityType.paymentTerm);
+              },
+              child: Icon(
+                Icons.add,
+                color: Colors.white,
+              ),
+              tooltip: localization.newPaymentTerm,
+            )
+          : null,
     );
   }
 }
