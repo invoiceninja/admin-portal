@@ -54,9 +54,7 @@ class DeleteCompanyRequest implements StartSaving {
   final String password;
 }
 
-class DeleteCompanySuccess implements StopSaving, PersistData {
-  DeleteCompanySuccess();
-}
+class DeleteCompanySuccess implements StopSaving, PersistData {}
 
 class DeleteCompanyFailure implements StopSaving {
   DeleteCompanyFailure(this.error);
