@@ -32,6 +32,8 @@ import 'package:invoiceninja_flutter/redux/group/group_reducer.dart';
 UserCompanyState companyReducer(UserCompanyState state, dynamic action) {
   if (action is RefreshData && action.loadCompanies) {
     return UserCompanyState();
+  } else if (action is DeleteCompanySuccess) {
+    return UserCompanyState();
   }
 
   return state.rebuild((b) => b
