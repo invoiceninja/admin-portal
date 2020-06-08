@@ -100,8 +100,8 @@ class UserListVM {
       state: state,
       userCompany: state.userCompany,
       listState: state.userListState,
-      userList: memoizedFilteredUserList(
-          state.userState.map, state.userState.list, state.userListState),
+      userList: memoizedFilteredUserList(state.userState.map,
+          state.userState.list, state.userListState, state.user.id),
       userMap: state.userState.map,
       isLoading: state.isLoading,
       isLoaded: state.userState.isLoaded,

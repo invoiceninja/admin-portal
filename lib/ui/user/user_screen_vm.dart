@@ -44,8 +44,8 @@ class UserScreenVM {
 
     return UserScreenVM(
       userMap: state.userState.map,
-      userList: memoizedFilteredUserList(
-          state.userState.map, state.userState.list, state.userListState),
+      userList: memoizedFilteredUserList(state.userState.map,
+          state.userState.list, state.userListState, state.user.id),
       userCompany: state.userCompany,
       isInMultiselect: state.userListState.isInMultiselect(),
     );

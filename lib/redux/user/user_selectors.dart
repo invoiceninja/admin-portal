@@ -29,16 +29,20 @@ List<String> dropdownUsersSelector(BuiltMap<String, UserEntity> userMap,
   return list;
 }
 
-var memoizedFilteredUserList = memo3((BuiltMap<String, UserEntity> userMap,
-        BuiltList<String> userList, ListUIState userListState) =>
-    filteredUsersSelector(userMap, userList, userListState));
+var memoizedFilteredUserList = memo4((BuiltMap<String, UserEntity> userMap,
+        BuiltList<String> userList,
+        ListUIState userListState,
+        String authUserId) =>
+    filteredUsersSelector(userMap, userList, userListState, authUserId));
 
 List<String> filteredUsersSelector(BuiltMap<String, UserEntity> userMap,
-    BuiltList<String> userList, ListUIState userListState) {
+    BuiltList<String> userList, ListUIState userListState, String authUserId) {
   final list = userList.where((userId) {
     final user = userMap[userId];
 
     if (!user.matchesStates(userListState.stateFilters)) {
+      return false;
+    } else if (user.id == authUserId) {
       return false;
     }
 
