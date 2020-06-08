@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
+import 'package:invoiceninja_flutter/utils/localization.dart';
 
 class AppDropdownButton<T> extends StatelessWidget {
   const AppDropdownButton({
@@ -31,8 +32,8 @@ class AppDropdownButton<T> extends StatelessWidget {
     if (!values.contains(value)) {
       checkedValue = blankValue;
     }
-    final bool isEmpty =
-        checkedValue == null || checkedValue == '';
+    final bool isEmpty = (checkedValue == null || checkedValue == '') &&
+        !state.settingsUIState.isFiltered;
 
     final dropDownButton = DropdownButtonHideUnderline(
       child: DropdownButton<T>(
@@ -44,7 +45,9 @@ class AppDropdownButton<T> extends StatelessWidget {
           if (_showBlank || isEmpty)
             DropdownMenuItem<T>(
               value: blankValue,
-              child: SizedBox(),
+              child: state.settingsUIState.isFiltered
+                  ? Text(AppLocalization.of(context).useDefault)
+                  : SizedBox(),
             ),
           ...items
         ],
