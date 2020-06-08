@@ -62,18 +62,25 @@ class _ChangeLayoutBannerState extends State<ChangeLayoutBanner> {
               children: [
                 Expanded(
                   child: IconText(
+                    style: TextStyle(color: Colors.white),
                     icon: Icons.info_outline,
                     text: message,
                   ),
                 ),
                 FlatButton(
-                  child: Text(localization.dismiss.toUpperCase()),
+                  child: Text(
+                    localization.dismiss.toUpperCase(),
+                    style: TextStyle(color: Colors.white),
+                  ),
                   onPressed: () {
                     setState(() => _dismissedChange = true);
                   },
                 ),
                 FlatButton(
-                  child: Text(localization.change.toUpperCase()),
+                  child: Text(
+                    localization.change.toUpperCase(),
+                    style: TextStyle(color: Colors.white),
+                  ),
                   onPressed: () {
                     final layout = widget.suggestedLayout == AppLayout.desktop
                         ? AppLayout.mobile

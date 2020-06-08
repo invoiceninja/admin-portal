@@ -18,7 +18,7 @@ class IconText extends StatelessWidget {
     return Row(
       mainAxisAlignment: alignment ?? MainAxisAlignment.start,
       children: <Widget>[
-        Icon(icon),
+        Icon(icon, color: style?.color),
         SizedBox(width: 10),
         Text(text, style: style),
       ],
