@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
+import 'package:invoiceninja_flutter/constants.dart';
 import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/redux/dashboard/dashboard_actions.dart';
@@ -48,57 +49,59 @@ class _ChangeLayoutBannerState extends State<ChangeLayoutBanner> {
       }
     }
 
-    if (message == null) {
-      return widget.child;
-    }
-
     return Column(
       children: [
-        Material(
-          color: Colors.orange,
-          child: Padding(
-            padding: const EdgeInsets.only(left: 10),
-            child: Row(
-              children: [
-                Expanded(
-                  child: IconText(
-                    style: TextStyle(color: Colors.white),
-                    icon: Icons.info_outline,
-                    text: message,
+        AnimatedContainer(
+          height: message == null ? 0 : kTopBottomBarHeight,
+          duration: Duration(milliseconds: kDefaultAnimationDuration),
+          curve: Curves.easeInOutCubic,
+          child: Material(
+            color: Colors.orange,
+            child: Padding(
+              padding: const EdgeInsets.only(left: 10),
+              child: Row(
+                children: [
+                  Expanded(
+                    child: IconText(
+                      style: TextStyle(color: Colors.white),
+                      icon: Icons.info_outline,
+                      text: message,
+                    ),
                   ),
-                ),
-                FlatButton(
-                  child: Text(
-                    localization.dismiss.toUpperCase(),
-                    style: TextStyle(color: Colors.white),
+                  FlatButton(
+                    child: Text(
+                      localization.dismiss.toUpperCase(),
+                      style: TextStyle(color: Colors.white),
+                    ),
+                    onPressed: () {
+                      setState(() => _dismissedChange = true);
+                    },
                   ),
-                  onPressed: () {
-                    setState(() => _dismissedChange = true);
-                  },
-                ),
-                FlatButton(
-                  child: Text(
-                    localization.change.toUpperCase(),
-                    style: TextStyle(color: Colors.white),
+                  FlatButton(
+                    child: Text(
+                      localization.change.toUpperCase(),
+                      style: TextStyle(color: Colors.white),
+                    ),
+                    onPressed: () {
+                      final layout = widget.suggestedLayout == AppLayout.desktop
+                          ? AppLayout.mobile
+                          : AppLayout.desktop;
+                      store.dispatch(UserPreferencesChanged(layout: layout));
+                      AppBuilder.of(context).rebuild();
+                      WidgetsBinding.instance.addPostFrameCallback((duration) {
+                        if (layout == AppLayout.mobile) {
+                          store.dispatch(
+                              ViewDashboard(navigator: Navigator.of(context)));
+                        } else {
+                          store.dispatch(ViewMainScreen(
+                              navigator: Navigator.of(context),
+                              addDelay: true));
+                        }
+                      });
+                    },
                   ),
-                  onPressed: () {
-                    final layout = widget.suggestedLayout == AppLayout.desktop
-                        ? AppLayout.mobile
-                        : AppLayout.desktop;
-                    store.dispatch(UserPreferencesChanged(layout: layout));
-                    AppBuilder.of(context).rebuild();
-                    WidgetsBinding.instance.addPostFrameCallback((duration) {
-                      if (layout == AppLayout.mobile) {
-                        store.dispatch(
-                            ViewDashboard(navigator: Navigator.of(context)));
-                      } else {
-                        store.dispatch(ViewMainScreen(
-                            navigator: Navigator.of(context), addDelay: true));
-                      }
-                    });
-                  },
-                ),
-              ],
+                ],
+              ),
             ),
           ),
         ),
