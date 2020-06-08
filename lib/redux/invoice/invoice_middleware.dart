@@ -333,7 +333,7 @@ Middleware<AppState> _emailInvoice(InvoiceRepository repository) {
     repository
         .emailInvoice(store.state.credentials, origInvoice, action.template,
             action.subject, action.body)
-        .then((void _) {
+        .then((InvoiceEntity invoice) {
       store.dispatch(EmailInvoiceSuccess());
       store.dispatch(LoadClient(clientId: origInvoice.clientId));
       if (action.completer != null) {
