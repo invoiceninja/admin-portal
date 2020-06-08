@@ -60,7 +60,11 @@ List<String> filteredCompanyGatewaysSelector(
 
   final List<String> gatewaysIds = (companyGatewayIds ?? '')
       .split(',')
-      .where((id) => id.isNotEmpty && companyGatewayMap.containsKey(id))
+      .where((id) =>
+          id.isNotEmpty &&
+          companyGatewayMap.containsKey(id) &&
+          companyGatewayMap[id]
+              .matchesStates(companyGatewayListState.stateFilters))
       .toList();
 
   if (includeAll) {
