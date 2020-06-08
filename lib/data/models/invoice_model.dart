@@ -633,7 +633,11 @@ abstract class InvoiceEntity extends Object
   bool get isPaid => statusId == kInvoiceStatusPaid;
 
   String get calculatedStatusId {
-    if (isPastDue) {
+    if (isPastDue &&
+        ![
+          kInvoiceStatusCancelled,
+          kInvoiceStatusReversed,
+        ].contains(statusId)) {
       return kInvoiceStatusPastDue;
     }
 

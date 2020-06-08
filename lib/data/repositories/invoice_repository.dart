@@ -75,8 +75,12 @@ class InvoiceRepository {
     return invoiceResponse.data;
   }
 
-  Future<Null> emailInvoice(Credentials credentials, InvoiceEntity invoice,
-      EmailTemplate template, String subject, String body) async {
+  Future<InvoiceEntity> emailInvoice(
+      Credentials credentials,
+      InvoiceEntity invoice,
+      EmailTemplate template,
+      String subject,
+      String body) async {
     final data = {
       'entity': '${invoice.entityType}',
       'entity_id': invoice.id,
@@ -85,7 +89,7 @@ class InvoiceRepository {
       'subject': subject,
     };
 
-    final List<dynamic> response = await webClient.post(
+    final dynamic response = await webClient.post(
         credentials.url + '/emails', credentials.token,
         data: json.encode(data));
 

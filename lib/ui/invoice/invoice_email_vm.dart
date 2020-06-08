@@ -1,10 +1,12 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
+import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:invoiceninja_flutter/redux/client/client_actions.dart';
 import 'package:invoiceninja_flutter/redux/invoice/invoice_actions.dart';
 import 'package:invoiceninja_flutter/ui/app/invoice/invoice_email_view.dart';
 import 'package:invoiceninja_flutter/utils/completers.dart';
+import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:invoiceninja_flutter/utils/platforms.dart';
 import 'package:redux/redux.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
@@ -89,13 +91,22 @@ class EmailInvoiceVM extends EmailEntityVM {
         invoice: invoice,
         client: state.clientState.map[invoice.clientId] ??
             ClientEntity(id: invoice.clientId),
-        onSendPressed: (context, template, subject, body) =>
-            store.dispatch(EmailInvoiceRequest(
-              completer: isMobile(context) ? popCompleter(context, true) : null,
-              invoiceId: invoice.id,
-              template: template,
-              subject: subject,
-              body: body,
-            )));
+        onSendPressed: (context, template, subject, body) {
+          final completer = snackBarCompleter<Null>(
+              context, AppLocalization.of(context).emailedInvoice,
+              shouldPop: isMobile(context));
+          if (!isMobile(context)) {
+            completer.future.then((value) {
+              viewEntity(entity: invoice, context: context);
+            });
+          }
+          store.dispatch(EmailInvoiceRequest(
+            completer: completer,
+            invoiceId: invoice.id,
+            template: template,
+            subject: subject,
+            body: body,
+          ));
+        });
   }
 }

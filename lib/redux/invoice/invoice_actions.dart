@@ -207,7 +207,10 @@ class EmailInvoiceRequest implements StartSaving {
   final String body;
 }
 
-class EmailInvoiceSuccess implements StopSaving, PersistData {}
+class EmailInvoiceSuccess implements StopSaving, PersistData {
+  EmailInvoiceSuccess({@required this.invoice});
+  final InvoiceEntity invoice;
+}
 
 class EmailInvoiceFailure implements StopSaving {
   EmailInvoiceFailure(this.error);

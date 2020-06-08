@@ -426,8 +426,8 @@ class InvoiceStatusColors {
     kInvoiceStatusPartial: Colors.deepPurple,
     kInvoiceStatusPaid: convertHexStringToColor('#407535'),
     kInvoiceStatusPastDue: convertHexStringToColor('#8D3E3F'),
-    kInvoiceStatusCancelled: convertHexStringToColor('#8D3E3F'),
-    kInvoiceStatusReversed: convertHexStringToColor('#8D3E3F'),
+    kInvoiceStatusCancelled: convertHexStringToColor('#444444'),
+    kInvoiceStatusReversed: convertHexStringToColor('#444444'),
   };
 }
 
