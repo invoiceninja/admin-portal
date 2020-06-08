@@ -201,10 +201,6 @@ Middleware<AppState> _saveCompanyGateway(CompanyGatewayRepository repository) {
         store.dispatch(SaveCompanyGatewaySuccess(companyGateway));
       }
       action.completer.complete(companyGateway);
-      final companyGatewayUIState = store.state.companyGatewayUIState;
-      if (companyGatewayUIState.saveCompleter != null) {
-        companyGatewayUIState.saveCompleter.complete(companyGateway);
-      }
     }).catchError((Object error) {
       print(error);
       dev.log(

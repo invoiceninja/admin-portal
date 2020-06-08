@@ -1,4 +1,5 @@
 import 'package:built_collection/built_collection.dart';
+import 'package:invoiceninja_flutter/data/models/client_model.dart';
 import 'package:invoiceninja_flutter/data/models/invoice_model.dart';
 import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:invoiceninja_flutter/redux/company/company_actions.dart';
@@ -58,9 +59,11 @@ final editingReducer = combineReducers<InvoiceEntity>([
     final client = action.client;
     return quote.rebuild((b) => b
       ..isChanged = true
-      ..clientId = client.id
-      ..invitations.addAll(client.contacts
-          .map((contact) => InvitationEntity(contactId: contact.id))));
+      ..clientId = client?.id ?? ''
+      ..invitations.replace((client?.contacts ?? <ContactEntity>[])
+          .where((contact) => contact.sendEmail)
+          .map((contact) => InvitationEntity(contactId: contact.id))
+          .toList()));
   }),
   TypedReducer<InvoiceEntity, RestoreQuotesSuccess>((quotes, action) {
     return action.quotes[0];

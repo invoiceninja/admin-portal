@@ -193,11 +193,6 @@ Middleware<AppState> _savePaymentTerm(PaymentTermRepository repository) {
       }
 
       action.completer.complete(paymentTerm);
-
-      final paymentTermUIState = store.state.paymentTermUIState;
-      if (paymentTermUIState.saveCompleter != null) {
-        paymentTermUIState.saveCompleter.complete(paymentTerm);
-      }
     }).catchError((Object error) {
       print(error);
       store.dispatch(SavePaymentTermFailure(error));
