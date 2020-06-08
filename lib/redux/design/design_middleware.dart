@@ -189,11 +189,6 @@ Middleware<AppState> _saveDesign(DesignRepository repository) {
       }
 
       action.completer.complete(design);
-
-      final designUIState = store.state.designUIState;
-      if (designUIState.saveCompleter != null) {
-        designUIState.saveCompleter.complete(design);
-      }
     }).catchError((Object error) {
       print(error);
       store.dispatch(SaveDesignFailure(error));

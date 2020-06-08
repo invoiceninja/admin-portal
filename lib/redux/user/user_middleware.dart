@@ -218,10 +218,6 @@ Middleware<AppState> _saveUser(UserRepository repository) {
       }
       store.dispatch(UserVerifiedPassword());
       action.completer.complete(user);
-      final userUIState = store.state.userUIState;
-      if (userUIState.saveCompleter != null) {
-        userUIState.saveCompleter.complete(user);
-      }
     }).catchError((Object error) {
       print(error);
       store.dispatch(SaveUserFailure(error));

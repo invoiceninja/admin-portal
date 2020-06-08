@@ -194,10 +194,6 @@ Middleware<AppState> _saveTaxRate(TaxRateRepository repository) {
         store.dispatch(SaveTaxRateSuccess(taxRate));
       }
       action.completer.complete(taxRate);
-      final taxRateUIState = store.state.taxRateUIState;
-      if (taxRateUIState.saveCompleter != null) {
-        taxRateUIState.saveCompleter.complete(taxRate);
-      }
     }).catchError((Object error) {
       print(error);
       store.dispatch(SaveTaxRateFailure(error));

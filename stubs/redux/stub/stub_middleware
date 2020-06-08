@@ -193,10 +193,6 @@ Middleware<AppState> _saveStub(StubRepository repository) {
 
       action.completer.complete(stub);
 
-    final stubUIState = store.state.stubUIState;
-    if (stubUIState.saveCompleter != null) {
-      stubUIState.saveCompleter.complete(stub);
-    }
     }).catchError((Object error) {
       print(error);
       store.dispatch(SaveStubFailure(error));
