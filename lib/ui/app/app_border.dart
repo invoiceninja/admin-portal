@@ -22,9 +22,12 @@ class AppBorder extends StatelessWidget {
     final state = store.state;
     final enableDarkMode = state.prefState.enableDarkMode;
     const borderWidth = 1.5;
+
     final color = enableDarkMode
         ? convertHexStringToColor(kDefaultDarkBorderColor)
-        : Colors.white;
+        : (isTop == true)
+            ? convertHexStringToColor(kDefaultLightBorderColor)
+            : Colors.white;
 
     return Container(
         decoration: BoxDecoration(
