@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/redux/app/app_middleware.dart';
+import 'package:invoiceninja_flutter/redux/credit/credit_actions.dart';
 import 'package:invoiceninja_flutter/redux/expense/expense_actions.dart';
 import 'package:invoiceninja_flutter/redux/invoice/invoice_actions.dart';
 import 'package:invoiceninja_flutter/redux/payment/payment_actions.dart';
@@ -172,7 +173,11 @@ Middleware<AppState> _reverseInvoices(InvoiceRepository repository) {
             store.state.credentials, action.invoiceIds, EntityAction.reverse)
         .then((List<InvoiceEntity> invoices) {
       store.dispatch(ReverseInvoicesSuccess(invoices));
-      store.dispatch(LoadClients(force: true));
+      final completer = Completer<Null>();
+      completer.future.then((value) {
+        store.dispatch(LoadCredits(force: true));
+      });
+      store.dispatch(LoadClients(force: true, completer: completer));
       if (action.completer != null) {
         action.completer.complete(null);
       }
