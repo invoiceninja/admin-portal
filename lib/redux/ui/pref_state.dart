@@ -17,7 +17,7 @@ abstract class PrefState implements Built<PrefState, PrefStateBuilder> {
       historySidebarMode: AppSidebarMode.float,
       isMenuVisible: true,
       isHistoryVisible: false,
-      enableDarkMode: true,
+      enableDarkMode: false,
       requireAuthentication: false,
       emailPayment: false,
       autoStartTasks: false,

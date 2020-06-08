@@ -378,17 +378,17 @@ class _GatewayConfigFieldState extends State<GatewayConfigField> {
 
     if ('${widget.defaultValue}'.startsWith('[') &&
         '${widget.defaultValue}'.endsWith(']')) {
-      final options = [
-        '',
-        ...'${widget.defaultValue}'
-            .replaceFirst('[', '')
-            .replaceFirst(']', '')
-            .split(',')
-      ];
-      final dynamic value =
-          widget.value == widget.defaultValue ? '' : widget.value;
+      final options = '${widget.defaultValue}'
+          .replaceFirst('[', '')
+          .replaceFirst(']', '')
+          .split(',');
 
-      return AppDropdownButton(
+      final dynamic value =
+          (widget.value == null || widget.value == widget.defaultValue)
+              ? ''
+              : widget.value;
+
+      return AppDropdownButton<String>(
         labelText: toTitleCase(widget.field),
         value: value,
         onChanged: (dynamic value) => widget.onChanged(value),

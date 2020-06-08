@@ -159,6 +159,10 @@ class _EntityDropdownState extends State<EntityDropdown> {
               );
             },
             onSuggestionSelected: (entityId) {
+              if (kIsWeb) {
+                return;
+              }
+
               final entity = _entityMap[entityId];
               _textController.text = _entityMap[entityId].listDisplayName;
               widget.onSelected(entity);

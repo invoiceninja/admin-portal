@@ -59,18 +59,16 @@ class CreditEditItemsVM extends EntityEditItemsVM {
         );
 
   factory CreditEditItemsVM.fromStore(Store<AppState> store) {
-    final AppState state = store.state;
-    final credit = state.creditUIState.editing;
-
     return CreditEditItemsVM(
-        state: state,
-        company: state.company,
-        invoice: credit,
-        invoiceItemIndex: state.creditUIState.editingItemIndex,
+        state: store.state,
+        company: store.state.company,
+        invoice: store.state.creditUIState.editing,
+        invoiceItemIndex: store.state.creditUIState.editingItemIndex,
         onRemoveInvoiceItemPressed: (index) =>
             store.dispatch(DeleteCreditItem(index)),
         onDoneInvoiceItemPressed: () => store.dispatch(EditCreditItem()),
         onChangedInvoiceItem: (creditItem, index) {
+          final credit = store.state.creditUIState.editing;
           if (index == credit.lineItems.length) {
             store.dispatch(AddCreditItem(creditItem: creditItem));
           } else {
