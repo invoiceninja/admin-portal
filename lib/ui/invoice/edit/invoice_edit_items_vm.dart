@@ -82,14 +82,12 @@ class InvoiceEditItemsVM extends EntityEditItemsVM {
         );
 
   factory InvoiceEditItemsVM.fromStore(Store<AppState> store) {
-    final AppState state = store.state;
-    final invoice = state.invoiceUIState.editing;
 
     return InvoiceEditItemsVM(
-        state: state,
-        company: state.company,
-        invoice: invoice,
-        invoiceItemIndex: state.invoiceUIState.editingItemIndex,
+        state: store.state,
+        company: store.state.company,
+        invoice: store.state.invoiceUIState.editing,
+        invoiceItemIndex: store.state.invoiceUIState.editingItemIndex,
         addLineItem: () =>
             store.dispatch(AddInvoiceItem(invoiceItem: InvoiceItemEntity())),
         deleteLineItem: null,
@@ -97,6 +95,7 @@ class InvoiceEditItemsVM extends EntityEditItemsVM {
             store.dispatch(DeleteInvoiceItem(index)),
         onDoneInvoiceItemPressed: () => store.dispatch(EditInvoiceItem()),
         onChangedInvoiceItem: (invoiceItem, index) {
+          final invoice = store.state.invoiceUIState.editing;
           if (index == invoice.lineItems.length) {
             store.dispatch(AddInvoiceItem(invoiceItem: invoiceItem));
           } else {

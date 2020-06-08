@@ -59,18 +59,16 @@ class QuoteEditItemsVM extends EntityEditItemsVM {
         );
 
   factory QuoteEditItemsVM.fromStore(Store<AppState> store) {
-    final AppState state = store.state;
-    final quote = state.quoteUIState.editing;
-
     return QuoteEditItemsVM(
-        state: state,
-        company: state.company,
-        invoice: quote,
-        invoiceItemIndex: state.quoteUIState.editingItemIndex,
+        state: store.state,
+        company: store.state.company,
+        invoice: store.state.quoteUIState.editing,
+        invoiceItemIndex: store.state.quoteUIState.editingItemIndex,
         onRemoveInvoiceItemPressed: (index) =>
             store.dispatch(DeleteQuoteItem(index)),
         onDoneInvoiceItemPressed: () => store.dispatch(EditQuoteItem()),
         onChangedInvoiceItem: (quoteItem, index) {
+          final quote = store.state.quoteUIState.editing;
           if (index == quote.lineItems.length) {
             store.dispatch(AddQuoteItem(quoteItem: quoteItem));
           } else {

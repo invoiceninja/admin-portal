@@ -197,6 +197,9 @@ class _InvoiceEditItemsDesktopState extends State<InvoiceEditItemsDesktop> {
                         );
                       },
                       onSuggestionSelected: (suggestion) {
+                        if (kIsWeb) {
+                          return;
+                        }
                         final item = lineItems[index];
                         final product = productState.map[suggestion];
                         final updatedItem = item.rebuild((b) => b
