@@ -572,7 +572,7 @@ abstract class ActivityEntity
           .firstWhere((contact) => contact.id == contactId, orElse: () => null);
     }
 
-    activity = activity.replaceFirst(':user', user?.fullName ?? '');
+    activity = activity.replaceFirst(':user', user?.listDisplayName ?? '');
     activity = activity.replaceFirst(':client', client?.displayName ?? '');
     activity = activity.replaceFirst(':invoice', invoice?.number ?? '');
     activity = activity.replaceFirst(':quote', quote?.number ?? '');

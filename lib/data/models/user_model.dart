@@ -149,7 +149,7 @@ abstract class UserEntity extends Object
 
   @override
   String get listDisplayName {
-    return fullName;
+    return fullName.isNotEmpty ? fullName : email;
   }
 
   int compareTo(UserEntity user, String sortField, bool sortAscending) {

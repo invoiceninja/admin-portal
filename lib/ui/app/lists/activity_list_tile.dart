@@ -42,12 +42,13 @@ class ActivityListTile extends StatelessWidget {
       onTap: !enableNavigation
           ? null
           : () {
+              print('## ON TAP: ${activity.entityType} - ${activity.invoiceId}');
               switch (activity.entityType) {
                 case EntityType.task:
                   viewEntityById(
                       context: context,
                       entityId: activity.taskId,
-                      entityType: EntityType.taxRate);
+                      entityType: EntityType.task);
                   break;
                 case EntityType.client:
                   viewEntityById(
@@ -66,6 +67,12 @@ class ActivityListTile extends StatelessWidget {
                       context: context,
                       entityId: activity.invoiceId,
                       entityType: EntityType.quote);
+                  break;
+                case EntityType.credit:
+                  viewEntityById(
+                      context: context,
+                      entityId: activity.creditId,
+                      entityType: EntityType.credit);
                   break;
                 case EntityType.payment:
                   viewEntityById(
