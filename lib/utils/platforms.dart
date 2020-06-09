@@ -41,15 +41,12 @@ String getAppURL(BuildContext context) {
 }
 
 
-AppLayout calculateLayout(BuildContext context, {bool breakOutTablet = false}) {
+AppLayout calculateLayout(BuildContext context) {
   final size = MediaQuery.of(context).size.width;
 
   if (size < kMobileLayoutWidth) {
     return AppLayout.mobile;
   } else {
-    if (breakOutTablet && size < kTabletLayoutWidth) {
-      return AppLayout.tablet;
-    }
     return AppLayout.desktop;
   }
 }
@@ -61,8 +58,6 @@ AppLayout getLayout(BuildContext context) =>
 bool isMobile(BuildContext context) => getLayout(context) == AppLayout.mobile;
 
 bool isNotMobile(BuildContext context) => !isMobile(context);
-
-bool isTablet(BuildContext context) => getLayout(context) == AppLayout.tablet;
 
 bool isDesktop(BuildContext context) => getLayout(context) == AppLayout.desktop;
 

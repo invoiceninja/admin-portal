@@ -34,7 +34,7 @@ class _ChangeLayoutBannerState extends State<ChangeLayoutBanner> {
     final store = StoreProvider.of<AppState>(context);
     final localization = AppLocalization.of(context);
 
-    final calculatedLayout = calculateLayout(context, breakOutTablet: true);
+    final calculatedLayout = calculateLayout(context);
     String message;
 
     if (!_dismissedChange) {

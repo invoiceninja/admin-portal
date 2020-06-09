@@ -75,8 +75,6 @@ abstract class PrefState implements Built<PrefState, PrefStateBuilder> {
 
   bool get isNotDesktop => !isDesktop;
 
-  bool get isTablet => appLayout == AppLayout.tablet;
-
   bool get isMobile => appLayout == AppLayout.mobile;
 
   bool get isNotMobile => !isMobile;
@@ -135,7 +133,6 @@ class AppLayout extends EnumClass {
   static Serializer<AppLayout> get serializer => _$appLayoutSerializer;
 
   static const AppLayout mobile = _$mobile;
-  static const AppLayout tablet = _$tablet;
   static const AppLayout desktop = _$desktop;
 
   static BuiltSet<AppLayout> get values => _$values;

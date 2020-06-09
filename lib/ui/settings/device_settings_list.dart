@@ -61,10 +61,6 @@ class _DeviceSettingsState extends State<DeviceSettings> {
                         value: AppLayout.desktop,
                       ),
                       DropdownMenuItem(
-                        child: Text(localization.tablet),
-                        value: AppLayout.tablet,
-                      ),
-                      DropdownMenuItem(
                         child: Text(localization.mobile),
                         value: AppLayout.mobile,
                       ),
