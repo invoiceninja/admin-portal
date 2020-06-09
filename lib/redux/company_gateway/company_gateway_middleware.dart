@@ -2,6 +2,7 @@ import 'dart:developer' as dev;
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:invoiceninja_flutter/data/models/company_gateway_model.dart';
+import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:redux/redux.dart';
 import 'package:invoiceninja_flutter/utils/platforms.dart';
 import 'package:invoiceninja_flutter/redux/app/app_middleware.dart';
@@ -93,7 +94,9 @@ Middleware<AppState> _viewCompanyGatewayList() {
 
     next(action);
 
-    if (store.state.companyGatewayState.isStale) {
+    if (store.state.staticState.isStale) {
+      store.dispatch(RefreshData());
+    } else if (store.state.companyGatewayState.isStale) {
       store.dispatch(LoadCompanyGateways());
     }
 

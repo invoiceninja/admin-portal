@@ -221,9 +221,9 @@ Middleware<AppState> _createRefreshRequest(AuthRepository repository) {
 
     repository.refresh(url: url, token: token).then((data) {
       store.dispatch(LoadAccountSuccess(
-          completer: action.completer,
-          loginResponse: data,
-          loadCompanies: action.loadCompanies));
+        completer: action.completer,
+        loginResponse: data,
+      ));
     }).catchError((Object error) {
       print('Refresh data error: $error');
       if (action.completer != null) {
@@ -267,6 +267,7 @@ Middleware<AppState> _createCompany(AuthRepository repository) {
     final state = store.state;
 
     repository.addCompany(credentials: state.credentials).then((dynamic value) {
+      store.dispatch(AddCompanySuccess());
       store.dispatch(RefreshData(
         completer: Completer<Null>()
           ..future.then<Null>((_) {
@@ -298,6 +299,7 @@ Middleware<AppState> _deleteCompany(AuthRepository repository) {
       action.completer.complete(null);
     }).catchError((Object error) {
       store.dispatch(DeleteCompanyFailure(error));
+      action.completer.completeError(error);
     });
 
     next(action);

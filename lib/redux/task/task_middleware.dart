@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:invoiceninja_flutter/redux/app/app_middleware.dart';
 import 'package:invoiceninja_flutter/redux/vendor/vendor_actions.dart';
 import 'package:invoiceninja_flutter/utils/platforms.dart';
@@ -89,7 +90,9 @@ Middleware<AppState> _viewTaskList() {
 
     next(action);
 
-    if (store.state.taskState.isStale) {
+    if (store.state.staticState.isStale) {
+      store.dispatch(RefreshData());
+    } else if (store.state.taskState.isStale) {
       store.dispatch(LoadTasks());
     }
 

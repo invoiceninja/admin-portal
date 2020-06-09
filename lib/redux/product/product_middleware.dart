@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
+import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:invoiceninja_flutter/redux/app/app_middleware.dart';
 import 'package:invoiceninja_flutter/redux/ui/ui_actions.dart';
 import 'package:invoiceninja_flutter/redux/invoice/invoice_actions.dart';
@@ -86,7 +87,9 @@ Middleware<AppState> _viewProductList() {
 
     next(action);
 
-    if (store.state.productState.isStale) {
+    if (store.state.staticState.isStale) {
+      store.dispatch(RefreshData());
+    } else if (store.state.productState.isStale) {
       store.dispatch(LoadProducts());
     }
 

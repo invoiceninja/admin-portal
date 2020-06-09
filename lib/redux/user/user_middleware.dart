@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:invoiceninja_flutter/redux/auth/auth_actions.dart';
 import 'package:redux/redux.dart';
 import 'package:invoiceninja_flutter/utils/platforms.dart';
@@ -91,7 +92,9 @@ Middleware<AppState> _viewUserList() {
 
     next(action);
 
-    if (store.state.userState.isStale) {
+    if (store.state.staticState.isStale) {
+      store.dispatch(RefreshData());
+    } else if (store.state.userState.isStale) {
       store.dispatch(LoadUsers());
     }
 

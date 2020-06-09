@@ -42,10 +42,12 @@ class SaveCompanyFailure implements StopSaving {
   final Object error;
 }
 
-class AddCompany {
+class AddCompany implements StartSaving {
   AddCompany(this.context);
   final BuildContext context;
 }
+
+class AddCompanySuccess implements StopSaving {}
 
 class DeleteCompanyRequest implements StartSaving {
   DeleteCompanyRequest({@required this.completer, @required this.password});

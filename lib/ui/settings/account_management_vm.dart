@@ -8,7 +8,7 @@ import 'package:invoiceninja_flutter/data/models/company_model.dart';
 import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:invoiceninja_flutter/redux/auth/auth_actions.dart';
 import 'package:invoiceninja_flutter/redux/company/company_actions.dart';
-import 'package:invoiceninja_flutter/redux/dashboard/dashboard_actions.dart';
+import 'package:invoiceninja_flutter/ui/app/dialogs/error_dialog.dart';
 import 'package:invoiceninja_flutter/ui/settings/account_management.dart';
 import 'package:invoiceninja_flutter/utils/completers.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
@@ -54,6 +54,8 @@ class AccountManagementVM {
             store.dispatch(UpdateCompany(company: company)),
         onCompanyDelete: (context, password) {
           final selectedCompanyIndex = state.uiState.selectedCompanyIndex;
+          final refreshCompleter = snackBarCompleter<Null>(
+              context, AppLocalization.of(context).refreshComplete);
           final completer = Completer<Null>()
             ..future.then((value) {
               final companies = state.companies;
@@ -66,17 +68,18 @@ class AccountManagementVM {
                   }
                 }
                 store.dispatch(SelectCompany(index));
-                store.dispatch(ViewDashboard(navigator: Navigator.of(context)));
-
-                final completer = snackBarCompleter<Null>(
-                    context, AppLocalization.of(context).refreshComplete);
                 store.dispatch(RefreshData(
-                  completer: completer,
-                  loadCompanies: false,
+                  completer: refreshCompleter,
                 ));
               } else {
                 store.dispatch(UserLogout(context));
               }
+            }).catchError((Object error) {
+              showDialog<ErrorDialog>(
+                  context: context,
+                  builder: (BuildContext context) {
+                    return ErrorDialog(error);
+                  });
             });
           store.dispatch(
               DeleteCompanyRequest(completer: completer, password: password));
@@ -95,7 +98,7 @@ class AccountManagementVM {
               PurgeDataRequest(completer: completer, password: password));
         },
         onAppliedLicense: () {
-          store.dispatch(RefreshData(loadCompanies: false));
+          store.dispatch(RefreshData());
         });
   }
 

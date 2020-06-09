@@ -118,18 +118,16 @@ class UserPreferencesChanged implements PersistPrefs {
 
 class LoadAccountSuccess {
   LoadAccountSuccess(
-      {this.loginResponse, this.completer, this.loadCompanies = true});
+      {this.loginResponse, this.completer,});
 
   final Completer completer;
   final LoginResponse loginResponse;
-  final bool loadCompanies;
 }
 
-class RefreshData {
-  RefreshData({this.completer, this.loadCompanies = true});
+class RefreshData implements StartLoading {
+  RefreshData({this.completer});
 
   final Completer completer;
-  final bool loadCompanies;
 }
 
 class RefreshDataFailure {

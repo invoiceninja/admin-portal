@@ -53,7 +53,7 @@ class BoolDropdownButton extends StatelessWidget {
           border: _showBlank ? null : InputBorder.none,
           labelText: label,
         ),
-        isEmpty: '${value ?? ''}'.isEmpty,
+        isEmpty: '${value ?? ''}'.isEmpty && !state.settingsUIState.isFiltered,
         child: _showBlank
             ? DropdownButtonHideUnderline(
                 child: DropdownButton<bool>(
@@ -63,7 +63,9 @@ class BoolDropdownButton extends StatelessWidget {
                   onChanged: (value) => onChanged(value),
                   items: [
                     DropdownMenuItem(
-                      child: Text(''),
+                      child: Text(state.settingsUIState.isFiltered
+                          ? localization.useDefault
+                          : ''),
                       value: null,
                     ),
                     DropdownMenuItem(

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:invoiceninja_flutter/redux/app/app_middleware.dart';
 import 'package:invoiceninja_flutter/redux/client/client_actions.dart';
 import 'package:invoiceninja_flutter/redux/task/task_actions.dart';
@@ -90,7 +91,9 @@ Middleware<AppState> _viewProjectList() {
 
     next(action);
 
-    if (store.state.projectState.isStale) {
+    if (store.state.staticState.isStale) {
+      store.dispatch(RefreshData());
+    } else if (store.state.projectState.isStale) {
       store.dispatch(LoadProjects());
     }
 

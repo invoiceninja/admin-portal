@@ -15,6 +15,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
   static final Map<String, Map<String, String>> _localizedValues = {
     'en': {
       // STARTER: lang key - do not remove comment
+      'use_default': 'Use default',
       'reminder_endless': 'Endless Reminders',
       'number_of_days': 'Number of days',
       'configure_payment_terms': 'Configure Payment Terms',
@@ -3885,6 +3886,10 @@ mixin LocalizationsProvider on LocaleCodeAware {
 
   String get reminderEndless =>
       _localizedValues[localeCode]['reminder_endless'] ?? '';
+
+  String get useDefault =>
+      _localizedValues[localeCode]['use_default'] ?? '';
+
 
   String lookup(String key) {
     final lookupKey = toSnakeCase(key);
