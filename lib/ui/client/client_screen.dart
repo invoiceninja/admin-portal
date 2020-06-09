@@ -12,6 +12,7 @@ import 'package:invoiceninja_flutter/ui/app/list_scaffold.dart';
 import 'package:invoiceninja_flutter/ui/app/entities/entity_actions_dialog.dart';
 import 'package:invoiceninja_flutter/ui/app/list_filter.dart';
 import 'package:invoiceninja_flutter/ui/client/client_list_vm.dart';
+import 'package:invoiceninja_flutter/ui/client/client_presenter.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 
 import 'client_screen_vm.dart';
@@ -85,6 +86,8 @@ class ClientScreen extends StatelessWidget {
       body: ClientListBuilder(),
       bottomNavigationBar: AppBottomBar(
         entityType: EntityType.client,
+        tableColumns: ClientPresenter.getAllTableFields(userCompany),
+        defaultTableColumns: ClientPresenter.getDefaultTableFields(userCompany),
         onRefreshPressed: () => store.dispatch(LoadClients(force: true)),
         onSelectedSortField: (value) {
           store.dispatch(SortClients(value));

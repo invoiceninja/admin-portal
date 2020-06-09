@@ -149,7 +149,7 @@ class ClientListVM {
           context: context,
           entityId: state.clientListState.filterEntityId,
           entityType: state.clientListState.filterEntityType),
-      tableColumns: ClientPresenter.getTableFields(state.userCompany),
+      tableColumns: ClientPresenter.getAllTableFields(state.userCompany),
       onSortColumn: (field) => store.dispatch(SortClients(field)),
     );
   } //

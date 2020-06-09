@@ -563,6 +563,7 @@ abstract class AppState implements Built<AppState, AppStateBuilder> {
     //return 'Account: $account';
     //return 'Payment Terms: ${paymentTermState.map}';
     //return 'Selected client: ${uiState.clientUIState.selectedId}, Filter: ${uiState.filterEntityType} ${uiState.filterEntityId}';
+    return 'Columns: ${userCompany.settings.tableColumns}';
     return 'Layout: ${prefState.appLayout}, Route: ${uiState.currentRoute} Prev: ${uiState.previousRoute}';
   }
 }
