@@ -151,8 +151,7 @@ class ClientListVM {
           entityId: state.clientListState.filterEntityId,
           entityType: state.clientListState.filterEntityType),
       tableColumns: state
-              .userCompany.settings.tableColumns['${EntityType.client}']
-              ?.toList() ??
+              .userCompany?.settings?.getTableColumns(EntityType.client) ??
           ClientPresenter.getAllTableFields(state.userCompany),
       onSortColumn: (field) => store.dispatch(SortClients(field)),
     );
