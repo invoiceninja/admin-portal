@@ -396,6 +396,7 @@ Middleware<AppState> _createAccountLoaded() {
       NextDispatcher next) async {
     final action = dynamicAction as LoadAccountSuccess;
     final response = action.loginResponse;
+    final selectedCompanyIndex = store.state.uiState.selectedCompanyIndex;
 
     store.dispatch(LoadStaticSuccess(data: response.static));
 
@@ -429,7 +430,7 @@ Middleware<AppState> _createAccountLoaded() {
       }
     }
 
-    store.dispatch(SelectCompany(0));
+    store.dispatch(SelectCompany(selectedCompanyIndex));
     store.dispatch(UserLoginSuccess());
 
     if (action.completer != null) {
