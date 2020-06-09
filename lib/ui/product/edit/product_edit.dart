@@ -146,6 +146,7 @@ class _ProductEditState extends State<ProductEdit> {
                   autovalidate: _autoValidate,
                 ),
                 DecoratedFormField(
+                  keyboardType: TextInputType.multiline,
                   label: localization.description,
                   controller: _notesController,
                   maxLines: 4,

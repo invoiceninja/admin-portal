@@ -863,6 +863,7 @@ class _ContactUsDialogState extends State<ContactUsDialog> {
                   minLines: 4,
                   maxLines: 4,
                   onChanged: (value) => _message = value,
+                  keyboardType: TextInputType.multiline,
                 ),
                 SizedBox(height: 10),
                 SwitchListTile(

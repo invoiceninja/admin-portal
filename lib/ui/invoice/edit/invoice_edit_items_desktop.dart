@@ -242,6 +242,7 @@ class _InvoiceEditItemsDesktopState extends State<InvoiceEditItemsDesktop> {
                       onChanged: (value) => viewModel.onChangedInvoiceItem(
                           lineItems[index].rebuild((b) => b..notes = value),
                           index),
+                      keyboardType: TextInputType.multiline,
                       minLines: 1,
                       maxLines: 6,
                       //maxLines: _focusNodes[index].hasFocus ? 6 : 1,

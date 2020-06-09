@@ -242,6 +242,7 @@ class _TemplatesAndRemindersState extends State<TemplatesAndReminders>
                   controller: _subjectController,
                 ),
                 DecoratedFormField(
+                  keyboardType: TextInputType.multiline,
                   label: localization.body,
                   controller: _bodyController,
                   maxLines: 8,
