@@ -235,6 +235,7 @@ class ItemEditDetailsState extends State<ItemEditDetails> {
               controller: _productKeyController,
             ),
             DecoratedFormField(
+              keyboardType: TextInputType.multiline,
               label: localization.description,
               controller: _notesController,
               maxLines: 4,

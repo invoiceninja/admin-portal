@@ -2,7 +2,9 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_redux/flutter_redux.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 import 'package:invoiceninja_flutter/constants.dart';
+import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/redux/auth/auth_actions.dart';
@@ -51,6 +53,8 @@ class DeviceSettingsVM {
   });
 
   static DeviceSettingsVM fromStore(Store<AppState> store) {
+    final GoogleSignIn _googleSignIn = GoogleSignIn();
+
     void _refreshData(BuildContext context) async {
       final completer = snackBarCompleter<Null>(
           context, AppLocalization.of(context).refreshComplete,
@@ -75,7 +79,13 @@ class DeviceSettingsVM {
       state: store.state,
       onLogoutTap: (BuildContext context) => confirmCallback(
           context: context,
-          callback: () => store.dispatch(UserLogout(context))),
+          callback: () async {
+            if (store.state.user.oauthProvider ==
+                UserEntity.OAUTH_PROVIDER_GOOGLE) {
+              await _googleSignIn.signOut();
+            }
+            store.dispatch(UserLogout(context));
+          }),
       onRefreshTap: (BuildContext context) => _refreshData(context),
       onDarkModeChanged: (BuildContext context, bool value) async {
         store.dispatch(UserPreferencesChanged(enableDarkMode: value));
