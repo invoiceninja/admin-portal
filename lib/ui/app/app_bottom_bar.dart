@@ -4,10 +4,12 @@ import 'package:flutter_redux/flutter_redux.dart';
 import 'package:invoiceninja_flutter/constants.dart';
 import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
+import 'package:invoiceninja_flutter/redux/settings/settings_actions.dart';
 import 'package:invoiceninja_flutter/redux/ui/list_ui_state.dart';
 import 'package:invoiceninja_flutter/redux/ui/pref_state.dart';
 import 'package:invoiceninja_flutter/ui/app/app_border.dart';
 import 'package:invoiceninja_flutter/ui/app/dialogs/multiselect_dialog.dart';
+import 'package:invoiceninja_flutter/utils/completers.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/utils/platforms.dart';
@@ -449,7 +451,20 @@ class _AppBottomBarState extends State<AppBottomBar> {
                       multiselectDialog(
                         context: context,
                         onSelected: (selected) {
-                          print('## SELECTED: $selected');
+                          final settings = state.userCompany.settings.rebuild(
+                              (b) => b
+                                ..tableColumns['${widget.entityType}'] =
+                                    BuiltList<String>(selected));
+                          final user = state.user.rebuild(
+                              (b) => b..userCompany.settings.replace(settings));
+                          final completer = snackBarCompleter<Null>(context,
+                              AppLocalization.of(context).savedSettings);
+                          store.dispatch(
+                            SaveUserSettingsRequest(
+                              completer: completer,
+                              user: user,
+                            ),
+                          );
                         },
                         options: widget.tableColumns,
                         defaultSelected: widget.defaultTableColumns,
