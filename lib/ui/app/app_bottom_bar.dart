@@ -445,7 +445,7 @@ class _AppBottomBarState extends State<AppBottomBar> {
                     tooltip: localization.refresh,
                   ),
                   IconButton(
-                    icon: Icon(Icons.settings),
+                    icon: Icon(Icons.view_week),
                     tooltip: localization.columns,
                     onPressed: () {
                       multiselectDialog(
