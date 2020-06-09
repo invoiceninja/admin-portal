@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
+import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:invoiceninja_flutter/redux/app/app_middleware.dart';
 import 'package:invoiceninja_flutter/redux/credit/credit_actions.dart';
 import 'package:invoiceninja_flutter/redux/invoice/invoice_actions.dart';
@@ -79,7 +80,9 @@ Middleware<AppState> _viewQuoteList() {
 
     next(action);
 
-    if (store.state.quoteState.isStale) {
+    if (store.state.staticState.isStale) {
+      store.dispatch(RefreshData());
+    } else if (store.state.quoteState.isStale) {
       store.dispatch(LoadQuotes());
     }
 

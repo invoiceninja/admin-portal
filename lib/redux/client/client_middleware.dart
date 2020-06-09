@@ -2,6 +2,7 @@ import 'package:invoiceninja_flutter/.env.dart';
 import 'package:flutter/material.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/data/repositories/client_repository.dart';
+import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:invoiceninja_flutter/redux/app/app_middleware.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/redux/client/client_actions.dart';
@@ -89,7 +90,9 @@ Middleware<AppState> _viewClientList() {
 
     next(action);
 
-    if (store.state.clientState.isStale) {
+    if (store.state.staticState.isStale) {
+      store.dispatch(RefreshData());
+    } else if (store.state.clientState.isStale) {
       store.dispatch(LoadClients());
     }
 

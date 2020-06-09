@@ -72,7 +72,6 @@ class AccountManagementVM {
                     context, AppLocalization.of(context).refreshComplete);
                 store.dispatch(RefreshData(
                   completer: completer,
-                  loadCompanies: false,
                 ));
               } else {
                 store.dispatch(UserLogout(context));
@@ -95,7 +94,7 @@ class AccountManagementVM {
               PurgeDataRequest(completer: completer, password: password));
         },
         onAppliedLicense: () {
-          store.dispatch(RefreshData(loadCompanies: false));
+          store.dispatch(RefreshData());
         });
   }
 

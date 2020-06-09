@@ -1,4 +1,5 @@
 import 'package:flutter/widgets.dart';
+import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:invoiceninja_flutter/redux/app/app_middleware.dart';
 import 'package:invoiceninja_flutter/redux/ui/ui_actions.dart';
 import 'package:invoiceninja_flutter/ui/dashboard/dashboard_screen_vm.dart';
@@ -22,6 +23,10 @@ Middleware<AppState> _createViewDashboard() {
     if (!action.force &&
         hasChanges(store: store, context: action.context, action: action)) {
       return;
+    }
+
+    if (store.state.staticState.isStale) {
+      store.dispatch(RefreshData());
     }
 
     /*

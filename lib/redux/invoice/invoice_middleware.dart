@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
+import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:invoiceninja_flutter/redux/app/app_middleware.dart';
 import 'package:invoiceninja_flutter/redux/credit/credit_actions.dart';
 import 'package:invoiceninja_flutter/redux/expense/expense_actions.dart';
@@ -69,7 +70,9 @@ Middleware<AppState> _viewInvoiceList() {
 
     next(action);
 
-    if (store.state.invoiceState.isStale) {
+    if (store.state.staticState.isStale) {
+      store.dispatch(RefreshData());
+    } else if (store.state.invoiceState.isStale) {
       store.dispatch(LoadInvoices());
     }
 

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:invoiceninja_flutter/data/models/payment_term_model.dart';
+import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:invoiceninja_flutter/ui/payment_term/view/payment_term_view_vm.dart';
 import 'package:redux/redux.dart';
 import 'package:invoiceninja_flutter/utils/platforms.dart';
@@ -89,7 +90,9 @@ Middleware<AppState> _viewPaymentTermList() {
 
     next(action);
 
-    if (store.state.paymentTermState.isStale) {
+    if (store.state.staticState.isStale) {
+      store.dispatch(RefreshData());
+    } else if (store.state.paymentTermState.isStale) {
       store.dispatch(LoadPaymentTerms());
     }
 

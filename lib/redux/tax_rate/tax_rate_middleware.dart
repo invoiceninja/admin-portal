@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:redux/redux.dart';
 import 'package:invoiceninja_flutter/utils/platforms.dart';
 import 'package:invoiceninja_flutter/redux/app/app_middleware.dart';
@@ -88,7 +89,9 @@ Middleware<AppState> _viewTaxRateList() {
 
     next(action);
 
-    if (store.state.taxRateState.isStale) {
+    if (store.state.staticState.isStale) {
+      store.dispatch(RefreshData());
+    } else if (store.state.taxRateState.isStale) {
       store.dispatch(LoadTaxRates());
     }
 

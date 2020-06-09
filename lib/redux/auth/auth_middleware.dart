@@ -221,9 +221,9 @@ Middleware<AppState> _createRefreshRequest(AuthRepository repository) {
 
     repository.refresh(url: url, token: token).then((data) {
       store.dispatch(LoadAccountSuccess(
-          completer: action.completer,
-          loginResponse: data,
-          loadCompanies: action.loadCompanies));
+        completer: action.completer,
+        loginResponse: data,
+      ));
     }).catchError((Object error) {
       print('Refresh data error: $error');
       if (action.completer != null) {

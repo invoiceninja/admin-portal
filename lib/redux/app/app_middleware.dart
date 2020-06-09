@@ -219,7 +219,7 @@ Middleware<AppState> _createLoadState(
       store.dispatch(LoadStateSuccess(appState));
 
       if (appState.staticState.isStale) {
-        store.dispatch(RefreshData(loadCompanies: false));
+        store.dispatch(RefreshData());
       }
 
       if (uiState.currentRoute != LoginScreen.route &&
@@ -399,40 +399,38 @@ Middleware<AppState> _createAccountLoaded() {
 
     store.dispatch(LoadStaticSuccess(data: response.static));
 
-    if (action.loadCompanies) {
-      for (int i = 0; i < response.userCompanies.length; i++) {
-        final UserCompanyEntity userCompany = response.userCompanies[i];
+    for (int i = 0; i < response.userCompanies.length; i++) {
+      final UserCompanyEntity userCompany = response.userCompanies[i];
 
-        if (i == 0) {
-          final SharedPreferences prefs = await SharedPreferences.getInstance();
-          prefs.setString(kSharedPrefToken, userCompany.token.token);
-        }
-
-        store.dispatch(SelectCompany(i));
-        store.dispatch(LoadCompanySuccess(userCompany));
-
-        // TODO remove this code/use reducers instead 
-        final company = userCompany.company;
-        if (company.clients.isNotEmpty) {
-          store.dispatch(LoadClientsSuccess(company.clients));
-          store.dispatch(LoadProductsSuccess(company.products));
-          store.dispatch(LoadInvoicesSuccess(company.invoices));
-          store.dispatch(LoadPaymentsSuccess(company.payments));
-          store.dispatch(LoadQuotesSuccess(company.quotes));
-          store.dispatch(LoadCreditsSuccess(company.credits));
-          store.dispatch(LoadDesignsSuccess(company.designs));
-          if (Config.DEMO_MODE) {
-            store.dispatch(LoadTasksSuccess(company.tasks));
-            store.dispatch(LoadProjectsSuccess(company.projects));
-            store.dispatch(LoadVendorsSuccess(company.vendors));
-            store.dispatch(LoadExpensesSuccess(company.expenses));
-          }
-        }
+      if (i == 0) {
+        final SharedPreferences prefs = await SharedPreferences.getInstance();
+        prefs.setString(kSharedPrefToken, userCompany.token.token);
       }
 
-      store.dispatch(SelectCompany(0));
-      store.dispatch(UserLoginSuccess());
+      store.dispatch(SelectCompany(i));
+      store.dispatch(LoadCompanySuccess(userCompany));
+
+      // TODO remove this code/use reducers instead
+      final company = userCompany.company;
+      if (company.clients.isNotEmpty) {
+        store.dispatch(LoadClientsSuccess(company.clients));
+        store.dispatch(LoadProductsSuccess(company.products));
+        store.dispatch(LoadInvoicesSuccess(company.invoices));
+        store.dispatch(LoadPaymentsSuccess(company.payments));
+        store.dispatch(LoadQuotesSuccess(company.quotes));
+        store.dispatch(LoadCreditsSuccess(company.credits));
+        store.dispatch(LoadDesignsSuccess(company.designs));
+        if (Config.DEMO_MODE) {
+          store.dispatch(LoadTasksSuccess(company.tasks));
+          store.dispatch(LoadProjectsSuccess(company.projects));
+          store.dispatch(LoadVendorsSuccess(company.vendors));
+          store.dispatch(LoadExpensesSuccess(company.expenses));
+        }
+      }
     }
+
+    store.dispatch(SelectCompany(0));
+    store.dispatch(UserLoginSuccess());
 
     if (action.completer != null) {
       action.completer.complete(null);
