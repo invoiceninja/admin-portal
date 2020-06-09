@@ -54,8 +54,6 @@ class AccountManagementVM {
             store.dispatch(UpdateCompany(company: company)),
         onCompanyDelete: (context, password) {
           final selectedCompanyIndex = state.uiState.selectedCompanyIndex;
-          final refreshCompleter = snackBarCompleter<Null>(
-              context, AppLocalization.of(context).refreshComplete);
           final completer = Completer<Null>()
             ..future.then((value) {
               final companies = state.companies;
@@ -68,9 +66,6 @@ class AccountManagementVM {
                   }
                 }
                 store.dispatch(SelectCompany(index));
-                store.dispatch(RefreshData(
-                  completer: refreshCompleter,
-                ));
               } else {
                 store.dispatch(UserLogout(context));
               }
