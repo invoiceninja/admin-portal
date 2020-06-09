@@ -142,6 +142,10 @@ class _EntityListState extends State<EntityList> {
                     )),
         ]);
       } else {
+        if (widget.tableColumns.isEmpty) {
+          return SizedBox();
+        }
+
         return SingleChildScrollView(
           child: Padding(
             padding: const EdgeInsets.symmetric(vertical: 24),

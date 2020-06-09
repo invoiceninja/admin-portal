@@ -451,6 +451,12 @@ class _AppBottomBarState extends State<AppBottomBar> {
                       multiselectDialog(
                         context: context,
                         onSelected: (selected) {
+                          final listUIState =
+                              store.state.getListState(widget.entityType);
+                          if (!selected.contains(listUIState.sortField)) {
+                            widget.onSelectedSortField(
+                                selected.isEmpty ? '' : selected[0]);
+                          }
                           final settings = state.userCompany.settings.rebuild(
                               (b) => b
                                 ..tableColumns['${widget.entityType}'] =
