@@ -27,8 +27,6 @@ List<String> dropdownPaymentTermsSelector(
     return paymentTermA.compareTo(paymentTermB, PaymentTermFields.name, true);
   });
 
-  print('## TERMS: ${list.map((id) => paymentTermMap[id].numDays).toList()}');
-
   return list;
 }
 
