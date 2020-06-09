@@ -298,6 +298,7 @@ Middleware<AppState> _deleteCompany(AuthRepository repository) {
       action.completer.complete(null);
     }).catchError((Object error) {
       store.dispatch(DeleteCompanyFailure(error));
+      action.completer.completeError(error);
     });
 
     next(action);

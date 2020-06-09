@@ -433,6 +433,10 @@ Middleware<AppState> _createAccountLoaded() {
     store.dispatch(SelectCompany(selectedCompanyIndex));
     store.dispatch(UserLoginSuccess());
 
+    if (store.state.clientState.isStale) {
+      store.dispatch(LoadClients());
+    }
+
     if (action.completer != null) {
       action.completer.complete(null);
     }
