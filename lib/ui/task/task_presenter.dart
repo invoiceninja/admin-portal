@@ -6,13 +6,20 @@ import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/ui/app/presenters/entity_presenter.dart';
 
 class TaskPresenter extends EntityPresenter {
-  static List<String> getTableFields(UserCompanyEntity userCompany) {
+
+  static List<String> getDefaultTableFields(UserCompanyEntity userCompany) {
     return [
       TaskFields.client,
       TaskFields.project,
       TaskFields.description,
       TaskFields.duration,
       EntityFields.state,
+    ];
+  }
+
+  static List<String> getAllTableFields(UserCompanyEntity userCompany) {
+    return [
+      ...getDefaultTableFields(userCompany),
     ];
   }
 

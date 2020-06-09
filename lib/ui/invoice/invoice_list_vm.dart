@@ -214,7 +214,7 @@ class InvoiceListVM extends EntityListVM {
       onEntityAction: (BuildContext context, List<BaseEntity> invoices,
               EntityAction action) =>
           handleInvoiceAction(context, invoices, action),
-      tableColumns: InvoicePresenter.getTableFields(state.userCompany),
+      tableColumns: InvoicePresenter.getDefaultTableFields(state.userCompany),
       entityType: EntityType.invoice,
       onSortColumn: (field) => store.dispatch(SortInvoices(field)),
     );

@@ -4,7 +4,9 @@ import 'package:invoiceninja_flutter/ui/app/presenters/entity_presenter.dart';
 import 'package:invoiceninja_flutter/utils/formatting.dart';
 
 class ProductPresenter extends EntityPresenter {
-  static List<String> getTableFields(UserCompanyEntity userCompany) {
+
+
+  static List<String> getDefaultTableFields(UserCompanyEntity userCompany) {
     final company = userCompany.company;
 
     return [
@@ -14,6 +16,12 @@ class ProductPresenter extends EntityPresenter {
       ProductFields.price,
       if (company.enableProductQuantity) ProductFields.quantity,
       EntityFields.state,
+    ];
+  }
+
+  static List<String> getAllTableFields(UserCompanyEntity userCompany) {
+    return [
+      ...getDefaultTableFields(userCompany),
     ];
   }
 

@@ -8,7 +8,8 @@ import 'package:invoiceninja_flutter/utils/formatting.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 
 class InvoicePresenter extends EntityPresenter {
-  static List<String> getTableFields(UserCompanyEntity userCompany) {
+
+  static List<String> getDefaultTableFields(UserCompanyEntity userCompany) {
     return [
       InvoiceFields.invoiceNumber,
       InvoiceFields.client,
@@ -20,6 +21,13 @@ class InvoicePresenter extends EntityPresenter {
       EntityFields.state,
     ];
   }
+
+  static List<String> getAllTableFields(UserCompanyEntity userCompany) {
+    return [
+      ...getDefaultTableFields(userCompany),
+    ];
+  }
+
 
   @override
   Widget getField({String field, BuildContext context}) {

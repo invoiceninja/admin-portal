@@ -7,7 +7,8 @@ import 'package:invoiceninja_flutter/utils/formatting.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 
 class PaymentPresenter extends EntityPresenter {
-  static List<String> getTableFields(UserCompanyEntity userCompany) {
+
+  static List<String> getDefaultTableFields(UserCompanyEntity userCompany) {
     return [
       PaymentFields.paymentNumber,
       PaymentFields.client,
@@ -18,6 +19,12 @@ class PaymentPresenter extends EntityPresenter {
       PaymentFields.transactionReference,
       PaymentFields.paymentStatus,
       EntityFields.state,
+    ];
+  }
+
+  static List<String> getAllTableFields(UserCompanyEntity userCompany) {
+    return [
+      ...getDefaultTableFields(userCompany),
     ];
   }
 

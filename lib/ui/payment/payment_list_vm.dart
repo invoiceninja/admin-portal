@@ -146,7 +146,7 @@ class PaymentListVM {
           entityId: state.paymentListState.filterEntityId,
           entityType: state.paymentListState.filterEntityType),
       onRefreshed: (context) => _handleRefresh(context),
-      tableColumns: PaymentPresenter.getTableFields(state.userCompany),
+      tableColumns: PaymentPresenter.getDefaultTableFields(state.userCompany),
       onSortColumn: (field) => store.dispatch(SortPayments(field)),
     );
   }

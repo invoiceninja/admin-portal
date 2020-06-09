@@ -123,7 +123,7 @@ class ProductListVM {
         }
       },
       onRefreshed: (context) => _handleRefresh(context),
-      tableColumns: ProductPresenter.getTableFields(state.userCompany),
+      tableColumns: ProductPresenter.getDefaultTableFields(state.userCompany),
       onSortColumn: (field) => store.dispatch(SortProducts(field)),
     );
   }

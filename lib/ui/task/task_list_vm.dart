@@ -148,7 +148,7 @@ class TaskListVM {
         }
       },
       onRefreshed: (context) => _handleRefresh(context),
-      tableColumns: TaskPresenter.getTableFields(state.userCompany),
+      tableColumns: TaskPresenter.getDefaultTableFields(state.userCompany),
     );
   }
 

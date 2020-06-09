@@ -169,7 +169,7 @@ class CreditListVM extends EntityListVM {
       onEntityAction: (BuildContext context, List<BaseEntity> credits,
               EntityAction action) =>
           handleCreditAction(context, credits, action),
-      tableColumns: CreditPresenter.getTableFields(state.userCompany),
+      tableColumns: CreditPresenter.getDefaultTableFields(state.userCompany),
       entityType: EntityType.credit,
       onSortColumn: (field) => store.dispatch(SortCredits(field)),
     );

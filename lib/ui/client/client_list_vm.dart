@@ -27,7 +27,6 @@ class ClientListBuilder extends StatelessWidget {
       converter: ClientListVM.fromStore,
       builder: (context, viewModel) {
         return EntityList(
-            key: ValueKey('__${EntityType.client}_${viewModel.tableColumns}__'),
             isLoaded: viewModel.isLoaded,
             entityType: EntityType.client,
             presenter: ClientPresenter(),

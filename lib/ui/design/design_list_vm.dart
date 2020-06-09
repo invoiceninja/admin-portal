@@ -139,7 +139,7 @@ class DesignListVM {
               EntityAction action) =>
           handleDesignAction(context, designs, action),
       onRefreshed: (context) => _handleRefresh(context),
-      tableColumns: DesignPresenter.getTableFields(state.userCompany),
+      tableColumns: DesignPresenter.getDefaultTableFields(state.userCompany),
       onSortColumn: (field) => store.dispatch(SortDesigns(field)),
     );
   }

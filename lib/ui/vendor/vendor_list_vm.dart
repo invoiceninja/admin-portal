@@ -133,7 +133,7 @@ class VendorListVM {
         }
       },
       onRefreshed: (context) => _handleRefresh(context),
-      tableColumns: VendorPresenter.getTableFields(state.userCompany),
+      tableColumns: VendorPresenter.getDefaultTableFields(state.userCompany),
       onSortColumn: (field) => store.dispatch(SortVendors(field)),
     );
   }

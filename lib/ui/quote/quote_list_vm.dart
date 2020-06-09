@@ -167,7 +167,7 @@ class QuoteListVM extends EntityListVM {
       onEntityAction: (BuildContext context, List<BaseEntity> quotes,
               EntityAction action) =>
           handleQuoteAction(context, quotes, action),
-      tableColumns: QuotePresenter.getTableFields(state.userCompany),
+      tableColumns: QuotePresenter.getDefaultTableFields(state.userCompany),
       onSortColumn: (field) => store.dispatch(SortQuotes(field)),
       entityType: EntityType.quote,
     );

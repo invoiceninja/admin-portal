@@ -9,7 +9,8 @@ import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:invoiceninja_flutter/constants.dart';
 
 class CreditPresenter extends EntityPresenter {
-  static List<String> getTableFields(UserCompanyEntity userCompany) {
+
+  static List<String> getDefaultTableFields(UserCompanyEntity userCompany) {
     return [
       CreditFields.creditNumber,
       CreditFields.client,
@@ -18,6 +19,12 @@ class CreditPresenter extends EntityPresenter {
       CreditFields.date,
       CreditFields.balance,
       EntityFields.state,
+    ];
+  }
+
+  static List<String> getAllTableFields(UserCompanyEntity userCompany) {
+    return [
+      ...getDefaultTableFields(userCompany),
     ];
   }
 
