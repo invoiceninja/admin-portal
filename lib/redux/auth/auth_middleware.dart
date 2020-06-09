@@ -267,6 +267,7 @@ Middleware<AppState> _createCompany(AuthRepository repository) {
     final state = store.state;
 
     repository.addCompany(credentials: state.credentials).then((dynamic value) {
+      store.dispatch(AddCompanySuccess());
       store.dispatch(RefreshData(
         completer: Completer<Null>()
           ..future.then<Null>((_) {
