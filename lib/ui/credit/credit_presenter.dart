@@ -9,7 +9,6 @@ import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:invoiceninja_flutter/constants.dart';
 
 class CreditPresenter extends EntityPresenter {
-
   static List<String> getDefaultTableFields(UserCompanyEntity userCompany) {
     return [
       CreditFields.creditNumber,
@@ -18,7 +17,6 @@ class CreditPresenter extends EntityPresenter {
       CreditFields.status,
       CreditFields.date,
       CreditFields.balance,
-      EntityFields.state,
     ];
   }
 
@@ -26,6 +24,14 @@ class CreditPresenter extends EntityPresenter {
     return [
       ...getDefaultTableFields(userCompany),
       ...EntityPresenter.getBaseFields(),
+      CreditFields.discount,
+      CreditFields.poNumber,
+      CreditFields.publicNotes,
+      CreditFields.privateNotes,
+      CreditFields.customValue1,
+      CreditFields.customValue2,
+      CreditFields.customValue3,
+      CreditFields.customValue4,
     ];
   }
 
@@ -58,6 +64,27 @@ class CreditPresenter extends EntityPresenter {
         return Align(
             alignment: Alignment.centerRight,
             child: Text(formatNumber(credit.balance, context)));
+      case CreditFields.customValue1:
+        return Text(credit.customValue1);
+      case CreditFields.customValue2:
+        return Text(credit.customValue2);
+      case CreditFields.customValue3:
+        return Text(credit.customValue3);
+      case CreditFields.customValue4:
+        return Text(credit.customValue4);
+      case CreditFields.publicNotes:
+        return Text(credit.publicNotes);
+      case CreditFields.privateNotes:
+        return Text(credit.privateNotes);
+      case CreditFields.discount:
+        return Text(credit.isAmountDiscount
+            ? formatNumber(credit.discount, context,
+                formatNumberType: FormatNumberType.money,
+                clientId: credit.clientId)
+            : formatNumber(credit.discount, context,
+                formatNumberType: FormatNumberType.percent));
+      case CreditFields.poNumber:
+        return Text(credit.poNumber);
     }
 
     return super.getField(field: field, context: context);

@@ -17,7 +17,6 @@ class QuotePresenter extends EntityPresenter {
       QuoteFields.status,
       QuoteFields.date,
       QuoteFields.validUntil,
-      EntityFields.state,
     ];
   }
 
@@ -25,6 +24,14 @@ class QuotePresenter extends EntityPresenter {
     return [
       ...getDefaultTableFields(userCompany),
       ...EntityPresenter.getBaseFields(),
+      QuoteFields.discount,
+      QuoteFields.poNumber,
+      QuoteFields.publicNotes,
+      QuoteFields.privateNotes,
+      QuoteFields.customValue1,
+      QuoteFields.customValue2,
+      QuoteFields.customValue3,
+      QuoteFields.customValue4,
     ];
   }
 
@@ -58,6 +65,27 @@ class QuotePresenter extends EntityPresenter {
         );
       case QuoteFields.validUntil:
         return Text(formatDate(quote.dueDate, context));
+      case QuoteFields.customValue1:
+        return Text(quote.customValue1);
+      case QuoteFields.customValue2:
+        return Text(quote.customValue2);
+      case QuoteFields.customValue3:
+        return Text(quote.customValue3);
+      case QuoteFields.customValue4:
+        return Text(quote.customValue4);
+      case QuoteFields.publicNotes:
+        return Text(quote.publicNotes);
+      case QuoteFields.privateNotes:
+        return Text(quote.privateNotes);
+      case QuoteFields.discount:
+        return Text(quote.isAmountDiscount
+            ? formatNumber(quote.discount, context,
+                formatNumberType: FormatNumberType.money,
+                clientId: quote.clientId)
+            : formatNumber(quote.discount, context,
+                formatNumberType: FormatNumberType.percent));
+      case QuoteFields.poNumber:
+        return Text(quote.poNumber);
     }
 
     return super.getField(field: field, context: context);

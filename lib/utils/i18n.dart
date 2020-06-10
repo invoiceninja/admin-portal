@@ -267,7 +267,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'filtered_by': 'Filtered by :value',
       'contact_email': 'Contact Email',
       'multiselect': 'Multiselect',
-      'entity_state': 'State',
+      'entity_state': 'Entity State',
       'verify_password': 'Verify Password',
       'applied': 'Applied',
       'include_recent_errors': 'Include recent errors from the logs',
