@@ -212,6 +212,7 @@ class EntityFields {
   static const String id = 'id';
   static const String createdAt = 'created_at';
   static const String updatedAt = 'updated_at';
+  static const String archivedAt = 'archived_at';
   static const String state = 'entity_state';
 }
 
