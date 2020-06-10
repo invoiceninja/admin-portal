@@ -22,6 +22,7 @@ class ProjectPresenter extends EntityPresenter {
   static List<String> getAllTableFields(UserCompanyEntity userCompany) {
     return [
       ...getDefaultTableFields(userCompany),
+      ...EntityPresenter.getBaseFields(),
     ];
   }
 
