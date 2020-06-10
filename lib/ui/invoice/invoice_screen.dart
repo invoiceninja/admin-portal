@@ -6,6 +6,7 @@ import 'package:invoiceninja_flutter/ui/app/forms/save_cancel_buttons.dart';
 import 'package:invoiceninja_flutter/ui/app/list_scaffold.dart';
 import 'package:invoiceninja_flutter/ui/app/entities/entity_actions_dialog.dart';
 import 'package:invoiceninja_flutter/ui/app/list_filter.dart';
+import 'package:invoiceninja_flutter/ui/invoice/invoice_presenter.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:flutter/material.dart';
@@ -86,6 +87,8 @@ class InvoiceScreen extends StatelessWidget {
       body: InvoiceListBuilder(),
       bottomNavigationBar: AppBottomBar(
         entityType: EntityType.invoice,
+        tableColumns: InvoicePresenter.getAllTableFields(userCompany),
+        defaultTableColumns: InvoicePresenter.getDefaultTableFields(userCompany),
         onRefreshPressed: () => store.dispatch(LoadInvoices(force: true)),
         onSelectedSortField: (value) {
           store.dispatch(SortInvoices(value));

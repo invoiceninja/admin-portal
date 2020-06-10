@@ -7,6 +7,7 @@ import 'package:invoiceninja_flutter/ui/app/forms/save_cancel_buttons.dart';
 import 'package:invoiceninja_flutter/ui/app/list_scaffold.dart';
 import 'package:invoiceninja_flutter/ui/app/entities/entity_actions_dialog.dart';
 import 'package:invoiceninja_flutter/ui/app/list_filter.dart';
+import 'package:invoiceninja_flutter/ui/project/project_presenter.dart';
 import 'package:invoiceninja_flutter/ui/project/project_screen_vm.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
@@ -84,6 +85,8 @@ class ProjectScreen extends StatelessWidget {
       body: ProjectListBuilder(),
       bottomNavigationBar: AppBottomBar(
         entityType: EntityType.project,
+        tableColumns: ProjectPresenter.getAllTableFields(userCompany),
+        defaultTableColumns: ProjectPresenter.getDefaultTableFields(userCompany),
         onRefreshPressed: () => store.dispatch(LoadProjects(force: true)),
         onSelectedSortField: (value) => store.dispatch(SortProjects(value)),
         customValues1: company.getCustomFieldValues(CustomFieldType.project1,

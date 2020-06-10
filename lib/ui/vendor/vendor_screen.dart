@@ -7,6 +7,7 @@ import 'package:invoiceninja_flutter/ui/app/forms/save_cancel_buttons.dart';
 import 'package:invoiceninja_flutter/ui/app/list_scaffold.dart';
 import 'package:invoiceninja_flutter/ui/app/entities/entity_actions_dialog.dart';
 import 'package:invoiceninja_flutter/ui/app/list_filter.dart';
+import 'package:invoiceninja_flutter/ui/vendor/vendor_presenter.dart';
 import 'package:invoiceninja_flutter/ui/vendor/vendor_screen_vm.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
@@ -84,6 +85,8 @@ class VendorScreen extends StatelessWidget {
       body: VendorListBuilder(),
       bottomNavigationBar: AppBottomBar(
         entityType: EntityType.vendor,
+        tableColumns: VendorPresenter.getAllTableFields(userCompany),
+        defaultTableColumns: VendorPresenter.getDefaultTableFields(userCompany),
         onRefreshPressed: () => store.dispatch(LoadVendors(force: true)),
         onSelectedSortField: (value) => store.dispatch(SortVendors(value)),
         customValues1: company.getCustomFieldValues(CustomFieldType.vendor1,

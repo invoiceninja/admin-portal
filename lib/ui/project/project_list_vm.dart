@@ -144,7 +144,9 @@ class ProjectListVM {
         }
       },
       onRefreshed: (context) => _handleRefresh(context),
-      tableColumns: ProjectPresenter.getDefaultTableFields(state.userCompany),
+      tableColumns:
+          state.userCompany.settings.getTableColumns(EntityType.project) ??
+              ProjectPresenter.getAllTableFields(state.userCompany),
       onSortColumn: (field) => store.dispatch(SortProjects(field)),
     );
   }

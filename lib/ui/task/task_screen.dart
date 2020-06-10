@@ -8,6 +8,7 @@ import 'package:invoiceninja_flutter/ui/app/forms/save_cancel_buttons.dart';
 import 'package:invoiceninja_flutter/ui/app/list_scaffold.dart';
 import 'package:invoiceninja_flutter/ui/app/entities/entity_actions_dialog.dart';
 import 'package:invoiceninja_flutter/ui/app/list_filter.dart';
+import 'package:invoiceninja_flutter/ui/task/task_presenter.dart';
 import 'package:invoiceninja_flutter/ui/task/task_screen_vm.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
@@ -84,6 +85,8 @@ class TaskScreen extends StatelessWidget {
       body: TaskListBuilder(),
       bottomNavigationBar: AppBottomBar(
         entityType: EntityType.task,
+        tableColumns: TaskPresenter.getAllTableFields(userCompany),
+        defaultTableColumns: TaskPresenter.getDefaultTableFields(userCompany),
         onRefreshPressed: () => store.dispatch(LoadTasks(force: true)),
         onSelectedSortField: (value) => store.dispatch(SortTasks(value)),
         onSelectedStatus: (EntityStatus status, value) {
@@ -136,22 +139,22 @@ class TaskScreen extends StatelessWidget {
           }
         },
       ),
-      floatingActionButton:
-          state.prefState.isMenuFloated && userCompany.canCreate(EntityType.task)
-              ? FloatingActionButton(
-                  heroTag: 'task_fab',
-                  backgroundColor: Theme.of(context).primaryColorDark,
-                  onPressed: () {
-                    createEntityByType(
-                        context: context, entityType: EntityType.task);
-                  },
-                  child: Icon(
-                    Icons.add,
-                    color: Colors.white,
-                  ),
-                  tooltip: localization.newTask,
-                )
-              : null,
+      floatingActionButton: state.prefState.isMenuFloated &&
+              userCompany.canCreate(EntityType.task)
+          ? FloatingActionButton(
+              heroTag: 'task_fab',
+              backgroundColor: Theme.of(context).primaryColorDark,
+              onPressed: () {
+                createEntityByType(
+                    context: context, entityType: EntityType.task);
+              },
+              child: Icon(
+                Icons.add,
+                color: Colors.white,
+              ),
+              tooltip: localization.newTask,
+            )
+          : null,
     );
   }
 }

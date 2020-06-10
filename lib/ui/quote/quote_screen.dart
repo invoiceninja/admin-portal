@@ -9,6 +9,7 @@ import 'package:invoiceninja_flutter/ui/app/forms/save_cancel_buttons.dart';
 import 'package:invoiceninja_flutter/ui/app/list_scaffold.dart';
 import 'package:invoiceninja_flutter/ui/app/entities/entity_actions_dialog.dart';
 import 'package:invoiceninja_flutter/ui/app/list_filter.dart';
+import 'package:invoiceninja_flutter/ui/quote/quote_presenter.dart';
 import 'package:invoiceninja_flutter/ui/quote/quote_screen_vm.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
@@ -86,6 +87,8 @@ class QuoteScreen extends StatelessWidget {
       body: QuoteListBuilder(),
       bottomNavigationBar: AppBottomBar(
         entityType: EntityType.quote,
+        tableColumns: QuotePresenter.getAllTableFields(userCompany),
+        defaultTableColumns: QuotePresenter.getDefaultTableFields(userCompany),
         onSelectedSortField: (value) => store.dispatch(SortQuotes(value)),
         onRefreshPressed: () => store.dispatch(LoadQuotes(force: true)),
         customValues1: company.getCustomFieldValues(CustomFieldType.invoice1,

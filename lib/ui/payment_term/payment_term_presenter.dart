@@ -15,7 +15,7 @@ class PaymentTermPresenter extends EntityPresenter {
       ...getDefaultTableFields(userCompany),
     ];
   }
-  
+
   @override
   Widget getField({String field, BuildContext context}) {
     //final state = StoreProvider.of<AppState>(context).state;
