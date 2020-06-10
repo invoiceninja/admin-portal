@@ -12,23 +12,20 @@ class ClientPresenter extends EntityPresenter {
       ClientFields.name,
       ClientFields.balance,
       ClientFields.paidToDate,
-      ClientFields.contact,
+      ClientFields.contactName,
       ClientFields.contactEmail,
-      EntityFields.createdAt,
       //ClientFields.contactLastLogin, // TODO implement field
-      EntityFields.state,
     ];
   }
 
   static List<String> getAllTableFields(UserCompanyEntity userCompany) {
     return [
       ...getDefaultTableFields(userCompany),
+      ...EntityPresenter.getBaseFields(),
       ClientFields.address1,
       ClientFields.address2,
       ClientFields.country,
       ClientFields.vatNumber,
-      EntityFields.updatedAt,
-      EntityFields.archivedAt,
       ClientFields.vatNumber,
       ClientFields.state,
       ClientFields.phone,
@@ -39,21 +36,19 @@ class ClientPresenter extends EntityPresenter {
       ClientFields.custom2,
       ClientFields.custom3,
       ClientFields.custom4,
-      ClientFields.assignedTo,
-      ClientFields.createdBy,
     ];
   }
 
   @override
   Widget getField({String field, BuildContext context}) {
+    final client = entity as ClientEntity;
     final store = StoreProvider.of<AppState>(context);
     final state = store.state;
-    final client = entity as ClientEntity;
 
     switch (field) {
       case ClientFields.name:
         return Text(client.name);
-      case ClientFields.contact:
+      case ClientFields.contactName:
         return Text(client.primaryContact.fullName);
       case ClientFields.contactEmail:
         return Text(client.primaryContact.email);
@@ -79,26 +74,25 @@ class ClientPresenter extends EntityPresenter {
       case ClientFields.language:
         return Text(
             state.staticState.languageMap[client.languageId]?.name ?? '');
+      case ClientFields.currency:
+        return Text(
+            state.staticState.currencyMap[client.currencyId]?.name ?? '');
       case ClientFields.vatNumber:
         return Text(client.vatNumber);
+      case ClientFields.state:
+        return Text(client.state);
+      case ClientFields.phone:
+        return Text(client.phone);
+      case ClientFields.custom1:
+        return Text(client.customValue1);
+      case ClientFields.custom2:
+        return Text(client.customValue2);
+      case ClientFields.custom3:
+        return Text(client.customValue3);
+      case ClientFields.custom4:
+        return Text(client.customValue4);
     }
 
     return super.getField(field: field, context: context);
   }
 }
-
-/*
-EntityFields.updatedAt,
-EntityFields.archivedAt,
-ClientFields.vatNumber,
-ClientFields.state,
-ClientFields.phone,
-ClientFields.website,
-ClientFields.currency,
-ClientFields.custom1,
-ClientFields.custom2,
-ClientFields.custom3,
-ClientFields.custom4,
-ClientFields.assignedTo,
-ClientFields.createdBy,
-*/

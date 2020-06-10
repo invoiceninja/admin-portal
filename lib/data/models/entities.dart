@@ -209,10 +209,11 @@ abstract class SelectableEntity {
 }
 
 class EntityFields {
-  static const String id = 'id';
   static const String createdAt = 'created_at';
   static const String updatedAt = 'updated_at';
   static const String archivedAt = 'archived_at';
+  static const String assignedTo = 'assigned_to';
+  static const String createdBy = 'created_by';
   static const String state = 'entity_state';
 }
 

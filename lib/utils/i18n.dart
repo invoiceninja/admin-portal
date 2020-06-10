@@ -15,6 +15,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
   static final Map<String, Map<String, String>> _localizedValues = {
     'en': {
       // STARTER: lang key - do not remove comment
+      'contact_name': 'Contact Name',
       'use_default': 'Use default',
       'reminder_endless': 'Endless Reminders',
       'number_of_days': 'Number of days',
@@ -3889,6 +3890,9 @@ mixin LocalizationsProvider on LocaleCodeAware {
 
   String get useDefault =>
       _localizedValues[localeCode]['use_default'] ?? '';
+
+  String get contactName =>
+      _localizedValues[localeCode]['contact_name'] ?? '';
 
 
   String lookup(String key) {
