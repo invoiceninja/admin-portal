@@ -61,3 +61,29 @@ class ActionMenuButton extends StatelessWidget {
     );
   }
 }
+
+/// This class is used to differentiate List and View ActionMenuButtons
+/// during tests
+class ViewActionMenuButton extends StatelessWidget {
+  const ViewActionMenuButton({
+    @required this.entity,
+    @required this.onSelected,
+    this.isSaving = false,
+    this.entityActions,
+  });
+
+  final BaseEntity entity;
+  final List<EntityAction> entityActions;
+  final Function(BuildContext, EntityAction) onSelected;
+  final bool isSaving;
+
+  @override
+  Widget build(BuildContext context) {
+    return ActionMenuButton(
+        entity: entity,
+        onSelected: onSelected,
+        isSaving: isSaving,
+        entityActions: entityActions
+    );
+  }
+}

@@ -136,6 +136,7 @@ class _InvoiceEditItemsDesktopState extends State<InvoiceEditItemsDesktop> {
                   Padding(
                     padding: const EdgeInsets.only(right: kTableColumnGap),
                     child: TypeAheadFormField<String>(
+                      key: ValueKey('__line_item_${index}_name__'),
                       initialValue: lineItems[index].productKey,
                       noItemsFoundBuilder: (context) => SizedBox(),
                       suggestionsCallback: (pattern) {
@@ -238,6 +239,7 @@ class _InvoiceEditItemsDesktopState extends State<InvoiceEditItemsDesktop> {
                   Padding(
                     padding: const EdgeInsets.only(right: kTableColumnGap),
                     child: TextFormField(
+                      key: ValueKey('__line_item_${index}_description__'),
                       initialValue: lineItems[index].notes,
                       onChanged: (value) => viewModel.onChangedInvoiceItem(
                           lineItems[index].rebuild((b) => b..notes = value),
@@ -346,6 +348,7 @@ class _InvoiceEditItemsDesktopState extends State<InvoiceEditItemsDesktop> {
                   Padding(
                     padding: const EdgeInsets.only(right: kTableColumnGap),
                     child: TextFormField(
+                      key: ValueKey('__line_item_${index}_cost__'),
                       textAlign: TextAlign.right,
                       initialValue: formatNumber(lineItems[index].cost, context,
                           formatNumberType: FormatNumberType.input,
@@ -361,6 +364,7 @@ class _InvoiceEditItemsDesktopState extends State<InvoiceEditItemsDesktop> {
                   Padding(
                     padding: const EdgeInsets.only(right: kTableColumnGap),
                     child: TextFormField(
+                      key: ValueKey('__line_item_${index}_quantity__'),
                       textAlign: TextAlign.right,
                       initialValue: formatNumber(
                           lineItems[index].quantity, context,
