@@ -52,10 +52,6 @@ void _saveAuthLocal(
 }
 
 void _loadAuthLocal(Store<AppState> store) async {
-  if (kIsWeb) {
-    return;
-  }
-
   final SharedPreferences prefs = await SharedPreferences.getInstance();
   final String email = kReleaseMode
       ? (prefs.getString(kSharedPrefEmail) ?? '')

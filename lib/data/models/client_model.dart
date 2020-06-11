@@ -61,19 +61,19 @@ class ClientFields {
   static const String updatedAt = 'updated_at';
   static const String archivedAt = 'archived_at';
   static const String isDeleted = 'is_deleted';
-  static const String contact = 'contact';
+  static const String contactName = 'contact_name';
   static const String contactEmail = 'contact_email';
   static const String state = 'state';
   static const String phone = 'phone';
   static const String website = 'website';
   static const String language = 'language';
+  static const String publicNotes = 'public_notes';
+  static const String privateNotes = 'private_notes';
   static const String currency = 'currency';
   static const String custom1 = 'custom1';
   static const String custom2 = 'custom2';
   static const String custom3 = 'custom3';
   static const String custom4 = 'custom4';
-  static const String assignedTo = 'assigned_to';
-  static const String createdBy = 'created_by';
   static const String assignedToId = 'assigned_to_id';
   static const String createdById = 'created_by_id';
   static const String cityStatePostal = 'city_state_postal';
@@ -326,7 +326,7 @@ abstract class ClientEntity extends Object
             .toLowerCase()
             .compareTo(clientB.displayName.toLowerCase());
         break;
-      case ClientFields.contact:
+      case ClientFields.contactName:
         response = clientA.primaryContact.fullName
             .toLowerCase()
             .compareTo(clientB.primaryContact.fullName.toLowerCase());

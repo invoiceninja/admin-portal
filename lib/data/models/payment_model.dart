@@ -59,15 +59,10 @@ class PaymentFields {
   static const String exchangeCurrencyId = 'exchange_currency_id';
   static const String paymentStatusId = 'payment_status_id';
   static const String paymentStatus = 'payment_status';
-
   static const String customValue1 = 'custom1';
   static const String customValue2 = 'custom2';
   static const String customValue3 = 'custom3';
   static const String customValue4 = 'custom4';
-
-  static const String updatedAt = 'updated_at';
-  static const String archivedAt = 'archived_at';
-  static const String isDeleted = 'is_deleted';
 }
 
 abstract class PaymentEntity extends Object
@@ -210,7 +205,7 @@ abstract class PaymentEntity extends Object
       case PaymentFields.paymentDate:
         response = paymentA.date.compareTo(paymentB.date);
         break;
-      case PaymentFields.updatedAt:
+      case EntityFields.updatedAt:
         response = paymentA.updatedAt.compareTo(paymentB.updatedAt);
         break;
       case PaymentFields.paymentStatus:

@@ -12,6 +12,7 @@ import 'package:invoiceninja_flutter/ui/app/list_scaffold.dart';
 import 'package:invoiceninja_flutter/ui/app/entities/entity_actions_dialog.dart';
 import 'package:invoiceninja_flutter/ui/app/list_filter.dart';
 import 'package:invoiceninja_flutter/ui/product/product_list_vm.dart';
+import 'package:invoiceninja_flutter/ui/product/product_presenter.dart';
 import 'package:invoiceninja_flutter/ui/product/product_screen_vm.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 
@@ -82,6 +83,8 @@ class ProductScreen extends StatelessWidget {
       body: ProductListBuilder(),
       bottomNavigationBar: AppBottomBar(
         entityType: EntityType.product,
+        tableColumns: ProductPresenter.getAllTableFields(userCompany),
+        defaultTableColumns: ProductPresenter.getDefaultTableFields(userCompany),
         onRefreshPressed: () => store.dispatch(LoadProducts(force: true)),
         onSelectedSortField: (value) => store.dispatch(SortProducts(value)),
         customValues1: company.getCustomFieldValues(CustomFieldType.product1,

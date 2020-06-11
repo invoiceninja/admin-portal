@@ -4,9 +4,12 @@ import 'package:flutter_redux/flutter_redux.dart';
 import 'package:invoiceninja_flutter/constants.dart';
 import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
+import 'package:invoiceninja_flutter/redux/settings/settings_actions.dart';
 import 'package:invoiceninja_flutter/redux/ui/list_ui_state.dart';
 import 'package:invoiceninja_flutter/redux/ui/pref_state.dart';
 import 'package:invoiceninja_flutter/ui/app/app_border.dart';
+import 'package:invoiceninja_flutter/ui/app/dialogs/multiselect_dialog.dart';
+import 'package:invoiceninja_flutter/utils/completers.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/utils/platforms.dart';
@@ -14,12 +17,14 @@ import 'package:redux/redux.dart';
 
 class AppBottomBar extends StatefulWidget {
   const AppBottomBar({
+    @required this.entityType,
     @required this.sortFields,
     @required this.onSelectedSortField,
-    @required this.entityType,
     @required this.onSelectedState,
     @required this.onCheckboxPressed,
     @required this.onRefreshPressed,
+    this.defaultTableColumns,
+    this.tableColumns,
     this.onSelectedStatus,
     this.onSelectedCustom1,
     this.onSelectedCustom2,
@@ -48,6 +53,8 @@ class AppBottomBar extends StatefulWidget {
   final List<String> customValues2;
   final List<String> customValues3;
   final List<String> customValues4;
+  final List<String> tableColumns;
+  final List<String> defaultTableColumns;
 
   @override
   _AppBottomBarState createState() => _AppBottomBarState();
@@ -431,11 +438,50 @@ class _AppBottomBarState extends State<AppBottomBar> {
                         : null,
                   ),
                 if (!state.prefState.isMenuFloated) Spacer(),
-                if (!widget.entityType.isSetting)
+                if (!widget.entityType.isSetting) ...[
+                  if (!isList)
+                    IconButton(
+                      icon: Icon(Icons.view_week),
+                      tooltip: localization.columns,
+                      onPressed: () {
+                        multiselectDialog(
+                          context: context,
+                          onSelected: (selected) {
+                            final listUIState =
+                                store.state.getListState(widget.entityType);
+                            if (!selected.contains(listUIState.sortField)) {
+                              widget.onSelectedSortField(
+                                  selected.isEmpty ? '' : selected[0]);
+                            }
+                            final settings = state.userCompany.settings.rebuild(
+                                (b) => b
+                                  ..tableColumns['${widget.entityType}'] =
+                                      BuiltList<String>(selected));
+                            final user = state.user.rebuild((b) =>
+                                b..userCompany.settings.replace(settings));
+                            final completer = snackBarCompleter<Null>(context,
+                                AppLocalization.of(context).savedSettings);
+                            store.dispatch(
+                              SaveUserSettingsRequest(
+                                completer: completer,
+                                user: user,
+                              ),
+                            );
+                          },
+                          options: widget.tableColumns,
+                          defaultSelected: widget.defaultTableColumns,
+                          selected: state.userCompany.settings
+                              .tableColumns['${widget.entityType}']
+                              ?.toList(),
+                        );
+                      },
+                    ),
                   IconButton(
                     icon: Icon(Icons.refresh),
                     onPressed: widget.onRefreshPressed,
+                    tooltip: localization.refresh,
                   ),
+                ],
               ],
             ),
           ),

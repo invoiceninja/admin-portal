@@ -133,7 +133,9 @@ class VendorListVM {
         }
       },
       onRefreshed: (context) => _handleRefresh(context),
-      tableColumns: VendorPresenter.getTableFields(state.userCompany),
+      tableColumns:
+          state.userCompany.settings.getTableColumns(EntityType.vendor) ??
+              VendorPresenter.getAllTableFields(state.userCompany),
       onSortColumn: (field) => store.dispatch(SortVendors(field)),
     );
   }

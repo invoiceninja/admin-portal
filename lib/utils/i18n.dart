@@ -15,6 +15,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
   static final Map<String, Map<String, String>> _localizedValues = {
     'en': {
       // STARTER: lang key - do not remove comment
+      'contact_name': 'Contact Name',
       'use_default': 'Use default',
       'reminder_endless': 'Endless Reminders',
       'number_of_days': 'Number of days',
@@ -72,10 +73,10 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'full_name': 'Full Name',
       'city_state_postal': 'City/State/Postal',
       'postal_city_state': 'Postal/City/State',
-      'custom1': 'First Custom',
-      'custom2': 'Second Custom',
-      'custom3': 'Third Custom',
-      'custom4': 'Fourth Custom',
+      'custom1': 'Custom 1',
+      'custom2': 'Custom 2',
+      'custom3': 'Custom 3',
+      'custom4': 'Custom 4',
       'optional': 'Optional',
       'license': 'License',
       'purge_data': 'Purge Data',
@@ -266,7 +267,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'filtered_by': 'Filtered by :value',
       'contact_email': 'Contact Email',
       'multiselect': 'Multiselect',
-      'entity_state': 'State',
+      'entity_state': 'Entity State',
       'verify_password': 'Verify Password',
       'applied': 'Applied',
       'include_recent_errors': 'Include recent errors from the logs',
@@ -3889,6 +3890,9 @@ mixin LocalizationsProvider on LocaleCodeAware {
 
   String get useDefault =>
       _localizedValues[localeCode]['use_default'] ?? '';
+
+  String get contactName =>
+      _localizedValues[localeCode]['contact_name'] ?? '';
 
 
   String lookup(String key) {

@@ -7,7 +7,7 @@ import 'package:invoiceninja_flutter/utils/formatting.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 
 class PaymentPresenter extends EntityPresenter {
-  static List<String> getTableFields(UserCompanyEntity userCompany) {
+  static List<String> getDefaultTableFields(UserCompanyEntity userCompany) {
     return [
       PaymentFields.paymentNumber,
       PaymentFields.client,
@@ -17,7 +17,20 @@ class PaymentPresenter extends EntityPresenter {
       PaymentFields.paymentDate,
       PaymentFields.transactionReference,
       PaymentFields.paymentStatus,
-      EntityFields.state,
+    ];
+  }
+
+  static List<String> getAllTableFields(UserCompanyEntity userCompany) {
+    return [
+      ...getDefaultTableFields(userCompany),
+      ...EntityPresenter.getBaseFields(),
+      PaymentFields.refunded,
+      PaymentFields.privateNotes,
+      PaymentFields.exchangeRate,
+      PaymentFields.customValue1,
+      PaymentFields.customValue2,
+      PaymentFields.customValue3,
+      PaymentFields.customValue4,
     ];
   }
 
@@ -46,10 +59,27 @@ class PaymentPresenter extends EntityPresenter {
       case PaymentFields.amount:
         return Align(
             alignment: Alignment.centerRight,
-            child: Text(formatNumber(payment.amount, context)));
+            child: Text(formatNumber(payment.amount, context,
+                clientId: payment.clientId)));
       case PaymentFields.paymentStatus:
         return Text(AppLocalization.of(context)
             .lookup('payment_status_${payment.statusId}'));
+      case PaymentFields.customValue1:
+        return Text(payment.customValue1);
+      case PaymentFields.customValue2:
+        return Text(payment.customValue2);
+      case PaymentFields.customValue3:
+        return Text(payment.customValue3);
+      case PaymentFields.customValue4:
+        return Text(payment.customValue4);
+      case PaymentFields.refunded:
+        return Text(formatNumber(payment.refunded, context,
+            clientId: payment.clientId));
+      case PaymentFields.privateNotes:
+        return Text(payment.privateNotes);
+      case PaymentFields.exchangeRate:
+        return Text(formatNumber(payment.exchangeRate, context,
+            formatNumberType: FormatNumberType.percent));
     }
 
     return super.getField(field: field, context: context);

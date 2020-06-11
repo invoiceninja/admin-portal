@@ -150,7 +150,9 @@ class ExpenseListVM {
         }
       },
       onRefreshed: (context) => _handleRefresh(context),
-      tableColumns: ExpensePresenter.getTableFields(state.userCompany),
+      tableColumns:
+          state.userCompany.settings.getTableColumns(EntityType.expense) ??
+              ExpensePresenter.getAllTableFields(state.userCompany),
       onSortColumn: (field) => store.dispatch(SortExpenses(field)),
     );
   }

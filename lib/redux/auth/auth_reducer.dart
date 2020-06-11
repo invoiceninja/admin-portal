@@ -1,3 +1,4 @@
+import 'package:invoiceninja_flutter/constants.dart';
 import 'package:invoiceninja_flutter/utils/formatting.dart';
 import 'package:redux/redux.dart';
 import 'package:invoiceninja_flutter/redux/auth/auth_actions.dart';
@@ -7,6 +8,7 @@ Reducer<AuthState> authReducer = combineReducers([
   TypedReducer<AuthState, UserLoginLoaded>(userLoginLoadedReducer),
   TypedReducer<AuthState, UserLoginRequest>(userLoginRequestReducer),
   TypedReducer<AuthState, OAuthLoginRequest>(oauthLoginRequestReducer),
+  TypedReducer<AuthState, OAuthSignUpRequest>(oauthSignUpRequestReducer),
   TypedReducer<AuthState, UserSignUpRequest>(userSignUpRequestReducer),
   TypedReducer<AuthState, UserLoginSuccess>(userLoginSuccessReducer),
   TypedReducer<AuthState, UserVerifiedPassword>(userVerifiedPasswordReducer),
@@ -15,7 +17,7 @@ Reducer<AuthState> authReducer = combineReducers([
 AuthState userSignUpRequestReducer(
     AuthState authState, UserSignUpRequest action) {
   return authState.rebuild((b) => b
-    ..url = ''
+    ..url = formatApiUrl(kAppProductionUrl)
     ..secret = '');
 }
 
@@ -40,6 +42,13 @@ AuthState oauthLoginRequestReducer(
   return authState.rebuild((b) => b
     ..url = formatApiUrl(action.url)
     ..secret = action.secret);
+}
+
+AuthState oauthSignUpRequestReducer(
+    AuthState authState, OAuthSignUpRequest action) {
+  return authState.rebuild((b) => b
+    ..url = formatApiUrl(kAppProductionUrl)
+    ..secret = '');
 }
 
 AuthState userLoginSuccessReducer(

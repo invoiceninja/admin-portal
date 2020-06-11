@@ -95,8 +95,6 @@ class ReportsScreen extends StatelessWidget {
                     options: reportResult.allColumns,
                     selected: reportResult.columns.toList(),
                     defaultSelected: reportResult.defaultColumns,
-                    title: localization.editColumns,
-                    addTitle: localization.addColumn,
                   );
                 },
               );

@@ -17,8 +17,7 @@ import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:invoiceninja_flutter/utils/platforms.dart';
 
 class EntityList extends StatefulWidget {
-  const EntityList({
-    Key key,
+  EntityList({
     @required this.isLoaded,
     @required this.state,
     @required this.entityType,
@@ -31,7 +30,7 @@ class EntityList extends StatefulWidget {
     this.tableColumns,
     this.onClearEntityFilterPressed,
     this.onViewEntityFilterPressed,
-  }) : super(key: key);
+  }) : super(key: ValueKey('__${entityType}_${tableColumns}__'));
 
   final bool isLoaded;
   final AppState state;
@@ -142,6 +141,10 @@ class _EntityListState extends State<EntityList> {
                     )),
         ]);
       } else {
+        if (widget.tableColumns.isEmpty) {
+          return SizedBox();
+        }
+
         return SingleChildScrollView(
           child: Padding(
             padding: const EdgeInsets.symmetric(vertical: 24),

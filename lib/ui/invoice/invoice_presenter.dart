@@ -8,7 +8,7 @@ import 'package:invoiceninja_flutter/utils/formatting.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 
 class InvoicePresenter extends EntityPresenter {
-  static List<String> getTableFields(UserCompanyEntity userCompany) {
+  static List<String> getDefaultTableFields(UserCompanyEntity userCompany) {
     return [
       InvoiceFields.invoiceNumber,
       InvoiceFields.client,
@@ -17,7 +17,21 @@ class InvoicePresenter extends EntityPresenter {
       InvoiceFields.status,
       InvoiceFields.invoiceDate,
       InvoiceFields.dueDate,
-      EntityFields.state,
+    ];
+  }
+
+  static List<String> getAllTableFields(UserCompanyEntity userCompany) {
+    return [
+      ...getDefaultTableFields(userCompany),
+      ...EntityPresenter.getBaseFields(),
+      InvoiceFields.discount,
+      InvoiceFields.poNumber,
+      InvoiceFields.publicNotes,
+      InvoiceFields.privateNotes,
+      InvoiceFields.customValue1,
+      InvoiceFields.customValue2,
+      InvoiceFields.customValue3,
+      InvoiceFields.customValue4,
     ];
   }
 
@@ -45,9 +59,8 @@ class InvoicePresenter extends EntityPresenter {
       case InvoiceFields.amount:
         return Align(
           alignment: Alignment.centerRight,
-          child: Text(
-            formatNumber(invoice.amount, context, clientId: invoice.clientId)
-          ),
+          child: Text(formatNumber(invoice.amount, context,
+              clientId: invoice.clientId)),
         );
       case InvoiceFields.balance:
         return Align(
@@ -57,6 +70,27 @@ class InvoicePresenter extends EntityPresenter {
         );
       case InvoiceFields.dueDate:
         return Text(formatDate(invoice.dueDate, context));
+      case InvoiceFields.customValue1:
+        return Text(invoice.customValue1);
+      case InvoiceFields.customValue2:
+        return Text(invoice.customValue2);
+      case InvoiceFields.customValue3:
+        return Text(invoice.customValue3);
+      case InvoiceFields.customValue4:
+        return Text(invoice.customValue4);
+      case InvoiceFields.publicNotes:
+        return Text(invoice.publicNotes);
+      case InvoiceFields.privateNotes:
+        return Text(invoice.privateNotes);
+      case InvoiceFields.discount:
+        return Text(invoice.isAmountDiscount
+            ? formatNumber(invoice.discount, context,
+                formatNumberType: FormatNumberType.money,
+                clientId: invoice.clientId)
+            : formatNumber(invoice.discount, context,
+                formatNumberType: FormatNumberType.percent));
+      case InvoiceFields.poNumber:
+        return Text(invoice.poNumber);
     }
 
     return super.getField(field: field, context: context);

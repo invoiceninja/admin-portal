@@ -148,7 +148,9 @@ class TaskListVM {
         }
       },
       onRefreshed: (context) => _handleRefresh(context),
-      tableColumns: TaskPresenter.getTableFields(state.userCompany),
+      tableColumns:
+          state.userCompany.settings.getTableColumns(EntityType.task) ??
+              TaskPresenter.getAllTableFields(state.userCompany),
     );
   }
 

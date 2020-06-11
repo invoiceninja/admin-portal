@@ -4,7 +4,6 @@ import 'package:flutter_redux/flutter_redux.dart';
 import 'package:invoiceninja_flutter/data/models/invoice_model.dart';
 import 'package:invoiceninja_flutter/data/web_client.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
-import 'package:invoiceninja_flutter/utils/formatting.dart';
 import 'package:invoiceninja_flutter/.env.dart';
 import 'dialogs.dart';
 
@@ -24,7 +23,7 @@ void loadEmailTemplate({
   final webClient = WebClient();
   final state = StoreProvider.of<AppState>(context).state;
   final credentials = state.credentials;
-  final url = formatApiUrl(credentials.url) + '/templates';
+  final url = '${credentials.url}/templates';
 
   /*
   final invoice = state.invoiceState.list.isEmpty

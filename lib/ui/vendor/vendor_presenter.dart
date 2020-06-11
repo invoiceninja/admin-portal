@@ -3,13 +3,21 @@ import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/ui/app/presenters/entity_presenter.dart';
 
 class VendorPresenter extends EntityPresenter {
-  static List<String> getTableFields(UserCompanyEntity userCompany) {
+
+  static List<String> getDefaultTableFields(UserCompanyEntity userCompany) {
     return [
       VendorFields.name,
       VendorFields.city,
       VendorFields.phone,
       EntityFields.state,
       EntityFields.createdAt,
+    ];
+  }
+
+  static List<String> getAllTableFields(UserCompanyEntity userCompany) {
+    return [
+      ...getDefaultTableFields(userCompany),
+      ...EntityPresenter.getBaseFields(),
     ];
   }
 

@@ -12,6 +12,7 @@ import 'package:invoiceninja_flutter/ui/app/list_scaffold.dart';
 import 'package:invoiceninja_flutter/ui/app/entities/entity_actions_dialog.dart';
 import 'package:invoiceninja_flutter/ui/app/list_filter.dart';
 import 'package:invoiceninja_flutter/ui/credit/credit_list_vm.dart';
+import 'package:invoiceninja_flutter/ui/credit/credit_presenter.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 
 import 'credit_screen_vm.dart';
@@ -85,6 +86,8 @@ class CreditScreen extends StatelessWidget {
       body: CreditListBuilder(),
       bottomNavigationBar: AppBottomBar(
         entityType: EntityType.credit,
+        tableColumns: CreditPresenter.getAllTableFields(userCompany),
+        defaultTableColumns: CreditPresenter.getDefaultTableFields(userCompany),
         onRefreshPressed: () => store.dispatch(LoadCredits(force: true)),
         onSelectedSortField: (value) {
           store.dispatch(SortCredits(value));

@@ -64,7 +64,6 @@ class InvoiceFields {
   static const String partialDueDate = 'partial_due_date';
   static const String publicNotes = 'public_notes';
   static const String privateNotes = 'private_notes';
-  static const String invoiceTypeId = 'invoice_type_id';
   static const String isRecurring = 'is_recurring';
   static const String frequencyId = 'frequency_id';
   static const String startDate = 'start_date';
@@ -73,9 +72,6 @@ class InvoiceFields {
   static const String customValue2 = 'custom2';
   static const String customValue3 = 'custom3';
   static const String customValue4 = 'custom4';
-  static const String updatedAt = 'updated_at';
-  static const String archivedAt = 'archived_at';
-  static const String isDeleted = 'is_deleted';
 }
 
 abstract class InvoiceEntity extends Object
@@ -387,7 +383,7 @@ abstract class InvoiceEntity extends Object
       case CreditFields.amount:
         response = invoiceA.amount.compareTo(invoiceB.amount);
         break;
-      case InvoiceFields.updatedAt:
+      case EntityFields.updatedAt:
         response = invoiceA.updatedAt.compareTo(invoiceB.updatedAt);
         break;
       case InvoiceFields.invoiceDate:

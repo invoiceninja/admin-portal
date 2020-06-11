@@ -123,7 +123,9 @@ class ProductListVM {
         }
       },
       onRefreshed: (context) => _handleRefresh(context),
-      tableColumns: ProductPresenter.getTableFields(state.userCompany),
+      tableColumns:
+          state.userCompany.settings.getTableColumns(EntityType.product) ??
+              ProductPresenter.getAllTableFields(state.userCompany),
       onSortColumn: (field) => store.dispatch(SortProducts(field)),
     );
   }

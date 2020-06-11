@@ -139,7 +139,9 @@ class StubListVM {
           (BuildContext context, List<BaseEntity> stubs, EntityAction action) =>
           handleStubAction(context, stubs, action),
         onRefreshed: (context) => _handleRefresh(context),
-        tableColumns: StubPresenter.getTableFields(state.userCompany),
+              tableColumns:
+                  state.userCompany.settings.getTableColumns(EntityType.stub) ??
+                      StubPresenter.getAllTableFields(state.userCompany),
         onSortColumn: (field) => store.dispatch(SortStubs(field)),
     );
   }

@@ -7,8 +7,6 @@ import 'package:invoiceninja_flutter/utils/platforms.dart';
 
 void multiselectDialog(
     {BuildContext context,
-    String title,
-    String addTitle,
     List<String> options,
     List<String> selected,
     List<String> defaultSelected,
@@ -16,20 +14,23 @@ void multiselectDialog(
   showDialog<AlertDialog>(
     context: context,
     barrierDismissible: false,
-    builder: (BuildContext context) => AlertDialog(
-      semanticLabel: title,
-      title: Text(title),
-      content: MultiSelectList(
-        options: options,
-        selected: selected,
-        addTitle: addTitle,
-        defaultSelected: defaultSelected,
-        onSelected: (values) {
-          // selected = values
-          onSelected(values);
-        },
-      ),
-    ),
+    builder: (BuildContext context) {
+      final localization = AppLocalization.of(context);
+      return AlertDialog(
+        semanticLabel: localization.editColumns,
+        title: Text(localization.editColumns),
+        content: MultiSelectList(
+          options: options,
+          selected: selected,
+          addTitle: localization.addColumn,
+          defaultSelected: defaultSelected,
+          onSelected: (values) {
+            // selected = values
+            onSelected(values);
+          },
+        ),
+      );
+    },
   );
 }
 
@@ -62,7 +63,7 @@ class MultiSelectListState extends State<MultiSelectList> {
   @override
   void initState() {
     super.initState();
-    selected = widget.selected ?? [];
+    selected = widget.selected ?? widget.defaultSelected;
   }
 
   String lookupOption(String value) {

@@ -594,6 +594,14 @@ abstract class UserSettingsEntity
   @BuiltValueField(wireName: 'report_settings')
   BuiltMap<String, ReportSettingsEntity> get reportSettings;
 
+  List<String> getTableColumns(EntityType entityType) {
+    if (tableColumns != null && tableColumns.containsKey('$entityType')) {
+      return tableColumns['$entityType'].toList();
+    } else {
+      return null;
+    }
+  }
+
   static Serializer<UserSettingsEntity> get serializer =>
       _$userSettingsEntitySerializer;
 }
