@@ -8,7 +8,6 @@ import 'package:invoiceninja_flutter/ui/app/forms/app_form.dart';
 import 'package:invoiceninja_flutter/ui/app/edit_scaffold.dart';
 import 'package:invoiceninja_flutter/ui/settings/account_management_vm.dart';
 import 'package:invoiceninja_flutter/utils/dialogs.dart';
-import 'package:invoiceninja_flutter/utils/formatting.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -171,8 +170,7 @@ class _AccountOverview extends StatelessWidget {
                   callback: (value) {
                     final state = viewModel.state;
                     final credentials = state.credentials;
-                    final url = formatApiUrl(credentials.url) +
-                        '/claim_license?license_key=$value';
+                    final url = '${credentials.url}/claim_license?license_key=$value';
                     WebClient()
                         .post(
                       url,

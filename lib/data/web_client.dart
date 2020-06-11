@@ -19,7 +19,9 @@ class WebClient {
       throw 'Server requests are not supported in the demo';
     }
 
-    url = _checkUrl(url);
+    if (!url.contains('?')) {
+      url += '?';
+    }
     print('GET: $url');
 
     if (url.contains('invoiceninja.com')) {
@@ -56,7 +58,10 @@ class WebClient {
       throw 'Server requests are not supported in the demo';
     }
 
-    url = _checkUrl(url);
+    if (!url.contains('?')) {
+      url += '?';
+    }
+
     print('POST: $url');
     printWrapped('Data: $data');
     http.Response response;
@@ -94,7 +99,10 @@ class WebClient {
       throw 'Server requests are not supported in the demo';
     }
 
-    url = _checkUrl(url);
+    if (!url.contains('?')) {
+      url += '?';
+    }
+
     print('PUT: $url');
     printWrapped('Data: $data');
 
@@ -121,7 +129,10 @@ class WebClient {
       throw 'Server requests are not supported in the demo';
     }
 
-    url = _checkUrl(url);
+    if (!url.contains('?')) {
+      url += '?';
+    }
+
     print('Delete: $url');
 
     final http.Response response = await http.Client().delete(
@@ -133,24 +144,6 @@ class WebClient {
 
     return json.decode(response.body);
   }
-}
-
-String _checkUrl(String url) {
-  print('## _checkUrl (PRE): $url');
-  if (!url.contains('/api/v1')) {
-    url = '/api/v1' + url;
-  }
-
-  if (!url.startsWith('http')) {
-    url = Constants.hostedApiUrl + url;
-  }
-
-  if (!url.contains('?')) {
-    url += '?';
-  }
-
-  print('## _checkUrl (POST): $url');
-  return url;
 }
 
 Map<String, String> _getHeaders(String url, String token,

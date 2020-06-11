@@ -118,7 +118,7 @@ class AuthRepository {
   Future<dynamic> addCompany({
     @required Credentials credentials,
   }) async {
-    final url = formatApiUrl(credentials.url) + '/companies';
+    final url = '${credentials.url}/companies';
     final data = {
       'token_name': _tokenName,
     };
@@ -131,7 +131,7 @@ class AuthRepository {
     @required String companyId,
     @required String password,
   }) async {
-    final url = formatApiUrl(credentials.url) + '/companies/$companyId';
+    final url = '${credentials.url}/companies/$companyId';
     return webClient.delete(url, credentials.token, password: password);
   }
 

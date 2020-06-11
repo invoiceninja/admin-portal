@@ -7,6 +7,7 @@ import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:invoiceninja_flutter/redux/dashboard/dashboard_actions.dart';
 import 'package:invoiceninja_flutter/redux/ui/pref_state.dart';
 import 'package:invoiceninja_flutter/ui/app/app_builder.dart';
+import 'package:invoiceninja_flutter/utils/formatting.dart';
 import 'package:invoiceninja_flutter/utils/platforms.dart';
 import 'package:redux/redux.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
@@ -124,7 +125,7 @@ class LoginVM {
                   accessToken: value.accessToken,
                   serverAuthCode: account
                       .displayName, // TODO fix this once PR is merged https://github.com/flutter/plugins/pull/2116
-                  url: url.trim(),
+                  url: formatApiUrl(url.trim()),
                   secret: secret.trim(),
                   platform: getPlatform(context),
                   oneTimePassword: oneTimePassword,
@@ -194,7 +195,7 @@ class LoginVM {
           store.dispatch(RecoverPasswordRequest(
             completer: completer,
             email: email.trim(),
-            url: url.trim(),
+            url: formatApiUrl(url.trim()),
             secret: secret.trim(),
           ));
           completer.future.then((_) {
@@ -222,7 +223,7 @@ class LoginVM {
             completer: completer,
             email: email.trim(),
             password: password.trim(),
-            url: url.trim(),
+            url: formatApiUrl(url.trim()),
             secret: secret.trim(),
             platform: getPlatform(context),
             oneTimePassword: oneTimePassword.trim(),
