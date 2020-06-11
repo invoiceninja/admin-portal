@@ -316,8 +316,8 @@ Reducer<BuiltList<HistoryRecord>> historyReducer = combineReducers([
       _addToHistory(
           historyList, HistoryRecord(entityType: EntityType.reports))),
   TypedReducer<BuiltList<HistoryRecord>, ViewSettings>((historyList, action) =>
-      _addToHistory(
-          historyList, HistoryRecord(entityType: EntityType.settings))),
+      _addToHistory(historyList,
+          HistoryRecord(entityType: EntityType.settings, id: action.section))),
   TypedReducer<BuiltList<HistoryRecord>, ViewClient>((historyList, action) =>
       _addToHistory(historyList,
           HistoryRecord(id: action.clientId, entityType: EntityType.client))),
@@ -436,8 +436,15 @@ BuiltList<HistoryRecord> _addToHistory(
     return list;
   }
 
+  if (record.entityType == EntityType.settings) {
+    if ((record.id ?? '').endsWith('_edit')) {
+      return list;
+    }
+  }
+
   final old =
       list.firstWhere((item) => item.matchesRecord(record), orElse: () => null);
+
   if (old != null) {
     return list.rebuild((b) => b
       ..remove(old)

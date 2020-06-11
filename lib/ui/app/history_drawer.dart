@@ -119,9 +119,8 @@ class _HistoryListTileState extends State<HistoryListTile> {
         subtitle =
             Text(localization.lookup(state.uiState.reportsUIState.report));
       } else if (history.entityType == EntityType.settings) {
-        var section = state.uiState.settingsUIState.section;
-        section = section.replaceAll('_edit', '').replaceAll('_view', '');
-        subtitle = Text(localization.lookup(section));
+        subtitle =
+            Text(localization.lookup(history.id ?? kSettingsCompanyDetails));
       }
     } else {
       entity = state.getEntityMap(history.entityType)[history.id] as BaseEntity;
@@ -130,27 +129,14 @@ class _HistoryListTileState extends State<HistoryListTile> {
         return SizedBox();
       }
 
-      switch (history.entityType) {
-        case EntityType.invoice:
-          clientId = (entity as InvoiceEntity).clientId;
-          break;
-        case EntityType.payment:
-          clientId = (entity as PaymentEntity).clientId;
-          break;
-        case EntityType.task:
-          clientId = (entity as TaskEntity).clientId;
-          break;
-        case EntityType.expense:
-          clientId = (entity as ExpenseEntity).clientId;
-          break;
-        case EntityType.project:
-          clientId = (entity as ProjectEntity).clientId;
-          break;
+      if (entity is BelongsToClient) {
+        clientId = (entity as BelongsToClient).clientId;
       }
 
       title = Text(entity.listDisplayName.isEmpty
           ? formatNumber(entity.listDisplayAmount, context,
-              formatNumberType: entity.listDisplayAmountType)
+              formatNumberType: entity.listDisplayAmountType,
+              clientId: clientId)
           : entity.listDisplayName);
 
       subtitle = Text(localization.lookup('${history.entityType}'));
@@ -222,7 +208,8 @@ class _HistoryListTileState extends State<HistoryListTile> {
               store.dispatch(ViewReports(navigator: Navigator.of(context)));
               break;
             case EntityType.settings:
-              store.dispatch(ViewSettings(navigator: Navigator.of(context)));
+              store.dispatch(ViewSettings(
+                  navigator: Navigator.of(context), section: history.id));
               break;
             default:
               viewEntityById(
