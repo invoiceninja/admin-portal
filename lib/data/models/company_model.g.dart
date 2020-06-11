@@ -1579,7 +1579,7 @@ class _$SettingsEntitySerializer
     }
     if (object.enablePortalPassword != null) {
       result
-        ..add('enable_portal_password')
+        ..add('enable_client_portal_password')
         ..add(serializers.serialize(object.enablePortalPassword,
             specifiedType: const FullType(bool)));
     }
@@ -2357,7 +2357,7 @@ class _$SettingsEntitySerializer
           result.emailBodyCustom3 = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String;
           break;
-        case 'enable_portal_password':
+        case 'enable_client_portal_password':
           result.enablePortalPassword = serializers.deserialize(value,
               specifiedType: const FullType(bool)) as bool;
           break;

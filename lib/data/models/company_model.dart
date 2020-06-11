@@ -1531,7 +1531,7 @@ abstract class SettingsEntity
   String get emailBodyCustom3;
 
   @nullable
-  @BuiltValueField(wireName: 'enable_portal_password')
+  @BuiltValueField(wireName: 'enable_client_portal_password')
   bool get enablePortalPassword;
 
   @nullable

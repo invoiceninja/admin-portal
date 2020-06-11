@@ -7,15 +7,12 @@ part of 'pref_state.dart';
 // **************************************************************************
 
 const AppLayout _$mobile = const AppLayout._('mobile');
-const AppLayout _$tablet = const AppLayout._('tablet');
 const AppLayout _$desktop = const AppLayout._('desktop');
 
 AppLayout _$valueOf(String name) {
   switch (name) {
     case 'mobile':
       return _$mobile;
-    case 'tablet':
-      return _$tablet;
     case 'desktop':
       return _$desktop;
     default:
@@ -25,7 +22,6 @@ AppLayout _$valueOf(String name) {
 
 final BuiltSet<AppLayout> _$values = new BuiltSet<AppLayout>(const <AppLayout>[
   _$mobile,
-  _$tablet,
   _$desktop,
 ]);
 
