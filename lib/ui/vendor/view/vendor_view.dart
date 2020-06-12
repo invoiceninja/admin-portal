@@ -62,7 +62,10 @@ class _VendorViewState extends State<VendorView>
           children: <Widget>[
             RefreshIndicator(
               onRefresh: () => viewModel.onRefreshed(context),
-              child: VendorOverview(viewModel: viewModel),
+              child: VendorOverview(
+                viewModel: viewModel,
+                isFilter: widget.isFilter,
+              ),
             ),
             RefreshIndicator(
               onRefresh: () => viewModel.onRefreshed(context),

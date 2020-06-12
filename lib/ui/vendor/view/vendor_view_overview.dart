@@ -5,22 +5,23 @@ import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/redux/expense/expense_selectors.dart';
 import 'package:invoiceninja_flutter/redux/vendor/vendor_selectors.dart';
 import 'package:invoiceninja_flutter/ui/app/FieldGrid.dart';
+import 'package:invoiceninja_flutter/ui/app/entities/entity_list_tile.dart';
 import 'package:invoiceninja_flutter/ui/app/entity_header.dart';
-import 'package:invoiceninja_flutter/ui/app/lists/list_divider.dart';
 import 'package:invoiceninja_flutter/ui/vendor/view/vendor_view_vm.dart';
 import 'package:invoiceninja_flutter/utils/formatting.dart';
 import 'package:flutter/material.dart';
 import 'package:invoiceninja_flutter/ui/app/icon_message.dart';
-import 'package:invoiceninja_flutter/utils/icons.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 
 class VendorOverview extends StatelessWidget {
   const VendorOverview({
     Key key,
     @required this.viewModel,
+    @required this.isFilter,
   }) : super(key: key);
 
   final VendorViewVM viewModel;
+  final bool isFilter;
 
   @override
   Widget build(BuildContext context) {
@@ -70,9 +71,10 @@ class VendorOverview extends StatelessWidget {
         Divider(
           height: 1.0,
         ),
-        EntityListTile(
-          icon: getEntityIcon(EntityType.expense),
+        EntitiesListTile(
           title: localization.expenses,
+          entityType: EntityType.expense,
+          isFilter: isFilter,
           onTap: () => viewModel.onEntityPressed(context, EntityType.expense),
           onLongPress: () =>
               viewModel.onEntityPressed(context, EntityType.expense, true),
@@ -80,37 +82,6 @@ class VendorOverview extends StatelessWidget {
               memoizedExpenseStatsForVendor(vendor.id, state.expenseState.map)
                   .present(localization.active, localization.archived),
         ),
-      ],
-    );
-  }
-}
-
-class EntityListTile extends StatelessWidget {
-  const EntityListTile(
-      {this.icon, this.onTap, this.onLongPress, this.title, this.subtitle});
-
-  final Function onTap;
-  final Function onLongPress;
-  final IconData icon;
-  final String title;
-  final String subtitle;
-
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-      children: <Widget>[
-        Material(
-          color: Theme.of(context).canvasColor,
-          child: ListTile(
-            title: Text(title),
-            subtitle: Text(subtitle),
-            leading: Icon(icon, size: 18.0),
-            trailing: Icon(Icons.navigate_next),
-            onTap: onTap,
-            onLongPress: onLongPress,
-          ),
-        ),
-        ListDivider(),
       ],
     );
   }
