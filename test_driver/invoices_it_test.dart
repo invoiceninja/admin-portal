@@ -16,14 +16,16 @@ void runTestSuite({bool batchMode = false}) {
 
     final clientName = makeUnique(faker.company.name());
     final poNumber =
-        faker.randomGenerator.integer(999999, min: 100000).toString();
+    faker.randomGenerator.integer(999999, min: 100000).toString();
     final productKey = makeUnique(faker.food.cuisine());
+    final clientKey = faker.randomGenerator.integer(999999, min: 100000)
+        .toString();
     final description = faker.lorem.sentences(5).toString();
     final cost =
-        faker.randomGenerator.decimal(min: 50, scale: 10).toStringAsFixed(2);
+    faker.randomGenerator.decimal(min: 50, scale: 10).toStringAsFixed(2);
 
     final updatedPoNumber =
-        faker.randomGenerator.integer(999999, min: 100000).toString();
+    faker.randomGenerator.integer(999999, min: 100000).toString();
 
     setUpAll(() async {
       localization = TestLocalization('en');
@@ -67,35 +69,53 @@ void runTestSuite({bool batchMode = false}) {
 
     // Create a new invoice
     test('Add a new invoice', () async {
+
       print('Tap new invoice');
       await driver.tap(find.byTooltip(localization.newInvoice));
 
       print('Create new client: $clientName');
-      await driver.tap(find.byValueKey(Keys.clientPickerEmptyKey));
+      if(await isMobile(driver)) {
+        await driver.tap(find.byValueKey(Keys.clientPickerEmptyKey));
+      }
       await driver.tap(find.byTooltip(localization.createNew));
 
       print('Fill the client form');
-      await fillTextField(
-          driver: driver, field: localization.name, value: clientName);
+      await fillTextFields(driver, <String, String>{
+        localization.name: clientName,
+        localization.idNumber: clientKey
+      });
       // Await for Debouncer
       await Future<dynamic>.delayed(Duration(milliseconds: 500));
       await driver.tap(find.text(localization.save));
 
+      // Await for Screen change
+      await driver.waitFor(find.text(localization.newInvoice));
+
       print('Fill the invoice form');
-      await driver.tap(find.byTooltip(localization.addItem));
-      await driver.tap(find.byTooltip(localization.createNew));
+      if(await isMobile(driver)) {
+        await driver.tap(find.byTooltip(localization.addItem));
+        await driver.tap(find.byTooltip(localization.createNew));
 
-      await fillTextFields(driver, <String, String>{
-        localization.product: productKey,
-        localization.description: description,
-        localization.unitCost: cost,
-        localization.quantity: '1',
-      });
+        await fillTextFields(driver, <String, String>{
+          localization.product: productKey,
+          localization.description: description,
+          localization.unitCost: cost,
+          localization.quantity: '1',
+        });
 
-      // Await for Debouncer
-      await Future<dynamic>.delayed(Duration(milliseconds: 500));
-      await driver.tap(find.text(localization.done));
-      await driver.tap(find.text(localization.details));
+        // Await for Debouncer
+        await Future<dynamic>.delayed(Duration(milliseconds: 500));
+        await driver.tap(find.text(localization.done));
+        await driver.tap(find.text(localization.details));
+
+      } else {
+        await fillTextFields(driver, <String, String>{
+          getLineItemKey('name', 0): productKey,
+          getLineItemKey('description', 0): description,
+          getLineItemKey('cost', 0): cost,
+          getLineItemKey('quantity', 0): '1'
+        });
+      }
 
       await fillAndSaveForm(driver, <String, String>{
         localization.poNumber: poNumber,
@@ -140,7 +160,8 @@ void runTestSuite({bool batchMode = false}) {
       await selectAction(driver, localization.enterPayment);
       await driver.tap(find.text(localization.save));
       // "Completed" status
-      await driver.waitFor(find.text(localization.paymentStatus4.toUpperCase()));
+      await driver.waitFor(
+          find.text(localization.paymentStatus4.toUpperCase()));
 
       if (await isMobile(driver)) {
         await driver.tap(find.pageBack());

@@ -9,6 +9,7 @@ import 'localizations.dart';
 class Keys {
   static const String openAppDrawer = 'Open navigation menu';
   static const String clientPickerEmptyKey = '__client___';
+  static const String invoiceLineItemBaseKey = '__line_item';
 }
 
 Future<bool> isTablet(FlutterDriver driver) async {
@@ -129,15 +130,15 @@ Future<void> fillAndSaveForm(FlutterDriver driver, Map<String, dynamic> values,
   // Await for Debouncer
   await Future<dynamic>.delayed(Duration(milliseconds: 400));
 
+  print('Check for updated values');
+  await checkTextFields(driver, values, except: skipCheckFor);
+
   print('Tap save');
   await driver.tap(find.text(localization.save));
 
   // verify snackbar
   //await driver.waitFor(find.text(localization.updatedProduct));
   //await driver.tap(find.pageBack());
-
-  print('Check for updated values');
-  await checkTextFields(driver, values, except: skipCheckFor);
 }
 
 Future<void> testArchiveAndDelete(
@@ -146,32 +147,46 @@ Future<void> testArchiveAndDelete(
     String deletedMessage,
     String restoredMessage}) async {
   final localization = TestLocalization('en');
+  final mobile = await isMobile(driver);
+
+  if (!mobile) {
+    // Show archived and deleted entries on tablet/web
+    await driver.tap(find.byTooltip(localization.filter));
+    await driver.tap(find.text(localization.archived));
+    await driver.tap(find.text(localization.deleted));
+    await driver.tap(find.byTooltip(localization.filter));
+  }
 
   print('Archive record');
   await selectAction(driver, localization.archive);
   await driver.waitFor(find.text(archivedMessage));
-  await driver.waitFor(find.text(localization.archived));
+  //await driver.waitFor(find.text(localization.archived));
+
 
   print('Restore record');
   await selectAction(driver, localization.restore);
   await driver.waitFor(find.text(restoredMessage));
-  await driver.waitForAbsent(find.text(localization.archived));
+  await driver.waitForAbsent(find.byType('Snackbar'));
 
   print('Delete record');
   await selectAction(driver, localization.delete);
   await driver.waitFor(find.text(deletedMessage));
-  await driver.waitFor(find.text(localization.deleted));
+  //await driver.waitFor(find.text(localization.deleted));
+
 
   print('Restore record');
   await selectAction(driver, localization.restore);
   await driver.waitFor(find.text(restoredMessage));
-  await driver.waitForAbsent(find.text(localization.deleted));
+  await driver.waitForAbsent(find.byType('Snackbar'));
 }
 
 Future<void> selectAction(FlutterDriver driver, String action) async {
-  await driver.tap(find.byType('ActionMenuButton'));
+  await driver.tap(find.byType('ViewActionMenuButton'));
   await driver.tap(find.text(action));
 }
 
 String makeUnique(String value) =>
     '$value ${faker.randomGenerator.integer(999999, min: 100000)}';
+
+String getLineItemKey(String key, int index) =>
+    '${Keys.invoiceLineItemBaseKey}_${index}_${key}__';

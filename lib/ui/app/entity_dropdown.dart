@@ -120,6 +120,7 @@ class _EntityDropdownState extends State<EntityDropdown> {
         alignment: Alignment.centerRight,
         children: <Widget>[
           TypeAheadFormField<String>(
+            validator: widget.validator,
             noItemsFoundBuilder: (context) => SizedBox(),
             suggestionsBoxDecoration: SuggestionsBoxDecoration(
               constraints: BoxConstraints(
