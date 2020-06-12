@@ -237,7 +237,7 @@ class DashboardPanels extends StatelessWidget {
         currentData: currentData,
         previousData: previousData,
         isLoaded: isLoaded,
-        title: AppLocalization.of(context).invoiced);
+        title: AppLocalization.of(context).invoices);
   }
 
   Widget _paymentChart(BuildContext context) {

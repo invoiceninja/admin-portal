@@ -4,7 +4,6 @@ import 'package:flutter/widgets.dart';
 import 'package:invoiceninja_flutter/constants.dart';
 import 'package:invoiceninja_flutter/data/models/entities.dart';
 import 'package:invoiceninja_flutter/ui/app/form_card.dart';
-import 'package:invoiceninja_flutter/ui/app/forms/app_form.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/client_picker.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/custom_field.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/custom_surcharges.dart';

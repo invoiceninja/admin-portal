@@ -335,7 +335,6 @@ class _AppBottomBarState extends State<AppBottomBar> {
       final prefState = store.state.prefState;
       final isList = prefState.moduleLayout == ModuleLayout.list ||
           widget.entityType.isSetting;
-      final company = state.company;
 
       return BottomAppBar(
         shape: CircularNotchedRectangle(),
