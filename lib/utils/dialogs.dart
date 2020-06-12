@@ -80,6 +80,7 @@ class _PasswordConfirmationState extends State<PasswordConfirmation> {
       content: TextField(
         onChanged: (value) => _password = value,
         obscureText: _isPasswordObscured,
+        keyboardType: TextInputType.visiblePassword,
         decoration: InputDecoration(
           labelText: localization.password,
           suffixIcon: IconButton(
