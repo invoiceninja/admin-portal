@@ -50,12 +50,9 @@ class EntityListTile extends StatelessWidget {
             handleEntityAction(context, entity, action),
       );
     } else {
-      //leading = Icon(getEntityIcon(entity.entityType), size: 18.0);
       leading = IconButton(
         icon: Icon(getEntityIcon(entity.entityType), size: 18.0),
-        onPressed: () {
-          //viewEntity(entity: entity, context: context);
-        },
+        onPressed: onTap,
       );
     }
 
