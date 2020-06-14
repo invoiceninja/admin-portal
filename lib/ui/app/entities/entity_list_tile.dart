@@ -3,6 +3,7 @@ import 'package:flutter_redux/flutter_redux.dart';
 import 'package:invoiceninja_flutter/data/models/entities.dart';
 import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
+import 'package:invoiceninja_flutter/ui/app/actions_menu_button.dart';
 import 'package:invoiceninja_flutter/ui/app/entities/entity_state_title.dart';
 import 'package:invoiceninja_flutter/ui/app/lists/list_divider.dart';
 import 'package:invoiceninja_flutter/ui/app/lists/selected_indicator.dart';
@@ -35,10 +36,35 @@ class EntityListTile extends StatelessWidget {
     final isFilteredBy = state.uiState.filterEntityId == entity.id &&
         state.uiState.filterEntityType == entity.entityType;
 
-    Widget trailingIcon = Icon(Icons.navigate_next);
+    Widget leading;
+    if (isFilteredBy) {
+      final client = entity is BelongsToClient
+          ? state.clientState.map[(entity as BelongsToClient).clientId]
+          : null;
+      leading = ActionMenuButton(
+        entityActions: entity.getActions(
+            userCompany: state.userCompany, includeEdit: true, client: client),
+        isSaving: false,
+        entity: entity,
+        onSelected: (context, action) =>
+            handleEntityAction(context, entity, action),
+      );
+    } else {
+      //leading = Icon(getEntityIcon(entity.entityType), size: 18.0);
+      leading = IconButton(
+        icon: Icon(getEntityIcon(entity.entityType), size: 18.0),
+        onPressed: () {
+          //viewEntity(entity: entity, context: context);
+        },
+      );
+    }
+
+    Widget trailing;
     if (isNotMobile(context) && isFilter != null && !isFilter) {
-      trailingIcon = Icon(Icons.filter_list,
+      trailing = Icon(Icons.filter_list,
           color: isFilteredBy ? Theme.of(context).accentColor : null);
+    } else {
+      Icon(Icons.navigate_next);
     }
 
     return Column(
@@ -53,8 +79,8 @@ class EntityListTile extends StatelessWidget {
               subtitle: subtitle != null && subtitle.isNotEmpty
                   ? Text(subtitle ?? '')
                   : null,
-              leading: Icon(getEntityIcon(entity.entityType), size: 18.0),
-              trailing: trailingIcon,
+              leading: leading,
+              trailing: trailing,
               onTap: () => isFilteredBy && isNotMobile(context)
                   ? store.dispatch(ClearEntityFilter())
                   : onTap(),
