@@ -176,12 +176,15 @@ void _checkResponse(http.Response response) {
   print('headers: ${response.headers}');
 
   final version = response.headers['X-APP-VERSION'];
-
+  
+  /*
   if (version == null) {
-    //throw 'Invalid version, please check v5 is installed on the server';
-  } else if (!_isVersionSupported(version)) {
+    throw 'Invalid version, please check v5 is installed on the server';
+  } else if (version != null && !_isVersionSupported(version)) {
     throw 'The minimum web app version is v$kMinMajorAppVersion.$kMinMinorAppVersion.$kMinPatchAppVersion';
-  } else if (response.statusCode >= 400) {
+  } else */
+
+  if (response.statusCode >= 400) {
     print('==== FAILED ====');
     throw _parseError(response.statusCode, response.body);
   }
