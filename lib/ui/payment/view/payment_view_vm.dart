@@ -63,9 +63,7 @@ class PaymentViewVM {
       isLoading: state.isLoading,
       payment: payment,
       onClientPressed: (context, [bool longPress = false]) {
-        if (longPress) {
-          showEntityActionsDialog(context: context, entities: [client]);
-        } else if (isMobile(context)) {
+        if (longPress || isMobile(context)) {
           viewEntity(context: context, entity: client);
         } else {
           store.dispatch(FilterPaymentsByEntity(
@@ -74,13 +72,7 @@ class PaymentViewVM {
       },
       onInvoicePressed: (context, invoiceId, [bool longPress = false]) {
         final invoice = state.invoiceState.map[invoiceId];
-        if (longPress) {
-          showEntityActionsDialog(
-            context: context,
-            entities: [invoice],
-            client: client,
-          );
-        } else if (isMobile(context)) {
+        if (longPress || isMobile(context)) {
           viewEntity(context: context, entity: invoice);
         } else {
           store.dispatch(FilterPaymentsByEntity(

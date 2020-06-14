@@ -140,12 +140,7 @@ class InvoiceViewVM extends EntityViewVM {
       },
       onRefreshed: (context) => _handleRefresh(context),
       onClientPressed: (BuildContext context, [bool longPress = false]) {
-        if (longPress) {
-          showEntityActionsDialog(
-            context: context,
-            entities: [client],
-          );
-        } else if (isMobile(context)) {
+        if (longPress || isMobile(context)) {
           viewEntity(context: context, entity: client);
         } else {
           store.dispatch(FilterInvoicesByEntity(
@@ -154,13 +149,7 @@ class InvoiceViewVM extends EntityViewVM {
       },
       onPaymentPressed: (BuildContext context, payment,
           [bool longPress = false]) {
-        if (longPress) {
-          showEntityActionsDialog(
-            context: context,
-            client: client,
-            entities: [payment],
-          );
-        } else if (isMobile(context)) {
+        if (longPress || isMobile(context)) {
           viewEntity(context: context, entity: payment);
         } else {
           print('## FILTER PAYMENT: ${payment.id}');

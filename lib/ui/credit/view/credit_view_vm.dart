@@ -109,12 +109,7 @@ class CreditViewVM extends EntityViewVM {
       },
       onRefreshed: (context) => _handleRefresh(context),
       onClientPressed: (BuildContext context, [bool longPress = false]) {
-        if (longPress) {
-          showEntityActionsDialog(
-            context: context,
-            entities: [client],
-          );
-        } else if (isMobile(context)) {
+        if (longPress || isMobile(context)) {
           viewEntity(context: context, entity: client);
         } else {
           store.dispatch(FilterCreditsByEntity(

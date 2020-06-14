@@ -108,36 +108,13 @@ class TaskViewVM {
       project: project,
       onFabPressed: (BuildContext context) => _toggleTask(context),
       onClientPressed: (BuildContext context, [bool longPress = false]) {
-        if (longPress) {
-          showEntityActionsDialog(
-            context: context,
-            entities: [client],
-          );
-        } else {
-          viewEntity(context: context, entity: client);
-        }
+        viewEntity(context: context, entity: client);
       },
       onProjectPressed: (context, [longPress = false]) {
-        if (longPress) {
-          showEntityActionsDialog(
-            context: context,
-            entities: [project],
-            client: client,
-          );
-        } else {
-          viewEntity(context: context, entity: project);
-        }
+        viewEntity(context: context, entity: project);
       },
       onInvoicePressed: (context, [longPress = false]) {
-        if (longPress) {
-          showEntityActionsDialog(
-            context: context,
-            entities: [invoice],
-            client: client,
-          );
-        } else {
-          viewEntity(context: context, entity: invoice);
-        }
+        viewEntity(context: context, entity: invoice);
       },
       onEditPressed: (BuildContext context, [TaskTime taskTime]) {
         // TODO change from time to index
