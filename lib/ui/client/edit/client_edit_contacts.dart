@@ -302,6 +302,7 @@ class ContactEditDetailsState extends State<ContactEditDetails> {
                     controller: _passwordController,
                     label: localization.password,
                     obscureText: true,
+                    keyboardType: TextInputType.visiblePassword,
                     validator: (value) => value.isNotEmpty && value.length < 8
                         ? localization.passwordIsTooShort
                         : null,

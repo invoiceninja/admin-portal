@@ -448,6 +448,7 @@ class _LoginState extends State<LoginView> {
                                 return null;
                               },
                               obscureText: _isPasswordObscured,
+                              keyboardType: TextInputType.visiblePassword,
                               onFieldSubmitted: (String value) =>
                                   FocusScope.of(context).nextFocus(),
                             ),
@@ -480,6 +481,7 @@ class _LoginState extends State<LoginView> {
                                   labelText:
                                       '${localization.secret} (${localization.optional})'),
                               obscureText: true,
+                              keyboardType: TextInputType.visiblePassword,
                               onFieldSubmitted: (String value) =>
                                   FocusScope.of(context).nextFocus(),
                             ),

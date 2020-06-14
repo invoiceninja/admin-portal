@@ -243,60 +243,70 @@ class MenuDrawer extends StatelessWidget {
                             entityType: EntityType.client,
                             icon: getEntityIcon(EntityType.client),
                             title: localization.clients,
+                            iconTooltip: localization.newClient,
                           ),
                           DrawerTile(
                             company: company,
                             entityType: EntityType.product,
                             icon: getEntityIcon(EntityType.product),
                             title: localization.products,
+                            iconTooltip: localization.newProduct,
                           ),
                           DrawerTile(
                             company: company,
                             entityType: EntityType.invoice,
                             icon: getEntityIcon(EntityType.invoice),
                             title: localization.invoices,
+                            iconTooltip: localization.newInvoice,
                           ),
                           DrawerTile(
                             company: company,
                             entityType: EntityType.payment,
                             icon: getEntityIcon(EntityType.payment),
                             title: localization.payments,
+                            iconTooltip: localization.newPayment,
                           ),
                           DrawerTile(
                             company: company,
                             entityType: EntityType.quote,
                             icon: getEntityIcon(EntityType.quote),
                             title: localization.quotes,
+                            iconTooltip: localization.newQuote,
                           ),
                           DrawerTile(
                             company: company,
                             entityType: EntityType.credit,
                             icon: getEntityIcon(EntityType.credit),
                             title: localization.credits,
+                            iconTooltip: localization.newCredit,
                           ),
                           DrawerTile(
                             company: company,
                             entityType: EntityType.project,
                             icon: getEntityIcon(EntityType.project),
                             title: localization.projects,
+                            iconTooltip: localization.newProject,
                           ),
                           DrawerTile(
                             company: company,
                             entityType: EntityType.task,
                             icon: getEntityIcon(EntityType.task),
                             title: localization.tasks,
+                            iconTooltip: localization.newTask,
                           ),
                           DrawerTile(
                             company: company,
                             entityType: EntityType.vendor,
                             icon: getEntityIcon(EntityType.vendor),
                             title: localization.vendors,
+                            iconTooltip: localization.newVendor,
                           ),
                           DrawerTile(
                             company: company,
                             entityType: EntityType.expense,
                             icon: getEntityIcon(EntityType.expense),
                             title: localization.expenses,
+                            iconTooltip: localization.newExpense,
                           ),
                           // STARTER: menu - do not remove comment
                           DrawerTile(
@@ -349,6 +359,7 @@ class DrawerTile extends StatefulWidget {
     this.entityType,
     this.onLongPress,
     this.onCreateTap,
+    this.iconTooltip,
   });
 
   final CompanyEntity company;
@@ -358,6 +369,7 @@ class DrawerTile extends StatefulWidget {
   final Function onTap;
   final Function onLongPress;
   final Function onCreateTap;
+  final String iconTooltip;
 
   @override
   _DrawerTileState createState() => _DrawerTileState();
@@ -421,6 +433,7 @@ class _DrawerTileState extends State<DrawerTile> {
         );
       } else if (userCompany.canCreate(widget.entityType)) {
         trailingWidget = IconButton(
+          tooltip: widget.iconTooltip,
           icon: Icon(
             Icons.add_circle_outline,
             color: textColor,

@@ -149,6 +149,7 @@ final stubsReducer = combineReducers<StubState>([
   TypedReducer<StubState, AddStubSuccess>(_addStub),
   TypedReducer<StubState, LoadStubsSuccess>(_setLoadedStubs),
   TypedReducer<StubState, LoadStubSuccess>(_setLoadedStub),
+  TypedReducer<StubState, LoadCompanySuccess>(_setLoadedCompany),
   TypedReducer<StubState, ArchiveStubsRequest>(_archiveStubRequest),
   TypedReducer<StubState, ArchiveStubsSuccess>(_archiveStubSuccess),
   TypedReducer<StubState, ArchiveStubsFailure>(_archiveStubFailure),
@@ -281,3 +282,7 @@ StubState _setLoadedStub(
 StubState _setLoadedStubs(
         StubState stubState, LoadStubsSuccess action) =>
     stubState.loadStubs(action.stubs);
+
+StubState _setLoadedCompany(
+        StubState stubState, LoadCompanySuccess action) =>
+    stubState.loadStubs(action.userCompany.company.stubs);

@@ -16,22 +16,12 @@ import 'package:invoiceninja_flutter/redux/auth/auth_state.dart';
 import 'package:invoiceninja_flutter/redux/client/client_actions.dart';
 import 'package:invoiceninja_flutter/redux/company/company_actions.dart';
 import 'package:invoiceninja_flutter/redux/company/company_state.dart';
-import 'package:invoiceninja_flutter/redux/credit/credit_actions.dart';
 import 'package:invoiceninja_flutter/redux/dashboard/dashboard_actions.dart';
-import 'package:invoiceninja_flutter/redux/design/design_actions.dart';
-import 'package:invoiceninja_flutter/redux/expense/expense_actions.dart';
-import 'package:invoiceninja_flutter/redux/invoice/invoice_actions.dart';
-import 'package:invoiceninja_flutter/redux/payment/payment_actions.dart';
-import 'package:invoiceninja_flutter/redux/product/product_actions.dart';
-import 'package:invoiceninja_flutter/redux/project/project_actions.dart';
-import 'package:invoiceninja_flutter/redux/quote/quote_actions.dart';
 import 'package:invoiceninja_flutter/redux/settings/settings_actions.dart';
 import 'package:invoiceninja_flutter/redux/static/static_state.dart';
-import 'package:invoiceninja_flutter/redux/task/task_actions.dart';
 import 'package:invoiceninja_flutter/redux/ui/pref_state.dart';
 import 'package:invoiceninja_flutter/redux/ui/ui_actions.dart';
 import 'package:invoiceninja_flutter/redux/ui/ui_state.dart';
-import 'package:invoiceninja_flutter/redux/vendor/vendor_actions.dart';
 import 'package:invoiceninja_flutter/ui/app/app_builder.dart';
 import 'package:invoiceninja_flutter/ui/app/dialogs/alert_dialog.dart';
 import 'package:invoiceninja_flutter/ui/app/main_screen.dart';
@@ -411,23 +401,9 @@ Middleware<AppState> _createAccountLoaded() {
       store.dispatch(SelectCompany(i));
       store.dispatch(LoadCompanySuccess(userCompany));
 
-      // TODO remove this code/use reducers instead
-      final company = userCompany.company;
-      if (company.clients.isNotEmpty) {
-        store.dispatch(LoadClientsSuccess(company.clients));
-        store.dispatch(LoadProductsSuccess(company.products));
-        store.dispatch(LoadInvoicesSuccess(company.invoices));
-        store.dispatch(LoadPaymentsSuccess(company.payments));
-        store.dispatch(LoadQuotesSuccess(company.quotes));
-        store.dispatch(LoadCreditsSuccess(company.credits));
-        store.dispatch(LoadDesignsSuccess(company.designs));
-        if (Config.DEMO_MODE) {
-          store.dispatch(LoadTasksSuccess(company.tasks));
-          store.dispatch(LoadProjectsSuccess(company.projects));
-          store.dispatch(LoadVendorsSuccess(company.vendors));
-          store.dispatch(LoadExpensesSuccess(company.expenses));
-        }
-      }
+      /*
+        stub
+       */
     }
 
     store.dispatch(SelectCompany(selectedCompanyIndex));

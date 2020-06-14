@@ -6,7 +6,6 @@ import 'package:invoiceninja_flutter/data/models/payment_model.dart';
 import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/redux/payment/payment_actions.dart';
-import 'package:invoiceninja_flutter/ui/app/entities/entity_actions_dialog.dart';
 import 'package:invoiceninja_flutter/ui/payment/view/payment_view.dart';
 import 'package:invoiceninja_flutter/utils/platforms.dart';
 import 'package:redux/redux.dart';
@@ -63,9 +62,7 @@ class PaymentViewVM {
       isLoading: state.isLoading,
       payment: payment,
       onClientPressed: (context, [bool longPress = false]) {
-        if (longPress) {
-          showEntityActionsDialog(context: context, entities: [client]);
-        } else if (isMobile(context)) {
+        if (longPress || isMobile(context)) {
           viewEntity(context: context, entity: client);
         } else {
           store.dispatch(FilterPaymentsByEntity(
@@ -74,13 +71,7 @@ class PaymentViewVM {
       },
       onInvoicePressed: (context, invoiceId, [bool longPress = false]) {
         final invoice = state.invoiceState.map[invoiceId];
-        if (longPress) {
-          showEntityActionsDialog(
-            context: context,
-            entities: [invoice],
-            client: client,
-          );
-        } else if (isMobile(context)) {
+        if (longPress || isMobile(context)) {
           viewEntity(context: context, entity: invoice);
         } else {
           store.dispatch(FilterPaymentsByEntity(

@@ -248,6 +248,7 @@ final creditsReducer = combineReducers<CreditState>([
   TypedReducer<CreditState, SaveCreditSuccess>(_updateCredit),
   TypedReducer<CreditState, AddCreditSuccess>(_addCredit),
   TypedReducer<CreditState, LoadCreditsSuccess>(_setLoadedCredits),
+  TypedReducer<CreditState, LoadCompanySuccess>(_setLoadedCompany),
   TypedReducer<CreditState, LoadCreditSuccess>(_updateCredit),
   TypedReducer<CreditState, MarkSentCreditSuccess>(_markSentCreditSuccess),
   TypedReducer<CreditState, ArchiveCreditsRequest>(_archiveCreditRequest),
@@ -385,3 +386,7 @@ CreditState _updateCredit(CreditState creditState, dynamic action) {
 CreditState _setLoadedCredits(
         CreditState creditState, LoadCreditsSuccess action) =>
     creditState.loadCredits(action.credits);
+
+CreditState _setLoadedCompany(
+        CreditState creditState, LoadCompanySuccess action) =>
+    creditState.loadCredits(action.userCompany.company.credits);

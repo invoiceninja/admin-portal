@@ -384,7 +384,6 @@ class _AppBottomBarState extends State<AppBottomBar> {
                 ),
                 if (widget.statuses.isNotEmpty)
                   IconButton(
-                    tooltip: localization.filter,
                     icon: Icon(Icons.filter),
                     onPressed: _showFilterStatusSheet,
                     color: store.state
@@ -395,7 +394,6 @@ class _AppBottomBarState extends State<AppBottomBar> {
                   ),
                 if (widget.customValues1.isNotEmpty)
                   IconButton(
-                    tooltip: localization.filter,
                     icon: Icon(Icons.looks_one),
                     onPressed: _showFilterCustom1Sheet,
                     color: store.state
@@ -406,7 +404,6 @@ class _AppBottomBarState extends State<AppBottomBar> {
                   ),
                 if (widget.customValues2.isNotEmpty)
                   IconButton(
-                    tooltip: localization.filter,
                     icon: Icon(Icons.looks_two),
                     onPressed: _showFilterCustom2Sheet,
                     color: store.state
@@ -417,7 +414,6 @@ class _AppBottomBarState extends State<AppBottomBar> {
                   ),
                 if (widget.customValues3.isNotEmpty)
                   IconButton(
-                    tooltip: localization.filter,
                     icon: Icon(Icons.looks_two),
                     onPressed: _showFilterCustom3Sheet,
                     color: store.state
@@ -428,7 +424,6 @@ class _AppBottomBarState extends State<AppBottomBar> {
                   ),
                 if (widget.customValues4.isNotEmpty)
                   IconButton(
-                    tooltip: localization.filter,
                     icon: Icon(Icons.looks_two),
                     onPressed: _showFilterCustom4Sheet,
                     color: store.state

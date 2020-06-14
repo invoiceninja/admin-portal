@@ -9,7 +9,6 @@ import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/redux/document/document_actions.dart';
 import 'package:invoiceninja_flutter/redux/credit/credit_actions.dart';
 import 'package:invoiceninja_flutter/ui/app/dialogs/error_dialog.dart';
-import 'package:invoiceninja_flutter/ui/app/entities/entity_actions_dialog.dart';
 import 'package:invoiceninja_flutter/ui/app/snackbar_row.dart';
 import 'package:invoiceninja_flutter/ui/invoice/view/invoice_view.dart';
 import 'package:invoiceninja_flutter/ui/invoice/view/invoice_view_vm.dart';
@@ -109,12 +108,7 @@ class CreditViewVM extends EntityViewVM {
       },
       onRefreshed: (context) => _handleRefresh(context),
       onClientPressed: (BuildContext context, [bool longPress = false]) {
-        if (longPress) {
-          showEntityActionsDialog(
-            context: context,
-            entities: [client],
-          );
-        } else if (isMobile(context)) {
+        if (longPress || isMobile(context)) {
           viewEntity(context: context, entity: client);
         } else {
           store.dispatch(FilterCreditsByEntity(

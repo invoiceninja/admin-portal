@@ -175,6 +175,7 @@ final paymentsReducer = combineReducers<PaymentState>([
   TypedReducer<PaymentState, AddPaymentSuccess>(_addPayment),
   TypedReducer<PaymentState, LoadPaymentsSuccess>(_setLoadedPayments),
   TypedReducer<PaymentState, LoadPaymentSuccess>(_setLoadedPayment),
+  TypedReducer<PaymentState, LoadCompanySuccess>(_setLoadedCompany),
   TypedReducer<PaymentState, ArchivePaymentsRequest>(_archivePaymentRequest),
   TypedReducer<PaymentState, ArchivePaymentsSuccess>(_archivePaymentSuccess),
   TypedReducer<PaymentState, ArchivePaymentsFailure>(_archivePaymentFailure),
@@ -308,3 +309,7 @@ PaymentState _setLoadedPayment(
 PaymentState _setLoadedPayments(
         PaymentState paymentState, LoadPaymentsSuccess action) =>
     paymentState.loadPayments(action.payments);
+
+PaymentState _setLoadedCompany(
+        PaymentState paymentState, LoadCompanySuccess action) =>
+    paymentState.loadPayments(action.userCompany.company.payments);

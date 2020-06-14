@@ -174,6 +174,7 @@ final tasksReducer = combineReducers<TaskState>([
   TypedReducer<TaskState, SaveTaskSuccess>(_updateTask),
   TypedReducer<TaskState, AddTaskSuccess>(_addTask),
   TypedReducer<TaskState, LoadTasksSuccess>(_setLoadedTasks),
+  TypedReducer<TaskState, LoadCompanySuccess>(_setLoadedCompany),
   TypedReducer<TaskState, LoadTaskSuccess>(_setLoadedTask),
   TypedReducer<TaskState, ArchiveTaskRequest>(_archiveTaskRequest),
   TypedReducer<TaskState, ArchiveTaskSuccess>(_archiveTaskSuccess),
@@ -294,3 +295,7 @@ TaskState _setLoadedTask(TaskState taskState, LoadTaskSuccess action) {
 
 TaskState _setLoadedTasks(TaskState taskState, LoadTasksSuccess action) =>
     taskState.loadTasks(action.tasks);
+
+TaskState _setLoadedCompany(
+    TaskState taskState, LoadCompanySuccess action) =>
+    taskState.loadTasks(action.userCompany.company.tasks);
