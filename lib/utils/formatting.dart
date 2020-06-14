@@ -57,17 +57,12 @@ String formatNumber(
   FormatNumberType formatNumberType = FormatNumberType.money,
   bool showCurrencyCode,
   bool zeroIsNull = false,
-  bool roundToTwo = false,
 }) {
   if ((zeroIsNull || formatNumberType == FormatNumberType.input) &&
       value == 0) {
     return null;
   } else if (value == null) {
     return '';
-  }
-
-  if (roundToTwo) {
-    value = round(value, 2);
   }
 
   if (formatNumberType == FormatNumberType.duration) {
@@ -138,15 +133,22 @@ String formatNumber(
   if (formatNumberType == FormatNumberType.int) {
     return NumberFormat('#,##0', 'custom').format(value);
   } else if (formatNumberType == FormatNumberType.double) {
-    return NumberFormat('#,##0.####', 'custom').format(value);
+    return NumberFormat('#,##0.#####', 'custom').format(value);
   } else if (formatNumberType == FormatNumberType.input) {
-    return NumberFormat('#.####', 'custom').format(value);
+    return NumberFormat('#.#####', 'custom').format(value);
   } else {
     if (formatNumberType == FormatNumberType.percent) {
-      formatter = NumberFormat('#,##0.####', 'custom');
-    } else {
-      formatter = NumberFormat('#,##0.00##', 'custom');
+      formatter = NumberFormat('#,##0.#####', 'custom');
+    } else if (currency.precision == '0') {
+      formatter = NumberFormat('#,##0.#####', 'custom');
+    } else if (currency.precision == '1') {
+      formatter = NumberFormat('#,##0.0####', 'custom');
+    } else if (currency.precision == '2') {
+      formatter = NumberFormat('#,##0.00###', 'custom');
+    } else if (currency.precision == '3') {
+      formatter = NumberFormat('#,##0.000##', 'custom');
     }
+
     formatted = formatter.format(value);
   }
 
