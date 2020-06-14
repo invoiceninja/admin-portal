@@ -264,6 +264,7 @@ final invoicesReducer = combineReducers<InvoiceState>([
   TypedReducer<InvoiceState, SaveInvoiceSuccess>(_updateInvoice),
   TypedReducer<InvoiceState, AddInvoiceSuccess>(_addInvoice),
   TypedReducer<InvoiceState, LoadInvoicesSuccess>(_setLoadedInvoices),
+  TypedReducer<InvoiceState, LoadCompanySuccess>(_setLoadedCompany),
   TypedReducer<InvoiceState, LoadInvoiceSuccess>(_updateInvoice),
   TypedReducer<InvoiceState, MarkInvoicesSentSuccess>(_markInvoicesSentSuccess),
   TypedReducer<InvoiceState, MarkInvoicesPaidSuccess>(_markInvoicesPaidSuccess),
@@ -439,3 +440,7 @@ InvoiceState _updateInvoice(InvoiceState invoiceState, dynamic action) {
 InvoiceState _setLoadedInvoices(
         InvoiceState invoiceState, LoadInvoicesSuccess action) =>
     invoiceState.loadInvoices(action.invoices);
+
+InvoiceState _setLoadedCompany(
+        InvoiceState invoiceState, LoadCompanySuccess action) =>
+    invoiceState.loadInvoices(action.userCompany.company.invoices);

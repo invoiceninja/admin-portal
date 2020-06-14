@@ -235,6 +235,7 @@ final clientsReducer = combineReducers<ClientState>([
   TypedReducer<ClientState, AddClientSuccess>(_addClient),
   TypedReducer<ClientState, LoadClientsSuccess>(_setLoadedClients),
   TypedReducer<ClientState, LoadClientSuccess>(_setLoadedClient),
+  TypedReducer<ClientState, LoadCompanySuccess>(_setLoadedCompany),
   TypedReducer<ClientState, ArchiveClientsRequest>(_archiveClientRequest),
   TypedReducer<ClientState, ArchiveClientsSuccess>(_archiveClientSuccess),
   TypedReducer<ClientState, ArchiveClientsFailure>(_archiveClientFailure),
@@ -369,3 +370,7 @@ ClientState _setLoadedClient(
 ClientState _setLoadedClients(
         ClientState clientState, LoadClientsSuccess action) =>
     clientState.loadClients(action.clients);
+
+ClientState _setLoadedCompany(
+        ClientState clientState, LoadCompanySuccess action) =>
+    clientState.loadClients(action.userCompany.company.clients);

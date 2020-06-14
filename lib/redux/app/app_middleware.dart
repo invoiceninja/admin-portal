@@ -411,23 +411,9 @@ Middleware<AppState> _createAccountLoaded() {
       store.dispatch(SelectCompany(i));
       store.dispatch(LoadCompanySuccess(userCompany));
 
-      // TODO remove this code/use reducers instead
-      final company = userCompany.company;
-      if (company.clients.isNotEmpty) {
-        store.dispatch(LoadClientsSuccess(company.clients));
-        store.dispatch(LoadProductsSuccess(company.products));
-        store.dispatch(LoadInvoicesSuccess(company.invoices));
-        store.dispatch(LoadPaymentsSuccess(company.payments));
-        store.dispatch(LoadQuotesSuccess(company.quotes));
-        store.dispatch(LoadCreditsSuccess(company.credits));
-        store.dispatch(LoadDesignsSuccess(company.designs));
-        if (Config.DEMO_MODE) {
-          store.dispatch(LoadTasksSuccess(company.tasks));
-          store.dispatch(LoadProjectsSuccess(company.projects));
-          store.dispatch(LoadVendorsSuccess(company.vendors));
-          store.dispatch(LoadExpensesSuccess(company.expenses));
-        }
-      }
+      /*
+        stub
+       */
     }
 
     store.dispatch(SelectCompany(selectedCompanyIndex));
