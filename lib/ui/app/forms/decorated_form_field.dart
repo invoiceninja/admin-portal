@@ -18,6 +18,7 @@ class DecoratedFormField extends StatelessWidget {
     this.initialValue,
     this.enabled = true,
     this.hint,
+    this.suffixIcon,
     this.expands = false,
     this.autofocus = false,
   }) : super(key: key);
@@ -39,6 +40,7 @@ class DecoratedFormField extends StatelessWidget {
   final TextInputAction textInputAction;
   final ValueChanged<String> onFieldSubmitted;
   final ValueChanged<String> onChanged;
+  final Icon suffixIcon;
 
   @override
   Widget build(BuildContext context) {
@@ -49,6 +51,7 @@ class DecoratedFormField extends StatelessWidget {
       decoration: InputDecoration(
         labelText: label,
         hintText: hint,
+        suffixIcon: suffixIcon,
       ),
       validator: validator,
       keyboardType: keyboardType ?? TextInputType.text,

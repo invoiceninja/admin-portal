@@ -75,31 +75,21 @@ class EntityHeader extends StatelessWidget {
       );
     }
 
-    final isVertical = value.length > 12 || (secondValue ?? '').length > 12;
-
     return Container(
       child: Padding(
         padding: EdgeInsets.only(left: 20, top: 30, right: 20, bottom: 25),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            isVertical
-                ? Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Expanded(child: _value1()),
-                      if (secondValue != null) Expanded(child: _value2()),
-                    ],
-                  )
-                : Row(
-                    children: [
-                      Expanded(child: _value1()),
-                      if (secondValue != null) ...[
-                        SizedBox(width: 8),
-                        Expanded(child: _value2()),
-                      ],
-                    ],
-                  ),
+            Row(
+              children: [
+                Expanded(child: _value1()),
+                if (secondValue != null) ...[
+                  SizedBox(width: 8),
+                  Expanded(child: _value2()),
+                ],
+              ],
+            ),
             if (statusLabel != null)
               Padding(
                 padding: const EdgeInsets.only(top: 25, bottom: 5),
