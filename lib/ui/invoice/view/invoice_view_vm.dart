@@ -151,7 +151,6 @@ class InvoiceViewVM extends EntityViewVM {
         if (longPress || isMobile(context)) {
           viewEntity(context: context, entity: payment);
         } else {
-          print('## FILTER PAYMENT: ${payment.id}');
           store.dispatch(FilterInvoicesByEntity(
               entityType: EntityType.payment, entityId: payment.id));
         }

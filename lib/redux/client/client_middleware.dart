@@ -75,7 +75,7 @@ Middleware<AppState> _viewClient() {
     final uiState = state.clientUIState;
     final client = state.clientState.map[action.clientId];
 
-    if (uiState.saveCompleter != null) {
+    if (uiState.saveCompleter != null && !uiState.saveCompleter.isCompleted) {
       uiState.saveCompleter.complete(client);
     } else {
       store.dispatch(UpdateCurrentRoute(ClientViewScreen.route));
