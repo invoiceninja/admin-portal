@@ -16,6 +16,7 @@ import 'package:invoiceninja_flutter/ui/app/form_card.dart';
 import 'package:invoiceninja_flutter/utils/platforms.dart';
 import 'package:invoiceninja_flutter/.env.dart';
 import 'package:rounded_loading_button/rounded_loading_button.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class LoginView extends StatefulWidget {
   const LoginView({
@@ -322,8 +323,15 @@ class _LoginState extends State<LoginView> {
           children: <Widget>[
             Padding(
               padding: EdgeInsets.only(top: 20.0, bottom: 20.0),
-              child: Image.asset('assets/images/logo.png',
-                  width: 100.0, height: 100.0),
+              child: Center(
+                child: InkWell(
+                  child: Image.asset('assets/images/logo.png',
+                      width: 100, height: 100),
+                  onTap: () {
+                    launch(kSiteUrl, forceSafariVC: false, forceWebView: false);
+                  },
+                ),
+              ),
             ),
             AnimatedOpacity(
               duration: Duration(milliseconds: 500),
