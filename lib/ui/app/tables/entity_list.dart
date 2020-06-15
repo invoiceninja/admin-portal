@@ -102,13 +102,19 @@ class _EntityListState extends State<EntityList> {
       return LoadingIndicator();
     }
 
-    if (state.shouldSelectEntity(
-        entityType: entityType, entityList: entityList)) {
+    final shouldSelectEntity = state.shouldSelectEntity(
+        entityType: entityType, entityList: entityList);
+    if (shouldSelectEntity != false) {
+      // null is a special case which means we need to reselect
+      // the current selection to add it to the history
+      final entityId = shouldSelectEntity == null
+          ? state.getUIState(entityType).selectedId
+          : (entityList.isEmpty ? null : entityList.first);
       WidgetsBinding.instance.addPostFrameCallback((duration) {
         viewEntityById(
           context: context,
           entityType: entityType,
-          entityId: entityList.isEmpty ? null : entityList.first,
+          entityId: entityId,
         );
       });
     }
