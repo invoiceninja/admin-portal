@@ -41,8 +41,6 @@ class TaxRateSettingsScreen extends StatelessWidget {
           listUIState.selectedIds.length == viewModel.taxRateList.length,
       showCheckbox: isInMultiselect,
       onHamburgerLongPress: () => store.dispatch(StartTaxRateMultiselect()),
-      onBackPressed: () => store.dispatch(ViewSettings(
-          navigator: Navigator.of(context), section: kSettingsTaxSettings)),
       onCheckboxChanged: (value) {
         final taxRates = viewModel.taxRateList
             .map<TaxRateEntity>((taxRateId) => viewModel.taxRateMap[taxRateId])
@@ -102,7 +100,8 @@ class TaxRateSettingsScreen extends StatelessWidget {
           }
         },
       ),
-      floatingActionButton: state.userCompany.canCreate(EntityType.taxRate)
+      floatingActionButton: state.prefState.isMenuFloated &&
+              state.userCompany.canCreate(EntityType.taxRate)
           ? FloatingActionButton(
               heroTag: 'tax_rate_fab',
               backgroundColor: Theme.of(context).primaryColorDark,

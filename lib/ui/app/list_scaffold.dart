@@ -23,7 +23,6 @@ class ListScaffold extends StatelessWidget {
     this.isChecked,
     this.onCheckboxChanged,
     this.onHamburgerLongPress,
-    this.onBackPressed,
     this.showCheckbox = false,
   });
 
@@ -36,7 +35,6 @@ class ListScaffold extends StatelessWidget {
   final bool showCheckbox;
   final Function(bool) onCheckboxChanged;
   final Function() onHamburgerLongPress;
-  final Function() onBackPressed;
   final bool isChecked;
 
   @override
@@ -54,24 +52,17 @@ class ListScaffold extends StatelessWidget {
           activeColor: Theme.of(context).accentColor,
           value: isChecked);
     } else if (isSettings) {
-      if (onBackPressed != null) {
-        leading = IconButton(
-          icon: Icon(Icons.arrow_back),
-          onPressed: onBackPressed,
-        );
-      } else {
-        leading = isMobile(context)
-            ? IconButton(
-                icon: Icon(Icons.arrow_back),
-                onPressed: () => Navigator.pop(context),
-              )
-            : IconButton(
-                icon: Icon(Icons.add),
-                onPressed: () {
-                  createEntityByType(entityType: entityType, context: context);
-                },
-              );
-      }
+      leading = isMobile(context)
+          ? IconButton(
+              icon: Icon(Icons.arrow_back),
+              onPressed: () => Navigator.pop(context),
+            )
+          : IconButton(
+              icon: Icon(Icons.add),
+              onPressed: () {
+                createEntityByType(entityType: entityType, context: context);
+              },
+            );
     } else if (isMobile(context) || state.prefState.isMenuFloated) {
       leading = Builder(
         builder: (context) => GestureDetector(
