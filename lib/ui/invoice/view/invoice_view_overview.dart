@@ -61,12 +61,22 @@ class InvoiceOverview extends StatelessWidget {
         entity: invoice,
         statusColor: color,
         statusLabel: localization.lookup(stauses[invoice.calculatedStatusId]),
-        label: localization.totalAmount,
+        label: invoice.subEntityType == EntityType.credit
+            ? localization.creditAmount
+            : invoice.subEntityType == EntityType.invoice
+                ? localization.invoiceAmount
+                : localization.quoteAmount,
         value:
             formatNumber(invoice.amount, context, clientId: invoice.clientId),
-        secondLabel: localization.balanceDue,
-        secondValue:
-            formatNumber(invoice.balance, context, clientId: invoice.clientId),
+        secondLabel: invoice.subEntityType == EntityType.credit
+            ? localization.creditRemaining
+            : invoice.subEntityType == EntityType.invoice
+                ? localization.balanceDue
+                : null,
+        secondValue: [EntityType.invoice, EntityType.credit]
+                .contains(invoice.subEntityType)
+            ? formatNumber(invoice.balance, context, clientId: invoice.clientId)
+            : null,
       ),
       ListDivider(),
     ];
