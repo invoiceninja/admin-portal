@@ -320,14 +320,6 @@ class _CompanyDetailsState extends State<CompanyDetails>
             padding: const EdgeInsets.all(30),
             child: Column(
               children: <Widget>[
-                if ('${settings.companyLogo ?? ''}'.isNotEmpty)
-                  Padding(
-                      padding: const EdgeInsets.only(bottom: 30),
-                      child: CachedImage(
-                        width: double.infinity,
-                        url: settings.companyLogo,
-                        //url: '${settings.logoUrl}?clear_cache=${state.selectedCompany.updatedAt}',
-                      )),
                 Builder(
                   builder: (context) {
                     return Row(
@@ -376,7 +368,15 @@ class _CompanyDetailsState extends State<CompanyDetails>
                       ],
                     );
                   },
-                )
+                ),
+                if ('${settings.companyLogo ?? ''}'.isNotEmpty)
+                  Padding(
+                      padding: const EdgeInsets.symmetric(vertical: 30),
+                      child: CachedImage(
+                        width: double.infinity,
+                        url: settings.companyLogo,
+                        //url: '${settings.logoUrl}?clear_cache=${state.selectedCompany.updatedAt}',
+                      )),
               ],
             ),
           ),
