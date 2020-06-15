@@ -99,7 +99,6 @@ class ClientOverview extends StatelessWidget {
           ),
         ],
         FieldGrid(fields),
-        ListDivider(),
         EntitiesListTile(
           isFilter: isFilter,
           entityType: EntityType.invoice,

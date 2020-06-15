@@ -72,6 +72,7 @@ class EntityListTile extends StatelessWidget {
           child: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 10),
             child: ListTile(
+              contentPadding: const EdgeInsets.only(left: 8, right: 12),
               title: EntityStateTitle(entity: entity),
               subtitle: subtitle != null && subtitle.isNotEmpty
                   ? Text(subtitle ?? '')
@@ -127,9 +128,13 @@ class EntitiesListTile extends StatelessWidget {
             child: Padding(
               padding: const EdgeInsets.symmetric(horizontal: 10),
               child: ListTile(
+                contentPadding: const EdgeInsets.only(left: 8, right: 12),
                 title: Text(title),
                 subtitle: Text(subtitle ?? ''),
-                leading: Icon(getEntityIcon(entityType), size: 18.0),
+                leading: IconButton(
+                  icon: Icon(getEntityIcon(entityType), size: 18.0),
+                  onPressed: onTap,
+                ),
                 trailing: isFilter
                     ? IconButton(
                         icon: Icon(Icons.add_circle_outline),
