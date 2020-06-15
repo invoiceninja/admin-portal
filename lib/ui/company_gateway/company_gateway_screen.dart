@@ -110,22 +110,26 @@ class CompanyGatewayScreen extends StatelessWidget {
           }
         },
       ),
-      floatingActionButton: FloatingActionButton(
-        heroTag: 'company_gateway_fab',
-        backgroundColor: Theme.of(context).primaryColorDark,
-        onPressed: () {
-          if (state.settingsUIState.isFiltered) {
-          } else {
-            createEntityByType(
-                context: context, entityType: EntityType.companyGateway);
-          }
-        },
-        child: Icon(
-          Icons.add,
-          color: Colors.white,
-        ),
-        tooltip: localization.newCompanyGateway,
-      ),
+      floatingActionButton:
+          state.prefState.isMobile && state.userCompany.isAdmin
+              ? FloatingActionButton(
+                  heroTag: 'company_gateway_fab',
+                  backgroundColor: Theme.of(context).primaryColorDark,
+                  onPressed: () {
+                    if (state.settingsUIState.isFiltered) {
+                    } else {
+                      createEntityByType(
+                          context: context,
+                          entityType: EntityType.companyGateway);
+                    }
+                  },
+                  child: Icon(
+                    Icons.add,
+                    color: Colors.white,
+                  ),
+                  tooltip: localization.newCompanyGateway,
+                )
+              : null,
     );
   }
 }

@@ -100,7 +100,7 @@ class TaxRateSettingsScreen extends StatelessWidget {
           }
         },
       ),
-      floatingActionButton: state.prefState.isMenuFloated &&
+      floatingActionButton: state.prefState.isMobile &&
               state.userCompany.canCreate(EntityType.taxRate)
           ? FloatingActionButton(
               heroTag: 'tax_rate_fab',

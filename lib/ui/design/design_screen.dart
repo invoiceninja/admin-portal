@@ -113,7 +113,7 @@ class DesignScreen extends StatelessWidget {
         onSelectedCustom4: (value) =>
             store.dispatch(FilterDesignsByCustom4(value)),
       ),
-      floatingActionButton: isMobile(context) && userCompany.isAdmin
+      floatingActionButton: state.prefState.isMobile && userCompany.isAdmin
           ? FloatingActionButton(
               heroTag: 'design_fab',
               backgroundColor: Theme.of(context).primaryColorDark,
