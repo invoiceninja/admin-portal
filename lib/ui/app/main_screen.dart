@@ -231,10 +231,40 @@ class MainScreen extends StatelessWidget {
               }
 
               final isEditing = state.uiState.isEditing;
-              final history = historyList[isEditing ? 0 : 1];
+              final index = isEditing ? 0 : 1;
+              HistoryRecord history;
+
+              for (int i = index; i < historyList.length; i++) {
+                final item = historyList[i];
+                if ([
+                  EntityType.dashboard,
+                  EntityType.reports,
+                  EntityType.settings,
+                ].contains(item.entityType)) {
+                  history = item;
+                  break;
+                } else {
+                  if (item.id == null) {
+                    continue;
+                  }
+
+                  final entity = state.getEntityMap(item.entityType)[item.id]
+                      as BaseEntity;
+                  if (!entity.isActive) {
+                    continue;
+                  }
+
+                  history = item;
+                  break;
+                }
+              }
 
               if (!isEditing) {
                 store.dispatch(PopLastHistory());
+              }
+
+              if (history == null) {
+                return false;
               }
 
               switch (history.entityType) {
@@ -246,8 +276,8 @@ class MainScreen extends StatelessWidget {
                   store.dispatch(ViewReports(navigator: Navigator.of(context)));
                   break;
                 case EntityType.settings:
-                  store
-                      .dispatch(ViewSettings(navigator: Navigator.of(context)));
+                  store.dispatch(ViewSettings(
+                      navigator: Navigator.of(context), section: history.id));
                   break;
                 default:
                   viewEntityById(
