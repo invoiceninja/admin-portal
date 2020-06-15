@@ -541,13 +541,6 @@ abstract class InvoiceEntity extends Object
           actions.add(EntityAction.markPaid);
         }
 
-        if (!isQuote && !isCredit && isSent) {
-          actions.add(EntityAction.cancel);
-          if (userCompany.company.isModuleEnabled(EntityType.credit)) {
-            actions.add(EntityAction.reverse);
-          }
-        }
-
         if (isQuote && !isApproved) {
           actions.add(EntityAction.convert);
         }
@@ -571,6 +564,18 @@ abstract class InvoiceEntity extends Object
         actions.add(EntityAction.cloneToCredit);
       }
       actions.add(null);
+    }
+
+    if (userCompany.canEditEntity(this)) {
+      if (!isQuote && !isCredit && isSent) {
+        if (statusId != kInvoiceStatusReversed) {
+          actions.add(EntityAction.cancel);
+        }
+
+        if (userCompany.company.isModuleEnabled(EntityType.credit)) {
+          actions.add(EntityAction.reverse);
+        }
+      }
     }
 
     return actions..addAll(super.getActions(userCompany: userCompany));
