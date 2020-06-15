@@ -84,7 +84,11 @@ class InvoiceItemListTile extends StatelessWidget {
                       clientId: invoice.clientId)),
                 ],
               ),
-              subtitle: Text(subtitle),
+              subtitle: Text(
+                subtitle,
+                maxLines: 3,
+                overflow: TextOverflow.ellipsis,
+              ),
               trailing: onTap != null ? Icon(Icons.navigate_next) : null,
             ),
             Divider(
