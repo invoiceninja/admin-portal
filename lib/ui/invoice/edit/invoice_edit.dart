@@ -113,7 +113,9 @@ class _InvoiceEditState extends State<InvoiceEdit>
                 controller: _controller,
                 children: <Widget>[
                   InvoiceEditDetailsScreen(),
-                  InvoiceEditContactsScreen(),
+                  InvoiceEditContactsScreen(
+                    entityType: invoice.entityType,
+                  ),
                   InvoiceEditItemsScreen(),
                   InvoiceEditNotesScreen(),
                 ],
@@ -132,8 +134,9 @@ class _InvoiceEditState extends State<InvoiceEdit>
                 '${localization.total}: ${formatNumber(invoice.calculateTotal(viewModel.company.settings.enableInclusiveTaxes ?? false), context, clientId: viewModel.invoice.clientId)}',
                 style: TextStyle(
                   //color: Theme.of(context).selectedRowColor,
-                  color:
-                      state.prefState.enableDarkMode ? Colors.white : Colors.black,
+                  color: state.prefState.enableDarkMode
+                      ? Colors.white
+                      : Colors.black,
                   fontSize: 20.0,
                 ),
               ),

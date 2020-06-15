@@ -197,7 +197,9 @@ class InvoiceEditDesktopState extends State<InvoiceEditDesktop>
                     ),
                   ConstrainedBox(
                     constraints: BoxConstraints(maxHeight: 200),
-                    child: InvoiceEditContactsScreen(),
+                    child: InvoiceEditContactsScreen(
+                      entityType: invoice.entityType,
+                    ),
                   ),
                 ],
               ),
