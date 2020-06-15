@@ -49,7 +49,7 @@ class ClientPresenter extends EntityPresenter {
 
     switch (field) {
       case ClientFields.name:
-        return Text(client.name);
+        return Text(client.displayName);
       case ClientFields.contactName:
         return Text(client.primaryContact.fullName);
       case ClientFields.contactEmail:
