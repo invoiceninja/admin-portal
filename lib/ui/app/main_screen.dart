@@ -723,7 +723,10 @@ class _EntityFilter extends StatelessWidget {
                     SizedBox(width: 4),
                     IconButton(
                       icon: Icon(Icons.clear),
-                      onPressed: () => store.dispatch(ClearEntityFilter()),
+                      onPressed: () => store.dispatch(FilterByEntity(
+                        entityId: uiState.filterEntityId,
+                        entityType: uiState.filterEntityType,
+                      )),
                     ),
                   ],
           ),
