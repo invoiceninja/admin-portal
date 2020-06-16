@@ -209,6 +209,7 @@ class EmailInvoiceRequest implements StartSaving {
 
 class EmailInvoiceSuccess implements StopSaving, PersistData {
   EmailInvoiceSuccess({@required this.invoice});
+
   final InvoiceEntity invoice;
 }
 
@@ -375,13 +376,6 @@ class FilterInvoicesByStatus implements PersistUI {
   final EntityStatus status;
 }
 
-class FilterInvoicesByEntity implements PersistUI {
-  FilterInvoicesByEntity({this.entityId, this.entityType});
-
-  final String entityId;
-  final EntityType entityType;
-}
-
 class FilterInvoiceDropdown {
   FilterInvoiceDropdown(this.filter);
 
@@ -513,12 +507,14 @@ void handleInvoiceAction(BuildContext context, List<BaseEntity> invoices,
       break;
     case EntityAction.newPayment:
       createEntity(
-          context: context,
-          entity: PaymentEntity(state: state).rebuild((b) => b
-            ..clientId = invoice.clientId
-            ..invoices.addAll(invoices
-                .map((invoice) => PaymentableEntity.fromInvoice(invoice))
-                .toList())));
+        context: context,
+        entity: PaymentEntity(state: state).rebuild((b) => b
+          ..clientId = invoice.clientId
+          ..invoices.addAll(invoices
+              .map((invoice) => PaymentableEntity.fromInvoice(invoice))
+              .toList())),
+        filterEntity: state.clientState.map[invoice.clientId],
+      );
       break;
     case EntityAction.restore:
       store.dispatch(RestoreInvoicesRequest(

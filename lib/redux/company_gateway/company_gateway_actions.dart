@@ -244,13 +244,6 @@ class FilterCompanyGatewaysByCustom4 implements PersistUI {
   final String value;
 }
 
-class FilterCompanyGatewaysByEntity implements PersistUI {
-  FilterCompanyGatewaysByEntity({this.entityId, this.entityType});
-
-  final String entityId;
-  final EntityType entityType;
-}
-
 void handleCompanyGatewayAction(BuildContext context,
     List<BaseEntity> companyGateways, EntityAction action) {
   assert(

@@ -20,6 +20,7 @@ Reducer<String> selectedIdReducer = combineReducers([
   TypedReducer<String, AddDocumentSuccess>(
       (selectedId, action) => action.document.id),
   TypedReducer<String, SelectCompany>((selectedId, action) => ''),
+  TypedReducer<String, ClearEntityFilter>((selectedId, action) => ''),
 ]);
 
 final editingReducer = combineReducers<DocumentEntity>([
@@ -51,7 +52,7 @@ final documentListReducer = combineReducers<ListUIState>([
       _filterDocumentsByCustom1),
   TypedReducer<ListUIState, FilterDocumentsByCustom2>(
       _filterDocumentsByCustom2),
-  TypedReducer<ListUIState, FilterDocumentsByEntity>(_filterDocumentsByClient),
+  TypedReducer<ListUIState, FilterByEntity>(_filterDocumentsByClient),
   TypedReducer<ListUIState, StartDocumentMultiselect>(_startListMultiselect),
   TypedReducer<ListUIState, AddToDocumentMultiselect>(_addToListMultiselect),
   TypedReducer<ListUIState, RemoveFromDocumentMultiselect>(
@@ -64,7 +65,7 @@ final documentListReducer = combineReducers<ListUIState>([
 ]);
 
 ListUIState _filterDocumentsByClient(
-    ListUIState documentListState, FilterDocumentsByEntity action) {
+    ListUIState documentListState, FilterByEntity action) {
   return documentListState.rebuild((b) => b
     ..filterEntityId = action.entityId
     ..filterEntityType = action.entityType);

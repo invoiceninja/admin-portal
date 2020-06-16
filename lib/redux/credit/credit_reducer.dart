@@ -38,6 +38,7 @@ Reducer<String> selectedIdReducer = combineReducers([
   TypedReducer<String, ShowEmailCredit>(
       (selectedId, action) => action.credit.id),
   TypedReducer<String, SelectCompany>((selectedId, action) => ''),
+  TypedReducer<String, ClearEntityFilter>((selectedId, action) => ''),
 ]);
 
 final editingReducer = combineReducers<InvoiceEntity>([
@@ -126,7 +127,7 @@ final creditListReducer = combineReducers<ListUIState>([
   TypedReducer<ListUIState, SortCredits>(_sortCredits),
   TypedReducer<ListUIState, FilterCreditsByState>(_filterCreditsByState),
   TypedReducer<ListUIState, FilterCreditsByStatus>(_filterCreditsByStatus),
-  TypedReducer<ListUIState, FilterCreditsByEntity>(_filterCreditsByEntity),
+  TypedReducer<ListUIState, FilterByEntity>(_filterCreditsByEntity),
   TypedReducer<ListUIState, FilterCredits>(_filterCredits),
   TypedReducer<ListUIState, FilterCreditsByCustom1>(_filterCreditsByCustom1),
   TypedReducer<ListUIState, FilterCreditsByCustom2>(_filterCreditsByCustom2),
@@ -203,7 +204,14 @@ ListUIState _filterCreditsByStatus(
 }
 
 ListUIState _filterCreditsByEntity(
-    ListUIState creditListState, FilterCreditsByEntity action) {
+    ListUIState creditListState, FilterByEntity action) {
+  if (creditListState.filterEntityId == action.entityId &&
+      creditListState.filterEntityType == action.entityType) {
+    return creditListState.rebuild((b) => b
+      ..filterEntityId = null
+      ..filterEntityType = null);
+  }
+
   return creditListState.rebuild((b) => b
     ..filterEntityId = action.entityId
     ..filterEntityType = action.entityType);

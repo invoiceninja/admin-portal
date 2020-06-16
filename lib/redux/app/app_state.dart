@@ -164,18 +164,39 @@ abstract class AppState implements Built<AppState, AppStateBuilder> {
   bool shouldSelectEntity({EntityType entityType, List<String> entityList}) {
     final entityUIState = getUIState(entityType);
 
-    if (prefState.isMobile || uiState.isEditing || entityType.isSetting) {
+    if (prefState.isMobile ||
+        uiState.isEditing ||
+        entityType.isSetting ||
+        entityList.isEmpty) {
       return false;
     }
 
-    if (entityList.isEmpty) {
-      return (entityUIState.selectedId ?? '').isNotEmpty;
-    } else if ((entityUIState.selectedId ?? '').isEmpty ||
-        !entityList.contains(entityUIState.selectedId)) {
+    if ((entityUIState.selectedId ?? '').isEmpty) {
       return true;
+    } else if (historyList.isNotEmpty &&
+        historyList.first.entityType != entityType) {
+      // check if this needs to be added to the history
+      return null;
     }
 
     return false;
+
+    /*
+    if (entityList.isEmpty) {
+      // no selection
+      return (entityUIState.selectedId ?? '').isNotEmpty;
+    } else if ((entityUIState.selectedId ?? '').isEmpty ||
+        !entityList.contains(entityUIState.selectedId)) {
+      // the current selection is no longer an option
+      return true;
+    } else if (historyList.isNotEmpty &&
+        historyList.first.entityType != entityType) {
+      // check if this needs to be added to the history
+      return null;
+    }
+
+    return false;
+     */
   }
 
   BuiltMap<String, SelectableEntity> getEntityMap(EntityType type) {
@@ -562,8 +583,8 @@ abstract class AppState implements Built<AppState, AppStateBuilder> {
     //return 'Invoice ${invoiceUIState.editing}';
     //return 'Account: $account';
     //return 'Payment Terms: ${paymentTermState.map}';
-    //return 'Selected client: ${uiState.clientUIState.selectedId}, Filter: ${uiState.filterEntityType} ${uiState.filterEntityId}';
-    return 'Save Complter: ${invoiceUIState.saveCompleter}';
+    return 'Filter: ${uiState.filterEntityType} ${uiState.filterEntityId}';
+    //return 'Save Complter: ${invoiceUIState.saveCompleter}';
     return 'Layout: ${prefState.appLayout}, Route: ${uiState.currentRoute} Prev: ${uiState.previousRoute}';
   }
 }

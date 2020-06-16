@@ -33,7 +33,7 @@ class NotificationSettings extends StatelessWidget {
         notifications.containsKey(kNotificationChannelEmail)
             ? notifications[kNotificationChannelEmail]
             : BuiltList<String>();
-    final hasMultipleUsers = state.userState.list.length > 1;
+    final hasMultipleUsers = state.userState.list.length > 1 || user.isNew;
 
     return Column(
       mainAxisSize: MainAxisSize.min,
@@ -61,6 +61,7 @@ class NotificationSettings extends StatelessWidget {
                               ? NOTIFY_OWNED
                               : null,
                       showNoneAsCustom: true,
+                      hasMultipleUsers: hasMultipleUsers,
                       onChanged: (value) {
                         List<String> options = [];
                         if (value == NOTIFY_ALL) {
@@ -114,17 +115,18 @@ class NotificationSettings extends StatelessWidget {
                           ? value == NOTIFY_ALL
                               ? IconText(
                                   text: hasMultipleUsers
-                                      ? localization.all
+                                      ? localization.allRecords
                                       : localization.enabled,
                                   icon: hasMultipleUsers
                                       ? Icons.supervised_user_circle
                                       : Icons.check_circle,
                                 )
                               : IconText(
-                                  text: localization.owned,
+                                  text: localization.ownedByUser,
                                   icon: Icons.account_circle)
                           : _NotificationSelector(
                               value: value,
+                              hasMultipleUsers: hasMultipleUsers,
                               onChanged: (value) {
                                 final options = emailNotifications.toList();
                                 options.remove('${eventType}_all');
@@ -153,18 +155,18 @@ class _NotificationSelector extends StatelessWidget {
   const _NotificationSelector({
     @required this.value,
     @required this.onChanged,
+    @required this.hasMultipleUsers,
     this.showNoneAsCustom = false,
   });
 
   final String value;
   final Function(String) onChanged;
+  final bool hasMultipleUsers;
   final bool showNoneAsCustom;
 
   @override
   Widget build(BuildContext context) {
     final localization = AppLocalization.of(context);
-    final state = StoreProvider.of<AppState>(context).state;
-    final hasMultipleUsers = state.userState.list.length > 1;
 
     return AppDropdownButton<String>(
       value: value,
@@ -178,7 +180,9 @@ class _NotificationSelector extends StatelessWidget {
         DropdownMenuItem(
           value: NotificationSettings.NOTIFY_ALL,
           child: IconText(
-            text: hasMultipleUsers ? localization.all : localization.enabled,
+            text: hasMultipleUsers
+                ? localization.allRecords
+                : localization.enabled,
             icon: hasMultipleUsers
                 ? Icons.supervised_user_circle
                 : Icons.check_circle,
@@ -187,8 +191,8 @@ class _NotificationSelector extends StatelessWidget {
         if (hasMultipleUsers)
           DropdownMenuItem(
             value: NotificationSettings.NOTIFY_OWNED,
-            child:
-                IconText(text: localization.owned, icon: Icons.account_circle),
+            child: IconText(
+                text: localization.ownedByUser, icon: Icons.account_circle),
           ),
         DropdownMenuItem(
           value: NotificationSettings.NOTIFY_NONE,

@@ -144,7 +144,7 @@ class ClientListVM {
       onEntityAction: (BuildContext context, List<BaseEntity> client,
               EntityAction action) =>
           handleClientAction(context, client, action),
-      onClearEntityFilterPressed: () => store.dispatch(FilterClientsByEntity()),
+      onClearEntityFilterPressed: () => store.dispatch(ClearEntityFilter()),
       onViewEntityFilterPressed: (BuildContext context) => viewEntityById(
           context: context,
           entityId: state.clientListState.filterEntityId,

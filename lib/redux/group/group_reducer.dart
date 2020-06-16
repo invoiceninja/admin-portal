@@ -2,7 +2,6 @@ import 'package:built_collection/built_collection.dart';
 import 'package:invoiceninja_flutter/data/models/entities.dart';
 import 'package:invoiceninja_flutter/data/models/group_model.dart';
 import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
-import 'package:invoiceninja_flutter/redux/client/client_actions.dart';
 import 'package:invoiceninja_flutter/redux/company/company_actions.dart';
 import 'package:invoiceninja_flutter/redux/group/group_actions.dart';
 import 'package:invoiceninja_flutter/redux/group/group_state.dart';
@@ -23,7 +22,8 @@ Reducer<String> selectedIdReducer = combineReducers([
   TypedReducer<String, AddGroupSuccess>(
       (String selectedId, action) => action.group.id),
   TypedReducer<String, SelectCompany>((selectedId, action) => ''),
-  TypedReducer<String, FilterClientsByEntity>((selectedId, action) =>
+  TypedReducer<String, ClearEntityFilter>((selectedId, action) => ''),
+  TypedReducer<String, FilterByEntity>((selectedId, action) =>
       action.entityType == EntityType.group ? action.entityId : selectedId),
 ]);
 
@@ -61,7 +61,7 @@ final groupListReducer = combineReducers<ListUIState>([
   TypedReducer<ListUIState, FilterGroups>(_filterGroups),
   TypedReducer<ListUIState, FilterGroupsByCustom1>(_filterGroupsByCustom1),
   TypedReducer<ListUIState, FilterGroupsByCustom2>(_filterGroupsByCustom2),
-  TypedReducer<ListUIState, FilterGroupsByEntity>(_filterGroupsByClient),
+  TypedReducer<ListUIState, FilterByEntity>(_filterGroupsByClient),
   TypedReducer<ListUIState, StartGroupMultiselect>(_startListMultiselect),
   TypedReducer<ListUIState, AddToGroupMultiselect>(_addToListMultiselect),
   TypedReducer<ListUIState, RemoveFromGroupMultiselect>(
@@ -74,7 +74,7 @@ final groupListReducer = combineReducers<ListUIState>([
 ]);
 
 ListUIState _filterGroupsByClient(
-    ListUIState groupListState, FilterGroupsByEntity action) {
+    ListUIState groupListState, FilterByEntity action) {
   return groupListState.rebuild((b) => b
     ..filterEntityId = action.entityId
     ..filterEntityType = action.entityType);

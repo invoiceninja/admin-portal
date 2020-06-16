@@ -84,7 +84,8 @@ class ProductScreen extends StatelessWidget {
       bottomNavigationBar: AppBottomBar(
         entityType: EntityType.product,
         tableColumns: ProductPresenter.getAllTableFields(userCompany),
-        defaultTableColumns: ProductPresenter.getDefaultTableFields(userCompany),
+        defaultTableColumns:
+            ProductPresenter.getDefaultTableFields(userCompany),
         onRefreshPressed: () => store.dispatch(LoadProducts(force: true)),
         onSelectedSortField: (value) => store.dispatch(SortProducts(value)),
         customValues1: company.getCustomFieldValues(CustomFieldType.product1,
@@ -119,22 +120,22 @@ class ProductScreen extends StatelessWidget {
           }
         },
       ),
-      floatingActionButton:
-          state.prefState.isMenuFloated && userCompany.canCreate(EntityType.product)
-              ? FloatingActionButton(
-                  heroTag: 'product_fab',
-                  backgroundColor: Theme.of(context).primaryColorDark,
-                  onPressed: () {
-                    createEntityByType(
-                        context: context, entityType: EntityType.product);
-                  },
-                  child: Icon(
-                    Icons.add,
-                    color: Colors.white,
-                  ),
-                  tooltip: localization.newProduct,
-                )
-              : null,
+      floatingActionButton: state.prefState.isMenuFloated &&
+              userCompany.canCreate(EntityType.product)
+          ? FloatingActionButton(
+              heroTag: 'product_fab',
+              backgroundColor: Theme.of(context).primaryColorDark,
+              onPressed: () {
+                createEntityByType(
+                    context: context, entityType: EntityType.product);
+              },
+              child: Icon(
+                Icons.add,
+                color: Colors.white,
+              ),
+              tooltip: localization.newProduct,
+            )
+          : null,
     );
   }
 }

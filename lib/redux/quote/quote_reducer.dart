@@ -37,6 +37,7 @@ Reducer<String> selectedIdReducer = combineReducers([
       (selectedId, action) => action.quote.id),
   TypedReducer<String, ShowEmailQuote>((selectedId, action) => action.quote.id),
   TypedReducer<String, SelectCompany>((selectedId, action) => ''),
+  TypedReducer<String, ClearEntityFilter>((selectedId, action) => ''),
 ]);
 
 final editingReducer = combineReducers<InvoiceEntity>([
@@ -125,7 +126,7 @@ final quoteListReducer = combineReducers<ListUIState>([
   TypedReducer<ListUIState, SortQuotes>(_sortQuotes),
   TypedReducer<ListUIState, FilterQuotesByState>(_filterQuotesByState),
   TypedReducer<ListUIState, FilterQuotesByStatus>(_filterQuotesByStatus),
-  TypedReducer<ListUIState, FilterQuotesByEntity>(_filterQuotesByEntity),
+  TypedReducer<ListUIState, FilterByEntity>(_filterQuotesByEntity),
   TypedReducer<ListUIState, FilterQuotes>(_filterQuotes),
   TypedReducer<ListUIState, FilterQuotesByCustom1>(_filterQuotesByCustom1),
   TypedReducer<ListUIState, FilterQuotesByCustom2>(_filterQuotesByCustom2),
@@ -202,7 +203,14 @@ ListUIState _filterQuotesByStatus(
 }
 
 ListUIState _filterQuotesByEntity(
-    ListUIState quoteListState, FilterQuotesByEntity action) {
+    ListUIState quoteListState, FilterByEntity action) {
+  if (quoteListState.filterEntityId == action.entityId &&
+      quoteListState.filterEntityType == action.entityType) {
+    return quoteListState.rebuild((b) => b
+      ..filterEntityId = null
+      ..filterEntityType = null);
+  }
+
   return quoteListState.rebuild((b) => b
     ..filterEntityId = action.entityId
     ..filterEntityType = action.entityType);

@@ -236,13 +236,6 @@ class FilterDocumentsByCustom4 implements PersistUI {
   final String value;
 }
 
-class FilterDocumentsByEntity implements PersistUI {
-  FilterDocumentsByEntity({this.entityId, this.entityType});
-
-  final String entityId;
-  final EntityType entityType;
-}
-
 void handleDocumentAction(
     BuildContext context, List<BaseEntity> documents, EntityAction action) {
   assert(

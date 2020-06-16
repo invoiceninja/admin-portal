@@ -50,7 +50,10 @@ class ViewScaffold extends StatelessWidget {
           entity.entityType == state.uiState.filterEntityType) {
         leading = IconButton(
           icon: Icon(Icons.clear),
-          onPressed: () => store.dispatch(ClearEntityFilter()),
+          onPressed: () => store.dispatch(FilterByEntity(
+            entityType: state.uiState.filterEntityType,
+            entityId: state.uiState.filterEntityId,
+          )),
         );
       } else if (isSettings) {
         leading = IconButton(

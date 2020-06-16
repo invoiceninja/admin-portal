@@ -170,7 +170,8 @@ class _AccountOverview extends StatelessWidget {
                   callback: (value) {
                     final state = viewModel.state;
                     final credentials = state.credentials;
-                    final url = '${credentials.url}/claim_license?license_key=$value';
+                    final url =
+                        '${credentials.url}/claim_license?license_key=$value';
                     WebClient()
                         .post(
                       url,

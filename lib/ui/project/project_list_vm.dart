@@ -129,8 +129,7 @@ class ProjectListVM {
       isLoading: state.isLoading,
       isLoaded: state.projectState.isLoaded,
       filter: state.projectUIState.listUIState.filter,
-      onClearEntityFilterPressed: () =>
-          store.dispatch(FilterProjectsByEntity()),
+      onClearEntityFilterPressed: () => store.dispatch(ClearEntityFilter()),
       onViewEntityFilterPressed: (BuildContext context) => viewEntityById(
           context: context,
           entityId: state.projectListState.filterEntityId,

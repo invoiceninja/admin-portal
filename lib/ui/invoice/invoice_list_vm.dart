@@ -186,11 +186,12 @@ class InvoiceListVM extends EntityListVM {
       user: state.user,
       listState: state.invoiceListState,
       invoiceList: memoizedFilteredInvoiceList(
-          state.invoiceState.map,
-          state.invoiceState.list,
-          state.clientState.map,
-          state.paymentState.map,
-          state.invoiceListState),
+        state.invoiceState.map,
+        state.invoiceState.list,
+        state.clientState.map,
+        state.paymentState.map,
+        state.invoiceListState,
+      ),
       invoiceMap: state.invoiceState.map,
       clientMap: state.clientState.map,
       isLoading: state.isLoading,
@@ -205,8 +206,7 @@ class InvoiceListVM extends EntityListVM {
         }
       },
       onRefreshed: (context) => _handleRefresh(context),
-      onClearEntityFilterPressed: () =>
-          store.dispatch(FilterInvoicesByEntity()),
+      onClearEntityFilterPressed: () => store.dispatch(FilterByEntity()),
       onViewEntityFilterPressed: (BuildContext context) => viewEntityById(
           context: context,
           entityId: state.invoiceListState.filterEntityId,

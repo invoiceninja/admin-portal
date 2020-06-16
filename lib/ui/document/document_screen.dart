@@ -110,22 +110,22 @@ class DocumentScreen extends StatelessWidget {
           }
         },
       ),
-      floatingActionButton:
-          state.prefState.isMenuFloated && userCompany.canCreate(EntityType.document)
-              ? FloatingActionButton(
-                  heroTag: 'document_fab',
-                  backgroundColor: Theme.of(context).primaryColorDark,
-                  onPressed: () {
-                    createEntityByType(
-                        context: context, entityType: EntityType.document);
-                  },
-                  child: Icon(
-                    Icons.add,
-                    color: Colors.white,
-                  ),
-                  tooltip: localization.newDocument,
-                )
-              : null,
+      floatingActionButton: state.prefState.isMenuFloated &&
+              userCompany.canCreate(EntityType.document)
+          ? FloatingActionButton(
+              heroTag: 'document_fab',
+              backgroundColor: Theme.of(context).primaryColorDark,
+              onPressed: () {
+                createEntityByType(
+                    context: context, entityType: EntityType.document);
+              },
+              child: Icon(
+                Icons.add,
+                color: Colors.white,
+              ),
+              tooltip: localization.newDocument,
+            )
+          : null,
     );
   }
 }

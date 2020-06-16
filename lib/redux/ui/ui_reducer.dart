@@ -4,13 +4,9 @@ import 'package:invoiceninja_flutter/redux/client/client_actions.dart';
 import 'package:invoiceninja_flutter/redux/client/client_reducer.dart';
 import 'package:invoiceninja_flutter/redux/company/company_actions.dart';
 import 'package:invoiceninja_flutter/redux/company/company_state.dart';
-import 'package:invoiceninja_flutter/redux/credit/credit_actions.dart';
 import 'package:invoiceninja_flutter/redux/dashboard/dashboard_actions.dart';
 import 'package:invoiceninja_flutter/redux/dashboard/dashboard_reducer.dart';
 import 'package:invoiceninja_flutter/redux/group/group_actions.dart';
-import 'package:invoiceninja_flutter/redux/invoice/invoice_actions.dart';
-import 'package:invoiceninja_flutter/redux/payment/payment_actions.dart';
-import 'package:invoiceninja_flutter/redux/quote/quote_actions.dart';
 import 'package:invoiceninja_flutter/redux/reports/reports_reducer.dart';
 import 'package:invoiceninja_flutter/redux/settings/settings_actions.dart';
 import 'package:invoiceninja_flutter/redux/ui/ui_actions.dart';
@@ -25,32 +21,27 @@ import 'package:invoiceninja_flutter/redux/project/project_reducer.dart';
 import 'package:invoiceninja_flutter/redux/quote/quote_reducer.dart';
 import 'package:invoiceninja_flutter/redux/task/task_reducer.dart';
 import 'package:invoiceninja_flutter/redux/vendor/vendor_reducer.dart';
-
 // STARTER: import - do not remove comment
 import 'package:invoiceninja_flutter/redux/payment_term/payment_term_reducer.dart';
-
 import 'package:invoiceninja_flutter/redux/design/design_reducer.dart';
-
 import 'package:invoiceninja_flutter/redux/credit/credit_reducer.dart';
-
 import 'package:invoiceninja_flutter/redux/user/user_reducer.dart';
 import 'package:invoiceninja_flutter/redux/tax_rate/tax_rate_reducer.dart';
 import 'package:invoiceninja_flutter/redux/company_gateway/company_gateway_reducer.dart';
 import 'package:invoiceninja_flutter/redux/group/group_reducer.dart';
 
 UIState uiReducer(UIState state, dynamic action) {
-  if (action is FilterClientsByEntity ||
-      action is FilterInvoicesByEntity ||
-      action is FilterPaymentsByEntity ||
-      action is FilterQuotesByEntity ||
-      action is FilterCreditsByEntity) {
-    state = state.rebuild((b) => b
-      ..filterEntityType = action.entityType
-      ..filterEntityId = action.entityId);
-  } else if (action is ClearEntityFilter) {
+  if (action is ClearEntityFilter ||
+      (action is FilterByEntity &&
+          action.entityType == state.filterEntityType &&
+          action.entityId == state.filterEntityId)) {
     state = state.rebuild((b) => b
       ..filterEntityType = null
       ..filterEntityId = null);
+  } else if (action is FilterByEntity) {
+    state = state.rebuild((b) => b
+      ..filterEntityType = action.entityType
+      ..filterEntityId = action.entityId);
   }
 
   final currentRoute = currentRouteReducer(state.currentRoute, action);

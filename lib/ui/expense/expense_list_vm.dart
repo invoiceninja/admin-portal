@@ -135,8 +135,7 @@ class ExpenseListVM {
       isLoading: state.isLoading,
       isLoaded: state.expenseState.isLoaded,
       filter: state.expenseUIState.listUIState.filter,
-      onClearEntityFilterPressed: () =>
-          store.dispatch(FilterExpensesByEntity()),
+      onClearEntityFilterPressed: () => store.dispatch(FilterByEntity()),
       onViewEntityFilterPressed: (BuildContext context) => viewEntityById(
           context: context,
           entityId: state.expenseListState.filterEntityId,

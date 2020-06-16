@@ -111,7 +111,7 @@ class QuoteViewVM extends EntityViewVM {
         if (longPress || isMobile(context)) {
           viewEntity(context: context, entity: client);
         } else {
-          store.dispatch(FilterQuotesByEntity(
+          store.dispatch(FilterByEntity(
               entityType: EntityType.client, entityId: client.id));
         }
       },

@@ -21,6 +21,7 @@ Reducer<String> selectedIdReducer = combineReducers([
   TypedReducer<String, AddDesignSuccess>(
       (String selectedId, dynamic action) => action.design.id),
   TypedReducer<String, SelectCompany>((selectedId, action) => ''),
+  TypedReducer<String, ClearEntityFilter>((selectedId, action) => ''),
 ]);
 
 final editingReducer = combineReducers<DesignEntity>([
@@ -57,7 +58,7 @@ final designListReducer = combineReducers<ListUIState>([
   TypedReducer<ListUIState, FilterDesigns>(_filterDesigns),
   TypedReducer<ListUIState, FilterDesignsByCustom1>(_filterDesignsByCustom1),
   TypedReducer<ListUIState, FilterDesignsByCustom2>(_filterDesignsByCustom2),
-  TypedReducer<ListUIState, FilterDesignsByEntity>(_filterDesignsByClient),
+  TypedReducer<ListUIState, FilterByEntity>(_filterDesignsByClient),
   TypedReducer<ListUIState, StartDesignMultiselect>(_startListMultiselect),
   TypedReducer<ListUIState, AddToDesignMultiselect>(_addToListMultiselect),
   TypedReducer<ListUIState, RemoveFromDesignMultiselect>(
@@ -70,7 +71,7 @@ final designListReducer = combineReducers<ListUIState>([
 ]);
 
 ListUIState _filterDesignsByClient(
-    ListUIState designListState, FilterDesignsByEntity action) {
+    ListUIState designListState, FilterByEntity action) {
   return designListState.rebuild((b) => b
     ..filterEntityId = action.entityId
     ..filterEntityType = action.entityType);

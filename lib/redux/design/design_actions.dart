@@ -245,13 +245,6 @@ class FilterDesignsByCustom4 implements PersistUI {
   final String value;
 }
 
-class FilterDesignsByEntity implements PersistUI {
-  FilterDesignsByEntity({this.entityId, this.entityType});
-
-  final String entityId;
-  final EntityType entityType;
-}
-
 void handleDesignAction(
     BuildContext context, List<BaseEntity> designs, EntityAction action) {
   if (designs.isEmpty) {

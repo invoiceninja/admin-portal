@@ -15,6 +15,8 @@ mixin LocalizationsProvider on LocaleCodeAware {
   static final Map<String, Map<String, String>> _localizedValues = {
     'en': {
       // STARTER: lang key - do not remove comment
+      'all_records': 'All records',
+      'owned_by_user': 'Owned by user',
       'credit_remaining': 'Credit Remaining',
       'contact_name': 'Contact Name',
       'use_default': 'Use default',
@@ -165,7 +167,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'app_updated': 'Update successfully completed',
       'learn_more': 'Learn More',
       'integrations': 'Integrations',
-      'tracking_id': 'Tracking Id',
+      'tracking_id': 'Tracking ID',
       'slack_webhook_url': 'Slack Webhook URL',
       'credit_footer': 'Credit Footer',
       'credit_terms': 'Credit Terms',
@@ -246,11 +248,11 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'shipping_state': 'Shipping State/Province',
       'shipping_postal_code': 'Shipping Postal Code',
       'shipping_country': 'Shipping Country',
-      'client_id': 'Client Id',
+      'client_id': 'Client ID',
       'assigned_to': 'Assigned To',
       'created_by': 'Created By',
-      'assigned_to_id': 'Assigned To Id',
-      'created_by_id': 'Created By Id',
+      'assigned_to_id': 'Assigned To ID',
+      'created_by_id': 'Created By ID',
       'add_column': 'Add Column',
       'edit_columns': 'Edit Columns',
       'columns': 'Columns',
@@ -827,7 +829,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'phone': 'Phone',
       'website': 'Website',
       'vat_number': 'VAT Number',
-      'id_number': 'Id Number',
+      'id_number': 'ID Number',
       'create': 'Create',
       'copied_to_clipboard': 'Copied :value to the clipboard',
       'error': 'Error',
@@ -3889,14 +3891,16 @@ mixin LocalizationsProvider on LocaleCodeAware {
   String get reminderEndless =>
       _localizedValues[localeCode]['reminder_endless'] ?? '';
 
-  String get useDefault =>
-      _localizedValues[localeCode]['use_default'] ?? '';
+  String get useDefault => _localizedValues[localeCode]['use_default'] ?? '';
 
-  String get contactName =>
-      _localizedValues[localeCode]['contact_name'] ?? '';
+  String get contactName => _localizedValues[localeCode]['contact_name'] ?? '';
 
   String get creditRemaining =>
       _localizedValues[localeCode]['credit_remaining'] ?? '';
+
+  String get allRecords => _localizedValues[localeCode]['all_records'] ?? '';
+
+  String get ownedByUser => _localizedValues[localeCode]['owned_by_user'] ?? '';
 
   String lookup(String key) {
     final lookupKey = toSnakeCase(key);

@@ -176,7 +176,7 @@ void _checkResponse(http.Response response) {
   print('headers: ${response.headers}');
 
   final version = response.headers['X-APP-VERSION'];
-  
+
   /*
   if (version == null) {
     throw 'Invalid version, please check v5 is installed on the server';

@@ -119,8 +119,7 @@ class DocumentListVM {
       isLoading: state.isLoading,
       isLoaded: state.documentState.isLoaded,
       filter: state.documentUIState.listUIState.filter,
-      onClearEntityFilterPressed: () =>
-          store.dispatch(FilterDocumentsByEntity()),
+      onClearEntityFilterPressed: () => store.dispatch(FilterByEntity()),
       onViewEntityFilterPressed: (BuildContext context) => viewEntityById(
           context: context,
           entityId: state.documentListState.filterEntityId,

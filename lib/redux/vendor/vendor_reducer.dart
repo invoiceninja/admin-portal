@@ -48,6 +48,7 @@ Reducer<String> selectedIdReducer = combineReducers([
   TypedReducer<String, AddVendorSuccess>(
       (selectedId, action) => action.vendor.id),
   TypedReducer<String, SelectCompany>((selectedId, action) => ''),
+  TypedReducer<String, ClearEntityFilter>((selectedId, action) => ''),
 ]);
 
 final editingReducer = combineReducers<VendorEntity>([
@@ -102,7 +103,7 @@ final vendorListReducer = combineReducers<ListUIState>([
   TypedReducer<ListUIState, FilterVendorsByCustom2>(_filterVendorsByCustom2),
   TypedReducer<ListUIState, FilterVendorsByCustom3>(_filterVendorsByCustom3),
   TypedReducer<ListUIState, FilterVendorsByCustom4>(_filterVendorsByCustom4),
-  TypedReducer<ListUIState, FilterVendorsByEntity>(_filterVendorsByClient),
+  TypedReducer<ListUIState, FilterByEntity>(_filterVendorsByClient),
   TypedReducer<ListUIState, StartVendorMultiselect>(_startListMultiselect),
   TypedReducer<ListUIState, AddToVendorMultiselect>(_addToListMultiselect),
   TypedReducer<ListUIState, RemoveFromVendorMultiselect>(
@@ -115,7 +116,7 @@ final vendorListReducer = combineReducers<ListUIState>([
 ]);
 
 ListUIState _filterVendorsByClient(
-    ListUIState vendorListState, FilterVendorsByEntity action) {
+    ListUIState vendorListState, FilterByEntity action) {
   return vendorListState.rebuild((b) => b
     ..filterEntityId = action.entityId
     ..filterEntityType = action.entityType);

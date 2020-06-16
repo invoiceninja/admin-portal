@@ -233,13 +233,6 @@ class FilterGroupsByCustom2 implements PersistUI {
   final String value;
 }
 
-class FilterGroupsByEntity implements PersistUI {
-  FilterGroupsByEntity({this.entityId, this.entityType});
-
-  final String entityId;
-  final EntityType entityType;
-}
-
 void handleGroupAction(
     BuildContext context, List<BaseEntity> groups, EntityAction action) {
   if (groups.isEmpty) {

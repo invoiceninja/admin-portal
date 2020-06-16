@@ -124,7 +124,7 @@ class _HistoryListTileState extends State<HistoryListTile> {
     } else {
       entity = state.getEntityMap(history.entityType)[history.id] as BaseEntity;
 
-      if (entity == null) {
+      if (entity == null || !entity.isActive) {
         return SizedBox();
       }
 
@@ -195,7 +195,6 @@ class _HistoryListTileState extends State<HistoryListTile> {
 
          */
         onTap: () {
-          store.dispatch(ClearEntityFilter());
           if (state.prefState.isHistoryFloated) {
             Navigator.pop(context);
           }
@@ -212,9 +211,11 @@ class _HistoryListTileState extends State<HistoryListTile> {
               break;
             default:
               viewEntityById(
-                  context: context,
-                  entityId: history.id,
-                  entityType: history.entityType);
+                context: context,
+                entityId: history.id,
+                entityType: history.entityType,
+                ensureVisible: true,
+              );
           }
         },
         onLongPress: entity == null

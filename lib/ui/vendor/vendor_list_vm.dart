@@ -120,7 +120,7 @@ class VendorListVM {
       isLoading: state.isLoading,
       isLoaded: state.vendorState.isLoaded,
       filter: state.vendorUIState.listUIState.filter,
-      onClearEntityFilterPressed: () => store.dispatch(FilterVendorsByEntity()),
+      onClearEntityFilterPressed: () => store.dispatch(ClearEntityFilter()),
       onViewEntityFilterPressed: (BuildContext context) => viewEntityById(
           context: context,
           entityId: state.vendorListState.filterEntityId,

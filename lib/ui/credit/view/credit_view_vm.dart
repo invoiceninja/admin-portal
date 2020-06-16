@@ -111,7 +111,7 @@ class CreditViewVM extends EntityViewVM {
         if (longPress || isMobile(context)) {
           viewEntity(context: context, entity: client);
         } else {
-          store.dispatch(FilterCreditsByEntity(
+          store.dispatch(FilterByEntity(
               entityType: EntityType.client, entityId: client.id));
         }
       },

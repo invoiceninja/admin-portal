@@ -1,7 +1,5 @@
 import 'package:built_collection/built_collection.dart';
 import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
-import 'package:invoiceninja_flutter/redux/company_gateway/company_gateway_actions.dart';
-import 'package:invoiceninja_flutter/redux/invoice/invoice_actions.dart';
 import 'package:redux/redux.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/redux/company/company_actions.dart';
@@ -22,9 +20,8 @@ Reducer<String> selectedIdReducer = combineReducers([
   TypedReducer<String, AddPaymentSuccess>(
       (selectedId, action) => action.payment.id),
   TypedReducer<String, SelectCompany>((selectedId, action) => ''),
-  TypedReducer<String, FilterInvoicesByEntity>((selectedId, action) =>
-      action.entityType == EntityType.payment ? action.entityId : selectedId),
-  TypedReducer<String, FilterCompanyGatewaysByEntity>((selectedId, action) =>
+  TypedReducer<String, ClearEntityFilter>((selectedId, action) => ''),
+  TypedReducer<String, FilterByEntity>((selectedId, action) =>
       action.entityType == EntityType.payment ? action.entityId : selectedId),
 ]);
 
@@ -65,7 +62,7 @@ final paymentListReducer = combineReducers<ListUIState>([
   TypedReducer<ListUIState, FilterPaymentsByCustom2>(_filterPaymentsByCustom2),
   TypedReducer<ListUIState, FilterPaymentsByCustom3>(_filterPaymentsByCustom3),
   TypedReducer<ListUIState, FilterPaymentsByCustom4>(_filterPaymentsByCustom4),
-  TypedReducer<ListUIState, FilterPaymentsByEntity>(_filterPaymentsByEntity),
+  TypedReducer<ListUIState, FilterByEntity>(_filterPaymentsByEntity),
   TypedReducer<ListUIState, StartPaymentMultiselect>(_startListMultiselect),
   TypedReducer<ListUIState, AddToPaymentMultiselect>(_addToListMultiselect),
   TypedReducer<ListUIState, RemoveFromPaymentMultiselect>(
@@ -78,7 +75,14 @@ final paymentListReducer = combineReducers<ListUIState>([
 ]);
 
 ListUIState _filterPaymentsByEntity(
-    ListUIState paymentListState, FilterPaymentsByEntity action) {
+    ListUIState paymentListState, FilterByEntity action) {
+  if (paymentListState.filterEntityId == action.entityId &&
+      paymentListState.filterEntityType == action.entityType) {
+    return paymentListState.rebuild((b) => b
+      ..filterEntityId = null
+      ..filterEntityType = null);
+  }
+
   return paymentListState.rebuild((b) => b
     ..filterEntityId = action.entityId
     ..filterEntityType = action.entityType);

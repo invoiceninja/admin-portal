@@ -95,11 +95,11 @@ class ClientOverview extends StatelessWidget {
           EntityListTile(
             entity: group,
             onTap: () => viewModel.onGroupPressed(context),
+            onLongPress: () => viewModel.onGroupPressed(context, true),
             isFilter: isFilter,
           ),
         ],
         FieldGrid(fields),
-        ListDivider(),
         EntitiesListTile(
           isFilter: isFilter,
           entityType: EntityType.invoice,

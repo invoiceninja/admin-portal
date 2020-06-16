@@ -281,13 +281,6 @@ class FilterTasksByCustom4 implements PersistUI {
   final String value;
 }
 
-class FilterTasksByEntity implements PersistUI {
-  FilterTasksByEntity({this.entityId, this.entityType});
-
-  final String entityId;
-  final EntityType entityType;
-}
-
 void handleTaskAction(
     BuildContext context, List<BaseEntity> tasks, EntityAction action) {
   assert(

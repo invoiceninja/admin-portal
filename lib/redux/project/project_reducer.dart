@@ -36,6 +36,7 @@ Reducer<String> selectedIdReducer = combineReducers([
   TypedReducer<String, AddProjectSuccess>(
       (selectedId, action) => action.project.id),
   TypedReducer<String, SelectCompany>((selectedId, action) => ''),
+  TypedReducer<String, ClearEntityFilter>((selectedId, action) => ''),
 ]);
 
 final editingReducer = combineReducers<ProjectEntity>([
@@ -74,7 +75,7 @@ final projectListReducer = combineReducers<ListUIState>([
   TypedReducer<ListUIState, FilterProjectsByCustom2>(_filterProjectsByCustom2),
   TypedReducer<ListUIState, FilterProjectsByCustom3>(_filterProjectsByCustom3),
   TypedReducer<ListUIState, FilterProjectsByCustom4>(_filterProjectsByCustom4),
-  TypedReducer<ListUIState, FilterProjectsByEntity>(_filterProjectsByClient),
+  TypedReducer<ListUIState, FilterByEntity>(_filterProjectsByClient),
   TypedReducer<ListUIState, StartProjectMultiselect>(_startListMultiselect),
   TypedReducer<ListUIState, AddToProjectMultiselect>(_addToListMultiselect),
   TypedReducer<ListUIState, RemoveFromProjectMultiselect>(
@@ -87,7 +88,7 @@ final projectListReducer = combineReducers<ListUIState>([
 ]);
 
 ListUIState _filterProjectsByClient(
-    ListUIState projectListState, FilterProjectsByEntity action) {
+    ListUIState projectListState, FilterByEntity action) {
   return projectListState.rebuild((b) => b
     ..filterEntityId = action.entityId
     ..filterEntityType = action.entityType);

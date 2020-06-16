@@ -120,22 +120,22 @@ class VendorScreen extends StatelessWidget {
           }
         },
       ),
-      floatingActionButton:
-          state.prefState.isMenuFloated && userCompany.canCreate(EntityType.vendor)
-              ? FloatingActionButton(
-                  heroTag: 'vendor_fab',
-                  backgroundColor: Theme.of(context).primaryColorDark,
-                  onPressed: () {
-                    createEntityByType(
-                        context: context, entityType: EntityType.vendor);
-                  },
-                  child: Icon(
-                    Icons.add,
-                    color: Colors.white,
-                  ),
-                  tooltip: localization.newVendor,
-                )
-              : null,
+      floatingActionButton: state.prefState.isMenuFloated &&
+              userCompany.canCreate(EntityType.vendor)
+          ? FloatingActionButton(
+              heroTag: 'vendor_fab',
+              backgroundColor: Theme.of(context).primaryColorDark,
+              onPressed: () {
+                createEntityByType(
+                    context: context, entityType: EntityType.vendor);
+              },
+              child: Icon(
+                Icons.add,
+                color: Colors.white,
+              ),
+              tooltip: localization.newVendor,
+            )
+          : null,
     );
   }
 }

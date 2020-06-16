@@ -8,7 +8,6 @@ import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/utils/completers.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
-import 'package:invoiceninja_flutter/utils/platforms.dart';
 
 class ViewVendorList extends AbstractNavigatorAction
     implements PersistUI, StopLoading {
@@ -272,13 +271,6 @@ class FilterVendorsByCustom4 implements PersistUI {
   final String value;
 }
 
-class FilterVendorsByEntity implements PersistUI {
-  FilterVendorsByEntity({this.entityId, this.entityType});
-
-  final String entityId;
-  final EntityType entityType;
-}
-
 void handleVendorAction(
     BuildContext context, List<BaseEntity> vendors, EntityAction action) {
   assert(
@@ -306,15 +298,11 @@ void handleVendorAction(
       editEntity(context: context, entity: vendor);
       break;
     case EntityAction.newExpense:
-      if (isNotMobile(context)) {
-        filterEntitiesByType(
-            context: context,
-            entityType: EntityType.expense,
-            filterEntity: vendor);
-      }
       createEntity(
-          context: context,
-          entity: ExpenseEntity(state: state, vendor: vendor));
+        context: context,
+        entity: ExpenseEntity(state: state, vendor: vendor),
+        filterEntity: vendor,
+      );
       break;
     case EntityAction.restore:
       store.dispatch(RestoreVendorRequest(

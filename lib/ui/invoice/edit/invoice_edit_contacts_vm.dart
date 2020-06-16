@@ -8,13 +8,16 @@ import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 
 class InvoiceEditContactsScreen extends StatelessWidget {
-  const InvoiceEditContactsScreen({Key key}) : super(key: key);
+  const InvoiceEditContactsScreen({Key key, @required this.entityType})
+      : super(key: key);
+
+  final EntityType entityType;
 
   @override
   Widget build(BuildContext context) {
     return StoreConnector<AppState, InvoiceEditContactsVM>(
       converter: (Store<AppState> store) {
-        return InvoiceEditContactsVM.fromStore(store);
+        return InvoiceEditContactsVM.fromStore(store, entityType);
       },
       builder: (context, viewModel) {
         return InvoiceEditContacts(
@@ -60,22 +63,31 @@ class InvoiceEditContactsVM extends EntityEditContactsVM {
           onRemoveContact: onRemoveContact,
         );
 
-  factory InvoiceEditContactsVM.fromStore(Store<AppState> store) {
+  factory InvoiceEditContactsVM.fromStore(
+      Store<AppState> store, EntityType entityType) {
     final AppState state = store.state;
-    final invoice = state.invoiceUIState.editing;
+
+    BaseEntity entity;
+    if (entityType == EntityType.invoice) {
+      entity = state.invoiceUIState.editing;
+    } else if (entityType == EntityType.quote) {
+      entity = state.quoteUIState.editing;
+    } else if (entityType == EntityType.credit) {
+      entity = state.creditUIState.editing;
+    }
 
     return InvoiceEditContactsVM(
       state: state,
       company: state.company,
-      invoice: invoice,
-      client: state.clientState.map[invoice.clientId],
+      invoice: entity,
+      client: state.clientState.map[(entity as BelongsToClient).clientId],
       onAddContact: (ContactEntity contact) {
         InvitationEntity invitation;
-        // prevent un-checking/checking a contact
-        // from creating a new invitation
-        if (invoice.isOld) {
-          invitation = state.invoiceState.map[invoice.id]
-              .getInvitationForContact(contact);
+        // prevent un-checking/checking a contact from creating a new invitation
+        if (entity.isOld) {
+          final origEntity =
+              state.getEntityMap(entityType)[entity.id] as InvoiceEntity;
+          invitation = origEntity.getInvitationForContact(contact);
         }
         store.dispatch(
             AddInvoiceContact(contact: contact, invitation: invitation));

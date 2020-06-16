@@ -86,7 +86,8 @@ class ProjectScreen extends StatelessWidget {
       bottomNavigationBar: AppBottomBar(
         entityType: EntityType.project,
         tableColumns: ProjectPresenter.getAllTableFields(userCompany),
-        defaultTableColumns: ProjectPresenter.getDefaultTableFields(userCompany),
+        defaultTableColumns:
+            ProjectPresenter.getDefaultTableFields(userCompany),
         onRefreshPressed: () => store.dispatch(LoadProjects(force: true)),
         onSelectedSortField: (value) => store.dispatch(SortProjects(value)),
         customValues1: company.getCustomFieldValues(CustomFieldType.project1,
@@ -120,20 +121,20 @@ class ProjectScreen extends StatelessWidget {
           }
         },
       ),
-      floatingActionButton:
-          state.prefState.isMenuFloated && userCompany.canCreate(EntityType.project)
-              ? FloatingActionButton(
-                  heroTag: 'project_fab',
-                  backgroundColor: Theme.of(context).primaryColorDark,
-                  onPressed: () => createEntityByType(
-                      context: context, entityType: EntityType.project),
-                  child: Icon(
-                    Icons.add,
-                    color: Colors.white,
-                  ),
-                  tooltip: localization.newProject,
-                )
-              : null,
+      floatingActionButton: state.prefState.isMenuFloated &&
+              userCompany.canCreate(EntityType.project)
+          ? FloatingActionButton(
+              heroTag: 'project_fab',
+              backgroundColor: Theme.of(context).primaryColorDark,
+              onPressed: () => createEntityByType(
+                  context: context, entityType: EntityType.project),
+              child: Icon(
+                Icons.add,
+                color: Colors.white,
+              ),
+              tooltip: localization.newProject,
+            )
+          : null,
     );
   }
 }

@@ -231,10 +231,40 @@ class MainScreen extends StatelessWidget {
               }
 
               final isEditing = state.uiState.isEditing;
-              final history = historyList[isEditing ? 0 : 1];
+              final index = isEditing ? 0 : 1;
+              HistoryRecord history;
+
+              for (int i = index; i < historyList.length; i++) {
+                final item = historyList[i];
+                if ([
+                  EntityType.dashboard,
+                  EntityType.reports,
+                  EntityType.settings,
+                ].contains(item.entityType)) {
+                  history = item;
+                  break;
+                } else {
+                  if (item.id == null) {
+                    continue;
+                  }
+
+                  final entity = state.getEntityMap(item.entityType)[item.id]
+                      as BaseEntity;
+                  if (entity == null || !entity.isActive) {
+                    continue;
+                  }
+
+                  history = item;
+                  break;
+                }
+              }
 
               if (!isEditing) {
                 store.dispatch(PopLastHistory());
+              }
+
+              if (history == null) {
+                return false;
               }
 
               switch (history.entityType) {
@@ -246,15 +276,15 @@ class MainScreen extends StatelessWidget {
                   store.dispatch(ViewReports(navigator: Navigator.of(context)));
                   break;
                 case EntityType.settings:
-                  store
-                      .dispatch(ViewSettings(navigator: Navigator.of(context)));
+                  store.dispatch(ViewSettings(
+                      navigator: Navigator.of(context), section: history.id));
                   break;
                 default:
                   viewEntityById(
                     context: context,
                     entityId: history.id,
                     entityType: history.entityType,
-                    showError: false,
+                    ensureVisible: true,
                   );
               }
 
@@ -647,7 +677,9 @@ class _EntityFilter extends StatelessWidget {
                             maxLines: 1,
                           ),
                           onPressed: () => viewEntitiesByType(
-                              context: context, entityType: filterEntityType),
+                              context: context,
+                              entityType: filterEntityType,
+                              filterEntity: filterEntity),
                         ),
                       ),
                     ),
@@ -668,8 +700,7 @@ class _EntityFilter extends StatelessWidget {
                       onSelected: (EntityType value) => viewEntitiesByType(
                         context: context,
                         entityType: value,
-                        filterEntity:
-                            value == filterEntityType ? null : filterEntity,
+                        filterEntity: filterEntity,
                       ),
                       itemBuilder: (BuildContext context) => [
                         filterEntityType,
@@ -693,7 +724,10 @@ class _EntityFilter extends StatelessWidget {
                     SizedBox(width: 4),
                     IconButton(
                       icon: Icon(Icons.clear),
-                      onPressed: () => store.dispatch(ClearEntityFilter()),
+                      onPressed: () => store.dispatch(FilterByEntity(
+                        entityId: uiState.filterEntityId,
+                        entityType: uiState.filterEntityType,
+                      )),
                     ),
                   ],
           ),

@@ -266,13 +266,6 @@ class FilterUsersByCustom2 implements PersistUI {
   final String value;
 }
 
-class FilterUsersByEntity implements PersistUI {
-  FilterUsersByEntity({this.entityId, this.entityType});
-
-  final String entityId;
-  final EntityType entityType;
-}
-
 void handleUserAction(
     BuildContext context, List<BaseEntity> users, EntityAction action) {
   if (users.isEmpty) {

@@ -29,6 +29,7 @@ Reducer<String> selectedIdReducer = combineReducers([
   TypedReducer<String, ViewTask>((selectedId, action) => action.taskId),
   TypedReducer<String, AddTaskSuccess>((selectedId, action) => action.task.id),
   TypedReducer<String, SelectCompany>((selectedId, action) => ''),
+  TypedReducer<String, ClearEntityFilter>((selectedId, action) => ''),
 ]);
 
 final editingReducer = combineReducers<TaskEntity>([
@@ -69,7 +70,7 @@ final taskListReducer = combineReducers<ListUIState>([
   TypedReducer<ListUIState, FilterTasks>(_filterTasks),
   TypedReducer<ListUIState, FilterTasksByCustom1>(_filterTasksByCustom1),
   TypedReducer<ListUIState, FilterTasksByCustom2>(_filterTasksByCustom2),
-  TypedReducer<ListUIState, FilterTasksByEntity>(_filterTasksByClient),
+  TypedReducer<ListUIState, FilterByEntity>(_filterTasksByClient),
   TypedReducer<ListUIState, StartTaskMultiselect>(_startListMultiselect),
   TypedReducer<ListUIState, AddToTaskMultiselect>(_addToListMultiselect),
   TypedReducer<ListUIState, RemoveFromTaskMultiselect>(
@@ -82,7 +83,7 @@ final taskListReducer = combineReducers<ListUIState>([
 ]);
 
 ListUIState _filterTasksByClient(
-    ListUIState taskListState, FilterTasksByEntity action) {
+    ListUIState taskListState, FilterByEntity action) {
   return taskListState.rebuild((b) => b
     ..filterEntityId = action.entityId
     ..filterEntityType = action.entityType);
@@ -296,6 +297,5 @@ TaskState _setLoadedTask(TaskState taskState, LoadTaskSuccess action) {
 TaskState _setLoadedTasks(TaskState taskState, LoadTasksSuccess action) =>
     taskState.loadTasks(action.tasks);
 
-TaskState _setLoadedCompany(
-    TaskState taskState, LoadCompanySuccess action) =>
+TaskState _setLoadedCompany(TaskState taskState, LoadCompanySuccess action) =>
     taskState.loadTasks(action.userCompany.company.tasks);

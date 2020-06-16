@@ -151,15 +151,22 @@ class ClientViewVM {
         }
       },
       onRefreshed: (context) => _handleRefresh(context),
-      onGroupPressed: (context) {
+      onGroupPressed: (context, [longPress = false]) {
         if (isMobile(context)) {
           viewEntityById(
               context: context,
               entityId: client.groupId,
               entityType: EntityType.group);
         } else {
-          store.dispatch(FilterClientsByEntity(
-              entityType: EntityType.group, entityId: client.groupId));
+          if (longPress) {
+            viewEntity(
+              context: context,
+              entity: state.groupState.map[client.groupId],
+            );
+          } else {
+            store.dispatch(FilterByEntity(
+                entityType: EntityType.group, entityId: client.groupId));
+          }
         }
       },
       onEntityAction: (BuildContext context, EntityAction action) =>
@@ -171,7 +178,7 @@ class ClientViewVM {
   final ClientEntity client;
   final CompanyEntity company;
   final Function(BuildContext, EntityAction) onEntityAction;
-  final Function(BuildContext) onGroupPressed;
+  final Function(BuildContext, [bool]) onGroupPressed;
   final Function(BuildContext, EntityType, [bool]) onEntityPressed;
   final Function(BuildContext) onRefreshed;
   final bool isSaving;
