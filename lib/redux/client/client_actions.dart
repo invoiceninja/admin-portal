@@ -299,74 +299,55 @@ void handleClientAction(
       ));
       break;
     case EntityAction.newInvoice:
-      if (isNotMobile(context)) {
-        filterByEntity(
-            context: context,
-            entity: client);
-      }
       createEntity(
           context: context,
-          entity: InvoiceEntity(state: state, client: client));
+          entity: InvoiceEntity(state: state, client: client),
+          filterEntity: client);
       break;
     case EntityAction.newQuote:
-      if (isNotMobile(context)) {
-        filterByEntity(
-            context: context,
-            entity: client);
-      }
       createEntity(
-          context: context,
-          entity: InvoiceEntity(
-            state: state,
-            client: client,
-            entityType: EntityType.quote,
-          ));
+        context: context,
+        entity: InvoiceEntity(
+          state: state,
+          client: client,
+          entityType: EntityType.quote,
+        ),
+        filterEntity: client,
+      );
       break;
     case EntityAction.newCredit:
-      if (isNotMobile(context)) {
-        filterByEntity(
-            context: context,
-            entity: client);
-      }
       createEntity(
-          context: context,
-          entity: InvoiceEntity(
-            state: state,
-            client: client,
-            entityType: EntityType.credit,
-          ));
+        context: context,
+        entity: InvoiceEntity(
+          state: state,
+          client: client,
+          entityType: EntityType.credit,
+        ),
+        filterEntity: client,
+      );
       break;
     case EntityAction.newExpense:
-      if (isNotMobile(context)) {
-        filterByEntity(
-            context: context,
-            entity: client);
-      }
       createEntity(
-          context: context,
-          entity: ExpenseEntity(state: state, client: client));
+        context: context,
+        entity: ExpenseEntity(state: state, client: client),
+        filterEntity: client,
+      );
       break;
     case EntityAction.newPayment:
-      if (isNotMobile(context)) {
-        filterByEntity(
-            context: context,
-            entity: client);
-      }
       createEntity(
-          context: context,
-          entity: PaymentEntity(state: state)
-              .rebuild((b) => b.clientId = client.id));
+        context: context,
+        entity:
+            PaymentEntity(state: state).rebuild((b) => b.clientId = client.id),
+        filterEntity: client,
+      );
       break;
     case EntityAction.newProject:
-      if (isNotMobile(context)) {
-        filterByEntity(
-            context: context,
-            entity: client);
-      }
       createEntity(
-          context: context,
-          entity: ProjectEntity(state: state)
-              .rebuild((b) => b.clientId = client.id));
+        context: context,
+        entity:
+            ProjectEntity(state: state).rebuild((b) => b.clientId = client.id),
+        filterEntity: client,
+      );
       break;
     case EntityAction.restore:
       store.dispatch(RestoreClientsRequest(

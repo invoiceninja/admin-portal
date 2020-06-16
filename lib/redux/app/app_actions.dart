@@ -555,11 +555,22 @@ void createEntity({
   BuildContext context,
   BaseEntity entity,
   bool force = false,
+  BaseEntity filterEntity,
   Completer completer,
   Completer cancelCompleter,
 }) {
   final store = StoreProvider.of<AppState>(context);
+  final uiState = store.state.uiState;
   final navigator = Navigator.of(context);
+
+  if (filterEntity != null &&
+      uiState.filterEntityType != filterEntity.entityType &&
+      uiState.filterEntityId != filterEntity.id) {
+    filterByEntity(
+      context: context,
+      entity: filterEntity,
+    );
+  }
 
   switch (entity.entityType) {
     case EntityType.client:

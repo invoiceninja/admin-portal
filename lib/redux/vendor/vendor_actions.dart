@@ -299,14 +299,11 @@ void handleVendorAction(
       editEntity(context: context, entity: vendor);
       break;
     case EntityAction.newExpense:
-      if (isNotMobile(context)) {
-        filterByEntity(
-            context: context,
-            entity: vendor);
-      }
       createEntity(
-          context: context,
-          entity: ExpenseEntity(state: state, vendor: vendor));
+        context: context,
+        entity: ExpenseEntity(state: state, vendor: vendor),
+        filterEntity: vendor,
+      );
       break;
     case EntityAction.restore:
       store.dispatch(RestoreVendorRequest(
