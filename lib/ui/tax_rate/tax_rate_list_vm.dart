@@ -120,8 +120,7 @@ class TaxRateListVM {
       isLoading: state.isLoading,
       isLoaded: state.taxRateState.isLoaded,
       filter: state.taxRateUIState.listUIState.filter,
-      onClearEntityFilterPressed: () =>
-          store.dispatch(ClearEntityFilter()),
+      onClearEntityFilterPressed: () => store.dispatch(ClearEntityFilter()),
       onViewEntityFilterPressed: (BuildContext context) => viewEntityById(
           context: context,
           entityId: state.taxRateListState.filterEntityId,

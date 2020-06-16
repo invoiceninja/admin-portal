@@ -20,6 +20,7 @@ Reducer<String> selectedIdReducer = combineReducers([
   TypedReducer<String, AddExpenseSuccess>(
       (selectedId, action) => action.expense.id),
   TypedReducer<String, SelectCompany>((selectedId, action) => ''),
+  TypedReducer<String, ClearEntityFilter>((selectedId, action) => ''),
 ]);
 
 final editingReducer = combineReducers<ExpenseEntity>([
@@ -315,5 +316,5 @@ ExpenseState _setLoadedExpenses(
     expenseState.loadExpenses(action.expenses);
 
 ExpenseState _setLoadedCompany(
-    ExpenseState expenseState, LoadCompanySuccess action) =>
+        ExpenseState expenseState, LoadCompanySuccess action) =>
     expenseState.loadExpenses(action.userCompany.company.expenses);

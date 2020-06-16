@@ -21,14 +21,10 @@ import 'package:invoiceninja_flutter/redux/project/project_reducer.dart';
 import 'package:invoiceninja_flutter/redux/quote/quote_reducer.dart';
 import 'package:invoiceninja_flutter/redux/task/task_reducer.dart';
 import 'package:invoiceninja_flutter/redux/vendor/vendor_reducer.dart';
-
 // STARTER: import - do not remove comment
 import 'package:invoiceninja_flutter/redux/payment_term/payment_term_reducer.dart';
-
 import 'package:invoiceninja_flutter/redux/design/design_reducer.dart';
-
 import 'package:invoiceninja_flutter/redux/credit/credit_reducer.dart';
-
 import 'package:invoiceninja_flutter/redux/user/user_reducer.dart';
 import 'package:invoiceninja_flutter/redux/tax_rate/tax_rate_reducer.dart';
 import 'package:invoiceninja_flutter/redux/company_gateway/company_gateway_reducer.dart';

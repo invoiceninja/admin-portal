@@ -3,7 +3,6 @@ import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/ui/app/presenters/entity_presenter.dart';
 
 class VendorPresenter extends EntityPresenter {
-
   static List<String> getDefaultTableFields(UserCompanyEntity userCompany) {
     return [
       VendorFields.name,

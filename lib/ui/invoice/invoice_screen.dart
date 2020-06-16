@@ -88,7 +88,8 @@ class InvoiceScreen extends StatelessWidget {
       bottomNavigationBar: AppBottomBar(
         entityType: EntityType.invoice,
         tableColumns: InvoicePresenter.getAllTableFields(userCompany),
-        defaultTableColumns: InvoicePresenter.getDefaultTableFields(userCompany),
+        defaultTableColumns:
+            InvoicePresenter.getDefaultTableFields(userCompany),
         onRefreshPressed: () => store.dispatch(LoadInvoices(force: true)),
         onSelectedSortField: (value) {
           store.dispatch(SortInvoices(value));

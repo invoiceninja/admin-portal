@@ -29,6 +29,7 @@ Reducer<String> selectedIdReducer = combineReducers([
   TypedReducer<String, ViewTask>((selectedId, action) => action.taskId),
   TypedReducer<String, AddTaskSuccess>((selectedId, action) => action.task.id),
   TypedReducer<String, SelectCompany>((selectedId, action) => ''),
+  TypedReducer<String, ClearEntityFilter>((selectedId, action) => ''),
 ]);
 
 final editingReducer = combineReducers<TaskEntity>([
@@ -296,6 +297,5 @@ TaskState _setLoadedTask(TaskState taskState, LoadTaskSuccess action) {
 TaskState _setLoadedTasks(TaskState taskState, LoadTasksSuccess action) =>
     taskState.loadTasks(action.tasks);
 
-TaskState _setLoadedCompany(
-    TaskState taskState, LoadCompanySuccess action) =>
+TaskState _setLoadedCompany(TaskState taskState, LoadCompanySuccess action) =>
     taskState.loadTasks(action.userCompany.company.tasks);

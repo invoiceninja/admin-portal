@@ -84,7 +84,8 @@ class PaymentScreen extends StatelessWidget {
       bottomNavigationBar: AppBottomBar(
         entityType: EntityType.payment,
         tableColumns: PaymentPresenter.getAllTableFields(userCompany),
-        defaultTableColumns: PaymentPresenter.getDefaultTableFields(userCompany),
+        defaultTableColumns:
+            PaymentPresenter.getDefaultTableFields(userCompany),
         onRefreshPressed: () => store.dispatch(LoadPayments(force: true)),
         onSelectedSortField: (value) => store.dispatch(SortPayments(value)),
         customValues1: company.getCustomFieldValues(CustomFieldType.payment1,

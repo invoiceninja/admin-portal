@@ -21,6 +21,7 @@ Reducer<String> selectedIdReducer = combineReducers([
   TypedReducer<String, AddPaymentTermSuccess>(
       (String selectedId, dynamic action) => action.paymentTerm.id),
   TypedReducer<String, SelectCompany>((selectedId, action) => ''),
+  TypedReducer<String, ClearEntityFilter>((selectedId, action) => ''),
 ]);
 
 final editingReducer = combineReducers<PaymentTermEntity>([
@@ -64,8 +65,7 @@ final paymentTermListReducer = combineReducers<ListUIState>([
       _filterPaymentTermsByCustom1),
   TypedReducer<ListUIState, FilterPaymentTermsByCustom2>(
       _filterPaymentTermsByCustom2),
-  TypedReducer<ListUIState, FilterByEntity>(
-      _filterPaymentTermsByClient),
+  TypedReducer<ListUIState, FilterByEntity>(_filterPaymentTermsByClient),
   TypedReducer<ListUIState, StartPaymentTermMultiselect>(_startListMultiselect),
   TypedReducer<ListUIState, AddToPaymentTermMultiselect>(_addToListMultiselect),
   TypedReducer<ListUIState, RemoveFromPaymentTermMultiselect>(

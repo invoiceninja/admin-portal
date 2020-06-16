@@ -40,7 +40,6 @@ String getAppURL(BuildContext context) {
   }
 }
 
-
 AppLayout calculateLayout(BuildContext context) {
   final size = MediaQuery.of(context).size.width;
 

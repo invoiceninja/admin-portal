@@ -6,7 +6,6 @@ import 'package:invoiceninja_flutter/ui/app/presenters/entity_presenter.dart';
 import 'package:invoiceninja_flutter/utils/formatting.dart';
 
 class ProjectPresenter extends EntityPresenter {
-
   static List<String> getDefaultTableFields(UserCompanyEntity userCompany) {
     return [
       ProjectFields.name,

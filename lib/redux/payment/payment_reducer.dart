@@ -20,6 +20,7 @@ Reducer<String> selectedIdReducer = combineReducers([
   TypedReducer<String, AddPaymentSuccess>(
       (selectedId, action) => action.payment.id),
   TypedReducer<String, SelectCompany>((selectedId, action) => ''),
+  TypedReducer<String, ClearEntityFilter>((selectedId, action) => ''),
   TypedReducer<String, FilterByEntity>((selectedId, action) =>
       action.entityType == EntityType.payment ? action.entityId : selectedId),
 ]);

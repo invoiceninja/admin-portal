@@ -50,6 +50,7 @@ final selectedIdReducer = combineReducers<String>([
     return action.client.id;
   }),
   TypedReducer<String, SelectCompany>((selectedId, action) => ''),
+  TypedReducer<String, ClearEntityFilter>((selectedId, action) => ''),
   TypedReducer<String, FilterByEntity>((selectedId, action) =>
       action.entityType == EntityType.client ? action.entityId : selectedId),
 ]);

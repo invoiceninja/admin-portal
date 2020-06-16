@@ -82,7 +82,6 @@ class InvoiceEditItemsVM extends EntityEditItemsVM {
         );
 
   factory InvoiceEditItemsVM.fromStore(Store<AppState> store) {
-
     return InvoiceEditItemsVM(
         state: store.state,
         company: store.state.company,

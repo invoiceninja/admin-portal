@@ -88,7 +88,8 @@ class ExpenseScreen extends StatelessWidget {
       bottomNavigationBar: AppBottomBar(
         entityType: EntityType.expense,
         tableColumns: ExpensePresenter.getAllTableFields(userCompany),
-        defaultTableColumns: ExpensePresenter.getDefaultTableFields(userCompany),
+        defaultTableColumns:
+            ExpensePresenter.getDefaultTableFields(userCompany),
         onRefreshPressed: () => store.dispatch(LoadExpenses(force: true)),
         onSelectedSortField: (value) => store.dispatch(SortExpenses(value)),
         customValues1: company.getCustomFieldValues(CustomFieldType.expense1,

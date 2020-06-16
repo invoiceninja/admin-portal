@@ -165,6 +165,7 @@ class AuthRepository {
     return serializers.deserializeWith(LoginResponse.serializer, response);
   }
 
-  String get _tokenName =>
-      kIsWeb ? 'web_client' : Platform.isAndroid ? 'android_client' : 'ios_client';
+  String get _tokenName => kIsWeb
+      ? 'web_client'
+      : Platform.isAndroid ? 'android_client' : 'ios_client';
 }

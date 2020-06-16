@@ -225,7 +225,9 @@ class CreditListItem extends StatelessWidget {
                             localization
                                 .lookup(kCreditStatuses[credit.statusId]),
                             style: TextStyle(
-                              color: !credit.isSent ? textColor : CreditStatusColors.colors[credit.statusId],
+                              color: !credit.isSent
+                                  ? textColor
+                                  : CreditStatusColors.colors[credit.statusId],
                             )),
                       ],
                     ),

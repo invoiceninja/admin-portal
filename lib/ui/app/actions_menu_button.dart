@@ -83,7 +83,6 @@ class ViewActionMenuButton extends StatelessWidget {
         entity: entity,
         onSelected: onSelected,
         isSaving: isSaving,
-        entityActions: entityActions
-    );
+        entityActions: entityActions);
   }
 }

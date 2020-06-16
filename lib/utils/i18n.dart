@@ -3891,20 +3891,16 @@ mixin LocalizationsProvider on LocaleCodeAware {
   String get reminderEndless =>
       _localizedValues[localeCode]['reminder_endless'] ?? '';
 
-  String get useDefault =>
-      _localizedValues[localeCode]['use_default'] ?? '';
+  String get useDefault => _localizedValues[localeCode]['use_default'] ?? '';
 
-  String get contactName =>
-      _localizedValues[localeCode]['contact_name'] ?? '';
+  String get contactName => _localizedValues[localeCode]['contact_name'] ?? '';
 
   String get creditRemaining =>
       _localizedValues[localeCode]['credit_remaining'] ?? '';
 
-  String get allRecords =>
-      _localizedValues[localeCode]['all_records'] ?? '';
+  String get allRecords => _localizedValues[localeCode]['all_records'] ?? '';
 
-  String get ownedByUser =>
-      _localizedValues[localeCode]['owned_by_user'] ?? '';
+  String get ownedByUser => _localizedValues[localeCode]['owned_by_user'] ?? '';
 
   String lookup(String key) {
     final lookupKey = toSnakeCase(key);
