@@ -38,7 +38,7 @@ List<String> filteredClientsSelector(
     final client = clientMap[clientId];
     final group = groupMap[client.groupId] ?? GroupEntity(id: client.groupId);
 
-    if (clientListState.filterEntityId != null) {
+    if (clientListState.filterEntityType == EntityType.group) {
       if (!clientListState.entityMatchesFilter(group)) {
         return false;
       }
