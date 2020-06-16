@@ -205,6 +205,13 @@ ListUIState _filterCreditsByStatus(
 
 ListUIState _filterCreditsByEntity(
     ListUIState creditListState, FilterByEntity action) {
+  if (creditListState.filterEntityId == action.entityId &&
+      creditListState.filterEntityType == action.entityType) {
+    return creditListState.rebuild((b) => b
+      ..filterEntityId = null
+      ..filterEntityType = null);
+  }
+
   return creditListState.rebuild((b) => b
     ..filterEntityId = action.entityId
     ..filterEntityType = action.entityType);

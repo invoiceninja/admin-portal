@@ -204,6 +204,13 @@ ListUIState _filterQuotesByStatus(
 
 ListUIState _filterQuotesByEntity(
     ListUIState quoteListState, FilterByEntity action) {
+  if (quoteListState.filterEntityId == action.entityId &&
+      quoteListState.filterEntityType == action.entityType) {
+    return quoteListState.rebuild((b) => b
+      ..filterEntityId = null
+      ..filterEntityType = null);
+  }
+
   return quoteListState.rebuild((b) => b
     ..filterEntityId = action.entityId
     ..filterEntityType = action.entityType);

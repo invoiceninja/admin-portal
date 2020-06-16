@@ -171,8 +171,15 @@ ListUIState _filterClientsByState(
 }
 
 ListUIState _filterClientsByEntity(
-    ListUIState invoiceListState, FilterByEntity action) {
-  return invoiceListState.rebuild((b) => b
+    ListUIState clientListState, FilterByEntity action) {
+  if (clientListState.filterEntityId == action.entityId &&
+      clientListState.filterEntityType == action.entityType) {
+    return clientListState.rebuild((b) => b
+      ..filterEntityId = null
+      ..filterEntityType = null);
+  }
+
+  return clientListState.rebuild((b) => b
     ..filterEntityId = action.entityId
     ..filterEntityType = action.entityType);
 }
