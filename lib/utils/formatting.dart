@@ -139,13 +139,13 @@ String formatNumber(
   } else {
     if (formatNumberType == FormatNumberType.percent) {
       formatter = NumberFormat('#,##0.#####', 'custom');
-    } else if (currency.precision == '0') {
+    } else if (currency.precision == 0) {
       formatter = NumberFormat('#,##0.#####', 'custom');
-    } else if (currency.precision == '1') {
+    } else if (currency.precision == 1) {
       formatter = NumberFormat('#,##0.0####', 'custom');
-    } else if (currency.precision == '2') {
+    } else if (currency.precision == 2) {
       formatter = NumberFormat('#,##0.00###', 'custom');
-    } else if (currency.precision == '3') {
+    } else if (currency.precision == 3) {
       formatter = NumberFormat('#,##0.000##', 'custom');
     }
 
