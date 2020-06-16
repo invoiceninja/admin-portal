@@ -199,7 +199,7 @@ class LoginVM {
             secret: secret.trim(),
           ));
           completer.future.then((_) {
-            print('## DONE ##');
+            // do nothing
           });
         },
         onLoginPressed: (
