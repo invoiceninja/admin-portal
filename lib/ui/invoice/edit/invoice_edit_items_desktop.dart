@@ -225,7 +225,8 @@ class _InvoiceEditItemsDesktopState extends State<InvoiceEditItemsDesktop> {
                         _updateTable();
                       },
                       textFieldConfiguration:
-                          TextFieldConfiguration<String>(onChanged: (value) {
+                          TextFieldConfiguration(onChanged: (value) {
+                        print('## ON CHANGED: $value');
                         viewModel.onChangedInvoiceItem(
                             lineItems[index]
                                 .rebuild((b) => b..productKey = value),
