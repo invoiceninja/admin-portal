@@ -168,7 +168,7 @@ class _EntityDropdownState extends State<EntityDropdown> {
               _textController.text = _entityMap[entityId].listDisplayName;
               widget.onSelected(entity);
             },
-            textFieldConfiguration: TextFieldConfiguration<String>(
+            textFieldConfiguration: TextFieldConfiguration(
               controller: _textController,
               autofocus: widget.autofocus ?? false,
               decoration: InputDecoration(

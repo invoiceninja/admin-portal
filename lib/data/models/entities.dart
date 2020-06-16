@@ -546,7 +546,7 @@ abstract class ActivityEntity
       return EntityType.task;
     } else {
       print(
-          '## Error: failed to resolve entity type - activity_type_id: $activityTypeId');
+          '## ERROR: failed to resolve entity type - activity_type_id: $activityTypeId');
       return null;
     }
   }

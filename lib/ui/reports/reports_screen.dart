@@ -935,7 +935,7 @@ class ReportResult {
                           textEditingControllers[column].text = value;
                           onFilterChanged(column, value);
                         },
-                        textFieldConfiguration: TextFieldConfiguration<String>(
+                        textFieldConfiguration: TextFieldConfiguration(
                           controller: textEditingControllers != null
                               ? textEditingControllers[column]
                               : null,

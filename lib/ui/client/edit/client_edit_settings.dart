@@ -125,7 +125,6 @@ class ClientEditSettingsState extends State<ClientEditSettings> {
               }).toList(),
               value: '${client.settings.defaultPaymentTerms}',
               onChanged: (dynamic numDays) {
-                print('## onChanged: $numDays');
                 viewModel.onChanged(client.rebuild((b) => b
                   ..settings.defaultPaymentTerms =
                       numDays == null ? null : '$numDays'));
