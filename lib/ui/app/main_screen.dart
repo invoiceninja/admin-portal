@@ -677,7 +677,9 @@ class _EntityFilter extends StatelessWidget {
                             maxLines: 1,
                           ),
                           onPressed: () => viewEntitiesByType(
-                              context: context, entityType: filterEntityType),
+                              context: context,
+                              entityType: filterEntityType,
+                              filterEntity: filterEntity),
                         ),
                       ),
                     ),
@@ -698,8 +700,7 @@ class _EntityFilter extends StatelessWidget {
                       onSelected: (EntityType value) => viewEntitiesByType(
                         context: context,
                         entityType: value,
-                        filterEntity:
-                            value == filterEntityType ? null : filterEntity,
+                        filterEntity: filterEntity,
                       ),
                       itemBuilder: (BuildContext context) => [
                         filterEntityType,
