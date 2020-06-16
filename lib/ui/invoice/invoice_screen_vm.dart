@@ -50,7 +50,6 @@ class InvoiceScreenVM {
         state.clientState.map,
         state.paymentState.map,
         state.invoiceListState,
-        state.invoiceUIState.selectedId,
       ),
       userCompany: state.userCompany,
       isInMultiselect: state.invoiceListState.isInMultiselect(),

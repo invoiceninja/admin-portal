@@ -191,7 +191,6 @@ class InvoiceListVM extends EntityListVM {
           state.clientState.map,
           state.paymentState.map,
           state.invoiceListState,
-          state.invoiceUIState.selectedId,
       ),
       invoiceMap: state.invoiceState.map,
       clientMap: state.clientState.map,

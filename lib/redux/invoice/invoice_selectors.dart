@@ -43,23 +43,21 @@ List<String> dropdownInvoiceSelector(
   return list;
 }
 
-var memoizedFilteredInvoiceList = memo6(
+var memoizedFilteredInvoiceList = memo5(
     (BuiltMap<String, InvoiceEntity> invoiceMap,
             BuiltList<String> invoiceList,
             BuiltMap<String, ClientEntity> clientMap,
             BuiltMap<String, PaymentEntity> paymentMap,
-            ListUIState invoiceListState,
-            String selectedId) =>
+            ListUIState invoiceListState,) =>
         filteredInvoicesSelector(invoiceMap, invoiceList, clientMap, paymentMap,
-            invoiceListState, selectedId));
+            invoiceListState));
 
 List<String> filteredInvoicesSelector(
     BuiltMap<String, InvoiceEntity> invoiceMap,
     BuiltList<String> invoiceList,
     BuiltMap<String, ClientEntity> clientMap,
     BuiltMap<String, PaymentEntity> paymentMap,
-    ListUIState invoiceListState,
-    String selectedId) {
+    ListUIState invoiceListState,) {
   final Map<String, List<String>> invoicePaymentMap = {};
 
   if (invoiceListState.filterEntityType == EntityType.payment) {
@@ -77,10 +75,6 @@ List<String> filteredInvoicesSelector(
     final invoice = invoiceMap[invoiceId];
     final client =
         clientMap[invoice.clientId] ?? ClientEntity(id: invoice.clientId);
-
-    if (invoice.id == selectedId) {
-      return true;
-    }
 
     if (invoiceListState.filterEntityType == EntityType.client) {
       if (!invoiceListState.entityMatchesFilter(client)) {

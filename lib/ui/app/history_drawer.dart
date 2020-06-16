@@ -124,7 +124,7 @@ class _HistoryListTileState extends State<HistoryListTile> {
     } else {
       entity = state.getEntityMap(history.entityType)[history.id] as BaseEntity;
 
-      if (entity == null) {
+      if (entity == null || !entity.isActive) {
         return SizedBox();
       }
 

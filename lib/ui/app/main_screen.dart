@@ -250,7 +250,7 @@ class MainScreen extends StatelessWidget {
 
                   final entity = state.getEntityMap(item.entityType)[item.id]
                       as BaseEntity;
-                  if (entity == null) {
+                  if (entity == null || !entity.isActive) {
                     continue;
                   }
 
