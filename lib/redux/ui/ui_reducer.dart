@@ -41,8 +41,8 @@ import 'package:invoiceninja_flutter/redux/group/group_reducer.dart';
 UIState uiReducer(UIState state, dynamic action) {
   if (action is ClearEntityFilter ||
       (action is FilterByEntity &&
-          (action.entityType == state.filterEntityType ||
-              action.entityId == state.filterEntityId))) {
+          action.entityType == state.filterEntityType &&
+          action.entityId == state.filterEntityId)) {
     state = state.rebuild((b) => b
       ..filterEntityType = null
       ..filterEntityId = null);

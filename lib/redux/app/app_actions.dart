@@ -182,15 +182,19 @@ void viewEntitiesByType({
   BaseEntity filterEntity,
 }) {
   final store = StoreProvider.of<AppState>(context);
+  final uiState = store.state.uiState;
   final navigator = Navigator.of(context);
   dynamic action;
 
   if (filterEntity != null) {
-    filterByEntity(
-      context: context,
-      entity: filterEntity,
-    );
-  } else if (store.state.uiState.filterEntityType != null) {
+    if (uiState.filterEntityType != filterEntity.entityType &&
+        uiState.filterEntityId != filterEntity.id) {
+      filterByEntity(
+        context: context,
+        entity: filterEntity,
+      );
+    }
+  } else if (uiState.filterEntityType != null) {
     store.dispatch(ClearEntityFilter());
   }
 
