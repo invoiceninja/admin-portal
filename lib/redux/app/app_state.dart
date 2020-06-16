@@ -168,6 +168,17 @@ abstract class AppState implements Built<AppState, AppStateBuilder> {
       return false;
     }
 
+    if ((entityUIState.selectedId ?? '').isEmpty) {
+      return true;
+    } else if (historyList.isNotEmpty &&
+        historyList.first.entityType != entityType) {
+      // check if this needs to be added to the history
+      return null;
+    }
+
+    return false;
+
+    /*
     if (entityList.isEmpty) {
       // no selection
       return (entityUIState.selectedId ?? '').isNotEmpty;
@@ -182,6 +193,7 @@ abstract class AppState implements Built<AppState, AppStateBuilder> {
     }
 
     return false;
+     */
   }
 
   BuiltMap<String, SelectableEntity> getEntityMap(EntityType type) {

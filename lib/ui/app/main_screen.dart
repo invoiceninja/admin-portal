@@ -284,7 +284,7 @@ class MainScreen extends StatelessWidget {
                     context: context,
                     entityId: history.id,
                     entityType: history.entityType,
-                    showError: false,
+                    ensureVisible: true,
                   );
               }
 

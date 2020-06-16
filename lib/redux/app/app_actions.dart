@@ -349,18 +349,23 @@ void viewEntityById({
   EntityType entityType,
   bool force = false,
   bool showError = true,
+  bool ensureVisible = false,
 }) {
   final store = StoreProvider.of<AppState>(context);
   final state = store.state;
   final navigator = Navigator.of(context);
 
-  if (entityId != null &&
-      showError &&
-      !store.state.getEntityMap(entityType).containsKey(entityId)) {
-    showErrorDialog(
-        context: context,
-        message: AppLocalization.of(context).failedToFindRecord);
-    return;
+  if (ensureVisible) {
+    store.dispatch(ClearEntityFilter());
+  } else {
+    if (entityId != null &&
+        showError &&
+        !store.state.getEntityMap(entityType).containsKey(entityId)) {
+      showErrorDialog(
+          context: context,
+          message: AppLocalization.of(context).failedToFindRecord);
+      return;
+    }
   }
 
   if (!state.prefState.isPreviewVisible &&
