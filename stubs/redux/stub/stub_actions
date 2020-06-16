@@ -249,13 +249,6 @@ class FilterStubsByCustom4 implements PersistUI {
   final String value;
 }
 
-class FilterStubsByEntity implements PersistUI {
-  FilterStubsByEntity({this.entityId, this.entityType});
-
-  final String entityId;
-  final EntityType entityType;
-}
-
 
 void handleStubAction(
     BuildContext context, List<BaseEntity> stubs, EntityAction action) {

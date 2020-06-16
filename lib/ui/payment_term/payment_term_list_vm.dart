@@ -126,7 +126,7 @@ class PaymentTermListVM {
       isLoaded: state.paymentTermState.isLoaded,
       filter: state.paymentTermUIState.listUIState.filter,
       onClearEntityFilterPressed: () =>
-          store.dispatch(FilterPaymentTermsByEntity()),
+          store.dispatch(FilterByEntity()),
       onViewEntityFilterPressed: (BuildContext context) => viewEntityById(
           context: context,
           entityId: state.paymentTermListState.filterEntityId,

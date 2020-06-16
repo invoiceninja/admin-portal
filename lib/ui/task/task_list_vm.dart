@@ -134,7 +134,7 @@ class TaskListVM {
       isLoading: state.isLoading,
       isLoaded: state.taskState.isLoaded,
       filter: state.taskUIState.listUIState.filter,
-      onClearEntityFilterPressed: () => store.dispatch(FilterTasksByEntity()),
+      onClearEntityFilterPressed: () => store.dispatch(ClearEntityFilter()),
       onViewEntityFilterPressed: (BuildContext context) => viewEntityById(
           context: context,
           entityId: state.taskListState.filterEntityId,

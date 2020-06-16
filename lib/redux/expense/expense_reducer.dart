@@ -59,7 +59,7 @@ final expenseListReducer = combineReducers<ListUIState>([
   TypedReducer<ListUIState, FilterExpensesByCustom2>(_filterExpensesByCustom2),
   TypedReducer<ListUIState, FilterExpensesByCustom3>(_filterExpensesByCustom3),
   TypedReducer<ListUIState, FilterExpensesByCustom4>(_filterExpensesByCustom4),
-  TypedReducer<ListUIState, FilterExpensesByEntity>(_filterExpensesByClient),
+  TypedReducer<ListUIState, FilterByEntity>(_filterExpensesByClient),
   TypedReducer<ListUIState, StartExpenseMultiselect>(_startListMultiselect),
   TypedReducer<ListUIState, AddToExpenseMultiselect>(_addToListMultiselect),
   TypedReducer<ListUIState, RemoveFromExpenseMultiselect>(
@@ -72,7 +72,7 @@ final expenseListReducer = combineReducers<ListUIState>([
 ]);
 
 ListUIState _filterExpensesByClient(
-    ListUIState expenseListState, FilterExpensesByEntity action) {
+    ListUIState expenseListState, FilterByEntity action) {
   return expenseListState.rebuild((b) => b
     ..filterEntityId = action.entityId
     ..filterEntityType = action.entityType);

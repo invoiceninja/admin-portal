@@ -82,7 +82,7 @@ class CompanyGatewayListVM {
       isLoaded: state.companyGatewayState.isLoaded,
       filter: state.companyGatewayUIState.listUIState.filter,
       onClearEntityFilterPressed: () =>
-          store.dispatch(FilterCompanyGatewaysByEntity()),
+          store.dispatch(ClearEntityFilter()),
       onViewEntityFilterPressed: (BuildContext context) => viewEntityById(
           context: context,
           entityId: state.companyGatewayListState.filterEntityId,

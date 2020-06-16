@@ -159,7 +159,7 @@ class QuoteListVM extends EntityListVM {
         viewEntity(context: context, entity: quote);
       },
       onRefreshed: (context) => _handleRefresh(context),
-      onClearEntityFilterPressed: () => store.dispatch(FilterQuotesByEntity()),
+      onClearEntityFilterPressed: () => store.dispatch(ClearEntityFilter()),
       onViewEntityFilterPressed: (BuildContext context) => viewEntityById(
           context: context,
           entityId: state.quoteListState.filterEntityId,

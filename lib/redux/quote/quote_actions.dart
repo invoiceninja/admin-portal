@@ -321,13 +321,6 @@ class FilterQuotesByStatus implements PersistUI {
   final EntityStatus status;
 }
 
-class FilterQuotesByEntity implements PersistUI {
-  FilterQuotesByEntity({this.entityId, this.entityType});
-
-  final String entityId;
-  final EntityType entityType;
-}
-
 class FilterQuoteDropdown {
   FilterQuoteDropdown(this.filter);
 

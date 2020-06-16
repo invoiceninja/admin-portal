@@ -291,13 +291,6 @@ class FilterPaymentsByCustom4 implements PersistUI {
   final String value;
 }
 
-class FilterPaymentsByEntity implements PersistUI {
-  FilterPaymentsByEntity({this.entityId, this.entityType});
-
-  final String entityId;
-  final EntityType entityType;
-}
-
 class StartPaymentMultiselect {}
 
 class AddToPaymentMultiselect {

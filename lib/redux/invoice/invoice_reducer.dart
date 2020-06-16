@@ -41,7 +41,8 @@ Reducer<String> selectedIdReducer = combineReducers([
   TypedReducer<String, ShowEmailInvoice>(
       (selectedId, action) => action.invoice.id),
   TypedReducer<String, SelectCompany>((selectedId, action) => ''),
-  TypedReducer<String, FilterPaymentsByEntity>((selectedId, action) =>
+  TypedReducer<String, ClearEntityFilter>((selectedId, action) => ''),
+  TypedReducer<String, FilterByEntity>((selectedId, action) =>
       action.entityType == EntityType.invoice ? action.entityId : selectedId),
 ]);
 
@@ -140,7 +141,7 @@ final invoiceListReducer = combineReducers<ListUIState>([
   TypedReducer<ListUIState, SortInvoices>(_sortInvoices),
   TypedReducer<ListUIState, FilterInvoicesByState>(_filterInvoicesByState),
   TypedReducer<ListUIState, FilterInvoicesByStatus>(_filterInvoicesByStatus),
-  TypedReducer<ListUIState, FilterInvoicesByEntity>(_filterInvoicesByEntity),
+  TypedReducer<ListUIState, FilterByEntity>(_filterInvoicesByEntity),
   TypedReducer<ListUIState, FilterInvoices>(_filterInvoices),
   TypedReducer<ListUIState, FilterInvoicesByCustom1>(_filterInvoicesByCustom1),
   TypedReducer<ListUIState, FilterInvoicesByCustom2>(_filterInvoicesByCustom2),
@@ -218,7 +219,14 @@ ListUIState _filterInvoicesByStatus(
 }
 
 ListUIState _filterInvoicesByEntity(
-    ListUIState invoiceListState, FilterInvoicesByEntity action) {
+    ListUIState invoiceListState, FilterByEntity action) {
+  if (invoiceListState.filterEntityId == action.entityId &&
+      invoiceListState.filterEntityType == action.entityType) {
+    return invoiceListState.rebuild((b) => b
+      ..filterEntityId = null
+      ..filterEntityType = null);
+  }
+
   return invoiceListState.rebuild((b) => b
     ..filterEntityId = action.entityId
     ..filterEntityType = action.entityType);

@@ -245,13 +245,6 @@ class SortClients implements PersistUI {
   final String field;
 }
 
-class FilterClientsByEntity implements PersistUI {
-  FilterClientsByEntity({this.entityId, this.entityType});
-
-  final String entityId;
-  final EntityType entityType;
-}
-
 class FilterClientsByState implements PersistUI {
   FilterClientsByState(this.state);
 
@@ -307,10 +300,9 @@ void handleClientAction(
       break;
     case EntityAction.newInvoice:
       if (isNotMobile(context)) {
-        filterEntitiesByType(
+        filterByEntity(
             context: context,
-            entityType: EntityType.invoice,
-            filterEntity: client);
+            entity: client);
       }
       createEntity(
           context: context,
@@ -318,10 +310,9 @@ void handleClientAction(
       break;
     case EntityAction.newQuote:
       if (isNotMobile(context)) {
-        filterEntitiesByType(
+        filterByEntity(
             context: context,
-            entityType: EntityType.quote,
-            filterEntity: client);
+            entity: client);
       }
       createEntity(
           context: context,
@@ -333,10 +324,9 @@ void handleClientAction(
       break;
     case EntityAction.newCredit:
       if (isNotMobile(context)) {
-        filterEntitiesByType(
+        filterByEntity(
             context: context,
-            entityType: EntityType.credit,
-            filterEntity: client);
+            entity: client);
       }
       createEntity(
           context: context,
@@ -348,10 +338,9 @@ void handleClientAction(
       break;
     case EntityAction.newExpense:
       if (isNotMobile(context)) {
-        filterEntitiesByType(
+        filterByEntity(
             context: context,
-            entityType: EntityType.expense,
-            filterEntity: client);
+            entity: client);
       }
       createEntity(
           context: context,
@@ -359,10 +348,9 @@ void handleClientAction(
       break;
     case EntityAction.newPayment:
       if (isNotMobile(context)) {
-        filterEntitiesByType(
+        filterByEntity(
             context: context,
-            entityType: EntityType.payment,
-            filterEntity: client);
+            entity: client);
       }
       createEntity(
           context: context,
@@ -371,10 +359,9 @@ void handleClientAction(
       break;
     case EntityAction.newProject:
       if (isNotMobile(context)) {
-        filterEntitiesByType(
+        filterByEntity(
             context: context,
-            entityType: EntityType.project,
-            filterEntity: client);
+            entity: client);
       }
       createEntity(
           context: context,

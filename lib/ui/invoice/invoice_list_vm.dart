@@ -207,7 +207,7 @@ class InvoiceListVM extends EntityListVM {
       },
       onRefreshed: (context) => _handleRefresh(context),
       onClearEntityFilterPressed: () =>
-          store.dispatch(FilterInvoicesByEntity()),
+          store.dispatch(FilterByEntity()),
       onViewEntityFilterPressed: (BuildContext context) => viewEntityById(
           context: context,
           entityId: state.invoiceListState.filterEntityId,

@@ -106,7 +106,7 @@ class UserListVM {
       isLoading: state.isLoading,
       isLoaded: state.userState.isLoaded,
       filter: state.userUIState.listUIState.filter,
-      onClearEntityFilterPressed: () => store.dispatch(FilterUsersByEntity()),
+      onClearEntityFilterPressed: () => store.dispatch(ClearEntityFilter()),
       onViewEntityFilterPressed: (BuildContext context) => viewEntityById(
           context: context,
           entityId: state.userListState.filterEntityId,

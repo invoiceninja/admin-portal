@@ -22,9 +22,7 @@ Reducer<String> selectedIdReducer = combineReducers([
   TypedReducer<String, AddPaymentSuccess>(
       (selectedId, action) => action.payment.id),
   TypedReducer<String, SelectCompany>((selectedId, action) => ''),
-  TypedReducer<String, FilterInvoicesByEntity>((selectedId, action) =>
-      action.entityType == EntityType.payment ? action.entityId : selectedId),
-  TypedReducer<String, FilterCompanyGatewaysByEntity>((selectedId, action) =>
+  TypedReducer<String, FilterByEntity>((selectedId, action) =>
       action.entityType == EntityType.payment ? action.entityId : selectedId),
 ]);
 
@@ -65,7 +63,7 @@ final paymentListReducer = combineReducers<ListUIState>([
   TypedReducer<ListUIState, FilterPaymentsByCustom2>(_filterPaymentsByCustom2),
   TypedReducer<ListUIState, FilterPaymentsByCustom3>(_filterPaymentsByCustom3),
   TypedReducer<ListUIState, FilterPaymentsByCustom4>(_filterPaymentsByCustom4),
-  TypedReducer<ListUIState, FilterPaymentsByEntity>(_filterPaymentsByEntity),
+  TypedReducer<ListUIState, FilterByEntity>(_filterPaymentsByEntity),
   TypedReducer<ListUIState, StartPaymentMultiselect>(_startListMultiselect),
   TypedReducer<ListUIState, AddToPaymentMultiselect>(_addToListMultiselect),
   TypedReducer<ListUIState, RemoveFromPaymentMultiselect>(
@@ -78,7 +76,7 @@ final paymentListReducer = combineReducers<ListUIState>([
 ]);
 
 ListUIState _filterPaymentsByEntity(
-    ListUIState paymentListState, FilterPaymentsByEntity action) {
+    ListUIState paymentListState, FilterByEntity action) {
   return paymentListState.rebuild((b) => b
     ..filterEntityId = action.entityId
     ..filterEntityType = action.entityType);

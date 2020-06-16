@@ -57,7 +57,7 @@ final taxRateListReducer = combineReducers<ListUIState>([
   TypedReducer<ListUIState, FilterTaxRates>(_filterTaxRates),
   TypedReducer<ListUIState, FilterTaxRatesByCustom1>(_filterTaxRatesByCustom1),
   TypedReducer<ListUIState, FilterTaxRatesByCustom2>(_filterTaxRatesByCustom2),
-  TypedReducer<ListUIState, FilterTaxRatesByEntity>(_filterTaxRatesByClient),
+  TypedReducer<ListUIState, FilterByEntity>(_filterTaxRatesByClient),
   TypedReducer<ListUIState, StartTaxRateMultiselect>(_startListMultiselect),
   TypedReducer<ListUIState, AddToTaxRateMultiselect>(_addToListMultiselect),
   TypedReducer<ListUIState, RemoveFromTaxRateMultiselect>(
@@ -70,7 +70,7 @@ final taxRateListReducer = combineReducers<ListUIState>([
 ]);
 
 ListUIState _filterTaxRatesByClient(
-    ListUIState taxRateListState, FilterTaxRatesByEntity action) {
+    ListUIState taxRateListState, FilterByEntity action) {
   return taxRateListState.rebuild((b) => b
     ..filterEntityId = action.entityId
     ..filterEntityType = action.entityType);

@@ -27,19 +27,7 @@ Reducer<String> selectedIdReducer = combineReducers([
   TypedReducer<String, AddUserSuccess>(
       (String selectedId, action) => action.user.id),
   TypedReducer<String, SelectCompany>((selectedId, action) => ''),
-  TypedReducer<String, FilterInvoicesByEntity>((selectedId, action) =>
-      action.entityType == EntityType.user ? action.entityId : selectedId),
-  TypedReducer<String, FilterPaymentsByEntity>((selectedId, action) =>
-      action.entityType == EntityType.user ? action.entityId : selectedId),
-  TypedReducer<String, FilterQuotesByEntity>((selectedId, action) =>
-      action.entityType == EntityType.user ? action.entityId : selectedId),
-  TypedReducer<String, FilterCreditsByEntity>((selectedId, action) =>
-      action.entityType == EntityType.user ? action.entityId : selectedId),
-  TypedReducer<String, FilterTasksByEntity>((selectedId, action) =>
-      action.entityType == EntityType.user ? action.entityId : selectedId),
-  TypedReducer<String, FilterProjectsByEntity>((selectedId, action) =>
-      action.entityType == EntityType.user ? action.entityId : selectedId),
-  TypedReducer<String, FilterExpensesByEntity>((selectedId, action) =>
+  TypedReducer<String, FilterByEntity>((selectedId, action) =>
       action.entityType == EntityType.user ? action.entityId : selectedId),
 ]);
 
@@ -77,7 +65,7 @@ final userListReducer = combineReducers<ListUIState>([
   TypedReducer<ListUIState, FilterUsers>(_filterUsers),
   TypedReducer<ListUIState, FilterUsersByCustom1>(_filterUsersByCustom1),
   TypedReducer<ListUIState, FilterUsersByCustom2>(_filterUsersByCustom2),
-  TypedReducer<ListUIState, FilterUsersByEntity>(_filterUsersByClient),
+  TypedReducer<ListUIState, FilterByEntity>(_filterUsersByClient),
   TypedReducer<ListUIState, StartUserMultiselect>(_startListMultiselect),
   TypedReducer<ListUIState, AddToUserMultiselect>(_addToListMultiselect),
   TypedReducer<ListUIState, RemoveFromUserMultiselect>(
@@ -90,7 +78,7 @@ final userListReducer = combineReducers<ListUIState>([
 ]);
 
 ListUIState _filterUsersByClient(
-    ListUIState userListState, FilterUsersByEntity action) {
+    ListUIState userListState, FilterByEntity action) {
   return userListState.rebuild((b) => b
     ..filterEntityId = action.entityId
     ..filterEntityType = action.entityType);

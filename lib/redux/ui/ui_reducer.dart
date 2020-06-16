@@ -39,18 +39,17 @@ import 'package:invoiceninja_flutter/redux/company_gateway/company_gateway_reduc
 import 'package:invoiceninja_flutter/redux/group/group_reducer.dart';
 
 UIState uiReducer(UIState state, dynamic action) {
-  if (action is FilterClientsByEntity ||
-      action is FilterInvoicesByEntity ||
-      action is FilterPaymentsByEntity ||
-      action is FilterQuotesByEntity ||
-      action is FilterCreditsByEntity) {
-    state = state.rebuild((b) => b
-      ..filterEntityType = action.entityType
-      ..filterEntityId = action.entityId);
-  } else if (action is ClearEntityFilter) {
+  if (action is ClearEntityFilter ||
+      (action is FilterByEntity &&
+          (action.entityType == state.filterEntityType ||
+              action.entityId == state.filterEntityId))) {
     state = state.rebuild((b) => b
       ..filterEntityType = null
       ..filterEntityId = null);
+  } else if (action is FilterByEntity) {
+    state = state.rebuild((b) => b
+      ..filterEntityType = action.entityType
+      ..filterEntityId = action.entityId);
   }
 
   final currentRoute = currentRouteReducer(state.currentRoute, action);

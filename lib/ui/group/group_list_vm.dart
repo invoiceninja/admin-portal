@@ -121,7 +121,7 @@ class GroupListVM {
       isLoading: state.isLoading,
       isLoaded: state.groupState.isLoaded,
       filter: state.groupUIState.listUIState.filter,
-      onClearEntityFilterPressed: () => store.dispatch(FilterGroupsByEntity()),
+      onClearEntityFilterPressed: () => store.dispatch(ClearEntityFilter()),
       onViewEntityFilterPressed: (BuildContext context) => viewEntityById(
           context: context,
           entityId: state.groupListState.filterEntityId,

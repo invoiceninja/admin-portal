@@ -117,8 +117,10 @@ class UserPreferencesChanged implements PersistPrefs {
 }
 
 class LoadAccountSuccess {
-  LoadAccountSuccess(
-      {this.loginResponse, this.completer,});
+  LoadAccountSuccess({
+    this.loginResponse,
+    this.completer,
+  });
 
   final Completer completer;
   final LoginResponse loginResponse;
@@ -142,6 +144,13 @@ class DiscardChanges {}
 
 class ClearEntityFilter {}
 
+class FilterByEntity implements PersistUI {
+  FilterByEntity({this.entityId, this.entityType});
+
+  final String entityId;
+  final EntityType entityType;
+}
+
 class FilterCompany implements PersistUI {
   FilterCompany(this.filter);
 
@@ -156,117 +165,15 @@ abstract class AbstractNavigatorAction {
   BuildContext get context => navigator.overlay.context ?? navigator.context;
 }
 
-void filterEntitiesByType({
+void filterByEntity({
   @required BuildContext context,
-  @required EntityType entityType,
-  @required BaseEntity filterEntity,
+  @required BaseEntity entity,
 }) {
   final store = StoreProvider.of<AppState>(context);
-
-  switch (entityType) {
-    case EntityType.client:
-      store.dispatch(FilterClientsByEntity(
-        entityId: filterEntity.id,
-        entityType: filterEntity.entityType,
-      ));
-      break;
-    case EntityType.user:
-      store.dispatch(FilterUsersByEntity(
-        entityId: filterEntity.id,
-        entityType: filterEntity.entityType,
-      ));
-      break;
-    case EntityType.project:
-      store.dispatch(FilterProjectsByEntity(
-        entityId: filterEntity.id,
-        entityType: filterEntity.entityType,
-      ));
-      break;
-    case EntityType.taxRate:
-      store.dispatch(FilterTaxRatesByEntity(
-        entityId: filterEntity.id,
-        entityType: filterEntity.entityType,
-      ));
-      break;
-    case EntityType.companyGateway:
-      store.dispatch(FilterCompanyGatewaysByEntity(
-        entityId: filterEntity.id,
-        entityType: filterEntity.entityType,
-      ));
-      break;
-    case EntityType.invoice:
-      store.dispatch(FilterInvoicesByEntity(
-        entityId: filterEntity.id,
-        entityType: filterEntity.entityType,
-      ));
-      break;
-    //case EntityType.recurringInvoice:
-    //store.dispatch(ViewRecurringInvoice(recurringInvoiceId: entityId, navigator: navigator));
-    //break;
-    case EntityType.quote:
-      store.dispatch(FilterQuotesByEntity(
-        entityId: filterEntity.id,
-        entityType: filterEntity.entityType,
-      ));
-      break;
-    case EntityType.vendor:
-      store.dispatch(FilterVendorsByEntity(
-        entityId: filterEntity.id,
-        entityType: filterEntity.entityType,
-      ));
-      break;
-    case EntityType.task:
-      store.dispatch(FilterTasksByEntity(
-        entityId: filterEntity.id,
-        entityType: filterEntity.entityType,
-      ));
-      break;
-    case EntityType.expense:
-      store.dispatch(FilterExpensesByEntity(
-        entityId: filterEntity.id,
-        entityType: filterEntity.entityType,
-      ));
-      break;
-    //case EntityType.expenseCategory:
-    //store.dispatch(ViewExpenseCategory(taxRateId: entityId, navigator: navigator));
-    //break;
-    //case EntityType.credit:
-    //store.dispatch(ViewCredit(creditId: entityId, navigator: navigator));
-    //break;
-    case EntityType.payment:
-      store.dispatch(FilterPaymentsByEntity(
-        entityId: filterEntity.id,
-        entityType: filterEntity.entityType,
-      ));
-      break;
-    case EntityType.group:
-      store.dispatch(FilterGroupsByEntity(
-        entityId: filterEntity.id,
-        entityType: filterEntity.entityType,
-      ));
-      break;
-    // STARTER: filter - do not remove comment
-    case EntityType.paymentTerm:
-      store.dispatch(FilterPaymentTermsByEntity(
-        entityId: filterEntity.id,
-        entityType: filterEntity.entityType,
-      ));
-      break;
-
-    case EntityType.design:
-      store.dispatch(FilterDesignsByEntity(
-        entityId: filterEntity.id,
-        entityType: filterEntity.entityType,
-      ));
-      break;
-
-    case EntityType.credit:
-      store.dispatch(FilterCreditsByEntity(
-        entityId: filterEntity.id,
-        entityType: filterEntity.entityType,
-      ));
-      break;
-  }
+  store.dispatch(FilterByEntity(
+    entityId: entity.id,
+    entityType: entity.entityType,
+  ));
 }
 
 void viewEntitiesByType({
@@ -279,11 +186,12 @@ void viewEntitiesByType({
   dynamic action;
 
   if (filterEntity != null) {
-    filterEntitiesByType(
+    filterByEntity(
       context: context,
-      entityType: entityType,
-      filterEntity: filterEntity,
+      entity: filterEntity,
     );
+  } else if (store.state.uiState.filterEntityType != null) {
+    store.dispatch(ClearEntityFilter());
   }
 
   switch (entityType) {

@@ -246,13 +246,6 @@ class FilterProjectsByCustom4 implements PersistUI {
   final String value;
 }
 
-class FilterProjectsByEntity implements PersistUI {
-  FilterProjectsByEntity({this.entityId, this.entityType});
-
-  final String entityId;
-  final EntityType entityType;
-}
-
 void handleProjectAction(
     BuildContext context, List<BaseEntity> projects, EntityAction action) {
   assert(

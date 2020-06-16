@@ -321,13 +321,6 @@ class FilterCreditsByStatus implements PersistUI {
   final EntityStatus status;
 }
 
-class FilterCreditsByEntity implements PersistUI {
-  FilterCreditsByEntity({this.entityId, this.entityType});
-
-  final String entityId;
-  final EntityType entityType;
-}
-
 class FilterCreditDropdown {
   FilterCreditDropdown(this.filter);
 

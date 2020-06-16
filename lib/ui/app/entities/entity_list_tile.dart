@@ -79,9 +79,7 @@ class EntityListTile extends StatelessWidget {
                   : null,
               leading: leading,
               trailing: trailing,
-              onTap: () => isFilteredBy && isNotMobile(context)
-                  ? store.dispatch(ClearEntityFilter())
-                  : onTap(),
+              onTap: () => onTap(),
               onLongPress: onLongPress,
             ),
           ),

@@ -161,7 +161,7 @@ class CreditListVM extends EntityListVM {
         viewEntity(context: context, entity: credit);
       },
       onRefreshed: (context) => _handleRefresh(context),
-      onClearEntityFilterPressed: () => store.dispatch(FilterCreditsByEntity()),
+      onClearEntityFilterPressed: () => store.dispatch(ClearEntityFilter()),
       onViewEntityFilterPressed: (BuildContext context) => viewEntityById(
           context: context,
           entityId: state.creditListState.filterEntityId,

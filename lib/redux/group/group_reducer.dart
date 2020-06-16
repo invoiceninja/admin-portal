@@ -23,7 +23,7 @@ Reducer<String> selectedIdReducer = combineReducers([
   TypedReducer<String, AddGroupSuccess>(
       (String selectedId, action) => action.group.id),
   TypedReducer<String, SelectCompany>((selectedId, action) => ''),
-  TypedReducer<String, FilterClientsByEntity>((selectedId, action) =>
+  TypedReducer<String, FilterByEntity>((selectedId, action) =>
       action.entityType == EntityType.group ? action.entityId : selectedId),
 ]);
 
@@ -61,7 +61,7 @@ final groupListReducer = combineReducers<ListUIState>([
   TypedReducer<ListUIState, FilterGroups>(_filterGroups),
   TypedReducer<ListUIState, FilterGroupsByCustom1>(_filterGroupsByCustom1),
   TypedReducer<ListUIState, FilterGroupsByCustom2>(_filterGroupsByCustom2),
-  TypedReducer<ListUIState, FilterGroupsByEntity>(_filterGroupsByClient),
+  TypedReducer<ListUIState, FilterByEntity>(_filterGroupsByClient),
   TypedReducer<ListUIState, StartGroupMultiselect>(_startListMultiselect),
   TypedReducer<ListUIState, AddToGroupMultiselect>(_addToListMultiselect),
   TypedReducer<ListUIState, RemoveFromGroupMultiselect>(
@@ -74,7 +74,7 @@ final groupListReducer = combineReducers<ListUIState>([
 ]);
 
 ListUIState _filterGroupsByClient(
-    ListUIState groupListState, FilterGroupsByEntity action) {
+    ListUIState groupListState, FilterByEntity action) {
   return groupListState.rebuild((b) => b
     ..filterEntityId = action.entityId
     ..filterEntityType = action.entityType);

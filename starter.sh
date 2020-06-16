@@ -417,10 +417,6 @@ else
     code="import 'package:${package}\/redux\/${module_snake}\/${module_snake}_actions.dart';${lineBreak}"
     sed -i -e "s/$comment/$comment${lineBreak}$code/g" ./lib/redux/app/app_actions.dart
 
-    comment="STARTER: filter - do not remove comment"
-    code="case EntityType.${module_camel}: store.dispatch(Filter${Module}sByEntity(entityId: filterEntity.id, entityType: filterEntity.entityType,)); break;${lineBreak}"
-    sed -i -e "s/$comment/$comment${lineBreak}$code/g" ./lib/redux/app/app_actions.dart
-
     comment="STARTER: view list - do not remove comment"
     code="case EntityType.${module_camel}: store.dispatch(View${Module}List(navigator: navigator)); break;${lineBreak}"
     sed -i -e "s/$comment/$comment${lineBreak}$code/g" ./lib/redux/app/app_actions.dart

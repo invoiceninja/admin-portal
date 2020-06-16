@@ -123,7 +123,7 @@ class DesignListVM {
       isLoading: state.isLoading,
       isLoaded: state.designState.isLoaded,
       filter: state.designUIState.listUIState.filter,
-      onClearEntityFilterPressed: () => store.dispatch(FilterDesignsByEntity()),
+      onClearEntityFilterPressed: () => store.dispatch(ClearEntityFilter()),
       onViewEntityFilterPressed: (BuildContext context) => viewEntityById(
           context: context,
           entityId: state.designListState.filterEntityId,

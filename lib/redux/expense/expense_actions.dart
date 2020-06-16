@@ -250,13 +250,6 @@ class FilterExpensesByCustom4 implements PersistUI {
   final String value;
 }
 
-class FilterExpensesByEntity implements PersistUI {
-  FilterExpensesByEntity({this.entityId, this.entityType});
-
-  final String entityId;
-  final EntityType entityType;
-}
-
 void handleExpenseAction(
     BuildContext context, List<BaseEntity> expenses, EntityAction action) {
   assert(

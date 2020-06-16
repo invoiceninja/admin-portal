@@ -65,7 +65,7 @@ class PaymentViewVM {
         if (longPress || isMobile(context)) {
           viewEntity(context: context, entity: client);
         } else {
-          store.dispatch(FilterPaymentsByEntity(
+          store.dispatch(FilterByEntity(
               entityType: EntityType.client, entityId: client.id));
         }
       },
@@ -74,7 +74,7 @@ class PaymentViewVM {
         if (longPress || isMobile(context)) {
           viewEntity(context: context, entity: invoice);
         } else {
-          store.dispatch(FilterPaymentsByEntity(
+          store.dispatch(FilterByEntity(
               entityType: EntityType.invoice, entityId: invoice.id));
         }
       },

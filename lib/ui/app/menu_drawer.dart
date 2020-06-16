@@ -477,7 +477,6 @@ class _DrawerTileState extends State<DrawerTile> {
             maxLines: 1,
           ),
           onTap: () {
-            store.dispatch(ClearEntityFilter());
             if (widget.entityType != null) {
               viewEntitiesByType(
                   context: context, entityType: widget.entityType);

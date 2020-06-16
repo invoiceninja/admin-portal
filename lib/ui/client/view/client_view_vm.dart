@@ -164,7 +164,7 @@ class ClientViewVM {
               entity: state.groupState.map[client.groupId],
             );
           } else {
-            store.dispatch(FilterClientsByEntity(
+            store.dispatch(FilterByEntity(
                 entityType: EntityType.group, entityId: client.groupId));
           }
         }

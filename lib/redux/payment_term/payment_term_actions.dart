@@ -246,13 +246,6 @@ class FilterPaymentTermsByCustom4 implements PersistUI {
   final String value;
 }
 
-class FilterPaymentTermsByEntity implements PersistUI {
-  FilterPaymentTermsByEntity({this.entityId, this.entityType});
-
-  final String entityId;
-  final EntityType entityType;
-}
-
 void handlePaymentTermAction(
     BuildContext context, List<BaseEntity> paymentTerms, EntityAction action) {
   if (paymentTerms.isEmpty) {

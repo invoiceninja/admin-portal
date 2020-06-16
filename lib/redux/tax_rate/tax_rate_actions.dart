@@ -228,13 +228,6 @@ class FilterTaxRatesByCustom2 implements PersistUI {
   final String value;
 }
 
-class FilterTaxRatesByEntity implements PersistUI {
-  FilterTaxRatesByEntity({this.entityId, this.entityType});
-
-  final String entityId;
-  final EntityType entityType;
-}
-
 void handleTaxRateAction(
     BuildContext context, List<BaseEntity> taxRates, EntityAction action) {
   assert(

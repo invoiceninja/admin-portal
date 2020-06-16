@@ -69,7 +69,7 @@ final taskListReducer = combineReducers<ListUIState>([
   TypedReducer<ListUIState, FilterTasks>(_filterTasks),
   TypedReducer<ListUIState, FilterTasksByCustom1>(_filterTasksByCustom1),
   TypedReducer<ListUIState, FilterTasksByCustom2>(_filterTasksByCustom2),
-  TypedReducer<ListUIState, FilterTasksByEntity>(_filterTasksByClient),
+  TypedReducer<ListUIState, FilterByEntity>(_filterTasksByClient),
   TypedReducer<ListUIState, StartTaskMultiselect>(_startListMultiselect),
   TypedReducer<ListUIState, AddToTaskMultiselect>(_addToListMultiselect),
   TypedReducer<ListUIState, RemoveFromTaskMultiselect>(
@@ -82,7 +82,7 @@ final taskListReducer = combineReducers<ListUIState>([
 ]);
 
 ListUIState _filterTasksByClient(
-    ListUIState taskListState, FilterTasksByEntity action) {
+    ListUIState taskListState, FilterByEntity action) {
   return taskListState.rebuild((b) => b
     ..filterEntityId = action.entityId
     ..filterEntityType = action.entityType);

@@ -142,7 +142,7 @@ class InvoiceViewVM extends EntityViewVM {
         if (longPress || isMobile(context)) {
           viewEntity(context: context, entity: client);
         } else {
-          store.dispatch(FilterInvoicesByEntity(
+          store.dispatch(FilterByEntity(
               entityType: EntityType.client, entityId: client.id));
         }
       },
@@ -151,7 +151,7 @@ class InvoiceViewVM extends EntityViewVM {
         if (longPress || isMobile(context)) {
           viewEntity(context: context, entity: payment);
         } else {
-          store.dispatch(FilterInvoicesByEntity(
+          store.dispatch(FilterByEntity(
               entityType: EntityType.payment, entityId: payment.id));
         }
       },

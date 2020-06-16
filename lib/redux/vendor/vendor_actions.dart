@@ -272,13 +272,6 @@ class FilterVendorsByCustom4 implements PersistUI {
   final String value;
 }
 
-class FilterVendorsByEntity implements PersistUI {
-  FilterVendorsByEntity({this.entityId, this.entityType});
-
-  final String entityId;
-  final EntityType entityType;
-}
-
 void handleVendorAction(
     BuildContext context, List<BaseEntity> vendors, EntityAction action) {
   assert(
@@ -307,10 +300,9 @@ void handleVendorAction(
       break;
     case EntityAction.newExpense:
       if (isNotMobile(context)) {
-        filterEntitiesByType(
+        filterByEntity(
             context: context,
-            entityType: EntityType.expense,
-            filterEntity: vendor);
+            entity: vendor);
       }
       createEntity(
           context: context,
