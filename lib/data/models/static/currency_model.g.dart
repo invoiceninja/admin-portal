@@ -126,7 +126,7 @@ class _$CurrencyEntitySerializer
           specifiedType: const FullType(String)),
       'precision',
       serializers.serialize(object.precision,
-          specifiedType: const FullType(String)),
+          specifiedType: const FullType(int)),
       'thousand_separator',
       serializers.serialize(object.thousandSeparator,
           specifiedType: const FullType(String)),
@@ -176,7 +176,7 @@ class _$CurrencyEntitySerializer
           break;
         case 'precision':
           result.precision = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String;
+              specifiedType: const FullType(int)) as int;
           break;
         case 'thousand_separator':
           result.thousandSeparator = serializers.deserialize(value,
@@ -407,7 +407,7 @@ class _$CurrencyEntity extends CurrencyEntity {
   @override
   final String symbol;
   @override
-  final String precision;
+  final int precision;
   @override
   final String thousandSeparator;
   @override
@@ -529,9 +529,9 @@ class CurrencyEntityBuilder
   String get symbol => _$this._symbol;
   set symbol(String symbol) => _$this._symbol = symbol;
 
-  String _precision;
-  String get precision => _$this._precision;
-  set precision(String precision) => _$this._precision = precision;
+  int _precision;
+  int get precision => _$this._precision;
+  set precision(int precision) => _$this._precision = precision;
 
   String _thousandSeparator;
   String get thousandSeparator => _$this._thousandSeparator;

@@ -56,7 +56,7 @@ abstract class CurrencyEntity extends Object
       id: '',
       name: '',
       symbol: '',
-      precision: '',
+      precision: 2,
       thousandSeparator: '',
       decimalSeparator: '',
       code: '',
@@ -74,7 +74,7 @@ abstract class CurrencyEntity extends Object
 
   String get symbol;
 
-  String get precision;
+  int get precision;
 
   @BuiltValueField(wireName: 'thousand_separator')
   String get thousandSeparator;

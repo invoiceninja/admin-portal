@@ -97,10 +97,14 @@ Middleware<AppState> _createLoginRequest(AuthRepository repository) {
       store.dispatch(
           LoadAccountSuccess(completer: action.completer, loginResponse: data));
     }).catchError((Object error) {
-      print(error);
+      print('Login error: $error');
       var message = error.toString();
-      if (message.toLowerCase().contains('no host specified')) {
-        message = 'Please check the URL is correct';
+      if (message.startsWith('Deserializing') && !kIsWeb) {
+        message = message.substring(message.lastIndexOf('Deserializing'));
+        message =
+            'An error occurred, please check that you\'re using the latest version of the app. $message';
+      } else if (message.toLowerCase().contains('no host specified')) {
+        message = 'An error occurred, please check the URL is correct';
       } else if (message.contains('404')) {
         message += ', you may need to add /public to the URL';
       }
