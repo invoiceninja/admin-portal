@@ -214,7 +214,7 @@ class _UpgradeDialogState extends State<UpgradeDialog> {
           )
         ],
       ),
-      contentPadding: const EdgeInsets.symmetric(horizontal: 8, vertical: 15),
+      contentPadding: const EdgeInsets.symmetric(horizontal: 8, vertical: 16),
       children: [
         if (_showPastPurchases)
           ..._purchases.map((purchase) => ListTile(

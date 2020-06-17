@@ -182,7 +182,7 @@ class _GeneratedNumbersState extends State<GeneratedNumbers>
                     onChanged: (value) => viewModel.onSettingsChanged(settings
                         .rebuild((b) => b..sharedInvoiceQuoteCounter = value)),
                   ),
-                  SizedBox(height: 15),
+                  SizedBox(height: 16),
                   DecoratedFormField(
                     label: localization.recurringPrefix,
                     controller: _recurringPrefixController,

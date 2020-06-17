@@ -735,7 +735,7 @@ class _FeesEditorState extends State<FeesEditor> {
             initialTaxName: settings.taxName3,
             initialTaxRate: settings.taxRate3,
           ),
-        SizedBox(height: 15),
+        SizedBox(height: 16),
         SwitchListTile(
           value: settings.adjustFeePercent,
           onChanged: (value) => viewModel.onChanged(companyGateway.rebuild(

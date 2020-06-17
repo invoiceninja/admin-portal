@@ -365,7 +365,7 @@ class _CustomFormFieldState extends State<CustomFormField> {
               hint: localization.commaSeparatedList,
             ),
           ),
-        SizedBox(height: 15),
+        SizedBox(height: 16),
       ],
     );
   }

@@ -76,7 +76,7 @@ class ProductListItem extends StatelessWidget {
                   child: Row(
                     children: <Widget>[
                       Padding(
-                          padding: const EdgeInsets.only(right: 15),
+                          padding: const EdgeInsets.only(right: 16),
                           child: showCheckbox
                               ? IgnorePointer(
                                   ignoring: listUIState.isInMultiselect(),

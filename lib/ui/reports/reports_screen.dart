@@ -12,6 +12,7 @@ import 'package:invoiceninja_flutter/redux/dashboard/dashboard_actions.dart';
 import 'package:invoiceninja_flutter/redux/reports/reports_actions.dart';
 import 'package:invoiceninja_flutter/redux/reports/reports_state.dart';
 import 'package:invoiceninja_flutter/redux/ui/pref_state.dart';
+import 'package:invoiceninja_flutter/ui/app/buttons/elevated_button.dart';
 import 'package:invoiceninja_flutter/ui/app/dialogs/multiselect_dialog.dart';
 import 'package:invoiceninja_flutter/ui/app/form_card.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/app_dropdown_button.dart';
@@ -53,6 +54,126 @@ class ReportsScreen extends StatelessWidget {
           filter == DateRange.custom.toString();
     }).isNotEmpty;
 
+    final reportChildren = [
+      AppDropdownButton<String>(
+        labelText: localization.report,
+        value: reportsState.report,
+        onChanged: (dynamic value) =>
+            viewModel.onSettingsChanged(report: value),
+        items: [
+          kReportClient,
+          kReportInvoice,
+          kReportPayment,
+          kReportTaxRate,
+          //kReportCredit,
+          //kReportDocument,
+          //kReportExpense,
+          //kReportProduct,
+          //kReportProfitAndLoss,
+          //kReportTask,
+          //kReportQuote,
+        ]
+            .map((report) =>
+            DropdownMenuItem(
+              value: report,
+              child: Text(localization.lookup(report)),
+            ))
+            .toList(),
+      ),
+      if (hasCustomDate) ...[
+        DatePicker(
+          labelText: localization.startDate,
+          selectedDate: reportsState.customStartDate,
+          allowClearing: true,
+          onSelected: (date) =>
+              viewModel.onSettingsChanged(
+                  customStartDate: date),
+        ),
+        DatePicker(
+          labelText: localization.endDate,
+          selectedDate: reportsState.customEndDate,
+          allowClearing: true,
+          onSelected: (date) =>
+              viewModel.onSettingsChanged(customEndDate: date),
+        ),
+      ]
+    ];
+
+    final groupChildren = [
+      AppDropdownButton<String>(
+        labelText: localization.group,
+        value: reportsState.group,
+        blankValue: '',
+        showBlank: true,
+        onChanged: (dynamic value) {
+          viewModel.onSettingsChanged(
+              group: value, selectedGroup: '');
+        },
+        items: reportResult.columns
+            .where((column) =>
+        getReportColumnType(column, context) !=
+            ReportColumnType.number)
+            .map((column) {
+          final columnTitle =
+          state.company.getCustomFieldLabel(column);
+          return DropdownMenuItem(
+            child: Text(columnTitle.isEmpty
+                ? localization.lookup(column)
+                : columnTitle),
+            value: column,
+          );
+        }).toList(),
+      ),
+      if (getReportColumnType(reportsState.group, context) ==
+          ReportColumnType.dateTime ||
+          getReportColumnType(reportsState.group, context) ==
+              ReportColumnType.date)
+        AppDropdownButton<String>(
+          labelText: localization.subgroup,
+          value: reportsState.subgroup,
+          onChanged: (dynamic value) {
+            viewModel.onSettingsChanged(subgroup: value);
+          },
+          items: [
+            DropdownMenuItem(
+              child: Text(localization.day),
+              value: kReportGroupDay,
+            ),
+            DropdownMenuItem(
+              child: Text(localization.month),
+              value: kReportGroupMonth,
+            ),
+            DropdownMenuItem(
+              child: Text(localization.year),
+              value: kReportGroupYear,
+            ),
+          ],
+        ),
+    ];
+
+    final chartChildren = [
+      AppDropdownButton<String>(
+        enabled: reportsState.group.isNotEmpty,
+        labelText: localization.chart,
+        value: reportsState.chart,
+        blankValue: '',
+        showBlank: true,
+        onChanged: (dynamic value) {
+          viewModel.onSettingsChanged(chart: value);
+        },
+        items: reportResult.columns
+            .where((column) =>
+        getReportColumnType(column, context) ==
+            ReportColumnType.number)
+            .map((column) =>
+            DropdownMenuItem(
+              child: Text(localization.lookup(column)),
+              value: column,
+            ))
+            .toList(),
+      ),
+    ];
+
     return WillPopScope(
       onWillPop: () async {
         store.dispatch(ViewDashboard(navigator: Navigator.of(context)));
@@ -82,30 +203,32 @@ class ReportsScreen extends StatelessWidget {
             ],
           ),
           actions: <Widget>[
-            Builder(builder: (BuildContext context) {
-              return FlatButton(
-                child: Text(localization.columns),
+            if (isDesktop(context))...[
+              Builder(builder: (BuildContext context) {
+                return FlatButton(
+                  child: Text(localization.columns),
+                  textColor: Colors.white,
+                  onPressed: () {
+                    multiselectDialog(
+                      context: context,
+                      onSelected: (selected) {
+                        viewModel.onReportColumnsChanged(context, selected);
+                      },
+                      options: reportResult.allColumns,
+                      selected: reportResult.columns.toList(),
+                      defaultSelected: reportResult.defaultColumns,
+                    );
+                  },
+                );
+              }),
+              FlatButton(
+                child: Text(localization.export),
                 textColor: Colors.white,
                 onPressed: () {
-                  multiselectDialog(
-                    context: context,
-                    onSelected: (selected) {
-                      viewModel.onReportColumnsChanged(context, selected);
-                    },
-                    options: reportResult.allColumns,
-                    selected: reportResult.columns.toList(),
-                    defaultSelected: reportResult.defaultColumns,
-                  );
+                  viewModel.onExportPressed(context);
                 },
-              );
-            }),
-            FlatButton(
-              child: Text(localization.export),
-              textColor: Colors.white,
-              onPressed: () {
-                viewModel.onExportPressed(context);
-              },
-            ),
+              ),
+            ],
             if (isMobile(context) || !state.prefState.isHistoryVisible)
               Builder(
                 builder: (context) =>
@@ -117,7 +240,8 @@ class ReportsScreen extends StatelessWidget {
                           Scaffold.of(context).openEndDrawer();
                         } else {
                           store.dispatch(
-                              UserPreferencesChanged(sidebar: AppSidebar.history));
+                              UserPreferencesChanged(
+                                  sidebar: AppSidebar.history));
                         }
                       },
                     ),
@@ -130,141 +254,67 @@ class ReportsScreen extends StatelessWidget {
                   .isSaving}_${reportsState.report}_${reportsState
                   .group}'),
           children: <Widget>[
-            Flex(
-              direction: isMobile(context) ? Axis.vertical : Axis.horizontal,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              mainAxisSize: MainAxisSize.min,
+            isMobile(context) ? FormCard(
+              children: [
+                ...reportChildren,
+                ...groupChildren,
+                ...chartChildren,
+              ],
+            ) : Row(
               children: <Widget>[
                 Flexible(
                   child: FormCard(
-                    children: <Widget>[
-                      AppDropdownButton<String>(
-                        labelText: localization.report,
-                        value: reportsState.report,
-                        onChanged: (dynamic value) =>
-                            viewModel.onSettingsChanged(report: value),
-                        items: [
-                          kReportClient,
-                          kReportInvoice,
-                          kReportPayment,
-                          kReportTaxRate,
-                          //kReportCredit,
-                          //kReportDocument,
-                          //kReportExpense,
-                          //kReportProduct,
-                          //kReportProfitAndLoss,
-                          //kReportTask,
-                          //kReportQuote,
-                        ]
-                            .map((report) =>
-                            DropdownMenuItem(
-                              value: report,
-                              child: Text(localization.lookup(report)),
-                            ))
-                            .toList(),
-                      ),
-                      if (hasCustomDate) ...[
-                        DatePicker(
-                          labelText: localization.startDate,
-                          selectedDate: reportsState.customStartDate,
-                          allowClearing: true,
-                          onSelected: (date) =>
-                              viewModel.onSettingsChanged(
-                                  customStartDate: date),
-                        ),
-                        DatePicker(
-                          labelText: localization.endDate,
-                          selectedDate: reportsState.customEndDate,
-                          allowClearing: true,
-                          onSelected: (date) =>
-                              viewModel.onSettingsChanged(customEndDate: date),
-                        ),
-                      ]
-                    ],
+                      children: reportChildren
                   ),
                 ),
                 Flexible(
                   child: FormCard(
-                    children: <Widget>[
-                      AppDropdownButton<String>(
-                        labelText: localization.group,
-                        value: reportsState.group,
-                        blankValue: '',
-                        showBlank: true,
-                        onChanged: (dynamic value) {
-                          viewModel.onSettingsChanged(
-                              group: value, selectedGroup: '');
-                        },
-                        items: reportResult.columns
-                            .where((column) =>
-                        getReportColumnType(column, context) !=
-                            ReportColumnType.number)
-                            .map((column) {
-                          final columnTitle =
-                          state.company.getCustomFieldLabel(column);
-                          return DropdownMenuItem(
-                            child: Text(columnTitle.isEmpty
-                                ? localization.lookup(column)
-                                : columnTitle),
-                            value: column,
-                          );
-                        }).toList(),
-                      ),
-                      if (getReportColumnType(reportsState.group, context) ==
-                          ReportColumnType.dateTime ||
-                          getReportColumnType(reportsState.group, context) ==
-                              ReportColumnType.date)
-                        AppDropdownButton<String>(
-                            labelText: localization.subgroup,
-                            value: reportsState.subgroup,
-                            onChanged: (dynamic value) {
-                              viewModel.onSettingsChanged(subgroup: value);
-                            },
-                            items: [
-                              DropdownMenuItem(
-                                child: Text(localization.day),
-                                value: kReportGroupDay,
-                              ),
-                              DropdownMenuItem(
-                                child: Text(localization.month),
-                                value: kReportGroupMonth,
-                              ),
-                              DropdownMenuItem(
-                                child: Text(localization.year),
-                                value: kReportGroupYear,
-                              ),
-                            ]),
-                    ],
+                      children: groupChildren
                   ),
                 ),
                 Flexible(
                   child: FormCard(
-                    children: <Widget>[
-                      AppDropdownButton<String>(
-                        enabled: reportsState.group.isNotEmpty,
-                        labelText: localization.chart,
-                        value: reportsState.chart,
-                        blankValue: '',
-                        showBlank: true,
-                        onChanged: (dynamic value) {
-                          viewModel.onSettingsChanged(chart: value);
-                        },
-                        items: reportResult.columns
-                            .where((column) =>
-                        getReportColumnType(column, context) ==
-                            ReportColumnType.number)
-                            .map((column) =>
-                            DropdownMenuItem(
-                              child: Text(localization.lookup(column)),
-                              value: column,
-                            ))
-                            .toList(),
-                      ),
-                    ],
+                      children: chartChildren
                   ),
                 )
               ],
             ),
+            if (isMobile(context))
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 16),
+                child: Row(
+                  children: [
+                    Builder(builder: (BuildContext context) {
+                      return Expanded(
+                        child: ElevatedButton(
+                          label: localization.columns,
+                          onPressed: () {
+                            multiselectDialog(
+                              context: context,
+                              onSelected: (selected) {
+                                viewModel.onReportColumnsChanged(
+                                    context, selected);
+                              },
+                              options: reportResult.allColumns,
+                              selected: reportResult.columns.toList(),
+                              defaultSelected: reportResult.defaultColumns,
+                            );
+                          },
+                        ),
+                      );
+                    }),
+                    SizedBox(width: kGutterWidth),
+                    Expanded(
+                      child: ElevatedButton(
+                        label: localization.export,
+                        onPressed: () {
+                          viewModel.onExportPressed(context);
+                        },
+                      ),
+                    ),
+                  ],
+                ),
+              ),
             ReportDataTable(
               key: ValueKey(
                   '${viewModel.state.isSaving}_${reportsState

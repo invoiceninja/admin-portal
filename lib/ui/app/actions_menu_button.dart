@@ -40,7 +40,7 @@ class ActionMenuButton extends StatelessWidget {
           child: Row(
             children: <Widget>[
               Icon(getEntityActionIcon(action)),
-              SizedBox(width: 15.0),
+              SizedBox(width: 16.0),
               Text(AppLocalization.of(context).lookup(action.toString()) ?? ''),
             ],
           ),
