@@ -521,7 +521,7 @@ abstract class InvoiceEntity extends Object
       }
 
       if (invitations.isNotEmpty && !multiselect) {
-        actions.add(EntityAction.pdf);
+        actions.add(EntityAction.viewPdf);
       }
 
       if (userCompany.canEditEntity(this)) {

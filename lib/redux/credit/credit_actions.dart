@@ -372,7 +372,7 @@ Future handleCreditAction(
     case EntityAction.edit:
       editEntity(context: context, entity: credit);
       break;
-    case EntityAction.pdf:
+    case EntityAction.viewPdf:
       viewPdf(credit, context);
       break;
     case EntityAction.clientPortal:

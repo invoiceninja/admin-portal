@@ -438,7 +438,7 @@ void handleInvoiceAction(BuildContext context, List<BaseEntity> invoices,
     case EntityAction.edit:
       editEntity(context: context, entity: invoice);
       break;
-    case EntityAction.pdf:
+    case EntityAction.viewPdf:
       viewPdf(invoice, context);
       break;
     case EntityAction.clientPortal:
