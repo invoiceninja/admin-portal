@@ -3157,7 +3157,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
 
   String get lineTotal => _localizedValues[localeCode]['line_total'] ?? '';
 
-  String get subtotal => _localizedValues[localeCode]['subtotal'] ?? '';
+  String get calculateSubtotal => _localizedValues[localeCode]['subtotal'] ?? '';
 
   String get contactUs => _localizedValues[localeCode]['contact_us'] ?? '';
 

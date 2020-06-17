@@ -4,21 +4,39 @@ import 'package:invoiceninja_flutter/utils/formatting.dart';
 
 abstract class CalculateInvoiceTotal {
   bool get isAmountDiscount;
+
   String get taxName1;
+
   double get taxRate1;
+
   String get taxName2;
+
   double get taxRate2;
+
   String get taxName3;
+
   double get taxRate3;
+
   double get discount;
+
   double get customSurcharge1;
+
   double get customSurcharge2;
+
   double get customSurcharge3;
+
   double get customSurcharge4;
+
   bool get customTaxes1;
+
   bool get customTaxes2;
+
   bool get customTaxes3;
+
   bool get customTaxes4;
+
+  bool get usesInclusiveTaxes;
+
   BuiltList<InvoiceItemEntity> get lineItems;
 
   double _calculateTaxAmount(
@@ -33,7 +51,7 @@ abstract class CalculateInvoiceTotal {
   }
 
   Map<String, double> calculateTaxes(bool useInclusiveTaxes) {
-    double total = baseTotal;
+    double total = subtotal;
     double taxAmount;
     final map = <String, double>{};
 
@@ -122,8 +140,8 @@ abstract class CalculateInvoiceTotal {
     return round(lineTotal, 2);
   }
 
-  double calculateTotal(bool useInclusiveTaxes) {
-    double total = baseTotal;
+  double get calculateTotal {
+    double total = subtotal;
     double itemTax = 0.0;
 
     lineItems.forEach((item) {
@@ -174,7 +192,7 @@ abstract class CalculateInvoiceTotal {
       total += round(customSurcharge2, 2);
     }
 
-    if (!useInclusiveTaxes) {
+    if (!usesInclusiveTaxes) {
       final double taxAmount1 = round(total * taxRate1 / 100, 2);
       final double taxAmount2 = round(total * taxRate2 / 100, 2);
 
@@ -192,7 +210,7 @@ abstract class CalculateInvoiceTotal {
     return total;
   }
 
-  double get baseTotal {
+  double get subtotal {
     var total = 0.0;
 
     lineItems.forEach((item) {

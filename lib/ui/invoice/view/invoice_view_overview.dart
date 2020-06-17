@@ -40,16 +40,16 @@ class InvoiceOverview extends StatelessWidget {
         : memoizedPaymentsByInvoice(
             invoice.id, state.paymentState.map, state.paymentState.list);
 
-    Map<String, String> stauses;
+    Map<String, String> statuses;
     Map<String, Color> colors;
     if (invoice.entityType == EntityType.quote) {
-      stauses = kQuoteStatuses;
+      statuses = kQuoteStatuses;
       colors = QuoteStatusColors.colors;
     } else if (invoice.entityType == EntityType.credit) {
-      stauses = kCreditStatuses;
+      statuses = kCreditStatuses;
       colors = CreditStatusColors.colors;
     } else {
-      stauses = kInvoiceStatuses;
+      statuses = kInvoiceStatuses;
       colors = InvoiceStatusColors.colors;
     }
 
@@ -60,7 +60,7 @@ class InvoiceOverview extends StatelessWidget {
       EntityHeader(
         entity: invoice,
         statusColor: color,
-        statusLabel: localization.lookup(stauses[invoice.calculatedStatusId]),
+        statusLabel: localization.lookup(statuses[invoice.calculatedStatusId]),
         label: invoice.subEntityType == EntityType.credit
             ? localization.creditAmount
             : invoice.subEntityType == EntityType.invoice
@@ -226,6 +226,11 @@ class InvoiceOverview extends StatelessWidget {
       );
     }
 
+    widgets.addAll([
+      SizedBox(height: 8),
+      surchargeRow(localization.calculateSubtotal, invoice.calculateTotal)
+    ]);
+
     if (invoice.customSurcharge1 != 0 && company.enableCustomSurchargeTaxes1) {
       widgets.add(surchargeRow(
           company.getCustomFieldLabel(CustomFieldType.surcharge1),
@@ -267,6 +272,8 @@ class InvoiceOverview extends StatelessWidget {
           company.getCustomFieldLabel(CustomFieldType.surcharge4),
           invoice.customSurcharge4));
     }
+
+    widgets.add(surchargeRow(localization.total, invoice.calculateTotal));
 
     return ListView(
       children: widgets,
