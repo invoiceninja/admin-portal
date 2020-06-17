@@ -12,6 +12,7 @@ import 'package:invoiceninja_flutter/redux/dashboard/dashboard_actions.dart';
 import 'package:invoiceninja_flutter/redux/reports/reports_actions.dart';
 import 'package:invoiceninja_flutter/redux/reports/reports_state.dart';
 import 'package:invoiceninja_flutter/redux/ui/pref_state.dart';
+import 'package:invoiceninja_flutter/ui/app/buttons/elevated_button.dart';
 import 'package:invoiceninja_flutter/ui/app/dialogs/multiselect_dialog.dart';
 import 'package:invoiceninja_flutter/ui/app/form_card.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/app_dropdown_button.dart';
@@ -173,7 +174,6 @@ class ReportsScreen extends StatelessWidget {
       ),
     ];
 
-
     return WillPopScope(
       onWillPop: () async {
         store.dispatch(ViewDashboard(navigator: Navigator.of(context)));
@@ -203,30 +203,32 @@ class ReportsScreen extends StatelessWidget {
             ],
           ),
           actions: <Widget>[
-            Builder(builder: (BuildContext context) {
-              return FlatButton(
-                child: Text(localization.columns),
+            if (isDesktop(context))...[
+              Builder(builder: (BuildContext context) {
+                return FlatButton(
+                  child: Text(localization.columns),
+                  textColor: Colors.white,
+                  onPressed: () {
+                    multiselectDialog(
+                      context: context,
+                      onSelected: (selected) {
+                        viewModel.onReportColumnsChanged(context, selected);
+                      },
+                      options: reportResult.allColumns,
+                      selected: reportResult.columns.toList(),
+                      defaultSelected: reportResult.defaultColumns,
+                    );
+                  },
+                );
+              }),
+              FlatButton(
+                child: Text(localization.export),
                 textColor: Colors.white,
                 onPressed: () {
-                  multiselectDialog(
-                    context: context,
-                    onSelected: (selected) {
-                      viewModel.onReportColumnsChanged(context, selected);
-                    },
-                    options: reportResult.allColumns,
-                    selected: reportResult.columns.toList(),
-                    defaultSelected: reportResult.defaultColumns,
-                  );
+                  viewModel.onExportPressed(context);
                 },
-              );
-            }),
-            FlatButton(
-              child: Text(localization.export),
-              textColor: Colors.white,
-              onPressed: () {
-                viewModel.onExportPressed(context);
-              },
-            ),
+              ),
+            ],
             if (isMobile(context) || !state.prefState.isHistoryVisible)
               Builder(
                 builder: (context) =>
@@ -277,6 +279,39 @@ class ReportsScreen extends StatelessWidget {
                 )
               ],
             ),
+            if (isMobile(context))
+              Row(
+                children: [
+                  Builder(builder: (BuildContext context) {
+                    return Expanded(
+                      child: ElevatedButton(
+                        label: localization.columns,
+                        onPressed: () {
+                          multiselectDialog(
+                            context: context,
+                            onSelected: (selected) {
+                              viewModel.onReportColumnsChanged(
+                                  context, selected);
+                            },
+                            options: reportResult.allColumns,
+                            selected: reportResult.columns.toList(),
+                            defaultSelected: reportResult.defaultColumns,
+                          );
+                        },
+                      ),
+                    );
+                  }),
+                  SizedBox(width: 16),
+                  Expanded(
+                    child: ElevatedButton(
+                      label: localization.export,
+                      onPressed: () {
+                        viewModel.onExportPressed(context);
+                      },
+                    ),
+                  ),
+                ],
+              ),
             ReportDataTable(
               key: ValueKey(
                   '${viewModel.state.isSaving}_${reportsState
