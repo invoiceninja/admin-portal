@@ -187,7 +187,7 @@ void viewEntitiesByType({
   dynamic action;
 
   if (filterEntity != null) {
-    if (uiState.filterEntityType != filterEntity.entityType &&
+    if (uiState.filterEntityType != filterEntity.entityType ||
         uiState.filterEntityId != filterEntity.id) {
       filterByEntity(
         context: context,
