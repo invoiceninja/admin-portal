@@ -67,7 +67,7 @@ class DashboardPanels extends StatelessWidget {
                   ? () => viewModel.onOffsetChanged(-1)
                   : null,
             ),
-            SizedBox(width: 15),
+            SizedBox(width: 16),
             Expanded(
               child: InkWell(
                 child: Row(

@@ -73,7 +73,7 @@ class ClientListItem extends StatelessWidget {
                   child: Row(
                     children: <Widget>[
                       Padding(
-                        padding: const EdgeInsets.only(right: 15),
+                        padding: const EdgeInsets.only(right: 16),
                         child: showCheckbox
                             ? Padding(
                                 padding: const EdgeInsets.only(right: 20),

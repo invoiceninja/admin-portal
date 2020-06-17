@@ -68,7 +68,7 @@ class _TaxSettingsState extends State<TaxSettings> {
                 onChanged: (value) => viewModel.onSettingsChanged(
                     settings.rebuild((b) => b..numberOfItemTaxRates = value)),
               ),
-              SizedBox(height: 15),
+              SizedBox(height: 16),
               BoolDropdownButton(
                 iconData: FontAwesomeIcons.percent,
                 label: localization.inclusiveTaxes,

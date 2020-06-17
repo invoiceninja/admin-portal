@@ -468,7 +468,7 @@ class AppDataTable extends StatelessWidget {
   static const double _sortArrowPadding = 2.0;
   static const double _headingFontSize = 12.0;
   static const Duration _sortArrowAnimationDuration =
-      Duration(milliseconds: 150);
+      Duration(milliseconds: 160);
   static const Color _grey100Opacity =
       Color(0x0A000000); // Grey 100 as opacity instead of solid color
   static const Color _grey300Opacity =

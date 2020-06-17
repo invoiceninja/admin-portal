@@ -183,7 +183,7 @@ class _PaymentRefundState extends State<PaymentRefund> {
           actions: <Widget>[
             if (viewModel.state.isSaving)
               Padding(
-                padding: const EdgeInsets.only(right: 15),
+                padding: const EdgeInsets.only(right: 16),
                 child: SizedBox(
                   child: CircularProgressIndicator(),
                   height: 30,
