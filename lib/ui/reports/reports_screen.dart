@@ -280,37 +280,40 @@ class ReportsScreen extends StatelessWidget {
               ],
             ),
             if (isMobile(context))
-              Row(
-                children: [
-                  Builder(builder: (BuildContext context) {
-                    return Expanded(
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 16),
+                child: Row(
+                  children: [
+                    Builder(builder: (BuildContext context) {
+                      return Expanded(
+                        child: ElevatedButton(
+                          label: localization.columns,
+                          onPressed: () {
+                            multiselectDialog(
+                              context: context,
+                              onSelected: (selected) {
+                                viewModel.onReportColumnsChanged(
+                                    context, selected);
+                              },
+                              options: reportResult.allColumns,
+                              selected: reportResult.columns.toList(),
+                              defaultSelected: reportResult.defaultColumns,
+                            );
+                          },
+                        ),
+                      );
+                    }),
+                    SizedBox(width: kGutterWidth),
+                    Expanded(
                       child: ElevatedButton(
-                        label: localization.columns,
+                        label: localization.export,
                         onPressed: () {
-                          multiselectDialog(
-                            context: context,
-                            onSelected: (selected) {
-                              viewModel.onReportColumnsChanged(
-                                  context, selected);
-                            },
-                            options: reportResult.allColumns,
-                            selected: reportResult.columns.toList(),
-                            defaultSelected: reportResult.defaultColumns,
-                          );
+                          viewModel.onExportPressed(context);
                         },
                       ),
-                    );
-                  }),
-                  SizedBox(width: 16),
-                  Expanded(
-                    child: ElevatedButton(
-                      label: localization.export,
-                      onPressed: () {
-                        viewModel.onExportPressed(context);
-                      },
                     ),
-                  ),
-                ],
+                  ],
+                ),
               ),
             ReportDataTable(
               key: ValueKey(
