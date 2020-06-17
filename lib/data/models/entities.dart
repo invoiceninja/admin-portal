@@ -95,7 +95,6 @@ class EntityType extends EnumClass {
       case EntityType.user:
         return [
           EntityType.invoice,
-          EntityType.payment,
           EntityType.quote,
           EntityType.credit,
           EntityType.task,

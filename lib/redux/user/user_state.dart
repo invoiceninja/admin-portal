@@ -20,6 +20,14 @@ abstract class UserState implements Built<UserState, UserStateBuilder> {
   }
   UserState._();
 
+  UserEntity get(String userId) {
+    if (map.containsKey(userId)) {
+      return map[userId];
+    } else {
+      return UserEntity(id: userId);
+    }
+  }
+
   @override
   @memoized
   int get hashCode;

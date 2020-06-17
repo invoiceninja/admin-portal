@@ -53,6 +53,7 @@ class QuoteViewVM extends EntityViewVM {
     Function(BuildContext, EntityAction) onEntityAction,
     Function(BuildContext, [int]) onEditPressed,
     Function(BuildContext, [bool]) onClientPressed,
+    Function(BuildContext, [bool]) onUserPressed,
     Function(BuildContext) onPaymentsPressed,
     Function(BuildContext, PaymentEntity) onPaymentPressed,
     Function(BuildContext) onRefreshed,
@@ -69,6 +70,7 @@ class QuoteViewVM extends EntityViewVM {
           onActionSelected: onEntityAction,
           onEditPressed: onEditPressed,
           onClientPressed: onClientPressed,
+          onUserPressed: onUserPressed,
           onPaymentsPressed: onPaymentsPressed,
           onPaymentPressed: onPaymentPressed,
           onRefreshed: onRefreshed,
@@ -83,6 +85,7 @@ class QuoteViewVM extends EntityViewVM {
         InvoiceEntity(id: state.quoteUIState.selectedId);
     final client = store.state.clientState.map[quote.clientId] ??
         ClientEntity(id: quote.clientId);
+    final user = state.userState.get(quote.assignedUserId);
 
     Future<Null> _handleRefresh(BuildContext context) {
       final completer = snackBarCompleter<Null>(
@@ -113,6 +116,14 @@ class QuoteViewVM extends EntityViewVM {
         } else {
           store.dispatch(FilterByEntity(
               entityType: EntityType.client, entityId: client.id));
+        }
+      },
+      onUserPressed: (BuildContext context, [bool longPress = false]) {
+        if (longPress || isMobile(context)) {
+          viewEntity(context: context, entity: user);
+        } else {
+          store.dispatch(FilterByEntity(
+              entityType: EntityType.user, entityId: user.id));
         }
       },
       onEntityAction: (BuildContext context, EntityAction action) =>

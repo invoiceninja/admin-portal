@@ -125,6 +125,15 @@ class InvoiceOverview extends StatelessWidget {
       ),
     );
 
+    if ((invoice.assignedUserId ?? '').isNotEmpty) {
+      widgets.add(EntityListTile(
+        isFilter: isFilter,
+        entity: state.userState.map[invoice.assignedUserId],
+        onTap: () => viewModel.onUserPressed(context),
+        onLongPress: () => viewModel.onUserPressed(context, true),
+      ));
+    }
+
     if (invoice.subEntityType == EntityType.quote ||
         invoice.subEntityType == EntityType.credit) {
       final relatedInvoice = state.invoiceState.map[invoice.invoiceId] ??
