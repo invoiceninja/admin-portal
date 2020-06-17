@@ -55,17 +55,6 @@ class UserView extends StatelessWidget {
                 memoizedInvoiceStatsForUser(user.id, state.invoiceState.map)
                     .present(localization.active, localization.archived),
           ),
-          EntitiesListTile(
-            isFilter: isFilter,
-            entityType: EntityType.payment,
-            title: localization.payments,
-            onTap: () => viewModel.onEntityPressed(context, EntityType.payment),
-            onLongPress: () =>
-                viewModel.onEntityPressed(context, EntityType.payment, true),
-            subtitle: memoizedPaymentStatsForUser(
-                    user.id, state.paymentState.map, state.invoiceState.map)
-                .present(localization.active, localization.archived),
-          ),
           company.isModuleEnabled(EntityType.quote)
               ? EntitiesListTile(
                   isFilter: isFilter,
