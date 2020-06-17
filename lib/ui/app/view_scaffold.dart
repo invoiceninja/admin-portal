@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:invoiceninja_flutter/data/models/entities.dart';
@@ -57,7 +59,7 @@ class ViewScaffold extends StatelessWidget {
         );
       } else if (isSettings) {
         leading = IconButton(
-          icon: Icon(Icons.arrow_back),
+          icon: Icon(Platform.isIOS ? Icons.arrow_back_ios : Icons.arrow_back),
           onPressed: () => onBackPressed != null
               ? onBackPressed()
               : store.dispatch(UpdateCurrentRoute(state.uiState.previousRoute)),
