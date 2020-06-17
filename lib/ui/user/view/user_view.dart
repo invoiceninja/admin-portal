@@ -81,6 +81,21 @@ class UserView extends StatelessWidget {
                   ).present(localization.active, localization.archived),
                 )
               : Container(),
+          company.isModuleEnabled(EntityType.credit)
+              ? EntitiesListTile(
+                  isFilter: isFilter,
+                  entityType: EntityType.credit,
+                  title: localization.credits,
+                  onTap: () =>
+                      viewModel.onEntityPressed(context, EntityType.credit),
+                  onLongPress: () => viewModel.onEntityPressed(
+                      context, EntityType.credit, true),
+                  subtitle: memoizedCreditStatsForUser(
+                    user.id,
+                    state.creditState.map,
+                  ).present(localization.active, localization.archived),
+                )
+              : Container(),
           /*
         company.isModuleEnabled(EntityType.project)
             ? EntityListTile(
