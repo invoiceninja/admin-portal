@@ -84,7 +84,7 @@ class EntityHeader extends StatelessWidget {
             Row(
               children: [
                 Expanded(child: _value1()),
-                if (secondValue != null) ...[
+                if ((secondValue ?? '').isNotEmpty) ...[
                   SizedBox(width: 8),
                   Expanded(child: _value2()),
                 ],
