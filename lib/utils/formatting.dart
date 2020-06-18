@@ -149,7 +149,7 @@ String formatNumber(
       formatter = NumberFormat('#,##0.000##', 'custom');
     }
 
-    formatted = formatter.format(value);
+    formatted = formatter.format(value < 0 ? value * -1 : value);
   }
 
   if (formatNumberType == FormatNumberType.percent) {
@@ -159,6 +159,8 @@ String formatNumber(
     return '$formatted ${currency.code}';
   } else if (swapCurrencySymbol) {
     return '$formatted ${currency.symbol.trim()}';
+  } else if (value < 0) {
+    return '-${currency.symbol}$formatted';
   } else {
     return '${currency.symbol}$formatted';
   }
