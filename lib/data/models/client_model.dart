@@ -122,6 +122,7 @@ abstract class ClientEntity extends Object
         <ContactEntity>[ContactEntity().rebuild((b) => b..isPrimary = true)],
       ),
       activities: BuiltList<ActivityEntity>(),
+      ledger: BuiltList<LedgerEntity>(),
       gatewayTokens: BuiltList<GatewayTokenEntity>(),
       lastUpdatedActivities: 0,
       updatedAt: 0,
@@ -252,6 +253,8 @@ abstract class ClientEntity extends Object
   BuiltList<ContactEntity> get contacts;
 
   BuiltList<ActivityEntity> get activities;
+
+  BuiltList<LedgerEntity> get ledger;
 
   @BuiltValueField(wireName: 'gateway_tokens')
   BuiltList<GatewayTokenEntity> get gatewayTokens;

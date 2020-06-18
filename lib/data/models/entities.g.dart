@@ -296,6 +296,8 @@ Serializer<LoginResponse> _$loginResponseSerializer =
     new _$LoginResponseSerializer();
 Serializer<ActivityEntity> _$activityEntitySerializer =
     new _$ActivityEntitySerializer();
+Serializer<LedgerEntity> _$ledgerEntitySerializer =
+    new _$LedgerEntitySerializer();
 
 class _$EntityTypeSerializer implements PrimitiveSerializer<EntityType> {
   @override
@@ -617,6 +619,89 @@ class _$ActivityEntitySerializer
           break;
         case 'vendor_id':
           result.vendorId = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String;
+          break;
+      }
+    }
+
+    return result.build();
+  }
+}
+
+class _$LedgerEntitySerializer implements StructuredSerializer<LedgerEntity> {
+  @override
+  final Iterable<Type> types = const [LedgerEntity, _$LedgerEntity];
+  @override
+  final String wireName = 'LedgerEntity';
+
+  @override
+  Iterable<Object> serialize(Serializers serializers, LedgerEntity object,
+      {FullType specifiedType = FullType.unspecified}) {
+    final result = <Object>[
+      'notes',
+      serializers.serialize(object.notes,
+          specifiedType: const FullType(String)),
+      'balance',
+      serializers.serialize(object.balance,
+          specifiedType: const FullType(double)),
+      'adjustment',
+      serializers.serialize(object.adjustment,
+          specifiedType: const FullType(double)),
+    ];
+    if (object.invoiceId != null) {
+      result
+        ..add('invoice_id')
+        ..add(serializers.serialize(object.invoiceId,
+            specifiedType: const FullType(String)));
+    }
+    if (object.creditId != null) {
+      result
+        ..add('credit_id')
+        ..add(serializers.serialize(object.creditId,
+            specifiedType: const FullType(String)));
+    }
+    if (object.paymentId != null) {
+      result
+        ..add('payment_id')
+        ..add(serializers.serialize(object.paymentId,
+            specifiedType: const FullType(String)));
+    }
+    return result;
+  }
+
+  @override
+  LedgerEntity deserialize(Serializers serializers, Iterable<Object> serialized,
+      {FullType specifiedType = FullType.unspecified}) {
+    final result = new LedgerEntityBuilder();
+
+    final iterator = serialized.iterator;
+    while (iterator.moveNext()) {
+      final key = iterator.current as String;
+      iterator.moveNext();
+      final dynamic value = iterator.current;
+      switch (key) {
+        case 'notes':
+          result.notes = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String;
+          break;
+        case 'balance':
+          result.balance = serializers.deserialize(value,
+              specifiedType: const FullType(double)) as double;
+          break;
+        case 'adjustment':
+          result.adjustment = serializers.deserialize(value,
+              specifiedType: const FullType(double)) as double;
+          break;
+        case 'invoice_id':
+          result.invoiceId = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String;
+          break;
+        case 'credit_id':
+          result.creditId = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String;
+          break;
+        case 'payment_id':
+          result.paymentId = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String;
           break;
       }
@@ -1095,6 +1180,158 @@ class ActivityEntityBuilder
             taskId: taskId,
             projectId: projectId,
             vendorId: vendorId);
+    replace(_$result);
+    return _$result;
+  }
+}
+
+class _$LedgerEntity extends LedgerEntity {
+  @override
+  final String notes;
+  @override
+  final double balance;
+  @override
+  final double adjustment;
+  @override
+  final String invoiceId;
+  @override
+  final String creditId;
+  @override
+  final String paymentId;
+
+  factory _$LedgerEntity([void Function(LedgerEntityBuilder) updates]) =>
+      (new LedgerEntityBuilder()..update(updates)).build();
+
+  _$LedgerEntity._(
+      {this.notes,
+      this.balance,
+      this.adjustment,
+      this.invoiceId,
+      this.creditId,
+      this.paymentId})
+      : super._() {
+    if (notes == null) {
+      throw new BuiltValueNullFieldError('LedgerEntity', 'notes');
+    }
+    if (balance == null) {
+      throw new BuiltValueNullFieldError('LedgerEntity', 'balance');
+    }
+    if (adjustment == null) {
+      throw new BuiltValueNullFieldError('LedgerEntity', 'adjustment');
+    }
+  }
+
+  @override
+  LedgerEntity rebuild(void Function(LedgerEntityBuilder) updates) =>
+      (toBuilder()..update(updates)).build();
+
+  @override
+  LedgerEntityBuilder toBuilder() => new LedgerEntityBuilder()..replace(this);
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(other, this)) return true;
+    return other is LedgerEntity &&
+        notes == other.notes &&
+        balance == other.balance &&
+        adjustment == other.adjustment &&
+        invoiceId == other.invoiceId &&
+        creditId == other.creditId &&
+        paymentId == other.paymentId;
+  }
+
+  int __hashCode;
+  @override
+  int get hashCode {
+    return __hashCode ??= $jf($jc(
+        $jc(
+            $jc(
+                $jc($jc($jc(0, notes.hashCode), balance.hashCode),
+                    adjustment.hashCode),
+                invoiceId.hashCode),
+            creditId.hashCode),
+        paymentId.hashCode));
+  }
+
+  @override
+  String toString() {
+    return (newBuiltValueToStringHelper('LedgerEntity')
+          ..add('notes', notes)
+          ..add('balance', balance)
+          ..add('adjustment', adjustment)
+          ..add('invoiceId', invoiceId)
+          ..add('creditId', creditId)
+          ..add('paymentId', paymentId))
+        .toString();
+  }
+}
+
+class LedgerEntityBuilder
+    implements Builder<LedgerEntity, LedgerEntityBuilder> {
+  _$LedgerEntity _$v;
+
+  String _notes;
+  String get notes => _$this._notes;
+  set notes(String notes) => _$this._notes = notes;
+
+  double _balance;
+  double get balance => _$this._balance;
+  set balance(double balance) => _$this._balance = balance;
+
+  double _adjustment;
+  double get adjustment => _$this._adjustment;
+  set adjustment(double adjustment) => _$this._adjustment = adjustment;
+
+  String _invoiceId;
+  String get invoiceId => _$this._invoiceId;
+  set invoiceId(String invoiceId) => _$this._invoiceId = invoiceId;
+
+  String _creditId;
+  String get creditId => _$this._creditId;
+  set creditId(String creditId) => _$this._creditId = creditId;
+
+  String _paymentId;
+  String get paymentId => _$this._paymentId;
+  set paymentId(String paymentId) => _$this._paymentId = paymentId;
+
+  LedgerEntityBuilder();
+
+  LedgerEntityBuilder get _$this {
+    if (_$v != null) {
+      _notes = _$v.notes;
+      _balance = _$v.balance;
+      _adjustment = _$v.adjustment;
+      _invoiceId = _$v.invoiceId;
+      _creditId = _$v.creditId;
+      _paymentId = _$v.paymentId;
+      _$v = null;
+    }
+    return this;
+  }
+
+  @override
+  void replace(LedgerEntity other) {
+    if (other == null) {
+      throw new ArgumentError.notNull('other');
+    }
+    _$v = other as _$LedgerEntity;
+  }
+
+  @override
+  void update(void Function(LedgerEntityBuilder) updates) {
+    if (updates != null) updates(this);
+  }
+
+  @override
+  _$LedgerEntity build() {
+    final _$result = _$v ??
+        new _$LedgerEntity._(
+            notes: notes,
+            balance: balance,
+            adjustment: adjustment,
+            invoiceId: invoiceId,
+            creditId: creditId,
+            paymentId: paymentId);
     replace(_$result);
     return _$result;
   }
