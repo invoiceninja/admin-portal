@@ -179,6 +179,8 @@ class _$TaskEntitySerializer implements StructuredSerializer<TaskEntity> {
       'custom_value2',
       serializers.serialize(object.customValue2,
           specifiedType: const FullType(String)),
+      'id',
+      serializers.serialize(object.id, specifiedType: const FullType(String)),
     ];
     if (object.invoiceId != null) {
       result
@@ -268,18 +270,6 @@ class _$TaskEntitySerializer implements StructuredSerializer<TaskEntity> {
       result
         ..add('assigned_user_id')
         ..add(serializers.serialize(object.assignedUserId,
-            specifiedType: const FullType(String)));
-    }
-    if (object.subEntityType != null) {
-      result
-        ..add('entity_type')
-        ..add(serializers.serialize(object.subEntityType,
-            specifiedType: const FullType(EntityType)));
-    }
-    if (object.id != null) {
-      result
-        ..add('id')
-        ..add(serializers.serialize(object.id,
             specifiedType: const FullType(String)));
     }
     return result;
@@ -379,10 +369,6 @@ class _$TaskEntitySerializer implements StructuredSerializer<TaskEntity> {
         case 'assigned_user_id':
           result.assignedUserId = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String;
-          break;
-        case 'entity_type':
-          result.subEntityType = serializers.deserialize(value,
-              specifiedType: const FullType(EntityType)) as EntityType;
           break;
         case 'id':
           result.id = serializers.deserialize(value,
@@ -770,8 +756,6 @@ class _$TaskEntity extends TaskEntity {
   @override
   final String assignedUserId;
   @override
-  final EntityType subEntityType;
-  @override
   final String id;
 
   factory _$TaskEntity([void Function(TaskEntityBuilder) updates]) =>
@@ -799,7 +783,6 @@ class _$TaskEntity extends TaskEntity {
       this.isDeleted,
       this.createdUserId,
       this.assignedUserId,
-      this.subEntityType,
       this.id})
       : super._() {
     if (description == null) {
@@ -819,6 +802,9 @@ class _$TaskEntity extends TaskEntity {
     }
     if (customValue2 == null) {
       throw new BuiltValueNullFieldError('TaskEntity', 'customValue2');
+    }
+    if (id == null) {
+      throw new BuiltValueNullFieldError('TaskEntity', 'id');
     }
   }
 
@@ -854,7 +840,6 @@ class _$TaskEntity extends TaskEntity {
         isDeleted == other.isDeleted &&
         createdUserId == other.createdUserId &&
         assignedUserId == other.assignedUserId &&
-        subEntityType == other.subEntityType &&
         id == other.id;
   }
 
@@ -879,25 +864,25 @@ class _$TaskEntity extends TaskEntity {
                                                                 $jc(
                                                                     $jc(
                                                                         $jc(
-                                                                            $jc($jc($jc($jc($jc(0, description.hashCode), duration.hashCode), invoiceId.hashCode), clientId.hashCode),
-                                                                                projectId.hashCode),
-                                                                            timeLog.hashCode),
-                                                                        isRunning.hashCode),
-                                                                    customValue1.hashCode),
-                                                                customValue2.hashCode),
-                                                            customValue3.hashCode),
-                                                        customValue4.hashCode),
-                                                    taskStatusId.hashCode),
-                                                taskStatusSortOrder.hashCode),
-                                            vendorId.hashCode),
-                                        isChanged.hashCode),
-                                    createdAt.hashCode),
-                                updatedAt.hashCode),
-                            archivedAt.hashCode),
-                        isDeleted.hashCode),
-                    createdUserId.hashCode),
-                assignedUserId.hashCode),
-            subEntityType.hashCode),
+                                                                            $jc($jc($jc($jc(0, description.hashCode), duration.hashCode), invoiceId.hashCode),
+                                                                                clientId.hashCode),
+                                                                            projectId.hashCode),
+                                                                        timeLog.hashCode),
+                                                                    isRunning.hashCode),
+                                                                customValue1.hashCode),
+                                                            customValue2.hashCode),
+                                                        customValue3.hashCode),
+                                                    customValue4.hashCode),
+                                                taskStatusId.hashCode),
+                                            taskStatusSortOrder.hashCode),
+                                        vendorId.hashCode),
+                                    isChanged.hashCode),
+                                createdAt.hashCode),
+                            updatedAt.hashCode),
+                        archivedAt.hashCode),
+                    isDeleted.hashCode),
+                createdUserId.hashCode),
+            assignedUserId.hashCode),
         id.hashCode));
   }
 
@@ -925,7 +910,6 @@ class _$TaskEntity extends TaskEntity {
           ..add('isDeleted', isDeleted)
           ..add('createdUserId', createdUserId)
           ..add('assignedUserId', assignedUserId)
-          ..add('subEntityType', subEntityType)
           ..add('id', id))
         .toString();
   }
@@ -1021,11 +1005,6 @@ class TaskEntityBuilder implements Builder<TaskEntity, TaskEntityBuilder> {
   set assignedUserId(String assignedUserId) =>
       _$this._assignedUserId = assignedUserId;
 
-  EntityType _subEntityType;
-  EntityType get subEntityType => _$this._subEntityType;
-  set subEntityType(EntityType subEntityType) =>
-      _$this._subEntityType = subEntityType;
-
   String _id;
   String get id => _$this._id;
   set id(String id) => _$this._id = id;
@@ -1055,7 +1034,6 @@ class TaskEntityBuilder implements Builder<TaskEntity, TaskEntityBuilder> {
       _isDeleted = _$v.isDeleted;
       _createdUserId = _$v.createdUserId;
       _assignedUserId = _$v.assignedUserId;
-      _subEntityType = _$v.subEntityType;
       _id = _$v.id;
       _$v = null;
     }
@@ -1100,7 +1078,6 @@ class TaskEntityBuilder implements Builder<TaskEntity, TaskEntityBuilder> {
             isDeleted: isDeleted,
             createdUserId: createdUserId,
             assignedUserId: assignedUserId,
-            subEntityType: subEntityType,
             id: id);
     replace(_$result);
     return _$result;

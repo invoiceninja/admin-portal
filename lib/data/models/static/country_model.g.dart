@@ -130,6 +130,8 @@ class _$CountryEntitySerializer implements StructuredSerializer<CountryEntity> {
       serializers.serialize(object.iso2, specifiedType: const FullType(String)),
       'iso_3166_3',
       serializers.serialize(object.iso3, specifiedType: const FullType(String)),
+      'id',
+      serializers.serialize(object.id, specifiedType: const FullType(String)),
     ];
     if (object.thousandSeparator != null) {
       result
@@ -141,12 +143,6 @@ class _$CountryEntitySerializer implements StructuredSerializer<CountryEntity> {
       result
         ..add('decimal_separator')
         ..add(serializers.serialize(object.decimalSeparator,
-            specifiedType: const FullType(String)));
-    }
-    if (object.id != null) {
-      result
-        ..add('id')
-        ..add(serializers.serialize(object.id,
             specifiedType: const FullType(String)));
     }
     return result;
@@ -439,6 +435,9 @@ class _$CountryEntity extends CountryEntity {
     }
     if (iso3 == null) {
       throw new BuiltValueNullFieldError('CountryEntity', 'iso3');
+    }
+    if (id == null) {
+      throw new BuiltValueNullFieldError('CountryEntity', 'id');
     }
   }
 

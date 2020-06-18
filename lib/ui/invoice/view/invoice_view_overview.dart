@@ -35,7 +35,7 @@ class InvoiceOverview extends StatelessWidget {
     final company = viewModel.company;
 
     final state = StoreProvider.of<AppState>(context).state;
-    final payments = invoice.subEntityType == EntityType.quote
+    final payments = invoice.isQuote
         ? <PaymentEntity>[]
         : memoizedPaymentsByInvoice(
             invoice.id, state.paymentState.map, state.paymentState.list);
@@ -61,20 +61,18 @@ class InvoiceOverview extends StatelessWidget {
         entity: invoice,
         statusColor: color,
         statusLabel: localization.lookup(statuses[invoice.calculatedStatusId]),
-        label: invoice.subEntityType == EntityType.credit
+        label: invoice.isCredit
             ? localization.creditAmount
-            : invoice.subEntityType == EntityType.invoice
-                ? localization.invoiceAmount
-                : localization.quoteAmount,
+            : invoice.isQuote
+                ? localization.quoteAmount
+                : localization.invoiceAmount,
         value:
             formatNumber(invoice.amount, context, clientId: invoice.clientId),
-        secondLabel: invoice.subEntityType == EntityType.credit
+        secondLabel: invoice.isCredit
             ? localization.creditRemaining
-            : invoice.subEntityType == EntityType.invoice
-                ? localization.balanceDue
-                : null,
+            : invoice.isQuote ? null : localization.balanceDue,
         secondValue: [EntityType.invoice, EntityType.credit]
-                .contains(invoice.subEntityType)
+                .contains(invoice.entityType)
             ? formatNumber(invoice.balance, context, clientId: invoice.clientId)
             : null,
       ),
@@ -82,7 +80,7 @@ class InvoiceOverview extends StatelessWidget {
     ];
 
     String dueDateField = InvoiceFields.dueDate;
-    if (invoice.subEntityType == EntityType.quote) {
+    if (invoice.isQuote) {
       dueDateField = QuoteFields.validUntil;
     }
 
@@ -134,8 +132,7 @@ class InvoiceOverview extends StatelessWidget {
       ));
     }
 
-    if (invoice.subEntityType == EntityType.quote ||
-        invoice.subEntityType == EntityType.credit) {
+    if (invoice.isQuote || invoice.isCredit) {
       final relatedInvoice = state.invoiceState.map[invoice.invoiceId] ??
           InvoiceEntity(id: invoice.invoiceId);
       if ((invoice.invoiceId ?? '').isNotEmpty) {

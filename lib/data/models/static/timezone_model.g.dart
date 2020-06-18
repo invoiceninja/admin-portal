@@ -124,13 +124,10 @@ class _$TimezoneEntitySerializer
       'location',
       serializers.serialize(object.location,
           specifiedType: const FullType(String)),
+      'id',
+      serializers.serialize(object.id, specifiedType: const FullType(String)),
     ];
-    if (object.id != null) {
-      result
-        ..add('id')
-        ..add(serializers.serialize(object.id,
-            specifiedType: const FullType(String)));
-    }
+
     return result;
   }
 
@@ -374,6 +371,9 @@ class _$TimezoneEntity extends TimezoneEntity {
     }
     if (location == null) {
       throw new BuiltValueNullFieldError('TimezoneEntity', 'location');
+    }
+    if (id == null) {
+      throw new BuiltValueNullFieldError('TimezoneEntity', 'id');
     }
   }
 

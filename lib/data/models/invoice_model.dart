@@ -86,7 +86,7 @@ abstract class InvoiceEntity extends Object
     final company = state?.company;
     return _$InvoiceEntity._(
       id: id ?? BaseEntity.nextId,
-      subEntityType: entityType ?? EntityType.invoice,
+      entityType: entityType ?? EntityType.invoice,
       isChanged: false,
       amount: 0.0,
       balance: 0.0,
@@ -162,15 +162,6 @@ abstract class InvoiceEntity extends Object
     ..dueDate = ''
     ..invitations.clear());
 
-  @override
-  EntityType get entityType {
-    if (subEntityType != null) {
-      return subEntityType;
-    } else {
-      return EntityType.invoice;
-    }
-  }
-
   double get amount;
 
   double get balance;
@@ -211,6 +202,7 @@ abstract class InvoiceEntity extends Object
   @BuiltValueField(wireName: 'design_id')
   String get designId;
 
+  @override
   @BuiltValueField(wireName: 'uses_inclusive_taxes')
   bool get usesInclusiveTaxes;
 

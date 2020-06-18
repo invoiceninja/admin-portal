@@ -231,6 +231,8 @@ class _$InvoiceEntitySerializer implements StructuredSerializer<InvoiceEntity> {
       serializers.serialize(object.invitations,
           specifiedType: const FullType(
               BuiltList, const [const FullType(InvitationEntity)])),
+      'id',
+      serializers.serialize(object.id, specifiedType: const FullType(String)),
     ];
     if (object.autoBill != null) {
       result
@@ -316,17 +318,11 @@ class _$InvoiceEntitySerializer implements StructuredSerializer<InvoiceEntity> {
         ..add(serializers.serialize(object.assignedUserId,
             specifiedType: const FullType(String)));
     }
-    if (object.subEntityType != null) {
+    if (object.entityType != null) {
       result
         ..add('entity_type')
-        ..add(serializers.serialize(object.subEntityType,
+        ..add(serializers.serialize(object.entityType,
             specifiedType: const FullType(EntityType)));
-    }
-    if (object.id != null) {
-      result
-        ..add('id')
-        ..add(serializers.serialize(object.id,
-            specifiedType: const FullType(String)));
     }
     return result;
   }
@@ -548,7 +544,7 @@ class _$InvoiceEntitySerializer implements StructuredSerializer<InvoiceEntity> {
               specifiedType: const FullType(String)) as String;
           break;
         case 'entity_type':
-          result.subEntityType = serializers.deserialize(value,
+          result.entityType = serializers.deserialize(value,
               specifiedType: const FullType(EntityType)) as EntityType;
           break;
         case 'id':
@@ -764,6 +760,8 @@ class _$InvitationEntitySerializer
       'viewed_date',
       serializers.serialize(object.viewedDate,
           specifiedType: const FullType(String)),
+      'id',
+      serializers.serialize(object.id, specifiedType: const FullType(String)),
     ];
     if (object.isChanged != null) {
       result
@@ -807,17 +805,11 @@ class _$InvitationEntitySerializer
         ..add(serializers.serialize(object.assignedUserId,
             specifiedType: const FullType(String)));
     }
-    if (object.subEntityType != null) {
+    if (object.entityType != null) {
       result
         ..add('entity_type')
-        ..add(serializers.serialize(object.subEntityType,
+        ..add(serializers.serialize(object.entityType,
             specifiedType: const FullType(EntityType)));
-    }
-    if (object.id != null) {
-      result
-        ..add('id')
-        ..add(serializers.serialize(object.id,
-            specifiedType: const FullType(String)));
     }
     return result;
   }
@@ -883,7 +875,7 @@ class _$InvitationEntitySerializer
               specifiedType: const FullType(String)) as String;
           break;
         case 'entity_type':
-          result.subEntityType = serializers.deserialize(value,
+          result.entityType = serializers.deserialize(value,
               specifiedType: const FullType(EntityType)) as EntityType;
           break;
         case 'id':
@@ -1190,7 +1182,7 @@ class _$InvoiceEntity extends InvoiceEntity {
   @override
   final String assignedUserId;
   @override
-  final EntityType subEntityType;
+  final EntityType entityType;
   @override
   final String id;
 
@@ -1248,7 +1240,7 @@ class _$InvoiceEntity extends InvoiceEntity {
       this.isDeleted,
       this.createdUserId,
       this.assignedUserId,
-      this.subEntityType,
+      this.entityType,
       this.id})
       : super._() {
     if (amount == null) {
@@ -1359,6 +1351,9 @@ class _$InvoiceEntity extends InvoiceEntity {
     if (invitations == null) {
       throw new BuiltValueNullFieldError('InvoiceEntity', 'invitations');
     }
+    if (id == null) {
+      throw new BuiltValueNullFieldError('InvoiceEntity', 'id');
+    }
   }
 
   @override
@@ -1422,7 +1417,7 @@ class _$InvoiceEntity extends InvoiceEntity {
         isDeleted == other.isDeleted &&
         createdUserId == other.createdUserId &&
         assignedUserId == other.assignedUserId &&
-        subEntityType == other.subEntityType &&
+        entityType == other.entityType &&
         id == other.id;
   }
 
@@ -1465,7 +1460,7 @@ class _$InvoiceEntity extends InvoiceEntity {
                         isDeleted.hashCode),
                     createdUserId.hashCode),
                 assignedUserId.hashCode),
-            subEntityType.hashCode),
+            entityType.hashCode),
         id.hashCode));
   }
 
@@ -1522,7 +1517,7 @@ class _$InvoiceEntity extends InvoiceEntity {
           ..add('isDeleted', isDeleted)
           ..add('createdUserId', createdUserId)
           ..add('assignedUserId', assignedUserId)
-          ..add('subEntityType', subEntityType)
+          ..add('entityType', entityType)
           ..add('id', id))
         .toString();
   }
@@ -1745,10 +1740,9 @@ class InvoiceEntityBuilder
   set assignedUserId(String assignedUserId) =>
       _$this._assignedUserId = assignedUserId;
 
-  EntityType _subEntityType;
-  EntityType get subEntityType => _$this._subEntityType;
-  set subEntityType(EntityType subEntityType) =>
-      _$this._subEntityType = subEntityType;
+  EntityType _entityType;
+  EntityType get entityType => _$this._entityType;
+  set entityType(EntityType entityType) => _$this._entityType = entityType;
 
   String _id;
   String get id => _$this._id;
@@ -1808,7 +1802,7 @@ class InvoiceEntityBuilder
       _isDeleted = _$v.isDeleted;
       _createdUserId = _$v.createdUserId;
       _assignedUserId = _$v.assignedUserId;
-      _subEntityType = _$v.subEntityType;
+      _entityType = _$v.entityType;
       _id = _$v.id;
       _$v = null;
     }
@@ -1884,7 +1878,7 @@ class InvoiceEntityBuilder
               isDeleted: isDeleted,
               createdUserId: createdUserId,
               assignedUserId: assignedUserId,
-              subEntityType: subEntityType,
+              entityType: entityType,
               id: id);
     } catch (_) {
       String _$failedField;
@@ -2299,7 +2293,7 @@ class _$InvitationEntity extends InvitationEntity {
   @override
   final String assignedUserId;
   @override
-  final EntityType subEntityType;
+  final EntityType entityType;
   @override
   final String id;
 
@@ -2320,7 +2314,7 @@ class _$InvitationEntity extends InvitationEntity {
       this.isDeleted,
       this.createdUserId,
       this.assignedUserId,
-      this.subEntityType,
+      this.entityType,
       this.id})
       : super._() {
     if (key == null) {
@@ -2337,6 +2331,9 @@ class _$InvitationEntity extends InvitationEntity {
     }
     if (viewedDate == null) {
       throw new BuiltValueNullFieldError('InvitationEntity', 'viewedDate');
+    }
+    if (id == null) {
+      throw new BuiltValueNullFieldError('InvitationEntity', 'id');
     }
   }
 
@@ -2364,7 +2361,7 @@ class _$InvitationEntity extends InvitationEntity {
         isDeleted == other.isDeleted &&
         createdUserId == other.createdUserId &&
         assignedUserId == other.assignedUserId &&
-        subEntityType == other.subEntityType &&
+        entityType == other.entityType &&
         id == other.id;
   }
 
@@ -2395,7 +2392,7 @@ class _$InvitationEntity extends InvitationEntity {
                         isDeleted.hashCode),
                     createdUserId.hashCode),
                 assignedUserId.hashCode),
-            subEntityType.hashCode),
+            entityType.hashCode),
         id.hashCode));
   }
 
@@ -2414,7 +2411,7 @@ class _$InvitationEntity extends InvitationEntity {
           ..add('isDeleted', isDeleted)
           ..add('createdUserId', createdUserId)
           ..add('assignedUserId', assignedUserId)
-          ..add('subEntityType', subEntityType)
+          ..add('entityType', entityType)
           ..add('id', id))
         .toString();
   }
@@ -2474,10 +2471,9 @@ class InvitationEntityBuilder
   set assignedUserId(String assignedUserId) =>
       _$this._assignedUserId = assignedUserId;
 
-  EntityType _subEntityType;
-  EntityType get subEntityType => _$this._subEntityType;
-  set subEntityType(EntityType subEntityType) =>
-      _$this._subEntityType = subEntityType;
+  EntityType _entityType;
+  EntityType get entityType => _$this._entityType;
+  set entityType(EntityType entityType) => _$this._entityType = entityType;
 
   String _id;
   String get id => _$this._id;
@@ -2499,7 +2495,7 @@ class InvitationEntityBuilder
       _isDeleted = _$v.isDeleted;
       _createdUserId = _$v.createdUserId;
       _assignedUserId = _$v.assignedUserId;
-      _subEntityType = _$v.subEntityType;
+      _entityType = _$v.entityType;
       _id = _$v.id;
       _$v = null;
     }
@@ -2535,7 +2531,7 @@ class InvitationEntityBuilder
             isDeleted: isDeleted,
             createdUserId: createdUserId,
             assignedUserId: assignedUserId,
-            subEntityType: subEntityType,
+            entityType: entityType,
             id: id);
     replace(_$result);
     return _$result;

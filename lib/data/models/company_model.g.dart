@@ -194,6 +194,8 @@ class _$CompanyEntitySerializer implements StructuredSerializer<CompanyEntity> {
       'settings',
       serializers.serialize(object.settings,
           specifiedType: const FullType(SettingsEntity)),
+      'id',
+      serializers.serialize(object.id, specifiedType: const FullType(String)),
     ];
     if (object.plan != null) {
       result
@@ -255,17 +257,11 @@ class _$CompanyEntitySerializer implements StructuredSerializer<CompanyEntity> {
         ..add(serializers.serialize(object.assignedUserId,
             specifiedType: const FullType(String)));
     }
-    if (object.subEntityType != null) {
+    if (object.entityType != null) {
       result
         ..add('entity_type')
-        ..add(serializers.serialize(object.subEntityType,
+        ..add(serializers.serialize(object.entityType,
             specifiedType: const FullType(EntityType)));
-    }
-    if (object.id != null) {
-      result
-        ..add('id')
-        ..add(serializers.serialize(object.id,
-            specifiedType: const FullType(String)));
     }
     return result;
   }
@@ -549,7 +545,7 @@ class _$CompanyEntitySerializer implements StructuredSerializer<CompanyEntity> {
               specifiedType: const FullType(String)) as String;
           break;
         case 'entity_type':
-          result.subEntityType = serializers.deserialize(value,
+          result.entityType = serializers.deserialize(value,
               specifiedType: const FullType(EntityType)) as EntityType;
           break;
         case 'id':
@@ -2764,7 +2760,7 @@ class _$CompanyEntity extends CompanyEntity {
   @override
   final String assignedUserId;
   @override
-  final EntityType subEntityType;
+  final EntityType entityType;
   @override
   final String id;
 
@@ -2827,7 +2823,7 @@ class _$CompanyEntity extends CompanyEntity {
       this.isDeleted,
       this.createdUserId,
       this.assignedUserId,
-      this.subEntityType,
+      this.entityType,
       this.id})
       : super._() {
     if (enableCustomSurchargeTaxes1 == null) {
@@ -2971,6 +2967,9 @@ class _$CompanyEntity extends CompanyEntity {
     if (settings == null) {
       throw new BuiltValueNullFieldError('CompanyEntity', 'settings');
     }
+    if (id == null) {
+      throw new BuiltValueNullFieldError('CompanyEntity', 'id');
+    }
   }
 
   @override
@@ -3039,7 +3038,7 @@ class _$CompanyEntity extends CompanyEntity {
         isDeleted == other.isDeleted &&
         createdUserId == other.createdUserId &&
         assignedUserId == other.assignedUserId &&
-        subEntityType == other.subEntityType &&
+        entityType == other.entityType &&
         id == other.id;
   }
 
@@ -3082,7 +3081,7 @@ class _$CompanyEntity extends CompanyEntity {
                         isDeleted.hashCode),
                     createdUserId.hashCode),
                 assignedUserId.hashCode),
-            subEntityType.hashCode),
+            entityType.hashCode),
         id.hashCode));
   }
 
@@ -3144,7 +3143,7 @@ class _$CompanyEntity extends CompanyEntity {
           ..add('isDeleted', isDeleted)
           ..add('createdUserId', createdUserId)
           ..add('assignedUserId', assignedUserId)
-          ..add('subEntityType', subEntityType)
+          ..add('entityType', entityType)
           ..add('id', id))
         .toString();
   }
@@ -3432,10 +3431,9 @@ class CompanyEntityBuilder
   set assignedUserId(String assignedUserId) =>
       _$this._assignedUserId = assignedUserId;
 
-  EntityType _subEntityType;
-  EntityType get subEntityType => _$this._subEntityType;
-  set subEntityType(EntityType subEntityType) =>
-      _$this._subEntityType = subEntityType;
+  EntityType _entityType;
+  EntityType get entityType => _$this._entityType;
+  set entityType(EntityType entityType) => _$this._entityType = entityType;
 
   String _id;
   String get id => _$this._id;
@@ -3500,7 +3498,7 @@ class CompanyEntityBuilder
       _isDeleted = _$v.isDeleted;
       _createdUserId = _$v.createdUserId;
       _assignedUserId = _$v.assignedUserId;
-      _subEntityType = _$v.subEntityType;
+      _entityType = _$v.entityType;
       _id = _$v.id;
       _$v = null;
     }
@@ -3581,7 +3579,7 @@ class CompanyEntityBuilder
               isDeleted: isDeleted,
               createdUserId: createdUserId,
               assignedUserId: assignedUserId,
-              subEntityType: subEntityType,
+              entityType: entityType,
               id: id);
     } catch (_) {
       String _$failedField;

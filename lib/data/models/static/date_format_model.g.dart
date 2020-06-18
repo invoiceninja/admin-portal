@@ -123,13 +123,10 @@ class _$DateFormatEntitySerializer
       'format_dart',
       serializers.serialize(object.format,
           specifiedType: const FullType(String)),
+      'id',
+      serializers.serialize(object.id, specifiedType: const FullType(String)),
     ];
-    if (object.id != null) {
-      result
-        ..add('id')
-        ..add(serializers.serialize(object.id,
-            specifiedType: const FullType(String)));
-    }
+
     return result;
   }
 
@@ -365,6 +362,9 @@ class _$DateFormatEntity extends DateFormatEntity {
   _$DateFormatEntity._({this.format, this.id}) : super._() {
     if (format == null) {
       throw new BuiltValueNullFieldError('DateFormatEntity', 'format');
+    }
+    if (id == null) {
+      throw new BuiltValueNullFieldError('DateFormatEntity', 'id');
     }
   }
 

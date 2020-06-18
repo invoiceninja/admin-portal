@@ -111,13 +111,10 @@ class _$SizeEntitySerializer implements StructuredSerializer<SizeEntity> {
     final result = <Object>[
       'name',
       serializers.serialize(object.name, specifiedType: const FullType(String)),
+      'id',
+      serializers.serialize(object.id, specifiedType: const FullType(String)),
     ];
-    if (object.id != null) {
-      result
-        ..add('id')
-        ..add(serializers.serialize(object.id,
-            specifiedType: const FullType(String)));
-    }
+
     return result;
   }
 
@@ -346,6 +343,9 @@ class _$SizeEntity extends SizeEntity {
   _$SizeEntity._({this.name, this.id}) : super._() {
     if (name == null) {
       throw new BuiltValueNullFieldError('SizeEntity', 'name');
+    }
+    if (id == null) {
+      throw new BuiltValueNullFieldError('SizeEntity', 'id');
     }
   }
 

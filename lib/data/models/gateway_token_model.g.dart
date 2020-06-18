@@ -132,6 +132,8 @@ class _$GatewayTokenEntitySerializer
       'is_default',
       serializers.serialize(object.isDefault,
           specifiedType: const FullType(bool)),
+      'id',
+      serializers.serialize(object.id, specifiedType: const FullType(String)),
     ];
     if (object.isChanged != null) {
       result
@@ -173,18 +175,6 @@ class _$GatewayTokenEntitySerializer
       result
         ..add('assigned_user_id')
         ..add(serializers.serialize(object.assignedUserId,
-            specifiedType: const FullType(String)));
-    }
-    if (object.subEntityType != null) {
-      result
-        ..add('entity_type')
-        ..add(serializers.serialize(object.subEntityType,
-            specifiedType: const FullType(EntityType)));
-    }
-    if (object.id != null) {
-      result
-        ..add('id')
-        ..add(serializers.serialize(object.id,
             specifiedType: const FullType(String)));
     }
     return result;
@@ -245,10 +235,6 @@ class _$GatewayTokenEntitySerializer
         case 'assigned_user_id':
           result.assignedUserId = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String;
-          break;
-        case 'entity_type':
-          result.subEntityType = serializers.deserialize(value,
-              specifiedType: const FullType(EntityType)) as EntityType;
           break;
         case 'id':
           result.id = serializers.deserialize(value,
@@ -479,8 +465,6 @@ class _$GatewayTokenEntity extends GatewayTokenEntity {
   @override
   final String assignedUserId;
   @override
-  final EntityType subEntityType;
-  @override
   final String id;
 
   factory _$GatewayTokenEntity(
@@ -499,7 +483,6 @@ class _$GatewayTokenEntity extends GatewayTokenEntity {
       this.isDeleted,
       this.createdUserId,
       this.assignedUserId,
-      this.subEntityType,
       this.id})
       : super._() {
     if (token == null) {
@@ -514,6 +497,9 @@ class _$GatewayTokenEntity extends GatewayTokenEntity {
     }
     if (isDefault == null) {
       throw new BuiltValueNullFieldError('GatewayTokenEntity', 'isDefault');
+    }
+    if (id == null) {
+      throw new BuiltValueNullFieldError('GatewayTokenEntity', 'id');
     }
   }
 
@@ -541,7 +527,6 @@ class _$GatewayTokenEntity extends GatewayTokenEntity {
         isDeleted == other.isDeleted &&
         createdUserId == other.createdUserId &&
         assignedUserId == other.assignedUserId &&
-        subEntityType == other.subEntityType &&
         id == other.id;
   }
 
@@ -558,19 +543,17 @@ class _$GatewayTokenEntity extends GatewayTokenEntity {
                                 $jc(
                                     $jc(
                                         $jc(
-                                            $jc(
-                                                $jc($jc(0, token.hashCode),
-                                                    customerReference.hashCode),
-                                                gatewayTypeId.hashCode),
-                                            isDefault.hashCode),
-                                        isChanged.hashCode),
-                                    createdAt.hashCode),
-                                updatedAt.hashCode),
-                            archivedAt.hashCode),
-                        isDeleted.hashCode),
-                    createdUserId.hashCode),
-                assignedUserId.hashCode),
-            subEntityType.hashCode),
+                                            $jc($jc(0, token.hashCode),
+                                                customerReference.hashCode),
+                                            gatewayTypeId.hashCode),
+                                        isDefault.hashCode),
+                                    isChanged.hashCode),
+                                createdAt.hashCode),
+                            updatedAt.hashCode),
+                        archivedAt.hashCode),
+                    isDeleted.hashCode),
+                createdUserId.hashCode),
+            assignedUserId.hashCode),
         id.hashCode));
   }
 
@@ -588,7 +571,6 @@ class _$GatewayTokenEntity extends GatewayTokenEntity {
           ..add('isDeleted', isDeleted)
           ..add('createdUserId', createdUserId)
           ..add('assignedUserId', assignedUserId)
-          ..add('subEntityType', subEntityType)
           ..add('id', id))
         .toString();
   }
@@ -646,11 +628,6 @@ class GatewayTokenEntityBuilder
   set assignedUserId(String assignedUserId) =>
       _$this._assignedUserId = assignedUserId;
 
-  EntityType _subEntityType;
-  EntityType get subEntityType => _$this._subEntityType;
-  set subEntityType(EntityType subEntityType) =>
-      _$this._subEntityType = subEntityType;
-
   String _id;
   String get id => _$this._id;
   set id(String id) => _$this._id = id;
@@ -670,7 +647,6 @@ class GatewayTokenEntityBuilder
       _isDeleted = _$v.isDeleted;
       _createdUserId = _$v.createdUserId;
       _assignedUserId = _$v.assignedUserId;
-      _subEntityType = _$v.subEntityType;
       _id = _$v.id;
       _$v = null;
     }
@@ -705,7 +681,6 @@ class GatewayTokenEntityBuilder
             isDeleted: isDeleted,
             createdUserId: createdUserId,
             assignedUserId: assignedUserId,
-            subEntityType: subEntityType,
             id: id);
     replace(_$result);
     return _$result;

@@ -124,13 +124,10 @@ class _$LanguageEntitySerializer
       'locale',
       serializers.serialize(object.locale,
           specifiedType: const FullType(String)),
+      'id',
+      serializers.serialize(object.id, specifiedType: const FullType(String)),
     ];
-    if (object.id != null) {
-      result
-        ..add('id')
-        ..add(serializers.serialize(object.id,
-            specifiedType: const FullType(String)));
-    }
+
     return result;
   }
 
@@ -374,6 +371,9 @@ class _$LanguageEntity extends LanguageEntity {
     }
     if (locale == null) {
       throw new BuiltValueNullFieldError('LanguageEntity', 'locale');
+    }
+    if (id == null) {
+      throw new BuiltValueNullFieldError('LanguageEntity', 'id');
     }
   }
 
