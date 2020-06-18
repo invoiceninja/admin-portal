@@ -585,6 +585,7 @@ abstract class AppState implements Built<AppState, AppStateBuilder> {
     //return 'Payment Terms: ${paymentTermState.map}';
     //return 'Filter: ${uiState.filterEntityType} ${uiState.filterEntityId}';
     //return 'Save Completer: ${invoiceUIState.saveCompleter}';
+    return 'Fields: ${uiState.settingsUIState.company.customFields} - ${company.customFields}';
     return 'Layout: ${prefState.appLayout}, Route: ${uiState.currentRoute} Prev: ${uiState.previousRoute}';
   }
 }

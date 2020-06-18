@@ -84,7 +84,6 @@ List<String> filteredPaymentsSelector(
             .map((p) => p.invoiceId)
             .contains(paymentListState.filterEntityId)) {
           return false;
-          ;
         }
       } else if (paymentListState.filterEntityType == EntityType.user) {
         if (payment.assignedUserId != paymentListState.filterEntityId) {
