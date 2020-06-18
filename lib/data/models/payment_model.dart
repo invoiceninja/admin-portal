@@ -173,6 +173,10 @@ abstract class PaymentEntity extends Object
   @BuiltValueField(wireName: 'vendor_id')
   String get vendorId;
 
+  @nullable
+  @BuiltValueField(serialize: false)
+  bool get isForInvoice;
+
   BuiltList<PaymentableEntity> get paymentables;
 
   BuiltList<PaymentableEntity> get invoices;

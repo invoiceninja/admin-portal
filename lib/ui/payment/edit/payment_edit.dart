@@ -93,9 +93,10 @@ class _PaymentEditState extends State<PaymentEdit> {
     final localization = AppLocalization.of(context);
 
     final invoicePaymentables = payment.invoices.toList();
-    if (invoicePaymentables
-        .where((paymentable) => paymentable.isEmpty)
-        .isEmpty) {
+    if (payment.isForInvoice != true &&
+        invoicePaymentables
+            .where((paymentable) => paymentable.isEmpty)
+            .isEmpty) {
       invoicePaymentables.add(PaymentableEntity());
     }
 
@@ -151,13 +152,14 @@ class _PaymentEditState extends State<PaymentEdit> {
                     entityList: memoizedDropdownClientList(
                         state.clientState.map, state.clientState.list),
                   ),
-                  DecoratedFormField(
-                    controller: _amountController,
-                    autocorrect: false,
-                    keyboardType:
-                        TextInputType.numberWithOptions(decimal: true),
-                    label: localization.amount,
-                  ),
+                  if (payment.isForInvoice != true)
+                    DecoratedFormField(
+                      controller: _amountController,
+                      autocorrect: false,
+                      keyboardType:
+                          TextInputType.numberWithOptions(decimal: true),
+                      label: localization.amount,
+                    ),
                 ],
                 for (var index = 0; index < invoicePaymentables.length; index++)
                   PaymentableEditor(
@@ -168,18 +170,19 @@ class _PaymentEditState extends State<PaymentEdit> {
                     index: index,
                     entityType: EntityType.invoice,
                   ),
-                if (state.company.isModuleEnabled(EntityType.credit))
-                  for (var index = 0;
-                      index < creditPaymentables.length;
-                      index++)
-                    PaymentableEditor(
-                      key: ValueKey(
-                          '__paymentable_${index}_${creditPaymentables[index].id}__'),
-                      viewModel: viewModel,
-                      paymentable: creditPaymentables[index],
-                      index: index,
-                      entityType: EntityType.credit,
-                    ),
+                if (payment.isForInvoice != true)
+                  if (state.company.isModuleEnabled(EntityType.credit))
+                    for (var index = 0;
+                        index < creditPaymentables.length;
+                        index++)
+                      PaymentableEditor(
+                        key: ValueKey(
+                            '__paymentable_${index}_${creditPaymentables[index].id}__'),
+                        viewModel: viewModel,
+                        paymentable: creditPaymentables[index],
+                        index: index,
+                        entityType: EntityType.credit,
+                      ),
                 EntityDropdown(
                   key: ValueKey('__payment_type_${payment.typeId}__'),
                   entityType: EntityType.paymentType,
@@ -390,12 +393,15 @@ class _PaymentableEditorState extends State<PaymentableEditor> {
           Expanded(
             child: DecoratedFormField(
               controller: _amountController,
-              label: localization.applied,
+              label: payment.isForInvoice
+                  ? localization.amount
+                  : localization.applied,
             ),
           ),
         ],
         if ((widget.entityType == EntityType.invoice &&
                 payment.invoices.isNotEmpty &&
+                !payment.isForInvoice &&
                 _invoiceId != null) ||
             (widget.entityType == EntityType.credit &&
                 payment.credits.isNotEmpty &&

@@ -723,6 +723,8 @@ class _$PaymentEntity extends PaymentEntity {
   @override
   final String vendorId;
   @override
+  final bool isForInvoice;
+  @override
   final BuiltList<PaymentableEntity> paymentables;
   @override
   final BuiltList<PaymentableEntity> invoices;
@@ -770,6 +772,7 @@ class _$PaymentEntity extends PaymentEntity {
       this.isManual,
       this.projectId,
       this.vendorId,
+      this.isForInvoice,
       this.paymentables,
       this.invoices,
       this.credits,
@@ -876,6 +879,7 @@ class _$PaymentEntity extends PaymentEntity {
         isManual == other.isManual &&
         projectId == other.projectId &&
         vendorId == other.vendorId &&
+        isForInvoice == other.isForInvoice &&
         paymentables == other.paymentables &&
         invoices == other.invoices &&
         credits == other.credits &&
@@ -911,14 +915,14 @@ class _$PaymentEntity extends PaymentEntity {
                                                                 $jc(
                                                                     $jc(
                                                                         $jc(
-                                                                            $jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc(0, amount.hashCode), applied.hashCode), refunded.hashCode), number.hashCode), clientId.hashCode), statusId.hashCode), transactionReference.hashCode), date.hashCode), typeId.hashCode), privateNotes.hashCode), customValue1.hashCode), customValue2.hashCode),
-                                                                                customValue3.hashCode),
-                                                                            customValue4.hashCode),
-                                                                        exchangeRate.hashCode),
-                                                                    exchangeCurrencyId.hashCode),
-                                                                isManual.hashCode),
-                                                            projectId.hashCode),
-                                                        vendorId.hashCode),
+                                                                            $jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc(0, amount.hashCode), applied.hashCode), refunded.hashCode), number.hashCode), clientId.hashCode), statusId.hashCode), transactionReference.hashCode), date.hashCode), typeId.hashCode), privateNotes.hashCode), customValue1.hashCode), customValue2.hashCode), customValue3.hashCode),
+                                                                                customValue4.hashCode),
+                                                                            exchangeRate.hashCode),
+                                                                        exchangeCurrencyId.hashCode),
+                                                                    isManual.hashCode),
+                                                                projectId.hashCode),
+                                                            vendorId.hashCode),
+                                                        isForInvoice.hashCode),
                                                     paymentables.hashCode),
                                                 invoices.hashCode),
                                             credits.hashCode),
@@ -955,6 +959,7 @@ class _$PaymentEntity extends PaymentEntity {
           ..add('isManual', isManual)
           ..add('projectId', projectId)
           ..add('vendorId', vendorId)
+          ..add('isForInvoice', isForInvoice)
           ..add('paymentables', paymentables)
           ..add('invoices', invoices)
           ..add('credits', credits)
@@ -1053,6 +1058,10 @@ class PaymentEntityBuilder
   String get vendorId => _$this._vendorId;
   set vendorId(String vendorId) => _$this._vendorId = vendorId;
 
+  bool _isForInvoice;
+  bool get isForInvoice => _$this._isForInvoice;
+  set isForInvoice(bool isForInvoice) => _$this._isForInvoice = isForInvoice;
+
   ListBuilder<PaymentableEntity> _paymentables;
   ListBuilder<PaymentableEntity> get paymentables =>
       _$this._paymentables ??= new ListBuilder<PaymentableEntity>();
@@ -1133,6 +1142,7 @@ class PaymentEntityBuilder
       _isManual = _$v.isManual;
       _projectId = _$v.projectId;
       _vendorId = _$v.vendorId;
+      _isForInvoice = _$v.isForInvoice;
       _paymentables = _$v.paymentables?.toBuilder();
       _invoices = _$v.invoices?.toBuilder();
       _credits = _$v.credits?.toBuilder();
@@ -1188,6 +1198,7 @@ class PaymentEntityBuilder
               isManual: isManual,
               projectId: projectId,
               vendorId: vendorId,
+              isForInvoice: isForInvoice,
               paymentables: paymentables.build(),
               invoices: invoices.build(),
               credits: credits.build(),
