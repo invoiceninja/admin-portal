@@ -160,7 +160,7 @@ String formatNumber(
   } else if (swapCurrencySymbol) {
     return '$formatted ${currency.symbol.trim()}';
   } else if (value < 0) {
-    return '-${currency.symbol}$formatted';
+    return '−${currency.symbol}$formatted';
   } else {
     return '${currency.symbol}$formatted';
   }
