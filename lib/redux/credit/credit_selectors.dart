@@ -70,7 +70,7 @@ List<String> filteredCreditsSelector(
         return false;
       }
     } else if (creditListState.filterEntityType == EntityType.user) {
-      if (!credit.userCanAccess(creditListState.filterEntityId)) {
+      if (credit.assignedUserId != creditListState.filterEntityId) {
         return false;
       }
     }
@@ -140,7 +140,7 @@ EntityStats creditStatsForUser(
   int countActive = 0;
   int countArchived = 0;
   creditMap.forEach((creditId, credit) {
-    if (credit.userCanAccess(userId)) {
+    if (credit.assignedUserId == userId) {
       if (credit.isActive) {
         countActive++;
       } else if (credit.isArchived) {

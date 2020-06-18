@@ -43,7 +43,7 @@ List<String> filteredClientsSelector(
         return false;
       }
     } else if (clientListState.filterEntityType == EntityType.user) {
-      if (!client.userCanAccess(clientListState.filterEntityId)) {
+      if (client.assignedUserId != clientListState.filterEntityId) {
         return false;
       }
     }
