@@ -9,6 +9,7 @@ import 'package:invoiceninja_flutter/ui/app/buttons/bottom_buttons.dart';
 import 'package:invoiceninja_flutter/ui/app/view_scaffold.dart';
 import 'package:invoiceninja_flutter/ui/client/view/client_view_activity.dart';
 import 'package:invoiceninja_flutter/ui/client/view/client_view_details.dart';
+import 'package:invoiceninja_flutter/ui/client/view/client_view_ledger.dart';
 import 'package:invoiceninja_flutter/ui/client/view/client_view_vm.dart';
 import 'package:invoiceninja_flutter/ui/client/view/client_view_overview.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
@@ -34,7 +35,7 @@ class _ClientViewState extends State<ClientView>
   @override
   void initState() {
     super.initState();
-    _controller = TabController(vsync: this, length: 3);
+    _controller = TabController(vsync: this, length: 4);
   }
 
   @override
@@ -57,12 +58,16 @@ class _ClientViewState extends State<ClientView>
       entity: client,
       appBarBottom: TabBar(
         controller: _controller,
+        isScrollable: true,
         tabs: [
           Tab(
             text: localization.overview,
           ),
           Tab(
             text: localization.details,
+          ),
+          Tab(
+            text: localization.ledger,
           ),
           Tab(
             text: localization.activity,
@@ -86,6 +91,13 @@ class _ClientViewState extends State<ClientView>
                   RefreshIndicator(
                     onRefresh: () => viewModel.onRefreshed(context),
                     child: ClientViewDetails(client: viewModel.client),
+                  ),
+                  RefreshIndicator(
+                    onRefresh: () => viewModel.onRefreshed(context),
+                    child: ClientViewLedger(
+                      viewModel: viewModel,
+                      key: ValueKey(viewModel.client.id),
+                    ),
                   ),
                   RefreshIndicator(
                     onRefresh: () => viewModel.onRefreshed(context),

@@ -605,6 +605,9 @@ abstract class LedgerEntity
 
   double get adjustment;
 
+  @BuiltValueField(wireName: 'created_at')
+  int get createdAt;
+
   @nullable
   @BuiltValueField(wireName: 'invoice_id')
   String get invoiceId;

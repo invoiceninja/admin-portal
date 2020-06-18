@@ -647,6 +647,9 @@ class _$LedgerEntitySerializer implements StructuredSerializer<LedgerEntity> {
       'adjustment',
       serializers.serialize(object.adjustment,
           specifiedType: const FullType(double)),
+      'created_at',
+      serializers.serialize(object.createdAt,
+          specifiedType: const FullType(int)),
     ];
     if (object.invoiceId != null) {
       result
@@ -691,6 +694,10 @@ class _$LedgerEntitySerializer implements StructuredSerializer<LedgerEntity> {
         case 'adjustment':
           result.adjustment = serializers.deserialize(value,
               specifiedType: const FullType(double)) as double;
+          break;
+        case 'created_at':
+          result.createdAt = serializers.deserialize(value,
+              specifiedType: const FullType(int)) as int;
           break;
         case 'invoice_id':
           result.invoiceId = serializers.deserialize(value,
@@ -1193,6 +1200,8 @@ class _$LedgerEntity extends LedgerEntity {
   @override
   final double adjustment;
   @override
+  final int createdAt;
+  @override
   final String invoiceId;
   @override
   final String creditId;
@@ -1206,6 +1215,7 @@ class _$LedgerEntity extends LedgerEntity {
       {this.notes,
       this.balance,
       this.adjustment,
+      this.createdAt,
       this.invoiceId,
       this.creditId,
       this.paymentId})
@@ -1218,6 +1228,9 @@ class _$LedgerEntity extends LedgerEntity {
     }
     if (adjustment == null) {
       throw new BuiltValueNullFieldError('LedgerEntity', 'adjustment');
+    }
+    if (createdAt == null) {
+      throw new BuiltValueNullFieldError('LedgerEntity', 'createdAt');
     }
   }
 
@@ -1235,6 +1248,7 @@ class _$LedgerEntity extends LedgerEntity {
         notes == other.notes &&
         balance == other.balance &&
         adjustment == other.adjustment &&
+        createdAt == other.createdAt &&
         invoiceId == other.invoiceId &&
         creditId == other.creditId &&
         paymentId == other.paymentId;
@@ -1246,8 +1260,10 @@ class _$LedgerEntity extends LedgerEntity {
     return __hashCode ??= $jf($jc(
         $jc(
             $jc(
-                $jc($jc($jc(0, notes.hashCode), balance.hashCode),
-                    adjustment.hashCode),
+                $jc(
+                    $jc($jc($jc(0, notes.hashCode), balance.hashCode),
+                        adjustment.hashCode),
+                    createdAt.hashCode),
                 invoiceId.hashCode),
             creditId.hashCode),
         paymentId.hashCode));
@@ -1259,6 +1275,7 @@ class _$LedgerEntity extends LedgerEntity {
           ..add('notes', notes)
           ..add('balance', balance)
           ..add('adjustment', adjustment)
+          ..add('createdAt', createdAt)
           ..add('invoiceId', invoiceId)
           ..add('creditId', creditId)
           ..add('paymentId', paymentId))
@@ -1282,6 +1299,10 @@ class LedgerEntityBuilder
   double get adjustment => _$this._adjustment;
   set adjustment(double adjustment) => _$this._adjustment = adjustment;
 
+  int _createdAt;
+  int get createdAt => _$this._createdAt;
+  set createdAt(int createdAt) => _$this._createdAt = createdAt;
+
   String _invoiceId;
   String get invoiceId => _$this._invoiceId;
   set invoiceId(String invoiceId) => _$this._invoiceId = invoiceId;
@@ -1301,6 +1322,7 @@ class LedgerEntityBuilder
       _notes = _$v.notes;
       _balance = _$v.balance;
       _adjustment = _$v.adjustment;
+      _createdAt = _$v.createdAt;
       _invoiceId = _$v.invoiceId;
       _creditId = _$v.creditId;
       _paymentId = _$v.paymentId;
@@ -1329,6 +1351,7 @@ class LedgerEntityBuilder
             notes: notes,
             balance: balance,
             adjustment: adjustment,
+            createdAt: createdAt,
             invoiceId: invoiceId,
             creditId: creditId,
             paymentId: paymentId);
