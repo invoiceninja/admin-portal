@@ -289,11 +289,12 @@ abstract class CompanyEntity extends Object
     if (values == null || !values.contains('|')) {
       return [];
     } else {
-      final data = values.split('|').last.split(',');
+      final parts = values.split('|');
+      final data = parts.last.split(',');
 
-      if (data.length == 1) {
-        final first = data.first;
-        if (first == kFieldTypeSwitch || first == kFieldTypeDate) {
+      if (parts.length == 2) {
+        if ([kFieldTypeDate, kFieldTypeSwitch, kFieldTypeSingleLineText]
+            .contains(parts[1])) {
           return [];
         }
       }
