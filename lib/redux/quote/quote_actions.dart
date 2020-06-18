@@ -381,7 +381,7 @@ Future handleQuoteAction(
     case EntityAction.edit:
       editEntity(context: context, entity: quote);
       break;
-    case EntityAction.pdf:
+    case EntityAction.viewPdf:
       viewPdf(quote, context);
       break;
     case EntityAction.clientPortal:

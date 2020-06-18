@@ -121,13 +121,10 @@ class _$IndustryEntitySerializer
     final result = <Object>[
       'name',
       serializers.serialize(object.name, specifiedType: const FullType(String)),
+      'id',
+      serializers.serialize(object.id, specifiedType: const FullType(String)),
     ];
-    if (object.id != null) {
-      result
-        ..add('id')
-        ..add(serializers.serialize(object.id,
-            specifiedType: const FullType(String)));
-    }
+
     return result;
   }
 
@@ -362,6 +359,9 @@ class _$IndustryEntity extends IndustryEntity {
   _$IndustryEntity._({this.name, this.id}) : super._() {
     if (name == null) {
       throw new BuiltValueNullFieldError('IndustryEntity', 'name');
+    }
+    if (id == null) {
+      throw new BuiltValueNullFieldError('IndustryEntity', 'id');
     }
   }
 

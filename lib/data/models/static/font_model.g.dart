@@ -20,13 +20,10 @@ class _$FontEntitySerializer implements StructuredSerializer<FontEntity> {
     final result = <Object>[
       'name',
       serializers.serialize(object.name, specifiedType: const FullType(String)),
+      'id',
+      serializers.serialize(object.id, specifiedType: const FullType(String)),
     ];
-    if (object.id != null) {
-      result
-        ..add('id')
-        ..add(serializers.serialize(object.id,
-            specifiedType: const FullType(String)));
-    }
+
     return result;
   }
 
@@ -68,6 +65,9 @@ class _$FontEntity extends FontEntity {
   _$FontEntity._({this.name, this.id}) : super._() {
     if (name == null) {
       throw new BuiltValueNullFieldError('FontEntity', 'name');
+    }
+    if (id == null) {
+      throw new BuiltValueNullFieldError('FontEntity', 'id');
     }
   }
 

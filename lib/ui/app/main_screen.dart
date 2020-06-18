@@ -676,10 +676,10 @@ class _EntityFilter extends StatelessWidget {
                             textAlign: TextAlign.start,
                             maxLines: 1,
                           ),
-                          onPressed: () => viewEntitiesByType(
-                              context: context,
-                              entityType: filterEntityType,
-                              filterEntity: filterEntity),
+                          onPressed: () => viewEntity(
+                            entity: filterEntity,
+                            context: context,
+                          ),
                         ),
                       ),
                     ),
@@ -697,11 +697,20 @@ class _EntityFilter extends StatelessWidget {
                         ],
                       ),
                       initialValue: routeEntityType,
-                      onSelected: (EntityType value) => viewEntitiesByType(
-                        context: context,
-                        entityType: value,
-                        filterEntity: filterEntity,
-                      ),
+                      onSelected: (EntityType value) {
+                        if (value == filterEntityType) {
+                          viewEntity(
+                            entity: filterEntity,
+                            context: context,
+                          );
+                        } else {
+                          viewEntitiesByType(
+                            context: context,
+                            entityType: value,
+                            filterEntity: filterEntity,
+                          );
+                        }
+                      },
                       itemBuilder: (BuildContext context) => [
                         filterEntityType,
                         ...filterEntityType.relatedTypes

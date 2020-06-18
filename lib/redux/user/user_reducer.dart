@@ -21,6 +21,8 @@ Reducer<String> selectedIdReducer = combineReducers([
       (String selectedId, action) => action.user.id),
   TypedReducer<String, SelectCompany>((selectedId, action) => ''),
   TypedReducer<String, ClearEntityFilter>((selectedId, action) => ''),
+  TypedReducer<String, ClearEntitySelection>((selectedId, action) =>
+      action.entityType == EntityType.user ? '' : selectedId),
   TypedReducer<String, FilterByEntity>((selectedId, action) =>
       action.entityType == EntityType.user ? action.entityId : selectedId),
 ]);

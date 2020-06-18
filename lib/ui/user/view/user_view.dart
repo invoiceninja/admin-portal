@@ -2,7 +2,6 @@ import 'package:flutter_redux/flutter_redux.dart';
 import 'package:invoiceninja_flutter/data/models/entities.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/redux/invoice/invoice_selectors.dart';
-import 'package:invoiceninja_flutter/redux/payment/payment_selectors.dart';
 import 'package:invoiceninja_flutter/redux/quote/quote_selectors.dart';
 import 'package:invoiceninja_flutter/ui/app/entities/entity_list_tile.dart';
 import 'package:invoiceninja_flutter/ui/app/entity_header.dart';
@@ -55,17 +54,6 @@ class UserView extends StatelessWidget {
                 memoizedInvoiceStatsForUser(user.id, state.invoiceState.map)
                     .present(localization.active, localization.archived),
           ),
-          EntitiesListTile(
-            isFilter: isFilter,
-            entityType: EntityType.payment,
-            title: localization.payments,
-            onTap: () => viewModel.onEntityPressed(context, EntityType.payment),
-            onLongPress: () =>
-                viewModel.onEntityPressed(context, EntityType.payment, true),
-            subtitle: memoizedPaymentStatsForUser(
-                    user.id, state.paymentState.map, state.invoiceState.map)
-                .present(localization.active, localization.archived),
-          ),
           company.isModuleEnabled(EntityType.quote)
               ? EntitiesListTile(
                   isFilter: isFilter,
@@ -78,6 +66,21 @@ class UserView extends StatelessWidget {
                   subtitle: memoizedQuoteStatsForUser(
                     user.id,
                     state.quoteState.map,
+                  ).present(localization.active, localization.archived),
+                )
+              : Container(),
+          company.isModuleEnabled(EntityType.credit)
+              ? EntitiesListTile(
+                  isFilter: isFilter,
+                  entityType: EntityType.credit,
+                  title: localization.credits,
+                  onTap: () =>
+                      viewModel.onEntityPressed(context, EntityType.credit),
+                  onLongPress: () => viewModel.onEntityPressed(
+                      context, EntityType.credit, true),
+                  subtitle: memoizedCreditStatsForUser(
+                    user.id,
+                    state.creditState.map,
                   ).present(localization.active, localization.archived),
                 )
               : Container(),

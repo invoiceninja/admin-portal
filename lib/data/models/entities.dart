@@ -95,7 +95,6 @@ class EntityType extends EnumClass {
       case EntityType.user:
         return [
           EntityType.invoice,
-          EntityType.payment,
           EntityType.quote,
           EntityType.credit,
           EntityType.task,
@@ -194,7 +193,6 @@ class EntityStats {
 }
 
 abstract class SelectableEntity {
-  @nullable
   String get id;
 
   bool matchesFilter(String filter) => true;
@@ -225,7 +223,6 @@ abstract class BaseEntity implements SelectableEntity {
   @nullable
   bool get isChanged;
 
-  // TODO remove this
   @nullable
   @BuiltValueField(wireName: 'created_at')
   int get createdAt;
@@ -238,7 +235,6 @@ abstract class BaseEntity implements SelectableEntity {
   @BuiltValueField(wireName: 'archived_at')
   int get archivedAt;
 
-  // TODO remove this
   @nullable
   @BuiltValueField(wireName: 'is_deleted')
   bool get isDeleted;
@@ -253,11 +249,9 @@ abstract class BaseEntity implements SelectableEntity {
 
   @nullable
   @BuiltValueField(wireName: 'entity_type')
-  EntityType get subEntityType;
+  EntityType get entityType;
 
   String get entityKey => '__${entityType}__${id}__';
-
-  EntityType get entityType => throw 'EntityType not set: ${this}';
 
   bool get isNew => id == null || (int.tryParse(id) ?? 0) < 0;
 

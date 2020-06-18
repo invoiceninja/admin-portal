@@ -122,13 +122,10 @@ class _$PaymentTypeEntitySerializer
     final result = <Object>[
       'name',
       serializers.serialize(object.name, specifiedType: const FullType(String)),
+      'id',
+      serializers.serialize(object.id, specifiedType: const FullType(String)),
     ];
-    if (object.id != null) {
-      result
-        ..add('id')
-        ..add(serializers.serialize(object.id,
-            specifiedType: const FullType(String)));
-    }
+
     return result;
   }
 
@@ -366,6 +363,9 @@ class _$PaymentTypeEntity extends PaymentTypeEntity {
   _$PaymentTypeEntity._({this.name, this.id}) : super._() {
     if (name == null) {
       throw new BuiltValueNullFieldError('PaymentTypeEntity', 'name');
+    }
+    if (id == null) {
+      throw new BuiltValueNullFieldError('PaymentTypeEntity', 'id');
     }
   }
 

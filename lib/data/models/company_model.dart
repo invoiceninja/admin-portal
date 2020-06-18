@@ -255,6 +255,12 @@ abstract class CompanyEntity extends Object
 
   bool hasCustomField(String field) => getCustomFieldLabel(field).isNotEmpty;
 
+  bool get hasCustomSurcharge =>
+      hasCustomField(CustomFieldType.surcharge1) ||
+      hasCustomField(CustomFieldType.surcharge2) ||
+      hasCustomField(CustomFieldType.surcharge3) ||
+      hasCustomField(CustomFieldType.surcharge4);
+
   String getCustomFieldLabel(String field) {
     if (customFields.containsKey(field)) {
       return customFields[field].split('|').first;

@@ -438,7 +438,7 @@ void handleInvoiceAction(BuildContext context, List<BaseEntity> invoices,
     case EntityAction.edit:
       editEntity(context: context, entity: invoice);
       break;
-    case EntityAction.pdf:
+    case EntityAction.viewPdf:
       viewPdf(invoice, context);
       break;
     case EntityAction.clientPortal:
@@ -497,18 +497,19 @@ void handleInvoiceAction(BuildContext context, List<BaseEntity> invoices,
       createEntity(
           context: context,
           entity: invoice.clone
-              .rebuild((b) => b..subEntityType = EntityType.quote));
+              .rebuild((b) => b..entityType = EntityType.quote));
       break;
     case EntityAction.cloneToCredit:
       createEntity(
           context: context,
           entity: invoice.clone
-              .rebuild((b) => b..subEntityType = EntityType.credit));
+              .rebuild((b) => b..entityType = EntityType.credit));
       break;
     case EntityAction.newPayment:
       createEntity(
         context: context,
         entity: PaymentEntity(state: state).rebuild((b) => b
+          ..isForInvoice = true
           ..clientId = invoice.clientId
           ..invoices.addAll(invoices
               .map((invoice) => PaymentableEntity.fromInvoice(invoice))

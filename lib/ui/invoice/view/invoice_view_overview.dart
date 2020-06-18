@@ -35,21 +35,21 @@ class InvoiceOverview extends StatelessWidget {
     final company = viewModel.company;
 
     final state = StoreProvider.of<AppState>(context).state;
-    final payments = invoice.subEntityType == EntityType.quote
+    final payments = invoice.isQuote
         ? <PaymentEntity>[]
         : memoizedPaymentsByInvoice(
             invoice.id, state.paymentState.map, state.paymentState.list);
 
-    Map<String, String> stauses;
+    Map<String, String> statuses;
     Map<String, Color> colors;
     if (invoice.entityType == EntityType.quote) {
-      stauses = kQuoteStatuses;
+      statuses = kQuoteStatuses;
       colors = QuoteStatusColors.colors;
     } else if (invoice.entityType == EntityType.credit) {
-      stauses = kCreditStatuses;
+      statuses = kCreditStatuses;
       colors = CreditStatusColors.colors;
     } else {
-      stauses = kInvoiceStatuses;
+      statuses = kInvoiceStatuses;
       colors = InvoiceStatusColors.colors;
     }
 
@@ -60,21 +60,19 @@ class InvoiceOverview extends StatelessWidget {
       EntityHeader(
         entity: invoice,
         statusColor: color,
-        statusLabel: localization.lookup(stauses[invoice.calculatedStatusId]),
-        label: invoice.subEntityType == EntityType.credit
+        statusLabel: localization.lookup(statuses[invoice.calculatedStatusId]),
+        label: invoice.isCredit
             ? localization.creditAmount
-            : invoice.subEntityType == EntityType.invoice
-                ? localization.invoiceAmount
-                : localization.quoteAmount,
+            : invoice.isQuote
+                ? localization.quoteAmount
+                : localization.invoiceAmount,
         value:
             formatNumber(invoice.amount, context, clientId: invoice.clientId),
-        secondLabel: invoice.subEntityType == EntityType.credit
+        secondLabel: invoice.isCredit
             ? localization.creditRemaining
-            : invoice.subEntityType == EntityType.invoice
-                ? localization.balanceDue
-                : null,
+            : invoice.isQuote ? null : localization.balanceDue,
         secondValue: [EntityType.invoice, EntityType.credit]
-                .contains(invoice.subEntityType)
+                .contains(invoice.entityType)
             ? formatNumber(invoice.balance, context, clientId: invoice.clientId)
             : null,
       ),
@@ -82,7 +80,7 @@ class InvoiceOverview extends StatelessWidget {
     ];
 
     String dueDateField = InvoiceFields.dueDate;
-    if (invoice.subEntityType == EntityType.quote) {
+    if (invoice.isQuote) {
       dueDateField = QuoteFields.validUntil;
     }
 
@@ -125,8 +123,16 @@ class InvoiceOverview extends StatelessWidget {
       ),
     );
 
-    if (invoice.subEntityType == EntityType.quote ||
-        invoice.subEntityType == EntityType.credit) {
+    if ((invoice.assignedUserId ?? '').isNotEmpty) {
+      widgets.add(EntityListTile(
+        isFilter: isFilter,
+        entity: state.userState.map[invoice.assignedUserId],
+        onTap: () => viewModel.onUserPressed(context),
+        onLongPress: () => viewModel.onUserPressed(context, true),
+      ));
+    }
+
+    if (invoice.isQuote || invoice.isCredit) {
       final relatedInvoice = state.invoiceState.map[invoice.invoiceId] ??
           InvoiceEntity(id: invoice.invoiceId);
       if ((invoice.invoiceId ?? '').isNotEmpty) {
@@ -217,6 +223,11 @@ class InvoiceOverview extends StatelessWidget {
       );
     }
 
+    widgets.addAll([
+      SizedBox(height: 8),
+      surchargeRow(localization.calculateSubtotal, invoice.calculateTotal)
+    ]);
+
     if (invoice.customSurcharge1 != 0 && company.enableCustomSurchargeTaxes1) {
       widgets.add(surchargeRow(
           company.getCustomFieldLabel(CustomFieldType.surcharge1),
@@ -258,6 +269,8 @@ class InvoiceOverview extends StatelessWidget {
           company.getCustomFieldLabel(CustomFieldType.surcharge4),
           invoice.customSurcharge4));
     }
+
+    widgets.add(surchargeRow(localization.total, invoice.calculateTotal));
 
     return ListView(
       children: widgets,

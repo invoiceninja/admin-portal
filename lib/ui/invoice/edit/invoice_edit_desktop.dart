@@ -355,25 +355,25 @@ class InvoiceEditDesktopState extends State<InvoiceEditDesktop>
                       controller: _tabController,
                       children: <Widget>[
                         DecoratedFormField(
-                          maxLines: 4,
+                          maxLines: 6,
                           controller: _publicNotesController,
                           keyboardType: TextInputType.multiline,
                           label: '',
                         ),
                         DecoratedFormField(
-                          maxLines: 4,
+                          maxLines: 6,
                           controller: _privateNotesController,
                           keyboardType: TextInputType.multiline,
                           label: '',
                         ),
                         DecoratedFormField(
-                          maxLines: 4,
+                          maxLines: 6,
                           controller: _termsController,
                           keyboardType: TextInputType.multiline,
                           label: '',
                         ),
                         DecoratedFormField(
-                          maxLines: 4,
+                          maxLines: 6,
                           controller: _footerController,
                           keyboardType: TextInputType.multiline,
                           label: '',
@@ -386,67 +386,72 @@ class InvoiceEditDesktopState extends State<InvoiceEditDesktop>
             ),
             Expanded(
               flex: 1,
-              child: FormCard(
-                padding: const EdgeInsets.only(
-                    top: kMobileDialogPadding,
-                    right: kMobileDialogPadding,
-                    bottom: kMobileDialogPadding,
-                    left: kMobileDialogPadding / 2),
-                children: <Widget>[
-                  /*
-                    DecoratedFormField(
-                      controller: null,
-                      enabled: false,
-                      initialValue: '10',
-                      label: localization.subtotal,
-                    ),
-                     */
-                  UserPicker(
-                    userId: invoice.assignedUserId,
-                    onChanged: (userId) => viewModel.onChanged(
-                        invoice.rebuild((b) => b..assignedUserId = userId)),
+              child: Column(
+                children: [
+                  FormCard(
+                    padding: const EdgeInsets.only(
+                        top: kMobileDialogPadding,
+                        right: kMobileDialogPadding,
+                        left: kMobileDialogPadding / 2),
+                    children: <Widget>[
+                      if (company.hasCustomSurcharge)
+                        CustomSurcharges(
+                          surcharge1Controller: _surcharge1Controller,
+                          surcharge2Controller: _surcharge2Controller,
+                          surcharge3Controller: _surcharge3Controller,
+                          surcharge4Controller: _surcharge4Controller,
+                        ),
+                      if (company.settings.enableFirstInvoiceTaxRate)
+                        TaxRateDropdown(
+                          onSelected: (taxRate) =>
+                              viewModel.onChanged(invoice.applyTax(taxRate)),
+                          labelText: localization.tax,
+                          initialTaxName: invoice.taxName1,
+                          initialTaxRate: invoice.taxRate1,
+                        ),
+                      if (company.settings.enableSecondInvoiceTaxRate)
+                        TaxRateDropdown(
+                          onSelected: (taxRate) => viewModel.onChanged(
+                              invoice.applyTax(taxRate, isSecond: true)),
+                          labelText: localization.tax,
+                          initialTaxName: invoice.taxName2,
+                          initialTaxRate: invoice.taxRate2,
+                        ),
+                      if (company.settings.enableThirdInvoiceTaxRate)
+                        TaxRateDropdown(
+                          onSelected: (taxRate) => viewModel.onChanged(
+                              invoice.applyTax(taxRate, isThird: true)),
+                          labelText: localization.tax,
+                          initialTaxName: invoice.taxName3,
+                          initialTaxRate: invoice.taxRate3,
+                        ),
+                      if (company.hasCustomSurcharge)
+                        CustomSurcharges(
+                          surcharge1Controller: _surcharge1Controller,
+                          surcharge2Controller: _surcharge2Controller,
+                          surcharge3Controller: _surcharge3Controller,
+                          surcharge4Controller: _surcharge4Controller,
+                          isAfterTaxes: true,
+                        ),
+                    ],
                   ),
-                  DesignPicker(
-                    initialValue: invoice.designId,
-                    onSelected: (value) => viewModel.onChanged(
-                        invoice.rebuild((b) => b..designId = value.id)),
-                  ),
-                  CustomSurcharges(
-                    surcharge1Controller: _surcharge1Controller,
-                    surcharge2Controller: _surcharge2Controller,
-                    surcharge3Controller: _surcharge3Controller,
-                    surcharge4Controller: _surcharge4Controller,
-                  ),
-                  if (company.settings.enableFirstInvoiceTaxRate)
-                    TaxRateDropdown(
-                      onSelected: (taxRate) =>
-                          viewModel.onChanged(invoice.applyTax(taxRate)),
-                      labelText: localization.tax,
-                      initialTaxName: invoice.taxName1,
-                      initialTaxRate: invoice.taxRate1,
-                    ),
-                  if (company.settings.enableSecondInvoiceTaxRate)
-                    TaxRateDropdown(
-                      onSelected: (taxRate) => viewModel
-                          .onChanged(invoice.applyTax(taxRate, isSecond: true)),
-                      labelText: localization.tax,
-                      initialTaxName: invoice.taxName2,
-                      initialTaxRate: invoice.taxRate2,
-                    ),
-                  if (company.settings.enableThirdInvoiceTaxRate)
-                    TaxRateDropdown(
-                      onSelected: (taxRate) => viewModel
-                          .onChanged(invoice.applyTax(taxRate, isThird: true)),
-                      labelText: localization.tax,
-                      initialTaxName: invoice.taxName3,
-                      initialTaxRate: invoice.taxRate3,
-                    ),
-                  CustomSurcharges(
-                    surcharge1Controller: _surcharge1Controller,
-                    surcharge2Controller: _surcharge2Controller,
-                    surcharge3Controller: _surcharge3Controller,
-                    surcharge4Controller: _surcharge4Controller,
-                    isAfterTaxes: true,
+                  FormCard(
+                    padding: const EdgeInsets.only(
+                        right: kMobileDialogPadding,
+                        top: kMobileDialogPadding,
+                        left: kMobileDialogPadding / 2),
+                    children: [
+                      DesignPicker(
+                        initialValue: invoice.designId,
+                        onSelected: (value) => viewModel.onChanged(
+                            invoice.rebuild((b) => b..designId = value.id)),
+                      ),
+                      UserPicker(
+                        userId: invoice.assignedUserId,
+                        onChanged: (userId) => viewModel.onChanged(
+                            invoice.rebuild((b) => b..assignedUserId = userId)),
+                      ),
+                    ],
                   ),
                 ],
               ),

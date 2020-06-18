@@ -122,6 +122,8 @@ class _$TaxRateEntitySerializer implements StructuredSerializer<TaxRateEntity> {
       serializers.serialize(object.name, specifiedType: const FullType(String)),
       'rate',
       serializers.serialize(object.rate, specifiedType: const FullType(double)),
+      'id',
+      serializers.serialize(object.id, specifiedType: const FullType(String)),
     ];
     if (object.isChanged != null) {
       result
@@ -163,18 +165,6 @@ class _$TaxRateEntitySerializer implements StructuredSerializer<TaxRateEntity> {
       result
         ..add('assigned_user_id')
         ..add(serializers.serialize(object.assignedUserId,
-            specifiedType: const FullType(String)));
-    }
-    if (object.subEntityType != null) {
-      result
-        ..add('entity_type')
-        ..add(serializers.serialize(object.subEntityType,
-            specifiedType: const FullType(EntityType)));
-    }
-    if (object.id != null) {
-      result
-        ..add('id')
-        ..add(serializers.serialize(object.id,
             specifiedType: const FullType(String)));
     }
     return result;
@@ -227,10 +217,6 @@ class _$TaxRateEntitySerializer implements StructuredSerializer<TaxRateEntity> {
         case 'assigned_user_id':
           result.assignedUserId = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String;
-          break;
-        case 'entity_type':
-          result.subEntityType = serializers.deserialize(value,
-              specifiedType: const FullType(EntityType)) as EntityType;
           break;
         case 'id':
           result.id = serializers.deserialize(value,
@@ -454,8 +440,6 @@ class _$TaxRateEntity extends TaxRateEntity {
   @override
   final String assignedUserId;
   @override
-  final EntityType subEntityType;
-  @override
   final String id;
 
   factory _$TaxRateEntity([void Function(TaxRateEntityBuilder) updates]) =>
@@ -471,7 +455,6 @@ class _$TaxRateEntity extends TaxRateEntity {
       this.isDeleted,
       this.createdUserId,
       this.assignedUserId,
-      this.subEntityType,
       this.id})
       : super._() {
     if (name == null) {
@@ -479,6 +462,9 @@ class _$TaxRateEntity extends TaxRateEntity {
     }
     if (rate == null) {
       throw new BuiltValueNullFieldError('TaxRateEntity', 'rate');
+    }
+    if (id == null) {
+      throw new BuiltValueNullFieldError('TaxRateEntity', 'id');
     }
   }
 
@@ -502,7 +488,6 @@ class _$TaxRateEntity extends TaxRateEntity {
         isDeleted == other.isDeleted &&
         createdUserId == other.createdUserId &&
         assignedUserId == other.assignedUserId &&
-        subEntityType == other.subEntityType &&
         id == other.id;
   }
 
@@ -516,18 +501,14 @@ class _$TaxRateEntity extends TaxRateEntity {
                     $jc(
                         $jc(
                             $jc(
-                                $jc(
-                                    $jc(
-                                        $jc($jc(0, name.hashCode),
-                                            rate.hashCode),
-                                        isChanged.hashCode),
-                                    createdAt.hashCode),
-                                updatedAt.hashCode),
-                            archivedAt.hashCode),
-                        isDeleted.hashCode),
-                    createdUserId.hashCode),
-                assignedUserId.hashCode),
-            subEntityType.hashCode),
+                                $jc($jc($jc(0, name.hashCode), rate.hashCode),
+                                    isChanged.hashCode),
+                                createdAt.hashCode),
+                            updatedAt.hashCode),
+                        archivedAt.hashCode),
+                    isDeleted.hashCode),
+                createdUserId.hashCode),
+            assignedUserId.hashCode),
         id.hashCode));
   }
 
@@ -543,7 +524,6 @@ class _$TaxRateEntity extends TaxRateEntity {
           ..add('isDeleted', isDeleted)
           ..add('createdUserId', createdUserId)
           ..add('assignedUserId', assignedUserId)
-          ..add('subEntityType', subEntityType)
           ..add('id', id))
         .toString();
   }
@@ -591,11 +571,6 @@ class TaxRateEntityBuilder
   set assignedUserId(String assignedUserId) =>
       _$this._assignedUserId = assignedUserId;
 
-  EntityType _subEntityType;
-  EntityType get subEntityType => _$this._subEntityType;
-  set subEntityType(EntityType subEntityType) =>
-      _$this._subEntityType = subEntityType;
-
   String _id;
   String get id => _$this._id;
   set id(String id) => _$this._id = id;
@@ -613,7 +588,6 @@ class TaxRateEntityBuilder
       _isDeleted = _$v.isDeleted;
       _createdUserId = _$v.createdUserId;
       _assignedUserId = _$v.assignedUserId;
-      _subEntityType = _$v.subEntityType;
       _id = _$v.id;
       _$v = null;
     }
@@ -646,7 +620,6 @@ class TaxRateEntityBuilder
             isDeleted: isDeleted,
             createdUserId: createdUserId,
             assignedUserId: assignedUserId,
-            subEntityType: subEntityType,
             id: id);
     replace(_$result);
     return _$result;

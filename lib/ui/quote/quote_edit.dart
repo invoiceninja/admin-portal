@@ -32,6 +32,7 @@ class _QuoteEditState extends State<QuoteEdit>
 
   static const kDetailsScreen = 0;
   static const kItemScreen = 1;
+
   //static const kNotesScreen = 2;
 
   @override
@@ -119,7 +120,7 @@ class _QuoteEditState extends State<QuoteEdit>
             child: Padding(
               padding: const EdgeInsets.all(14.0),
               child: Text(
-                '${localization.total}: ${formatNumber(invoice.calculateTotal(viewModel.company.settings.enableInclusiveTaxes ?? false), context, clientId: viewModel.invoice.clientId)}',
+                '${localization.total}: ${formatNumber(invoice.calculateTotal, context, clientId: viewModel.invoice.clientId)}',
                 style: TextStyle(
                   //color: Theme.of(context).selectedRowColor,
                   color: Colors.white,

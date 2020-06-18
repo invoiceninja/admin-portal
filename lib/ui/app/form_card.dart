@@ -19,6 +19,10 @@ class FormCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    if (child == null && (children == null || children.isEmpty)) {
+      return SizedBox();
+    }
+
     return Padding(
       padding: padding ??
           (forceNarrow

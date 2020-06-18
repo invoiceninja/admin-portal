@@ -144,6 +144,12 @@ class DiscardChanges {}
 
 class ClearEntityFilter {}
 
+class ClearEntitySelection {
+  ClearEntitySelection({this.entityType});
+
+  final EntityType entityType;
+}
+
 class FilterByEntity implements PersistUI {
   FilterByEntity({this.entityId, this.entityType});
 
@@ -187,12 +193,13 @@ void viewEntitiesByType({
   dynamic action;
 
   if (filterEntity != null) {
-    if (uiState.filterEntityType != filterEntity.entityType &&
+    if (uiState.filterEntityType != filterEntity.entityType ||
         uiState.filterEntityId != filterEntity.id) {
-      filterByEntity(
-        context: context,
-        entity: filterEntity,
-      );
+      store.dispatch(ClearEntitySelection(entityType: entityType));
+      store.dispatch(FilterByEntity(
+        entityId: filterEntity.id,
+        entityType: filterEntity.entityType,
+      ));
     }
   } else if (uiState.filterEntityType != null) {
     store.dispatch(ClearEntityFilter());

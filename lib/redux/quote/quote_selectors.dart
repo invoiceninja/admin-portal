@@ -112,6 +112,29 @@ EntityStats quoteStatsForUser(
   return EntityStats(countActive: countActive, countArchived: countArchived);
 }
 
+var memoizedCreditStatsForUser = memo2(
+        (String userId, BuiltMap<String, InvoiceEntity> creditMap) =>
+        creditStatsForUser(userId, creditMap));
+
+EntityStats creditStatsForUser(
+    String userId,
+    BuiltMap<String, InvoiceEntity> creditMap,
+    ) {
+  int countActive = 0;
+  int countArchived = 0;
+  creditMap.forEach((creditId, credit) {
+    if (credit.userCanAccess(userId)) {
+      if (credit.isActive) {
+        countActive++;
+      } else if (credit.isArchived) {
+        countArchived++;
+      }
+    }
+  });
+
+  return EntityStats(countActive: countActive, countArchived: countArchived);
+}
+
 bool hasQuoteChanges(
         InvoiceEntity quote, BuiltMap<String, InvoiceEntity> quoteMap) =>
     quote.isNew ? quote.isChanged : quote != quoteMap[quote.id];

@@ -64,7 +64,7 @@ class EntityAction extends EnumClass {
   static const EntityAction newPayment = _$newPayment;
   static const EntityAction settings = _$settings;
   static const EntityAction refund = _$refund;
-  static const EntityAction pdf = _$pdf;
+  static const EntityAction viewPdf = _$viewPdf;
   static const EntityAction more = _$more;
   static const EntityAction start = _$start;
   static const EntityAction resume = _$resume;

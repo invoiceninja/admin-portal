@@ -182,6 +182,8 @@ class _$PaymentEntitySerializer implements StructuredSerializer<PaymentEntity> {
       serializers.serialize(object.credits,
           specifiedType: const FullType(
               BuiltList, const [const FullType(PaymentableEntity)])),
+      'id',
+      serializers.serialize(object.id, specifiedType: const FullType(String)),
     ];
     if (object.exchangeRate != null) {
       result
@@ -235,18 +237,6 @@ class _$PaymentEntitySerializer implements StructuredSerializer<PaymentEntity> {
       result
         ..add('assigned_user_id')
         ..add(serializers.serialize(object.assignedUserId,
-            specifiedType: const FullType(String)));
-    }
-    if (object.subEntityType != null) {
-      result
-        ..add('entity_type')
-        ..add(serializers.serialize(object.subEntityType,
-            specifiedType: const FullType(EntityType)));
-    }
-    if (object.id != null) {
-      result
-        ..add('id')
-        ..add(serializers.serialize(object.id,
             specifiedType: const FullType(String)));
     }
     return result;
@@ -386,10 +376,6 @@ class _$PaymentEntitySerializer implements StructuredSerializer<PaymentEntity> {
           result.assignedUserId = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String;
           break;
-        case 'entity_type':
-          result.subEntityType = serializers.deserialize(value,
-              specifiedType: const FullType(EntityType)) as EntityType;
-          break;
         case 'id':
           result.id = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String;
@@ -415,6 +401,8 @@ class _$PaymentableEntitySerializer
       'amount',
       serializers.serialize(object.amount,
           specifiedType: const FullType(double)),
+      'id',
+      serializers.serialize(object.id, specifiedType: const FullType(String)),
     ];
     if (object.createdAt != null) {
       result
@@ -438,12 +426,6 @@ class _$PaymentableEntitySerializer
       result
         ..add('credit_id')
         ..add(serializers.serialize(object.creditId,
-            specifiedType: const FullType(String)));
-    }
-    if (object.id != null) {
-      result
-        ..add('id')
-        ..add(serializers.serialize(object.id,
             specifiedType: const FullType(String)));
     }
     return result;
@@ -723,6 +705,8 @@ class _$PaymentEntity extends PaymentEntity {
   @override
   final String vendorId;
   @override
+  final bool isForInvoice;
+  @override
   final BuiltList<PaymentableEntity> paymentables;
   @override
   final BuiltList<PaymentableEntity> invoices;
@@ -742,8 +726,6 @@ class _$PaymentEntity extends PaymentEntity {
   final String createdUserId;
   @override
   final String assignedUserId;
-  @override
-  final EntityType subEntityType;
   @override
   final String id;
 
@@ -770,6 +752,7 @@ class _$PaymentEntity extends PaymentEntity {
       this.isManual,
       this.projectId,
       this.vendorId,
+      this.isForInvoice,
       this.paymentables,
       this.invoices,
       this.credits,
@@ -780,7 +763,6 @@ class _$PaymentEntity extends PaymentEntity {
       this.isDeleted,
       this.createdUserId,
       this.assignedUserId,
-      this.subEntityType,
       this.id})
       : super._() {
     if (amount == null) {
@@ -844,6 +826,9 @@ class _$PaymentEntity extends PaymentEntity {
     if (credits == null) {
       throw new BuiltValueNullFieldError('PaymentEntity', 'credits');
     }
+    if (id == null) {
+      throw new BuiltValueNullFieldError('PaymentEntity', 'id');
+    }
   }
 
   @override
@@ -876,6 +861,7 @@ class _$PaymentEntity extends PaymentEntity {
         isManual == other.isManual &&
         projectId == other.projectId &&
         vendorId == other.vendorId &&
+        isForInvoice == other.isForInvoice &&
         paymentables == other.paymentables &&
         invoices == other.invoices &&
         credits == other.credits &&
@@ -886,7 +872,6 @@ class _$PaymentEntity extends PaymentEntity {
         isDeleted == other.isDeleted &&
         createdUserId == other.createdUserId &&
         assignedUserId == other.assignedUserId &&
-        subEntityType == other.subEntityType &&
         id == other.id;
   }
 
@@ -919,17 +904,17 @@ class _$PaymentEntity extends PaymentEntity {
                                                                 isManual.hashCode),
                                                             projectId.hashCode),
                                                         vendorId.hashCode),
-                                                    paymentables.hashCode),
-                                                invoices.hashCode),
-                                            credits.hashCode),
-                                        isChanged.hashCode),
-                                    createdAt.hashCode),
-                                updatedAt.hashCode),
-                            archivedAt.hashCode),
-                        isDeleted.hashCode),
-                    createdUserId.hashCode),
-                assignedUserId.hashCode),
-            subEntityType.hashCode),
+                                                    isForInvoice.hashCode),
+                                                paymentables.hashCode),
+                                            invoices.hashCode),
+                                        credits.hashCode),
+                                    isChanged.hashCode),
+                                createdAt.hashCode),
+                            updatedAt.hashCode),
+                        archivedAt.hashCode),
+                    isDeleted.hashCode),
+                createdUserId.hashCode),
+            assignedUserId.hashCode),
         id.hashCode));
   }
 
@@ -955,6 +940,7 @@ class _$PaymentEntity extends PaymentEntity {
           ..add('isManual', isManual)
           ..add('projectId', projectId)
           ..add('vendorId', vendorId)
+          ..add('isForInvoice', isForInvoice)
           ..add('paymentables', paymentables)
           ..add('invoices', invoices)
           ..add('credits', credits)
@@ -965,7 +951,6 @@ class _$PaymentEntity extends PaymentEntity {
           ..add('isDeleted', isDeleted)
           ..add('createdUserId', createdUserId)
           ..add('assignedUserId', assignedUserId)
-          ..add('subEntityType', subEntityType)
           ..add('id', id))
         .toString();
   }
@@ -1053,6 +1038,10 @@ class PaymentEntityBuilder
   String get vendorId => _$this._vendorId;
   set vendorId(String vendorId) => _$this._vendorId = vendorId;
 
+  bool _isForInvoice;
+  bool get isForInvoice => _$this._isForInvoice;
+  set isForInvoice(bool isForInvoice) => _$this._isForInvoice = isForInvoice;
+
   ListBuilder<PaymentableEntity> _paymentables;
   ListBuilder<PaymentableEntity> get paymentables =>
       _$this._paymentables ??= new ListBuilder<PaymentableEntity>();
@@ -1101,11 +1090,6 @@ class PaymentEntityBuilder
   set assignedUserId(String assignedUserId) =>
       _$this._assignedUserId = assignedUserId;
 
-  EntityType _subEntityType;
-  EntityType get subEntityType => _$this._subEntityType;
-  set subEntityType(EntityType subEntityType) =>
-      _$this._subEntityType = subEntityType;
-
   String _id;
   String get id => _$this._id;
   set id(String id) => _$this._id = id;
@@ -1133,6 +1117,7 @@ class PaymentEntityBuilder
       _isManual = _$v.isManual;
       _projectId = _$v.projectId;
       _vendorId = _$v.vendorId;
+      _isForInvoice = _$v.isForInvoice;
       _paymentables = _$v.paymentables?.toBuilder();
       _invoices = _$v.invoices?.toBuilder();
       _credits = _$v.credits?.toBuilder();
@@ -1143,7 +1128,6 @@ class PaymentEntityBuilder
       _isDeleted = _$v.isDeleted;
       _createdUserId = _$v.createdUserId;
       _assignedUserId = _$v.assignedUserId;
-      _subEntityType = _$v.subEntityType;
       _id = _$v.id;
       _$v = null;
     }
@@ -1188,6 +1172,7 @@ class PaymentEntityBuilder
               isManual: isManual,
               projectId: projectId,
               vendorId: vendorId,
+              isForInvoice: isForInvoice,
               paymentables: paymentables.build(),
               invoices: invoices.build(),
               credits: credits.build(),
@@ -1198,7 +1183,6 @@ class PaymentEntityBuilder
               isDeleted: isDeleted,
               createdUserId: createdUserId,
               assignedUserId: assignedUserId,
-              subEntityType: subEntityType,
               id: id);
     } catch (_) {
       String _$failedField;
@@ -1248,6 +1232,9 @@ class _$PaymentableEntity extends PaymentableEntity {
       : super._() {
     if (amount == null) {
       throw new BuiltValueNullFieldError('PaymentableEntity', 'amount');
+    }
+    if (id == null) {
+      throw new BuiltValueNullFieldError('PaymentableEntity', 'id');
     }
   }
 

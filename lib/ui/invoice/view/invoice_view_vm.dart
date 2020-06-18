@@ -53,6 +53,7 @@ class EntityViewVM {
     @required this.onDeleteDocument,
     @required this.onEditPressed,
     @required this.onClientPressed,
+    @required this.onUserPressed,
     @required this.onPaymentsPressed,
     @required this.onPaymentPressed,
     @required this.onRefreshed,
@@ -68,6 +69,7 @@ class EntityViewVM {
   final Function(BuildContext, EntityAction) onActionSelected;
   final Function(BuildContext, [int]) onEditPressed;
   final Function(BuildContext, [bool]) onClientPressed;
+  final Function(BuildContext, [bool]) onUserPressed;
   final Function(BuildContext) onPaymentsPressed;
   final Function(BuildContext, PaymentEntity, [bool]) onPaymentPressed;
   final Function(BuildContext) onRefreshed;
@@ -87,6 +89,7 @@ class InvoiceViewVM extends EntityViewVM {
     Function(BuildContext, EntityAction) onEntityAction,
     Function(BuildContext, [int]) onEditPressed,
     Function(BuildContext, [bool]) onClientPressed,
+    Function(BuildContext, [bool]) onUserPressed,
     Function(BuildContext, PaymentEntity, [bool]) onPaymentPressed,
     Function(BuildContext) onPaymentsPressed,
     Function(BuildContext) onRefreshed,
@@ -103,6 +106,7 @@ class InvoiceViewVM extends EntityViewVM {
             onActionSelected: onEntityAction,
             onEditPressed: onEditPressed,
             onClientPressed: onClientPressed,
+            onUserPressed: onUserPressed,
             onPaymentPressed: onPaymentPressed,
             onPaymentsPressed: onPaymentsPressed,
             onRefreshed: onRefreshed,
@@ -114,6 +118,7 @@ class InvoiceViewVM extends EntityViewVM {
     final state = store.state;
     final invoice = state.invoiceState.get(state.invoiceUIState.selectedId);
     final client = state.clientState.get(invoice.clientId);
+    final user = state.userState.get(invoice.assignedUserId);
 
     Future<Null> _handleRefresh(BuildContext context) {
       final completer = snackBarCompleter<Null>(
@@ -144,6 +149,14 @@ class InvoiceViewVM extends EntityViewVM {
         } else {
           store.dispatch(FilterByEntity(
               entityType: EntityType.client, entityId: client.id));
+        }
+      },
+      onUserPressed: (BuildContext context, [bool longPress = false]) {
+        if (longPress || isMobile(context)) {
+          viewEntity(context: context, entity: user);
+        } else {
+          store.dispatch(FilterByEntity(
+              entityType: EntityType.user, entityId: user.id));
         }
       },
       onPaymentPressed: (BuildContext context, payment,

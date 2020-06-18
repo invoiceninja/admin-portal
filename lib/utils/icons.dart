@@ -7,7 +7,7 @@ IconData getEntityActionIcon(EntityAction entityAction) {
   switch (entityAction) {
     case EntityAction.edit:
       return Icons.edit;
-    case EntityAction.pdf:
+    case EntityAction.viewPdf:
       return Icons.picture_as_pdf;
     case EntityAction.clientPortal:
       return Icons.cloud_circle;
