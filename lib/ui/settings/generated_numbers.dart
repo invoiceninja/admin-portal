@@ -144,6 +144,7 @@ class _GeneratedNumbersState extends State<GeneratedNumbers>
               FormCard(
                 children: <Widget>[
                   AppDropdownButton<int>(
+                    showUseDefault: true,
                     labelText: localization.numberPadding,
                     value: settings.counterPadding,
                     blankValue: null,
@@ -157,6 +158,7 @@ class _GeneratedNumbersState extends State<GeneratedNumbers>
                         .toList(),
                   ),
                   AppDropdownButton<String>(
+                    showUseDefault: true,
                     labelText: localization.generateNumber,
                     value: settings.counterNumberApplied,
                     onChanged: (dynamic value) => viewModel.onSettingsChanged(

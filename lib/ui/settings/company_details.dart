@@ -285,6 +285,7 @@ class _CompanyDetailsState extends State<CompanyDetails>
                 FormCard(
                   children: <Widget>[
                     AppDropdownButton(
+                      showUseDefault: true,
                       value: company.sizeId,
                       labelText: localization.size,
                       items: memoizedSizeList(state.staticState.sizeMap)
@@ -449,6 +450,7 @@ class _CompanyDetailsState extends State<CompanyDetails>
                     allowClearing: true,
                   ),
                   AppDropdownButton<String>(
+                    showUseDefault: true,
                     showBlank: true,
                     labelText: localization.paymentTerm,
                     items: memoizedDropdownPaymentTermList(
