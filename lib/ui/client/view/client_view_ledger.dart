@@ -56,13 +56,16 @@ class _ClientViewLedgerState extends State<ClientViewLedger> {
               Text(
                 '${localization.lookup('${ledger.entityType}')}  ›  ${entity.listDisplayName}',
               ),
-              Text(
-                formatNumber(
-                  ledger.balance,
-                  context,
-                  clientId: client.id,
+              Padding(
+                padding: const EdgeInsets.only(right: 2),
+                child: Text(
+                  formatNumber(
+                    ledger.balance,
+                    context,
+                    clientId: client.id,
+                  ),
+                  textAlign: TextAlign.end,
                 ),
-                textAlign: TextAlign.end,
               ),
             ],
           ),
@@ -75,20 +78,24 @@ class _ClientViewLedgerState extends State<ClientViewLedger> {
                 context,
                 showTime: true,
               )),
-              DecoratedBox(
-                decoration: BoxDecoration(
-                  color: ledger.adjustment <= 0 ? kColorGreen : kColorRed,
-                  borderRadius: BorderRadius.all(Radius.circular(5)),
-                ),
-                child: Padding(
-                  padding: const EdgeInsets.all(2),
-                  child: Text(
-                    formatNumber(
-                      ledger.adjustment,
-                      context,
-                      clientId: client.id,
+              Padding(
+                padding: const EdgeInsets.only(top: 4),
+                child: DecoratedBox(
+                  decoration: BoxDecoration(
+                    color: ledger.adjustment <= 0 ? kColorGreen : kColorRed,
+                    borderRadius: BorderRadius.all(Radius.circular(5)),
+                  ),
+                  child: Padding(
+                    padding: const EdgeInsets.all(4),
+                    child: Text(
+                      (ledger.adjustment > 0 ? '+' : '') +
+                          formatNumber(
+                            ledger.adjustment,
+                            context,
+                            clientId: client.id,
+                          ),
+                      textAlign: TextAlign.end,
                     ),
-                    textAlign: TextAlign.end,
                   ),
                 ),
               ),
