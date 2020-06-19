@@ -316,8 +316,11 @@ Reducer<BuiltList<HistoryRecord>> historyReducer = combineReducers([
       _addToHistory(
           historyList, HistoryRecord(entityType: EntityType.reports))),
   TypedReducer<BuiltList<HistoryRecord>, ViewSettings>((historyList, action) =>
-      _addToHistory(historyList,
-          HistoryRecord(entityType: EntityType.settings, id: action.section))),
+      _addToHistory(
+          historyList,
+          HistoryRecord(
+              entityType: EntityType.settings,
+              id: action.section ?? kSettingsCompanyDetails))),
   TypedReducer<BuiltList<HistoryRecord>, ViewClient>((historyList, action) =>
       _addToHistory(historyList,
           HistoryRecord(id: action.clientId, entityType: EntityType.client))),

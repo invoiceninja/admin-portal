@@ -57,6 +57,7 @@ class ClientFields {
   static const String vatNumber = 'vat_number';
   static const String idNumber = 'id_number';
   static const String paidToDate = 'paid_to_date';
+  static const String lastLoginAt = 'last_login_at';
   static const String createdAt = 'created_at';
   static const String updatedAt = 'updated_at';
   static const String archivedAt = 'archived_at';
@@ -93,6 +94,7 @@ abstract class ClientEntity extends Object
       balance: 0,
       creditBalance: 0,
       paidToDate: 0,
+      lastLogin: 0,
       address1: '',
       address2: '',
       city: '',
@@ -237,6 +239,9 @@ abstract class ClientEntity extends Object
   String get shippingCountryId;
 
   SettingsEntity get settings;
+
+  @BuiltValueField(wireName: 'last_login')
+  int get lastLogin;
 
   @BuiltValueField(wireName: 'custom_value1')
   String get customValue1;
@@ -649,8 +654,6 @@ abstract class ContactEntity extends Object
   @BuiltValueField(wireName: 'custom_value4')
   String get customValue4;
 
-  // TODO remove this nullable
-  @nullable
   @BuiltValueField(wireName: 'last_login')
   int get lastLogin;
 

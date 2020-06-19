@@ -51,6 +51,7 @@ class _DeviceSettingsState extends State<DeviceSettings> {
               FormCard(
                 children: <Widget>[
                   AppDropdownButton<AppLayout>(
+                    showUseDefault: true,
                     labelText: localization.layout,
                     value: viewModel.state.prefState.appLayout,
                     onChanged: (dynamic value) =>
@@ -68,6 +69,7 @@ class _DeviceSettingsState extends State<DeviceSettings> {
                   ),
                   if (state.prefState.isNotMobile) ...[
                     AppDropdownButton<AppSidebarMode>(
+                      showUseDefault: true,
                       labelText: localization.menuSidebar,
                       value: state.prefState.menuSidebarMode,
                       items: [
@@ -84,6 +86,7 @@ class _DeviceSettingsState extends State<DeviceSettings> {
                           viewModel.onMenuModeChanged(context, value),
                     ),
                     AppDropdownButton<AppSidebarMode>(
+                      showUseDefault: true,
                       labelText: localization.historySidebar,
                       value: state.prefState.historySidebarMode,
                       items: [

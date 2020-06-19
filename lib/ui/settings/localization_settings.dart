@@ -181,6 +181,7 @@ class _LocalizationSettingsState extends State<LocalizationSettings> {
                 ),                
                  */
                 AppDropdownButton(
+                    showUseDefault: true,
                     labelText: localization.firstMonthOfTheYear,
                     value: company.firstMonthOfYear,
                     onChanged: (dynamic value) => viewModel.onCompanyChanged(

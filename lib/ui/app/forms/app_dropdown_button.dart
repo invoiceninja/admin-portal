@@ -12,6 +12,7 @@ class AppDropdownButton<T> extends StatelessWidget {
     this.showBlank,
     this.blankValue = '',
     this.enabled = true,
+    this.showUseDefault = false,
   });
 
   final String labelText;
@@ -20,6 +21,7 @@ class AppDropdownButton<T> extends StatelessWidget {
   final List<DropdownMenuItem<T>> items;
   final bool showBlank;
   final bool enabled;
+  final bool showUseDefault;
   final dynamic blankValue;
 
   @override
@@ -33,7 +35,7 @@ class AppDropdownButton<T> extends StatelessWidget {
       checkedValue = blankValue;
     }
     final bool isEmpty = (checkedValue == null || checkedValue == '') &&
-        !state.settingsUIState.isFiltered;
+        (!state.settingsUIState.isFiltered || !showUseDefault);
 
     final dropDownButton = DropdownButtonHideUnderline(
       child: DropdownButton<T>(
@@ -45,7 +47,7 @@ class AppDropdownButton<T> extends StatelessWidget {
           if (_showBlank || isEmpty)
             DropdownMenuItem<T>(
               value: blankValue,
-              child: state.settingsUIState.isFiltered
+              child: state.settingsUIState.isFiltered && showUseDefault
                   ? Text(AppLocalization.of(context).useDefault)
                   : SizedBox(),
             ),
