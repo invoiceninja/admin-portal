@@ -21,15 +21,16 @@ class ErrorDialog extends StatelessWidget {
       title: Text(localization.anErrorOccurred),
       content: Text(error.toString()),
       actions: [
-        FlatButton(
-            child: Text(localization.logout.toUpperCase()),
-            onPressed: () {
-              confirmCallback(
-                  context: context,
-                  callback: () {
-                    store.dispatch(UserLogout(context));
-                  });
-            }),
+        if (clearErrorOnDismiss)
+          FlatButton(
+              child: Text(localization.logout.toUpperCase()),
+              onPressed: () {
+                confirmCallback(
+                    context: context,
+                    callback: () {
+                      store.dispatch(UserLogout(context));
+                    });
+              }),
         FlatButton(
             child: Text(localization.dismiss.toUpperCase()),
             onPressed: () {
