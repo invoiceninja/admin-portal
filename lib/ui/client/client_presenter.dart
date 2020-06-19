@@ -14,7 +14,7 @@ class ClientPresenter extends EntityPresenter {
       ClientFields.paidToDate,
       ClientFields.contactName,
       ClientFields.contactEmail,
-      //ClientFields.contactLastLogin, // TODO implement field
+      ClientFields.lastLoginAt,
     ];
   }
 
@@ -60,6 +60,9 @@ class ClientPresenter extends EntityPresenter {
         return Text(client.address2);
       case ClientFields.idNumber:
         return Text(client.idNumber);
+      case ClientFields.lastLoginAt:
+        return Text(formatDate(
+            convertTimestampToDateString(client.lastLogin), context));
       case ClientFields.balance:
         return Align(
             alignment: Alignment.centerRight,

@@ -191,6 +191,9 @@ class _$ClientEntitySerializer implements StructuredSerializer<ClientEntity> {
       'settings',
       serializers.serialize(object.settings,
           specifiedType: const FullType(SettingsEntity)),
+      'last_login',
+      serializers.serialize(object.lastLogin,
+          specifiedType: const FullType(int)),
       'custom_value1',
       serializers.serialize(object.customValue1,
           specifiedType: const FullType(String)),
@@ -396,6 +399,10 @@ class _$ClientEntitySerializer implements StructuredSerializer<ClientEntity> {
           result.settings.replace(serializers.deserialize(value,
               specifiedType: const FullType(SettingsEntity)) as SettingsEntity);
           break;
+        case 'last_login':
+          result.lastLogin = serializers.deserialize(value,
+              specifiedType: const FullType(int)) as int;
+          break;
         case 'custom_value1':
           result.customValue1 = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String;
@@ -521,15 +528,12 @@ class _$ContactEntitySerializer implements StructuredSerializer<ContactEntity> {
       'custom_value4',
       serializers.serialize(object.customValue4,
           specifiedType: const FullType(String)),
+      'last_login',
+      serializers.serialize(object.lastLogin,
+          specifiedType: const FullType(int)),
       'id',
       serializers.serialize(object.id, specifiedType: const FullType(String)),
     ];
-    if (object.lastLogin != null) {
-      result
-        ..add('last_login')
-        ..add(serializers.serialize(object.lastLogin,
-            specifiedType: const FullType(int)));
-    }
     if (object.isChanged != null) {
       result
         ..add('isChanged')
@@ -927,6 +931,8 @@ class _$ClientEntity extends ClientEntity {
   @override
   final SettingsEntity settings;
   @override
+  final int lastLogin;
+  @override
   final String customValue1;
   @override
   final String customValue2;
@@ -991,6 +997,7 @@ class _$ClientEntity extends ClientEntity {
       this.shippingPostalCode,
       this.shippingCountryId,
       this.settings,
+      this.lastLogin,
       this.customValue1,
       this.customValue2,
       this.customValue3,
@@ -1089,6 +1096,9 @@ class _$ClientEntity extends ClientEntity {
     if (settings == null) {
       throw new BuiltValueNullFieldError('ClientEntity', 'settings');
     }
+    if (lastLogin == null) {
+      throw new BuiltValueNullFieldError('ClientEntity', 'lastLogin');
+    }
     if (customValue1 == null) {
       throw new BuiltValueNullFieldError('ClientEntity', 'customValue1');
     }
@@ -1157,6 +1167,7 @@ class _$ClientEntity extends ClientEntity {
         shippingPostalCode == other.shippingPostalCode &&
         shippingCountryId == other.shippingCountryId &&
         settings == other.settings &&
+        lastLogin == other.lastLogin &&
         customValue1 == other.customValue1 &&
         customValue2 == other.customValue2 &&
         customValue3 == other.customValue3 &&
@@ -1196,10 +1207,10 @@ class _$ClientEntity extends ClientEntity {
                                                                 $jc(
                                                                     $jc(
                                                                         $jc(
-                                                                            $jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc(0, groupId.hashCode), lastUpdatedActivities.hashCode), name.hashCode), displayName.hashCode), balance.hashCode), creditBalance.hashCode), paidToDate.hashCode), address1.hashCode), address2.hashCode), city.hashCode), state.hashCode), postalCode.hashCode), countryId.hashCode), phone.hashCode), privateNotes.hashCode), publicNotes.hashCode), website.hashCode), industryId.hashCode), sizeId.hashCode), vatNumber.hashCode), idNumber.hashCode), shippingAddress1.hashCode), shippingAddress2.hashCode), shippingCity.hashCode), shippingState.hashCode),
-                                                                                shippingPostalCode.hashCode),
-                                                                            shippingCountryId.hashCode),
-                                                                        settings.hashCode),
+                                                                            $jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc(0, groupId.hashCode), lastUpdatedActivities.hashCode), name.hashCode), displayName.hashCode), balance.hashCode), creditBalance.hashCode), paidToDate.hashCode), address1.hashCode), address2.hashCode), city.hashCode), state.hashCode), postalCode.hashCode), countryId.hashCode), phone.hashCode), privateNotes.hashCode), publicNotes.hashCode), website.hashCode), industryId.hashCode), sizeId.hashCode), vatNumber.hashCode), idNumber.hashCode), shippingAddress1.hashCode), shippingAddress2.hashCode), shippingCity.hashCode), shippingState.hashCode), shippingPostalCode.hashCode),
+                                                                                shippingCountryId.hashCode),
+                                                                            settings.hashCode),
+                                                                        lastLogin.hashCode),
                                                                     customValue1.hashCode),
                                                                 customValue2.hashCode),
                                                             customValue3.hashCode),
@@ -1249,6 +1260,7 @@ class _$ClientEntity extends ClientEntity {
           ..add('shippingPostalCode', shippingPostalCode)
           ..add('shippingCountryId', shippingCountryId)
           ..add('settings', settings)
+          ..add('lastLogin', lastLogin)
           ..add('customValue1', customValue1)
           ..add('customValue2', customValue2)
           ..add('customValue3', customValue3)
@@ -1393,6 +1405,10 @@ class ClientEntityBuilder
       _$this._settings ??= new SettingsEntityBuilder();
   set settings(SettingsEntityBuilder settings) => _$this._settings = settings;
 
+  int _lastLogin;
+  int get lastLogin => _$this._lastLogin;
+  set lastLogin(int lastLogin) => _$this._lastLogin = lastLogin;
+
   String _customValue1;
   String get customValue1 => _$this._customValue1;
   set customValue1(String customValue1) => _$this._customValue1 = customValue1;
@@ -1498,6 +1514,7 @@ class ClientEntityBuilder
       _shippingPostalCode = _$v.shippingPostalCode;
       _shippingCountryId = _$v.shippingCountryId;
       _settings = _$v.settings?.toBuilder();
+      _lastLogin = _$v.lastLogin;
       _customValue1 = _$v.customValue1;
       _customValue2 = _$v.customValue2;
       _customValue3 = _$v.customValue3;
@@ -1566,6 +1583,7 @@ class ClientEntityBuilder
               shippingPostalCode: shippingPostalCode,
               shippingCountryId: shippingCountryId,
               settings: settings.build(),
+              lastLogin: lastLogin,
               customValue1: customValue1,
               customValue2: customValue2,
               customValue3: customValue3,
@@ -1712,6 +1730,9 @@ class _$ContactEntity extends ContactEntity {
     }
     if (customValue4 == null) {
       throw new BuiltValueNullFieldError('ContactEntity', 'customValue4');
+    }
+    if (lastLogin == null) {
+      throw new BuiltValueNullFieldError('ContactEntity', 'lastLogin');
     }
     if (id == null) {
       throw new BuiltValueNullFieldError('ContactEntity', 'id');
