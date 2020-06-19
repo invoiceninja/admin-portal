@@ -218,7 +218,7 @@ class ContactsPageState extends State<ContactsPage>
     }
 
     items.add(Padding(
-      padding: const EdgeInsets.all(14.0),
+      padding: const EdgeInsets.all(16),
       child: RaisedButton(
         elevation: 4.0,
         textColor: Theme.of(context).secondaryHeaderColor,

@@ -118,7 +118,7 @@ class _CreditEditState extends State<CreditEdit>
           child: AppBorder(
             isTop: true,
             child: Padding(
-              padding: const EdgeInsets.all(14.0),
+              padding: const EdgeInsets.all(16),
               child: Text(
                 '${localization.total}: ${formatNumber(invoice.calculateTotal, context, clientId: viewModel.invoice.clientId)}',
                 style: TextStyle(

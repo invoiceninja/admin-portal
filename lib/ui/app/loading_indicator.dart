@@ -11,7 +11,7 @@ class LoadingIndicator extends StatelessWidget {
   Widget build(BuildContext context) {
     if (useCard) {
       return Padding(
-        padding: EdgeInsets.all(14.0),
+        padding: EdgeInsets.all(16),
         child: SizedBox(
           height: 200.0,
           width: double.infinity,
