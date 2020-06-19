@@ -1,9 +1,14 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_redux/flutter_redux.dart';
+import 'package:invoiceninja_flutter/data/models/entities.dart';
+import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/ui/app/lists/list_divider.dart';
 import 'package:invoiceninja_flutter/ui/app/loading_indicator.dart';
 import 'package:invoiceninja_flutter/ui/client/view/client_view_vm.dart';
 import 'package:invoiceninja_flutter/utils/formatting.dart';
+import 'package:invoiceninja_flutter/utils/icons.dart';
+import 'package:invoiceninja_flutter/utils/localization.dart';
 
 class ClientViewLedger extends StatefulWidget {
   const ClientViewLedger({Key key, this.viewModel}) : super(key: key);
@@ -37,17 +42,26 @@ class _ClientViewLedgerState extends State<ClientViewLedger> {
       itemCount: client.ledger.length,
       separatorBuilder: (context, index) => ListDivider(),
       itemBuilder: (BuildContext context, index) {
+        final store = StoreProvider.of<AppState>(context);
+        final localization = AppLocalization.of(context);
         final ledger = client.ledger[index];
-        final textTheme = Theme.of(context).textTheme;
+        final state = store.state;
+        final entity = state.getEntityMap(ledger.entityType)[ledger.entityId];
 
         return ListTile(
           title: Row(
             mainAxisSize: MainAxisSize.max,
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Text('ENTITY'),
               Text(
-                formatNumber(ledger.balance, context),
+                '${localization.lookup('${ledger.entityType}')}  ›  ${entity.listDisplayName}',
+              ),
+              Text(
+                formatNumber(
+                  ledger.balance,
+                  context,
+                  clientId: client.id,
+                ),
                 textAlign: TextAlign.end,
               ),
             ],
@@ -62,11 +76,17 @@ class _ClientViewLedgerState extends State<ClientViewLedger> {
                 showTime: true,
               )),
               Text(
-                formatNumber(ledger.adjustment, context),
+                formatNumber(
+                  ledger.adjustment,
+                  context,
+                  clientId: client.id,
+                ),
                 textAlign: TextAlign.end,
               ),
             ],
           ),
+          leading: Icon(getEntityIcon(ledger.entityType)),
+          trailing: Icon(Icons.chevron_right),
         );
       },
     );
