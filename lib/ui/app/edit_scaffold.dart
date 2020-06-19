@@ -52,7 +52,13 @@ class EditScaffold extends StatelessWidget {
             SaveCancelButtons(
               saveLabel: saveLabel,
               isSaving: state.isSaving,
-              onSavePressed: (context) => onSavePressed(context),
+              onSavePressed: (context) {
+                // Clear focus now to prevent un-focus after save from
+                // marking the form as changed and to hide the keyboard
+                FocusScope.of(context).unfocus();
+
+                onSavePressed(context);
+              },
               onCancelPressed: isMobile(context)
                   ? null
                   : (context) {

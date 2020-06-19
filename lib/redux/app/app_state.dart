@@ -550,41 +550,7 @@ abstract class AppState implements Built<AppState, AppStateBuilder> {
 
   @override
   String toString() {
-    //return 'Permissions: ${uiState.userUIState.editing.userCompany.permissions}';
-    //return 'Layout: ${uiState.layout}, menu: ${uiState.menuSidebarMode}, history: ${uiState.historySidebarMode}';
-    //return 'Gateway: ${uiState.companyGatewayUIState.editing.feesAndLimitsMap}';
-    //return 'HISTORY: ${uiState.historyList.map((history) => '${history.id}-${history.entityType}')}';
-    //return 'Products: ' + productState.list.map((productId) => productState.map[productId].archivedAt).toList().join('-');
-    //return 'resetCounterFrequencyId: ${settingsUIState.settings.resetCounterFrequencyId}';
-    //return 'Fields: ${uiState.settingsUIState.company.customFields} - ${company.customFields}';
-    //return 'Custom: ${uiState.settingsUIState.company.settings.customValue1} - ${company.settings.customValue1}';
-    //return 'Color: $accentColor, User Settings: ${user?.userCompany?.settings}';
-    //return 'Line items: ${invoiceUIState.editing.lineItems.map((item) => item.productKey)}';
-    //return 'Settings: ${uiState.settingsUIState.settings}';
-    //return 'Payment: ${uiState.paymentUIState.editing.paymentables}';
-    //return 'isAuthenticated: ${authState.isAuthenticated}';
-    //return 'MultiSelect: ${productListState.isInMultiselect()} SelectedIds: ${productListState.selectedIds}';
-    //return 'History: $historyList';
-    //return 'Report State: ${uiState.reportsUIState}';
-    //return 'UserCompany Settngs: ${userCompany.settings}, User Settings: ${user.userCompany.settings}';
-    //return 'Currency Map: ${staticState.currencyMap}';
-    //return 'History: $historyList';
-    //return 'Use inclusive: ${invoiceUIState.editing.usesInclusiveTaxes}';
-    //return 'Invitations: ${invoiceUIState.editing.invitations}';
-    //return 'Token: ${userCompanyStates.map((state) => state.token.token).where((name) => name.isNotEmpty).toList().join(', ')}';
-    //return 'Settings: ${company.settings.companyLogo}';
-    //return 'Designs: ${designState.list.map((id) => id + ' ' + designState.map[id].name).toList()}';
-    //return 'PDF Variables: ${uiState.settingsUIState.settings.pdfVariables}';
-    //return 'Account: ${userCompany.account}';
-    //return 'Notifications: ${user.userCompany.notifications} ${uiState.settingsUIState.user.userCompany.notifications}';
-    //return 'SORT: Sort Ascending: ${uiState.productUIState.listUIState.sortAscending}';
-    //return 'URL: ${authState.url}';
-    //return 'PLAN: ${account.plan}';
-    //return 'Invoice ${invoiceUIState.editing}';
-    //return 'Account: $account';
-    //return 'Payment Terms: ${paymentTermState.map}';
-    //return 'Filter: ${uiState.filterEntityType} ${uiState.filterEntityId}';
-    //return 'Save Completer: ${invoiceUIState.saveCompleter}';
+    //return 'Token: ${userCompanyStates.map((state) => state.token.token).where((name) => name.isNotEmpty).first}';
     return 'Layout: ${prefState.appLayout}, Route: ${uiState.currentRoute} Prev: ${uiState.previousRoute}';
   }
 }
