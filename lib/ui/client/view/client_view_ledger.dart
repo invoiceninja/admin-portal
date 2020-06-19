@@ -42,42 +42,31 @@ class _ClientViewLedgerState extends State<ClientViewLedger> {
 
         return ListTile(
           title: Row(
-            crossAxisAlignment: CrossAxisAlignment.center,
+            mainAxisSize: MainAxisSize.max,
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Expanded(
-                flex: 2,
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text('ENTITY', style: textTheme.subtitle1),
-                    Text(
-                        formatDate(
-                          convertTimestampToDateString(ledger.createdAt),
-                          context,
-                          showTime: true,
-                        ),
-                        style: textTheme.bodyText2
-                            .copyWith(color: textTheme.caption.color)),
-                  ],
-                ),
-              ),
-              Expanded(
-                flex: 1,
-                child: Text(
-                  formatNumber(ledger.adjustment, context),
-                  textAlign: TextAlign.end,
-                ),
-              ),
-              Expanded(
-                flex: 1,
-                child: Text(
-                  formatNumber(ledger.balance, context),
-                  textAlign: TextAlign.end,
-                ),
+              Text('ENTITY'),
+              Text(
+                formatNumber(ledger.balance, context),
+                textAlign: TextAlign.end,
               ),
             ],
           ),
-          trailing: Icon(Icons.chevron_right),
+          subtitle: Row(
+            mainAxisSize: MainAxisSize.max,
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Text(formatDate(
+                convertTimestampToDateString(ledger.createdAt),
+                context,
+                showTime: true,
+              )),
+              Text(
+                formatNumber(ledger.adjustment, context),
+                textAlign: TextAlign.end,
+              ),
+            ],
+          ),
         );
       },
     );
