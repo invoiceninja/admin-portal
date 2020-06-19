@@ -83,7 +83,7 @@ List<String> filteredInvoicesSelector(
         return false;
       }
     } else if (invoiceListState.filterEntityType == EntityType.user) {
-      if (!invoice.userCanAccess(invoiceListState.filterEntityId)) {
+      if (invoice.assignedUserId != invoiceListState.filterEntityId) {
         return false;
       }
     } else if (invoiceListState.filterEntityType == EntityType.payment) {
@@ -162,7 +162,7 @@ EntityStats invoiceStatsForUser(
   int countActive = 0;
   int countArchived = 0;
   invoiceMap.forEach((invoiceId, invoice) {
-    if (invoice.userCanAccess(userId)) {
+    if (invoice.assignedUserId == userId) {
       if (invoice.isActive) {
         countActive++;
       } else if (invoice.isDeleted) {

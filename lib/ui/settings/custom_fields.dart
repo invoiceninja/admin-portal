@@ -277,6 +277,12 @@ class _CustomFormFieldState extends State<CustomFormField> {
   void _onChanged() {
     _debouncer.run(() {
       var value = _customFieldController.text.trim();
+
+      if (value.isEmpty) {
+        widget.onChanged('');
+        return;
+      }
+
       if ([
         kFieldTypeSingleLineText,
         kFieldTypeDate,
@@ -286,6 +292,7 @@ class _CustomFormFieldState extends State<CustomFormField> {
       } else if (_fieldType == kFieldTypeDropdown) {
         value = '$value|${_optionsController.text.trim()}';
       }
+
       widget.onChanged(value);
     });
   }

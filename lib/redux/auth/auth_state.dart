@@ -63,12 +63,6 @@ abstract class AuthState implements Built<AuthState, AuthStateBuilder> {
       return true;
     }
 
-    /*
-    if (cleanUrl.startsWith('http://localhost')) {
-      return true;
-    }
-    */
-
     return false;
   }
 

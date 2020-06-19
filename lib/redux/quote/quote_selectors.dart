@@ -29,7 +29,7 @@ List<String> filteredQuotesSelector(
         return false;
       }
     } else if (quoteListState.filterEntityType == EntityType.user) {
-      if (!quote.userCanAccess(quoteListState.filterEntityId)) {
+      if (quote.assignedUserId != quoteListState.filterEntityId) {
         return false;
       }
     }
@@ -100,33 +100,10 @@ EntityStats quoteStatsForUser(
   int countActive = 0;
   int countArchived = 0;
   quoteMap.forEach((quoteId, quote) {
-    if (quote.userCanAccess(userId)) {
+    if (quote.assignedUserId == userId) {
       if (quote.isActive) {
         countActive++;
       } else if (quote.isArchived) {
-        countArchived++;
-      }
-    }
-  });
-
-  return EntityStats(countActive: countActive, countArchived: countArchived);
-}
-
-var memoizedCreditStatsForUser = memo2(
-        (String userId, BuiltMap<String, InvoiceEntity> creditMap) =>
-        creditStatsForUser(userId, creditMap));
-
-EntityStats creditStatsForUser(
-    String userId,
-    BuiltMap<String, InvoiceEntity> creditMap,
-    ) {
-  int countActive = 0;
-  int countArchived = 0;
-  creditMap.forEach((creditId, credit) {
-    if (credit.userCanAccess(userId)) {
-      if (credit.isActive) {
-        countActive++;
-      } else if (credit.isArchived) {
         countArchived++;
       }
     }

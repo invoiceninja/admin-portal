@@ -92,6 +92,7 @@ Serializers _$serializers = (new Serializers().toBuilder()
       ..add(LanguageEntity.serializer)
       ..add(LanguageItemResponse.serializer)
       ..add(LanguageListResponse.serializer)
+      ..add(LedgerEntity.serializer)
       ..add(ListUIState.serializer)
       ..add(LoginResponse.serializer)
       ..add(ModuleLayout.serializer)
@@ -180,6 +181,9 @@ Serializers _$serializers = (new Serializers().toBuilder()
       ..addBuilderFactory(
           const FullType(BuiltList, const [const FullType(ActivityEntity)]),
           () => new ListBuilder<ActivityEntity>())
+      ..addBuilderFactory(
+          const FullType(BuiltList, const [const FullType(LedgerEntity)]),
+          () => new ListBuilder<LedgerEntity>())
       ..addBuilderFactory(
           const FullType(BuiltList, const [const FullType(GatewayTokenEntity)]),
           () => new ListBuilder<GatewayTokenEntity>())

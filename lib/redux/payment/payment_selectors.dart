@@ -75,17 +75,20 @@ List<String> filteredPaymentsSelector(
         clientMap[payment.clientId] ?? ClientEntity(id: payment.clientId);
 
     if (paymentListState.filterEntityId != null) {
-      if (paymentListState.filterEntityType == EntityType.client &&
-          payment.clientId != paymentListState.filterEntityId) {
-        return false;
-      } else if (paymentListState.filterEntityType == EntityType.invoice &&
-          !payment.paymentables
-              .map((p) => p.invoiceId)
-              .contains(paymentListState.filterEntityId)) {
-        return false;
-      } else if (paymentListState.filterEntityType == EntityType.user &&
-          !payment.userCanAccess(paymentListState.filterEntityId)) {
-        return false;
+      if (paymentListState.filterEntityType == EntityType.client) {
+        if (payment.clientId != paymentListState.filterEntityId) {
+          return false;
+        }
+      } else if (paymentListState.filterEntityType == EntityType.invoice) {
+        if (!payment.paymentables
+            .map((p) => p.invoiceId)
+            .contains(paymentListState.filterEntityId)) {
+          return false;
+        }
+      } else if (paymentListState.filterEntityType == EntityType.user) {
+        if (payment.assignedUserId != paymentListState.filterEntityId) {
+          return false;
+        }
       }
     } else if (!client.isActive) {
       return false;
@@ -145,7 +148,7 @@ EntityStats paymentStatsForUser(
   int countActive = 0;
   int countArchived = 0;
   paymentMap.forEach((paymentId, payment) {
-    if (payment.userCanAccess(userId)) {
+    if (payment.assignedUserId == userId) {
       if (payment.isActive) {
         countActive++;
       } else if (payment.isArchived) {

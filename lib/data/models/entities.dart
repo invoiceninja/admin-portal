@@ -588,3 +588,37 @@ abstract class ActivityEntity
   static Serializer<ActivityEntity> get serializer =>
       _$activityEntitySerializer;
 }
+
+abstract class LedgerEntity
+    implements Built<LedgerEntity, LedgerEntityBuilder> {
+  factory LedgerEntity([void updates(LedgerEntityBuilder b)]) = _$LedgerEntity;
+
+  LedgerEntity._();
+
+  @override
+  @memoized
+  int get hashCode;
+
+  String get notes;
+
+  double get balance;
+
+  double get adjustment;
+
+  @BuiltValueField(wireName: 'created_at')
+  int get createdAt;
+
+  @nullable
+  @BuiltValueField(wireName: 'invoice_id')
+  String get invoiceId;
+
+  @nullable
+  @BuiltValueField(wireName: 'credit_id')
+  String get creditId;
+
+  @nullable
+  @BuiltValueField(wireName: 'payment_id')
+  String get paymentId;
+
+  static Serializer<LedgerEntity> get serializer => _$ledgerEntitySerializer;
+}

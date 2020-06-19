@@ -15,6 +15,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
   static final Map<String, Map<String, String>> _localizedValues = {
     'en': {
       // STARTER: lang key - do not remove comment
+      'ledger': 'Ledger',
       'view_pdf': 'View PDF',
       'all_records': 'All records',
       'owned_by_user': 'Owned by user',
@@ -3904,6 +3905,8 @@ mixin LocalizationsProvider on LocaleCodeAware {
   String get ownedByUser => _localizedValues[localeCode]['owned_by_user'] ?? '';
 
   String get viewPdf => _localizedValues[localeCode]['view_pdf'] ?? '';
+
+  String get ledger => _localizedValues[localeCode]['ledger'] ?? '';
 
   String lookup(String key) {
     final lookupKey = toSnakeCase(key);
