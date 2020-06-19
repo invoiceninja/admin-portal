@@ -579,8 +579,8 @@ class SidebarFooter extends StatelessWidget {
               onPressed: () => viewPdf(InvoiceEntity(), context),
             ),
              */
-            if (state.lastError.isNotEmpty &&
-                (state.isSelfHosted || !kReleaseMode))
+            //if (state.lastError.isNotEmpty && (state.isSelfHosted || !kReleaseMode))
+            if (state.lastError.isNotEmpty)
               IconButton(
                 icon: Icon(
                   Icons.warning,
