@@ -620,5 +620,25 @@ abstract class LedgerEntity
   @BuiltValueField(wireName: 'payment_id')
   String get paymentId;
 
+  EntityType get entityType {
+    if (creditId != null) {
+      return EntityType.credit;
+    } else if (paymentId != null) {
+      return EntityType.payment;
+    } else {
+      return EntityType.invoice;
+    }
+  }
+
+  String get entityId {
+    if (creditId != null) {
+      return creditId;
+    } else if (paymentId != null) {
+      return paymentId;
+    } else {
+      return invoiceId;
+    }
+  }
+
   static Serializer<LedgerEntity> get serializer => _$ledgerEntitySerializer;
 }

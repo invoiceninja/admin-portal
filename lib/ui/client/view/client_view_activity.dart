@@ -32,13 +32,11 @@ class _ClientViewActivityState extends State<ClientViewActivity> {
 
     return ListView.separated(
       itemCount: activities.length,
+      padding: const EdgeInsets.symmetric(vertical: 16),
       separatorBuilder: (context, index) => ListDivider(),
       itemBuilder: (BuildContext context, index) {
         final activity = activities[index];
-        return Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 10),
-          child: ActivityListTile(activity: activity),
-        );
+        return ActivityListTile(activity: activity);
       },
     );
   }

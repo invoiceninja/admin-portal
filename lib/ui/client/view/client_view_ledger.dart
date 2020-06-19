@@ -1,9 +1,16 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_redux/flutter_redux.dart';
+import 'package:invoiceninja_flutter/constants.dart';
+import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
+import 'package:invoiceninja_flutter/redux/app/app_state.dart';
+import 'package:invoiceninja_flutter/ui/app/entities/entity_actions_dialog.dart';
 import 'package:invoiceninja_flutter/ui/app/lists/list_divider.dart';
 import 'package:invoiceninja_flutter/ui/app/loading_indicator.dart';
 import 'package:invoiceninja_flutter/ui/client/view/client_view_vm.dart';
 import 'package:invoiceninja_flutter/utils/formatting.dart';
+import 'package:invoiceninja_flutter/utils/icons.dart';
+import 'package:invoiceninja_flutter/utils/localization.dart';
 
 class ClientViewLedger extends StatefulWidget {
   const ClientViewLedger({Key key, this.viewModel}) : super(key: key);
@@ -37,46 +44,75 @@ class _ClientViewLedgerState extends State<ClientViewLedger> {
       itemCount: client.ledger.length,
       separatorBuilder: (context, index) => ListDivider(),
       itemBuilder: (BuildContext context, index) {
+        final store = StoreProvider.of<AppState>(context);
+        final localization = AppLocalization.of(context);
         final ledger = client.ledger[index];
-        final textTheme = Theme.of(context).textTheme;
+        final state = store.state;
+        final entity = state.getEntityMap(ledger.entityType)[ledger.entityId];
 
         return ListTile(
+          onTap: () => viewEntity(context: context, entity: entity),
+          onLongPress: () =>
+              showEntityActionsDialog(context: context, entities: [entity]),
           title: Row(
-            crossAxisAlignment: CrossAxisAlignment.center,
+            mainAxisSize: MainAxisSize.max,
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Expanded(
-                flex: 2,
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text('ENTITY', style: textTheme.subtitle1),
-                    Text(
-                        formatDate(
-                          convertTimestampToDateString(ledger.createdAt),
-                          context,
-                          showTime: true,
-                        ),
-                        style: textTheme.bodyText2
-                            .copyWith(color: textTheme.caption.color)),
-                  ],
+              Flexible(
+                child: Text(
+                  '${localization.lookup('${ledger.entityType}')}  ›  ${entity.listDisplayName}',
                 ),
               ),
-              Expanded(
-                flex: 1,
+              Padding(
+                padding: const EdgeInsets.only(right: 2),
                 child: Text(
-                  formatNumber(ledger.adjustment, context),
-                  textAlign: TextAlign.end,
-                ),
-              ),
-              Expanded(
-                flex: 1,
-                child: Text(
-                  formatNumber(ledger.balance, context),
+                  formatNumber(
+                    ledger.balance,
+                    context,
+                    clientId: client.id,
+                  ),
                   textAlign: TextAlign.end,
                 ),
               ),
             ],
           ),
+          subtitle: Row(
+            mainAxisSize: MainAxisSize.max,
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Flexible(
+                child: Text(
+                  formatDate(
+                    convertTimestampToDateString(ledger.createdAt),
+                    context,
+                    showTime: true,
+                  ),
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.only(top: 4),
+                child: DecoratedBox(
+                  decoration: BoxDecoration(
+                    color: ledger.adjustment <= 0 ? kColorGreen : kColorRed,
+                    borderRadius: BorderRadius.all(Radius.circular(5)),
+                  ),
+                  child: Padding(
+                    padding: const EdgeInsets.all(4),
+                    child: Text(
+                      (ledger.adjustment > 0 ? '+' : '') +
+                          formatNumber(
+                            ledger.adjustment,
+                            context,
+                            clientId: client.id,
+                          ),
+                      textAlign: TextAlign.end,
+                    ),
+                  ),
+                ),
+              ),
+            ],
+          ),
+          leading: Icon(getEntityIcon(ledger.entityType)),
           trailing: Icon(Icons.chevron_right),
         );
       },

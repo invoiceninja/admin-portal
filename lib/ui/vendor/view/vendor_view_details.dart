@@ -142,7 +142,7 @@ class _VendorViewDetailsState extends State<VendorViewDetails> {
       }
 
       listTiles.add(Padding(
-        padding: const EdgeInsets.all(14.0),
+        padding: const EdgeInsets.all(16),
         child: FutureBuilder<Null>(future: _launched, builder: _launchStatus),
       ));
 

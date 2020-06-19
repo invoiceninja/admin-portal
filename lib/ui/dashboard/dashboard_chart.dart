@@ -92,7 +92,7 @@ class _DashboardChartState extends State<DashboardChart> {
     return FormCard(
       children: <Widget>[
         Padding(
-          padding: EdgeInsets.all(14.0),
+          padding: EdgeInsets.all(16),
           child: Text(
             widget.title,
             style: theme.textTheme.headline5,
