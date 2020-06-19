@@ -211,7 +211,7 @@ class InvoiceOverview extends StatelessWidget {
             children: <Widget>[
               Text(label),
               SizedBox(
-                width: 80.0,
+                width: 100.0,
                 child: Align(
                     alignment: Alignment.centerRight,
                     child: Text(formatNumber(amount, context,

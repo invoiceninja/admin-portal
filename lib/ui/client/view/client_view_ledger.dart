@@ -2,7 +2,9 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:invoiceninja_flutter/constants.dart';
+import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
+import 'package:invoiceninja_flutter/ui/app/entities/entity_actions_dialog.dart';
 import 'package:invoiceninja_flutter/ui/app/lists/list_divider.dart';
 import 'package:invoiceninja_flutter/ui/app/loading_indicator.dart';
 import 'package:invoiceninja_flutter/ui/client/view/client_view_vm.dart';
@@ -49,12 +51,17 @@ class _ClientViewLedgerState extends State<ClientViewLedger> {
         final entity = state.getEntityMap(ledger.entityType)[ledger.entityId];
 
         return ListTile(
+          onTap: () => viewEntity(context: context, entity: entity),
+          onLongPress: () =>
+              showEntityActionsDialog(context: context, entities: [entity]),
           title: Row(
             mainAxisSize: MainAxisSize.max,
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Text(
-                '${localization.lookup('${ledger.entityType}')}  ›  ${entity.listDisplayName}',
+              Flexible(
+                child: Text(
+                  '${localization.lookup('${ledger.entityType}')}  ›  ${entity.listDisplayName}',
+                ),
               ),
               Padding(
                 padding: const EdgeInsets.only(right: 2),
@@ -73,11 +80,15 @@ class _ClientViewLedgerState extends State<ClientViewLedger> {
             mainAxisSize: MainAxisSize.max,
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Text(formatDate(
-                convertTimestampToDateString(ledger.createdAt),
-                context,
-                showTime: true,
-              )),
+              Flexible(
+                child: Text(
+                  formatDate(
+                    convertTimestampToDateString(ledger.createdAt),
+                    context,
+                    showTime: true,
+                  ),
+                ),
+              ),
               Padding(
                 padding: const EdgeInsets.only(top: 4),
                 child: DecoratedBox(
