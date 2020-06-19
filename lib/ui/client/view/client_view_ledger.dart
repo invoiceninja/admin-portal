@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
-import 'package:invoiceninja_flutter/data/models/entities.dart';
+import 'package:invoiceninja_flutter/constants.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/ui/app/lists/list_divider.dart';
 import 'package:invoiceninja_flutter/ui/app/loading_indicator.dart';
@@ -75,13 +75,22 @@ class _ClientViewLedgerState extends State<ClientViewLedger> {
                 context,
                 showTime: true,
               )),
-              Text(
-                formatNumber(
-                  ledger.adjustment,
-                  context,
-                  clientId: client.id,
+              DecoratedBox(
+                decoration: BoxDecoration(
+                  color: ledger.adjustment <= 0 ? kColorGreen : kColorRed,
+                  borderRadius: BorderRadius.all(Radius.circular(5)),
                 ),
-                textAlign: TextAlign.end,
+                child: Padding(
+                  padding: const EdgeInsets.all(2),
+                  child: Text(
+                    formatNumber(
+                      ledger.adjustment,
+                      context,
+                      clientId: client.id,
+                    ),
+                    textAlign: TextAlign.end,
+                  ),
+                ),
               ),
             ],
           ),
