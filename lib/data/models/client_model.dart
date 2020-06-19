@@ -94,6 +94,7 @@ abstract class ClientEntity extends Object
       balance: 0,
       creditBalance: 0,
       paidToDate: 0,
+      lastLogin: 0,
       address1: '',
       address2: '',
       city: '',

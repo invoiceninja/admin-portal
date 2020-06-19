@@ -59,11 +59,8 @@ class HistoryDrawer extends StatelessWidget {
                   ),
                 )
               else
-                FlatButton(
-                  child: Text(
-                    localization.close,
-                    //style: TextStyle(color: Colors.white),
-                  ),
+                IconButton(
+                  icon: Icon(Icons.close),
                   onPressed: () {
                     store.dispatch(
                         UserPreferencesChanged(sidebar: AppSidebar.history));
