@@ -58,7 +58,9 @@ void _loadAuthLocal(Store<AppState> store) async {
       : Config.TEST_EMAIL;
   final String url = formatApiUrl(prefs.getString(kSharedPrefUrl) ?? '');
 
-  store.dispatch(UserLoginLoaded(email, url));
+  if (email.isNotEmpty) {
+    store.dispatch(UserLoginLoaded(email, url));
+  }
 }
 
 Middleware<AppState> _createUserLogout() {
