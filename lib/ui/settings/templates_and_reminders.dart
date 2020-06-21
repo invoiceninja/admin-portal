@@ -183,6 +183,10 @@ class _TemplatesAndRemindersState extends State<TemplatesAndReminders>
         body: body,
         subject: subject,
         onComplete: (subject, body, wrapper) {
+          if (!mounted) {
+            return;
+          }
+
           setState(() {
             _isLoading = false;
             _subjectPreview = subject.trim();

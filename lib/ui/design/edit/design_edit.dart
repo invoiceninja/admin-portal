@@ -151,6 +151,10 @@ class _DesignEditState extends State<DesignEdit>
         context: context,
         design: design,
         onComplete: (response) async {
+          if (!mounted) {
+            return;
+          }
+
           if (response == null) {
             setState(() {
               _isLoading = false;
