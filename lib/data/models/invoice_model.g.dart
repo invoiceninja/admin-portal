@@ -234,6 +234,9 @@ class _$InvoiceEntitySerializer implements StructuredSerializer<InvoiceEntity> {
       'created_at',
       serializers.serialize(object.createdAt,
           specifiedType: const FullType(int)),
+      'updated_at',
+      serializers.serialize(object.updatedAt,
+          specifiedType: const FullType(int)),
       'id',
       serializers.serialize(object.id, specifiedType: const FullType(String)),
     ];
@@ -284,12 +287,6 @@ class _$InvoiceEntitySerializer implements StructuredSerializer<InvoiceEntity> {
         ..add('isChanged')
         ..add(serializers.serialize(object.isChanged,
             specifiedType: const FullType(bool)));
-    }
-    if (object.updatedAt != null) {
-      result
-        ..add('updated_at')
-        ..add(serializers.serialize(object.updatedAt,
-            specifiedType: const FullType(int)));
     }
     if (object.archivedAt != null) {
       result
@@ -760,6 +757,9 @@ class _$InvitationEntitySerializer
       'created_at',
       serializers.serialize(object.createdAt,
           specifiedType: const FullType(int)),
+      'updated_at',
+      serializers.serialize(object.updatedAt,
+          specifiedType: const FullType(int)),
       'id',
       serializers.serialize(object.id, specifiedType: const FullType(String)),
     ];
@@ -768,12 +768,6 @@ class _$InvitationEntitySerializer
         ..add('isChanged')
         ..add(serializers.serialize(object.isChanged,
             specifiedType: const FullType(bool)));
-    }
-    if (object.updatedAt != null) {
-      result
-        ..add('updated_at')
-        ..add(serializers.serialize(object.updatedAt,
-            specifiedType: const FullType(int)));
     }
     if (object.archivedAt != null) {
       result
@@ -1347,6 +1341,9 @@ class _$InvoiceEntity extends InvoiceEntity {
     }
     if (createdAt == null) {
       throw new BuiltValueNullFieldError('InvoiceEntity', 'createdAt');
+    }
+    if (updatedAt == null) {
+      throw new BuiltValueNullFieldError('InvoiceEntity', 'updatedAt');
     }
     if (id == null) {
       throw new BuiltValueNullFieldError('InvoiceEntity', 'id');
@@ -2331,6 +2328,9 @@ class _$InvitationEntity extends InvitationEntity {
     }
     if (createdAt == null) {
       throw new BuiltValueNullFieldError('InvitationEntity', 'createdAt');
+    }
+    if (updatedAt == null) {
+      throw new BuiltValueNullFieldError('InvitationEntity', 'updatedAt');
     }
     if (id == null) {
       throw new BuiltValueNullFieldError('InvitationEntity', 'id');

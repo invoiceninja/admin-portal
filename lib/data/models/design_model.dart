@@ -87,6 +87,7 @@ abstract class DesignEntity extends Object
     return _$DesignEntity._(
       id: id ?? BaseEntity.nextId,
       createdAt: 0,
+      updatedAt: 0,
       isChanged: false,
       name: '',
       design: design ??

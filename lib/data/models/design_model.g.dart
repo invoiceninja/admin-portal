@@ -184,6 +184,9 @@ class _$DesignEntitySerializer implements StructuredSerializer<DesignEntity> {
       'created_at',
       serializers.serialize(object.createdAt,
           specifiedType: const FullType(int)),
+      'updated_at',
+      serializers.serialize(object.updatedAt,
+          specifiedType: const FullType(int)),
       'id',
       serializers.serialize(object.id, specifiedType: const FullType(String)),
     ];
@@ -192,12 +195,6 @@ class _$DesignEntitySerializer implements StructuredSerializer<DesignEntity> {
         ..add('isChanged')
         ..add(serializers.serialize(object.isChanged,
             specifiedType: const FullType(bool)));
-    }
-    if (object.updatedAt != null) {
-      result
-        ..add('updated_at')
-        ..add(serializers.serialize(object.updatedAt,
-            specifiedType: const FullType(int)));
     }
     if (object.archivedAt != null) {
       result
@@ -658,6 +655,9 @@ class _$DesignEntity extends DesignEntity {
     }
     if (createdAt == null) {
       throw new BuiltValueNullFieldError('DesignEntity', 'createdAt');
+    }
+    if (updatedAt == null) {
+      throw new BuiltValueNullFieldError('DesignEntity', 'updatedAt');
     }
     if (id == null) {
       throw new BuiltValueNullFieldError('DesignEntity', 'id');

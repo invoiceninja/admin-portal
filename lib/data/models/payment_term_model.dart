@@ -58,6 +58,7 @@ abstract class PaymentTermEntity extends Object
       numDays: 0,
       name: '',
       createdAt: 0,
+      updatedAt: 0,
     );
   }
 
