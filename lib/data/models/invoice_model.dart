@@ -916,6 +916,7 @@ abstract class InvitationEntity extends Object
       id: BaseEntity.nextId,
       isChanged: false,
       contactId: contactId ?? '',
+      createdAt: 0,
       key: '',
       link: '',
       sentDate: '',
