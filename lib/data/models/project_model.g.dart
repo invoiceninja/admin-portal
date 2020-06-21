@@ -153,6 +153,9 @@ class _$ProjectEntitySerializer implements StructuredSerializer<ProjectEntity> {
       'updated_at',
       serializers.serialize(object.updatedAt,
           specifiedType: const FullType(int)),
+      'archived_at',
+      serializers.serialize(object.archivedAt,
+          specifiedType: const FullType(int)),
       'id',
       serializers.serialize(object.id, specifiedType: const FullType(String)),
     ];
@@ -161,12 +164,6 @@ class _$ProjectEntitySerializer implements StructuredSerializer<ProjectEntity> {
         ..add('isChanged')
         ..add(serializers.serialize(object.isChanged,
             specifiedType: const FullType(bool)));
-    }
-    if (object.archivedAt != null) {
-      result
-        ..add('archived_at')
-        ..add(serializers.serialize(object.archivedAt,
-            specifiedType: const FullType(int)));
     }
     if (object.isDeleted != null) {
       result
@@ -567,6 +564,9 @@ class _$ProjectEntity extends ProjectEntity {
     }
     if (updatedAt == null) {
       throw new BuiltValueNullFieldError('ProjectEntity', 'updatedAt');
+    }
+    if (archivedAt == null) {
+      throw new BuiltValueNullFieldError('ProjectEntity', 'archivedAt');
     }
     if (id == null) {
       throw new BuiltValueNullFieldError('ProjectEntity', 'id');

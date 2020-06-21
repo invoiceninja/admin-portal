@@ -228,6 +228,9 @@ class _$ClientEntitySerializer implements StructuredSerializer<ClientEntity> {
       'updated_at',
       serializers.serialize(object.updatedAt,
           specifiedType: const FullType(int)),
+      'archived_at',
+      serializers.serialize(object.archivedAt,
+          specifiedType: const FullType(int)),
       'id',
       serializers.serialize(object.id, specifiedType: const FullType(String)),
     ];
@@ -242,12 +245,6 @@ class _$ClientEntitySerializer implements StructuredSerializer<ClientEntity> {
         ..add('isChanged')
         ..add(serializers.serialize(object.isChanged,
             specifiedType: const FullType(bool)));
-    }
-    if (object.archivedAt != null) {
-      result
-        ..add('archived_at')
-        ..add(serializers.serialize(object.archivedAt,
-            specifiedType: const FullType(int)));
     }
     if (object.isDeleted != null) {
       result
@@ -531,6 +528,9 @@ class _$ContactEntitySerializer implements StructuredSerializer<ContactEntity> {
       'updated_at',
       serializers.serialize(object.updatedAt,
           specifiedType: const FullType(int)),
+      'archived_at',
+      serializers.serialize(object.archivedAt,
+          specifiedType: const FullType(int)),
       'id',
       serializers.serialize(object.id, specifiedType: const FullType(String)),
     ];
@@ -539,12 +539,6 @@ class _$ContactEntitySerializer implements StructuredSerializer<ContactEntity> {
         ..add('isChanged')
         ..add(serializers.serialize(object.isChanged,
             specifiedType: const FullType(bool)));
-    }
-    if (object.archivedAt != null) {
-      result
-        ..add('archived_at')
-        ..add(serializers.serialize(object.archivedAt,
-            specifiedType: const FullType(int)));
     }
     if (object.isDeleted != null) {
       result
@@ -1116,6 +1110,9 @@ class _$ClientEntity extends ClientEntity {
     }
     if (updatedAt == null) {
       throw new BuiltValueNullFieldError('ClientEntity', 'updatedAt');
+    }
+    if (archivedAt == null) {
+      throw new BuiltValueNullFieldError('ClientEntity', 'archivedAt');
     }
     if (id == null) {
       throw new BuiltValueNullFieldError('ClientEntity', 'id');
@@ -1733,6 +1730,9 @@ class _$ContactEntity extends ContactEntity {
     }
     if (updatedAt == null) {
       throw new BuiltValueNullFieldError('ContactEntity', 'updatedAt');
+    }
+    if (archivedAt == null) {
+      throw new BuiltValueNullFieldError('ContactEntity', 'archivedAt');
     }
     if (id == null) {
       throw new BuiltValueNullFieldError('ContactEntity', 'id');

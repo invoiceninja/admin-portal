@@ -176,6 +176,9 @@ class _$UserEntitySerializer implements StructuredSerializer<UserEntity> {
       'updated_at',
       serializers.serialize(object.updatedAt,
           specifiedType: const FullType(int)),
+      'archived_at',
+      serializers.serialize(object.archivedAt,
+          specifiedType: const FullType(int)),
       'id',
       serializers.serialize(object.id, specifiedType: const FullType(String)),
     ];
@@ -220,12 +223,6 @@ class _$UserEntitySerializer implements StructuredSerializer<UserEntity> {
         ..add('isChanged')
         ..add(serializers.serialize(object.isChanged,
             specifiedType: const FullType(bool)));
-    }
-    if (object.archivedAt != null) {
-      result
-        ..add('archived_at')
-        ..add(serializers.serialize(object.archivedAt,
-            specifiedType: const FullType(int)));
     }
     if (object.isDeleted != null) {
       result
@@ -701,6 +698,9 @@ class _$UserEntity extends UserEntity {
     }
     if (updatedAt == null) {
       throw new BuiltValueNullFieldError('UserEntity', 'updatedAt');
+    }
+    if (archivedAt == null) {
+      throw new BuiltValueNullFieldError('UserEntity', 'archivedAt');
     }
     if (id == null) {
       throw new BuiltValueNullFieldError('UserEntity', 'id');

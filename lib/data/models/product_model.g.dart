@@ -162,6 +162,9 @@ class _$ProductEntitySerializer implements StructuredSerializer<ProductEntity> {
       'updated_at',
       serializers.serialize(object.updatedAt,
           specifiedType: const FullType(int)),
+      'archived_at',
+      serializers.serialize(object.archivedAt,
+          specifiedType: const FullType(int)),
       'id',
       serializers.serialize(object.id, specifiedType: const FullType(String)),
     ];
@@ -194,12 +197,6 @@ class _$ProductEntitySerializer implements StructuredSerializer<ProductEntity> {
         ..add('isChanged')
         ..add(serializers.serialize(object.isChanged,
             specifiedType: const FullType(bool)));
-    }
-    if (object.archivedAt != null) {
-      result
-        ..add('archived_at')
-        ..add(serializers.serialize(object.archivedAt,
-            specifiedType: const FullType(int)));
     }
     if (object.isDeleted != null) {
       result
@@ -658,6 +655,9 @@ class _$ProductEntity extends ProductEntity {
     }
     if (updatedAt == null) {
       throw new BuiltValueNullFieldError('ProductEntity', 'updatedAt');
+    }
+    if (archivedAt == null) {
+      throw new BuiltValueNullFieldError('ProductEntity', 'archivedAt');
     }
     if (id == null) {
       throw new BuiltValueNullFieldError('ProductEntity', 'id');

@@ -88,6 +88,8 @@ abstract class DesignEntity extends Object
       id: id ?? BaseEntity.nextId,
       createdAt: 0,
       updatedAt: 0,
+      archivedAt: 0,
+      isDeleted: false,
       isChanged: false,
       name: '',
       design: design ??

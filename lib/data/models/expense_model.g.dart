@@ -194,6 +194,9 @@ class _$ExpenseEntitySerializer implements StructuredSerializer<ExpenseEntity> {
       'updated_at',
       serializers.serialize(object.updatedAt,
           specifiedType: const FullType(int)),
+      'archived_at',
+      serializers.serialize(object.archivedAt,
+          specifiedType: const FullType(int)),
       'id',
       serializers.serialize(object.id, specifiedType: const FullType(String)),
     ];
@@ -238,12 +241,6 @@ class _$ExpenseEntitySerializer implements StructuredSerializer<ExpenseEntity> {
         ..add('isChanged')
         ..add(serializers.serialize(object.isChanged,
             specifiedType: const FullType(bool)));
-    }
-    if (object.archivedAt != null) {
-      result
-        ..add('archived_at')
-        ..add(serializers.serialize(object.archivedAt,
-            specifiedType: const FullType(int)));
     }
     if (object.isDeleted != null) {
       result
@@ -452,6 +449,9 @@ class _$ExpenseCategoryEntitySerializer
       'updated_at',
       serializers.serialize(object.updatedAt,
           specifiedType: const FullType(int)),
+      'archived_at',
+      serializers.serialize(object.archivedAt,
+          specifiedType: const FullType(int)),
       'id',
       serializers.serialize(object.id, specifiedType: const FullType(String)),
     ];
@@ -460,12 +460,6 @@ class _$ExpenseCategoryEntitySerializer
         ..add('isChanged')
         ..add(serializers.serialize(object.isChanged,
             specifiedType: const FullType(bool)));
-    }
-    if (object.archivedAt != null) {
-      result
-        ..add('archived_at')
-        ..add(serializers.serialize(object.archivedAt,
-            specifiedType: const FullType(int)));
     }
     if (object.isDeleted != null) {
       result
@@ -983,6 +977,9 @@ class _$ExpenseEntity extends ExpenseEntity {
     if (updatedAt == null) {
       throw new BuiltValueNullFieldError('ExpenseEntity', 'updatedAt');
     }
+    if (archivedAt == null) {
+      throw new BuiltValueNullFieldError('ExpenseEntity', 'archivedAt');
+    }
     if (id == null) {
       throw new BuiltValueNullFieldError('ExpenseEntity', 'id');
     }
@@ -1429,6 +1426,9 @@ class _$ExpenseCategoryEntity extends ExpenseCategoryEntity {
     }
     if (updatedAt == null) {
       throw new BuiltValueNullFieldError('ExpenseCategoryEntity', 'updatedAt');
+    }
+    if (archivedAt == null) {
+      throw new BuiltValueNullFieldError('ExpenseCategoryEntity', 'archivedAt');
     }
     if (id == null) {
       throw new BuiltValueNullFieldError('ExpenseCategoryEntity', 'id');
