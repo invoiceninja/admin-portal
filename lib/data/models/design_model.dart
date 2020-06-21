@@ -86,6 +86,7 @@ abstract class DesignEntity extends Object
       {String id, AppState state, BuiltMap<String, String> design}) {
     return _$DesignEntity._(
       id: id ?? BaseEntity.nextId,
+      createdAt: 0,
       isChanged: false,
       name: '',
       design: design ??

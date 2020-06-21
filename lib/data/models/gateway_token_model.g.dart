@@ -132,6 +132,9 @@ class _$GatewayTokenEntitySerializer
       'is_default',
       serializers.serialize(object.isDefault,
           specifiedType: const FullType(bool)),
+      'created_at',
+      serializers.serialize(object.createdAt,
+          specifiedType: const FullType(int)),
       'id',
       serializers.serialize(object.id, specifiedType: const FullType(String)),
     ];
@@ -140,12 +143,6 @@ class _$GatewayTokenEntitySerializer
         ..add('isChanged')
         ..add(serializers.serialize(object.isChanged,
             specifiedType: const FullType(bool)));
-    }
-    if (object.createdAt != null) {
-      result
-        ..add('created_at')
-        ..add(serializers.serialize(object.createdAt,
-            specifiedType: const FullType(int)));
     }
     if (object.updatedAt != null) {
       result
@@ -497,6 +494,9 @@ class _$GatewayTokenEntity extends GatewayTokenEntity {
     }
     if (isDefault == null) {
       throw new BuiltValueNullFieldError('GatewayTokenEntity', 'isDefault');
+    }
+    if (createdAt == null) {
+      throw new BuiltValueNullFieldError('GatewayTokenEntity', 'createdAt');
     }
     if (id == null) {
       throw new BuiltValueNullFieldError('GatewayTokenEntity', 'id');

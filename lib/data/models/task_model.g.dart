@@ -179,6 +179,9 @@ class _$TaskEntitySerializer implements StructuredSerializer<TaskEntity> {
       'custom_value2',
       serializers.serialize(object.customValue2,
           specifiedType: const FullType(String)),
+      'created_at',
+      serializers.serialize(object.createdAt,
+          specifiedType: const FullType(int)),
       'id',
       serializers.serialize(object.id, specifiedType: const FullType(String)),
     ];
@@ -235,12 +238,6 @@ class _$TaskEntitySerializer implements StructuredSerializer<TaskEntity> {
         ..add('isChanged')
         ..add(serializers.serialize(object.isChanged,
             specifiedType: const FullType(bool)));
-    }
-    if (object.createdAt != null) {
-      result
-        ..add('created_at')
-        ..add(serializers.serialize(object.createdAt,
-            specifiedType: const FullType(int)));
     }
     if (object.updatedAt != null) {
       result
@@ -802,6 +799,9 @@ class _$TaskEntity extends TaskEntity {
     }
     if (customValue2 == null) {
       throw new BuiltValueNullFieldError('TaskEntity', 'customValue2');
+    }
+    if (createdAt == null) {
+      throw new BuiltValueNullFieldError('TaskEntity', 'createdAt');
     }
     if (id == null) {
       throw new BuiltValueNullFieldError('TaskEntity', 'id');

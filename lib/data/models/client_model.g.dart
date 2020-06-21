@@ -222,6 +222,9 @@ class _$ClientEntitySerializer implements StructuredSerializer<ClientEntity> {
       serializers.serialize(object.gatewayTokens,
           specifiedType: const FullType(
               BuiltList, const [const FullType(GatewayTokenEntity)])),
+      'created_at',
+      serializers.serialize(object.createdAt,
+          specifiedType: const FullType(int)),
       'id',
       serializers.serialize(object.id, specifiedType: const FullType(String)),
     ];
@@ -236,12 +239,6 @@ class _$ClientEntitySerializer implements StructuredSerializer<ClientEntity> {
         ..add('isChanged')
         ..add(serializers.serialize(object.isChanged,
             specifiedType: const FullType(bool)));
-    }
-    if (object.createdAt != null) {
-      result
-        ..add('created_at')
-        ..add(serializers.serialize(object.createdAt,
-            specifiedType: const FullType(int)));
     }
     if (object.updatedAt != null) {
       result
@@ -531,6 +528,9 @@ class _$ContactEntitySerializer implements StructuredSerializer<ContactEntity> {
       'last_login',
       serializers.serialize(object.lastLogin,
           specifiedType: const FullType(int)),
+      'created_at',
+      serializers.serialize(object.createdAt,
+          specifiedType: const FullType(int)),
       'id',
       serializers.serialize(object.id, specifiedType: const FullType(String)),
     ];
@@ -539,12 +539,6 @@ class _$ContactEntitySerializer implements StructuredSerializer<ContactEntity> {
         ..add('isChanged')
         ..add(serializers.serialize(object.isChanged,
             specifiedType: const FullType(bool)));
-    }
-    if (object.createdAt != null) {
-      result
-        ..add('created_at')
-        ..add(serializers.serialize(object.createdAt,
-            specifiedType: const FullType(int)));
     }
     if (object.updatedAt != null) {
       result
@@ -1122,6 +1116,9 @@ class _$ClientEntity extends ClientEntity {
     }
     if (gatewayTokens == null) {
       throw new BuiltValueNullFieldError('ClientEntity', 'gatewayTokens');
+    }
+    if (createdAt == null) {
+      throw new BuiltValueNullFieldError('ClientEntity', 'createdAt');
     }
     if (id == null) {
       throw new BuiltValueNullFieldError('ClientEntity', 'id');
@@ -1733,6 +1730,9 @@ class _$ContactEntity extends ContactEntity {
     }
     if (lastLogin == null) {
       throw new BuiltValueNullFieldError('ContactEntity', 'lastLogin');
+    }
+    if (createdAt == null) {
+      throw new BuiltValueNullFieldError('ContactEntity', 'createdAt');
     }
     if (id == null) {
       throw new BuiltValueNullFieldError('ContactEntity', 'id');

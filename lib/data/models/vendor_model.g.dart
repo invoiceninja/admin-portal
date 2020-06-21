@@ -162,6 +162,9 @@ class _$VendorEntitySerializer implements StructuredSerializer<VendorEntity> {
       serializers.serialize(object.contacts,
           specifiedType: const FullType(
               BuiltList, const [const FullType(VendorContactEntity)])),
+      'created_at',
+      serializers.serialize(object.createdAt,
+          specifiedType: const FullType(int)),
       'id',
       serializers.serialize(object.id, specifiedType: const FullType(String)),
     ];
@@ -176,12 +179,6 @@ class _$VendorEntitySerializer implements StructuredSerializer<VendorEntity> {
         ..add('isChanged')
         ..add(serializers.serialize(object.isChanged,
             specifiedType: const FullType(bool)));
-    }
-    if (object.createdAt != null) {
-      result
-        ..add('created_at')
-        ..add(serializers.serialize(object.createdAt,
-            specifiedType: const FullType(int)));
     }
     if (object.updatedAt != null) {
       result
@@ -370,6 +367,9 @@ class _$VendorContactEntitySerializer
       'phone',
       serializers.serialize(object.phone,
           specifiedType: const FullType(String)),
+      'created_at',
+      serializers.serialize(object.createdAt,
+          specifiedType: const FullType(int)),
       'id',
       serializers.serialize(object.id, specifiedType: const FullType(String)),
     ];
@@ -378,12 +378,6 @@ class _$VendorContactEntitySerializer
         ..add('isChanged')
         ..add(serializers.serialize(object.isChanged,
             specifiedType: const FullType(bool)));
-    }
-    if (object.createdAt != null) {
-      result
-        ..add('created_at')
-        ..add(serializers.serialize(object.createdAt,
-            specifiedType: const FullType(int)));
     }
     if (object.updatedAt != null) {
       result
@@ -816,6 +810,9 @@ class _$VendorEntity extends VendorEntity {
     if (contacts == null) {
       throw new BuiltValueNullFieldError('VendorEntity', 'contacts');
     }
+    if (createdAt == null) {
+      throw new BuiltValueNullFieldError('VendorEntity', 'createdAt');
+    }
     if (id == null) {
       throw new BuiltValueNullFieldError('VendorEntity', 'id');
     }
@@ -1205,6 +1202,9 @@ class _$VendorContactEntity extends VendorContactEntity {
     }
     if (phone == null) {
       throw new BuiltValueNullFieldError('VendorContactEntity', 'phone');
+    }
+    if (createdAt == null) {
+      throw new BuiltValueNullFieldError('VendorContactEntity', 'createdAt');
     }
     if (id == null) {
       throw new BuiltValueNullFieldError('VendorContactEntity', 'id');

@@ -223,7 +223,6 @@ abstract class BaseEntity implements SelectableEntity {
   @nullable
   bool get isChanged;
 
-  @nullable
   @BuiltValueField(wireName: 'created_at')
   int get createdAt;
 

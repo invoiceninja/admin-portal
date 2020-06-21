@@ -122,6 +122,9 @@ class _$TaxRateEntitySerializer implements StructuredSerializer<TaxRateEntity> {
       serializers.serialize(object.name, specifiedType: const FullType(String)),
       'rate',
       serializers.serialize(object.rate, specifiedType: const FullType(double)),
+      'created_at',
+      serializers.serialize(object.createdAt,
+          specifiedType: const FullType(int)),
       'id',
       serializers.serialize(object.id, specifiedType: const FullType(String)),
     ];
@@ -130,12 +133,6 @@ class _$TaxRateEntitySerializer implements StructuredSerializer<TaxRateEntity> {
         ..add('isChanged')
         ..add(serializers.serialize(object.isChanged,
             specifiedType: const FullType(bool)));
-    }
-    if (object.createdAt != null) {
-      result
-        ..add('created_at')
-        ..add(serializers.serialize(object.createdAt,
-            specifiedType: const FullType(int)));
     }
     if (object.updatedAt != null) {
       result
@@ -462,6 +459,9 @@ class _$TaxRateEntity extends TaxRateEntity {
     }
     if (rate == null) {
       throw new BuiltValueNullFieldError('TaxRateEntity', 'rate');
+    }
+    if (createdAt == null) {
+      throw new BuiltValueNullFieldError('TaxRateEntity', 'createdAt');
     }
     if (id == null) {
       throw new BuiltValueNullFieldError('TaxRateEntity', 'id');

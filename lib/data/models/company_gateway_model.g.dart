@@ -165,6 +165,9 @@ class _$CompanyGatewayEntitySerializer
       'config',
       serializers.serialize(object.config,
           specifiedType: const FullType(String)),
+      'created_at',
+      serializers.serialize(object.createdAt,
+          specifiedType: const FullType(int)),
       'id',
       serializers.serialize(object.id, specifiedType: const FullType(String)),
     ];
@@ -173,12 +176,6 @@ class _$CompanyGatewayEntitySerializer
         ..add('isChanged')
         ..add(serializers.serialize(object.isChanged,
             specifiedType: const FullType(bool)));
-    }
-    if (object.createdAt != null) {
-      result
-        ..add('created_at')
-        ..add(serializers.serialize(object.createdAt,
-            specifiedType: const FullType(int)));
     }
     if (object.updatedAt != null) {
       result
@@ -744,6 +741,9 @@ class _$CompanyGatewayEntity extends CompanyGatewayEntity {
     }
     if (config == null) {
       throw new BuiltValueNullFieldError('CompanyGatewayEntity', 'config');
+    }
+    if (createdAt == null) {
+      throw new BuiltValueNullFieldError('CompanyGatewayEntity', 'createdAt');
     }
     if (id == null) {
       throw new BuiltValueNullFieldError('CompanyGatewayEntity', 'id');
