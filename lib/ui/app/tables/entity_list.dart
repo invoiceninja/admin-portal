@@ -63,14 +63,15 @@ class _EntityListState extends State<EntityList> {
     final entityState = state.getUIState(entityType);
 
     dataTableSource = EntityDataTableSource(
-        context: context,
-        entityType: entityType,
-        editingId: entityState.editingId,
-        tableColumns: widget.tableColumns,
-        entityList: entityList.toList(),
-        entityMap: entityMap,
-        entityPresenter: widget.presenter,
-        onTap: (BaseEntity entity) => widget.onEntityTap(context, entity));
+      context: context,
+      entityType: entityType,
+      editingId: entityState.editingId,
+      tableColumns: widget.tableColumns,
+      entityList: entityList.toList(),
+      entityMap: entityMap,
+      entityPresenter: widget.presenter,
+      onTap: (BaseEntity entity) => widget.onEntityTap(context, entity),
+    );
   }
 
   @override
@@ -185,13 +186,6 @@ class _EntityListState extends State<EntityList> {
                     })),
               ],
               source: dataTableSource,
-              /*
-              header: DatatableHeader(
-                entityType: widget.entityType,
-                onClearPressed: widget.onClearEntityFilterPressed,
-                onRefreshPressed: () => widget.onRefreshed(context),
-              ),
-               */
               sortColumnIndex:
                   widget.tableColumns.indexOf(listUIState.sortField),
               sortAscending: listUIState.sortAscending,
