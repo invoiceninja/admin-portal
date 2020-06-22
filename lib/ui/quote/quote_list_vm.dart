@@ -1,7 +1,6 @@
 import 'dart:async';
 import 'package:built_collection/built_collection.dart';
 import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
-import 'package:invoiceninja_flutter/redux/document/document_selectors.dart';
 import 'package:invoiceninja_flutter/redux/invoice/invoice_actions.dart';
 import 'package:invoiceninja_flutter/redux/quote/quote_actions.dart';
 import 'package:invoiceninja_flutter/redux/quote/quote_selectors.dart';
@@ -32,9 +31,6 @@ class QuoteListBuilder extends StatelessWidget {
       converter: QuoteListVM.fromStore,
       builder: (context, viewModel) {
         final state = viewModel.state;
-        final documentMap = memoizedEntityDocumentMap(EntityType.invoice,
-            state.documentState.map, state.expenseState.map);
-
         return EntityList(
             isLoaded: viewModel.isLoaded,
             entityType: EntityType.quote,
@@ -64,7 +60,6 @@ class QuoteListBuilder extends StatelessWidget {
               return QuoteListItem(
                 user: viewModel.user,
                 filter: viewModel.filter,
-                hasDocuments: documentMap[invoice.id] == true,
                 quote: invoice,
                 client: viewModel.clientMap[invoice.clientId] ?? ClientEntity(),
                 onTap: () => viewModel.onInvoiceTap(context, invoice),

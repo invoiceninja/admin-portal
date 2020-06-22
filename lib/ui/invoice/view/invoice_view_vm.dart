@@ -179,7 +179,6 @@ class InvoiceViewVM extends EntityViewVM {
       onUploadDocument: (BuildContext context, String path) {
         final Completer<DocumentEntity> completer = Completer<DocumentEntity>();
         final document = DocumentEntity().rebuild((b) => b
-          ..invoiceId = invoice.id
           ..path = path);
         store.dispatch(
             SaveDocumentRequest(document: document, completer: completer));
@@ -203,10 +202,12 @@ class InvoiceViewVM extends EntityViewVM {
             [document.id]));
       },
       onViewExpense: (BuildContext context, DocumentEntity document) {
+        /*
         viewEntityById(
             context: context,
             entityId: document.expenseId,
             entityType: EntityType.expense);
+         */
       },
     );
   }

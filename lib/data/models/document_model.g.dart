@@ -149,54 +149,6 @@ class _$DocumentEntitySerializer
       'id',
       serializers.serialize(object.id, specifiedType: const FullType(String)),
     ];
-    if (object.invoiceId != null) {
-      result
-        ..add('invoice_id')
-        ..add(serializers.serialize(object.invoiceId,
-            specifiedType: const FullType(String)));
-    }
-    if (object.expenseId != null) {
-      result
-        ..add('expense_id')
-        ..add(serializers.serialize(object.expenseId,
-            specifiedType: const FullType(String)));
-    }
-    if (object.customValue1 != null) {
-      result
-        ..add('custom_value1')
-        ..add(serializers.serialize(object.customValue1,
-            specifiedType: const FullType(String)));
-    }
-    if (object.customValue2 != null) {
-      result
-        ..add('custom_value2')
-        ..add(serializers.serialize(object.customValue2,
-            specifiedType: const FullType(String)));
-    }
-    if (object.customValue3 != null) {
-      result
-        ..add('custom_value3')
-        ..add(serializers.serialize(object.customValue3,
-            specifiedType: const FullType(String)));
-    }
-    if (object.customValue4 != null) {
-      result
-        ..add('custom_value4')
-        ..add(serializers.serialize(object.customValue4,
-            specifiedType: const FullType(String)));
-    }
-    if (object.projectId != null) {
-      result
-        ..add('project_id')
-        ..add(serializers.serialize(object.projectId,
-            specifiedType: const FullType(String)));
-    }
-    if (object.vendorId != null) {
-      result
-        ..add('vendor_id')
-        ..add(serializers.serialize(object.vendorId,
-            specifiedType: const FullType(String)));
-    }
     if (object.isChanged != null) {
       result
         ..add('isChanged')
@@ -264,41 +216,9 @@ class _$DocumentEntitySerializer
           result.preview = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String;
           break;
-        case 'invoice_id':
-          result.invoiceId = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String;
-          break;
-        case 'expense_id':
-          result.expenseId = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String;
-          break;
         case 'is_default':
           result.isDefault = serializers.deserialize(value,
               specifiedType: const FullType(bool)) as bool;
-          break;
-        case 'custom_value1':
-          result.customValue1 = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String;
-          break;
-        case 'custom_value2':
-          result.customValue2 = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String;
-          break;
-        case 'custom_value3':
-          result.customValue3 = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String;
-          break;
-        case 'custom_value4':
-          result.customValue4 = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String;
-          break;
-        case 'project_id':
-          result.projectId = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String;
-          break;
-        case 'vendor_id':
-          result.vendorId = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String;
           break;
         case 'isChanged':
           result.isChanged = serializers.deserialize(value,
@@ -547,23 +467,7 @@ class _$DocumentEntity extends DocumentEntity {
   @override
   final String preview;
   @override
-  final String invoiceId;
-  @override
-  final String expenseId;
-  @override
   final bool isDefault;
-  @override
-  final String customValue1;
-  @override
-  final String customValue2;
-  @override
-  final String customValue3;
-  @override
-  final String customValue4;
-  @override
-  final String projectId;
-  @override
-  final String vendorId;
   @override
   final bool isChanged;
   @override
@@ -592,15 +496,7 @@ class _$DocumentEntity extends DocumentEntity {
       this.height,
       this.size,
       this.preview,
-      this.invoiceId,
-      this.expenseId,
       this.isDefault,
-      this.customValue1,
-      this.customValue2,
-      this.customValue3,
-      this.customValue4,
-      this.projectId,
-      this.vendorId,
       this.isChanged,
       this.createdAt,
       this.updatedAt,
@@ -667,15 +563,7 @@ class _$DocumentEntity extends DocumentEntity {
         height == other.height &&
         size == other.size &&
         preview == other.preview &&
-        invoiceId == other.invoiceId &&
-        expenseId == other.expenseId &&
         isDefault == other.isDefault &&
-        customValue1 == other.customValue1 &&
-        customValue2 == other.customValue2 &&
-        customValue3 == other.customValue3 &&
-        customValue4 == other.customValue4 &&
-        projectId == other.projectId &&
-        vendorId == other.vendorId &&
         isChanged == other.isChanged &&
         createdAt == other.createdAt &&
         updatedAt == other.updatedAt &&
@@ -704,21 +592,15 @@ class _$DocumentEntity extends DocumentEntity {
                                                     $jc(
                                                         $jc(
                                                             $jc(
-                                                                $jc(
-                                                                    $jc(
-                                                                        $jc(
-                                                                            $jc($jc($jc($jc($jc($jc(0, name.hashCode), type.hashCode), path.hashCode), width.hashCode), height.hashCode),
-                                                                                size.hashCode),
-                                                                            preview.hashCode),
-                                                                        invoiceId.hashCode),
-                                                                    expenseId.hashCode),
-                                                                isDefault.hashCode),
-                                                            customValue1.hashCode),
-                                                        customValue2.hashCode),
-                                                    customValue3.hashCode),
-                                                customValue4.hashCode),
-                                            projectId.hashCode),
-                                        vendorId.hashCode),
+                                                                $jc(0,
+                                                                    name.hashCode),
+                                                                type.hashCode),
+                                                            path.hashCode),
+                                                        width.hashCode),
+                                                    height.hashCode),
+                                                size.hashCode),
+                                            preview.hashCode),
+                                        isDefault.hashCode),
                                     isChanged.hashCode),
                                 createdAt.hashCode),
                             updatedAt.hashCode),
@@ -739,15 +621,7 @@ class _$DocumentEntity extends DocumentEntity {
           ..add('height', height)
           ..add('size', size)
           ..add('preview', preview)
-          ..add('invoiceId', invoiceId)
-          ..add('expenseId', expenseId)
           ..add('isDefault', isDefault)
-          ..add('customValue1', customValue1)
-          ..add('customValue2', customValue2)
-          ..add('customValue3', customValue3)
-          ..add('customValue4', customValue4)
-          ..add('projectId', projectId)
-          ..add('vendorId', vendorId)
           ..add('isChanged', isChanged)
           ..add('createdAt', createdAt)
           ..add('updatedAt', updatedAt)
@@ -792,41 +666,9 @@ class DocumentEntityBuilder
   String get preview => _$this._preview;
   set preview(String preview) => _$this._preview = preview;
 
-  String _invoiceId;
-  String get invoiceId => _$this._invoiceId;
-  set invoiceId(String invoiceId) => _$this._invoiceId = invoiceId;
-
-  String _expenseId;
-  String get expenseId => _$this._expenseId;
-  set expenseId(String expenseId) => _$this._expenseId = expenseId;
-
   bool _isDefault;
   bool get isDefault => _$this._isDefault;
   set isDefault(bool isDefault) => _$this._isDefault = isDefault;
-
-  String _customValue1;
-  String get customValue1 => _$this._customValue1;
-  set customValue1(String customValue1) => _$this._customValue1 = customValue1;
-
-  String _customValue2;
-  String get customValue2 => _$this._customValue2;
-  set customValue2(String customValue2) => _$this._customValue2 = customValue2;
-
-  String _customValue3;
-  String get customValue3 => _$this._customValue3;
-  set customValue3(String customValue3) => _$this._customValue3 = customValue3;
-
-  String _customValue4;
-  String get customValue4 => _$this._customValue4;
-  set customValue4(String customValue4) => _$this._customValue4 = customValue4;
-
-  String _projectId;
-  String get projectId => _$this._projectId;
-  set projectId(String projectId) => _$this._projectId = projectId;
-
-  String _vendorId;
-  String get vendorId => _$this._vendorId;
-  set vendorId(String vendorId) => _$this._vendorId = vendorId;
 
   bool _isChanged;
   bool get isChanged => _$this._isChanged;
@@ -873,15 +715,7 @@ class DocumentEntityBuilder
       _height = _$v.height;
       _size = _$v.size;
       _preview = _$v.preview;
-      _invoiceId = _$v.invoiceId;
-      _expenseId = _$v.expenseId;
       _isDefault = _$v.isDefault;
-      _customValue1 = _$v.customValue1;
-      _customValue2 = _$v.customValue2;
-      _customValue3 = _$v.customValue3;
-      _customValue4 = _$v.customValue4;
-      _projectId = _$v.projectId;
-      _vendorId = _$v.vendorId;
       _isChanged = _$v.isChanged;
       _createdAt = _$v.createdAt;
       _updatedAt = _$v.updatedAt;
@@ -919,15 +753,7 @@ class DocumentEntityBuilder
             height: height,
             size: size,
             preview: preview,
-            invoiceId: invoiceId,
-            expenseId: expenseId,
             isDefault: isDefault,
-            customValue1: customValue1,
-            customValue2: customValue2,
-            customValue3: customValue3,
-            customValue4: customValue4,
-            projectId: projectId,
-            vendorId: vendorId,
             isChanged: isChanged,
             createdAt: createdAt,
             updatedAt: updatedAt,

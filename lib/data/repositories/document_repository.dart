@@ -60,12 +60,6 @@ class DocumentRepository {
 
     if (document.isNew) {
       final fields = <String, String>{};
-      if (document.expenseId != null && document.expenseId.isNotEmpty) {
-        fields['expense_id'] = '${document.expenseId}';
-      } else {
-        fields['invoice_id'] = '${document.invoiceId}';
-      }
-
       response = await webClient.post(
           '${credentials.url}/documents', credentials.token,
           data: fields, filePath: document.path);

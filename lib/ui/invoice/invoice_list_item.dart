@@ -21,7 +21,6 @@ class InvoiceListItem extends StatelessWidget {
     @required this.invoice,
     @required this.client,
     @required this.filter,
-    @required this.hasDocuments,
     this.onCheckboxChanged,
     this.isChecked = false,
   });
@@ -33,7 +32,6 @@ class InvoiceListItem extends StatelessWidget {
   final InvoiceEntity invoice;
   final ClientEntity client;
   final String filter;
-  final bool hasDocuments;
   final Function(bool) onCheckboxChanged;
   final bool isChecked;
 
@@ -67,9 +65,6 @@ class InvoiceListItem extends StatelessWidget {
         subtitle += ' • ';
       }
       subtitle += formatDate(invoice.dueDate, context);
-    }
-    if (hasDocuments) {
-      subtitle += '  📎';
     }
 
     return DismissibleEntity(
@@ -147,7 +142,12 @@ class InvoiceListItem extends StatelessWidget {
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: <Widget>[
-                              Text(client.displayName, style: textStyle),
+                              Text(
+                                  client.displayName +
+                                      (invoice.documents.isNotEmpty
+                                          ? '  📎'
+                                          : ''),
+                                  style: textStyle),
                               Text(
                                 filterMatch ?? subtitle,
                                 maxLines: 3,
@@ -234,7 +234,9 @@ class InvoiceListItem extends StatelessWidget {
                                                     ? invoice.dueDate
                                                     : invoice.date,
                                                 context) +
-                                            (hasDocuments ? '  📎' : ''))
+                                            (invoice.documents.isNotEmpty
+                                                ? '  📎'
+                                                : ''))
                                         .trim(),
                                     style: TextStyle(
                                       color: textColor.withOpacity(0.65),

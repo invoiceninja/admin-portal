@@ -1,7 +1,6 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:invoiceninja_flutter/redux/document/document_selectors.dart';
 import 'package:invoiceninja_flutter/ui/app/view_scaffold.dart';
 import 'package:invoiceninja_flutter/ui/expense/view/expense_view_details.dart';
 import 'package:invoiceninja_flutter/ui/expense/view/expense_view_documents.dart';
@@ -45,9 +44,6 @@ class _ExpenseViewState extends State<ExpenseView>
     final viewModel = widget.viewModel;
     final company = viewModel.state.company;
     final expense = viewModel.expense;
-    final documentState = viewModel.state.documentState;
-    final documents =
-        memoizedExpenseDocumentsSelector(documentState.map, viewModel.expense);
 
     return ViewScaffold(
       isFilter: widget.isFilter,
@@ -62,9 +58,9 @@ class _ExpenseViewState extends State<ExpenseView>
             text: localization.details,
           ),
           Tab(
-            text: documents.isEmpty
+            text: expense.documents.isEmpty
                 ? localization.documents
-                : '${localization.documents} (${documents.length})',
+                : '${localization.documents} (${expense.documents.length})',
           ),
         ],
       ),

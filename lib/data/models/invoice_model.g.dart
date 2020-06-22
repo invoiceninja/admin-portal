@@ -231,6 +231,10 @@ class _$InvoiceEntitySerializer implements StructuredSerializer<InvoiceEntity> {
       serializers.serialize(object.invitations,
           specifiedType: const FullType(
               BuiltList, const [const FullType(InvitationEntity)])),
+      'documents',
+      serializers.serialize(object.documents,
+          specifiedType: const FullType(
+              BuiltList, const [const FullType(DocumentEntity)])),
       'created_at',
       serializers.serialize(object.createdAt,
           specifiedType: const FullType(int)),
@@ -504,6 +508,12 @@ class _$InvoiceEntitySerializer implements StructuredSerializer<InvoiceEntity> {
           result.invitations.replace(serializers.deserialize(value,
                   specifiedType: const FullType(
                       BuiltList, const [const FullType(InvitationEntity)]))
+              as BuiltList<Object>);
+          break;
+        case 'documents':
+          result.documents.replace(serializers.deserialize(value,
+                  specifiedType: const FullType(
+                      BuiltList, const [const FullType(DocumentEntity)]))
               as BuiltList<Object>);
           break;
         case 'isChanged':
@@ -1150,6 +1160,8 @@ class _$InvoiceEntity extends InvoiceEntity {
   @override
   final BuiltList<InvitationEntity> invitations;
   @override
+  final BuiltList<DocumentEntity> documents;
+  @override
   final bool isChanged;
   @override
   final int createdAt;
@@ -1215,6 +1227,7 @@ class _$InvoiceEntity extends InvoiceEntity {
       this.filename,
       this.lineItems,
       this.invitations,
+      this.documents,
       this.isChanged,
       this.createdAt,
       this.updatedAt,
@@ -1333,6 +1346,9 @@ class _$InvoiceEntity extends InvoiceEntity {
     if (invitations == null) {
       throw new BuiltValueNullFieldError('InvoiceEntity', 'invitations');
     }
+    if (documents == null) {
+      throw new BuiltValueNullFieldError('InvoiceEntity', 'documents');
+    }
     if (createdAt == null) {
       throw new BuiltValueNullFieldError('InvoiceEntity', 'createdAt');
     }
@@ -1401,6 +1417,7 @@ class _$InvoiceEntity extends InvoiceEntity {
         filename == other.filename &&
         lineItems == other.lineItems &&
         invitations == other.invitations &&
+        documents == other.documents &&
         isChanged == other.isChanged &&
         createdAt == other.createdAt &&
         updatedAt == other.updatedAt &&
@@ -1433,17 +1450,17 @@ class _$InvoiceEntity extends InvoiceEntity {
                                                                 $jc(
                                                                     $jc(
                                                                         $jc(
-                                                                            $jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc(0, amount.hashCode), balance.hashCode), clientId.hashCode), statusId.hashCode), number.hashCode), discount.hashCode), poNumber.hashCode), date.hashCode), dueDate.hashCode), publicNotes.hashCode), privateNotes.hashCode), terms.hashCode), footer.hashCode), designId.hashCode), usesInclusiveTaxes.hashCode), taxName1.hashCode), taxRate1.hashCode), taxName2.hashCode), taxRate2.hashCode), taxName3.hashCode), taxRate3.hashCode), isAmountDiscount.hashCode), partial.hashCode), partialDueDate.hashCode), hasTasks.hashCode), autoBill.hashCode), customValue1.hashCode), customValue2.hashCode), customValue3.hashCode), customValue4.hashCode), customSurcharge1.hashCode), customSurcharge2.hashCode), customSurcharge3.hashCode),
-                                                                                customSurcharge4.hashCode),
-                                                                            customTaxes1.hashCode),
-                                                                        customTaxes2.hashCode),
-                                                                    customTaxes3.hashCode),
-                                                                customTaxes4.hashCode),
-                                                            hasExpenses.hashCode),
-                                                        invoiceId.hashCode),
-                                                    filename.hashCode),
-                                                lineItems.hashCode),
-                                            invitations.hashCode),
+                                                                            $jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc(0, amount.hashCode), balance.hashCode), clientId.hashCode), statusId.hashCode), number.hashCode), discount.hashCode), poNumber.hashCode), date.hashCode), dueDate.hashCode), publicNotes.hashCode), privateNotes.hashCode), terms.hashCode), footer.hashCode), designId.hashCode), usesInclusiveTaxes.hashCode), taxName1.hashCode), taxRate1.hashCode), taxName2.hashCode), taxRate2.hashCode), taxName3.hashCode), taxRate3.hashCode), isAmountDiscount.hashCode), partial.hashCode), partialDueDate.hashCode), hasTasks.hashCode), autoBill.hashCode), customValue1.hashCode), customValue2.hashCode), customValue3.hashCode), customValue4.hashCode), customSurcharge1.hashCode), customSurcharge2.hashCode), customSurcharge3.hashCode), customSurcharge4.hashCode),
+                                                                                customTaxes1.hashCode),
+                                                                            customTaxes2.hashCode),
+                                                                        customTaxes3.hashCode),
+                                                                    customTaxes4.hashCode),
+                                                                hasExpenses.hashCode),
+                                                            invoiceId.hashCode),
+                                                        filename.hashCode),
+                                                    lineItems.hashCode),
+                                                invitations.hashCode),
+                                            documents.hashCode),
                                         isChanged.hashCode),
                                     createdAt.hashCode),
                                 updatedAt.hashCode),
@@ -1501,6 +1518,7 @@ class _$InvoiceEntity extends InvoiceEntity {
           ..add('filename', filename)
           ..add('lineItems', lineItems)
           ..add('invitations', invitations)
+          ..add('documents', documents)
           ..add('isChanged', isChanged)
           ..add('createdAt', createdAt)
           ..add('updatedAt', updatedAt)
@@ -1701,6 +1719,12 @@ class InvoiceEntityBuilder
   set invitations(ListBuilder<InvitationEntity> invitations) =>
       _$this._invitations = invitations;
 
+  ListBuilder<DocumentEntity> _documents;
+  ListBuilder<DocumentEntity> get documents =>
+      _$this._documents ??= new ListBuilder<DocumentEntity>();
+  set documents(ListBuilder<DocumentEntity> documents) =>
+      _$this._documents = documents;
+
   bool _isChanged;
   bool get isChanged => _$this._isChanged;
   set isChanged(bool isChanged) => _$this._isChanged = isChanged;
@@ -1786,6 +1810,7 @@ class InvoiceEntityBuilder
       _filename = _$v.filename;
       _lineItems = _$v.lineItems?.toBuilder();
       _invitations = _$v.invitations?.toBuilder();
+      _documents = _$v.documents?.toBuilder();
       _isChanged = _$v.isChanged;
       _createdAt = _$v.createdAt;
       _updatedAt = _$v.updatedAt;
@@ -1862,6 +1887,7 @@ class InvoiceEntityBuilder
               filename: filename,
               lineItems: lineItems.build(),
               invitations: invitations.build(),
+              documents: documents.build(),
               isChanged: isChanged,
               createdAt: createdAt,
               updatedAt: updatedAt,
@@ -1878,6 +1904,8 @@ class InvoiceEntityBuilder
         lineItems.build();
         _$failedField = 'invitations';
         invitations.build();
+        _$failedField = 'documents';
+        documents.build();
       } catch (e) {
         throw new BuiltValueNestedFieldError(
             'InvoiceEntity', _$failedField, e.toString());

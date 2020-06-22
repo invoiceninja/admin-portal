@@ -188,6 +188,10 @@ class _$ExpenseEntitySerializer implements StructuredSerializer<ExpenseEntity> {
       'custom_value2',
       serializers.serialize(object.customValue2,
           specifiedType: const FullType(String)),
+      'documents',
+      serializers.serialize(object.documents,
+          specifiedType: const FullType(
+              BuiltList, const [const FullType(DocumentEntity)])),
       'created_at',
       serializers.serialize(object.createdAt,
           specifiedType: const FullType(int)),
@@ -386,6 +390,12 @@ class _$ExpenseEntitySerializer implements StructuredSerializer<ExpenseEntity> {
         case 'custom_value4':
           result.customValue4 = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String;
+          break;
+        case 'documents':
+          result.documents.replace(serializers.deserialize(value,
+                  specifiedType: const FullType(
+                      BuiltList, const [const FullType(DocumentEntity)]))
+              as BuiltList<Object>);
           break;
         case 'isChanged':
           result.isChanged = serializers.deserialize(value,
@@ -847,6 +857,8 @@ class _$ExpenseEntity extends ExpenseEntity {
   @override
   final String customValue4;
   @override
+  final BuiltList<DocumentEntity> documents;
+  @override
   final bool isChanged;
   @override
   final int createdAt;
@@ -895,6 +907,7 @@ class _$ExpenseEntity extends ExpenseEntity {
       this.customValue2,
       this.customValue3,
       this.customValue4,
+      this.documents,
       this.isChanged,
       this.createdAt,
       this.updatedAt,
@@ -971,6 +984,9 @@ class _$ExpenseEntity extends ExpenseEntity {
     if (customValue2 == null) {
       throw new BuiltValueNullFieldError('ExpenseEntity', 'customValue2');
     }
+    if (documents == null) {
+      throw new BuiltValueNullFieldError('ExpenseEntity', 'documents');
+    }
     if (createdAt == null) {
       throw new BuiltValueNullFieldError('ExpenseEntity', 'createdAt');
     }
@@ -1024,6 +1040,7 @@ class _$ExpenseEntity extends ExpenseEntity {
         customValue2 == other.customValue2 &&
         customValue3 == other.customValue3 &&
         customValue4 == other.customValue4 &&
+        documents == other.documents &&
         isChanged == other.isChanged &&
         createdAt == other.createdAt &&
         updatedAt == other.updatedAt &&
@@ -1055,18 +1072,18 @@ class _$ExpenseEntity extends ExpenseEntity {
                                                                 $jc(
                                                                     $jc(
                                                                         $jc(
-                                                                            $jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc(0, privateNotes.hashCode), publicNotes.hashCode), shouldBeInvoiced.hashCode), invoiceDocuments.hashCode), transactionId.hashCode), transactionReference.hashCode), bankId.hashCode), expenseCurrencyId.hashCode), categoryId.hashCode), amount.hashCode), expenseDate.hashCode), paymentDate.hashCode), exchangeRate.hashCode), invoiceCurrencyId.hashCode), paymentTypeId.hashCode), taxName1.hashCode), taxName2.hashCode),
-                                                                                taxRate1.hashCode),
-                                                                            taxRate2.hashCode),
-                                                                        taxName3.hashCode),
-                                                                    taxRate3.hashCode),
-                                                                clientId.hashCode),
-                                                            invoiceId.hashCode),
-                                                        vendorId.hashCode),
-                                                    customValue1.hashCode),
-                                                customValue2.hashCode),
-                                            customValue3.hashCode),
-                                        customValue4.hashCode),
+                                                                            $jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc(0, privateNotes.hashCode), publicNotes.hashCode), shouldBeInvoiced.hashCode), invoiceDocuments.hashCode), transactionId.hashCode), transactionReference.hashCode), bankId.hashCode), expenseCurrencyId.hashCode), categoryId.hashCode), amount.hashCode), expenseDate.hashCode), paymentDate.hashCode), exchangeRate.hashCode), invoiceCurrencyId.hashCode), paymentTypeId.hashCode), taxName1.hashCode), taxName2.hashCode), taxRate1.hashCode),
+                                                                                taxRate2.hashCode),
+                                                                            taxName3.hashCode),
+                                                                        taxRate3.hashCode),
+                                                                    clientId.hashCode),
+                                                                invoiceId.hashCode),
+                                                            vendorId.hashCode),
+                                                        customValue1.hashCode),
+                                                    customValue2.hashCode),
+                                                customValue3.hashCode),
+                                            customValue4.hashCode),
+                                        documents.hashCode),
                                     isChanged.hashCode),
                                 createdAt.hashCode),
                             updatedAt.hashCode),
@@ -1108,6 +1125,7 @@ class _$ExpenseEntity extends ExpenseEntity {
           ..add('customValue2', customValue2)
           ..add('customValue3', customValue3)
           ..add('customValue4', customValue4)
+          ..add('documents', documents)
           ..add('isChanged', isChanged)
           ..add('createdAt', createdAt)
           ..add('updatedAt', updatedAt)
@@ -1243,6 +1261,12 @@ class ExpenseEntityBuilder
   String get customValue4 => _$this._customValue4;
   set customValue4(String customValue4) => _$this._customValue4 = customValue4;
 
+  ListBuilder<DocumentEntity> _documents;
+  ListBuilder<DocumentEntity> get documents =>
+      _$this._documents ??= new ListBuilder<DocumentEntity>();
+  set documents(ListBuilder<DocumentEntity> documents) =>
+      _$this._documents = documents;
+
   bool _isChanged;
   bool get isChanged => _$this._isChanged;
   set isChanged(bool isChanged) => _$this._isChanged = isChanged;
@@ -1309,6 +1333,7 @@ class ExpenseEntityBuilder
       _customValue2 = _$v.customValue2;
       _customValue3 = _$v.customValue3;
       _customValue4 = _$v.customValue4;
+      _documents = _$v.documents?.toBuilder();
       _isChanged = _$v.isChanged;
       _createdAt = _$v.createdAt;
       _updatedAt = _$v.updatedAt;
@@ -1337,44 +1362,58 @@ class ExpenseEntityBuilder
 
   @override
   _$ExpenseEntity build() {
-    final _$result = _$v ??
-        new _$ExpenseEntity._(
-            privateNotes: privateNotes,
-            publicNotes: publicNotes,
-            shouldBeInvoiced: shouldBeInvoiced,
-            invoiceDocuments: invoiceDocuments,
-            transactionId: transactionId,
-            transactionReference: transactionReference,
-            bankId: bankId,
-            expenseCurrencyId: expenseCurrencyId,
-            categoryId: categoryId,
-            amount: amount,
-            expenseDate: expenseDate,
-            paymentDate: paymentDate,
-            exchangeRate: exchangeRate,
-            invoiceCurrencyId: invoiceCurrencyId,
-            paymentTypeId: paymentTypeId,
-            taxName1: taxName1,
-            taxName2: taxName2,
-            taxRate1: taxRate1,
-            taxRate2: taxRate2,
-            taxName3: taxName3,
-            taxRate3: taxRate3,
-            clientId: clientId,
-            invoiceId: invoiceId,
-            vendorId: vendorId,
-            customValue1: customValue1,
-            customValue2: customValue2,
-            customValue3: customValue3,
-            customValue4: customValue4,
-            isChanged: isChanged,
-            createdAt: createdAt,
-            updatedAt: updatedAt,
-            archivedAt: archivedAt,
-            isDeleted: isDeleted,
-            createdUserId: createdUserId,
-            assignedUserId: assignedUserId,
-            id: id);
+    _$ExpenseEntity _$result;
+    try {
+      _$result = _$v ??
+          new _$ExpenseEntity._(
+              privateNotes: privateNotes,
+              publicNotes: publicNotes,
+              shouldBeInvoiced: shouldBeInvoiced,
+              invoiceDocuments: invoiceDocuments,
+              transactionId: transactionId,
+              transactionReference: transactionReference,
+              bankId: bankId,
+              expenseCurrencyId: expenseCurrencyId,
+              categoryId: categoryId,
+              amount: amount,
+              expenseDate: expenseDate,
+              paymentDate: paymentDate,
+              exchangeRate: exchangeRate,
+              invoiceCurrencyId: invoiceCurrencyId,
+              paymentTypeId: paymentTypeId,
+              taxName1: taxName1,
+              taxName2: taxName2,
+              taxRate1: taxRate1,
+              taxRate2: taxRate2,
+              taxName3: taxName3,
+              taxRate3: taxRate3,
+              clientId: clientId,
+              invoiceId: invoiceId,
+              vendorId: vendorId,
+              customValue1: customValue1,
+              customValue2: customValue2,
+              customValue3: customValue3,
+              customValue4: customValue4,
+              documents: documents.build(),
+              isChanged: isChanged,
+              createdAt: createdAt,
+              updatedAt: updatedAt,
+              archivedAt: archivedAt,
+              isDeleted: isDeleted,
+              createdUserId: createdUserId,
+              assignedUserId: assignedUserId,
+              id: id);
+    } catch (_) {
+      String _$failedField;
+      try {
+        _$failedField = 'documents';
+        documents.build();
+      } catch (e) {
+        throw new BuiltValueNestedFieldError(
+            'ExpenseEntity', _$failedField, e.toString());
+      }
+      rethrow;
+    }
     replace(_$result);
     return _$result;
   }

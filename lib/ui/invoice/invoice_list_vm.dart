@@ -7,7 +7,6 @@ import 'package:flutter_redux/flutter_redux.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
-import 'package:invoiceninja_flutter/redux/document/document_selectors.dart';
 import 'package:invoiceninja_flutter/redux/invoice/invoice_actions.dart';
 import 'package:invoiceninja_flutter/redux/invoice/invoice_selectors.dart';
 import 'package:invoiceninja_flutter/redux/ui/list_ui_state.dart';
@@ -30,9 +29,6 @@ class InvoiceListBuilder extends StatelessWidget {
       converter: InvoiceListVM.fromStore,
       builder: (context, viewModel) {
         final state = viewModel.state;
-        final documentMap = memoizedEntityDocumentMap(EntityType.invoice,
-            state.documentState.map, state.expenseState.map);
-
         return EntityList(
             isLoaded: viewModel.isLoaded,
             entityType: EntityType.invoice,
@@ -62,7 +58,6 @@ class InvoiceListBuilder extends StatelessWidget {
               return InvoiceListItem(
                 user: viewModel.user,
                 filter: viewModel.filter,
-                hasDocuments: documentMap[invoice.id] == true,
                 invoice: invoice,
                 client: viewModel.clientMap[invoice.clientId] ?? ClientEntity(),
                 onTap: () => viewModel.onInvoiceTap(context, invoice),

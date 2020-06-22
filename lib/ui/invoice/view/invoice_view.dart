@@ -45,8 +45,12 @@ class _InvoiceViewState extends State<InvoiceView>
     final invoice = viewModel.invoice;
     final localization = AppLocalization.of(context);
     final documentState = viewModel.state.documentState;
+    /*
     final documents = memoizedInvoiceDocumentsSelector(
         documentState.map, viewModel.state.expenseState.map, invoice);
+    */
+    final documents = invoice.documents;
+
 
     EntityAction secondAction;
     if (invoice.isCredit) {

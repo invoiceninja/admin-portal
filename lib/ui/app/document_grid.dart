@@ -14,13 +14,13 @@ import 'package:invoiceninja_flutter/utils/localization.dart';
 
 class DocumentGrid extends StatelessWidget {
   const DocumentGrid({
-    @required this.documentIds,
+    @required this.documents,
     @required this.onUploadDocument,
     @required this.onDeleteDocument,
     @required this.onViewExpense,
   });
 
-  final List<String> documentIds;
+  final List<DocumentEntity> documents;
   final Function(String) onUploadDocument;
   final Function(DocumentEntity) onDeleteDocument;
   final Function(DocumentEntity) onViewExpense;
@@ -85,13 +85,12 @@ class DocumentGrid extends StatelessWidget {
           shrinkWrap: true,
           primary: true,
           crossAxisCount: 2,
-          children: documentIds
-              .map((documentId) => DocumentTile(
-                    document: state.documentState.map[documentId],
+          children: documents
+              .map((document) => DocumentTile(
+                    document: document,
                     onDeleteDocument: onDeleteDocument,
                     onViewExpense: onViewExpense,
-                    isFromExpense: onViewExpense != null &&
-                        state.documentState.map[documentId].isExpenseDocument,
+                    isFromExpense: onViewExpense != null,
                   ))
               .toList(),
         ),

@@ -131,7 +131,6 @@ class CreditViewVM extends EntityViewVM {
       onUploadDocument: (BuildContext context, String path) {
         final Completer<DocumentEntity> completer = Completer<DocumentEntity>();
         final document = DocumentEntity().rebuild((b) => b
-          ..invoiceId = credit.id
           ..path = path);
         store.dispatch(
             SaveDocumentRequest(document: document, completer: completer));

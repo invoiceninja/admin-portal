@@ -116,7 +116,6 @@ class ExpenseViewVM {
           final Completer<DocumentEntity> completer =
               Completer<DocumentEntity>();
           final document = DocumentEntity().rebuild((b) => b
-            ..expenseId = expense.id
             ..path = path);
           store.dispatch(
               SaveDocumentRequest(document: document, completer: completer));

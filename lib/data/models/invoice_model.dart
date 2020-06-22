@@ -130,6 +130,7 @@ abstract class InvoiceEntity extends Object
       filename: '',
       lineItems: BuiltList<InvoiceItemEntity>(),
       usesInclusiveTaxes: company?.settings?.enableInclusiveTaxes ?? false,
+      documents: BuiltList<DocumentEntity>(),
       invitations: client == null
           ? BuiltList<InvitationEntity>()
           : BuiltList(client.contacts
@@ -326,6 +327,8 @@ abstract class InvoiceEntity extends Object
   BuiltList<InvoiceItemEntity> get lineItems;
 
   BuiltList<InvitationEntity> get invitations;
+
+  BuiltList<DocumentEntity> get documents;
 
   bool get isApproved => statusId == kQuoteStatusApproved;
 

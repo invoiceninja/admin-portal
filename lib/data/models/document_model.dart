@@ -68,17 +68,9 @@ abstract class DocumentEntity extends Object
       width: 0,
       height: 0,
       size: 0,
-      customValue1: '',
-      customValue2: '',
-      customValue3: '',
-      customValue4: '',
       createdUserId: '',
       assignedUserId: '',
       createdAt: 0,
-      vendorId: '',
-      projectId: '',
-      invoiceId: '',
-      expenseId: '',
     );
   }
 
@@ -102,40 +94,8 @@ abstract class DocumentEntity extends Object
 
   String get preview;
 
-  @nullable
-  @BuiltValueField(wireName: 'invoice_id')
-  String get invoiceId;
-
-  @nullable
-  @BuiltValueField(wireName: 'expense_id')
-  String get expenseId;
-
   @BuiltValueField(wireName: 'is_default')
   bool get isDefault;
-
-  @nullable
-  @BuiltValueField(wireName: 'custom_value1')
-  String get customValue1;
-
-  @nullable
-  @BuiltValueField(wireName: 'custom_value2')
-  String get customValue2;
-
-  @nullable
-  @BuiltValueField(wireName: 'custom_value3')
-  String get customValue3;
-
-  @nullable
-  @BuiltValueField(wireName: 'custom_value4')
-  String get customValue4;
-
-  @nullable
-  @BuiltValueField(wireName: 'project_id')
-  String get projectId;
-
-  @nullable
-  @BuiltValueField(wireName: 'vendor_id')
-  String get vendorId;
 
   DocumentEntity get clone => rebuild((b) => b
     ..id = BaseEntity.nextId
@@ -157,10 +117,6 @@ abstract class DocumentEntity extends Object
 
   @override
   FormatNumberType get listDisplayAmountType => FormatNumberType.money;
-
-  bool get isInvoiceDocument => invoiceId != null && invoiceId.isNotEmpty;
-
-  bool get isExpenseDocument => expenseId != null && expenseId.isNotEmpty;
 
   String get prettySize => size > 1000000
       ? '${round(size / 1000000, 1).toInt()} MB'
