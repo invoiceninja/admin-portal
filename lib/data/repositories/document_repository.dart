@@ -54,38 +54,14 @@ class DocumentRepository {
     return documentResponse.data.toList();
   }
 
-  Future<DocumentEntity> saveData(
-      Credentials credentials, DocumentEntity document) async {
-    dynamic response;
+  Future<bool> upload(Credentials credentials, BaseEntity entity,
+      String filePath) async {
+    final fields = <String, String>{};
 
-    if (document.isNew) {
-      final fields = <String, String>{};
-      response = await webClient.post(
-          '${credentials.url}/documents', credentials.token,
-          data: fields, filePath: document.path);
-    } else {
-      final data =
-          serializers.serializeWith(DocumentEntity.serializer, document);
-      final url = '${credentials.url}/documents/${document.id}?';
-      response =
-          await webClient.put(url, credentials.token, data: json.encode(data));
+    await webClient.put(
+        '${credentials.url}/${entity.entityType.plural}/${entity.id}', credentials.token,
+        data: fields, filePath: filePath, fileIndex: 'documents[]');
 
-      /*
-      if (action == EntityAction.delete) {
-        response = await webClient.delete(url, credentials.token);
-      } else {
-        if (action != null) {
-          url += '&action=$action';
-        }
-        response = await webClient.put(url, credentials.token,
-            data: json.encode(data));
-      }
-       */
-    }
-
-    final DocumentItemResponse documentResponse =
-        serializers.deserializeWith(DocumentItemResponse.serializer, response);
-
-    return documentResponse.data;
+    return true;
   }
 }

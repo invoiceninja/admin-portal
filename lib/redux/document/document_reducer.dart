@@ -17,15 +17,14 @@ EntityUIState documentUIReducer(DocumentUIState state, dynamic action) {
 
 Reducer<String> selectedIdReducer = combineReducers([
   TypedReducer<String, ViewDocument>((selectedId, action) => action.documentId),
-  TypedReducer<String, AddDocumentSuccess>(
-      (selectedId, action) => action.document.id),
+  //TypedReducer<String, AddDocumentSuccess>((selectedId, action) => action.document.id),
   TypedReducer<String, SelectCompany>((selectedId, action) => ''),
   TypedReducer<String, ClearEntityFilter>((selectedId, action) => ''),
 ]);
 
 final editingReducer = combineReducers<DocumentEntity>([
   TypedReducer<DocumentEntity, SaveDocumentSuccess>(_updateEditing),
-  TypedReducer<DocumentEntity, AddDocumentSuccess>(_updateEditing),
+  //TypedReducer<DocumentEntity, AddDocumentSuccess>(_updateEditing),
   TypedReducer<DocumentEntity, RestoreDocumentSuccess>(_updateEditing),
   TypedReducer<DocumentEntity, ArchiveDocumentSuccess>(_updateEditing),
   TypedReducer<DocumentEntity, DeleteDocumentSuccess>(_updateEditing),
@@ -142,7 +141,7 @@ ListUIState _clearListMultiselect(
 
 final documentsReducer = combineReducers<DocumentState>([
   TypedReducer<DocumentState, SaveDocumentSuccess>(_updateDocument),
-  TypedReducer<DocumentState, AddDocumentSuccess>(_addDocument),
+  //TypedReducer<DocumentState, AddDocumentSuccess>(_addDocument),
   TypedReducer<DocumentState, LoadDocumentsSuccess>(_setLoadedDocuments),
   TypedReducer<DocumentState, LoadDocumentSuccess>(_setLoadedDocument),
   TypedReducer<DocumentState, ArchiveDocumentRequest>(_archiveDocumentRequest),
@@ -260,12 +259,14 @@ DocumentState _restoreDocumentFailure(
   });
 }
 
+/*
 DocumentState _addDocument(
     DocumentState documentState, AddDocumentSuccess action) {
   return documentState.rebuild((b) => b
     ..map[action.document.id] = action.document
     ..list.add(action.document.id));
 }
+ */
 
 DocumentState _updateDocument(
     DocumentState documentState, SaveDocumentSuccess action) {

@@ -170,14 +170,10 @@ Middleware<AppState> _saveDocument(DocumentRepository repository) {
     final action = dynamicAction as SaveDocumentRequest;
     if (store.state.company.isEnterprisePlan) {
       repository
-          .saveData(store.state.credentials, action.document)
-          .then((DocumentEntity document) {
-        if (action.document.isNew) {
-          store.dispatch(AddDocumentSuccess(document));
-        } else {
-          store.dispatch(SaveDocumentSuccess(document));
-        }
-        action.completer.complete(document);
+          .upload(store.state.credentials, action.entity, action.filePath)
+          .then((_) {
+        store.dispatch(AddDocumentSuccess());
+        action.completer.complete(null);
       }).catchError((Object error) {
         print(error);
         store.dispatch(SaveDocumentFailure(error));

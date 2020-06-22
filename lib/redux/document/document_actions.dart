@@ -113,10 +113,15 @@ class LoadDocumentsSuccess implements StopLoading, PersistData {
 }
 
 class SaveDocumentRequest implements StartSaving {
-  SaveDocumentRequest({this.completer, this.document});
+  SaveDocumentRequest({
+    @required this.completer,
+    @required this.filePath,
+    @required this.entity,
+  });
 
   final Completer completer;
-  final DocumentEntity document;
+  final String filePath;
+  final BaseEntity entity;
 }
 
 class SaveDocumentSuccess implements StopSaving, PersistData, PersistUI {
@@ -125,11 +130,7 @@ class SaveDocumentSuccess implements StopSaving, PersistData, PersistUI {
   final DocumentEntity document;
 }
 
-class AddDocumentSuccess implements StopSaving, PersistData, PersistUI {
-  AddDocumentSuccess(this.document);
-
-  final DocumentEntity document;
-}
+class AddDocumentSuccess implements StopSaving, PersistData, PersistUI {}
 
 class SaveDocumentFailure implements StopSaving {
   SaveDocumentFailure(this.error);

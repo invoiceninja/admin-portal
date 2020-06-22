@@ -155,8 +155,8 @@ class InvoiceViewVM extends EntityViewVM {
         if (longPress || isMobile(context)) {
           viewEntity(context: context, entity: user);
         } else {
-          store.dispatch(FilterByEntity(
-              entityType: EntityType.user, entityId: user.id));
+          store.dispatch(
+              FilterByEntity(entityType: EntityType.user, entityId: user.id));
         }
       },
       onPaymentPressed: (BuildContext context, payment,
@@ -176,12 +176,10 @@ class InvoiceViewVM extends EntityViewVM {
       },
       onEntityAction: (BuildContext context, EntityAction action) =>
           handleInvoiceAction(context, [invoice], action),
-      onUploadDocument: (BuildContext context, String path) {
+      onUploadDocument: (BuildContext context, String filePath) {
         final Completer<DocumentEntity> completer = Completer<DocumentEntity>();
-        final document = DocumentEntity().rebuild((b) => b
-          ..path = path);
-        store.dispatch(
-            SaveDocumentRequest(document: document, completer: completer));
+        store.dispatch(SaveDocumentRequest(
+            filePath: filePath, entity: invoice, completer: completer));
         completer.future.then((client) {
           Scaffold.of(context).showSnackBar(SnackBar(
               content: SnackBarRow(

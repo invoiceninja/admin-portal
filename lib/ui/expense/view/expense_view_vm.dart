@@ -112,13 +112,11 @@ class ExpenseViewVM {
         },
         onEntityAction: (BuildContext context, EntityAction action) =>
             handleExpenseAction(context, [expense], action),
-        onUploadDocument: (BuildContext context, String path) {
+        onUploadDocument: (BuildContext context, String filePath) {
           final Completer<DocumentEntity> completer =
               Completer<DocumentEntity>();
-          final document = DocumentEntity().rebuild((b) => b
-            ..path = path);
           store.dispatch(
-              SaveDocumentRequest(document: document, completer: completer));
+              SaveDocumentRequest(filePath: filePath, entity: expense, completer: completer));
           completer.future.then((client) {
             Scaffold.of(context).showSnackBar(SnackBar(
                 content: SnackBarRow(
