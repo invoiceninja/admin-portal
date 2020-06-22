@@ -521,7 +521,10 @@ abstract class InvoiceEntity extends Object
           actions.add(EntityAction.sendEmail);
         }
 
-        if (!isQuote && userCompany.canCreate(EntityType.payment) && isUnpaid) {
+        if (!isQuote &&
+            userCompany.canCreate(EntityType.payment) &&
+            isUnpaid &&
+            !isCancelledOrReversed) {
           actions.add(EntityAction.newPayment);
         }
 
@@ -529,7 +532,7 @@ abstract class InvoiceEntity extends Object
           actions.add(EntityAction.markSent);
         }
 
-        if (!isQuote && !isPaid) {
+        if (!isQuote && !isPaid && !isCancelledOrReversed) {
           actions.add(EntityAction.markPaid);
         }
 
@@ -560,15 +563,12 @@ abstract class InvoiceEntity extends Object
 
     if (userCompany.canEditEntity(this)) {
       if (!isQuote && !isCredit && isSent) {
-        if (![
-          kInvoiceStatusReversed,
-          kInvoiceStatusCancelled,
-        ].contains(statusId)) {
+        if (!isCancelledOrReversed) {
           actions.add(EntityAction.cancel);
         }
 
         if (userCompany.company.isModuleEnabled(EntityType.credit) &&
-            statusId != kInvoiceStatusReversed) {
+            !isReversed) {
           actions.add(EntityAction.reverse);
         }
       }
@@ -629,12 +629,14 @@ abstract class InvoiceEntity extends Object
 
   bool get isPaid => statusId == kInvoiceStatusPaid;
 
+  bool get isReversed => statusId == kInvoiceStatusReversed;
+
+  bool get isCancelled => statusId == kInvoiceStatusCancelled;
+
+  bool get isCancelledOrReversed => isCancelled || isReversed;
+
   String get calculatedStatusId {
-    if (isPastDue &&
-        ![
-          kInvoiceStatusCancelled,
-          kInvoiceStatusReversed,
-        ].contains(statusId)) {
+    if (isPastDue && !isCancelledOrReversed) {
       return kInvoiceStatusPastDue;
     }
 
