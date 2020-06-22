@@ -560,11 +560,15 @@ abstract class InvoiceEntity extends Object
 
     if (userCompany.canEditEntity(this)) {
       if (!isQuote && !isCredit && isSent) {
-        if (statusId != kInvoiceStatusReversed) {
+        if (![
+          kInvoiceStatusReversed,
+          kInvoiceStatusCancelled,
+        ].contains(statusId)) {
           actions.add(EntityAction.cancel);
         }
 
-        if (userCompany.company.isModuleEnabled(EntityType.credit)) {
+        if (userCompany.company.isModuleEnabled(EntityType.credit) &&
+            statusId != kInvoiceStatusReversed) {
           actions.add(EntityAction.reverse);
         }
       }

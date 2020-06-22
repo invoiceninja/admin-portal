@@ -15,13 +15,6 @@ class LoadStateSuccess {
   final AppState state;
 }
 
-class UserLoginLoaded {
-  UserLoginLoaded(this.email, this.url);
-
-  final String email;
-  final String url;
-}
-
 class OAuthLoginRequest implements StartLoading {
   OAuthLoginRequest({
     @required this.completer,
