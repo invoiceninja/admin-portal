@@ -32,6 +32,7 @@ class DocumentGrid extends StatelessWidget {
     final company = state.company;
 
     return ListView(
+      shrinkWrap: true,
       children: [
         if (company.isEnterprisePlan)
           Padding(
@@ -200,13 +201,13 @@ class DocumentTile extends StatelessWidget {
                     height: 120,
                   ),
                   Padding(
-                    padding: EdgeInsets.all(8),
+                    padding: const EdgeInsets.all(4),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: <Widget>[
                         Text(
                           document.name ?? '',
-                          style: Theme.of(context).textTheme.headline5,
+                          style: Theme.of(context).textTheme.headline6,
                           overflow: TextOverflow.ellipsis,
                         ),
                         Text(

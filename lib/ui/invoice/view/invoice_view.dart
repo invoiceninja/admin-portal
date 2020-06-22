@@ -1,7 +1,6 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
-import 'package:invoiceninja_flutter/redux/document/document_selectors.dart';
 import 'package:invoiceninja_flutter/ui/app/buttons/bottom_buttons.dart';
 import 'package:invoiceninja_flutter/ui/app/view_scaffold.dart';
 import 'package:invoiceninja_flutter/ui/invoice/view/invoice_view_documents.dart';
@@ -44,7 +43,6 @@ class _InvoiceViewState extends State<InvoiceView>
     final viewModel = widget.viewModel;
     final invoice = viewModel.invoice;
     final localization = AppLocalization.of(context);
-    final documentState = viewModel.state.documentState;
     /*
     final documents = memoizedInvoiceDocumentsSelector(
         documentState.map, viewModel.state.expenseState.map, invoice);
