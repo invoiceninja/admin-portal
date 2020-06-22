@@ -370,6 +370,30 @@ class ConvertQuoteFailure implements StopSaving {
   final dynamic error;
 }
 
+class SaveQuoteDocumentRequest implements StartSaving {
+  SaveQuoteDocumentRequest({
+    @required this.completer,
+    @required this.filePath,
+    @required this.quote,
+  });
+
+  final Completer completer;
+  final String filePath;
+  final InvoiceEntity quote;
+}
+
+class SaveQuoteDocumentSuccess implements StopSaving, PersistData, PersistUI {
+  SaveQuoteDocumentSuccess(this.document);
+
+  final DocumentEntity document;
+}
+
+class SaveQuoteDocumentFailure implements StopSaving {
+  SaveQuoteDocumentFailure(this.error);
+
+  final Object error;
+}
+
 Future handleQuoteAction(
     BuildContext context, List<BaseEntity> quotes, EntityAction action) async {
   final store = StoreProvider.of<AppState>(context);

@@ -130,8 +130,8 @@ class CreditViewVM extends EntityViewVM {
           handleCreditAction(context, [credit], action),
       onUploadDocument: (BuildContext context, String filePath) {
         final Completer<DocumentEntity> completer = Completer<DocumentEntity>();
-        store.dispatch(SaveDocumentRequest(
-            filePath: filePath, entity: credit, completer: completer));
+        store.dispatch(SaveCreditDocumentRequest(
+            filePath: filePath, credit: credit, completer: completer));
         completer.future.then((client) {
           Scaffold.of(context).showSnackBar(SnackBar(
               content: SnackBarRow(

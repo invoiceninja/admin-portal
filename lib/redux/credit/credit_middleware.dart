@@ -30,6 +30,7 @@ List<Middleware<AppState>> createStoreCreditsMiddleware([
   final restoreCredit = _restoreCredit(repository);
   final emailCredit = _emailCredit(repository);
   final markSentCredit = _markSentCredit(repository);
+  final saveDocument = _saveDocument(repository);
 
   return [
     TypedMiddleware<AppState, ViewCreditList>(viewCreditList),
@@ -44,6 +45,7 @@ List<Middleware<AppState>> createStoreCreditsMiddleware([
     TypedMiddleware<AppState, RestoreCreditsRequest>(restoreCredit),
     TypedMiddleware<AppState, EmailCreditRequest>(emailCredit),
     TypedMiddleware<AppState, MarkSentCreditRequest>(markSentCredit),
+    TypedMiddleware<AppState, SaveCreditDocumentRequest>(saveDocument),
   ];
 }
 
@@ -351,6 +353,31 @@ Middleware<AppState> _loadCredits(CreditRepository repository) {
         action.completer.completeError(error);
       }
     });
+
+    next(action);
+  };
+}
+
+Middleware<AppState> _saveDocument(CreditRepository repository) {
+  return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
+    final action = dynamicAction as SaveCreditDocumentRequest;
+    if (store.state.company.isEnterprisePlan) {
+      repository
+          .uploadDocument(
+          store.state.credentials, action.credit, action.filePath)
+          .then((credit) {
+        store.dispatch(SaveCreditSuccess(credit));
+        action.completer.complete(null);
+      }).catchError((Object error) {
+        print(error);
+        store.dispatch(SaveCreditDocumentFailure(error));
+        action.completer.completeError(error);
+      });
+    } else {
+      const error = 'Uploading documents requires an enterprise plan';
+      store.dispatch(SaveCreditDocumentFailure(error));
+      action.completer.completeError(error);
+    }
 
     next(action);
   };

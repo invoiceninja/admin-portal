@@ -130,8 +130,8 @@ class QuoteViewVM extends EntityViewVM {
           handleQuoteAction(context, [quote], action),
       onUploadDocument: (BuildContext context, String filePath) {
         final Completer<DocumentEntity> completer = Completer<DocumentEntity>();
-        store.dispatch(SaveDocumentRequest(
-            filePath: filePath, entity: quote, completer: completer));
+        store.dispatch(SaveQuoteDocumentRequest(
+            filePath: filePath, quote: quote, completer: completer));
         completer.future.then((client) {
           Scaffold.of(context).showSnackBar(SnackBar(
               content: SnackBarRow(

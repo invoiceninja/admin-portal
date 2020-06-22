@@ -351,6 +351,30 @@ class FilterCreditsByCustom4 implements PersistUI {
   final String value;
 }
 
+class SaveCreditDocumentRequest implements StartSaving {
+  SaveCreditDocumentRequest({
+    @required this.completer,
+    @required this.filePath,
+    @required this.credit,
+  });
+
+  final Completer completer;
+  final String filePath;
+  final InvoiceEntity credit;
+}
+
+class SaveCreditDocumentSuccess implements StopSaving, PersistData, PersistUI {
+  SaveCreditDocumentSuccess(this.document);
+
+  final DocumentEntity document;
+}
+
+class SaveCreditDocumentFailure implements StopSaving {
+  SaveCreditDocumentFailure(this.error);
+
+  final Object error;
+}
+
 Future handleCreditAction(
     BuildContext context, List<BaseEntity> credits, EntityAction action) async {
   assert(

@@ -31,6 +31,7 @@ List<Middleware<AppState>> createStoreQuotesMiddleware([
   final restoreQuote = _restoreQuote(repository);
   final emailQuote = _emailQuote(repository);
   final markSentQuote = _markSentQuote(repository);
+  final saveDocument = _saveDocument(repository);
 
   return [
     TypedMiddleware<AppState, ViewQuoteList>(viewQuoteList),
@@ -46,6 +47,7 @@ List<Middleware<AppState>> createStoreQuotesMiddleware([
     TypedMiddleware<AppState, RestoreQuotesRequest>(restoreQuote),
     TypedMiddleware<AppState, EmailQuoteRequest>(emailQuote),
     TypedMiddleware<AppState, MarkSentQuotesRequest>(markSentQuote),
+    TypedMiddleware<AppState, SaveQuoteDocumentRequest>(saveDocument),
   ];
 }
 
@@ -368,6 +370,31 @@ Middleware<AppState> _loadQuotes(QuoteRepository repository) {
         action.completer.completeError(error);
       }
     });
+
+    next(action);
+  };
+}
+
+Middleware<AppState> _saveDocument(QuoteRepository repository) {
+  return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
+    final action = dynamicAction as SaveQuoteDocumentRequest;
+    if (store.state.company.isEnterprisePlan) {
+      repository
+          .uploadDocument(
+          store.state.credentials, action.quote, action.filePath)
+          .then((quote) {
+        store.dispatch(SaveQuoteSuccess(quote));
+        action.completer.complete(null);
+      }).catchError((Object error) {
+        print(error);
+        store.dispatch(SaveQuoteDocumentFailure(error));
+        action.completer.completeError(error);
+      });
+    } else {
+      const error = 'Uploading documents requires an enterprise plan';
+      store.dispatch(SaveQuoteDocumentFailure(error));
+      action.completer.completeError(error);
+    }
 
     next(action);
   };

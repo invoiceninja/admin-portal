@@ -90,4 +90,20 @@ class CreditRepository {
         credentials.token,
         data: json.encode(data));
   }
+
+  Future<InvoiceEntity> uploadDocument(
+      Credentials credentials, BaseEntity entity, String filePath) async {
+    final fields = <String, String>{
+      '_method': 'put',
+    };
+
+    final dynamic response = await webClient.post(
+        '${credentials.url}/credits/${entity.id}', credentials.token,
+        data: fields, filePath: filePath, fileIndex: 'documents[]');
+
+    final InvoiceItemResponse invoiceResponse =
+        serializers.deserializeWith(InvoiceItemResponse.serializer, response);
+
+    return invoiceResponse.data;
+  }
 }
