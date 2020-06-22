@@ -218,9 +218,10 @@ class _AppBottomBarState extends State<AppBottomBar> {
               child: Column(
                   mainAxisSize: MainAxisSize.min,
                   children: widget.sortFields.map((sortField) {
+                    final field = sortField;
                     return GestureDetector(
                       onTap: () => widget.onSelectedSortField(sortField),
-                      child: RadioListTile(
+                      child: RadioListTile<String>(
                         dense: true,
                         title:
                             Text(AppLocalization.of(context).lookup(sortField)),
@@ -231,9 +232,16 @@ class _AppBottomBarState extends State<AppBottomBar> {
                             : null,
                         groupValue: listUIState.sortField,
                         activeColor: Theme.of(context).accentColor,
-                        onChanged: (String value) =>
-                            widget.onSelectedSortField(value),
-                        value: sortField,
+                        onChanged: (String value) {
+                          if(value == null && listUIState.sortField == field) {
+                            // Is re-selecting
+                            widget.onSelectedSortField(field);
+                          } else {
+                            widget.onSelectedSortField(value);
+                          }
+                        },
+                        value: field,
+                        toggleable: true,
                       ),
                     );
                   }).toList()),

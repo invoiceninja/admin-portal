@@ -5,6 +5,7 @@ import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/redux/auth/auth_actions.dart';
 import 'package:invoiceninja_flutter/utils/dialogs.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
+import 'package:invoiceninja_flutter/.env.dart';
 
 class ErrorDialog extends StatelessWidget {
   const ErrorDialog(this.error, {this.clearErrorOnDismiss = false});
@@ -21,15 +22,16 @@ class ErrorDialog extends StatelessWidget {
       title: Text(localization.anErrorOccurred),
       content: Text(error.toString()),
       actions: [
-        FlatButton(
-            child: Text(localization.logout.toUpperCase()),
-            onPressed: () {
-              confirmCallback(
-                  context: context,
-                  callback: () {
-                    store.dispatch(UserLogout(context));
-                  });
-            }),
+        if (clearErrorOnDismiss && !Config.DEMO_MODE)
+          FlatButton(
+              child: Text(localization.logout.toUpperCase()),
+              onPressed: () {
+                confirmCallback(
+                    context: context,
+                    callback: () {
+                      store.dispatch(UserLogout(context));
+                    });
+              }),
         FlatButton(
             child: Text(localization.dismiss.toUpperCase()),
             onPressed: () {

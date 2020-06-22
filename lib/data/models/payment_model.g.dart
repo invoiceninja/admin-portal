@@ -182,6 +182,15 @@ class _$PaymentEntitySerializer implements StructuredSerializer<PaymentEntity> {
       serializers.serialize(object.credits,
           specifiedType: const FullType(
               BuiltList, const [const FullType(PaymentableEntity)])),
+      'created_at',
+      serializers.serialize(object.createdAt,
+          specifiedType: const FullType(int)),
+      'updated_at',
+      serializers.serialize(object.updatedAt,
+          specifiedType: const FullType(int)),
+      'archived_at',
+      serializers.serialize(object.archivedAt,
+          specifiedType: const FullType(int)),
       'id',
       serializers.serialize(object.id, specifiedType: const FullType(String)),
     ];
@@ -197,29 +206,17 @@ class _$PaymentEntitySerializer implements StructuredSerializer<PaymentEntity> {
         ..add(serializers.serialize(object.exchangeCurrencyId,
             specifiedType: const FullType(String)));
     }
+    if (object.isForInvoice != null) {
+      result
+        ..add('isForInvoice')
+        ..add(serializers.serialize(object.isForInvoice,
+            specifiedType: const FullType(bool)));
+    }
     if (object.isChanged != null) {
       result
         ..add('isChanged')
         ..add(serializers.serialize(object.isChanged,
             specifiedType: const FullType(bool)));
-    }
-    if (object.createdAt != null) {
-      result
-        ..add('created_at')
-        ..add(serializers.serialize(object.createdAt,
-            specifiedType: const FullType(int)));
-    }
-    if (object.updatedAt != null) {
-      result
-        ..add('updated_at')
-        ..add(serializers.serialize(object.updatedAt,
-            specifiedType: const FullType(int)));
-    }
-    if (object.archivedAt != null) {
-      result
-        ..add('archived_at')
-        ..add(serializers.serialize(object.archivedAt,
-            specifiedType: const FullType(int)));
     }
     if (object.isDeleted != null) {
       result
@@ -329,6 +326,10 @@ class _$PaymentEntitySerializer implements StructuredSerializer<PaymentEntity> {
         case 'vendor_id':
           result.vendorId = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String;
+          break;
+        case 'isForInvoice':
+          result.isForInvoice = serializers.deserialize(value,
+              specifiedType: const FullType(bool)) as bool;
           break;
         case 'paymentables':
           result.paymentables.replace(serializers.deserialize(value,
@@ -825,6 +826,15 @@ class _$PaymentEntity extends PaymentEntity {
     }
     if (credits == null) {
       throw new BuiltValueNullFieldError('PaymentEntity', 'credits');
+    }
+    if (createdAt == null) {
+      throw new BuiltValueNullFieldError('PaymentEntity', 'createdAt');
+    }
+    if (updatedAt == null) {
+      throw new BuiltValueNullFieldError('PaymentEntity', 'updatedAt');
+    }
+    if (archivedAt == null) {
+      throw new BuiltValueNullFieldError('PaymentEntity', 'archivedAt');
     }
     if (id == null) {
       throw new BuiltValueNullFieldError('PaymentEntity', 'id');

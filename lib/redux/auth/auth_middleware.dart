@@ -44,23 +44,10 @@ List<Middleware<AppState>> createStoreAuthMiddleware([
   ];
 }
 
-void _saveAuthLocal(
-    {String email = '', String url = '', String secret = ''}) async {
+void _saveAuthLocal({String email = '', String url = ''}) async {
   final SharedPreferences prefs = await SharedPreferences.getInstance();
-  prefs.setString(kSharedPrefEmail, email ?? '');
+  prefs.setString(kSharedPrefEmail, email);
   prefs.setString(kSharedPrefUrl, formatApiUrl(url));
-}
-
-void _loadAuthLocal(Store<AppState> store) async {
-  final SharedPreferences prefs = await SharedPreferences.getInstance();
-  final String email = kReleaseMode
-      ? (prefs.getString(kSharedPrefEmail) ?? '')
-      : Config.TEST_EMAIL;
-  final String url = formatApiUrl(prefs.getString(kSharedPrefUrl) ?? '');
-
-  if (email.isNotEmpty) {
-    store.dispatch(UserLoginLoaded(email, url));
-  }
 }
 
 Middleware<AppState> _createUserLogout() {
@@ -68,8 +55,6 @@ Middleware<AppState> _createUserLogout() {
     final action = dynamicAction as UserLogout;
 
     next(action);
-
-    _loadAuthLocal(store);
 
     Navigator.of(action.context).pushNamedAndRemoveUntil(
         LoginScreen.route, (Route<dynamic> route) => false);
@@ -93,7 +78,6 @@ Middleware<AppState> _createLoginRequest(AuthRepository repository) {
         .then((data) {
       _saveAuthLocal(
         email: action.email,
-        secret: action.secret,
         url: action.url,
       );
       store.dispatch(
@@ -131,7 +115,7 @@ Middleware<AppState> _createSignUpRequest(AuthRepository repository) {
       password: action.password,
     )
         .then((data) {
-      _saveAuthLocal(email: action.email, secret: '', url: '');
+      _saveAuthLocal(email: action.email, url: kAppProductionUrl);
 
       store.dispatch(
           LoadAccountSuccess(completer: action.completer, loginResponse: data));
@@ -162,7 +146,6 @@ Middleware<AppState> _createOAuthLoginRequest(AuthRepository repository) {
         .then((data) {
       _saveAuthLocal(
         email: action.email,
-        secret: action.secret,
         url: action.url,
       );
 
@@ -191,7 +174,7 @@ Middleware<AppState> _createOAuthSignUpRequest(AuthRepository repository) {
       serverAuthCode: action.serverAuthCode,
     )
         .then((data) {
-      _saveAuthLocal(email: '', secret: '', url: '');
+      _saveAuthLocal(url: kAppProductionUrl);
 
       store.dispatch(
           LoadAccountSuccess(completer: action.completer, loginResponse: data));
@@ -212,14 +195,10 @@ Middleware<AppState> _createRefreshRequest(AuthRepository repository) {
       NextDispatcher next) async {
     final action = dynamicAction as RefreshData;
 
-    _loadAuthLocal(store);
-
-    String url;
-    String token;
-
     final SharedPreferences prefs = await SharedPreferences.getInstance();
-    url = formatApiUrl(prefs.getString(kSharedPrefUrl) ?? Config.TEST_URL);
-    token = prefs.getString(kSharedPrefToken);
+    final url =
+        formatApiUrl(prefs.getString(kSharedPrefUrl) ?? Config.TEST_URL);
+    final token = prefs.getString(kSharedPrefToken);
 
     repository.refresh(url: url, token: token).then((data) {
       store.dispatch(LoadAccountSuccess(

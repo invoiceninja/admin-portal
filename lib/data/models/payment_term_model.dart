@@ -55,8 +55,11 @@ abstract class PaymentTermEntity extends Object
       id: id ?? BaseEntity.nextId,
       isChanged: false,
       isDeleted: false,
+      archivedAt: 0,
       numDays: 0,
       name: '',
+      createdAt: 0,
+      updatedAt: 0,
     );
   }
 

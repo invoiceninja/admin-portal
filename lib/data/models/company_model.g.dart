@@ -194,6 +194,15 @@ class _$CompanyEntitySerializer implements StructuredSerializer<CompanyEntity> {
       'settings',
       serializers.serialize(object.settings,
           specifiedType: const FullType(SettingsEntity)),
+      'created_at',
+      serializers.serialize(object.createdAt,
+          specifiedType: const FullType(int)),
+      'updated_at',
+      serializers.serialize(object.updatedAt,
+          specifiedType: const FullType(int)),
+      'archived_at',
+      serializers.serialize(object.archivedAt,
+          specifiedType: const FullType(int)),
       'id',
       serializers.serialize(object.id, specifiedType: const FullType(String)),
     ];
@@ -220,24 +229,6 @@ class _$CompanyEntitySerializer implements StructuredSerializer<CompanyEntity> {
         ..add('isChanged')
         ..add(serializers.serialize(object.isChanged,
             specifiedType: const FullType(bool)));
-    }
-    if (object.createdAt != null) {
-      result
-        ..add('created_at')
-        ..add(serializers.serialize(object.createdAt,
-            specifiedType: const FullType(int)));
-    }
-    if (object.updatedAt != null) {
-      result
-        ..add('updated_at')
-        ..add(serializers.serialize(object.updatedAt,
-            specifiedType: const FullType(int)));
-    }
-    if (object.archivedAt != null) {
-      result
-        ..add('archived_at')
-        ..add(serializers.serialize(object.archivedAt,
-            specifiedType: const FullType(int)));
     }
     if (object.isDeleted != null) {
       result
@@ -2966,6 +2957,15 @@ class _$CompanyEntity extends CompanyEntity {
     }
     if (settings == null) {
       throw new BuiltValueNullFieldError('CompanyEntity', 'settings');
+    }
+    if (createdAt == null) {
+      throw new BuiltValueNullFieldError('CompanyEntity', 'createdAt');
+    }
+    if (updatedAt == null) {
+      throw new BuiltValueNullFieldError('CompanyEntity', 'updatedAt');
+    }
+    if (archivedAt == null) {
+      throw new BuiltValueNullFieldError('CompanyEntity', 'archivedAt');
     }
     if (id == null) {
       throw new BuiltValueNullFieldError('CompanyEntity', 'id');

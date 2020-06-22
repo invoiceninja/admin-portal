@@ -137,6 +137,15 @@ class _$DocumentEntitySerializer
       'is_default',
       serializers.serialize(object.isDefault,
           specifiedType: const FullType(bool)),
+      'created_at',
+      serializers.serialize(object.createdAt,
+          specifiedType: const FullType(int)),
+      'updated_at',
+      serializers.serialize(object.updatedAt,
+          specifiedType: const FullType(int)),
+      'archived_at',
+      serializers.serialize(object.archivedAt,
+          specifiedType: const FullType(int)),
       'id',
       serializers.serialize(object.id, specifiedType: const FullType(String)),
     ];
@@ -193,24 +202,6 @@ class _$DocumentEntitySerializer
         ..add('isChanged')
         ..add(serializers.serialize(object.isChanged,
             specifiedType: const FullType(bool)));
-    }
-    if (object.createdAt != null) {
-      result
-        ..add('created_at')
-        ..add(serializers.serialize(object.createdAt,
-            specifiedType: const FullType(int)));
-    }
-    if (object.updatedAt != null) {
-      result
-        ..add('updated_at')
-        ..add(serializers.serialize(object.updatedAt,
-            specifiedType: const FullType(int)));
-    }
-    if (object.archivedAt != null) {
-      result
-        ..add('archived_at')
-        ..add(serializers.serialize(object.archivedAt,
-            specifiedType: const FullType(int)));
     }
     if (object.isDeleted != null) {
       result
@@ -642,6 +633,15 @@ class _$DocumentEntity extends DocumentEntity {
     }
     if (isDefault == null) {
       throw new BuiltValueNullFieldError('DocumentEntity', 'isDefault');
+    }
+    if (createdAt == null) {
+      throw new BuiltValueNullFieldError('DocumentEntity', 'createdAt');
+    }
+    if (updatedAt == null) {
+      throw new BuiltValueNullFieldError('DocumentEntity', 'updatedAt');
+    }
+    if (archivedAt == null) {
+      throw new BuiltValueNullFieldError('DocumentEntity', 'archivedAt');
     }
     if (id == null) {
       throw new BuiltValueNullFieldError('DocumentEntity', 'id');

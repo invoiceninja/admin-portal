@@ -124,6 +124,15 @@ class _$PaymentTermEntitySerializer
       serializers.serialize(object.name, specifiedType: const FullType(String)),
       'num_days',
       serializers.serialize(object.numDays, specifiedType: const FullType(int)),
+      'created_at',
+      serializers.serialize(object.createdAt,
+          specifiedType: const FullType(int)),
+      'updated_at',
+      serializers.serialize(object.updatedAt,
+          specifiedType: const FullType(int)),
+      'archived_at',
+      serializers.serialize(object.archivedAt,
+          specifiedType: const FullType(int)),
       'id',
       serializers.serialize(object.id, specifiedType: const FullType(String)),
     ];
@@ -132,24 +141,6 @@ class _$PaymentTermEntitySerializer
         ..add('isChanged')
         ..add(serializers.serialize(object.isChanged,
             specifiedType: const FullType(bool)));
-    }
-    if (object.createdAt != null) {
-      result
-        ..add('created_at')
-        ..add(serializers.serialize(object.createdAt,
-            specifiedType: const FullType(int)));
-    }
-    if (object.updatedAt != null) {
-      result
-        ..add('updated_at')
-        ..add(serializers.serialize(object.updatedAt,
-            specifiedType: const FullType(int)));
-    }
-    if (object.archivedAt != null) {
-      result
-        ..add('archived_at')
-        ..add(serializers.serialize(object.archivedAt,
-            specifiedType: const FullType(int)));
     }
     if (object.isDeleted != null) {
       result
@@ -468,6 +459,15 @@ class _$PaymentTermEntity extends PaymentTermEntity {
     }
     if (numDays == null) {
       throw new BuiltValueNullFieldError('PaymentTermEntity', 'numDays');
+    }
+    if (createdAt == null) {
+      throw new BuiltValueNullFieldError('PaymentTermEntity', 'createdAt');
+    }
+    if (updatedAt == null) {
+      throw new BuiltValueNullFieldError('PaymentTermEntity', 'updatedAt');
+    }
+    if (archivedAt == null) {
+      throw new BuiltValueNullFieldError('PaymentTermEntity', 'archivedAt');
     }
     if (id == null) {
       throw new BuiltValueNullFieldError('PaymentTermEntity', 'id');

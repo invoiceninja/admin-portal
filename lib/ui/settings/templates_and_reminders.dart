@@ -183,6 +183,10 @@ class _TemplatesAndRemindersState extends State<TemplatesAndReminders>
         body: body,
         subject: subject,
         onComplete: (subject, body, wrapper) {
+          if (!mounted) {
+            return;
+          }
+
           setState(() {
             _isLoading = false;
             _subjectPreview = subject.trim();
@@ -580,9 +584,7 @@ class _TemplatePreviewState extends State<TemplatePreview>
           'data:text/html;charset=utf-8,' + Uri.encodeComponent(widget.html);
       registerWebView(html);
       return AbsorbPointer(
-        child: RepaintBoundary(
-          child: HtmlElementView(viewType: html),
-        ),
+        child: HtmlElementView(viewType: html),
       );
     } else {
       return WebView(

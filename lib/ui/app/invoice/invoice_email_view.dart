@@ -101,6 +101,10 @@ class _InvoiceEmailViewState extends State<InvoiceEmailView>
         template: '$selectedTemplate',
         invoice: widget.viewModel.invoice,
         onComplete: (subject, body, wrapper) {
+          if (!mounted) {
+            return;
+          }
+
           setState(() {
             _isLoading = false;
             _subjectPreview = subject.trim();
