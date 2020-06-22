@@ -5,7 +5,6 @@ import 'package:image_picker/image_picker.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/ui/app/buttons/elevated_button.dart';
-import 'package:invoiceninja_flutter/ui/app/form_card.dart';
 import 'package:invoiceninja_flutter/ui/app/lists/list_divider.dart';
 import 'package:invoiceninja_flutter/utils/dialogs.dart';
 import 'package:invoiceninja_flutter/utils/formatting.dart';
@@ -91,7 +90,7 @@ class DocumentGrid extends StatelessWidget {
                     document: document,
                     onDeleteDocument: onDeleteDocument,
                     onViewExpense: onViewExpense,
-                    isFromExpense: onViewExpense != null,
+                    isFromExpense: false,
                   ))
               .toList(),
         ),
@@ -116,67 +115,38 @@ class DocumentTile extends StatelessWidget {
   void showDocumentModal(BuildContext context) {
     showDialog<Column>(
         context: context,
-        barrierDismissible: true,
         builder: (BuildContext context) {
           final localization = AppLocalization.of(context);
 
-          return ListView(
-            shrinkWrap: true,
-            children: <Widget>[
-              SizedBox(height: 10),
-              FormCard(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: <Widget>[
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.end,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: <Widget>[
-                      isFromExpense
-                          ? ElevatedButton(
-                              iconData: getEntityIcon(EntityType.expense),
-                              label: localization.expense,
-                              onPressed: () {
-                                Navigator.of(context).pop();
-                                onViewExpense(document);
-                              },
-                            )
-                          : ElevatedButton(
-                              color: Colors.red,
-                              iconData: Icons.delete,
-                              label: localization.delete,
-                              onPressed: () {
-                                confirmCallback(
-                                    context: context,
-                                    callback: () {
-                                      onDeleteDocument(document);
-                                      Navigator.pop(context);
-                                    });
-                              },
-                            ),
-                      SizedBox(
-                        width: 16,
-                      ),
-                      ElevatedButton(
-                        iconData: Icons.check_circle,
-                        label: localization.done,
-                        onPressed: () {
-                          Navigator.of(context).pop();
-                        },
-                      ),
-                    ],
-                  ),
-                  SizedBox(height: 25),
-                  Text(document.name,
-                      overflow: TextOverflow.ellipsis,
-                      style: Theme.of(context).textTheme.headline5),
-                  Text(
-                    '${formatDate(convertTimestampToDateString(document.createdAt), context)} • ${document.prettySize}',
-                    style: Theme.of(context).textTheme.headline5,
-                  ),
-                  SizedBox(height: 20),
-                  DocumentPreview(document),
-                ],
-              )
+          return AlertDialog(
+            title: Text(document.name),
+            content: DocumentPreview(document),
+            actions: [
+              isFromExpense
+                  ? FlatButton(
+                      child: Text(localization.expense.toUpperCase()),
+                      onPressed: () {
+                        Navigator.of(context).pop();
+                        onViewExpense(document);
+                      },
+                    )
+                  : FlatButton(
+                      child: Text(localization.delete.toUpperCase()),
+                      onPressed: () {
+                        confirmCallback(
+                            context: context,
+                            callback: () {
+                              onDeleteDocument(document);
+                              Navigator.pop(context);
+                            });
+                      },
+                    ),
+              FlatButton(
+                child: Text(localization.close.toUpperCase()),
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+              ),
             ],
           );
         });
