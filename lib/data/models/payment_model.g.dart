@@ -206,6 +206,12 @@ class _$PaymentEntitySerializer implements StructuredSerializer<PaymentEntity> {
         ..add(serializers.serialize(object.exchangeCurrencyId,
             specifiedType: const FullType(String)));
     }
+    if (object.isForInvoice != null) {
+      result
+        ..add('isForInvoice')
+        ..add(serializers.serialize(object.isForInvoice,
+            specifiedType: const FullType(bool)));
+    }
     if (object.isChanged != null) {
       result
         ..add('isChanged')
@@ -320,6 +326,10 @@ class _$PaymentEntitySerializer implements StructuredSerializer<PaymentEntity> {
         case 'vendor_id':
           result.vendorId = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String;
+          break;
+        case 'isForInvoice':
+          result.isForInvoice = serializers.deserialize(value,
+              specifiedType: const FullType(bool)) as bool;
           break;
         case 'paymentables':
           result.paymentables.replace(serializers.deserialize(value,

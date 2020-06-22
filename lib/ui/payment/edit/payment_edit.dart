@@ -393,7 +393,7 @@ class _PaymentableEditorState extends State<PaymentableEditor> {
           Expanded(
             child: DecoratedFormField(
               controller: _amountController,
-              label: payment.isForInvoice
+              label: payment.isForInvoice == true
                   ? localization.amount
                   : localization.applied,
             ),
@@ -401,7 +401,7 @@ class _PaymentableEditorState extends State<PaymentableEditor> {
         ],
         if ((widget.entityType == EntityType.invoice &&
                 payment.invoices.isNotEmpty &&
-                !payment.isForInvoice &&
+                payment.isForInvoice != true &&
                 _invoiceId != null) ||
             (widget.entityType == EntityType.credit &&
                 payment.credits.isNotEmpty &&
