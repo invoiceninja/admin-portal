@@ -54,13 +54,18 @@ class DocumentRepository {
     return documentResponse.data.toList();
   }
 
-  Future<bool> upload(Credentials credentials, BaseEntity entity,
-      String filePath) async {
-    final fields = <String, String>{};
+  Future<bool> upload(
+      Credentials credentials, BaseEntity entity, String filePath) async {
+    final fields = <String, String>{
+      '_method': 'put',
+    };
 
-    await webClient.put(
-        '${credentials.url}/${entity.entityType.plural}/${entity.id}', credentials.token,
-        data: fields, filePath: filePath, fileIndex: 'documents[]');
+    await webClient.post(
+        '${credentials.url}/${entity.entityType.plural}/${entity.id}',
+        credentials.token,
+        data: fields,
+        filePath: filePath,
+        fileIndex: 'documents[]');
 
     return true;
   }
