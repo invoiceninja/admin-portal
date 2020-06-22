@@ -178,8 +178,8 @@ class InvoiceViewVM extends EntityViewVM {
           handleInvoiceAction(context, [invoice], action),
       onUploadDocument: (BuildContext context, String filePath) {
         final Completer<DocumentEntity> completer = Completer<DocumentEntity>();
-        store.dispatch(SaveDocumentRequest(
-            filePath: filePath, entity: invoice, completer: completer));
+        store.dispatch(SaveInvoiceDocumentRequest(
+            filePath: filePath, invoice: invoice, completer: completer));
         completer.future.then((client) {
           Scaffold.of(context).showSnackBar(SnackBar(
               content: SnackBarRow(

@@ -422,6 +422,30 @@ class RemoveFromInvoiceMultiselect {
 
 class ClearInvoiceMultiselect {}
 
+class SaveInvoiceDocumentRequest implements StartSaving {
+  SaveInvoiceDocumentRequest({
+    @required this.completer,
+    @required this.filePath,
+    @required this.invoice,
+  });
+
+  final Completer completer;
+  final String filePath;
+  final InvoiceEntity invoice;
+}
+
+class SaveInvoiceDocumentSuccess implements StopSaving, PersistData, PersistUI {
+  SaveInvoiceDocumentSuccess(this.document);
+
+  final DocumentEntity document;
+}
+
+class SaveInvoiceDocumentFailure implements StopSaving {
+  SaveInvoiceDocumentFailure(this.error);
+
+  final Object error;
+}
+
 void handleInvoiceAction(BuildContext context, List<BaseEntity> invoices,
     EntityAction action) async {
   if (invoices.isEmpty) {
@@ -496,14 +520,14 @@ void handleInvoiceAction(BuildContext context, List<BaseEntity> invoices,
     case EntityAction.cloneToQuote:
       createEntity(
           context: context,
-          entity: invoice.clone
-              .rebuild((b) => b..entityType = EntityType.quote));
+          entity:
+              invoice.clone.rebuild((b) => b..entityType = EntityType.quote));
       break;
     case EntityAction.cloneToCredit:
       createEntity(
           context: context,
-          entity: invoice.clone
-              .rebuild((b) => b..entityType = EntityType.credit));
+          entity:
+              invoice.clone.rebuild((b) => b..entityType = EntityType.credit));
       break;
     case EntityAction.newPayment:
       createEntity(

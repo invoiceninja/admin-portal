@@ -39,6 +39,7 @@ List<Middleware<AppState>> createStoreInvoicesMiddleware([
   final markInvoicePaid = _markInvoicePaid(repository);
   final reverseInvoices = _reverseInvoices(repository);
   final cancelInvoices = _cancelInvoices(repository);
+  final saveDocument = _saveDocument(repository);
 
   return [
     TypedMiddleware<AppState, ViewInvoiceList>(viewInvoiceList),
@@ -56,6 +57,7 @@ List<Middleware<AppState>> createStoreInvoicesMiddleware([
     TypedMiddleware<AppState, MarkInvoicesPaidRequest>(markInvoicePaid),
     TypedMiddleware<AppState, ReverseInvoicesRequest>(reverseInvoices),
     TypedMiddleware<AppState, CancelInvoicesRequest>(cancelInvoices),
+    TypedMiddleware<AppState, SaveInvoiceDocumentRequest>(saveDocument),
   ];
 }
 
@@ -455,6 +457,31 @@ Middleware<AppState> _loadInvoices(InvoiceRepository repository) {
         action.completer.completeError(error);
       }
     });
+
+    next(action);
+  };
+}
+
+Middleware<AppState> _saveDocument(InvoiceRepository repository) {
+  return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
+    final action = dynamicAction as SaveInvoiceDocumentRequest;
+    if (store.state.company.isEnterprisePlan) {
+      repository
+          .uploadDocument(
+              store.state.credentials, action.invoice, action.filePath)
+          .then((invoice) {
+        store.dispatch(SaveInvoiceSuccess(invoice));
+        action.completer.complete(null);
+      }).catchError((Object error) {
+        print(error);
+        store.dispatch(SaveInvoiceDocumentFailure(error));
+        action.completer.completeError(error);
+      });
+    } else {
+      const error = 'Uploading documents requires an enterprise plan';
+      store.dispatch(SaveInvoiceDocumentFailure(error));
+      action.completer.completeError(error);
+    }
 
     next(action);
   };
