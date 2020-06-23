@@ -123,8 +123,8 @@ class _$DocumentEntitySerializer
       serializers.serialize(object.name, specifiedType: const FullType(String)),
       'type',
       serializers.serialize(object.type, specifiedType: const FullType(String)),
-      'path',
-      serializers.serialize(object.path, specifiedType: const FullType(String)),
+      'url',
+      serializers.serialize(object.url, specifiedType: const FullType(String)),
       'width',
       serializers.serialize(object.width, specifiedType: const FullType(int)),
       'height',
@@ -196,8 +196,8 @@ class _$DocumentEntitySerializer
           result.type = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String;
           break;
-        case 'path':
-          result.path = serializers.deserialize(value,
+        case 'url':
+          result.url = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String;
           break;
         case 'width':
@@ -457,7 +457,7 @@ class _$DocumentEntity extends DocumentEntity {
   @override
   final String type;
   @override
-  final String path;
+  final String url;
   @override
   final int width;
   @override
@@ -491,7 +491,7 @@ class _$DocumentEntity extends DocumentEntity {
   _$DocumentEntity._(
       {this.name,
       this.type,
-      this.path,
+      this.url,
       this.width,
       this.height,
       this.size,
@@ -512,8 +512,8 @@ class _$DocumentEntity extends DocumentEntity {
     if (type == null) {
       throw new BuiltValueNullFieldError('DocumentEntity', 'type');
     }
-    if (path == null) {
-      throw new BuiltValueNullFieldError('DocumentEntity', 'path');
+    if (url == null) {
+      throw new BuiltValueNullFieldError('DocumentEntity', 'url');
     }
     if (width == null) {
       throw new BuiltValueNullFieldError('DocumentEntity', 'width');
@@ -558,7 +558,7 @@ class _$DocumentEntity extends DocumentEntity {
     return other is DocumentEntity &&
         name == other.name &&
         type == other.type &&
-        path == other.path &&
+        url == other.url &&
         width == other.width &&
         height == other.height &&
         size == other.size &&
@@ -595,7 +595,7 @@ class _$DocumentEntity extends DocumentEntity {
                                                                 $jc(0,
                                                                     name.hashCode),
                                                                 type.hashCode),
-                                                            path.hashCode),
+                                                            url.hashCode),
                                                         width.hashCode),
                                                     height.hashCode),
                                                 size.hashCode),
@@ -616,7 +616,7 @@ class _$DocumentEntity extends DocumentEntity {
     return (newBuiltValueToStringHelper('DocumentEntity')
           ..add('name', name)
           ..add('type', type)
-          ..add('path', path)
+          ..add('url', url)
           ..add('width', width)
           ..add('height', height)
           ..add('size', size)
@@ -646,9 +646,9 @@ class DocumentEntityBuilder
   String get type => _$this._type;
   set type(String type) => _$this._type = type;
 
-  String _path;
-  String get path => _$this._path;
-  set path(String path) => _$this._path = path;
+  String _url;
+  String get url => _$this._url;
+  set url(String url) => _$this._url = url;
 
   int _width;
   int get width => _$this._width;
@@ -710,7 +710,7 @@ class DocumentEntityBuilder
     if (_$v != null) {
       _name = _$v.name;
       _type = _$v.type;
-      _path = _$v.path;
+      _url = _$v.url;
       _width = _$v.width;
       _height = _$v.height;
       _size = _$v.size;
@@ -748,7 +748,7 @@ class DocumentEntityBuilder
         new _$DocumentEntity._(
             name: name,
             type: type,
-            path: path,
+            url: url,
             width: width,
             height: height,
             size: size,

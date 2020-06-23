@@ -146,8 +146,6 @@ class NumberOfRatesSelector extends StatelessWidget {
   Widget build(BuildContext context) {
     final localization = AppLocalization.of(context);
 
-    print('## VALUE: $numberOfRates');
-
     return AppDropdownButton(
       showUseDefault: true,
       labelText: label,

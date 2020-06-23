@@ -58,7 +58,7 @@ abstract class DocumentEntity extends Object
       id: id ?? BaseEntity.nextId,
       isChanged: false,
       name: '',
-      path: '',
+      url: '',
       type: '',
       isDefault: false,
       updatedAt: 0,
@@ -84,7 +84,7 @@ abstract class DocumentEntity extends Object
 
   String get type;
 
-  String get path;
+  String get url;
 
   int get width;
 
