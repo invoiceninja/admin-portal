@@ -317,5 +317,9 @@ PaymentState _setLoadedPayments(
     paymentState.loadPayments(action.payments);
 
 PaymentState _setLoadedCompany(
-        PaymentState paymentState, LoadCompanySuccess action) =>
-    paymentState.loadPayments(action.userCompany.company.payments);
+    PaymentState paymentState, LoadCompanySuccess action) {
+  final company = action.userCompany.company;
+  return company.hasData
+      ? paymentState.loadPayments(company.payments)
+      : paymentState;
+}

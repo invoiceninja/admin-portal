@@ -408,6 +408,7 @@ QuoteState _updateQuote(QuoteState quoteState, dynamic action) {
 QuoteState _setLoadedQuotes(QuoteState quoteState, LoadQuotesSuccess action) =>
     quoteState.loadQuotes(action.quotes);
 
-QuoteState _setLoadedCompany(
-        QuoteState quoteState, LoadCompanySuccess action) =>
-    quoteState.loadQuotes(action.userCompany.company.quotes);
+QuoteState _setLoadedCompany(QuoteState quoteState, LoadCompanySuccess action) {
+  final company = action.userCompany.company;
+  return company.hasData ? quoteState.loadQuotes(company.quotes) : quoteState;
+}

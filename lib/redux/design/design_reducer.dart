@@ -279,5 +279,9 @@ DesignState _setLoadedDesigns(
     designState.loadDesigns(action.designs);
 
 DesignState _setLoadedCompany(
-        DesignState designState, LoadCompanySuccess action) =>
-    designState.loadDesigns(action.userCompany.company.designs);
+        DesignState designState, LoadCompanySuccess action) {
+  final company = action.userCompany.company;
+  return company.hasData
+      ? designState.loadDesigns(company.designs)
+      : designState;
+}

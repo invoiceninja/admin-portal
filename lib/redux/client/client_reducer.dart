@@ -363,5 +363,9 @@ ClientState _setLoadedClients(
     clientState.loadClients(action.clients);
 
 ClientState _setLoadedCompany(
-        ClientState clientState, LoadCompanySuccess action) =>
-    clientState.loadClients(action.userCompany.company.clients);
+    ClientState clientState, LoadCompanySuccess action) {
+  final company = action.userCompany.company;
+  return company.hasData
+      ? clientState.loadClients(company.clients)
+      : clientState;
+}
