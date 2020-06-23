@@ -32,12 +32,11 @@ class DocumentGrid extends StatelessWidget {
   Widget build(BuildContext context) {
     final localization = AppLocalization.of(context);
     final state = StoreProvider.of<AppState>(context).state;
-    final company = state.company;
 
     return ListView(
       shrinkWrap: true,
       children: [
-        if (company.isEnterprisePlan)
+        if (state.isEnterprisePlan)
           Padding(
             padding: const EdgeInsets.all(14),
             child: Row(

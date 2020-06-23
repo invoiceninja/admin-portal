@@ -378,7 +378,7 @@ Middleware<AppState> _loadQuotes(QuoteRepository repository) {
 Middleware<AppState> _saveDocument(QuoteRepository repository) {
   return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
     final action = dynamicAction as SaveQuoteDocumentRequest;
-    if (store.state.company.isEnterprisePlan) {
+    if (store.state.isEnterprisePlan) {
       repository
           .uploadDocument(
           store.state.credentials, action.quote, action.filePath)

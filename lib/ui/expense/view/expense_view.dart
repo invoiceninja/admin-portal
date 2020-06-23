@@ -44,7 +44,6 @@ class _ExpenseViewState extends State<ExpenseView>
   Widget build(BuildContext context) {
     final localization = AppLocalization.of(context);
     final viewModel = widget.viewModel;
-    final company = viewModel.state.company;
     final expense = viewModel.expense;
 
     return ViewScaffold(
@@ -86,7 +85,7 @@ class _ExpenseViewState extends State<ExpenseView>
           ],
         );
       }),
-      floatingActionButton: company.isEnterprisePlan
+      floatingActionButton: viewModel.state.isEnterprisePlan
           ? Builder(builder: (BuildContext context) {
               return FloatingActionButton(
                 heroTag: 'expense_fab',

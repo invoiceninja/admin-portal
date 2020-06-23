@@ -361,7 +361,7 @@ Middleware<AppState> _loadCredits(CreditRepository repository) {
 Middleware<AppState> _saveDocument(CreditRepository repository) {
   return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
     final action = dynamicAction as SaveCreditDocumentRequest;
-    if (store.state.company.isEnterprisePlan) {
+    if (store.state.isEnterprisePlan) {
       repository
           .uploadDocument(
           store.state.credentials, action.credit, action.filePath)

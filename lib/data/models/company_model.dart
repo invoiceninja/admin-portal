@@ -3,7 +3,6 @@ import 'dart:convert';
 import 'package:built_collection/built_collection.dart';
 import 'package:built_value/built_value.dart';
 import 'package:built_value/serializer.dart';
-import 'package:flutter/foundation.dart';
 import 'package:invoiceninja_flutter/constants.dart';
 import 'package:invoiceninja_flutter/data/models/account_model.dart';
 import 'package:invoiceninja_flutter/data/models/company_gateway_model.dart';
@@ -52,7 +51,6 @@ abstract class CompanyEntity extends Object
       companyKey: '',
       plan: '',
       settings: SettingsEntity(),
-      appUrl: '',
       sizeId: '',
       industryId: '',
       enabledModules: 0,
@@ -162,11 +160,6 @@ abstract class CompanyEntity extends Object
 
   @BuiltValueField(wireName: 'company_key')
   String get companyKey;
-
-  // TODO remove this
-  @nullable
-  @BuiltValueField(wireName: 'default_url')
-  String get appUrl;
 
   @BuiltValueField(wireName: 'first_day_of_week')
   String get firstDayOfWeek;
@@ -326,22 +319,6 @@ abstract class CompanyEntity extends Object
       }
     }
   }
-
-  bool get isSelfHost {
-    if (!kReleaseMode || Config.DEMO_MODE) {
-      return true;
-    }
-
-    return appUrl != null &&
-        appUrl.isNotEmpty &&
-        appUrl != Constants.hostedApiUrl;
-  }
-
-  bool get isHosted => !isSelfHost;
-
-  bool get isProPlan => isSelfHost || plan == kPlanPro;
-
-  bool get isEnterprisePlan => isSelfHost || plan == kPlanEnterprise;
 
   // TODO make sure to clear everything
   CompanyEntity get coreCompany => rebuild((b) => b

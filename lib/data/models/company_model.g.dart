@@ -218,12 +218,6 @@ class _$CompanyEntitySerializer implements StructuredSerializer<CompanyEntity> {
         ..add(serializers.serialize(object.plan,
             specifiedType: const FullType(String)));
     }
-    if (object.appUrl != null) {
-      result
-        ..add('default_url')
-        ..add(serializers.serialize(object.appUrl,
-            specifiedType: const FullType(String)));
-    }
     if (object.enabledModules != null) {
       result
         ..add('enabled_modules')
@@ -345,10 +339,6 @@ class _$CompanyEntitySerializer implements StructuredSerializer<CompanyEntity> {
           break;
         case 'company_key':
           result.companyKey = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String;
-          break;
-        case 'default_url':
-          result.appUrl = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String;
           break;
         case 'first_day_of_week':
@@ -2671,8 +2661,6 @@ class _$CompanyEntity extends CompanyEntity {
   @override
   final String companyKey;
   @override
-  final String appUrl;
-  @override
   final String firstDayOfWeek;
   @override
   final String firstMonthOfYear;
@@ -2775,7 +2763,6 @@ class _$CompanyEntity extends CompanyEntity {
       this.showProductDetails,
       this.plan,
       this.companyKey,
-      this.appUrl,
       this.firstDayOfWeek,
       this.firstMonthOfYear,
       this.numberOfInvoiceTaxRates,
@@ -3009,7 +2996,6 @@ class _$CompanyEntity extends CompanyEntity {
         showProductDetails == other.showProductDetails &&
         plan == other.plan &&
         companyKey == other.companyKey &&
-        appUrl == other.appUrl &&
         firstDayOfWeek == other.firstDayOfWeek &&
         firstMonthOfYear == other.firstMonthOfYear &&
         numberOfInvoiceTaxRates == other.numberOfInvoiceTaxRates &&
@@ -3073,7 +3059,7 @@ class _$CompanyEntity extends CompanyEntity {
                                                                 $jc(
                                                                     $jc(
                                                                         $jc(
-                                                                            $jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc(0, enableCustomSurchargeTaxes1.hashCode), enableCustomSurchargeTaxes2.hashCode), enableCustomSurchargeTaxes3.hashCode), enableCustomSurchargeTaxes4.hashCode), sizeId.hashCode), industryId.hashCode), subdomain.hashCode), portalMode.hashCode), portalDomain.hashCode), updateProducts.hashCode), convertProductExchangeRate.hashCode), fillProducts.hashCode), enableProductCost.hashCode), enableProductQuantity.hashCode), defaultQuantity.hashCode), showProductDetails.hashCode), plan.hashCode), companyKey.hashCode), appUrl.hashCode), firstDayOfWeek.hashCode), firstMonthOfYear.hashCode), numberOfInvoiceTaxRates.hashCode), numberOfItemTaxRates.hashCode), groups.hashCode), activities.hashCode), taxRates.hashCode), taskStatuses.hashCode), taskStatusMap.hashCode), companyGateways.hashCode), expenseCategories.hashCode), expenseCategoryMap.hashCode), users.hashCode), clients.hashCode), products.hashCode), invoices.hashCode), payments.hashCode), quotes.hashCode), credits.hashCode), tasks.hashCode), projects.hashCode),
+                                                                            $jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc(0, enableCustomSurchargeTaxes1.hashCode), enableCustomSurchargeTaxes2.hashCode), enableCustomSurchargeTaxes3.hashCode), enableCustomSurchargeTaxes4.hashCode), sizeId.hashCode), industryId.hashCode), subdomain.hashCode), portalMode.hashCode), portalDomain.hashCode), updateProducts.hashCode), convertProductExchangeRate.hashCode), fillProducts.hashCode), enableProductCost.hashCode), enableProductQuantity.hashCode), defaultQuantity.hashCode), showProductDetails.hashCode), plan.hashCode), companyKey.hashCode), firstDayOfWeek.hashCode), firstMonthOfYear.hashCode), numberOfInvoiceTaxRates.hashCode), numberOfItemTaxRates.hashCode), groups.hashCode), activities.hashCode), taxRates.hashCode), taskStatuses.hashCode), taskStatusMap.hashCode), companyGateways.hashCode), expenseCategories.hashCode), expenseCategoryMap.hashCode), users.hashCode), clients.hashCode), products.hashCode), invoices.hashCode), payments.hashCode), quotes.hashCode), credits.hashCode), tasks.hashCode), projects.hashCode),
                                                                                 expenses.hashCode),
                                                                             vendors.hashCode),
                                                                         designs.hashCode),
@@ -3116,7 +3102,6 @@ class _$CompanyEntity extends CompanyEntity {
           ..add('showProductDetails', showProductDetails)
           ..add('plan', plan)
           ..add('companyKey', companyKey)
-          ..add('appUrl', appUrl)
           ..add('firstDayOfWeek', firstDayOfWeek)
           ..add('firstMonthOfYear', firstMonthOfYear)
           ..add('numberOfInvoiceTaxRates', numberOfInvoiceTaxRates)
@@ -3246,10 +3231,6 @@ class CompanyEntityBuilder
   String _companyKey;
   String get companyKey => _$this._companyKey;
   set companyKey(String companyKey) => _$this._companyKey = companyKey;
-
-  String _appUrl;
-  String get appUrl => _$this._appUrl;
-  set appUrl(String appUrl) => _$this._appUrl = appUrl;
 
   String _firstDayOfWeek;
   String get firstDayOfWeek => _$this._firstDayOfWeek;
@@ -3483,7 +3464,6 @@ class CompanyEntityBuilder
       _showProductDetails = _$v.showProductDetails;
       _plan = _$v.plan;
       _companyKey = _$v.companyKey;
-      _appUrl = _$v.appUrl;
       _firstDayOfWeek = _$v.firstDayOfWeek;
       _firstMonthOfYear = _$v.firstMonthOfYear;
       _numberOfInvoiceTaxRates = _$v.numberOfInvoiceTaxRates;
@@ -3566,7 +3546,6 @@ class CompanyEntityBuilder
               showProductDetails: showProductDetails,
               plan: plan,
               companyKey: companyKey,
-              appUrl: appUrl,
               firstDayOfWeek: firstDayOfWeek,
               firstMonthOfYear: firstMonthOfYear,
               numberOfInvoiceTaxRates: numberOfInvoiceTaxRates,
