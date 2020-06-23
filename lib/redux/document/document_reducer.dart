@@ -189,6 +189,7 @@ DocumentState _archiveDocumentFailure(
   });
 }
 
+/*
 DocumentState _deleteDocumentRequest(
     DocumentState documentState, DeleteDocumentRequest action) {
   final documents =
@@ -205,6 +206,7 @@ DocumentState _deleteDocumentRequest(
     }
   });
 }
+*/
 
 DocumentState _deleteDocumentSuccess(
     DocumentState documentState, DeleteDocumentSuccess action) {
