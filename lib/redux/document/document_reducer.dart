@@ -147,9 +147,9 @@ final documentsReducer = combineReducers<DocumentState>([
   TypedReducer<DocumentState, ArchiveDocumentRequest>(_archiveDocumentRequest),
   TypedReducer<DocumentState, ArchiveDocumentSuccess>(_archiveDocumentSuccess),
   TypedReducer<DocumentState, ArchiveDocumentFailure>(_archiveDocumentFailure),
-  TypedReducer<DocumentState, DeleteDocumentRequest>(_deleteDocumentRequest),
+  //TypedReducer<DocumentState, DeleteDocumentRequest>(_deleteDocumentRequest),
   TypedReducer<DocumentState, DeleteDocumentSuccess>(_deleteDocumentSuccess),
-  TypedReducer<DocumentState, DeleteDocumentFailure>(_deleteDocumentFailure),
+  //TypedReducer<DocumentState, DeleteDocumentFailure>(_deleteDocumentFailure),
   TypedReducer<DocumentState, RestoreDocumentRequest>(_restoreDocumentRequest),
   TypedReducer<DocumentState, RestoreDocumentSuccess>(_restoreDocumentSuccess),
   TypedReducer<DocumentState, RestoreDocumentFailure>(_restoreDocumentFailure),
@@ -208,13 +208,10 @@ DocumentState _deleteDocumentRequest(
 
 DocumentState _deleteDocumentSuccess(
     DocumentState documentState, DeleteDocumentSuccess action) {
-  return documentState.rebuild((b) {
-    for (final document in action.documents) {
-      b.map[document.id] = document;
-    }
-  });
+  return documentState.rebuild((b) => b..map.remove(action.documentId));
 }
 
+/*
 DocumentState _deleteDocumentFailure(
     DocumentState documentState, DeleteDocumentFailure action) {
   return documentState.rebuild((b) {
@@ -223,6 +220,7 @@ DocumentState _deleteDocumentFailure(
     }
   });
 }
+ */
 
 DocumentState _restoreDocumentRequest(
     DocumentState documentState, RestoreDocumentRequest action) {

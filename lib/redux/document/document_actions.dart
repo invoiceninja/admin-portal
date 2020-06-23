@@ -165,15 +165,16 @@ class DeleteDocumentRequest implements StartSaving {
 }
 
 class DeleteDocumentSuccess implements StopSaving, PersistData {
-  DeleteDocumentSuccess(this.documents);
+  DeleteDocumentSuccess({this.documentId});
+  final String documentId;
 
-  final List<DocumentEntity> documents;
+  //DeleteDocumentSuccess(this.documents);
+  //final List<DocumentEntity> documents;
 }
 
 class DeleteDocumentFailure implements StopSaving {
-  DeleteDocumentFailure(this.documents);
-
-  final List<DocumentEntity> documents;
+  //DeleteDocumentFailure(this.documents);
+  //final List<DocumentEntity> documents;
 }
 
 class RestoreDocumentRequest implements StartSaving {

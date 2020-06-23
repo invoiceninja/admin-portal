@@ -54,18 +54,9 @@ class DocumentRepository {
     return documentResponse.data.toList();
   }
 
-  Future<bool> upload(
-      Credentials credentials, BaseEntity entity, String filePath) async {
-    final fields = <String, String>{
-      '_method': 'put',
-    };
-
-    await webClient.post(
-        '${credentials.url}/${entity.entityType.plural}/${entity.id}',
-        credentials.token,
-        data: fields,
-        filePath: filePath,
-        fileIndex: 'documents[]');
+  Future<bool> delete(Credentials credentials, String documentId) async {
+    await webClient.delete(
+        '${credentials.url}/documents/$documentId', credentials.token);
 
     return true;
   }
