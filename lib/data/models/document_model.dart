@@ -122,12 +122,6 @@ abstract class DocumentEntity extends Object
       ? '${round(size / 1000000, 1).toInt()} MB'
       : '${round(size / 1000, 0).toInt()} KB';
 
-  String previewUrl(String baseUrl) =>
-      formatApiUrl(baseUrl != null && baseUrl.startsWith('http')
-          ? baseUrl
-          : Constants.hostedApiUrl) +
-      '/documents/$id';
-
   int compareTo(DocumentEntity document,
       [String sortField, bool sortAscending = true]) {
     int response = 0;

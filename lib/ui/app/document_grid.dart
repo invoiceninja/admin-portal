@@ -10,6 +10,7 @@ import 'package:invoiceninja_flutter/utils/dialogs.dart';
 import 'package:invoiceninja_flutter/utils/formatting.dart';
 import 'package:invoiceninja_flutter/utils/icons.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class DocumentGrid extends StatelessWidget {
   const DocumentGrid({
@@ -120,8 +121,14 @@ class DocumentTile extends StatelessWidget {
 
           return AlertDialog(
             title: Text(document.name),
-            content: DocumentPreview(document),
             actions: [
+              FlatButton(
+                child: Text(localization.download.toUpperCase()),
+                onPressed: () {
+                  launch(document.url,
+                      forceWebView: false, forceSafariVC: false);
+                },
+              ),
               isFromExpense
                   ? FlatButton(
                       child: Text(localization.expense.toUpperCase()),
@@ -206,16 +213,14 @@ class DocumentPreview extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final state = StoreProvider.of<AppState>(context).state;
-
-    return document.preview != null && document.preview.isNotEmpty
+    return ['png', 'jpg', 'jpeg'].contains(document.type)
         ? CachedNetworkImage(
             height: height,
             width: double.infinity,
             fit: BoxFit.cover,
             key: ValueKey(document.preview),
-            imageUrl: document.previewUrl(state.credentials.url),
-            httpHeaders: {'X-API-TOKEN': state.credentials.token},
+            imageUrl: document.url,
+            //httpHeaders: {'X-API-TOKEN': state.credentials.token},
             placeholder: (context, url) => Container(
                   height: height,
                   child: Center(
