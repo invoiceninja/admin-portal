@@ -38,6 +38,7 @@ import 'package:sentry/sentry.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:invoiceninja_flutter/utils/web_stub.dart'
     if (dart.library.html) 'package:invoiceninja_flutter/utils/web.dart';
+
 // STARTER: import - do not remove comment
 import 'package:invoiceninja_flutter/redux/payment_term/payment_term_middleware.dart';
 
@@ -138,9 +139,11 @@ Future<AppState> _initialState(bool isTesting) async {
   }
    */
 
+  final url = prefs.getString(kSharedPrefUrl) ?? getBrowserUrl();
+
   return AppState(
     prefState: prefState,
     currentRoute: currentRoute,
-    url: Config.DEMO_MODE ? '' : getBrowserUrl(),
+    url: Config.DEMO_MODE ? '' : url,
   );
 }

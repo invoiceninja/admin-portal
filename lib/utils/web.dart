@@ -4,7 +4,7 @@ import 'dart:ui' as ui;
 
 import 'package:invoiceninja_flutter/utils/formatting.dart';
 
-String getBrowserUrl() => cleanApiUrl(window.location.href.split('#')[0]);
+String getBrowserUrl() => formatApiUrl(window.location.href.split('#')[0]);
 
 Future<String> webFilePicker() {
   final completer = new Completer<String>();
