@@ -28,6 +28,7 @@ class InvoicePresenter extends EntityPresenter {
       InvoiceFields.poNumber,
       InvoiceFields.publicNotes,
       InvoiceFields.privateNotes,
+      InvoiceFields.documents,
       InvoiceFields.customValue1,
       InvoiceFields.customValue2,
       InvoiceFields.customValue3,
@@ -91,6 +92,8 @@ class InvoicePresenter extends EntityPresenter {
                 formatNumberType: FormatNumberType.percent));
       case InvoiceFields.poNumber:
         return Text(invoice.poNumber);
+      case InvoiceFields.documents:
+        return Text('${invoice.documents.length}');
     }
 
     return super.getField(field: field, context: context);

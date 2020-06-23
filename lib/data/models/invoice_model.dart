@@ -68,6 +68,7 @@ class InvoiceFields {
   static const String frequencyId = 'frequency_id';
   static const String startDate = 'start_date';
   static const String endDate = 'end_date';
+  static const String documents = 'documents';
   static const String customValue1 = 'custom1';
   static const String customValue2 = 'custom2';
   static const String customValue3 = 'custom3';
