@@ -199,6 +199,20 @@ abstract class AppState implements Built<AppState, AppStateBuilder> {
      */
   }
 
+  // TODO add to starter.sh
+  bool get isDataLoaded {
+    if (clientState.lastUpdated == 0 ||
+        productState.lastUpdated == 0 ||
+        invoiceState.lastUpdated == 0 ||
+        paymentState.lastUpdated == 0 ||
+        quoteState.lastUpdated == 0 ||
+        creditState.lastUpdated == 0) {
+      return false;
+    }
+
+    return true;
+  }
+
   BuiltMap<String, SelectableEntity> getEntityMap(EntityType type) {
     switch (type) {
       case EntityType.product:

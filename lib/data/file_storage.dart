@@ -34,7 +34,14 @@ class FileStorage {
   Future<File> save(String data) async {
     if (kIsWeb) {
       final prefs = await SharedPreferences.getInstance();
-      prefs.setString(tag, data);
+
+      try {
+        await prefs.setString(tag, data);
+      } catch (e) {
+        if ('$e'.contains('QuotaExceededError')) {
+          await prefs.setString(tag, '');
+        }
+      }
 
       return null;
     } else {
