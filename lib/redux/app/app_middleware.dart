@@ -344,6 +344,10 @@ Middleware<AppState> _createPersistData(
     next(action);
 
     _persistDataDebouncer.run(() {
+      if (!store.state.isDataLoaded) {
+        return;
+      }
+
       final AppState state = store.state;
       final index = state.uiState.selectedCompanyIndex;
       companyRepositories[index]
