@@ -1,6 +1,8 @@
 import 'dart:async';
+import 'dart:convert';
 import 'dart:io';
 
+import 'package:archive/archive.dart';
 import 'package:flutter/foundation.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -9,6 +11,8 @@ class FileStorage {
     this.tag,
     this.getDirectory,
   );
+
+  static const GZIP_TAG = '_gzip';
 
   final String tag;
   final Future<Directory> Function() getDirectory;
@@ -22,7 +26,21 @@ class FileStorage {
   Future<dynamic> load() async {
     if (kIsWeb) {
       final prefs = await SharedPreferences.getInstance();
-      return prefs.getString(tag);
+      String value = prefs.getString(tag);
+
+      if (value != null) {
+        return value;
+      }
+
+      value = prefs.getString(tag + GZIP_TAG);
+
+      if (value != null) {
+        final decoded = base64Decode(value);
+        final unzipped = GZipDecoder().decodeBytes(decoded);
+        return utf8.decode(unzipped);
+      }
+
+      return null;
     } else {
       final file = await _getLocalFile();
       final contents = await file.readAsString();
@@ -34,12 +52,20 @@ class FileStorage {
   Future<File> save(String data) async {
     if (kIsWeb) {
       final prefs = await SharedPreferences.getInstance();
-
       try {
         await prefs.setString(tag, data);
       } catch (e) {
         if ('$e'.contains('QuotaExceededError')) {
-          await prefs.setString(tag, '');
+          await prefs.remove(tag);
+          final gzipBytes = GZipEncoder().encode(utf8.encode(data));
+          final zipped = base64Encode(gzipBytes);
+          try {
+            await prefs.setString(tag + GZIP_TAG, zipped);
+          } catch (e) {
+            if ('$e'.contains('QuotaExceededError')) {
+              await prefs.remove(tag + GZIP_TAG);
+            }
+          }
         }
       }
 
@@ -55,6 +81,7 @@ class FileStorage {
     if (kIsWeb) {
       final prefs = await SharedPreferences.getInstance();
       prefs.remove(tag);
+      prefs.remove(tag + GZIP_TAG);
       return null;
     } else {
       final file = await _getLocalFile();
@@ -66,7 +93,7 @@ class FileStorage {
   Future<bool> exists() async {
     if (kIsWeb) {
       final prefs = await SharedPreferences.getInstance();
-      return prefs.containsKey(tag);
+      return prefs.containsKey(tag) || prefs.containsKey(tag + GZIP_TAG);
     } else {
       final file = await _getLocalFile();
 
