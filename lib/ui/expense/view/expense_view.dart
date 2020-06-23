@@ -7,6 +7,8 @@ import 'package:invoiceninja_flutter/ui/expense/view/expense_view_documents.dart
 import 'package:invoiceninja_flutter/ui/expense/view/expense_view_vm.dart';
 import 'package:invoiceninja_flutter/ui/expense/view/expense_view_overview.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
+import 'package:invoiceninja_flutter/utils/web_stub.dart'
+    if (dart.library.html) 'package:invoiceninja_flutter/utils/web.dart';
 
 class ExpenseView extends StatefulWidget {
   const ExpenseView({
@@ -90,10 +92,18 @@ class _ExpenseViewState extends State<ExpenseView>
                 heroTag: 'expense_fab',
                 backgroundColor: Theme.of(context).primaryColorDark,
                 onPressed: () async {
-                  final image =
-                      await ImagePicker.pickImage(source: ImageSource.camera);
-                  if (image != null) {
-                    viewModel.onUploadDocument(context, image.path);
+                  String path;
+                  if (kIsWeb) {
+                    path = await webFilePicker();
+                  } else {
+                    final image = await ImagePicker()
+                        .getImage(source: ImageSource.camera);
+                    if (image != null) {
+                      path = image.path;
+                    }
+                  }
+                  if (path != null) {
+                    viewModel.onUploadDocument(context, path);
                   }
                 },
                 child: Icon(

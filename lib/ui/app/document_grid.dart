@@ -1,4 +1,5 @@
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:image_picker/image_picker.dart';
@@ -11,6 +12,8 @@ import 'package:invoiceninja_flutter/utils/formatting.dart';
 import 'package:invoiceninja_flutter/utils/icons.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:url_launcher/url_launcher.dart';
+import 'package:invoiceninja_flutter/utils/web_stub.dart'
+    if (dart.library.html) 'package:invoiceninja_flutter/utils/web.dart';
 
 class DocumentGrid extends StatelessWidget {
   const DocumentGrid({
@@ -39,30 +42,42 @@ class DocumentGrid extends StatelessWidget {
             padding: const EdgeInsets.all(14),
             child: Row(
               children: <Widget>[
-                Expanded(
-                  child: ElevatedButton(
-                    iconData: Icons.camera_alt,
-                    label: localization.takePicture,
-                    onPressed: () async {
-                      final image = await ImagePicker.pickImage(
-                          source: ImageSource.camera);
-                      if (image != null) {
-                        onUploadDocument(image.path);
-                      }
-                    },
+                if (!kIsWeb)
+                  Expanded(
+                    child: ElevatedButton(
+                      iconData: Icons.camera_alt,
+                      label: localization.takePicture,
+                      onPressed: () async {
+                        final image = await ImagePicker()
+                            .getImage(source: ImageSource.camera);
+                        if (image != null && image.path != null) {
+                          onUploadDocument(image.path);
+                        }
+                      },
+                    ),
                   ),
-                ),
-                SizedBox(
-                  width: 14,
-                ),
+                if (!kIsWeb)
+                  SizedBox(
+                    width: 14,
+                  ),
                 Expanded(
                   child: ElevatedButton(
                     iconData: Icons.insert_drive_file,
                     label: localization.uploadFile,
                     onPressed: () async {
-                      final image = await ImagePicker.pickImage(
-                          source: ImageSource.gallery);
-                      onUploadDocument(image.path);
+                      String path;
+                      if (kIsWeb) {
+                        path = await webFilePicker();
+                      } else {
+                        final image = await ImagePicker()
+                            .getImage(source: ImageSource.gallery);
+                        if (image != null) {
+                          path = image.path;
+                        }
+                      }
+                      if (path != null) {
+                        onUploadDocument(path);
+                      }
                     },
                   ),
                 ),

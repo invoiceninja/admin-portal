@@ -352,7 +352,7 @@ class _CompanyDetailsState extends State<CompanyDetails>
                               if (kIsWeb) {
                                 path = await webFilePicker();
                               } else {
-                                final image = await ImagePicker.pickImage(
+                                final image = await ImagePicker().getImage(
                                     source: kReleaseMode
                                         ? ImageSource.gallery
                                         : ImageSource.camera);
