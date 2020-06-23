@@ -46,6 +46,7 @@ class FieldGrid extends StatelessWidget {
     }
 
     return Column(
+      mainAxisSize: MainAxisSize.min,
       children: <Widget>[
         Container(
           color: Theme.of(context).cardColor,
