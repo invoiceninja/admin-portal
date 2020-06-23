@@ -33,13 +33,16 @@ class EntityPresenter {
     switch (field) {
       case EntityFields.createdAt:
         return Text(formatDate(
-            convertTimestampToDateString(entity.createdAt), context));
+            convertTimestampToDateString(entity.createdAt), context,
+            showTime: true));
       case EntityFields.updatedAt:
         return Text(formatDate(
-            convertTimestampToDateString(entity.updatedAt), context));
+            convertTimestampToDateString(entity.updatedAt), context,
+            showTime: true));
       case EntityFields.archivedAt:
         return Text(formatDate(
-            convertTimestampToDateString(entity.archivedAt), context));
+            convertTimestampToDateString(entity.archivedAt), context,
+            showTime: true));
       case EntityFields.state:
         return Text(entity.isActive
             ? localization.active

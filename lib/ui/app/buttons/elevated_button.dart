@@ -28,7 +28,7 @@ class ElevatedButton extends StatelessWidget {
                 text: label,
                 alignment: MainAxisAlignment.center,
               )
-            : Text(label),
+            : Text(label, overflow: TextOverflow.ellipsis),
         textColor: Colors.white,
         elevation: 4.0,
         onPressed: () => onPressed(),

@@ -7,7 +7,6 @@ import 'package:flutter_redux/flutter_redux.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
-import 'package:invoiceninja_flutter/redux/document/document_selectors.dart';
 import 'package:invoiceninja_flutter/redux/expense/expense_actions.dart';
 import 'package:invoiceninja_flutter/redux/expense/expense_selectors.dart';
 import 'package:invoiceninja_flutter/redux/ui/list_ui_state.dart';
@@ -47,8 +46,6 @@ class ExpenseListBuilder extends StatelessWidget {
               final state = viewModel.state;
               final listUIState = state.getListState(EntityType.expense);
               final isInMultiselect = listUIState.isInMultiselect();
-              final documentMap = memoizedEntityDocumentMap(EntityType.expense,
-                  state.documentState.map, state.expenseState.map);
 
               void showDialog() => showEntityActionsDialog(
                     entities: [expense],
@@ -59,7 +56,6 @@ class ExpenseListBuilder extends StatelessWidget {
               return ExpenseListItem(
                 userCompany: viewModel.state.userCompany,
                 filter: viewModel.filter,
-                hasDocuments: documentMap[expense.id] == true,
                 expense: expense,
                 client: client,
                 vendor: vendor,

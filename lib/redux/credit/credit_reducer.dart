@@ -400,5 +400,9 @@ CreditState _setLoadedCredits(
     creditState.loadCredits(action.credits);
 
 CreditState _setLoadedCompany(
-        CreditState creditState, LoadCompanySuccess action) =>
-    creditState.loadCredits(action.userCompany.company.credits);
+    CreditState creditState, LoadCompanySuccess action) {
+  final company = action.userCompany.company;
+  return company.hasData
+      ? creditState.loadCredits(company.credits)
+      : creditState;
+}

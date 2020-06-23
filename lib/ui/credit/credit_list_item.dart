@@ -21,7 +21,6 @@ class CreditListItem extends StatelessWidget {
     @required this.credit,
     @required this.client,
     @required this.filter,
-    @required this.hasDocuments,
     this.onCheckboxChanged,
     this.isChecked = false,
   });
@@ -33,7 +32,6 @@ class CreditListItem extends StatelessWidget {
   final InvoiceEntity credit;
   final ClientEntity client;
   final String filter;
-  final bool hasDocuments;
   final Function(bool) onCheckboxChanged;
   final bool isChecked;
 
@@ -56,9 +54,6 @@ class CreditListItem extends StatelessWidget {
     String subtitle = '';
     if (credit.date.isNotEmpty) {
       subtitle = formatDate(credit.date, context);
-    }
-    if (hasDocuments) {
-      subtitle += '  📎';
     }
 
     return DismissibleEntity(
@@ -135,7 +130,10 @@ class CreditListItem extends StatelessWidget {
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: <Widget>[
-                            Text(client.displayName, style: textStyle),
+                            Text(client.displayName +
+                                (credit.documents.isNotEmpty
+                                    ? '  📎'
+                                    : ''), style: textStyle),
                             Text(
                               filterMatch ?? subtitle,
                               maxLines: 3,
@@ -213,7 +211,9 @@ class CreditListItem extends StatelessWidget {
                                           : credit.number) +
                                       ' • ' +
                                       formatDate(credit.date, context) +
-                                      (hasDocuments ? '  📎' : ''))
+                                      (credit.documents.isNotEmpty
+                                          ? '  📎'
+                                          : ''))
                                   .trim())
                               : Text(
                                   filterMatch,

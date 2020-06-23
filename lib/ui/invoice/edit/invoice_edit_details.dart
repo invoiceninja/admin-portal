@@ -235,7 +235,7 @@ class InvoiceEditDetailsState extends State<InvoiceEditDetails> {
                 label: company.getCustomFieldLabel(CustomFieldType.surcharge4),
                 keyboardType: TextInputType.numberWithOptions(decimal: true),
               ),
-            if (company.settings.enableFirstInvoiceTaxRate)
+            if (company.enableFirstInvoiceTaxRate)
               TaxRateDropdown(
                 onSelected: (taxRate) =>
                     viewModel.onChanged(invoice.applyTax(taxRate)),
@@ -243,7 +243,7 @@ class InvoiceEditDetailsState extends State<InvoiceEditDetails> {
                 initialTaxName: invoice.taxName1,
                 initialTaxRate: invoice.taxRate1,
               ),
-            if (company.settings.enableSecondInvoiceTaxRate)
+            if (company.enableSecondInvoiceTaxRate)
               TaxRateDropdown(
                 onSelected: (taxRate) => viewModel
                     .onChanged(invoice.applyTax(taxRate, isSecond: true)),
@@ -251,7 +251,7 @@ class InvoiceEditDetailsState extends State<InvoiceEditDetails> {
                 initialTaxName: invoice.taxName2,
                 initialTaxRate: invoice.taxRate2,
               ),
-            if (company.settings.enableThirdInvoiceTaxRate)
+            if (company.enableThirdInvoiceTaxRate)
               TaxRateDropdown(
                 onSelected: (taxRate) => viewModel
                     .onChanged(invoice.applyTax(taxRate, isThird: true)),

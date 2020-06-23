@@ -400,10 +400,6 @@ Middleware<AppState> _createAccountLoaded() {
 
       store.dispatch(SelectCompany(i));
       store.dispatch(LoadCompanySuccess(userCompany));
-
-      /*
-        stub
-       */
     }
 
     store.dispatch(SelectCompany(selectedCompanyIndex));

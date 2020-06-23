@@ -122,19 +122,16 @@ class CreditViewVM extends EntityViewVM {
         if (longPress || isMobile(context)) {
           viewEntity(context: context, entity: user);
         } else {
-          store.dispatch(FilterByEntity(
-              entityType: EntityType.user, entityId: user.id));
+          store.dispatch(
+              FilterByEntity(entityType: EntityType.user, entityId: user.id));
         }
       },
       onEntityAction: (BuildContext context, EntityAction action) =>
           handleCreditAction(context, [credit], action),
-      onUploadDocument: (BuildContext context, String path) {
+      onUploadDocument: (BuildContext context, String filePath) {
         final Completer<DocumentEntity> completer = Completer<DocumentEntity>();
-        final document = DocumentEntity().rebuild((b) => b
-          ..invoiceId = credit.id
-          ..path = path);
-        store.dispatch(
-            SaveDocumentRequest(document: document, completer: completer));
+        store.dispatch(SaveCreditDocumentRequest(
+            filePath: filePath, credit: credit, completer: completer));
         completer.future.then((client) {
           Scaffold.of(context).showSnackBar(SnackBar(
               content: SnackBarRow(

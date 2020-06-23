@@ -3,7 +3,6 @@ import 'dart:convert';
 import 'package:built_collection/built_collection.dart';
 import 'package:built_value/built_value.dart';
 import 'package:built_value/serializer.dart';
-import 'package:flutter/foundation.dart';
 import 'package:invoiceninja_flutter/constants.dart';
 import 'package:invoiceninja_flutter/data/models/account_model.dart';
 import 'package:invoiceninja_flutter/data/models/company_gateway_model.dart';
@@ -52,7 +51,6 @@ abstract class CompanyEntity extends Object
       companyKey: '',
       plan: '',
       settings: SettingsEntity(),
-      appUrl: '',
       sizeId: '',
       industryId: '',
       enabledModules: 0,
@@ -74,6 +72,8 @@ abstract class CompanyEntity extends Object
       enableCustomSurchargeTaxes2: false,
       enableCustomSurchargeTaxes3: false,
       enableCustomSurchargeTaxes4: false,
+      numberOfInvoiceTaxRates: 0,
+      numberOfItemTaxRates: 0,
       groups: BuiltList<GroupEntity>(),
       taxRates: BuiltList<TaxRateEntity>(),
       taskStatuses: BuiltList<TaskStatusEntity>(),
@@ -161,16 +161,17 @@ abstract class CompanyEntity extends Object
   @BuiltValueField(wireName: 'company_key')
   String get companyKey;
 
-  // TODO remove this
-  @nullable
-  @BuiltValueField(wireName: 'default_url')
-  String get appUrl;
-
   @BuiltValueField(wireName: 'first_day_of_week')
   String get firstDayOfWeek;
 
   @BuiltValueField(wireName: 'first_month_of_year')
   String get firstMonthOfYear;
+
+  @BuiltValueField(wireName: 'enabled_tax_rates')
+  int get numberOfInvoiceTaxRates;
+
+  @BuiltValueField(wireName: 'enabled_item_tax_rates')
+  int get numberOfItemTaxRates;
 
   BuiltList<GroupEntity> get groups;
 
@@ -255,6 +256,20 @@ abstract class CompanyEntity extends Object
 
   bool hasCustomField(String field) => getCustomFieldLabel(field).isNotEmpty;
 
+  bool get enableFirstInvoiceTaxRate => (numberOfInvoiceTaxRates ?? 0) >= 1;
+
+  bool get enableSecondInvoiceTaxRate => (numberOfInvoiceTaxRates ?? 0) >= 2;
+
+  bool get enableThirdInvoiceTaxRate => (numberOfInvoiceTaxRates ?? 0) >= 3;
+
+  bool get enableFirstItemTaxRate => (numberOfItemTaxRates ?? 0) >= 1;
+
+  bool get enableSecondItemTaxRate => (numberOfItemTaxRates ?? 0) >= 2;
+
+  bool get enableThirdItemTaxRate => (numberOfItemTaxRates ?? 0) >= 3;
+
+  bool get hasData => clients.isNotEmpty || products.isNotEmpty || tasks.isNotEmpty;
+
   bool get hasCustomSurcharge =>
       hasCustomField(CustomFieldType.surcharge1) ||
       hasCustomField(CustomFieldType.surcharge2) ||
@@ -306,22 +321,6 @@ abstract class CompanyEntity extends Object
       }
     }
   }
-
-  bool get isSelfHost {
-    if (!kReleaseMode || Config.DEMO_MODE) {
-      return true;
-    }
-
-    return appUrl != null &&
-        appUrl.isNotEmpty &&
-        appUrl != Constants.hostedApiUrl;
-  }
-
-  bool get isHosted => !isSelfHost;
-
-  bool get isProPlan => isSelfHost || plan == kPlanPro;
-
-  bool get isEnterprisePlan => isSelfHost || plan == kPlanEnterprise;
 
   // TODO make sure to clear everything
   CompanyEntity get coreCompany => rebuild((b) => b
@@ -873,12 +872,6 @@ abstract class SettingsEntity
       defaultQuoteFooter: clientSettings?.defaultQuoteFooter ??
           groupSettings?.defaultQuoteFooter ??
           companySettings?.defaultQuoteFooter,
-      numberOfInvoiceTaxRates: clientSettings?.numberOfInvoiceTaxRates ??
-          groupSettings?.numberOfInvoiceTaxRates ??
-          companySettings?.numberOfInvoiceTaxRates,
-      numberOfItemTaxRates: clientSettings?.numberOfItemTaxRates ??
-          groupSettings?.numberOfItemTaxRates ??
-          companySettings?.numberOfItemTaxRates,
       defaultInvoiceDesignId: clientSettings?.defaultInvoiceDesignId ??
           groupSettings?.defaultInvoiceDesignId ??
           companySettings?.defaultInvoiceDesignId,
@@ -1390,14 +1383,6 @@ abstract class SettingsEntity
   String get defaultCreditFooter;
 
   @nullable
-  @BuiltValueField(wireName: 'enabled_tax_rates')
-  int get numberOfInvoiceTaxRates;
-
-  @nullable
-  @BuiltValueField(wireName: 'enabled_item_tax_rates')
-  int get numberOfItemTaxRates;
-
-  @nullable
   @BuiltValueField(wireName: 'invoice_design_id')
   String get defaultInvoiceDesignId;
 
@@ -1773,18 +1758,6 @@ abstract class SettingsEntity
   @nullable
   @BuiltValueField(wireName: 'has_custom_design3_HIDDEN')
   bool get hasCustomDesign3;
-
-  bool get enableFirstInvoiceTaxRate => (numberOfInvoiceTaxRates ?? 0) >= 1;
-
-  bool get enableSecondInvoiceTaxRate => (numberOfInvoiceTaxRates ?? 0) >= 2;
-
-  bool get enableThirdInvoiceTaxRate => (numberOfInvoiceTaxRates ?? 0) >= 3;
-
-  bool get enableFirstItemTaxRate => (numberOfItemTaxRates ?? 0) >= 1;
-
-  bool get enableSecondItemTaxRate => (numberOfItemTaxRates ?? 0) >= 2;
-
-  bool get enableThirdItemTaxRate => (numberOfItemTaxRates ?? 0) >= 3;
 
   bool get hasAddress => address1 != null && address1.isNotEmpty;
 

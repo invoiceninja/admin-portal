@@ -401,7 +401,7 @@ class InvoiceEditDesktopState extends State<InvoiceEditDesktop>
                           surcharge3Controller: _surcharge3Controller,
                           surcharge4Controller: _surcharge4Controller,
                         ),
-                      if (company.settings.enableFirstInvoiceTaxRate)
+                      if (company.enableFirstInvoiceTaxRate)
                         TaxRateDropdown(
                           onSelected: (taxRate) =>
                               viewModel.onChanged(invoice.applyTax(taxRate)),
@@ -409,7 +409,7 @@ class InvoiceEditDesktopState extends State<InvoiceEditDesktop>
                           initialTaxName: invoice.taxName1,
                           initialTaxRate: invoice.taxRate1,
                         ),
-                      if (company.settings.enableSecondInvoiceTaxRate)
+                      if (company.enableSecondInvoiceTaxRate)
                         TaxRateDropdown(
                           onSelected: (taxRate) => viewModel.onChanged(
                               invoice.applyTax(taxRate, isSecond: true)),
@@ -417,7 +417,7 @@ class InvoiceEditDesktopState extends State<InvoiceEditDesktop>
                           initialTaxName: invoice.taxName2,
                           initialTaxRate: invoice.taxRate2,
                         ),
-                      if (company.settings.enableThirdInvoiceTaxRate)
+                      if (company.enableThirdInvoiceTaxRate)
                         TaxRateDropdown(
                           onSelected: (taxRate) => viewModel.onChanged(
                               invoice.applyTax(taxRate, isThird: true)),

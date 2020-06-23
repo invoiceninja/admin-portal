@@ -17,15 +17,14 @@ EntityUIState documentUIReducer(DocumentUIState state, dynamic action) {
 
 Reducer<String> selectedIdReducer = combineReducers([
   TypedReducer<String, ViewDocument>((selectedId, action) => action.documentId),
-  TypedReducer<String, AddDocumentSuccess>(
-      (selectedId, action) => action.document.id),
+  //TypedReducer<String, AddDocumentSuccess>((selectedId, action) => action.document.id),
   TypedReducer<String, SelectCompany>((selectedId, action) => ''),
   TypedReducer<String, ClearEntityFilter>((selectedId, action) => ''),
 ]);
 
 final editingReducer = combineReducers<DocumentEntity>([
   TypedReducer<DocumentEntity, SaveDocumentSuccess>(_updateEditing),
-  TypedReducer<DocumentEntity, AddDocumentSuccess>(_updateEditing),
+  //TypedReducer<DocumentEntity, AddDocumentSuccess>(_updateEditing),
   TypedReducer<DocumentEntity, RestoreDocumentSuccess>(_updateEditing),
   TypedReducer<DocumentEntity, ArchiveDocumentSuccess>(_updateEditing),
   TypedReducer<DocumentEntity, DeleteDocumentSuccess>(_updateEditing),
@@ -142,15 +141,15 @@ ListUIState _clearListMultiselect(
 
 final documentsReducer = combineReducers<DocumentState>([
   TypedReducer<DocumentState, SaveDocumentSuccess>(_updateDocument),
-  TypedReducer<DocumentState, AddDocumentSuccess>(_addDocument),
+  //TypedReducer<DocumentState, AddDocumentSuccess>(_addDocument),
   TypedReducer<DocumentState, LoadDocumentsSuccess>(_setLoadedDocuments),
   TypedReducer<DocumentState, LoadDocumentSuccess>(_setLoadedDocument),
   TypedReducer<DocumentState, ArchiveDocumentRequest>(_archiveDocumentRequest),
   TypedReducer<DocumentState, ArchiveDocumentSuccess>(_archiveDocumentSuccess),
   TypedReducer<DocumentState, ArchiveDocumentFailure>(_archiveDocumentFailure),
-  TypedReducer<DocumentState, DeleteDocumentRequest>(_deleteDocumentRequest),
+  //TypedReducer<DocumentState, DeleteDocumentRequest>(_deleteDocumentRequest),
   TypedReducer<DocumentState, DeleteDocumentSuccess>(_deleteDocumentSuccess),
-  TypedReducer<DocumentState, DeleteDocumentFailure>(_deleteDocumentFailure),
+  //TypedReducer<DocumentState, DeleteDocumentFailure>(_deleteDocumentFailure),
   TypedReducer<DocumentState, RestoreDocumentRequest>(_restoreDocumentRequest),
   TypedReducer<DocumentState, RestoreDocumentSuccess>(_restoreDocumentSuccess),
   TypedReducer<DocumentState, RestoreDocumentFailure>(_restoreDocumentFailure),
@@ -190,6 +189,7 @@ DocumentState _archiveDocumentFailure(
   });
 }
 
+/*
 DocumentState _deleteDocumentRequest(
     DocumentState documentState, DeleteDocumentRequest action) {
   final documents =
@@ -206,16 +206,14 @@ DocumentState _deleteDocumentRequest(
     }
   });
 }
+*/
 
 DocumentState _deleteDocumentSuccess(
     DocumentState documentState, DeleteDocumentSuccess action) {
-  return documentState.rebuild((b) {
-    for (final document in action.documents) {
-      b.map[document.id] = document;
-    }
-  });
+  return documentState.rebuild((b) => b..map.remove(action.documentId));
 }
 
+/*
 DocumentState _deleteDocumentFailure(
     DocumentState documentState, DeleteDocumentFailure action) {
   return documentState.rebuild((b) {
@@ -224,6 +222,7 @@ DocumentState _deleteDocumentFailure(
     }
   });
 }
+ */
 
 DocumentState _restoreDocumentRequest(
     DocumentState documentState, RestoreDocumentRequest action) {
@@ -260,12 +259,14 @@ DocumentState _restoreDocumentFailure(
   });
 }
 
+/*
 DocumentState _addDocument(
     DocumentState documentState, AddDocumentSuccess action) {
   return documentState.rebuild((b) => b
     ..map[action.document.id] = action.document
     ..list.add(action.document.id));
 }
+ */
 
 DocumentState _updateDocument(
     DocumentState documentState, SaveDocumentSuccess action) {

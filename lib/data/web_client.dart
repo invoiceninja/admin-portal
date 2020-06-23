@@ -7,7 +7,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:invoiceninja_flutter/.env.dart';
 import 'package:http/http.dart' as http;
 import 'package:invoiceninja_flutter/constants.dart';
-import 'package:async/async.dart';
 import 'package:invoiceninja_flutter/utils/strings.dart';
 import 'package:path/path.dart';
 
@@ -249,7 +248,7 @@ Future<http.Response> _uploadFile(String url, String token, String filePath,
         filename: 'file.$fileExt');
   } else {
     final file = File(filePath);
-    final stream = http.ByteStream(DelegatingStream.typed(file.openRead()));
+    final stream = http.ByteStream(file.openRead().cast());
     final length = await file.length();
     multipartFile = http.MultipartFile(fileIndex, stream, length,
         filename: basename(file.path));

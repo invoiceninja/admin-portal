@@ -541,6 +541,15 @@ abstract class AppState implements Built<AppState, AppStateBuilder> {
 
   bool get isSelfHosted => authState.isSelfHost ?? false;
 
+  bool get isWhiteLabeled =>
+      isSelfHosted || account.plan == kPlanWhiteLabel || !kReleaseMode;
+
+  bool get isProPlan =>
+      isSelfHosted || account.plan == kPlanPro || !kReleaseMode;
+
+  bool get isEnterprisePlan =>
+      isSelfHosted || account.plan == kPlanEnterprise || !kReleaseMode;
+
   bool get isMenuCollapsed =>
       (prefState.isNotMobile &&
           prefState.fullHeightFilter &&
@@ -551,7 +560,7 @@ abstract class AppState implements Built<AppState, AppStateBuilder> {
   @override
   String toString() {
     //return 'Token: ${userCompanyStates.map((state) => state.token.token).where((name) => name.isNotEmpty).first}';
-    return 'URL: ${authState.url}';
+    //return 'URL: ${authState.url}';
     return 'Layout: ${prefState.appLayout}, Route: ${uiState.currentRoute} Prev: ${uiState.previousRoute}';
   }
 }

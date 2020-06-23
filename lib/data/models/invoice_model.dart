@@ -68,6 +68,7 @@ class InvoiceFields {
   static const String frequencyId = 'frequency_id';
   static const String startDate = 'start_date';
   static const String endDate = 'end_date';
+  static const String documents = 'documents';
   static const String customValue1 = 'custom1';
   static const String customValue2 = 'custom2';
   static const String customValue3 = 'custom3';
@@ -130,6 +131,7 @@ abstract class InvoiceEntity extends Object
       filename: '',
       lineItems: BuiltList<InvoiceItemEntity>(),
       usesInclusiveTaxes: company?.settings?.enableInclusiveTaxes ?? false,
+      documents: BuiltList<DocumentEntity>(),
       invitations: client == null
           ? BuiltList<InvitationEntity>()
           : BuiltList(client.contacts
@@ -327,6 +329,8 @@ abstract class InvoiceEntity extends Object
 
   BuiltList<InvitationEntity> get invitations;
 
+  BuiltList<DocumentEntity> get documents;
+
   bool get isApproved => statusId == kQuoteStatusApproved;
 
   bool get hasClient => '${clientId ?? ''}'.isNotEmpty;
@@ -521,7 +525,10 @@ abstract class InvoiceEntity extends Object
           actions.add(EntityAction.sendEmail);
         }
 
-        if (!isQuote && userCompany.canCreate(EntityType.payment) && isUnpaid) {
+        if (!isQuote &&
+            userCompany.canCreate(EntityType.payment) &&
+            isUnpaid &&
+            !isCancelledOrReversed) {
           actions.add(EntityAction.newPayment);
         }
 
@@ -529,7 +536,7 @@ abstract class InvoiceEntity extends Object
           actions.add(EntityAction.markSent);
         }
 
-        if (!isQuote && !isPaid) {
+        if (!isQuote && !isPaid && !isCancelledOrReversed) {
           actions.add(EntityAction.markPaid);
         }
 
@@ -560,15 +567,12 @@ abstract class InvoiceEntity extends Object
 
     if (userCompany.canEditEntity(this)) {
       if (!isQuote && !isCredit && isSent) {
-        if (![
-          kInvoiceStatusReversed,
-          kInvoiceStatusCancelled,
-        ].contains(statusId)) {
+        if (!isCancelledOrReversed) {
           actions.add(EntityAction.cancel);
         }
 
         if (userCompany.company.isModuleEnabled(EntityType.credit) &&
-            statusId != kInvoiceStatusReversed) {
+            !isReversed) {
           actions.add(EntityAction.reverse);
         }
       }
@@ -629,12 +633,14 @@ abstract class InvoiceEntity extends Object
 
   bool get isPaid => statusId == kInvoiceStatusPaid;
 
+  bool get isReversed => statusId == kInvoiceStatusReversed;
+
+  bool get isCancelled => statusId == kInvoiceStatusCancelled;
+
+  bool get isCancelledOrReversed => isCancelled || isReversed;
+
   String get calculatedStatusId {
-    if (isPastDue &&
-        ![
-          kInvoiceStatusCancelled,
-          kInvoiceStatusReversed,
-        ].contains(statusId)) {
+    if (isPastDue && !isCancelledOrReversed) {
       return kInvoiceStatusPastDue;
     }
 

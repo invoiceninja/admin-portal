@@ -9,7 +9,7 @@ class Constants {
 }
 
 // TODO remove version once #46609 is fixed
-const String kAppVersion = '5.0.10';
+const String kAppVersion = '5.0.11';
 
 const String kSiteUrl = 'https://invoiceninja.com';
 //const String kAppProductionUrl = 'https://invoicing.co';
@@ -85,6 +85,7 @@ const String kPaymentTypeDiscover = '10';
 const String kPlanFree = '';
 const String kPlanPro = 'pro';
 const String kPlanEnterprise = 'enterprise';
+const String kPlanWhiteLabel = 'white_label';
 
 const double kGutterWidth = 16;
 

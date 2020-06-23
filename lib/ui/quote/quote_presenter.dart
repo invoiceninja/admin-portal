@@ -28,6 +28,7 @@ class QuotePresenter extends EntityPresenter {
       QuoteFields.poNumber,
       QuoteFields.publicNotes,
       QuoteFields.privateNotes,
+      QuoteFields.documents,
       QuoteFields.customValue1,
       QuoteFields.customValue2,
       QuoteFields.customValue3,
@@ -86,6 +87,8 @@ class QuotePresenter extends EntityPresenter {
                 formatNumberType: FormatNumberType.percent));
       case QuoteFields.poNumber:
         return Text(quote.poNumber);
+      case QuoteFields.documents:
+        return Text('${quote.documents.length}');
     }
 
     return super.getField(field: field, context: context);

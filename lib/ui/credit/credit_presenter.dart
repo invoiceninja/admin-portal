@@ -28,6 +28,7 @@ class CreditPresenter extends EntityPresenter {
       CreditFields.poNumber,
       CreditFields.publicNotes,
       CreditFields.privateNotes,
+      CreditFields.documents,
       CreditFields.customValue1,
       CreditFields.customValue2,
       CreditFields.customValue3,
@@ -85,6 +86,8 @@ class CreditPresenter extends EntityPresenter {
                 formatNumberType: FormatNumberType.percent));
       case CreditFields.poNumber:
         return Text(credit.poNumber);
+      case CreditFields.documents:
+        return Text('${credit.documents.length}');
     }
 
     return super.getField(field: field, context: context);

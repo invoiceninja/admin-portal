@@ -270,7 +270,7 @@ class ItemEditDetailsState extends State<ItemEditDetails> {
                         TextInputType.numberWithOptions(decimal: true),
                   )
                 : Container(),
-            if (company.settings.enableFirstItemTaxRate)
+            if (company.enableFirstItemTaxRate)
               TaxRateDropdown(
                 onSelected: (taxRate) {
                   setState(() {
@@ -282,7 +282,7 @@ class ItemEditDetailsState extends State<ItemEditDetails> {
                 initialTaxName: _taxRate1.name,
                 initialTaxRate: _taxRate1.rate,
               ),
-            if (company.settings.enableSecondItemTaxRate)
+            if (company.enableSecondItemTaxRate)
               TaxRateDropdown(
                 onSelected: (taxRate) {
                   setState(() {
@@ -294,7 +294,7 @@ class ItemEditDetailsState extends State<ItemEditDetails> {
                 initialTaxName: _taxRate2.name,
                 initialTaxRate: _taxRate2.rate,
               ),
-            if (company.settings.enableThirdItemTaxRate)
+            if (company.enableThirdItemTaxRate)
               TaxRateDropdown(
                 onSelected: (taxRate) {
                   setState(() {

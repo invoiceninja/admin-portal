@@ -21,7 +21,6 @@ class QuoteListItem extends StatelessWidget {
     @required this.quote,
     @required this.client,
     @required this.filter,
-    @required this.hasDocuments,
     this.onCheckboxChanged,
     this.isChecked = false,
   });
@@ -33,7 +32,6 @@ class QuoteListItem extends StatelessWidget {
   final InvoiceEntity quote;
   final ClientEntity client;
   final String filter;
-  final bool hasDocuments;
   final Function(bool) onCheckboxChanged;
   final bool isChecked;
 
@@ -62,9 +60,6 @@ class QuoteListItem extends StatelessWidget {
         subtitle += ' • ';
       }
       subtitle += formatDate(quote.dueDate, context);
-    }
-    if (hasDocuments) {
-      subtitle += '  📎';
     }
 
     return DismissibleEntity(
@@ -142,7 +137,12 @@ class QuoteListItem extends StatelessWidget {
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: <Widget>[
-                              Text(client.displayName, style: textStyle),
+                              Text(
+                                  client.displayName +
+                                      (quote.documents.isNotEmpty
+                                          ? '  📎'
+                                          : ''),
+                                  style: textStyle),
                               Text(
                                 filterMatch ?? subtitle,
                                 maxLines: 3,
@@ -224,7 +224,9 @@ class QuoteListItem extends StatelessWidget {
                                                 ? quote.dueDate
                                                 : quote.date,
                                             context) +
-                                        (hasDocuments ? '  📎' : ''))
+                                        (quote.documents.isNotEmpty
+                                            ? '  📎'
+                                            : ''))
                                     .trim())
                                 : Text(
                                     filterMatch,

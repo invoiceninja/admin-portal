@@ -200,6 +200,8 @@ Middleware<AppState> _createRefreshRequest(AuthRepository repository) {
         formatApiUrl(prefs.getString(kSharedPrefUrl) ?? Config.TEST_URL);
     final token = prefs.getString(kSharedPrefToken);
 
+    store.dispatch(UserLoadUrl(url: url));
+
     repository.refresh(url: url, token: token).then((data) {
       store.dispatch(LoadAccountSuccess(
         completer: action.completer,

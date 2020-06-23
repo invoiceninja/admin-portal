@@ -102,6 +102,7 @@ abstract class ExpenseEntity extends Object
       invoiceCurrencyId: (client != null && client.hasCurrency)
           ? client.settings.currencyId // TODO handle group currency
           : (state?.company?.currencyId ?? kDefaultCurrencyId),
+      documents: BuiltList<DocumentEntity>(),
       taxName1: '',
       taxName2: '',
       taxRate1: 0,
@@ -235,6 +236,8 @@ abstract class ExpenseEntity extends Object
   @nullable
   @BuiltValueField(wireName: 'custom_value4')
   String get customValue4;
+
+  BuiltList<DocumentEntity> get documents;
 
   @override
   List<EntityAction> getActions(

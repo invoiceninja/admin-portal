@@ -21,7 +21,6 @@ List<Middleware<AppState>> createStoreDocumentsMiddleware([
   final editDocument = _editDocument();
   final loadDocuments = _loadDocuments(repository);
   final loadDocument = _loadDocument(repository);
-  final saveDocument = _saveDocument(repository);
   final archiveDocument = _archiveDocument(repository);
   final deleteDocument = _deleteDocument(repository);
   final restoreDocument = _restoreDocument(repository);
@@ -32,7 +31,6 @@ List<Middleware<AppState>> createStoreDocumentsMiddleware([
     TypedMiddleware<AppState, EditDocument>(editDocument),
     TypedMiddleware<AppState, LoadDocuments>(loadDocuments),
     TypedMiddleware<AppState, LoadDocument>(loadDocument),
-    TypedMiddleware<AppState, SaveDocumentRequest>(saveDocument),
     TypedMiddleware<AppState, ArchiveDocumentRequest>(archiveDocument),
     TypedMiddleware<AppState, DeleteDocumentRequest>(deleteDocument),
     TypedMiddleware<AppState, RestoreDocumentRequest>(restoreDocument),
@@ -114,6 +112,23 @@ Middleware<AppState> _archiveDocument(DocumentRepository repository) {
 Middleware<AppState> _deleteDocument(DocumentRepository repository) {
   return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
     final action = dynamicAction as DeleteDocumentRequest;
+
+    repository
+        .delete(store.state.credentials, action.documentIds.first)
+        .then((value) {
+      store.dispatch(DeleteDocumentSuccess());
+      if (action.completer != null) {
+        action.completer.complete(null);
+      }
+    }).catchError((Object error) {
+      print(error);
+      store.dispatch(DeleteDocumentFailure());
+      if (action.completer != null) {
+        action.completer.completeError(error);
+      }
+    });
+
+    /*
     final prevDocuments = action.documentIds
         .map((id) => store.state.documentState.map[id])
         .toList();
@@ -132,7 +147,8 @@ Middleware<AppState> _deleteDocument(DocumentRepository repository) {
       if (action.completer != null) {
         action.completer.completeError(error);
       }
-    });
+    });    
+     */
 
     next(action);
   };
@@ -160,34 +176,6 @@ Middleware<AppState> _restoreDocument(DocumentRepository repository) {
         action.completer.completeError(error);
       }
     });
-
-    next(action);
-  };
-}
-
-Middleware<AppState> _saveDocument(DocumentRepository repository) {
-  return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
-    final action = dynamicAction as SaveDocumentRequest;
-    if (store.state.company.isEnterprisePlan) {
-      repository
-          .saveData(store.state.credentials, action.document)
-          .then((DocumentEntity document) {
-        if (action.document.isNew) {
-          store.dispatch(AddDocumentSuccess(document));
-        } else {
-          store.dispatch(SaveDocumentSuccess(document));
-        }
-        action.completer.complete(document);
-      }).catchError((Object error) {
-        print(error);
-        store.dispatch(SaveDocumentFailure(error));
-        action.completer.completeError(error);
-      });
-    } else {
-      const error = 'Uploading documents requires an enterprise plan';
-      store.dispatch(SaveDocumentFailure(error));
-      action.completer.completeError(error);
-    }
 
     next(action);
   };

@@ -1,14 +1,8 @@
-import 'dart:async';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
-import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
-import 'package:invoiceninja_flutter/redux/ui/ui_actions.dart';
-import 'package:invoiceninja_flutter/utils/platforms.dart';
 import 'package:redux/redux.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
-import 'package:invoiceninja_flutter/ui/app/dialogs/error_dialog.dart';
-import 'package:invoiceninja_flutter/ui/document/view/document_view_vm.dart';
 import 'package:invoiceninja_flutter/redux/document/document_actions.dart';
 import 'package:invoiceninja_flutter/data/models/document_model.dart';
 import 'package:invoiceninja_flutter/ui/document/edit/document_edit.dart';
@@ -60,6 +54,7 @@ class DocumentEditVM {
         store.dispatch(UpdateDocument(document));
       },
       onSavePressed: (BuildContext context) {
+        /*
         final Completer<DocumentEntity> completer =
             new Completer<DocumentEntity>();
         store.dispatch(
@@ -87,6 +82,7 @@ class DocumentEditVM {
                 return ErrorDialog(error);
               });
         });
+         */
       },
     );
   }

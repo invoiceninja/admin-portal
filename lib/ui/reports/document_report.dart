@@ -73,10 +73,6 @@ ReportResult documentReport(
 
   for (var documentId in documentMap.keys) {
     final document = documentMap[documentId];
-    final invoice = invoiceMap[document.invoiceId];
-    final expense = expenseMap[document.expenseId];
-    final project = projectMap[document.projectId];
-    final vendor = vendorMap[document.vendorId];
 
     if (document.isDeleted) {
       continue;
@@ -86,8 +82,9 @@ ReportResult documentReport(
     final List<ReportElement> row = [];
 
     for (var column in columns) {
-      dynamic value = '';
+      const value = '';
 
+      /*
       switch (column) {
         case DocumentReportFields.name:
           value = document.name;
@@ -95,28 +92,8 @@ ReportResult documentReport(
         case DocumentReportFields.type:
           value = document.type;
           break;
-        case DocumentReportFields.invoice:
-          value = invoice.listDisplayName;
-          break;
-        case DocumentReportFields.invoice_amount:
-          value = invoice.amount;
-          break;
-        case DocumentReportFields.invoice_date:
-          value = invoice.date;
-          break;
-        case DocumentReportFields.invoice_due_date:
-          value = invoice.dueDate;
-          break;
-        case DocumentReportFields.expense:
-          value = expense.listDisplayName;
-          break;
-        case DocumentReportFields.project:
-          value = project.listDisplayName;
-          break;
-        case DocumentReportFields.vendor:
-          value = vendor.listDisplayName;
-          break;
       }
+       */
 
       if (!ReportResult.matchField(
         value: value,
@@ -128,9 +105,9 @@ ReportResult documentReport(
       }
 
       if (value.runtimeType == bool) {
-        row.add(document.getReportBool(value: value));
+        //row.add(document.getReportBool(value: value));
       } else if (value.runtimeType == double || value.runtimeType == int) {
-        row.add(document.getReportNumber(value: value));
+        //row.add(document.getReportNumber(value: value));
       } else {
         row.add(document.getReportString(value: value));
       }

@@ -113,7 +113,7 @@ class ExpenseEditSettingsState extends State<ExpenseEditSettings> {
       children: <Widget>[
         FormCard(
           children: <Widget>[
-            if (company.settings.enableFirstItemTaxRate)
+            if (company.enableFirstItemTaxRate)
               TaxRateDropdown(
                 onSelected: (taxRate) =>
                     viewModel.onChanged(expense.rebuild((b) => b
@@ -123,7 +123,7 @@ class ExpenseEditSettingsState extends State<ExpenseEditSettings> {
                 initialTaxName: expense.taxName1,
                 initialTaxRate: expense.taxRate1,
               ),
-            if (company.settings.enableSecondItemTaxRate)
+            if (company.enableSecondItemTaxRate)
               TaxRateDropdown(
                 onSelected: (taxRate) =>
                     viewModel.onChanged(expense.rebuild((b) => b
@@ -133,7 +133,7 @@ class ExpenseEditSettingsState extends State<ExpenseEditSettings> {
                 initialTaxName: expense.taxName2,
                 initialTaxRate: expense.taxRate2,
               ),
-            if (company.settings.enableThirdItemTaxRate)
+            if (company.enableThirdItemTaxRate)
               TaxRateDropdown(
                 onSelected: (taxRate) =>
                     viewModel.onChanged(expense.rebuild((b) => b

@@ -7,7 +7,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_redux/flutter_redux.dart';
-import 'package:invoiceninja_flutter/redux/document/document_selectors.dart';
 import 'package:invoiceninja_flutter/redux/invoice/invoice_actions.dart';
 import 'package:invoiceninja_flutter/redux/ui/list_ui_state.dart';
 import 'package:invoiceninja_flutter/ui/app/entities/entity_actions_dialog.dart';
@@ -31,10 +30,6 @@ class CreditListBuilder extends StatelessWidget {
     return StoreConnector<AppState, CreditListVM>(
         converter: CreditListVM.fromStore,
         builder: (context, viewModel) {
-          final state = viewModel.state;
-          final documentMap = memoizedEntityDocumentMap(EntityType.credit,
-              state.documentState.map, state.expenseState.map);
-
           return EntityList(
               isLoaded: viewModel.isLoaded,
               entityType: EntityType.credit,
@@ -65,7 +60,6 @@ class CreditListBuilder extends StatelessWidget {
                 return CreditListItem(
                   user: viewModel.user,
                   filter: viewModel.filter,
-                  hasDocuments: documentMap[invoice.id] == true,
                   credit: invoice,
                   client:
                       viewModel.clientMap[invoice.clientId] ?? ClientEntity(),

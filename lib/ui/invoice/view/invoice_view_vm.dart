@@ -155,8 +155,8 @@ class InvoiceViewVM extends EntityViewVM {
         if (longPress || isMobile(context)) {
           viewEntity(context: context, entity: user);
         } else {
-          store.dispatch(FilterByEntity(
-              entityType: EntityType.user, entityId: user.id));
+          store.dispatch(
+              FilterByEntity(entityType: EntityType.user, entityId: user.id));
         }
       },
       onPaymentPressed: (BuildContext context, payment,
@@ -176,13 +176,10 @@ class InvoiceViewVM extends EntityViewVM {
       },
       onEntityAction: (BuildContext context, EntityAction action) =>
           handleInvoiceAction(context, [invoice], action),
-      onUploadDocument: (BuildContext context, String path) {
+      onUploadDocument: (BuildContext context, String filePath) {
         final Completer<DocumentEntity> completer = Completer<DocumentEntity>();
-        final document = DocumentEntity().rebuild((b) => b
-          ..invoiceId = invoice.id
-          ..path = path);
-        store.dispatch(
-            SaveDocumentRequest(document: document, completer: completer));
+        store.dispatch(SaveInvoiceDocumentRequest(
+            filePath: filePath, invoice: invoice, completer: completer));
         completer.future.then((client) {
           Scaffold.of(context).showSnackBar(SnackBar(
               content: SnackBarRow(
@@ -197,16 +194,19 @@ class InvoiceViewVM extends EntityViewVM {
         });
       },
       onDeleteDocument: (BuildContext context, DocumentEntity document) {
-        store.dispatch(DeleteDocumentRequest(
-            snackBarCompleter<Null>(
-                context, AppLocalization.of(context).deletedDocument),
-            [document.id]));
+        final completer = snackBarCompleter<Null>(
+            context, AppLocalization.of(context).deletedDocument);
+        completer.future.then<Null>(
+            (value) => store.dispatch(LoadInvoice(invoiceId: invoice.id)));
+        store.dispatch(DeleteDocumentRequest(completer, [document.id]));
       },
       onViewExpense: (BuildContext context, DocumentEntity document) {
+        /*
         viewEntityById(
             context: context,
             entityId: document.expenseId,
             entityType: EntityType.expense);
+         */
       },
     );
   }

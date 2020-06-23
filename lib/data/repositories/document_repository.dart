@@ -54,44 +54,10 @@ class DocumentRepository {
     return documentResponse.data.toList();
   }
 
-  Future<DocumentEntity> saveData(
-      Credentials credentials, DocumentEntity document) async {
-    dynamic response;
+  Future<bool> delete(Credentials credentials, String documentId) async {
+    await webClient.delete(
+        '${credentials.url}/documents/$documentId', credentials.token);
 
-    if (document.isNew) {
-      final fields = <String, String>{};
-      if (document.expenseId != null && document.expenseId.isNotEmpty) {
-        fields['expense_id'] = '${document.expenseId}';
-      } else {
-        fields['invoice_id'] = '${document.invoiceId}';
-      }
-
-      response = await webClient.post(
-          '${credentials.url}/documents', credentials.token,
-          data: fields, filePath: document.path);
-    } else {
-      final data =
-          serializers.serializeWith(DocumentEntity.serializer, document);
-      final url = '${credentials.url}/documents/${document.id}?';
-      response =
-          await webClient.put(url, credentials.token, data: json.encode(data));
-
-      /*
-      if (action == EntityAction.delete) {
-        response = await webClient.delete(url, credentials.token);
-      } else {
-        if (action != null) {
-          url += '&action=$action';
-        }
-        response = await webClient.put(url, credentials.token,
-            data: json.encode(data));
-      }
-       */
-    }
-
-    final DocumentItemResponse documentResponse =
-        serializers.deserializeWith(DocumentItemResponse.serializer, response);
-
-    return documentResponse.data;
+    return true;
   }
 }

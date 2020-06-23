@@ -1,26 +1,29 @@
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/ui/app/buttons/elevated_button.dart';
-import 'package:invoiceninja_flutter/ui/app/form_card.dart';
 import 'package:invoiceninja_flutter/ui/app/lists/list_divider.dart';
 import 'package:invoiceninja_flutter/utils/dialogs.dart';
 import 'package:invoiceninja_flutter/utils/formatting.dart';
 import 'package:invoiceninja_flutter/utils/icons.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
+import 'package:url_launcher/url_launcher.dart';
+import 'package:invoiceninja_flutter/utils/web_stub.dart'
+    if (dart.library.html) 'package:invoiceninja_flutter/utils/web.dart';
 
 class DocumentGrid extends StatelessWidget {
   const DocumentGrid({
-    @required this.documentIds,
+    @required this.documents,
     @required this.onUploadDocument,
     @required this.onDeleteDocument,
     @required this.onViewExpense,
   });
 
-  final List<String> documentIds;
+  final List<DocumentEntity> documents;
   final Function(String) onUploadDocument;
   final Function(DocumentEntity) onDeleteDocument;
   final Function(DocumentEntity) onViewExpense;
@@ -29,39 +32,51 @@ class DocumentGrid extends StatelessWidget {
   Widget build(BuildContext context) {
     final localization = AppLocalization.of(context);
     final state = StoreProvider.of<AppState>(context).state;
-    final company = state.company;
 
     return ListView(
+      shrinkWrap: true,
       children: [
-        if (company.isEnterprisePlan)
+        if (state.isEnterprisePlan)
           Padding(
             padding: const EdgeInsets.all(14),
             child: Row(
               children: <Widget>[
-                Expanded(
-                  child: ElevatedButton(
-                    iconData: Icons.camera_alt,
-                    label: localization.takePicture,
-                    onPressed: () async {
-                      final image = await ImagePicker.pickImage(
-                          source: ImageSource.camera);
-                      if (image != null) {
-                        onUploadDocument(image.path);
-                      }
-                    },
+                if (!kIsWeb)
+                  Expanded(
+                    child: ElevatedButton(
+                      iconData: Icons.camera_alt,
+                      label: localization.takePicture,
+                      onPressed: () async {
+                        final image = await ImagePicker()
+                            .getImage(source: ImageSource.camera);
+                        if (image != null && image.path != null) {
+                          onUploadDocument(image.path);
+                        }
+                      },
+                    ),
                   ),
-                ),
-                SizedBox(
-                  width: 14,
-                ),
+                if (!kIsWeb)
+                  SizedBox(
+                    width: 14,
+                  ),
                 Expanded(
                   child: ElevatedButton(
                     iconData: Icons.insert_drive_file,
                     label: localization.uploadFile,
                     onPressed: () async {
-                      final image = await ImagePicker.pickImage(
-                          source: ImageSource.gallery);
-                      onUploadDocument(image.path);
+                      String path;
+                      if (kIsWeb) {
+                        path = await webFilePicker();
+                      } else {
+                        final image = await ImagePicker()
+                            .getImage(source: ImageSource.gallery);
+                        if (image != null) {
+                          path = image.path;
+                        }
+                      }
+                      if (path != null) {
+                        onUploadDocument(path);
+                      }
                     },
                   ),
                 ),
@@ -85,13 +100,12 @@ class DocumentGrid extends StatelessWidget {
           shrinkWrap: true,
           primary: true,
           crossAxisCount: 2,
-          children: documentIds
-              .map((documentId) => DocumentTile(
-                    document: state.documentState.map[documentId],
+          children: documents
+              .map((document) => DocumentTile(
+                    document: document,
                     onDeleteDocument: onDeleteDocument,
                     onViewExpense: onViewExpense,
-                    isFromExpense: onViewExpense != null &&
-                        state.documentState.map[documentId].isExpenseDocument,
+                    isFromExpense: false,
                   ))
               .toList(),
         ),
@@ -116,67 +130,44 @@ class DocumentTile extends StatelessWidget {
   void showDocumentModal(BuildContext context) {
     showDialog<Column>(
         context: context,
-        barrierDismissible: true,
         builder: (BuildContext context) {
           final localization = AppLocalization.of(context);
 
-          return ListView(
-            shrinkWrap: true,
-            children: <Widget>[
-              SizedBox(height: 10),
-              FormCard(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: <Widget>[
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.end,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: <Widget>[
-                      isFromExpense
-                          ? ElevatedButton(
-                              iconData: getEntityIcon(EntityType.expense),
-                              label: localization.expense,
-                              onPressed: () {
-                                Navigator.of(context).pop();
-                                onViewExpense(document);
-                              },
-                            )
-                          : ElevatedButton(
-                              color: Colors.red,
-                              iconData: Icons.delete,
-                              label: localization.delete,
-                              onPressed: () {
-                                confirmCallback(
-                                    context: context,
-                                    callback: () {
-                                      onDeleteDocument(document);
-                                      Navigator.pop(context);
-                                    });
-                              },
-                            ),
-                      SizedBox(
-                        width: 16,
-                      ),
-                      ElevatedButton(
-                        iconData: Icons.check_circle,
-                        label: localization.done,
-                        onPressed: () {
-                          Navigator.of(context).pop();
-                        },
-                      ),
-                    ],
-                  ),
-                  SizedBox(height: 25),
-                  Text(document.name,
-                      overflow: TextOverflow.ellipsis,
-                      style: Theme.of(context).textTheme.headline5),
-                  Text(
-                    '${formatDate(convertTimestampToDateString(document.createdAt), context)} • ${document.prettySize}',
-                    style: Theme.of(context).textTheme.headline5,
-                  ),
-                  SizedBox(height: 20),
-                  DocumentPreview(document),
-                ],
-              )
+          return AlertDialog(
+            title: Text(document.name),
+            actions: [
+              FlatButton(
+                child: Text(localization.download.toUpperCase()),
+                onPressed: () {
+                  launch(document.url,
+                      forceWebView: false, forceSafariVC: false);
+                },
+              ),
+              isFromExpense
+                  ? FlatButton(
+                      child: Text(localization.expense.toUpperCase()),
+                      onPressed: () {
+                        Navigator.of(context).pop();
+                        onViewExpense(document);
+                      },
+                    )
+                  : FlatButton(
+                      child: Text(localization.delete.toUpperCase()),
+                      onPressed: () {
+                        confirmCallback(
+                            context: context,
+                            callback: () {
+                              onDeleteDocument(document);
+                              Navigator.pop(context);
+                            });
+                      },
+                    ),
+              FlatButton(
+                child: Text(localization.close.toUpperCase()),
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+              ),
             ],
           );
         });
@@ -201,13 +192,13 @@ class DocumentTile extends StatelessWidget {
                     height: 120,
                   ),
                   Padding(
-                    padding: EdgeInsets.all(8),
+                    padding: const EdgeInsets.all(4),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: <Widget>[
                         Text(
                           document.name ?? '',
-                          style: Theme.of(context).textTheme.headline5,
+                          style: Theme.of(context).textTheme.headline6,
                           overflow: TextOverflow.ellipsis,
                         ),
                         Text(
@@ -236,16 +227,14 @@ class DocumentPreview extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final state = StoreProvider.of<AppState>(context).state;
-
-    return document.preview != null && document.preview.isNotEmpty
+    return ['png', 'jpg', 'jpeg'].contains(document.type)
         ? CachedNetworkImage(
             height: height,
             width: double.infinity,
             fit: BoxFit.cover,
             key: ValueKey(document.preview),
-            imageUrl: document.previewUrl(state.credentials.url),
-            httpHeaders: {'X-API-TOKEN': state.credentials.token},
+            imageUrl: document.url,
+            //httpHeaders: {'X-API-TOKEN': state.credentials.token},
             placeholder: (context, url) => Container(
                   height: height,
                   child: Center(

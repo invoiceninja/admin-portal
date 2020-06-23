@@ -45,6 +45,7 @@ class _TaxSettingsState extends State<TaxSettings> {
     final localization = AppLocalization.of(context);
     final viewModel = widget.viewModel;
     final settings = viewModel.settings;
+    final company = viewModel.company;
     final state = viewModel.state;
 
     return EditScaffold(
@@ -58,15 +59,15 @@ class _TaxSettingsState extends State<TaxSettings> {
             children: <Widget>[
               NumberOfRatesSelector(
                 label: localization.invoiceTaxRates,
-                numberOfRates: settings.numberOfInvoiceTaxRates,
-                onChanged: (value) => viewModel.onSettingsChanged(settings
+                numberOfRates: company.numberOfInvoiceTaxRates,
+                onChanged: (value) => viewModel.onCompanyChanged(company
                     .rebuild((b) => b..numberOfInvoiceTaxRates = value)),
               ),
               NumberOfRatesSelector(
                 label: localization.itemTaxRates,
-                numberOfRates: settings.numberOfItemTaxRates,
-                onChanged: (value) => viewModel.onSettingsChanged(
-                    settings.rebuild((b) => b..numberOfItemTaxRates = value)),
+                numberOfRates: company.numberOfItemTaxRates,
+                onChanged: (value) => viewModel.onCompanyChanged(
+                    company.rebuild((b) => b..numberOfItemTaxRates = value)),
               ),
               SizedBox(height: 16),
               BoolDropdownButton(
@@ -80,7 +81,7 @@ class _TaxSettingsState extends State<TaxSettings> {
               ),
             ],
           ),
-          if (settings.enableFirstInvoiceTaxRate &&
+          if (company.enableFirstInvoiceTaxRate &&
               state.taxRateState.list.isNotEmpty)
             FormCard(
               children: <Widget>[
@@ -93,7 +94,7 @@ class _TaxSettingsState extends State<TaxSettings> {
                   initialTaxName: settings.defaultTaxName1,
                   initialTaxRate: settings.defaultTaxRate1,
                 ),
-                if (settings.enableSecondInvoiceTaxRate)
+                if (company.enableSecondInvoiceTaxRate)
                   TaxRateDropdown(
                     onSelected: (taxRate) =>
                         viewModel.onSettingsChanged(settings.rebuild((b) => b
@@ -103,7 +104,7 @@ class _TaxSettingsState extends State<TaxSettings> {
                     initialTaxName: settings.defaultTaxName2,
                     initialTaxRate: settings.defaultTaxRate2,
                   ),
-                if (settings.enableThirdInvoiceTaxRate)
+                if (company.enableThirdInvoiceTaxRate)
                   TaxRateDropdown(
                     onSelected: (taxRate) =>
                         viewModel.onSettingsChanged(settings.rebuild((b) => b
