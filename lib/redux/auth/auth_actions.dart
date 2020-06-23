@@ -39,6 +39,12 @@ class OAuthLoginRequest implements StartLoading {
   final String oneTimePassword;
 }
 
+class UserLoadUrl {
+  UserLoadUrl({this.url});
+
+  final String url;
+}
+
 class UserLoginRequest implements StartLoading {
   UserLoginRequest(
       {@required this.completer,
