@@ -541,11 +541,14 @@ abstract class AppState implements Built<AppState, AppStateBuilder> {
 
   bool get isSelfHosted => authState.isSelfHost ?? false;
 
-  bool get isWhiteLabeled => isSelfHosted || account.plan == kPlanWhiteLabel;
+  bool get isWhiteLabeled =>
+      isSelfHosted || account.plan == kPlanWhiteLabel || !kReleaseMode;
 
-  bool get isProPlan => isSelfHosted || account.plan == kPlanPro;
+  bool get isProPlan =>
+      isSelfHosted || account.plan == kPlanPro || !kReleaseMode;
 
-  bool get isEnterprisePlan => isSelfHosted || account.plan == kPlanEnterprise;
+  bool get isEnterprisePlan =>
+      isSelfHosted || account.plan == kPlanEnterprise || !kReleaseMode;
 
   bool get isMenuCollapsed =>
       (prefState.isNotMobile &&
