@@ -11,7 +11,6 @@ import 'package:invoiceninja_flutter/utils/dialogs.dart';
 import 'package:invoiceninja_flutter/utils/formatting.dart';
 import 'package:invoiceninja_flutter/utils/icons.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
-import 'package:url_launcher/url_launcher.dart';
 import 'package:invoiceninja_flutter/utils/web_stub.dart'
     if (dart.library.html) 'package:invoiceninja_flutter/utils/web.dart';
 
@@ -136,6 +135,7 @@ class DocumentTile extends StatelessWidget {
           return AlertDialog(
             title: Text(document.name),
             actions: [
+              /*
               FlatButton(
                 child: Text(localization.download.toUpperCase()),
                 onPressed: () {
@@ -143,6 +143,7 @@ class DocumentTile extends StatelessWidget {
                       forceWebView: false, forceSafariVC: false);
                 },
               ),
+               */
               isFromExpense
                   ? FlatButton(
                       child: Text(localization.expense.toUpperCase()),
