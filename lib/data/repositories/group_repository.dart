@@ -44,7 +44,7 @@ class GroupRepository {
 
   Future<List<GroupEntity>> bulkAction(
       Credentials credentials, List<String> ids, EntityAction action) async {
-    final url = credentials.url + '/groups/bulk';
+    final url = credentials.url + '/group_settings/bulk';
     final dynamic response = await webClient.post(url, credentials.token,
         data: json.encode({'ids': ids, 'action': '$action'}));
 
