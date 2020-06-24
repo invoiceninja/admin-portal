@@ -8,6 +8,7 @@ import 'package:invoiceninja_flutter/data/models/company_model.dart';
 import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:invoiceninja_flutter/redux/auth/auth_actions.dart';
 import 'package:invoiceninja_flutter/redux/company/company_actions.dart';
+import 'package:invoiceninja_flutter/redux/dashboard/dashboard_actions.dart';
 import 'package:invoiceninja_flutter/ui/app/dialogs/error_dialog.dart';
 import 'package:invoiceninja_flutter/ui/settings/account_management.dart';
 import 'package:invoiceninja_flutter/utils/completers.dart';
@@ -66,6 +67,7 @@ class AccountManagementVM {
                   }
                 }
                 store.dispatch(SelectCompany(index));
+                store.dispatch(ViewDashboard(navigator: Navigator.of(context)));
               } else {
                 store.dispatch(UserLogout(context));
               }

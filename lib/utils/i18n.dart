@@ -122,10 +122,10 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'apply_license': 'Apply License',
       'cancel_account': 'Delete Account',
       'cancel_account_message':
-          'Warning: This will permanently delete your account, there is no undo.',
+          'Warning: This will permanently delete your account [:company], there is no undo',
       'delete_company': 'Delete Company',
       'delete_company_message':
-          'Warning: This will permanently delete your company, there is no undo.',
+          'Warning: This will permanently delete your company [:company], there is no undo',
       'enable_modules': 'Enable Modules',
       'converted_quote': 'Successfully converted quote',
       'credit_design': 'Credit Design',
