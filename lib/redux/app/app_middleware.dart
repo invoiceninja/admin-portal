@@ -184,10 +184,10 @@ Middleware<AppState> _createLoadState(
 
       //final packageInfo = await PackageInfo.fromPlatform();
       //prefs.setString(kSharedPrefAppVersion, packageInfo.version);
-      prefs.setString(kSharedPrefAppVersion, kAppVersion);
+      prefs.setString(kSharedPrefAppVersion, kClientVersion);
 
       //if (appVersion != packageInfo.version) {
-      if (appVersion != kAppVersion) {
+      if (appVersion != kClientVersion) {
         throw 'New app version - clearing state';
       }
 

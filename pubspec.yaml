@@ -52,6 +52,7 @@ dependencies:
   device_info: ^0.4.2+1
   rounded_loading_button: ^1.0.0
   #quick_actions: ^0.2.1
+  version: ^1.0.0
 
 dependency_overrides:
   # Error: No named parameter with the name 'animation'
