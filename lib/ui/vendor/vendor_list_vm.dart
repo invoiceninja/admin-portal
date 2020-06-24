@@ -16,6 +16,7 @@ import 'package:invoiceninja_flutter/ui/vendor/vendor_list_item.dart';
 import 'package:invoiceninja_flutter/ui/vendor/vendor_presenter.dart';
 import 'package:invoiceninja_flutter/utils/completers.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
+import 'package:invoiceninja_flutter/utils/platforms.dart';
 import 'package:redux/redux.dart';
 
 class VendorListBuilder extends StatelessWidget {
@@ -128,6 +129,12 @@ class VendorListVM {
       onVendorTap: (context, vendor) {
         if (store.state.vendorListState.isInMultiselect()) {
           handleVendorAction(context, [vendor], EntityAction.toggleMultiselect);
+        } else if (isDesktop(context) &&
+            state.vendorUIState.editing.id == vendor.id) {
+          viewEntity(context: context, entity: vendor);
+        } else if (isDesktop(context) &&
+            state.vendorUIState.selectedId == vendor.id) {
+          editEntity(context: context, entity: vendor);
         } else {
           viewEntity(context: context, entity: vendor);
         }

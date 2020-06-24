@@ -98,7 +98,6 @@ class CreditListItem extends StatelessWidget {
                               : ActionMenuButton(
                                   entityActions: credit.getActions(
                                       userCompany: state.userCompany,
-                                      includeEdit: true,
                                       client: client),
                                   isSaving: false,
                                   entity: credit,

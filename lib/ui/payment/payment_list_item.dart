@@ -106,7 +106,6 @@ class PaymentListItem extends StatelessWidget {
                               : ActionMenuButton(
                                   entityActions: payment.getActions(
                                       userCompany: state.userCompany,
-                                      includeEdit: true,
                                       client: client),
                                   isSaving: false,
                                   entity: payment,

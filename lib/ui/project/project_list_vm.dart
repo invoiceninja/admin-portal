@@ -17,6 +17,7 @@ import 'package:invoiceninja_flutter/ui/project/project_list_item.dart';
 import 'package:invoiceninja_flutter/ui/project/project_presenter.dart';
 import 'package:invoiceninja_flutter/utils/completers.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
+import 'package:invoiceninja_flutter/utils/platforms.dart';
 import 'package:redux/redux.dart';
 
 class ProjectListBuilder extends StatelessWidget {
@@ -138,6 +139,12 @@ class ProjectListVM {
         if (store.state.projectListState.isInMultiselect()) {
           handleProjectAction(
               context, [project], EntityAction.toggleMultiselect);
+        } else if (isDesktop(context) &&
+            state.projectUIState.editing.id == project.id) {
+          viewEntity(context: context, entity: project);
+        } else if (isDesktop(context) &&
+            state.projectUIState.selectedId == project.id) {
+          editEntity(context: context, entity: project);
         } else {
           viewEntity(context: context, entity: project);
         }

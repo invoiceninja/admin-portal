@@ -110,7 +110,6 @@ class InvoiceListItem extends StatelessWidget {
                                 : ActionMenuButton(
                                     entityActions: invoice.getActions(
                                         userCompany: state.userCompany,
-                                        includeEdit: true,
                                         client: client),
                                     isSaving: false,
                                     entity: invoice,

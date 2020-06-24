@@ -17,6 +17,7 @@ import 'package:invoiceninja_flutter/ui/payment/payment_list_item.dart';
 import 'package:invoiceninja_flutter/ui/payment/payment_presenter.dart';
 import 'package:invoiceninja_flutter/utils/completers.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
+import 'package:invoiceninja_flutter/utils/platforms.dart';
 import 'package:redux/redux.dart';
 
 class PaymentListBuilder extends StatelessWidget {
@@ -135,6 +136,12 @@ class PaymentListVM {
         if (store.state.paymentListState.isInMultiselect()) {
           handlePaymentAction(
               context, [payment], EntityAction.toggleMultiselect);
+        } else if (isDesktop(context) &&
+            state.paymentUIState.editing.id == payment.id) {
+          viewEntity(context: context, entity: payment);
+        } else if (isDesktop(context) &&
+            state.paymentUIState.selectedId == payment.id) {
+          editEntity(context: context, entity: payment);
         } else {
           viewEntity(context: context, entity: payment);
         }

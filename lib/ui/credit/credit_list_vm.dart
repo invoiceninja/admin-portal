@@ -16,6 +16,7 @@ import 'package:invoiceninja_flutter/ui/credit/credit_presenter.dart';
 import 'package:invoiceninja_flutter/ui/invoice/invoice_list_vm.dart';
 import 'package:invoiceninja_flutter/utils/completers.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
+import 'package:invoiceninja_flutter/utils/platforms.dart';
 import 'package:redux/redux.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
@@ -152,7 +153,18 @@ class CreditListVM extends EntityListVM {
       isLoaded: state.creditState.isLoaded && state.clientState.isLoaded,
       filter: state.creditListState.filter,
       onInvoiceTap: (context, credit) {
-        viewEntity(context: context, entity: credit);
+        if (store.state.invoiceListState.isInMultiselect()) {
+          handleInvoiceAction(
+              context, [credit], EntityAction.toggleMultiselect);
+        } else if (isDesktop(context) &&
+            state.creditUIState.editing.id == credit.id) {
+          viewEntity(context: context, entity: credit);
+        } else if (isDesktop(context) &&
+            state.creditUIState.selectedId == credit.id) {
+          editEntity(context: context, entity: credit);
+        } else {
+          viewEntity(context: context, entity: credit);
+        }
       },
       onRefreshed: (context) => _handleRefresh(context),
       onClearEntityFilterPressed: () => store.dispatch(ClearEntityFilter()),

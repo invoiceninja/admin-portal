@@ -105,7 +105,6 @@ class QuoteListItem extends StatelessWidget {
                                 : ActionMenuButton(
                                     entityActions: quote.getActions(
                                         userCompany: state.userCompany,
-                                        includeEdit: true,
                                         client: client),
                                     isSaving: false,
                                     entity: quote,

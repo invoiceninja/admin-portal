@@ -16,6 +16,7 @@ import 'package:invoiceninja_flutter/ui/invoice/invoice_list_item.dart';
 import 'package:invoiceninja_flutter/ui/invoice/invoice_presenter.dart';
 import 'package:invoiceninja_flutter/utils/completers.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
+import 'package:invoiceninja_flutter/utils/platforms.dart';
 import 'package:redux/redux.dart';
 
 class InvoiceListBuilder extends StatelessWidget {
@@ -196,6 +197,12 @@ class InvoiceListVM extends EntityListVM {
         if (store.state.invoiceListState.isInMultiselect()) {
           handleInvoiceAction(
               context, [invoice], EntityAction.toggleMultiselect);
+        } else if (isDesktop(context) &&
+            state.invoiceUIState.editing.id == invoice.id) {
+          viewEntity(context: context, entity: invoice);
+        } else if (isDesktop(context) &&
+            state.invoiceUIState.selectedId == invoice.id) {
+          editEntity(context: context, entity: invoice);
         } else {
           viewEntity(context: context, entity: invoice);
         }
