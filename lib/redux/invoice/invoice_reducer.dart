@@ -401,7 +401,7 @@ InvoiceState _restoreInvoiceRequest(
 
   for (int i = 0; i < invoices.length; i++) {
     invoices[i] = invoices[i].rebuild((b) => b
-      ..archivedAt = null
+      ..archivedAt = 0
       ..isDeleted = false);
   }
   return invoiceState.rebuild((b) {

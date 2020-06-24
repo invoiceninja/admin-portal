@@ -265,7 +265,7 @@ ExpenseState _restoreExpenseRequest(
 
   for (int i = 0; i < expenses.length; i++) {
     expenses[i] = expenses[i].rebuild((b) => b
-      ..archivedAt = null
+      ..archivedAt = 0
       ..isDeleted = false);
   }
   return expenseState.rebuild((b) {

@@ -257,7 +257,7 @@ PaymentTermState _restorePaymentTermRequest(
 
   for (int i = 0; i < paymentTerms.length; i++) {
     paymentTerms[i] = paymentTerms[i].rebuild((b) => b
-      ..archivedAt = null
+      ..archivedAt = 0
       ..isDeleted = false);
   }
   return paymentTermState.rebuild((b) {

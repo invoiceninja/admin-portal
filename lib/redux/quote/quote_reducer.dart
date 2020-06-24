@@ -357,7 +357,7 @@ QuoteState _restoreQuoteRequest(
 
   for (int i = 0; i < quotes.length; i++) {
     quotes[i] = quotes[i].rebuild((b) => b
-      ..archivedAt = null
+      ..archivedAt = 0
       ..isDeleted = false);
   }
   return quoteState.rebuild((b) {

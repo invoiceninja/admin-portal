@@ -233,7 +233,7 @@ TaxRateState _restoreTaxRateRequest(
 
   for (int i = 0; i < taxRates.length; i++) {
     taxRates[i] = taxRates[i].rebuild((b) => b
-      ..archivedAt = null
+      ..archivedAt = 0
       ..isDeleted = false);
   }
   return taxRateState.rebuild((b) {

@@ -231,7 +231,7 @@ DocumentState _restoreDocumentRequest(
 
   for (int i = 0; i < documents.length; i++) {
     documents[i] = documents[i].rebuild((b) => b
-      ..archivedAt = null
+      ..archivedAt = 0
       ..isDeleted = false);
   }
   return documentState.rebuild((b) {

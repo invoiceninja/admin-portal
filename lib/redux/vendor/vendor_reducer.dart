@@ -296,7 +296,7 @@ VendorState _restoreVendorRequest(
 
   for (int i = 0; i < vendors.length; i++) {
     vendors[i] = vendors[i].rebuild((b) => b
-      ..archivedAt = null
+      ..archivedAt = 0
       ..isDeleted = false);
   }
   return vendorState.rebuild((b) {

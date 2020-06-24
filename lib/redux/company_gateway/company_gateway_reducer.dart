@@ -277,7 +277,7 @@ CompanyGatewayState _restoreCompanyGatewayRequest(
 
   for (int i = 0; i < companyGateways.length; i++) {
     companyGateways[i] = companyGateways[i].rebuild((b) => b
-      ..archivedAt = null
+      ..archivedAt = 0
       ..isDeleted = false);
   }
   return companyGatewayState.rebuild((b) {

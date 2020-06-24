@@ -266,7 +266,7 @@ PaymentState _restorePaymentRequest(
 
   for (int i = 0; i < payments.length; i++) {
     payments[i] = payments[i].rebuild((b) => b
-      ..archivedAt = null
+      ..archivedAt = 0
       ..isDeleted = false);
   }
   return paymentState.rebuild((b) {

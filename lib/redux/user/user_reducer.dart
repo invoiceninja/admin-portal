@@ -224,7 +224,7 @@ UserState _restoreUserRequest(UserState userState, RestoreUserRequest action) {
 
   for (int i = 0; i < users.length; i++) {
     users[i] = users[i].rebuild((b) => b
-      ..archivedAt = null
+      ..archivedAt = 0
       ..isDeleted = false);
   }
   return userState.rebuild((b) {

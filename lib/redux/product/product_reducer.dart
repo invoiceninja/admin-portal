@@ -250,7 +250,7 @@ ProductState _restoreProductRequest(
 
   for (int i = 0; i < products.length; i++) {
     products[i] = products[i].rebuild((b) => b
-      ..archivedAt = null
+      ..archivedAt = 0
       ..isDeleted = false);
   }
   return productState.rebuild((b) {

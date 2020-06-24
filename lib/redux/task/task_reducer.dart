@@ -254,7 +254,7 @@ TaskState _restoreTaskRequest(TaskState taskState, RestoreTaskRequest action) {
 
   for (int i = 0; i < tasks.length; i++) {
     tasks[i] = tasks[i].rebuild((b) => b
-      ..archivedAt = null
+      ..archivedAt = 0
       ..isDeleted = false);
   }
   return taskState.rebuild((b) {

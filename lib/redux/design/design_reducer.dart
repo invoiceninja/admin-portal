@@ -231,7 +231,7 @@ DesignState _restoreDesignRequest(
 
   for (int i = 0; i < designs.length; i++) {
     designs[i] = designs[i].rebuild((b) => b
-      ..archivedAt = null
+      ..archivedAt = 0
       ..isDeleted = false);
   }
   return designState.rebuild((b) {
