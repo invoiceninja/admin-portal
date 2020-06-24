@@ -42,6 +42,7 @@ class _GroupViewState extends State<GroupView> {
       entity: group,
       onBackPressed: () => viewModel.onBackPressed(),
       body: ListView(
+        shrinkWrap: true,
         children: <Widget>[
           Padding(
             padding: const EdgeInsets.all(16),
@@ -67,7 +68,7 @@ class _GroupViewState extends State<GroupView> {
           SettingsViewer(
             settings: group.settings,
             state: state,
-          )
+          ),
         ],
       ),
     );
@@ -75,7 +76,10 @@ class _GroupViewState extends State<GroupView> {
 }
 
 class SettingsViewer extends StatelessWidget {
-  const SettingsViewer({this.settings, this.state});
+  const SettingsViewer({
+    @required this.settings,
+    @required this.state,
+  });
 
   final SettingsEntity settings;
   final AppState state;

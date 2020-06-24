@@ -112,8 +112,7 @@ class EntitiesListTile extends StatelessWidget {
     final store = StoreProvider.of<AppState>(context);
     final state = store.state;
     final mainRoute = state.uiState.mainRoute;
-    final isFilterMatch =
-        isFilter && entityType.toString() == mainRoute.replaceFirst('/', '');
+    final isFilterMatch = isFilter && '/$entityType' == mainRoute;
 
     return Column(
       mainAxisSize: MainAxisSize.min,
@@ -123,25 +122,22 @@ class EntitiesListTile extends StatelessWidget {
           child: SelectedIndicator(
             isSelected: isFilterMatch,
             isMenu: true,
-            child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 10),
-              child: ListTile(
-                contentPadding: const EdgeInsets.only(left: 8, right: 12),
-                title: Text(title),
-                subtitle: Text(subtitle ?? ''),
-                leading: IconButton(
-                  icon: Icon(getEntityIcon(entityType), size: 18.0),
-                  onPressed: onTap,
-                ),
-                trailing: isFilter
-                    ? IconButton(
-                        icon: Icon(Icons.add_circle_outline),
-                        onPressed: onLongPress,
-                      )
-                    : Icon(Icons.navigate_next),
-                onTap: onTap,
-                onLongPress: onLongPress,
+            child: ListTile(
+              contentPadding: const EdgeInsets.only(left: 16, right: 16),
+              title: Text(title),
+              subtitle: Text(subtitle ?? ''),
+              leading: IconButton(
+                icon: Icon(getEntityIcon(entityType), size: 18.0),
+                onPressed: onTap,
               ),
+              trailing: isFilter
+                  ? IconButton(
+                      icon: Icon(Icons.add_circle_outline),
+                      onPressed: onLongPress,
+                    )
+                  : Icon(Icons.navigate_next),
+              onTap: onTap,
+              onLongPress: onLongPress,
             ),
           ),
         ),
