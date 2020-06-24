@@ -156,8 +156,7 @@ class CreditListVM extends EntityListVM {
         if (store.state.invoiceListState.isInMultiselect()) {
           handleInvoiceAction(
               context, [credit], EntityAction.toggleMultiselect);
-        } else if (isDesktop(context) &&
-            state.creditUIState.editing.id == credit.id) {
+        } else if (isDesktop(context) && state.uiState.isEditing) {
           viewEntity(context: context, entity: credit);
         } else if (isDesktop(context) &&
             state.creditUIState.selectedId == credit.id) {

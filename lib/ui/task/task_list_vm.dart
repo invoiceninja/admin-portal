@@ -144,8 +144,7 @@ class TaskListVM {
       onTaskTap: (context, task) {
         if (store.state.taskListState.isInMultiselect()) {
           handleTaskAction(context, [task], EntityAction.toggleMultiselect);
-        } else if (isDesktop(context) &&
-            state.taskUIState.editing.id == task.id) {
+        } else if (isDesktop(context) && state.uiState.isEditing) {
           viewEntity(context: context, entity: task);
         } else if (isDesktop(context) &&
             state.taskUIState.selectedId == task.id) {

@@ -137,8 +137,7 @@ class ClientListVM {
       onClientTap: (context, client) {
         if (store.state.clientListState.isInMultiselect()) {
           handleClientAction(context, [client], EntityAction.toggleMultiselect);
-        } else if (isDesktop(context) &&
-            state.clientUIState.editing.id == client.id) {
+        } else if (isDesktop(context) && state.uiState.isEditing) {
           viewEntity(context: context, entity: client);
         } else if (isDesktop(context) &&
             state.clientUIState.selectedId == client.id) {

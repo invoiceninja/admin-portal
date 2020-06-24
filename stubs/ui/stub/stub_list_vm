@@ -132,8 +132,7 @@ class StubListVM {
           if (store.state.stubListState.isInMultiselect()) {
             handleStubAction(
                 context, [stub], EntityAction.toggleMultiselect);
-        } else if (isDesktop(context) &&
-            state.stubUIState.editing.id == stub.id) {
+        } else if (isDesktop(context) && state.uiState.isEditing) {
           viewEntity(context: context, entity: stub);
         } else if (isDesktop(context) &&
             state.stubUIState.selectedId == stub.id) {

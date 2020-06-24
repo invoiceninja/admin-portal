@@ -141,8 +141,7 @@ class ExpenseListVM {
         if (store.state.expenseListState.isInMultiselect()) {
           handleExpenseAction(
               context, [expense], EntityAction.toggleMultiselect);
-        } else if (isDesktop(context) &&
-            state.expenseUIState.editing.id == expense.id) {
+        } else if (isDesktop(context) && state.uiState.isEditing) {
           viewEntity(context: context, entity: expense);
         } else if (isDesktop(context) &&
             state.expenseUIState.selectedId == expense.id) {

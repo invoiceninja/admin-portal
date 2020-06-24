@@ -136,8 +136,7 @@ class PaymentListVM {
         if (store.state.paymentListState.isInMultiselect()) {
           handlePaymentAction(
               context, [payment], EntityAction.toggleMultiselect);
-        } else if (isDesktop(context) &&
-            state.paymentUIState.editing.id == payment.id) {
+        } else if (isDesktop(context) && state.uiState.isEditing) {
           viewEntity(context: context, entity: payment);
         } else if (isDesktop(context) &&
             state.paymentUIState.selectedId == payment.id) {

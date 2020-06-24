@@ -155,8 +155,7 @@ class QuoteListVM extends EntityListVM {
         if (store.state.invoiceListState.isInMultiselect()) {
           handleInvoiceAction(
               context, [quote], EntityAction.toggleMultiselect);
-        } else if (isDesktop(context) &&
-            state.quoteUIState.editing.id == quote.id) {
+        } else if (isDesktop(context) && state.uiState.isEditing) {
           viewEntity(context: context, entity: quote);
         } else if (isDesktop(context) &&
             state.quoteUIState.selectedId == quote.id) {

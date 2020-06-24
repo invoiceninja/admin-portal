@@ -197,8 +197,7 @@ class InvoiceListVM extends EntityListVM {
         if (store.state.invoiceListState.isInMultiselect()) {
           handleInvoiceAction(
               context, [invoice], EntityAction.toggleMultiselect);
-        } else if (isDesktop(context) &&
-            state.invoiceUIState.editing.id == invoice.id) {
+        } else if (isDesktop(context) && state.uiState.isEditing) {
           viewEntity(context: context, entity: invoice);
         } else if (isDesktop(context) &&
             state.invoiceUIState.selectedId == invoice.id) {
