@@ -53,7 +53,6 @@ abstract class PaymentState
     }
   }
 
-
   PaymentState loadPayments(BuiltList<PaymentEntity> clients) {
     final map = Map<String, PaymentEntity>.fromIterable(
       clients,

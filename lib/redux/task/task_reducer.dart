@@ -299,8 +299,5 @@ TaskState _setLoadedTasks(TaskState taskState, LoadTasksSuccess action) =>
 
 TaskState _setLoadedCompany(TaskState taskState, LoadCompanySuccess action) {
   final company = action.userCompany.company;
-  return company.hasData
-      ? taskState.loadTasks(company.tasks)
-      : taskState;
+  return company.hasData ? taskState.loadTasks(company.tasks) : taskState;
 }
-

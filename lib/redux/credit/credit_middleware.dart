@@ -364,7 +364,7 @@ Middleware<AppState> _saveDocument(CreditRepository repository) {
     if (store.state.isEnterprisePlan) {
       repository
           .uploadDocument(
-          store.state.credentials, action.credit, action.filePath)
+              store.state.credentials, action.credit, action.filePath)
           .then((credit) {
         store.dispatch(SaveCreditSuccess(credit));
         action.completer.complete(null);

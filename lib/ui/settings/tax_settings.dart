@@ -60,8 +60,8 @@ class _TaxSettingsState extends State<TaxSettings> {
               NumberOfRatesSelector(
                 label: localization.invoiceTaxRates,
                 numberOfRates: company.numberOfInvoiceTaxRates,
-                onChanged: (value) => viewModel.onCompanyChanged(company
-                    .rebuild((b) => b..numberOfInvoiceTaxRates = value)),
+                onChanged: (value) => viewModel.onCompanyChanged(
+                    company.rebuild((b) => b..numberOfInvoiceTaxRates = value)),
               ),
               NumberOfRatesSelector(
                 label: localization.itemTaxRates,

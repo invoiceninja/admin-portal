@@ -153,8 +153,7 @@ class QuoteListVM extends EntityListVM {
       filter: state.quoteListState.filter,
       onInvoiceTap: (context, quote) {
         if (store.state.invoiceListState.isInMultiselect()) {
-          handleInvoiceAction(
-              context, [quote], EntityAction.toggleMultiselect);
+          handleInvoiceAction(context, [quote], EntityAction.toggleMultiselect);
         } else if (isDesktop(context) && state.uiState.isEditing) {
           viewEntity(context: context, entity: quote);
         } else if (isDesktop(context) &&

@@ -129,10 +129,10 @@ class CreditListItem extends StatelessWidget {
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: <Widget>[
-                            Text(client.displayName +
-                                (credit.documents.isNotEmpty
-                                    ? '  📎'
-                                    : ''), style: textStyle),
+                            Text(
+                                client.displayName +
+                                    (credit.documents.isNotEmpty ? '  📎' : ''),
+                                style: textStyle),
                             Text(
                               filterMatch ?? subtitle,
                               maxLines: 3,
