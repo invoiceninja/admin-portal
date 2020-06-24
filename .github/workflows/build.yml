@@ -30,7 +30,7 @@ jobs:
       - run: flutter build web --release
       - run: |
           sed -i '29d' web/flutter_service_worker.js
-          sed -i '18d' web/flutter_service_worker.js
+          sed -i '20d' web/flutter_service_worker.js
 
           git config --global user.email ${{secrets.commit_email}}
           git config --global user.name ${{secrets.commit_name}}
