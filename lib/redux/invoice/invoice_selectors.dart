@@ -60,7 +60,6 @@ List<String> filteredInvoicesSelector(
   BuiltMap<String, PaymentEntity> paymentMap,
   ListUIState invoiceListState,
 ) {
-  print('## filteredInvoicesSelector');
   final Map<String, List<String>> invoicePaymentMap = {};
 
   if (invoiceListState.filterEntityType == EntityType.payment) {
