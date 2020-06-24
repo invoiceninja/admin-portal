@@ -129,8 +129,7 @@ class VendorListVM {
       onVendorTap: (context, vendor) {
         if (store.state.vendorListState.isInMultiselect()) {
           handleVendorAction(context, [vendor], EntityAction.toggleMultiselect);
-        } else if (isDesktop(context) &&
-            state.vendorUIState.editing.id == vendor.id) {
+        } else if (isDesktop(context) && state.uiState.isEditing) {
           viewEntity(context: context, entity: vendor);
         } else if (isDesktop(context) &&
             state.vendorUIState.selectedId == vendor.id) {

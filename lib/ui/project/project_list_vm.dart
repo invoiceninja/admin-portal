@@ -139,8 +139,7 @@ class ProjectListVM {
         if (store.state.projectListState.isInMultiselect()) {
           handleProjectAction(
               context, [project], EntityAction.toggleMultiselect);
-        } else if (isDesktop(context) &&
-            state.projectUIState.editing.id == project.id) {
+        } else if (isDesktop(context) && state.uiState.isEditing) {
           viewEntity(context: context, entity: project);
         } else if (isDesktop(context) &&
             state.projectUIState.selectedId == project.id) {

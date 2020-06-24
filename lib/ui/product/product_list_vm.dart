@@ -119,8 +119,7 @@ class ProductListVM {
         if (store.state.productListState.isInMultiselect()) {
           handleProductAction(
               context, [product], EntityAction.toggleMultiselect);
-        } else if (isDesktop(context) &&
-            state.productUIState.editing.id == product.id) {
+        } else if (isDesktop(context) && state.uiState.isEditing) {
           viewEntity(context: context, entity: product);
         } else if (isDesktop(context) &&
             state.productUIState.selectedId == product.id) {
