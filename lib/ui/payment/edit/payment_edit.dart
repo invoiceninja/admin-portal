@@ -93,7 +93,7 @@ class _PaymentEditState extends State<PaymentEdit> {
     final localization = AppLocalization.of(context);
 
     final invoicePaymentables = payment.invoices.toList();
-    if (payment.isForInvoice != true &&
+    if ((payment.isForInvoice != true || invoicePaymentables.isEmpty) &&
         invoicePaymentables
             .where((paymentable) => paymentable.isEmpty)
             .isEmpty) {
