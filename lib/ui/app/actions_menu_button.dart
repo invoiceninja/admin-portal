@@ -48,16 +48,13 @@ class ActionMenuButton extends StatelessWidget {
       }
     });
 
-    if (actions.isEmpty) {
-      return Container();
-    }
-
     return PopupMenuButton<EntityAction>(
       icon: Icon(Icons.more_vert),
       itemBuilder: (BuildContext context) => actions,
       onSelected: (EntityAction action) {
         onSelected(context, action);
       },
+      enabled: actions.isNotEmpty,
     );
   }
 }
