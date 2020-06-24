@@ -161,6 +161,9 @@ abstract class AppState implements Built<AppState, AppStateBuilder> {
         return true;
       }).toList();
 
+  List<HistoryRecord> get unfilteredHistoryList =>
+      prefState.companyPrefs[uiState.selectedCompanyIndex].historyList.toList();
+
   bool shouldSelectEntity({EntityType entityType, List<String> entityList}) {
     final entityUIState = getUIState(entityType);
 
@@ -173,30 +176,13 @@ abstract class AppState implements Built<AppState, AppStateBuilder> {
 
     if ((entityUIState.selectedId ?? '').isEmpty) {
       return true;
-    } else if (historyList.isNotEmpty &&
-        historyList.first.entityType != entityType) {
+    } else if (unfilteredHistoryList.isNotEmpty &&
+        unfilteredHistoryList.first.entityType != entityType) {
       // check if this needs to be added to the history
       return null;
     }
 
     return false;
-
-    /*
-    if (entityList.isEmpty) {
-      // no selection
-      return (entityUIState.selectedId ?? '').isNotEmpty;
-    } else if ((entityUIState.selectedId ?? '').isEmpty ||
-        !entityList.contains(entityUIState.selectedId)) {
-      // the current selection is no longer an option
-      return true;
-    } else if (historyList.isNotEmpty &&
-        historyList.first.entityType != entityType) {
-      // check if this needs to be added to the history
-      return null;
-    }
-
-    return false;
-     */
   }
 
   // TODO add to starter.sh
