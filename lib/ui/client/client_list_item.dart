@@ -63,7 +63,6 @@ class ClientListItem extends StatelessWidget {
                     ? () => onEntityAction(EntityAction.toggleMultiselect)
                     : onTap,
                 onLongPress: onLongPress,
-                onDoubleTap: () => editEntity(context: context, entity: client),
                 child: Padding(
                   padding: const EdgeInsets.only(
                     left: 12,
