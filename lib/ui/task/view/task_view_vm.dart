@@ -50,9 +50,6 @@ class TaskViewVM {
     @required this.onEntityAction,
     @required this.onEditPressed,
     @required this.onRefreshed,
-    @required this.onClientPressed,
-    @required this.onProjectPressed,
-    @required this.onInvoicePressed,
     @required this.isSaving,
     @required this.isLoading,
     @required this.isDirty,
@@ -64,7 +61,6 @@ class TaskViewVM {
         TaskEntity(id: state.taskUIState.selectedId);
     final client = state.clientState.map[task.clientId];
     final project = state.projectState.map[task.projectId];
-    final invoice = state.invoiceState.map[task.invoiceId];
 
     Future<Null> _handleRefresh(BuildContext context) {
       final completer = snackBarCompleter<Null>(
@@ -106,15 +102,6 @@ class TaskViewVM {
       client: client,
       project: project,
       onFabPressed: (BuildContext context) => _toggleTask(context),
-      onClientPressed: (BuildContext context, [bool longPress = false]) {
-        viewEntity(context: context, entity: client);
-      },
-      onProjectPressed: (context, [longPress = false]) {
-        viewEntity(context: context, entity: project);
-      },
-      onInvoicePressed: (context, [longPress = false]) {
-        viewEntity(context: context, entity: invoice);
-      },
       onEditPressed: (BuildContext context, [TaskTime taskTime]) {
         // TODO change from time to index
         editEntity(context: context, entity: task);
@@ -149,9 +136,6 @@ class TaskViewVM {
   final Function(BuildContext, [TaskTime]) onEditPressed;
   final Function(BuildContext) onFabPressed;
   final Function(BuildContext) onRefreshed;
-  final Function(BuildContext, [bool]) onClientPressed;
-  final Function(BuildContext, [bool]) onProjectPressed;
-  final Function(BuildContext, [bool]) onInvoicePressed;
   final bool isSaving;
   final bool isLoading;
   final bool isDirty;

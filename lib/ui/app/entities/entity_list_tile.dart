@@ -37,7 +37,7 @@ class EntityListTile extends StatelessWidget {
         state.uiState.filterEntityType == entity.entityType;
 
     Widget leading;
-    if (isFilteredBy) {
+    if (isDesktop(context) && isFilteredBy) {
       final client = entity is BelongsToClient
           ? state.clientState.map[(entity as BelongsToClient).clientId]
           : null;

@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:invoiceninja_flutter/data/models/entities.dart';
 import 'package:invoiceninja_flutter/data/models/project_model.dart';
+import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:invoiceninja_flutter/redux/project/project_selectors.dart';
 import 'package:invoiceninja_flutter/ui/app/FieldGrid.dart';
 import 'package:invoiceninja_flutter/redux/task/task_selectors.dart';
@@ -100,8 +101,9 @@ class _ProjectViewState extends State<ProjectView> {
                   title: EntityStateTitle(entity: client),
                   leading: Icon(FontAwesomeIcons.users, size: 18.0),
                   trailing: Icon(Icons.navigate_next),
-                  onTap: () => viewModel.onClientPressed(context),
-                  onLongPress: () => viewModel.onClientPressed(context, true),
+                  onTap: () => inspectEntity(context: context, entity: client),
+                  onLongPress: () => inspectEntity(
+                      context: context, entity: client, longPress: true),
                 ),
               ),
               Container(

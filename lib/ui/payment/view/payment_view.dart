@@ -4,6 +4,7 @@ import 'package:flutter_redux/flutter_redux.dart';
 import 'package:invoiceninja_flutter/constants.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/data/models/payment_model.dart';
+import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/ui/app/FieldGrid.dart';
 import 'package:invoiceninja_flutter/ui/app/buttons/bottom_buttons.dart';
@@ -89,25 +90,30 @@ class _PaymentViewState extends State<PaymentView> {
                     EntityListTile(
                       isFilter: widget.isFilter,
                       entity: client,
-                      onTap: () => viewModel.onClientPressed(context),
-                      onLongPress: () =>
-                          viewModel.onClientPressed(context, true),
+                      onTap: () =>
+                          inspectEntity(context: context, entity: client),
+                      onLongPress: () => inspectEntity(
+                          context: context, entity: client, longPress: true),
                     ),
                     for (final paymentable in payment.paymentables)
                       EntityListTile(
-                        isFilter: widget.isFilter,
-                        entity: state.invoiceState.map[paymentable.invoiceId],
-                        subtitle: formatNumber(paymentable.amount, context) +
-                            ' • ' +
-                            formatDate(
-                                convertTimestampToDateString(
-                                    paymentable.createdAt),
-                                context),
-                        onTap: () => viewModel.onInvoicePressed(
-                            context, paymentable.invoiceId),
-                        onLongPress: () => viewModel.onInvoicePressed(
-                            context, paymentable.invoiceId, true),
-                      ),
+                          isFilter: widget.isFilter,
+                          entity: state.invoiceState.map[paymentable.invoiceId],
+                          subtitle: formatNumber(paymentable.amount, context) +
+                              ' • ' +
+                              formatDate(
+                                  convertTimestampToDateString(
+                                      paymentable.createdAt),
+                                  context),
+                          onTap: () => inspectEntity(
+                              context: context,
+                              entity: state.invoiceState
+                                  .get(paymentable.invoiceId)),
+                          onLongPress: () => inspectEntity(
+                              context: context,
+                              entity:
+                                  state.invoiceState.get(paymentable.invoiceId),
+                              longPress: true)),
                     payment.privateNotes != null &&
                             payment.privateNotes.isNotEmpty
                         ? Column(

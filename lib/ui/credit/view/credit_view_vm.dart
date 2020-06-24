@@ -14,7 +14,6 @@ import 'package:invoiceninja_flutter/ui/invoice/view/invoice_view.dart';
 import 'package:invoiceninja_flutter/ui/invoice/view/invoice_view_vm.dart';
 import 'package:invoiceninja_flutter/utils/completers.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
-import 'package:invoiceninja_flutter/utils/platforms.dart';
 import 'package:redux/redux.dart';
 
 class CreditViewScreen extends StatelessWidget {
@@ -69,10 +68,7 @@ class CreditViewVM extends EntityViewVM {
           isDirty: isDirty,
           onActionSelected: onEntityAction,
           onEditPressed: onEditPressed,
-          onClientPressed: onClientPressed,
-          onUserPressed: onUserPressed,
           onPaymentsPressed: onPaymentsPressed,
-          onPaymentPressed: onPaymentPressed,
           onRefreshed: onRefreshed,
           onUploadDocument: onUploadDocument,
           onDeleteDocument: onDeleteDocument,
@@ -85,7 +81,6 @@ class CreditViewVM extends EntityViewVM {
         InvoiceEntity(id: state.creditUIState.selectedId);
     final client = store.state.clientState.map[credit.clientId] ??
         ClientEntity(id: credit.clientId);
-    final user = state.userState.get(credit.assignedUserId);
 
     Future<Null> _handleRefresh(BuildContext context) {
       final completer = snackBarCompleter<Null>(
@@ -110,22 +105,6 @@ class CreditViewVM extends EntityViewVM {
                 context, AppLocalization.of(context).updatedCredit));
       },
       onRefreshed: (context) => _handleRefresh(context),
-      onClientPressed: (BuildContext context, [bool longPress = false]) {
-        if (longPress || isMobile(context)) {
-          viewEntity(context: context, entity: client);
-        } else {
-          store.dispatch(FilterByEntity(
-              entityType: EntityType.client, entityId: client.id));
-        }
-      },
-      onUserPressed: (BuildContext context, [bool longPress = false]) {
-        if (longPress || isMobile(context)) {
-          viewEntity(context: context, entity: user);
-        } else {
-          store.dispatch(
-              FilterByEntity(entityType: EntityType.user, entityId: user.id));
-        }
-      },
       onEntityAction: (BuildContext context, EntityAction action) =>
           handleCreditAction(context, [credit], action),
       onUploadDocument: (BuildContext context, String filePath) {

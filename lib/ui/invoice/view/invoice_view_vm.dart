@@ -13,7 +13,6 @@ import 'package:invoiceninja_flutter/ui/app/snackbar_row.dart';
 import 'package:invoiceninja_flutter/ui/invoice/view/invoice_view.dart';
 import 'package:invoiceninja_flutter/utils/completers.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
-import 'package:invoiceninja_flutter/utils/platforms.dart';
 import 'package:redux/redux.dart';
 
 class InvoiceViewScreen extends StatelessWidget {
@@ -52,10 +51,7 @@ class EntityViewVM {
     @required this.onUploadDocument,
     @required this.onDeleteDocument,
     @required this.onEditPressed,
-    @required this.onClientPressed,
-    @required this.onUserPressed,
     @required this.onPaymentsPressed,
-    @required this.onPaymentPressed,
     @required this.onRefreshed,
     @required this.onViewExpense,
   });
@@ -68,10 +64,7 @@ class EntityViewVM {
   final bool isDirty;
   final Function(BuildContext, EntityAction) onActionSelected;
   final Function(BuildContext, [int]) onEditPressed;
-  final Function(BuildContext, [bool]) onClientPressed;
-  final Function(BuildContext, [bool]) onUserPressed;
   final Function(BuildContext) onPaymentsPressed;
-  final Function(BuildContext, PaymentEntity, [bool]) onPaymentPressed;
   final Function(BuildContext) onRefreshed;
   final Function(BuildContext, String) onUploadDocument;
   final Function(BuildContext, DocumentEntity) onDeleteDocument;
@@ -105,9 +98,6 @@ class InvoiceViewVM extends EntityViewVM {
             isDirty: isDirty,
             onActionSelected: onEntityAction,
             onEditPressed: onEditPressed,
-            onClientPressed: onClientPressed,
-            onUserPressed: onUserPressed,
-            onPaymentPressed: onPaymentPressed,
             onPaymentsPressed: onPaymentsPressed,
             onRefreshed: onRefreshed,
             onUploadDocument: onUploadDocument,
@@ -118,7 +108,6 @@ class InvoiceViewVM extends EntityViewVM {
     final state = store.state;
     final invoice = state.invoiceState.get(state.invoiceUIState.selectedId);
     final client = state.clientState.get(invoice.clientId);
-    final user = state.userState.get(invoice.assignedUserId);
 
     Future<Null> _handleRefresh(BuildContext context) {
       final completer = snackBarCompleter<Null>(
@@ -143,31 +132,6 @@ class InvoiceViewVM extends EntityViewVM {
                 context, AppLocalization.of(context).updatedInvoice));
       },
       onRefreshed: (context) => _handleRefresh(context),
-      onClientPressed: (BuildContext context, [bool longPress = false]) {
-        if (longPress || isMobile(context)) {
-          viewEntity(context: context, entity: client);
-        } else {
-          store.dispatch(FilterByEntity(
-              entityType: EntityType.client, entityId: client.id));
-        }
-      },
-      onUserPressed: (BuildContext context, [bool longPress = false]) {
-        if (longPress || isMobile(context)) {
-          viewEntity(context: context, entity: user);
-        } else {
-          store.dispatch(
-              FilterByEntity(entityType: EntityType.user, entityId: user.id));
-        }
-      },
-      onPaymentPressed: (BuildContext context, payment,
-          [bool longPress = false]) {
-        if (longPress || isMobile(context)) {
-          viewEntity(context: context, entity: payment);
-        } else {
-          store.dispatch(FilterByEntity(
-              entityType: EntityType.payment, entityId: payment.id));
-        }
-      },
       onPaymentsPressed: (BuildContext context) {
         viewEntitiesByType(
             context: context,
