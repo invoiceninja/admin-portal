@@ -740,7 +740,7 @@ void editEntityById(
   final map = store.state.getEntityMap(entityType);
   final entity = map[entityId] as BaseEntity;
 
-  if (entity.isDeleted) {
+  if (!entity.isEditable) {
     return;
   }
 
