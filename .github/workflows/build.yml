@@ -29,7 +29,7 @@ jobs:
       - run: flutter config --enable-web
       - run: flutter build web --release
       - run: |
-          sed -i '/index.html/d' flutter_service_worker.js
+          sed -i '/index.html/d' ../build/web/flutter_service_worker.js
 
           git config --global user.email ${{secrets.commit_email}}
           git config --global user.name ${{secrets.commit_name}}
