@@ -16,6 +16,7 @@ import 'package:invoiceninja_flutter/ui/quote/quote_presenter.dart';
 import 'package:invoiceninja_flutter/ui/invoice/invoice_list_vm.dart';
 import 'package:invoiceninja_flutter/utils/completers.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
+import 'package:invoiceninja_flutter/utils/platforms.dart';
 import 'package:redux/redux.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
@@ -151,7 +152,18 @@ class QuoteListVM extends EntityListVM {
       isLoaded: state.quoteState.isLoaded && state.clientState.isLoaded,
       filter: state.quoteListState.filter,
       onInvoiceTap: (context, quote) {
-        viewEntity(context: context, entity: quote);
+        if (store.state.invoiceListState.isInMultiselect()) {
+          handleInvoiceAction(
+              context, [quote], EntityAction.toggleMultiselect);
+        } else if (isDesktop(context) &&
+            state.quoteUIState.editing.id == quote.id) {
+          viewEntity(context: context, entity: quote);
+        } else if (isDesktop(context) &&
+            state.quoteUIState.selectedId == quote.id) {
+          editEntity(context: context, entity: quote);
+        } else {
+          viewEntity(context: context, entity: quote);
+        }
       },
       onRefreshed: (context) => _handleRefresh(context),
       onClearEntityFilterPressed: () => store.dispatch(ClearEntityFilter()),

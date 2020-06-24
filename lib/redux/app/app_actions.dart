@@ -738,6 +738,10 @@ void editEntityById(
   final map = store.state.getEntityMap(entityType);
   final entity = map[entityId] as BaseEntity;
 
+  if (entity.isDeleted) {
+    return;
+  }
+
   switch (entityType) {
     case EntityType.client:
       store.dispatch(

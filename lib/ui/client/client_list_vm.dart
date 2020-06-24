@@ -16,6 +16,7 @@ import 'package:invoiceninja_flutter/ui/client/client_list_item.dart';
 import 'package:invoiceninja_flutter/ui/client/client_presenter.dart';
 import 'package:invoiceninja_flutter/utils/completers.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
+import 'package:invoiceninja_flutter/utils/platforms.dart';
 import 'package:redux/redux.dart';
 
 class ClientListBuilder extends StatelessWidget {
@@ -136,6 +137,12 @@ class ClientListVM {
       onClientTap: (context, client) {
         if (store.state.clientListState.isInMultiselect()) {
           handleClientAction(context, [client], EntityAction.toggleMultiselect);
+        } else if (isDesktop(context) &&
+            state.clientUIState.editing.id == client.id) {
+          viewEntity(context: context, entity: client);
+        } else if (isDesktop(context) &&
+            state.clientUIState.selectedId == client.id) {
+          editEntity(context: context, entity: client);
         } else {
           viewEntity(context: context, entity: client);
         }

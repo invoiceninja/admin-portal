@@ -91,8 +91,7 @@ class ProductListItem extends StatelessWidget {
                                 )
                               : ActionMenuButton(
                                   entityActions: product.getActions(
-                                      userCompany: state.userCompany,
-                                      includeEdit: true),
+                                      userCompany: state.userCompany),
                                   isSaving: false,
                                   entity: product,
                                   onSelected: (context, action) =>

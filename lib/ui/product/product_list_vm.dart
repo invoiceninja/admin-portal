@@ -16,6 +16,7 @@ import 'package:invoiceninja_flutter/ui/product/product_list_item.dart';
 import 'package:invoiceninja_flutter/ui/product/product_presenter.dart';
 import 'package:invoiceninja_flutter/utils/completers.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
+import 'package:invoiceninja_flutter/utils/platforms.dart';
 import 'package:redux/redux.dart';
 
 class ProductListBuilder extends StatelessWidget {
@@ -118,6 +119,12 @@ class ProductListVM {
         if (store.state.productListState.isInMultiselect()) {
           handleProductAction(
               context, [product], EntityAction.toggleMultiselect);
+        } else if (isDesktop(context) &&
+            state.productUIState.editing.id == product.id) {
+          viewEntity(context: context, entity: product);
+        } else if (isDesktop(context) &&
+            state.productUIState.selectedId == product.id) {
+          editEntity(context: context, entity: product);
         } else {
           viewEntity(context: context, entity: product);
         }

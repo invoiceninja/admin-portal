@@ -62,7 +62,6 @@ Middleware<AppState> _editClient() {
 Middleware<AppState> _viewClient() {
   return (Store<AppState> store, dynamic dynamicAction,
       NextDispatcher next) async {
-    final state = store.state;
     final action = dynamicAction as ViewClient;
 
     if (!action.force &&
@@ -72,17 +71,10 @@ Middleware<AppState> _viewClient() {
 
     next(action);
 
-    final uiState = state.clientUIState;
-    final client = state.clientState.map[action.clientId];
+    store.dispatch(UpdateCurrentRoute(ClientViewScreen.route));
 
-    if (uiState.saveCompleter != null && !uiState.saveCompleter.isCompleted) {
-      uiState.saveCompleter.complete(client);
-    } else {
-      store.dispatch(UpdateCurrentRoute(ClientViewScreen.route));
-
-      if (isMobile(action.context)) {
-        action.navigator.pushNamed(ClientViewScreen.route);
-      }
+    if (isMobile(action.context)) {
+      action.navigator.pushNamed(ClientViewScreen.route);
     }
   };
 }
