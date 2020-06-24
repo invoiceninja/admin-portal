@@ -93,7 +93,7 @@ class _PaymentEditState extends State<PaymentEdit> {
     final localization = AppLocalization.of(context);
 
     final invoicePaymentables = payment.invoices.toList();
-    if (payment.isForInvoice != true &&
+    if ((payment.isForInvoice != true || invoicePaymentables.isEmpty) &&
         invoicePaymentables
             .where((paymentable) => paymentable.isEmpty)
             .isEmpty) {
@@ -135,7 +135,6 @@ class _PaymentEditState extends State<PaymentEdit> {
               children: <Widget>[
                 if (payment.isNew) ...[
                   EntityDropdown(
-                    autofocus: kIsWeb,
                     key: Key('__client_${payment.clientId}__'),
                     entityType: EntityType.client,
                     labelText: AppLocalization.of(context).client,

@@ -199,11 +199,16 @@ class _AccountOverview extends StatelessWidget {
             color: Colors.red,
             iconData: Icons.delete,
             onPressed: () {
+              String message = companies.length == 1
+                  ? localization.cancelAccountMessage
+                  : localization.deleteCompanyMessage;
+
+              message =
+                  message.replaceFirst(':company', state.company.displayName);
+
               confirmCallback(
                   context: context,
-                  message: companies.length == 1
-                      ? localization.cancelAccountMessage
-                      : localization.deleteCompanyMessage,
+                  message: message,
                   callback: () {
                     passwordCallback(
                         context: context,

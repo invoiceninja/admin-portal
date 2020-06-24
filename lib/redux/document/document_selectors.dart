@@ -113,4 +113,3 @@ List<String> invoiceDocumentsSelector(
 
   return list.toList();
 }
-

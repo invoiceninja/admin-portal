@@ -348,7 +348,21 @@ abstract class PaymentEntity extends Object
       actions.add(null);
     }
 
-    return actions..addAll(super.getActions(userCompany: userCompany));
+    // We're overriding the default behavior to
+    // prevent users from restoring deleted payments
+    if (userCompany.canEditEntity(this) && isArchived) {
+      actions.add(EntityAction.restore);
+    }
+
+    if (userCompany.canEditEntity(this) && isActive) {
+      actions.add(EntityAction.archive);
+    }
+
+    if (userCompany.canEditEntity(this) && (isActive || isArchived)) {
+      actions.add(EntityAction.delete);
+    }
+
+    return actions;
   }
 
   @override

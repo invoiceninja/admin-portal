@@ -337,6 +337,21 @@ abstract class InvoiceEntity extends Object
 
   bool get hasInvoice => '${invoiceId ?? ''}'.isNotEmpty;
 
+  @override
+  bool get isEditable {
+    if (isDeleted) {
+      return false;
+    }
+
+    if (entityType == EntityType.invoice) {
+      if (isCancelledOrReversed) {
+        return false;
+      }
+    }
+
+    return true;
+  }
+
   int get age {
     int ageInDays = 0;
     if (isPastDue) {

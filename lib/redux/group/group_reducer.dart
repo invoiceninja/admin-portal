@@ -235,7 +235,7 @@ GroupState _restoreGroupRequest(
 
   for (int i = 0; i < groups.length; i++) {
     groups[i] = groups[i].rebuild((b) => b
-      ..archivedAt = null
+      ..archivedAt = 0
       ..isDeleted = false);
   }
   return groupState.rebuild((b) {

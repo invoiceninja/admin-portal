@@ -311,7 +311,7 @@ ClientState _restoreClientRequest(
 
   for (int i = 0; i < clients.length; i++) {
     clients[i] = clients[i].rebuild((b) => b
-      ..archivedAt = null
+      ..archivedAt = 0
       ..isDeleted = false);
   }
   return clientState.rebuild((b) {

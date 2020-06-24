@@ -45,6 +45,14 @@ abstract class PaymentState
 
   bool get isLoaded => lastUpdated != null && lastUpdated > 0;
 
+  PaymentEntity get(String paymentId) {
+    if (map.containsKey(paymentId)) {
+      return map[paymentId];
+    } else {
+      return PaymentEntity(id: paymentId);
+    }
+  }
+
   PaymentState loadPayments(BuiltList<PaymentEntity> clients) {
     final map = Map<String, PaymentEntity>.fromIterable(
       clients,

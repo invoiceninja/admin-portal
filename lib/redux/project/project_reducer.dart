@@ -270,7 +270,7 @@ ProjectState _restoreProjectRequest(
 
   for (int i = 0; i < projects.length; i++) {
     projects[i] = projects[i].rebuild((b) => b
-      ..archivedAt = null
+      ..archivedAt = 0
       ..isDeleted = false);
   }
   return projectState.rebuild((b) {

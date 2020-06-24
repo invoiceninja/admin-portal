@@ -9,7 +9,8 @@ class Constants {
 }
 
 // TODO remove version once #46609 is fixed
-const String kAppVersion = '5.0.11';
+const String kClientVersion = '5.0.11';
+const String kMinServerVersion = '5.0.4';
 
 const String kSiteUrl = 'https://invoiceninja.com';
 //const String kAppProductionUrl = 'https://invoicing.co';
@@ -89,10 +90,7 @@ const String kPlanWhiteLabel = 'white_label';
 
 const double kGutterWidth = 16;
 
-const int kMinMajorAppVersion = 0;
-const int kMinMinorAppVersion = 0;
-const int kMinPatchAppVersion = 0;
-const int kDebounceDelay = 300;
+const int kDebounceDelay = 250;
 const int kMaxNumberOfCompanies = 10;
 const int kMaxNumberOfHistory = 50;
 const int kMaxRecordsPerApiPage = 5000;

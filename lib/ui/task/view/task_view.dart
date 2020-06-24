@@ -2,6 +2,7 @@ import 'dart:async';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
+import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:invoiceninja_flutter/redux/task/task_selectors.dart';
 import 'package:invoiceninja_flutter/ui/app/FieldGrid.dart';
 import 'package:invoiceninja_flutter/ui/app/entities/entity_state_title.dart';
@@ -116,8 +117,10 @@ class _TaskViewState extends State<TaskView> {
                     title: EntityStateTitle(entity: client),
                     leading: Icon(getEntityIcon(EntityType.client), size: 18.0),
                     trailing: Icon(Icons.navigate_next),
-                    onTap: () => viewModel.onClientPressed(context),
-                    onLongPress: () => viewModel.onClientPressed(context, true),
+                    onTap: () =>
+                        inspectEntity(context: context, entity: client),
+                    onLongPress: () => inspectEntity(
+                        context: context, entity: client, longPress: true),
                   ),
                 ),
                 Container(
@@ -136,9 +139,10 @@ class _TaskViewState extends State<TaskView> {
                     leading:
                         Icon(getEntityIcon(EntityType.project), size: 18.0),
                     trailing: Icon(Icons.navigate_next),
-                    onTap: () => viewModel.onProjectPressed(context),
-                    onLongPress: () =>
-                        viewModel.onProjectPressed(context, true),
+                    onTap: () =>
+                        inspectEntity(context: context, entity: project),
+                    onLongPress: () => inspectEntity(
+                        context: context, entity: project, longPress: true),
                   ),
                 ),
                 Container(
@@ -157,9 +161,10 @@ class _TaskViewState extends State<TaskView> {
                     leading:
                         Icon(getEntityIcon(EntityType.invoice), size: 18.0),
                     trailing: Icon(Icons.navigate_next),
-                    onTap: () => viewModel.onInvoicePressed(context),
-                    onLongPress: () =>
-                        viewModel.onInvoicePressed(context, true),
+                    onTap: () =>
+                        inspectEntity(context: context, entity: invoice),
+                    onLongPress: () => inspectEntity(
+                        context: context, entity: invoice, longPress: true),
                   ),
                 ),
                 Container(

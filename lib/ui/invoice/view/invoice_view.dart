@@ -49,7 +49,6 @@ class _InvoiceViewState extends State<InvoiceView>
     */
     final documents = invoice.documents;
 
-
     EntityAction secondAction;
     if (invoice.isCredit) {
       secondAction = EntityAction.cloneToCredit;

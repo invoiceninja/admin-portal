@@ -12,7 +12,6 @@ class ExpenseViewDocuments extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-
     return DocumentGrid(
       documents: expense.documents.toList(),
       onUploadDocument: (path) => viewModel.onUploadDocument(context, path),

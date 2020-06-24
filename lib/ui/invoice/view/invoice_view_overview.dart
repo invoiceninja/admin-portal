@@ -118,17 +118,20 @@ class InvoiceOverview extends StatelessWidget {
       EntityListTile(
         isFilter: isFilter,
         entity: client,
-        onTap: () => viewModel.onClientPressed(context),
-        onLongPress: () => viewModel.onClientPressed(context, true),
+        onTap: () => inspectEntity(context: context, entity: client),
+        onLongPress: () =>
+            inspectEntity(context: context, entity: client, longPress: true),
       ),
     );
 
     if ((invoice.assignedUserId ?? '').isNotEmpty) {
+      final assignedUser = state.userState.get(invoice.assignedUserId);
       widgets.add(EntityListTile(
         isFilter: isFilter,
-        entity: state.userState.map[invoice.assignedUserId],
-        onTap: () => viewModel.onUserPressed(context),
-        onLongPress: () => viewModel.onUserPressed(context, true),
+        entity: assignedUser,
+        onTap: () => inspectEntity(context: context, entity: assignedUser),
+        onLongPress: () => inspectEntity(
+            context: context, entity: assignedUser, longPress: true),
       ));
     }
 
@@ -150,9 +153,9 @@ class InvoiceOverview extends StatelessWidget {
           EntityListTile(
             isFilter: isFilter,
             entity: payment,
-            onTap: () => viewModel.onPaymentPressed(context, payment),
-            onLongPress: () =>
-                viewModel.onPaymentPressed(context, payment, true),
+            onTap: () => inspectEntity(context: context, entity: payment),
+            onLongPress: () => inspectEntity(
+                context: context, entity: payment, longPress: true),
             subtitle:
                 formatNumber(payment.amount, context, clientId: client.id) +
                     ' • ' +

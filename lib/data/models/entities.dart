@@ -248,8 +248,6 @@ abstract class BaseEntity implements SelectableEntity {
   @BuiltValueField(wireName: 'entity_type')
   EntityType get entityType;
 
-
-
   String get entityKey => '__${entityType}__${id}__';
 
   bool get isNew => id == null || (int.tryParse(id) ?? 0) < 0;
@@ -260,6 +258,8 @@ abstract class BaseEntity implements SelectableEntity {
 
   bool get isArchived =>
       archivedAt != null && archivedAt > 0 && !(isDeleted ?? false);
+
+  bool get isEditable => !isDeleted;
 
   bool userCanAccess(String userId) =>
       createdUserId == userId || assignedUserId == userId;
@@ -298,9 +298,7 @@ abstract class BaseEntity implements SelectableEntity {
       bool multiselect = false}) {
     final actions = <EntityAction>[];
 
-    // TODO remove ?? check
-    if (userCompany.canEditEntity(this) &&
-        (isArchived || (isDeleted ?? false))) {
+    if (userCompany.canEditEntity(this) && (isArchived || isDeleted)) {
       actions.add(EntityAction.restore);
     }
 

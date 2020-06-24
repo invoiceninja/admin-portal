@@ -105,6 +105,7 @@ class _ClientViewLedgerState extends State<ClientViewLedger> {
                             context,
                             clientId: client.id,
                           ),
+                      style: TextStyle(color: Colors.white),
                       textAlign: TextAlign.end,
                     ),
                   ),

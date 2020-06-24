@@ -32,32 +32,36 @@ Future<void> showEntityActionsDialog(
     return;
   }
   final mainContext = context;
+  final state = StoreProvider.of<AppState>(context).state;
+  final actions = <Widget>[];
+
+  actions.addAll(entities[0]
+      .getActions(
+    userCompany: state.userCompany,
+    includeEdit: true,
+    client: client,
+    multiselect: multiselect,
+  )
+      .map((entityAction) {
+    if (entityAction == null) {
+      return Divider();
+    } else {
+      return EntityActionListTile(
+        entities: entities,
+        action: entityAction,
+        mainContext: mainContext,
+        completer: completer,
+      );
+    }
+  }).toList());
+
+  if (actions.isEmpty) {
+    return;
+  }
+
   showDialog<String>(
       context: context,
       builder: (BuildContext dialogContext) {
-        final state = StoreProvider.of<AppState>(context).state;
-        final actions = <Widget>[];
-
-        actions.addAll(entities[0]
-            .getActions(
-          userCompany: state.userCompany,
-          includeEdit: true,
-          client: client,
-          multiselect: multiselect,
-        )
-            .map((entityAction) {
-          if (entityAction == null) {
-            return Divider();
-          } else {
-            return EntityActionListTile(
-              entities: entities,
-              action: entityAction,
-              mainContext: mainContext,
-              completer: completer,
-            );
-          }
-        }).toList());
-
         return SimpleDialog(children: actions);
       });
 }

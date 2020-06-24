@@ -231,7 +231,7 @@ DesignState _restoreDesignRequest(
 
   for (int i = 0; i < designs.length; i++) {
     designs[i] = designs[i].rebuild((b) => b
-      ..archivedAt = null
+      ..archivedAt = 0
       ..isDeleted = false);
   }
   return designState.rebuild((b) {
@@ -279,7 +279,7 @@ DesignState _setLoadedDesigns(
     designState.loadDesigns(action.designs);
 
 DesignState _setLoadedCompany(
-        DesignState designState, LoadCompanySuccess action) {
+    DesignState designState, LoadCompanySuccess action) {
   final company = action.userCompany.company;
   return company.hasData
       ? designState.loadDesigns(company.designs)

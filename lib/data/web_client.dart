@@ -9,6 +9,7 @@ import 'package:http/http.dart' as http;
 import 'package:invoiceninja_flutter/constants.dart';
 import 'package:invoiceninja_flutter/utils/strings.dart';
 import 'package:path/path.dart';
+import 'package:version/version.dart';
 
 class WebClient {
   const WebClient();
@@ -174,15 +175,23 @@ void _checkResponse(http.Response response) {
   //debugPrint('response: ${response.statusCode} ${response.body}');
   print('headers: ${response.headers}');
 
-  final version = response.headers['x-app-version'];
+  final serverVersion = response.headers['x-app-version'];
+  final minClientVersion = response.headers['x-minimum-client-version'];
 
-  if (version == null) {
+  // TODO re-enable this code
+  return;
+  if (serverVersion == null) {
     throw 'Error: please check that Invoice Ninja v5 is installed on the server';
-  } else if (!_isVersionSupported(version)) {
-    throw 'The minimum web app version is v$kMinMajorAppVersion.$kMinMinorAppVersion.$kMinPatchAppVersion';
-  } else if (response.statusCode >= 400) {
-    print('==== FAILED ====');
-    throw _parseError(response.statusCode, response.body);
+  } else {
+    if (Version.parse(kClientVersion) < Version.parse(minClientVersion)) {
+      throw 'Error: client not supported, please update to the latest version [v$kClientVersion < v$minClientVersion]';
+    } else if (Version.parse(serverVersion) <
+        Version.parse(kMinServerVersion)) {
+      throw 'Error: server not supported, please update to the latest version [v$serverVersion < v$kMinServerVersion]';
+    } else if (response.statusCode >= 400) {
+      print('==== FAILED ====');
+      throw _parseError(response.statusCode, response.body);
+    }
   }
 }
 
@@ -215,22 +224,6 @@ String _parseError(int code, String response) {
   }
 
   return '$code: $message';
-}
-
-bool _isVersionSupported(String version) {
-  if (version == null || version.isEmpty) {
-    return false;
-  }
-
-  final parts = version.split('.');
-
-  final int major = int.parse(parts[0]);
-  final int minor = int.parse(parts[1]);
-  final int patch = int.parse(parts[2]);
-
-  return major >= kMinMajorAppVersion &&
-      minor >= kMinMinorAppVersion &&
-      patch >= kMinPatchAppVersion;
 }
 
 Future<http.Response> _uploadFile(String url, String token, String filePath,

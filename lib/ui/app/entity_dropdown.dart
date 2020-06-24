@@ -90,6 +90,10 @@ class _EntityDropdownState extends State<EntityDropdown> {
             entityMap: _entityMap,
             entityList: widget.entityList ?? _entityMap.keys.toList(),
             onSelected: (entity, [update = true]) {
+              if (entity?.id == widget.entityId) {
+                return;
+              }
+
               widget.onSelected(entity);
 
               if (update) {
@@ -155,6 +159,11 @@ class _EntityDropdownState extends State<EntityDropdown> {
                   }
                   final entity = _entityMap[entityId];
                   _textController.text = _entityMap[entityId].listDisplayName;
+
+                  if (entity?.id == widget.entityId) {
+                    return;
+                  }
+
                   widget.onSelected(entity);
                 },
               );
@@ -166,6 +175,11 @@ class _EntityDropdownState extends State<EntityDropdown> {
 
               final entity = _entityMap[entityId];
               _textController.text = _entityMap[entityId].listDisplayName;
+
+              if (entity?.id == widget.entityId) {
+                return;
+              }
+
               widget.onSelected(entity);
             },
             textFieldConfiguration: TextFieldConfiguration(

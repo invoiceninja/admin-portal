@@ -357,7 +357,7 @@ CreditState _restoreCreditRequest(
 
   for (int i = 0; i < credits.length; i++) {
     credits[i] = credits[i].rebuild((b) => b
-      ..archivedAt = null
+      ..archivedAt = 0
       ..isDeleted = false);
   }
   return creditState.rebuild((b) {

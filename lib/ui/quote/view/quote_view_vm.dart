@@ -14,7 +14,6 @@ import 'package:invoiceninja_flutter/ui/invoice/view/invoice_view.dart';
 import 'package:invoiceninja_flutter/ui/invoice/view/invoice_view_vm.dart';
 import 'package:invoiceninja_flutter/utils/completers.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
-import 'package:invoiceninja_flutter/utils/platforms.dart';
 import 'package:redux/redux.dart';
 
 class QuoteViewScreen extends StatelessWidget {
@@ -52,8 +51,6 @@ class QuoteViewVM extends EntityViewVM {
     bool isDirty,
     Function(BuildContext, EntityAction) onEntityAction,
     Function(BuildContext, [int]) onEditPressed,
-    Function(BuildContext, [bool]) onClientPressed,
-    Function(BuildContext, [bool]) onUserPressed,
     Function(BuildContext) onPaymentsPressed,
     Function(BuildContext, PaymentEntity) onPaymentPressed,
     Function(BuildContext) onRefreshed,
@@ -69,10 +66,7 @@ class QuoteViewVM extends EntityViewVM {
           isDirty: isDirty,
           onActionSelected: onEntityAction,
           onEditPressed: onEditPressed,
-          onClientPressed: onClientPressed,
-          onUserPressed: onUserPressed,
           onPaymentsPressed: onPaymentsPressed,
-          onPaymentPressed: onPaymentPressed,
           onRefreshed: onRefreshed,
           onUploadDocument: onUploadDocument,
           onDeleteDocument: onDeleteDocument,
@@ -85,7 +79,6 @@ class QuoteViewVM extends EntityViewVM {
         InvoiceEntity(id: state.quoteUIState.selectedId);
     final client = store.state.clientState.map[quote.clientId] ??
         ClientEntity(id: quote.clientId);
-    final user = state.userState.get(quote.assignedUserId);
 
     Future<Null> _handleRefresh(BuildContext context) {
       final completer = snackBarCompleter<Null>(
@@ -110,22 +103,6 @@ class QuoteViewVM extends EntityViewVM {
                 context, AppLocalization.of(context).updatedQuote));
       },
       onRefreshed: (context) => _handleRefresh(context),
-      onClientPressed: (BuildContext context, [bool longPress = false]) {
-        if (longPress || isMobile(context)) {
-          viewEntity(context: context, entity: client);
-        } else {
-          store.dispatch(FilterByEntity(
-              entityType: EntityType.client, entityId: client.id));
-        }
-      },
-      onUserPressed: (BuildContext context, [bool longPress = false]) {
-        if (longPress || isMobile(context)) {
-          viewEntity(context: context, entity: user);
-        } else {
-          store.dispatch(
-              FilterByEntity(entityType: EntityType.user, entityId: user.id));
-        }
-      },
       onEntityAction: (BuildContext context, EntityAction action) =>
           handleQuoteAction(context, [quote], action),
       onUploadDocument: (BuildContext context, String filePath) {

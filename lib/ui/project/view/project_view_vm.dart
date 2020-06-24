@@ -6,7 +6,6 @@ import 'package:invoiceninja_flutter/data/models/project_model.dart';
 import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/redux/project/project_actions.dart';
-import 'package:invoiceninja_flutter/ui/app/entities/entity_actions_dialog.dart';
 import 'package:invoiceninja_flutter/ui/project/view/project_view.dart';
 import 'package:invoiceninja_flutter/utils/completers.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
@@ -45,7 +44,6 @@ class ProjectViewVM {
     @required this.onEntityAction,
     @required this.onTasksPressed,
     @required this.onAddTaskPressed,
-    @required this.onClientPressed,
     @required this.onRefreshed,
     @required this.isSaving,
     @required this.isLoading,
@@ -75,16 +73,6 @@ class ProjectViewVM {
       project: project,
       client: client,
       onRefreshed: (context) => _handleRefresh(context),
-      onClientPressed: (BuildContext context, [bool longPress = false]) {
-        if (longPress) {
-          showEntityActionsDialog(
-            context: context,
-            entities: [client],
-          );
-        } else {
-          viewEntity(context: context, entity: client);
-        }
-      },
       onTasksPressed: (BuildContext context, {bool longPress = false}) {
         if (longPress && project.isActive && client.isActive) {
           createEntity(
@@ -117,7 +105,6 @@ class ProjectViewVM {
   final ClientEntity client;
   final CompanyEntity company;
   final Function(BuildContext, EntityAction) onEntityAction;
-  final Function(BuildContext, [bool]) onClientPressed;
   final Function(BuildContext) onAddTaskPressed;
   final Function(BuildContext, {bool longPress}) onTasksPressed;
   final Function(BuildContext) onRefreshed;

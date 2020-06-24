@@ -27,7 +27,7 @@ final editingReducer = combineReducers<DocumentEntity>([
   //TypedReducer<DocumentEntity, AddDocumentSuccess>(_updateEditing),
   TypedReducer<DocumentEntity, RestoreDocumentSuccess>(_updateEditing),
   TypedReducer<DocumentEntity, ArchiveDocumentSuccess>(_updateEditing),
-  TypedReducer<DocumentEntity, DeleteDocumentSuccess>(_updateEditing),
+  //TypedReducer<DocumentEntity, DeleteDocumentSuccess>(_updateEditing),
   TypedReducer<DocumentEntity, EditDocument>(_updateEditing),
   TypedReducer<DocumentEntity, UpdateDocument>((document, action) {
     return action.document.rebuild((b) => b..isChanged = true);
@@ -231,7 +231,7 @@ DocumentState _restoreDocumentRequest(
 
   for (int i = 0; i < documents.length; i++) {
     documents[i] = documents[i].rebuild((b) => b
-      ..archivedAt = null
+      ..archivedAt = 0
       ..isDeleted = false);
   }
   return documentState.rebuild((b) {

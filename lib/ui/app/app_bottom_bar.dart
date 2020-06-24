@@ -233,7 +233,7 @@ class _AppBottomBarState extends State<AppBottomBar> {
                         groupValue: listUIState.sortField,
                         activeColor: Theme.of(context).accentColor,
                         onChanged: (String value) {
-                          if(value == null && listUIState.sortField == field) {
+                          if (value == null && listUIState.sortField == field) {
                             // Is re-selecting
                             widget.onSelectedSortField(field);
                           } else {

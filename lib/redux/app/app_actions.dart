@@ -27,12 +27,14 @@ import 'package:invoiceninja_flutter/redux/tax_rate/tax_rate_actions.dart';
 import 'package:invoiceninja_flutter/redux/ui/pref_state.dart';
 import 'package:invoiceninja_flutter/redux/user/user_actions.dart';
 import 'package:invoiceninja_flutter/redux/vendor/vendor_actions.dart';
+import 'package:invoiceninja_flutter/ui/app/entities/entity_actions_dialog.dart';
 import 'package:invoiceninja_flutter/utils/completers.dart';
 import 'package:invoiceninja_flutter/utils/dialogs.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 
 // STARTER: import - do not remove comment
 import 'package:invoiceninja_flutter/redux/payment_term/payment_term_actions.dart';
+import 'package:invoiceninja_flutter/utils/platforms.dart';
 
 class PersistUI {}
 
@@ -738,7 +740,7 @@ void editEntityById(
   final map = store.state.getEntityMap(entityType);
   final entity = map[entityId] as BaseEntity;
 
-  if (entity.isDeleted) {
+  if (!entity.isEditable) {
     return;
   }
 
@@ -1028,5 +1030,27 @@ void handleEntitiesActions(
     case EntityType.credit:
       handleCreditAction(context, entities, action);
       break;
+  }
+}
+
+void inspectEntity({
+  BuildContext context,
+  BaseEntity entity,
+  bool longPress = false,
+}) {
+  final store = StoreProvider.of<AppState>(context);
+  if (isDesktop(context)) {
+    if (longPress) {
+      viewEntity(context: context, entity: entity);
+    } else {
+      store.dispatch(
+          FilterByEntity(entityType: entity.entityType, entityId: entity.id));
+    }
+  } else {
+    if (longPress) {
+      showEntityActionsDialog(context: context, entities: [entity]);
+    } else {
+      viewEntity(context: context, entity: entity);
+    }
   }
 }
