@@ -27,7 +27,7 @@ final editingReducer = combineReducers<DocumentEntity>([
   //TypedReducer<DocumentEntity, AddDocumentSuccess>(_updateEditing),
   TypedReducer<DocumentEntity, RestoreDocumentSuccess>(_updateEditing),
   TypedReducer<DocumentEntity, ArchiveDocumentSuccess>(_updateEditing),
-  TypedReducer<DocumentEntity, DeleteDocumentSuccess>(_updateEditing),
+  //TypedReducer<DocumentEntity, DeleteDocumentSuccess>(_updateEditing),
   TypedReducer<DocumentEntity, EditDocument>(_updateEditing),
   TypedReducer<DocumentEntity, UpdateDocument>((document, action) {
     return action.document.rebuild((b) => b..isChanged = true);
