@@ -62,6 +62,7 @@ class DeviceSettingsVM {
 
       store.dispatch(RefreshData(
         completer: completer,
+        clearData: true,
       ));
 
       await showDialog<AlertDialog>(

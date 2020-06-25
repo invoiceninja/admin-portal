@@ -204,6 +204,9 @@ Middleware<AppState> _createRefreshRequest(AuthRepository repository) {
     store.dispatch(UserLoadUrl(url: url));
 
     repository.refresh(url: url, token: token).then((data) {
+      if (action.clearData) {
+        store.dispatch(ClearData());
+      }
       store.dispatch(LoadAccountSuccess(
         completer: action.completer,
         loginResponse: data,
