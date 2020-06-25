@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:invoiceninja_flutter/ui/app/dialogs/alert_dialog.dart';
 import 'package:invoiceninja_flutter/ui/app/dialogs/error_dialog.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/save_cancel_buttons.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
@@ -9,6 +10,14 @@ void showErrorDialog({BuildContext context, String message}) {
       context: context,
       builder: (BuildContext context) {
         return ErrorDialog(message);
+      });
+}
+
+void showMessageDialog({BuildContext context, String message}) {
+  showDialog<MessageDialog>(
+      context: context,
+      builder: (BuildContext context) {
+        return MessageDialog(message);
       });
 }
 
