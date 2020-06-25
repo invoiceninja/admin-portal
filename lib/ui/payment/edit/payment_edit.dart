@@ -149,7 +149,12 @@ class _PaymentEditState extends State<PaymentEdit> {
                         ..invoices.clear()));
                     },
                     entityList: memoizedDropdownClientList(
-                        state.clientState.map, state.clientState.list),
+                        state.clientState.map,
+                        state.clientState.list,
+                        state.userState.map,
+                        state.staticState.countryMap,
+                        state.staticState.languageMap,
+                        state.staticState.currencyMap),
                   ),
                   if (payment.isForInvoice != true)
                     DecoratedFormField(

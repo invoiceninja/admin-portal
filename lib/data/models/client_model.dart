@@ -323,7 +323,14 @@ abstract class ClientEntity extends Object
   bool get hasEmailAddress =>
       contacts.where((contact) => contact.email?.isNotEmpty).isNotEmpty;
 
-  int compareTo(ClientEntity client, String sortField, bool sortAscending) {
+  int compareTo(
+      ClientEntity client,
+      String sortField,
+      bool sortAscending,
+      BuiltMap<String, UserEntity> userMap,
+      BuiltMap<String, CountryEntity> countryMap,
+      BuiltMap<String, LanguageEntity> languageMap,
+      BuiltMap<String, CurrencyEntity> currencyMap) {
     int response = 0;
     final ClientEntity clientA = sortAscending ? this : client;
     final ClientEntity clientB = sortAscending ? client : this;
@@ -356,8 +363,90 @@ abstract class ClientEntity extends Object
       case ClientFields.idNumber:
         response = clientA.idNumber.compareTo(clientB.idNumber);
         break;
+      case ClientFields.website:
+        response = clientA.website
+            .toLowerCase()
+            .compareTo(clientB.website.toLowerCase());
+        break;
+      case ClientFields.address1:
+        response = clientA.address1
+            .toLowerCase()
+            .compareTo(clientB.address1.toLowerCase());
+        break;
+      case ClientFields.address2:
+        response = clientA.address2
+            .toLowerCase()
+            .compareTo(clientB.address2.toLowerCase());
+        break;
+      case ClientFields.phone:
+        response = clientA.phone
+            .toLowerCase()
+            .compareTo(clientB.phone.toLowerCase());
+        break;
+      case ClientFields.publicNotes:
+        response = clientA.publicNotes
+            .toLowerCase()
+            .compareTo(clientB.publicNotes.toLowerCase());
+        break;
+      case ClientFields.privateNotes:
+        response = clientA.privateNotes
+            .toLowerCase()
+            .compareTo(clientB.privateNotes.toLowerCase());
+        break;
+      case ClientFields.vatNumber:
+        response = clientA.vatNumber
+            .toLowerCase()
+            .compareTo(clientB.vatNumber.toLowerCase());
+        break;
+      case ClientFields.assignedToId:
+      case EntityFields.assignedTo:
+        final userA = userMap[clientA.assignedUserId] ?? UserEntity();
+        final userB = userMap[clientB.assignedUserId] ?? UserEntity();
+        response = userA.listDisplayName
+            .toLowerCase()
+            .compareTo(userB.listDisplayName.toLowerCase());
+        break;
+      case ClientFields.createdById:
+      case EntityFields.createdBy:
+        final userA = userMap[clientA.createdUserId] ?? UserEntity();
+        final userB = userMap[clientB.createdUserId] ?? UserEntity();
+        response = userA.listDisplayName
+            .toLowerCase()
+            .compareTo(userB.listDisplayName.toLowerCase());
+        break;
+      case ClientFields.country:
+        final countryA = countryMap[clientA.countryId] ?? CountryEntity();
+        final countryB = countryMap[clientB.countryId] ?? CountryEntity();
+        response = countryA.name.toLowerCase()
+            .compareTo(countryB.name.toLowerCase());
+        break;
+      case ClientFields.currency:
+        final currencyA = currencyMap[clientA.currencyId] ?? CurrencyEntity();
+        final currencyB = currencyMap[clientB.currencyId] ?? CurrencyEntity();
+        response = currencyA.name.toLowerCase()
+            .compareTo(currencyB.name.toLowerCase());
+        break;
+      case EntityFields.state:
+      case ClientFields.state:
+        final stateA = EntityState.valueOf(clientA.entityState) ?? EntityState.active;
+        final stateB = EntityState.valueOf(clientB.entityState) ?? EntityState.active;
+        response = stateA.name.toLowerCase()
+            .compareTo(stateB.name.toLowerCase());
+        break;
+      case ClientFields.language:
+        final languageA = languageMap[clientA.languageId] ?? LanguageEntity();
+        final languageB = languageMap[clientB.languageId] ?? LanguageEntity();
+        response = languageA.name.toLowerCase()
+            .compareTo(languageB.name.toLowerCase());
+        break;
       case ClientFields.createdAt:
         response = clientA.createdAt.compareTo(clientB.createdAt);
+        break;
+      case ClientFields.archivedAt:
+        response = clientA.archivedAt.compareTo(clientB.archivedAt);
+        break;
+      case ClientFields.lastLoginAt:
+        response = clientA.lastLogin.compareTo(clientB.lastLogin);
         break;
       case ClientFields.custom1:
         response = clientA.customValue1

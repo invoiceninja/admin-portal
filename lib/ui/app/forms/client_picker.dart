@@ -1,7 +1,9 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_redux/flutter_redux.dart';
 import 'package:invoiceninja_flutter/data/models/entities.dart';
+import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/redux/client/client_selectors.dart';
 import 'package:invoiceninja_flutter/redux/client/client_state.dart';
 import 'package:invoiceninja_flutter/ui/app/entity_dropdown.dart';
@@ -25,6 +27,8 @@ class ClientPicker extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final localization = AppLocalization.of(context);
+    final store = StoreProvider.of<AppState>(context);
+    final state = store.state;
 
     return EntityDropdown(
       key: ValueKey('__client_${clientId}__'),
@@ -32,7 +36,13 @@ class ClientPicker extends StatelessWidget {
       labelText: localization.client,
       entityId: clientId,
       autofocus: autofocus,
-      entityList: memoizedDropdownClientList(clientState.map, clientState.list),
+      entityList: memoizedDropdownClientList(
+          clientState.map,
+          clientState.list,
+          state.userState.map,
+          state.staticState.countryMap,
+          state.staticState.languageMap,
+          state.staticState.currencyMap),
       entityMap: clientState.map,
       validator: (String val) => val.trim().isEmpty
           ? AppLocalization.of(context).pleaseSelectAClient

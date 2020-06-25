@@ -137,7 +137,12 @@ class _ProjectEditState extends State<ProjectEdit> {
                           labelText: localization.client,
                           entityId: project.clientId,
                           entityList: memoizedDropdownClientList(
-                              state.clientState.map, state.clientState.list),
+                              state.clientState.map,
+                              state.clientState.list,
+                              state.userState.map,
+                              state.staticState.countryMap,
+                              state.staticState.languageMap,
+                              state.staticState.currencyMap),
                           validator: (String val) => val.trim().isEmpty
                               ? localization.pleaseSelectAClient
                               : null,

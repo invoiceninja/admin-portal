@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_redux/flutter_redux.dart';
 import 'package:invoiceninja_flutter/data/models/entities.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
+import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/ui/app/entity_dropdown.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/custom_field.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/date_picker.dart';
@@ -84,6 +86,8 @@ class ExpenseEditDetailsState extends State<ExpenseEditDetails> {
   @override
   Widget build(BuildContext context) {
     final localization = AppLocalization.of(context);
+    final store = StoreProvider.of<AppState>(context);
+    final state = store.state;
     final viewModel = widget.viewModel;
     final expense = viewModel.expense;
     final company = viewModel.company;
@@ -121,7 +125,12 @@ class ExpenseEditDetailsState extends State<ExpenseEditDetails> {
                     labelText: localization.client,
                     entityId: expense.clientId,
                     entityList: memoizedDropdownClientList(
-                        clientState.map, clientState.list),
+                        clientState.map,
+                        clientState.list,
+                        state.userState.map,
+                        state.staticState.countryMap,
+                        state.staticState.languageMap,
+                        state.staticState.currencyMap),
                     onSelected: (client) {
                       final currencyId =
                           (client as ClientEntity)?.settings?.currencyId ??

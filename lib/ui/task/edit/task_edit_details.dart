@@ -93,7 +93,12 @@ class _TaskEditDetailsState extends State<TaskEditDetails> {
                     labelText: localization.client,
                     entityId: task.clientId,
                     entityList: memoizedDropdownClientList(
-                        state.clientState.map, state.clientState.list),
+                        state.clientState.map,
+                        state.clientState.list,
+                        state.userState.map,
+                        state.staticState.countryMap,
+                        state.staticState.languageMap,
+                        state.staticState.currencyMap),
                     onSelected: (client) {
                       viewModel.onChanged(task.rebuild((b) => b
                         ..clientId = client?.id
