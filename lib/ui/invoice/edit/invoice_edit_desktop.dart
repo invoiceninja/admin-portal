@@ -169,6 +169,7 @@ class InvoiceEditDesktopState extends State<InvoiceEditDesktop>
     final viewModel = widget.viewModel;
     final invoice = viewModel.invoice;
     final company = viewModel.company;
+    final client = viewModel.state.clientState.get(invoice.clientId);
 
     return ListView(
       key: ValueKey('__invoice_${invoice.id}__'),
@@ -179,6 +180,7 @@ class InvoiceEditDesktopState extends State<InvoiceEditDesktop>
           children: <Widget>[
             Expanded(
               child: FormCard(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 padding: const EdgeInsets.only(
                     top: kMobileDialogPadding,
                     right: kMobileDialogPadding / 2,
@@ -194,7 +196,18 @@ class InvoiceEditDesktopState extends State<InvoiceEditDesktop>
                           viewModel.onClientChanged(invoice, client),
                       onAddPressed: (completer) =>
                           viewModel.onAddClientPressed(context, completer),
+                    )
+                  else if (client.name.isNotEmpty)
+                    Padding(
+                      padding: const EdgeInsets.only(bottom: 8),
+                      child: Text(
+                        localization.client + '  ›  ' + client.name,
+                        style: Theme.of(context).textTheme.headline6,
+                        maxLines: 2,
+                        overflow: TextOverflow.ellipsis,
+                      ),
                     ),
+                  SizedBox(height: 8),
                   ConstrainedBox(
                     constraints: BoxConstraints(maxHeight: 200),
                     child: InvoiceEditContactsScreen(

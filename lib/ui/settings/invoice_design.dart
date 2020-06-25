@@ -116,7 +116,7 @@ class _InvoiceDesignState extends State<InvoiceDesign>
                 padding: const EdgeInsets.only(
                     top: 20, right: 16, bottom: 10, left: 16),
                 child: ElevatedButton(
-                  label: localization.customize.toUpperCase(),
+                  label: localization.customizeAndPreview.toUpperCase(),
                   iconData: Icons.settings,
                   onPressed: () => state.designState.customDesigns.isEmpty
                       ? createEntity(
