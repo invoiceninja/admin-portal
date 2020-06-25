@@ -57,6 +57,8 @@ Reducer<String> selectedIdReducer = combineReducers([
   TypedReducer<String, AddProductSuccess>(
       (selectedId, action) => action.product.id),
   TypedReducer<String, SelectCompany>((selectedId, action) => ''),
+  TypedReducer<String, DeleteProductsSuccess>((selectedId, action) => ''),
+  TypedReducer<String, ArchiveProductsSuccess>((selectedId, action) => ''),
   TypedReducer<String, ClearEntityFilter>((selectedId, action) => ''),
 ]);
 

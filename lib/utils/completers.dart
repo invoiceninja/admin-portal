@@ -95,6 +95,7 @@ Completer<Null> errorCompleter(BuildContext context) {
 class Debouncer {
   Debouncer({this.milliseconds = kDebounceDelay});
 
+  static bool isDebouncing = false;
   final int milliseconds;
   VoidCallback action;
   Timer _timer;
@@ -104,6 +105,11 @@ class Debouncer {
       _timer.cancel();
     }
 
-    _timer = Timer(Duration(milliseconds: milliseconds), action);
+    Debouncer.isDebouncing = true;
+
+    _timer = Timer(Duration(milliseconds: milliseconds), () {
+      Debouncer.isDebouncing = false;
+      action();
+    });
   }
 }
