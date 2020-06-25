@@ -1,3 +1,4 @@
+import 'package:invoiceninja_flutter/redux/static/static_state.dart';
 import 'package:memoize/memoize.dart';
 import 'package:built_collection/built_collection.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
@@ -8,17 +9,22 @@ ClientEntity quoteClientSelector(
   return clientMap[quote.clientId];
 }
 
-var memoizedFilteredQuoteList = memo4((BuiltMap<String, InvoiceEntity> quoteMap,
+var memoizedFilteredQuoteList = memo6((BuiltMap<String, InvoiceEntity> quoteMap,
         BuiltList<String> quoteList,
         BuiltMap<String, ClientEntity> clientMap,
-        ListUIState quoteListState) =>
-    filteredQuotesSelector(quoteMap, quoteList, clientMap, quoteListState));
+        ListUIState quoteListState,
+        StaticState staticState,
+        BuiltMap<String, UserEntity> userMap) =>
+    filteredQuotesSelector(
+        quoteMap, quoteList, clientMap, quoteListState, staticState, userMap));
 
 List<String> filteredQuotesSelector(
     BuiltMap<String, InvoiceEntity> quoteMap,
     BuiltList<String> quoteList,
     BuiltMap<String, ClientEntity> clientMap,
-    ListUIState quoteListState) {
+    ListUIState quoteListState,
+    StaticState staticState,
+    BuiltMap<String, UserEntity> userMap) {
   final list = quoteList.where((quoteId) {
     final quote = quoteMap[quoteId];
     final client =
@@ -61,11 +67,12 @@ List<String> filteredQuotesSelector(
 
   list.sort((quoteAId, quoteBId) {
     return quoteMap[quoteAId].compareTo(
-      invoice: quoteMap[quoteBId],
-      sortField: quoteListState.sortField,
-      sortAscending: quoteListState.sortAscending,
-      clientMap: clientMap,
-    );
+        invoice: quoteMap[quoteBId],
+        sortField: quoteListState.sortField,
+        sortAscending: quoteListState.sortAscending,
+        clientMap: clientMap,
+        staticState: staticState,
+        userMap: userMap);
   });
 
   return list;

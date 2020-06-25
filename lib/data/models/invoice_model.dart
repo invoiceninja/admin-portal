@@ -8,6 +8,7 @@ import 'package:invoiceninja_flutter/data/models/mixins/invoice_mixin.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/data/models/quote_model.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
+import 'package:invoiceninja_flutter/redux/static/static_state.dart';
 import 'package:invoiceninja_flutter/utils/formatting.dart';
 
 part 'invoice_model.g.dart';
@@ -376,7 +377,9 @@ abstract class InvoiceEntity extends Object
       {InvoiceEntity invoice,
       String sortField,
       bool sortAscending,
-      BuiltMap<String, ClientEntity> clientMap}) {
+      BuiltMap<String, ClientEntity> clientMap,
+      StaticState staticState,
+      BuiltMap<String, UserEntity> userMap}) {
     int response = 0;
     final InvoiceEntity invoiceA = sortAscending ? this : invoice;
     final InvoiceEntity invoiceB = sortAscending ? invoice : this;
@@ -394,8 +397,14 @@ abstract class InvoiceEntity extends Object
       case CreditFields.amount:
         response = invoiceA.amount.compareTo(invoiceB.amount);
         break;
+      case EntityFields.createdAt:
+        response = invoiceA.createdAt.compareTo(invoiceB.createdAt);
+        break;
       case EntityFields.updatedAt:
         response = invoiceA.updatedAt.compareTo(invoiceB.updatedAt);
+        break;
+      case EntityFields.archivedAt:
+        response = invoiceA.archivedAt.compareTo(invoiceB.archivedAt);
         break;
       case InvoiceFields.invoiceDate:
       case QuoteFields.date:
@@ -405,12 +414,57 @@ abstract class InvoiceEntity extends Object
       case InvoiceFields.balance:
         response = invoiceA.balance.compareTo(invoiceB.balance);
         break;
+      case InvoiceFields.discount:
+        response = invoiceA.discount.compareTo(invoiceB.discount);
+        break;
+      case InvoiceFields.documents:
+        response = invoiceA.documents.length.compareTo(invoiceB.documents.length);
+        break;
+      case InvoiceFields.poNumber:
+        response = invoiceA.poNumber.compareTo(invoiceB.poNumber);
+        break;
       case InvoiceFields.statusId:
         response = invoiceA.statusId.compareTo(invoiceB.statusId);
+        break;
+      case InvoiceFields.status:
+        response = (staticState.invoiceStatusMap[invoiceA.statusId]?.name ?? '')
+            .toLowerCase()
+            .compareTo(
+                staticState.invoiceStatusMap[invoiceB.statusId]?.name ?? '');
+        break;
+      case EntityFields.state:
+        final stateA = EntityState.valueOf(invoiceA.entityState) ?? EntityState.active;
+        final stateB = EntityState.valueOf(invoiceB.entityState) ?? EntityState.active;
+        response = stateA.name.toLowerCase()
+            .compareTo(stateB.name.toLowerCase());
         break;
       case InvoiceFields.dueDate:
       case QuoteFields.validUntil:
         response = invoiceA.dueDate.compareTo(invoiceB.dueDate);
+        break;
+      case EntityFields.assignedTo:
+        final userA = userMap[invoiceA.assignedUserId] ?? UserEntity();
+        final userB = userMap[invoiceB.assignedUserId] ?? UserEntity();
+        response = userA.listDisplayName
+            .toLowerCase()
+            .compareTo(userB.listDisplayName.toLowerCase());
+        break;
+      case EntityFields.createdBy:
+        final userA = userMap[invoiceA.createdUserId] ?? UserEntity();
+        final userB = userMap[invoiceB.createdUserId] ?? UserEntity();
+        response = userA.listDisplayName
+            .toLowerCase()
+            .compareTo(userB.listDisplayName.toLowerCase());
+        break;
+      case InvoiceFields.publicNotes:
+        response = invoiceA.publicNotes
+            .toLowerCase()
+            .compareTo(invoiceB.publicNotes.toLowerCase());
+        break;
+      case InvoiceFields.privateNotes:
+        response = invoiceA.privateNotes
+            .toLowerCase()
+            .compareTo(invoiceB.privateNotes.toLowerCase());
         break;
       case InvoiceFields.customValue1:
         response = invoiceA.customValue1
