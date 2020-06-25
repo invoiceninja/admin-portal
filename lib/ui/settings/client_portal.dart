@@ -254,6 +254,7 @@ class _ClientPortalState extends State<ClientPortal>
                     onChanged: (value) => viewModel.onSettingsChanged(
                         settings.rebuild((b) => b..clientCanRegister = value)),
                   ),
+                  SizedBox(height: 16),
                   DecoratedFormField(
                     controller: _termsController,
                     label: localization.termsOfService,
