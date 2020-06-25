@@ -1744,6 +1744,19 @@ abstract class SettingsEntity
   @BuiltValueField(wireName: 'gmail_sending_user_id')
   String get gmailSendingUserId;
 
+  @nullable
+  @BuiltValueField(wireName: 'client_can_register')
+  bool get clientCanRegister;
+
+  @nullable
+  @BuiltValueField(wireName: 'client_signup_terms')
+  String get clientPortalTerms;
+
+  @nullable
+  @BuiltValueField(wireName: 'client_signup_privacy_policy')
+  String get clientPortalPrivacy;
+
+
   // TODO remove this field
   @nullable
   @BuiltValueField(wireName: 'custom_payment_terms')
