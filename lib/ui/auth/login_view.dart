@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:io';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
@@ -49,8 +50,12 @@ class _LoginState extends State<LoginView> {
 
   String _loginError = '';
 
-  bool _emailLogin = false;
-  bool _isSelfHosted = false;
+  bool _emailLogin = true;
+  bool _isSelfHosted = true;
+
+  // TODO change for stable release
+  //bool _emailLogin = false;
+  //bool _isSelfHosted = false;
 
   bool _createAccount = true;
   bool _recoverPassword = false;
@@ -380,7 +385,7 @@ class _LoginState extends State<LoginView> {
                                 });
                               },
                             ),
-                          if (!_isSelfHosted)
+                          if (!_isSelfHosted && !Platform.isIOS)
                             _ToggleButtons(
                               tabLabels: [
                                 'Google',
