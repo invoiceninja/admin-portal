@@ -1169,7 +1169,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'tax_amount': 'Tax Amount',
       'tax_paid': 'Tax Paid Amount',
       'payment_amount': 'Payment Amount',
-      'age': 'Age'
+      'age': 'Age',
     },
     // OTHER_LANGUAGES
   };
