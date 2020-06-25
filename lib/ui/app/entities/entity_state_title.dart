@@ -17,17 +17,11 @@ class EntityStateTitle extends StatelessWidget {
         '  ›  ' +
         entity.listDisplayName;
 
-    if (state == kEntityStateActive) {
-      return Row(
-        mainAxisSize: MainAxisSize.min,
-        children: <Widget>[
-          Expanded(
-            child: Text(
-              titleText,
-              overflow: TextOverflow.ellipsis,
-            ),
-          ),
-        ],
+    if (!entity.isDeleted) {
+      return Text(
+        titleText,
+        maxLines: 2,
+        overflow: TextOverflow.ellipsis,
       );
     }
 

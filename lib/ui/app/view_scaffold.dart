@@ -7,6 +7,7 @@ import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/redux/ui/ui_actions.dart';
 import 'package:invoiceninja_flutter/ui/app/actions_menu_button.dart';
+import 'package:invoiceninja_flutter/ui/app/entities/entity_state_title.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:invoiceninja_flutter/utils/platforms.dart';
 import 'buttons/edit_icon_button.dart';
@@ -76,9 +77,8 @@ class ViewScaffold extends StatelessWidget {
         appBar: AppBar(
           leading: leading,
           automaticallyImplyLeading: isMobile(context) || isSettings,
-          title: Text(
-            title,
-            maxLines: 2,
+          title: EntityStateTitle(
+            entity: entity,
           ),
           bottom: appBarBottom,
           actions: entity.isNew
