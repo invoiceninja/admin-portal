@@ -29,20 +29,23 @@ InvoiceItemEntity convertProductToInvoiceItem({
   }
 }
 
-var memoizedDropdownProductList = memo2(
-    (BuiltMap<String, ProductEntity> productMap,
-            BuiltList<String> productList) =>
-        dropdownProductsSelector(productMap, productList));
+var memoizedDropdownProductList = memo3(
+    (BuiltMap<String, ProductEntity> productMap, BuiltList<String> productList,
+            BuiltMap<String, UserEntity> userMap) =>
+        dropdownProductsSelector(productMap, productList, userMap));
 
 List<String> dropdownProductsSelector(
-    BuiltMap<String, ProductEntity> productMap, BuiltList<String> productList) {
+    BuiltMap<String, ProductEntity> productMap,
+    BuiltList<String> productList,
+    BuiltMap<String, UserEntity> userMap) {
   final list =
       productList.where((productId) => productMap[productId].isActive).toList();
 
   list.sort((productAId, productBId) {
     final productA = productMap[productAId];
     final productB = productMap[productBId];
-    return productA.compareTo(productB, ProductFields.productKey, true);
+    return productA.compareTo(
+        productB, ProductFields.productKey, true, userMap);
   });
 
   return list;
@@ -63,15 +66,19 @@ List<String> productList(BuiltMap<String, ProductEntity> productMap) {
   return list;
 }
 
-var memoizedFilteredProductList = memo3(
-    (BuiltMap<String, ProductEntity> productMap, BuiltList<String> productList,
-            ListUIState productListState) =>
-        filteredProductsSelector(productMap, productList, productListState));
+var memoizedFilteredProductList = memo4(
+    (BuiltMap<String, ProductEntity> productMap,
+            BuiltList<String> productList,
+            ListUIState productListState,
+            BuiltMap<String, UserEntity> userMap) =>
+        filteredProductsSelector(
+            productMap, productList, productListState, userMap));
 
 List<String> filteredProductsSelector(
     BuiltMap<String, ProductEntity> productMap,
     BuiltList<String> productList,
-    ListUIState productListState) {
+    ListUIState productListState,
+    BuiltMap<String, UserEntity> userMap) {
   final list = productList.where((productId) {
     final product = productMap[productId];
     if (!product.matchesStates(productListState.stateFilters)) {
@@ -94,8 +101,8 @@ List<String> filteredProductsSelector(
   list.sort((productAId, productBId) {
     final productA = productMap[productAId];
     final productB = productMap[productBId];
-    return productA.compareTo(
-        productB, productListState.sortField, productListState.sortAscending);
+    return productA.compareTo(productB, productListState.sortField,
+        productListState.sortAscending, userMap);
   });
 
   return list;
