@@ -508,7 +508,7 @@ void handleInvoiceAction(BuildContext context, List<BaseEntity> invoices,
                   : localization.markedInvoicesAsPaid),
           invoiceIds));
       break;
-    case EntityAction.sendEmail:
+    case EntityAction.emailInvoice:
       final client = state.clientState.get(invoice.clientId);
       if (!client.hasEmailAddress) {
         showMessageDialog(context: context, message: localization.clientEmailNotSet);

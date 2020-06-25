@@ -430,7 +430,7 @@ Future handleQuoteAction(
           snackBarCompleter<Null>(context, localization.markedQuoteAsSent),
           quoteIds));
       break;
-    case EntityAction.sendEmail:
+    case EntityAction.emailQuote:
       store.dispatch(ShowEmailQuote(
           completer:
               snackBarCompleter<Null>(context, localization.emailedQuote),

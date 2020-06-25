@@ -178,8 +178,6 @@ void _checkResponse(http.Response response) {
   final serverVersion = response.headers['x-app-version'];
   final minClientVersion = response.headers['x-minimum-client-version'];
 
-  // TODO re-enable this code
-  return;
   if (serverVersion == null) {
     throw 'Error: please check that Invoice Ninja v5 is installed on the server';
   } else {
