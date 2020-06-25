@@ -7,6 +7,7 @@ import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/utils/completers.dart';
+import 'package:invoiceninja_flutter/utils/dialogs.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:invoiceninja_flutter/utils/pdf.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -507,7 +508,12 @@ void handleInvoiceAction(BuildContext context, List<BaseEntity> invoices,
                   : localization.markedInvoicesAsPaid),
           invoiceIds));
       break;
-    case EntityAction.sendEmail:
+    case EntityAction.emailInvoice:
+      final client = state.clientState.get(invoice.clientId);
+      if (!client.hasEmailAddress) {
+        showMessageDialog(context: context, message: localization.clientEmailNotSet);
+        return;
+      }
       store.dispatch(ShowEmailInvoice(
           completer:
               snackBarCompleter<Null>(context, localization.emailedInvoice),

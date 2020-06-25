@@ -332,7 +332,7 @@ void handlePaymentAction(
         payment: payment,
       ));
       break;
-    case EntityAction.sendEmail:
+    case EntityAction.emailPayment:
       store.dispatch(EmailPaymentRequest(
           snackBarCompleter<Null>(context, localization.emailedPayment),
           payment));

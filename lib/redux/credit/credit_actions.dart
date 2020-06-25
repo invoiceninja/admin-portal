@@ -417,7 +417,7 @@ Future handleCreditAction(
           snackBarCompleter<Null>(context, localization.markedCreditAsSent),
           creditIds));
       break;
-    case EntityAction.sendEmail:
+    case EntityAction.emailCredit:
       store.dispatch(ShowEmailCredit(
           completer:
               snackBarCompleter<Null>(context, localization.emailedCredit),

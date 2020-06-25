@@ -3,6 +3,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:invoiceninja_flutter/.env.dart';
 import 'package:invoiceninja_flutter/constants.dart';
+import 'package:invoiceninja_flutter/data/models/company_model.dart';
 import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:invoiceninja_flutter/redux/client/client_actions.dart';
 import 'package:invoiceninja_flutter/redux/company/company_actions.dart';
@@ -198,7 +199,7 @@ Middleware<AppState> _createRefreshRequest(AuthRepository repository) {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     final url =
         formatApiUrl(prefs.getString(kSharedPrefUrl) ?? Config.TEST_URL);
-    final token = prefs.getString(kSharedPrefToken);
+    final token = TokenEntity.unobscureToken(prefs.getString(kSharedPrefToken));
 
     store.dispatch(UserLoadUrl(url: url));
 

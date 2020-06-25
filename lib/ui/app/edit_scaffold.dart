@@ -8,6 +8,7 @@ import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/redux/settings/settings_actions.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/save_cancel_buttons.dart';
 import 'package:invoiceninja_flutter/ui/app/menu_drawer_vm.dart';
+import 'package:invoiceninja_flutter/utils/completers.dart';
 import 'package:invoiceninja_flutter/utils/platforms.dart';
 
 class EditScaffold extends StatelessWidget {
@@ -60,9 +61,13 @@ class EditScaffold extends StatelessWidget {
                 // marking the form as changed and to hide the keyboard
                 FocusScope.of(context).unfocus();
 
-                Timer(Duration(milliseconds: kDebounceDelay), () {
+                if (Debouncer.isDebouncing) {
+                  Timer(Duration(milliseconds: kDebounceDelay), () {
+                    onSavePressed(context);
+                  });
+                } else {
                   onSavePressed(context);
-                });
+                }
               },
               onCancelPressed: isMobile(context)
                   ? null

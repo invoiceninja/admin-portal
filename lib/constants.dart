@@ -35,7 +35,7 @@ const String kSharedPrefs = 'shared_prefs';
 const String kSharedPrefAppVersion = 'app_version';
 const String kSharedPrefEmail = 'email';
 const String kSharedPrefUrl = 'url';
-const String kSharedPrefToken = 'token';
+const String kSharedPrefToken = 'checksum';
 
 // TODO remove these
 const String kSharedPrefAddDocumentsToInvoice = 'add_documents_to_invoice';
@@ -90,7 +90,7 @@ const String kPlanWhiteLabel = 'white_label';
 
 const double kGutterWidth = 16;
 
-const int kDebounceDelay = 250;
+const int kDebounceDelay = 300;
 const int kMaxNumberOfCompanies = 10;
 const int kMaxNumberOfHistory = 50;
 const int kMaxRecordsPerApiPage = 5000;

@@ -20,7 +20,10 @@ IconData getEntityActionIcon(EntityAction entityAction) {
       return Icons.public;
     case EntityAction.markPaid:
       return Icons.payment;
-    case EntityAction.sendEmail:
+    case EntityAction.emailPayment:
+    case EntityAction.emailQuote:
+    case EntityAction.emailInvoice:
+    case EntityAction.emailCredit:
       return Icons.send;
     case EntityAction.archive:
       return Icons.archive;
