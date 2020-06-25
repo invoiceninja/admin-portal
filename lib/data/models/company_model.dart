@@ -678,6 +678,10 @@ abstract class TokenEntity implements Built<TokenEntity, TokenEntityBuilder> {
 
   String get name;
 
+  String get obscuredToken => base64Encode(utf8.encode(token));
+
+  static String unobscureToken(String value) => utf8.decode(base64Decode(value));
+
   static Serializer<TokenEntity> get serializer => _$tokenEntitySerializer;
 }
 

@@ -244,6 +244,9 @@ Middleware<AppState> _createLoadState(
       } else {
         final SharedPreferences prefs = await SharedPreferences.getInstance();
         token = prefs.getString(kSharedPrefToken) ?? '';
+        if (token.isNotEmpty) {
+          token = TokenEntity.unobscureToken(token);
+        }
       }
 
       if (token.isNotEmpty) {
@@ -399,7 +402,7 @@ Middleware<AppState> _createAccountLoaded() {
 
       if (i == 0) {
         final SharedPreferences prefs = await SharedPreferences.getInstance();
-        prefs.setString(kSharedPrefToken, userCompany.token.token);
+        prefs.setString(kSharedPrefToken, userCompany.token.obscuredToken);
       }
 
       store.dispatch(SelectCompany(i));

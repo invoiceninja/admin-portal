@@ -35,7 +35,7 @@ const String kSharedPrefs = 'shared_prefs';
 const String kSharedPrefAppVersion = 'app_version';
 const String kSharedPrefEmail = 'email';
 const String kSharedPrefUrl = 'url';
-const String kSharedPrefToken = 'token';
+const String kSharedPrefToken = 'checksum';
 
 // TODO remove these
 const String kSharedPrefAddDocumentsToInvoice = 'add_documents_to_invoice';
