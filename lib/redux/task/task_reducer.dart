@@ -29,6 +29,8 @@ Reducer<String> selectedIdReducer = combineReducers([
   TypedReducer<String, ViewTask>((selectedId, action) => action.taskId),
   TypedReducer<String, AddTaskSuccess>((selectedId, action) => action.task.id),
   TypedReducer<String, SelectCompany>((selectedId, action) => ''),
+  TypedReducer<String, DeleteTaskSuccess>((selectedId, action) => ''),
+  TypedReducer<String, ArchiveTaskSuccess>((selectedId, action) => ''),
   TypedReducer<String, ClearEntityFilter>((selectedId, action) => ''),
 ]);
 

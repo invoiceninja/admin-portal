@@ -65,6 +65,10 @@ List<String> filteredCreditsSelector(
     final client =
         clientMap[credit.clientId] ?? ClientEntity(id: credit.clientId);
 
+    if (!client.isActive && !creditListState.entityMatchesFilter(client)) {
+      return false;
+    }
+
     if (creditListState.filterEntityType == EntityType.client) {
       if (!creditListState.entityMatchesFilter(client)) {
         return false;

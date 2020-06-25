@@ -21,6 +21,8 @@ Reducer<String> selectedIdReducer = combineReducers([
   TypedReducer<String, AddDesignSuccess>(
       (String selectedId, dynamic action) => action.design.id),
   TypedReducer<String, SelectCompany>((selectedId, action) => ''),
+  TypedReducer<String, DeleteDesignsSuccess>((selectedId, action) => ''),
+  TypedReducer<String, ArchiveDesignsSuccess>((selectedId, action) => ''),
   TypedReducer<String, ClearEntityFilter>((selectedId, action) => ''),
 ]);
 

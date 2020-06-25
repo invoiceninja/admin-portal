@@ -40,6 +40,8 @@ Reducer<String> selectedIdReducer = combineReducers([
   TypedReducer<String, ShowEmailInvoice>(
       (selectedId, action) => action.invoice.id),
   TypedReducer<String, SelectCompany>((selectedId, action) => ''),
+  TypedReducer<String, DeleteInvoicesSuccess>((selectedId, action) => ''),
+  TypedReducer<String, ArchiveInvoicesSuccess>((selectedId, action) => ''),
   TypedReducer<String, ClearEntityFilter>((selectedId, action) => ''),
   TypedReducer<String, ClearEntitySelection>((selectedId, action) =>
       action.entityType == EntityType.invoice ? '' : selectedId),

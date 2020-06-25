@@ -24,6 +24,10 @@ List<String> filteredQuotesSelector(
     final client =
         clientMap[quote.clientId] ?? ClientEntity(id: quote.clientId);
 
+    if (!client.isActive && !quoteListState.entityMatchesFilter(client)) {
+      return false;
+    }
+
     if (quoteListState.filterEntityType == EntityType.client) {
       if (!quoteListState.entityMatchesFilter(client)) {
         return false;

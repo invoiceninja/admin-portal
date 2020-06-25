@@ -21,6 +21,8 @@ Reducer<String> selectedIdReducer = combineReducers([
   TypedReducer<String, AddTaxRateSuccess>(
       (String selectedId, action) => action.taxRate.id),
   TypedReducer<String, SelectCompany>((selectedId, action) => ''),
+  TypedReducer<String, DeleteTaxRatesSuccess>((selectedId, action) => ''),
+  TypedReducer<String, ArchiveTaxRatesSuccess>((selectedId, action) => ''),
   TypedReducer<String, ClearEntityFilter>((selectedId, action) => ''),
 ]);
 
