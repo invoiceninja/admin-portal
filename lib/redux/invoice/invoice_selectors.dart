@@ -78,6 +78,10 @@ List<String> filteredInvoicesSelector(
     final client =
         clientMap[invoice.clientId] ?? ClientEntity(id: invoice.clientId);
 
+    if (!client.isActive && !invoiceListState.entityMatchesFilter(client)) {
+      return false;
+    }
+
     if (invoiceListState.filterEntityType == EntityType.client) {
       if (!invoiceListState.entityMatchesFilter(client)) {
         return false;

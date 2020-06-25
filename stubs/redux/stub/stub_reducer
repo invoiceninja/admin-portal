@@ -23,6 +23,8 @@ Reducer<String> selectedIdReducer = combineReducers([
   TypedReducer<String, AddStubSuccess>(
       (String selectedId, dynamic action) => action.stub.id),
     TypedReducer<String, SelectCompany>((selectedId, action) => ''),
+      TypedReducer<String, DeleteStubsSuccess>((selectedId, action) => ''),
+      TypedReducer<String, ArchiveStubsSuccess>((selectedId, action) => ''),
   TypedReducer<String, ClearEntityFilter>((selectedId, action) => ''),
 ]);
 

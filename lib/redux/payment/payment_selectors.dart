@@ -74,24 +74,24 @@ List<String> filteredPaymentsSelector(
     final client =
         clientMap[payment.clientId] ?? ClientEntity(id: payment.clientId);
 
-    if (paymentListState.filterEntityId != null) {
-      if (paymentListState.filterEntityType == EntityType.client) {
-        if (payment.clientId != paymentListState.filterEntityId) {
-          return false;
-        }
-      } else if (paymentListState.filterEntityType == EntityType.invoice) {
-        if (!payment.paymentables
-            .map((p) => p.invoiceId)
-            .contains(paymentListState.filterEntityId)) {
-          return false;
-        }
-      } else if (paymentListState.filterEntityType == EntityType.user) {
-        if (payment.assignedUserId != paymentListState.filterEntityId) {
-          return false;
-        }
-      }
-    } else if (!client.isActive) {
+    if (!client.isActive && !paymentListState.entityMatchesFilter(client)) {
       return false;
+    }
+
+    if (paymentListState.filterEntityType == EntityType.client) {
+      if (payment.clientId != paymentListState.filterEntityId) {
+        return false;
+      }
+    } else if (paymentListState.filterEntityType == EntityType.invoice) {
+      if (!payment.paymentables
+          .map((p) => p.invoiceId)
+          .contains(paymentListState.filterEntityId)) {
+        return false;
+      }
+    } else if (paymentListState.filterEntityType == EntityType.user) {
+      if (payment.assignedUserId != paymentListState.filterEntityId) {
+        return false;
+      }
     }
 
     return payment.matchesFilter(paymentListState.filter);

@@ -88,6 +88,10 @@ List<String> filteredTasksSelector(
     final project =
         projectMap[task.projectId] ?? ProjectEntity(id: task.projectId);
 
+    if (!client.isActive && !taskListState.entityMatchesFilter(client)) {
+      return false;
+    }
+
     if (!task.matchesFilter(taskListState.filter) &&
         !client.matchesFilter(taskListState.filter) &&
         !project.matchesFilter(taskListState.filter)) {

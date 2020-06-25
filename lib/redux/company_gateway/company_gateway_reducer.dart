@@ -22,6 +22,8 @@ Reducer<String> selectedIdReducer = combineReducers([
   TypedReducer<String, AddCompanyGatewaySuccess>(
       (String selectedId, action) => action.companyGateway.id),
   TypedReducer<String, SelectCompany>((selectedId, action) => ''),
+  TypedReducer<String, DeleteCompanyGatewaySuccess>((selectedId, action) => ''),
+  TypedReducer<String, ArchiveCompanyGatewaySuccess>((selectedId, action) => ''),
   TypedReducer<String, ClearEntityFilter>((selectedId, action) => ''),
 ]);
 

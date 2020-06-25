@@ -17,7 +17,7 @@ class EntityStateTitle extends StatelessWidget {
         '  ›  ' +
         entity.listDisplayName;
 
-    if (!entity.isDeleted) {
+    if (entity.isActive) {
       return Text(
         titleText,
         maxLines: 2,

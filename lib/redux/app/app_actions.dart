@@ -129,10 +129,16 @@ class LoadAccountSuccess {
 }
 
 class RefreshData implements StartLoading {
-  RefreshData({this.completer});
+  RefreshData({
+    this.completer,
+    this.clearData = false,
+  });
 
   final Completer completer;
+  final bool clearData;
 }
+
+class ClearData {}
 
 class RefreshDataFailure {
   const RefreshDataFailure(this.error);

@@ -4,6 +4,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:invoiceninja_flutter/ui/app/form_card.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/app_form.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/bool_dropdown_button.dart';
+import 'package:invoiceninja_flutter/ui/app/forms/decorated_form_field.dart';
 import 'package:invoiceninja_flutter/ui/settings/client_portal_vm.dart';
 import 'package:invoiceninja_flutter/ui/app/edit_scaffold.dart';
 import 'package:invoiceninja_flutter/utils/completers.dart';
@@ -41,6 +42,9 @@ class _ClientPortalState extends State<ClientPortal>
   final _customMessagePaidInvoice = TextEditingController();
   final _customMessageUnapprovedQuote = TextEditingController();
 
+  final _termsController = TextEditingController();
+  final _privacyController = TextEditingController();
+
   List<TextEditingController> _controllers = [];
 
   @override
@@ -70,6 +74,8 @@ class _ClientPortalState extends State<ClientPortal>
       _customMessageUnpaidInvoice,
       _customMessagePaidInvoice,
       _customMessageUnapprovedQuote,
+      _termsController,
+      _privacyController,
     ];
 
     _controllers
@@ -83,6 +89,8 @@ class _ClientPortalState extends State<ClientPortal>
     _customMessagePaidInvoice.text = settings.customMessagePaidInvoice;
     _customMessageUnpaidInvoice.text = settings.customMessageUnpaidInvoice;
     _customMessageUnapprovedQuote.text = settings.customMessageUnapprovedQuote;
+    _privacyController.text = settings.clientPortalPrivacy;
+    _termsController.text = settings.clientPortalTerms;
 
     _controllers
         .forEach((dynamic controller) => controller.addListener(_onChanged));
@@ -104,7 +112,9 @@ class _ClientPortalState extends State<ClientPortal>
         ..customMessageUnpaidInvoice = _customMessageUnpaidInvoice.text.trim()
         ..customMessagePaidInvoice = _customMessagePaidInvoice.text.trim()
         ..customMessageUnapprovedQuote =
-            _customMessageUnapprovedQuote.text.trim());
+            _customMessageUnapprovedQuote.text.trim()
+        ..clientPortalTerms = _termsController.text.trim()
+        ..clientPortalPrivacy = _privacyController.text.trim());
       if (settings != widget.viewModel.settings) {
         widget.viewModel.onSettingsChanged(settings);
       }
@@ -212,16 +222,14 @@ class _ClientPortalState extends State<ClientPortal>
                   BoolDropdownButton(
                     label: localization.clientPortal,
                     value: settings.enablePortal,
-                    iconData: kIsWeb ? Icons.timer : FontAwesomeIcons.cloud,
+                    iconData: FontAwesomeIcons.cloud,
                     onChanged: (value) => viewModel.onSettingsChanged(
                         settings.rebuild((b) => b..enablePortal = value)),
                   ),
                   BoolDropdownButton(
                     label: localization.dashboard,
                     value: settings.enablePortalDashboard,
-                    iconData: kIsWeb
-                        ? Icons.dashboard
-                        : FontAwesomeIcons.tachometerAlt,
+                    iconData: FontAwesomeIcons.tachometerAlt,
                     onChanged: (value) => viewModel.onSettingsChanged(settings
                         .rebuild((b) => b..enablePortalDashboard = value)),
                   ),
@@ -236,6 +244,29 @@ class _ClientPortalState extends State<ClientPortal>
                    */
                 ],
               ),
+              FormCard(
+                children: [
+                  BoolDropdownButton(
+                    label: localization.clientRegistration,
+                    helpLabel: localization.clientRegistrationHelp,
+                    value: settings.clientCanRegister,
+                    iconData: FontAwesomeIcons.userPlus,
+                    onChanged: (value) => viewModel.onSettingsChanged(
+                        settings.rebuild((b) => b..clientCanRegister = value)),
+                  ),
+                  SizedBox(height: 16),
+                  DecoratedFormField(
+                    controller: _termsController,
+                    label: localization.termsOfService,
+                    maxLines: 6,
+                  ),
+                  DecoratedFormField(
+                    controller: _privacyController,
+                    label: localization.privacyPolicy,
+                    maxLines: 6,
+                  ),
+                ],
+              )
             ],
           ),
           ListView(
@@ -246,8 +277,7 @@ class _ClientPortalState extends State<ClientPortal>
                     label: localization.enablePortalPassword,
                     helpLabel: localization.enablePortalPasswordHelp,
                     value: settings.enablePortalPassword,
-                    iconData:
-                        kIsWeb ? Icons.security : FontAwesomeIcons.shieldAlt,
+                    iconData: FontAwesomeIcons.shieldAlt,
                     onChanged: (value) => viewModel.onSettingsChanged(settings
                         .rebuild((b) => b..enablePortalPassword = value)),
                   ),

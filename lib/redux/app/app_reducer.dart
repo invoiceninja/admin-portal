@@ -1,5 +1,8 @@
+import 'package:built_collection/built_collection.dart';
+import 'package:invoiceninja_flutter/constants.dart';
 import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:invoiceninja_flutter/redux/client/client_actions.dart';
+import 'package:invoiceninja_flutter/redux/company/company_state.dart';
 import 'package:invoiceninja_flutter/redux/expense/expense_actions.dart';
 import 'package:invoiceninja_flutter/redux/invoice/invoice_actions.dart';
 import 'package:invoiceninja_flutter/redux/payment/payment_actions.dart';
@@ -17,11 +20,10 @@ import 'package:invoiceninja_flutter/redux/app/loading_reducer.dart';
 import 'package:invoiceninja_flutter/redux/auth/auth_reducer.dart';
 import 'package:invoiceninja_flutter/redux/company/company_reducer.dart';
 import 'package:invoiceninja_flutter/redux/static/static_reducer.dart';
+
 // STARTER: import - do not remove comment
 import 'package:invoiceninja_flutter/redux/payment_term/payment_term_actions.dart';
-
 import 'package:invoiceninja_flutter/redux/design/design_actions.dart';
-
 import 'package:invoiceninja_flutter/redux/credit/credit_actions.dart';
 
 // We create the State reducer by combining many smaller reducers into one!
@@ -36,6 +38,12 @@ AppState appReducer(AppState state, dynamic action) {
     return action.state.rebuild((b) => b
       ..isLoading = false
       ..isSaving = false);
+  } else if (action is ClearData) {
+    return state.rebuild((b) => b
+      ..userCompanyStates.replace(BuiltList<UserCompanyState>(
+          List<int>.generate(kMaxNumberOfCompanies, (i) => i + 1)
+              .map((index) => UserCompanyState())
+              .toList())));
   }
 
   return state.rebuild((b) => b
