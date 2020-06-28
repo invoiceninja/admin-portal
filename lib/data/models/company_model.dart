@@ -155,8 +155,6 @@ abstract class CompanyEntity extends Object
   @BuiltValueField(wireName: 'show_product_details')
   bool get showProductDetails;
 
-  // TODO remove this
-  @nullable
   @BuiltValueField(wireName: 'client_can_register')
   bool get clientCanRegister;
 

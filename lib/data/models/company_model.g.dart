@@ -80,6 +80,9 @@ class _$CompanyEntitySerializer implements StructuredSerializer<CompanyEntity> {
       'show_product_details',
       serializers.serialize(object.showProductDetails,
           specifiedType: const FullType(bool)),
+      'client_can_register',
+      serializers.serialize(object.clientCanRegister,
+          specifiedType: const FullType(bool)),
       'company_key',
       serializers.serialize(object.companyKey,
           specifiedType: const FullType(String)),
@@ -212,12 +215,6 @@ class _$CompanyEntitySerializer implements StructuredSerializer<CompanyEntity> {
       'id',
       serializers.serialize(object.id, specifiedType: const FullType(String)),
     ];
-    if (object.clientCanRegister != null) {
-      result
-        ..add('client_can_register')
-        ..add(serializers.serialize(object.clientCanRegister,
-            specifiedType: const FullType(bool)));
-    }
     if (object.plan != null) {
       result
         ..add('plan')
@@ -2890,6 +2887,9 @@ class _$CompanyEntity extends CompanyEntity {
     }
     if (showProductDetails == null) {
       throw new BuiltValueNullFieldError('CompanyEntity', 'showProductDetails');
+    }
+    if (clientCanRegister == null) {
+      throw new BuiltValueNullFieldError('CompanyEntity', 'clientCanRegister');
     }
     if (companyKey == null) {
       throw new BuiltValueNullFieldError('CompanyEntity', 'companyKey');
