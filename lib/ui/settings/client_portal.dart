@@ -140,7 +140,7 @@ class _ClientPortalState extends State<ClientPortal>
     final localization = AppLocalization.of(context);
     final viewModel = widget.viewModel;
     final state = viewModel.state;
-    //final company = viewModel.company;
+    final company = viewModel.company;
     final settings = viewModel.settings;
 
     return EditScaffold(
@@ -249,10 +249,10 @@ class _ClientPortalState extends State<ClientPortal>
                   BoolDropdownButton(
                     label: localization.clientRegistration,
                     helpLabel: localization.clientRegistrationHelp,
-                    value: settings.clientCanRegister,
+                    value: company.clientCanRegister,
                     iconData: FontAwesomeIcons.userPlus,
-                    onChanged: (value) => viewModel.onSettingsChanged(
-                        settings.rebuild((b) => b..clientCanRegister = value)),
+                    onChanged: (value) => viewModel.onCompanyChanged(
+                        company.rebuild((b) => b..clientCanRegister = value)),
                   ),
                   SizedBox(height: 16),
                   DecoratedFormField(

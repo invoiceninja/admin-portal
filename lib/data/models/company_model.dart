@@ -67,6 +67,7 @@ abstract class CompanyEntity extends Object
       defaultQuantity: true,
       slackWebhookUrl: '',
       googleAnalyticsKey: '',
+      clientCanRegister: true,
       convertProductExchangeRate: false,
       enableCustomSurchargeTaxes1: false,
       enableCustomSurchargeTaxes2: false,
@@ -153,6 +154,11 @@ abstract class CompanyEntity extends Object
 
   @BuiltValueField(wireName: 'show_product_details')
   bool get showProductDetails;
+
+  // TODO remove this
+  @nullable
+  @BuiltValueField(wireName: 'client_can_register')
+  bool get clientCanRegister;
 
   // TODO remove this
   @nullable
@@ -1745,15 +1751,11 @@ abstract class SettingsEntity
   String get gmailSendingUserId;
 
   @nullable
-  @BuiltValueField(wireName: 'client_can_register')
-  bool get clientCanRegister;
-
-  @nullable
-  @BuiltValueField(wireName: 'client_signup_terms')
+  @BuiltValueField(wireName: 'client_portal_terms')
   String get clientPortalTerms;
 
   @nullable
-  @BuiltValueField(wireName: 'client_signup_privacy_policy')
+  @BuiltValueField(wireName: 'client_portal_privacy_policy')
   String get clientPortalPrivacy;
 
 
