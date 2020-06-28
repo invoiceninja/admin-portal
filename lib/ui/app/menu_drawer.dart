@@ -549,7 +549,7 @@ class SidebarFooter extends StatelessWidget {
             IconButton(
               icon: Icon(Icons.forum),
               onPressed: () =>
-                  launch('https://www.invoiceninja.com/forums/forum/support'),
+                  launch('https://forum.invoiceninja.com'),
               tooltip: localization.supportForum,
             ),
             IconButton(
