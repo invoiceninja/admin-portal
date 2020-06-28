@@ -38667,6 +38667,8 @@ mixin LocalizationsProvider on LocaleCodeAware {
   String get clientRegistrationHelp =>
       _localizedValues[localeCode]['client_registration_help'] ?? '';
 
+  String get subtotal => _localizedValues[localeCode]['subtotal'] ?? '';
+
   String lookup(String key) {
     final lookupKey = toSnakeCase(key);
     return _localizedValues[localeCode][lookupKey] ??
