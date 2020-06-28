@@ -52,12 +52,13 @@ class _LoginState extends State<LoginView> {
 
   bool _emailLogin = true;
   bool _isSelfHosted = true;
+  bool _createAccount = false;
 
   // TODO change for stable release
   //bool _emailLogin = false;
   //bool _isSelfHosted = false;
+  //bool _createAccount = true;
 
-  bool _createAccount = true;
   bool _recoverPassword = false;
   bool _autoValidate = false;
   bool _termsChecked = false;
@@ -355,7 +356,7 @@ class _LoginState extends State<LoginView> {
                       Column(
                         children: <Widget>[
                           SizedBox(height: 10),
-                          if (!kIsWeb)
+                          if (!kReleaseMode)
                             _ToggleButtons(
                               tabLabels: [
                                 localization.hosted,
