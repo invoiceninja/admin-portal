@@ -67,7 +67,7 @@ class InvoiceEditDesktopState extends State<InvoiceEditDesktop>
     super.initState();
 
     _focusNode = FocusScopeNode();
-    _tabController = TabController(vsync: this, length: 4);
+    _tabController = TabController(vsync: this, length: 5);
   }
 
   @override
@@ -170,6 +170,7 @@ class InvoiceEditDesktopState extends State<InvoiceEditDesktop>
     final invoice = viewModel.invoice;
     final company = viewModel.company;
     final client = viewModel.state.clientState.get(invoice.clientId);
+    final invoiceTotal = invoice.calculateTotal;
 
     return ListView(
       key: ValueKey('__invoice_${invoice.id}__'),
@@ -346,6 +347,7 @@ class InvoiceEditDesktopState extends State<InvoiceEditDesktop>
                   TabBar(
                     controller: _tabController,
                     tabs: [
+                      Tab(text: localization.settings),
                       Tab(text: localization.publicNotes),
                       Tab(text: localization.privateNotes),
                       Tab(
@@ -367,6 +369,29 @@ class InvoiceEditDesktopState extends State<InvoiceEditDesktop>
                     child: TabBarView(
                       controller: _tabController,
                       children: <Widget>[
+                        Row(
+                          children: [
+                            Expanded(
+                              child: DesignPicker(
+                                initialValue: invoice.designId,
+                                onSelected: (value) => viewModel.onChanged(
+                                    invoice.rebuild(
+                                        (b) => b..designId = value.id)),
+                              ),
+                            ),
+                            SizedBox(
+                              width: 38,
+                            ),
+                            Expanded(
+                              child: UserPicker(
+                                userId: invoice.assignedUserId,
+                                onChanged: (userId) => viewModel.onChanged(
+                                    invoice.rebuild(
+                                        (b) => b..assignedUserId = userId)),
+                              ),
+                            ),
+                          ],
+                        ),
                         DecoratedFormField(
                           maxLines: 6,
                           controller: _publicNotesController,
@@ -407,6 +432,18 @@ class InvoiceEditDesktopState extends State<InvoiceEditDesktop>
                         right: kMobileDialogPadding,
                         left: kMobileDialogPadding / 2),
                     children: <Widget>[
+                      if (company.hasCustomSurcharge || company.hasInvoiceTaxes)
+                        TextFormField(
+                          enabled: false,
+                          decoration: InputDecoration(
+                            labelText: localization.subtotal,
+                          ),
+                          textAlign: TextAlign.end,
+                          key: ValueKey(
+                              '__invoice_subtotal_${invoice.subtotal}_${invoice.clientId}__'),
+                          initialValue: formatNumber(invoice.subtotal, context,
+                              clientId: invoice.clientId),
+                        ),
                       if (company.hasCustomSurcharge)
                         CustomSurcharges(
                           surcharge1Controller: _surcharge1Controller,
@@ -446,23 +483,16 @@ class InvoiceEditDesktopState extends State<InvoiceEditDesktop>
                           surcharge4Controller: _surcharge4Controller,
                           isAfterTaxes: true,
                         ),
-                    ],
-                  ),
-                  FormCard(
-                    padding: const EdgeInsets.only(
-                        right: kMobileDialogPadding,
-                        top: kMobileDialogPadding,
-                        left: kMobileDialogPadding / 2),
-                    children: [
-                      DesignPicker(
-                        initialValue: invoice.designId,
-                        onSelected: (value) => viewModel.onChanged(
-                            invoice.rebuild((b) => b..designId = value.id)),
-                      ),
-                      UserPicker(
-                        userId: invoice.assignedUserId,
-                        onChanged: (userId) => viewModel.onChanged(
-                            invoice.rebuild((b) => b..assignedUserId = userId)),
+                      TextFormField(
+                        enabled: false,
+                        decoration: InputDecoration(
+                          labelText: localization.total,
+                        ),
+                        textAlign: TextAlign.end,
+                        key: ValueKey(
+                            '__invoice_total_${invoiceTotal}_${invoice.clientId}__'),
+                        initialValue: formatNumber(invoiceTotal, context,
+                            clientId: invoice.clientId),
                       ),
                     ],
                   ),
