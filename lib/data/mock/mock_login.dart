@@ -53,6 +53,8 @@ const dynamic kMockLogin = '''
                 "company_key": "tnsafrog3idqdi1f9mediu1liddyefiencpa0ablymwghbky3wanjhzwtyqbz0uk",
                 "update_products": true,
                 "fill_products": true,
+                "client_can_register": true,
+                "enabled_item_tax_rates": 0,                
                 "convert_products": false,
                 "custom_surcharge_taxes1": false,
                 "custom_surcharge_taxes2": false,
@@ -298,7 +300,7 @@ const dynamic kMockLogin = '''
                         }
                     }
                 },
-                "enabled_tax_rates": 1,
+                "enabled_tax_rates": 0,
                 "enabled_modules": 0,
                 "updated_at": 1584439517,
                 "archived_at": 0,
