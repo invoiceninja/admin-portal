@@ -56,7 +56,7 @@ class UserRepository {
 
   Future<List<UserEntity>> detachFromCompany(
       Credentials credentials, String userId) async {
-    final url = credentials.url + '/users/$userId/detachFromCompany';
+    final url = credentials.url + '/users/$userId/detach_from_company';
     final dynamic response = await webClient.delete(url, credentials.token);
 
     final UserListResponse userResponse =

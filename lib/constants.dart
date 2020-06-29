@@ -17,6 +17,8 @@ const String kSiteUrl = 'https://invoiceninja.com';
 const String kAppProductionUrl =
     'https://staging.invoicing.co'; // TODO remove staging
 const String kAppStagingUrl = 'https://staging.invoicing.co';
+//const String kAppDemoUrl = 'https://demo.invoiceninja.com';
+const String kAppDemoUrl = 'http://localhost:57652';
 const String kWhiteLabelUrl =
     'https://app.invoiceninja.com/buy_now/?account_key=AsFmBAeLXF0IKf7tmi0eiyZfmWW9hxMT&product_id=3';
 

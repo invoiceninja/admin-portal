@@ -686,7 +686,13 @@ abstract class TokenEntity implements Built<TokenEntity, TokenEntityBuilder> {
 
   String get obscuredToken => base64Encode(utf8.encode(token));
 
-  static String unobscureToken(String value) => utf8.decode(base64Decode(value));
+  static String unobscureToken(String value) {
+    if (value == null || value.isEmpty) {
+      return null;
+    }
+
+    return utf8.decode(base64Decode(value));
+  }
 
   static Serializer<TokenEntity> get serializer => _$tokenEntitySerializer;
 }
@@ -1757,7 +1763,6 @@ abstract class SettingsEntity
   @nullable
   @BuiltValueField(wireName: 'client_portal_privacy_policy')
   String get clientPortalPrivacy;
-
 
   // TODO remove this field
   @nullable

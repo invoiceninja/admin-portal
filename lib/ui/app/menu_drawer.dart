@@ -548,8 +548,7 @@ class SidebarFooter extends StatelessWidget {
             ),
             IconButton(
               icon: Icon(Icons.forum),
-              onPressed: () =>
-                  launch('https://www.invoiceninja.com/forums/forum/support'),
+              onPressed: () => launch('https://forum.invoiceninja.com'),
               tooltip: localization.supportForum,
             ),
             IconButton(
@@ -580,7 +579,7 @@ class SidebarFooter extends StatelessWidget {
             ),
              */
             //if (state.lastError.isNotEmpty && (state.isSelfHosted || !kReleaseMode))
-            if (state.lastError.isNotEmpty)
+            if (state.lastError.isNotEmpty && !Config.DEMO_MODE)
               IconButton(
                 icon: Icon(
                   Icons.warning,
