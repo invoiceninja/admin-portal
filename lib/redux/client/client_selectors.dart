@@ -1,50 +1,42 @@
 import 'package:invoiceninja_flutter/data/models/group_model.dart';
+import 'package:invoiceninja_flutter/redux/static/static_state.dart';
 import 'package:memoize/memoize.dart';
 import 'package:built_collection/built_collection.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/redux/ui/list_ui_state.dart';
 
-var memoizedDropdownClientList = memo6(
-    (BuiltMap<String, ClientEntity> clientMap,
-            BuiltList<String> clientList,
-            BuiltMap<String, UserEntity> userMap,
-            BuiltMap<String, CountryEntity> countryMap,
-            BuiltMap<String, LanguageEntity> languageMap,
-            BuiltMap<String, CurrencyEntity> currencyMap) =>
-        dropdownClientsSelector(clientMap, clientList, userMap, countryMap,
-            languageMap, currencyMap));
+var memoizedDropdownClientList = memo4(
+    (BuiltMap<String, ClientEntity> clientMap, BuiltList<String> clientList,
+            BuiltMap<String, UserEntity> userMap, StaticState staticState) =>
+        dropdownClientsSelector(clientMap, clientList, userMap, staticState));
 
 List<String> dropdownClientsSelector(
     BuiltMap<String, ClientEntity> clientMap,
     BuiltList<String> clientList,
     BuiltMap<String, UserEntity> userMap,
-    BuiltMap<String, CountryEntity> countryMap,
-    BuiltMap<String, LanguageEntity> languageMap,
-    BuiltMap<String, CurrencyEntity> currencyMap) {
+    StaticState staticState) {
   final list =
       clientList.where((clientId) => clientMap[clientId].isActive).toList();
 
   list.sort((clientAId, clientBId) {
     final clientA = clientMap[clientAId];
     final clientB = clientMap[clientBId];
-    return clientA.compareTo(clientB, ClientFields.name, true, userMap,
-        countryMap, languageMap, currencyMap);
+    return clientA.compareTo(
+        clientB, ClientFields.name, true, userMap, staticState);
   });
 
   return list;
 }
 
-var memoizedFilteredClientList = memo8(
+var memoizedFilteredClientList = memo6(
     (BuiltMap<String, ClientEntity> clientMap,
             BuiltList<String> clientList,
             BuiltMap<String, GroupEntity> groupMap,
             ListUIState clientListState,
             BuiltMap<String, UserEntity> userMap,
-            BuiltMap<String, CountryEntity> countryMap,
-            BuiltMap<String, LanguageEntity> languageMap,
-            BuiltMap<String, CurrencyEntity> currencyMap) =>
+            StaticState staticState) =>
         filteredClientsSelector(clientMap, clientList, groupMap,
-            clientListState, userMap, countryMap, languageMap, currencyMap));
+            clientListState, userMap, staticState));
 
 List<String> filteredClientsSelector(
     BuiltMap<String, ClientEntity> clientMap,
@@ -52,9 +44,7 @@ List<String> filteredClientsSelector(
     BuiltMap<String, GroupEntity> groupMap,
     ListUIState clientListState,
     BuiltMap<String, UserEntity> userMap,
-    BuiltMap<String, CountryEntity> countryMap,
-    BuiltMap<String, LanguageEntity> languageMap,
-    BuiltMap<String, CurrencyEntity> currencyMap) {
+    StaticState staticState) {
   final list = clientList.where((clientId) {
     final client = clientMap[clientId];
     final group = groupMap[client.groupId] ?? GroupEntity(id: client.groupId);
@@ -99,14 +89,8 @@ List<String> filteredClientsSelector(
   list.sort((clientAId, clientBId) {
     final clientA = clientMap[clientAId];
     final clientB = clientMap[clientBId];
-    return clientA.compareTo(
-        clientB,
-        clientListState.sortField,
-        clientListState.sortAscending,
-        userMap,
-        countryMap,
-        languageMap,
-        currencyMap);
+    return clientA.compareTo(clientB, clientListState.sortField,
+        clientListState.sortAscending, userMap, staticState);
   });
 
   return list;

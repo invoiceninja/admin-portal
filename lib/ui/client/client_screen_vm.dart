@@ -50,9 +50,7 @@ class ClientScreenVM {
           state.groupState.map,
           state.clientListState,
           state.userState.map,
-          state.staticState.countryMap,
-          state.staticState.languageMap,
-          state.staticState.currencyMap),
+          state.staticState),
       userCompany: state.userCompany,
       isInMultiselect: state.clientListState.isInMultiselect(),
     );

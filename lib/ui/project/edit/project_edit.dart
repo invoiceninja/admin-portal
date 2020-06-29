@@ -140,9 +140,7 @@ class _ProjectEditState extends State<ProjectEdit> {
                               state.clientState.map,
                               state.clientState.list,
                               state.userState.map,
-                              state.staticState.countryMap,
-                              state.staticState.languageMap,
-                              state.staticState.currencyMap),
+                              state.staticState),
                           validator: (String val) => val.trim().isEmpty
                               ? localization.pleaseSelectAClient
                               : null,

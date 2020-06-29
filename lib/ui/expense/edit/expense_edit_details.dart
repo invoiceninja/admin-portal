@@ -128,9 +128,7 @@ class ExpenseEditDetailsState extends State<ExpenseEditDetails> {
                         clientState.map,
                         clientState.list,
                         state.userState.map,
-                        state.staticState.countryMap,
-                        state.staticState.languageMap,
-                        state.staticState.currencyMap),
+                        state.staticState),
                     onSelected: (client) {
                       final currencyId =
                           (client as ClientEntity)?.settings?.currencyId ??

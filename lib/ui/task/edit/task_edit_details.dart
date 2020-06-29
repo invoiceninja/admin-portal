@@ -96,9 +96,7 @@ class _TaskEditDetailsState extends State<TaskEditDetails> {
                         state.clientState.map,
                         state.clientState.list,
                         state.userState.map,
-                        state.staticState.countryMap,
-                        state.staticState.languageMap,
-                        state.staticState.currencyMap),
+                        state.staticState),
                     onSelected: (client) {
                       viewModel.onChanged(task.rebuild((b) => b
                         ..clientId = client?.id

@@ -9,6 +9,7 @@ import 'package:invoiceninja_flutter/data/models/gateway_token_model.dart';
 import 'package:invoiceninja_flutter/data/models/group_model.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
+import 'package:invoiceninja_flutter/redux/static/static_state.dart';
 import 'package:invoiceninja_flutter/utils/formatting.dart';
 
 part 'client_model.g.dart';
@@ -328,9 +329,7 @@ abstract class ClientEntity extends Object
       String sortField,
       bool sortAscending,
       BuiltMap<String, UserEntity> userMap,
-      BuiltMap<String, CountryEntity> countryMap,
-      BuiltMap<String, LanguageEntity> languageMap,
-      BuiltMap<String, CurrencyEntity> currencyMap) {
+      StaticState staticState) {
     int response = 0;
     final ClientEntity clientA = sortAscending ? this : client;
     final ClientEntity clientB = sortAscending ? client : this;
@@ -415,14 +414,14 @@ abstract class ClientEntity extends Object
             .compareTo(userB.listDisplayName.toLowerCase());
         break;
       case ClientFields.country:
-        final countryA = countryMap[clientA.countryId] ?? CountryEntity();
-        final countryB = countryMap[clientB.countryId] ?? CountryEntity();
+        final countryA = staticState.countryMap[clientA.countryId] ?? CountryEntity();
+        final countryB = staticState.countryMap[clientB.countryId] ?? CountryEntity();
         response = countryA.name.toLowerCase()
             .compareTo(countryB.name.toLowerCase());
         break;
       case ClientFields.currency:
-        final currencyA = currencyMap[clientA.currencyId] ?? CurrencyEntity();
-        final currencyB = currencyMap[clientB.currencyId] ?? CurrencyEntity();
+        final currencyA = staticState.currencyMap[clientA.currencyId] ?? CurrencyEntity();
+        final currencyB = staticState.currencyMap[clientB.currencyId] ?? CurrencyEntity();
         response = currencyA.name.toLowerCase()
             .compareTo(currencyB.name.toLowerCase());
         break;
@@ -434,8 +433,8 @@ abstract class ClientEntity extends Object
             .compareTo(stateB.name.toLowerCase());
         break;
       case ClientFields.language:
-        final languageA = languageMap[clientA.languageId] ?? LanguageEntity();
-        final languageB = languageMap[clientB.languageId] ?? LanguageEntity();
+        final languageA = staticState.languageMap[clientA.languageId] ?? LanguageEntity();
+        final languageB = staticState.languageMap[clientB.languageId] ?? LanguageEntity();
         response = languageA.name.toLowerCase()
             .compareTo(languageB.name.toLowerCase());
         break;

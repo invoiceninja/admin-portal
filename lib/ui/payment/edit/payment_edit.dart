@@ -152,9 +152,7 @@ class _PaymentEditState extends State<PaymentEdit> {
                         state.clientState.map,
                         state.clientState.list,
                         state.userState.map,
-                        state.staticState.countryMap,
-                        state.staticState.languageMap,
-                        state.staticState.currencyMap),
+                        state.staticState),
                   ),
                   if (payment.isForInvoice != true)
                     DecoratedFormField(
