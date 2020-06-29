@@ -688,7 +688,7 @@ abstract class TokenEntity implements Built<TokenEntity, TokenEntityBuilder> {
 
   static String unobscureToken(String value) {
     if (value == null || value.isEmpty) {
-      return '';
+      return null;
     }
 
     return utf8.decode(base64Decode(value));

@@ -28,6 +28,7 @@ import 'package:invoiceninja_flutter/ui/app/main_screen.dart';
 import 'package:invoiceninja_flutter/ui/auth/login_vm.dart';
 import 'package:invoiceninja_flutter/ui/dashboard/dashboard_screen_vm.dart';
 import 'package:invoiceninja_flutter/utils/completers.dart';
+import 'package:invoiceninja_flutter/utils/formatting.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:invoiceninja_flutter/utils/platforms.dart';
 import 'package:redux/redux.dart';
@@ -239,8 +240,10 @@ Middleware<AppState> _createLoadState(
       print('Load state error: $error');
 
       String token;
-      if (Config.DEMO_MODE) {
-        token = 'DEMO';
+
+      if (Config.DEMO_MODE ||
+          cleanApiUrl(store.state.authState.url) == kAppDemoUrl) {
+        token = 'TOKEN';
       } else {
         final SharedPreferences prefs = await SharedPreferences.getInstance();
         token = prefs.getString(kSharedPrefToken) ?? '';
