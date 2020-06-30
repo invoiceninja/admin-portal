@@ -449,56 +449,52 @@ class _DrawerTileState extends State<DrawerTile> {
     }
 
     Widget child = Material(
-      color: Colors.transparent,
-      child: Container(
-        color: isSelected
-            ? convertHexStringToColor(enableDarkMode
-                ? kDefaultDarkSelectedColorMenu
-                : kDefaultLightSelectedColorMenu)
-            : Colors.transparent,
-        child: ListTile(
-          dense: true,
-          leading: Padding(
-            padding: const EdgeInsets.only(left: 4),
-            child: Icon(
-              widget.icon,
-              size: 20,
-              color: textColor,
-            ),
+      color: isSelected
+          ? convertHexStringToColor(enableDarkMode
+              ? kDefaultDarkSelectedColorMenu
+              : kDefaultLightSelectedColorMenu)
+          : Colors.transparent,
+      child: ListTile(
+        dense: true,
+        leading: Padding(
+          padding: const EdgeInsets.only(left: 4),
+          child: Icon(
+            widget.icon,
+            size: 20,
+            color: textColor,
           ),
-          title: Text(
-            widget.title,
-            style: Theme.of(context).textTheme.bodyText1.copyWith(
-                  fontWeight: FontWeight.w100,
-                  fontSize: 16,
-                  color: textColor,
-                ),
-            overflow: TextOverflow.clip,
-            maxLines: 1,
-          ),
-          onTap: () {
-            if (widget.entityType != null) {
-              viewEntitiesByType(
-                  context: context, entityType: widget.entityType);
-            } else {
-              widget.onTap();
-            }
-          },
-          onLongPress: () => widget.onLongPress != null
-              ? widget.onLongPress()
-              : widget.entityType != null
-                  ? createEntityByType(
-                      context: context, entityType: widget.entityType)
-                  : null,
-          /*
-              trailing: _isHovered ||
-                      !RendererBinding.instance.mouseTracker.mouseIsConnected
-                  ? trailingWidget
-                  : null,
-
-               */
-          trailing: state.isMenuCollapsed ? null : trailingWidget,
         ),
+        title: Text(
+          widget.title,
+          style: Theme.of(context).textTheme.bodyText1.copyWith(
+                fontWeight: FontWeight.w100,
+                fontSize: 16,
+                color: textColor,
+              ),
+          overflow: TextOverflow.clip,
+          maxLines: 1,
+        ),
+        onTap: () {
+          if (widget.entityType != null) {
+            viewEntitiesByType(context: context, entityType: widget.entityType);
+          } else {
+            widget.onTap();
+          }
+        },
+        onLongPress: () => widget.onLongPress != null
+            ? widget.onLongPress()
+            : widget.entityType != null
+                ? createEntityByType(
+                    context: context, entityType: widget.entityType)
+                : null,
+        /*
+            trailing: _isHovered ||
+                    !RendererBinding.instance.mouseTracker.mouseIsConnected
+                ? trailingWidget
+                : null,
+
+             */
+        trailing: state.isMenuCollapsed ? null : trailingWidget,
       ),
     );
 
@@ -525,7 +521,7 @@ class SidebarFooter extends StatelessWidget {
     final localization = AppLocalization.of(context);
     final account = state.userCompany.account;
 
-    return Container(
+    return Material(
       color: Theme.of(context).bottomAppBarColor,
       child: Row(
         mainAxisSize: MainAxisSize.max,
