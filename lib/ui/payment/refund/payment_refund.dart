@@ -301,6 +301,11 @@ class _PaymentableEditorState extends State<PaymentableEditor> {
             entityList: payment.paymentables
                 .map((payment) => payment.invoiceId)
                 .toList(),
+            overrideSuggestedAmount: (entity) {
+              final invoice = entity as InvoiceEntity;
+              return formatNumber(invoice.amount, context,
+                  clientId: invoice.clientId);
+            },
             onSelected: (selected) {
               final invoice = selected as InvoiceEntity;
               /*

@@ -27,6 +27,8 @@ class EntityDropdown extends StatefulWidget {
     this.onAddPressed,
     this.autofocus = false,
     this.onFieldSubmitted,
+    this.overrideSuggestedAmount,
+    this.overrideSuggestedLabel,
   }) : super(key: key);
 
   final EntityType entityType;
@@ -41,6 +43,8 @@ class EntityDropdown extends StatefulWidget {
   final bool allowClearing;
   final Function(String) onFieldSubmitted;
   final Function(Completer<SelectableEntity> completer) onAddPressed;
+  final Function(BaseEntity) overrideSuggestedAmount;
+  final Function(BaseEntity) overrideSuggestedLabel;
 
   @override
   _EntityDropdownState createState() => _EntityDropdownState();
@@ -69,7 +73,12 @@ class _EntityDropdownState extends State<EntityDropdown> {
     if (_entityMap == null) {
       print('ERROR: ENTITY MAP IS NULL: ${widget.entityType}');
     } else {
-      _textController.text = _entityMap[widget.entityId]?.listDisplayName ?? '';
+      final entity = _entityMap[widget.entityId];
+      if (widget.overrideSuggestedLabel != null) {
+        _textController.text = widget.overrideSuggestedLabel(entity);
+      } else {
+        _textController.text = entity?.listDisplayName ?? '';
+      }
     }
 
     super.didChangeDependencies();
@@ -96,17 +105,23 @@ class _EntityDropdownState extends State<EntityDropdown> {
 
               widget.onSelected(entity);
 
+              final String label = widget.overrideSuggestedLabel != null
+                  ? widget.overrideSuggestedLabel(entity)
+                  : entity.listDisplayName;
+
               if (update) {
-                _textController.text = entity.listDisplayName;
+                _textController.text = label;
               }
 
               if (widget.onFieldSubmitted != null) {
-                widget.onFieldSubmitted(entity.listDisplayName);
+                widget.onFieldSubmitted(label);
               }
             },
             onAddPressed: widget.onAddPressed != null
                 ? (context, completer) => widget.onAddPressed(completer)
                 : null,
+            overrideSuggestedAmount: widget.overrideSuggestedAmount,
+            overrideSuggestedLabel: widget.overrideSuggestedLabel,
           );
         });
   }
@@ -151,6 +166,8 @@ class _EntityDropdownState extends State<EntityDropdown> {
                   child: _EntityListTile(
                     entity: _entityMap[entityId],
                     filter: _textController.text,
+                    overrideSuggestedAmount: widget.overrideSuggestedAmount,
+                    overrideSuggestedLabel: widget.overrideSuggestedLabel,
                   ),
                 ),
                 onPointerDown: (_) {
@@ -158,7 +175,10 @@ class _EntityDropdownState extends State<EntityDropdown> {
                     return;
                   }
                   final entity = _entityMap[entityId];
-                  _textController.text = _entityMap[entityId].listDisplayName;
+
+                  _textController.text = widget.overrideSuggestedLabel != null
+                      ? widget.overrideSuggestedLabel(entity)
+                      : entity?.listDisplayName;
 
                   if (entity?.id == widget.entityId) {
                     return;
@@ -174,7 +194,9 @@ class _EntityDropdownState extends State<EntityDropdown> {
               }
 
               final entity = _entityMap[entityId];
-              _textController.text = _entityMap[entityId].listDisplayName;
+              _textController.text = widget.overrideSuggestedLabel != null
+                  ? widget.overrideSuggestedLabel(entity)
+                  : entity?.listDisplayName;
 
               if (entity?.id == widget.entityId) {
                 return;
@@ -260,6 +282,8 @@ class EntityDropdownDialog extends StatefulWidget {
     @required this.entityMap,
     @required this.entityList,
     @required this.onSelected,
+    @required this.overrideSuggestedLabel,
+    @required this.overrideSuggestedAmount,
     this.onAddPressed,
   });
 
@@ -267,6 +291,8 @@ class EntityDropdownDialog extends StatefulWidget {
   final List<String> entityList;
   final Function(SelectableEntity, [bool]) onSelected;
   final Function(BuildContext context, Completer completer) onAddPressed;
+  final Function(BaseEntity) overrideSuggestedAmount;
+  final Function(BaseEntity) overrideSuggestedLabel;
 
   @override
   _EntityDropdownDialogState createState() => _EntityDropdownDialogState();
@@ -355,6 +381,8 @@ class _EntityDropdownDialogState extends State<EntityDropdownDialog> {
             entity: entity,
             filter: _filter,
             onTap: (entity) => _selectEntity(entity),
+            overrideSuggestedAmount: widget.overrideSuggestedAmount,
+            overrideSuggestedLabel: widget.overrideSuggestedLabel,
           );
         },
       );
@@ -379,28 +407,36 @@ class _EntityListTile extends StatelessWidget {
   const _EntityListTile({
     @required this.entity,
     @required this.filter,
+    @required this.overrideSuggestedLabel,
+    @required this.overrideSuggestedAmount,
     this.onTap,
   });
 
   final SelectableEntity entity;
   final Function(SelectableEntity entity) onTap;
   final String filter;
+  final Function(BaseEntity) overrideSuggestedAmount;
+  final Function(BaseEntity) overrideSuggestedLabel;
 
   @override
   Widget build(BuildContext context) {
     final String subtitle = entity.matchesFilterValue(filter);
+    final String label = overrideSuggestedLabel == null
+        ? entity.listDisplayName
+        : overrideSuggestedLabel(entity);
+    final String amount = overrideSuggestedAmount == null
+        ? formatNumber(entity.listDisplayAmount, context,
+            formatNumberType: entity.listDisplayAmountType)
+        : overrideSuggestedAmount(entity);
+
     return ListTile(
       title: Row(
         children: <Widget>[
           Expanded(
-            child: Text(entity.listDisplayName,
-                style: Theme.of(context).textTheme.headline6),
+            child: Text(label, style: Theme.of(context).textTheme.headline6),
           ),
           entity.listDisplayAmount != null
-              ? Text(
-                  formatNumber(entity.listDisplayAmount, context,
-                      formatNumberType: entity.listDisplayAmountType),
-                  style: Theme.of(context).textTheme.headline6)
+              ? Text(amount, style: Theme.of(context).textTheme.headline6)
               : Container(),
         ],
       ),
