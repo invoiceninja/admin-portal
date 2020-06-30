@@ -27,7 +27,7 @@ class SelectedIndicator extends StatelessWidget {
               : (isMenu
                   ? kDefaultLightSelectedColorMenu
                   : kDefaultLightSelectedColor))
-          : null,
+          : Theme.of(context).cardColor,
       child: child,
     );
   }

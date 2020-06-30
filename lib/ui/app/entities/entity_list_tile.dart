@@ -112,33 +112,32 @@ class EntitiesListTile extends StatelessWidget {
     final store = StoreProvider.of<AppState>(context);
     final state = store.state;
     final mainRoute = state.uiState.mainRoute;
-    final isFilterMatch = isFilter && '/$entityType' == mainRoute;
+    final isFilterMatch = isFilter && '$entityType' == mainRoute;
+
+    print('## BUIOLD: isFilter: $isFilter, entitType: $entityType, mainRoute: $mainRoute');
 
     return Column(
       mainAxisSize: MainAxisSize.min,
       children: <Widget>[
-        Material(
-          color: Theme.of(context).cardColor,
-          child: SelectedIndicator(
-            isSelected: isFilterMatch,
-            isMenu: true,
-            child: ListTile(
-              contentPadding: const EdgeInsets.only(left: 16, right: 16),
-              title: Text(title),
-              subtitle: Text(subtitle ?? ''),
-              leading: IconButton(
-                icon: Icon(getEntityIcon(entityType), size: 18.0),
-                onPressed: onTap,
-              ),
-              trailing: isFilter
-                  ? IconButton(
-                      icon: Icon(Icons.add_circle_outline),
-                      onPressed: onLongPress,
-                    )
-                  : Icon(Icons.navigate_next),
-              onTap: onTap,
-              onLongPress: onLongPress,
+        SelectedIndicator(
+          isSelected: isFilterMatch,
+          isMenu: true,
+          child: ListTile(
+            contentPadding: const EdgeInsets.only(left: 16, right: 16),
+            title: Text(title),
+            subtitle: Text(subtitle ?? ''),
+            leading: IconButton(
+              icon: Icon(getEntityIcon(entityType), size: 18.0),
+              onPressed: onTap,
             ),
+            trailing: isFilter
+                ? IconButton(
+                    icon: Icon(Icons.add_circle_outline),
+                    onPressed: onLongPress,
+                  )
+                : Icon(Icons.navigate_next),
+            onTap: onTap,
+            onLongPress: onLongPress,
           ),
         ),
         ListDivider(),
