@@ -211,7 +211,6 @@ class _HistoryListTileState extends State<HistoryListTile> {
                 context: context,
                 entityId: history.id,
                 entityType: history.entityType,
-                ensureVisible: true,
               );
           }
         },
