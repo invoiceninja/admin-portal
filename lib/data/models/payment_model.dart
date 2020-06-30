@@ -176,6 +176,9 @@ abstract class PaymentEntity extends Object
   @nullable
   bool get isForInvoice;
 
+  @nullable
+  bool get isForCredit;
+
   BuiltList<PaymentableEntity> get paymentables;
 
   BuiltList<PaymentableEntity> get invoices;
@@ -418,6 +421,13 @@ abstract class PaymentableEntity extends Object
     return PaymentableEntity(
       invoiceId: invoice.id,
       amount: invoice.balance,
+    );
+  }
+
+  factory PaymentableEntity.fromCredit(InvoiceEntity credit) {
+    return PaymentableEntity(
+      creditId: credit.id,
+      amount: credit.balance,
     );
   }
 
