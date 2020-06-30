@@ -168,8 +168,12 @@ abstract class ProductEntity extends Object
   @override
   FormatNumberType get listDisplayAmountType => FormatNumberType.money;
 
-  int compareTo(ProductEntity product,
-      [String sortField, bool sortAscending = true]) {
+  int compareTo(
+    ProductEntity product, [
+    String sortField,
+    bool sortAscending = true,
+    BuiltMap<String, UserEntity> userMap,
+  ]) {
     int response = 0;
     final ProductEntity productA = sortAscending ? this : product;
     final ProductEntity productB = sortAscending ? product : this;
@@ -192,10 +196,36 @@ abstract class ProductEntity extends Object
       case ProductFields.updatedAt:
         response = productA.updatedAt.compareTo(productB.updatedAt);
         break;
+      case EntityFields.createdAt:
+        response = productA.createdAt.compareTo(productB.createdAt);
+        break;
+      case ProductFields.archivedAt:
+        response = productA.archivedAt.compareTo(productB.archivedAt);
+        break;
       case ProductFields.notes:
         response = productA.notes
             .toLowerCase()
             .compareTo(productB.notes.toLowerCase());
+        break;
+      case EntityFields.assignedTo:
+        final userA = userMap[productA.assignedUserId] ?? UserEntity();
+        final userB = userMap[productB.assignedUserId] ?? UserEntity();
+        response = userA.listDisplayName
+            .toLowerCase()
+            .compareTo(userB.listDisplayName.toLowerCase());
+        break;
+      case EntityFields.createdBy:
+        final userA = userMap[productA.createdUserId] ?? UserEntity();
+        final userB = userMap[productB.createdUserId] ?? UserEntity();
+        response = userA.listDisplayName
+            .toLowerCase()
+            .compareTo(userB.listDisplayName.toLowerCase());
+        break;
+      case EntityFields.state:
+        final stateA = EntityState.valueOf(productA.entityState) ?? EntityState.active;
+        final stateB = EntityState.valueOf(productB.entityState) ?? EntityState.active;
+        response = stateA.name.toLowerCase()
+            .compareTo(stateB.name.toLowerCase());
         break;
       case ProductFields.customValue1:
         response = productA.customValue1
