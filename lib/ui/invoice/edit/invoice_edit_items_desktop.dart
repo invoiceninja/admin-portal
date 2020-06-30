@@ -68,8 +68,8 @@ class _InvoiceEditItemsDesktopState extends State<InvoiceEditItemsDesktop> {
     final invoice = viewModel.invoice;
     final lineItems = invoice.lineItems.toList();
     final productState = state.productState;
-    final productIds =
-        memoizedDropdownProductList(productState.map, productState.list);
+    final productIds = memoizedDropdownProductList(
+        productState.map, productState.list, state.userState.map);
 
     if (lineItems.where((item) => item.isEmpty).isEmpty) {
       lineItems.add(InvoiceItemEntity());
@@ -150,7 +150,7 @@ class _InvoiceEditItemsDesktopState extends State<InvoiceEditItemsDesktop> {
                         return productIds
                             .where((productId) => productState.map[productId]
                                 .matchesFilter(pattern))
-                            .toList();                            
+                            .toList();
                          */
                       },
                       itemBuilder: (context, productId) {

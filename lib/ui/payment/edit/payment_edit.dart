@@ -150,7 +150,10 @@ class _PaymentEditState extends State<PaymentEdit> {
                         ..invoices.clear()));
                     },
                     entityList: memoizedDropdownClientList(
-                        state.clientState.map, state.clientState.list),
+                        state.clientState.map,
+                        state.clientState.list,
+                        state.userState.map,
+                        state.staticState),
                   ),
                   if (payment.isForInvoice != true &&
                       payment.isForCredit != true)
@@ -359,7 +362,9 @@ class _PaymentableEditorState extends State<PaymentableEditor> {
                   state.invoiceState.map,
                   state.clientState.map,
                   state.invoiceState.list,
-                  payment.clientId),
+                  payment.clientId,
+                  state.staticState,
+                  state.userState.map),
               onSelected: (selected) {
                 final invoice = selected as InvoiceEntity;
                 _amountController.text = formatNumber(invoice.balance, context,
@@ -380,7 +385,9 @@ class _PaymentableEditorState extends State<PaymentableEditor> {
                   state.creditState.map,
                   state.clientState.map,
                   state.creditState.list,
-                  payment.clientId),
+                  payment.clientId,
+                  state.staticState,
+                  state.userState.map),
               onSelected: (selected) {
                 final credit = selected as InvoiceEntity;
                 _amountController.text = formatNumber(credit.balance, context,

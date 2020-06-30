@@ -44,8 +44,13 @@ class QuoteScreenVM {
 
     return QuoteScreenVM(
       quoteMap: state.quoteState.map,
-      quoteList: memoizedFilteredQuoteList(state.quoteState.map,
-          state.quoteState.list, state.clientState.map, state.quoteListState),
+      quoteList: memoizedFilteredQuoteList(
+          state.quoteState.map,
+          state.quoteState.list,
+          state.clientState.map,
+          state.quoteListState,
+          state.staticState,
+          state.userState.map),
       userCompany: state.userCompany,
       isInMultiselect: state.quoteListState.isInMultiselect(),
     );

@@ -12,7 +12,6 @@ class PaymentPresenter extends EntityPresenter {
       PaymentFields.paymentNumber,
       PaymentFields.client,
       PaymentFields.amount,
-      PaymentFields.paymentStatus,
       PaymentFields.invoiceNumber,
       PaymentFields.paymentDate,
       PaymentFields.transactionReference,

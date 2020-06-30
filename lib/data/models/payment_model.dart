@@ -57,7 +57,6 @@ class PaymentFields {
   static const String privateNotes = 'private_notes';
   static const String exchangeRate = 'exchange_rate';
   static const String exchangeCurrencyId = 'exchange_currency_id';
-  static const String paymentStatusId = 'payment_status_id';
   static const String paymentStatus = 'payment_status';
   static const String customValue1 = 'custom1';
   static const String customValue2 = 'custom2';
@@ -190,7 +189,8 @@ abstract class PaymentEntity extends Object
       String sortField,
       bool sortAscending,
       BuiltMap<String, InvoiceEntity> invoiceMap,
-      BuiltMap<String, ClientEntity> clientMap}) {
+      BuiltMap<String, ClientEntity> clientMap,
+      BuiltMap<String, UserEntity> userMap}) {
     int response = 0;
     final PaymentEntity paymentA = sortAscending ? this : payment;
     final PaymentEntity paymentB = sortAscending ? payment : this;
@@ -198,6 +198,12 @@ abstract class PaymentEntity extends Object
     switch (sortField) {
       case PaymentFields.amount:
         response = paymentA.amount.compareTo(paymentB.amount);
+        break;
+      case PaymentFields.exchangeRate:
+        response = paymentA.exchangeRate.compareTo(paymentB.exchangeRate);
+        break;
+      case PaymentFields.refunded:
+        response = paymentA.refunded.compareTo(paymentB.refunded);
         break;
       case PaymentFields.paymentNumber:
         response = paymentA.number
@@ -211,8 +217,19 @@ abstract class PaymentEntity extends Object
       case PaymentFields.paymentDate:
         response = paymentA.date.compareTo(paymentB.date);
         break;
+      case PaymentFields.privateNotes:
+        response = paymentA.privateNotes
+            .toLowerCase()
+            .compareTo(paymentB.date.toLowerCase());
+        break;
       case EntityFields.updatedAt:
         response = paymentA.updatedAt.compareTo(paymentB.updatedAt);
+        break;
+      case EntityFields.createdAt:
+        response = paymentA.createdAt.compareTo(paymentB.createdAt);
+        break;
+      case EntityFields.archivedAt:
+        response = paymentA.archivedAt.compareTo(paymentB.archivedAt);
         break;
       case PaymentFields.paymentStatus:
         response = paymentA.statusId.compareTo(paymentB.statusId);
@@ -250,6 +267,26 @@ abstract class PaymentEntity extends Object
         response = clientA.displayName
             .toLowerCase()
             .compareTo(clientB.displayName.toLowerCase());
+        break;
+      case EntityFields.assignedTo:
+        final userA = userMap[paymentA.assignedUserId] ?? UserEntity();
+        final userB = userMap[paymentB.assignedUserId] ?? UserEntity();
+        response = userA.listDisplayName
+            .toLowerCase()
+            .compareTo(userB.listDisplayName.toLowerCase());
+        break;
+      case EntityFields.createdBy:
+        final userA = userMap[paymentA.createdUserId] ?? UserEntity();
+        final userB = userMap[paymentB.createdUserId] ?? UserEntity();
+        response = userA.listDisplayName
+            .toLowerCase()
+            .compareTo(userB.listDisplayName.toLowerCase());
+        break;
+      case EntityFields.state:
+        final stateA = EntityState.valueOf(paymentA.entityState) ?? EntityState.active;
+        final stateB = EntityState.valueOf(paymentB.entityState) ?? EntityState.active;
+        response = stateA.name.toLowerCase()
+            .compareTo(stateB.name.toLowerCase());
         break;
       default:
         print('## ERROR: sort by payment.$sortField is not implemented');

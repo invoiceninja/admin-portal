@@ -44,8 +44,13 @@ class ClientScreenVM {
 
     return ClientScreenVM(
       clientMap: state.clientState.map,
-      clientList: memoizedFilteredClientList(state.clientState.map,
-          state.clientState.list, state.groupState.map, state.clientListState),
+      clientList: memoizedFilteredClientList(
+          state.clientState.map,
+          state.clientState.list,
+          state.groupState.map,
+          state.clientListState,
+          state.userState.map,
+          state.staticState),
       userCompany: state.userCompany,
       isInMultiselect: state.clientListState.isInMultiselect(),
     );

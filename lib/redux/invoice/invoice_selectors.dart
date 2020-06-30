@@ -1,20 +1,26 @@
+import 'package:invoiceninja_flutter/redux/static/static_state.dart';
 import 'package:memoize/memoize.dart';
 import 'package:built_collection/built_collection.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/redux/ui/list_ui_state.dart';
 
-var memoizedDropdownInvoiceList = memo4(
+var memoizedDropdownInvoiceList = memo6(
     (BuiltMap<String, InvoiceEntity> invoiceMap,
             BuiltMap<String, ClientEntity> clientMap,
             BuiltList<String> invoiceList,
-            String clientId) =>
-        dropdownInvoiceSelector(invoiceMap, clientMap, invoiceList, clientId));
+            String clientId,
+            StaticState staticState,
+            BuiltMap<String, UserEntity> userMap) =>
+        dropdownInvoiceSelector(invoiceMap, clientMap, invoiceList, clientId,
+            staticState, userMap));
 
 List<String> dropdownInvoiceSelector(
     BuiltMap<String, InvoiceEntity> invoiceMap,
     BuiltMap<String, ClientEntity> clientMap,
     BuiltList<String> invoiceList,
-    String clientId) {
+    String clientId,
+    StaticState staticState,
+    BuiltMap<String, UserEntity> userMap) {
   final list = invoiceList.where((invoiceId) {
     final invoice = invoiceMap[invoiceId];
     if (clientId != null &&
@@ -35,33 +41,36 @@ List<String> dropdownInvoiceSelector(
     final invoiceA = invoiceMap[invoiceAId];
     final invoiceB = invoiceMap[invoiceBId];
     return invoiceA.compareTo(
-      invoice: invoiceB,
-      clientMap: clientMap,
-      sortAscending: false,
-      sortField: InvoiceFields.invoiceNumber,
-    );
+        invoice: invoiceB,
+        clientMap: clientMap,
+        sortAscending: false,
+        sortField: InvoiceFields.invoiceNumber,
+        staticState: staticState,
+        userMap: userMap);
   });
 
   return list;
 }
 
-var memoizedFilteredInvoiceList = memo5((
-  BuiltMap<String, InvoiceEntity> invoiceMap,
-  BuiltList<String> invoiceList,
-  BuiltMap<String, ClientEntity> clientMap,
-  BuiltMap<String, PaymentEntity> paymentMap,
-  ListUIState invoiceListState,
-) =>
-    filteredInvoicesSelector(
-        invoiceMap, invoiceList, clientMap, paymentMap, invoiceListState));
+var memoizedFilteredInvoiceList = memo7(
+    (BuiltMap<String, InvoiceEntity> invoiceMap,
+            BuiltList<String> invoiceList,
+            BuiltMap<String, ClientEntity> clientMap,
+            BuiltMap<String, PaymentEntity> paymentMap,
+            ListUIState invoiceListState,
+            StaticState staticState,
+            BuiltMap<String, UserEntity> userMap) =>
+        filteredInvoicesSelector(invoiceMap, invoiceList, clientMap, paymentMap,
+            invoiceListState, staticState, userMap));
 
 List<String> filteredInvoicesSelector(
-  BuiltMap<String, InvoiceEntity> invoiceMap,
-  BuiltList<String> invoiceList,
-  BuiltMap<String, ClientEntity> clientMap,
-  BuiltMap<String, PaymentEntity> paymentMap,
-  ListUIState invoiceListState,
-) {
+    BuiltMap<String, InvoiceEntity> invoiceMap,
+    BuiltList<String> invoiceList,
+    BuiltMap<String, ClientEntity> clientMap,
+    BuiltMap<String, PaymentEntity> paymentMap,
+    ListUIState invoiceListState,
+    StaticState staticState,
+    BuiltMap<String, UserEntity> userMap) {
   final Map<String, List<String>> invoicePaymentMap = {};
 
   if (invoiceListState.filterEntityType == EntityType.payment) {
@@ -128,11 +137,12 @@ List<String> filteredInvoicesSelector(
 
   list.sort((invoiceAId, invoiceBId) {
     return invoiceMap[invoiceAId].compareTo(
-      invoice: invoiceMap[invoiceBId],
-      sortField: invoiceListState.sortField,
-      sortAscending: invoiceListState.sortAscending,
-      clientMap: clientMap,
-    );
+        invoice: invoiceMap[invoiceBId],
+        sortField: invoiceListState.sortField,
+        sortAscending: invoiceListState.sortAscending,
+        clientMap: clientMap,
+        staticState: staticState,
+        userMap: userMap);
   });
 
   return list;
