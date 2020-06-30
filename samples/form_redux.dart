@@ -142,6 +142,7 @@ class _MyAppState extends State<MyApp> with SingleTickerProviderStateMixin {
       child: MaterialApp(
         home: Scaffold(
           appBar: AppBar(
+            centerTitle: false,
             title: Text('Client Form'),
             actions: <Widget>[
               StoreBuilder(

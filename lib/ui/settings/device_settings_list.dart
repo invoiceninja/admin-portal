@@ -40,6 +40,7 @@ class _DeviceSettingsState extends State<DeviceSettings> {
       },
       child: Scaffold(
         appBar: AppBar(
+          centerTitle: false,
           automaticallyImplyLeading: isMobile(context),
           title: Text(localization.deviceSettings),
           actions: <Widget>[],

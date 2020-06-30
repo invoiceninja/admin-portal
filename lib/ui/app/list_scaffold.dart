@@ -102,6 +102,7 @@ class ListScaffold extends StatelessWidget {
               ? HistoryDrawerBuilder()
               : null,
           appBar: AppBar(
+            centerTitle: false,
             automaticallyImplyLeading: false,
             leading: leading,
             title: appBarTitle,

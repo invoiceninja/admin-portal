@@ -50,6 +50,7 @@ class EditScaffold extends StatelessWidget {
         body: body,
         drawer: isDesktop(context) ? MenuDrawerBuilder() : null,
         appBar: AppBar(
+          centerTitle: false,
           automaticallyImplyLeading: isMobile(context),
           title: Text(title),
           actions: <Widget>[

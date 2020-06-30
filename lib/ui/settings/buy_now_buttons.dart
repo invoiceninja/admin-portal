@@ -69,6 +69,7 @@ class _BuyNowButtonsState extends State<BuyNowButtons> {
       },
       child: Scaffold(
         appBar: AppBar(
+          centerTitle: false,
           automaticallyImplyLeading: isMobile(context),
           title: Text(localization.buyNowButtons),
           actions: <Widget>[],

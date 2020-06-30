@@ -92,6 +92,7 @@ class _PDFScaffoldState extends State<PDFScaffold> {
 
     return Scaffold(
       appBar: AppBar(
+        centerTitle: false,
         leading: IconButton(
           icon: Icon(Platform.isIOS ? Icons.arrow_back_ios : Icons.arrow_back),
           onPressed: () => Navigator.of(context).pop(),

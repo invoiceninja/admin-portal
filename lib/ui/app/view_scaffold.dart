@@ -75,6 +75,7 @@ class ViewScaffold extends StatelessWidget {
       child: Scaffold(
         backgroundColor: Theme.of(context).cardColor,
         appBar: AppBar(
+          centerTitle: false,
           leading: leading,
           automaticallyImplyLeading: isMobile(context) || isSettings,
           title: EntityStateTitle(

@@ -57,6 +57,7 @@ class _DashboardScreenState extends State<DashboardScreen>
             ? HistoryDrawerBuilder()
             : null,
         appBar: AppBar(
+          centerTitle: false,
           leading: isMobile(context) || state.prefState.isMenuFloated
               ? null
               : SizedBox(),

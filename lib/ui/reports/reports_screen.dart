@@ -187,6 +187,7 @@ class ReportsScreen extends StatelessWidget {
             ? HistoryDrawerBuilder()
             : null,
         appBar: AppBar(
+          centerTitle: false,
           leading: isMobile(context) || state.prefState.isMenuFloated
               ? null
               : SizedBox(),

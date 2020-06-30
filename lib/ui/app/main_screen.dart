@@ -607,6 +607,7 @@ class BlankScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        centerTitle: false,
         automaticallyImplyLeading: isMobile(context),
         backgroundColor: Theme.of(context).cardColor,
       ),
