@@ -290,7 +290,8 @@ class _CustomFormFieldState extends State<CustomFormField> {
       ].contains(_fieldType)) {
         value = '$value|$_fieldType';
       } else if (_fieldType == kFieldTypeDropdown) {
-        value = '$value|${_optionsController.text.trim()}';
+        value =
+            '$value|${_optionsController.text.split(',').map((part) => part.trim()).join(',')}';
       }
 
       widget.onChanged(value);
