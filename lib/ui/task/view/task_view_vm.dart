@@ -123,7 +123,7 @@ class TaskViewVM {
       },
       onRefreshed: (context) => _handleRefresh(context),
       onEntityAction: (BuildContext context, EntityAction action) =>
-          handleTaskAction(context, [task], action),
+          handleEntitiesActions(context, [task], action, autoPop: true),
     );
   }
 

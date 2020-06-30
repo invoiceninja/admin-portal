@@ -96,8 +96,9 @@ class ViewScaffold extends StatelessWidget {
                   ViewActionMenuButton(
                     isSaving: state.isSaving,
                     entity: entity,
-                    onSelected: (context, action) =>
-                        handleEntityAction(context, entity, action),
+                    onSelected: (context, action) => handleEntityAction(
+                        context, entity, action,
+                        autoPop: true),
                     entityActions: entity.getActions(
                       userCompany: userCompany,
                       client: entity is BelongsToClient

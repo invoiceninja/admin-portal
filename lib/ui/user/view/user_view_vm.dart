@@ -77,7 +77,7 @@ class UserViewVM {
         store.dispatch(UpdateCurrentRoute(UserScreen.route));
       },
       onEntityAction: (BuildContext context, EntityAction action) =>
-          handleUserAction(context, [user], action),
+          handleEntitiesActions(context, [user], action, autoPop: true),
       onEntityPressed: (BuildContext context, EntityType entityType,
           [longPress = false]) {
         switch (entityType) {

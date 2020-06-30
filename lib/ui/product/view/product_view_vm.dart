@@ -2,8 +2,8 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
+import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
-import 'package:invoiceninja_flutter/redux/product/product_actions.dart';
 import 'package:invoiceninja_flutter/ui/product/view/product_view.dart';
 import 'package:redux/redux.dart';
 
@@ -73,7 +73,7 @@ class ProductViewVM {
           _handleRefresh(context),
           */
       onEntityAction: (BuildContext context, EntityAction action) =>
-          handleProductAction(context, [product], action),
+          handleEntitiesActions(context, [product], action, autoPop: true),
     );
   }
 

@@ -96,7 +96,7 @@ class ProjectViewVM {
             force: true);
       },
       onEntityAction: (BuildContext context, EntityAction action) =>
-          handleProjectAction(context, [project], action),
+          handleEntitiesActions(context, [project], action, autoPop: true),
     );
   }
 

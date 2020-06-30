@@ -2,6 +2,7 @@ import 'dart:async';
 import 'package:invoiceninja_flutter/constants.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:invoiceninja_flutter/redux/ui/ui_actions.dart';
 import 'package:invoiceninja_flutter/utils/completers.dart';
 import 'package:invoiceninja_flutter/ui/company_gateway/company_gateway_screen.dart';
@@ -78,7 +79,7 @@ class CompanyGatewayViewVM {
         store.dispatch(UpdateCurrentRoute(CompanyGatewayScreen.route));
       },
       onEntityAction: (BuildContext context, EntityAction action) =>
-          handleCompanyGatewayAction(context, [companyGateway], action),
+          handleEntitiesActions(context, [companyGateway], action, autoPop: true),
     );
   }
 

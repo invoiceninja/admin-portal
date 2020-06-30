@@ -78,7 +78,7 @@ class GroupViewVM {
           store.dispatch(UpdateCurrentRoute(GroupSettingsScreen.route));
         },
         onEntityAction: (BuildContext context, EntityAction action) =>
-            handleGroupAction(context, [group], action),
+            handleEntitiesActions(context, [group], action, autoPop: true),
         onClientsPressed: (context, [longPress = false]) {
           if (longPress) {
             handleGroupAction(context, [group], EntityAction.newClient);

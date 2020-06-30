@@ -111,7 +111,7 @@ class ExpenseViewVM {
           }
         },
         onEntityAction: (BuildContext context, EntityAction action) =>
-            handleExpenseAction(context, [expense], action),
+            handleEntitiesActions(context, [expense], action, autoPop: true),
         onUploadDocument: (BuildContext context, String filePath) {
           final Completer<DocumentEntity> completer =
               Completer<DocumentEntity>();

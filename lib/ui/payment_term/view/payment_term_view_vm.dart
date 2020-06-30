@@ -3,6 +3,7 @@ import 'package:invoiceninja_flutter/constants.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:invoiceninja_flutter/data/models/payment_term_model.dart';
+import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:invoiceninja_flutter/redux/payment_term/payment_term_actions.dart';
 import 'package:invoiceninja_flutter/redux/ui/ui_actions.dart';
 import 'package:invoiceninja_flutter/ui/payment_term/payment_term_screen.dart';
@@ -76,7 +77,7 @@ class PaymentTermViewVM {
         store.dispatch(UpdateCurrentRoute(PaymentTermScreen.route));
       },
       onEntityAction: (BuildContext context, EntityAction action) =>
-          handlePaymentTermAction(context, [paymentTerm], action),
+          handleEntitiesActions(context, [paymentTerm], action, autoPop: true),
     );
   }
 
