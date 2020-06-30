@@ -592,8 +592,7 @@ class SidebarFooter extends StatelessWidget {
                     }),
               ),
             /*
-          if (!Platform.isIOS &&
-              isHosted(context) &&
+          if (isHosted(context) &&
               !isPaidAccount(context)) ...[
             Spacer(),
             FlatButton(
