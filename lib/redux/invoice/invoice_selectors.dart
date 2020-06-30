@@ -26,7 +26,9 @@ List<String> dropdownInvoiceSelector(
         !clientMap[invoice.clientId].isActive) {
       return false;
     }
-    return invoice.isActive && invoice.isUnpaid;
+    return invoice.isActive &&
+        invoice.isUnpaid &&
+        !invoice.isCancelledOrReversed;
   }).toList();
 
   list.sort((invoiceAId, invoiceBId) {
