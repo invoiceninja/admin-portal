@@ -114,8 +114,6 @@ class EntitiesListTile extends StatelessWidget {
     final mainRoute = state.uiState.mainRoute;
     final isFilterMatch = isFilter && '$entityType' == mainRoute;
 
-    print('## BUIOLD: isFilter: $isFilter, entitType: $entityType, mainRoute: $mainRoute');
-
     return Column(
       mainAxisSize: MainAxisSize.min,
       children: <Widget>[
