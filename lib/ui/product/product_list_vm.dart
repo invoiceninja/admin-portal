@@ -110,7 +110,7 @@ class ProductListVM {
     return ProductListVM(
       state: state,
       productList: memoizedFilteredProductList(state.productState.map,
-          state.productState.list, state.productListState),
+          state.productState.list, state.productListState, state.userState.map),
       productMap: state.productState.map,
       isLoading: state.isLoading,
       isLoaded: state.productState.isLoaded,

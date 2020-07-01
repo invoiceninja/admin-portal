@@ -3,8 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/data/models/payment_model.dart';
+import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
-import 'package:invoiceninja_flutter/redux/payment/payment_actions.dart';
 import 'package:invoiceninja_flutter/ui/payment/view/payment_view.dart';
 import 'package:redux/redux.dart';
 
@@ -56,7 +56,7 @@ class PaymentViewVM {
       isLoading: state.isLoading,
       payment: payment,
       onEntityAction: (BuildContext context, EntityAction action) =>
-          handlePaymentAction(context, [payment], action),
+          handleEntitiesActions(context, [payment], action, autoPop: true),
     );
   }
 

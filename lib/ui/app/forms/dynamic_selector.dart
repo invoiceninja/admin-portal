@@ -7,13 +7,21 @@ import 'package:invoiceninja_flutter/ui/app/forms/app_dropdown_button.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 
 class DynamicSelector extends StatelessWidget {
-  const DynamicSelector(
-      {this.entityId, this.entityType, this.entityIds, this.onChanged});
+  const DynamicSelector({
+    this.entityId,
+    this.entityType,
+    this.entityIds,
+    this.onChanged,
+    this.overrideSuggestedAmount,
+    this.overrideSuggestedLabel,
+  });
 
   final String entityId;
   final List<String> entityIds;
   final EntityType entityType;
   final Function(String) onChanged;
+  final Function(BaseEntity) overrideSuggestedAmount;
+  final Function(BaseEntity) overrideSuggestedLabel;
 
   @override
   Widget build(BuildContext context) {
@@ -29,7 +37,9 @@ class DynamicSelector extends StatelessWidget {
         onChanged: (dynamic entityId) => onChanged(entityId),
         items: entityIds
             .map((entityId) => DropdownMenuItem(
-                  child: Text(entityMap[entityId]?.listDisplayName ?? ''),
+                  child: Text(overrideSuggestedLabel != null
+                      ? overrideSuggestedLabel(entityMap[entityId])
+                      : entityMap[entityId]?.listDisplayName ?? ''),
                   value: entityId,
                 ))
             .toList(),
@@ -43,6 +53,8 @@ class DynamicSelector extends StatelessWidget {
         onSelected: (entity) => onChanged(entity.id),
         entityId: entityId,
         entityList: entityIds,
+        overrideSuggestedAmount: overrideSuggestedAmount,
+        overrideSuggestedLabel: overrideSuggestedLabel,
       );
     }
   }

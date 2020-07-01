@@ -1,5 +1,4 @@
 import 'dart:async';
-import 'dart:io';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
@@ -386,7 +385,7 @@ class _LoginState extends State<LoginView> {
                                 });
                               },
                             ),
-                          if (!_isSelfHosted && !Platform.isIOS)
+                          if (!_isSelfHosted)
                             _ToggleButtons(
                               tabLabels: [
                                 'Google',

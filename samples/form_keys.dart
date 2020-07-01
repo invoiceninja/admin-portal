@@ -54,6 +54,7 @@ class _MyAppState extends State<MyApp> with SingleTickerProviderStateMixin {
     return MaterialApp(
       home: Scaffold(
         appBar: AppBar(
+          centerTitle: false,
           automaticallyImplyLeading: isMobile(context),
           title: Text('Client Form'),
           actions: <Widget>[

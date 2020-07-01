@@ -170,7 +170,7 @@ class ClientViewVM {
         }
       },
       onEntityAction: (BuildContext context, EntityAction action) =>
-          handleClientAction(context, [client], action),
+          handleEntitiesActions(context, [client], action, autoPop: true),
     );
   }
 

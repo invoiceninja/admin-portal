@@ -284,7 +284,6 @@ class MainScreen extends StatelessWidget {
                     context: context,
                     entityId: history.id,
                     entityType: history.entityType,
-                    ensureVisible: true,
                   );
               }
 
@@ -608,6 +607,7 @@ class BlankScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        centerTitle: false,
         automaticallyImplyLeading: isMobile(context),
         backgroundColor: Theme.of(context).cardColor,
       ),

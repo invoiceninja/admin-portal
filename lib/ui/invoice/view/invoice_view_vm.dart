@@ -139,7 +139,7 @@ class InvoiceViewVM extends EntityViewVM {
             filterEntity: invoice);
       },
       onEntityAction: (BuildContext context, EntityAction action) =>
-          handleInvoiceAction(context, [invoice], action),
+          handleEntitiesActions(context, [invoice], action, autoPop: true),
       onUploadDocument: (BuildContext context, String filePath) {
         final Completer<DocumentEntity> completer = Completer<DocumentEntity>();
         store.dispatch(SaveInvoiceDocumentRequest(

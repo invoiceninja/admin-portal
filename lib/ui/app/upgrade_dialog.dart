@@ -53,9 +53,7 @@ class _UpgradeDialogState extends State<UpgradeDialog> {
     final data = {
       'order_id': purchase.purchaseID,
       'product_id': purchase.productID,
-      'timestamp': Platform.isIOS
-          ? (int.parse(purchase.transactionDate) / 1000).floor()
-          : purchase.transactionDate,
+      'timestamp': (int.parse(purchase.transactionDate) / 1000).floor(),
     };
 
     try {

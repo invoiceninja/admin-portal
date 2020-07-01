@@ -47,8 +47,13 @@ class CreditScreenVM {
 
     return CreditScreenVM(
       creditMap: state.creditState.map,
-      creditList: memoizedFilteredCreditList(state.creditState.map,
-          state.creditState.list, state.clientState.map, state.creditListState),
+      creditList: memoizedFilteredCreditList(
+          state.creditState.map,
+          state.creditState.list,
+          state.clientState.map,
+          state.creditListState,
+          state.staticState,
+          state.userState.map),
       userCompany: state.userCompany,
       isInMultiselect: state.creditListState.isInMultiselect(),
       onEntityAction: (BuildContext context, List<BaseEntity> credits,

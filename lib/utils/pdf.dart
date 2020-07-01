@@ -1,7 +1,6 @@
 import 'dart:async';
 import 'dart:convert';
 import 'dart:io' as file;
-import 'dart:io';
 import 'package:flutter_share/flutter_share.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
@@ -92,8 +91,9 @@ class _PDFScaffoldState extends State<PDFScaffold> {
 
     return Scaffold(
       appBar: AppBar(
+        centerTitle: false,
         leading: IconButton(
-          icon: Icon(Platform.isIOS ? Icons.arrow_back_ios : Icons.arrow_back),
+          icon: Icon(Icons.arrow_back),
           onPressed: () => Navigator.of(context).pop(),
         ),
         title: Text(localization.invoice + ' ' + (invoice.number ?? '')),

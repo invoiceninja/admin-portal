@@ -1,5 +1,3 @@
-import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:invoiceninja_flutter/data/models/entities.dart';
@@ -56,8 +54,7 @@ class ListScaffold extends StatelessWidget {
     } else if (isSettings) {
       leading = isMobile(context)
           ? IconButton(
-              icon: Icon(
-                  Platform.isIOS ? Icons.arrow_back_ios : Icons.arrow_back),
+              icon: Icon(Icons.arrow_back),
               onPressed: () => Navigator.pop(context),
             )
           : IconButton(
@@ -102,6 +99,7 @@ class ListScaffold extends StatelessWidget {
               ? HistoryDrawerBuilder()
               : null,
           appBar: AppBar(
+            centerTitle: false,
             automaticallyImplyLeading: false,
             leading: leading,
             title: appBarTitle,

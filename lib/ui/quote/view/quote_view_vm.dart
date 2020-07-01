@@ -104,7 +104,7 @@ class QuoteViewVM extends EntityViewVM {
       },
       onRefreshed: (context) => _handleRefresh(context),
       onEntityAction: (BuildContext context, EntityAction action) =>
-          handleQuoteAction(context, [quote], action),
+          handleEntitiesActions(context, [quote], action, autoPop: true),
       onUploadDocument: (BuildContext context, String filePath) {
         final Completer<DocumentEntity> completer = Completer<DocumentEntity>();
         store.dispatch(SaveQuoteDocumentRequest(

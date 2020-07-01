@@ -4,6 +4,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:invoiceninja_flutter/constants.dart';
 import 'package:invoiceninja_flutter/data/models/company_model.dart';
 import 'package:invoiceninja_flutter/data/models/entities.dart';
+import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/redux/user/user_selectors.dart';
 import 'package:invoiceninja_flutter/ui/app/form_card.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/app_dropdown_button.dart';
@@ -130,6 +131,10 @@ class _EmailSettingsState extends State<EmailSettings> {
                     entityType: EntityType.user,
                     entityId: settings.gmailSendingUserId,
                     entityIds: gmailUserIds,
+                    overrideSuggestedLabel: (entity) {
+                      final user = entity as UserEntity;
+                      return '${user.fullName} <${user.email}>';
+                    },
                   ),
                 ),
             ]),

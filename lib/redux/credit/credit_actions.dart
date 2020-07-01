@@ -388,6 +388,7 @@ Future handleCreditAction(
       'Cannot perform this action on more than one credit');
 
   final store = StoreProvider.of<AppState>(context);
+  final state = store.state;
   final localization = AppLocalization.of(context);
   final credit = credits.first as InvoiceEntity;
   final creditIds = credits.map((credit) => credit.id).toList();
@@ -430,6 +431,18 @@ Future handleCreditAction(
     case EntityAction.cloneToCredit:
       createEntity(context: context, entity: credit.clone);
       createEntity(context: context, entity: credit.clone);
+      break;
+    case EntityAction.newPayment:
+      createEntity(
+        context: context,
+        entity: PaymentEntity(state: state).rebuild((b) => b
+          ..isForCredit = true
+          ..clientId = credit.clientId
+          ..credits.addAll(credits
+              .map((credit) => PaymentableEntity.fromCredit(credit))
+              .toList())),
+        filterEntity: state.clientState.map[credit.clientId],
+      );
       break;
     case EntityAction.restore:
       store.dispatch(RestoreCreditsRequest(

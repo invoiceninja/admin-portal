@@ -94,7 +94,7 @@ class VendorViewVM {
             entity: ExpenseEntity(state: state, vendor: vendor));
       },
       onEntityAction: (BuildContext context, EntityAction action) =>
-          handleVendorAction(context, [vendor], action),
+          handleEntitiesActions(context, [vendor], action, autoPop: true),
     );
   }
 

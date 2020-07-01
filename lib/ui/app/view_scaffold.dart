@@ -1,5 +1,3 @@
-import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:invoiceninja_flutter/data/models/entities.dart';
@@ -33,6 +31,7 @@ class ViewScaffold extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+
     final localization = AppLocalization.of(context);
     final store = StoreProvider.of<AppState>(context);
     final state = store.state;
@@ -60,7 +59,7 @@ class ViewScaffold extends StatelessWidget {
         );
       } else if (isSettings) {
         leading = IconButton(
-          icon: Icon(Platform.isIOS ? Icons.arrow_back_ios : Icons.arrow_back),
+          icon: Icon(Icons.arrow_back),
           onPressed: () => onBackPressed != null
               ? onBackPressed()
               : store.dispatch(UpdateCurrentRoute(state.uiState.previousRoute)),
@@ -75,6 +74,7 @@ class ViewScaffold extends StatelessWidget {
       child: Scaffold(
         backgroundColor: Theme.of(context).cardColor,
         appBar: AppBar(
+          centerTitle: false,
           leading: leading,
           automaticallyImplyLeading: isMobile(context) || isSettings,
           title: EntityStateTitle(
@@ -96,8 +96,9 @@ class ViewScaffold extends StatelessWidget {
                   ViewActionMenuButton(
                     isSaving: state.isSaving,
                     entity: entity,
-                    onSelected: (context, action) =>
-                        handleEntityAction(context, entity, action),
+                    onSelected: (context, action) => handleEntityAction(
+                        context, entity, action,
+                        autoPop: true),
                     entityActions: entity.getActions(
                       userCompany: userCompany,
                       client: entity is BelongsToClient

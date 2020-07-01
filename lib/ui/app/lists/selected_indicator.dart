@@ -18,7 +18,7 @@ class SelectedIndicator extends StatelessWidget {
     final state = store.state;
     final enableDarkMode = state.prefState.enableDarkMode;
 
-    return Container(
+    return Material(
       color: isSelected
           ? convertHexStringToColor(enableDarkMode
               ? (isMenu
@@ -27,7 +27,7 @@ class SelectedIndicator extends StatelessWidget {
               : (isMenu
                   ? kDefaultLightSelectedColorMenu
                   : kDefaultLightSelectedColor))
-          : null,
+          : Theme.of(context).cardColor,
       child: child,
     );
   }

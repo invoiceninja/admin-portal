@@ -45,7 +45,7 @@ class _CompanyGatewayEditState extends State<CompanyGatewayEdit>
   @override
   void initState() {
     super.initState();
-    _controller = TabController(vsync: this, length: 2);
+    _controller = TabController(vsync: this, length: 3);
   }
 
   @override
@@ -85,11 +85,9 @@ class _CompanyGatewayEditState extends State<CompanyGatewayEdit>
           Tab(
             text: localization.settings,
           ),
-          /*
           Tab(
             text: localization.limitsAndFees,
           ),
-          */
         ],
       ),
       body: AppTabForm(
@@ -199,7 +197,6 @@ class _CompanyGatewayEditState extends State<CompanyGatewayEdit>
               )
             ],
           ),
-          /*
           ListView(
             children: <Widget>[
               if (companyGateway.gatewayId == kGatewayStripe)
@@ -240,7 +237,6 @@ class _CompanyGatewayEditState extends State<CompanyGatewayEdit>
               ),
             ],
           ),
-           */
         ],
       ),
     );

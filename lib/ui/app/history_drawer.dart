@@ -46,6 +46,7 @@ class HistoryDrawer extends StatelessWidget {
       child: Drawer(
         child: Scaffold(
           appBar: AppBar(
+            centerTitle: false,
             automaticallyImplyLeading: false,
             title: Text(localization.history),
             actions: <Widget>[
@@ -211,7 +212,6 @@ class _HistoryListTileState extends State<HistoryListTile> {
                 context: context,
                 entityId: history.id,
                 entityType: history.entityType,
-                ensureVisible: true,
               );
           }
         },

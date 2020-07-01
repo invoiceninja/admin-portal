@@ -106,7 +106,7 @@ class CreditViewVM extends EntityViewVM {
       },
       onRefreshed: (context) => _handleRefresh(context),
       onEntityAction: (BuildContext context, EntityAction action) =>
-          handleCreditAction(context, [credit], action),
+          handleEntitiesActions(context, [credit], action, autoPop: true),
       onUploadDocument: (BuildContext context, String filePath) {
         final Completer<DocumentEntity> completer = Completer<DocumentEntity>();
         store.dispatch(SaveCreditDocumentRequest(

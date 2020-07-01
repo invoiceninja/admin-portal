@@ -276,23 +276,18 @@ void viewEntityById({
   EntityType entityType,
   bool force = false,
   bool showError = true,
-  bool ensureVisible = false,
 }) {
   final store = StoreProvider.of<AppState>(context);
   final state = store.state;
   final navigator = Navigator.of(context);
 
-  if (ensureVisible) {
-    store.dispatch(ClearEntityFilter());
-  } else {
-    if (entityId != null &&
-        showError &&
-        !store.state.getEntityMap(entityType).containsKey(entityId)) {
-      showErrorDialog(
-          context: context,
-          message: AppLocalization.of(context).failedToFindRecord);
-      return;
-    }
+  if (entityId != null &&
+      showError &&
+      !store.state.getEntityMap(entityType).containsKey(entityId)) {
+    showErrorDialog(
+        context: context,
+        message: AppLocalization.of(context).failedToFindRecord);
+    return;
   }
 
   if (!state.prefState.isPreviewVisible &&
@@ -971,14 +966,22 @@ void editEntity(
         completer: completer);
 
 void handleEntityAction(
-    BuildContext context, BaseEntity entity, dynamic action) {
-  handleEntitiesActions(context, [entity], action);
+    BuildContext context, BaseEntity entity, EntityAction action,
+    {bool autoPop = false}) {
+  handleEntitiesActions(context, [entity], action, autoPop: autoPop);
 }
 
 void handleEntitiesActions(
-    BuildContext context, List<BaseEntity> entities, dynamic action) {
+    BuildContext context, List<BaseEntity> entities, EntityAction action,
+    {bool autoPop = false}) {
   if (entities.isEmpty) {
     return;
+  }
+
+  if ([EntityAction.archive, EntityAction.delete].contains(action) &&
+      autoPop &&
+      isMobile(context)) {
+    Navigator.of(context).pop();
   }
 
   switch (entities.first.entityType) {

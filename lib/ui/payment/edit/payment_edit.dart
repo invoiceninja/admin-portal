@@ -101,9 +101,10 @@ class _PaymentEditState extends State<PaymentEdit> {
     }
 
     final creditPaymentables = payment.credits.toList();
-    if (creditPaymentables
-        .where((paymentable) => paymentable.isEmpty)
-        .isEmpty) {
+    if ((payment.isForCredit != true || creditPaymentables.isEmpty) &&
+        creditPaymentables
+            .where((paymentable) => paymentable.isEmpty)
+            .isEmpty) {
       creditPaymentables.add(PaymentableEntity());
     }
 
@@ -149,9 +150,13 @@ class _PaymentEditState extends State<PaymentEdit> {
                         ..invoices.clear()));
                     },
                     entityList: memoizedDropdownClientList(
-                        state.clientState.map, state.clientState.list),
+                        state.clientState.map,
+                        state.clientState.list,
+                        state.userState.map,
+                        state.staticState),
                   ),
-                  if (payment.isForInvoice != true)
+                  if (payment.isForInvoice != true &&
+                      payment.isForCredit != true)
                     DecoratedFormField(
                       controller: _amountController,
                       autocorrect: false,
@@ -160,15 +165,18 @@ class _PaymentEditState extends State<PaymentEdit> {
                       label: localization.amount,
                     ),
                 ],
-                for (var index = 0; index < invoicePaymentables.length; index++)
-                  PaymentableEditor(
-                    key: ValueKey(
-                        '__paymentable_${index}_${invoicePaymentables[index].id}__'),
-                    viewModel: viewModel,
-                    paymentable: invoicePaymentables[index],
-                    index: index,
-                    entityType: EntityType.invoice,
-                  ),
+                if (payment.isForCredit != true)
+                  for (var index = 0;
+                      index < invoicePaymentables.length;
+                      index++)
+                    PaymentableEditor(
+                      key: ValueKey(
+                          '__paymentable_${index}_${invoicePaymentables[index].id}__'),
+                      viewModel: viewModel,
+                      paymentable: invoicePaymentables[index],
+                      index: index,
+                      entityType: EntityType.invoice,
+                    ),
                 if (payment.isForInvoice != true)
                   if (state.company.isModuleEnabled(EntityType.credit))
                     for (var index = 0;
@@ -354,7 +362,9 @@ class _PaymentableEditorState extends State<PaymentableEditor> {
                   state.invoiceState.map,
                   state.clientState.map,
                   state.invoiceState.list,
-                  payment.clientId),
+                  payment.clientId,
+                  state.staticState,
+                  state.userState.map),
               onSelected: (selected) {
                 final invoice = selected as InvoiceEntity;
                 _amountController.text = formatNumber(invoice.balance, context,
@@ -375,7 +385,9 @@ class _PaymentableEditorState extends State<PaymentableEditor> {
                   state.creditState.map,
                   state.clientState.map,
                   state.creditState.list,
-                  payment.clientId),
+                  payment.clientId,
+                  state.staticState,
+                  state.userState.map),
               onSelected: (selected) {
                 final credit = selected as InvoiceEntity;
                 _amountController.text = formatNumber(credit.balance, context,
@@ -404,6 +416,7 @@ class _PaymentableEditorState extends State<PaymentableEditor> {
                 _invoiceId != null) ||
             (widget.entityType == EntityType.credit &&
                 payment.credits.isNotEmpty &&
+                payment.isForCredit != true &&
                 _creditId != null)) ...[
           SizedBox(
             width: kTableColumnGap,
