@@ -21,15 +21,20 @@ List<InvoiceItemEntity> convertProjectToInvoiceItem(
   return items;
 }
 
-var memoizedDropdownProjectList = memo4(
-    (BuiltMap<String, ProjectEntity> projectMap, BuiltList<String> projectList,
-            BuiltMap<String, ClientEntity> clientMap, String clientId) =>
-        dropdownProjectsSelector(projectMap, projectList, clientMap, clientId));
+var memoizedDropdownProjectList = memo5(
+    (BuiltMap<String, ProjectEntity> projectMap,
+            BuiltList<String> projectList,
+            BuiltMap<String, ClientEntity> clientMap,
+            BuiltMap<String, UserEntity> userMap,
+            String clientId) =>
+        dropdownProjectsSelector(
+            projectMap, projectList, clientMap, userMap, clientId));
 
 List<String> dropdownProjectsSelector(
     BuiltMap<String, ProjectEntity> projectMap,
     BuiltList<String> projectList,
     BuiltMap<String, ClientEntity> clientMap,
+    BuiltMap<String, UserEntity> userMap,
     String clientId) {
   final list = projectList.where((projectId) {
     final project = projectMap[projectId];
@@ -49,25 +54,28 @@ List<String> dropdownProjectsSelector(
   list.sort((projectAId, projectBId) {
     final projectA = projectMap[projectAId];
     final projectB = projectMap[projectBId];
-    return projectA.compareTo(projectB, ProjectFields.name, true);
+    return projectA.compareTo(
+        projectB, ProjectFields.name, true, userMap, clientMap);
   });
 
   return list;
 }
 
-var memoizedFilteredProjectList = memo4(
+var memoizedFilteredProjectList = memo5(
     (BuiltMap<String, ProjectEntity> projectMap,
             BuiltList<String> projectList,
             ListUIState projectListState,
-            BuiltMap<String, ClientEntity> clientMap) =>
+            BuiltMap<String, ClientEntity> clientMap,
+            BuiltMap<String, UserEntity> userMap) =>
         filteredProjectsSelector(
-            projectMap, projectList, projectListState, clientMap));
+            projectMap, projectList, projectListState, clientMap, userMap));
 
 List<String> filteredProjectsSelector(
     BuiltMap<String, ProjectEntity> projectMap,
     BuiltList<String> projectList,
     ListUIState projectListState,
-    BuiltMap<String, ClientEntity> clientMap) {
+    BuiltMap<String, ClientEntity> clientMap,
+    BuiltMap<String, UserEntity> userMap) {
   final list = projectList.where((projectId) {
     final project = projectMap[projectId];
     final client =
@@ -111,8 +119,8 @@ List<String> filteredProjectsSelector(
   list.sort((projectAId, projectBId) {
     final projectA = projectMap[projectAId];
     final projectB = projectMap[projectBId];
-    return projectA.compareTo(
-        projectB, projectListState.sortField, projectListState.sortAscending);
+    return projectA.compareTo(projectB, projectListState.sortField,
+        projectListState.sortAscending, userMap, clientMap);
   });
 
   return list;

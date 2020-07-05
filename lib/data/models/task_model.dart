@@ -47,6 +47,7 @@ abstract class TaskItemResponse
 }
 
 class TaskFields {
+  static const String name = 'name';
   static const String description = 'description';
   static const String duration = 'duration';
   static const String invoiceId = 'invoice_id';
@@ -58,6 +59,8 @@ class TaskFields {
   static const String isRunning = 'is_running';
   static const String customValue1 = 'custom1';
   static const String customValue2 = 'custom2';
+  static const String customValue3 = 'custom3';
+  static const String customValue4 = 'custom4';
 
   static const String updatedAt = 'updated_at';
   static const String archivedAt = 'archived_at';
@@ -437,14 +440,77 @@ abstract class TaskEntity extends Object
     return actions..addAll(super.getActions(userCompany: userCompany));
   }
 
-  int compareTo(TaskEntity task, String sortField, bool sortAscending) {
+  int compareTo(
+      TaskEntity task,
+      String sortField,
+      bool sortAscending,
+      BuiltMap<String, UserEntity> userMap,
+      BuiltMap<String, ClientEntity> clientMap,
+      BuiltMap<String, ProjectEntity> projectMap,
+      BuiltMap<String, InvoiceEntity> invoiceMap) {
     int response = 0;
     final TaskEntity taskA = sortAscending ? this : task;
     final TaskEntity taskB = sortAscending ? task : this;
 
     switch (sortField) {
       case TaskFields.duration:
-        response = taskA.clientId.compareTo(taskB.clientId);
+        response = taskA.duration.compareTo(taskB.duration);
+        break;
+      case TaskFields.description:
+        response = taskA.description.compareTo(taskB.description);
+        break;
+      case TaskFields.customValue1:
+        response = taskA.customValue1.compareTo(taskB.customValue1);
+        break;
+      case TaskFields.customValue2:
+        response = taskA.customValue2.compareTo(taskB.customValue2);
+        break;
+      case TaskFields.customValue3:
+        response = taskA.customValue3.compareTo(taskB.customValue3);
+        break;
+      case TaskFields.clientId:
+      case TaskFields.client:
+        final clientA = clientMap[taskA.clientId] ?? ClientEntity();
+        final clientB = clientMap[taskB.clientId] ?? ClientEntity();
+        response = clientA.listDisplayName
+            .toLowerCase()
+            .compareTo(clientB.listDisplayName.toLowerCase());
+        break;
+      case TaskFields.projectId:
+      case TaskFields.project:
+        final projectA = projectMap[taskA.projectId] ?? ProjectEntity();
+        final projectB = projectMap[taskB.projectId] ?? ProjectEntity();
+        response = projectA.listDisplayName
+            .toLowerCase()
+            .compareTo(projectB.listDisplayName.toLowerCase());
+        break;
+      case TaskFields.invoiceId:
+        final invoiceA = invoiceMap[taskA.invoiceId] ?? InvoiceEntity();
+        final invoiceB = invoiceMap[taskB.invoiceId] ?? InvoiceEntity();
+        response = invoiceA.listDisplayName
+            .toLowerCase()
+            .compareTo(invoiceB.listDisplayName.toLowerCase());
+        break;
+      case EntityFields.state:
+        final stateA =
+            EntityState.valueOf(taskA.entityState) ?? EntityState.active;
+        final stateB =
+            EntityState.valueOf(taskB.entityState) ?? EntityState.active;
+        response =
+            stateA.name.toLowerCase().compareTo(stateB.name.toLowerCase());
+        break;
+      case TaskFields.timeLog:
+        response =
+            taskA.timeLog.toLowerCase().compareTo(taskB.timeLog.toLowerCase());
+        break;
+      case EntityFields.createdAt:
+        response = taskA.createdAt.compareTo(taskB.createdAt);
+        break;
+      case TaskFields.archivedAt:
+        response = taskA.archivedAt.compareTo(taskB.archivedAt);
+        break;
+      case TaskFields.updatedAt:
+        response = taskA.updatedAt.compareTo(taskB.updatedAt);
         break;
       default:
         print('## ERROR: sort by task.$sortField is not implemented');

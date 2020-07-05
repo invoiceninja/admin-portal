@@ -48,6 +48,7 @@ class ExpenseScreenVM {
           state.expenseState.map,
           state.clientState.map,
           state.vendorState.map,
+          state.userState.map,
           state.expenseState.list,
           state.expenseListState),
       userCompany: state.userCompany,

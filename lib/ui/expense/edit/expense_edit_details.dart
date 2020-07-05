@@ -106,8 +106,8 @@ class ExpenseEditDetailsState extends State<ExpenseEditDetails> {
               entityType: EntityType.vendor,
               labelText: localization.vendor,
               entityId: expense.vendorId,
-              entityList:
-                  memoizedDropdownVendorList(vendorState.map, vendorState.list),
+              entityList: memoizedDropdownVendorList(
+                  vendorState.map, vendorState.list, state.userState.map),
               onSelected: (vendor) {
                 viewModel.onChanged(
                     expense.rebuild((b) => b..vendorId = vendor?.id));

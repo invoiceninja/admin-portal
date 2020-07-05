@@ -164,7 +164,12 @@ abstract class ProjectEntity extends Object
     return actions..addAll(super.getActions(userCompany: userCompany));
   }
 
-  int compareTo(ProjectEntity project, String sortField, bool sortAscending) {
+  int compareTo(
+      ProjectEntity project,
+      String sortField,
+      bool sortAscending,
+      BuiltMap<String, UserEntity> userMap,
+      BuiltMap<String, ClientEntity> clientMap) {
     int response = 0;
     final ProjectEntity projectA = sortAscending ? this : project;
     final ProjectEntity projectB = sortAscending ? project : this;
@@ -176,6 +181,53 @@ abstract class ProjectEntity extends Object
         break;
       case ProjectFields.taskRate:
         response = projectA.taskRate.compareTo(projectB.taskRate);
+        break;
+      case ProjectFields.client:
+        final clientA = clientMap[projectA.clientId] ?? ClientEntity();
+        final clientB = clientMap[projectB.clientId] ?? ClientEntity();
+        response = clientA.listDisplayName
+            .toLowerCase()
+            .compareTo(clientB.listDisplayName.toLowerCase());
+        break;
+      case ProjectFields.dueDate:
+        response = projectA.dueDate.compareTo(projectB.dueDate);
+        break;
+      case ProjectFields.privateNotes:
+        response = projectA.privateNotes.compareTo(projectB.privateNotes);
+        break;
+      case ProjectFields.budgetedHours:
+        response = projectA.budgetedHours.compareTo(projectB.budgetedHours);
+        break;
+      case EntityFields.state:
+        final stateA =
+            EntityState.valueOf(projectA.entityState) ?? EntityState.active;
+        final stateB =
+            EntityState.valueOf(projectB.entityState) ?? EntityState.active;
+        response =
+            stateA.name.toLowerCase().compareTo(stateB.name.toLowerCase());
+        break;
+      case EntityFields.createdAt:
+        response = projectA.createdAt.compareTo(projectB.createdAt);
+        break;
+      case ProjectFields.archivedAt:
+        response = projectA.archivedAt.compareTo(projectB.archivedAt);
+        break;
+      case ProjectFields.updatedAt:
+        response = projectA.updatedAt.compareTo(projectB.updatedAt);
+        break;
+      case EntityFields.assignedTo:
+        final userA = userMap[projectA.assignedUserId] ?? UserEntity();
+        final userB = userMap[projectB.assignedUserId] ?? UserEntity();
+        response = userA.listDisplayName
+            .toLowerCase()
+            .compareTo(userB.listDisplayName.toLowerCase());
+        break;
+      case EntityFields.createdBy:
+        final userA = userMap[projectA.createdUserId] ?? UserEntity();
+        final userB = userMap[projectB.createdUserId] ?? UserEntity();
+        response = userA.listDisplayName
+            .toLowerCase()
+            .compareTo(userB.listDisplayName.toLowerCase());
         break;
       default:
         print('## ERROR: sort by project.$sortField is not implemented');

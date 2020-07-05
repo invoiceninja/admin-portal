@@ -118,6 +118,7 @@ class _TaskEditDetailsState extends State<TaskEditDetails> {
                         state.projectState.map,
                         state.projectState.list,
                         state.clientState.map,
+                        state.userState.map,
                         task.clientId),
                     onSelected: (selected) {
                       final project = selected as ProjectEntity;

@@ -32,11 +32,19 @@ InvoiceItemEntity convertTaskToInvoiceItem(
     ..quantity = round(task.duration / 3600, 3));
 }
 
-var memoizedTaskList = memo2(
-    (BuiltMap<String, TaskEntity> taskMap, String clientId) =>
-        taskList(taskMap, clientId));
+var memoizedTaskList = memo5((BuiltMap<String, TaskEntity> taskMap,
+        String clientId,
+        BuiltMap<String, UserEntity> userMap,
+        BuiltMap<String, ClientEntity> clientMap,
+        BuiltMap<String, ProjectEntity> projectMap) =>
+    taskList(taskMap, clientId, userMap, clientMap, projectMap));
 
-List<String> taskList(BuiltMap<String, TaskEntity> taskMap, String clientId) {
+List<String> taskList(
+    BuiltMap<String, TaskEntity> taskMap,
+    String clientId,
+    BuiltMap<String, UserEntity> userMap,
+    BuiltMap<String, ClientEntity> clientMap,
+    BuiltMap<String, ProjectEntity> projectMap) {
   final list = taskMap.keys.where((taskId) {
     final task = taskMap[taskId];
     if (clientId != null && clientId != null && task.clientId != clientId) {
@@ -51,35 +59,50 @@ List<String> taskList(BuiltMap<String, TaskEntity> taskMap, String clientId) {
   return list;
 }
 
-var memoizedDropdownTaskList = memo2(
-    (BuiltMap<String, TaskEntity> taskMap, BuiltList<String> taskList) =>
-        dropdownTasksSelector(taskMap, taskList));
+var memoizedDropdownTaskList = memo6((BuiltMap<String, TaskEntity> taskMap,
+        BuiltList<String> taskList,
+        BuiltMap<String, UserEntity> userMap,
+        BuiltMap<String, ClientEntity> clientMap,
+        BuiltMap<String, InvoiceEntity> invoiceMap,
+        BuiltMap<String, ProjectEntity> projectMap) =>
+    dropdownTasksSelector(
+        taskMap, taskList, userMap, clientMap, invoiceMap, projectMap));
 
 List<String> dropdownTasksSelector(
-    BuiltMap<String, TaskEntity> taskMap, BuiltList<String> taskList) {
+    BuiltMap<String, TaskEntity> taskMap,
+    BuiltList<String> taskList,
+    BuiltMap<String, UserEntity> userMap,
+    BuiltMap<String, ClientEntity> clientMap,
+    BuiltMap<String, InvoiceEntity> invoiceMap,
+    BuiltMap<String, ProjectEntity> projectMap) {
   final list = taskList.where((taskId) => taskMap[taskId].isActive).toList();
 
   list.sort((taskAId, taskBId) {
     final taskA = taskMap[taskAId];
     final taskB = taskMap[taskBId];
-    return taskA.compareTo(taskB, TaskFields.updatedAt, false);
+    return taskA.compareTo(taskB, TaskFields.updatedAt, false, userMap,
+        clientMap, projectMap, invoiceMap);
   });
 
   return list;
 }
 
-var memoizedFilteredTaskList = memo5((BuiltMap<String, TaskEntity> taskMap,
+var memoizedFilteredTaskList = memo7((BuiltMap<String, TaskEntity> taskMap,
         BuiltMap<String, ClientEntity> clientMap,
+        BuiltMap<String, UserEntity> userMap,
         BuiltMap<String, ProjectEntity> projectMap,
+        BuiltMap<String, InvoiceEntity> invoiceMap,
         BuiltList<String> taskList,
         ListUIState taskListState) =>
-    filteredTasksSelector(
-        taskMap, clientMap, projectMap, taskList, taskListState));
+    filteredTasksSelector(taskMap, clientMap, userMap, projectMap, invoiceMap,
+        taskList, taskListState));
 
 List<String> filteredTasksSelector(
     BuiltMap<String, TaskEntity> taskMap,
     BuiltMap<String, ClientEntity> clientMap,
+    BuiltMap<String, UserEntity> userMap,
     BuiltMap<String, ProjectEntity> projectMap,
+    BuiltMap<String, InvoiceEntity> invoiceMap,
     BuiltList<String> taskList,
     ListUIState taskListState) {
   final list = taskList.where((taskId) {
@@ -140,7 +163,13 @@ List<String> filteredTasksSelector(
     final taskA = taskMap[taskAId];
     final taskB = taskMap[taskBId];
     return taskA.compareTo(
-        taskB, taskListState.sortField, taskListState.sortAscending);
+        taskB,
+        taskListState.sortField,
+        taskListState.sortAscending,
+        userMap,
+        clientMap,
+        projectMap,
+        invoiceMap);
   });
 
   return list;
