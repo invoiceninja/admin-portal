@@ -1,7 +1,6 @@
 import 'dart:async';
 import 'dart:convert';
 import 'dart:core';
-import 'package:invoiceninja_flutter/.env.dart';
 import 'package:built_collection/built_collection.dart';
 import 'package:invoiceninja_flutter/constants.dart';
 import 'package:invoiceninja_flutter/data/models/serializers.dart';
@@ -65,7 +64,7 @@ class WebhookRepository {
           credentials.url + '/webhooks', credentials.token,
           data: json.encode(data));
     } else {
-      var url = '${credentials.url}/webhooks/${webhook.id}';
+      final url = '${credentials.url}/webhooks/${webhook.id}';
       response =
           await webClient.put(url, credentials.token, data: json.encode(data));
     }

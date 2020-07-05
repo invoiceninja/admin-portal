@@ -39,13 +39,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:invoiceninja_flutter/utils/web_stub.dart'
     if (dart.library.html) 'package:invoiceninja_flutter/utils/web.dart';
 // STARTER: import - do not remove comment
-import 'package:invoiceninja_flutter/ui/webhook/webhook_screen.dart';
-import 'package:invoiceninja_flutter/ui/webhook/edit/webhook_edit_vm.dart';
-import 'package:invoiceninja_flutter/ui/webhook/view/webhook_view_vm.dart';
-import 'package:invoiceninja_flutter/ui/webhook/webhook_screen_vm.dart';
-import 'package:invoiceninja_flutter/redux/webhook/webhook_actions.dart';
 import 'package:invoiceninja_flutter/redux/webhook/webhook_middleware.dart';
-
 import 'package:invoiceninja_flutter/redux/token/token_middleware.dart';
 import 'package:invoiceninja_flutter/redux/payment_term/payment_term_middleware.dart';
 

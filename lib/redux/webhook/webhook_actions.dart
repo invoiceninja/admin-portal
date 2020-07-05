@@ -2,14 +2,11 @@ import 'dart:async';
 import 'package:built_collection/built_collection.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_redux/flutter_redux.dart';
-import 'package:invoiceninja_flutter/constants.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
-import 'package:invoiceninja_flutter/redux/settings/settings_actions.dart';
 import 'package:invoiceninja_flutter/utils/completers.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
-import 'package:invoiceninja_flutter/utils/platforms.dart';
 
 class ViewWebhookList extends AbstractNavigatorAction
     implements PersistUI, StopLoading {
@@ -255,8 +252,6 @@ void handleWebhookAction(
   }
 
   final store = StoreProvider.of<AppState>(context);
-  final state = store.state;
-  final CompanyEntity company = state.company;
   final localization = AppLocalization.of(context);
   final webhook = webhooks.first as WebhookEntity;
   final webhookIds = webhooks.map((webhook) => webhook.id).toList();

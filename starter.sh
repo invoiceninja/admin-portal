@@ -184,7 +184,7 @@ else
     # Link in new module
     echo "app_state: import"
     comment="STARTER: import - do not remove comment"
-    code="import 'package:${package}\/redux\/${module_snake}\/${module_snake}_state.dart';import 'package:${package}\/ui\/${module_snake}\/edit\/${module_snake}_edit_vm.dart';import 'package:${package}\/redux\/${module_snake}\/${module_snake}_state.dart';import 'package:${package}\/ui\/${module_snake}\/edit\/${module_snake}_edit_vm.dart';import 'package:${package}\/redux\/${module_snake}\/${module_snake}_selectors.dart';${lineBreak}"
+    code="import 'package:${package}\/redux\/${module_snake}\/${module_snake}_state.dart';import 'package:${package}\/ui\/${module_snake}\/edit\/${module_snake}_edit_vm.dart';import 'package:${package}\/redux\/${module_snake}\/${module_snake}_selectors.dart';${lineBreak}"
     sed -i -e "s/$comment/$comment${lineBreak}$code/g" ./lib/redux/app/app_state.dart
 
     echo "app_state: list"
@@ -308,12 +308,7 @@ else
 
     echo "main: import"
     comment="STARTER: import - do not remove comment"
-    code="import 'package:${package}\/ui\/${module_snake}\/${module_snake}_screen.dart';${lineBreak}"
-    code="${code}import 'package:${package}\/ui\/${module_snake}\/edit\/${module_snake}_edit_vm.dart';${lineBreak}"
-    code="${code}import 'package:${package}\/ui\/${module_snake}\/view\/${module_snake}_view_vm.dart';${lineBreak}"
-    code="${code}import 'package:${package}\/ui\/${module_snake}\/${module_snake}_screen_vm.dart';${lineBreak}"
-    code="${code}import 'package:${package}\/redux\/${module_snake}\/${module_snake}_actions.dart';${lineBreak}"
-    code="${code}import 'package:${package}\/redux\/${module_snake}\/${module_snake}_middleware.dart';${lineBreak}"
+    code="import 'package:${package}\/redux\/${module_snake}\/${module_snake}_middleware.dart';${lineBreak}"
     sed -i -e "s/$comment/$comment${lineBreak}$code/g" ./lib/main.dart
 
     comment="STARTER: middleware - do not remove comment"
@@ -361,10 +356,6 @@ else
     comment="STARTER: reducer - do not remove comment"
     code="..${module_camel}State.replace(${module_camel}sReducer(state.${module_camel}State, action))${lineBreak}"
     sed -i -e "s/$comment/$comment${lineBreak}$code/g" ./lib/redux/company/company_reducer.dart
-
-    comment="STARTER: import - do not remove comment"
-    code="import 'package:${package}\/redux\/${module_snake}\/${module_snake}_actions.dart';${lineBreak}"
-    sed -i -e "s/$comment/$comment${lineBreak}$code/g" ./lib/ui/app/menu_drawer.dart
 
     comment="STARTER: menu - do not remove comment"
     code="DrawerTile(${lineBreak}"

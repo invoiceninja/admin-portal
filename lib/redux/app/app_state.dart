@@ -48,10 +48,7 @@ import 'package:invoiceninja_flutter/ui/product/edit/product_edit_vm.dart';
 // STARTER: import - do not remove comment
 import 'package:invoiceninja_flutter/redux/webhook/webhook_state.dart';
 import 'package:invoiceninja_flutter/ui/webhook/edit/webhook_edit_vm.dart';
-import 'package:invoiceninja_flutter/redux/webhook/webhook_state.dart';
-import 'package:invoiceninja_flutter/ui/webhook/edit/webhook_edit_vm.dart';
 import 'package:invoiceninja_flutter/redux/webhook/webhook_selectors.dart';
-
 import 'package:invoiceninja_flutter/redux/token/token_state.dart';
 import 'package:invoiceninja_flutter/ui/token/edit/token_edit_vm.dart';
 import 'package:invoiceninja_flutter/redux/token/token_selectors.dart';

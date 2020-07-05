@@ -28,8 +28,6 @@ import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:invoiceninja_flutter/utils/platforms.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:invoiceninja_flutter/utils/colors.dart';
-// STARTER: import - do not remove comment
-import 'package:invoiceninja_flutter/redux/webhook/webhook_actions.dart';
 
 class MenuDrawer extends StatelessWidget {
   const MenuDrawer({
