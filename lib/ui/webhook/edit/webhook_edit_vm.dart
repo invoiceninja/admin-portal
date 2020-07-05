@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:invoiceninja_flutter/constants.dart';
 import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
+import 'package:invoiceninja_flutter/redux/settings/settings_actions.dart';
 import 'package:invoiceninja_flutter/redux/ui/ui_actions.dart';
 import 'package:invoiceninja_flutter/utils/platforms.dart';
 import 'package:redux/redux.dart';
@@ -64,7 +65,10 @@ class WebhookEditVM {
         store.dispatch(UpdateWebhook(webhook));
       },
       onCancelPressed: (BuildContext context) {
-        createEntity(context: context, entity: WebhookEntity(), force: true);
+        store.dispatch(ViewSettings(
+          navigator: Navigator.of(context),
+          section: kSettingsWebhooks,
+        ));
       },
       onSavePressed: (BuildContext context) {
         final Completer<WebhookEntity> completer =
