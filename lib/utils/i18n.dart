@@ -15,6 +15,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
   static final Map<String, Map<String, String>> _localizedValues = {
     'en': {
       // STARTER: lang key - do not remove comment
+      'manage_tokens': 'Manage Tokens',
       'search_tokens': 'Search Tokens',
       'token': 'Token',
       'tokens': 'Tokens',
@@ -38700,6 +38701,8 @@ mixin LocalizationsProvider on LocaleCodeAware {
   String get subtotal => _localizedValues[localeCode]['subtotal'] ?? '';
 
   String get searchTokens => _localizedValues[localeCode]['search_tokens'] ?? '';
+
+  String get manageTokens => _localizedValues[localeCode]['manage_tokens'] ?? '';
 
   String lookup(String key) {
     final lookupKey = toSnakeCase(key);

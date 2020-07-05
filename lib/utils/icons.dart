@@ -101,6 +101,8 @@ IconData getEntityIcon(EntityType entityType) {
       return FontAwesomeIcons.stamp;
     case EntityType.paymentTerm:
       return FontAwesomeIcons.calendarCheck;
+    case EntityType.token:
+      return FontAwesomeIcons.key;
     default:
       return null;
   }
