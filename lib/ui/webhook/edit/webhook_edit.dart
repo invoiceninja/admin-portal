@@ -98,6 +98,7 @@ class _WebhookEditState extends State<WebhookEdit> {
                     DecoratedFormField(
                       controller: _urlController,
                       label: localization.url,
+                      keyboardType: TextInputType.url,
                     )
                   ],
                 ),
