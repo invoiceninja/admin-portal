@@ -49,6 +49,7 @@ import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:invoiceninja_flutter/utils/platforms.dart';
 import 'package:local_auth/local_auth.dart';
 import 'package:redux/redux.dart';
+
 // STARTER: import - do not remove comment
 import 'package:invoiceninja_flutter/ui/token/token_screen.dart';
 import 'package:invoiceninja_flutter/ui/token/edit/token_edit_vm.dart';
@@ -257,7 +258,6 @@ class InvoiceNinjaAppState extends State<InvoiceNinjaApp> {
                   TokenScreen.route: (context) => TokenScreenBuilder(),
                   TokenViewScreen.route: (context) => TokenViewScreen(),
                   TokenEditScreen.route: (context) => TokenEditScreen(),
-
                   PaymentTermScreen.route: (context) =>
                       PaymentTermScreenBuilder(),
                   PaymentTermEditScreen.route: (context) =>

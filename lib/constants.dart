@@ -319,6 +319,12 @@ const String kSettingsUserManagement = 'user_management';
 const String kSettingsUserManagementView = 'user_management_view';
 const String kSettingsUserManagementEdit = 'user_management_edit';
 const String kSettingsAccountManagement = 'account_management';
+const String kSettingsTokens = 'tokens';
+const String kSettingsTokenView = 'token_view';
+const String kSettingsTokenEdit = 'token_edit';
+const String kSettingsWebhooks = 'webhook';
+const String kSettingsWebhookView = 'webhook_view';
+const String kSettingsWebhookEdit = 'webhook_edit';
 
 const kEntitySettings = [
   EntityType.group,

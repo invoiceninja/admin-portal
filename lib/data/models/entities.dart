@@ -68,6 +68,7 @@ class EntityType extends EnumClass {
         EntityType.user,
         EntityType.group,
         EntityType.design,
+        EntityType.token,
       ].contains(this);
 
   List<EntityType> get relatedTypes {
