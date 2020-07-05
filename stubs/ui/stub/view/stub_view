@@ -22,7 +22,6 @@ class _StubViewState extends State<StubView> {
   @override
   Widget build(BuildContext context) {
     final viewModel = widget.viewModel;
-    final userCompany = viewModel.state.userCompany;
     final stub = viewModel.stub;
 
     return ViewScaffold(

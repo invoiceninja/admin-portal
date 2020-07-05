@@ -70,7 +70,7 @@ class _WebhookEditState extends State<WebhookEdit> {
   Widget build(BuildContext context) {
     final viewModel = widget.viewModel;
     final localization = AppLocalization.of(context);
-    final webhook = viewModel.webhook;
+    //final webhook = viewModel.webhook;
 
     return EditScaffold(
       title: localization.editWebhook,

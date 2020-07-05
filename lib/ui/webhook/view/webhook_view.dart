@@ -21,7 +21,6 @@ class _WebhookViewState extends State<WebhookView> {
   @override
   Widget build(BuildContext context) {
     final viewModel = widget.viewModel;
-    final userCompany = viewModel.state.userCompany;
     final webhook = viewModel.webhook;
 
     return ViewScaffold(
