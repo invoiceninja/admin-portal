@@ -263,7 +263,6 @@ class InvoiceNinjaAppState extends State<InvoiceNinjaApp> {
                   WebhookScreen.route: (context) => WebhookScreenBuilder(),
                   WebhookViewScreen.route: (context) => WebhookViewScreen(),
                   WebhookEditScreen.route: (context) => WebhookEditScreen(),
-
                   TokenScreen.route: (context) => TokenScreenBuilder(),
                   TokenViewScreen.route: (context) => TokenViewScreen(),
                   TokenEditScreen.route: (context) => TokenEditScreen(),
