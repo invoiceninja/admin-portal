@@ -126,6 +126,7 @@ class ExpenseListVM {
           state.expenseState.map,
           state.clientState.map,
           state.vendorState.map,
+          state.userState.map,
           state.expenseState.list,
           state.expenseListState),
       expenseMap: state.expenseState.map,

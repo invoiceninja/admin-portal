@@ -45,10 +45,12 @@ class ProjectScreenVM {
     return ProjectScreenVM(
       projectMap: state.projectState.map,
       projectList: memoizedFilteredProjectList(
-          state.projectState.map,
-          state.projectState.list,
-          state.projectListState,
-          state.clientState.map),
+        state.projectState.map,
+        state.projectState.list,
+        state.projectListState,
+        state.clientState.map,
+        state.userState.map,
+      ),
       userCompany: state.userCompany,
       isInMultiselect: state.projectListState.isInMultiselect(),
     );

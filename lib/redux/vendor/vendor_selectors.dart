@@ -3,12 +3,13 @@ import 'package:built_collection/built_collection.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/redux/ui/list_ui_state.dart';
 
-var memoizedDropdownVendorList = memo2(
-    (BuiltMap<String, VendorEntity> vendorMap, BuiltList<String> vendorList) =>
-        dropdownVendorsSelector(vendorMap, vendorList));
+var memoizedDropdownVendorList = memo3(
+    (BuiltMap<String, VendorEntity> vendorMap, BuiltList<String> vendorList,
+            BuiltMap<String, UserEntity> userMap) =>
+        dropdownVendorsSelector(vendorMap, vendorList, userMap));
 
-List<String> dropdownVendorsSelector(
-    BuiltMap<String, VendorEntity> vendorMap, BuiltList<String> vendorList) {
+List<String> dropdownVendorsSelector(BuiltMap<String, VendorEntity> vendorMap,
+    BuiltList<String> vendorList, BuiltMap<String, UserEntity> userMap) {
   final list = vendorList.where((vendorId) {
     final vendor = vendorMap[vendorId];
     return vendor.isActive;
@@ -17,19 +18,24 @@ List<String> dropdownVendorsSelector(
   list.sort((vendorAId, vendorBId) {
     final vendorA = vendorMap[vendorAId];
     final vendorB = vendorMap[vendorBId];
-    return vendorA.compareTo(vendorB, VendorFields.name, true);
+    return vendorA.compareTo(vendorB, VendorFields.name, true, userMap);
   });
 
   return list;
 }
 
-var memoizedFilteredVendorList = memo3(
-    (BuiltMap<String, VendorEntity> vendorMap, BuiltList<String> vendorList,
-            ListUIState vendorListState) =>
-        filteredVendorsSelector(vendorMap, vendorList, vendorListState));
+var memoizedFilteredVendorList = memo4((BuiltMap<String, VendorEntity>
+            vendorMap,
+        BuiltList<String> vendorList,
+        ListUIState vendorListState,
+        BuiltMap<String, UserEntity> userMap) =>
+    filteredVendorsSelector(vendorMap, vendorList, vendorListState, userMap));
 
-List<String> filteredVendorsSelector(BuiltMap<String, VendorEntity> vendorMap,
-    BuiltList<String> vendorList, ListUIState vendorListState) {
+List<String> filteredVendorsSelector(
+    BuiltMap<String, VendorEntity> vendorMap,
+    BuiltList<String> vendorList,
+    ListUIState vendorListState,
+    BuiltMap<String, UserEntity> userMap) {
   final list = vendorList.where((vendorId) {
     final vendor = vendorMap[vendorId];
 
@@ -53,8 +59,8 @@ List<String> filteredVendorsSelector(BuiltMap<String, VendorEntity> vendorMap,
   list.sort((vendorAId, vendorBId) {
     final vendorA = vendorMap[vendorAId];
     final vendorB = vendorMap[vendorBId];
-    return vendorA.compareTo(
-        vendorB, vendorListState.sortField, vendorListState.sortAscending);
+    return vendorA.compareTo(vendorB, vendorListState.sortField,
+        vendorListState.sortAscending, userMap);
   });
 
   return list;

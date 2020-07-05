@@ -212,7 +212,12 @@ class _InvoiceItemSelectorState extends State<InvoiceItemSelector>
     }
 
     Widget _taskList() {
-      final matches = memoizedTaskList(state.taskState.map, _filterClientId)
+      final matches = memoizedTaskList(
+              state.taskState.map,
+              _filterClientId,
+              state.userState.map,
+              state.clientState.map,
+              state.projectState.map)
           .where((entityId) {
         final task = state.taskState.map[entityId];
         if (widget.excluded != null && widget.excluded.contains(task)) {
