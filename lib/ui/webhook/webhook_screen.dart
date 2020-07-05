@@ -12,8 +12,8 @@ import 'package:invoiceninja_flutter/ui/app/list_scaffold.dart';
 import 'package:invoiceninja_flutter/ui/app/entities/entity_actions_dialog.dart';
 import 'package:invoiceninja_flutter/ui/app/list_filter.dart';
 import 'package:invoiceninja_flutter/ui/webhook/webhook_list_vm.dart';
+import 'package:invoiceninja_flutter/ui/webhook/webhook_presenter.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
-import 'package:invoiceninja_flutter/utils/platforms.dart';
 
 import 'webhook_screen_vm.dart';
 
@@ -95,8 +95,6 @@ class WebhookScreen extends StatelessWidget {
         },
         sortFields: [
           WebhookFields.name,
-          WebhookFields.balance,
-          WebhookFields.updatedAt,
         ],
         onSelectedState: (EntityState state, value) {
           store.dispatch(FilterWebhooksByState(state));
