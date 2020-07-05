@@ -272,7 +272,13 @@ abstract class ExpenseEntity extends Object
     return actions..addAll(super.getActions(userCompany: userCompany));
   }
 
-  int compareTo(ExpenseEntity expense, String sortField, bool sortAscending) {
+  int compareTo(
+      ExpenseEntity expense,
+      String sortField,
+      bool sortAscending,
+      BuiltMap<String, ClientEntity> clientMap,
+      BuiltMap<String, UserEntity> userMap,
+      BuiltMap<String, VendorEntity> vendorMap) {
     int response = 0;
     final ExpenseEntity expenseA = sortAscending ? this : expense;
     final ExpenseEntity expenseB = sortAscending ? expense : this;
@@ -281,13 +287,63 @@ abstract class ExpenseEntity extends Object
       case ExpenseFields.amount:
         response = expenseA.amount.compareTo(expenseB.amount);
         break;
+      case EntityFields.assignedTo:
+        final userA = userMap[expenseA.assignedUserId] ?? UserEntity();
+        final userB = userMap[expenseB.assignedUserId] ?? UserEntity();
+        response = userA.listDisplayName
+            .toLowerCase()
+            .compareTo(userB.listDisplayName.toLowerCase());
+        break;
+      case EntityFields.createdBy:
+        final userA = userMap[expenseA.createdUserId] ?? UserEntity();
+        final userB = userMap[expenseB.createdUserId] ?? UserEntity();
+        response = userA.listDisplayName
+            .toLowerCase()
+            .compareTo(userB.listDisplayName.toLowerCase());
+        break;
+      case ExpenseFields.client:
+        final clientA = clientMap[expenseA.clientId] ?? ClientEntity();
+        final clientB = clientMap[expenseB.clientId] ?? ClientEntity();
+        response = clientA.listDisplayName
+            .toLowerCase()
+            .compareTo(clientB.listDisplayName.toLowerCase());
+        break;
+      case ExpenseFields.vendor:
+        final vendorA = vendorMap[expenseA.vendorId] ?? VendorEntity();
+        final vendorB = vendorMap[expenseB.vendorId] ?? VendorEntity();
+        response = vendorA.listDisplayName
+            .toLowerCase()
+            .compareTo(vendorB.listDisplayName.toLowerCase());
+        break;
+      case EntityFields.state:
+        final stateA = EntityState.valueOf(expenseA.entityState) ?? EntityState.active;
+        final stateB = EntityState.valueOf(expenseB.entityState) ?? EntityState.active;
+        response = stateA.name.toLowerCase()
+            .compareTo(stateB.name.toLowerCase());
+        break;
       case ExpenseFields.publicNotes:
         response = expenseA.publicNotes
             .toLowerCase()
             .compareTo(expenseB.publicNotes.toLowerCase());
         break;
+      case ExpenseFields.expenseDate:
+        response = expenseA.expenseDate
+            .toLowerCase()
+            .compareTo(expenseB.expenseDate.toLowerCase());
+        break;
+      case ExpenseFields.paymentDate:
+        response = expenseA.paymentDate
+            .toLowerCase()
+            .compareTo(expenseB.paymentDate.toLowerCase());
+        break;
+      case EntityFields.createdAt:
+        response = expenseA.createdAt.compareTo(expenseB.createdAt);
+        break;
       case ExpenseFields.updatedAt:
         response = expenseA.updatedAt.compareTo(expenseB.updatedAt);
+        break;
+      case ExpenseFields.archivedAt:
+        response = expenseA.archivedAt.compareTo(expenseB.archivedAt);
         break;
       default:
         print('## ERROR: sort by expense.$sortField is not implemented');
