@@ -131,7 +131,7 @@ class _AccountOverview extends StatelessWidget {
         Padding(
           padding: const EdgeInsets.all(16),
           child: ElevatedButton(
-            label: localization.manageTokens,
+            label: localization.manageTokens.toUpperCase(),
             iconData: getEntityIcon(EntityType.token),
             onPressed: () {
               store.dispatch(ViewSettings(
@@ -144,7 +144,7 @@ class _AccountOverview extends StatelessWidget {
         Padding(
           padding: const EdgeInsets.all(16),
           child: ElevatedButton(
-            label: localization.manageWebhooks,
+            label: localization.manageWebhooks.toUpperCase(),
             iconData: getEntityIcon(EntityType.webhook),
             onPressed: () {
               store.dispatch(ViewSettings(
@@ -180,7 +180,7 @@ class _AccountOverview extends StatelessWidget {
         Padding(
           padding: const EdgeInsets.all(16),
           child: ElevatedButton(
-            label: localization.purchaseLicense,
+            label: localization.purchaseLicense.toUpperCase(),
             iconData: Icons.cloud_download,
             onPressed: () async {
               if (await canLaunch(kWhiteLabelUrl)) {
@@ -192,7 +192,7 @@ class _AccountOverview extends StatelessWidget {
         Padding(
           padding: const EdgeInsets.all(16),
           child: ElevatedButton(
-            label: localization.applyLicense,
+            label: localization.applyLicense.toUpperCase(),
             iconData: Icons.cloud_done,
             onPressed: () {
               fieldCallback(

@@ -103,8 +103,10 @@ IconData getEntityIcon(EntityType entityType) {
       return FontAwesomeIcons.calendarCheck;
     case EntityType.token:
       return FontAwesomeIcons.key;
+    case EntityType.webhook:
+      return FontAwesomeIcons.link;
     default:
-      return null;
+      return FontAwesomeIcons.questionCircle;
   }
 }
 
