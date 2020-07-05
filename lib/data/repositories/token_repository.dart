@@ -54,18 +54,18 @@ class TokenRepository {
   }
 
   Future<TokenEntity> saveData(
-      Credentials credentials, TokenEntity token) async {
+      Credentials credentials, TokenEntity token, String password) async {
     final data = serializers.serializeWith(TokenEntity.serializer, token);
     dynamic response;
 
     if (token.isNew) {
       response = await webClient.post(
           credentials.url + '/tokens', credentials.token,
-          data: json.encode(data));
+          data: json.encode(data), password: password);
     } else {
       final url = '${credentials.url}/tokens/${token.id}';
-      response =
-          await webClient.put(url, credentials.token, data: json.encode(data));
+      response = await webClient.put(url, credentials.token,
+          data: json.encode(data), password: password);
     }
 
     final TokenItemResponse tokenResponse =

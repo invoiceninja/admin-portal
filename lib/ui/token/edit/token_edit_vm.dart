@@ -6,6 +6,7 @@ import 'package:invoiceninja_flutter/constants.dart';
 import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:invoiceninja_flutter/redux/settings/settings_actions.dart';
 import 'package:invoiceninja_flutter/redux/ui/ui_actions.dart';
+import 'package:invoiceninja_flutter/utils/dialogs.dart';
 import 'package:invoiceninja_flutter/utils/platforms.dart';
 import 'package:redux/redux.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
@@ -70,26 +71,33 @@ class TokenEditVM {
         ));
       },
       onSavePressed: (BuildContext context) {
-        final Completer<TokenEntity> completer = new Completer<TokenEntity>();
-        store.dispatch(SaveTokenRequest(completer: completer, token: token));
-        return completer.future.then((savedToken) {
-          if (isMobile(context)) {
-            store.dispatch(UpdateCurrentRoute(TokenViewScreen.route));
-            if (token.isNew) {
-              Navigator.of(context).pushReplacementNamed(TokenViewScreen.route);
-            } else {
-              Navigator.of(context).pop(savedToken);
-            }
-          } else {
-            viewEntity(context: context, entity: savedToken, force: true);
-          }
-        }).catchError((Object error) {
-          showDialog<ErrorDialog>(
-              context: context,
-              builder: (BuildContext context) {
-                return ErrorDialog(error);
+        passwordCallback(
+            context: context,
+            callback: (password) {
+              final Completer<TokenEntity> completer =
+                  new Completer<TokenEntity>();
+              store.dispatch(SaveTokenRequest(
+                  completer: completer, token: token, password: password));
+              return completer.future.then((savedToken) {
+                if (isMobile(context)) {
+                  store.dispatch(UpdateCurrentRoute(TokenViewScreen.route));
+                  if (token.isNew) {
+                    Navigator.of(context)
+                        .pushReplacementNamed(TokenViewScreen.route);
+                  } else {
+                    Navigator.of(context).pop(savedToken);
+                  }
+                } else {
+                  viewEntity(context: context, entity: savedToken, force: true);
+                }
+              }).catchError((Object error) {
+                showDialog<ErrorDialog>(
+                    context: context,
+                    builder: (BuildContext context) {
+                      return ErrorDialog(error);
+                    });
               });
-        });
+            });
       },
     );
   }

@@ -122,10 +122,14 @@ class LoadTokensSuccess implements StopLoading, PersistData {
 }
 
 class SaveTokenRequest implements StartSaving {
-  SaveTokenRequest({this.completer, this.token});
+  SaveTokenRequest(
+      {@required this.completer,
+      @required this.token,
+      @required this.password});
 
   final Completer completer;
   final TokenEntity token;
+  final String password;
 }
 
 class SaveTokenSuccess implements StopSaving, PersistData, PersistUI {
