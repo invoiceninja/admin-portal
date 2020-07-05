@@ -149,7 +149,7 @@ class _AccountOverview extends StatelessWidget {
             onPressed: () {
               store.dispatch(ViewSettings(
                 navigator: Navigator.of(context),
-                section: kSettingsTokens,
+                section: kSettingsWebhooks,
               ));
             },
           ),
