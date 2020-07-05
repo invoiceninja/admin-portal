@@ -10,6 +10,7 @@ import 'package:invoiceninja_flutter/ui/app/buttons/elevated_button.dart';
 import 'package:invoiceninja_flutter/ui/app/form_card.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/app_form.dart';
 import 'package:invoiceninja_flutter/ui/app/edit_scaffold.dart';
+import 'package:invoiceninja_flutter/ui/app/lists/list_divider.dart';
 import 'package:invoiceninja_flutter/ui/settings/account_management_vm.dart';
 import 'package:invoiceninja_flutter/utils/dialogs.dart';
 import 'package:invoiceninja_flutter/utils/icons.dart';
@@ -154,7 +155,10 @@ class _AccountOverview extends StatelessWidget {
             },
           ),
         ),
-
+        Padding(
+          padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 16),
+          child: ListDivider(),
+        ),
         /*
               Padding(
                 padding: const EdgeInsets.all(16),
@@ -220,8 +224,8 @@ class _AccountOverview extends StatelessWidget {
           ),
         ),
         Padding(
-          padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 16),
-          child: Divider(),
+          padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 16),
+          child: ListDivider(),
         ),
         Padding(
           padding: const EdgeInsets.all(16),
