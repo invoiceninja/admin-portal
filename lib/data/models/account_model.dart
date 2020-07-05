@@ -41,7 +41,9 @@ abstract class AccountEntity
   String get currentVersion;
 
   bool get isUpdateAvailable =>
-      latestVersion != currentVersion && latestVersion != '0.0.0';
+      latestVersion != currentVersion && isCronEnabled;
+
+  bool get isCronEnabled => latestVersion != '0.0.0';
 
   static Serializer<AccountEntity> get serializer => _$accountEntitySerializer;
 }

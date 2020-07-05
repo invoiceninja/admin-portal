@@ -528,7 +528,18 @@ class SidebarFooter extends StatelessWidget {
           if (state.isMenuCollapsed) ...[
             Expanded(child: SizedBox())
           ] else ...[
-            if (account.isUpdateAvailable)
+            if (!account.isCronEnabled)
+              IconButton(
+                icon: Icon(
+                  Icons.error_outline,
+                  color: Colors.red,
+                ),
+                onPressed: () => showMessageDialog(
+                  context: context,
+                  message: localization.cronsNotEnabled,
+                ),
+              )
+            else if (account.isUpdateAvailable)
               IconButton(
                 icon: Icon(
                   Icons.warning,

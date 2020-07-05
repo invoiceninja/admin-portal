@@ -61,7 +61,6 @@ void main({bool isTesting = false}) async {
         ..addAll(createStoreProductsMiddleware())
         ..addAll(createStoreClientsMiddleware())
         ..addAll(createStoreInvoicesMiddleware())
-        ..addAll(createStorePersistenceMiddleware())
         ..addAll(createStoreExpensesMiddleware())
         ..addAll(createStoreVendorsMiddleware())
         ..addAll(createStoreTasksMiddleware())
@@ -80,6 +79,7 @@ void main({bool isTesting = false}) async {
         ..addAll(createStoreTaxRatesMiddleware())
         ..addAll(createStoreCompanyGatewaysMiddleware())
         ..addAll(createStoreGroupsMiddleware())
+        ..addAll(createStorePersistenceMiddleware())
         ..addAll(isTesting
             ? []
             : [
