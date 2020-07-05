@@ -42,6 +42,9 @@ class _$UIStateSerializer implements StructuredSerializer<UIState> {
       'invoiceUIState',
       serializers.serialize(object.invoiceUIState,
           specifiedType: const FullType(InvoiceUIState)),
+      'webhookUIState',
+      serializers.serialize(object.webhookUIState,
+          specifiedType: const FullType(WebhookUIState)),
       'tokenUIState',
       serializers.serialize(object.tokenUIState,
           specifiedType: const FullType(TokenUIState)),
@@ -171,6 +174,10 @@ class _$UIStateSerializer implements StructuredSerializer<UIState> {
           result.invoiceUIState.replace(serializers.deserialize(value,
               specifiedType: const FullType(InvoiceUIState)) as InvoiceUIState);
           break;
+        case 'webhookUIState':
+          result.webhookUIState.replace(serializers.deserialize(value,
+              specifiedType: const FullType(WebhookUIState)) as WebhookUIState);
+          break;
         case 'tokenUIState':
           result.tokenUIState.replace(serializers.deserialize(value,
               specifiedType: const FullType(TokenUIState)) as TokenUIState);
@@ -274,6 +281,8 @@ class _$UIState extends UIState {
   @override
   final InvoiceUIState invoiceUIState;
   @override
+  final WebhookUIState webhookUIState;
+  @override
   final TokenUIState tokenUIState;
   @override
   final PaymentTermUIState paymentTermUIState;
@@ -323,6 +332,7 @@ class _$UIState extends UIState {
       this.productUIState,
       this.clientUIState,
       this.invoiceUIState,
+      this.webhookUIState,
       this.tokenUIState,
       this.paymentTermUIState,
       this.designUIState,
@@ -364,6 +374,9 @@ class _$UIState extends UIState {
     }
     if (invoiceUIState == null) {
       throw new BuiltValueNullFieldError('UIState', 'invoiceUIState');
+    }
+    if (webhookUIState == null) {
+      throw new BuiltValueNullFieldError('UIState', 'webhookUIState');
     }
     if (tokenUIState == null) {
       throw new BuiltValueNullFieldError('UIState', 'tokenUIState');
@@ -440,6 +453,7 @@ class _$UIState extends UIState {
         productUIState == other.productUIState &&
         clientUIState == other.clientUIState &&
         invoiceUIState == other.invoiceUIState &&
+        webhookUIState == other.webhookUIState &&
         tokenUIState == other.tokenUIState &&
         paymentTermUIState == other.paymentTermUIState &&
         designUIState == other.designUIState &&
@@ -480,9 +494,9 @@ class _$UIState extends UIState {
                                                                 $jc(
                                                                     $jc(
                                                                         $jc(
-                                                                            $jc($jc($jc($jc($jc($jc($jc($jc($jc($jc(0, selectedCompanyIndex.hashCode), currentRoute.hashCode), previousRoute.hashCode), filterEntityId.hashCode), filterEntityType.hashCode), filter.hashCode), filterClearedAt.hashCode), dashboardUIState.hashCode), productUIState.hashCode),
-                                                                                clientUIState.hashCode),
-                                                                            invoiceUIState.hashCode),
+                                                                            $jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc(0, selectedCompanyIndex.hashCode), currentRoute.hashCode), previousRoute.hashCode), filterEntityId.hashCode), filterEntityType.hashCode), filter.hashCode), filterClearedAt.hashCode), dashboardUIState.hashCode), productUIState.hashCode), clientUIState.hashCode),
+                                                                                invoiceUIState.hashCode),
+                                                                            webhookUIState.hashCode),
                                                                         tokenUIState.hashCode),
                                                                     paymentTermUIState.hashCode),
                                                                 designUIState.hashCode),
@@ -516,6 +530,7 @@ class _$UIState extends UIState {
           ..add('productUIState', productUIState)
           ..add('clientUIState', clientUIState)
           ..add('invoiceUIState', invoiceUIState)
+          ..add('webhookUIState', webhookUIState)
           ..add('tokenUIState', tokenUIState)
           ..add('paymentTermUIState', paymentTermUIState)
           ..add('designUIState', designUIState)
@@ -596,6 +611,12 @@ class UIStateBuilder implements Builder<UIState, UIStateBuilder> {
       _$this._invoiceUIState ??= new InvoiceUIStateBuilder();
   set invoiceUIState(InvoiceUIStateBuilder invoiceUIState) =>
       _$this._invoiceUIState = invoiceUIState;
+
+  WebhookUIStateBuilder _webhookUIState;
+  WebhookUIStateBuilder get webhookUIState =>
+      _$this._webhookUIState ??= new WebhookUIStateBuilder();
+  set webhookUIState(WebhookUIStateBuilder webhookUIState) =>
+      _$this._webhookUIState = webhookUIState;
 
   TokenUIStateBuilder _tokenUIState;
   TokenUIStateBuilder get tokenUIState =>
@@ -715,6 +736,7 @@ class UIStateBuilder implements Builder<UIState, UIStateBuilder> {
       _productUIState = _$v.productUIState?.toBuilder();
       _clientUIState = _$v.clientUIState?.toBuilder();
       _invoiceUIState = _$v.invoiceUIState?.toBuilder();
+      _webhookUIState = _$v.webhookUIState?.toBuilder();
       _tokenUIState = _$v.tokenUIState?.toBuilder();
       _paymentTermUIState = _$v.paymentTermUIState?.toBuilder();
       _designUIState = _$v.designUIState?.toBuilder();
@@ -767,6 +789,7 @@ class UIStateBuilder implements Builder<UIState, UIStateBuilder> {
               productUIState: productUIState.build(),
               clientUIState: clientUIState.build(),
               invoiceUIState: invoiceUIState.build(),
+              webhookUIState: webhookUIState.build(),
               tokenUIState: tokenUIState.build(),
               paymentTermUIState: paymentTermUIState.build(),
               designUIState: designUIState.build(),
@@ -795,6 +818,8 @@ class UIStateBuilder implements Builder<UIState, UIStateBuilder> {
         clientUIState.build();
         _$failedField = 'invoiceUIState';
         invoiceUIState.build();
+        _$failedField = 'webhookUIState';
+        webhookUIState.build();
         _$failedField = 'tokenUIState';
         tokenUIState.build();
         _$failedField = 'paymentTermUIState';

@@ -36,11 +36,11 @@ import 'package:invoiceninja_flutter/redux/task/task_state.dart';
 import 'package:invoiceninja_flutter/redux/project/project_state.dart';
 import 'package:invoiceninja_flutter/redux/payment/payment_state.dart';
 import 'package:invoiceninja_flutter/redux/quote/quote_state.dart';
-
 // STARTER: import - do not remove comment
+import 'package:invoiceninja_flutter/data/models/webhook_model.dart';
+import 'package:invoiceninja_flutter/redux/webhook/webhook_state.dart';
 import 'package:invoiceninja_flutter/data/models/token_model.dart';
 import 'package:invoiceninja_flutter/redux/token/token_state.dart';
-
 import 'package:invoiceninja_flutter/redux/payment_term/payment_term_state.dart';
 import 'package:invoiceninja_flutter/data/models/design_model.dart';
 import 'package:invoiceninja_flutter/redux/design/design_state.dart';
@@ -116,8 +116,12 @@ part 'serializers.g.dart';
   TaxRateItemResponse,
   TaxRateListResponse,
   // STARTER: serializers - do not remove comment
-  TokenEntity, TokenListResponse, TokenItemResponse,
-
+  WebhookEntity,
+  WebhookListResponse,
+  WebhookItemResponse,
+  TokenEntity,
+  TokenListResponse,
+  TokenItemResponse,
   PaymentTermEntity,
   PaymentTermListResponse,
   PaymentTermItemResponse,

@@ -8,6 +8,8 @@ import 'package:built_value/built_value.dart';
 import 'package:built_value/serializer.dart';
 
 // STARTER: import - do not remove comment
+import 'package:invoiceninja_flutter/redux/webhook/webhook_state.dart';
+
 import 'package:invoiceninja_flutter/redux/token/token_state.dart';
 
 import 'package:invoiceninja_flutter/redux/payment_term/payment_term_state.dart';
@@ -46,6 +48,8 @@ abstract class UserCompanyState
       paymentState: PaymentState(),
       quoteState: QuoteState(),
       // STARTER: constructor - do not remove comment
+      webhookState: WebhookState(),
+
       tokenState: TokenState(),
 
       paymentTermState: PaymentTermState(),
@@ -88,6 +92,8 @@ abstract class UserCompanyState
   QuoteState get quoteState;
 
   // STARTER: fields - do not remove comment
+  WebhookState get webhookState;
+
   TokenState get tokenState;
 
   PaymentTermState get paymentTermState;

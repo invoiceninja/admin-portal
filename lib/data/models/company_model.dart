@@ -99,6 +99,7 @@ abstract class CompanyEntity extends Object
       designs: BuiltList<DesignEntity>(),
       paymentTerms: BuiltList<PaymentTermEntity>(),
       tokens: BuiltList<TokenEntity>(),
+      webhooks: BuiltList<WebhookEntity>(),
     );
   }
 
@@ -223,6 +224,8 @@ abstract class CompanyEntity extends Object
   BuiltList<DesignEntity> get designs;
 
   BuiltList<TokenEntity> get tokens;
+
+  BuiltList<WebhookEntity> get webhooks;
 
   @BuiltValueField(wireName: 'payment_terms')
   BuiltList<PaymentTermEntity> get paymentTerms;

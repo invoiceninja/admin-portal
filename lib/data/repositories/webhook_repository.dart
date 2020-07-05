@@ -1,0 +1,78 @@
+import 'dart:async';
+import 'dart:convert';
+import 'dart:core';
+import 'package:invoiceninja_flutter/.env.dart';
+import 'package:built_collection/built_collection.dart';
+import 'package:invoiceninja_flutter/constants.dart';
+import 'package:invoiceninja_flutter/data/models/serializers.dart';
+import 'package:invoiceninja_flutter/redux/app/app_state.dart';
+import 'package:invoiceninja_flutter/data/models/models.dart';
+import 'package:invoiceninja_flutter/data/web_client.dart';
+
+class WebhookRepository {
+  const WebhookRepository({
+    this.webClient = const WebClient(),
+  });
+
+  final WebClient webClient;
+
+  Future<WebhookEntity> loadItem(
+      Credentials credentials, String entityId) async {
+    final dynamic response = await webClient.get(
+        '${credentials.url}/webhooks/$entityId', credentials.token);
+
+    final WebhookItemResponse webhookResponse =
+        serializers.deserializeWith(WebhookItemResponse.serializer, response);
+
+    return webhookResponse.data;
+  }
+
+  Future<BuiltList<WebhookEntity>> loadList(
+      Credentials credentials, int updatedAt) async {
+    String url = credentials.url + '/webhooks?';
+
+    if (updatedAt > 0) {
+      url += '&updated_at=${updatedAt - kUpdatedAtBufferSeconds}';
+    }
+
+    final dynamic response = await webClient.get(url, credentials.token);
+
+    final WebhookListResponse webhookResponse =
+        serializers.deserializeWith(WebhookListResponse.serializer, response);
+
+    return webhookResponse.data;
+  }
+
+  Future<List<WebhookEntity>> bulkAction(
+      Credentials credentials, List<String> ids, EntityAction action) async {
+    final url = credentials.url + '/webhooks/bulk';
+    final dynamic response = await webClient.post(url, credentials.token,
+        data: json.encode({'ids': ids, 'action': '$action'}));
+
+    final WebhookListResponse webhookResponse =
+        serializers.deserializeWith(WebhookListResponse.serializer, response);
+
+    return webhookResponse.data.toList();
+  }
+
+  Future<WebhookEntity> saveData(
+      Credentials credentials, WebhookEntity webhook) async {
+    final data = serializers.serializeWith(WebhookEntity.serializer, webhook);
+    dynamic response;
+
+    if (webhook.isNew) {
+      response = await webClient.post(
+          credentials.url + '/webhooks', credentials.token,
+          data: json.encode(data));
+    } else {
+      var url = '${credentials.url}/webhooks/${webhook.id}';
+      response =
+          await webClient.put(url, credentials.token, data: json.encode(data));
+    }
+
+    final WebhookItemResponse webhookResponse =
+        serializers.deserializeWith(WebhookItemResponse.serializer, response);
+
+    return webhookResponse.data;
+  }
+}

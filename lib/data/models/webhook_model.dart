@@ -9,57 +9,57 @@ import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/utils/formatting.dart';
 
-part 'token_model.g.dart';
+part 'webhook_model.g.dart';
 
-abstract class TokenListResponse
-    implements Built<TokenListResponse, TokenListResponseBuilder> {
-  factory TokenListResponse([void updates(TokenListResponseBuilder b)]) =
-      _$TokenListResponse;
+abstract class WebhookListResponse
+    implements Built<WebhookListResponse, WebhookListResponseBuilder> {
+  factory WebhookListResponse([void updates(WebhookListResponseBuilder b)]) =
+      _$WebhookListResponse;
 
-  TokenListResponse._();
-
-  @override
-  @memoized
-  int get hashCode;
-
-  BuiltList<TokenEntity> get data;
-
-  static Serializer<TokenListResponse> get serializer =>
-      _$tokenListResponseSerializer;
-}
-
-abstract class TokenItemResponse
-    implements Built<TokenItemResponse, TokenItemResponseBuilder> {
-  factory TokenItemResponse([void updates(TokenItemResponseBuilder b)]) =
-      _$TokenItemResponse;
-
-  TokenItemResponse._();
+  WebhookListResponse._();
 
   @override
   @memoized
   int get hashCode;
 
-  TokenEntity get data;
+  BuiltList<WebhookEntity> get data;
 
-  static Serializer<TokenItemResponse> get serializer =>
-      _$tokenItemResponseSerializer;
+  static Serializer<WebhookListResponse> get serializer =>
+      _$webhookListResponseSerializer;
 }
 
-class TokenFields {
+abstract class WebhookItemResponse
+    implements Built<WebhookItemResponse, WebhookItemResponseBuilder> {
+  factory WebhookItemResponse([void updates(WebhookItemResponseBuilder b)]) =
+      _$WebhookItemResponse;
+
+  WebhookItemResponse._();
+
+  @override
+  @memoized
+  int get hashCode;
+
+  WebhookEntity get data;
+
+  static Serializer<WebhookItemResponse> get serializer =>
+      _$webhookItemResponseSerializer;
+}
+
+class WebhookFields {
   static const String name = 'name';
   static const String custom1 = 'custom1';
   static const String custom2 = 'custom2';
 }
 
-abstract class TokenEntity extends Object
+abstract class WebhookEntity extends Object
     with BaseEntity, SelectableEntity
-    implements Built<TokenEntity, TokenEntityBuilder> {
-  factory TokenEntity({String id, AppState state}) {
-    return _$TokenEntity._(
+    implements Built<WebhookEntity, WebhookEntityBuilder> {
+  factory WebhookEntity({String id, AppState state}) {
+    return _$WebhookEntity._(
       id: id ?? BaseEntity.nextId,
       isChanged: false,
       name: '',
-      token: '',
+      webhook: '',
       updatedAt: 0,
       archivedAt: 0,
       isDeleted: false,
@@ -69,7 +69,7 @@ abstract class TokenEntity extends Object
     );
   }
 
-  TokenEntity._();
+  WebhookEntity._();
 
   @override
   @memoized
@@ -77,7 +77,7 @@ abstract class TokenEntity extends Object
 
   @override
   EntityType get entityType {
-    return EntityType.token;
+    return EntityType.webhook;
   }
 
   // TODO remove this
@@ -85,13 +85,13 @@ abstract class TokenEntity extends Object
   @nullable
   String get id;
 
-  String get token;
+  String get webhook;
 
   String get name;
 
-  String get obscuredToken => base64Encode(utf8.encode(token));
+  String get obscuredWebhook => base64Encode(utf8.encode(webhook));
 
-  static String unobscureToken(String value) {
+  static String unobscureWebhook(String value) {
     if (value == null || value.isEmpty) {
       return null;
     }
@@ -104,18 +104,18 @@ abstract class TokenEntity extends Object
     return name;
   }
 
-  int compareTo(TokenEntity token, String sortField, bool sortAscending) {
+  int compareTo(WebhookEntity webhook, String sortField, bool sortAscending) {
     int response = 0;
-    final TokenEntity tokenA = sortAscending ? this : token;
-    final TokenEntity tokenB = sortAscending ? token : this;
+    final WebhookEntity webhookA = sortAscending ? this : webhook;
+    final WebhookEntity webhookB = sortAscending ? webhook : this;
 
     switch (sortField) {
-      case TokenFields.name:
+      case WebhookFields.name:
         response =
-            tokenA.name.toLowerCase().compareTo(tokenB.name.toLowerCase());
+            webhookA.name.toLowerCase().compareTo(webhookB.name.toLowerCase());
         break;
       default:
-        print('## ERROR: sort by token.$sortField is not implemented');
+        print('## ERROR: sort by webhook.$sortField is not implemented');
         break;
     }
 
@@ -181,5 +181,5 @@ abstract class TokenEntity extends Object
   @override
   FormatNumberType get listDisplayAmountType => null;
 
-  static Serializer<TokenEntity> get serializer => _$tokenEntitySerializer;
+  static Serializer<WebhookEntity> get serializer => _$webhookEntitySerializer;
 }

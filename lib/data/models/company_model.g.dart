@@ -185,6 +185,10 @@ class _$CompanyEntitySerializer implements StructuredSerializer<CompanyEntity> {
       serializers.serialize(object.tokens,
           specifiedType:
               const FullType(BuiltList, const [const FullType(TokenEntity)])),
+      'webhooks',
+      serializers.serialize(object.webhooks,
+          specifiedType:
+              const FullType(BuiltList, const [const FullType(WebhookEntity)])),
       'payment_terms',
       serializers.serialize(object.paymentTerms,
           specifiedType: const FullType(
@@ -493,6 +497,12 @@ class _$CompanyEntitySerializer implements StructuredSerializer<CompanyEntity> {
           result.tokens.replace(serializers.deserialize(value,
                   specifiedType: const FullType(
                       BuiltList, const [const FullType(TokenEntity)]))
+              as BuiltList<Object>);
+          break;
+        case 'webhooks':
+          result.webhooks.replace(serializers.deserialize(value,
+                  specifiedType: const FullType(
+                      BuiltList, const [const FullType(WebhookEntity)]))
               as BuiltList<Object>);
           break;
         case 'payment_terms':
@@ -2703,6 +2713,8 @@ class _$CompanyEntity extends CompanyEntity {
   @override
   final BuiltList<TokenEntity> tokens;
   @override
+  final BuiltList<WebhookEntity> webhooks;
+  @override
   final BuiltList<PaymentTermEntity> paymentTerms;
   @override
   final BuiltMap<String, UserEntity> userMap;
@@ -2783,6 +2795,7 @@ class _$CompanyEntity extends CompanyEntity {
       this.vendors,
       this.designs,
       this.tokens,
+      this.webhooks,
       this.paymentTerms,
       this.userMap,
       this.customFields,
@@ -2937,6 +2950,9 @@ class _$CompanyEntity extends CompanyEntity {
     if (tokens == null) {
       throw new BuiltValueNullFieldError('CompanyEntity', 'tokens');
     }
+    if (webhooks == null) {
+      throw new BuiltValueNullFieldError('CompanyEntity', 'webhooks');
+    }
     if (paymentTerms == null) {
       throw new BuiltValueNullFieldError('CompanyEntity', 'paymentTerms');
     }
@@ -3024,6 +3040,7 @@ class _$CompanyEntity extends CompanyEntity {
         vendors == other.vendors &&
         designs == other.designs &&
         tokens == other.tokens &&
+        webhooks == other.webhooks &&
         paymentTerms == other.paymentTerms &&
         userMap == other.userMap &&
         customFields == other.customFields &&
@@ -3063,10 +3080,10 @@ class _$CompanyEntity extends CompanyEntity {
                                                                 $jc(
                                                                     $jc(
                                                                         $jc(
-                                                                            $jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc(0, enableCustomSurchargeTaxes1.hashCode), enableCustomSurchargeTaxes2.hashCode), enableCustomSurchargeTaxes3.hashCode), enableCustomSurchargeTaxes4.hashCode), sizeId.hashCode), industryId.hashCode), subdomain.hashCode), portalMode.hashCode), portalDomain.hashCode), updateProducts.hashCode), convertProductExchangeRate.hashCode), fillProducts.hashCode), enableProductCost.hashCode), enableProductQuantity.hashCode), defaultQuantity.hashCode), showProductDetails.hashCode), clientCanRegister.hashCode), plan.hashCode), companyKey.hashCode), firstDayOfWeek.hashCode), firstMonthOfYear.hashCode), numberOfInvoiceTaxRates.hashCode), numberOfItemTaxRates.hashCode), groups.hashCode), activities.hashCode), taxRates.hashCode), taskStatuses.hashCode), taskStatusMap.hashCode), companyGateways.hashCode), expenseCategories.hashCode), expenseCategoryMap.hashCode), users.hashCode), clients.hashCode), products.hashCode), invoices.hashCode), payments.hashCode), quotes.hashCode), credits.hashCode), tasks.hashCode), projects.hashCode), expenses.hashCode),
-                                                                                vendors.hashCode),
-                                                                            designs.hashCode),
-                                                                        tokens.hashCode),
+                                                                            $jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc(0, enableCustomSurchargeTaxes1.hashCode), enableCustomSurchargeTaxes2.hashCode), enableCustomSurchargeTaxes3.hashCode), enableCustomSurchargeTaxes4.hashCode), sizeId.hashCode), industryId.hashCode), subdomain.hashCode), portalMode.hashCode), portalDomain.hashCode), updateProducts.hashCode), convertProductExchangeRate.hashCode), fillProducts.hashCode), enableProductCost.hashCode), enableProductQuantity.hashCode), defaultQuantity.hashCode), showProductDetails.hashCode), clientCanRegister.hashCode), plan.hashCode), companyKey.hashCode), firstDayOfWeek.hashCode), firstMonthOfYear.hashCode), numberOfInvoiceTaxRates.hashCode), numberOfItemTaxRates.hashCode), groups.hashCode), activities.hashCode), taxRates.hashCode), taskStatuses.hashCode), taskStatusMap.hashCode), companyGateways.hashCode), expenseCategories.hashCode), expenseCategoryMap.hashCode), users.hashCode), clients.hashCode), products.hashCode), invoices.hashCode), payments.hashCode), quotes.hashCode), credits.hashCode), tasks.hashCode), projects.hashCode), expenses.hashCode), vendors.hashCode),
+                                                                                designs.hashCode),
+                                                                            tokens.hashCode),
+                                                                        webhooks.hashCode),
                                                                     paymentTerms.hashCode),
                                                                 userMap.hashCode),
                                                             customFields.hashCode),
@@ -3132,6 +3149,7 @@ class _$CompanyEntity extends CompanyEntity {
           ..add('vendors', vendors)
           ..add('designs', designs)
           ..add('tokens', tokens)
+          ..add('webhooks', webhooks)
           ..add('paymentTerms', paymentTerms)
           ..add('userMap', userMap)
           ..add('customFields', customFields)
@@ -3382,6 +3400,12 @@ class CompanyEntityBuilder
       _$this._tokens ??= new ListBuilder<TokenEntity>();
   set tokens(ListBuilder<TokenEntity> tokens) => _$this._tokens = tokens;
 
+  ListBuilder<WebhookEntity> _webhooks;
+  ListBuilder<WebhookEntity> get webhooks =>
+      _$this._webhooks ??= new ListBuilder<WebhookEntity>();
+  set webhooks(ListBuilder<WebhookEntity> webhooks) =>
+      _$this._webhooks = webhooks;
+
   ListBuilder<PaymentTermEntity> _paymentTerms;
   ListBuilder<PaymentTermEntity> get paymentTerms =>
       _$this._paymentTerms ??= new ListBuilder<PaymentTermEntity>();
@@ -3506,6 +3530,7 @@ class CompanyEntityBuilder
       _vendors = _$v.vendors?.toBuilder();
       _designs = _$v.designs?.toBuilder();
       _tokens = _$v.tokens?.toBuilder();
+      _webhooks = _$v.webhooks?.toBuilder();
       _paymentTerms = _$v.paymentTerms?.toBuilder();
       _userMap = _$v.userMap?.toBuilder();
       _customFields = _$v.customFields?.toBuilder();
@@ -3590,6 +3615,7 @@ class CompanyEntityBuilder
               vendors: vendors.build(),
               designs: designs.build(),
               tokens: tokens.build(),
+              webhooks: webhooks.build(),
               paymentTerms: paymentTerms.build(),
               userMap: userMap.build(),
               customFields: customFields.build(),
@@ -3651,6 +3677,8 @@ class CompanyEntityBuilder
         designs.build();
         _$failedField = 'tokens';
         tokens.build();
+        _$failedField = 'webhooks';
+        webhooks.build();
         _$failedField = 'paymentTerms';
         paymentTerms.build();
         _$failedField = 'userMap';

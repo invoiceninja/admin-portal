@@ -1,0 +1,290 @@
+import 'package:redux/redux.dart';
+import 'package:built_collection/built_collection.dart';
+import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
+import 'package:invoiceninja_flutter/data/models/models.dart';
+import 'package:invoiceninja_flutter/redux/company/company_actions.dart';
+import 'package:invoiceninja_flutter/redux/ui/entity_ui_state.dart';
+import 'package:invoiceninja_flutter/redux/webhook/webhook_actions.dart';
+import 'package:invoiceninja_flutter/redux/ui/list_ui_state.dart';
+import 'package:invoiceninja_flutter/redux/webhook/webhook_actions.dart';
+import 'package:invoiceninja_flutter/redux/webhook/webhook_state.dart';
+import 'package:invoiceninja_flutter/data/models/entities.dart';
+
+EntityUIState webhookUIReducer(WebhookUIState state, dynamic action) {
+  return state.rebuild((b) => b
+    ..listUIState.replace(webhookListReducer(state.listUIState, action))
+    ..editing.replace(editingReducer(state.editing, action))
+    ..selectedId = selectedIdReducer(state.selectedId, action));
+}
+
+Reducer<String> selectedIdReducer = combineReducers([
+  TypedReducer<String, ViewWebhook>(
+      (String selectedId, dynamic action) => action.webhookId),
+  TypedReducer<String, AddWebhookSuccess>(
+      (String selectedId, dynamic action) => action.webhook.id),
+  TypedReducer<String, SelectCompany>((selectedId, action) => ''),
+  TypedReducer<String, DeleteWebhooksSuccess>((selectedId, action) => ''),
+  TypedReducer<String, ArchiveWebhooksSuccess>((selectedId, action) => ''),
+  TypedReducer<String, ClearEntityFilter>((selectedId, action) => ''),
+  TypedReducer<String, FilterByEntity>((selectedId, action) =>
+      action.entityType == EntityType.webhook ? action.entityId : selectedId),
+]);
+
+final editingReducer = combineReducers<WebhookEntity>([
+  TypedReducer<WebhookEntity, SaveWebhookSuccess>(_updateEditing),
+  TypedReducer<WebhookEntity, AddWebhookSuccess>(_updateEditing),
+  TypedReducer<WebhookEntity, RestoreWebhooksSuccess>((webhooks, action) {
+    return action.webhooks[0];
+  }),
+  TypedReducer<WebhookEntity, ArchiveWebhooksSuccess>((webhooks, action) {
+    return action.webhooks[0];
+  }),
+  TypedReducer<WebhookEntity, DeleteWebhooksSuccess>((webhooks, action) {
+    return action.webhooks[0];
+  }),
+  TypedReducer<WebhookEntity, EditWebhook>(_updateEditing),
+  TypedReducer<WebhookEntity, UpdateWebhook>((webhook, action) {
+    return action.webhook.rebuild((b) => b..isChanged = true);
+  }),
+  TypedReducer<WebhookEntity, SelectCompany>(_clearEditing),
+  TypedReducer<WebhookEntity, DiscardChanges>(_clearEditing),
+]);
+
+WebhookEntity _clearEditing(WebhookEntity webhook, dynamic action) {
+  return WebhookEntity();
+}
+
+WebhookEntity _updateEditing(WebhookEntity webhook, dynamic action) {
+  return action.webhook;
+}
+
+final webhookListReducer = combineReducers<ListUIState>([
+  TypedReducer<ListUIState, SortWebhooks>(_sortWebhooks),
+  TypedReducer<ListUIState, FilterWebhooksByState>(_filterWebhooksByState),
+  TypedReducer<ListUIState, FilterWebhooks>(_filterWebhooks),
+  TypedReducer<ListUIState, FilterWebhooksByCustom1>(_filterWebhooksByCustom1),
+  TypedReducer<ListUIState, FilterWebhooksByCustom2>(_filterWebhooksByCustom2),
+  TypedReducer<ListUIState, StartWebhookMultiselect>(_startListMultiselect),
+  TypedReducer<ListUIState, AddToWebhookMultiselect>(_addToListMultiselect),
+  TypedReducer<ListUIState, RemoveFromWebhookMultiselect>(
+      _removeFromListMultiselect),
+  TypedReducer<ListUIState, ClearWebhookMultiselect>(_clearListMultiselect),
+  TypedReducer<ListUIState, ClearEntityFilter>(
+      (state, action) => state.rebuild((b) => b
+        ..filterEntityId = null
+        ..filterEntityType = null)),
+]);
+
+ListUIState _filterWebhooksByCustom1(
+    ListUIState webhookListState, FilterWebhooksByCustom1 action) {
+  if (webhookListState.custom1Filters.contains(action.value)) {
+    return webhookListState
+        .rebuild((b) => b..custom1Filters.remove(action.value));
+  } else {
+    return webhookListState.rebuild((b) => b..custom1Filters.add(action.value));
+  }
+}
+
+ListUIState _filterWebhooksByCustom2(
+    ListUIState webhookListState, FilterWebhooksByCustom2 action) {
+  if (webhookListState.custom2Filters.contains(action.value)) {
+    return webhookListState
+        .rebuild((b) => b..custom2Filters.remove(action.value));
+  } else {
+    return webhookListState.rebuild((b) => b..custom2Filters.add(action.value));
+  }
+}
+
+ListUIState _filterWebhooksByState(
+    ListUIState webhookListState, FilterWebhooksByState action) {
+  if (webhookListState.stateFilters.contains(action.state)) {
+    return webhookListState
+        .rebuild((b) => b..stateFilters.remove(action.state));
+  } else {
+    return webhookListState.rebuild((b) => b..stateFilters.add(action.state));
+  }
+}
+
+ListUIState _filterWebhooks(
+    ListUIState webhookListState, FilterWebhooks action) {
+  return webhookListState.rebuild((b) => b
+    ..filter = action.filter
+    ..filterClearedAt = action.filter == null
+        ? DateTime.now().millisecondsSinceEpoch
+        : webhookListState.filterClearedAt);
+}
+
+ListUIState _sortWebhooks(ListUIState webhookListState, SortWebhooks action) {
+  return webhookListState.rebuild((b) => b
+    ..sortAscending = b.sortField != action.field || !b.sortAscending
+    ..sortField = action.field);
+}
+
+ListUIState _startListMultiselect(
+    ListUIState productListState, StartWebhookMultiselect action) {
+  return productListState.rebuild((b) => b..selectedIds = ListBuilder());
+}
+
+ListUIState _addToListMultiselect(
+    ListUIState productListState, AddToWebhookMultiselect action) {
+  return productListState.rebuild((b) => b..selectedIds.add(action.entity.id));
+}
+
+ListUIState _removeFromListMultiselect(
+    ListUIState productListState, RemoveFromWebhookMultiselect action) {
+  return productListState
+      .rebuild((b) => b..selectedIds.remove(action.entity.id));
+}
+
+ListUIState _clearListMultiselect(
+    ListUIState productListState, ClearWebhookMultiselect action) {
+  return productListState.rebuild((b) => b..selectedIds = null);
+}
+
+final webhooksReducer = combineReducers<WebhookState>([
+  TypedReducer<WebhookState, SaveWebhookSuccess>(_updateWebhook),
+  TypedReducer<WebhookState, AddWebhookSuccess>(_addWebhook),
+  TypedReducer<WebhookState, LoadWebhooksSuccess>(_setLoadedWebhooks),
+  TypedReducer<WebhookState, LoadWebhookSuccess>(_setLoadedWebhook),
+  TypedReducer<WebhookState, LoadCompanySuccess>(_setLoadedCompany),
+  TypedReducer<WebhookState, ArchiveWebhooksRequest>(_archiveWebhookRequest),
+  TypedReducer<WebhookState, ArchiveWebhooksSuccess>(_archiveWebhookSuccess),
+  TypedReducer<WebhookState, ArchiveWebhooksFailure>(_archiveWebhookFailure),
+  TypedReducer<WebhookState, DeleteWebhooksRequest>(_deleteWebhookRequest),
+  TypedReducer<WebhookState, DeleteWebhooksSuccess>(_deleteWebhookSuccess),
+  TypedReducer<WebhookState, DeleteWebhooksFailure>(_deleteWebhookFailure),
+  TypedReducer<WebhookState, RestoreWebhooksRequest>(_restoreWebhookRequest),
+  TypedReducer<WebhookState, RestoreWebhooksSuccess>(_restoreWebhookSuccess),
+  TypedReducer<WebhookState, RestoreWebhooksFailure>(_restoreWebhookFailure),
+]);
+
+WebhookState _archiveWebhookRequest(
+    WebhookState webhookState, ArchiveWebhooksRequest action) {
+  final webhooks = action.webhookIds.map((id) => webhookState.map[id]).toList();
+
+  for (int i = 0; i < webhooks.length; i++) {
+    webhooks[i] = webhooks[i]
+        .rebuild((b) => b..archivedAt = DateTime.now().millisecondsSinceEpoch);
+  }
+  return webhookState.rebuild((b) {
+    for (final webhook in webhooks) {
+      b.map[webhook.id] = webhook;
+    }
+  });
+}
+
+WebhookState _archiveWebhookSuccess(
+    WebhookState webhookState, ArchiveWebhooksSuccess action) {
+  return webhookState.rebuild((b) {
+    for (final webhook in action.webhooks) {
+      b.map[webhook.id] = webhook;
+    }
+  });
+}
+
+WebhookState _archiveWebhookFailure(
+    WebhookState webhookState, ArchiveWebhooksFailure action) {
+  return webhookState.rebuild((b) {
+    for (final webhook in action.webhooks) {
+      b.map[webhook.id] = webhook;
+    }
+  });
+}
+
+WebhookState _deleteWebhookRequest(
+    WebhookState webhookState, DeleteWebhooksRequest action) {
+  final webhooks = action.webhookIds.map((id) => webhookState.map[id]).toList();
+
+  for (int i = 0; i < webhooks.length; i++) {
+    webhooks[i] = webhooks[i].rebuild((b) => b
+      ..archivedAt = DateTime.now().millisecondsSinceEpoch
+      ..isDeleted = true);
+  }
+  return webhookState.rebuild((b) {
+    for (final webhook in webhooks) {
+      b.map[webhook.id] = webhook;
+    }
+  });
+}
+
+WebhookState _deleteWebhookSuccess(
+    WebhookState webhookState, DeleteWebhooksSuccess action) {
+  return webhookState.rebuild((b) {
+    for (final webhook in action.webhooks) {
+      b.map[webhook.id] = webhook;
+    }
+  });
+}
+
+WebhookState _deleteWebhookFailure(
+    WebhookState webhookState, DeleteWebhooksFailure action) {
+  return webhookState.rebuild((b) {
+    for (final webhook in action.webhooks) {
+      b.map[webhook.id] = webhook;
+    }
+  });
+}
+
+WebhookState _restoreWebhookRequest(
+    WebhookState webhookState, RestoreWebhooksRequest action) {
+  final webhooks = action.webhookIds.map((id) => webhookState.map[id]).toList();
+
+  for (int i = 0; i < webhooks.length; i++) {
+    webhooks[i] = webhooks[i].rebuild((b) => b
+      ..archivedAt = 0
+      ..isDeleted = false);
+  }
+  return webhookState.rebuild((b) {
+    for (final webhook in webhooks) {
+      b.map[webhook.id] = webhook;
+    }
+  });
+}
+
+WebhookState _restoreWebhookSuccess(
+    WebhookState webhookState, RestoreWebhooksSuccess action) {
+  return webhookState.rebuild((b) {
+    for (final webhook in action.webhooks) {
+      b.map[webhook.id] = webhook;
+    }
+  });
+}
+
+WebhookState _restoreWebhookFailure(
+    WebhookState webhookState, RestoreWebhooksFailure action) {
+  return webhookState.rebuild((b) {
+    for (final webhook in action.webhooks) {
+      b.map[webhook.id] = webhook;
+    }
+  });
+}
+
+WebhookState _addWebhook(WebhookState webhookState, AddWebhookSuccess action) {
+  return webhookState.rebuild((b) => b
+    ..map[action.webhook.id] = action.webhook
+    ..list.add(action.webhook.id));
+}
+
+WebhookState _updateWebhook(
+    WebhookState webhookState, SaveWebhookSuccess action) {
+  return webhookState
+      .rebuild((b) => b..map[action.webhook.id] = action.webhook);
+}
+
+WebhookState _setLoadedWebhook(
+    WebhookState webhookState, LoadWebhookSuccess action) {
+  return webhookState
+      .rebuild((b) => b..map[action.webhook.id] = action.webhook);
+}
+
+WebhookState _setLoadedWebhooks(
+        WebhookState webhookState, LoadWebhooksSuccess action) =>
+    webhookState.loadWebhooks(action.webhooks);
+
+WebhookState _setLoadedCompany(
+    WebhookState webhookState, LoadCompanySuccess action) {
+  final company = action.userCompany.company;
+  return company.hasData
+      ? webhookState.loadWebhooks(company.webhooks)
+      : webhookState;
+}

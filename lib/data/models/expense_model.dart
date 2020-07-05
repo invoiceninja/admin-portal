@@ -316,10 +316,12 @@ abstract class ExpenseEntity extends Object
             .compareTo(vendorB.listDisplayName.toLowerCase());
         break;
       case EntityFields.state:
-        final stateA = EntityState.valueOf(expenseA.entityState) ?? EntityState.active;
-        final stateB = EntityState.valueOf(expenseB.entityState) ?? EntityState.active;
-        response = stateA.name.toLowerCase()
-            .compareTo(stateB.name.toLowerCase());
+        final stateA =
+            EntityState.valueOf(expenseA.entityState) ?? EntityState.active;
+        final stateB =
+            EntityState.valueOf(expenseB.entityState) ?? EntityState.active;
+        response =
+            stateA.name.toLowerCase().compareTo(stateB.name.toLowerCase());
         break;
       case ExpenseFields.publicNotes:
         response = expenseA.publicNotes

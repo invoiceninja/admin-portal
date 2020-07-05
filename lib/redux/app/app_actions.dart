@@ -33,6 +33,8 @@ import 'package:invoiceninja_flutter/utils/dialogs.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 
 // STARTER: import - do not remove comment
+import 'package:invoiceninja_flutter/redux/webhook/webhook_actions.dart';
+
 import 'package:invoiceninja_flutter/redux/token/token_actions.dart';
 
 import 'package:invoiceninja_flutter/redux/payment_term/payment_term_actions.dart';
@@ -256,6 +258,10 @@ void viewEntitiesByType({
       action = ViewGroupList(navigator: navigator);
       break;
     // STARTER: view list - do not remove comment
+    case EntityType.webhook:
+      store.dispatch(ViewWebhookList(navigator: navigator));
+      break;
+
     case EntityType.token:
       store.dispatch(ViewTokenList(navigator: navigator));
       break;
@@ -400,6 +406,14 @@ void viewEntityById({
       ));
       break;
     // STARTER: view - do not remove comment
+    case EntityType.webhook:
+      store.dispatch(ViewWebhook(
+        webhookId: entityId,
+        navigator: navigator,
+        force: force,
+      ));
+      break;
+
     case EntityType.token:
       store.dispatch(ViewToken(
         tokenId: entityId,
@@ -546,6 +560,14 @@ void createEntityByType(
       ));
       break;
     // STARTER: create type - do not remove comment
+    case EntityType.webhook:
+      store.dispatch(EditWebhook(
+        navigator: navigator,
+        force: force,
+        webhook: WebhookEntity(state: state),
+      ));
+      break;
+
     case EntityType.token:
       store.dispatch(EditToken(
         navigator: navigator,
@@ -722,6 +744,15 @@ void createEntity({
       ));
       break;
     // STARTER: create - do not remove comment
+    case EntityType.webhook:
+      store.dispatch(EditWebhook(
+        navigator: navigator,
+        webhook: entity,
+        force: force,
+        completer: completer,
+      ));
+      break;
+
     case EntityType.token:
       store.dispatch(EditToken(
         navigator: navigator,
@@ -943,6 +974,19 @@ void editEntityById(
       ));
       break;
     // STARTER: edit - do not remove comment
+    case EntityType.webhook:
+      store.dispatch(EditWebhook(
+        webhook: map[entityId],
+        navigator: navigator,
+        completer: completer ??
+            snackBarCompleter<WebhookEntity>(
+                context,
+                entity.isNew
+                    ? localization.createdWebhook
+                    : localization.updatedWebhook),
+      ));
+      break;
+
     case EntityType.token:
       store.dispatch(EditToken(
         token: map[entityId],
@@ -1072,6 +1116,10 @@ void handleEntitiesActions(
       handleDocumentAction(context, entities, action);
       break;
     // STARTER: actions - do not remove comment
+    case EntityType.webhook:
+      handleWebhookAction(context, entities, action);
+      break;
+
     case EntityType.token:
       handleTokenAction(context, entities, action);
       break;
