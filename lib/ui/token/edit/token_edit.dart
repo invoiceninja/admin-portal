@@ -68,10 +68,10 @@ class _TokenEditState extends State<TokenEdit> {
   Widget build(BuildContext context) {
     final viewModel = widget.viewModel;
     final localization = AppLocalization.of(context);
-    //final token = viewModel.token;
+    final token = viewModel.token;
 
     return EditScaffold(
-      title: localization.editToken,
+      title: token.isNew ? localization.newToken : localization.editToken,
       onCancelPressed: (context) => viewModel.onCancelPressed(context),
       onSavePressed: (context) {
         final bool isValid = _formKey.currentState.validate();

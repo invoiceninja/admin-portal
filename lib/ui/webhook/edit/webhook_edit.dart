@@ -70,10 +70,10 @@ class _WebhookEditState extends State<WebhookEdit> {
   Widget build(BuildContext context) {
     final viewModel = widget.viewModel;
     final localization = AppLocalization.of(context);
-    //final webhook = viewModel.webhook;
+    final webhook = viewModel.webhook;
 
     return EditScaffold(
-      title: localization.editWebhook,
+      title: webhook.isNew ? localization.newWebhook : localization.editWebhook,
       onCancelPressed: (context) => viewModel.onCancelPressed(context),
       onSavePressed: (context) {
         final bool isValid = _formKey.currentState.validate();
