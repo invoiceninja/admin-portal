@@ -27,11 +27,12 @@ class _TokenEditState extends State<TokenEdit> {
   final _nameController = TextEditingController();
 
   List<TextEditingController> _controllers = [];
+  bool _autoValidate = false;
 
   @override
   void didChangeDependencies() {
     _controllers = [
-      // STARTER: array - do not remove comment
+      _nameController,
     ];
 
     _controllers.forEach((controller) => controller.removeListener(_onChanged));
@@ -56,9 +57,8 @@ class _TokenEditState extends State<TokenEdit> {
 
   void _onChanged() {
     _debouncer.run(() {
-      final token = widget.viewModel.token.rebuild((b) => b
-          ..name = _nameController.text.trim()
-          );
+      final token = widget.viewModel.token
+          .rebuild((b) => b..name = _nameController.text.trim());
       if (token != widget.viewModel.token) {
         widget.viewModel.onChanged(token);
       }
@@ -77,11 +77,9 @@ class _TokenEditState extends State<TokenEdit> {
       onSavePressed: (context) {
         final bool isValid = _formKey.currentState.validate();
 
-        /*
-          setState(() {
-            _autoValidate = !isValid;
-          });
-            */
+        setState(() {
+          _autoValidate = !isValid;
+        });
 
         if (!isValid) {
           return;
@@ -99,6 +97,11 @@ class _TokenEditState extends State<TokenEdit> {
                     DecoratedFormField(
                       controller: _nameController,
                       label: localization.name,
+                      autovalidate: _autoValidate,
+                      validator: (value) =>
+                          value.isEmpty || value.trim().isEmpty
+                              ? localization.pleaseEnterAName
+                              : null,
                     ),
                   ],
                 ),
