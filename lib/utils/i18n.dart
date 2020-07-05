@@ -15,6 +15,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
   static final Map<String, Map<String, String>> _localizedValues = {
     'en': {
       // STARTER: lang key - do not remove comment
+      'search_webhooks': 'Search Webhooks',
       'webhook': 'Webhook',
       'webhooks': 'Webhooks',
       'new_webhook': 'New Webhook',
@@ -38215,57 +38216,74 @@ mixin LocalizationsProvider on LocaleCodeAware {
   String get appUpdated => _localizedValues[localeCode]['app_updated'] ?? '';
 
   // STARTER: lang field - do not remove comment
-  String get webhook => _localizedValues[localeCode]['webhook'];
-  String get webhooks => _localizedValues[localeCode]['webhooks'];
-  String get newWebhook => _localizedValues[localeCode]['new_webhook'];
-  String get createdWebhook => _localizedValues[localeCode]['created_webhook'];
-  String get updatedWebhook => _localizedValues[localeCode]['updated_webhook'];
+  String get webhook => _localizedValues[localeCode]['webhook'] ?? '';
+
+  String get webhooks => _localizedValues[localeCode]['webhooks'] ?? '';
+
+  String get newWebhook => _localizedValues[localeCode]['new_webhook'] ?? '';
+
+  String get createdWebhook =>
+      _localizedValues[localeCode]['created_webhook'] ?? '';
+
+  String get updatedWebhook =>
+      _localizedValues[localeCode]['updated_webhook'] ?? '';
+
   String get archivedWebhook =>
-      _localizedValues[localeCode]['archived_webhook'];
-  String get deletedWebhook => _localizedValues[localeCode]['deleted_webhook'];
+      _localizedValues[localeCode]['archived_webhook'] ?? '';
+
+  String get deletedWebhook =>
+      _localizedValues[localeCode]['deleted_webhook'] ?? '';
+
   String get restoredWebhook =>
-      _localizedValues[localeCode]['restored_webhook'];
-  String get editWebhook => _localizedValues[localeCode]['edit_webhook'];
+      _localizedValues[localeCode]['restored_webhook'] ?? '';
 
-  String get token => _localizedValues[localeCode]['token'];
+  String get editWebhook => _localizedValues[localeCode]['edit_webhook'] ?? '';
 
-  String get tokens => _localizedValues[localeCode]['tokens'];
+  String get token => _localizedValues[localeCode]['token'] ?? '';
 
-  String get newToken => _localizedValues[localeCode]['new_token'];
+  String get tokens => _localizedValues[localeCode]['tokens'] ?? '';
 
-  String get createdToken => _localizedValues[localeCode]['created_token'];
+  String get newToken => _localizedValues[localeCode]['new_token'] ?? '';
 
-  String get updatedToken => _localizedValues[localeCode]['updated_token'];
+  String get createdToken =>
+      _localizedValues[localeCode]['created_token'] ?? '';
 
-  String get archivedToken => _localizedValues[localeCode]['archived_token'];
+  String get updatedToken =>
+      _localizedValues[localeCode]['updated_token'] ?? '';
 
-  String get deletedToken => _localizedValues[localeCode]['deleted_token'];
+  String get archivedToken =>
+      _localizedValues[localeCode]['archived_token'] ?? '';
 
-  String get restoredToken => _localizedValues[localeCode]['restored_token'];
+  String get deletedToken =>
+      _localizedValues[localeCode]['deleted_token'] ?? '';
 
-  String get editToken => _localizedValues[localeCode]['edit_token'];
+  String get restoredToken =>
+      _localizedValues[localeCode]['restored_token'] ?? '';
 
-  String get paymentTerm => _localizedValues[localeCode]['payment_term'];
+  String get editToken => _localizedValues[localeCode]['edit_token'] ?? '';
 
-  String get newPaymentTerm => _localizedValues[localeCode]['new_payment_term'];
+  String get paymentTerm => _localizedValues[localeCode]['payment_term'] ?? '';
+
+  String get newPaymentTerm =>
+      _localizedValues[localeCode]['new_payment_term'] ?? '';
 
   String get createdPaymentTerm =>
-      _localizedValues[localeCode]['created_payment_term'];
+      _localizedValues[localeCode]['created_payment_term'] ?? '';
 
   String get updatedPaymentTerm =>
-      _localizedValues[localeCode]['updated_payment_term'];
+      _localizedValues[localeCode]['updated_payment_term'] ?? '';
 
   String get archivedPaymentTerm =>
-      _localizedValues[localeCode]['archived_payment_term'];
+      _localizedValues[localeCode]['archived_payment_term'] ?? '';
 
   String get deletedPaymentTerm =>
-      _localizedValues[localeCode]['deleted_payment_term'];
+      _localizedValues[localeCode]['deleted_payment_term'] ?? '';
 
   String get restoredPaymentTerm =>
-      _localizedValues[localeCode]['restored_payment_term'];
+      _localizedValues[localeCode]['restored_payment_term'] ?? '';
 
   String get editPaymentTerm =>
-      _localizedValues[localeCode]['edit_payment_term'];
+      _localizedValues[localeCode]['edit_payment_term'] ?? '';
 
   String get designs => _localizedValues[localeCode]['designs'] ?? '';
 
@@ -38725,6 +38743,9 @@ mixin LocalizationsProvider on LocaleCodeAware {
 
   String get searchTokens =>
       _localizedValues[localeCode]['search_tokens'] ?? '';
+
+  String get searchWebhooks =>
+      _localizedValues[localeCode]['search_webhooks'] ?? '';
 
   String get manageTokens =>
       _localizedValues[localeCode]['manage_tokens'] ?? '';
