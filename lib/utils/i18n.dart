@@ -15,6 +15,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
   static final Map<String, Map<String, String>> _localizedValues = {
     'en': {
       // STARTER: lang key - do not remove comment
+      'manage_webhooks': 'Manage Webhooks',
       'search_webhooks': 'Search Webhooks',
       'webhook': 'Webhook',
       'webhooks': 'Webhooks',
@@ -26,7 +27,6 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'deleted_webhook': 'Successfully deleted webhook',
       'removed_webhook': 'Successfully removed webhook',
       'restored_webhook': 'Successfully restored webhook',
-
       'manage_tokens': 'Manage Tokens',
       'search_tokens': 'Search Tokens',
       'token': 'Token',
@@ -38749,6 +38749,9 @@ mixin LocalizationsProvider on LocaleCodeAware {
 
   String get manageTokens =>
       _localizedValues[localeCode]['manage_tokens'] ?? '';
+
+  String get manageWebhooks =>
+      _localizedValues[localeCode]['manage_webhooks'] ?? '';
 
   String lookup(String key) {
     final lookupKey = toSnakeCase(key);

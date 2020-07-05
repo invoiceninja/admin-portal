@@ -141,6 +141,19 @@ class _AccountOverview extends StatelessWidget {
             },
           ),
         ),
+        Padding(
+          padding: const EdgeInsets.all(16),
+          child: ElevatedButton(
+            label: localization.manageWebhooks,
+            iconData: getEntityIcon(EntityType.webhook),
+            onPressed: () {
+              store.dispatch(ViewSettings(
+                navigator: Navigator.of(context),
+                section: kSettingsTokens,
+              ));
+            },
+          ),
+        ),
 
         /*
               Padding(
