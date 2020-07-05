@@ -1,0 +1,316 @@
+import 'dart:async';
+import 'package:built_collection/built_collection.dart';
+import 'package:flutter/widgets.dart';
+import 'package:flutter_redux/flutter_redux.dart';
+import 'package:invoiceninja_flutter/data/models/models.dart';
+import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
+import 'package:invoiceninja_flutter/redux/app/app_state.dart';
+import 'package:invoiceninja_flutter/utils/completers.dart';
+import 'package:invoiceninja_flutter/utils/localization.dart';
+
+class ViewTokenList extends AbstractNavigatorAction
+    implements PersistUI, StopLoading {
+  ViewTokenList({
+    @required NavigatorState navigator,
+    this.force = false,
+  }) : super(navigator: navigator);
+
+  final bool force;
+}
+
+class ViewToken extends AbstractNavigatorAction
+    implements PersistUI, PersistPrefs {
+  ViewToken({
+    @required NavigatorState navigator,
+    @required this.tokenId,
+    this.force = false,
+  }) : super(navigator: navigator);
+
+  final String tokenId;
+  final bool force;
+}
+
+class EditToken extends AbstractNavigatorAction
+    implements PersistUI, PersistPrefs {
+  EditToken(
+      {@required this.token,
+      @required NavigatorState navigator,
+      this.completer,
+      this.cancelCompleter,
+      this.force = false})
+      : super(navigator: navigator);
+
+  final TokenEntity token;
+  final Completer completer;
+  final Completer cancelCompleter;
+  final bool force;
+}
+
+class UpdateToken implements PersistUI {
+  UpdateToken(this.token);
+
+  final TokenEntity token;
+}
+
+class LoadToken {
+  LoadToken({this.completer, this.tokenId});
+
+  final Completer completer;
+  final String tokenId;
+}
+
+class LoadTokenActivity {
+  LoadTokenActivity({this.completer, this.tokenId});
+
+  final Completer completer;
+  final String tokenId;
+}
+
+class LoadTokens {
+  LoadTokens({this.completer, this.force = false});
+
+  final Completer completer;
+  final bool force;
+}
+
+class LoadTokenRequest implements StartLoading {}
+
+class LoadTokenFailure implements StopLoading {
+  LoadTokenFailure(this.error);
+
+  final dynamic error;
+
+  @override
+  String toString() {
+    return 'LoadTokenFailure{error: $error}';
+  }
+}
+
+class LoadTokenSuccess implements StopLoading, PersistData {
+  LoadTokenSuccess(this.token);
+
+  final TokenEntity token;
+
+  @override
+  String toString() {
+    return 'LoadTokenSuccess{token: $token}';
+  }
+}
+
+class LoadTokensRequest implements StartLoading {}
+
+class LoadTokensFailure implements StopLoading {
+  LoadTokensFailure(this.error);
+
+  final dynamic error;
+
+  @override
+  String toString() {
+    return 'LoadTokensFailure{error: $error}';
+  }
+}
+
+class LoadTokensSuccess implements StopLoading, PersistData {
+  LoadTokensSuccess(this.tokens);
+
+  final BuiltList<TokenEntity> tokens;
+
+  @override
+  String toString() {
+    return 'LoadTokensSuccess{tokens: $tokens}';
+  }
+}
+
+class SaveTokenRequest implements StartSaving {
+  SaveTokenRequest({this.completer, this.token});
+
+  final Completer completer;
+  final TokenEntity token;
+}
+
+class SaveTokenSuccess implements StopSaving, PersistData, PersistUI {
+  SaveTokenSuccess(this.token);
+
+  final TokenEntity token;
+}
+
+class AddTokenSuccess implements StopSaving, PersistData, PersistUI {
+  AddTokenSuccess(this.token);
+
+  final TokenEntity token;
+}
+
+class SaveTokenFailure implements StopSaving {
+  SaveTokenFailure(this.error);
+
+  final Object error;
+}
+
+class ArchiveTokensRequest implements StartSaving {
+  ArchiveTokensRequest(this.completer, this.tokenIds);
+
+  final Completer completer;
+  final List<String> tokenIds;
+}
+
+class ArchiveTokensSuccess implements StopSaving, PersistData {
+  ArchiveTokensSuccess(this.tokens);
+
+  final List<TokenEntity> tokens;
+}
+
+class ArchiveTokensFailure implements StopSaving {
+  ArchiveTokensFailure(this.tokens);
+
+  final List<TokenEntity> tokens;
+}
+
+class DeleteTokensRequest implements StartSaving {
+  DeleteTokensRequest(this.completer, this.tokenIds);
+
+  final Completer completer;
+  final List<String> tokenIds;
+}
+
+class DeleteTokensSuccess implements StopSaving, PersistData {
+  DeleteTokensSuccess(this.tokens);
+
+  final List<TokenEntity> tokens;
+}
+
+class DeleteTokensFailure implements StopSaving {
+  DeleteTokensFailure(this.tokens);
+
+  final List<TokenEntity> tokens;
+}
+
+class RestoreTokensRequest implements StartSaving {
+  RestoreTokensRequest(this.completer, this.tokenIds);
+
+  final Completer completer;
+  final List<String> tokenIds;
+}
+
+class RestoreTokensSuccess implements StopSaving, PersistData {
+  RestoreTokensSuccess(this.tokens);
+
+  final List<TokenEntity> tokens;
+}
+
+class RestoreTokensFailure implements StopSaving {
+  RestoreTokensFailure(this.tokens);
+
+  final List<TokenEntity> tokens;
+}
+
+class FilterTokens implements PersistUI {
+  FilterTokens(this.filter);
+
+  final String filter;
+}
+
+class SortTokens implements PersistUI {
+  SortTokens(this.field);
+
+  final String field;
+}
+
+class FilterTokensByState implements PersistUI {
+  FilterTokensByState(this.state);
+
+  final EntityState state;
+}
+
+class FilterTokensByCustom1 implements PersistUI {
+  FilterTokensByCustom1(this.value);
+
+  final String value;
+}
+
+class FilterTokensByCustom2 implements PersistUI {
+  FilterTokensByCustom2(this.value);
+
+  final String value;
+}
+
+class FilterTokensByCustom3 implements PersistUI {
+  FilterTokensByCustom3(this.value);
+
+  final String value;
+}
+
+class FilterTokensByCustom4 implements PersistUI {
+  FilterTokensByCustom4(this.value);
+
+  final String value;
+}
+
+void handleTokenAction(
+    BuildContext context, List<BaseEntity> tokens, EntityAction action) {
+  if (tokens.isEmpty) {
+    return;
+  }
+
+  final store = StoreProvider.of<AppState>(context);
+  final localization = AppLocalization.of(context);
+  final token = tokens.first as TokenEntity;
+  final tokenIds = tokens.map((token) => token.id).toList();
+
+  switch (action) {
+    case EntityAction.edit:
+      editEntity(context: context, entity: token);
+      break;
+    case EntityAction.restore:
+      store.dispatch(RestoreTokensRequest(
+          snackBarCompleter<Null>(context, localization.restoredToken),
+          tokenIds));
+      break;
+    case EntityAction.archive:
+      store.dispatch(ArchiveTokensRequest(
+          snackBarCompleter<Null>(context, localization.archivedToken),
+          tokenIds));
+      break;
+    case EntityAction.delete:
+      store.dispatch(DeleteTokensRequest(
+          snackBarCompleter<Null>(context, localization.deletedToken),
+          tokenIds));
+      break;
+    case EntityAction.toggleMultiselect:
+      if (!store.state.tokenListState.isInMultiselect()) {
+        store.dispatch(StartTokenMultiselect());
+      }
+
+      if (tokens.isEmpty) {
+        break;
+      }
+
+      for (final token in tokens) {
+        if (!store.state.tokenListState.isSelected(token.id)) {
+          store.dispatch(AddToTokenMultiselect(entity: token));
+        } else {
+          store.dispatch(RemoveFromTokenMultiselect(entity: token));
+        }
+      }
+      break;
+  }
+}
+
+class StartTokenMultiselect {
+  StartTokenMultiselect();
+}
+
+class AddToTokenMultiselect {
+  AddToTokenMultiselect({@required this.entity});
+
+  final BaseEntity entity;
+}
+
+class RemoveFromTokenMultiselect {
+  RemoveFromTokenMultiselect({@required this.entity});
+
+  final BaseEntity entity;
+}
+
+class ClearTokenMultiselect {
+  ClearTokenMultiselect();
+}

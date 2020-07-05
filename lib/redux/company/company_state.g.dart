@@ -52,6 +52,9 @@ class _$UserCompanyStateSerializer
       'quoteState',
       serializers.serialize(object.quoteState,
           specifiedType: const FullType(QuoteState)),
+      'tokenState',
+      serializers.serialize(object.tokenState,
+          specifiedType: const FullType(TokenState)),
       'paymentTermState',
       serializers.serialize(object.paymentTermState,
           specifiedType: const FullType(PaymentTermState)),
@@ -139,6 +142,10 @@ class _$UserCompanyStateSerializer
         case 'quoteState':
           result.quoteState.replace(serializers.deserialize(value,
               specifiedType: const FullType(QuoteState)) as QuoteState);
+          break;
+        case 'tokenState':
+          result.tokenState.replace(serializers.deserialize(value,
+              specifiedType: const FullType(TokenState)) as TokenState);
           break;
         case 'paymentTermState':
           result.paymentTermState.replace(serializers.deserialize(value,
@@ -336,6 +343,8 @@ class _$UserCompanyState extends UserCompanyState {
   @override
   final QuoteState quoteState;
   @override
+  final TokenState tokenState;
+  @override
   final PaymentTermState paymentTermState;
   @override
   final DesignState designState;
@@ -366,6 +375,7 @@ class _$UserCompanyState extends UserCompanyState {
       this.projectState,
       this.paymentState,
       this.quoteState,
+      this.tokenState,
       this.paymentTermState,
       this.designState,
       this.creditState,
@@ -403,6 +413,9 @@ class _$UserCompanyState extends UserCompanyState {
     }
     if (quoteState == null) {
       throw new BuiltValueNullFieldError('UserCompanyState', 'quoteState');
+    }
+    if (tokenState == null) {
+      throw new BuiltValueNullFieldError('UserCompanyState', 'tokenState');
     }
     if (paymentTermState == null) {
       throw new BuiltValueNullFieldError(
@@ -452,6 +465,7 @@ class _$UserCompanyState extends UserCompanyState {
         projectState == other.projectState &&
         paymentState == other.paymentState &&
         quoteState == other.quoteState &&
+        tokenState == other.tokenState &&
         paymentTermState == other.paymentTermState &&
         designState == other.designState &&
         creditState == other.creditState &&
@@ -482,23 +496,26 @@ class _$UserCompanyState extends UserCompanyState {
                                                                 $jc(
                                                                     $jc(
                                                                         $jc(
-                                                                            0,
-                                                                            userCompany
+                                                                            $jc(
+                                                                                0,
+                                                                                userCompany
+                                                                                    .hashCode),
+                                                                            documentState
                                                                                 .hashCode),
-                                                                        documentState
+                                                                        productState
                                                                             .hashCode),
-                                                                    productState
+                                                                    clientState
                                                                         .hashCode),
-                                                                clientState
+                                                                invoiceState
                                                                     .hashCode),
-                                                            invoiceState
+                                                            expenseState
                                                                 .hashCode),
-                                                        expenseState.hashCode),
-                                                    vendorState.hashCode),
-                                                taskState.hashCode),
-                                            projectState.hashCode),
-                                        paymentState.hashCode),
-                                    quoteState.hashCode),
+                                                        vendorState.hashCode),
+                                                    taskState.hashCode),
+                                                projectState.hashCode),
+                                            paymentState.hashCode),
+                                        quoteState.hashCode),
+                                    tokenState.hashCode),
                                 paymentTermState.hashCode),
                             designState.hashCode),
                         creditState.hashCode),
@@ -522,6 +539,7 @@ class _$UserCompanyState extends UserCompanyState {
           ..add('projectState', projectState)
           ..add('paymentState', paymentState)
           ..add('quoteState', quoteState)
+          ..add('tokenState', tokenState)
           ..add('paymentTermState', paymentTermState)
           ..add('designState', designState)
           ..add('creditState', creditState)
@@ -602,6 +620,12 @@ class UserCompanyStateBuilder
   set quoteState(QuoteStateBuilder quoteState) =>
       _$this._quoteState = quoteState;
 
+  TokenStateBuilder _tokenState;
+  TokenStateBuilder get tokenState =>
+      _$this._tokenState ??= new TokenStateBuilder();
+  set tokenState(TokenStateBuilder tokenState) =>
+      _$this._tokenState = tokenState;
+
   PaymentTermStateBuilder _paymentTermState;
   PaymentTermStateBuilder get paymentTermState =>
       _$this._paymentTermState ??= new PaymentTermStateBuilder();
@@ -658,6 +682,7 @@ class UserCompanyStateBuilder
       _projectState = _$v.projectState?.toBuilder();
       _paymentState = _$v.paymentState?.toBuilder();
       _quoteState = _$v.quoteState?.toBuilder();
+      _tokenState = _$v.tokenState?.toBuilder();
       _paymentTermState = _$v.paymentTermState?.toBuilder();
       _designState = _$v.designState?.toBuilder();
       _creditState = _$v.creditState?.toBuilder();
@@ -700,6 +725,7 @@ class UserCompanyStateBuilder
               projectState: projectState.build(),
               paymentState: paymentState.build(),
               quoteState: quoteState.build(),
+              tokenState: tokenState.build(),
               paymentTermState: paymentTermState.build(),
               designState: designState.build(),
               creditState: creditState.build(),
@@ -732,6 +758,8 @@ class UserCompanyStateBuilder
         paymentState.build();
         _$failedField = 'quoteState';
         quoteState.build();
+        _$failedField = 'tokenState';
+        tokenState.build();
         _$failedField = 'paymentTermState';
         paymentTermState.build();
         _$failedField = 'designState';

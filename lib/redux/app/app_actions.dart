@@ -33,6 +33,8 @@ import 'package:invoiceninja_flutter/utils/dialogs.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 
 // STARTER: import - do not remove comment
+import 'package:invoiceninja_flutter/redux/token/token_actions.dart';
+
 import 'package:invoiceninja_flutter/redux/payment_term/payment_term_actions.dart';
 import 'package:invoiceninja_flutter/utils/platforms.dart';
 
@@ -254,6 +256,10 @@ void viewEntitiesByType({
       action = ViewGroupList(navigator: navigator);
       break;
     // STARTER: view list - do not remove comment
+    case EntityType.token:
+      store.dispatch(ViewTokenList(navigator: navigator));
+      break;
+
     case EntityType.paymentTerm:
       store.dispatch(ViewPaymentTermList(navigator: navigator));
       break;
@@ -394,6 +400,14 @@ void viewEntityById({
       ));
       break;
     // STARTER: view - do not remove comment
+    case EntityType.token:
+      store.dispatch(ViewToken(
+        tokenId: entityId,
+        navigator: navigator,
+        force: force,
+      ));
+      break;
+
     case EntityType.paymentTerm:
       store.dispatch(ViewPaymentTerm(
         paymentTermId: entityId,
@@ -532,6 +546,14 @@ void createEntityByType(
       ));
       break;
     // STARTER: create type - do not remove comment
+    case EntityType.token:
+      store.dispatch(EditToken(
+        navigator: navigator,
+        force: force,
+        token: TokenEntity(state: state),
+      ));
+      break;
+
     case EntityType.paymentTerm:
       store.dispatch(EditPaymentTerm(
         navigator: navigator,
@@ -700,6 +722,15 @@ void createEntity({
       ));
       break;
     // STARTER: create - do not remove comment
+    case EntityType.token:
+      store.dispatch(EditToken(
+        navigator: navigator,
+        token: entity,
+        force: force,
+        completer: completer,
+      ));
+      break;
+
     case EntityType.paymentTerm:
       store.dispatch(EditPaymentTerm(
         navigator: navigator,
@@ -912,6 +943,19 @@ void editEntityById(
       ));
       break;
     // STARTER: edit - do not remove comment
+    case EntityType.token:
+      store.dispatch(EditToken(
+        token: map[entityId],
+        navigator: navigator,
+        completer: completer ??
+            snackBarCompleter<TokenEntity>(
+                context,
+                entity.isNew
+                    ? localization.createdToken
+                    : localization.updatedToken),
+      ));
+      break;
+
     case EntityType.paymentTerm:
       store.dispatch(EditPaymentTerm(
         paymentTerm: map[entityId],
@@ -1028,6 +1072,10 @@ void handleEntitiesActions(
       handleDocumentAction(context, entities, action);
       break;
     // STARTER: actions - do not remove comment
+    case EntityType.token:
+      handleTokenAction(context, entities, action);
+      break;
+
     case EntityType.paymentTerm:
       handlePaymentTermAction(context, entities, action);
       break;

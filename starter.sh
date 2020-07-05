@@ -107,7 +107,6 @@ if [ ${action} = "init" ]; then
         './stubs/ui/stub/view/stub_view_vm'
         './stubs/ui/stub/stub_list_item'
         './stubs/ui/stub/stub_list_vm'
-        './stubs/ui/stub/stub_list'
         './stubs/ui/stub/stub_screen')
 
     for i in "${files[@]}"
@@ -167,7 +166,6 @@ else
        './stubs/ui/stub/view/stub_view_vm'
        './stubs/ui/stub/stub_list_item'
        './stubs/ui/stub/stub_list_vm'
-       './stubs/ui/stub/stub_list'
        './stubs/ui/stub/stub_presenter'
        './stubs/ui/stub/stub_screen'
        './stubs/ui/stub/stub_screen_vm')

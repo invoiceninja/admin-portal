@@ -16,7 +16,6 @@ Serializer<UserSettingsEntity> _$userSettingsEntitySerializer =
     new _$UserSettingsEntitySerializer();
 Serializer<ReportSettingsEntity> _$reportSettingsEntitySerializer =
     new _$ReportSettingsEntitySerializer();
-Serializer<TokenEntity> _$tokenEntitySerializer = new _$TokenEntitySerializer();
 Serializer<SettingsEntity> _$settingsEntitySerializer =
     new _$SettingsEntitySerializer();
 Serializer<CompanyItemResponse> _$companyItemResponseSerializer =
@@ -182,6 +181,10 @@ class _$CompanyEntitySerializer implements StructuredSerializer<CompanyEntity> {
       serializers.serialize(object.designs,
           specifiedType:
               const FullType(BuiltList, const [const FullType(DesignEntity)])),
+      'tokens',
+      serializers.serialize(object.tokens,
+          specifiedType:
+              const FullType(BuiltList, const [const FullType(TokenEntity)])),
       'payment_terms',
       serializers.serialize(object.paymentTerms,
           specifiedType: const FullType(
@@ -484,6 +487,12 @@ class _$CompanyEntitySerializer implements StructuredSerializer<CompanyEntity> {
           result.designs.replace(serializers.deserialize(value,
                   specifiedType: const FullType(
                       BuiltList, const [const FullType(DesignEntity)]))
+              as BuiltList<Object>);
+          break;
+        case 'tokens':
+          result.tokens.replace(serializers.deserialize(value,
+                  specifiedType: const FullType(
+                      BuiltList, const [const FullType(TokenEntity)]))
               as BuiltList<Object>);
           break;
         case 'payment_terms':
@@ -906,52 +915,6 @@ class _$ReportSettingsEntitySerializer
                   specifiedType:
                       const FullType(BuiltList, const [const FullType(String)]))
               as BuiltList<Object>);
-          break;
-      }
-    }
-
-    return result.build();
-  }
-}
-
-class _$TokenEntitySerializer implements StructuredSerializer<TokenEntity> {
-  @override
-  final Iterable<Type> types = const [TokenEntity, _$TokenEntity];
-  @override
-  final String wireName = 'TokenEntity';
-
-  @override
-  Iterable<Object> serialize(Serializers serializers, TokenEntity object,
-      {FullType specifiedType = FullType.unspecified}) {
-    final result = <Object>[
-      'token',
-      serializers.serialize(object.token,
-          specifiedType: const FullType(String)),
-      'name',
-      serializers.serialize(object.name, specifiedType: const FullType(String)),
-    ];
-
-    return result;
-  }
-
-  @override
-  TokenEntity deserialize(Serializers serializers, Iterable<Object> serialized,
-      {FullType specifiedType = FullType.unspecified}) {
-    final result = new TokenEntityBuilder();
-
-    final iterator = serialized.iterator;
-    while (iterator.moveNext()) {
-      final key = iterator.current as String;
-      iterator.moveNext();
-      final dynamic value = iterator.current;
-      switch (key) {
-        case 'token':
-          result.token = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String;
-          break;
-        case 'name':
-          result.name = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String;
           break;
       }
     }
@@ -2738,6 +2701,8 @@ class _$CompanyEntity extends CompanyEntity {
   @override
   final BuiltList<DesignEntity> designs;
   @override
+  final BuiltList<TokenEntity> tokens;
+  @override
   final BuiltList<PaymentTermEntity> paymentTerms;
   @override
   final BuiltMap<String, UserEntity> userMap;
@@ -2817,6 +2782,7 @@ class _$CompanyEntity extends CompanyEntity {
       this.expenses,
       this.vendors,
       this.designs,
+      this.tokens,
       this.paymentTerms,
       this.userMap,
       this.customFields,
@@ -2968,6 +2934,9 @@ class _$CompanyEntity extends CompanyEntity {
     if (designs == null) {
       throw new BuiltValueNullFieldError('CompanyEntity', 'designs');
     }
+    if (tokens == null) {
+      throw new BuiltValueNullFieldError('CompanyEntity', 'tokens');
+    }
     if (paymentTerms == null) {
       throw new BuiltValueNullFieldError('CompanyEntity', 'paymentTerms');
     }
@@ -3054,6 +3023,7 @@ class _$CompanyEntity extends CompanyEntity {
         expenses == other.expenses &&
         vendors == other.vendors &&
         designs == other.designs &&
+        tokens == other.tokens &&
         paymentTerms == other.paymentTerms &&
         userMap == other.userMap &&
         customFields == other.customFields &&
@@ -3093,10 +3063,10 @@ class _$CompanyEntity extends CompanyEntity {
                                                                 $jc(
                                                                     $jc(
                                                                         $jc(
-                                                                            $jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc(0, enableCustomSurchargeTaxes1.hashCode), enableCustomSurchargeTaxes2.hashCode), enableCustomSurchargeTaxes3.hashCode), enableCustomSurchargeTaxes4.hashCode), sizeId.hashCode), industryId.hashCode), subdomain.hashCode), portalMode.hashCode), portalDomain.hashCode), updateProducts.hashCode), convertProductExchangeRate.hashCode), fillProducts.hashCode), enableProductCost.hashCode), enableProductQuantity.hashCode), defaultQuantity.hashCode), showProductDetails.hashCode), clientCanRegister.hashCode), plan.hashCode), companyKey.hashCode), firstDayOfWeek.hashCode), firstMonthOfYear.hashCode), numberOfInvoiceTaxRates.hashCode), numberOfItemTaxRates.hashCode), groups.hashCode), activities.hashCode), taxRates.hashCode), taskStatuses.hashCode), taskStatusMap.hashCode), companyGateways.hashCode), expenseCategories.hashCode), expenseCategoryMap.hashCode), users.hashCode), clients.hashCode), products.hashCode), invoices.hashCode), payments.hashCode), quotes.hashCode), credits.hashCode), tasks.hashCode), projects.hashCode),
-                                                                                expenses.hashCode),
-                                                                            vendors.hashCode),
-                                                                        designs.hashCode),
+                                                                            $jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc(0, enableCustomSurchargeTaxes1.hashCode), enableCustomSurchargeTaxes2.hashCode), enableCustomSurchargeTaxes3.hashCode), enableCustomSurchargeTaxes4.hashCode), sizeId.hashCode), industryId.hashCode), subdomain.hashCode), portalMode.hashCode), portalDomain.hashCode), updateProducts.hashCode), convertProductExchangeRate.hashCode), fillProducts.hashCode), enableProductCost.hashCode), enableProductQuantity.hashCode), defaultQuantity.hashCode), showProductDetails.hashCode), clientCanRegister.hashCode), plan.hashCode), companyKey.hashCode), firstDayOfWeek.hashCode), firstMonthOfYear.hashCode), numberOfInvoiceTaxRates.hashCode), numberOfItemTaxRates.hashCode), groups.hashCode), activities.hashCode), taxRates.hashCode), taskStatuses.hashCode), taskStatusMap.hashCode), companyGateways.hashCode), expenseCategories.hashCode), expenseCategoryMap.hashCode), users.hashCode), clients.hashCode), products.hashCode), invoices.hashCode), payments.hashCode), quotes.hashCode), credits.hashCode), tasks.hashCode), projects.hashCode), expenses.hashCode),
+                                                                                vendors.hashCode),
+                                                                            designs.hashCode),
+                                                                        tokens.hashCode),
                                                                     paymentTerms.hashCode),
                                                                 userMap.hashCode),
                                                             customFields.hashCode),
@@ -3161,6 +3131,7 @@ class _$CompanyEntity extends CompanyEntity {
           ..add('expenses', expenses)
           ..add('vendors', vendors)
           ..add('designs', designs)
+          ..add('tokens', tokens)
           ..add('paymentTerms', paymentTerms)
           ..add('userMap', userMap)
           ..add('customFields', customFields)
@@ -3406,6 +3377,11 @@ class CompanyEntityBuilder
       _$this._designs ??= new ListBuilder<DesignEntity>();
   set designs(ListBuilder<DesignEntity> designs) => _$this._designs = designs;
 
+  ListBuilder<TokenEntity> _tokens;
+  ListBuilder<TokenEntity> get tokens =>
+      _$this._tokens ??= new ListBuilder<TokenEntity>();
+  set tokens(ListBuilder<TokenEntity> tokens) => _$this._tokens = tokens;
+
   ListBuilder<PaymentTermEntity> _paymentTerms;
   ListBuilder<PaymentTermEntity> get paymentTerms =>
       _$this._paymentTerms ??= new ListBuilder<PaymentTermEntity>();
@@ -3529,6 +3505,7 @@ class CompanyEntityBuilder
       _expenses = _$v.expenses?.toBuilder();
       _vendors = _$v.vendors?.toBuilder();
       _designs = _$v.designs?.toBuilder();
+      _tokens = _$v.tokens?.toBuilder();
       _paymentTerms = _$v.paymentTerms?.toBuilder();
       _userMap = _$v.userMap?.toBuilder();
       _customFields = _$v.customFields?.toBuilder();
@@ -3612,6 +3589,7 @@ class CompanyEntityBuilder
               expenses: expenses.build(),
               vendors: vendors.build(),
               designs: designs.build(),
+              tokens: tokens.build(),
               paymentTerms: paymentTerms.build(),
               userMap: userMap.build(),
               customFields: customFields.build(),
@@ -3671,6 +3649,8 @@ class CompanyEntityBuilder
         vendors.build();
         _$failedField = 'designs';
         designs.build();
+        _$failedField = 'tokens';
+        tokens.build();
         _$failedField = 'paymentTerms';
         paymentTerms.build();
         _$failedField = 'userMap';
@@ -4331,95 +4311,6 @@ class ReportSettingsEntityBuilder
       }
       rethrow;
     }
-    replace(_$result);
-    return _$result;
-  }
-}
-
-class _$TokenEntity extends TokenEntity {
-  @override
-  final String token;
-  @override
-  final String name;
-
-  factory _$TokenEntity([void Function(TokenEntityBuilder) updates]) =>
-      (new TokenEntityBuilder()..update(updates)).build();
-
-  _$TokenEntity._({this.token, this.name}) : super._() {
-    if (token == null) {
-      throw new BuiltValueNullFieldError('TokenEntity', 'token');
-    }
-    if (name == null) {
-      throw new BuiltValueNullFieldError('TokenEntity', 'name');
-    }
-  }
-
-  @override
-  TokenEntity rebuild(void Function(TokenEntityBuilder) updates) =>
-      (toBuilder()..update(updates)).build();
-
-  @override
-  TokenEntityBuilder toBuilder() => new TokenEntityBuilder()..replace(this);
-
-  @override
-  bool operator ==(Object other) {
-    if (identical(other, this)) return true;
-    return other is TokenEntity && token == other.token && name == other.name;
-  }
-
-  int __hashCode;
-  @override
-  int get hashCode {
-    return __hashCode ??= $jf($jc($jc(0, token.hashCode), name.hashCode));
-  }
-
-  @override
-  String toString() {
-    return (newBuiltValueToStringHelper('TokenEntity')
-          ..add('token', token)
-          ..add('name', name))
-        .toString();
-  }
-}
-
-class TokenEntityBuilder implements Builder<TokenEntity, TokenEntityBuilder> {
-  _$TokenEntity _$v;
-
-  String _token;
-  String get token => _$this._token;
-  set token(String token) => _$this._token = token;
-
-  String _name;
-  String get name => _$this._name;
-  set name(String name) => _$this._name = name;
-
-  TokenEntityBuilder();
-
-  TokenEntityBuilder get _$this {
-    if (_$v != null) {
-      _token = _$v.token;
-      _name = _$v.name;
-      _$v = null;
-    }
-    return this;
-  }
-
-  @override
-  void replace(TokenEntity other) {
-    if (other == null) {
-      throw new ArgumentError.notNull('other');
-    }
-    _$v = other as _$TokenEntity;
-  }
-
-  @override
-  void update(void Function(TokenEntityBuilder) updates) {
-    if (updates != null) updates(this);
-  }
-
-  @override
-  _$TokenEntity build() {
-    final _$result = _$v ?? new _$TokenEntity._(token: token, name: name);
     replace(_$result);
     return _$result;
   }

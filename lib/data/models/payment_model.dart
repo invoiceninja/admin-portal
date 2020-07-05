@@ -283,10 +283,12 @@ abstract class PaymentEntity extends Object
             .compareTo(userB.listDisplayName.toLowerCase());
         break;
       case EntityFields.state:
-        final stateA = EntityState.valueOf(paymentA.entityState) ?? EntityState.active;
-        final stateB = EntityState.valueOf(paymentB.entityState) ?? EntityState.active;
-        response = stateA.name.toLowerCase()
-            .compareTo(stateB.name.toLowerCase());
+        final stateA =
+            EntityState.valueOf(paymentA.entityState) ?? EntityState.active;
+        final stateB =
+            EntityState.valueOf(paymentB.entityState) ?? EntityState.active;
+        response =
+            stateA.name.toLowerCase().compareTo(stateB.name.toLowerCase());
         break;
       default:
         print('## ERROR: sort by payment.$sortField is not implemented');

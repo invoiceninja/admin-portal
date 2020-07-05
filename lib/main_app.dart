@@ -50,6 +50,10 @@ import 'package:invoiceninja_flutter/utils/platforms.dart';
 import 'package:local_auth/local_auth.dart';
 import 'package:redux/redux.dart';
 // STARTER: import - do not remove comment
+import 'package:invoiceninja_flutter/ui/token/token_screen.dart';
+import 'package:invoiceninja_flutter/ui/token/edit/token_edit_vm.dart';
+import 'package:invoiceninja_flutter/ui/token/view/token_view_vm.dart';
+import 'package:invoiceninja_flutter/ui/token/token_screen_vm.dart';
 
 class InvoiceNinjaApp extends StatefulWidget {
   const InvoiceNinjaApp({Key key, this.store}) : super(key: key);
@@ -250,6 +254,10 @@ class InvoiceNinjaAppState extends State<InvoiceNinjaApp> {
                   QuoteEditScreen.route: (context) => QuoteEditScreen(),
                   QuoteEmailScreen.route: (context) => QuoteEmailScreen(),
                   // STARTER: routes - do not remove comment
+                  TokenScreen.route: (context) => TokenScreenBuilder(),
+                  TokenViewScreen.route: (context) => TokenViewScreen(),
+                  TokenEditScreen.route: (context) => TokenEditScreen(),
+
                   PaymentTermScreen.route: (context) =>
                       PaymentTermScreenBuilder(),
                   PaymentTermEditScreen.route: (context) =>

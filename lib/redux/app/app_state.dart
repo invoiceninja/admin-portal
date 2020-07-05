@@ -45,8 +45,10 @@ import 'package:invoiceninja_flutter/ui/credit/edit/credit_edit_vm.dart';
 import 'package:invoiceninja_flutter/ui/design/edit/design_edit_vm.dart';
 import 'package:invoiceninja_flutter/ui/group/edit/group_edit_vm.dart';
 import 'package:invoiceninja_flutter/ui/product/edit/product_edit_vm.dart';
-
 // STARTER: import - do not remove comment
+import 'package:invoiceninja_flutter/redux/token/token_state.dart';
+import 'package:invoiceninja_flutter/ui/token/edit/token_edit_vm.dart';
+import 'package:invoiceninja_flutter/redux/token/token_selectors.dart';
 import 'package:invoiceninja_flutter/redux/payment_term/payment_term_state.dart';
 import 'package:invoiceninja_flutter/ui/payment_term/edit/payment_term_edit_vm.dart';
 import 'package:invoiceninja_flutter/redux/payment_term/payment_term_selectors.dart';
@@ -208,6 +210,9 @@ abstract class AppState implements Built<AppState, AppStateBuilder> {
       case EntityType.invoice:
         return invoiceState.map;
       // STARTER: states switch map - do not remove comment
+      case EntityType.token:
+        return tokenState.map;
+
       case EntityType.paymentTerm:
         return paymentTermState.map;
 
@@ -274,6 +279,9 @@ abstract class AppState implements Built<AppState, AppStateBuilder> {
       case EntityType.invoice:
         return invoiceState.list;
       // STARTER: states switch list - do not remove comment
+      case EntityType.token:
+        return tokenState.list;
+
       case EntityType.paymentTerm:
         return paymentTermState.list;
 
@@ -319,6 +327,9 @@ abstract class AppState implements Built<AppState, AppStateBuilder> {
       case EntityType.invoice:
         return invoiceUIState;
       // STARTER: states switch - do not remove comment
+      case EntityType.token:
+        return tokenUIState;
+
       case EntityType.paymentTerm:
         return paymentTermUIState;
 
@@ -376,6 +387,10 @@ abstract class AppState implements Built<AppState, AppStateBuilder> {
   ListUIState get invoiceListState => uiState.invoiceUIState.listUIState;
 
   // STARTER: state getters - do not remove comment
+  TokenState get tokenState => userCompanyState.tokenState;
+  ListUIState get tokenListState => uiState.tokenUIState.listUIState;
+  TokenUIState get tokenUIState => uiState.tokenUIState;
+
   PaymentTermState get paymentTermState => userCompanyState.paymentTermState;
 
   ListUIState get paymentTermListState =>
@@ -496,6 +511,9 @@ abstract class AppState implements Built<AppState, AppStateBuilder> {
       case CreditEditScreen.route:
         return hasCreditChanges(creditUIState.editing, creditState.map);
       // STARTER: has changes - do not remove comment
+      case TokenEditScreen.route:
+        return hasTokenChanges(tokenUIState.editing, tokenState.map);
+
       case PaymentTermEditScreen.route:
         return hasPaymentTermChanges(
             paymentTermUIState.editing, paymentTermState.map);

@@ -39,7 +39,7 @@ List<String> filteredStubsSelector(BuiltMap<String, StubEntity> stubMap,
   final list = stubList.where((stubId) {
     final stub = stubMap[stubId];
     if (stubListState.filterEntityId != null &&
-        stub.entityId != stubListState.filterEntityId) {
+        stub.id != stubListState.filterEntityId) {
       return false;
     } else {
 

@@ -79,7 +79,8 @@ class CompanyGatewayViewVM {
         store.dispatch(UpdateCurrentRoute(CompanyGatewayScreen.route));
       },
       onEntityAction: (BuildContext context, EntityAction action) =>
-          handleEntitiesActions(context, [companyGateway], action, autoPop: true),
+          handleEntitiesActions(context, [companyGateway], action,
+              autoPop: true),
     );
   }
 

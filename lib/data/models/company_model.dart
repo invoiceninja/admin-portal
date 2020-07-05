@@ -98,6 +98,7 @@ abstract class CompanyEntity extends Object
       vendors: BuiltList<VendorEntity>(),
       designs: BuiltList<DesignEntity>(),
       paymentTerms: BuiltList<PaymentTermEntity>(),
+      tokens: BuiltList<TokenEntity>(),
     );
   }
 
@@ -220,6 +221,8 @@ abstract class CompanyEntity extends Object
   BuiltList<VendorEntity> get vendors;
 
   BuiltList<DesignEntity> get designs;
+
+  BuiltList<TokenEntity> get tokens;
 
   @BuiltValueField(wireName: 'payment_terms')
   BuiltList<PaymentTermEntity> get paymentTerms;
@@ -664,37 +667,6 @@ abstract class ReportSettingsEntity
 
   static Serializer<ReportSettingsEntity> get serializer =>
       _$reportSettingsEntitySerializer;
-}
-
-abstract class TokenEntity implements Built<TokenEntity, TokenEntityBuilder> {
-  factory TokenEntity() {
-    return _$TokenEntity._(
-      token: '',
-      name: '',
-    );
-  }
-
-  TokenEntity._();
-
-  @override
-  @memoized
-  int get hashCode;
-
-  String get token;
-
-  String get name;
-
-  String get obscuredToken => base64Encode(utf8.encode(token));
-
-  static String unobscureToken(String value) {
-    if (value == null || value.isEmpty) {
-      return null;
-    }
-
-    return utf8.decode(base64Decode(value));
-  }
-
-  static Serializer<TokenEntity> get serializer => _$tokenEntitySerializer;
 }
 
 abstract class SettingsEntity

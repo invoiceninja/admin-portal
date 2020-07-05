@@ -26,6 +26,9 @@ Reducer<String> selectedIdReducer = combineReducers([
       TypedReducer<String, DeleteStubsSuccess>((selectedId, action) => ''),
       TypedReducer<String, ArchiveStubsSuccess>((selectedId, action) => ''),
   TypedReducer<String, ClearEntityFilter>((selectedId, action) => ''),
+  TypedReducer<String, FilterByEntity>((selectedId, action) =>
+        action.entityType == EntityType.stub ? action.entityId : selectedId),
+
 ]);
 
 final editingReducer = combineReducers<StubEntity>([
@@ -75,13 +78,6 @@ final stubListReducer = combineReducers<ListUIState>([
           ..filterEntityType = null)),
 
 ]);
-
-ListUIState _filterStubsByClient(
-    ListUIState stubListState, FilterStubsByEntity action) {
-  return stubListState.rebuild((b) => b
-  ..filterEntityId = action.entityId
-  ..filterEntityType = action.entityType);
-}
 
 ListUIState _filterStubsByCustom1(
     ListUIState stubListState, FilterStubsByCustom1 action) {

@@ -1,32 +1,33 @@
 import 'dart:async';
-import 'package:invoiceninja_flutter/ui/app/snackbar_row.dart';
+import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:invoiceninja_flutter/redux/ui/ui_actions.dart';
 import 'package:invoiceninja_flutter/utils/completers.dart';
-import 'package:invoiceninja_flutter/ui/stub/stub_screen.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:redux/redux.dart';
 import 'package:flutter_redux/flutter_redux.dart';
-import 'package:invoiceninja_flutter/redux/stub/stub_actions.dart';
-import 'package:invoiceninja_flutter/data/models/stub_model.dart';
+import 'package:invoiceninja_flutter/redux/token/token_actions.dart';
+import 'package:invoiceninja_flutter/data/models/token_model.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
-import 'package:invoiceninja_flutter/ui/stub/view/stub_view.dart';
+import 'package:invoiceninja_flutter/ui/token/view/token_view.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 
-class StubViewScreen extends StatelessWidget {
-  const StubViewScreen({Key key, this.isFilter = false,}) : super(key: key);
-  static const String route = '/stub/view';
+class TokenViewScreen extends StatelessWidget {
+  const TokenViewScreen({
+    Key key,
+    this.isFilter = false,
+  }) : super(key: key);
+  static const String route = '/token/view';
   final bool isFilter;
 
   @override
   Widget build(BuildContext context) {
-    return StoreConnector<AppState, StubViewVM>(
+    return StoreConnector<AppState, TokenViewVM>(
       converter: (Store<AppState> store) {
-        return StubViewVM.fromStore(store);
+        return TokenViewVM.fromStore(store);
       },
       builder: (context, vm) {
-        return StubView(
+        return TokenView(
           viewModel: vm,
           isFilter: isFilter,
         );
@@ -35,11 +36,10 @@ class StubViewScreen extends StatelessWidget {
   }
 }
 
-class StubViewVM {
-
-  StubViewVM({
+class TokenViewVM {
+  TokenViewVM({
     @required this.state,
-    @required this.stub,
+    @required this.token,
     @required this.company,
     @required this.onEntityAction,
     @required this.onRefreshed,
@@ -48,33 +48,33 @@ class StubViewVM {
     @required this.isDirty,
   });
 
-  factory StubViewVM.fromStore(Store<AppState> store) {
+  factory TokenViewVM.fromStore(Store<AppState> store) {
     final state = store.state;
-    final stub = state.stubState.map[state.stubUIState.selectedId] ??
-        StubEntity(id: state.stubUIState.selectedId);
+    final token = state.tokenState.map[state.tokenUIState.selectedId] ??
+        TokenEntity(id: state.tokenUIState.selectedId);
 
     Future<Null> _handleRefresh(BuildContext context) {
       final completer = snackBarCompleter<Null>(
           context, AppLocalization.of(context).refreshComplete);
-      store.dispatch(LoadStub(completer: completer, stubId: stub.id));
+      store.dispatch(LoadToken(completer: completer, tokenId: token.id));
       return completer.future;
     }
 
-    return StubViewVM(
-        state: state,
-        company: state.company,
-        isSaving: state.isSaving,
-        isLoading: state.isLoading,
-        isDirty: stub.isNew,
-        stub: stub,
-        onRefreshed: (context) => _handleRefresh(context),
+    return TokenViewVM(
+      state: state,
+      company: state.company,
+      isSaving: state.isSaving,
+      isLoading: state.isLoading,
+      isDirty: token.isNew,
+      token: token,
+      onRefreshed: (context) => _handleRefresh(context),
       onEntityAction: (BuildContext context, EntityAction action) =>
-          handleEntitiesActions(context, [stub], action, autoPop: true),
-        );
+          handleEntitiesActions(context, [token], action, autoPop: true),
+    );
   }
 
   final AppState state;
-  final StubEntity stub;
+  final TokenEntity token;
   final CompanyEntity company;
   final Function(BuildContext, EntityAction) onEntityAction;
   final Function(BuildContext) onRefreshed;
