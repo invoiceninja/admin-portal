@@ -310,13 +310,6 @@ class MenuDrawer extends StatelessWidget {
                           // STARTER: menu - do not remove comment
                           DrawerTile(
                             company: company,
-                            entityType: EntityType.webhook,
-                            icon: getEntityIcon(EntityType.webhook),
-                            title: localization.webhooks,
-                          ),
-
-                          DrawerTile(
-                            company: company,
                             icon: getEntityIcon(EntityType.reports),
                             title: localization.reports,
                             onTap: () {
