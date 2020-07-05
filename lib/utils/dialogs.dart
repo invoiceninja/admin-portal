@@ -5,7 +5,10 @@ import 'package:invoiceninja_flutter/ui/app/dialogs/error_dialog.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/save_cancel_buttons.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 
-void showErrorDialog({BuildContext context, String message}) {
+void showErrorDialog({
+  @required BuildContext context,
+  @required String message,
+}) {
   showDialog<ErrorDialog>(
       context: context,
       builder: (BuildContext context) {
@@ -13,11 +16,18 @@ void showErrorDialog({BuildContext context, String message}) {
       });
 }
 
-void showMessageDialog({BuildContext context, String message}) {
+void showMessageDialog({
+  @required BuildContext context,
+  @required String message,
+  FlatButton secondaryAction,
+}) {
   showDialog<MessageDialog>(
       context: context,
       builder: (BuildContext context) {
-        return MessageDialog(message);
+        return MessageDialog(
+          message,
+          secondaryAction: secondaryAction,
+        );
       });
 }
 

@@ -2,11 +2,17 @@ import 'package:flutter/material.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 
 class MessageDialog extends StatelessWidget {
-  const MessageDialog(this.message,
-      {this.onDismiss, this.onDiscard, this.dismissLabel});
+  const MessageDialog(
+    this.message, {
+    this.onDismiss,
+    this.onDiscard,
+    this.dismissLabel,
+    this.secondaryAction,
+  });
 
   final String message;
   final String dismissLabel;
+  final FlatButton secondaryAction;
   final Function onDismiss;
   final Function onDiscard;
 
@@ -37,11 +43,17 @@ class MessageDialog extends StatelessWidget {
                         Padding(
                           padding: const EdgeInsets.only(right: 10),
                           child: FlatButton(
-                              child: Text(localization.discardChanges),
+                              child: Text(
+                                  localization.discardChanges.toUpperCase()),
                               onPressed: () {
                                 Navigator.of(context).pop();
                                 onDiscard();
                               }),
+                        ),
+                      if (secondaryAction != null)
+                        Padding(
+                          padding: const EdgeInsets.only(right: 10),
+                          child: secondaryAction,
                         ),
                       FlatButton(
                         onPressed: () {
@@ -50,7 +62,8 @@ class MessageDialog extends StatelessWidget {
                             onDismiss();
                           }
                         },
-                        child: Text(dismissLabel ?? localization.dismiss),
+                        child: Text((dismissLabel ?? localization.dismiss)
+                            .toUpperCase()),
                       ),
                     ],
                   ),

@@ -15,7 +15,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
   static final Map<String, Map<String, String>> _localizedValues = {
     'en': {
       // STARTER: lang key - do not remove comment
-      'crons_not_enabled': 'The crons are not enabled',
+      'crons_not_enabled': 'Error: The crons need to be enabled',
       'manage_webhooks': 'Manage Webhooks',
       'search_webhooks': 'Search Webhooks',
       'webhook': 'Webhook',

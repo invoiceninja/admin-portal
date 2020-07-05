@@ -537,6 +537,13 @@ class SidebarFooter extends StatelessWidget {
                 onPressed: () => showMessageDialog(
                   context: context,
                   message: localization.cronsNotEnabled,
+                  secondaryAction: FlatButton(
+                    child: Text(localization.learnMore.toUpperCase()),
+                    onPressed: () {
+                      launch(kCronsHelpUrl,
+                          forceSafariVC: false, forceWebView: false);
+                    },
+                  ),
                 ),
               )
             else if (account.isUpdateAvailable)

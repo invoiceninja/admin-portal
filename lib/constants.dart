@@ -32,6 +32,7 @@ const String kAppleStoreUrl =
 const String kGoogleStoreUrl =
     'https://play.google.com/store/apps/details?id=com.invoiceninja.flutter';
 const String kCapterralUrl = 'https://www.capterra.com/p/145215/Invoice-Ninja/';
+const String kCronsHelpUrl = 'https://invoiceninja.github.io/selfhost.html#cron-configuration';
 
 const String kSharedPrefs = 'shared_prefs';
 const String kSharedPrefAppVersion = 'app_version';
