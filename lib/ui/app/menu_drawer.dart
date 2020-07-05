@@ -531,7 +531,7 @@ class SidebarFooter extends StatelessWidget {
             if (!account.isCronEnabled)
               IconButton(
                 icon: Icon(
-                  Icons.error_outline,
+                  Icons.warning,
                   color: Colors.red,
                 ),
                 onPressed: () => showMessageDialog(
