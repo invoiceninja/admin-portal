@@ -158,14 +158,6 @@ abstract class TokenEntity extends Object
       if (includeEdit && userCompany.canEditEntity(this)) {
         actions.add(EntityAction.edit);
       }
-
-      if (userCompany.canEditEntity(this)) {
-        actions.add(EntityAction.settings);
-      }
-
-      if (userCompany.canCreate(EntityType.client)) {
-        actions.add(EntityAction.newClient);
-      }
     }
 
     if (actions.isNotEmpty) {

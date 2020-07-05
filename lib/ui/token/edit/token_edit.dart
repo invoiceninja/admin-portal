@@ -2,6 +2,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:invoiceninja_flutter/ui/app/edit_scaffold.dart';
 import 'package:invoiceninja_flutter/ui/app/form_card.dart';
+import 'package:invoiceninja_flutter/ui/app/forms/decorated_form_field.dart';
 import 'package:invoiceninja_flutter/ui/token/edit/token_edit_vm.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:invoiceninja_flutter/utils/completers.dart';
@@ -23,7 +24,7 @@ class _TokenEditState extends State<TokenEdit> {
       GlobalKey<FormState>(debugLabel: '_tokenEdit');
   final _debouncer = Debouncer();
 
-  // STARTER: controllers - do not remove comment
+  final _nameController = TextEditingController();
 
   List<TextEditingController> _controllers = [];
 
@@ -35,8 +36,8 @@ class _TokenEditState extends State<TokenEdit> {
 
     _controllers.forEach((controller) => controller.removeListener(_onChanged));
 
-    //final token = widget.viewModel.token;
-    // STARTER: read value - do not remove comment
+    final token = widget.viewModel.token;
+    _nameController.text = token.name;
 
     _controllers.forEach((controller) => controller.addListener(_onChanged));
 
@@ -56,7 +57,7 @@ class _TokenEditState extends State<TokenEdit> {
   void _onChanged() {
     _debouncer.run(() {
       final token = widget.viewModel.token.rebuild((b) => b
-          // STARTER: set value - do not remove comment
+          ..name = _nameController.text.trim()
           );
       if (token != widget.viewModel.token) {
         widget.viewModel.onChanged(token);
@@ -95,7 +96,10 @@ class _TokenEditState extends State<TokenEdit> {
               children: <Widget>[
                 FormCard(
                   children: <Widget>[
-                    // STARTER: widgets - do not remove comment
+                    DecoratedFormField(
+                      controller: _nameController,
+                      label: localization.name,
+                    ),
                   ],
                 ),
               ],

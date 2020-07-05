@@ -123,6 +123,8 @@ class _$WebhookEntitySerializer implements StructuredSerializer<WebhookEntity> {
           specifiedType: const FullType(String)),
       'name',
       serializers.serialize(object.name, specifiedType: const FullType(String)),
+      'url',
+      serializers.serialize(object.url, specifiedType: const FullType(String)),
       'created_at',
       serializers.serialize(object.createdAt,
           specifiedType: const FullType(int)),
@@ -188,6 +190,10 @@ class _$WebhookEntitySerializer implements StructuredSerializer<WebhookEntity> {
           break;
         case 'name':
           result.name = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String;
+          break;
+        case 'url':
+          result.url = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String;
           break;
         case 'isChanged':
@@ -424,6 +430,8 @@ class _$WebhookEntity extends WebhookEntity {
   @override
   final String name;
   @override
+  final String url;
+  @override
   final bool isChanged;
   @override
   final int createdAt;
@@ -445,6 +453,7 @@ class _$WebhookEntity extends WebhookEntity {
       {this.id,
       this.webhook,
       this.name,
+      this.url,
       this.isChanged,
       this.createdAt,
       this.updatedAt,
@@ -458,6 +467,9 @@ class _$WebhookEntity extends WebhookEntity {
     }
     if (name == null) {
       throw new BuiltValueNullFieldError('WebhookEntity', 'name');
+    }
+    if (url == null) {
+      throw new BuiltValueNullFieldError('WebhookEntity', 'url');
     }
     if (createdAt == null) {
       throw new BuiltValueNullFieldError('WebhookEntity', 'createdAt');
@@ -484,6 +496,7 @@ class _$WebhookEntity extends WebhookEntity {
         id == other.id &&
         webhook == other.webhook &&
         name == other.name &&
+        url == other.url &&
         isChanged == other.isChanged &&
         createdAt == other.createdAt &&
         updatedAt == other.updatedAt &&
@@ -503,8 +516,12 @@ class _$WebhookEntity extends WebhookEntity {
                     $jc(
                         $jc(
                             $jc(
-                                $jc($jc($jc(0, id.hashCode), webhook.hashCode),
-                                    name.hashCode),
+                                $jc(
+                                    $jc(
+                                        $jc($jc(0, id.hashCode),
+                                            webhook.hashCode),
+                                        name.hashCode),
+                                    url.hashCode),
                                 isChanged.hashCode),
                             createdAt.hashCode),
                         updatedAt.hashCode),
@@ -520,6 +537,7 @@ class _$WebhookEntity extends WebhookEntity {
           ..add('id', id)
           ..add('webhook', webhook)
           ..add('name', name)
+          ..add('url', url)
           ..add('isChanged', isChanged)
           ..add('createdAt', createdAt)
           ..add('updatedAt', updatedAt)
@@ -546,6 +564,10 @@ class WebhookEntityBuilder
   String _name;
   String get name => _$this._name;
   set name(String name) => _$this._name = name;
+
+  String _url;
+  String get url => _$this._url;
+  set url(String url) => _$this._url = url;
 
   bool _isChanged;
   bool get isChanged => _$this._isChanged;
@@ -584,6 +606,7 @@ class WebhookEntityBuilder
       _id = _$v.id;
       _webhook = _$v.webhook;
       _name = _$v.name;
+      _url = _$v.url;
       _isChanged = _$v.isChanged;
       _createdAt = _$v.createdAt;
       _updatedAt = _$v.updatedAt;
@@ -616,6 +639,7 @@ class WebhookEntityBuilder
             id: id,
             webhook: webhook,
             name: name,
+            url: url,
             isChanged: isChanged,
             createdAt: createdAt,
             updatedAt: updatedAt,

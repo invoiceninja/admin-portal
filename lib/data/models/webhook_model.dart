@@ -1,5 +1,3 @@
-import 'dart:convert';
-
 import 'package:built_collection/built_collection.dart';
 import 'package:built_value/built_value.dart';
 import 'package:built_value/serializer.dart';
@@ -58,6 +56,7 @@ abstract class WebhookEntity extends Object
     return _$WebhookEntity._(
       id: id ?? BaseEntity.nextId,
       isChanged: false,
+      url: '',
       name: '',
       webhook: '',
       updatedAt: 0,
@@ -89,15 +88,7 @@ abstract class WebhookEntity extends Object
 
   String get name;
 
-  String get obscuredWebhook => base64Encode(utf8.encode(webhook));
-
-  static String unobscureWebhook(String value) {
-    if (value == null || value.isEmpty) {
-      return null;
-    }
-
-    return utf8.decode(base64Decode(value));
-  }
+  String get url;
 
   @override
   String get listDisplayName {
@@ -159,13 +150,6 @@ abstract class WebhookEntity extends Object
         actions.add(EntityAction.edit);
       }
 
-      if (userCompany.canEditEntity(this)) {
-        actions.add(EntityAction.settings);
-      }
-
-      if (userCompany.canCreate(EntityType.client)) {
-        actions.add(EntityAction.newClient);
-      }
     }
 
     if (actions.isNotEmpty) {

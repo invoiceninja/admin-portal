@@ -20,7 +20,6 @@ class WebhookEdit extends StatefulWidget {
 }
 
 class _WebhookEditState extends State<WebhookEdit> {
-
   final _urlController = TextEditingController();
 
   static final GlobalKey<FormState> _formKey =
@@ -57,9 +56,8 @@ class _WebhookEditState extends State<WebhookEdit> {
 
   void _onChanged() {
     _debouncer.run(() {
-      final webhook = widget.viewModel.webhook.rebuild((b) => b
-          // STARTER: set value - do not remove comment
-          );
+      final webhook = widget.viewModel.webhook
+          .rebuild((b) => b..url = _urlController.text.trim());
       if (webhook != widget.viewModel.webhook) {
         widget.viewModel.onChanged(webhook);
       }
