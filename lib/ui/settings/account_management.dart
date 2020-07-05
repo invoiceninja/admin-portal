@@ -131,7 +131,7 @@ class _AccountOverview extends StatelessWidget {
         Padding(
           padding: const EdgeInsets.all(16),
           child: ElevatedButton(
-            label: localization.tokens,
+            label: localization.manageTokens,
             iconData: getEntityIcon(EntityType.token),
             onPressed: () {
               store.dispatch(ViewSettings(
