@@ -334,15 +334,19 @@ void handleUserAction(
           completer: snackBarCompleter<Null>(context, localization.removedUser),
           userId: user.id,
           password: password));
-      if (state.authState.hasRecentlyEnteredPassword) {
-        dispatch();
-      } else {
-        passwordCallback(
-            context: context,
-            callback: (password) {
-              dispatch(password);
-            });
-      }
+      confirmCallback(
+          context: context,
+          callback: () {
+            if (state.authState.hasRecentlyEnteredPassword) {
+              dispatch();
+            } else {
+              passwordCallback(
+                  context: context,
+                  callback: (password) {
+                    dispatch(password);
+                  });
+            }
+          });
       break;
     case EntityAction.toggleMultiselect:
       if (!store.state.userListState.isInMultiselect()) {
