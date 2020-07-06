@@ -15,6 +15,8 @@ mixin LocalizationsProvider on LocaleCodeAware {
   static final Map<String, Map<String, String>> _localizedValues = {
     'en': {
       // STARTER: lang key - do not remove comment
+      'must_be_online':
+          'Please restart the app once connected to the interenet',
       'crons_not_enabled': 'The crons need to be enabled',
       'manage_webhooks': 'Manage Webhooks',
       'search_webhooks': 'Search Webhooks',
@@ -38756,6 +38758,9 @@ mixin LocalizationsProvider on LocaleCodeAware {
 
   String get cronsNotEnabled =>
       _localizedValues[localeCode]['crons_not_enabled'] ?? '';
+
+  String get mustBeOnline =>
+      _localizedValues[localeCode]['must_be_online'] ?? '';
 
   String lookup(String key) {
     final lookupKey = toSnakeCase(key);
