@@ -85,7 +85,7 @@ class MenuDrawer extends StatelessWidget {
     final _collapsedCompanySelector = PopupMenuButton<String>(
       tooltip: localization.selectCompany,
       child: SizedBox(
-        height: 48,
+        height: kTopBottomBarHeight,
         width: double.infinity,
         child: _companyLogo(viewModel.selectedCompany),
       ),
@@ -330,15 +330,18 @@ class MenuDrawer extends StatelessWidget {
                         ],
                       ),
                     )),
-              AppBorder(
-                isTop: true,
-                child: Align(
-                  child: state.isMenuCollapsed
-                      ? SidebarFooterCollapsed(
-                          isUpdateAvailable: state.account.isUpdateAvailable,
-                        )
-                      : SidebarFooter(),
-                  alignment: Alignment(0, 1),
+              SizedBox(
+                height: kTopBottomBarHeight,
+                child: AppBorder(
+                  isTop: true,
+                  child: Align(
+                    child: state.isMenuCollapsed
+                        ? SidebarFooterCollapsed(
+                            isUpdateAvailable: state.account.isUpdateAvailable,
+                          )
+                        : SidebarFooter(),
+                    alignment: Alignment(0, 1),
+                  ),
                 ),
               ),
             ],
@@ -659,7 +662,6 @@ class SidebarFooterCollapsed extends StatelessWidget {
 
     return Container(
       width: double.infinity,
-      height: 44,
       color: Theme.of(context).cardColor,
       child: state.uiState.filterEntityType != null &&
               state.prefState.fullHeightFilter
