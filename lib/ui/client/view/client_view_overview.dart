@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:invoiceninja_flutter/data/models/client_model.dart';
 import 'package:invoiceninja_flutter/data/models/entities.dart';
+import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:invoiceninja_flutter/redux/credit/credit_selectors.dart';
 import 'package:invoiceninja_flutter/redux/expense/expense_selectors.dart';
 import 'package:invoiceninja_flutter/redux/invoice/invoice_selectors.dart';
@@ -36,6 +37,8 @@ class ClientOverview extends StatelessWidget {
     final statics = state.staticState;
     final fields = <String, String>{};
     final group = client.hasGroup ? state.groupState.map[client.groupId] : null;
+    final user =
+        client.hasUser ? state.userState.get(client.assignedUserId) : null;
 
     if (client.hasLanguage &&
         client.languageId != company.settings.languageId) {
@@ -91,14 +94,22 @@ class ClientOverview extends StatelessWidget {
         client.privateNotes != null && client.privateNotes.isNotEmpty
             ? IconMessage(client.privateNotes)
             : Container(),
-        if (client.hasGroup) ...[
+        if (client.hasGroup)
           EntityListTile(
             entity: group,
-            onTap: () => viewModel.onGroupPressed(context),
-            onLongPress: () => viewModel.onGroupPressed(context, true),
+            onTap: () => inspectEntity(context: context, entity: group),
+            onLongPress: () =>
+                inspectEntity(context: context, entity: group, longPress: true),
             isFilter: isFilter,
           ),
-        ],
+        if (client.hasUser)
+          EntityListTile(
+            entity: user,
+            onTap: () => inspectEntity(context: context, entity: user),
+            onLongPress: () =>
+                inspectEntity(context: context, entity: user, longPress: true),
+            isFilter: isFilter,
+          ),
         FieldGrid(fields),
         EntitiesListTile(
           isFilter: isFilter,
