@@ -194,14 +194,53 @@ abstract class VendorEntity extends Object
     return actions..addAll(super.getActions(userCompany: userCompany));
   }
 
-  int compareTo(VendorEntity vendor, String sortField, bool sortAscending) {
+  int compareTo(VendorEntity vendor, String sortField, bool sortAscending,
+      BuiltMap<String, UserEntity> userMap) {
     int response = 0;
     final VendorEntity vendorA = sortAscending ? this : vendor;
     final VendorEntity vendorB = sortAscending ? vendor : this;
 
     switch (sortField) {
       case VendorFields.name:
-        response = vendorA.name.compareTo(vendorB.name);
+        response =
+            vendorA.name.toLowerCase().compareTo(vendorB.name.toLowerCase());
+        break;
+      case VendorFields.city:
+        response =
+            vendorA.city.toLowerCase().compareTo(vendorB.city.toLowerCase());
+        break;
+      case VendorFields.phone:
+        response =
+            vendorA.phone.toLowerCase().compareTo(vendorB.phone.toLowerCase());
+        break;
+      case EntityFields.state:
+      case VendorFields.state:
+        final stateA =
+            EntityState.valueOf(vendorA.entityState) ?? EntityState.active;
+        final stateB =
+            EntityState.valueOf(vendorB.entityState) ?? EntityState.active;
+        response =
+            stateA.name.toLowerCase().compareTo(stateB.name.toLowerCase());
+        break;
+      case EntityFields.assignedTo:
+        final userA = userMap[vendorA.assignedUserId] ?? UserEntity();
+        final userB = userMap[vendorB.assignedUserId] ?? UserEntity();
+        response = userA.listDisplayName
+            .toLowerCase()
+            .compareTo(userB.listDisplayName.toLowerCase());
+        break;
+      case EntityFields.createdBy:
+        final userA = userMap[vendorA.createdUserId] ?? UserEntity();
+        final userB = userMap[vendorB.createdUserId] ?? UserEntity();
+        response = userA.listDisplayName
+            .toLowerCase()
+            .compareTo(userB.listDisplayName.toLowerCase());
+        break;
+      case EntityFields.createdAt:
+        response = vendorA.createdAt.compareTo(vendorB.createdAt);
+        break;
+      case VendorFields.archivedAt:
+        response = vendorA.archivedAt.compareTo(vendorB.archivedAt);
         break;
       case VendorFields.updatedAt:
         response = vendorA.updatedAt.compareTo(vendorB.updatedAt);

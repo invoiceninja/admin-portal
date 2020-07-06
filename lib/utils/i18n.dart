@@ -15,6 +15,34 @@ mixin LocalizationsProvider on LocaleCodeAware {
   static final Map<String, Map<String, String>> _localizedValues = {
     'en': {
       // STARTER: lang key - do not remove comment
+      'must_be_online':
+          'Please restart the app once connected to the interenet',
+      'crons_not_enabled': 'The crons need to be enabled',
+      'manage_webhooks': 'Manage Webhooks',
+      'search_webhooks': 'Search Webhooks',
+      'webhook': 'Webhook',
+      'webhooks': 'Webhooks',
+      'new_webhook': 'New Webhook',
+      'edit_webhook': 'Edit Webhook',
+      'created_webhook': 'Successfully created webhook',
+      'updated_webhook': 'Successfully updated webhook',
+      'archived_webhook': 'Successfully archived webhook',
+      'deleted_webhook': 'Successfully deleted webhook',
+      'removed_webhook': 'Successfully removed webhook',
+      'restored_webhook': 'Successfully restored webhook',
+      'manage_tokens': 'Manage Tokens',
+      'search_tokens': 'Search Tokens',
+      'token': 'Token',
+      'tokens': 'Tokens',
+      'new_token': 'New Token',
+      'edit_token': 'Edit Token',
+      'created_token': 'Successfully created token',
+      'updated_token': 'Successfully updated token',
+      'archived_token': 'Successfully archived token',
+      'deleted_token': 'Successfully deleted token',
+      'removed_token': 'Successfully removed token',
+      'restored_token': 'Successfully restored token',
+
       'client_registration': 'Client Registration',
       'client_registration_help':
           'Enable clients to self register in the portal',
@@ -38191,27 +38219,74 @@ mixin LocalizationsProvider on LocaleCodeAware {
   String get appUpdated => _localizedValues[localeCode]['app_updated'] ?? '';
 
   // STARTER: lang field - do not remove comment
-  String get paymentTerm => _localizedValues[localeCode]['payment_term'];
+  String get webhook => _localizedValues[localeCode]['webhook'] ?? '';
 
-  String get newPaymentTerm => _localizedValues[localeCode]['new_payment_term'];
+  String get webhooks => _localizedValues[localeCode]['webhooks'] ?? '';
+
+  String get newWebhook => _localizedValues[localeCode]['new_webhook'] ?? '';
+
+  String get createdWebhook =>
+      _localizedValues[localeCode]['created_webhook'] ?? '';
+
+  String get updatedWebhook =>
+      _localizedValues[localeCode]['updated_webhook'] ?? '';
+
+  String get archivedWebhook =>
+      _localizedValues[localeCode]['archived_webhook'] ?? '';
+
+  String get deletedWebhook =>
+      _localizedValues[localeCode]['deleted_webhook'] ?? '';
+
+  String get restoredWebhook =>
+      _localizedValues[localeCode]['restored_webhook'] ?? '';
+
+  String get editWebhook => _localizedValues[localeCode]['edit_webhook'] ?? '';
+
+  String get token => _localizedValues[localeCode]['token'] ?? '';
+
+  String get tokens => _localizedValues[localeCode]['tokens'] ?? '';
+
+  String get newToken => _localizedValues[localeCode]['new_token'] ?? '';
+
+  String get createdToken =>
+      _localizedValues[localeCode]['created_token'] ?? '';
+
+  String get updatedToken =>
+      _localizedValues[localeCode]['updated_token'] ?? '';
+
+  String get archivedToken =>
+      _localizedValues[localeCode]['archived_token'] ?? '';
+
+  String get deletedToken =>
+      _localizedValues[localeCode]['deleted_token'] ?? '';
+
+  String get restoredToken =>
+      _localizedValues[localeCode]['restored_token'] ?? '';
+
+  String get editToken => _localizedValues[localeCode]['edit_token'] ?? '';
+
+  String get paymentTerm => _localizedValues[localeCode]['payment_term'] ?? '';
+
+  String get newPaymentTerm =>
+      _localizedValues[localeCode]['new_payment_term'] ?? '';
 
   String get createdPaymentTerm =>
-      _localizedValues[localeCode]['created_payment_term'];
+      _localizedValues[localeCode]['created_payment_term'] ?? '';
 
   String get updatedPaymentTerm =>
-      _localizedValues[localeCode]['updated_payment_term'];
+      _localizedValues[localeCode]['updated_payment_term'] ?? '';
 
   String get archivedPaymentTerm =>
-      _localizedValues[localeCode]['archived_payment_term'];
+      _localizedValues[localeCode]['archived_payment_term'] ?? '';
 
   String get deletedPaymentTerm =>
-      _localizedValues[localeCode]['deleted_payment_term'];
+      _localizedValues[localeCode]['deleted_payment_term'] ?? '';
 
   String get restoredPaymentTerm =>
-      _localizedValues[localeCode]['restored_payment_term'];
+      _localizedValues[localeCode]['restored_payment_term'] ?? '';
 
   String get editPaymentTerm =>
-      _localizedValues[localeCode]['edit_payment_term'];
+      _localizedValues[localeCode]['edit_payment_term'] ?? '';
 
   String get designs => _localizedValues[localeCode]['designs'] ?? '';
 
@@ -38668,6 +38743,24 @@ mixin LocalizationsProvider on LocaleCodeAware {
       _localizedValues[localeCode]['client_registration_help'] ?? '';
 
   String get subtotal => _localizedValues[localeCode]['subtotal'] ?? '';
+
+  String get searchTokens =>
+      _localizedValues[localeCode]['search_tokens'] ?? '';
+
+  String get searchWebhooks =>
+      _localizedValues[localeCode]['search_webhooks'] ?? '';
+
+  String get manageTokens =>
+      _localizedValues[localeCode]['manage_tokens'] ?? '';
+
+  String get manageWebhooks =>
+      _localizedValues[localeCode]['manage_webhooks'] ?? '';
+
+  String get cronsNotEnabled =>
+      _localizedValues[localeCode]['crons_not_enabled'] ?? '';
+
+  String get mustBeOnline =>
+      _localizedValues[localeCode]['must_be_online'] ?? '';
 
   String lookup(String key) {
     final lookupKey = toSnakeCase(key);

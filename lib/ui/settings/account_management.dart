@@ -1,13 +1,19 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_redux/flutter_redux.dart';
 import 'package:invoiceninja_flutter/constants.dart';
+import 'package:invoiceninja_flutter/data/models/entities.dart';
 import 'package:invoiceninja_flutter/data/web_client.dart';
+import 'package:invoiceninja_flutter/redux/app/app_state.dart';
+import 'package:invoiceninja_flutter/redux/settings/settings_actions.dart';
 import 'package:invoiceninja_flutter/ui/app/buttons/elevated_button.dart';
 import 'package:invoiceninja_flutter/ui/app/form_card.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/app_form.dart';
 import 'package:invoiceninja_flutter/ui/app/edit_scaffold.dart';
+import 'package:invoiceninja_flutter/ui/app/lists/list_divider.dart';
 import 'package:invoiceninja_flutter/ui/settings/account_management_vm.dart';
 import 'package:invoiceninja_flutter/utils/dialogs.dart';
+import 'package:invoiceninja_flutter/utils/icons.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -115,6 +121,7 @@ class _AccountOverview extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final store = StoreProvider.of<AppState>(context);
     final localization = AppLocalization.of(context);
     final state = viewModel.state;
     final companies = state.companies;
@@ -122,6 +129,36 @@ class _AccountOverview extends StatelessWidget {
     return ListView(
       children: <Widget>[
         SizedBox(height: 14),
+        Padding(
+          padding: const EdgeInsets.all(16),
+          child: ElevatedButton(
+            label: localization.manageTokens.toUpperCase(),
+            iconData: getEntityIcon(EntityType.token),
+            onPressed: () {
+              store.dispatch(ViewSettings(
+                navigator: Navigator.of(context),
+                section: kSettingsTokens,
+              ));
+            },
+          ),
+        ),
+        Padding(
+          padding: const EdgeInsets.all(16),
+          child: ElevatedButton(
+            label: localization.manageWebhooks.toUpperCase(),
+            iconData: getEntityIcon(EntityType.webhook),
+            onPressed: () {
+              store.dispatch(ViewSettings(
+                navigator: Navigator.of(context),
+                section: kSettingsWebhooks,
+              ));
+            },
+          ),
+        ),
+        Padding(
+          padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 16),
+          child: ListDivider(),
+        ),
         /*
               Padding(
                 padding: const EdgeInsets.all(16),
@@ -147,7 +184,7 @@ class _AccountOverview extends StatelessWidget {
         Padding(
           padding: const EdgeInsets.all(16),
           child: ElevatedButton(
-            label: localization.purchaseLicense,
+            label: localization.purchaseLicense.toUpperCase(),
             iconData: Icons.cloud_download,
             onPressed: () async {
               if (await canLaunch(kWhiteLabelUrl)) {
@@ -159,7 +196,7 @@ class _AccountOverview extends StatelessWidget {
         Padding(
           padding: const EdgeInsets.all(16),
           child: ElevatedButton(
-            label: localization.applyLicense,
+            label: localization.applyLicense.toUpperCase(),
             iconData: Icons.cloud_done,
             onPressed: () {
               fieldCallback(
@@ -187,8 +224,8 @@ class _AccountOverview extends StatelessWidget {
           ),
         ),
         Padding(
-          padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 16),
-          child: Divider(),
+          padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 16),
+          child: ListDivider(),
         ),
         Padding(
           padding: const EdgeInsets.all(16),

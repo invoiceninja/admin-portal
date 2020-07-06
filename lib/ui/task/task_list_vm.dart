@@ -127,7 +127,9 @@ class TaskListVM {
       taskList: memoizedFilteredTaskList(
           state.taskState.map,
           state.clientState.map,
+          state.userState.map,
           state.projectState.map,
+          state.invoiceState.map,
           state.taskState.list,
           state.taskListState),
       taskMap: state.taskState.map,

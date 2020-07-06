@@ -324,12 +324,8 @@ abstract class ClientEntity extends Object
   bool get hasEmailAddress =>
       contacts.where((contact) => contact.email?.isNotEmpty).isNotEmpty;
 
-  int compareTo(
-      ClientEntity client,
-      String sortField,
-      bool sortAscending,
-      BuiltMap<String, UserEntity> userMap,
-      StaticState staticState) {
+  int compareTo(ClientEntity client, String sortField, bool sortAscending,
+      BuiltMap<String, UserEntity> userMap, StaticState staticState) {
     int response = 0;
     final ClientEntity clientA = sortAscending ? this : client;
     final ClientEntity clientB = sortAscending ? client : this;
@@ -378,9 +374,8 @@ abstract class ClientEntity extends Object
             .compareTo(clientB.address2.toLowerCase());
         break;
       case ClientFields.phone:
-        response = clientA.phone
-            .toLowerCase()
-            .compareTo(clientB.phone.toLowerCase());
+        response =
+            clientA.phone.toLowerCase().compareTo(clientB.phone.toLowerCase());
         break;
       case ClientFields.publicNotes:
         response = clientA.publicNotes
@@ -414,28 +409,38 @@ abstract class ClientEntity extends Object
             .compareTo(userB.listDisplayName.toLowerCase());
         break;
       case ClientFields.country:
-        final countryA = staticState.countryMap[clientA.countryId] ?? CountryEntity();
-        final countryB = staticState.countryMap[clientB.countryId] ?? CountryEntity();
-        response = countryA.name.toLowerCase()
-            .compareTo(countryB.name.toLowerCase());
+        final countryA =
+            staticState.countryMap[clientA.countryId] ?? CountryEntity();
+        final countryB =
+            staticState.countryMap[clientB.countryId] ?? CountryEntity();
+        response =
+            countryA.name.toLowerCase().compareTo(countryB.name.toLowerCase());
         break;
       case ClientFields.currency:
-        final currencyA = staticState.currencyMap[clientA.currencyId] ?? CurrencyEntity();
-        final currencyB = staticState.currencyMap[clientB.currencyId] ?? CurrencyEntity();
-        response = currencyA.name.toLowerCase()
+        final currencyA =
+            staticState.currencyMap[clientA.currencyId] ?? CurrencyEntity();
+        final currencyB =
+            staticState.currencyMap[clientB.currencyId] ?? CurrencyEntity();
+        response = currencyA.name
+            .toLowerCase()
             .compareTo(currencyB.name.toLowerCase());
         break;
       case EntityFields.state:
       case ClientFields.state:
-        final stateA = EntityState.valueOf(clientA.entityState) ?? EntityState.active;
-        final stateB = EntityState.valueOf(clientB.entityState) ?? EntityState.active;
-        response = stateA.name.toLowerCase()
-            .compareTo(stateB.name.toLowerCase());
+        final stateA =
+            EntityState.valueOf(clientA.entityState) ?? EntityState.active;
+        final stateB =
+            EntityState.valueOf(clientB.entityState) ?? EntityState.active;
+        response =
+            stateA.name.toLowerCase().compareTo(stateB.name.toLowerCase());
         break;
       case ClientFields.language:
-        final languageA = staticState.languageMap[clientA.languageId] ?? LanguageEntity();
-        final languageB = staticState.languageMap[clientB.languageId] ?? LanguageEntity();
-        response = languageA.name.toLowerCase()
+        final languageA =
+            staticState.languageMap[clientA.languageId] ?? LanguageEntity();
+        final languageB =
+            staticState.languageMap[clientB.languageId] ?? LanguageEntity();
+        response = languageA.name
+            .toLowerCase()
             .compareTo(languageB.name.toLowerCase());
         break;
       case ClientFields.createdAt:

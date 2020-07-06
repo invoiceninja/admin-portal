@@ -29,6 +29,12 @@ import 'package:invoiceninja_flutter/ui/reports/reports_screen_vm.dart';
 import 'package:invoiceninja_flutter/ui/settings/account_management_vm.dart';
 import 'package:invoiceninja_flutter/ui/settings/settings_screen_vm.dart';
 import 'package:invoiceninja_flutter/ui/settings/tax_settings_vm.dart';
+import 'package:invoiceninja_flutter/ui/token/edit/token_edit_vm.dart';
+import 'package:invoiceninja_flutter/ui/token/token_screen_vm.dart';
+import 'package:invoiceninja_flutter/ui/token/view/token_view_vm.dart';
+import 'package:invoiceninja_flutter/ui/webhook/edit/webhook_edit_vm.dart';
+import 'package:invoiceninja_flutter/ui/webhook/view/webhook_view_vm.dart';
+import 'package:invoiceninja_flutter/ui/webhook/webhook_screen_vm.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:invoiceninja_flutter/utils/platforms.dart';
 import 'package:invoiceninja_flutter/ui/app/app_border.dart';
@@ -435,6 +441,24 @@ class SettingsScreens extends StatelessWidget {
         break;
       case kSettingsAccountManagement:
         screen = AccountManagementScreen();
+        break;
+      case kSettingsTokens:
+        screen = TokenScreenBuilder();
+        break;
+      case kSettingsTokenView:
+        screen = TokenViewScreen();
+        break;
+      case kSettingsTokenEdit:
+        screen = TokenEditScreen();
+        break;
+      case kSettingsWebhooks:
+        screen = WebhookScreenBuilder();
+        break;
+      case kSettingsWebhookView:
+        screen = WebhookViewScreen();
+        break;
+      case kSettingsWebhookEdit:
+        screen = WebhookEditScreen();
         break;
     }
 

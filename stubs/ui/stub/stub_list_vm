@@ -1,7 +1,10 @@
 import 'dart:async';
 import 'package:invoiceninja_flutter/data/models/stub_model.dart';
+import 'package:invoiceninja_flutter/ui/app/entities/entity_actions_dialog.dart';
+import 'package:invoiceninja_flutter/ui/app/tables/entity_list.dart';
+import 'package:invoiceninja_flutter/ui/webhook/stub_list_item.dart';
+import 'package:invoiceninja_flutter/ui/stub/stub_presenter.dart';
 import 'package:redux/redux.dart';
-import 'package:invoiceninja_flutter/ui/design/design_presenter.dart';
 import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/foundation.dart';
@@ -122,8 +125,7 @@ class StubListVM {
         isLoading: state.isLoading,
         isLoaded: state.stubState.isLoaded,
         filter: state.stubUIState.listUIState.filter,
-          onClearEntityFilterPressed: () =>
-              store.dispatch(FilterStubsByEntity()),
+        onClearEntityFilterPressed: () => store.dispatch(ClearEntityFilter()),
       onViewEntityFilterPressed: (BuildContext context) => viewEntityById(
           context: context,
           entityId: state.stubListState.filterEntityId,

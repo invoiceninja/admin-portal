@@ -1,10 +1,7 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:invoiceninja_flutter/ui/app/buttons/edit_icon_button.dart';
-import 'package:invoiceninja_flutter/ui/app/actions_menu_button.dart';
 import 'package:invoiceninja_flutter/ui/stub/view/stub_view_vm.dart';
 import 'package:invoiceninja_flutter/ui/app/form_card.dart';
-import 'package:invoiceninja_flutter/ui/app/entities/entity_state_title.dart';
 
 class StubView extends StatefulWidget {
 
@@ -25,7 +22,6 @@ class _StubViewState extends State<StubView> {
   @override
   Widget build(BuildContext context) {
     final viewModel = widget.viewModel;
-    final userCompany = viewModel.state.userCompany;
     final stub = viewModel.stub;
 
     return ViewScaffold(

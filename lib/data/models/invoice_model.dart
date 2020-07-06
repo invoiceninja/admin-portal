@@ -418,7 +418,8 @@ abstract class InvoiceEntity extends Object
         response = invoiceA.discount.compareTo(invoiceB.discount);
         break;
       case InvoiceFields.documents:
-        response = invoiceA.documents.length.compareTo(invoiceB.documents.length);
+        response =
+            invoiceA.documents.length.compareTo(invoiceB.documents.length);
         break;
       case InvoiceFields.poNumber:
         response = invoiceA.poNumber.compareTo(invoiceB.poNumber);
@@ -433,10 +434,12 @@ abstract class InvoiceEntity extends Object
                 staticState.invoiceStatusMap[invoiceB.statusId]?.name ?? '');
         break;
       case EntityFields.state:
-        final stateA = EntityState.valueOf(invoiceA.entityState) ?? EntityState.active;
-        final stateB = EntityState.valueOf(invoiceB.entityState) ?? EntityState.active;
-        response = stateA.name.toLowerCase()
-            .compareTo(stateB.name.toLowerCase());
+        final stateA =
+            EntityState.valueOf(invoiceA.entityState) ?? EntityState.active;
+        final stateB =
+            EntityState.valueOf(invoiceB.entityState) ?? EntityState.active;
+        response =
+            stateA.name.toLowerCase().compareTo(stateB.name.toLowerCase());
         break;
       case InvoiceFields.dueDate:
       case QuoteFields.validUntil:

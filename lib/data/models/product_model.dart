@@ -222,10 +222,12 @@ abstract class ProductEntity extends Object
             .compareTo(userB.listDisplayName.toLowerCase());
         break;
       case EntityFields.state:
-        final stateA = EntityState.valueOf(productA.entityState) ?? EntityState.active;
-        final stateB = EntityState.valueOf(productB.entityState) ?? EntityState.active;
-        response = stateA.name.toLowerCase()
-            .compareTo(stateB.name.toLowerCase());
+        final stateA =
+            EntityState.valueOf(productA.entityState) ?? EntityState.active;
+        final stateB =
+            EntityState.valueOf(productB.entityState) ?? EntityState.active;
+        response =
+            stateA.name.toLowerCase().compareTo(stateB.name.toLowerCase());
         break;
       case ProductFields.customValue1:
         response = productA.customValue1

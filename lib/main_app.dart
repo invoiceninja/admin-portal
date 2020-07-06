@@ -49,7 +49,17 @@ import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:invoiceninja_flutter/utils/platforms.dart';
 import 'package:local_auth/local_auth.dart';
 import 'package:redux/redux.dart';
+
 // STARTER: import - do not remove comment
+import 'package:invoiceninja_flutter/ui/webhook/webhook_screen.dart';
+import 'package:invoiceninja_flutter/ui/webhook/edit/webhook_edit_vm.dart';
+import 'package:invoiceninja_flutter/ui/webhook/view/webhook_view_vm.dart';
+import 'package:invoiceninja_flutter/ui/webhook/webhook_screen_vm.dart';
+
+import 'package:invoiceninja_flutter/ui/token/token_screen.dart';
+import 'package:invoiceninja_flutter/ui/token/edit/token_edit_vm.dart';
+import 'package:invoiceninja_flutter/ui/token/view/token_view_vm.dart';
+import 'package:invoiceninja_flutter/ui/token/token_screen_vm.dart';
 
 class InvoiceNinjaApp extends StatefulWidget {
   const InvoiceNinjaApp({Key key, this.store}) : super(key: key);
@@ -250,6 +260,12 @@ class InvoiceNinjaAppState extends State<InvoiceNinjaApp> {
                   QuoteEditScreen.route: (context) => QuoteEditScreen(),
                   QuoteEmailScreen.route: (context) => QuoteEmailScreen(),
                   // STARTER: routes - do not remove comment
+                  WebhookScreen.route: (context) => WebhookScreenBuilder(),
+                  WebhookViewScreen.route: (context) => WebhookViewScreen(),
+                  WebhookEditScreen.route: (context) => WebhookEditScreen(),
+                  TokenScreen.route: (context) => TokenScreenBuilder(),
+                  TokenViewScreen.route: (context) => TokenViewScreen(),
+                  TokenEditScreen.route: (context) => TokenEditScreen(),
                   PaymentTermScreen.route: (context) =>
                       PaymentTermScreenBuilder(),
                   PaymentTermEditScreen.route: (context) =>

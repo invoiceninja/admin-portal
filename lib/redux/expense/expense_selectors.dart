@@ -22,14 +22,22 @@ InvoiceItemEntity convertExpenseToInvoiceItem({
     ..taxRate2 = expense.taxRate2);
 }
 
-var memoizedDropdownExpenseList = memo3(
-    (BuiltMap<String, ExpenseEntity> expenseMap, BuiltList<String> expenseList,
+var memoizedDropdownExpenseList = memo6(
+    (BuiltMap<String, ExpenseEntity> expenseMap,
+            BuiltList<String> expenseList,
+            BuiltMap<String, ClientEntity> clientMap,
+            BuiltMap<String, UserEntity> userMap,
+            BuiltMap<String, VendorEntity> vendorMap,
             String clientId) =>
-        dropdownExpensesSelector(expenseMap, expenseList, clientId));
+        dropdownExpensesSelector(
+            expenseMap, expenseList, clientMap, userMap, vendorMap, clientId));
 
 List<String> dropdownExpensesSelector(
     BuiltMap<String, ExpenseEntity> expenseMap,
     BuiltList<String> expenseList,
+    BuiltMap<String, ClientEntity> clientMap,
+    BuiltMap<String, UserEntity> userMap,
+    BuiltMap<String, VendorEntity> vendorMap,
     String clientId) {
   final list = expenseList.where((expenseId) {
     final expense = expenseMap[expenseId];
@@ -44,25 +52,28 @@ List<String> dropdownExpensesSelector(
   list.sort((expenseAId, expenseBId) {
     final expenseA = expenseMap[expenseAId];
     final expenseB = expenseMap[expenseBId];
-    return expenseA.compareTo(expenseB, ExpenseFields.expenseDate, true);
+    return expenseA.compareTo(expenseB, ExpenseFields.expenseDate, true,
+        clientMap, userMap, vendorMap);
   });
 
   return list;
 }
 
-var memoizedFilteredExpenseList = memo5(
+var memoizedFilteredExpenseList = memo6(
     (BuiltMap<String, ExpenseEntity> expenseMap,
             BuiltMap<String, ClientEntity> clientMap,
             BuiltMap<String, VendorEntity> vendorMap,
+            BuiltMap<String, UserEntity> userMap,
             BuiltList<String> expenseList,
             ListUIState expenseListState) =>
-        filteredExpensesSelector(
-            expenseMap, clientMap, vendorMap, expenseList, expenseListState));
+        filteredExpensesSelector(expenseMap, clientMap, vendorMap, userMap,
+            expenseList, expenseListState));
 
 List<String> filteredExpensesSelector(
     BuiltMap<String, ExpenseEntity> expenseMap,
     BuiltMap<String, ClientEntity> clientMap,
     BuiltMap<String, VendorEntity> vendorMap,
+    BuiltMap<String, UserEntity> userMap,
     BuiltList<String> expenseList,
     ListUIState expenseListState) {
   final list = expenseList.where((expenseId) {
@@ -107,8 +118,8 @@ List<String> filteredExpensesSelector(
   list.sort((expenseAId, expenseBId) {
     final expenseA = expenseMap[expenseAId];
     final expenseB = expenseMap[expenseBId];
-    return expenseA.compareTo(
-        expenseB, expenseListState.sortField, expenseListState.sortAscending);
+    return expenseA.compareTo(expenseB, expenseListState.sortField,
+        expenseListState.sortAscending, clientMap, userMap, vendorMap);
   });
 
   return list;
