@@ -249,7 +249,7 @@ Middleware<AppState> _createLoadState(
     } catch (error) {
       print('Load state error: $error');
 
-      if (!await isOnline()) {
+      if (!kIsWeb && !await isOnline()) {
         showMessageDialog(
             context: action.context,
             message: AppLocalization.of(action.context).mustBeOnline);
