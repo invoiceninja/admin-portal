@@ -129,6 +129,7 @@ class _AccountOverview extends StatelessWidget {
     return ListView(
       children: <Widget>[
         SizedBox(height: 14),
+        /*
         Padding(
           padding: const EdgeInsets.all(16),
           child: ElevatedButton(
@@ -159,6 +160,7 @@ class _AccountOverview extends StatelessWidget {
           padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 16),
           child: ListDivider(),
         ),
+         */
         /*
               Padding(
                 padding: const EdgeInsets.all(16),
