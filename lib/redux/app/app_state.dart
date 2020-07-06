@@ -45,6 +45,7 @@ import 'package:invoiceninja_flutter/ui/credit/edit/credit_edit_vm.dart';
 import 'package:invoiceninja_flutter/ui/design/edit/design_edit_vm.dart';
 import 'package:invoiceninja_flutter/ui/group/edit/group_edit_vm.dart';
 import 'package:invoiceninja_flutter/ui/product/edit/product_edit_vm.dart';
+
 // STARTER: import - do not remove comment
 import 'package:invoiceninja_flutter/redux/webhook/webhook_state.dart';
 import 'package:invoiceninja_flutter/ui/webhook/edit/webhook_edit_vm.dart';
@@ -182,6 +183,7 @@ abstract class AppState implements Built<AppState, AppStateBuilder> {
     if ((entityUIState.selectedId ?? '').isEmpty) {
       return true;
     } else if (unfilteredHistoryList.isNotEmpty &&
+        uiState.isViewing &&
         unfilteredHistoryList.first.entityType != entityType) {
       // check if this needs to be added to the history
       return null;
@@ -400,11 +402,15 @@ abstract class AppState implements Built<AppState, AppStateBuilder> {
 
   // STARTER: state getters - do not remove comment
   WebhookState get webhookState => userCompanyState.webhookState;
+
   ListUIState get webhookListState => uiState.webhookUIState.listUIState;
+
   WebhookUIState get webhookUIState => uiState.webhookUIState;
 
   TokenState get tokenState => userCompanyState.tokenState;
+
   ListUIState get tokenListState => uiState.tokenUIState.listUIState;
+
   TokenUIState get tokenUIState => uiState.tokenUIState;
 
   PaymentTermState get paymentTermState => userCompanyState.paymentTermState;

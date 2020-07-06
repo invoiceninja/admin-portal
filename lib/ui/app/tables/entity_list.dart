@@ -111,6 +111,7 @@ class _EntityListState extends State<EntityList> {
       final entityId = shouldSelectEntity == null
           ? state.getUIState(entityType).selectedId
           : (entityList.isEmpty ? null : entityList.first);
+
       WidgetsBinding.instance.addPostFrameCallback((duration) {
         viewEntityById(
           context: context,

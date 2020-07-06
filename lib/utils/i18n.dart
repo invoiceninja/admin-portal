@@ -16,7 +16,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
     'en': {
       // STARTER: lang key - do not remove comment
       'must_be_online':
-          'Please restart the app once connected to the interenet',
+          'Please restart the app once connected to the internet',
       'crons_not_enabled': 'The crons need to be enabled',
       'manage_webhooks': 'Manage Webhooks',
       'search_webhooks': 'Search Webhooks',
