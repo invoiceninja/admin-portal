@@ -3,6 +3,7 @@ import 'package:flutter/widgets.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:invoiceninja_flutter/constants.dart';
 import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
+import 'package:invoiceninja_flutter/redux/client/client_actions.dart';
 import 'package:invoiceninja_flutter/redux/company/company_actions.dart';
 import 'package:invoiceninja_flutter/redux/settings/settings_actions.dart';
 import 'package:invoiceninja_flutter/ui/app/app_builder.dart';
@@ -61,7 +62,11 @@ class MenuDrawerVM {
         store.dispatch(ClearEntityFilter());
         store.dispatch(SelectCompany(int.parse(companyIndex)));
         if (store.state.isStale) {
-          store.dispatch(RefreshData());
+          if (!store.state.isLoaded && store.state.company.isLarge) {
+            store.dispatch(LoadClients());
+          } else {
+            store.dispatch(RefreshData());
+          }
         }
         AppBuilder.of(context).rebuild();
 

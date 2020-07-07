@@ -446,9 +446,6 @@ Middleware<AppState> _createAccountLoaded() {
         response.userCompanies[selectedCompanyIndex].company.isLarge) {
       print('## Loading clients..');
       store.dispatch(LoadClients());
-    } else {
-      print('## Set is loaded');
-      store.dispatch(SetDataLoaded());
     }
 
     if (action.completer != null) {

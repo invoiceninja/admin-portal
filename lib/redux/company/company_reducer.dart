@@ -182,8 +182,12 @@ UserCompanyEntity saveCompanySuccessReducer(
 }
 
 Reducer<int> lastUpdatedReducer = combineReducers([
+  TypedReducer<int, LoadCompanySuccess>((state, action) {
+    return action.userCompany.company.isLarge
+        ? state
+        : DateTime.now().millisecondsSinceEpoch;
+  }),
   TypedReducer<int, SetDataLoaded>((state, action) {
     return DateTime.now().millisecondsSinceEpoch;
   }),
 ]);
-
