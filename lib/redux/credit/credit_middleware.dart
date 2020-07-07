@@ -328,10 +328,10 @@ Middleware<AppState> _loadCredits(CreditRepository repository) {
     store.dispatch(LoadCreditsRequest());
     repository.loadList(store.state.credentials).then((data) {
       store.dispatch(LoadCreditsSuccess(data));
+      store.dispatch(PersistData());
       if (action.completer != null) {
         action.completer.complete(null);
       }
-      store.dispatch(SetDataLoaded());
     }).catchError((Object error) {
       print(error);
       store.dispatch(LoadCreditsFailure(error));

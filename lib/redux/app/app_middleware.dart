@@ -438,6 +438,9 @@ Middleware<AppState> _createAccountLoaded() {
       store.dispatch(
           SelectCompany(companyIndex: i, clearSelection: loadedStaticData));
       store.dispatch(LoadCompanySuccess(userCompany));
+      if (!userCompany.company.isLarge) {
+        store.dispatch(PersistData());
+      }
     }
 
     store.dispatch(SelectCompany(

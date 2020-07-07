@@ -144,8 +144,6 @@ class RefreshData implements StartLoading {
 
 class ClearData {}
 
-class SetDataLoaded implements PersistData {}
-
 class RefreshDataFailure {
   const RefreshDataFailure(this.error);
 

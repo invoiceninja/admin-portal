@@ -187,7 +187,7 @@ Reducer<int> lastUpdatedReducer = combineReducers([
         ? state
         : DateTime.now().millisecondsSinceEpoch;
   }),
-  TypedReducer<int, SetDataLoaded>((state, action) {
+  TypedReducer<int, PersistData>((state, action) {
     return DateTime.now().millisecondsSinceEpoch;
   }),
 ]);
