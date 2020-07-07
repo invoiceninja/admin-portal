@@ -412,5 +412,5 @@ QuoteState _setLoadedQuotes(QuoteState quoteState, LoadQuotesSuccess action) =>
 
 QuoteState _setLoadedCompany(QuoteState quoteState, LoadCompanySuccess action) {
   final company = action.userCompany.company;
-  return company.hasData ? quoteState.loadQuotes(company.quotes) : quoteState;
+  return quoteState.loadQuotes(company.quotes);
 }

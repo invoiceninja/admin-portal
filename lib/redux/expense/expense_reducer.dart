@@ -320,7 +320,5 @@ ExpenseState _setLoadedExpenses(
 ExpenseState _setLoadedCompany(
     ExpenseState expenseState, LoadCompanySuccess action) {
   final company = action.userCompany.company;
-  return company.hasData
-      ? expenseState.loadExpenses(company.expenses)
-      : expenseState;
+  return expenseState.loadExpenses(company.expenses);
 }

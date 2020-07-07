@@ -299,7 +299,5 @@ ProductState _setLoadedProducts(
 ProductState _setLoadedCompany(
     ProductState productState, LoadCompanySuccess action) {
   final company = action.userCompany.company;
-  return company.hasData
-      ? productState.loadProducts(company.products)
-      : productState;
+  return productState.loadProducts(company.products);
 }

@@ -321,7 +321,5 @@ PaymentState _setLoadedPayments(
 PaymentState _setLoadedCompany(
     PaymentState paymentState, LoadCompanySuccess action) {
   final company = action.userCompany.company;
-  return company.hasData
-      ? paymentState.loadPayments(company.payments)
-      : paymentState;
+  return paymentState.loadPayments(company.payments);
 }

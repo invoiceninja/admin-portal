@@ -325,7 +325,5 @@ ProjectState _setLoadedProjects(
 ProjectState _setLoadedCompany(
     ProjectState projectState, LoadCompanySuccess action) {
   final company = action.userCompany.company;
-  return company.hasData
-      ? projectState.loadProjects(company.projects)
-      : projectState;
+  return projectState.loadProjects(company.projects);
 }

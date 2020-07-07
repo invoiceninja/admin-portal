@@ -283,7 +283,5 @@ WebhookState _setLoadedWebhooks(
 WebhookState _setLoadedCompany(
     WebhookState webhookState, LoadCompanySuccess action) {
   final company = action.userCompany.company;
-  return company.hasData
-      ? webhookState.loadWebhooks(company.webhooks)
-      : webhookState;
+  return webhookState.loadWebhooks(company.webhooks);
 }

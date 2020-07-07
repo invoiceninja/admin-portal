@@ -202,7 +202,7 @@ Middleware<AppState> _createRefreshRequest(AuthRepository repository) {
             'TOKEN';
     final updatedAt = action.clearData
         ? 0
-        : ((DateTime.now().millisecondsSinceEpoch -
+        : ((store.state.userCompanyState.lastUpdated -
                     kMillisecondsToRefreshData) /
                 1000)
             .round();

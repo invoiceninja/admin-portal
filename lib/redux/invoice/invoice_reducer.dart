@@ -455,7 +455,5 @@ InvoiceState _setLoadedInvoices(
 InvoiceState _setLoadedCompany(
     InvoiceState invoiceState, LoadCompanySuccess action) {
   final company = action.userCompany.company;
-  return company.hasData
-      ? invoiceState.loadInvoices(company.invoices)
-      : invoiceState;
+  return invoiceState.loadInvoices(company.invoices);
 }

@@ -283,7 +283,5 @@ StubState _setLoadedStubs(
 StubState _setLoadedCompany(
         StubState stubState, LoadCompanySuccess action) {
  final company = action.userCompany.company;
- return company.hasData
-  ? stubState.loadStubs(company.stubs)
-  : stubState;
+ return stubState.loadStubs(company.stubs);
 }

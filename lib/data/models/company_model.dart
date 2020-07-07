@@ -282,9 +282,6 @@ abstract class CompanyEntity extends Object
 
   bool get enableThirdItemTaxRate => (numberOfItemTaxRates ?? 0) >= 3;
 
-  bool get hasData =>
-      clients.isNotEmpty || products.isNotEmpty || tasks.isNotEmpty;
-
   bool get hasInvoiceTaxes => numberOfInvoiceTaxRates > 0;
 
   bool get hasCustomSurcharge =>
