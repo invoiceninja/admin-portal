@@ -60,7 +60,9 @@ class MenuDrawerVM {
           (BuildContext context, String companyIndex, CompanyEntity company) {
         store.dispatch(ClearEntityFilter());
         store.dispatch(SelectCompany(int.parse(companyIndex)));
-        store.dispatch(RefreshData());
+        if (store.state.isStale) {
+          store.dispatch(RefreshData());
+        }
         AppBuilder.of(context).rebuild();
 
         if (state.uiState.isInSettings) {

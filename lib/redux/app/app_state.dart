@@ -581,8 +581,8 @@ abstract class AppState implements Built<AppState, AppStateBuilder> {
   @override
   String toString() {
     //return 'latestVersion: ${account.latestVersion}';
-    //return 'Token: ${userCompanyStates.map((state) => state.token.token).where((name) => name.isNotEmpty).first}';
-    return 'URL: ${authState.url}, Route: ${uiState.currentRoute} Prev: ${uiState.previousRoute}';
+    return 'Token: ${credentials.token} - ${userCompanyStates.map((state) => state?.token?.token ?? '').where((name) => name.isNotEmpty).join(',')}';
+    //return 'URL: ${authState.url}, Route: ${uiState.currentRoute} Prev: ${uiState.previousRoute}';
   }
 }
 

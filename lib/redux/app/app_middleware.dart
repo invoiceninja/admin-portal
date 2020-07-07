@@ -424,6 +424,7 @@ Middleware<AppState> _createAccountLoaded() {
       store.dispatch(LoadStaticSuccess(data: response.static));
     }
 
+    print('## userCompanies.length: ${response.userCompanies.length}');
     for (int i = 0; i < response.userCompanies.length; i++) {
       final UserCompanyEntity userCompany = response.userCompanies[i];
 
