@@ -60,7 +60,7 @@ class MenuDrawerVM {
       onCompanyChanged:
           (BuildContext context, String companyIndex, CompanyEntity company) {
         store.dispatch(ClearEntityFilter());
-        store.dispatch(SelectCompany(int.parse(companyIndex)));
+        store.dispatch(SelectCompany(companyIndex: int.parse(companyIndex)));
         if (store.state.isStale) {
           if (!store.state.isLoaded && store.state.company.isLarge) {
             store.dispatch(LoadClients());

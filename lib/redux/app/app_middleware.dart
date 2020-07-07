@@ -419,12 +419,14 @@ Middleware<AppState> _createAccountLoaded() {
     final action = dynamicAction as LoadAccountSuccess;
     final response = action.loginResponse;
     final selectedCompanyIndex = store.state.uiState.selectedCompanyIndex;
+    final loadedStaticData = response.static.currencies.isNotEmpty;
 
-    if (response.static.currencies.isNotEmpty) {
+    if (loadedStaticData) {
       store.dispatch(LoadStaticSuccess(data: response.static));
     }
 
     print('## userCompanies.length: ${response.userCompanies.length}');
+
     for (int i = 0; i < response.userCompanies.length; i++) {
       final UserCompanyEntity userCompany = response.userCompanies[i];
 
@@ -433,11 +435,11 @@ Middleware<AppState> _createAccountLoaded() {
         prefs.setString(kSharedPrefToken, userCompany.token.obscuredToken);
       }
 
-      store.dispatch(SelectCompany(i));
+      store.dispatch(SelectCompany(companyIndex: i, clearSelection: loadedStaticData));
       store.dispatch(LoadCompanySuccess(userCompany));
     }
 
-    store.dispatch(SelectCompany(selectedCompanyIndex));
+    store.dispatch(SelectCompany(companyIndex: selectedCompanyIndex, clearSelection: loadedStaticData));
     store.dispatch(UserLoginSuccess());
 
     print('## Account is loaded');

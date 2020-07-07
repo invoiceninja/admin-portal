@@ -66,7 +66,7 @@ class AccountManagementVM {
                     break;
                   }
                 }
-                store.dispatch(SelectCompany(index));
+                store.dispatch(SelectCompany(companyIndex: index));
                 store.dispatch(ViewDashboard(navigator: Navigator.of(context)));
               } else {
                 store.dispatch(UserLogout(context));

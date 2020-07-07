@@ -21,7 +21,7 @@ Reducer<String> selectedIdReducer = combineReducers([
       (String selectedId, action) => action.groupId),
   TypedReducer<String, AddGroupSuccess>(
       (String selectedId, action) => action.group.id),
-  TypedReducer<String, SelectCompany>((selectedId, action) => ''),
+  TypedReducer<String, SelectCompany>((selectedId, action) => action.clearSelection ? '' : selectedId),
   TypedReducer<String, DeleteGroupSuccess>((selectedId, action) => ''),
   TypedReducer<String, ArchiveGroupSuccess>((selectedId, action) => ''),
   TypedReducer<String, ClearEntityFilter>((selectedId, action) => ''),
