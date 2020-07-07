@@ -28,7 +28,6 @@ class ProductListBuilder extends StatelessWidget {
       converter: ProductListVM.fromStore,
       builder: (context, viewModel) {
         return EntityList(
-            isLoaded: viewModel.isLoaded,
             entityType: EntityType.product,
             presenter: ProductPresenter(),
             state: viewModel.state,
@@ -87,7 +86,6 @@ class ProductListVM {
     @required this.productMap,
     @required this.filter,
     @required this.isLoading,
-    @required this.isLoaded,
     @required this.onProductTap,
     @required this.onRefreshed,
     @required this.tableColumns,
@@ -101,7 +99,7 @@ class ProductListVM {
       }
       final completer = snackBarCompleter<Null>(
           context, AppLocalization.of(context).refreshComplete);
-      store.dispatch(LoadProducts(completer: completer, force: true));
+      store.dispatch(RefreshData(completer: completer));
       return completer.future;
     }
 
@@ -113,7 +111,6 @@ class ProductListVM {
           state.productState.list, state.productListState, state.userState.map),
       productMap: state.productState.map,
       isLoading: state.isLoading,
-      isLoaded: state.productState.isLoaded,
       filter: state.productUIState.listUIState.filter,
       onProductTap: (context, product) {
         if (store.state.productListState.isInMultiselect()) {
@@ -141,7 +138,6 @@ class ProductListVM {
   final BuiltMap<String, BaseEntity> productMap;
   final String filter;
   final bool isLoading;
-  final bool isLoaded;
   final Function(BuildContext, BaseEntity) onProductTap;
   final Function(BuildContext) onRefreshed;
   final List<String> tableColumns;

@@ -22,6 +22,9 @@ class _$UserCompanyStateSerializer
   Iterable<Object> serialize(Serializers serializers, UserCompanyState object,
       {FullType specifiedType = FullType.unspecified}) {
     final result = <Object>[
+      'lastUpdated',
+      serializers.serialize(object.lastUpdated,
+          specifiedType: const FullType(int)),
       'documentState',
       serializers.serialize(object.documentState,
           specifiedType: const FullType(DocumentState)),
@@ -101,6 +104,10 @@ class _$UserCompanyStateSerializer
       iterator.moveNext();
       final dynamic value = iterator.current;
       switch (key) {
+        case 'lastUpdated':
+          result.lastUpdated = serializers.deserialize(value,
+              specifiedType: const FullType(int)) as int;
+          break;
         case 'userCompany':
           result.userCompany.replace(serializers.deserialize(value,
                   specifiedType: const FullType(UserCompanyEntity))
@@ -328,6 +335,8 @@ class _$SettingsUIStateSerializer
 
 class _$UserCompanyState extends UserCompanyState {
   @override
+  final int lastUpdated;
+  @override
   final UserCompanyEntity userCompany;
   @override
   final DocumentState documentState;
@@ -373,7 +382,8 @@ class _$UserCompanyState extends UserCompanyState {
       (new UserCompanyStateBuilder()..update(updates)).build();
 
   _$UserCompanyState._(
-      {this.userCompany,
+      {this.lastUpdated,
+      this.userCompany,
       this.documentState,
       this.productState,
       this.clientState,
@@ -394,6 +404,9 @@ class _$UserCompanyState extends UserCompanyState {
       this.companyGatewayState,
       this.groupState})
       : super._() {
+    if (lastUpdated == null) {
+      throw new BuiltValueNullFieldError('UserCompanyState', 'lastUpdated');
+    }
     if (documentState == null) {
       throw new BuiltValueNullFieldError('UserCompanyState', 'documentState');
     }
@@ -467,6 +480,7 @@ class _$UserCompanyState extends UserCompanyState {
   bool operator ==(Object other) {
     if (identical(other, this)) return true;
     return other is UserCompanyState &&
+        lastUpdated == other.lastUpdated &&
         userCompany == other.userCompany &&
         documentState == other.documentState &&
         productState == other.productState &&
@@ -510,23 +524,13 @@ class _$UserCompanyState extends UserCompanyState {
                                                                 $jc(
                                                                     $jc(
                                                                         $jc(
-                                                                            $jc(
-                                                                                $jc(
-                                                                                    0,
-                                                                                    userCompany
-                                                                                        .hashCode),
-                                                                                documentState
-                                                                                    .hashCode),
-                                                                            productState
-                                                                                .hashCode),
-                                                                        clientState
-                                                                            .hashCode),
-                                                                    invoiceState
-                                                                        .hashCode),
-                                                                expenseState
-                                                                    .hashCode),
-                                                            vendorState
-                                                                .hashCode),
+                                                                            $jc($jc($jc(0, lastUpdated.hashCode), userCompany.hashCode),
+                                                                                documentState.hashCode),
+                                                                            productState.hashCode),
+                                                                        clientState.hashCode),
+                                                                    invoiceState.hashCode),
+                                                                expenseState.hashCode),
+                                                            vendorState.hashCode),
                                                         taskState.hashCode),
                                                     projectState.hashCode),
                                                 paymentState.hashCode),
@@ -545,6 +549,7 @@ class _$UserCompanyState extends UserCompanyState {
   @override
   String toString() {
     return (newBuiltValueToStringHelper('UserCompanyState')
+          ..add('lastUpdated', lastUpdated)
           ..add('userCompany', userCompany)
           ..add('documentState', documentState)
           ..add('productState', productState)
@@ -572,6 +577,10 @@ class _$UserCompanyState extends UserCompanyState {
 class UserCompanyStateBuilder
     implements Builder<UserCompanyState, UserCompanyStateBuilder> {
   _$UserCompanyState _$v;
+
+  int _lastUpdated;
+  int get lastUpdated => _$this._lastUpdated;
+  set lastUpdated(int lastUpdated) => _$this._lastUpdated = lastUpdated;
 
   UserCompanyEntityBuilder _userCompany;
   UserCompanyEntityBuilder get userCompany =>
@@ -695,6 +704,7 @@ class UserCompanyStateBuilder
 
   UserCompanyStateBuilder get _$this {
     if (_$v != null) {
+      _lastUpdated = _$v.lastUpdated;
       _userCompany = _$v.userCompany?.toBuilder();
       _documentState = _$v.documentState?.toBuilder();
       _productState = _$v.productState?.toBuilder();
@@ -739,6 +749,7 @@ class UserCompanyStateBuilder
     try {
       _$result = _$v ??
           new _$UserCompanyState._(
+              lastUpdated: lastUpdated,
               userCompany: _userCompany?.build(),
               documentState: documentState.build(),
               productState: productState.build(),

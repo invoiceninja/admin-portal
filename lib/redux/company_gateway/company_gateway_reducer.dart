@@ -332,7 +332,6 @@ CompanyGatewayState _setLoadedCompanyGateway(
 CompanyGatewayState _setLoadedCompany(
     CompanyGatewayState companyGatewayState, LoadCompanySuccess action) {
   final state = companyGatewayState.rebuild((b) => b
-    ..lastUpdated = DateTime.now().millisecondsSinceEpoch
     ..map.addAll(Map.fromIterable(
       action.userCompany.company.companyGateways,
       key: (dynamic item) => item.id,
@@ -346,7 +345,6 @@ CompanyGatewayState _setLoadedCompanyGateways(
     CompanyGatewayState companyGatewayState,
     LoadCompanyGatewaysSuccess action) {
   final state = companyGatewayState.rebuild((b) => b
-    ..lastUpdated = DateTime.now().millisecondsSinceEpoch
     ..map.addAll(Map.fromIterable(
       action.companyGateways,
       key: (dynamic item) => item.id,

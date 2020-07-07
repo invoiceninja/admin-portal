@@ -313,7 +313,6 @@ PaymentTermState _setLoadedPaymentTerms(
 PaymentTermState _setLoadedCompany(
     PaymentTermState paymentTermState, LoadCompanySuccess action) {
   final state = paymentTermState.rebuild((b) => b
-    ..lastUpdated = DateTime.now().millisecondsSinceEpoch
     ..map.addAll(Map.fromIterable(
       action.userCompany.company.paymentTerms,
       key: (dynamic item) => item.id,

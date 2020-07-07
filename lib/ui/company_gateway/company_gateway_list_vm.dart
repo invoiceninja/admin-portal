@@ -41,7 +41,6 @@ class CompanyGatewayListVM {
     @required this.companyGatewayMap,
     @required this.filter,
     @required this.isLoading,
-    @required this.isLoaded,
     @required this.onCompanyGatewayTap,
     @required this.listState,
     @required this.onRefreshed,
@@ -58,7 +57,7 @@ class CompanyGatewayListVM {
       }
       final completer = snackBarCompleter<Null>(
           context, AppLocalization.of(context).refreshComplete);
-      store.dispatch(LoadCompanyGateways(completer: completer, force: true));
+      store.dispatch(RefreshData(completer: completer));
       return completer.future;
     }
 
@@ -79,7 +78,6 @@ class CompanyGatewayListVM {
       companyGatewayList: gatewayIds,
       companyGatewayMap: state.companyGatewayState.map,
       isLoading: state.isLoading,
-      isLoaded: state.companyGatewayState.isLoaded,
       filter: state.companyGatewayUIState.listUIState.filter,
       onClearEntityFilterPressed: () => store.dispatch(ClearEntityFilter()),
       onViewEntityFilterPressed: (BuildContext context) => viewEntityById(
@@ -120,7 +118,6 @@ class CompanyGatewayListVM {
   final ListUIState listState;
   final String filter;
   final bool isLoading;
-  final bool isLoaded;
   final Function(BuildContext, CompanyGatewayEntity) onCompanyGatewayTap;
   final Function(BuildContext) onRefreshed;
   final Function onClearEntityFilterPressed;

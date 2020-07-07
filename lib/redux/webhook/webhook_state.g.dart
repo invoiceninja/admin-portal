@@ -30,12 +30,7 @@ class _$WebhookStateSerializer implements StructuredSerializer<WebhookState> {
           specifiedType:
               const FullType(BuiltList, const [const FullType(String)])),
     ];
-    if (object.lastUpdated != null) {
-      result
-        ..add('lastUpdated')
-        ..add(serializers.serialize(object.lastUpdated,
-            specifiedType: const FullType(int)));
-    }
+
     return result;
   }
 
@@ -50,10 +45,6 @@ class _$WebhookStateSerializer implements StructuredSerializer<WebhookState> {
       iterator.moveNext();
       final dynamic value = iterator.current;
       switch (key) {
-        case 'lastUpdated':
-          result.lastUpdated = serializers.deserialize(value,
-              specifiedType: const FullType(int)) as int;
-          break;
         case 'map':
           result.map.replace(serializers.deserialize(value,
               specifiedType: const FullType(BuiltMap, const [
@@ -137,8 +128,6 @@ class _$WebhookUIStateSerializer
 
 class _$WebhookState extends WebhookState {
   @override
-  final int lastUpdated;
-  @override
   final BuiltMap<String, WebhookEntity> map;
   @override
   final BuiltList<String> list;
@@ -146,7 +135,7 @@ class _$WebhookState extends WebhookState {
   factory _$WebhookState([void Function(WebhookStateBuilder) updates]) =>
       (new WebhookStateBuilder()..update(updates)).build();
 
-  _$WebhookState._({this.lastUpdated, this.map, this.list}) : super._() {
+  _$WebhookState._({this.map, this.list}) : super._() {
     if (map == null) {
       throw new BuiltValueNullFieldError('WebhookState', 'map');
     }
@@ -165,23 +154,18 @@ class _$WebhookState extends WebhookState {
   @override
   bool operator ==(Object other) {
     if (identical(other, this)) return true;
-    return other is WebhookState &&
-        lastUpdated == other.lastUpdated &&
-        map == other.map &&
-        list == other.list;
+    return other is WebhookState && map == other.map && list == other.list;
   }
 
   int __hashCode;
   @override
   int get hashCode {
-    return __hashCode ??= $jf(
-        $jc($jc($jc(0, lastUpdated.hashCode), map.hashCode), list.hashCode));
+    return __hashCode ??= $jf($jc($jc(0, map.hashCode), list.hashCode));
   }
 
   @override
   String toString() {
     return (newBuiltValueToStringHelper('WebhookState')
-          ..add('lastUpdated', lastUpdated)
           ..add('map', map)
           ..add('list', list))
         .toString();
@@ -191,10 +175,6 @@ class _$WebhookState extends WebhookState {
 class WebhookStateBuilder
     implements Builder<WebhookState, WebhookStateBuilder> {
   _$WebhookState _$v;
-
-  int _lastUpdated;
-  int get lastUpdated => _$this._lastUpdated;
-  set lastUpdated(int lastUpdated) => _$this._lastUpdated = lastUpdated;
 
   MapBuilder<String, WebhookEntity> _map;
   MapBuilder<String, WebhookEntity> get map =>
@@ -209,7 +189,6 @@ class WebhookStateBuilder
 
   WebhookStateBuilder get _$this {
     if (_$v != null) {
-      _lastUpdated = _$v.lastUpdated;
       _map = _$v.map?.toBuilder();
       _list = _$v.list?.toBuilder();
       _$v = null;
@@ -234,9 +213,8 @@ class WebhookStateBuilder
   _$WebhookState build() {
     _$WebhookState _$result;
     try {
-      _$result = _$v ??
-          new _$WebhookState._(
-              lastUpdated: lastUpdated, map: map.build(), list: list.build());
+      _$result =
+          _$v ?? new _$WebhookState._(map: map.build(), list: list.build());
     } catch (_) {
       String _$failedField;
       try {

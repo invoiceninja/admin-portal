@@ -99,8 +99,13 @@ class AuthRepository {
     return sendRequest(url: url, data: credentials, secret: secret);
   }
 
-  Future<LoginResponse> refresh({String url, String token}) async {
+  Future<LoginResponse> refresh(
+      {String url, String token, int updatedAt}) async {
     url = formatApiUrl(url) + '/refresh';
+
+    if (updatedAt > 0) {
+      url += '?updated_at=$updatedAt';
+    }
 
     return sendRequest(url: url, token: token);
   }

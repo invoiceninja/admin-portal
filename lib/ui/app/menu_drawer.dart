@@ -549,6 +549,17 @@ class SidebarFooter extends StatelessWidget {
                   ),
                 ),
               )
+            else if (state.credentials.token.isEmpty)
+              IconButton(
+                icon: Icon(
+                  Icons.warning,
+                  color: Colors.red,
+                ),
+                onPressed: () => showErrorDialog(
+                  context: context,
+                  clearErrorOnDismiss: true,
+                ),
+              )
             else if (account.isUpdateAvailable)
               IconButton(
                 icon: Icon(

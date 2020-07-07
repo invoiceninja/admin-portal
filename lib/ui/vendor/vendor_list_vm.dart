@@ -28,7 +28,6 @@ class VendorListBuilder extends StatelessWidget {
       converter: VendorListVM.fromStore,
       builder: (context, viewModel) {
         return EntityList(
-          isLoaded: viewModel.isLoaded,
           entityType: EntityType.vendor,
           presenter: VendorPresenter(),
           state: viewModel.state,
@@ -89,7 +88,6 @@ class VendorListVM {
     @required this.vendorMap,
     @required this.filter,
     @required this.isLoading,
-    @required this.isLoaded,
     @required this.onVendorTap,
     @required this.listState,
     @required this.onRefreshed,
@@ -106,7 +104,7 @@ class VendorListVM {
       }
       final completer = snackBarCompleter<Null>(
           context, AppLocalization.of(context).refreshComplete);
-      store.dispatch(LoadVendors(completer: completer, force: true));
+      store.dispatch(RefreshData(completer: completer));
       return completer.future;
     }
 
@@ -119,7 +117,6 @@ class VendorListVM {
           state.vendorState.list, state.vendorListState, state.userState.map),
       vendorMap: state.vendorState.map,
       isLoading: state.isLoading,
-      isLoaded: state.vendorState.isLoaded,
       filter: state.vendorUIState.listUIState.filter,
       onClearEntityFilterPressed: () => store.dispatch(ClearEntityFilter()),
       onViewEntityFilterPressed: (BuildContext context) => viewEntityById(
@@ -152,7 +149,6 @@ class VendorListVM {
   final ListUIState listState;
   final String filter;
   final bool isLoading;
-  final bool isLoaded;
   final Function(BuildContext, BaseEntity) onVendorTap;
   final Function(BuildContext) onRefreshed;
   final Function onClearEntityFilterPressed;

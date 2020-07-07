@@ -285,7 +285,6 @@ DocumentState _setLoadedDocument(
 DocumentState _setLoadedDocuments(
     DocumentState documentState, LoadDocumentsSuccess action) {
   final state = documentState.rebuild((b) => b
-    ..lastUpdated = DateTime.now().millisecondsSinceEpoch
     ..map.addAll(Map.fromIterable(
       action.documents,
       key: (dynamic item) => item.id,

@@ -29,7 +29,6 @@ class TokenListBuilder extends StatelessWidget {
       converter: TokenListVM.fromStore,
       builder: (context, viewModel) {
         return EntityList(
-            isLoaded: viewModel.isLoaded,
             entityType: EntityType.token,
             presenter: TokenPresenter(),
             state: viewModel.state,
@@ -91,7 +90,6 @@ class TokenListVM {
     @required this.tokenMap,
     @required this.filter,
     @required this.isLoading,
-    @required this.isLoaded,
     @required this.onTokenTap,
     @required this.listState,
     @required this.onRefreshed,
@@ -109,7 +107,7 @@ class TokenListVM {
       }
       final completer = snackBarCompleter<Null>(
           context, AppLocalization.of(context).refreshComplete);
-      store.dispatch(LoadTokens(completer: completer, force: true));
+      store.dispatch(RefreshData(completer: completer));
       return completer.future;
     }
 
@@ -123,7 +121,6 @@ class TokenListVM {
           state.tokenState.map, state.tokenState.list, state.tokenListState),
       tokenMap: state.tokenState.map,
       isLoading: state.isLoading,
-      isLoaded: state.tokenState.isLoaded,
       filter: state.tokenUIState.listUIState.filter,
       onClearEntityFilterPressed: () => store.dispatch(ClearEntityFilter()),
       onViewEntityFilterPressed: (BuildContext context) => viewEntityById(
@@ -160,7 +157,6 @@ class TokenListVM {
   final ListUIState listState;
   final String filter;
   final bool isLoading;
-  final bool isLoaded;
   final Function(BuildContext, BaseEntity) onTokenTap;
   final Function(BuildContext) onRefreshed;
   final Function(BuildContext, List<BaseEntity>, EntityAction) onEntityAction;

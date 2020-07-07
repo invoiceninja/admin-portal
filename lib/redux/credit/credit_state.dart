@@ -2,7 +2,6 @@ import 'dart:async';
 import 'package:built_value/built_value.dart';
 import 'package:built_value/serializer.dart';
 import 'package:built_collection/built_collection.dart';
-import 'package:invoiceninja_flutter/constants.dart';
 import 'package:invoiceninja_flutter/data/models/credit_model.dart';
 import 'package:invoiceninja_flutter/redux/ui/entity_ui_state.dart';
 import 'package:invoiceninja_flutter/redux/ui/list_ui_state.dart';
@@ -13,7 +12,6 @@ part 'credit_state.g.dart';
 abstract class CreditState implements Built<CreditState, CreditStateBuilder> {
   factory CreditState() {
     return _$CreditState._(
-      lastUpdated: 0,
       map: BuiltMap<String, InvoiceEntity>(),
       list: BuiltList<String>(),
     );
@@ -24,22 +22,8 @@ abstract class CreditState implements Built<CreditState, CreditStateBuilder> {
   @memoized
   int get hashCode;
 
-  @nullable
-  int get lastUpdated;
-
   BuiltMap<String, InvoiceEntity> get map;
   BuiltList<String> get list;
-
-  bool get isStale {
-    if (!isLoaded) {
-      return true;
-    }
-
-    return DateTime.now().millisecondsSinceEpoch - lastUpdated >
-        kMillisecondsToRefreshData;
-  }
-
-  bool get isLoaded => lastUpdated != null && lastUpdated > 0;
 
   CreditState loadCredits(BuiltList<InvoiceEntity> clients) {
     final map = Map<String, InvoiceEntity>.fromIterable(
@@ -49,7 +33,6 @@ abstract class CreditState implements Built<CreditState, CreditStateBuilder> {
     );
 
     return rebuild((b) => b
-      ..lastUpdated = DateTime.now().millisecondsSinceEpoch
       ..map.addAll(map)
       ..list.replace((map.keys.toList() + list.toList()).toSet().toList()));
   }

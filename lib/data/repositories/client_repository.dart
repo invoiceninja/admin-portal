@@ -2,7 +2,6 @@ import 'dart:async';
 import 'dart:convert';
 import 'dart:core';
 import 'package:built_collection/built_collection.dart';
-import 'package:invoiceninja_flutter/constants.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/data/models/serializers.dart';
 import 'package:invoiceninja_flutter/data/web_client.dart';
@@ -28,13 +27,8 @@ class ClientRepository {
     return clientResponse.data;
   }
 
-  Future<BuiltList<ClientEntity>> loadList(
-      Credentials credentials, int updatedAt) async {
-    String url = credentials.url + '/clients?';
-
-    if (updatedAt > 0) {
-      url += '&updated_at=${updatedAt - kUpdatedAtBufferSeconds}';
-    }
+  Future<BuiltList<ClientEntity>> loadList(Credentials credentials) async {
+    final String url = credentials.url + '/clients?';
 
     final dynamic response = await webClient.get(url, credentials.token);
 

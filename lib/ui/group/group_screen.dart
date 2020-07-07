@@ -86,7 +86,6 @@ class GroupSettingsScreen extends StatelessWidget {
       body: GroupListBuilder(),
       bottomNavigationBar: AppBottomBar(
         entityType: EntityType.group,
-        onRefreshPressed: () => store.dispatch(LoadGroups(force: true)),
         onSelectedSortField: (value) => store.dispatch(SortGroups(value)),
         customValues1: company.getCustomFieldValues(CustomFieldType.group1,
             excludeBlank: true),

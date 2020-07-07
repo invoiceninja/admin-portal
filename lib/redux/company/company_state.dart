@@ -6,18 +6,12 @@ import 'package:invoiceninja_flutter/redux/product/product_state.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:built_value/built_value.dart';
 import 'package:built_value/serializer.dart';
-
 // STARTER: import - do not remove comment
 import 'package:invoiceninja_flutter/redux/webhook/webhook_state.dart';
-
 import 'package:invoiceninja_flutter/redux/token/token_state.dart';
-
 import 'package:invoiceninja_flutter/redux/payment_term/payment_term_state.dart';
-
 import 'package:invoiceninja_flutter/redux/design/design_state.dart';
-
 import 'package:invoiceninja_flutter/redux/credit/credit_state.dart';
-
 import 'package:invoiceninja_flutter/redux/user/user_state.dart';
 import 'package:invoiceninja_flutter/redux/tax_rate/tax_rate_state.dart';
 import 'package:invoiceninja_flutter/redux/company_gateway/company_gateway_state.dart';
@@ -36,6 +30,7 @@ abstract class UserCompanyState
     implements Built<UserCompanyState, UserCompanyStateBuilder> {
   factory UserCompanyState() {
     return _$UserCompanyState._(
+      lastUpdated: 0,
       userCompany: UserCompanyEntity(),
       documentState: DocumentState(),
       productState: ProductState(),
@@ -49,9 +44,7 @@ abstract class UserCompanyState
       quoteState: QuoteState(),
       // STARTER: constructor - do not remove comment
       webhookState: WebhookState(),
-
       tokenState: TokenState(),
-
       paymentTermState: PaymentTermState(),
       designState: DesignState(),
       creditState: CreditState(),
@@ -67,6 +60,8 @@ abstract class UserCompanyState
   @override
   @memoized
   int get hashCode;
+
+  int get lastUpdated;
 
   @nullable
   UserCompanyEntity get userCompany;
@@ -115,6 +110,18 @@ abstract class UserCompanyState
   UserEntity get user => userCompany.user;
 
   TokenEntity get token => userCompany.token;
+
+
+  bool get isStale {
+    if (!isLoaded) {
+      return true;
+    }
+
+    return DateTime.now().millisecondsSinceEpoch - lastUpdated >
+        kMillisecondsToRefreshData;
+  }
+
+  bool get isLoaded => lastUpdated != null && lastUpdated > 0;
 
   //factory CompanyState([void updates(CompanyStateBuilder b)]) = _$CompanyState;
   static Serializer<UserCompanyState> get serializer =>

@@ -1,6 +1,5 @@
 import 'dart:async';
 
-import 'package:invoiceninja_flutter/constants.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:built_value/built_value.dart';
 import 'package:built_value/serializer.dart';
@@ -14,7 +13,6 @@ abstract class InvoiceState
     implements Built<InvoiceState, InvoiceStateBuilder> {
   factory InvoiceState() {
     return _$InvoiceState._(
-      lastUpdated: 0,
       map: BuiltMap<String, InvoiceEntity>(),
       list: BuiltList<String>(),
     );
@@ -25,9 +23,6 @@ abstract class InvoiceState
   @override
   @memoized
   int get hashCode;
-
-  @nullable
-  int get lastUpdated;
 
   BuiltMap<String, InvoiceEntity> get map;
 
@@ -41,17 +36,6 @@ abstract class InvoiceState
 
   BuiltList<String> get list;
 
-  bool get isStale {
-    if (!isLoaded) {
-      return true;
-    }
-
-    return DateTime.now().millisecondsSinceEpoch - lastUpdated >
-        kMillisecondsToRefreshData;
-  }
-
-  bool get isLoaded => lastUpdated != null && lastUpdated > 0;
-
   InvoiceState loadInvoices(BuiltList<InvoiceEntity> clients) {
     final map = Map<String, InvoiceEntity>.fromIterable(
       clients,
@@ -60,7 +44,6 @@ abstract class InvoiceState
     );
 
     return rebuild((b) => b
-      ..lastUpdated = DateTime.now().millisecondsSinceEpoch
       ..map.addAll(map)
       ..list.replace((map.keys.toList() + list.toList()).toSet().toList()));
   }

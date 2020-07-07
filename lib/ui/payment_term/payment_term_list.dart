@@ -33,7 +33,7 @@ class _PaymentTermListState extends State<PaymentTermList> {
     final listUIState = state.uiState.paymentTermUIState.listUIState;
     final isInMultiselect = listUIState.isInMultiselect();
 
-    if (!viewModel.isLoaded) {
+    if (!viewModel.state.isLoaded) {
       return viewModel.isLoading ? LoadingIndicator() : SizedBox();
     } else if (viewModel.paymentTermMap.isEmpty) {
       return HelpText(AppLocalization.of(context).noRecordsFound);

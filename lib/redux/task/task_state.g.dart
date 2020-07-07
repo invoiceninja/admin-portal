@@ -28,12 +28,7 @@ class _$TaskStateSerializer implements StructuredSerializer<TaskState> {
           specifiedType:
               const FullType(BuiltList, const [const FullType(String)])),
     ];
-    if (object.lastUpdated != null) {
-      result
-        ..add('lastUpdated')
-        ..add(serializers.serialize(object.lastUpdated,
-            specifiedType: const FullType(int)));
-    }
+
     return result;
   }
 
@@ -48,10 +43,6 @@ class _$TaskStateSerializer implements StructuredSerializer<TaskState> {
       iterator.moveNext();
       final dynamic value = iterator.current;
       switch (key) {
-        case 'lastUpdated':
-          result.lastUpdated = serializers.deserialize(value,
-              specifiedType: const FullType(int)) as int;
-          break;
         case 'map':
           result.map.replace(serializers.deserialize(value,
               specifiedType: const FullType(BuiltMap,
@@ -141,8 +132,6 @@ class _$TaskUIStateSerializer implements StructuredSerializer<TaskUIState> {
 
 class _$TaskState extends TaskState {
   @override
-  final int lastUpdated;
-  @override
   final BuiltMap<String, TaskEntity> map;
   @override
   final BuiltList<String> list;
@@ -150,7 +139,7 @@ class _$TaskState extends TaskState {
   factory _$TaskState([void Function(TaskStateBuilder) updates]) =>
       (new TaskStateBuilder()..update(updates)).build();
 
-  _$TaskState._({this.lastUpdated, this.map, this.list}) : super._() {
+  _$TaskState._({this.map, this.list}) : super._() {
     if (map == null) {
       throw new BuiltValueNullFieldError('TaskState', 'map');
     }
@@ -169,23 +158,18 @@ class _$TaskState extends TaskState {
   @override
   bool operator ==(Object other) {
     if (identical(other, this)) return true;
-    return other is TaskState &&
-        lastUpdated == other.lastUpdated &&
-        map == other.map &&
-        list == other.list;
+    return other is TaskState && map == other.map && list == other.list;
   }
 
   int __hashCode;
   @override
   int get hashCode {
-    return __hashCode ??= $jf(
-        $jc($jc($jc(0, lastUpdated.hashCode), map.hashCode), list.hashCode));
+    return __hashCode ??= $jf($jc($jc(0, map.hashCode), list.hashCode));
   }
 
   @override
   String toString() {
     return (newBuiltValueToStringHelper('TaskState')
-          ..add('lastUpdated', lastUpdated)
           ..add('map', map)
           ..add('list', list))
         .toString();
@@ -194,10 +178,6 @@ class _$TaskState extends TaskState {
 
 class TaskStateBuilder implements Builder<TaskState, TaskStateBuilder> {
   _$TaskState _$v;
-
-  int _lastUpdated;
-  int get lastUpdated => _$this._lastUpdated;
-  set lastUpdated(int lastUpdated) => _$this._lastUpdated = lastUpdated;
 
   MapBuilder<String, TaskEntity> _map;
   MapBuilder<String, TaskEntity> get map =>
@@ -212,7 +192,6 @@ class TaskStateBuilder implements Builder<TaskState, TaskStateBuilder> {
 
   TaskStateBuilder get _$this {
     if (_$v != null) {
-      _lastUpdated = _$v.lastUpdated;
       _map = _$v.map?.toBuilder();
       _list = _$v.list?.toBuilder();
       _$v = null;
@@ -237,9 +216,7 @@ class TaskStateBuilder implements Builder<TaskState, TaskStateBuilder> {
   _$TaskState build() {
     _$TaskState _$result;
     try {
-      _$result = _$v ??
-          new _$TaskState._(
-              lastUpdated: lastUpdated, map: map.build(), list: list.build());
+      _$result = _$v ?? new _$TaskState._(map: map.build(), list: list.build());
     } catch (_) {
       String _$failedField;
       try {

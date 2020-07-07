@@ -82,7 +82,6 @@ class PaymentTermScreen extends StatelessWidget {
       body: PaymentTermListBuilder(),
       bottomNavigationBar: AppBottomBar(
         entityType: EntityType.paymentTerm,
-        onRefreshPressed: () => store.dispatch(LoadPaymentTerms(force: true)),
         onSelectedSortField: (value) {
           store.dispatch(SortPaymentTerms(value));
         },

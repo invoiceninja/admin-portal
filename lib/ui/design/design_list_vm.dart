@@ -28,7 +28,6 @@ class DesignListBuilder extends StatelessWidget {
       converter: DesignListVM.fromStore,
       builder: (context, viewModel) {
         return EntityList(
-            isLoaded: viewModel.isLoaded,
             entityType: EntityType.design,
             //presenter: ClientPresenter(),
             state: viewModel.state,
@@ -89,7 +88,6 @@ class DesignListVM {
     @required this.designMap,
     @required this.filter,
     @required this.isLoading,
-    @required this.isLoaded,
     @required this.onDesignTap,
     @required this.listState,
     @required this.onRefreshed,
@@ -107,7 +105,7 @@ class DesignListVM {
       }
       final completer = snackBarCompleter<Null>(
           context, AppLocalization.of(context).refreshComplete);
-      store.dispatch(LoadDesigns(completer: completer, force: true));
+      store.dispatch(RefreshData(completer: completer));
       return completer.future;
     }
 
@@ -121,7 +119,6 @@ class DesignListVM {
           state.designState.map, state.designState.list, state.designListState),
       designMap: state.designState.map,
       isLoading: state.isLoading,
-      isLoaded: state.designState.isLoaded,
       filter: state.designUIState.listUIState.filter,
       onClearEntityFilterPressed: () => store.dispatch(ClearEntityFilter()),
       onViewEntityFilterPressed: (BuildContext context) => viewEntityById(
@@ -151,7 +148,6 @@ class DesignListVM {
   final ListUIState listState;
   final String filter;
   final bool isLoading;
-  final bool isLoaded;
   final Function(BuildContext, BaseEntity) onDesignTap;
   final Function(BuildContext) onRefreshed;
   final Function(BuildContext, List<BaseEntity>, EntityAction) onEntityAction;

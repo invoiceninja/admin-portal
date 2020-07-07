@@ -3,7 +3,6 @@ import 'dart:async';
 import 'package:built_value/built_value.dart';
 import 'package:built_value/serializer.dart';
 import 'package:built_collection/built_collection.dart';
-import 'package:invoiceninja_flutter/constants.dart';
 import 'package:invoiceninja_flutter/data/models/entities.dart';
 import 'package:invoiceninja_flutter/data/models/expense_model.dart';
 import 'package:invoiceninja_flutter/redux/ui/entity_ui_state.dart';
@@ -15,7 +14,6 @@ abstract class ExpenseState
     implements Built<ExpenseState, ExpenseStateBuilder> {
   factory ExpenseState() {
     return _$ExpenseState._(
-      lastUpdated: 0,
       map: BuiltMap<String, ExpenseEntity>(),
       list: BuiltList<String>(),
     );
@@ -26,22 +24,8 @@ abstract class ExpenseState
   @memoized
   int get hashCode;
 
-  @nullable
-  int get lastUpdated;
-
   BuiltMap<String, ExpenseEntity> get map;
   BuiltList<String> get list;
-
-  bool get isStale {
-    if (!isLoaded) {
-      return true;
-    }
-
-    return DateTime.now().millisecondsSinceEpoch - lastUpdated >
-        kMillisecondsToRefreshData;
-  }
-
-  bool get isLoaded => lastUpdated != null && lastUpdated > 0;
 
   ExpenseState loadExpenses(BuiltList<ExpenseEntity> clients) {
     final map = Map<String, ExpenseEntity>.fromIterable(
@@ -51,7 +35,6 @@ abstract class ExpenseState
     );
 
     return rebuild((b) => b
-      ..lastUpdated = DateTime.now().millisecondsSinceEpoch
       ..map.addAll(map)
       ..list.replace((map.keys.toList() + list.toList()).toSet().toList()));
   }

@@ -90,10 +90,8 @@ Middleware<AppState> _viewPaymentTermList() {
 
     next(action);
 
-    if (store.state.staticState.isStale) {
+    if (store.state.isStale) {
       store.dispatch(RefreshData());
-    } else if (store.state.paymentTermState.isStale) {
-      store.dispatch(LoadPaymentTerms());
     }
 
     store.dispatch(UpdateCurrentRoute(PaymentTermScreen.route));
@@ -242,20 +240,14 @@ Middleware<AppState> _loadPaymentTerms(PaymentTermRepository repository) {
     final action = dynamicAction as LoadPaymentTerms;
     final AppState state = store.state;
 
-    if (!state.paymentTermState.isStale && !action.force) {
-      next(action);
-      return;
-    }
 
     if (state.isLoading) {
       next(action);
       return;
     }
 
-    final int updatedAt = (state.paymentTermState.lastUpdated / 1000).round();
-
     store.dispatch(LoadPaymentTermsRequest());
-    repository.loadList(state.credentials, updatedAt).then((data) {
+    repository.loadList(state.credentials).then((data) {
       store.dispatch(LoadPaymentTermsSuccess(data));
 
       if (action.completer != null) {

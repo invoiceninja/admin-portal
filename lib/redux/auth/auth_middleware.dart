@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:invoiceninja_flutter/constants.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
-import 'package:invoiceninja_flutter/redux/client/client_actions.dart';
 import 'package:invoiceninja_flutter/redux/company/company_actions.dart';
 import 'package:invoiceninja_flutter/redux/dashboard/dashboard_actions.dart';
 import 'package:invoiceninja_flutter/redux/ui/ui_actions.dart';
@@ -201,10 +200,22 @@ Middleware<AppState> _createRefreshRequest(AuthRepository repository) {
     final token =
         TokenEntity.unobscureToken(prefs.getString(kSharedPrefToken)) ??
             'TOKEN';
+    final updatedAt = action.clearData
+        ? 0
+        : ((DateTime.now().millisecondsSinceEpoch -
+                    kMillisecondsToRefreshData) /
+                1000)
+            .round();
 
     store.dispatch(UserLoadUrl(url: url));
 
-    repository.refresh(url: url, token: token).then((data) {
+    repository
+        .refresh(
+      url: url,
+      token: token,
+      updatedAt: updatedAt - kUpdatedAtBufferSeconds,
+    )
+        .then((data) {
       if (action.clearData) {
         store.dispatch(ClearData());
       }
@@ -262,7 +273,6 @@ Middleware<AppState> _createCompany(AuthRepository repository) {
             store.dispatch(SelectCompany(state.companies.length));
             store.dispatch(ViewDashboard(
                 navigator: Navigator.of(action.context), force: true));
-            store.dispatch(LoadClients());
           }),
       ));
     });

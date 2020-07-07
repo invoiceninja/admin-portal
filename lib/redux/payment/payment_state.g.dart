@@ -30,12 +30,7 @@ class _$PaymentStateSerializer implements StructuredSerializer<PaymentState> {
           specifiedType:
               const FullType(BuiltList, const [const FullType(String)])),
     ];
-    if (object.lastUpdated != null) {
-      result
-        ..add('lastUpdated')
-        ..add(serializers.serialize(object.lastUpdated,
-            specifiedType: const FullType(int)));
-    }
+
     return result;
   }
 
@@ -50,10 +45,6 @@ class _$PaymentStateSerializer implements StructuredSerializer<PaymentState> {
       iterator.moveNext();
       final dynamic value = iterator.current;
       switch (key) {
-        case 'lastUpdated':
-          result.lastUpdated = serializers.deserialize(value,
-              specifiedType: const FullType(int)) as int;
-          break;
         case 'map':
           result.map.replace(serializers.deserialize(value,
               specifiedType: const FullType(BuiltMap, const [
@@ -137,8 +128,6 @@ class _$PaymentUIStateSerializer
 
 class _$PaymentState extends PaymentState {
   @override
-  final int lastUpdated;
-  @override
   final BuiltMap<String, PaymentEntity> map;
   @override
   final BuiltList<String> list;
@@ -146,7 +135,7 @@ class _$PaymentState extends PaymentState {
   factory _$PaymentState([void Function(PaymentStateBuilder) updates]) =>
       (new PaymentStateBuilder()..update(updates)).build();
 
-  _$PaymentState._({this.lastUpdated, this.map, this.list}) : super._() {
+  _$PaymentState._({this.map, this.list}) : super._() {
     if (map == null) {
       throw new BuiltValueNullFieldError('PaymentState', 'map');
     }
@@ -165,23 +154,18 @@ class _$PaymentState extends PaymentState {
   @override
   bool operator ==(Object other) {
     if (identical(other, this)) return true;
-    return other is PaymentState &&
-        lastUpdated == other.lastUpdated &&
-        map == other.map &&
-        list == other.list;
+    return other is PaymentState && map == other.map && list == other.list;
   }
 
   int __hashCode;
   @override
   int get hashCode {
-    return __hashCode ??= $jf(
-        $jc($jc($jc(0, lastUpdated.hashCode), map.hashCode), list.hashCode));
+    return __hashCode ??= $jf($jc($jc(0, map.hashCode), list.hashCode));
   }
 
   @override
   String toString() {
     return (newBuiltValueToStringHelper('PaymentState')
-          ..add('lastUpdated', lastUpdated)
           ..add('map', map)
           ..add('list', list))
         .toString();
@@ -191,10 +175,6 @@ class _$PaymentState extends PaymentState {
 class PaymentStateBuilder
     implements Builder<PaymentState, PaymentStateBuilder> {
   _$PaymentState _$v;
-
-  int _lastUpdated;
-  int get lastUpdated => _$this._lastUpdated;
-  set lastUpdated(int lastUpdated) => _$this._lastUpdated = lastUpdated;
 
   MapBuilder<String, PaymentEntity> _map;
   MapBuilder<String, PaymentEntity> get map =>
@@ -209,7 +189,6 @@ class PaymentStateBuilder
 
   PaymentStateBuilder get _$this {
     if (_$v != null) {
-      _lastUpdated = _$v.lastUpdated;
       _map = _$v.map?.toBuilder();
       _list = _$v.list?.toBuilder();
       _$v = null;
@@ -234,9 +213,8 @@ class PaymentStateBuilder
   _$PaymentState build() {
     _$PaymentState _$result;
     try {
-      _$result = _$v ??
-          new _$PaymentState._(
-              lastUpdated: lastUpdated, map: map.build(), list: list.build());
+      _$result =
+          _$v ?? new _$PaymentState._(map: map.build(), list: list.build());
     } catch (_) {
       String _$failedField;
       try {

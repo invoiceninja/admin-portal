@@ -219,7 +219,8 @@ Middleware<AppState> _createLoadState(
       AppBuilder.of(action.context).rebuild();
       store.dispatch(LoadStateSuccess(appState));
 
-      if (appState.staticState.isStale) {
+      if (appState.isStale) {
+        print('## Load state: is stale - refreshing...');
         store.dispatch(RefreshData());
       }
 
@@ -367,8 +368,12 @@ Middleware<AppState> _createPersistData(
     next(action);
 
     _persistDataDebouncer.run(() {
-      if (!store.state.isDataLoaded) {
+      print('## Calling Persist Data');
+      if (!store.state.isLoaded) {
+        print('## Not loaded: skipping');
         return;
+      } else {
+        print('## Loaded: saving data');
       }
 
       final AppState state = store.state;
@@ -432,8 +437,15 @@ Middleware<AppState> _createAccountLoaded() {
     store.dispatch(SelectCompany(selectedCompanyIndex));
     store.dispatch(UserLoginSuccess());
 
-    if (store.state.clientState.isStale) {
+    print('## Account is loaded');
+    if (!store.state.userCompanyState.isLoaded &&
+        response.userCompanies.isNotEmpty && // TODO remove this check
+        response.userCompanies[selectedCompanyIndex].company.isLarge) {
+      print('## Loading clients..');
       store.dispatch(LoadClients());
+    } else {
+      print('## Set is loaded');
+      store.dispatch(SetDataLoaded());
     }
 
     if (action.completer != null) {

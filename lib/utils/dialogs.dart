@@ -8,11 +8,12 @@ import 'package:invoiceninja_flutter/utils/localization.dart';
 void showErrorDialog({
   @required BuildContext context,
   @required String message,
+  bool clearErrorOnDismiss = false,
 }) {
   showDialog<ErrorDialog>(
       context: context,
       builder: (BuildContext context) {
-        return ErrorDialog(message);
+        return ErrorDialog(message, clearErrorOnDismiss: clearErrorOnDismiss);
       });
 }
 

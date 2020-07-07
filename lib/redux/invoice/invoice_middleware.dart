@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:invoiceninja_flutter/redux/app/app_middleware.dart';
-import 'package:invoiceninja_flutter/redux/credit/credit_actions.dart';
 import 'package:invoiceninja_flutter/redux/expense/expense_actions.dart';
 import 'package:invoiceninja_flutter/redux/invoice/invoice_actions.dart';
 import 'package:invoiceninja_flutter/redux/payment/payment_actions.dart';
@@ -72,10 +71,8 @@ Middleware<AppState> _viewInvoiceList() {
 
     next(action);
 
-    if (store.state.staticState.isStale) {
+    if (store.state.isStale) {
       store.dispatch(RefreshData());
-    } else if (store.state.invoiceState.isStale) {
-      store.dispatch(LoadInvoices());
     }
 
     store.dispatch(UpdateCurrentRoute(InvoiceScreen.route));
@@ -154,7 +151,7 @@ Middleware<AppState> _cancelInvoices(InvoiceRepository repository) {
             store.state.credentials, action.invoiceIds, EntityAction.cancel)
         .then((List<InvoiceEntity> invoices) {
       store.dispatch(CancelInvoicesSuccess(invoices));
-      store.dispatch(LoadClients(force: true));
+      store.dispatch(RefreshData());
       if (action.completer != null) {
         action.completer.complete(null);
       }
@@ -178,11 +175,7 @@ Middleware<AppState> _reverseInvoices(InvoiceRepository repository) {
             store.state.credentials, action.invoiceIds, EntityAction.reverse)
         .then((List<InvoiceEntity> invoices) {
       store.dispatch(ReverseInvoicesSuccess(invoices));
-      final completer = Completer<Null>();
-      completer.future.then((value) {
-        store.dispatch(LoadCredits(force: true));
-      });
-      store.dispatch(LoadClients(force: true, completer: completer));
+      store.dispatch(RefreshData());
       if (action.completer != null) {
         action.completer.complete(null);
       }
@@ -429,27 +422,18 @@ Middleware<AppState> _loadInvoices(InvoiceRepository repository) {
     final action = dynamicAction as LoadInvoices;
     final AppState state = store.state;
 
-    if (!state.invoiceState.isStale && !action.force) {
-      next(action);
-      return;
-    }
-
     if (state.isLoading) {
       next(action);
       return;
     }
 
-    final int updatedAt = (state.invoiceState.lastUpdated / 1000).round();
-
     store.dispatch(LoadInvoicesRequest());
-    repository.loadList(store.state.credentials, updatedAt).then((data) {
+    repository.loadList(store.state.credentials).then((data) {
       store.dispatch(LoadInvoicesSuccess(data));
       if (action.completer != null) {
         action.completer.complete(null);
       }
-      if (state.paymentState.isStale) {
-        store.dispatch(LoadPayments());
-      }
+      store.dispatch(LoadPayments());
     }).catchError((Object error) {
       print(error);
       store.dispatch(LoadInvoicesFailure(error));

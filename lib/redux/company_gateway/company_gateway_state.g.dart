@@ -37,12 +37,7 @@ class _$CompanyGatewayStateSerializer
           specifiedType:
               const FullType(BuiltList, const [const FullType(String)])),
     ];
-    if (object.lastUpdated != null) {
-      result
-        ..add('lastUpdated')
-        ..add(serializers.serialize(object.lastUpdated,
-            specifiedType: const FullType(int)));
-    }
+
     return result;
   }
 
@@ -58,10 +53,6 @@ class _$CompanyGatewayStateSerializer
       iterator.moveNext();
       final dynamic value = iterator.current;
       switch (key) {
-        case 'lastUpdated':
-          result.lastUpdated = serializers.deserialize(value,
-              specifiedType: const FullType(int)) as int;
-          break;
         case 'map':
           result.map.replace(serializers.deserialize(value,
               specifiedType: const FullType(BuiltMap, const [
@@ -150,8 +141,6 @@ class _$CompanyGatewayUIStateSerializer
 
 class _$CompanyGatewayState extends CompanyGatewayState {
   @override
-  final int lastUpdated;
-  @override
   final BuiltMap<String, CompanyGatewayEntity> map;
   @override
   final BuiltList<String> list;
@@ -160,7 +149,7 @@ class _$CompanyGatewayState extends CompanyGatewayState {
           [void Function(CompanyGatewayStateBuilder) updates]) =>
       (new CompanyGatewayStateBuilder()..update(updates)).build();
 
-  _$CompanyGatewayState._({this.lastUpdated, this.map, this.list}) : super._() {
+  _$CompanyGatewayState._({this.map, this.list}) : super._() {
     if (map == null) {
       throw new BuiltValueNullFieldError('CompanyGatewayState', 'map');
     }
@@ -182,7 +171,6 @@ class _$CompanyGatewayState extends CompanyGatewayState {
   bool operator ==(Object other) {
     if (identical(other, this)) return true;
     return other is CompanyGatewayState &&
-        lastUpdated == other.lastUpdated &&
         map == other.map &&
         list == other.list;
   }
@@ -190,14 +178,12 @@ class _$CompanyGatewayState extends CompanyGatewayState {
   int __hashCode;
   @override
   int get hashCode {
-    return __hashCode ??= $jf(
-        $jc($jc($jc(0, lastUpdated.hashCode), map.hashCode), list.hashCode));
+    return __hashCode ??= $jf($jc($jc(0, map.hashCode), list.hashCode));
   }
 
   @override
   String toString() {
     return (newBuiltValueToStringHelper('CompanyGatewayState')
-          ..add('lastUpdated', lastUpdated)
           ..add('map', map)
           ..add('list', list))
         .toString();
@@ -207,10 +193,6 @@ class _$CompanyGatewayState extends CompanyGatewayState {
 class CompanyGatewayStateBuilder
     implements Builder<CompanyGatewayState, CompanyGatewayStateBuilder> {
   _$CompanyGatewayState _$v;
-
-  int _lastUpdated;
-  int get lastUpdated => _$this._lastUpdated;
-  set lastUpdated(int lastUpdated) => _$this._lastUpdated = lastUpdated;
 
   MapBuilder<String, CompanyGatewayEntity> _map;
   MapBuilder<String, CompanyGatewayEntity> get map =>
@@ -225,7 +207,6 @@ class CompanyGatewayStateBuilder
 
   CompanyGatewayStateBuilder get _$this {
     if (_$v != null) {
-      _lastUpdated = _$v.lastUpdated;
       _map = _$v.map?.toBuilder();
       _list = _$v.list?.toBuilder();
       _$v = null;
@@ -251,8 +232,7 @@ class CompanyGatewayStateBuilder
     _$CompanyGatewayState _$result;
     try {
       _$result = _$v ??
-          new _$CompanyGatewayState._(
-              lastUpdated: lastUpdated, map: map.build(), list: list.build());
+          new _$CompanyGatewayState._(map: map.build(), list: list.build());
     } catch (_) {
       String _$failedField;
       try {

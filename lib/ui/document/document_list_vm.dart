@@ -27,7 +27,6 @@ class DocumentListBuilder extends StatelessWidget {
       converter: DocumentListVM.fromStore,
       builder: (context, viewModel) {
         return EntityList(
-            isLoaded: viewModel.isLoaded,
             entityType: EntityType.document,
             state: viewModel.state,
             entityList: viewModel.documentList,
@@ -87,7 +86,6 @@ class DocumentListVM {
     @required this.documentMap,
     @required this.filter,
     @required this.isLoading,
-    @required this.isLoaded,
     @required this.onDocumentTap,
     @required this.listState,
     @required this.onRefreshed,
@@ -104,7 +102,7 @@ class DocumentListVM {
       }
       final completer = snackBarCompleter<Null>(
           context, AppLocalization.of(context).refreshComplete);
-      store.dispatch(LoadDocuments(completer: completer, force: true));
+      store.dispatch(RefreshData(completer: completer));
       return completer.future;
     }
 
@@ -117,7 +115,6 @@ class DocumentListVM {
           state.documentState.list, state.documentListState),
       documentMap: state.documentState.map,
       isLoading: state.isLoading,
-      isLoaded: state.documentState.isLoaded,
       filter: state.documentUIState.listUIState.filter,
       onClearEntityFilterPressed: () => store.dispatch(FilterByEntity()),
       onViewEntityFilterPressed: (BuildContext context) => viewEntityById(
@@ -142,7 +139,6 @@ class DocumentListVM {
   final ListUIState listState;
   final String filter;
   final bool isLoading;
-  final bool isLoaded;
   final Function(BuildContext, BaseEntity) onDocumentTap;
   final Function(BuildContext) onRefreshed;
   final Function(BuildContext, List<DocumentEntity>, EntityAction)

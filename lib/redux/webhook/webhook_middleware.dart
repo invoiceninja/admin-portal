@@ -89,10 +89,8 @@ Middleware<AppState> _viewWebhookList() {
 
     next(action);
 
-    if (store.state.staticState.isStale) {
+    if (store.state.isStale) {
       store.dispatch(RefreshData());
-    } else if (store.state.webhookState.isStale) {
-      store.dispatch(LoadWebhooks());
     }
 
     store.dispatch(UpdateCurrentRoute(WebhookScreen.route));
@@ -239,20 +237,13 @@ Middleware<AppState> _loadWebhooks(WebhookRepository repository) {
     final action = dynamicAction as LoadWebhooks;
     final AppState state = store.state;
 
-    if (!state.webhookState.isStale && !action.force) {
-      next(action);
-      return;
-    }
-
     if (state.isLoading) {
       next(action);
       return;
     }
 
-    final int updatedAt = (state.webhookState.lastUpdated / 1000).round();
-
     store.dispatch(LoadWebhooksRequest());
-    repository.loadList(state.credentials, updatedAt).then((data) {
+    repository.loadList(state.credentials).then((data) {
       store.dispatch(LoadWebhooksSuccess(data));
 
       if (action.completer != null) {

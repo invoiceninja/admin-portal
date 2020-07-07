@@ -149,7 +149,6 @@ abstract class WebhookEntity extends Object
       if (includeEdit && userCompany.canEditEntity(this)) {
         actions.add(EntityAction.edit);
       }
-
     }
 
     if (actions.isNotEmpty) {

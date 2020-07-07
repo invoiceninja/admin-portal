@@ -268,7 +268,6 @@ UserState _setLoadedUser(UserState userState, LoadUserSuccess action) {
 
 UserState _setLoadedUsers(UserState userState, LoadUsersSuccess action) {
   final state = userState.rebuild((b) => b
-    ..lastUpdated = DateTime.now().millisecondsSinceEpoch
     ..map.addAll(Map.fromIterable(
       action.users,
       key: (dynamic item) => item.id,
@@ -280,7 +279,6 @@ UserState _setLoadedUsers(UserState userState, LoadUsersSuccess action) {
 
 UserState _setLoadedCompany(UserState userState, LoadCompanySuccess action) {
   final state = userState.rebuild((b) => b
-    ..lastUpdated = DateTime.now().millisecondsSinceEpoch
     ..map.addAll(Map.fromIterable(
       action.userCompany.company.users,
       key: (dynamic item) => item.id,

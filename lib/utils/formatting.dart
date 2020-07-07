@@ -154,7 +154,7 @@ String formatNumber(
 
   if (formatNumberType == FormatNumberType.percent) {
     return '$formatted%';
-  } else if ((showCurrencyCode ?? company.settings.showCurrencyCode) ||
+  } else if ((showCurrencyCode ?? company.settings.showCurrencyCode ?? false) ||
       currency.symbol.isEmpty) {
     return '$formatted ${currency.code}';
   } else if (swapCurrencySymbol) {

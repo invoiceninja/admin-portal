@@ -90,7 +90,6 @@ class InvoiceScreen extends StatelessWidget {
         tableColumns: InvoicePresenter.getAllTableFields(userCompany),
         defaultTableColumns:
             InvoicePresenter.getDefaultTableFields(userCompany),
-        onRefreshPressed: () => store.dispatch(LoadInvoices(force: true)),
         onSelectedSortField: (value) {
           store.dispatch(SortInvoices(value));
         },

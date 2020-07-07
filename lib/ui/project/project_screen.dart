@@ -88,7 +88,6 @@ class ProjectScreen extends StatelessWidget {
         tableColumns: ProjectPresenter.getAllTableFields(userCompany),
         defaultTableColumns:
             ProjectPresenter.getDefaultTableFields(userCompany),
-        onRefreshPressed: () => store.dispatch(LoadProjects(force: true)),
         onSelectedSortField: (value) => store.dispatch(SortProjects(value)),
         customValues1: company.getCustomFieldValues(CustomFieldType.project1,
             excludeBlank: true),

@@ -281,7 +281,6 @@ GroupState _setLoadedGroup(GroupState groupState, LoadGroupSuccess action) {
 
 GroupState _setLoadedGroups(GroupState groupState, LoadGroupsSuccess action) {
   final state = groupState.rebuild((b) => b
-    ..lastUpdated = DateTime.now().millisecondsSinceEpoch
     ..map.addAll(Map.fromIterable(
       action.groups,
       key: (dynamic item) => item.id,
@@ -293,7 +292,6 @@ GroupState _setLoadedGroups(GroupState groupState, LoadGroupsSuccess action) {
 
 GroupState _setLoadedCompany(GroupState groupState, LoadCompanySuccess action) {
   final state = groupState.rebuild((b) => b
-    ..lastUpdated = DateTime.now().millisecondsSinceEpoch
     ..map.addAll(Map.fromIterable(
       action.userCompany.company.groups,
       key: (dynamic item) => item.id,

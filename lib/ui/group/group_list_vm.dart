@@ -28,7 +28,6 @@ class GroupListBuilder extends StatelessWidget {
       converter: GroupListVM.fromStore,
       builder: (context, viewModel) {
         return EntityList(
-            isLoaded: viewModel.isLoaded,
             entityType: EntityType.group,
             //presenter: ClientPresenter(),
             state: viewModel.state,
@@ -89,7 +88,6 @@ class GroupListVM {
     @required this.groupMap,
     @required this.filter,
     @required this.isLoading,
-    @required this.isLoaded,
     @required this.onGroupTap,
     @required this.listState,
     @required this.onRefreshed,
@@ -105,7 +103,7 @@ class GroupListVM {
       }
       final completer = snackBarCompleter<Null>(
           context, AppLocalization.of(context).refreshComplete);
-      store.dispatch(LoadGroups(completer: completer, force: true));
+      store.dispatch(RefreshData(completer: completer));
       return completer.future;
     }
 
@@ -119,7 +117,6 @@ class GroupListVM {
           state.groupState.map, state.groupState.list, state.groupListState),
       groupMap: state.groupState.map,
       isLoading: state.isLoading,
-      isLoaded: state.groupState.isLoaded,
       filter: state.groupUIState.listUIState.filter,
       onClearEntityFilterPressed: () => store.dispatch(ClearEntityFilter()),
       onViewEntityFilterPressed: (BuildContext context) => viewEntityById(
@@ -145,7 +142,6 @@ class GroupListVM {
   final ListUIState listState;
   final String filter;
   final bool isLoading;
-  final bool isLoaded;
   final Function(BuildContext, BaseEntity) onGroupTap;
   final Function(BuildContext) onRefreshed;
   final Function onClearEntityFilterPressed;

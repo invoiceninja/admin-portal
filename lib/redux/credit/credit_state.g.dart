@@ -29,12 +29,7 @@ class _$CreditStateSerializer implements StructuredSerializer<CreditState> {
           specifiedType:
               const FullType(BuiltList, const [const FullType(String)])),
     ];
-    if (object.lastUpdated != null) {
-      result
-        ..add('lastUpdated')
-        ..add(serializers.serialize(object.lastUpdated,
-            specifiedType: const FullType(int)));
-    }
+
     return result;
   }
 
@@ -49,10 +44,6 @@ class _$CreditStateSerializer implements StructuredSerializer<CreditState> {
       iterator.moveNext();
       final dynamic value = iterator.current;
       switch (key) {
-        case 'lastUpdated':
-          result.lastUpdated = serializers.deserialize(value,
-              specifiedType: const FullType(int)) as int;
-          break;
         case 'map':
           result.map.replace(serializers.deserialize(value,
               specifiedType: const FullType(BuiltMap, const [
@@ -135,8 +126,6 @@ class _$CreditUIStateSerializer implements StructuredSerializer<CreditUIState> {
 
 class _$CreditState extends CreditState {
   @override
-  final int lastUpdated;
-  @override
   final BuiltMap<String, InvoiceEntity> map;
   @override
   final BuiltList<String> list;
@@ -144,7 +133,7 @@ class _$CreditState extends CreditState {
   factory _$CreditState([void Function(CreditStateBuilder) updates]) =>
       (new CreditStateBuilder()..update(updates)).build();
 
-  _$CreditState._({this.lastUpdated, this.map, this.list}) : super._() {
+  _$CreditState._({this.map, this.list}) : super._() {
     if (map == null) {
       throw new BuiltValueNullFieldError('CreditState', 'map');
     }
@@ -163,23 +152,18 @@ class _$CreditState extends CreditState {
   @override
   bool operator ==(Object other) {
     if (identical(other, this)) return true;
-    return other is CreditState &&
-        lastUpdated == other.lastUpdated &&
-        map == other.map &&
-        list == other.list;
+    return other is CreditState && map == other.map && list == other.list;
   }
 
   int __hashCode;
   @override
   int get hashCode {
-    return __hashCode ??= $jf(
-        $jc($jc($jc(0, lastUpdated.hashCode), map.hashCode), list.hashCode));
+    return __hashCode ??= $jf($jc($jc(0, map.hashCode), list.hashCode));
   }
 
   @override
   String toString() {
     return (newBuiltValueToStringHelper('CreditState')
-          ..add('lastUpdated', lastUpdated)
           ..add('map', map)
           ..add('list', list))
         .toString();
@@ -188,10 +172,6 @@ class _$CreditState extends CreditState {
 
 class CreditStateBuilder implements Builder<CreditState, CreditStateBuilder> {
   _$CreditState _$v;
-
-  int _lastUpdated;
-  int get lastUpdated => _$this._lastUpdated;
-  set lastUpdated(int lastUpdated) => _$this._lastUpdated = lastUpdated;
 
   MapBuilder<String, InvoiceEntity> _map;
   MapBuilder<String, InvoiceEntity> get map =>
@@ -206,7 +186,6 @@ class CreditStateBuilder implements Builder<CreditState, CreditStateBuilder> {
 
   CreditStateBuilder get _$this {
     if (_$v != null) {
-      _lastUpdated = _$v.lastUpdated;
       _map = _$v.map?.toBuilder();
       _list = _$v.list?.toBuilder();
       _$v = null;
@@ -231,9 +210,8 @@ class CreditStateBuilder implements Builder<CreditState, CreditStateBuilder> {
   _$CreditState build() {
     _$CreditState _$result;
     try {
-      _$result = _$v ??
-          new _$CreditState._(
-              lastUpdated: lastUpdated, map: map.build(), list: list.build());
+      _$result =
+          _$v ?? new _$CreditState._(map: map.build(), list: list.build());
     } catch (_) {
       String _$failedField;
       try {

@@ -28,12 +28,7 @@ class _$UserStateSerializer implements StructuredSerializer<UserState> {
           specifiedType:
               const FullType(BuiltList, const [const FullType(String)])),
     ];
-    if (object.lastUpdated != null) {
-      result
-        ..add('lastUpdated')
-        ..add(serializers.serialize(object.lastUpdated,
-            specifiedType: const FullType(int)));
-    }
+
     return result;
   }
 
@@ -48,10 +43,6 @@ class _$UserStateSerializer implements StructuredSerializer<UserState> {
       iterator.moveNext();
       final dynamic value = iterator.current;
       switch (key) {
-        case 'lastUpdated':
-          result.lastUpdated = serializers.deserialize(value,
-              specifiedType: const FullType(int)) as int;
-          break;
         case 'map':
           result.map.replace(serializers.deserialize(value,
               specifiedType: const FullType(BuiltMap,
@@ -131,8 +122,6 @@ class _$UserUIStateSerializer implements StructuredSerializer<UserUIState> {
 
 class _$UserState extends UserState {
   @override
-  final int lastUpdated;
-  @override
   final BuiltMap<String, UserEntity> map;
   @override
   final BuiltList<String> list;
@@ -140,7 +129,7 @@ class _$UserState extends UserState {
   factory _$UserState([void Function(UserStateBuilder) updates]) =>
       (new UserStateBuilder()..update(updates)).build();
 
-  _$UserState._({this.lastUpdated, this.map, this.list}) : super._() {
+  _$UserState._({this.map, this.list}) : super._() {
     if (map == null) {
       throw new BuiltValueNullFieldError('UserState', 'map');
     }
@@ -159,23 +148,18 @@ class _$UserState extends UserState {
   @override
   bool operator ==(Object other) {
     if (identical(other, this)) return true;
-    return other is UserState &&
-        lastUpdated == other.lastUpdated &&
-        map == other.map &&
-        list == other.list;
+    return other is UserState && map == other.map && list == other.list;
   }
 
   int __hashCode;
   @override
   int get hashCode {
-    return __hashCode ??= $jf(
-        $jc($jc($jc(0, lastUpdated.hashCode), map.hashCode), list.hashCode));
+    return __hashCode ??= $jf($jc($jc(0, map.hashCode), list.hashCode));
   }
 
   @override
   String toString() {
     return (newBuiltValueToStringHelper('UserState')
-          ..add('lastUpdated', lastUpdated)
           ..add('map', map)
           ..add('list', list))
         .toString();
@@ -184,10 +168,6 @@ class _$UserState extends UserState {
 
 class UserStateBuilder implements Builder<UserState, UserStateBuilder> {
   _$UserState _$v;
-
-  int _lastUpdated;
-  int get lastUpdated => _$this._lastUpdated;
-  set lastUpdated(int lastUpdated) => _$this._lastUpdated = lastUpdated;
 
   MapBuilder<String, UserEntity> _map;
   MapBuilder<String, UserEntity> get map =>
@@ -202,7 +182,6 @@ class UserStateBuilder implements Builder<UserState, UserStateBuilder> {
 
   UserStateBuilder get _$this {
     if (_$v != null) {
-      _lastUpdated = _$v.lastUpdated;
       _map = _$v.map?.toBuilder();
       _list = _$v.list?.toBuilder();
       _$v = null;
@@ -227,9 +206,7 @@ class UserStateBuilder implements Builder<UserState, UserStateBuilder> {
   _$UserState build() {
     _$UserState _$result;
     try {
-      _$result = _$v ??
-          new _$UserState._(
-              lastUpdated: lastUpdated, map: map.build(), list: list.build());
+      _$result = _$v ?? new _$UserState._(map: map.build(), list: list.build());
     } catch (_) {
       String _$failedField;
       try {

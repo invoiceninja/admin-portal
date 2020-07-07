@@ -89,10 +89,8 @@ Middleware<AppState> _viewTaxRateList() {
 
     next(action);
 
-    if (store.state.staticState.isStale) {
+    if (store.state.isStale) {
       store.dispatch(RefreshData());
-    } else if (store.state.taxRateState.isStale) {
-      store.dispatch(LoadTaxRates());
     }
 
     store.dispatch(UpdateCurrentRoute(TaxRateSettingsScreen.route));
@@ -241,20 +239,13 @@ Middleware<AppState> _loadTaxRates(TaxRateRepository repository) {
     final action = dynamicAction as LoadTaxRates;
     final AppState state = store.state;
 
-    if (!state.taxRateState.isStale && !action.force) {
-      next(action);
-      return;
-    }
-
     if (state.isLoading) {
       next(action);
       return;
     }
 
-    final int updatedAt = (state.taxRateState.lastUpdated / 1000).round();
-
     store.dispatch(LoadTaxRatesRequest());
-    repository.loadList(state.credentials, updatedAt).then((data) {
+    repository.loadList(state.credentials).then((data) {
       store.dispatch(LoadTaxRatesSuccess(data));
 
       if (action.completer != null) {

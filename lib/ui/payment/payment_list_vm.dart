@@ -29,7 +29,6 @@ class PaymentListBuilder extends StatelessWidget {
       converter: PaymentListVM.fromStore,
       builder: (context, viewModel) {
         return EntityList(
-            isLoaded: viewModel.isLoaded,
             entityType: EntityType.payment,
             presenter: PaymentPresenter(),
             state: viewModel.state,
@@ -94,7 +93,6 @@ class PaymentListVM {
     @required this.clientMap,
     @required this.filter,
     @required this.isLoading,
-    @required this.isLoaded,
     @required this.onPaymentTap,
     @required this.onRefreshed,
     @required this.onClearEntityFilterPressed,
@@ -111,7 +109,7 @@ class PaymentListVM {
       }
       final completer = snackBarCompleter<Null>(
           context, AppLocalization.of(context).refreshComplete);
-      store.dispatch(LoadPayments(completer: completer, force: true));
+      store.dispatch(RefreshData(completer: completer));
       return completer.future;
     }
 
@@ -130,7 +128,6 @@ class PaymentListVM {
       paymentMap: state.paymentState.map,
       clientMap: state.clientState.map,
       isLoading: state.isLoading,
-      isLoaded: state.paymentState.isLoaded,
       filter: state.paymentUIState.listUIState.filter,
       listState: state.paymentListState,
       onPaymentTap: (context, payment) {
@@ -167,7 +164,6 @@ class PaymentListVM {
   final BuiltMap<String, ClientEntity> clientMap;
   final String filter;
   final bool isLoading;
-  final bool isLoaded;
   final Function(BuildContext, BaseEntity) onPaymentTap;
   final Function(BuildContext) onRefreshed;
   final Function onClearEntityFilterPressed;

@@ -3,7 +3,6 @@ import 'dart:async';
 import 'package:built_value/built_value.dart';
 import 'package:built_value/serializer.dart';
 import 'package:built_collection/built_collection.dart';
-import 'package:invoiceninja_flutter/constants.dart';
 import 'package:invoiceninja_flutter/data/models/entities.dart';
 import 'package:invoiceninja_flutter/data/models/invoice_model.dart';
 import 'package:invoiceninja_flutter/data/models/quote_model.dart';
@@ -15,7 +14,6 @@ part 'quote_state.g.dart';
 abstract class QuoteState implements Built<QuoteState, QuoteStateBuilder> {
   factory QuoteState() {
     return _$QuoteState._(
-      lastUpdated: 0,
       map: BuiltMap<String, InvoiceEntity>(),
       list: BuiltList<String>(),
     );
@@ -27,23 +25,9 @@ abstract class QuoteState implements Built<QuoteState, QuoteStateBuilder> {
   @memoized
   int get hashCode;
 
-  @nullable
-  int get lastUpdated;
-
   BuiltMap<String, InvoiceEntity> get map;
 
   BuiltList<String> get list;
-
-  bool get isStale {
-    if (!isLoaded) {
-      return true;
-    }
-
-    return DateTime.now().millisecondsSinceEpoch - lastUpdated >
-        kMillisecondsToRefreshData;
-  }
-
-  bool get isLoaded => lastUpdated != null && lastUpdated > 0;
 
   QuoteState loadQuotes(BuiltList<InvoiceEntity> quotes) {
     final map = Map<String, InvoiceEntity>.fromIterable(
@@ -53,7 +37,6 @@ abstract class QuoteState implements Built<QuoteState, QuoteStateBuilder> {
     );
 
     return rebuild((b) => b
-      ..lastUpdated = DateTime.now().millisecondsSinceEpoch
       ..map.addAll(map)
       ..list.replace((map.keys.toList() + list.toList()).toSet().toList()));
   }

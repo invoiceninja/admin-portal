@@ -117,9 +117,9 @@ abstract class AppState implements Built<AppState, AppStateBuilder> {
   UserCompanyState get userCompanyState =>
       userCompanyStates[uiState.selectedCompanyIndex];
 
-  bool get isLoaded {
-    return productState.isLoaded && clientState.isLoaded;
-  }
+  bool get isLoaded => userCompanyState.isLoaded;
+
+  bool get isStale => userCompanyState.isStale || staticState.isStale;
 
   AccountEntity get account => userCompany.account;
 
@@ -192,20 +192,6 @@ abstract class AppState implements Built<AppState, AppStateBuilder> {
     return false;
   }
 
-  // TODO add to starter.sh
-  bool get isDataLoaded {
-    if (clientState.lastUpdated == 0 ||
-        productState.lastUpdated == 0 ||
-        invoiceState.lastUpdated == 0 ||
-        paymentState.lastUpdated == 0 ||
-        quoteState.lastUpdated == 0 ||
-        creditState.lastUpdated == 0) {
-      return false;
-    }
-
-    return true;
-  }
-
   BuiltMap<String, SelectableEntity> getEntityMap(EntityType type) {
     switch (type) {
       case EntityType.product:
@@ -217,19 +203,14 @@ abstract class AppState implements Built<AppState, AppStateBuilder> {
       // STARTER: states switch map - do not remove comment
       case EntityType.webhook:
         return webhookState.map;
-
       case EntityType.token:
         return tokenState.map;
-
       case EntityType.paymentTerm:
         return paymentTermState.map;
-
       case EntityType.design:
         return designState.map;
-
       case EntityType.credit:
         return creditState.map;
-
       case EntityType.user:
         return userState.map;
       case EntityType.taxRate:
@@ -289,19 +270,14 @@ abstract class AppState implements Built<AppState, AppStateBuilder> {
       // STARTER: states switch list - do not remove comment
       case EntityType.webhook:
         return webhookState.list;
-
       case EntityType.token:
         return tokenState.list;
-
       case EntityType.paymentTerm:
         return paymentTermState.list;
-
       case EntityType.design:
         return designState.list;
-
       case EntityType.credit:
         return creditState.list;
-
       case EntityType.user:
         return userState.list;
       case EntityType.taxRate:
@@ -606,7 +582,7 @@ abstract class AppState implements Built<AppState, AppStateBuilder> {
   String toString() {
     //return 'latestVersion: ${account.latestVersion}';
     //return 'Token: ${userCompanyStates.map((state) => state.token.token).where((name) => name.isNotEmpty).first}';
-    return 'URL: ${authState.url}, Route: ${uiState.currentRoute} Prev: ${uiState.previousRoute}';
+    return 'Loaded: ${DateTime.fromMillisecondsSinceEpoch(userCompanyState.lastUpdated)}, URL: ${authState.url}, Route: ${uiState.currentRoute} Prev: ${uiState.previousRoute}';
   }
 }
 

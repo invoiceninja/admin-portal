@@ -29,7 +29,6 @@ class WebhookListBuilder extends StatelessWidget {
       converter: WebhookListVM.fromStore,
       builder: (context, viewModel) {
         return EntityList(
-            isLoaded: viewModel.isLoaded,
             entityType: EntityType.webhook,
             presenter: WebhookPresenter(),
             state: viewModel.state,
@@ -91,7 +90,6 @@ class WebhookListVM {
     @required this.webhookMap,
     @required this.filter,
     @required this.isLoading,
-    @required this.isLoaded,
     @required this.onWebhookTap,
     @required this.listState,
     @required this.onRefreshed,
@@ -109,7 +107,7 @@ class WebhookListVM {
       }
       final completer = snackBarCompleter<Null>(
           context, AppLocalization.of(context).refreshComplete);
-      store.dispatch(LoadWebhooks(completer: completer, force: true));
+      store.dispatch(RefreshData(completer: completer));
       return completer.future;
     }
 
@@ -123,7 +121,6 @@ class WebhookListVM {
           state.webhookState.list, state.webhookListState),
       webhookMap: state.webhookState.map,
       isLoading: state.isLoading,
-      isLoaded: state.webhookState.isLoaded,
       filter: state.webhookUIState.listUIState.filter,
       onClearEntityFilterPressed: () => store.dispatch(ClearEntityFilter()),
       onViewEntityFilterPressed: (BuildContext context) => viewEntityById(
@@ -161,7 +158,6 @@ class WebhookListVM {
   final ListUIState listState;
   final String filter;
   final bool isLoading;
-  final bool isLoaded;
   final Function(BuildContext, BaseEntity) onWebhookTap;
   final Function(BuildContext) onRefreshed;
   final Function(BuildContext, List<BaseEntity>, EntityAction) onEntityAction;

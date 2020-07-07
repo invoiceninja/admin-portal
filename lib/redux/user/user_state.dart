@@ -2,7 +2,6 @@ import 'dart:async';
 import 'package:built_value/built_value.dart';
 import 'package:built_value/serializer.dart';
 import 'package:built_collection/built_collection.dart';
-import 'package:invoiceninja_flutter/constants.dart';
 import 'package:invoiceninja_flutter/data/models/user_model.dart';
 import 'package:invoiceninja_flutter/redux/ui/entity_ui_state.dart';
 import 'package:invoiceninja_flutter/redux/ui/list_ui_state.dart';
@@ -13,7 +12,6 @@ part 'user_state.g.dart';
 abstract class UserState implements Built<UserState, UserStateBuilder> {
   factory UserState() {
     return _$UserState._(
-      lastUpdated: 0,
       map: BuiltMap<String, UserEntity>(),
       list: BuiltList<String>(),
     );
@@ -32,22 +30,8 @@ abstract class UserState implements Built<UserState, UserStateBuilder> {
   @memoized
   int get hashCode;
 
-  @nullable
-  int get lastUpdated;
-
   BuiltMap<String, UserEntity> get map;
   BuiltList<String> get list;
-
-  bool get isStale {
-    if (!isLoaded) {
-      return true;
-    }
-
-    return DateTime.now().millisecondsSinceEpoch - lastUpdated >
-        kMillisecondsToRefreshData;
-  }
-
-  bool get isLoaded => lastUpdated != null && lastUpdated > 0;
 
   static Serializer<UserState> get serializer => _$userStateSerializer;
 }

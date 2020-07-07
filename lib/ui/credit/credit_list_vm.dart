@@ -32,7 +32,6 @@ class CreditListBuilder extends StatelessWidget {
         converter: CreditListVM.fromStore,
         builder: (context, viewModel) {
           return EntityList(
-              isLoaded: viewModel.isLoaded,
               entityType: EntityType.credit,
               presenter: CreditPresenter(),
               state: viewModel.state,
@@ -135,7 +134,7 @@ class CreditListVM extends EntityListVM {
       }
       final completer = snackBarCompleter<Null>(
           context, AppLocalization.of(context).refreshComplete);
-      store.dispatch(LoadCredits(completer: completer, force: true));
+      store.dispatch(RefreshData(completer: completer));
       return completer.future;
     }
 
@@ -155,7 +154,6 @@ class CreditListVM extends EntityListVM {
       invoiceMap: state.creditState.map,
       clientMap: state.clientState.map,
       isLoading: state.isLoading,
-      isLoaded: state.creditState.isLoaded && state.clientState.isLoaded,
       filter: state.creditListState.filter,
       onInvoiceTap: (context, credit) {
         if (store.state.invoiceListState.isInMultiselect()) {

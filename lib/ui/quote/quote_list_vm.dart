@@ -33,7 +33,6 @@ class QuoteListBuilder extends StatelessWidget {
       builder: (context, viewModel) {
         final state = viewModel.state;
         return EntityList(
-            isLoaded: viewModel.isLoaded,
             entityType: EntityType.quote,
             presenter: QuotePresenter(),
             state: viewModel.state,
@@ -134,7 +133,7 @@ class QuoteListVM extends EntityListVM {
       }
       final completer = snackBarCompleter<Null>(
           context, AppLocalization.of(context).refreshComplete);
-      store.dispatch(LoadQuotes(completer: completer, force: true));
+      store.dispatch(RefreshData(completer: completer));
       return completer.future;
     }
 
@@ -154,7 +153,6 @@ class QuoteListVM extends EntityListVM {
       invoiceMap: state.quoteState.map,
       clientMap: state.clientState.map,
       isLoading: state.isLoading,
-      isLoaded: state.quoteState.isLoaded && state.clientState.isLoaded,
       filter: state.quoteListState.filter,
       onInvoiceTap: (context, quote) {
         if (store.state.invoiceListState.isInMultiselect()) {

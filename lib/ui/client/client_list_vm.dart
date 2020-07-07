@@ -28,7 +28,6 @@ class ClientListBuilder extends StatelessWidget {
       converter: ClientListVM.fromStore,
       builder: (context, viewModel) {
         return EntityList(
-            isLoaded: viewModel.isLoaded,
             entityType: EntityType.client,
             presenter: ClientPresenter(),
             state: viewModel.state,
@@ -88,7 +87,6 @@ class ClientListVM {
     @required this.clientList,
     @required this.clientMap,
     @required this.isLoading,
-    @required this.isLoaded,
     @required this.filter,
     @required this.onClientTap,
     @required this.onRefreshed,
@@ -104,7 +102,6 @@ class ClientListVM {
   final BuiltMap<String, BaseEntity> clientMap;
   final String filter;
   final bool isLoading;
-  final bool isLoaded;
   final Function(BuildContext, BaseEntity) onClientTap;
   final Function(BuildContext) onRefreshed;
   final Function(BuildContext, List<BaseEntity>, EntityAction) onEntityAction;
@@ -120,7 +117,7 @@ class ClientListVM {
       }
       final completer = snackBarCompleter<Null>(
           context, AppLocalization.of(context).refreshComplete);
-      store.dispatch(LoadClients(completer: completer, force: true));
+      store.dispatch(RefreshData(completer: completer));
       return completer.future;
     }
 
@@ -137,7 +134,6 @@ class ClientListVM {
           state.staticState),
       clientMap: state.clientState.map,
       isLoading: state.isLoading,
-      isLoaded: state.clientState.isLoaded,
       filter: state.clientListState.filter,
       onClientTap: (context, client) {
         if (store.state.clientListState.isInMultiselect()) {

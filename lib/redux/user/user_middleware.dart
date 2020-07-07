@@ -92,10 +92,8 @@ Middleware<AppState> _viewUserList() {
 
     next(action);
 
-    if (store.state.staticState.isStale) {
+    if (store.state.isStale) {
       store.dispatch(RefreshData());
-    } else if (store.state.userState.isStale) {
-      store.dispatch(LoadUsers());
     }
 
     store.dispatch(UpdateCurrentRoute(UserScreen.route));
@@ -265,20 +263,13 @@ Middleware<AppState> _loadUsers(UserRepository repository) {
     final action = dynamicAction as LoadUsers;
     final AppState state = store.state;
 
-    if (!state.userState.isStale && !action.force) {
-      next(action);
-      return;
-    }
-
     if (state.isLoading) {
       next(action);
       return;
     }
 
-    final int updatedAt = (state.userState.lastUpdated / 1000).round();
-
     store.dispatch(LoadUsersRequest());
-    repository.loadList(state.credentials, updatedAt).then((data) {
+    repository.loadList(state.credentials).then((data) {
       store.dispatch(LoadUsersSuccess(data));
 
       if (action.completer != null) {

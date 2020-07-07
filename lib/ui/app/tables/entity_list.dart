@@ -18,7 +18,6 @@ import 'package:invoiceninja_flutter/utils/platforms.dart';
 
 class EntityList extends StatefulWidget {
   EntityList({
-    @required this.isLoaded,
     @required this.state,
     @required this.entityType,
     @required this.entityList,
@@ -32,7 +31,6 @@ class EntityList extends StatefulWidget {
     this.onViewEntityFilterPressed,
   }) : super(key: ValueKey('__${entityType}_${tableColumns}__'));
 
-  final bool isLoaded;
   final AppState state;
   final EntityType entityType;
   final List<String> tableColumns;
@@ -99,7 +97,7 @@ class _EntityListState extends State<EntityList> {
     final entityList = widget.entityList;
     final entityMap = state.getEntityMap(entityType);
 
-    if (!widget.isLoaded) {
+    if (!state.isLoaded && entityList.isEmpty) {
       return LoadingIndicator();
     }
 

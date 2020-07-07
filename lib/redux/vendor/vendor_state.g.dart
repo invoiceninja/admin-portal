@@ -29,12 +29,7 @@ class _$VendorStateSerializer implements StructuredSerializer<VendorState> {
           specifiedType:
               const FullType(BuiltList, const [const FullType(String)])),
     ];
-    if (object.lastUpdated != null) {
-      result
-        ..add('lastUpdated')
-        ..add(serializers.serialize(object.lastUpdated,
-            specifiedType: const FullType(int)));
-    }
+
     return result;
   }
 
@@ -49,10 +44,6 @@ class _$VendorStateSerializer implements StructuredSerializer<VendorState> {
       iterator.moveNext();
       final dynamic value = iterator.current;
       switch (key) {
-        case 'lastUpdated':
-          result.lastUpdated = serializers.deserialize(value,
-              specifiedType: const FullType(int)) as int;
-          break;
         case 'map':
           result.map.replace(serializers.deserialize(value,
               specifiedType: const FullType(BuiltMap, const [
@@ -146,8 +137,6 @@ class _$VendorUIStateSerializer implements StructuredSerializer<VendorUIState> {
 
 class _$VendorState extends VendorState {
   @override
-  final int lastUpdated;
-  @override
   final BuiltMap<String, VendorEntity> map;
   @override
   final BuiltList<String> list;
@@ -155,7 +144,7 @@ class _$VendorState extends VendorState {
   factory _$VendorState([void Function(VendorStateBuilder) updates]) =>
       (new VendorStateBuilder()..update(updates)).build();
 
-  _$VendorState._({this.lastUpdated, this.map, this.list}) : super._() {
+  _$VendorState._({this.map, this.list}) : super._() {
     if (map == null) {
       throw new BuiltValueNullFieldError('VendorState', 'map');
     }
@@ -174,23 +163,18 @@ class _$VendorState extends VendorState {
   @override
   bool operator ==(Object other) {
     if (identical(other, this)) return true;
-    return other is VendorState &&
-        lastUpdated == other.lastUpdated &&
-        map == other.map &&
-        list == other.list;
+    return other is VendorState && map == other.map && list == other.list;
   }
 
   int __hashCode;
   @override
   int get hashCode {
-    return __hashCode ??= $jf(
-        $jc($jc($jc(0, lastUpdated.hashCode), map.hashCode), list.hashCode));
+    return __hashCode ??= $jf($jc($jc(0, map.hashCode), list.hashCode));
   }
 
   @override
   String toString() {
     return (newBuiltValueToStringHelper('VendorState')
-          ..add('lastUpdated', lastUpdated)
           ..add('map', map)
           ..add('list', list))
         .toString();
@@ -199,10 +183,6 @@ class _$VendorState extends VendorState {
 
 class VendorStateBuilder implements Builder<VendorState, VendorStateBuilder> {
   _$VendorState _$v;
-
-  int _lastUpdated;
-  int get lastUpdated => _$this._lastUpdated;
-  set lastUpdated(int lastUpdated) => _$this._lastUpdated = lastUpdated;
 
   MapBuilder<String, VendorEntity> _map;
   MapBuilder<String, VendorEntity> get map =>
@@ -217,7 +197,6 @@ class VendorStateBuilder implements Builder<VendorState, VendorStateBuilder> {
 
   VendorStateBuilder get _$this {
     if (_$v != null) {
-      _lastUpdated = _$v.lastUpdated;
       _map = _$v.map?.toBuilder();
       _list = _$v.list?.toBuilder();
       _$v = null;
@@ -242,9 +221,8 @@ class VendorStateBuilder implements Builder<VendorState, VendorStateBuilder> {
   _$VendorState build() {
     _$VendorState _$result;
     try {
-      _$result = _$v ??
-          new _$VendorState._(
-              lastUpdated: lastUpdated, map: map.build(), list: list.build());
+      _$result =
+          _$v ?? new _$VendorState._(map: map.build(), list: list.build());
     } catch (_) {
       String _$failedField;
       try {
