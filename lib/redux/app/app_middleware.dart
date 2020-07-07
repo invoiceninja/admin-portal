@@ -420,7 +420,9 @@ Middleware<AppState> _createAccountLoaded() {
     final response = action.loginResponse;
     final selectedCompanyIndex = store.state.uiState.selectedCompanyIndex;
 
-    store.dispatch(LoadStaticSuccess(data: response.static));
+    if (response.static.currencies.isNotEmpty) {
+      store.dispatch(LoadStaticSuccess(data: response.static));
+    }
 
     for (int i = 0; i < response.userCompanies.length; i++) {
       final UserCompanyEntity userCompany = response.userCompanies[i];
