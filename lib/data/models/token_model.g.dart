@@ -109,6 +109,12 @@ class _$TokenEntitySerializer implements StructuredSerializer<TokenEntity> {
   Iterable<Object> serialize(Serializers serializers, TokenEntity object,
       {FullType specifiedType = FullType.unspecified}) {
     final result = <Object>[
+      'user_id',
+      serializers.serialize(object.userId,
+          specifiedType: const FullType(String)),
+      'is_system',
+      serializers.serialize(object.isSystem,
+          specifiedType: const FullType(bool)),
       'token',
       serializers.serialize(object.token,
           specifiedType: const FullType(String)),
@@ -123,13 +129,9 @@ class _$TokenEntitySerializer implements StructuredSerializer<TokenEntity> {
       'archived_at',
       serializers.serialize(object.archivedAt,
           specifiedType: const FullType(int)),
+      'id',
+      serializers.serialize(object.id, specifiedType: const FullType(String)),
     ];
-    if (object.id != null) {
-      result
-        ..add('id')
-        ..add(serializers.serialize(object.id,
-            specifiedType: const FullType(String)));
-    }
     if (object.isChanged != null) {
       result
         ..add('isChanged')
@@ -168,9 +170,13 @@ class _$TokenEntitySerializer implements StructuredSerializer<TokenEntity> {
       iterator.moveNext();
       final dynamic value = iterator.current;
       switch (key) {
-        case 'id':
-          result.id = serializers.deserialize(value,
+        case 'user_id':
+          result.userId = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String;
+          break;
+        case 'is_system':
+          result.isSystem = serializers.deserialize(value,
+              specifiedType: const FullType(bool)) as bool;
           break;
         case 'token':
           result.token = serializers.deserialize(value,
@@ -200,12 +206,12 @@ class _$TokenEntitySerializer implements StructuredSerializer<TokenEntity> {
           result.isDeleted = serializers.deserialize(value,
               specifiedType: const FullType(bool)) as bool;
           break;
-        case 'user_id':
-          result.createdUserId = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String;
-          break;
         case 'assigned_user_id':
           result.assignedUserId = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String;
+          break;
+        case 'id':
+          result.id = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String;
           break;
       }
@@ -404,7 +410,9 @@ class TokenItemResponseBuilder
 
 class _$TokenEntity extends TokenEntity {
   @override
-  final String id;
+  final String userId;
+  @override
+  final bool isSystem;
   @override
   final String token;
   @override
@@ -423,12 +431,15 @@ class _$TokenEntity extends TokenEntity {
   final String createdUserId;
   @override
   final String assignedUserId;
+  @override
+  final String id;
 
   factory _$TokenEntity([void Function(TokenEntityBuilder) updates]) =>
       (new TokenEntityBuilder()..update(updates)).build();
 
   _$TokenEntity._(
-      {this.id,
+      {this.userId,
+      this.isSystem,
       this.token,
       this.name,
       this.isChanged,
@@ -437,8 +448,15 @@ class _$TokenEntity extends TokenEntity {
       this.archivedAt,
       this.isDeleted,
       this.createdUserId,
-      this.assignedUserId})
+      this.assignedUserId,
+      this.id})
       : super._() {
+    if (userId == null) {
+      throw new BuiltValueNullFieldError('TokenEntity', 'userId');
+    }
+    if (isSystem == null) {
+      throw new BuiltValueNullFieldError('TokenEntity', 'isSystem');
+    }
     if (token == null) {
       throw new BuiltValueNullFieldError('TokenEntity', 'token');
     }
@@ -454,6 +472,9 @@ class _$TokenEntity extends TokenEntity {
     if (archivedAt == null) {
       throw new BuiltValueNullFieldError('TokenEntity', 'archivedAt');
     }
+    if (id == null) {
+      throw new BuiltValueNullFieldError('TokenEntity', 'id');
+    }
   }
 
   @override
@@ -467,7 +488,8 @@ class _$TokenEntity extends TokenEntity {
   bool operator ==(Object other) {
     if (identical(other, this)) return true;
     return other is TokenEntity &&
-        id == other.id &&
+        userId == other.userId &&
+        isSystem == other.isSystem &&
         token == other.token &&
         name == other.name &&
         isChanged == other.isChanged &&
@@ -476,7 +498,8 @@ class _$TokenEntity extends TokenEntity {
         archivedAt == other.archivedAt &&
         isDeleted == other.isDeleted &&
         createdUserId == other.createdUserId &&
-        assignedUserId == other.assignedUserId;
+        assignedUserId == other.assignedUserId &&
+        id == other.id;
   }
 
   int __hashCode;
@@ -489,21 +512,28 @@ class _$TokenEntity extends TokenEntity {
                     $jc(
                         $jc(
                             $jc(
-                                $jc($jc($jc(0, id.hashCode), token.hashCode),
-                                    name.hashCode),
-                                isChanged.hashCode),
-                            createdAt.hashCode),
-                        updatedAt.hashCode),
-                    archivedAt.hashCode),
-                isDeleted.hashCode),
-            createdUserId.hashCode),
-        assignedUserId.hashCode));
+                                $jc(
+                                    $jc(
+                                        $jc(
+                                            $jc($jc(0, userId.hashCode),
+                                                isSystem.hashCode),
+                                            token.hashCode),
+                                        name.hashCode),
+                                    isChanged.hashCode),
+                                createdAt.hashCode),
+                            updatedAt.hashCode),
+                        archivedAt.hashCode),
+                    isDeleted.hashCode),
+                createdUserId.hashCode),
+            assignedUserId.hashCode),
+        id.hashCode));
   }
 
   @override
   String toString() {
     return (newBuiltValueToStringHelper('TokenEntity')
-          ..add('id', id)
+          ..add('userId', userId)
+          ..add('isSystem', isSystem)
           ..add('token', token)
           ..add('name', name)
           ..add('isChanged', isChanged)
@@ -512,7 +542,8 @@ class _$TokenEntity extends TokenEntity {
           ..add('archivedAt', archivedAt)
           ..add('isDeleted', isDeleted)
           ..add('createdUserId', createdUserId)
-          ..add('assignedUserId', assignedUserId))
+          ..add('assignedUserId', assignedUserId)
+          ..add('id', id))
         .toString();
   }
 }
@@ -520,9 +551,13 @@ class _$TokenEntity extends TokenEntity {
 class TokenEntityBuilder implements Builder<TokenEntity, TokenEntityBuilder> {
   _$TokenEntity _$v;
 
-  String _id;
-  String get id => _$this._id;
-  set id(String id) => _$this._id = id;
+  String _userId;
+  String get userId => _$this._userId;
+  set userId(String userId) => _$this._userId = userId;
+
+  bool _isSystem;
+  bool get isSystem => _$this._isSystem;
+  set isSystem(bool isSystem) => _$this._isSystem = isSystem;
 
   String _token;
   String get token => _$this._token;
@@ -562,11 +597,16 @@ class TokenEntityBuilder implements Builder<TokenEntity, TokenEntityBuilder> {
   set assignedUserId(String assignedUserId) =>
       _$this._assignedUserId = assignedUserId;
 
+  String _id;
+  String get id => _$this._id;
+  set id(String id) => _$this._id = id;
+
   TokenEntityBuilder();
 
   TokenEntityBuilder get _$this {
     if (_$v != null) {
-      _id = _$v.id;
+      _userId = _$v.userId;
+      _isSystem = _$v.isSystem;
       _token = _$v.token;
       _name = _$v.name;
       _isChanged = _$v.isChanged;
@@ -576,6 +616,7 @@ class TokenEntityBuilder implements Builder<TokenEntity, TokenEntityBuilder> {
       _isDeleted = _$v.isDeleted;
       _createdUserId = _$v.createdUserId;
       _assignedUserId = _$v.assignedUserId;
+      _id = _$v.id;
       _$v = null;
     }
     return this;
@@ -598,7 +639,8 @@ class TokenEntityBuilder implements Builder<TokenEntity, TokenEntityBuilder> {
   _$TokenEntity build() {
     final _$result = _$v ??
         new _$TokenEntity._(
-            id: id,
+            userId: userId,
+            isSystem: isSystem,
             token: token,
             name: name,
             isChanged: isChanged,
@@ -607,7 +649,8 @@ class TokenEntityBuilder implements Builder<TokenEntity, TokenEntityBuilder> {
             archivedAt: archivedAt,
             isDeleted: isDeleted,
             createdUserId: createdUserId,
-            assignedUserId: assignedUserId);
+            assignedUserId: assignedUserId,
+            id: id);
     replace(_$result);
     return _$result;
   }

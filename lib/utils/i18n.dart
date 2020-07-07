@@ -995,7 +995,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'payment_date': 'Payment Date',
       'payment_status': 'Payment Status',
       'payment_status_1': 'Pending',
-      'payment_status_2': 'Voided',
+      'payment_status_2': 'Cancelled',
       'payment_status_3': 'Failed',
       'payment_status_4': 'Completed',
       'payment_status_5': 'Partially Refunded',

@@ -66,6 +66,8 @@ abstract class TokenEntity extends Object
       createdAt: 0,
       assignedUserId: '',
       createdUserId: '',
+      userId: '',
+      isSystem: false,
     );
   }
 
@@ -80,10 +82,11 @@ abstract class TokenEntity extends Object
     return EntityType.token;
   }
 
-  // TODO remove this
-  @override
-  @nullable
-  String get id;
+  @BuiltValueField(wireName: 'user_id')
+  String get userId;
+
+  @BuiltValueField(wireName: 'is_system')
+  bool get isSystem;
 
   String get token;
 

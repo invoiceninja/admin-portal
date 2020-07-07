@@ -113,6 +113,30 @@ const String kCurrencyEuro = '3';
 
 const String kCountryUnitedStates = '840';
 
+/*
+const EVENT_CREATE_CLIENT = 1;
+const EVENT_CREATE_INVOICE = 2;
+const EVENT_CREATE_QUOTE = 3;
+const EVENT_CREATE_PAYMENT = 4;
+const EVENT_CREATE_VENDOR = 5;
+const EVENT_UPDATE_QUOTE = 6;
+const EVENT_DELETE_QUOTE = 7;
+const EVENT_UPDATE_INVOICE = 8;
+const EVENT_DELETE_INVOICE = 9;
+const EVENT_UPDATE_CLIENT = 10;
+const EVENT_DELETE_CLIENT = 11;
+const EVENT_DELETE_PAYMENT = 12;
+const EVENT_UPDATE_VENDOR = 13;
+const EVENT_DELETE_VENDOR = 14;
+const EVENT_CREATE_EXPENSE = 15;
+const EVENT_UPDATE_EXPENSE = 16;
+const EVENT_DELETE_EXPENSE = 17;
+const EVENT_CREATE_TASK = 18;
+const EVENT_UPDATE_TASK = 19;
+const EVENT_DELETE_TASK = 20;
+const EVENT_APPROVE_QUOTE = 21;
+*/
+
 const String kInvoiceStatusPastDue = '-1';
 const String kInvoiceStatusDraft = '1';
 const String kInvoiceStatusSent = '2';
@@ -362,7 +386,7 @@ const String kPermissionViewAll = 'view_all';
 const String kPermissionEditAll = 'edit_all';
 
 const String kPaymentStatusPending = '1';
-const String kPaymentStatusVoided = '2';
+const String kPaymentStatusCancelled = '2';
 const String kPaymentStatusFailed = '3';
 const String kPaymentStatusCompleted = '4';
 const String kPaymentStatusPartiallyRefunded = '5';
@@ -370,7 +394,7 @@ const String kPaymentStatusRefunded = '6';
 
 const kPaymentStatuses = {
   kPaymentStatusPending: 'pending',
-  kPaymentStatusVoided: 'voided',
+  kPaymentStatusCancelled: 'cancelled',
   kPaymentStatusFailed: 'failed',
   kPaymentStatusCompleted: 'completed',
   kPaymentStatusPartiallyRefunded: 'partially_refunded',
@@ -466,7 +490,7 @@ class QuoteStatusColors {
 class PaymentStatusColors {
   static var colors = {
     kPaymentStatusPending: convertHexStringToColor('#505F73'),
-    kPaymentStatusVoided: kColorRed,
+    kPaymentStatusCancelled: kColorRed,
     kPaymentStatusFailed: kColorRed,
     kPaymentStatusCompleted: kColorGreen,
     kPaymentStatusPartiallyRefunded: Colors.purple,

@@ -3,6 +3,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:invoiceninja_flutter/data/web_client.dart';
+import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/ui/app/loading_indicator.dart';
 import 'package:invoiceninja_flutter/utils/dialogs.dart';
@@ -23,17 +24,19 @@ enum UpdateState {
 
 class _UpdateDialogState extends State<UpdateDialog> {
   UpdateState updateState = UpdateState.initial;
+  String updateResponse;
 
   @override
   Widget build(BuildContext context) {
     final localization = AppLocalization.of(context);
-    final state = StoreProvider.of<AppState>(context).state;
+    final store = StoreProvider.of<AppState>(context);
+    final state = store.state;
     final account = state.userCompany.account;
 
     return AlertDialog(
       title: Text(localization.updateAvailable),
       content: updateState == UpdateState.done
-          ? Text(localization.appUpdated)
+          ? Text('${localization.appUpdated}\n\n$updateResponse')
           : updateState == UpdateState.loading
               ? Padding(
                   padding: const EdgeInsets.only(top: 10),
@@ -71,6 +74,7 @@ class _UpdateDialogState extends State<UpdateDialog> {
             child: Text(localization.close.toUpperCase()),
             onPressed: () {
               Navigator.of(context).pop();
+              store.dispatch(RefreshData());
             },
           ),
       ],
@@ -85,18 +89,17 @@ class _UpdateDialogState extends State<UpdateDialog> {
           setState(() => updateState = UpdateState.loading);
           final credentials = state.credentials;
           final webClient = WebClient();
-          const url = '/self-update';
+          final url = '${credentials.url}/self-update';
           webClient
-              .post(url, credentials.token, password: password)
+              .post(url, credentials.token,
+                  password: password, rawResponse: true)
               .then((dynamic response) {
-            if (response['message'] == true) {
-              setState(() => updateState = UpdateState.done);
-              if (kIsWeb) {
-                webReload();
-              }
-            } else {
-              setState(() => updateState = UpdateState.initial);
-              showErrorDialog(context: context, message: '$response');
+            setState(() {
+              updateState = UpdateState.done;
+              updateResponse = response.body;
+            });
+            if (kIsWeb) {
+              webReload();
             }
           }).catchError((dynamic error) {
             showErrorDialog(context: context, message: '$error');
