@@ -67,10 +67,9 @@ class LoadDesignActivity {
 }
 
 class LoadDesigns {
-  LoadDesigns({this.completer, this.force = false});
+  LoadDesigns({this.completer});
 
   final Completer completer;
-  final bool force;
 }
 
 class LoadDesignRequest implements StartLoading {}

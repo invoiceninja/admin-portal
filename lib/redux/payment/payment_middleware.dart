@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:invoiceninja_flutter/redux/app/app_middleware.dart';
-import 'package:invoiceninja_flutter/redux/invoice/invoice_actions.dart';
 import 'package:invoiceninja_flutter/redux/quote/quote_actions.dart';
 import 'package:invoiceninja_flutter/ui/payment/refund/payment_refund_vm.dart';
 import 'package:invoiceninja_flutter/utils/platforms.dart';
@@ -171,7 +170,7 @@ Middleware<AppState> _deletePayment(PaymentRepository repository) {
             store.state.credentials, action.paymentIds, EntityAction.delete)
         .then((List<PaymentEntity> payments) {
       store.dispatch(DeletePaymentsSuccess(payments));
-      store.dispatch(LoadInvoices(force: true));
+      store.dispatch(RefreshData());
       if (action.completer != null) {
         action.completer.complete(null);
       }
@@ -198,7 +197,7 @@ Middleware<AppState> _restorePayment(PaymentRepository repository) {
             store.state.credentials, action.paymentIds, EntityAction.restore)
         .then((List<PaymentEntity> payments) {
       store.dispatch(RestorePaymentsSuccess(payments));
-      store.dispatch(LoadInvoices(force: true));
+      store.dispatch(RefreshData());
       if (action.completer != null) {
         action.completer.complete(null);
       }
@@ -228,7 +227,7 @@ Middleware<AppState> _savePayment(PaymentRepository repository) {
       } else {
         store.dispatch(SavePaymentSuccess(payment));
       }
-      store.dispatch(LoadInvoices(force: true));
+      store.dispatch(RefreshData());
       action.completer.complete(payment);
     }).catchError((Object error) {
       print(error);
@@ -251,7 +250,7 @@ Middleware<AppState> _refundPayment(PaymentRepository repository) {
         .then((PaymentEntity payment) {
       store.dispatch(SavePaymentSuccess(payment));
       store.dispatch(RefundPaymentSuccess(payment));
-      store.dispatch(LoadInvoices(force: true));
+      store.dispatch(RefreshData());
       action.completer.complete(payment);
     }).catchError((Object error) {
       print(error);

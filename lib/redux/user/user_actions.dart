@@ -72,10 +72,9 @@ class LoadUserActivity {
 }
 
 class LoadUsers {
-  LoadUsers({this.completer, this.force = false});
+  LoadUsers({this.completer});
 
   final Completer completer;
-  final bool force;
 }
 
 class LoadUserRequest implements StartLoading {}

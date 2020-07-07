@@ -67,10 +67,9 @@ class LoadGroupActivity {
 }
 
 class LoadGroups {
-  LoadGroups({this.completer, this.force = false});
+  LoadGroups({this.completer});
 
   final Completer completer;
-  final bool force;
 }
 
 class LoadGroupRequest implements StartLoading {}

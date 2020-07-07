@@ -67,10 +67,9 @@ class LoadTokenActivity {
 }
 
 class LoadTokens {
-  LoadTokens({this.completer, this.force = false});
+  LoadTokens({this.completer});
 
   final Completer completer;
-  final bool force;
 }
 
 class LoadTokenRequest implements StartLoading {}

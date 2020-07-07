@@ -68,10 +68,9 @@ class LoadProjectActivity {
 }
 
 class LoadProjects {
-  LoadProjects({this.completer, this.force = false});
+  LoadProjects({this.completer});
 
   final Completer completer;
-  final bool force;
 }
 
 class LoadProjectRequest implements StartLoading {}

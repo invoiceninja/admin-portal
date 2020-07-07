@@ -78,10 +78,9 @@ class LoadClientActivity {
 }
 
 class LoadClients {
-  LoadClients({this.completer, this.force = false});
+  LoadClients({this.completer});
 
   final Completer completer;
-  final bool force;
 }
 
 class LoadClientRequest implements StartLoading {}

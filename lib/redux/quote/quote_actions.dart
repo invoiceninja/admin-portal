@@ -82,10 +82,9 @@ class LoadQuote {
 }
 
 class LoadQuotes {
-  LoadQuotes({this.completer, this.force = false});
+  LoadQuotes({this.completer});
 
   final Completer completer;
-  final bool force;
 }
 
 class LoadQuoteRequest implements StartLoading {}

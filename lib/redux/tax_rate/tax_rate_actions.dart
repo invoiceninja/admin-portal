@@ -62,10 +62,9 @@ class LoadTaxRateActivity {
 }
 
 class LoadTaxRates {
-  LoadTaxRates({this.completer, this.force = false});
+  LoadTaxRates({this.completer});
 
   final Completer completer;
-  final bool force;
 }
 
 class LoadTaxRateRequest implements StartLoading {}

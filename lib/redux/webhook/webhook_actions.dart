@@ -67,10 +67,9 @@ class LoadWebhookActivity {
 }
 
 class LoadWebhooks {
-  LoadWebhooks({this.completer, this.force = false});
+  LoadWebhooks({this.completer});
 
   final Completer completer;
-  final bool force;
 }
 
 class LoadWebhookRequest implements StartLoading {}

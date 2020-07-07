@@ -72,10 +72,9 @@ class LoadTaskActivity {
 }
 
 class LoadTasks {
-  LoadTasks({this.completer, this.force = false});
+  LoadTasks({this.completer});
 
   final Completer completer;
-  final bool force;
 }
 
 class LoadTaskRequest implements StartLoading {}

@@ -1,14 +1,9 @@
-import 'dart:async';
-
 import 'package:flutter/material.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:invoiceninja_flutter/redux/app/app_middleware.dart';
-import 'package:invoiceninja_flutter/redux/expense/expense_actions.dart';
 import 'package:invoiceninja_flutter/redux/invoice/invoice_actions.dart';
 import 'package:invoiceninja_flutter/redux/payment/payment_actions.dart';
-import 'package:invoiceninja_flutter/redux/product/product_actions.dart';
-import 'package:invoiceninja_flutter/redux/task/task_actions.dart';
 import 'package:invoiceninja_flutter/redux/ui/ui_actions.dart';
 import 'package:invoiceninja_flutter/ui/invoice/invoice_email_vm.dart';
 import 'package:invoiceninja_flutter/ui/invoice/edit/invoice_edit_vm.dart';
@@ -303,12 +298,7 @@ Middleware<AppState> _markInvoicePaid(InvoiceRepository repository) {
             store.state.credentials, action.invoiceIds, EntityAction.markPaid)
         .then((invoices) {
       store.dispatch(MarkInvoicesPaidSuccess(invoices));
-      final Completer<Null> completer = Completer<Null>();
-      completer.future.then((_) {
-        store.dispatch(LoadPayments(force: true));
-      });
-      store.dispatch(
-          LoadClient(clientId: invoices.first.clientId, completer: completer));
+      store.dispatch(RefreshData());
       if (action.completer != null) {
         action.completer.complete(null);
       }
@@ -366,14 +356,7 @@ Middleware<AppState> _saveInvoice(InvoiceRepository repository) {
       } else {
         store.dispatch(SaveInvoiceSuccess(invoice));
       }
-      if (invoice.hasTasks) {
-        store.dispatch(LoadTasks(force: true));
-      } else if (invoice.hasExpenses) {
-        store.dispatch(LoadExpenses(force: true));
-      } else {
-        // TODO add check if auto-update is enabled
-        store.dispatch(LoadProducts(force: true));
-      }
+      store.dispatch(RefreshData());
       action.completer.complete(invoice);
     }).catchError((Object error) {
       print(error);

@@ -79,10 +79,9 @@ class LoadPaymentActivity {
 }
 
 class LoadPayments {
-  LoadPayments({this.completer, this.force = false});
+  LoadPayments({this.completer});
 
   final Completer completer;
-  final bool force;
 }
 
 class LoadPaymentRequest implements StartLoading {}

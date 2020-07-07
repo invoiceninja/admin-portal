@@ -58,10 +58,9 @@ class LoadDocumentActivity {
 }
 
 class LoadDocuments {
-  LoadDocuments({this.completer, this.force = false});
+  LoadDocuments({this.completer});
 
   final Completer completer;
-  final bool force;
 }
 
 class LoadDocumentRequest implements StartLoading {}

@@ -80,10 +80,9 @@ class LoadInvoice {
 }
 
 class LoadInvoices {
-  LoadInvoices({this.completer, this.force = false});
+  LoadInvoices({this.completer});
 
   final Completer completer;
-  final bool force;
 }
 
 class LoadInvoiceRequest implements StartLoading {}
