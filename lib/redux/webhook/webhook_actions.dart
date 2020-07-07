@@ -109,7 +109,7 @@ class LoadWebhooksFailure implements StopLoading {
   }
 }
 
-class LoadWebhooksSuccess implements StopLoading, PersistData {
+class LoadWebhooksSuccess implements StopLoading {
   LoadWebhooksSuccess(this.webhooks);
 
   final BuiltList<WebhookEntity> webhooks;

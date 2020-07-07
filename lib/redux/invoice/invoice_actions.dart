@@ -122,7 +122,7 @@ class LoadInvoicesFailure implements StopLoading {
   }
 }
 
-class LoadInvoicesSuccess implements StopLoading, PersistData {
+class LoadInvoicesSuccess implements StopLoading {
   LoadInvoicesSuccess(this.invoices);
 
   final BuiltList<InvoiceEntity> invoices;

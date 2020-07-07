@@ -109,7 +109,7 @@ class LoadTokensFailure implements StopLoading {
   }
 }
 
-class LoadTokensSuccess implements StopLoading, PersistData {
+class LoadTokensSuccess implements StopLoading {
   LoadTokensSuccess(this.tokens);
 
   final BuiltList<TokenEntity> tokens;

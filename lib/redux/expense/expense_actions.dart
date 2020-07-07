@@ -108,7 +108,7 @@ class LoadExpensesFailure implements StopLoading {
   }
 }
 
-class LoadExpensesSuccess implements StopLoading, PersistData {
+class LoadExpensesSuccess implements StopLoading {
   LoadExpensesSuccess(this.expenses);
 
   final BuiltList<ExpenseEntity> expenses;

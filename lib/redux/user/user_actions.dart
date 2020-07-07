@@ -114,7 +114,7 @@ class LoadUsersFailure implements StopLoading {
   }
 }
 
-class LoadUsersSuccess implements StopLoading, PersistData {
+class LoadUsersSuccess implements StopLoading {
   LoadUsersSuccess(this.users);
 
   final BuiltList<UserEntity> users;

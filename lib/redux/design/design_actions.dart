@@ -109,7 +109,7 @@ class LoadDesignsFailure implements StopLoading {
   }
 }
 
-class LoadDesignsSuccess implements StopLoading, PersistData {
+class LoadDesignsSuccess implements StopLoading {
   LoadDesignsSuccess(this.designs);
 
   final BuiltList<DesignEntity> designs;

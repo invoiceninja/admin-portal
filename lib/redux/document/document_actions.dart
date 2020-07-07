@@ -100,7 +100,7 @@ class LoadDocumentsFailure implements StopLoading {
   }
 }
 
-class LoadDocumentsSuccess implements StopLoading, PersistData {
+class LoadDocumentsSuccess implements StopLoading {
   LoadDocumentsSuccess(this.documents);
 
   final BuiltList<DocumentEntity> documents;

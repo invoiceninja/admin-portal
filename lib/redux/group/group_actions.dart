@@ -109,7 +109,7 @@ class LoadGroupsFailure implements StopLoading {
   }
 }
 
-class LoadGroupsSuccess implements StopLoading, PersistData {
+class LoadGroupsSuccess implements StopLoading {
   LoadGroupsSuccess(this.groups);
 
   final BuiltList<GroupEntity> groups;

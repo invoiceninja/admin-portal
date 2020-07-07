@@ -110,7 +110,7 @@ class LoadVendorsFailure implements StopLoading {
   }
 }
 
-class LoadVendorsSuccess implements StopLoading, PersistData {
+class LoadVendorsSuccess implements StopLoading {
   LoadVendorsSuccess(this.vendors);
 
   final BuiltList<VendorEntity> vendors;

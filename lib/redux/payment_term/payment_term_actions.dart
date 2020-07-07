@@ -110,7 +110,7 @@ class LoadPaymentTermsFailure implements StopLoading {
   }
 }
 
-class LoadPaymentTermsSuccess implements StopLoading, PersistData {
+class LoadPaymentTermsSuccess implements StopLoading {
   LoadPaymentTermsSuccess(this.paymentTerms);
 
   final BuiltList<PaymentTermEntity> paymentTerms;

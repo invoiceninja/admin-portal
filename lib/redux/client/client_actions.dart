@@ -120,7 +120,7 @@ class LoadClientsFailure implements StopLoading {
   }
 }
 
-class LoadClientsSuccess implements StopLoading, PersistData {
+class LoadClientsSuccess implements StopLoading {
   LoadClientsSuccess(this.clients);
 
   final BuiltList<ClientEntity> clients;

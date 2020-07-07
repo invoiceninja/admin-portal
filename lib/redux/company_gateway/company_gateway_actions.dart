@@ -108,7 +108,7 @@ class LoadCompanyGatewaysFailure implements StopLoading {
   }
 }
 
-class LoadCompanyGatewaysSuccess implements StopLoading, PersistData {
+class LoadCompanyGatewaysSuccess implements StopLoading {
   LoadCompanyGatewaysSuccess(this.companyGateways);
 
   final BuiltList<CompanyGatewayEntity> companyGateways;

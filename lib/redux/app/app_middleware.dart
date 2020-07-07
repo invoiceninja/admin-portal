@@ -435,11 +435,13 @@ Middleware<AppState> _createAccountLoaded() {
         prefs.setString(kSharedPrefToken, userCompany.token.obscuredToken);
       }
 
-      store.dispatch(SelectCompany(companyIndex: i, clearSelection: loadedStaticData));
+      store.dispatch(
+          SelectCompany(companyIndex: i, clearSelection: loadedStaticData));
       store.dispatch(LoadCompanySuccess(userCompany));
     }
 
-    store.dispatch(SelectCompany(companyIndex: selectedCompanyIndex, clearSelection: loadedStaticData));
+    store.dispatch(SelectCompany(
+        companyIndex: selectedCompanyIndex, clearSelection: loadedStaticData));
     store.dispatch(UserLoginSuccess());
 
     print('## Account is loaded');

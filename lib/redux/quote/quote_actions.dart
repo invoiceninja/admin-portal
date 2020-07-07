@@ -124,7 +124,7 @@ class LoadQuotesFailure implements StopLoading {
   }
 }
 
-class LoadQuotesSuccess implements StopLoading, PersistData {
+class LoadQuotesSuccess implements StopLoading {
   LoadQuotesSuccess(this.quotes);
 
   final BuiltList<InvoiceEntity> quotes;

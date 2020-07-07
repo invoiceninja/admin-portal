@@ -110,7 +110,7 @@ class LoadProjectsFailure implements StopLoading {
   }
 }
 
-class LoadProjectsSuccess implements StopLoading, PersistData {
+class LoadProjectsSuccess implements StopLoading {
   LoadProjectsSuccess(this.projects);
 
   final BuiltList<ProjectEntity> projects;

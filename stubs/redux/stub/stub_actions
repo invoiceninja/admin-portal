@@ -108,7 +108,7 @@ class LoadStubsFailure implements StopLoading {
   }
 }
 
-class LoadStubsSuccess implements StopLoading, PersistData {
+class LoadStubsSuccess implements StopLoading {
   LoadStubsSuccess(this.stubs);
 
   final BuiltList<StubEntity> stubs;

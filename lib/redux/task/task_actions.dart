@@ -139,7 +139,7 @@ class LoadTasksFailure implements StopLoading {
   }
 }
 
-class LoadTasksSuccess implements StopLoading, PersistData {
+class LoadTasksSuccess implements StopLoading {
   LoadTasksSuccess(this.tasks);
 
   final BuiltList<TaskEntity> tasks;

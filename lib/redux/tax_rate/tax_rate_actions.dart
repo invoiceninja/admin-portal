@@ -104,7 +104,7 @@ class LoadTaxRatesFailure implements StopLoading {
   }
 }
 
-class LoadTaxRatesSuccess implements StopLoading, PersistData {
+class LoadTaxRatesSuccess implements StopLoading {
   LoadTaxRatesSuccess(this.taxRates);
 
   final BuiltList<TaxRateEntity> taxRates;
