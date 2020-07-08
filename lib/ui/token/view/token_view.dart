@@ -63,7 +63,7 @@ class _TokenListTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ListTile(
-      contentPadding: const EdgeInsets.all(32),
+      contentPadding: const EdgeInsets.all(22),
       title: Padding(
         padding: const EdgeInsets.only(right: 16),
         child: Text(
