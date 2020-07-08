@@ -25,6 +25,7 @@ class _WebhookViewState extends State<WebhookView> {
 
     return ViewScaffold(
       isFilter: widget.isFilter,
+      onBackPressed: () => viewModel.onBackPressed(),
       entity: webhook,
       body: ListView(
         children: <Widget>[],

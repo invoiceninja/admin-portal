@@ -26,6 +26,7 @@ class _TokenViewState extends State<TokenView> {
 
     return ViewScaffold(
       isFilter: widget.isFilter,
+      onBackPressed: () => viewModel.onBackPressed(),
       entity: token,
       body: ListView(
         children: <Widget>[],
