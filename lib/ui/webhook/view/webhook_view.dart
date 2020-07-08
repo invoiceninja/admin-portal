@@ -26,7 +26,6 @@ class _WebhookViewState extends State<WebhookView> {
     final localization = AppLocalization.of(context);
     final viewModel = widget.viewModel;
     final webhook = viewModel.webhook;
-    final user = viewModel.state.userState.get(webhook.createdUserId);
 
     return ViewScaffold(
       isFilter: widget.isFilter,
@@ -36,8 +35,8 @@ class _WebhookViewState extends State<WebhookView> {
         children: <Widget>[
           EntityHeader(
             entity: webhook,
-            label: localization.user,
-            value: user.fullName,
+            label: localization.eventType,
+            value: ' ',
             secondLabel: localization.createdOn,
             secondValue: formatDate(
                 convertTimestampToDateString(webhook.createdAt), context),
