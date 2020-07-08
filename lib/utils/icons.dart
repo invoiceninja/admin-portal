@@ -59,6 +59,8 @@ IconData getEntityActionIcon(EntityAction entityAction) {
       return Icons.remove_circle_outline;
     case EntityAction.reverse:
       return Icons.undo;
+    case EntityAction.copy:
+      return Icons.content_copy;
     default:
       return null;
   }

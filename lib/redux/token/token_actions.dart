@@ -1,5 +1,7 @@
 import 'dart:async';
 import 'package:built_collection/built_collection.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
@@ -260,6 +262,12 @@ void handleTokenAction(
   final tokenIds = tokens.map((token) => token.id).toList();
 
   switch (action) {
+    case EntityAction.copy:
+      Clipboard.setData(ClipboardData(text: token.token));
+      Scaffold.of(context).showSnackBar(SnackBar(
+          content: Text(
+              localization.copiedToClipboard.replaceFirst(':value ', ''))));
+      break;
     case EntityAction.edit:
       editEntity(context: context, entity: token);
       break;

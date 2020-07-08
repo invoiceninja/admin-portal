@@ -66,7 +66,6 @@ abstract class TokenEntity extends Object
       createdAt: 0,
       assignedUserId: '',
       createdUserId: '',
-      userId: '',
       isSystem: false,
     );
   }
@@ -81,9 +80,6 @@ abstract class TokenEntity extends Object
   EntityType get entityType {
     return EntityType.token;
   }
-
-  @BuiltValueField(wireName: 'user_id')
-  String get userId;
 
   @BuiltValueField(wireName: 'is_system')
   bool get isSystem;
@@ -155,6 +151,8 @@ abstract class TokenEntity extends Object
       bool includeEdit = false,
       bool multiselect = false}) {
     final actions = <EntityAction>[];
+
+    actions.add(EntityAction.copy);
 
     // TODO remove ??
     if (!(isDeleted ?? false)) {

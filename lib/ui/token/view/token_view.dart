@@ -1,12 +1,11 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/data/models/token_model.dart';
+import 'package:invoiceninja_flutter/redux/token/token_actions.dart';
 import 'package:invoiceninja_flutter/ui/app/lists/list_divider.dart';
 import 'package:invoiceninja_flutter/ui/app/view_scaffold.dart';
 import 'package:invoiceninja_flutter/ui/token/view/token_view_vm.dart';
-import 'package:invoiceninja_flutter/utils/localization.dart';
 
 class TokenView extends StatefulWidget {
   const TokenView({
@@ -51,8 +50,6 @@ class _TokenListTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final localization = AppLocalization.of(context);
-
     return ListTile(
       contentPadding: const EdgeInsets.all(32),
       title: Padding(
@@ -61,12 +58,9 @@ class _TokenListTile extends StatelessWidget {
           token.token,
         ),
       ),
-      trailing: Icon(FontAwesomeIcons.copy),
+      trailing: Icon(Icons.content_copy),
       onTap: () {
-        Clipboard.setData(ClipboardData(text: token.token));
-        Scaffold.of(context).showSnackBar(SnackBar(
-            content: Text(
-                localization.copiedToClipboard.replaceFirst(':value ', ''))));
+        handleTokenAction(context, [token], EntityAction.copy);
       },
     );
   }
