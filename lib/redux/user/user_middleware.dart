@@ -116,6 +116,9 @@ Middleware<AppState> _archiveUser(UserRepository repository) {
             EntityAction.archive, action.password)
         .then((List<UserEntity> users) {
       store.dispatch(ArchiveUserSuccess(users));
+      if (action.password != null) {
+        store.dispatch(UserVerifiedPassword());
+      }
       if (action.completer != null) {
         action.completer.complete(null);
       }
@@ -142,6 +145,9 @@ Middleware<AppState> _deleteUser(UserRepository repository) {
             EntityAction.delete, action.password)
         .then((List<UserEntity> users) {
       store.dispatch(DeleteUserSuccess(users));
+      if (action.password != null) {
+        store.dispatch(UserVerifiedPassword());
+      }
       if (action.completer != null) {
         action.completer.complete(null);
       }
@@ -168,6 +174,9 @@ Middleware<AppState> _restoreUser(UserRepository repository) {
             EntityAction.restore, action.password)
         .then((List<UserEntity> users) {
       store.dispatch(RestoreUserSuccess(users));
+      if (action.password != null) {
+        store.dispatch(UserVerifiedPassword());
+      }
       if (action.completer != null) {
         action.completer.complete(null);
       }
@@ -217,7 +226,9 @@ Middleware<AppState> _saveUser(UserRepository repository) {
       } else {
         store.dispatch(SaveUserSuccess(user));
       }
-      store.dispatch(UserVerifiedPassword());
+      if (action.password != null) {
+        store.dispatch(UserVerifiedPassword());
+      }
       action.completer.complete(user);
     }).catchError((Object error) {
       print(error);

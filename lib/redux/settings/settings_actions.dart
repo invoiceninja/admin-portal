@@ -7,6 +7,7 @@ import 'package:invoiceninja_flutter/data/models/entities.dart';
 import 'package:invoiceninja_flutter/data/models/group_model.dart';
 import 'package:invoiceninja_flutter/data/models/user_model.dart';
 import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
+import 'package:invoiceninja_flutter/redux/auth/auth_actions.dart';
 
 class ViewSettings extends AbstractNavigatorAction implements PersistUI {
   ViewSettings({
@@ -91,7 +92,8 @@ class SaveAuthUserRequest implements StartSaving {
   final String password;
 }
 
-class SaveAuthUserSuccess implements StopSaving, PersistData, PersistUI {
+class SaveAuthUserSuccess
+    implements StopSaving, PersistData, PersistUI {
   SaveAuthUserSuccess(this.user);
 
   final UserEntity user;

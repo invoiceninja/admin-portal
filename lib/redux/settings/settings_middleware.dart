@@ -99,7 +99,9 @@ Middleware<AppState> _saveAuthUser(SettingsRepository settingsRepository) {
         .saveAuthUser(store.state.credentials, action.user, action.password)
         .then((user) {
       store.dispatch(SaveAuthUserSuccess(user));
-      store.dispatch(UserVerifiedPassword());
+      if (action.password != null) {
+        store.dispatch(UserVerifiedPassword());
+      }
       action.completer.complete();
     }).catchError((Object error) {
       print(error);

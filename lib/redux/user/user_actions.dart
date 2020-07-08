@@ -6,6 +6,7 @@ import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:invoiceninja_flutter/data/models/user_model.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
+import 'package:invoiceninja_flutter/redux/auth/auth_actions.dart';
 import 'package:invoiceninja_flutter/utils/dialogs.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:invoiceninja_flutter/utils/completers.dart';
@@ -137,13 +138,15 @@ class SaveUserRequest implements StartSaving {
   final String password;
 }
 
-class SaveUserSuccess implements StopSaving, PersistData, PersistUI {
+class SaveUserSuccess
+    implements StopSaving, PersistData, PersistUI {
   SaveUserSuccess(this.user);
 
   final UserEntity user;
 }
 
-class AddUserSuccess implements StopSaving, PersistData, PersistUI {
+class AddUserSuccess
+    implements StopSaving, PersistData, PersistUI {
   AddUserSuccess(this.user);
 
   final UserEntity user;

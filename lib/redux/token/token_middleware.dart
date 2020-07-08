@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:invoiceninja_flutter/redux/auth/auth_actions.dart';
 import 'package:redux/redux.dart';
 import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:invoiceninja_flutter/utils/platforms.dart';
@@ -188,7 +189,9 @@ Middleware<AppState> _saveToken(TokenRepository repository) {
       } else {
         store.dispatch(SaveTokenSuccess(token));
       }
-
+      if (action.password != null) {
+        store.dispatch(UserVerifiedPassword());
+      }
       action.completer.complete(token);
     }).catchError((Object error) {
       print(error);
