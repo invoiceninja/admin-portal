@@ -20,7 +20,7 @@ class ErrorDialog extends StatelessWidget {
 
     return AlertDialog(
       title: Text(localization.anErrorOccurred),
-      content: Text(error.toString()),
+      content: error != null ? Text(error.toString()) : SizedBox(),
       actions: [
         if (clearErrorOnDismiss && !Config.DEMO_MODE)
           FlatButton(

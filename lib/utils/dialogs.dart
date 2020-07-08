@@ -9,7 +9,7 @@ import 'package:invoiceninja_flutter/utils/localization.dart';
 
 void showErrorDialog({
   @required BuildContext context,
-  @required String message,
+  String message,
   bool clearErrorOnDismiss = false,
 }) {
   showDialog<ErrorDialog>(
