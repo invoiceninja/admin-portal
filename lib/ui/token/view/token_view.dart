@@ -55,7 +55,7 @@ class _TokenListTile extends StatelessWidget {
       title: Padding(
         padding: const EdgeInsets.only(right: 16),
         child: Text(
-          token.token,
+          token.token.substring(0, 10) + 'XXXXXXXXXX',
         ),
       ),
       trailing: Icon(Icons.content_copy),

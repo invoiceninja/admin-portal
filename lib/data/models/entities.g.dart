@@ -530,6 +530,12 @@ class _$ActivityEntitySerializer
         ..add(serializers.serialize(object.isSystem,
             specifiedType: const FullType(bool)));
     }
+    if (object.ip != null) {
+      result
+        ..add('ip')
+        ..add(serializers.serialize(object.ip,
+            specifiedType: const FullType(String)));
+    }
     if (object.contactId != null) {
       result
         ..add('contact_id')
@@ -612,6 +618,10 @@ class _$ActivityEntitySerializer
         case 'is_system':
           result.isSystem = serializers.deserialize(value,
               specifiedType: const FullType(bool)) as bool;
+          break;
+        case 'ip':
+          result.ip = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String;
           break;
         case 'contact_id':
           result.contactId = serializers.deserialize(value,
@@ -942,6 +952,8 @@ class _$ActivityEntity extends ActivityEntity {
   @override
   final bool isSystem;
   @override
+  final String ip;
+  @override
   final String contactId;
   @override
   final String taskId;
@@ -965,6 +977,7 @@ class _$ActivityEntity extends ActivityEntity {
       this.updatedAt,
       this.expenseId,
       this.isSystem,
+      this.ip,
       this.contactId,
       this.taskId,
       this.projectId,
@@ -1010,6 +1023,7 @@ class _$ActivityEntity extends ActivityEntity {
         updatedAt == other.updatedAt &&
         expenseId == other.expenseId &&
         isSystem == other.isSystem &&
+        ip == other.ip &&
         contactId == other.contactId &&
         taskId == other.taskId &&
         projectId == other.projectId &&
@@ -1033,19 +1047,23 @@ class _$ActivityEntity extends ActivityEntity {
                                                 $jc(
                                                     $jc(
                                                         $jc(
-                                                            $jc(0,
-                                                                notes.hashCode),
-                                                            key.hashCode),
-                                                        activityTypeId
-                                                            .hashCode),
-                                                    clientId.hashCode),
-                                                userId.hashCode),
-                                            invoiceId.hashCode),
-                                        paymentId.hashCode),
-                                    creditId.hashCode),
-                                updatedAt.hashCode),
-                            expenseId.hashCode),
-                        isSystem.hashCode),
+                                                            $jc(
+                                                                $jc(
+                                                                    0,
+                                                                    notes
+                                                                        .hashCode),
+                                                                key.hashCode),
+                                                            activityTypeId
+                                                                .hashCode),
+                                                        clientId.hashCode),
+                                                    userId.hashCode),
+                                                invoiceId.hashCode),
+                                            paymentId.hashCode),
+                                        creditId.hashCode),
+                                    updatedAt.hashCode),
+                                expenseId.hashCode),
+                            isSystem.hashCode),
+                        ip.hashCode),
                     contactId.hashCode),
                 taskId.hashCode),
             projectId.hashCode),
@@ -1066,6 +1084,7 @@ class _$ActivityEntity extends ActivityEntity {
           ..add('updatedAt', updatedAt)
           ..add('expenseId', expenseId)
           ..add('isSystem', isSystem)
+          ..add('ip', ip)
           ..add('contactId', contactId)
           ..add('taskId', taskId)
           ..add('projectId', projectId)
@@ -1123,6 +1142,10 @@ class ActivityEntityBuilder
   bool get isSystem => _$this._isSystem;
   set isSystem(bool isSystem) => _$this._isSystem = isSystem;
 
+  String _ip;
+  String get ip => _$this._ip;
+  set ip(String ip) => _$this._ip = ip;
+
   String _contactId;
   String get contactId => _$this._contactId;
   set contactId(String contactId) => _$this._contactId = contactId;
@@ -1154,6 +1177,7 @@ class ActivityEntityBuilder
       _updatedAt = _$v.updatedAt;
       _expenseId = _$v.expenseId;
       _isSystem = _$v.isSystem;
+      _ip = _$v.ip;
       _contactId = _$v.contactId;
       _taskId = _$v.taskId;
       _projectId = _$v.projectId;
@@ -1191,6 +1215,7 @@ class ActivityEntityBuilder
             updatedAt: updatedAt,
             expenseId: expenseId,
             isSystem: isSystem,
+            ip: ip,
             contactId: contactId,
             taskId: taskId,
             projectId: projectId,

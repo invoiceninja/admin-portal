@@ -503,6 +503,9 @@ abstract class ActivityEntity
   bool get isSystem;
 
   @nullable
+  String get ip;
+
+  @nullable
   @BuiltValueField(wireName: 'contact_id')
   String get contactId;
 
