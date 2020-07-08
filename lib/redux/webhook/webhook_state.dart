@@ -46,7 +46,7 @@ abstract class WebhookUIState extends Object
     implements Built<WebhookUIState, WebhookUIStateBuilder> {
   factory WebhookUIState() {
     return _$WebhookUIState._(
-      listUIState: ListUIState(WebhookFields.name),
+      listUIState: ListUIState(WebhookFields.targetUrl),
       editing: WebhookEntity(),
       selectedId: '',
     );

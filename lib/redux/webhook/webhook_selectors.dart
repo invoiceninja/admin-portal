@@ -26,7 +26,7 @@ List<String> dropdownWebhooksSelector(
   list.sort((webhookAId, webhookBId) {
     final webhookA = webhookMap[webhookAId];
     final webhookB = webhookMap[webhookBId];
-    return webhookA.compareTo(webhookB, WebhookFields.name, true);
+    return webhookA.compareTo(webhookB, WebhookFields.targetUrl, true);
   });
 
   return list;

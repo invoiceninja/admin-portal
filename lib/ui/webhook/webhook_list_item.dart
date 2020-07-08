@@ -76,7 +76,7 @@ class WebhookListItem extends StatelessWidget {
             children: <Widget>[
               Expanded(
                 child: Text(
-                  webhook.name,
+                  webhook.targetUrl,
                   style: Theme.of(context).textTheme.headline6,
                 ),
               ),

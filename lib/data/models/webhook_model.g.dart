@@ -118,13 +118,15 @@ class _$WebhookEntitySerializer implements StructuredSerializer<WebhookEntity> {
   Iterable<Object> serialize(Serializers serializers, WebhookEntity object,
       {FullType specifiedType = FullType.unspecified}) {
     final result = <Object>[
-      'webhook',
-      serializers.serialize(object.webhook,
+      'event_id',
+      serializers.serialize(object.eventId,
           specifiedType: const FullType(String)),
-      'name',
-      serializers.serialize(object.name, specifiedType: const FullType(String)),
-      'url',
-      serializers.serialize(object.url, specifiedType: const FullType(String)),
+      'target_url',
+      serializers.serialize(object.targetUrl,
+          specifiedType: const FullType(String)),
+      'format',
+      serializers.serialize(object.format,
+          specifiedType: const FullType(String)),
       'created_at',
       serializers.serialize(object.createdAt,
           specifiedType: const FullType(int)),
@@ -134,13 +136,9 @@ class _$WebhookEntitySerializer implements StructuredSerializer<WebhookEntity> {
       'archived_at',
       serializers.serialize(object.archivedAt,
           specifiedType: const FullType(int)),
+      'id',
+      serializers.serialize(object.id, specifiedType: const FullType(String)),
     ];
-    if (object.id != null) {
-      result
-        ..add('id')
-        ..add(serializers.serialize(object.id,
-            specifiedType: const FullType(String)));
-    }
     if (object.isChanged != null) {
       result
         ..add('isChanged')
@@ -180,20 +178,16 @@ class _$WebhookEntitySerializer implements StructuredSerializer<WebhookEntity> {
       iterator.moveNext();
       final dynamic value = iterator.current;
       switch (key) {
-        case 'id':
-          result.id = serializers.deserialize(value,
+        case 'event_id':
+          result.eventId = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String;
           break;
-        case 'webhook':
-          result.webhook = serializers.deserialize(value,
+        case 'target_url':
+          result.targetUrl = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String;
           break;
-        case 'name':
-          result.name = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String;
-          break;
-        case 'url':
-          result.url = serializers.deserialize(value,
+        case 'format':
+          result.format = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String;
           break;
         case 'isChanged':
@@ -222,6 +216,10 @@ class _$WebhookEntitySerializer implements StructuredSerializer<WebhookEntity> {
           break;
         case 'assigned_user_id':
           result.assignedUserId = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String;
+          break;
+        case 'id':
+          result.id = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String;
           break;
       }
@@ -424,13 +422,11 @@ class WebhookItemResponseBuilder
 
 class _$WebhookEntity extends WebhookEntity {
   @override
-  final String id;
+  final String eventId;
   @override
-  final String webhook;
+  final String targetUrl;
   @override
-  final String name;
-  @override
-  final String url;
+  final String format;
   @override
   final bool isChanged;
   @override
@@ -445,31 +441,33 @@ class _$WebhookEntity extends WebhookEntity {
   final String createdUserId;
   @override
   final String assignedUserId;
+  @override
+  final String id;
 
   factory _$WebhookEntity([void Function(WebhookEntityBuilder) updates]) =>
       (new WebhookEntityBuilder()..update(updates)).build();
 
   _$WebhookEntity._(
-      {this.id,
-      this.webhook,
-      this.name,
-      this.url,
+      {this.eventId,
+      this.targetUrl,
+      this.format,
       this.isChanged,
       this.createdAt,
       this.updatedAt,
       this.archivedAt,
       this.isDeleted,
       this.createdUserId,
-      this.assignedUserId})
+      this.assignedUserId,
+      this.id})
       : super._() {
-    if (webhook == null) {
-      throw new BuiltValueNullFieldError('WebhookEntity', 'webhook');
+    if (eventId == null) {
+      throw new BuiltValueNullFieldError('WebhookEntity', 'eventId');
     }
-    if (name == null) {
-      throw new BuiltValueNullFieldError('WebhookEntity', 'name');
+    if (targetUrl == null) {
+      throw new BuiltValueNullFieldError('WebhookEntity', 'targetUrl');
     }
-    if (url == null) {
-      throw new BuiltValueNullFieldError('WebhookEntity', 'url');
+    if (format == null) {
+      throw new BuiltValueNullFieldError('WebhookEntity', 'format');
     }
     if (createdAt == null) {
       throw new BuiltValueNullFieldError('WebhookEntity', 'createdAt');
@@ -479,6 +477,9 @@ class _$WebhookEntity extends WebhookEntity {
     }
     if (archivedAt == null) {
       throw new BuiltValueNullFieldError('WebhookEntity', 'archivedAt');
+    }
+    if (id == null) {
+      throw new BuiltValueNullFieldError('WebhookEntity', 'id');
     }
   }
 
@@ -493,17 +494,17 @@ class _$WebhookEntity extends WebhookEntity {
   bool operator ==(Object other) {
     if (identical(other, this)) return true;
     return other is WebhookEntity &&
-        id == other.id &&
-        webhook == other.webhook &&
-        name == other.name &&
-        url == other.url &&
+        eventId == other.eventId &&
+        targetUrl == other.targetUrl &&
+        format == other.format &&
         isChanged == other.isChanged &&
         createdAt == other.createdAt &&
         updatedAt == other.updatedAt &&
         archivedAt == other.archivedAt &&
         isDeleted == other.isDeleted &&
         createdUserId == other.createdUserId &&
-        assignedUserId == other.assignedUserId;
+        assignedUserId == other.assignedUserId &&
+        id == other.id;
   }
 
   int __hashCode;
@@ -518,33 +519,33 @@ class _$WebhookEntity extends WebhookEntity {
                             $jc(
                                 $jc(
                                     $jc(
-                                        $jc($jc(0, id.hashCode),
-                                            webhook.hashCode),
-                                        name.hashCode),
-                                    url.hashCode),
-                                isChanged.hashCode),
-                            createdAt.hashCode),
-                        updatedAt.hashCode),
-                    archivedAt.hashCode),
-                isDeleted.hashCode),
-            createdUserId.hashCode),
-        assignedUserId.hashCode));
+                                        $jc($jc(0, eventId.hashCode),
+                                            targetUrl.hashCode),
+                                        format.hashCode),
+                                    isChanged.hashCode),
+                                createdAt.hashCode),
+                            updatedAt.hashCode),
+                        archivedAt.hashCode),
+                    isDeleted.hashCode),
+                createdUserId.hashCode),
+            assignedUserId.hashCode),
+        id.hashCode));
   }
 
   @override
   String toString() {
     return (newBuiltValueToStringHelper('WebhookEntity')
-          ..add('id', id)
-          ..add('webhook', webhook)
-          ..add('name', name)
-          ..add('url', url)
+          ..add('eventId', eventId)
+          ..add('targetUrl', targetUrl)
+          ..add('format', format)
           ..add('isChanged', isChanged)
           ..add('createdAt', createdAt)
           ..add('updatedAt', updatedAt)
           ..add('archivedAt', archivedAt)
           ..add('isDeleted', isDeleted)
           ..add('createdUserId', createdUserId)
-          ..add('assignedUserId', assignedUserId))
+          ..add('assignedUserId', assignedUserId)
+          ..add('id', id))
         .toString();
   }
 }
@@ -553,21 +554,17 @@ class WebhookEntityBuilder
     implements Builder<WebhookEntity, WebhookEntityBuilder> {
   _$WebhookEntity _$v;
 
-  String _id;
-  String get id => _$this._id;
-  set id(String id) => _$this._id = id;
+  String _eventId;
+  String get eventId => _$this._eventId;
+  set eventId(String eventId) => _$this._eventId = eventId;
 
-  String _webhook;
-  String get webhook => _$this._webhook;
-  set webhook(String webhook) => _$this._webhook = webhook;
+  String _targetUrl;
+  String get targetUrl => _$this._targetUrl;
+  set targetUrl(String targetUrl) => _$this._targetUrl = targetUrl;
 
-  String _name;
-  String get name => _$this._name;
-  set name(String name) => _$this._name = name;
-
-  String _url;
-  String get url => _$this._url;
-  set url(String url) => _$this._url = url;
+  String _format;
+  String get format => _$this._format;
+  set format(String format) => _$this._format = format;
 
   bool _isChanged;
   bool get isChanged => _$this._isChanged;
@@ -599,14 +596,17 @@ class WebhookEntityBuilder
   set assignedUserId(String assignedUserId) =>
       _$this._assignedUserId = assignedUserId;
 
+  String _id;
+  String get id => _$this._id;
+  set id(String id) => _$this._id = id;
+
   WebhookEntityBuilder();
 
   WebhookEntityBuilder get _$this {
     if (_$v != null) {
-      _id = _$v.id;
-      _webhook = _$v.webhook;
-      _name = _$v.name;
-      _url = _$v.url;
+      _eventId = _$v.eventId;
+      _targetUrl = _$v.targetUrl;
+      _format = _$v.format;
       _isChanged = _$v.isChanged;
       _createdAt = _$v.createdAt;
       _updatedAt = _$v.updatedAt;
@@ -614,6 +614,7 @@ class WebhookEntityBuilder
       _isDeleted = _$v.isDeleted;
       _createdUserId = _$v.createdUserId;
       _assignedUserId = _$v.assignedUserId;
+      _id = _$v.id;
       _$v = null;
     }
     return this;
@@ -636,17 +637,17 @@ class WebhookEntityBuilder
   _$WebhookEntity build() {
     final _$result = _$v ??
         new _$WebhookEntity._(
-            id: id,
-            webhook: webhook,
-            name: name,
-            url: url,
+            eventId: eventId,
+            targetUrl: targetUrl,
+            format: format,
             isChanged: isChanged,
             createdAt: createdAt,
             updatedAt: updatedAt,
             archivedAt: archivedAt,
             isDeleted: isDeleted,
             createdUserId: createdUserId,
-            assignedUserId: assignedUserId);
+            assignedUserId: assignedUserId,
+            id: id);
     replace(_$result);
     return _$result;
   }

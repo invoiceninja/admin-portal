@@ -93,7 +93,7 @@ class WebhookScreen extends StatelessWidget {
           store.dispatch(SortWebhooks(value));
         },
         sortFields: [
-          WebhookFields.name,
+          WebhookFields.targetUrl,
         ],
         onSelectedState: (EntityState state, value) {
           store.dispatch(FilterWebhooksByState(state));

@@ -560,6 +560,12 @@ class _$ActivityEntitySerializer
         ..add(serializers.serialize(object.vendorId,
             specifiedType: const FullType(String)));
     }
+    if (object.tokenId != null) {
+      result
+        ..add('token_id')
+        ..add(serializers.serialize(object.tokenId,
+            specifiedType: const FullType(String)));
+    }
     return result;
   }
 
@@ -637,6 +643,10 @@ class _$ActivityEntitySerializer
           break;
         case 'vendor_id':
           result.vendorId = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String;
+          break;
+        case 'token_id':
+          result.tokenId = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String;
           break;
       }
@@ -961,6 +971,8 @@ class _$ActivityEntity extends ActivityEntity {
   final String projectId;
   @override
   final String vendorId;
+  @override
+  final String tokenId;
 
   factory _$ActivityEntity([void Function(ActivityEntityBuilder) updates]) =>
       (new ActivityEntityBuilder()..update(updates)).build();
@@ -981,7 +993,8 @@ class _$ActivityEntity extends ActivityEntity {
       this.contactId,
       this.taskId,
       this.projectId,
-      this.vendorId})
+      this.vendorId,
+      this.tokenId})
       : super._() {
     if (notes == null) {
       throw new BuiltValueNullFieldError('ActivityEntity', 'notes');
@@ -1027,7 +1040,8 @@ class _$ActivityEntity extends ActivityEntity {
         contactId == other.contactId &&
         taskId == other.taskId &&
         projectId == other.projectId &&
-        vendorId == other.vendorId;
+        vendorId == other.vendorId &&
+        tokenId == other.tokenId;
   }
 
   int __hashCode;
@@ -1049,25 +1063,28 @@ class _$ActivityEntity extends ActivityEntity {
                                                         $jc(
                                                             $jc(
                                                                 $jc(
-                                                                    0,
-                                                                    notes
+                                                                    $jc(
+                                                                        0,
+                                                                        notes
+                                                                            .hashCode),
+                                                                    key
                                                                         .hashCode),
-                                                                key.hashCode),
-                                                            activityTypeId
-                                                                .hashCode),
-                                                        clientId.hashCode),
-                                                    userId.hashCode),
-                                                invoiceId.hashCode),
-                                            paymentId.hashCode),
-                                        creditId.hashCode),
-                                    updatedAt.hashCode),
-                                expenseId.hashCode),
-                            isSystem.hashCode),
-                        ip.hashCode),
-                    contactId.hashCode),
-                taskId.hashCode),
-            projectId.hashCode),
-        vendorId.hashCode));
+                                                                activityTypeId
+                                                                    .hashCode),
+                                                            clientId.hashCode),
+                                                        userId.hashCode),
+                                                    invoiceId.hashCode),
+                                                paymentId.hashCode),
+                                            creditId.hashCode),
+                                        updatedAt.hashCode),
+                                    expenseId.hashCode),
+                                isSystem.hashCode),
+                            ip.hashCode),
+                        contactId.hashCode),
+                    taskId.hashCode),
+                projectId.hashCode),
+            vendorId.hashCode),
+        tokenId.hashCode));
   }
 
   @override
@@ -1088,7 +1105,8 @@ class _$ActivityEntity extends ActivityEntity {
           ..add('contactId', contactId)
           ..add('taskId', taskId)
           ..add('projectId', projectId)
-          ..add('vendorId', vendorId))
+          ..add('vendorId', vendorId)
+          ..add('tokenId', tokenId))
         .toString();
   }
 }
@@ -1162,6 +1180,10 @@ class ActivityEntityBuilder
   String get vendorId => _$this._vendorId;
   set vendorId(String vendorId) => _$this._vendorId = vendorId;
 
+  String _tokenId;
+  String get tokenId => _$this._tokenId;
+  set tokenId(String tokenId) => _$this._tokenId = tokenId;
+
   ActivityEntityBuilder();
 
   ActivityEntityBuilder get _$this {
@@ -1182,6 +1204,7 @@ class ActivityEntityBuilder
       _taskId = _$v.taskId;
       _projectId = _$v.projectId;
       _vendorId = _$v.vendorId;
+      _tokenId = _$v.tokenId;
       _$v = null;
     }
     return this;
@@ -1219,7 +1242,8 @@ class ActivityEntityBuilder
             contactId: contactId,
             taskId: taskId,
             projectId: projectId,
-            vendorId: vendorId);
+            vendorId: vendorId,
+            tokenId: tokenId);
     replace(_$result);
     return _$result;
   }
