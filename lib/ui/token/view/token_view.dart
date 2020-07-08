@@ -25,7 +25,6 @@ class TokenView extends StatefulWidget {
 class _TokenViewState extends State<TokenView> {
   @override
   Widget build(BuildContext context) {
-    final localization = AppLocalization.of(context);
     final viewModel = widget.viewModel;
     final token = viewModel.token;
 
@@ -46,8 +45,8 @@ class _TokenViewState extends State<TokenView> {
 }
 
 class _TokenListTile extends StatelessWidget {
-
   const _TokenListTile(this.token);
+
   final TokenEntity token;
 
   @override
@@ -66,9 +65,8 @@ class _TokenListTile extends StatelessWidget {
       onTap: () {
         Clipboard.setData(ClipboardData(text: token.token));
         Scaffold.of(context).showSnackBar(SnackBar(
-            content: Text(AppLocalization.of(context)
-                .copiedToClipboard
-                .replaceFirst(':value', token.token))));
+            content: Text(
+                localization.copiedToClipboard.replaceFirst(':value ', ''))));
       },
     );
   }
