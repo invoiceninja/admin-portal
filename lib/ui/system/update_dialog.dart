@@ -84,6 +84,7 @@ class _UpdateDialogState extends State<UpdateDialog> {
   void updateApp(BuildContext context) async {
     final state = StoreProvider.of<AppState>(context).state;
     passwordCallback(
+        alwaysRequire: true,
         context: context,
         callback: (password) {
           setState(() => updateState = UpdateState.loading);

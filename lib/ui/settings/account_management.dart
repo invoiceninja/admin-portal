@@ -172,6 +172,7 @@ class _AccountOverview extends StatelessWidget {
                         message: localization.purgeDataMessage,
                         callback: () {
                           passwordCallback(
+                              alwaysRequire: true,
                               context: context,
                               callback: (password) {
                                 viewModel.onPurgeData(context, password);
@@ -248,6 +249,7 @@ class _AccountOverview extends StatelessWidget {
                   message: message,
                   callback: () {
                     passwordCallback(
+                        alwaysRequire: true,
                         context: context,
                         callback: (password) {
                           viewModel.onCompanyDelete(context, password);

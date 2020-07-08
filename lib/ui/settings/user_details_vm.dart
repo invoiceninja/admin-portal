@@ -50,26 +50,17 @@ class UserDetailsVM {
         completer.future.then((_) {
           AppBuilder.of(context).rebuild();
         });
-        if (state.authState.hasRecentlyEnteredPassword) {
-          store.dispatch(
-            SaveAuthUserRequest(
-              completer: completer,
-              user: state.uiState.settingsUIState.user,
-            ),
-          );
-        } else {
-          passwordCallback(
-              context: context,
-              callback: (password) {
-                store.dispatch(
-                  SaveAuthUserRequest(
-                    completer: completer,
-                    user: state.uiState.settingsUIState.user,
-                    password: password,
-                  ),
-                );
-              });
-        }
+        passwordCallback(
+            context: context,
+            callback: (password) {
+              store.dispatch(
+                SaveAuthUserRequest(
+                  completer: completer,
+                  user: state.uiState.settingsUIState.user,
+                  password: password,
+                ),
+              );
+            });
       },
     );
   }

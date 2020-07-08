@@ -272,7 +272,6 @@ void handleUserAction(
   }
 
   final store = StoreProvider.of<AppState>(context);
-  final state = store.state;
   final localization = AppLocalization.of(context);
   final user = users.first as UserEntity;
   final userIds = users.map((user) => user.id).toList();
@@ -287,15 +286,11 @@ void handleUserAction(
               snackBarCompleter<Null>(context, localization.restoredUser),
           userIds: userIds,
           password: password));
-      if (state.authState.hasRecentlyEnteredPassword) {
-        dispatch();
-      } else {
-        passwordCallback(
-            context: context,
-            callback: (password) {
-              dispatch(password);
-            });
-      }
+      passwordCallback(
+          context: context,
+          callback: (password) {
+            dispatch(password);
+          });
       break;
     case EntityAction.archive:
       final dispatch = ([String password]) => store.dispatch(ArchiveUserRequest(
@@ -303,30 +298,22 @@ void handleUserAction(
               snackBarCompleter<Null>(context, localization.archivedUser),
           userIds: userIds,
           password: password));
-      if (state.authState.hasRecentlyEnteredPassword) {
-        dispatch();
-      } else {
-        passwordCallback(
-            context: context,
-            callback: (password) {
-              dispatch(password);
-            });
-      }
+      passwordCallback(
+          context: context,
+          callback: (password) {
+            dispatch(password);
+          });
       break;
     case EntityAction.delete:
       final dispatch = ([String password]) => store.dispatch(DeleteUserRequest(
           completer: snackBarCompleter<Null>(context, localization.deletedUser),
           userIds: userIds,
           password: password));
-      if (state.authState.hasRecentlyEnteredPassword) {
-        dispatch();
-      } else {
-        passwordCallback(
-            context: context,
-            callback: (password) {
-              dispatch(password);
-            });
-      }
+      passwordCallback(
+          context: context,
+          callback: (password) {
+            dispatch(password);
+          });
       break;
     case EntityAction.remove:
       final dispatch = ([String password]) => store.dispatch(RemoveUserRequest(
@@ -336,15 +323,11 @@ void handleUserAction(
       confirmCallback(
           context: context,
           callback: () {
-            if (state.authState.hasRecentlyEnteredPassword) {
-              dispatch();
-            } else {
-              passwordCallback(
-                  context: context,
-                  callback: (password) {
-                    dispatch(password);
-                  });
-            }
+            passwordCallback(
+                context: context,
+                callback: (password) {
+                  dispatch(password);
+                });
           });
       break;
     case EntityAction.toggleMultiselect:
