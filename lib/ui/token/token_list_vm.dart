@@ -18,7 +18,6 @@ import 'package:invoiceninja_flutter/redux/token/token_selectors.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/redux/token/token_actions.dart';
-import 'package:invoiceninja_flutter/utils/platforms.dart';
 
 class TokenListBuilder extends StatelessWidget {
   const TokenListBuilder({Key key}) : super(key: key);
@@ -128,13 +127,8 @@ class TokenListVM {
           entityId: state.tokenListState.filterEntityId,
           entityType: state.tokenListState.filterEntityType),
       onTokenTap: (context, token) {
-        if (store.state.tokenListState.isInMultiselect()) {
+        if (store.state.userListState.isInMultiselect()) {
           handleTokenAction(context, [token], EntityAction.toggleMultiselect);
-        } else if (isDesktop(context) && state.uiState.isEditing) {
-          viewEntity(context: context, entity: token);
-        } else if (isDesktop(context) &&
-            state.tokenUIState.selectedId == token.id) {
-          editEntity(context: context, entity: token);
         } else {
           viewEntity(context: context, entity: token);
         }

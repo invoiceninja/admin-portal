@@ -18,7 +18,6 @@ import 'package:invoiceninja_flutter/redux/webhook/webhook_selectors.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/redux/webhook/webhook_actions.dart';
-import 'package:invoiceninja_flutter/utils/platforms.dart';
 
 class WebhookListBuilder extends StatelessWidget {
   const WebhookListBuilder({Key key}) : super(key: key);
@@ -128,14 +127,9 @@ class WebhookListVM {
           entityId: state.webhookListState.filterEntityId,
           entityType: state.webhookListState.filterEntityType),
       onWebhookTap: (context, webhook) {
-        if (store.state.webhookListState.isInMultiselect()) {
+        if (store.state.userListState.isInMultiselect()) {
           handleWebhookAction(
               context, [webhook], EntityAction.toggleMultiselect);
-        } else if (isDesktop(context) && state.uiState.isEditing) {
-          viewEntity(context: context, entity: webhook);
-        } else if (isDesktop(context) &&
-            state.webhookUIState.selectedId == webhook.id) {
-          editEntity(context: context, entity: webhook);
         } else {
           viewEntity(context: context, entity: webhook);
         }
