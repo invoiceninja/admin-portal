@@ -7,7 +7,6 @@ import 'package:invoiceninja_flutter/data/models/entities.dart';
 import 'package:invoiceninja_flutter/data/models/group_model.dart';
 import 'package:invoiceninja_flutter/data/models/user_model.dart';
 import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
-import 'package:invoiceninja_flutter/redux/auth/auth_actions.dart';
 
 class ViewSettings extends AbstractNavigatorAction implements PersistUI {
   ViewSettings({
