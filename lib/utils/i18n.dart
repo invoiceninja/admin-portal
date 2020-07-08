@@ -962,6 +962,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'language': 'Language',
       'currency': 'Currency',
       'created_at': 'Created At',
+      'created_on': 'Created On',
       'updated_at': 'Updated At',
       'tax': 'Tax',
       'please_enter_an_invoice_number': 'Please enter an invoice number',
@@ -36450,6 +36451,8 @@ mixin LocalizationsProvider on LocaleCodeAware {
   String get currency => _localizedValues[localeCode]['currency'] ?? '';
 
   String get createdAt => _localizedValues[localeCode]['created_at'] ?? '';
+
+  String get createdOn => _localizedValues[localeCode]['created_on'] ?? '';
 
   String get updatedAt => _localizedValues[localeCode]['updated_at'] ?? '';
 

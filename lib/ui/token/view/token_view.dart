@@ -3,9 +3,12 @@ import 'package:flutter/material.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/data/models/token_model.dart';
 import 'package:invoiceninja_flutter/redux/token/token_actions.dart';
+import 'package:invoiceninja_flutter/ui/app/entity_header.dart';
 import 'package:invoiceninja_flutter/ui/app/lists/list_divider.dart';
 import 'package:invoiceninja_flutter/ui/app/view_scaffold.dart';
 import 'package:invoiceninja_flutter/ui/token/view/token_view_vm.dart';
+import 'package:invoiceninja_flutter/utils/formatting.dart';
+import 'package:invoiceninja_flutter/utils/localization.dart';
 
 class TokenView extends StatefulWidget {
   const TokenView({
@@ -24,8 +27,10 @@ class TokenView extends StatefulWidget {
 class _TokenViewState extends State<TokenView> {
   @override
   Widget build(BuildContext context) {
+    final localization = AppLocalization.of(context);
     final viewModel = widget.viewModel;
     final token = viewModel.token;
+    final user = viewModel.state.userState.get(token.createdUserId);
 
     return ViewScaffold(
       isFilter: widget.isFilter,
@@ -33,7 +38,14 @@ class _TokenViewState extends State<TokenView> {
       entity: token,
       body: ListView(
         children: <Widget>[
-          SizedBox(height: 32),
+          EntityHeader(
+            entity: token,
+            label: localization.user,
+            value: user.fullName,
+            secondLabel: localization.createdOn,
+            secondValue: formatDate(
+                convertTimestampToDateString(token.createdAt), context),
+          ),
           ListDivider(),
           _TokenListTile(token),
           ListDivider(),
