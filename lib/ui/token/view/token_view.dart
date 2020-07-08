@@ -1,7 +1,9 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:invoiceninja_flutter/data/models/entities.dart';
+import 'package:invoiceninja_flutter/data/models/token_model.dart';
 import 'package:invoiceninja_flutter/ui/app/lists/list_divider.dart';
 import 'package:invoiceninja_flutter/ui/app/view_scaffold.dart';
 import 'package:invoiceninja_flutter/ui/token/view/token_view_vm.dart';
@@ -38,19 +40,36 @@ class _TokenViewState extends State<TokenView> {
         children: <Widget>[
           SizedBox(height: 16),
           ListDivider(),
-          ListTile(
-            contentPadding: const EdgeInsets.all(16),
-            title: Text(
-              token.token,
-            ),
-            trailing: Icon(FontAwesomeIcons.copy),
-            onTap: () {
-
-            },
-          ),
+          _TokenListTile(token),
           ListDivider(),
         ],
       ),
+    );
+  }
+}
+
+class _TokenListTile extends StatelessWidget {
+
+  const _TokenListTile(this.token);
+  final TokenEntity token;
+
+  @override
+  Widget build(BuildContext context) {
+    final localization = AppLocalization.of(context);
+
+    return ListTile(
+      contentPadding: const EdgeInsets.all(16),
+      title: Text(
+        token.token,
+      ),
+      trailing: Icon(FontAwesomeIcons.copy),
+      onTap: () {
+        Clipboard.setData(ClipboardData(text: token.token));
+        Scaffold.of(context).showSnackBar(SnackBar(
+            content: Text(AppLocalization.of(context)
+                .copiedToClipboard
+                .replaceFirst(':value', token.token))));
+      },
     );
   }
 }
