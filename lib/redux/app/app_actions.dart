@@ -122,7 +122,7 @@ class UserPreferencesChanged implements PersistPrefs {
   final String accentColor;
 }
 
-class LoadAccountSuccess {
+class LoadAccountSuccess implements StopLoading {
   LoadAccountSuccess({
     this.loginResponse,
     this.completer,
@@ -144,7 +144,7 @@ class RefreshData implements StartLoading {
 
 class ClearData {}
 
-class RefreshDataFailure {
+class RefreshDataFailure implements StopLoading {
   const RefreshDataFailure(this.error);
 
   final dynamic error;

@@ -105,8 +105,7 @@ class AuthRepository {
 
     bool includeStatic = false;
     if (updatedAt > 0) {
-      // TODO enable this code
-      //url += '?updated_at=$updatedAt';
+      url += '?updated_at=$updatedAt';
       includeStatic =
           DateTime.now().millisecondsSinceEpoch - (updatedAt * 1000) >
               kMillisecondsToRefreshStaticData;
