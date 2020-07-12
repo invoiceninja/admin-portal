@@ -1,6 +1,8 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
+import 'package:invoiceninja_flutter/redux/credit/credit_actions.dart';
+import 'package:invoiceninja_flutter/redux/quote/quote_actions.dart';
 import 'package:invoiceninja_flutter/ui/invoice/edit/invoice_edit_contacts.dart';
 import 'package:redux/redux.dart';
 import 'package:invoiceninja_flutter/redux/invoice/invoice_actions.dart';
@@ -89,11 +91,27 @@ class InvoiceEditContactsVM extends EntityEditContactsVM {
               state.getEntityMap(entityType)[entity.id] as InvoiceEntity;
           invitation = origEntity.getInvitationForContact(contact);
         }
-        store.dispatch(
-            AddInvoiceContact(contact: contact, invitation: invitation));
+
+        if (entity.entityType == EntityType.quote) {
+          store.dispatch(
+              AddQuoteContact(contact: contact, invitation: invitation));
+        } else if (entity.entityType == EntityType.credit) {
+          store.dispatch(
+              AddCreditContact(contact: contact, invitation: invitation));
+        } else {
+          store.dispatch(
+              AddInvoiceContact(contact: contact, invitation: invitation));
+        }
       },
-      onRemoveContact: (InvitationEntity invitation) =>
-          store.dispatch(RemoveInvoiceContact(invitation: invitation)),
+      onRemoveContact: (InvitationEntity invitation) {
+        if (entity.entityType == EntityType.quote) {
+          store.dispatch(RemoveQuoteContact(invitation: invitation));
+        } else if (entity.entityType == EntityType.credit) {
+          store.dispatch(RemoveCreditContact(invitation: invitation));
+        } else {
+          store.dispatch(RemoveInvoiceContact(invitation: invitation));
+        }
+      },
     );
   }
 }
