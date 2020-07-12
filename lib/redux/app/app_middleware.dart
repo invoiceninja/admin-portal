@@ -367,20 +367,25 @@ Middleware<AppState> _createPersistData(
 
     next(action);
 
-    _persistDataDebouncer.run(() {
-      print('## Calling Persist Data');
-      if (!store.state.isLoaded) {
-        print('## Not loaded: skipping');
-        return;
-      } else {
-        print('## Loaded: saving data');
-      }
-
+    void saveState() {
       final AppState state = store.state;
       final index = state.uiState.selectedCompanyIndex;
       companyRepositories[index]
           .saveCompanyState(state.userCompanyStates[index]);
-    });
+    }
+
+    // When a company is deleted the app switches to another company
+    // so we need to save it immediately before the selection changes
+    if (action is DeleteCompanySuccess) {
+      saveState();
+    } else {
+      _persistDataDebouncer.run(() {
+        if (!store.state.isLoaded) {
+          return;
+        }
+        saveState();
+      });
+    }
   };
 }
 

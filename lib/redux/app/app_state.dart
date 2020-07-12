@@ -581,9 +581,11 @@ abstract class AppState implements Built<AppState, AppStateBuilder> {
   @override
   String toString() {
     //return 'latestVersion: ${account.latestVersion}';
-    return 'Last Updated: ${userCompanyStates.map((state) => state.lastUpdated).join(',')}';
+    //return 'Last Updated: ${userCompanyStates.map((state) => state.lastUpdated).join(',')}';
+    //return 'Names: ${userCompanyStates.map((state) => state.company.id).join(',')}';
+    //return 'Client Count: ${userCompanyState.clientState.list.length}, Last Updated: ${userCompanyState.lastUpdated}';
     //return 'Token: ${credentials.token} - ${userCompanyStates.map((state) => state?.token?.token ?? '').where((name) => name.isNotEmpty).join(',')}';
-    //return 'URL: ${authState.url}, Route: ${uiState.currentRoute} Prev: ${uiState.previousRoute}';
+    return 'URL: ${authState.url}, Route: ${uiState.currentRoute} Prev: ${uiState.previousRoute}';
   }
 }
 

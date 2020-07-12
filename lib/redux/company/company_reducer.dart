@@ -29,9 +29,7 @@ import 'package:invoiceninja_flutter/redux/company_gateway/company_gateway_reduc
 import 'package:invoiceninja_flutter/redux/group/group_reducer.dart';
 
 UserCompanyState companyReducer(UserCompanyState state, dynamic action) {
-  if (action is LoadAccountSuccess) {
-    return UserCompanyState();
-  } else if (action is DeleteCompanySuccess) {
+  if (action is DeleteCompanySuccess) {
     return UserCompanyState();
   }
 
