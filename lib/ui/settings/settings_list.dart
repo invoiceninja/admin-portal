@@ -205,7 +205,6 @@ class SettingsListTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final localization = AppLocalization.of(context);
-    final state = viewModel.state;
 
     IconData icon;
     if (section == kSettingsDeviceSettings) {
@@ -228,17 +227,7 @@ class SettingsListTile extends StatelessWidget {
             child: Icon(icon ?? icon, size: 20),
           ),
           title: Text(localization.lookup(section)),
-          onTap: () {
-            if (section == kSettingsOnlinePayments &&
-                state.companyGatewayState.list.isEmpty) {
-              viewModel.loadSection(context, kSettingsOnlinePaymentsEdit);
-            } else if (section == kSettingsGroupSettings &&
-                state.groupState.list.isEmpty) {
-              viewModel.loadSection(context, kSettingsGroupSettingsEdit);
-            } else {
-              viewModel.loadSection(context, section);
-            }
-          },
+          onTap: () => viewModel.loadSection(context, section),
         ),
       ),
     );
