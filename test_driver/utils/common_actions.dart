@@ -73,19 +73,19 @@ Future<void> logout(FlutterDriver driver, TestLocalization localization,
         : find.byTooltip(localization.menuSidebar));
   }
 
-//await driver.scrollUntilVisible(find.byType('Drawer'), find.text(localization.settings));
+  //await driver.scrollUntilVisible(find.byType('Drawer'), find.text(localization.settings));
   await driver.tap(find.text(localization.settings));
   await driver.tap(find.text(localization.deviceSettings));
 
-// Tap on Log Out
+  // Tap on Log Out
   await driver.tap(find.text(localization.logout));
 
-// Confirm log out
+  // Confirm log out
   await driver.waitFor(find.text(localization.areYouSure));
   await driver.tap(find.text(localization.ok.toUpperCase()));
 
-// Should be in the login screen now
-  await driver.waitFor(find.text(localization.login.toUpperCase()));
+  // Should be in the login screen now
+  await driver.waitFor(find.text(localization.selfhosted.toUpperCase()));
 }
 
 Future<void> viewSection({FlutterDriver driver, String name}) async {
@@ -162,7 +162,6 @@ Future<void> testArchiveAndDelete(
   await driver.waitFor(find.text(archivedMessage));
   //await driver.waitFor(find.text(localization.archived));
 
-
   print('Restore record');
   await selectAction(driver, localization.restore);
   await driver.waitFor(find.text(restoredMessage));
@@ -172,7 +171,6 @@ Future<void> testArchiveAndDelete(
   await selectAction(driver, localization.delete);
   await driver.waitFor(find.text(deletedMessage));
   //await driver.waitFor(find.text(localization.deleted));
-
 
   print('Restore record');
   await selectAction(driver, localization.restore);
