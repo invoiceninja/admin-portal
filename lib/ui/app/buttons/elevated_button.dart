@@ -2,12 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:invoiceninja_flutter/ui/app/icon_text.dart';
 
 class ElevatedButton extends StatelessWidget {
-  const ElevatedButton(
-      {@required this.label,
-      @required this.onPressed,
-      this.iconData,
-      this.color,
-      this.width});
+  const ElevatedButton({
+    @required this.label,
+    @required this.onPressed,
+    this.iconData,
+    this.color,
+    this.width,
+  });
 
   final Color color;
   final IconData iconData;
@@ -17,22 +18,26 @@ class ElevatedButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
-      width: width,
-      child: RaisedButton(
-        padding: EdgeInsets.symmetric(vertical: 10, horizontal: 10),
-        color: color ?? Theme.of(context).buttonColor,
-        child: iconData != null
-            ? IconText(
-                icon: iconData,
-                text: label,
-                alignment: MainAxisAlignment.center,
-              )
-            : Text(label, overflow: TextOverflow.ellipsis),
-        textColor: Colors.white,
-        elevation: 4.0,
-        onPressed: () => onPressed(),
-      ),
+    final button = RaisedButton(
+      padding: EdgeInsets.symmetric(vertical: 10, horizontal: 10),
+      color: color ?? Theme.of(context).buttonColor,
+      child: iconData != null
+          ? IconText(
+              icon: iconData,
+              text: label,
+              alignment: MainAxisAlignment.center,
+            )
+          : Text(label, overflow: TextOverflow.ellipsis),
+      textColor: Colors.white,
+      elevation: 4.0,
+      onPressed: () => onPressed(),
     );
+
+    return width == null
+        ? button
+        : SizedBox(
+            width: width,
+            child: button,
+          );
   }
 }

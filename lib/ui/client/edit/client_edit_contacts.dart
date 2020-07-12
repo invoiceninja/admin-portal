@@ -162,6 +162,8 @@ class ContactEditDetailsState extends State<ContactEditDetails> {
   final _phoneController = TextEditingController();
   final _custom1Controller = TextEditingController();
   final _custom2Controller = TextEditingController();
+  final _custom3Controller = TextEditingController();
+  final _custom4Controller = TextEditingController();
 
   final _debouncer = Debouncer();
   List<TextEditingController> _controllers = [];
@@ -180,6 +182,8 @@ class ContactEditDetailsState extends State<ContactEditDetails> {
       _phoneController,
       _custom1Controller,
       _custom2Controller,
+      _custom3Controller,
+      _custom4Controller,
     ];
 
     _controllers
@@ -192,6 +196,8 @@ class ContactEditDetailsState extends State<ContactEditDetails> {
     _phoneController.text = contact.phone;
     _custom1Controller.text = contact.customValue1;
     _custom2Controller.text = contact.customValue2;
+    _custom3Controller.text = contact.customValue3;
+    _custom4Controller.text = contact.customValue4;
 
     _controllers
         .forEach((dynamic controller) => controller.addListener(_onChanged));
@@ -218,7 +224,9 @@ class ContactEditDetailsState extends State<ContactEditDetails> {
         ..password = _passwordController.text.trim()
         ..phone = _phoneController.text.trim()
         ..customValue1 = _custom1Controller.text.trim()
-        ..customValue2 = _custom2Controller.text.trim());
+        ..customValue2 = _custom2Controller.text.trim()
+        ..customValue3 = _custom3Controller.text.trim()
+        ..customValue4 = _custom4Controller.text.trim());
       if (contact != widget.contact) {
         widget.viewModel.onChangedContact(contact, widget.index);
       }
@@ -322,6 +330,16 @@ class ContactEditDetailsState extends State<ContactEditDetails> {
               controller: _custom2Controller,
               field: CustomFieldType.contact2,
               value: widget.contact.customValue2,
+            ),
+            CustomField(
+              controller: _custom3Controller,
+              field: CustomFieldType.contact3,
+              value: widget.contact.customValue3,
+            ),
+            CustomField(
+              controller: _custom4Controller,
+              field: CustomFieldType.contact4,
+              value: widget.contact.customValue4,
             ),
           ],
         ),

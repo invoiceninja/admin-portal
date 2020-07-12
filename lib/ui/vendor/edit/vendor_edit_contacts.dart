@@ -25,13 +25,13 @@ class _VendorEditContactsState extends State<VendorEditContacts> {
   VendorContactEntity selectedContact;
 
   void _showContactEditor(VendorContactEntity contact, BuildContext context) {
-    showDialog<ContactEditDetails>(
+    showDialog<VendorContactEditDetails>(
         context: context,
         builder: (BuildContext context) {
           final viewModel = widget.viewModel;
           final vendor = viewModel.vendor;
 
-          return ContactEditDetails(
+          return VendorContactEditDetails(
             viewModel: viewModel,
             key: Key(contact.entityKey),
             contact: contact,
@@ -60,7 +60,7 @@ class _VendorEditContactsState extends State<VendorEditContacts> {
     } else {
       final contact = vendor.contacts[0];
       contacts = [
-        ContactEditDetails(
+        VendorContactEditDetails(
           viewModel: viewModel,
           key: Key(contact.entityKey),
           contact: contact,
@@ -132,8 +132,8 @@ class ContactListTile extends StatelessWidget {
   }
 }
 
-class ContactEditDetails extends StatefulWidget {
-  const ContactEditDetails({
+class VendorContactEditDetails extends StatefulWidget {
+  const VendorContactEditDetails({
     Key key,
     @required this.index,
     @required this.contact,
@@ -147,16 +147,14 @@ class ContactEditDetails extends StatefulWidget {
   final bool areButtonsVisible;
 
   @override
-  ContactEditDetailsState createState() => ContactEditDetailsState();
+  VendorContactEditDetailsState createState() => VendorContactEditDetailsState();
 }
 
-class ContactEditDetailsState extends State<ContactEditDetails> {
+class VendorContactEditDetailsState extends State<VendorContactEditDetails> {
   final _firstNameController = TextEditingController();
   final _lastNameController = TextEditingController();
   final _emailController = TextEditingController();
   final _phoneController = TextEditingController();
-  final _custom1Controller = TextEditingController();
-  final _custom2Controller = TextEditingController();
 
   final _debouncer = Debouncer();
   List<TextEditingController> _controllers = [];
@@ -172,8 +170,6 @@ class ContactEditDetailsState extends State<ContactEditDetails> {
       _lastNameController,
       _emailController,
       _phoneController,
-      _custom1Controller,
-      _custom2Controller,
     ];
 
     _controllers
@@ -283,16 +279,6 @@ class ContactEditDetailsState extends State<ContactEditDetails> {
               label: localization.phone,
               keyboardType: TextInputType.phone,
             ),
-            /*
-            CustomField(
-              controller: _custom1Controller,
-              field: CustomFieldType.contact1,
-            ),
-            CustomField(
-              controller: _custom2Controller,
-              field: CustomFieldType.contact2,
-            ),
-             */
           ],
         ),
       ),
