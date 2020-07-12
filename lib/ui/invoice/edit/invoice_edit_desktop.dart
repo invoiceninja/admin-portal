@@ -170,7 +170,8 @@ class InvoiceEditDesktopState extends State<InvoiceEditDesktop>
     final invoice = viewModel.invoice;
     final company = viewModel.company;
     final client = viewModel.state.clientState.get(invoice.clientId);
-    final invoiceTotal = invoice.calculateTotal;
+    final invoiceTotal =
+        invoice.partial != 0 ? invoice.partial : invoice.calculateTotal;
 
     return ListView(
       key: ValueKey('__invoice_${invoice.id}__'),
@@ -432,7 +433,9 @@ class InvoiceEditDesktopState extends State<InvoiceEditDesktop>
                         right: kMobileDialogPadding,
                         left: kMobileDialogPadding / 2),
                     children: <Widget>[
-                      if (company.hasCustomSurcharge || company.hasInvoiceTaxes)
+                      if (company.hasCustomSurcharge ||
+                          company.hasInvoiceTaxes ||
+                          invoice.partial != 0)
                         TextFormField(
                           enabled: false,
                           decoration: InputDecoration(
