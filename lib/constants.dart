@@ -94,19 +94,16 @@ const String kPlanWhiteLabel = 'white_label';
 
 const double kGutterWidth = 16;
 
-const int kDebounceDelay = 300;
 const int kMaxNumberOfCompanies = 10;
 const int kMaxNumberOfHistory = 50;
 const int kMaxRecordsPerApiPage = 5000;
 const int kMaxPostSeconds = 120;
 const int kMillisecondsToRefreshData = 1000 * 60 * 15; // 15 minutes
 const int kUpdatedAtBufferSeconds = 600;
-//const int kMillisecondsToRefreshData = 1000 * 60 * 1; // 15 minutes
-//const int kUpdatedAtBufferSeconds = 10;
 const int kMillisecondsToRefreshActivities = 1000 * 60 * 60 * 24; // 1 day
 const int kMillisecondsToRefreshStaticData = 1000 * 60 * 60 * 24; // 1 day
 const int kMillisecondsToReenterPassword = 1000 * 60 * 10; // 10 minutes
-const int kMillisecondsToDebounceStateSave = 1000 * 1; // 3 seconds
+const int kMillisecondsToDebounceStateSave = 1000 * 2; // 2 seconds
 
 const String kLanguageEnglish = '1';
 

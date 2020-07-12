@@ -1,7 +1,6 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'package:invoiceninja_flutter/constants.dart';
 import 'package:invoiceninja_flutter/ui/app/dialogs/error_dialog.dart';
 import 'package:invoiceninja_flutter/ui/app/snackbar_row.dart';
 
@@ -93,7 +92,7 @@ Completer<Null> errorCompleter(BuildContext context) {
 
 // https://stackoverflow.com/a/55119208/497368
 class Debouncer {
-  Debouncer({this.milliseconds = kDebounceDelay});
+  Debouncer({this.milliseconds});
 
   static bool isDebouncing = false;
   final int milliseconds;
@@ -101,6 +100,11 @@ class Debouncer {
   Timer _timer;
 
   void run(VoidCallback action) {
+    if (milliseconds == null) {
+      action();
+      return;
+    }
+
     if (_timer != null) {
       _timer.cancel();
     }
