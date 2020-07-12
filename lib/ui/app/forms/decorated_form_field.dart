@@ -21,6 +21,7 @@ class DecoratedFormField extends StatelessWidget {
     this.suffixIcon,
     this.expands = false,
     this.autofocus = false,
+    this.autofillHints,
   }) : super(key: key);
 
   final TextEditingController controller;
@@ -41,6 +42,7 @@ class DecoratedFormField extends StatelessWidget {
   final ValueChanged<String> onFieldSubmitted;
   final ValueChanged<String> onChanged;
   final Icon suffixIcon;
+  final Iterable<String> autofillHints;
 
   @override
   Widget build(BuildContext context) {
@@ -77,6 +79,7 @@ class DecoratedFormField extends StatelessWidget {
         }
       },
       enabled: enabled,
+      autofillHints: autofillHints,
     );
   }
 }
