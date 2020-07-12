@@ -11,6 +11,7 @@ import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/redux/static/static_state.dart';
 import 'package:invoiceninja_flutter/utils/formatting.dart';
+import 'package:invoiceninja_flutter/utils/strings.dart';
 
 part 'client_model.g.dart';
 
@@ -484,40 +485,28 @@ abstract class ClientEntity extends Object
 
   @override
   bool matchesFilter(String filter) {
-    if (filter == null || filter.isEmpty) {
-      return true;
-    }
-    filter = filter.toLowerCase();
-
-    if (displayName.toLowerCase().contains(filter)) {
-      return true;
-    } else if (vatNumber.toLowerCase().contains(filter)) {
-      return true;
-    } else if (idNumber.toLowerCase().contains(filter)) {
-      return true;
-    } else if (phone.toLowerCase().contains(filter)) {
-      return true;
-    } else if (address1.toLowerCase().contains(filter)) {
-      return true;
-    } else if (city.toLowerCase().contains(filter)) {
-      return true;
-    } else if (postalCode.toLowerCase().contains(filter)) {
-      return true;
-    } else if (contacts
-        .where((contact) => contact.matchesFilter(filter))
-        .isNotEmpty) {
-      return true;
-    } else if (customValue1.toLowerCase().contains(filter)) {
-      return true;
-    } else if (customValue2.toLowerCase().contains(filter)) {
-      return true;
-    } else if (customValue3.toLowerCase().contains(filter)) {
-      return true;
-    } else if (customValue4.toLowerCase().contains(filter)) {
-      return true;
+    for (var i = 0; i < contacts.length; i++) {
+      if (contacts[i].matchesFilter(filter)) {
+        return true;
+      }
     }
 
-    return false;
+    return matchesStrings(
+      haystacks: [
+        displayName,
+        vatNumber,
+        idNumber,
+        phone,
+        address1,
+        city,
+        postalCode,
+        customValue1,
+        customValue2,
+        customValue3,
+        customValue4,
+      ],
+      needle: filter,
+    );
   }
 
   @override
