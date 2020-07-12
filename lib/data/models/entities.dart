@@ -37,6 +37,7 @@ class EntityType extends EnumClass {
   static const EntityType gatewayToken = _$gatewayToken;
   static const EntityType invoiceItem = _$invoiceItem;
   static const EntityType design = _$design;
+
   // STARTER: entity type - do not remove comment
   static const EntityType webhook = _$webhook;
   static const EntityType token = _$token;
@@ -526,24 +527,78 @@ abstract class ActivityEntity
   String get tokenId;
 
   EntityType get entityType {
-    if (['1', '2', '3', '26'].contains(activityTypeId)) {
+    if ([
+      kActivityCreateClient,
+      kActivityArchiveClient,
+      kActivityDeleteClient,
+      kActivityRestoreClient
+    ].contains(activityTypeId)) {
       return EntityType.client;
-    } else if (['4', '5', '6', '7', '8', '9', '25', '53', '58', '59']
-        .contains(activityTypeId)) {
+    } else if ([
+      kActivityCreateInvoice,
+      kActivityUpdateInvoice,
+      kActivityEmailInvoice,
+      kActivityViewInvoice,
+      kActivityArchiveInvoice,
+      kActivityDeleteInvoice,
+      kActivityRestoreInvoice,
+      kActivityMarkSentInvoice,
+      kActivityReversedInvoice,
+      kActivityCancelledInvoice
+    ].contains(activityTypeId)) {
       return EntityType.invoice;
-    } else if (['10', '11', '12', '13', '27'].contains(activityTypeId)) {
+    } else if ([
+      kActivityCreatePayment,
+      kActivityUpdatePayment,
+      kActivityArchivePayment,
+      kActivityDeletePayment,
+      kActivityRestorePayment
+    ].contains(activityTypeId)) {
       return EntityType.payment;
-    } else if (['14', '15', '16', '17', '28', '39', '40', '41']
-        .contains(activityTypeId)) {
+    } else if ([
+      kActivityCreateCredit,
+      kActivityUpdateCredit,
+      kActivityArchiveCredit,
+      kActivityDeleteCredit,
+      kActivityRestoreCredit,
+      kActivityVoidedPayment,
+      kActivityRefundedPayment,
+      kActivityFailedPayment
+    ].contains(activityTypeId)) {
       return EntityType.credit;
-    } else if (['18', '19', '20', '21', '22', '23', '24', '29']
-        .contains(activityTypeId)) {
+    } else if ([
+      kActivityCreateQuote,
+      kActivityUpdateQuote,
+      kActivityEmailQuote,
+      kActivityViewQuote,
+      kActivityArchiveQuote,
+      kActivityDeleteQuote,
+      kActivityRestoreQuote,
+      kActivityApproveQuote
+    ].contains(activityTypeId)) {
       return EntityType.quote;
-    } else if (['30', '31', '32', '33'].contains(activityTypeId)) {
+    } else if ([
+      kActivityCreateVendor,
+      kActivityArchiveVendor,
+      kActivityDeleteVendor,
+      kActivityRestoreVendor
+    ].contains(activityTypeId)) {
       return EntityType.vendor;
-    } else if (['34', '35', '36', '37', '47'].contains(activityTypeId)) {
+    } else if ([
+      kActivityCreateExpense,
+      kActivityArchiveExpense,
+      kActivityDeleteExpense,
+      kActivityRestoreExpense,
+      kActivityUpdateExpense
+    ].contains(activityTypeId)) {
       return EntityType.expense;
-    } else if (['42', '43', '44', '45', '46'].contains(activityTypeId)) {
+    } else if ([
+      kActivityCreateTask,
+      kActivityUpdateTask,
+      kActivityArchiveTask,
+      kActivityDeleteTask,
+      kActivityRestoreTask
+    ].contains(activityTypeId)) {
       return EntityType.task;
     } else {
       print(
