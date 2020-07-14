@@ -100,6 +100,10 @@ class _WebhookEditState extends State<WebhookEdit> {
                       controller: _targetUrlController,
                       label: localization.targetUrl,
                       keyboardType: TextInputType.url,
+                      validator: (value) =>
+                          value.isEmpty || value.trim().isEmpty
+                              ? localization.pleaseEnterAValue
+                              : null,
                     ),
                     AppDropdownButton<String>(
                       labelText: localization.eventType,
