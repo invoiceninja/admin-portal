@@ -23,9 +23,7 @@ import 'package:invoiceninja_flutter/redux/static/static_reducer.dart';
 
 // STARTER: import - do not remove comment
 import 'package:invoiceninja_flutter/redux/webhook/webhook_actions.dart';
-
 import 'package:invoiceninja_flutter/redux/token/token_actions.dart';
-
 import 'package:invoiceninja_flutter/redux/payment_term/payment_term_actions.dart';
 import 'package:invoiceninja_flutter/redux/design/design_actions.dart';
 import 'package:invoiceninja_flutter/redux/credit/credit_actions.dart';
