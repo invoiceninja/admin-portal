@@ -273,7 +273,8 @@ class InvoiceOverview extends StatelessWidget {
           invoice.customSurcharge4));
     }
 
-    widgets.add(surchargeRow(localization.total, invoice.calculateTotal));
+    widgets.add(surchargeRow(localization.total,
+        invoice.partial != 0 ? invoice.partial : invoice.calculateTotal));
 
     return ListView(
       children: widgets,
