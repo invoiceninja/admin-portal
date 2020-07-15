@@ -75,7 +75,9 @@ class TaskListItem extends StatelessWidget {
         onTap: () => onTap != null
             ? onTap()
             : selectEntity(entity: task, context: context),
-        onLongPress: onLongPress,
+        onLongPress: () => onLongPress != null
+            ? onLongPress()
+            : selectEntity(entity: task, context: context, longPress: true),
         leading: showCheckbox
             ? IgnorePointer(
                 ignoring: listUIState.isInMultiselect(),

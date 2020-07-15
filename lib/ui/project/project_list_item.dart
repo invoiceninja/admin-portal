@@ -60,7 +60,9 @@ class ProjectListItem extends StatelessWidget {
         onTap: () => onTap != null
             ? onTap()
             : selectEntity(entity: project, context: context),
-        onLongPress: onLongPress,
+        onLongPress: () => onLongPress != null
+            ? onLongPress()
+            : selectEntity(entity: project, context: context, longPress: true),
         leading: showCheckbox
             ? IgnorePointer(
                 ignoring: listUIState.isInMultiselect(),

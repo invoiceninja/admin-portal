@@ -57,19 +57,6 @@ class ClientListBuilder extends StatelessWidget {
                     handleClientAction(context, [client], action);
                   }
                 },
-                onLongPress: () async {
-                  final longPressIsSelection =
-                      state.prefState.longPressSelectionIsDefault ?? true;
-                  if (longPressIsSelection && !isInMultiselect) {
-                    handleClientAction(
-                        context, [client], EntityAction.toggleMultiselect);
-                  } else {
-                    showEntityActionsDialog(
-                      entities: [client],
-                      context: context,
-                    );
-                  }
-                },
                 isChecked: isInMultiselect && listState.isSelected(client.id),
               );
             });

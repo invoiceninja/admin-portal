@@ -56,19 +56,6 @@ class PaymentTermListBuilder extends StatelessWidget {
                     handlePaymentTermAction(context, [paymentTerm], action);
                   }
                 },
-                onLongPress: () async {
-                  final longPressIsSelection =
-                      state.prefState.longPressSelectionIsDefault ?? true;
-                  if (longPressIsSelection && !isInMultiselect) {
-                    handlePaymentTermAction(
-                        context, [paymentTerm], EntityAction.toggleMultiselect);
-                  } else {
-                    showEntityActionsDialog(
-                      entities: [paymentTerm],
-                      context: context,
-                    );
-                  }
-                },
                 isChecked:
                     isInMultiselect && listState.isSelected(paymentTerm.id),
               );

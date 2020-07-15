@@ -64,16 +64,6 @@ class ProjectListBuilder extends StatelessWidget {
                     handleProjectAction(context, [project], action);
                   }
                 },
-                onLongPress: () async {
-                  final longPressIsSelection =
-                      state.prefState.longPressSelectionIsDefault ?? true;
-                  if (longPressIsSelection && !isInMultiselect) {
-                    handleProjectAction(
-                        context, [project], EntityAction.toggleMultiselect);
-                  } else {
-                    showDialog();
-                  }
-                },
                 isChecked: isInMultiselect && listState.isSelected(project.id),
               );
             });

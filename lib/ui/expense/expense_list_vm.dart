@@ -64,16 +64,6 @@ class ExpenseListBuilder extends StatelessWidget {
                     handleExpenseAction(context, [expense], action);
                   }
                 },
-                onLongPress: () async {
-                  final longPressIsSelection =
-                      state.prefState.longPressSelectionIsDefault ?? true;
-                  if (longPressIsSelection && !isInMultiselect) {
-                    handleExpenseAction(
-                        context, [expense], EntityAction.toggleMultiselect);
-                  } else {
-                    showDialog();
-                  }
-                },
                 isChecked:
                     isInMultiselect && listUIState.isSelected(expense.id),
               );

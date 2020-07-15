@@ -59,16 +59,6 @@ class VendorListBuilder extends StatelessWidget {
                   handleVendorAction(context, [vendor], action);
                 }
               },
-              onLongPress: () async {
-                final longPressIsSelection =
-                    state.prefState.longPressSelectionIsDefault ?? true;
-                if (longPressIsSelection && !isInMultiselect) {
-                  handleVendorAction(
-                      context, [vendor], EntityAction.toggleMultiselect);
-                } else {
-                  showDialog();
-                }
-              },
               isChecked: isInMultiselect && listUIState.isSelected(vendor.id),
             );
           },

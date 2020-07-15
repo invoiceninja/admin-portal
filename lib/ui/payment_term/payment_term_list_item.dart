@@ -60,7 +60,10 @@ class PaymentTermListItem extends StatelessWidget {
         onTap: () => onTap != null
             ? onTap()
             : selectEntity(entity: paymentTerm, context: context),
-        onLongPress: onLongPress,
+        onLongPress: () => onLongPress != null
+            ? onLongPress()
+            : selectEntity(
+                entity: paymentTerm, context: context, longPress: true),
         leading: showCheckbox
             ? IgnorePointer(
                 ignoring: listUIState.isInMultiselect(),

@@ -65,7 +65,10 @@ class ProductListItem extends StatelessWidget {
                 onTap: () => onTap != null
                     ? onTap()
                     : selectEntity(entity: product, context: context),
-                onLongPress: onLongPress,
+                onLongPress: () => onLongPress != null
+                    ? onLongPress()
+                    : selectEntity(
+                        entity: product, context: context, longPress: true),
                 child: Padding(
                   padding: const EdgeInsets.only(
                     left: 12,
@@ -139,8 +142,13 @@ class ProductListItem extends StatelessWidget {
                 ),
               )
             : ListTile(
-                onTap: onTap,
-                onLongPress: onLongPress,
+                onTap: () => onTap != null
+                    ? onTap()
+                    : selectEntity(entity: product, context: context),
+                onLongPress: () => onLongPress != null
+                    ? onLongPress()
+                    : selectEntity(
+                        entity: product, context: context, longPress: true),
                 leading: showCheckbox
                     ? IgnorePointer(
                         ignoring: listUIState.isInMultiselect(),

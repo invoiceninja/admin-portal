@@ -59,16 +59,6 @@ class TaxRateListBuilder extends StatelessWidget {
                     handleTaxRateAction(context, [taxRate], action);
                   }
                 },
-                onLongPress: () async {
-                  final longPressIsSelection =
-                      state.prefState.longPressSelectionIsDefault ?? true;
-                  if (longPressIsSelection && !isInMultiselect) {
-                    handleTaxRateAction(
-                        context, [taxRate], EntityAction.toggleMultiselect);
-                  } else {
-                    showDialog();
-                  }
-                },
                 isChecked: isInMultiselect && listState.isSelected(taxRate.id),
               );
             });

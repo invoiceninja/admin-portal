@@ -55,7 +55,9 @@ class GroupListItem extends StatelessWidget {
         onTap: () => onTap != null
             ? onTap()
             : selectEntity(entity: group, context: context),
-        onLongPress: onLongPress,
+        onLongPress: () => onLongPress != null
+            ? onLongPress()
+            : selectEntity(entity: group, context: context, longPress: true),
         leading: showCheckbox
             ? IgnorePointer(
                 ignoring: listUIState.isInMultiselect(),

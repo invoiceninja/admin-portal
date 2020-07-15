@@ -93,7 +93,9 @@ class ExpenseListItem extends StatelessWidget {
         onTap: () => onTap != null
             ? onTap()
             : selectEntity(entity: expense, context: context),
-        onLongPress: onLongPress,
+        onLongPress: () => onLongPress != null
+            ? onLongPress()
+            : selectEntity(entity: expense, context: context, longPress: true),
         leading: showCheckbox
             ? IgnorePointer(
                 ignoring: listUIState.isInMultiselect(),

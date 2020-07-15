@@ -82,7 +82,10 @@ class InvoiceListItem extends StatelessWidget {
                   onTap: () => onTap != null
                       ? onTap()
                       : selectEntity(entity: invoice, context: context),
-                  onLongPress: onLongPress,
+                  onLongPress: () => onLongPress != null
+                      ? onLongPress()
+                      : selectEntity(
+                          entity: invoice, context: context, longPress: true),
                   child: Padding(
                     padding: const EdgeInsets.only(
                       left: 12,
@@ -179,10 +182,13 @@ class InvoiceListItem extends StatelessWidget {
                   ),
                 )
               : ListTile(
-                  onTap: isInMultiselect
-                      ? () => onEntityAction(EntityAction.toggleMultiselect)
-                      : onTap,
-                  onLongPress: onLongPress,
+                  onTap: () => onTap != null
+                      ? onTap()
+                      : selectEntity(entity: invoice, context: context),
+                  onLongPress: () => onLongPress != null
+                      ? onLongPress()
+                      : selectEntity(
+                          entity: invoice, context: context, longPress: true),
                   leading: showCheckbox
                       ? IgnorePointer(
                           ignoring: listUIState.isInMultiselect(),

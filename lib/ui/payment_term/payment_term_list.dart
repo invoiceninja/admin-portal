@@ -62,19 +62,6 @@ class _PaymentTermListState extends State<PaymentTermList> {
                   handlePaymentTermAction(context, [paymentTerm], action);
                 }
               },
-              onLongPress: () async {
-                final longPressIsSelection =
-                    state.prefState.longPressSelectionIsDefault ?? true;
-                if (longPressIsSelection && !isInMultiselect) {
-                  handlePaymentTermAction(
-                      context, [paymentTerm], EntityAction.toggleMultiselect);
-                } else {
-                  showEntityActionsDialog(
-                    entities: [paymentTerm],
-                    context: context,
-                  );
-                }
-              },
               isChecked:
                   isInMultiselect && listUIState.isSelected(paymentTerm.id),
             );

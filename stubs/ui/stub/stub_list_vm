@@ -61,19 +61,6 @@ class StubListBuilder extends StatelessWidget {
                   }
                 },
                 onTap: () => viewModel.onStubTap(context, stub),
-                onLongPress: () async {
-                  final longPressIsSelection =
-                      state.prefState.longPressSelectionIsDefault ?? true;
-                  if (longPressIsSelection && !isInMultiselect) {
-                    handleStubAction(
-                        context, [stub], EntityAction.toggleMultiselect);
-                  } else {
-                    showEntityActionsDialog(
-                      entities: [stub],
-                      context: context,
-                    );
-                  }
-                },
                 isChecked: isInMultiselect && listState.isSelected(stub.id),
               );
             });
@@ -90,7 +77,6 @@ class StubListVM {
     @required this.stubMap,
     @required this.filter,
     @required this.isLoading,
-    @required this.onStubTap,
     @required this.listState,
     @required this.onRefreshed,
     @required this.onEntityAction,
@@ -127,19 +113,6 @@ class StubListVM {
           context: context,
           entityId: state.stubListState.filterEntityId,
           entityType: state.stubListState.filterEntityType),
-        onStubTap: (context, stub) {
-          if (store.state.stubListState.isInMultiselect()) {
-            handleStubAction(
-                context, [stub], EntityAction.toggleMultiselect);
-        } else if (isDesktop(context) && state.uiState.isEditing) {
-          viewEntity(context: context, entity: stub);
-        } else if (isDesktop(context) &&
-            state.stubUIState.selectedId == stub.id) {
-          editEntity(context: context, entity: stub);
-          } else {
-            viewEntity(context: context, entity: stub);
-          }
-        },
       onEntityAction:
           (BuildContext context, List<BaseEntity> stubs, EntityAction action) =>
           handleStubAction(context, stubs, action),
@@ -158,7 +131,6 @@ class StubListVM {
   final ListUIState listState;
   final String filter;
   final bool isLoading;
-  final Function(BuildContext, BaseEntity) onStubTap;
   final Function(BuildContext) onRefreshed;
   final Function(BuildContext, List<BaseEntity>, EntityAction) onEntityAction;
   final Function onClearEntityFilterPressed;

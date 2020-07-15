@@ -1140,10 +1140,28 @@ void handleEntitiesActions(
   }
 }
 
-void selectEntity({BuildContext context, BaseEntity entity}) {
+void selectEntity({
+  @required BuildContext context,
+  @required BaseEntity entity,
+  bool longPress,
+}) {
   final store = StoreProvider.of<AppState>(context);
   final state = store.state;
-  if (state.getListState(entity.entityType).isInMultiselect()) {
+  final isInMultiselect =
+      state.getListState(entity.entityType).isInMultiselect();
+
+  if (longPress == true) {
+    final longPressIsSelection =
+        state.prefState.longPressSelectionIsDefault ?? true;
+    if (longPressIsSelection && !isInMultiselect) {
+      handleEntityAction(context, entity, EntityAction.toggleMultiselect);
+    } else {
+      showEntityActionsDialog(
+        entities: [entity],
+        context: context,
+      );
+    }
+  } else if (isInMultiselect) {
     handleEntityAction(context, entity, EntityAction.toggleMultiselect);
   } else if (isDesktop(context) && state.uiState.isEditing) {
     viewEntity(context: context, entity: entity);

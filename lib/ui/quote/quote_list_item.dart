@@ -77,7 +77,10 @@ class QuoteListItem extends StatelessWidget {
                   onTap: () => onTap != null
                       ? onTap()
                       : selectEntity(entity: quote, context: context),
-                  onLongPress: onLongPress,
+                  onLongPress: () => onLongPress != null
+                      ? onLongPress()
+                      : selectEntity(
+                          entity: quote, context: context, longPress: true),
                   child: Padding(
                     padding: const EdgeInsets.only(
                       left: 12,
@@ -170,10 +173,13 @@ class QuoteListItem extends StatelessWidget {
                   ),
                 )
               : ListTile(
-                  onTap: isInMultiselect
-                      ? () => onEntityAction(EntityAction.toggleMultiselect)
-                      : onTap,
-                  onLongPress: onLongPress,
+                  onTap: () => onTap != null
+                      ? onTap()
+                      : selectEntity(entity: quote, context: context),
+                  onLongPress: () => onLongPress != null
+                      ? onLongPress()
+                      : selectEntity(
+                          entity: quote, context: context, longPress: true),
                   leading: showCheckbox
                       ? IgnorePointer(
                           ignoring: listUIState.isInMultiselect(),

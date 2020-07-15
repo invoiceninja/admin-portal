@@ -63,16 +63,6 @@ class PaymentListBuilder extends StatelessWidget {
                     handlePaymentAction(context, [payment], action);
                   }
                 },
-                onLongPress: () async {
-                  final longPressIsSelection =
-                      state.prefState.longPressSelectionIsDefault ?? true;
-                  if (longPressIsSelection && !isInMultiselect) {
-                    handlePaymentAction(
-                        context, [payment], EntityAction.toggleMultiselect);
-                  } else {
-                    showDialog();
-                  }
-                },
                 isChecked: isInMultiselect && listState.isSelected(payment.id),
               );
             });

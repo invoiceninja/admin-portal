@@ -58,19 +58,6 @@ class WebhookListBuilder extends StatelessWidget {
                     handleWebhookAction(context, [webhook], action);
                   }
                 },
-                onLongPress: () async {
-                  final longPressIsSelection =
-                      state.prefState.longPressSelectionIsDefault ?? true;
-                  if (longPressIsSelection && !isInMultiselect) {
-                    handleWebhookAction(
-                        context, [webhook], EntityAction.toggleMultiselect);
-                  } else {
-                    showEntityActionsDialog(
-                      entities: [webhook],
-                      context: context,
-                    );
-                  }
-                },
                 isChecked: isInMultiselect && listState.isSelected(webhook.id),
               );
             });

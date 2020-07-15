@@ -71,7 +71,10 @@ class CreditListItem extends StatelessWidget {
                 onTap: () => onTap != null
                     ? onTap()
                     : selectEntity(entity: credit, context: context),
-                onLongPress: onLongPress,
+                onLongPress: () => onLongPress != null
+                    ? onLongPress()
+                    : selectEntity(
+                        entity: credit, context: context, longPress: true),
                 child: Padding(
                   padding: const EdgeInsets.only(
                     left: 12,
@@ -161,10 +164,13 @@ class CreditListItem extends StatelessWidget {
                 ),
               )
             : ListTile(
-                onTap: isInMultiselect
-                    ? () => onEntityAction(EntityAction.toggleMultiselect)
-                    : onTap,
-                onLongPress: onLongPress,
+                onTap: () => onTap != null
+                    ? onTap()
+                    : selectEntity(entity: credit, context: context),
+                onLongPress: () => onLongPress != null
+                    ? onLongPress()
+                    : selectEntity(
+                        entity: credit, context: context, longPress: true),
                 leading: showCheckbox
                     ? IgnorePointer(
                         ignoring: listUIState.isInMultiselect(),

@@ -60,16 +60,6 @@ class GroupListBuilder extends StatelessWidget {
                     handleGroupAction(context, [group], action);
                   }
                 },
-                onLongPress: () async {
-                  final longPressIsSelection =
-                      state.prefState.longPressSelectionIsDefault ?? true;
-                  if (longPressIsSelection && !isInMultiselect) {
-                    handleGroupAction(
-                        context, [group], EntityAction.toggleMultiselect);
-                  } else {
-                    showDialog();
-                  }
-                },
                 isChecked: isInMultiselect && listState.isSelected(group.id),
               );
             });

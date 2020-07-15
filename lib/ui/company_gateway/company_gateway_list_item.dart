@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:invoiceninja_flutter/data/models/company_gateway_model.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
+import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/ui/app/dismissible_entity.dart';
 import 'package:invoiceninja_flutter/ui/app/entity_state_label.dart';
@@ -55,10 +56,13 @@ class CompanyGatewayListItem extends StatelessWidget {
       isSelected: false,
       onEntityAction: onEntityAction,
       child: ListTile(
-        onTap: isInMultiselect
-            ? () => onEntityAction(EntityAction.toggleMultiselect)
-            : onTap,
-        onLongPress: onLongPress,
+        onTap: () => onTap != null
+            ? onTap()
+            : selectEntity(entity: companyGateway, context: context),
+        onLongPress: () => onLongPress != null
+            ? onLongPress()
+            : selectEntity(
+                entity: companyGateway, context: context, longPress: true),
         trailing: onRemovePressed == null
             ? null
             : FlatButton(

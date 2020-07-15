@@ -59,16 +59,6 @@ class DocumentListBuilder extends StatelessWidget {
                     viewModel.onEntityAction(context, [document], action);
                   }
                 },
-                onLongPress: () async {
-                  final longPressIsSelection =
-                      state.prefState.longPressSelectionIsDefault ?? true;
-                  if (longPressIsSelection && !isInMultiselect) {
-                    viewModel.onEntityAction(
-                        context, [document], EntityAction.toggleMultiselect);
-                  } else {
-                    showDialog();
-                  }
-                },
                 isChecked: isInMultiselect && listState.isSelected(document.id),
               );
             });

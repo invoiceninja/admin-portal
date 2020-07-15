@@ -60,16 +60,6 @@ class DesignListBuilder extends StatelessWidget {
                     handleDesignAction(context, [design], action);
                   }
                 },
-                onLongPress: () async {
-                  final longPressIsSelection =
-                      state.prefState.longPressSelectionIsDefault ?? true;
-                  if (longPressIsSelection && !isInMultiselect) {
-                    handleDesignAction(
-                        context, [design], EntityAction.toggleMultiselect);
-                  } else {
-                    showDialog();
-                  }
-                },
                 isChecked: isInMultiselect && listState.isSelected(design.id),
               );
             });

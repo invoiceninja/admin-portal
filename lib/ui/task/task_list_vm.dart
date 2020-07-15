@@ -65,17 +65,6 @@ class TaskListBuilder extends StatelessWidget {
                     handleTaskAction(context, [task], action);
                   }
                 },
-                onLongPress: () async {
-                  final longPressIsSelection =
-                      viewModel.state.prefState.longPressSelectionIsDefault ??
-                          true;
-                  if (longPressIsSelection && !isInMultiselect) {
-                    handleTaskAction(
-                        context, [task], EntityAction.toggleMultiselect);
-                  } else {
-                    showDialog();
-                  }
-                },
                 isChecked: isInMultiselect && listUIState.isSelected(task.id),
               );
             });
