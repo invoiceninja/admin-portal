@@ -73,8 +73,6 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'deleted_payment_term': 'Successfully deleted payment term',
       'removed_payment_term': 'Successfully removed payment term',
       'restored_payment_term': 'Successfully restored payment term',
-      'full_width_editor': 'Full Width Editor',
-      'full_height_filter': 'Full Height Filter',
       'email_sign_in': 'Sign in with email',
       'change': 'Change',
       'change_to_mobile_layout': 'Change to the mobile layout?',
@@ -38694,12 +38692,6 @@ mixin LocalizationsProvider on LocaleCodeAware {
   String get change => _localizedValues[localeCode]['change'] ?? '';
 
   String get emailSignIn => _localizedValues[localeCode]['email_sign_in'] ?? '';
-
-  String get fullWidthEditor =>
-      _localizedValues[localeCode]['full_width_editor'] ?? '';
-
-  String get fullHeightFilter =>
-      _localizedValues[localeCode]['full_height_filter'] ?? '';
 
   String get configurePaymentTerms =>
       _localizedValues[localeCode]['configure_payment_terms'] ?? '';

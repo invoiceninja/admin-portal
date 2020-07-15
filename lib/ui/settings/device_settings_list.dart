@@ -158,14 +158,6 @@ class _DeviceSettingsState extends State<DeviceSettings> {
                     activeColor: Theme.of(context).accentColor,
                   ),
                    */
-                  SwitchListTile(
-                    title: Text(localization.fullHeightFilter),
-                    value: prefState.fullHeightFilter,
-                    onChanged: (value) =>
-                        viewModel.onFullHeightFilterChanged(context, value),
-                    secondary: Icon(Icons.filter_list),
-                    activeColor: Theme.of(context).accentColor,
-                  ),
                   viewModel.state.company.isModuleEnabled(EntityType.task)
                       ? SwitchListTile(
                           title:

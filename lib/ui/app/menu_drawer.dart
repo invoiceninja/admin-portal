@@ -156,51 +156,12 @@ class MenuDrawer extends StatelessWidget {
             },
           );
 
-    /*
-    final _expandedCompanySelector = viewModel.companies.isEmpty
-        ? SizedBox()
-        : DropdownButtonHideUnderline(
-            child: DropdownButton<String>(
-            isExpanded: true,
-            icon: Icon(Icons.arrow_drop_down),
-            value: viewModel.selectedCompanyIndex,
-            items: [
-              ...viewModel.companies
-                  .map((CompanyEntity company) => DropdownMenuItem<String>(
-                        value:
-                            (viewModel.companies.indexOf(company)).toString(),
-                        child: _companyListItem(company),
-                      ))
-                  .toList(),
-              if (viewModel.state.userCompany.isAdmin)
-                DropdownMenuItem<String>(
-                  value: null,
-                  child: Row(
-                    children: <Widget>[
-                      SizedBox(width: 2),
-                      Icon(Icons.add_circle, size: 32),
-                      SizedBox(width: 28),
-                      Text(localization.addCompany),
-                    ],
-                  ),
-                ),
-            ],
-            onChanged: (value) {
-              if (value == null) {
-                viewModel.onAddCompany(context);
-              } else {
-                viewModel.onCompanyChanged(
-                    context, value, viewModel.companies[int.parse(value)]);
-              }
-            },
-          ));
-  */
-
     return AnimatedContainer(
       width: state.isMenuCollapsed ? 65 : kDrawerWidth,
       duration: Duration(
-          milliseconds:
-              state.prefState.fullHeightFilter ? 0 : kDefaultAnimationDuration),
+          milliseconds: state.uiState.filterEntityType != null
+              ? 0
+              : kDefaultAnimationDuration),
       curve: Curves.easeInOutCubic,
       child: Drawer(
         child: SafeArea(

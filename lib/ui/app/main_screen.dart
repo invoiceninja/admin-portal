@@ -47,275 +47,274 @@ class MainScreen extends StatelessWidget {
     return StoreBuilder(
         //onInit: (Store<AppState> store) => store.dispatch(RefreshData()),
         builder: (BuildContext context, Store<AppState> store) {
-          final state = store.state;
-          final uiState = state.uiState;
-          final prefState = state.prefState;
-          final subRoute = '/' + uiState.subRoute;
-          String mainRoute = '/' + uiState.mainRoute;
-          Widget screen = BlankScreen();
+      final state = store.state;
+      final uiState = state.uiState;
+      final prefState = state.prefState;
+      final subRoute = '/' + uiState.subRoute;
+      String mainRoute = '/' + uiState.mainRoute;
+      Widget screen = BlankScreen();
 
-          bool isFullScreen = false;
-          if (prefState.isDesktop) {
-            if ([
-                  InvoiceScreen.route,
-                  QuoteScreen.route,
-                  CreditScreen.route,
-                ].contains(mainRoute) &&
-                subRoute == '/edit') {
-              isFullScreen = true;
+      bool isFullScreen = false;
+      if (prefState.isDesktop) {
+        if ([
+              InvoiceScreen.route,
+              QuoteScreen.route,
+              CreditScreen.route,
+            ].contains(mainRoute) &&
+            subRoute == '/edit') {
+          isFullScreen = true;
+        }
+      }
+      if (prefState.isNotMobile &&
+          DesignEditScreen.route == uiState.currentRoute) {
+        isFullScreen = true;
+      }
+
+      if (isFullScreen) {
+        switch (mainRoute) {
+          case InvoiceScreen.route:
+            screen = InvoiceEditScreen();
+            break;
+          case QuoteScreen.route:
+            screen = QuoteEditScreen();
+            break;
+          case CreditScreen.route:
+            screen = CreditEditScreen();
+            break;
+          default:
+            switch (uiState.currentRoute) {
+              case DesignEditScreen.route:
+                screen = DesignEditScreen();
+                break;
             }
+        }
+      } else {
+        bool editingFilterEntity = false;
+        if (prefState.fullHeightFilter &&
+            uiState.filterEntityId != null &&
+            subRoute == '/edit') {
+          if (mainRoute == '/${uiState.filterEntityType}') {
+            mainRoute = '/' + uiState.previousMainRoute;
+            editingFilterEntity = true;
           }
-          if (prefState.isNotMobile &&
-              DesignEditScreen.route == uiState.currentRoute) {
-            isFullScreen = true;
-          }
+        }
 
-          if (isFullScreen) {
-            switch (mainRoute) {
-              case InvoiceScreen.route:
-                screen = InvoiceEditScreen();
-                break;
-              case QuoteScreen.route:
-                screen = QuoteEditScreen();
-                break;
-              case CreditScreen.route:
-                screen = CreditEditScreen();
-                break;
-              default:
-                switch (uiState.currentRoute) {
-                  case DesignEditScreen.route:
-                    screen = DesignEditScreen();
-                    break;
-                }
-            }
-          } else {
-            bool editingFilterEntity = false;
-            if (prefState.fullHeightFilter &&
-                uiState.filterEntityId != null &&
-                subRoute == '/edit') {
-              if (mainRoute == '/${uiState.filterEntityType}') {
-                mainRoute = '/' + uiState.previousMainRoute;
-                editingFilterEntity = true;
-              }
-            }
-
-            switch (mainRoute) {
-              case DashboardScreenBuilder.route:
-                screen = Row(
-                  children: <Widget>[
-                    Expanded(
-                      child: DashboardScreenBuilder(),
-                      flex: 5,
-                    ),
-                    if (prefState.showHistory) ...[
-                      _CustomDivider(),
-                      HistoryDrawerBuilder(),
-                    ],
-                  ],
-                );
-                break;
-              case ClientScreen.route:
-                screen = EntityScreens(
-                  entityType: EntityType.client,
-                  listWidget: ClientScreenBuilder(),
-                  viewWidget: ClientViewScreen(),
-                  editWidget: ClientEditScreen(),
-                  editingFIlterEntity: editingFilterEntity,
-                );
-                break;
-              case ProductScreen.route:
-                screen = EntityScreens(
-                  entityType: EntityType.product,
-                  listWidget: ProductScreenBuilder(),
-                  viewWidget: ProductViewScreen(),
-                  editWidget: ProductEditScreen(),
-                  editingFIlterEntity: editingFilterEntity,
-                );
-                break;
-              case InvoiceScreen.route:
-                screen = EntityScreens(
-                  entityType: EntityType.invoice,
-                  listWidget: InvoiceScreenBuilder(),
-                  viewWidget: InvoiceViewScreen(),
-                  editWidget: InvoiceEditScreen(),
-                  emailWidget: InvoiceEmailScreen(),
-                  editingFIlterEntity: editingFilterEntity,
-                );
-                break;
-              case PaymentScreen.route:
-                screen = EntityScreens(
-                  entityType: EntityType.payment,
-                  listWidget: PaymentScreenBuilder(),
-                  viewWidget: PaymentViewScreen(),
-                  editWidget: PaymentEditScreen(),
-                  editingFIlterEntity: editingFilterEntity,
-                );
-                break;
-              case QuoteScreen.route:
-                screen = EntityScreens(
-                  entityType: EntityType.quote,
-                  listWidget: QuoteScreenBuilder(),
-                  viewWidget: QuoteViewScreen(),
-                  editWidget: QuoteEditScreen(),
-                  editingFIlterEntity: editingFilterEntity,
-                );
-                break;
-              case CreditScreen.route:
-                screen = EntityScreens(
-                  entityType: EntityType.credit,
-                  listWidget: CreditScreenBuilder(),
-                  viewWidget: CreditViewScreen(),
-                  editWidget: CreditEditScreen(),
-                  editingFIlterEntity: editingFilterEntity,
-                );
-                break;
-              case ProjectScreen.route:
-                screen = EntityScreens(
-                  entityType: EntityType.project,
-                  listWidget: ProjectScreenBuilder(),
-                  viewWidget: ProjectViewScreen(),
-                  editWidget: ProjectEditScreen(),
-                  editingFIlterEntity: editingFilterEntity,
-                );
-                break;
-              case TaskScreen.route:
-                screen = EntityScreens(
-                  entityType: EntityType.task,
-                  listWidget: TaskScreenBuilder(),
-                  viewWidget: TaskViewScreen(),
-                  editWidget: TaskEditScreen(),
-                  editingFIlterEntity: editingFilterEntity,
-                );
-                break;
-              case VendorScreen.route:
-                screen = EntityScreens(
-                  entityType: EntityType.vendor,
-                  listWidget: VendorScreenBuilder(),
-                  viewWidget: VendorViewScreen(),
-                  editWidget: VendorEditScreen(),
-                  editingFIlterEntity: editingFilterEntity,
-                );
-                break;
-              case ExpenseScreen.route:
-                screen = EntityScreens(
-                  entityType: EntityType.expense,
-                  listWidget: ExpenseScreenBuilder(),
-                  viewWidget: ExpenseViewScreen(),
-                  editWidget: ExpenseEditScreen(),
-                  editingFIlterEntity: editingFilterEntity,
-                );
-                break;
-
-              case SettingsScreen.route:
-                screen = SettingsScreens();
-                break;
-              case ReportsScreen.route:
-                screen = Row(
-                  children: <Widget>[
-                    Expanded(
-                      child: ReportsScreenBuilder(),
-                      flex: 5,
-                    ),
-                    if (prefState.showHistory) ...[
-                      _CustomDivider(),
-                      HistoryDrawerBuilder(),
-                    ],
-                  ],
-                );
-                break;
-            }
-          }
-
-          return WillPopScope(
-            onWillPop: () async {
-              final state = store.state;
-              final historyList = state.historyList;
-
-              if (historyList.length <= 1) {
-                return true;
-              }
-
-              final isEditing = state.uiState.isEditing;
-              final index = isEditing ? 0 : 1;
-              HistoryRecord history;
-
-              for (int i = index; i < historyList.length; i++) {
-                final item = historyList[i];
-                if ([
-                  EntityType.dashboard,
-                  EntityType.reports,
-                  EntityType.settings,
-                ].contains(item.entityType)) {
-                  history = item;
-                  break;
-                } else {
-                  if (item.id == null) {
-                    continue;
-                  }
-
-                  final entity = state.getEntityMap(item.entityType)[item.id]
-                      as BaseEntity;
-                  if (entity == null || !entity.isActive) {
-                    continue;
-                  }
-
-                  history = item;
-                  break;
-                }
-              }
-
-              if (!isEditing) {
-                store.dispatch(PopLastHistory());
-              }
-
-              if (history == null) {
-                return false;
-              }
-
-              switch (history.entityType) {
-                case EntityType.dashboard:
-                  store.dispatch(
-                      ViewDashboard(navigator: Navigator.of(context)));
-                  break;
-                case EntityType.reports:
-                  store.dispatch(ViewReports(navigator: Navigator.of(context)));
-                  break;
-                case EntityType.settings:
-                  store.dispatch(ViewSettings(
-                      navigator: Navigator.of(context), section: history.id));
-                  break;
-                default:
-                  viewEntityById(
-                    context: context,
-                    entityId: history.id,
-                    entityType: history.entityType,
-                  );
-              }
-
-              return false;
-            },
-            child: SafeArea(
-              child: FocusTraversalGroup(
-                policy: WidgetOrderTraversalPolicy(),
-                child: ChangeLayoutBanner(
-                  appLayout: prefState.appLayout,
-                  suggestedLayout: AppLayout.desktop,
-                  child: Row(children: <Widget>[
-                    if (prefState.showMenu) ...[
-                      MenuDrawerBuilder(),
-                      _CustomDivider(),
-                    ],
-                    Expanded(
-                        child: AppBorder(
-                      child: screen,
-                      isLeft: prefState.showMenu,
-                    )),
-                  ]),
+        switch (mainRoute) {
+          case DashboardScreenBuilder.route:
+            screen = Row(
+              children: <Widget>[
+                Expanded(
+                  child: DashboardScreenBuilder(),
+                  flex: 5,
                 ),
-              ),
+                if (prefState.showHistory) ...[
+                  _CustomDivider(),
+                  HistoryDrawerBuilder(),
+                ],
+              ],
+            );
+            break;
+          case ClientScreen.route:
+            screen = EntityScreens(
+              entityType: EntityType.client,
+              listWidget: ClientScreenBuilder(),
+              viewWidget: ClientViewScreen(),
+              editWidget: ClientEditScreen(),
+              editingFIlterEntity: editingFilterEntity,
+            );
+            break;
+          case ProductScreen.route:
+            screen = EntityScreens(
+              entityType: EntityType.product,
+              listWidget: ProductScreenBuilder(),
+              viewWidget: ProductViewScreen(),
+              editWidget: ProductEditScreen(),
+              editingFIlterEntity: editingFilterEntity,
+            );
+            break;
+          case InvoiceScreen.route:
+            screen = EntityScreens(
+              entityType: EntityType.invoice,
+              listWidget: InvoiceScreenBuilder(),
+              viewWidget: InvoiceViewScreen(),
+              editWidget: InvoiceEditScreen(),
+              emailWidget: InvoiceEmailScreen(),
+              editingFIlterEntity: editingFilterEntity,
+            );
+            break;
+          case PaymentScreen.route:
+            screen = EntityScreens(
+              entityType: EntityType.payment,
+              listWidget: PaymentScreenBuilder(),
+              viewWidget: PaymentViewScreen(),
+              editWidget: PaymentEditScreen(),
+              editingFIlterEntity: editingFilterEntity,
+            );
+            break;
+          case QuoteScreen.route:
+            screen = EntityScreens(
+              entityType: EntityType.quote,
+              listWidget: QuoteScreenBuilder(),
+              viewWidget: QuoteViewScreen(),
+              editWidget: QuoteEditScreen(),
+              editingFIlterEntity: editingFilterEntity,
+            );
+            break;
+          case CreditScreen.route:
+            screen = EntityScreens(
+              entityType: EntityType.credit,
+              listWidget: CreditScreenBuilder(),
+              viewWidget: CreditViewScreen(),
+              editWidget: CreditEditScreen(),
+              editingFIlterEntity: editingFilterEntity,
+            );
+            break;
+          case ProjectScreen.route:
+            screen = EntityScreens(
+              entityType: EntityType.project,
+              listWidget: ProjectScreenBuilder(),
+              viewWidget: ProjectViewScreen(),
+              editWidget: ProjectEditScreen(),
+              editingFIlterEntity: editingFilterEntity,
+            );
+            break;
+          case TaskScreen.route:
+            screen = EntityScreens(
+              entityType: EntityType.task,
+              listWidget: TaskScreenBuilder(),
+              viewWidget: TaskViewScreen(),
+              editWidget: TaskEditScreen(),
+              editingFIlterEntity: editingFilterEntity,
+            );
+            break;
+          case VendorScreen.route:
+            screen = EntityScreens(
+              entityType: EntityType.vendor,
+              listWidget: VendorScreenBuilder(),
+              viewWidget: VendorViewScreen(),
+              editWidget: VendorEditScreen(),
+              editingFIlterEntity: editingFilterEntity,
+            );
+            break;
+          case ExpenseScreen.route:
+            screen = EntityScreens(
+              entityType: EntityType.expense,
+              listWidget: ExpenseScreenBuilder(),
+              viewWidget: ExpenseViewScreen(),
+              editWidget: ExpenseEditScreen(),
+              editingFIlterEntity: editingFilterEntity,
+            );
+            break;
+
+          case SettingsScreen.route:
+            screen = SettingsScreens();
+            break;
+          case ReportsScreen.route:
+            screen = Row(
+              children: <Widget>[
+                Expanded(
+                  child: ReportsScreenBuilder(),
+                  flex: 5,
+                ),
+                if (prefState.showHistory) ...[
+                  _CustomDivider(),
+                  HistoryDrawerBuilder(),
+                ],
+              ],
+            );
+            break;
+        }
+      }
+
+      return WillPopScope(
+        onWillPop: () async {
+          final state = store.state;
+          final historyList = state.historyList;
+
+          if (historyList.length <= 1) {
+            return true;
+          }
+
+          final isEditing = state.uiState.isEditing;
+          final index = isEditing ? 0 : 1;
+          HistoryRecord history;
+
+          for (int i = index; i < historyList.length; i++) {
+            final item = historyList[i];
+            if ([
+              EntityType.dashboard,
+              EntityType.reports,
+              EntityType.settings,
+            ].contains(item.entityType)) {
+              history = item;
+              break;
+            } else {
+              if (item.id == null) {
+                continue;
+              }
+
+              final entity =
+                  state.getEntityMap(item.entityType)[item.id] as BaseEntity;
+              if (entity == null || !entity.isActive) {
+                continue;
+              }
+
+              history = item;
+              break;
+            }
+          }
+
+          if (!isEditing) {
+            store.dispatch(PopLastHistory());
+          }
+
+          if (history == null) {
+            return false;
+          }
+
+          switch (history.entityType) {
+            case EntityType.dashboard:
+              store.dispatch(ViewDashboard(navigator: Navigator.of(context)));
+              break;
+            case EntityType.reports:
+              store.dispatch(ViewReports(navigator: Navigator.of(context)));
+              break;
+            case EntityType.settings:
+              store.dispatch(ViewSettings(
+                  navigator: Navigator.of(context), section: history.id));
+              break;
+            default:
+              viewEntityById(
+                context: context,
+                entityId: history.id,
+                entityType: history.entityType,
+              );
+          }
+
+          return false;
+        },
+        child: SafeArea(
+          child: FocusTraversalGroup(
+            policy: WidgetOrderTraversalPolicy(),
+            child: ChangeLayoutBanner(
+              appLayout: prefState.appLayout,
+              suggestedLayout: AppLayout.desktop,
+              child: Row(children: <Widget>[
+                if (prefState.showMenu) ...[
+                  MenuDrawerBuilder(),
+                  _CustomDivider(),
+                ],
+                Expanded(
+                    child: AppBorder(
+                  child: screen,
+                  isLeft: prefState.showMenu,
+                )),
+              ]),
             ),
-          );
-        });
+          ),
+        ),
+      );
+    });
   }
 }
 
@@ -683,29 +682,35 @@ class _EntityFilter extends StatelessWidget {
           opacity: show ? 1 : 0,
           duration: Duration(milliseconds: kDefaultAnimationDuration),
           curve: Curves.easeInOutCubic,
-          child: Row(
-            children: filterEntity == null
-                ? []
-                : [
-                    SizedBox(width: 4),
-                    Expanded(
-                      child: Align(
-                        alignment: Alignment.centerLeft,
-                        child: FlatButton(
-                          child: Text(
-                            '${localization.lookup('$filterEntityType')}  ›  ${filterEntity.listDisplayName}',
-                            style: TextStyle(fontSize: 17),
-                            overflow: TextOverflow.ellipsis,
-                            textAlign: TextAlign.start,
-                            maxLines: 1,
-                          ),
-                          onPressed: () => viewEntity(
-                            entity: filterEntity,
-                            context: context,
-                          ),
-                        ),
+          child: filterEntity == null
+              ? Container(
+                  color: Theme.of(context).cardColor,
+                )
+              : AppBar(
+                  leading: IconButton(
+                    tooltip: localization.preview,
+                    icon: Icon(Icons.chrome_reader_mode),
+                    onPressed: () => store.dispatch(
+                        UserPreferencesChanged(fullHeightFilter: true)),
+                  ),
+                  title: Align(
+                    alignment: Alignment.centerLeft,
+                    child: FlatButton(
+                      padding: const EdgeInsets.only(left: 0),
+                      child: Text(
+                        '${localization.lookup('$filterEntityType')}  ›  ${filterEntity.listDisplayName}',
+                        style: TextStyle(fontSize: 17),
+                        overflow: TextOverflow.ellipsis,
+                        textAlign: TextAlign.start,
+                        maxLines: 1,
+                      ),
+                      onPressed: () => viewEntity(
+                        entity: filterEntity,
+                        context: context,
                       ),
                     ),
+                  ),
+                  actions: [
                     PopupMenuButton<EntityType>(
                       child: Row(
                         children: [
@@ -760,9 +765,9 @@ class _EntityFilter extends StatelessWidget {
                         entityId: uiState.filterEntityId,
                         entityType: uiState.filterEntityType,
                       )),
-                    ),
+                    )
                   ],
-          ),
+                ),
         ),
       ),
     );

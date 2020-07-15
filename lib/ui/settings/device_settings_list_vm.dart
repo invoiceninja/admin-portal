@@ -47,8 +47,6 @@ class DeviceSettingsVM {
     @required this.authenticationSupported,
     @required this.onMenuModeChanged,
     @required this.onHistoryModeChanged,
-    @required this.onFullHeightFilterChanged,
-    @required this.onFullWidthEditorChanged,
   });
 
   static DeviceSettingsVM fromStore(Store<AppState> store) {
@@ -103,12 +101,6 @@ class DeviceSettingsVM {
       onHistoryModeChanged: (context, value) async {
         store.dispatch(UserPreferencesChanged(historyMode: value));
       },
-      onFullHeightFilterChanged: (context, value) async {
-        store.dispatch(UserPreferencesChanged(fullHeightFilter: value));
-      },
-      onFullWidthEditorChanged: (context, value) async {
-        store.dispatch(UserPreferencesChanged(fullWidthEditor: value));
-      },
       onLayoutChanged: (BuildContext context, AppLayout value) async {
         if (store.state.prefState.appLayout == value) {
           return;
@@ -158,8 +150,6 @@ class DeviceSettingsVM {
   final AppState state;
   final Function(BuildContext) onLogoutTap;
   final Function(BuildContext) onRefreshTap;
-  final Function(BuildContext, bool) onFullHeightFilterChanged;
-  final Function(BuildContext, bool) onFullWidthEditorChanged;
   final Function(BuildContext, bool) onDarkModeChanged;
   final Function(BuildContext, AppLayout) onLayoutChanged;
   final Function(BuildContext, AppSidebarMode) onMenuModeChanged;
