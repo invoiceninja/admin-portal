@@ -15,6 +15,8 @@ mixin LocalizationsProvider on LocaleCodeAware {
   static final Map<String, Map<String, String>> _localizedValues = {
     'en': {
       // STARTER: lang key - do not remove comment
+      'show_sidebar': 'Show Sidebar',
+      'hide_sidebar': 'Hide Sidebar',
       'event_type': 'Event Type',
       'target_url': 'Target URL',
       'copy': 'Copy',
@@ -38764,6 +38766,10 @@ mixin LocalizationsProvider on LocaleCodeAware {
   String get targetUrl => _localizedValues[localeCode]['target_url'] ?? '';
 
   String get eventType => _localizedValues[localeCode]['event_type'] ?? '';
+
+  String get showSidebar => _localizedValues[localeCode]['show_sidebar'] ?? '';
+
+  String get hideSidebar => _localizedValues[localeCode]['hide_sidebar'] ?? '';
 
   String lookup(String key) {
     final lookupKey = toSnakeCase(key);

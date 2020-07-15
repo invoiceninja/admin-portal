@@ -688,7 +688,7 @@ class _EntityFilter extends StatelessWidget {
                 )
               : AppBar(
                   leading: IconButton(
-                    tooltip: localization.preview,
+                    tooltip: localization.showSidebar,
                     icon: Icon(Icons.chrome_reader_mode),
                     onPressed: () => store.dispatch(
                         UserPreferencesChanged(fullHeightFilter: true)),
@@ -718,7 +718,11 @@ class _EntityFilter extends StatelessWidget {
                             routeEntityType == filterEntityType
                                 ? localization.overview
                                 : '${localization.lookup(routeEntityType.plural)}',
-                            style: TextStyle(fontSize: 17),
+                            style: TextStyle(
+                                fontSize: 17,
+                                color: state.prefState.enableDarkMode
+                                    ? Colors.white
+                                    : Theme.of(context).accentColor),
                           ),
                           SizedBox(width: 4),
                           Icon(Icons.arrow_drop_down),
