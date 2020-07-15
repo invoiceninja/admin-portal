@@ -1,4 +1,5 @@
 import 'package:flutter_redux/flutter_redux.dart';
+import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/ui/app/entity_state_label.dart';
 import 'package:invoiceninja_flutter/ui/app/live_text.dart';
@@ -14,10 +15,10 @@ class TaskListItem extends StatelessWidget {
     @required this.userCompany,
     @required this.client,
     @required this.project,
-    @required this.onTap,
     @required this.task,
     @required this.filter,
     this.onEntityAction,
+    this.onTap,
     this.onLongPress,
     this.onCheckboxChanged,
     this.isChecked = false,
@@ -71,9 +72,9 @@ class TaskListItem extends StatelessWidget {
       entity: task,
       onEntityAction: onEntityAction,
       child: ListTile(
-        onTap: isInMultiselect
-            ? () => onEntityAction(EntityAction.toggleMultiselect)
-            : onTap,
+        onTap: () => onTap != null
+            ? onTap()
+            : selectEntity(entity: task, context: context),
         onLongPress: onLongPress,
         leading: showCheckbox
             ? IgnorePointer(

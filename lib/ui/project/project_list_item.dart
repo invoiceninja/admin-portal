@@ -1,4 +1,5 @@
 import 'package:flutter_redux/flutter_redux.dart';
+import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/ui/app/entity_state_label.dart';
 import 'package:invoiceninja_flutter/utils/formatting.dart';
@@ -11,11 +12,11 @@ class ProjectListItem extends StatelessWidget {
   const ProjectListItem({
     @required this.userCompany,
     @required this.onEntityAction,
-    @required this.onTap,
-    @required this.onLongPress,
     @required this.project,
     @required this.filter,
     @required this.client,
+    this.onTap,
+    this.onLongPress,
     this.onCheckboxChanged,
     this.isChecked = false,
   });
@@ -56,9 +57,9 @@ class ProjectListItem extends StatelessWidget {
       entity: project,
       onEntityAction: onEntityAction,
       child: ListTile(
-        onTap: isInMultiselect
-            ? () => onEntityAction(EntityAction.toggleMultiselect)
-            : onTap,
+        onTap: () => onTap != null
+            ? onTap()
+            : selectEntity(entity: project, context: context),
         onLongPress: onLongPress,
         leading: showCheckbox
             ? IgnorePointer(

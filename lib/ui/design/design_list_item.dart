@@ -12,10 +12,10 @@ class DesignListItem extends StatelessWidget {
   const DesignListItem({
     @required this.user,
     @required this.onEntityAction,
-    @required this.onTap,
-    @required this.onLongPress,
     @required this.design,
     @required this.filter,
+    this.onTap,
+    this.onLongPress,
     this.onCheckboxChanged,
     this.isChecked = false,
   });

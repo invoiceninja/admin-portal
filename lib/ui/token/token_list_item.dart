@@ -1,5 +1,6 @@
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:invoiceninja_flutter/data/models/token_model.dart';
+import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/ui/app/entity_state_label.dart';
 import 'package:flutter/foundation.dart';
@@ -11,10 +12,10 @@ class TokenListItem extends StatelessWidget {
   const TokenListItem({
     @required this.user,
     @required this.onEntityAction,
-    @required this.onTap,
-    @required this.onLongPress,
     @required this.token,
     @required this.filter,
+    this.onTap,
+    this.onLongPress,
     this.onCheckboxChanged,
     this.isChecked = false,
   });
@@ -55,9 +56,9 @@ class TokenListItem extends StatelessWidget {
               : tokenUIState.selectedId),
       onEntityAction: onEntityAction,
       child: ListTile(
-        onTap: isInMultiselect
-            ? () => onEntityAction(EntityAction.toggleMultiselect)
-            : onTap,
+        onTap: () => onTap != null
+            ? onTap()
+            : selectEntity(entity: token, context: context),
         onLongPress: onLongPress,
         leading: showCheckbox
             ? IgnorePointer(

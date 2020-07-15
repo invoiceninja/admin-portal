@@ -13,10 +13,10 @@ import 'package:invoiceninja_flutter/utils/formatting.dart';
 class ProductListItem extends StatelessWidget {
   const ProductListItem({
     @required this.userCompany,
-    @required this.onTap,
     @required this.product,
     @required this.filter,
     this.onEntityAction,
+    this.onTap,
     this.onLongPress,
     this.onCheckboxChanged,
     this.isChecked = false,
@@ -62,9 +62,9 @@ class ProductListItem extends StatelessWidget {
           builder: (BuildContext context, BoxConstraints constraints) {
         return constraints.maxWidth > kTableListWidthCutoff
             ? InkWell(
-                onTap: isInMultiselect
-                    ? () => onEntityAction(EntityAction.toggleMultiselect)
-                    : onTap,
+                onTap: () => onTap != null
+                    ? onTap()
+                    : selectEntity(entity: product, context: context),
                 onLongPress: onLongPress,
                 child: Padding(
                   padding: const EdgeInsets.only(

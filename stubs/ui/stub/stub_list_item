@@ -1,4 +1,5 @@
 import 'package:flutter_redux/flutter_redux.dart';
+import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:invoiceninja_flutter/data/models/stub_model.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/ui/app/entity_state_label.dart';
@@ -12,10 +13,10 @@ class StubListItem extends StatelessWidget {
   const StubListItem({
     @required this.user,
     @required this.onEntityAction,
-    @required this.onTap,
-    @required this.onLongPress,
     @required this.stub,
     @required this.filter,
+    this.onTap,
+    this.onLongPress,
     this.onCheckboxChanged,
     this.isChecked = false,
   });
@@ -53,9 +54,9 @@ class StubListItem extends StatelessWidget {
           (uiState.isEditing ? stubUIState.editing.id : stubUIState.selectedId),
       onEntityAction: onEntityAction,
       child: ListTile(
-        onTap: isInMultiselect
-            ? () => onEntityAction(EntityAction.toggleMultiselect)
-            : onTap,
+        onTap: () => onTap != null
+            ? onTap()
+            : selectEntity(entity: stub, context: context),
         onLongPress: onLongPress,
         leading: showCheckbox
             ? IgnorePointer(

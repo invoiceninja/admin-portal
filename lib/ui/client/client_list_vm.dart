@@ -16,7 +16,6 @@ import 'package:invoiceninja_flutter/ui/client/client_list_item.dart';
 import 'package:invoiceninja_flutter/ui/client/client_presenter.dart';
 import 'package:invoiceninja_flutter/utils/completers.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
-import 'package:invoiceninja_flutter/utils/platforms.dart';
 import 'package:redux/redux.dart';
 
 class ClientListBuilder extends StatelessWidget {

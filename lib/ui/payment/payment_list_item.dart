@@ -16,10 +16,10 @@ class PaymentListItem extends StatelessWidget {
   const PaymentListItem({
     @required this.user,
     @required this.onEntityAction,
-    @required this.onTap,
-    @required this.onLongPress,
     @required this.payment,
     @required this.filter,
+    this.onTap,
+    this.onLongPress,
     this.onCheckboxChanged,
     this.isChecked = false,
   });
@@ -76,9 +76,9 @@ class PaymentListItem extends StatelessWidget {
           builder: (BuildContext context, BoxConstraints constraints) {
         return constraints.maxWidth > kTableListWidthCutoff
             ? InkWell(
-                onTap: isInMultiselect
-                    ? () => onEntityAction(EntityAction.toggleMultiselect)
-                    : onTap,
+                onTap: () => onTap != null
+                    ? onTap()
+                    : selectEntity(entity: payment, context: context),
                 onLongPress: onLongPress,
                 child: Padding(
                   padding: const EdgeInsets.only(

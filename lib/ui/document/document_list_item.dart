@@ -2,6 +2,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
+import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/ui/app/dismissible_entity.dart';
 import 'package:invoiceninja_flutter/ui/app/entity_state_label.dart';
@@ -11,11 +12,11 @@ class DocumentListItem extends StatelessWidget {
   const DocumentListItem({
     @required this.userCompany,
     @required this.onEntityAction,
-    @required this.onTap,
-    @required this.onLongPress,
     //@required this.onCheckboxChanged,
     @required this.document,
     @required this.filter,
+    this.onTap,
+    this.onLongPress,
     this.onCheckboxChanged,
     this.isChecked = false,
   });
@@ -55,9 +56,9 @@ class DocumentListItem extends StatelessWidget {
       entity: document,
       onEntityAction: onEntityAction,
       child: ListTile(
-        onTap: isInMultiselect
-            ? () => onEntityAction(EntityAction.toggleMultiselect)
-            : onTap,
+        onTap: () => onTap != null
+            ? onTap()
+            : selectEntity(entity: document, context: context),
         onLongPress: onLongPress,
         leading: showCheckbox
             ? IgnorePointer(

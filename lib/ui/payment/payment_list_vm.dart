@@ -17,7 +17,6 @@ import 'package:invoiceninja_flutter/ui/payment/payment_list_item.dart';
 import 'package:invoiceninja_flutter/ui/payment/payment_presenter.dart';
 import 'package:invoiceninja_flutter/utils/completers.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
-import 'package:invoiceninja_flutter/utils/platforms.dart';
 import 'package:redux/redux.dart';
 
 class PaymentListBuilder extends StatelessWidget {

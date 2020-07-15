@@ -1143,7 +1143,7 @@ void handleEntitiesActions(
 void selectEntity({BuildContext context, BaseEntity entity}) {
   final store = StoreProvider.of<AppState>(context);
   final state = store.state;
-  if (store.state.taskListState.isInMultiselect()) {
+  if (state.getListState(entity.entityType).isInMultiselect()) {
     handleEntityAction(context, entity, EntityAction.toggleMultiselect);
   } else if (isDesktop(context) && state.uiState.isEditing) {
     viewEntity(context: context, entity: entity);

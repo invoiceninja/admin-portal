@@ -14,10 +14,10 @@ class ClientListItem extends StatelessWidget {
   const ClientListItem({
     @required this.user,
     @required this.onEntityAction,
-    @required this.onTap,
     @required this.onLongPress,
     @required this.client,
     @required this.filter,
+    this.onTap,
     this.onCheckboxChanged,
     this.isChecked = false,
   });
@@ -59,9 +59,9 @@ class ClientListItem extends StatelessWidget {
           builder: (BuildContext context, BoxConstraints constraints) {
         return constraints.maxWidth > kTableListWidthCutoff
             ? InkWell(
-                onTap: isInMultiselect
-                    ? () => onEntityAction(EntityAction.toggleMultiselect)
-                    : onTap,
+                onTap: () => onTap != null
+                    ? onTap()
+                    : selectEntity(entity: client, context: context),
                 onLongPress: onLongPress,
                 child: Padding(
                   padding: const EdgeInsets.only(
