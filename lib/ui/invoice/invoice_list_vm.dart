@@ -35,7 +35,6 @@ class InvoiceListBuilder extends StatelessWidget {
             presenter: InvoicePresenter(),
             state: viewModel.state,
             entityList: viewModel.invoiceList,
-            onEntityTap: viewModel.onInvoiceTap,
             tableColumns: viewModel.tableColumns,
             onRefreshed: viewModel.onRefreshed,
             onClearEntityFilterPressed: viewModel.onClearEntityFilterPressed,
@@ -60,7 +59,6 @@ class InvoiceListBuilder extends StatelessWidget {
                 filter: viewModel.filter,
                 invoice: invoice,
                 client: viewModel.clientMap[invoice.clientId] ?? ClientEntity(),
-                onTap: () => viewModel.onInvoiceTap(context, invoice),
                 onEntityAction: (EntityAction action) {
                   if (action == EntityAction.more) {
                     showDialog();
@@ -99,7 +97,6 @@ class EntityListVM {
     @required this.isLoading,
     @required this.isLoaded,
     @required this.filter,
-    @required this.onInvoiceTap,
     @required this.onRefreshed,
     @required this.onClearEntityFilterPressed,
     @required this.onViewEntityFilterPressed,
@@ -117,7 +114,6 @@ class EntityListVM {
   final String filter;
   final bool isLoading;
   final bool isLoaded;
-  final Function(BuildContext, BaseEntity) onInvoiceTap;
   final Function(BuildContext) onRefreshed;
   final Function onClearEntityFilterPressed;
   final Function(BuildContext) onViewEntityFilterPressed;
@@ -136,7 +132,6 @@ class InvoiceListVM extends EntityListVM {
     String filter,
     bool isLoading,
     bool isLoaded,
-    Function(BuildContext, BaseEntity) onInvoiceTap,
     Function(BuildContext) onRefreshed,
     Function onClearEntityFilterPressed,
     Function(BuildContext) onViewEntityFilterPressed,
@@ -154,7 +149,6 @@ class InvoiceListVM extends EntityListVM {
           filter: filter,
           isLoading: isLoading,
           isLoaded: isLoaded,
-          onInvoiceTap: onInvoiceTap,
           onRefreshed: onRefreshed,
           onClearEntityFilterPressed: onClearEntityFilterPressed,
           onViewEntityFilterPressed: onViewEntityFilterPressed,
@@ -192,19 +186,6 @@ class InvoiceListVM extends EntityListVM {
       clientMap: state.clientState.map,
       isLoading: state.isLoading,
       filter: state.invoiceListState.filter,
-      onInvoiceTap: (context, invoice) {
-        if (store.state.invoiceListState.isInMultiselect()) {
-          handleInvoiceAction(
-              context, [invoice], EntityAction.toggleMultiselect);
-        } else if (isDesktop(context) && state.uiState.isEditing) {
-          viewEntity(context: context, entity: invoice);
-        } else if (isDesktop(context) &&
-            state.invoiceUIState.selectedId == invoice.id) {
-          editEntity(context: context, entity: invoice);
-        } else {
-          viewEntity(context: context, entity: invoice);
-        }
-      },
       onRefreshed: (context) => _handleRefresh(context),
       onClearEntityFilterPressed: () => store.dispatch(FilterByEntity()),
       onViewEntityFilterPressed: (BuildContext context) => viewEntityById(

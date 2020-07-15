@@ -31,7 +31,6 @@ class TaxRateListBuilder extends StatelessWidget {
             //presenter: ClientPresenter(),
             state: viewModel.state,
             entityList: viewModel.taxRateList,
-            onEntityTap: viewModel.onTaxRateTap,
             //tableColumns: viewModel.tableColumns,
             onRefreshed: viewModel.onRefreshed,
             onClearEntityFilterPressed: viewModel.onClearEntityFilterPressed,
@@ -53,7 +52,6 @@ class TaxRateListBuilder extends StatelessWidget {
                 user: viewModel.userCompany.user,
                 filter: viewModel.filter,
                 taxRate: taxRate,
-                onTap: () => viewModel.onTaxRateTap(context, taxRate),
                 onEntityAction: (EntityAction action) {
                   if (action == EntityAction.more) {
                     showDialog();
@@ -87,7 +85,6 @@ class TaxRateListVM {
     @required this.taxRateMap,
     @required this.filter,
     @required this.isLoading,
-    @required this.onTaxRateTap,
     @required this.listState,
     @required this.onRefreshed,
     @required this.onClearEntityFilterPressed,
@@ -122,14 +119,6 @@ class TaxRateListVM {
           context: context,
           entityId: state.taxRateListState.filterEntityId,
           entityType: state.taxRateListState.filterEntityType),
-      onTaxRateTap: (context, taxRate) {
-        if (store.state.taxRateListState.isInMultiselect()) {
-          handleTaxRateAction(
-              context, [taxRate], EntityAction.toggleMultiselect);
-        } else {
-          viewEntity(context: context, entity: taxRate);
-        }
-      },
       onRefreshed: (context) => _handleRefresh(context),
       onSortColumn: (field) => store.dispatch(SortTaxRates(field)),
     );
@@ -142,7 +131,6 @@ class TaxRateListVM {
   final ListUIState listState;
   final String filter;
   final bool isLoading;
-  final Function(BuildContext, BaseEntity) onTaxRateTap;
   final Function(BuildContext) onRefreshed;
   final Function onClearEntityFilterPressed;
   final Function(BuildContext) onViewEntityFilterPressed;

@@ -32,7 +32,6 @@ class DesignListBuilder extends StatelessWidget {
             //presenter: ClientPresenter(),
             state: viewModel.state,
             entityList: viewModel.designList,
-            onEntityTap: viewModel.onDesignTap,
             tableColumns: viewModel.tableColumns,
             onRefreshed: viewModel.onRefreshed,
             onClearEntityFilterPressed: viewModel.onClearEntityFilterPressed,
@@ -61,7 +60,6 @@ class DesignListBuilder extends StatelessWidget {
                     handleDesignAction(context, [design], action);
                   }
                 },
-                onTap: () => viewModel.onDesignTap(context, design),
                 onLongPress: () async {
                   final longPressIsSelection =
                       state.prefState.longPressSelectionIsDefault ?? true;
@@ -88,7 +86,6 @@ class DesignListVM {
     @required this.designMap,
     @required this.filter,
     @required this.isLoading,
-    @required this.onDesignTap,
     @required this.listState,
     @required this.onRefreshed,
     @required this.onEntityAction,
@@ -125,13 +122,6 @@ class DesignListVM {
           context: context,
           entityId: state.designListState.filterEntityId,
           entityType: state.designListState.filterEntityType),
-      onDesignTap: (context, design) {
-        if (store.state.designListState.isInMultiselect()) {
-          handleDesignAction(context, [design], EntityAction.toggleMultiselect);
-        } else {
-          editEntity(context: context, entity: design);
-        }
-      },
       onEntityAction: (BuildContext context, List<BaseEntity> designs,
               EntityAction action) =>
           handleDesignAction(context, designs, action),
@@ -148,7 +138,6 @@ class DesignListVM {
   final ListUIState listState;
   final String filter;
   final bool isLoading;
-  final Function(BuildContext, BaseEntity) onDesignTap;
   final Function(BuildContext) onRefreshed;
   final Function(BuildContext, List<BaseEntity>, EntityAction) onEntityAction;
   final Function onClearEntityFilterPressed;

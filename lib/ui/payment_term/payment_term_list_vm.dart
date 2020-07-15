@@ -30,7 +30,6 @@ class PaymentTermListBuilder extends StatelessWidget {
             entityType: EntityType.paymentTerm,
             state: viewModel.state,
             entityList: viewModel.paymentTermList,
-            onEntityTap: viewModel.onPaymentTermTap,
             tableColumns: viewModel.tableColumns,
             onRefreshed: viewModel.onRefreshed,
             onClearEntityFilterPressed: viewModel.onClearEntityFilterPressed,
@@ -57,7 +56,6 @@ class PaymentTermListBuilder extends StatelessWidget {
                     handlePaymentTermAction(context, [paymentTerm], action);
                   }
                 },
-                onTap: () => viewModel.onPaymentTermTap(context, paymentTerm),
                 onLongPress: () async {
                   final longPressIsSelection =
                       state.prefState.longPressSelectionIsDefault ?? true;
@@ -88,7 +86,6 @@ class PaymentTermListVM {
     @required this.paymentTermMap,
     @required this.filter,
     @required this.isLoading,
-    @required this.onPaymentTermTap,
     @required this.listState,
     @required this.onRefreshed,
     @required this.onEntityAction,
@@ -127,14 +124,6 @@ class PaymentTermListVM {
           context: context,
           entityId: state.paymentTermListState.filterEntityId,
           entityType: state.paymentTermListState.filterEntityType),
-      onPaymentTermTap: (context, paymentTerm) {
-        if (store.state.paymentTermListState.isInMultiselect()) {
-          handlePaymentTermAction(
-              context, [paymentTerm], EntityAction.toggleMultiselect);
-        } else {
-          viewEntity(context: context, entity: paymentTerm);
-        }
-      },
       onEntityAction: (BuildContext context, List<BaseEntity> paymentTerms,
               EntityAction action) =>
           handlePaymentTermAction(context, paymentTerms, action),
@@ -150,7 +139,6 @@ class PaymentTermListVM {
   final ListUIState listState;
   final String filter;
   final bool isLoading;
-  final Function(BuildContext, BaseEntity) onPaymentTermTap;
   final Function(BuildContext) onRefreshed;
   final Function(BuildContext, List<BaseEntity>, EntityAction) onEntityAction;
   final Function onClearEntityFilterPressed;

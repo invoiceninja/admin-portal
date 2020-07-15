@@ -33,7 +33,6 @@ class TaskListBuilder extends StatelessWidget {
             presenter: TaskPresenter(),
             state: viewModel.state,
             entityList: viewModel.taskList,
-            onEntityTap: viewModel.onTaskTap,
             tableColumns: viewModel.tableColumns,
             onRefreshed: viewModel.onRefreshed,
             onClearEntityFilterPressed: viewModel.onClearEntityFilterPressed,
@@ -60,7 +59,6 @@ class TaskListBuilder extends StatelessWidget {
                 task: task,
                 client: viewModel.clientMap[task.clientId] ?? ClientEntity(),
                 project: viewModel.state.projectState.map[task.projectId],
-                onTap: () => viewModel.onTaskTap(context, task),
                 onEntityAction: (EntityAction action) {
                   if (action == EntityAction.more) {
                     showDialog();
@@ -96,7 +94,6 @@ class TaskListVM {
     @required this.clientMap,
     @required this.filter,
     @required this.isLoading,
-    @required this.onTaskTap,
     @required this.listState,
     @required this.onRefreshed,
     @required this.tableColumns,
@@ -140,18 +137,6 @@ class TaskListVM {
           entityId: state.taskListState.filterEntityId,
           entityType: state.taskListState.filterEntityType),
       onSortColumn: (field) => store.dispatch(SortTasks(field)),
-      onTaskTap: (context, task) {
-        if (store.state.taskListState.isInMultiselect()) {
-          handleTaskAction(context, [task], EntityAction.toggleMultiselect);
-        } else if (isDesktop(context) && state.uiState.isEditing) {
-          viewEntity(context: context, entity: task);
-        } else if (isDesktop(context) &&
-            state.taskUIState.selectedId == task.id) {
-          editEntity(context: context, entity: task);
-        } else {
-          viewEntity(context: context, entity: task);
-        }
-      },
       onRefreshed: (context) => _handleRefresh(context),
       tableColumns:
           state.userCompany.settings.getTableColumns(EntityType.task) ??
@@ -167,7 +152,6 @@ class TaskListVM {
   final ListUIState listState;
   final String filter;
   final bool isLoading;
-  final Function(BuildContext, BaseEntity) onTaskTap;
   final Function(BuildContext) onRefreshed;
   final Function onClearEntityFilterPressed;
   final Function(BuildContext) onViewEntityFilterPressed;

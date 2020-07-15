@@ -32,7 +32,6 @@ class WebhookListBuilder extends StatelessWidget {
             presenter: WebhookPresenter(),
             state: viewModel.state,
             entityList: viewModel.webhookList,
-            onEntityTap: viewModel.onWebhookTap,
             tableColumns: viewModel.tableColumns,
             onRefreshed: viewModel.onRefreshed,
             onClearEntityFilterPressed: viewModel.onClearEntityFilterPressed,
@@ -59,7 +58,6 @@ class WebhookListBuilder extends StatelessWidget {
                     handleWebhookAction(context, [webhook], action);
                   }
                 },
-                onTap: () => viewModel.onWebhookTap(context, webhook),
                 onLongPress: () async {
                   final longPressIsSelection =
                       state.prefState.longPressSelectionIsDefault ?? true;
@@ -89,7 +87,6 @@ class WebhookListVM {
     @required this.webhookMap,
     @required this.filter,
     @required this.isLoading,
-    @required this.onWebhookTap,
     @required this.listState,
     @required this.onRefreshed,
     @required this.onEntityAction,
@@ -126,14 +123,6 @@ class WebhookListVM {
           context: context,
           entityId: state.webhookListState.filterEntityId,
           entityType: state.webhookListState.filterEntityType),
-      onWebhookTap: (context, webhook) {
-        if (store.state.userListState.isInMultiselect()) {
-          handleWebhookAction(
-              context, [webhook], EntityAction.toggleMultiselect);
-        } else {
-          viewEntity(context: context, entity: webhook);
-        }
-      },
       onEntityAction: (BuildContext context, List<BaseEntity> webhooks,
               EntityAction action) =>
           handleWebhookAction(context, webhooks, action),
@@ -152,7 +141,6 @@ class WebhookListVM {
   final ListUIState listState;
   final String filter;
   final bool isLoading;
-  final Function(BuildContext, BaseEntity) onWebhookTap;
   final Function(BuildContext) onRefreshed;
   final Function(BuildContext, List<BaseEntity>, EntityAction) onEntityAction;
   final Function onClearEntityFilterPressed;

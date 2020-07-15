@@ -36,7 +36,6 @@ class CreditListBuilder extends StatelessWidget {
               presenter: CreditPresenter(),
               state: viewModel.state,
               entityList: viewModel.invoiceList,
-              onEntityTap: viewModel.onInvoiceTap,
               tableColumns: viewModel.tableColumns,
               onRefreshed: viewModel.onRefreshed,
               onClearEntityFilterPressed: viewModel.onClearEntityFilterPressed,
@@ -63,7 +62,6 @@ class CreditListBuilder extends StatelessWidget {
                   credit: invoice,
                   client:
                       viewModel.clientMap[invoice.clientId] ?? ClientEntity(),
-                  onTap: () => viewModel.onInvoiceTap(context, invoice),
                   onEntityAction: (EntityAction action) {
                     if (action == EntityAction.more) {
                       showDialog();
@@ -100,7 +98,6 @@ class CreditListVM extends EntityListVM {
     String filter,
     bool isLoading,
     bool isLoaded,
-    Function(BuildContext, BaseEntity) onInvoiceTap,
     Function(BuildContext) onRefreshed,
     Function onClearEntityFilterPressed,
     Function(BuildContext) onViewEntityFilterPressed,
@@ -118,7 +115,6 @@ class CreditListVM extends EntityListVM {
           filter: filter,
           isLoading: isLoading,
           isLoaded: isLoaded,
-          onInvoiceTap: onInvoiceTap,
           onRefreshed: onRefreshed,
           onClearEntityFilterPressed: onClearEntityFilterPressed,
           onViewEntityFilterPressed: onViewEntityFilterPressed,
@@ -155,19 +151,6 @@ class CreditListVM extends EntityListVM {
       clientMap: state.clientState.map,
       isLoading: state.isLoading,
       filter: state.creditListState.filter,
-      onInvoiceTap: (context, credit) {
-        if (store.state.invoiceListState.isInMultiselect()) {
-          handleInvoiceAction(
-              context, [credit], EntityAction.toggleMultiselect);
-        } else if (isDesktop(context) && state.uiState.isEditing) {
-          viewEntity(context: context, entity: credit);
-        } else if (isDesktop(context) &&
-            state.creditUIState.selectedId == credit.id) {
-          editEntity(context: context, entity: credit);
-        } else {
-          viewEntity(context: context, entity: credit);
-        }
-      },
       onRefreshed: (context) => _handleRefresh(context),
       onClearEntityFilterPressed: () => store.dispatch(ClearEntityFilter()),
       onViewEntityFilterPressed: (BuildContext context) => viewEntityById(

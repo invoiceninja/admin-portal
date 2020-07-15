@@ -45,7 +45,9 @@ class EntityListTile extends StatelessWidget {
         entityActions: entity.getActions(
             userCompany: state.userCompany, includeEdit: true, client: client),
         isSaving: false,
-        color: Theme.of(context).accentColor,
+        color: state.prefState.enableDarkMode
+            ? Colors.white
+            : Theme.of(context).accentColor,
         entity: entity,
         onSelected: (context, action) =>
             handleEntityAction(context, entity, action),
@@ -61,7 +63,9 @@ class EntityListTile extends StatelessWidget {
     if (isNotMobile(context) && isFilter != null && !isFilter) {
       if (isFilteredBy) {
         trailing = IconButton(
-          color: Theme.of(context).accentColor,
+          color: state.prefState.enableDarkMode
+              ? Colors.white
+              : Theme.of(context).accentColor,
           icon: Icon(Icons.chevron_right),
           onPressed: () => viewEntity(entity: entity, context: context),
         );

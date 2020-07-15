@@ -33,7 +33,6 @@ class PaymentListBuilder extends StatelessWidget {
             presenter: PaymentPresenter(),
             state: viewModel.state,
             entityList: viewModel.paymentList,
-            onEntityTap: viewModel.onPaymentTap,
             tableColumns: viewModel.tableColumns,
             onRefreshed: viewModel.onRefreshed,
             onClearEntityFilterPressed: viewModel.onClearEntityFilterPressed,
@@ -58,7 +57,6 @@ class PaymentListBuilder extends StatelessWidget {
                 user: viewModel.user,
                 filter: viewModel.filter,
                 payment: payment,
-                onTap: () => viewModel.onPaymentTap(context, payment),
                 onEntityAction: (EntityAction action) {
                   if (action == EntityAction.more) {
                     showDialog();
@@ -93,7 +91,6 @@ class PaymentListVM {
     @required this.clientMap,
     @required this.filter,
     @required this.isLoading,
-    @required this.onPaymentTap,
     @required this.onRefreshed,
     @required this.onClearEntityFilterPressed,
     @required this.onViewEntityFilterPressed,
@@ -130,19 +127,6 @@ class PaymentListVM {
       isLoading: state.isLoading,
       filter: state.paymentUIState.listUIState.filter,
       listState: state.paymentListState,
-      onPaymentTap: (context, payment) {
-        if (store.state.paymentListState.isInMultiselect()) {
-          handlePaymentAction(
-              context, [payment], EntityAction.toggleMultiselect);
-        } else if (isDesktop(context) && state.uiState.isEditing) {
-          viewEntity(context: context, entity: payment);
-        } else if (isDesktop(context) &&
-            state.paymentUIState.selectedId == payment.id) {
-          editEntity(context: context, entity: payment);
-        } else {
-          viewEntity(context: context, entity: payment);
-        }
-      },
       onClearEntityFilterPressed: () => store.dispatch(FilterByEntity()),
       onViewEntityFilterPressed: (BuildContext context) => viewEntityById(
           context: context,
@@ -164,7 +148,6 @@ class PaymentListVM {
   final BuiltMap<String, ClientEntity> clientMap;
   final String filter;
   final bool isLoading;
-  final Function(BuildContext, BaseEntity) onPaymentTap;
   final Function(BuildContext) onRefreshed;
   final Function onClearEntityFilterPressed;
   final Function(BuildContext) onViewEntityFilterPressed;

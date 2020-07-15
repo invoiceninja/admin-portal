@@ -30,7 +30,6 @@ class DocumentListBuilder extends StatelessWidget {
             entityType: EntityType.document,
             state: viewModel.state,
             entityList: viewModel.documentList,
-            onEntityTap: viewModel.onDocumentTap,
             //presenter: DocumentPresenter(),
             //tableColumns: viewModel.tableColumns,
             onRefreshed: viewModel.onRefreshed,
@@ -53,7 +52,6 @@ class DocumentListBuilder extends StatelessWidget {
                 userCompany: state.userCompany,
                 filter: viewModel.filter,
                 document: document,
-                onTap: () => viewModel.onDocumentTap(context, document),
                 onEntityAction: (EntityAction action) {
                   if (action == EntityAction.more) {
                     showDialog();
@@ -86,7 +84,6 @@ class DocumentListVM {
     @required this.documentMap,
     @required this.filter,
     @required this.isLoading,
-    @required this.onDocumentTap,
     @required this.listState,
     @required this.onRefreshed,
     @required this.onEntityAction,
@@ -121,10 +118,6 @@ class DocumentListVM {
           context: context,
           entityId: state.documentListState.filterEntityId,
           entityType: state.documentListState.filterEntityType),
-      onDocumentTap: (context, document) => viewEntityById(
-          context: context,
-          entityId: document.id,
-          entityType: EntityType.document),
       onEntityAction: (BuildContext context, List<BaseEntity> documents,
               EntityAction action) =>
           handleDocumentAction(context, documents, action),
@@ -139,7 +132,6 @@ class DocumentListVM {
   final ListUIState listState;
   final String filter;
   final bool isLoading;
-  final Function(BuildContext, BaseEntity) onDocumentTap;
   final Function(BuildContext) onRefreshed;
   final Function(BuildContext, List<DocumentEntity>, EntityAction)
       onEntityAction;

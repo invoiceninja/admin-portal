@@ -1140,6 +1140,22 @@ void handleEntitiesActions(
   }
 }
 
+void selectEntity({BuildContext context, BaseEntity entity}) {
+  final store = StoreProvider.of<AppState>(context);
+  final state = store.state;
+  if (store.state.taskListState.isInMultiselect()) {
+    handleEntityAction(context, entity, EntityAction.toggleMultiselect);
+  } else if (isDesktop(context) && state.uiState.isEditing) {
+    viewEntity(context: context, entity: entity);
+  } else if (isDesktop(context) &&
+      !entity.entityType.isSetting &&
+      state.getUIState(entity.entityType).selectedId == entity.id) {
+    editEntity(context: context, entity: entity);
+  } else {
+    viewEntity(context: context, entity: entity);
+  }
+}
+
 void inspectEntity({
   BuildContext context,
   BaseEntity entity,

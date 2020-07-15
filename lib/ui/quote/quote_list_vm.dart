@@ -37,7 +37,6 @@ class QuoteListBuilder extends StatelessWidget {
             presenter: QuotePresenter(),
             state: viewModel.state,
             entityList: viewModel.invoiceList,
-            onEntityTap: viewModel.onInvoiceTap,
             tableColumns: viewModel.tableColumns,
             onRefreshed: viewModel.onRefreshed,
             onClearEntityFilterPressed: viewModel.onClearEntityFilterPressed,
@@ -62,7 +61,6 @@ class QuoteListBuilder extends StatelessWidget {
                 filter: viewModel.filter,
                 quote: invoice,
                 client: viewModel.clientMap[invoice.clientId] ?? ClientEntity(),
-                onTap: () => viewModel.onInvoiceTap(context, invoice),
                 onEntityAction: (EntityAction action) {
                   if (action == EntityAction.more) {
                     showDialog();
@@ -99,7 +97,6 @@ class QuoteListVM extends EntityListVM {
     String filter,
     bool isLoading,
     bool isLoaded,
-    Function(BuildContext, BaseEntity) onInvoiceTap,
     Function(BuildContext) onRefreshed,
     Function onClearEntityFilterPressed,
     Function(BuildContext) onViewEntityFilterPressed,
@@ -117,7 +114,6 @@ class QuoteListVM extends EntityListVM {
           filter: filter,
           isLoading: isLoading,
           isLoaded: isLoaded,
-          onInvoiceTap: onInvoiceTap,
           onRefreshed: onRefreshed,
           onClearEntityFilterPressed: onClearEntityFilterPressed,
           onViewEntityFilterPressed: onViewEntityFilterPressed,
@@ -154,18 +150,6 @@ class QuoteListVM extends EntityListVM {
       clientMap: state.clientState.map,
       isLoading: state.isLoading,
       filter: state.quoteListState.filter,
-      onInvoiceTap: (context, quote) {
-        if (store.state.invoiceListState.isInMultiselect()) {
-          handleInvoiceAction(context, [quote], EntityAction.toggleMultiselect);
-        } else if (isDesktop(context) && state.uiState.isEditing) {
-          viewEntity(context: context, entity: quote);
-        } else if (isDesktop(context) &&
-            state.quoteUIState.selectedId == quote.id) {
-          editEntity(context: context, entity: quote);
-        } else {
-          viewEntity(context: context, entity: quote);
-        }
-      },
       onRefreshed: (context) => _handleRefresh(context),
       onClearEntityFilterPressed: () => store.dispatch(ClearEntityFilter()),
       onViewEntityFilterPressed: (BuildContext context) => viewEntityById(

@@ -62,7 +62,6 @@ class _PaymentTermListState extends State<PaymentTermList> {
                   handlePaymentTermAction(context, [paymentTerm], action);
                 }
               },
-              onTap: () => viewModel.onPaymentTermTap(context, paymentTerm),
               onLongPress: () async {
                 final longPressIsSelection =
                     state.prefState.longPressSelectionIsDefault ?? true;
