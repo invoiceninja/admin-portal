@@ -448,7 +448,7 @@ Future handleQuoteAction(
     case EntityAction.cloneToCredit:
       createEntity(
           context: context,
-          entity: quote.clone.rebuild((b) => b..entityType = EntityType.quote));
+          entity: quote.clone.rebuild((b) => b..entityType = EntityType.credit));
       break;
     case EntityAction.restore:
       store.dispatch(RestoreQuotesRequest(
