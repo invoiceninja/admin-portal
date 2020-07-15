@@ -159,7 +159,8 @@ class MenuDrawer extends StatelessWidget {
     return AnimatedContainer(
       width: state.isMenuCollapsed ? 65 : kDrawerWidth,
       duration: Duration(
-          milliseconds: state.uiState.filterEntityType != null
+          milliseconds: state.uiState.filterEntityType != null ||
+                  state.prefState.alwaysShowFilterSidebar
               ? 0
               : kDefaultAnimationDuration),
       curve: Curves.easeInOutCubic,
