@@ -66,10 +66,9 @@ class LoadStubActivity {
 }
 
 class LoadStubs {
-  LoadStubs({this.completer, this.force = false});
+  LoadStubs({this.completer});
 
   final Completer completer;
-  final bool force;
 }
 
 class LoadStubRequest implements StartLoading {}
@@ -109,7 +108,7 @@ class LoadStubsFailure implements StopLoading {
   }
 }
 
-class LoadStubsSuccess implements StopLoading, PersistData {
+class LoadStubsSuccess implements StopLoading {
   LoadStubsSuccess(this.stubs);
 
   final BuiltList<StubEntity> stubs;

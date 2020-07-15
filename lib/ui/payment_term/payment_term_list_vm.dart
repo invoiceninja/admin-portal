@@ -27,7 +27,6 @@ class PaymentTermListBuilder extends StatelessWidget {
       converter: PaymentTermListVM.fromStore,
       builder: (context, viewModel) {
         return EntityList(
-            isLoaded: viewModel.isLoaded,
             entityType: EntityType.paymentTerm,
             state: viewModel.state,
             entityList: viewModel.paymentTermList,
@@ -89,7 +88,6 @@ class PaymentTermListVM {
     @required this.paymentTermMap,
     @required this.filter,
     @required this.isLoading,
-    @required this.isLoaded,
     @required this.onPaymentTermTap,
     @required this.listState,
     @required this.onRefreshed,
@@ -107,7 +105,7 @@ class PaymentTermListVM {
       }
       final completer = snackBarCompleter<Null>(
           context, AppLocalization.of(context).refreshComplete);
-      store.dispatch(LoadPaymentTerms(completer: completer, force: true));
+      store.dispatch(RefreshData(completer: completer));
       return completer.future;
     }
 
@@ -123,7 +121,6 @@ class PaymentTermListVM {
           state.paymentTermListState),
       paymentTermMap: state.paymentTermState.map,
       isLoading: state.isLoading,
-      isLoaded: state.paymentTermState.isLoaded,
       filter: state.paymentTermUIState.listUIState.filter,
       onClearEntityFilterPressed: () => store.dispatch(FilterByEntity()),
       onViewEntityFilterPressed: (BuildContext context) => viewEntityById(
@@ -153,7 +150,6 @@ class PaymentTermListVM {
   final ListUIState listState;
   final String filter;
   final bool isLoading;
-  final bool isLoaded;
   final Function(BuildContext, BaseEntity) onPaymentTermTap;
   final Function(BuildContext) onRefreshed;
   final Function(BuildContext, List<BaseEntity>, EntityAction) onEntityAction;

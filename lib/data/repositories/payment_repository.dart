@@ -1,7 +1,6 @@
 import 'dart:async';
 import 'dart:convert';
 import 'dart:core';
-import 'package:invoiceninja_flutter/constants.dart';
 import 'package:invoiceninja_flutter/data/models/serializers.dart';
 import 'package:built_collection/built_collection.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
@@ -16,12 +15,8 @@ class PaymentRepository {
   final WebClient webClient;
 
   Future<BuiltList<PaymentEntity>> loadList(
-      Credentials credentials, int updatedAt) async {
-    String url = credentials.url + '/payments?include=paymentables';
-
-    if (updatedAt > 0) {
-      url += '&updated_at=${updatedAt - kUpdatedAtBufferSeconds}';
-    }
+      Credentials credentials) async {
+    final url = credentials.url + '/payments?include=paymentables';
 
     final dynamic response = await webClient.get(url, credentials.token);
 

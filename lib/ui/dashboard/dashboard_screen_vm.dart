@@ -9,13 +9,11 @@ import 'package:invoiceninja_flutter/data/models/dashboard_model.dart';
 import 'package:invoiceninja_flutter/data/models/entities.dart';
 import 'package:invoiceninja_flutter/data/models/static/currency_model.dart';
 import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
-import 'package:invoiceninja_flutter/redux/client/client_actions.dart';
 import 'package:invoiceninja_flutter/redux/company/company_selectors.dart';
 import 'package:invoiceninja_flutter/redux/dashboard/dashboard_actions.dart';
 import 'package:invoiceninja_flutter/ui/dashboard/dashboard_screen.dart';
 import 'package:invoiceninja_flutter/utils/completers.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
-import 'package:invoiceninja_flutter/utils/platforms.dart';
 import 'package:redux/redux.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/redux/dashboard/dashboard_state.dart';
@@ -28,8 +26,7 @@ class DashboardScreenBuilder extends StatelessWidget {
   Widget build(BuildContext context) {
     return StoreConnector<AppState, DashboardVM>(
       //distinct: true,
-      onInit: (Store<AppState> store) =>
-          isMobile(context) ? store.dispatch(LoadClients()) : null,
+      //onInit: (Store<AppState> store) => isMobile(context) ? store.dispatch(LoadClients()) : null,
       converter: DashboardVM.fromStore,
       builder: (context, viewModel) {
         return DashboardScreen(viewModel: viewModel);

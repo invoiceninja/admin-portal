@@ -71,16 +71,12 @@ class UserEditVM {
       },
       onSavePressed: (BuildContext context) {
         final Completer<UserEntity> completer = new Completer<UserEntity>();
-        if (state.authState.hasRecentlyEnteredPassword) {
-          store.dispatch(SaveUserRequest(completer: completer, user: user));
-        } else {
-          passwordCallback(
-              context: context,
-              callback: (password) {
-                store.dispatch(SaveUserRequest(
-                    completer: completer, user: user, password: password));
-              });
-        }
+        passwordCallback(
+            context: context,
+            callback: (password) {
+              store.dispatch(SaveUserRequest(
+                  completer: completer, user: user, password: password));
+            });
         return completer.future.then((savedUser) {
           if (isMobile(context)) {
             store.dispatch(UpdateCurrentRoute(UserViewScreen.route));

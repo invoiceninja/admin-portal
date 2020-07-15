@@ -20,7 +20,7 @@ Reducer<String> selectedIdReducer = combineReducers([
       (String selectedId, action) => action.taxRateId),
   TypedReducer<String, AddTaxRateSuccess>(
       (String selectedId, action) => action.taxRate.id),
-  TypedReducer<String, SelectCompany>((selectedId, action) => ''),
+  TypedReducer<String, SelectCompany>((selectedId, action) => action.clearSelection ? '' : selectedId),
   TypedReducer<String, DeleteTaxRatesSuccess>((selectedId, action) => ''),
   TypedReducer<String, ArchiveTaxRatesSuccess>((selectedId, action) => ''),
   TypedReducer<String, ClearEntityFilter>((selectedId, action) => ''),
@@ -284,7 +284,6 @@ TaxRateState _setLoadedTaxRate(
 TaxRateState _setLoadedTaxRates(
     TaxRateState taxRateState, LoadTaxRatesSuccess action) {
   final state = taxRateState.rebuild((b) => b
-    ..lastUpdated = DateTime.now().millisecondsSinceEpoch
     ..map.addAll(Map.fromIterable(
       action.taxRates,
       key: (dynamic item) => item.id,
@@ -297,7 +296,6 @@ TaxRateState _setLoadedTaxRates(
 TaxRateState _setLoadedCompany(
     TaxRateState taxRateState, LoadCompanySuccess action) {
   final state = taxRateState.rebuild((b) => b
-    ..lastUpdated = DateTime.now().millisecondsSinceEpoch
     ..map.addAll(Map.fromIterable(
       action.userCompany.company.taxRates,
       key: (dynamic item) => item.id,

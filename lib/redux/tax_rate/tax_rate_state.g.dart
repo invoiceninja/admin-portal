@@ -30,12 +30,7 @@ class _$TaxRateStateSerializer implements StructuredSerializer<TaxRateState> {
           specifiedType:
               const FullType(BuiltList, const [const FullType(String)])),
     ];
-    if (object.lastUpdated != null) {
-      result
-        ..add('lastUpdated')
-        ..add(serializers.serialize(object.lastUpdated,
-            specifiedType: const FullType(int)));
-    }
+
     return result;
   }
 
@@ -50,10 +45,6 @@ class _$TaxRateStateSerializer implements StructuredSerializer<TaxRateState> {
       iterator.moveNext();
       final dynamic value = iterator.current;
       switch (key) {
-        case 'lastUpdated':
-          result.lastUpdated = serializers.deserialize(value,
-              specifiedType: const FullType(int)) as int;
-          break;
         case 'map':
           result.map.replace(serializers.deserialize(value,
               specifiedType: const FullType(BuiltMap, const [
@@ -137,8 +128,6 @@ class _$TaxRateUIStateSerializer
 
 class _$TaxRateState extends TaxRateState {
   @override
-  final int lastUpdated;
-  @override
   final BuiltMap<String, TaxRateEntity> map;
   @override
   final BuiltList<String> list;
@@ -146,7 +135,7 @@ class _$TaxRateState extends TaxRateState {
   factory _$TaxRateState([void Function(TaxRateStateBuilder) updates]) =>
       (new TaxRateStateBuilder()..update(updates)).build();
 
-  _$TaxRateState._({this.lastUpdated, this.map, this.list}) : super._() {
+  _$TaxRateState._({this.map, this.list}) : super._() {
     if (map == null) {
       throw new BuiltValueNullFieldError('TaxRateState', 'map');
     }
@@ -165,23 +154,18 @@ class _$TaxRateState extends TaxRateState {
   @override
   bool operator ==(Object other) {
     if (identical(other, this)) return true;
-    return other is TaxRateState &&
-        lastUpdated == other.lastUpdated &&
-        map == other.map &&
-        list == other.list;
+    return other is TaxRateState && map == other.map && list == other.list;
   }
 
   int __hashCode;
   @override
   int get hashCode {
-    return __hashCode ??= $jf(
-        $jc($jc($jc(0, lastUpdated.hashCode), map.hashCode), list.hashCode));
+    return __hashCode ??= $jf($jc($jc(0, map.hashCode), list.hashCode));
   }
 
   @override
   String toString() {
     return (newBuiltValueToStringHelper('TaxRateState')
-          ..add('lastUpdated', lastUpdated)
           ..add('map', map)
           ..add('list', list))
         .toString();
@@ -191,10 +175,6 @@ class _$TaxRateState extends TaxRateState {
 class TaxRateStateBuilder
     implements Builder<TaxRateState, TaxRateStateBuilder> {
   _$TaxRateState _$v;
-
-  int _lastUpdated;
-  int get lastUpdated => _$this._lastUpdated;
-  set lastUpdated(int lastUpdated) => _$this._lastUpdated = lastUpdated;
 
   MapBuilder<String, TaxRateEntity> _map;
   MapBuilder<String, TaxRateEntity> get map =>
@@ -209,7 +189,6 @@ class TaxRateStateBuilder
 
   TaxRateStateBuilder get _$this {
     if (_$v != null) {
-      _lastUpdated = _$v.lastUpdated;
       _map = _$v.map?.toBuilder();
       _list = _$v.list?.toBuilder();
       _$v = null;
@@ -234,9 +213,8 @@ class TaxRateStateBuilder
   _$TaxRateState build() {
     _$TaxRateState _$result;
     try {
-      _$result = _$v ??
-          new _$TaxRateState._(
-              lastUpdated: lastUpdated, map: map.build(), list: list.build());
+      _$result =
+          _$v ?? new _$TaxRateState._(map: map.build(), list: list.build());
     } catch (_) {
       String _$failedField;
       try {

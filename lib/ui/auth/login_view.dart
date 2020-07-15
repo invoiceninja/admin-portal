@@ -416,6 +416,7 @@ class _LoginState extends State<LoginView> {
                                       : null,
                               onFieldSubmitted: (String value) =>
                                   FocusScope.of(context).nextFocus(),
+                              autofillHints: [AutofillHints.email],
                             ),
                           if (_emailLogin && !_recoverPassword)
                             TextFormField(
@@ -464,6 +465,11 @@ class _LoginState extends State<LoginView> {
                               keyboardType: TextInputType.visiblePassword,
                               onFieldSubmitted: (String value) =>
                                   FocusScope.of(context).nextFocus(),
+                              autofillHints: [
+                                _createAccount
+                                    ? AutofillHints.newPassword
+                                    : AutofillHints.password
+                              ],
                             ),
                           if (_isSelfHosted)
                             TextFormField(

@@ -78,10 +78,9 @@ class LoadClientActivity {
 }
 
 class LoadClients {
-  LoadClients({this.completer, this.force = false});
+  LoadClients({this.completer});
 
   final Completer completer;
-  final bool force;
 }
 
 class LoadClientRequest implements StartLoading {}
@@ -121,7 +120,7 @@ class LoadClientsFailure implements StopLoading {
   }
 }
 
-class LoadClientsSuccess implements StopLoading, PersistData {
+class LoadClientsSuccess implements StopLoading {
   LoadClientsSuccess(this.clients);
 
   final BuiltList<ClientEntity> clients;

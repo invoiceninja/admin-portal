@@ -30,12 +30,7 @@ class _$DocumentStateSerializer implements StructuredSerializer<DocumentState> {
           specifiedType:
               const FullType(BuiltList, const [const FullType(String)])),
     ];
-    if (object.lastUpdated != null) {
-      result
-        ..add('lastUpdated')
-        ..add(serializers.serialize(object.lastUpdated,
-            specifiedType: const FullType(int)));
-    }
+
     return result;
   }
 
@@ -51,10 +46,6 @@ class _$DocumentStateSerializer implements StructuredSerializer<DocumentState> {
       iterator.moveNext();
       final dynamic value = iterator.current;
       switch (key) {
-        case 'lastUpdated':
-          result.lastUpdated = serializers.deserialize(value,
-              specifiedType: const FullType(int)) as int;
-          break;
         case 'map':
           result.map.replace(serializers.deserialize(value,
               specifiedType: const FullType(BuiltMap, const [
@@ -138,8 +129,6 @@ class _$DocumentUIStateSerializer
 
 class _$DocumentState extends DocumentState {
   @override
-  final int lastUpdated;
-  @override
   final BuiltMap<String, DocumentEntity> map;
   @override
   final BuiltList<String> list;
@@ -147,7 +136,7 @@ class _$DocumentState extends DocumentState {
   factory _$DocumentState([void Function(DocumentStateBuilder) updates]) =>
       (new DocumentStateBuilder()..update(updates)).build();
 
-  _$DocumentState._({this.lastUpdated, this.map, this.list}) : super._() {
+  _$DocumentState._({this.map, this.list}) : super._() {
     if (map == null) {
       throw new BuiltValueNullFieldError('DocumentState', 'map');
     }
@@ -166,23 +155,18 @@ class _$DocumentState extends DocumentState {
   @override
   bool operator ==(Object other) {
     if (identical(other, this)) return true;
-    return other is DocumentState &&
-        lastUpdated == other.lastUpdated &&
-        map == other.map &&
-        list == other.list;
+    return other is DocumentState && map == other.map && list == other.list;
   }
 
   int __hashCode;
   @override
   int get hashCode {
-    return __hashCode ??= $jf(
-        $jc($jc($jc(0, lastUpdated.hashCode), map.hashCode), list.hashCode));
+    return __hashCode ??= $jf($jc($jc(0, map.hashCode), list.hashCode));
   }
 
   @override
   String toString() {
     return (newBuiltValueToStringHelper('DocumentState')
-          ..add('lastUpdated', lastUpdated)
           ..add('map', map)
           ..add('list', list))
         .toString();
@@ -192,10 +176,6 @@ class _$DocumentState extends DocumentState {
 class DocumentStateBuilder
     implements Builder<DocumentState, DocumentStateBuilder> {
   _$DocumentState _$v;
-
-  int _lastUpdated;
-  int get lastUpdated => _$this._lastUpdated;
-  set lastUpdated(int lastUpdated) => _$this._lastUpdated = lastUpdated;
 
   MapBuilder<String, DocumentEntity> _map;
   MapBuilder<String, DocumentEntity> get map =>
@@ -210,7 +190,6 @@ class DocumentStateBuilder
 
   DocumentStateBuilder get _$this {
     if (_$v != null) {
-      _lastUpdated = _$v.lastUpdated;
       _map = _$v.map?.toBuilder();
       _list = _$v.list?.toBuilder();
       _$v = null;
@@ -235,9 +214,8 @@ class DocumentStateBuilder
   _$DocumentState build() {
     _$DocumentState _$result;
     try {
-      _$result = _$v ??
-          new _$DocumentState._(
-              lastUpdated: lastUpdated, map: map.build(), list: list.build());
+      _$result =
+          _$v ?? new _$DocumentState._(map: map.build(), list: list.build());
     } catch (_) {
       String _$failedField;
       try {

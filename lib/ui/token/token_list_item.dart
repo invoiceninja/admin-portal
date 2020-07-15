@@ -2,7 +2,6 @@ import 'package:flutter_redux/flutter_redux.dart';
 import 'package:invoiceninja_flutter/data/models/token_model.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/ui/app/entity_state_label.dart';
-import 'package:invoiceninja_flutter/utils/formatting.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
@@ -40,6 +39,7 @@ class TokenListItem extends StatelessWidget {
     final listUIState = tokenUIState.listUIState;
     final isInMultiselect = listUIState.isInMultiselect();
     final showCheckbox = onCheckboxChanged != null || isInMultiselect;
+    final user = state.userState.get(token.createdUserId);
 
     final filterMatch = filter != null && filter.isNotEmpty
         ? token.matchesFilterValue(filter)
@@ -70,24 +70,14 @@ class TokenListItem extends StatelessWidget {
                 ),
               )
             : null,
-        title: Container(
-          width: MediaQuery.of(context).size.width,
-          child: Row(
-            children: <Widget>[
-              Expanded(
-                child: Text(
-                  token.name,
-                  style: Theme.of(context).textTheme.headline6,
-                ),
-              ),
-              Text(formatNumber(token.listDisplayAmount, context),
-                  style: Theme.of(context).textTheme.headline6),
-            ],
-          ),
+        title: Text(
+          token.name,
+          style: Theme.of(context).textTheme.headline6,
         ),
         subtitle: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
+            Text(user.fullName),
             subtitle != null && subtitle.isNotEmpty
                 ? Text(
                     subtitle,

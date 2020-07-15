@@ -80,10 +80,9 @@ class LoadInvoice {
 }
 
 class LoadInvoices {
-  LoadInvoices({this.completer, this.force = false});
+  LoadInvoices({this.completer});
 
   final Completer completer;
-  final bool force;
 }
 
 class LoadInvoiceRequest implements StartLoading {}
@@ -123,7 +122,7 @@ class LoadInvoicesFailure implements StopLoading {
   }
 }
 
-class LoadInvoicesSuccess implements StopLoading, PersistData {
+class LoadInvoicesSuccess implements StopLoading {
   LoadInvoicesSuccess(this.invoices);
 
   final BuiltList<InvoiceEntity> invoices;

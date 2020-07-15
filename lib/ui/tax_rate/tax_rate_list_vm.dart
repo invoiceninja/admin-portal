@@ -27,7 +27,6 @@ class TaxRateListBuilder extends StatelessWidget {
       converter: TaxRateListVM.fromStore,
       builder: (context, viewModel) {
         return EntityList(
-            isLoaded: viewModel.isLoaded,
             entityType: EntityType.taxRate,
             //presenter: ClientPresenter(),
             state: viewModel.state,
@@ -88,7 +87,6 @@ class TaxRateListVM {
     @required this.taxRateMap,
     @required this.filter,
     @required this.isLoading,
-    @required this.isLoaded,
     @required this.onTaxRateTap,
     @required this.listState,
     @required this.onRefreshed,
@@ -104,7 +102,7 @@ class TaxRateListVM {
       }
       final completer = snackBarCompleter<Null>(
           context, AppLocalization.of(context).refreshComplete);
-      store.dispatch(LoadTaxRates(completer: completer, force: true));
+      store.dispatch(RefreshData(completer: completer));
       return completer.future;
     }
 
@@ -118,7 +116,6 @@ class TaxRateListVM {
           state.taxRateState.list, state.taxRateListState),
       taxRateMap: state.taxRateState.map,
       isLoading: state.isLoading,
-      isLoaded: state.taxRateState.isLoaded,
       filter: state.taxRateUIState.listUIState.filter,
       onClearEntityFilterPressed: () => store.dispatch(ClearEntityFilter()),
       onViewEntityFilterPressed: (BuildContext context) => viewEntityById(
@@ -145,7 +142,6 @@ class TaxRateListVM {
   final ListUIState listState;
   final String filter;
   final bool isLoading;
-  final bool isLoaded;
   final Function(BuildContext, BaseEntity) onTaxRateTap;
   final Function(BuildContext) onRefreshed;
   final Function onClearEntityFilterPressed;

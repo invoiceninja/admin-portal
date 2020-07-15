@@ -32,7 +32,8 @@ const String kAppleStoreUrl =
 const String kGoogleStoreUrl =
     'https://play.google.com/store/apps/details?id=com.invoiceninja.flutter';
 const String kCapterralUrl = 'https://www.capterra.com/p/145215/Invoice-Ninja/';
-const String kCronsHelpUrl = 'https://invoiceninja.github.io/selfhost.html#cron-configuration';
+const String kCronsHelpUrl =
+    'https://invoiceninja.github.io/selfhost.html#cron-configuration';
 
 const String kSharedPrefs = 'shared_prefs';
 const String kSharedPrefAppVersion = 'app_version';
@@ -93,17 +94,16 @@ const String kPlanWhiteLabel = 'white_label';
 
 const double kGutterWidth = 16;
 
-const int kDebounceDelay = 300;
 const int kMaxNumberOfCompanies = 10;
 const int kMaxNumberOfHistory = 50;
 const int kMaxRecordsPerApiPage = 5000;
 const int kMaxPostSeconds = 120;
 const int kMillisecondsToRefreshData = 1000 * 60 * 15; // 15 minutes
+const int kUpdatedAtBufferSeconds = 600;
 const int kMillisecondsToRefreshActivities = 1000 * 60 * 60 * 24; // 1 day
 const int kMillisecondsToRefreshStaticData = 1000 * 60 * 60 * 24; // 1 day
 const int kMillisecondsToReenterPassword = 1000 * 60 * 10; // 10 minutes
-const int kMillisecondsToDebounceStateSave = 1000 * 1; // 3 seconds
-const int kUpdatedAtBufferSeconds = 600;
+const int kMillisecondsToDebounceStateSave = 1000 * 2; // 2 seconds
 
 const String kLanguageEnglish = '1';
 
@@ -112,6 +112,30 @@ const String kCurrencyUSDollar = '1';
 const String kCurrencyEuro = '3';
 
 const String kCountryUnitedStates = '840';
+
+/*
+const EVENT_CREATE_CLIENT = 1;
+const EVENT_CREATE_INVOICE = 2;
+const EVENT_CREATE_QUOTE = 3;
+const EVENT_CREATE_PAYMENT = 4;
+const EVENT_CREATE_VENDOR = 5;
+const EVENT_UPDATE_QUOTE = 6;
+const EVENT_DELETE_QUOTE = 7;
+const EVENT_UPDATE_INVOICE = 8;
+const EVENT_DELETE_INVOICE = 9;
+const EVENT_UPDATE_CLIENT = 10;
+const EVENT_DELETE_CLIENT = 11;
+const EVENT_DELETE_PAYMENT = 12;
+const EVENT_UPDATE_VENDOR = 13;
+const EVENT_DELETE_VENDOR = 14;
+const EVENT_CREATE_EXPENSE = 15;
+const EVENT_UPDATE_EXPENSE = 16;
+const EVENT_DELETE_EXPENSE = 17;
+const EVENT_CREATE_TASK = 18;
+const EVENT_UPDATE_TASK = 19;
+const EVENT_DELETE_TASK = 20;
+const EVENT_APPROVE_QUOTE = 21;
+*/
 
 const String kInvoiceStatusPastDue = '-1';
 const String kInvoiceStatusDraft = '1';
@@ -362,7 +386,7 @@ const String kPermissionViewAll = 'view_all';
 const String kPermissionEditAll = 'edit_all';
 
 const String kPaymentStatusPending = '1';
-const String kPaymentStatusVoided = '2';
+const String kPaymentStatusCancelled = '2';
 const String kPaymentStatusFailed = '3';
 const String kPaymentStatusCompleted = '4';
 const String kPaymentStatusPartiallyRefunded = '5';
@@ -370,7 +394,7 @@ const String kPaymentStatusRefunded = '6';
 
 const kPaymentStatuses = {
   kPaymentStatusPending: 'pending',
-  kPaymentStatusVoided: 'voided',
+  kPaymentStatusCancelled: 'cancelled',
   kPaymentStatusFailed: 'failed',
   kPaymentStatusCompleted: 'completed',
   kPaymentStatusPartiallyRefunded: 'partially_refunded',
@@ -394,8 +418,6 @@ const String kDefaultLightBorderColor = '#E7EBEE';
 const String kReportGroupDay = 'day';
 const String kReportGroupMonth = 'month';
 const String kReportGroupYear = 'year';
-
-const String kActivityEmailInvoice = '6';
 
 const int kModuleRecurringInvoices = 1;
 const int kModuleCredits = 2;
@@ -466,7 +488,7 @@ class QuoteStatusColors {
 class PaymentStatusColors {
   static var colors = {
     kPaymentStatusPending: convertHexStringToColor('#505F73'),
-    kPaymentStatusVoided: kColorRed,
+    kPaymentStatusCancelled: kColorRed,
     kPaymentStatusFailed: kColorRed,
     kPaymentStatusCompleted: kColorGreen,
     kPaymentStatusPartiallyRefunded: Colors.purple,
@@ -610,3 +632,60 @@ const kPageSizes = [
 ];
 
 const String kDrawerKey = 'drawer_key';
+
+const String kActivityCreateClient = '1';
+const String kActivityArchiveClient = '2';
+const String kActivityDeleteClient = '3';
+const String kActivityCreateInvoice = '4';
+const String kActivityUpdateInvoice = '5';
+const String kActivityEmailInvoice = '6';
+const String kActivityViewInvoice = '7';
+const String kActivityArchiveInvoice = '8';
+const String kActivityDeleteInvoice = '9';
+const String kActivityCreatePayment = '10';
+const String kActivityUpdatePayment = '11';
+const String kActivityArchivePayment = '12';
+const String kActivityDeletePayment = '13';
+const String kActivityCreateCredit = '14';
+const String kActivityUpdateCredit = '15';
+const String kActivityArchiveCredit = '16';
+const String kActivityDeleteCredit = '17';
+const String kActivityCreateQuote = '18';
+const String kActivityUpdateQuote = '19';
+const String kActivityEmailQuote = '20';
+const String kActivityViewQuote = '21';
+const String kActivityArchiveQuote = '22';
+const String kActivityDeleteQuote = '23';
+const String kActivityRestoreQuote = '24';
+const String kActivityRestoreInvoice = '25';
+const String kActivityRestoreClient = '26';
+const String kActivityRestorePayment = '27';
+const String kActivityRestoreCredit = '28';
+const String kActivityApproveQuote = '29';
+const String kActivityCreateVendor = '30';
+const String kActivityArchiveVendor = '31';
+const String kActivityDeleteVendor = '32';
+const String kActivityRestoreVendor = '33';
+const String kActivityCreateExpense = '34';
+const String kActivityArchiveExpense = '35';
+const String kActivityDeleteExpense = '36';
+const String kActivityRestoreExpense = '37';
+const String kActivityVoidedPayment = '39';
+const String kActivityRefundedPayment = '40';
+const String kActivityFailedPayment = '41';
+const String kActivityCreateTask = '42';
+const String kActivityUpdateTask = '43';
+const String kActivityArchiveTask = '44';
+const String kActivityDeleteTask = '45';
+const String kActivityRestoreTask = '46';
+const String kActivityUpdateExpense = '47';
+const String kActivityCreateUser = '48';
+const String kActivityUpdateUser = '49';
+const String kActivityArchiveUser = '50';
+const String kActivityDeleteUser = '51';
+const String kActivityRestoreUser = '52';
+const String kActivityMarkSentInvoice = '53';
+const String kActivityPaidInvoice = '54';
+const String kActivityEmailInvoiceFailed = '57';
+const String kActivityReversedInvoice = '58';
+const String kActivityCancelledInvoice = '59';

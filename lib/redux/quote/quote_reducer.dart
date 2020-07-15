@@ -37,7 +37,7 @@ Reducer<String> selectedIdReducer = combineReducers([
   TypedReducer<String, AddQuoteSuccess>(
       (selectedId, action) => action.quote.id),
   TypedReducer<String, ShowEmailQuote>((selectedId, action) => action.quote.id),
-  TypedReducer<String, SelectCompany>((selectedId, action) => ''),
+  TypedReducer<String, SelectCompany>((selectedId, action) => action.clearSelection ? '' : selectedId),
   TypedReducer<String, DeleteQuotesSuccess>((selectedId, action) => ''),
   TypedReducer<String, ArchiveQuotesSuccess>((selectedId, action) => ''),
   TypedReducer<String, ClearEntityFilter>((selectedId, action) => ''),
@@ -412,5 +412,5 @@ QuoteState _setLoadedQuotes(QuoteState quoteState, LoadQuotesSuccess action) =>
 
 QuoteState _setLoadedCompany(QuoteState quoteState, LoadCompanySuccess action) {
   final company = action.userCompany.company;
-  return company.hasData ? quoteState.loadQuotes(company.quotes) : quoteState;
+  return quoteState.loadQuotes(company.quotes);
 }

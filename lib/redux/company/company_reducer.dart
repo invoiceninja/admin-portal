@@ -19,28 +19,22 @@ import 'package:invoiceninja_flutter/redux/quote/quote_reducer.dart';
 
 // STARTER: import - do not remove comment
 import 'package:invoiceninja_flutter/redux/webhook/webhook_reducer.dart';
-
 import 'package:invoiceninja_flutter/redux/token/token_reducer.dart';
-
 import 'package:invoiceninja_flutter/redux/payment_term/payment_term_reducer.dart';
-
 import 'package:invoiceninja_flutter/redux/design/design_reducer.dart';
-
 import 'package:invoiceninja_flutter/redux/credit/credit_reducer.dart';
-
 import 'package:invoiceninja_flutter/redux/user/user_reducer.dart';
 import 'package:invoiceninja_flutter/redux/tax_rate/tax_rate_reducer.dart';
 import 'package:invoiceninja_flutter/redux/company_gateway/company_gateway_reducer.dart';
 import 'package:invoiceninja_flutter/redux/group/group_reducer.dart';
 
 UserCompanyState companyReducer(UserCompanyState state, dynamic action) {
-  if (action is LoadAccountSuccess) {
-    return UserCompanyState();
-  } else if (action is DeleteCompanySuccess) {
+  if (action is DeleteCompanySuccess) {
     return UserCompanyState();
   }
 
   return state.rebuild((b) => b
+    ..lastUpdated = lastUpdatedReducer(state.lastUpdated, action)
     ..userCompany.replace(userCompanyEntityReducer(state.userCompany, action))
     ..documentState.replace(documentsReducer(state.documentState, action))
     ..clientState.replace(clientsReducer(state.clientState, action))
@@ -184,3 +178,14 @@ UserCompanyEntity saveCompanySuccessReducer(
 
   return userCompany;
 }
+
+Reducer<int> lastUpdatedReducer = combineReducers([
+  TypedReducer<int, LoadCompanySuccess>((state, action) {
+    return action.userCompany.company.isLarge
+        ? state
+        : DateTime.now().millisecondsSinceEpoch;
+  }),
+  TypedReducer<int, PersistData>((state, action) {
+    return DateTime.now().millisecondsSinceEpoch;
+  }),
+]);

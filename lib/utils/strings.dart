@@ -56,29 +56,6 @@ String getLastName(String value) {
   return parts.last;
 }
 
-bool matchesStrings(List<String> haystacks, String needle) {
-  bool isMatch = false;
-  haystacks.forEach((haystack) {
-    if (matchesString(haystack, needle)) {
-      isMatch = true;
-    }
-  });
-  return isMatch;
-}
-
-bool matchesString(String haystack, String needle) {
-  if (needle == null || needle.isEmpty) {
-    return true;
-  }
-
-  String regExp = '';
-  needle.toLowerCase().runes.forEach((int rune) {
-    final character = String.fromCharCode(rune);
-    regExp += character + '.*?';
-  });
-  return RegExp(regExp).hasMatch(haystack.toLowerCase());
-}
-
 bool isValidDate(String input) {
   try {
     DateTime.parse(input);
@@ -91,4 +68,37 @@ bool isValidDate(String input) {
 void printWrapped(String text) {
   final pattern = RegExp('.{1,800}'); // 800 is the size of each chunk
   pattern.allMatches(text).forEach((match) => print(match.group(0)));
+}
+
+bool matchesStrings({
+  List<String> haystacks,
+  String needle,
+}) {
+  if (needle == null || needle.isEmpty) {
+    return true;
+  }
+
+  bool isMatch = false;
+  haystacks.forEach((haystack) {
+    if (matchesString(
+      haystack: haystack,
+      needle: needle,
+    )) {
+      isMatch = true;
+    }
+  });
+  return isMatch;
+}
+
+bool matchesString({String haystack, String needle}) {
+  if (needle == null || needle.isEmpty) {
+    return true;
+  }
+
+  String regExp = '';
+  needle.toLowerCase().runes.forEach((int rune) {
+    final character = String.fromCharCode(rune);
+    regExp += character + '.*?';
+  });
+  return RegExp(regExp).hasMatch(haystack.toLowerCase());
 }

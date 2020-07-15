@@ -433,7 +433,7 @@ abstract class PaymentEntity extends Object
   FormatNumberType get listDisplayAmountType => FormatNumberType.money;
 
   double get completedAmount {
-    if ([kPaymentStatusVoided, kPaymentStatusFailed].contains(statusId)) {
+    if ([kPaymentStatusCancelled, kPaymentStatusFailed].contains(statusId)) {
       return 0.0;
     }
 

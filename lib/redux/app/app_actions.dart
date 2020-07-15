@@ -102,8 +102,8 @@ class UserPreferencesChanged implements PersistPrefs {
     this.accentColor,
     this.menuMode,
     this.historyMode,
-    this.fullHeightFilter,
-    this.fullWidthEditor,
+    this.showFilterSidebar,
+    this.alwaysShowFilterSidebar,
   });
 
   final AppLayout layout;
@@ -117,12 +117,12 @@ class UserPreferencesChanged implements PersistPrefs {
   final bool autoStartTasks;
   final bool isPreviewVisible;
   final bool addDocumentsToInvoice;
-  final bool fullWidthEditor;
-  final bool fullHeightFilter;
+  final bool showFilterSidebar;
+  final bool alwaysShowFilterSidebar;
   final String accentColor;
 }
 
-class LoadAccountSuccess {
+class LoadAccountSuccess implements StopLoading {
   LoadAccountSuccess({
     this.loginResponse,
     this.completer,
@@ -136,15 +136,17 @@ class RefreshData implements StartLoading {
   RefreshData({
     this.completer,
     this.clearData = false,
+    this.includeStatic = false,
   });
 
   final Completer completer;
   final bool clearData;
+  final bool includeStatic;
 }
 
 class ClearData {}
 
-class RefreshDataFailure {
+class RefreshDataFailure implements StopLoading {
   const RefreshDataFailure(this.error);
 
   final dynamic error;

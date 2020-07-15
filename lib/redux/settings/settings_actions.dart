@@ -91,7 +91,8 @@ class SaveAuthUserRequest implements StartSaving {
   final String password;
 }
 
-class SaveAuthUserSuccess implements StopSaving, PersistData, PersistUI {
+class SaveAuthUserSuccess
+    implements StopSaving, PersistData, PersistUI {
   SaveAuthUserSuccess(this.user);
 
   final UserEntity user;

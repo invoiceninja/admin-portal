@@ -15,18 +15,12 @@ import 'package:invoiceninja_flutter/redux/project/project_state.dart';
 import 'package:invoiceninja_flutter/redux/quote/quote_state.dart';
 import 'package:invoiceninja_flutter/redux/task/task_state.dart';
 import 'package:invoiceninja_flutter/redux/vendor/vendor_state.dart';
-
 // STARTER: import - do not remove comment
 import 'package:invoiceninja_flutter/redux/webhook/webhook_state.dart';
-
 import 'package:invoiceninja_flutter/redux/token/token_state.dart';
-
 import 'package:invoiceninja_flutter/redux/payment_term/payment_term_state.dart';
-
 import 'package:invoiceninja_flutter/redux/design/design_state.dart';
-
 import 'package:invoiceninja_flutter/redux/credit/credit_state.dart';
-
 import 'package:invoiceninja_flutter/redux/user/user_state.dart';
 import 'package:invoiceninja_flutter/redux/tax_rate/tax_rate_state.dart';
 import 'package:invoiceninja_flutter/redux/company_gateway/company_gateway_state.dart';
@@ -47,11 +41,8 @@ abstract class UIState implements Built<UIState, UIStateBuilder> {
       invoiceUIState: InvoiceUIState(),
       // STARTER: constructor - do not remove comment
       webhookUIState: WebhookUIState(),
-
       tokenUIState: TokenUIState(),
-
       paymentTermUIState: PaymentTermUIState(),
-
       designUIState: DesignUIState(),
       creditUIState: CreditUIState(),
       userUIState: UserUIState(),
@@ -178,6 +169,10 @@ abstract class UIState implements Built<UIState, UIStateBuilder> {
       currentRoute.endsWith('_edit') ||
       currentRoute.endsWith('/edit') ||
       currentRoute.endsWith('refund');
+
+  bool get isEmailing => currentRoute.endsWith('/email');
+
+  bool get isViewing => !isEditing && !isEmailing;
 
   bool get isInSettings => currentRoute.contains('settings');
 }

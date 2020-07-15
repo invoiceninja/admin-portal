@@ -58,10 +58,9 @@ class LoadDocumentActivity {
 }
 
 class LoadDocuments {
-  LoadDocuments({this.completer, this.force = false});
+  LoadDocuments({this.completer});
 
   final Completer completer;
-  final bool force;
 }
 
 class LoadDocumentRequest implements StartLoading {}
@@ -101,7 +100,7 @@ class LoadDocumentsFailure implements StopLoading {
   }
 }
 
-class LoadDocumentsSuccess implements StopLoading, PersistData {
+class LoadDocumentsSuccess implements StopLoading {
   LoadDocumentsSuccess(this.documents);
 
   final BuiltList<DocumentEntity> documents;

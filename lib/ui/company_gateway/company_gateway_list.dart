@@ -37,7 +37,8 @@ class CompanyGatewayList extends StatelessWidget {
       children: <Widget>[
         Flexible(
           fit: FlexFit.tight,
-          child: !viewModel.isLoaded
+          child: !viewModel.state.isLoaded &&
+                  viewModel.companyGatewayList.isEmpty
               ? LoadingIndicator()
               : RefreshIndicator(
                   onRefresh: () => viewModel.onRefreshed(context),

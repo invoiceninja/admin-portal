@@ -29,12 +29,7 @@ class _$DesignStateSerializer implements StructuredSerializer<DesignState> {
           specifiedType:
               const FullType(BuiltList, const [const FullType(String)])),
     ];
-    if (object.lastUpdated != null) {
-      result
-        ..add('lastUpdated')
-        ..add(serializers.serialize(object.lastUpdated,
-            specifiedType: const FullType(int)));
-    }
+
     return result;
   }
 
@@ -49,10 +44,6 @@ class _$DesignStateSerializer implements StructuredSerializer<DesignState> {
       iterator.moveNext();
       final dynamic value = iterator.current;
       switch (key) {
-        case 'lastUpdated':
-          result.lastUpdated = serializers.deserialize(value,
-              specifiedType: const FullType(int)) as int;
-          break;
         case 'map':
           result.map.replace(serializers.deserialize(value,
               specifiedType: const FullType(BuiltMap, const [
@@ -135,8 +126,6 @@ class _$DesignUIStateSerializer implements StructuredSerializer<DesignUIState> {
 
 class _$DesignState extends DesignState {
   @override
-  final int lastUpdated;
-  @override
   final BuiltMap<String, DesignEntity> map;
   @override
   final BuiltList<String> list;
@@ -144,7 +133,7 @@ class _$DesignState extends DesignState {
   factory _$DesignState([void Function(DesignStateBuilder) updates]) =>
       (new DesignStateBuilder()..update(updates)).build();
 
-  _$DesignState._({this.lastUpdated, this.map, this.list}) : super._() {
+  _$DesignState._({this.map, this.list}) : super._() {
     if (map == null) {
       throw new BuiltValueNullFieldError('DesignState', 'map');
     }
@@ -163,23 +152,18 @@ class _$DesignState extends DesignState {
   @override
   bool operator ==(Object other) {
     if (identical(other, this)) return true;
-    return other is DesignState &&
-        lastUpdated == other.lastUpdated &&
-        map == other.map &&
-        list == other.list;
+    return other is DesignState && map == other.map && list == other.list;
   }
 
   int __hashCode;
   @override
   int get hashCode {
-    return __hashCode ??= $jf(
-        $jc($jc($jc(0, lastUpdated.hashCode), map.hashCode), list.hashCode));
+    return __hashCode ??= $jf($jc($jc(0, map.hashCode), list.hashCode));
   }
 
   @override
   String toString() {
     return (newBuiltValueToStringHelper('DesignState')
-          ..add('lastUpdated', lastUpdated)
           ..add('map', map)
           ..add('list', list))
         .toString();
@@ -188,10 +172,6 @@ class _$DesignState extends DesignState {
 
 class DesignStateBuilder implements Builder<DesignState, DesignStateBuilder> {
   _$DesignState _$v;
-
-  int _lastUpdated;
-  int get lastUpdated => _$this._lastUpdated;
-  set lastUpdated(int lastUpdated) => _$this._lastUpdated = lastUpdated;
 
   MapBuilder<String, DesignEntity> _map;
   MapBuilder<String, DesignEntity> get map =>
@@ -206,7 +186,6 @@ class DesignStateBuilder implements Builder<DesignState, DesignStateBuilder> {
 
   DesignStateBuilder get _$this {
     if (_$v != null) {
-      _lastUpdated = _$v.lastUpdated;
       _map = _$v.map?.toBuilder();
       _list = _$v.list?.toBuilder();
       _$v = null;
@@ -231,9 +210,8 @@ class DesignStateBuilder implements Builder<DesignState, DesignStateBuilder> {
   _$DesignState build() {
     _$DesignState _$result;
     try {
-      _$result = _$v ??
-          new _$DesignState._(
-              lastUpdated: lastUpdated, map: map.build(), list: list.build());
+      _$result =
+          _$v ?? new _$DesignState._(map: map.build(), list: list.build());
     } catch (_) {
       String _$failedField;
       try {

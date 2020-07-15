@@ -87,7 +87,6 @@ class VendorScreen extends StatelessWidget {
         entityType: EntityType.vendor,
         tableColumns: VendorPresenter.getAllTableFields(userCompany),
         defaultTableColumns: VendorPresenter.getDefaultTableFields(userCompany),
-        onRefreshPressed: () => store.dispatch(LoadVendors(force: true)),
         onSelectedSortField: (value) => store.dispatch(SortVendors(value)),
         customValues1: company.getCustomFieldValues(CustomFieldType.vendor1,
             excludeBlank: true),

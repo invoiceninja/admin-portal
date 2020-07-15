@@ -68,10 +68,9 @@ class LoadVendorActivity {
 }
 
 class LoadVendors {
-  LoadVendors({this.completer, this.force = false});
+  LoadVendors({this.completer});
 
   final Completer completer;
-  final bool force;
 }
 
 class LoadVendorRequest implements StartLoading {}
@@ -111,7 +110,7 @@ class LoadVendorsFailure implements StopLoading {
   }
 }
 
-class LoadVendorsSuccess implements StopLoading, PersistData {
+class LoadVendorsSuccess implements StopLoading {
   LoadVendorsSuccess(this.vendors);
 
   final BuiltList<VendorEntity> vendors;

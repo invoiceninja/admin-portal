@@ -39,7 +39,7 @@ Reducer<String> selectedIdReducer = combineReducers([
       (selectedId, action) => action.invoice.id),
   TypedReducer<String, ShowEmailInvoice>(
       (selectedId, action) => action.invoice.id),
-  TypedReducer<String, SelectCompany>((selectedId, action) => ''),
+  TypedReducer<String, SelectCompany>((selectedId, action) => action.clearSelection ? '' : selectedId),
   TypedReducer<String, DeleteInvoicesSuccess>((selectedId, action) => ''),
   TypedReducer<String, ArchiveInvoicesSuccess>((selectedId, action) => ''),
   TypedReducer<String, ClearEntityFilter>((selectedId, action) => ''),
@@ -455,7 +455,5 @@ InvoiceState _setLoadedInvoices(
 InvoiceState _setLoadedCompany(
     InvoiceState invoiceState, LoadCompanySuccess action) {
   final company = action.userCompany.company;
-  return company.hasData
-      ? invoiceState.loadInvoices(company.invoices)
-      : invoiceState;
+  return invoiceState.loadInvoices(company.invoices);
 }

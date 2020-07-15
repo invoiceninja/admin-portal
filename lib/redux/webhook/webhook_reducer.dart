@@ -21,7 +21,7 @@ Reducer<String> selectedIdReducer = combineReducers([
       (String selectedId, dynamic action) => action.webhookId),
   TypedReducer<String, AddWebhookSuccess>(
       (String selectedId, dynamic action) => action.webhook.id),
-  TypedReducer<String, SelectCompany>((selectedId, action) => ''),
+  TypedReducer<String, SelectCompany>((selectedId, action) => action.clearSelection ? '' : selectedId),
   TypedReducer<String, DeleteWebhooksSuccess>((selectedId, action) => ''),
   TypedReducer<String, ArchiveWebhooksSuccess>((selectedId, action) => ''),
   TypedReducer<String, ClearEntityFilter>((selectedId, action) => ''),
@@ -283,7 +283,5 @@ WebhookState _setLoadedWebhooks(
 WebhookState _setLoadedCompany(
     WebhookState webhookState, LoadCompanySuccess action) {
   final company = action.userCompany.company;
-  return company.hasData
-      ? webhookState.loadWebhooks(company.webhooks)
-      : webhookState;
+  return webhookState.loadWebhooks(company.webhooks);
 }

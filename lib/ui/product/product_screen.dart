@@ -86,7 +86,6 @@ class ProductScreen extends StatelessWidget {
         tableColumns: ProductPresenter.getAllTableFields(userCompany),
         defaultTableColumns:
             ProductPresenter.getDefaultTableFields(userCompany),
-        onRefreshPressed: () => store.dispatch(LoadProducts(force: true)),
         onSelectedSortField: (value) => store.dispatch(SortProducts(value)),
         customValues1: company.getCustomFieldValues(CustomFieldType.product1,
             excludeBlank: true),

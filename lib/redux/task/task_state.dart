@@ -3,7 +3,6 @@ import 'dart:async';
 import 'package:built_value/built_value.dart';
 import 'package:built_value/serializer.dart';
 import 'package:built_collection/built_collection.dart';
-import 'package:invoiceninja_flutter/constants.dart';
 import 'package:invoiceninja_flutter/data/models/entities.dart';
 import 'package:invoiceninja_flutter/data/models/task_model.dart';
 import 'package:invoiceninja_flutter/redux/ui/entity_ui_state.dart';
@@ -14,7 +13,6 @@ part 'task_state.g.dart';
 abstract class TaskState implements Built<TaskState, TaskStateBuilder> {
   factory TaskState() {
     return _$TaskState._(
-      lastUpdated: 0,
       map: BuiltMap<String, TaskEntity>(),
       list: BuiltList<String>(),
     );
@@ -25,22 +23,8 @@ abstract class TaskState implements Built<TaskState, TaskStateBuilder> {
   @memoized
   int get hashCode;
 
-  @nullable
-  int get lastUpdated;
-
   BuiltMap<String, TaskEntity> get map;
   BuiltList<String> get list;
-
-  bool get isStale {
-    if (!isLoaded) {
-      return true;
-    }
-
-    return DateTime.now().millisecondsSinceEpoch - lastUpdated >
-        kMillisecondsToRefreshData;
-  }
-
-  bool get isLoaded => lastUpdated != null && lastUpdated > 0;
 
   TaskState loadTasks(BuiltList<TaskEntity> clients) {
     final map = Map<String, TaskEntity>.fromIterable(
@@ -50,7 +34,6 @@ abstract class TaskState implements Built<TaskState, TaskStateBuilder> {
     );
 
     return rebuild((b) => b
-      ..lastUpdated = DateTime.now().millisecondsSinceEpoch
       ..map.addAll(map)
       ..list.replace((map.keys.toList() + list.toList()).toSet().toList()));
   }

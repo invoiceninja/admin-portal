@@ -20,7 +20,7 @@ Reducer<String> selectedIdReducer = combineReducers([
       (String selectedId, dynamic action) => action.paymentTermId),
   TypedReducer<String, AddPaymentTermSuccess>(
       (String selectedId, dynamic action) => action.paymentTerm.id),
-  TypedReducer<String, SelectCompany>((selectedId, action) => ''),
+  TypedReducer<String, SelectCompany>((selectedId, action) => action.clearSelection ? '' : selectedId),
   TypedReducer<String, DeletePaymentTermsSuccess>((selectedId, action) => ''),
   TypedReducer<String, ArchivePaymentTermsSuccess>((selectedId, action) => ''),
   TypedReducer<String, ClearEntityFilter>((selectedId, action) => ''),
@@ -313,7 +313,6 @@ PaymentTermState _setLoadedPaymentTerms(
 PaymentTermState _setLoadedCompany(
     PaymentTermState paymentTermState, LoadCompanySuccess action) {
   final state = paymentTermState.rebuild((b) => b
-    ..lastUpdated = DateTime.now().millisecondsSinceEpoch
     ..map.addAll(Map.fromIterable(
       action.userCompany.company.paymentTerms,
       key: (dynamic item) => item.id,

@@ -35,7 +35,7 @@ Reducer<String> selectedIdReducer = combineReducers([
   TypedReducer<String, ViewProject>((selectedId, action) => action.projectId),
   TypedReducer<String, AddProjectSuccess>(
       (selectedId, action) => action.project.id),
-  TypedReducer<String, SelectCompany>((selectedId, action) => ''),
+  TypedReducer<String, SelectCompany>((selectedId, action) => action.clearSelection ? '' : selectedId),
   TypedReducer<String, DeleteProjectSuccess>((selectedId, action) => ''),
   TypedReducer<String, ArchiveProjectSuccess>((selectedId, action) => ''),
   TypedReducer<String, ClearEntityFilter>((selectedId, action) => ''),
@@ -325,7 +325,5 @@ ProjectState _setLoadedProjects(
 ProjectState _setLoadedCompany(
     ProjectState projectState, LoadCompanySuccess action) {
   final company = action.userCompany.company;
-  return company.hasData
-      ? projectState.loadProjects(company.projects)
-      : projectState;
+  return projectState.loadProjects(company.projects);
 }

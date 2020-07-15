@@ -66,10 +66,9 @@ class LoadCompanyGatewayActivity {
 }
 
 class LoadCompanyGateways {
-  LoadCompanyGateways({this.completer, this.force = false});
+  LoadCompanyGateways({this.completer});
 
   final Completer completer;
-  final bool force;
 }
 
 class LoadCompanyGatewayRequest implements StartLoading {}
@@ -109,7 +108,7 @@ class LoadCompanyGatewaysFailure implements StopLoading {
   }
 }
 
-class LoadCompanyGatewaysSuccess implements StopLoading, PersistData {
+class LoadCompanyGatewaysSuccess implements StopLoading {
   LoadCompanyGatewaysSuccess(this.companyGateways);
 
   final BuiltList<CompanyGatewayEntity> companyGateways;

@@ -87,10 +87,8 @@ Middleware<AppState> _viewProductList() {
 
     next(action);
 
-    if (store.state.staticState.isStale) {
+    if (store.state.isStale) {
       store.dispatch(RefreshData());
-    } else if (store.state.productState.isStale) {
-      store.dispatch(LoadProducts());
     }
 
     store.dispatch(UpdateCurrentRoute(ProductScreen.route));
@@ -207,27 +205,18 @@ Middleware<AppState> _loadProducts(ProductRepository repository) {
     final action = dynamicAction as LoadProducts;
     final AppState state = store.state;
 
-    if (!state.productState.isStale && !action.force) {
-      next(action);
-      return;
-    }
-
     if (state.isLoading) {
       next(action);
       return;
     }
 
-    final int updatedAt = (state.productState.lastUpdated / 1000).round();
-
     store.dispatch(LoadProductsRequest());
-    repository.loadList(store.state.credentials, updatedAt).then((data) {
+    repository.loadList(store.state.credentials).then((data) {
       store.dispatch(LoadProductsSuccess(data));
       if (action.completer != null) {
         action.completer.complete(null);
       }
-      if (state.invoiceState.isStale) {
-        store.dispatch(LoadInvoices());
-      }
+      store.dispatch(LoadInvoices());
     }).catchError((Object error) {
       print(error);
       store.dispatch(LoadProductsFailure(error));

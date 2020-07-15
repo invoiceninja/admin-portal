@@ -3,7 +3,6 @@ import 'dart:async';
 import 'package:built_value/built_value.dart';
 import 'package:built_value/serializer.dart';
 import 'package:built_collection/built_collection.dart';
-import 'package:invoiceninja_flutter/constants.dart';
 import 'package:invoiceninja_flutter/data/models/entities.dart';
 import 'package:invoiceninja_flutter/data/models/payment_model.dart';
 import 'package:invoiceninja_flutter/redux/ui/entity_ui_state.dart';
@@ -15,7 +14,6 @@ abstract class PaymentState
     implements Built<PaymentState, PaymentStateBuilder> {
   factory PaymentState() {
     return _$PaymentState._(
-      lastUpdated: 0,
       map: BuiltMap<String, PaymentEntity>(),
       list: BuiltList<String>(),
     );
@@ -27,23 +25,9 @@ abstract class PaymentState
   @memoized
   int get hashCode;
 
-  @nullable
-  int get lastUpdated;
-
   BuiltMap<String, PaymentEntity> get map;
 
   BuiltList<String> get list;
-
-  bool get isStale {
-    if (!isLoaded) {
-      return true;
-    }
-
-    return DateTime.now().millisecondsSinceEpoch - lastUpdated >
-        kMillisecondsToRefreshData;
-  }
-
-  bool get isLoaded => lastUpdated != null && lastUpdated > 0;
 
   PaymentEntity get(String paymentId) {
     if (map.containsKey(paymentId)) {
@@ -61,7 +45,6 @@ abstract class PaymentState
     );
 
     return rebuild((b) => b
-      ..lastUpdated = DateTime.now().millisecondsSinceEpoch
       ..map.addAll(map)
       ..list.replace((map.keys.toList() + list.toList()).toSet().toList()));
   }

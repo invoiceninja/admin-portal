@@ -62,10 +62,9 @@ class LoadTaxRateActivity {
 }
 
 class LoadTaxRates {
-  LoadTaxRates({this.completer, this.force = false});
+  LoadTaxRates({this.completer});
 
   final Completer completer;
-  final bool force;
 }
 
 class LoadTaxRateRequest implements StartLoading {}
@@ -105,7 +104,7 @@ class LoadTaxRatesFailure implements StopLoading {
   }
 }
 
-class LoadTaxRatesSuccess implements StopLoading, PersistData {
+class LoadTaxRatesSuccess implements StopLoading {
   LoadTaxRatesSuccess(this.taxRates);
 
   final BuiltList<TaxRateEntity> taxRates;

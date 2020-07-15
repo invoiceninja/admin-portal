@@ -2,6 +2,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:invoiceninja_flutter/ui/app/edit_scaffold.dart';
 import 'package:invoiceninja_flutter/ui/app/form_card.dart';
+import 'package:invoiceninja_flutter/ui/app/forms/app_dropdown_button.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/decorated_form_field.dart';
 import 'package:invoiceninja_flutter/ui/webhook/edit/webhook_edit_vm.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
@@ -20,7 +21,7 @@ class WebhookEdit extends StatefulWidget {
 }
 
 class _WebhookEditState extends State<WebhookEdit> {
-  final _urlController = TextEditingController();
+  final _targetUrlController = TextEditingController();
 
   static final GlobalKey<FormState> _formKey =
       GlobalKey<FormState>(debugLabel: '_webhookEdit');
@@ -31,13 +32,13 @@ class _WebhookEditState extends State<WebhookEdit> {
   @override
   void didChangeDependencies() {
     _controllers = [
-      _urlController,
+      _targetUrlController,
     ];
 
     _controllers.forEach((controller) => controller.removeListener(_onChanged));
 
-    //final webhook = widget.viewModel.webhook;
-    //_urlController.text = webhook.
+    final webhook = widget.viewModel.webhook;
+    _targetUrlController.text = webhook.targetUrl;
 
     _controllers.forEach((controller) => controller.addListener(_onChanged));
 
@@ -57,7 +58,7 @@ class _WebhookEditState extends State<WebhookEdit> {
   void _onChanged() {
     _debouncer.run(() {
       final webhook = widget.viewModel.webhook
-          .rebuild((b) => b..url = _urlController.text.trim());
+          .rebuild((b) => b..targetUrl = _targetUrlController.text.trim());
       if (webhook != widget.viewModel.webhook) {
         widget.viewModel.onChanged(webhook);
       }
@@ -96,10 +97,30 @@ class _WebhookEditState extends State<WebhookEdit> {
                 FormCard(
                   children: <Widget>[
                     DecoratedFormField(
-                      controller: _urlController,
-                      label: localization.url,
+                      controller: _targetUrlController,
+                      label: localization.targetUrl,
                       keyboardType: TextInputType.url,
-                    )
+                      validator: (value) =>
+                          value.isEmpty || value.trim().isEmpty
+                              ? localization.pleaseEnterAValue
+                              : null,
+                    ),
+                    AppDropdownButton<String>(
+                      labelText: localization.eventType,
+                      value: webhook.eventId,
+                      onChanged: (dynamic value) => viewModel.onChanged(
+                          webhook.rebuild((b) => b..eventId = value)),
+                      items: [
+                        DropdownMenuItem(
+                          child: Text('TEST 1'),
+                          value: '1',
+                        ),
+                        DropdownMenuItem(
+                          child: Text('TEST 2'),
+                          value: '2',
+                        ),
+                      ],
+                    ),
                   ],
                 ),
               ],

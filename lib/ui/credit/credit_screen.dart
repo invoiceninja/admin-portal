@@ -88,7 +88,6 @@ class CreditScreen extends StatelessWidget {
         entityType: EntityType.credit,
         tableColumns: CreditPresenter.getAllTableFields(userCompany),
         defaultTableColumns: CreditPresenter.getDefaultTableFields(userCompany),
-        onRefreshPressed: () => store.dispatch(LoadCredits(force: true)),
         onSelectedSortField: (value) {
           store.dispatch(SortCredits(value));
         },

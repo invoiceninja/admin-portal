@@ -29,12 +29,7 @@ class _$QuoteStateSerializer implements StructuredSerializer<QuoteState> {
           specifiedType:
               const FullType(BuiltList, const [const FullType(String)])),
     ];
-    if (object.lastUpdated != null) {
-      result
-        ..add('lastUpdated')
-        ..add(serializers.serialize(object.lastUpdated,
-            specifiedType: const FullType(int)));
-    }
+
     return result;
   }
 
@@ -49,10 +44,6 @@ class _$QuoteStateSerializer implements StructuredSerializer<QuoteState> {
       iterator.moveNext();
       final dynamic value = iterator.current;
       switch (key) {
-        case 'lastUpdated':
-          result.lastUpdated = serializers.deserialize(value,
-              specifiedType: const FullType(int)) as int;
-          break;
         case 'map':
           result.map.replace(serializers.deserialize(value,
               specifiedType: const FullType(BuiltMap, const [
@@ -134,8 +125,6 @@ class _$QuoteUIStateSerializer implements StructuredSerializer<QuoteUIState> {
 
 class _$QuoteState extends QuoteState {
   @override
-  final int lastUpdated;
-  @override
   final BuiltMap<String, InvoiceEntity> map;
   @override
   final BuiltList<String> list;
@@ -143,7 +132,7 @@ class _$QuoteState extends QuoteState {
   factory _$QuoteState([void Function(QuoteStateBuilder) updates]) =>
       (new QuoteStateBuilder()..update(updates)).build();
 
-  _$QuoteState._({this.lastUpdated, this.map, this.list}) : super._() {
+  _$QuoteState._({this.map, this.list}) : super._() {
     if (map == null) {
       throw new BuiltValueNullFieldError('QuoteState', 'map');
     }
@@ -162,23 +151,18 @@ class _$QuoteState extends QuoteState {
   @override
   bool operator ==(Object other) {
     if (identical(other, this)) return true;
-    return other is QuoteState &&
-        lastUpdated == other.lastUpdated &&
-        map == other.map &&
-        list == other.list;
+    return other is QuoteState && map == other.map && list == other.list;
   }
 
   int __hashCode;
   @override
   int get hashCode {
-    return __hashCode ??= $jf(
-        $jc($jc($jc(0, lastUpdated.hashCode), map.hashCode), list.hashCode));
+    return __hashCode ??= $jf($jc($jc(0, map.hashCode), list.hashCode));
   }
 
   @override
   String toString() {
     return (newBuiltValueToStringHelper('QuoteState')
-          ..add('lastUpdated', lastUpdated)
           ..add('map', map)
           ..add('list', list))
         .toString();
@@ -187,10 +171,6 @@ class _$QuoteState extends QuoteState {
 
 class QuoteStateBuilder implements Builder<QuoteState, QuoteStateBuilder> {
   _$QuoteState _$v;
-
-  int _lastUpdated;
-  int get lastUpdated => _$this._lastUpdated;
-  set lastUpdated(int lastUpdated) => _$this._lastUpdated = lastUpdated;
 
   MapBuilder<String, InvoiceEntity> _map;
   MapBuilder<String, InvoiceEntity> get map =>
@@ -205,7 +185,6 @@ class QuoteStateBuilder implements Builder<QuoteState, QuoteStateBuilder> {
 
   QuoteStateBuilder get _$this {
     if (_$v != null) {
-      _lastUpdated = _$v.lastUpdated;
       _map = _$v.map?.toBuilder();
       _list = _$v.list?.toBuilder();
       _$v = null;
@@ -230,9 +209,8 @@ class QuoteStateBuilder implements Builder<QuoteState, QuoteStateBuilder> {
   _$QuoteState build() {
     _$QuoteState _$result;
     try {
-      _$result = _$v ??
-          new _$QuoteState._(
-              lastUpdated: lastUpdated, map: map.build(), list: list.build());
+      _$result =
+          _$v ?? new _$QuoteState._(map: map.build(), list: list.build());
     } catch (_) {
       String _$failedField;
       try {

@@ -99,10 +99,26 @@ class AuthRepository {
     return sendRequest(url: url, data: credentials, secret: secret);
   }
 
-  Future<LoginResponse> refresh({String url, String token}) async {
+  Future<LoginResponse> refresh(
+      {@required String url,
+      @required String token,
+      @required int updatedAt,
+      @required bool includeStatic}) async {
     url = formatApiUrl(url) + '/refresh';
 
-    return sendRequest(url: url, token: token);
+    if (updatedAt > 0) {
+      // TODO re-enable this
+      //url += '?updated_at=$updatedAt';
+      includeStatic = includeStatic ||
+          DateTime.now().millisecondsSinceEpoch - (updatedAt * 1000) >
+              kMillisecondsToRefreshStaticData;
+    } else {
+      includeStatic = true;
+    }
+
+    print('## Refresh data - include static: $includeStatic');
+
+    return sendRequest(url: url, token: token, includeStatic: includeStatic);
   }
 
   Future<LoginResponse> recoverPassword(
@@ -143,15 +159,24 @@ class AuthRepository {
     //return webClient.delete('/companies/$companyId', token, password: password);
   }
 
-  Future<LoginResponse> sendRequest(
-      {String url, dynamic data, String token, String secret}) async {
+  Future<LoginResponse> sendRequest({
+    String url,
+    dynamic data,
+    String token,
+    String secret,
+    bool includeStatic = true,
+  }) async {
     if (url.contains('?')) {
       url += '&';
     } else {
       url += '?';
     }
 
-    url += 'first_load=true&include_static=true';
+    url += 'first_load=true';
+
+    if (includeStatic) {
+      url += '&include_static=true';
+    }
 
     dynamic response;
 

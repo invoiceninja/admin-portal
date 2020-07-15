@@ -10,7 +10,6 @@ import 'package:invoiceninja_flutter/redux/client/client_actions.dart';
 import 'package:invoiceninja_flutter/ui/client/view/client_view.dart';
 import 'package:invoiceninja_flutter/utils/completers.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
-import 'package:invoiceninja_flutter/utils/platforms.dart';
 import 'package:redux/redux.dart';
 
 class ClientViewScreen extends StatelessWidget {
@@ -50,7 +49,6 @@ class ClientViewVM {
     @required this.isLoading,
     @required this.isDirty,
     @required this.onRefreshed,
-    @required this.onGroupPressed,
   });
 
   factory ClientViewVM.fromStore(Store<AppState> store) {
@@ -151,24 +149,6 @@ class ClientViewVM {
         }
       },
       onRefreshed: (context) => _handleRefresh(context),
-      onGroupPressed: (context, [longPress = false]) {
-        if (isMobile(context)) {
-          viewEntityById(
-              context: context,
-              entityId: client.groupId,
-              entityType: EntityType.group);
-        } else {
-          if (longPress) {
-            viewEntity(
-              context: context,
-              entity: state.groupState.map[client.groupId],
-            );
-          } else {
-            store.dispatch(FilterByEntity(
-                entityType: EntityType.group, entityId: client.groupId));
-          }
-        }
-      },
       onEntityAction: (BuildContext context, EntityAction action) =>
           handleEntitiesActions(context, [client], action, autoPop: true),
     );
@@ -178,7 +158,6 @@ class ClientViewVM {
   final ClientEntity client;
   final CompanyEntity company;
   final Function(BuildContext, EntityAction) onEntityAction;
-  final Function(BuildContext, [bool]) onGroupPressed;
   final Function(BuildContext, EntityType, [bool]) onEntityPressed;
   final Function(BuildContext) onRefreshed;
   final bool isSaving;

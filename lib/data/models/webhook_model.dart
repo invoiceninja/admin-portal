@@ -44,9 +44,8 @@ abstract class WebhookItemResponse
 }
 
 class WebhookFields {
-  static const String name = 'name';
-  static const String custom1 = 'custom1';
-  static const String custom2 = 'custom2';
+  static const String targetUrl = 'target_url';
+  static const String eventId = 'event_id';
 }
 
 abstract class WebhookEntity extends Object
@@ -56,9 +55,9 @@ abstract class WebhookEntity extends Object
     return _$WebhookEntity._(
       id: id ?? BaseEntity.nextId,
       isChanged: false,
-      url: '',
-      name: '',
-      webhook: '',
+      eventId: '',
+      format: 'JSON',
+      targetUrl: '',
       updatedAt: 0,
       archivedAt: 0,
       isDeleted: false,
@@ -79,20 +78,17 @@ abstract class WebhookEntity extends Object
     return EntityType.webhook;
   }
 
-  // TODO remove this
-  @override
-  @nullable
-  String get id;
+  @BuiltValueField(wireName: 'event_id')
+  String get eventId;
 
-  String get webhook;
+  @BuiltValueField(wireName: 'target_url')
+  String get targetUrl;
 
-  String get name;
-
-  String get url;
+  String get format;
 
   @override
   String get listDisplayName {
-    return name;
+    return targetUrl;
   }
 
   int compareTo(WebhookEntity webhook, String sortField, bool sortAscending) {
@@ -101,9 +97,10 @@ abstract class WebhookEntity extends Object
     final WebhookEntity webhookB = sortAscending ? webhook : this;
 
     switch (sortField) {
-      case WebhookFields.name:
-        response =
-            webhookA.name.toLowerCase().compareTo(webhookB.name.toLowerCase());
+      case WebhookFields.targetUrl:
+        response = webhookA.targetUrl
+            .toLowerCase()
+            .compareTo(webhookB.targetUrl.toLowerCase());
         break;
       default:
         print('## ERROR: sort by webhook.$sortField is not implemented');
@@ -120,7 +117,7 @@ abstract class WebhookEntity extends Object
     }
     filter = filter.toLowerCase();
 
-    if (name.toLowerCase().contains(filter)) {
+    if (targetUrl.toLowerCase().contains(filter)) {
       return true;
     }
 
@@ -149,7 +146,6 @@ abstract class WebhookEntity extends Object
       if (includeEdit && userCompany.canEditEntity(this)) {
         actions.add(EntityAction.edit);
       }
-
     }
 
     if (actions.isNotEmpty) {

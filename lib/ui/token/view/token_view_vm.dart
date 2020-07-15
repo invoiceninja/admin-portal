@@ -3,6 +3,8 @@ import 'package:invoiceninja_flutter/constants.dart';
 import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:invoiceninja_flutter/redux/ui/ui_actions.dart';
+import 'package:invoiceninja_flutter/ui/token/token_screen.dart';
 import 'package:invoiceninja_flutter/utils/completers.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:redux/redux.dart';
@@ -43,6 +45,7 @@ class TokenViewVM {
     @required this.token,
     @required this.company,
     @required this.onEntityAction,
+    @required this.onBackPressed,
     @required this.onRefreshed,
     @required this.isSaving,
     @required this.isLoading,
@@ -69,6 +72,9 @@ class TokenViewVM {
       isDirty: token.isNew,
       token: token,
       onRefreshed: (context) => _handleRefresh(context),
+      onBackPressed: () {
+        store.dispatch(UpdateCurrentRoute(TokenScreen.route));
+      },
       onEntityAction: (BuildContext context, EntityAction action) =>
           handleEntitiesActions(context, [token], action, autoPop: true),
     );
@@ -79,6 +85,7 @@ class TokenViewVM {
   final CompanyEntity company;
   final Function(BuildContext, EntityAction) onEntityAction;
   final Function(BuildContext) onRefreshed;
+  final Function onBackPressed;
   final bool isSaving;
   final bool isLoading;
   final bool isDirty;

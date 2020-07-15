@@ -21,7 +21,7 @@ Reducer<String> selectedIdReducer = combineReducers([
       (String selectedId, dynamic action) => action.stubId),
   TypedReducer<String, AddStubSuccess>(
       (String selectedId, dynamic action) => action.stub.id),
-    TypedReducer<String, SelectCompany>((selectedId, action) => ''),
+    TypedReducer<String, SelectCompany>((selectedId, action) => action.clearSelection ? '' : selectedId),
       TypedReducer<String, DeleteStubsSuccess>((selectedId, action) => ''),
       TypedReducer<String, ArchiveStubsSuccess>((selectedId, action) => ''),
   TypedReducer<String, ClearEntityFilter>((selectedId, action) => ''),
@@ -283,7 +283,5 @@ StubState _setLoadedStubs(
 StubState _setLoadedCompany(
         StubState stubState, LoadCompanySuccess action) {
  final company = action.userCompany.company;
- return company.hasData
-  ? stubState.loadStubs(company.stubs)
-  : stubState;
+ return stubState.loadStubs(company.stubs);
 }

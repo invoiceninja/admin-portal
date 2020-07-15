@@ -6,9 +6,13 @@ import 'package:invoiceninja_flutter/data/models/company_model.dart';
 import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 
 class SelectCompany {
-  SelectCompany(this.companyIndex);
+  SelectCompany({
+    @required this.companyIndex,
+    this.clearSelection = true,
+  });
 
   final int companyIndex;
+  final bool clearSelection;
 }
 
 class LoadCompanySuccess {
@@ -44,6 +48,7 @@ class SaveCompanyFailure implements StopSaving {
 
 class AddCompany implements StartSaving {
   AddCompany(this.context);
+
   final BuildContext context;
 }
 

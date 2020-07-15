@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:invoiceninja_flutter/redux/app/app_middleware.dart';
-import 'package:invoiceninja_flutter/redux/client/client_actions.dart';
 import 'package:invoiceninja_flutter/redux/task/task_actions.dart';
 import 'package:invoiceninja_flutter/utils/platforms.dart';
 import 'package:redux/redux.dart';
@@ -91,10 +90,8 @@ Middleware<AppState> _viewProjectList() {
 
     next(action);
 
-    if (store.state.staticState.isStale) {
+    if (store.state.isStale) {
       store.dispatch(RefreshData());
-    } else if (store.state.projectState.isStale) {
-      store.dispatch(LoadProjects());
     }
 
     store.dispatch(UpdateCurrentRoute(ProjectScreen.route));
@@ -234,9 +231,7 @@ Middleware<AppState> _loadProject(ProjectRepository repository) {
       if (action.completer != null) {
         action.completer.complete(null);
       }
-      if (state.clientState.isStale) {
-        store.dispatch(LoadClients());
-      }
+      //store.dispatch(LoadClients());
     }).catchError((Object error) {
       print(error);
       store.dispatch(LoadProjectFailure(error));
@@ -254,28 +249,19 @@ Middleware<AppState> _loadProjects(ProjectRepository repository) {
     final action = dynamicAction as LoadProjects;
     final AppState state = store.state;
 
-    if (!state.projectState.isStale && !action.force) {
-      next(action);
-      return;
-    }
-
     if (state.isLoading) {
       next(action);
       return;
     }
 
-    final int updatedAt = (state.projectState.lastUpdated / 1000).round();
-
     store.dispatch(LoadProjectsRequest());
-    repository.loadList(store.state.credentials, updatedAt).then((data) {
+    repository.loadList(store.state.credentials).then((data) {
       store.dispatch(LoadProjectsSuccess(data));
 
       if (action.completer != null) {
         action.completer.complete(null);
       }
-      if (state.taskState.isStale) {
-        store.dispatch(LoadTasks());
-      }
+      store.dispatch(LoadTasks());
     }).catchError((Object error) {
       print(error);
       store.dispatch(LoadProjectsFailure(error));

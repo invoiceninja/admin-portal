@@ -77,6 +77,7 @@ class EntityAction extends EnumClass {
   static const EntityAction toggleMultiselect = _$toggleMultiselect;
   static const EntityAction reverse = _$reverse;
   static const EntityAction cancel = _$cancel;
+  static const EntityAction copy = _$copy;
 
   @override
   String toString() {

@@ -90,10 +90,8 @@ Middleware<AppState> _viewTaskList() {
 
     next(action);
 
-    if (store.state.staticState.isStale) {
+    if (store.state.isStale) {
       store.dispatch(RefreshData());
-    } else if (store.state.taskState.isStale) {
-      store.dispatch(LoadTasks());
     }
 
     store.dispatch(UpdateCurrentRoute(TaskScreen.route));
@@ -239,28 +237,19 @@ Middleware<AppState> _loadTasks(TaskRepository repository) {
     final action = dynamicAction as LoadTasks;
     final AppState state = store.state;
 
-    if (!state.taskState.isStale && !action.force) {
-      next(action);
-      return;
-    }
-
     if (state.isLoading) {
       next(action);
       return;
     }
 
-    final int updatedAt = (state.taskState.lastUpdated / 1000).round();
-
     store.dispatch(LoadTasksRequest());
-    repository.loadList(store.state.credentials, updatedAt).then((data) {
+    repository.loadList(store.state.credentials).then((data) {
       store.dispatch(LoadTasksSuccess(data));
 
       if (action.completer != null) {
         action.completer.complete(null);
       }
-      if (state.vendorState.isStale) {
-        store.dispatch(LoadVendors());
-      }
+      store.dispatch(LoadVendors());
     }).catchError((Object error) {
       print(error);
       store.dispatch(LoadTasksFailure(error));

@@ -28,7 +28,7 @@ TaskTime editTaskTime(TaskTime taskTime, dynamic action) {
 Reducer<String> selectedIdReducer = combineReducers([
   TypedReducer<String, ViewTask>((selectedId, action) => action.taskId),
   TypedReducer<String, AddTaskSuccess>((selectedId, action) => action.task.id),
-  TypedReducer<String, SelectCompany>((selectedId, action) => ''),
+  TypedReducer<String, SelectCompany>((selectedId, action) => action.clearSelection ? '' : selectedId),
   TypedReducer<String, DeleteTaskSuccess>((selectedId, action) => ''),
   TypedReducer<String, ArchiveTaskSuccess>((selectedId, action) => ''),
   TypedReducer<String, ClearEntityFilter>((selectedId, action) => ''),
@@ -301,5 +301,5 @@ TaskState _setLoadedTasks(TaskState taskState, LoadTasksSuccess action) =>
 
 TaskState _setLoadedCompany(TaskState taskState, LoadCompanySuccess action) {
   final company = action.userCompany.company;
-  return company.hasData ? taskState.loadTasks(company.tasks) : taskState;
+  return taskState.loadTasks(company.tasks);
 }

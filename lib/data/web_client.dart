@@ -2,8 +2,6 @@ import 'dart:async';
 import 'dart:convert';
 import 'dart:core';
 import 'dart:io';
-import 'dart:math';
-import 'package:flutter/cupertino.dart';
 import 'package:invoiceninja_flutter/.env.dart';
 import 'package:http/http.dart' as http;
 import 'package:invoiceninja_flutter/constants.dart';
@@ -169,10 +167,13 @@ Map<String, String> _getHeaders(String url, String token,
 }
 
 void _checkResponse(http.Response response) {
+  /*
   debugPrint(
       'response: ${response.statusCode} ${response.body.substring(0, min(response.body.length, 30000))}',
       wrapWidth: 1000);
-  //debugPrint('response: ${response.statusCode} ${response.body}');
+  debugPrint('response: ${response.statusCode} ${response.body}');
+   */
+  printWrapped('${response.statusCode} ${response.body}');
   print('headers: ${response.headers}');
 
   final serverVersion = response.headers['x-app-version'];
@@ -204,7 +205,8 @@ String _parseError(int code, String response) {
     final dynamic jsonResponse = json.decode(response);
     message = jsonResponse['message'] ?? jsonResponse;
 
-    if (jsonResponse['errors'] != null) {
+    if (jsonResponse['errors'] != null &&
+        (jsonResponse['errors'] as List).isNotEmpty) {
       message += '\n';
       try {
         jsonResponse['errors'].forEach((String field, dynamic errors) {

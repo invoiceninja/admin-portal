@@ -79,10 +79,9 @@ class LoadPaymentActivity {
 }
 
 class LoadPayments {
-  LoadPayments({this.completer, this.force = false});
+  LoadPayments({this.completer});
 
   final Completer completer;
-  final bool force;
 }
 
 class LoadPaymentRequest implements StartLoading {}
@@ -122,7 +121,7 @@ class LoadPaymentsFailure implements StopLoading {
   }
 }
 
-class LoadPaymentsSuccess implements StopLoading, PersistData {
+class LoadPaymentsSuccess implements StopLoading {
   LoadPaymentsSuccess(this.payments);
 
   final BuiltList<PaymentEntity> payments;

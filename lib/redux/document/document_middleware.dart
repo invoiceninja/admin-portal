@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
-import 'package:invoiceninja_flutter/redux/client/client_actions.dart';
 import 'package:invoiceninja_flutter/utils/platforms.dart';
 import 'package:redux/redux.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
@@ -69,10 +68,8 @@ Middleware<AppState> _viewDocumentList() {
 
     next(action);
 
-    if (store.state.staticState.isStale) {
+    if (store.state.isStale) {
       store.dispatch(RefreshData());
-    } else if (store.state.documentState.isStale) {
-      store.dispatch(LoadDocuments());
     }
 
     store.dispatch(UpdateCurrentRoute(DocumentScreen.route));
@@ -217,28 +214,18 @@ Middleware<AppState> _loadDocuments(DocumentRepository repository) {
     final action = dynamicAction as LoadDocuments;
     final AppState state = store.state;
 
-    if (!state.documentState.isStale && !action.force) {
-      next(action);
-      return;
-    }
-
     if (state.isLoading) {
       next(action);
       return;
     }
 
-    final int updatedAt = (state.documentState.lastUpdated / 1000).round();
-
     store.dispatch(LoadDocumentsRequest());
-    repository.loadList(store.state.credentials, updatedAt).then((data) {
+    repository.loadList(store.state.credentials).then((data) {
       store.dispatch(LoadDocumentsSuccess(data));
-
       if (action.completer != null) {
         action.completer.complete(null);
       }
-      if (state.clientState.isStale) {
-        store.dispatch(LoadClients());
-      }
+      //store.dispatch(LoadClients());
     }).catchError((Object error) {
       print(error);
       store.dispatch(LoadDocumentsFailure(error));

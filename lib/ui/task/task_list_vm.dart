@@ -29,7 +29,6 @@ class TaskListBuilder extends StatelessWidget {
       converter: TaskListVM.fromStore,
       builder: (context, viewModel) {
         return EntityList(
-            isLoaded: viewModel.isLoaded,
             entityType: EntityType.taxRate,
             presenter: TaskPresenter(),
             state: viewModel.state,
@@ -97,7 +96,6 @@ class TaskListVM {
     @required this.clientMap,
     @required this.filter,
     @required this.isLoading,
-    @required this.isLoaded,
     @required this.onTaskTap,
     @required this.listState,
     @required this.onRefreshed,
@@ -114,7 +112,7 @@ class TaskListVM {
       }
       final completer = snackBarCompleter<Null>(
           context, AppLocalization.of(context).refreshComplete);
-      store.dispatch(LoadTasks(completer: completer, force: true));
+      store.dispatch(RefreshData(completer: completer));
       return completer.future;
     }
 
@@ -135,7 +133,6 @@ class TaskListVM {
       taskMap: state.taskState.map,
       clientMap: state.clientState.map,
       isLoading: state.isLoading,
-      isLoaded: state.taskState.isLoaded,
       filter: state.taskUIState.listUIState.filter,
       onClearEntityFilterPressed: () => store.dispatch(ClearEntityFilter()),
       onViewEntityFilterPressed: (BuildContext context) => viewEntityById(
@@ -170,7 +167,6 @@ class TaskListVM {
   final ListUIState listState;
   final String filter;
   final bool isLoading;
-  final bool isLoaded;
   final Function(BuildContext, BaseEntity) onTaskTap;
   final Function(BuildContext) onRefreshed;
   final Function onClearEntityFilterPressed;

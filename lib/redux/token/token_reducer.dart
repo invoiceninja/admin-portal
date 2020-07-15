@@ -21,7 +21,7 @@ Reducer<String> selectedIdReducer = combineReducers([
       (String selectedId, dynamic action) => action.tokenId),
   TypedReducer<String, AddTokenSuccess>(
       (String selectedId, dynamic action) => action.token.id),
-  TypedReducer<String, SelectCompany>((selectedId, action) => ''),
+  TypedReducer<String, SelectCompany>((selectedId, action) => action.clearSelection ? '' : selectedId),
   TypedReducer<String, DeleteTokensSuccess>((selectedId, action) => ''),
   TypedReducer<String, ArchiveTokensSuccess>((selectedId, action) => ''),
   TypedReducer<String, ClearEntityFilter>((selectedId, action) => ''),
@@ -275,5 +275,5 @@ TokenState _setLoadedTokens(TokenState tokenState, LoadTokensSuccess action) =>
 
 TokenState _setLoadedCompany(TokenState tokenState, LoadCompanySuccess action) {
   final company = action.userCompany.company;
-  return company.hasData ? tokenState.loadTokens(company.tokens) : tokenState;
+  return tokenState.loadTokens(company.tokens);
 }

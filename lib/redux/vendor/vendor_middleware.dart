@@ -90,10 +90,8 @@ Middleware<AppState> _viewVendorList() {
 
     next(action);
 
-    if (store.state.staticState.isStale) {
+    if (store.state.isStale) {
       store.dispatch(RefreshData());
-    } else if (store.state.vendorState.isStale) {
-      store.dispatch(LoadVendors());
     }
 
     store.dispatch(UpdateCurrentRoute(VendorScreen.route));
@@ -230,9 +228,7 @@ Middleware<AppState> _loadVendor(VendorRepository repository) {
       if (action.completer != null) {
         action.completer.complete(null);
       }
-      if (state.expenseState.isStale) {
-        store.dispatch(LoadExpenses());
-      }
+      store.dispatch(LoadExpenses());
     }).catchError((Object error) {
       print(error);
       store.dispatch(LoadVendorFailure(error));
@@ -250,28 +246,19 @@ Middleware<AppState> _loadVendors(VendorRepository repository) {
     final action = dynamicAction as LoadVendors;
     final AppState state = store.state;
 
-    if (!state.vendorState.isStale && !action.force) {
-      next(action);
-      return;
-    }
-
     if (state.isLoading) {
       next(action);
       return;
     }
 
-    final int updatedAt = (state.vendorState.lastUpdated / 1000).round();
-
     store.dispatch(LoadVendorsRequest());
-    repository.loadList(store.state.credentials, updatedAt).then((data) {
+    repository.loadList(store.state.credentials).then((data) {
       store.dispatch(LoadVendorsSuccess(data));
 
       if (action.completer != null) {
         action.completer.complete(null);
       }
-      if (state.expenseState.isStale) {
-        store.dispatch(LoadExpenses());
-      }
+      store.dispatch(LoadExpenses());
     }).catchError((Object error) {
       print(error);
       store.dispatch(LoadVendorsFailure(error));

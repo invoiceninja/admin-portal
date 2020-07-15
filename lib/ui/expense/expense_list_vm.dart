@@ -28,7 +28,6 @@ class ExpenseListBuilder extends StatelessWidget {
       converter: ExpenseListVM.fromStore,
       builder: (context, viewModel) {
         return EntityList(
-            isLoaded: viewModel.isLoaded,
             entityType: EntityType.expense,
             presenter: ExpensePresenter(),
             state: viewModel.state,
@@ -95,7 +94,6 @@ class ExpenseListVM {
     @required this.expenseMap,
     @required this.filter,
     @required this.isLoading,
-    @required this.isLoaded,
     @required this.onExpenseTap,
     @required this.listState,
     @required this.onRefreshed,
@@ -112,7 +110,7 @@ class ExpenseListVM {
       }
       final completer = snackBarCompleter<Null>(
           context, AppLocalization.of(context).refreshComplete);
-      store.dispatch(LoadExpenses(completer: completer, force: true));
+      store.dispatch(RefreshData(completer: completer));
       return completer.future;
     }
 
@@ -131,7 +129,6 @@ class ExpenseListVM {
           state.expenseListState),
       expenseMap: state.expenseState.map,
       isLoading: state.isLoading,
-      isLoaded: state.expenseState.isLoaded,
       filter: state.expenseUIState.listUIState.filter,
       onClearEntityFilterPressed: () => store.dispatch(FilterByEntity()),
       onViewEntityFilterPressed: (BuildContext context) => viewEntityById(
@@ -166,7 +163,6 @@ class ExpenseListVM {
   final ListUIState listState;
   final String filter;
   final bool isLoading;
-  final bool isLoaded;
   final Function(BuildContext, BaseEntity) onExpenseTap;
   final Function(BuildContext) onRefreshed;
   final Function onClearEntityFilterPressed;

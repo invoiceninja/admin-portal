@@ -94,10 +94,8 @@ Middleware<AppState> _viewCompanyGatewayList() {
 
     next(action);
 
-    if (store.state.staticState.isStale) {
+    if (store.state.isStale) {
       store.dispatch(RefreshData());
-    } else if (store.state.companyGatewayState.isStale) {
-      store.dispatch(LoadCompanyGateways());
     }
 
     store.dispatch(UpdateCurrentRoute(CompanyGatewayScreen.route));
@@ -256,21 +254,13 @@ Middleware<AppState> _loadCompanyGateways(CompanyGatewayRepository repository) {
     final action = dynamicAction as LoadCompanyGateways;
     final AppState state = store.state;
 
-    if (!state.companyGatewayState.isStale && !action.force) {
-      next(action);
-      return;
-    }
-
     if (state.isLoading) {
       next(action);
       return;
     }
 
-    final int updatedAt =
-        (state.companyGatewayState.lastUpdated / 1000).round();
-
     store.dispatch(LoadCompanyGatewaysRequest());
-    repository.loadList(state.credentials, updatedAt).then((data) {
+    repository.loadList(state.credentials).then((data) {
       store.dispatch(LoadCompanyGatewaysSuccess(data));
 
       if (action.completer != null) {

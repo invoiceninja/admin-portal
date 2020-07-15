@@ -45,6 +45,7 @@ class EntityListTile extends StatelessWidget {
         entityActions: entity.getActions(
             userCompany: state.userCompany, includeEdit: true, client: client),
         isSaving: false,
+        color: Theme.of(context).accentColor,
         entity: entity,
         onSelected: (context, action) =>
             handleEntityAction(context, entity, action),
@@ -58,8 +59,18 @@ class EntityListTile extends StatelessWidget {
 
     Widget trailing;
     if (isNotMobile(context) && isFilter != null && !isFilter) {
-      trailing = Icon(Icons.filter_list,
-          color: isFilteredBy ? Theme.of(context).accentColor : null);
+      if (isFilteredBy) {
+        trailing = IconButton(
+          color: Theme.of(context).accentColor,
+          icon: Icon(Icons.chevron_right),
+          onPressed: () => viewEntity(entity: entity, context: context),
+        );
+      } else {
+        trailing = IconButton(
+          icon: Icon(Icons.filter_list),
+          onPressed: onTap,
+        );
+      }
     } else {
       Icon(Icons.navigate_next);
     }
@@ -67,21 +78,18 @@ class EntityListTile extends StatelessWidget {
     return Column(
       mainAxisSize: MainAxisSize.min,
       children: <Widget>[
-        Material(
-          color: Theme.of(context).cardColor,
-          child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 10),
-            child: ListTile(
-              contentPadding: const EdgeInsets.only(left: 8, right: 12),
-              title: EntityStateTitle(entity: entity),
-              subtitle: subtitle != null && subtitle.isNotEmpty
-                  ? Text(subtitle ?? '')
-                  : null,
-              leading: leading,
-              trailing: trailing,
-              onTap: () => onTap(),
-              onLongPress: onLongPress,
-            ),
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 10),
+          child: ListTile(
+            contentPadding: const EdgeInsets.only(left: 8, right: 8),
+            title: EntityStateTitle(entity: entity),
+            subtitle: subtitle != null && subtitle.isNotEmpty
+                ? Text(subtitle ?? '')
+                : null,
+            leading: leading,
+            trailing: trailing,
+            onTap: () => onTap(),
+            onLongPress: onLongPress,
           ),
         ),
         ListDivider(),

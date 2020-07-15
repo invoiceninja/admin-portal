@@ -89,10 +89,8 @@ Middleware<AppState> _viewDesignList() {
 
     next(action);
 
-    if (store.state.staticState.isStale) {
+    if (store.state.isStale) {
       store.dispatch(RefreshData());
-    } else if (store.state.designState.isStale) {
-      store.dispatch(LoadDesigns());
     }
 
     store.dispatch(UpdateCurrentRoute(DesignScreen.route));
@@ -236,20 +234,13 @@ Middleware<AppState> _loadDesigns(DesignRepository repository) {
     final action = dynamicAction as LoadDesigns;
     final AppState state = store.state;
 
-    if (!state.designState.isStale && !action.force) {
-      next(action);
-      return;
-    }
-
     if (state.isLoading) {
       next(action);
       return;
     }
 
-    final int updatedAt = (state.designState.lastUpdated / 1000).round();
-
     store.dispatch(LoadDesignsRequest());
-    repository.loadList(state.credentials, updatedAt).then((data) {
+    repository.loadList(state.credentials).then((data) {
       store.dispatch(LoadDesignsSuccess(data));
 
       if (action.completer != null) {

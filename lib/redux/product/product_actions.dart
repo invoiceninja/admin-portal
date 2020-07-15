@@ -51,10 +51,9 @@ class UpdateProduct implements PersistUI {
 }
 
 class LoadProducts {
-  LoadProducts({this.completer, this.force = false});
+  LoadProducts({this.completer});
 
   final Completer completer;
-  final bool force;
 }
 
 class LoadProductsRequest implements StartLoading {}

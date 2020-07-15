@@ -18,7 +18,6 @@ import 'package:invoiceninja_flutter/redux/webhook/webhook_selectors.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/redux/webhook/webhook_actions.dart';
-import 'package:invoiceninja_flutter/utils/platforms.dart';
 
 class WebhookListBuilder extends StatelessWidget {
   const WebhookListBuilder({Key key}) : super(key: key);
@@ -29,7 +28,6 @@ class WebhookListBuilder extends StatelessWidget {
       converter: WebhookListVM.fromStore,
       builder: (context, viewModel) {
         return EntityList(
-            isLoaded: viewModel.isLoaded,
             entityType: EntityType.webhook,
             presenter: WebhookPresenter(),
             state: viewModel.state,
@@ -91,7 +89,6 @@ class WebhookListVM {
     @required this.webhookMap,
     @required this.filter,
     @required this.isLoading,
-    @required this.isLoaded,
     @required this.onWebhookTap,
     @required this.listState,
     @required this.onRefreshed,
@@ -109,7 +106,7 @@ class WebhookListVM {
       }
       final completer = snackBarCompleter<Null>(
           context, AppLocalization.of(context).refreshComplete);
-      store.dispatch(LoadWebhooks(completer: completer, force: true));
+      store.dispatch(RefreshData(completer: completer));
       return completer.future;
     }
 
@@ -123,7 +120,6 @@ class WebhookListVM {
           state.webhookState.list, state.webhookListState),
       webhookMap: state.webhookState.map,
       isLoading: state.isLoading,
-      isLoaded: state.webhookState.isLoaded,
       filter: state.webhookUIState.listUIState.filter,
       onClearEntityFilterPressed: () => store.dispatch(ClearEntityFilter()),
       onViewEntityFilterPressed: (BuildContext context) => viewEntityById(
@@ -131,14 +127,9 @@ class WebhookListVM {
           entityId: state.webhookListState.filterEntityId,
           entityType: state.webhookListState.filterEntityType),
       onWebhookTap: (context, webhook) {
-        if (store.state.webhookListState.isInMultiselect()) {
+        if (store.state.userListState.isInMultiselect()) {
           handleWebhookAction(
               context, [webhook], EntityAction.toggleMultiselect);
-        } else if (isDesktop(context) && state.uiState.isEditing) {
-          viewEntity(context: context, entity: webhook);
-        } else if (isDesktop(context) &&
-            state.webhookUIState.selectedId == webhook.id) {
-          editEntity(context: context, entity: webhook);
         } else {
           viewEntity(context: context, entity: webhook);
         }
@@ -161,7 +152,6 @@ class WebhookListVM {
   final ListUIState listState;
   final String filter;
   final bool isLoading;
-  final bool isLoaded;
   final Function(BuildContext, BaseEntity) onWebhookTap;
   final Function(BuildContext) onRefreshed;
   final Function(BuildContext, List<BaseEntity>, EntityAction) onEntityAction;

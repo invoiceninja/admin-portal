@@ -1,5 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_redux/flutter_redux.dart';
+import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/ui/app/dialogs/alert_dialog.dart';
 import 'package:invoiceninja_flutter/ui/app/dialogs/error_dialog.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/save_cancel_buttons.dart';
@@ -7,12 +9,13 @@ import 'package:invoiceninja_flutter/utils/localization.dart';
 
 void showErrorDialog({
   @required BuildContext context,
-  @required String message,
+  String message,
+  bool clearErrorOnDismiss = false,
 }) {
   showDialog<ErrorDialog>(
       context: context,
       builder: (BuildContext context) {
-        return ErrorDialog(message);
+        return ErrorDialog(message, clearErrorOnDismiss: clearErrorOnDismiss);
       });
 }
 
@@ -61,16 +64,25 @@ void confirmCallback({
   );
 }
 
-void passwordCallback({BuildContext context, Function(String) callback}) {
-  showDialog<AlertDialog>(
-    context: context,
-    barrierDismissible: false,
-    builder: (BuildContext context) {
-      return PasswordConfirmation(
-        callback: callback,
-      );
-    },
-  );
+void passwordCallback({
+  BuildContext context,
+  Function(String) callback,
+  bool alwaysRequire = false,
+}) {
+  final state = StoreProvider.of<AppState>(context).state;
+  if (state.authState.hasRecentlyEnteredPassword && !alwaysRequire) {
+    callback(null);
+  } else {
+    showDialog<AlertDialog>(
+      context: context,
+      barrierDismissible: false,
+      builder: (BuildContext context) {
+        return PasswordConfirmation(
+          callback: callback,
+        );
+      },
+    );
+  }
 }
 
 class PasswordConfirmation extends StatefulWidget {

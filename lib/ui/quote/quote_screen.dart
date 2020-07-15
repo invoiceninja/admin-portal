@@ -90,7 +90,6 @@ class QuoteScreen extends StatelessWidget {
         tableColumns: QuotePresenter.getAllTableFields(userCompany),
         defaultTableColumns: QuotePresenter.getDefaultTableFields(userCompany),
         onSelectedSortField: (value) => store.dispatch(SortQuotes(value)),
-        onRefreshPressed: () => store.dispatch(LoadQuotes(force: true)),
         customValues1: company.getCustomFieldValues(CustomFieldType.invoice1,
             excludeBlank: true),
         customValues2: company.getCustomFieldValues(CustomFieldType.invoice2,

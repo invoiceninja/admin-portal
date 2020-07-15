@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:invoiceninja_flutter/redux/app/app_middleware.dart';
-import 'package:invoiceninja_flutter/redux/invoice/invoice_actions.dart';
 import 'package:invoiceninja_flutter/redux/quote/quote_actions.dart';
 import 'package:invoiceninja_flutter/ui/payment/refund/payment_refund_vm.dart';
 import 'package:invoiceninja_flutter/utils/platforms.dart';
@@ -121,10 +120,8 @@ Middleware<AppState> _viewPaymentList() {
 
     next(action);
 
-    if (store.state.staticState.isStale) {
+    if (store.state.isStale) {
       store.dispatch(RefreshData());
-    } else if (store.state.paymentState.isStale) {
-      store.dispatch(LoadPayments());
     }
 
     store.dispatch(UpdateCurrentRoute(PaymentScreen.route));
@@ -173,7 +170,7 @@ Middleware<AppState> _deletePayment(PaymentRepository repository) {
             store.state.credentials, action.paymentIds, EntityAction.delete)
         .then((List<PaymentEntity> payments) {
       store.dispatch(DeletePaymentsSuccess(payments));
-      store.dispatch(LoadInvoices(force: true));
+      store.dispatch(RefreshData());
       if (action.completer != null) {
         action.completer.complete(null);
       }
@@ -200,7 +197,7 @@ Middleware<AppState> _restorePayment(PaymentRepository repository) {
             store.state.credentials, action.paymentIds, EntityAction.restore)
         .then((List<PaymentEntity> payments) {
       store.dispatch(RestorePaymentsSuccess(payments));
-      store.dispatch(LoadInvoices(force: true));
+      store.dispatch(RefreshData());
       if (action.completer != null) {
         action.completer.complete(null);
       }
@@ -230,7 +227,7 @@ Middleware<AppState> _savePayment(PaymentRepository repository) {
       } else {
         store.dispatch(SavePaymentSuccess(payment));
       }
-      store.dispatch(LoadInvoices(force: true));
+      store.dispatch(RefreshData());
       action.completer.complete(payment);
     }).catchError((Object error) {
       print(error);
@@ -253,7 +250,7 @@ Middleware<AppState> _refundPayment(PaymentRepository repository) {
         .then((PaymentEntity payment) {
       store.dispatch(SavePaymentSuccess(payment));
       store.dispatch(RefundPaymentSuccess(payment));
-      store.dispatch(LoadInvoices(force: true));
+      store.dispatch(RefreshData());
       action.completer.complete(payment);
     }).catchError((Object error) {
       print(error);
@@ -320,28 +317,19 @@ Middleware<AppState> _loadPayments(PaymentRepository repository) {
     final action = dynamicAction as LoadPayments;
     final AppState state = store.state;
 
-    if (!state.paymentState.isStale && !action.force) {
-      next(action);
-      return;
-    }
-
     if (state.isLoading) {
       next(action);
       return;
     }
 
-    final int updatedAt = (state.paymentState.lastUpdated / 1000).round();
-
     store.dispatch(LoadPaymentsRequest());
-    repository.loadList(store.state.credentials, updatedAt).then((data) {
+    repository.loadList(store.state.credentials).then((data) {
       store.dispatch(LoadPaymentsSuccess(data));
 
       if (action.completer != null) {
         action.completer.complete(null);
       }
-      if (state.quoteState.isStale) {
-        store.dispatch(LoadQuotes());
-      }
+      store.dispatch(LoadQuotes());
     }).catchError((Object error) {
       print(error);
       store.dispatch(LoadPaymentsFailure(error));

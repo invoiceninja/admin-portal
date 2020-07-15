@@ -29,12 +29,7 @@ class _$GroupStateSerializer implements StructuredSerializer<GroupState> {
           specifiedType:
               const FullType(BuiltList, const [const FullType(String)])),
     ];
-    if (object.lastUpdated != null) {
-      result
-        ..add('lastUpdated')
-        ..add(serializers.serialize(object.lastUpdated,
-            specifiedType: const FullType(int)));
-    }
+
     return result;
   }
 
@@ -49,10 +44,6 @@ class _$GroupStateSerializer implements StructuredSerializer<GroupState> {
       iterator.moveNext();
       final dynamic value = iterator.current;
       switch (key) {
-        case 'lastUpdated':
-          result.lastUpdated = serializers.deserialize(value,
-              specifiedType: const FullType(int)) as int;
-          break;
         case 'map':
           result.map.replace(serializers.deserialize(value,
               specifiedType: const FullType(BuiltMap, const [
@@ -134,8 +125,6 @@ class _$GroupUIStateSerializer implements StructuredSerializer<GroupUIState> {
 
 class _$GroupState extends GroupState {
   @override
-  final int lastUpdated;
-  @override
   final BuiltMap<String, GroupEntity> map;
   @override
   final BuiltList<String> list;
@@ -143,7 +132,7 @@ class _$GroupState extends GroupState {
   factory _$GroupState([void Function(GroupStateBuilder) updates]) =>
       (new GroupStateBuilder()..update(updates)).build();
 
-  _$GroupState._({this.lastUpdated, this.map, this.list}) : super._() {
+  _$GroupState._({this.map, this.list}) : super._() {
     if (map == null) {
       throw new BuiltValueNullFieldError('GroupState', 'map');
     }
@@ -162,23 +151,18 @@ class _$GroupState extends GroupState {
   @override
   bool operator ==(Object other) {
     if (identical(other, this)) return true;
-    return other is GroupState &&
-        lastUpdated == other.lastUpdated &&
-        map == other.map &&
-        list == other.list;
+    return other is GroupState && map == other.map && list == other.list;
   }
 
   int __hashCode;
   @override
   int get hashCode {
-    return __hashCode ??= $jf(
-        $jc($jc($jc(0, lastUpdated.hashCode), map.hashCode), list.hashCode));
+    return __hashCode ??= $jf($jc($jc(0, map.hashCode), list.hashCode));
   }
 
   @override
   String toString() {
     return (newBuiltValueToStringHelper('GroupState')
-          ..add('lastUpdated', lastUpdated)
           ..add('map', map)
           ..add('list', list))
         .toString();
@@ -187,10 +171,6 @@ class _$GroupState extends GroupState {
 
 class GroupStateBuilder implements Builder<GroupState, GroupStateBuilder> {
   _$GroupState _$v;
-
-  int _lastUpdated;
-  int get lastUpdated => _$this._lastUpdated;
-  set lastUpdated(int lastUpdated) => _$this._lastUpdated = lastUpdated;
 
   MapBuilder<String, GroupEntity> _map;
   MapBuilder<String, GroupEntity> get map =>
@@ -205,7 +185,6 @@ class GroupStateBuilder implements Builder<GroupState, GroupStateBuilder> {
 
   GroupStateBuilder get _$this {
     if (_$v != null) {
-      _lastUpdated = _$v.lastUpdated;
       _map = _$v.map?.toBuilder();
       _list = _$v.list?.toBuilder();
       _$v = null;
@@ -230,9 +209,8 @@ class GroupStateBuilder implements Builder<GroupState, GroupStateBuilder> {
   _$GroupState build() {
     _$GroupState _$result;
     try {
-      _$result = _$v ??
-          new _$GroupState._(
-              lastUpdated: lastUpdated, map: map.build(), list: list.build());
+      _$result =
+          _$v ?? new _$GroupState._(map: map.build(), list: list.build());
     } catch (_) {
       String _$failedField;
       try {

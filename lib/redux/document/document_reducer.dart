@@ -18,7 +18,7 @@ EntityUIState documentUIReducer(DocumentUIState state, dynamic action) {
 Reducer<String> selectedIdReducer = combineReducers([
   TypedReducer<String, ViewDocument>((selectedId, action) => action.documentId),
   //TypedReducer<String, AddDocumentSuccess>((selectedId, action) => action.document.id),
-  TypedReducer<String, SelectCompany>((selectedId, action) => ''),
+  TypedReducer<String, SelectCompany>((selectedId, action) => action.clearSelection ? '' : selectedId),
   TypedReducer<String, DeleteDocumentSuccess>((selectedId, action) => ''),
   TypedReducer<String, ArchiveDocumentSuccess>((selectedId, action) => ''),
   TypedReducer<String, ClearEntityFilter>((selectedId, action) => ''),
@@ -285,7 +285,6 @@ DocumentState _setLoadedDocument(
 DocumentState _setLoadedDocuments(
     DocumentState documentState, LoadDocumentsSuccess action) {
   final state = documentState.rebuild((b) => b
-    ..lastUpdated = DateTime.now().millisecondsSinceEpoch
     ..map.addAll(Map.fromIterable(
       action.documents,
       key: (dynamic item) => item.id,

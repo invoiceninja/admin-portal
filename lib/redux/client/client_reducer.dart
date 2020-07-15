@@ -49,7 +49,8 @@ final selectedIdReducer = combineReducers<String>([
   TypedReducer<String, AddClientSuccess>((selectedId, action) {
     return action.client.id;
   }),
-  TypedReducer<String, SelectCompany>((selectedId, action) => ''),
+  TypedReducer<String, SelectCompany>(
+      (selectedId, action) => action.clearSelection ? '' : selectedId),
   TypedReducer<String, DeleteClientsSuccess>((selectedId, action) => ''),
   TypedReducer<String, ArchiveClientsSuccess>((selectedId, action) => ''),
   TypedReducer<String, ClearEntityFilter>((selectedId, action) => ''),
@@ -367,7 +368,5 @@ ClientState _setLoadedClients(
 ClientState _setLoadedCompany(
     ClientState clientState, LoadCompanySuccess action) {
   final company = action.userCompany.company;
-  return company.hasData
-      ? clientState.loadClients(company.clients)
-      : clientState;
+  return clientState.loadClients(company.clients);
 }

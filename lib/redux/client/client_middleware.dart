@@ -90,10 +90,8 @@ Middleware<AppState> _viewClientList() {
 
     next(action);
 
-    if (store.state.staticState.isStale) {
+    if (store.state.isStale) {
       store.dispatch(RefreshData());
-    } else if (store.state.clientState.isStale) {
-      store.dispatch(LoadClients());
     }
 
     store.dispatch(UpdateCurrentRoute(ClientScreen.route));
@@ -244,28 +242,18 @@ Middleware<AppState> _loadClients(ClientRepository repository) {
     final AppState state = store.state;
     final action = dynamicAction as LoadClients;
 
-    if (!state.clientState.isStale && !action.force) {
-      next(action);
-      return;
-    }
-
     if (state.isLoading) {
       next(action);
       return;
     }
 
-    final int updatedAt = (state.clientState.lastUpdated / 1000).round();
-
     store.dispatch(LoadClientsRequest());
-    repository.loadList(store.state.credentials, updatedAt).then((data) {
+    repository.loadList(store.state.credentials).then((data) {
       store.dispatch(LoadClientsSuccess(data));
-
       if (action.completer != null) {
         action.completer.complete(null);
       }
-      if (state.productState.isStale) {
-        store.dispatch(LoadProducts());
-      }
+      store.dispatch(LoadProducts());
     }).catchError((Object error) {
       print(error);
       store.dispatch(LoadClientsFailure(error));

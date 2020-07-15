@@ -82,6 +82,9 @@ class _$CompanyEntitySerializer implements StructuredSerializer<CompanyEntity> {
       'client_can_register',
       serializers.serialize(object.clientCanRegister,
           specifiedType: const FullType(bool)),
+      'is_large',
+      serializers.serialize(object.isLarge,
+          specifiedType: const FullType(bool)),
       'company_key',
       serializers.serialize(object.companyKey,
           specifiedType: const FullType(String)),
@@ -345,6 +348,10 @@ class _$CompanyEntitySerializer implements StructuredSerializer<CompanyEntity> {
           break;
         case 'client_can_register':
           result.clientCanRegister = serializers.deserialize(value,
+              specifiedType: const FullType(bool)) as bool;
+          break;
+        case 'is_large':
+          result.isLarge = serializers.deserialize(value,
               specifiedType: const FullType(bool)) as bool;
           break;
         case 'plan':
@@ -2659,6 +2666,8 @@ class _$CompanyEntity extends CompanyEntity {
   @override
   final bool clientCanRegister;
   @override
+  final bool isLarge;
+  @override
   final String plan;
   @override
   final String companyKey;
@@ -2768,6 +2777,7 @@ class _$CompanyEntity extends CompanyEntity {
       this.defaultQuantity,
       this.showProductDetails,
       this.clientCanRegister,
+      this.isLarge,
       this.plan,
       this.companyKey,
       this.firstDayOfWeek,
@@ -2869,6 +2879,9 @@ class _$CompanyEntity extends CompanyEntity {
     }
     if (clientCanRegister == null) {
       throw new BuiltValueNullFieldError('CompanyEntity', 'clientCanRegister');
+    }
+    if (isLarge == null) {
+      throw new BuiltValueNullFieldError('CompanyEntity', 'isLarge');
     }
     if (companyKey == null) {
       throw new BuiltValueNullFieldError('CompanyEntity', 'companyKey');
@@ -3013,6 +3026,7 @@ class _$CompanyEntity extends CompanyEntity {
         defaultQuantity == other.defaultQuantity &&
         showProductDetails == other.showProductDetails &&
         clientCanRegister == other.clientCanRegister &&
+        isLarge == other.isLarge &&
         plan == other.plan &&
         companyKey == other.companyKey &&
         firstDayOfWeek == other.firstDayOfWeek &&
@@ -3080,7 +3094,7 @@ class _$CompanyEntity extends CompanyEntity {
                                                                 $jc(
                                                                     $jc(
                                                                         $jc(
-                                                                            $jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc(0, enableCustomSurchargeTaxes1.hashCode), enableCustomSurchargeTaxes2.hashCode), enableCustomSurchargeTaxes3.hashCode), enableCustomSurchargeTaxes4.hashCode), sizeId.hashCode), industryId.hashCode), subdomain.hashCode), portalMode.hashCode), portalDomain.hashCode), updateProducts.hashCode), convertProductExchangeRate.hashCode), fillProducts.hashCode), enableProductCost.hashCode), enableProductQuantity.hashCode), defaultQuantity.hashCode), showProductDetails.hashCode), clientCanRegister.hashCode), plan.hashCode), companyKey.hashCode), firstDayOfWeek.hashCode), firstMonthOfYear.hashCode), numberOfInvoiceTaxRates.hashCode), numberOfItemTaxRates.hashCode), groups.hashCode), activities.hashCode), taxRates.hashCode), taskStatuses.hashCode), taskStatusMap.hashCode), companyGateways.hashCode), expenseCategories.hashCode), expenseCategoryMap.hashCode), users.hashCode), clients.hashCode), products.hashCode), invoices.hashCode), payments.hashCode), quotes.hashCode), credits.hashCode), tasks.hashCode), projects.hashCode), expenses.hashCode), vendors.hashCode),
+                                                                            $jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc(0, enableCustomSurchargeTaxes1.hashCode), enableCustomSurchargeTaxes2.hashCode), enableCustomSurchargeTaxes3.hashCode), enableCustomSurchargeTaxes4.hashCode), sizeId.hashCode), industryId.hashCode), subdomain.hashCode), portalMode.hashCode), portalDomain.hashCode), updateProducts.hashCode), convertProductExchangeRate.hashCode), fillProducts.hashCode), enableProductCost.hashCode), enableProductQuantity.hashCode), defaultQuantity.hashCode), showProductDetails.hashCode), clientCanRegister.hashCode), isLarge.hashCode), plan.hashCode), companyKey.hashCode), firstDayOfWeek.hashCode), firstMonthOfYear.hashCode), numberOfInvoiceTaxRates.hashCode), numberOfItemTaxRates.hashCode), groups.hashCode), activities.hashCode), taxRates.hashCode), taskStatuses.hashCode), taskStatusMap.hashCode), companyGateways.hashCode), expenseCategories.hashCode), expenseCategoryMap.hashCode), users.hashCode), clients.hashCode), products.hashCode), invoices.hashCode), payments.hashCode), quotes.hashCode), credits.hashCode), tasks.hashCode), projects.hashCode), expenses.hashCode), vendors.hashCode),
                                                                                 designs.hashCode),
                                                                             tokens.hashCode),
                                                                         webhooks.hashCode),
@@ -3122,6 +3136,7 @@ class _$CompanyEntity extends CompanyEntity {
           ..add('defaultQuantity', defaultQuantity)
           ..add('showProductDetails', showProductDetails)
           ..add('clientCanRegister', clientCanRegister)
+          ..add('isLarge', isLarge)
           ..add('plan', plan)
           ..add('companyKey', companyKey)
           ..add('firstDayOfWeek', firstDayOfWeek)
@@ -3252,6 +3267,10 @@ class CompanyEntityBuilder
   bool get clientCanRegister => _$this._clientCanRegister;
   set clientCanRegister(bool clientCanRegister) =>
       _$this._clientCanRegister = clientCanRegister;
+
+  bool _isLarge;
+  bool get isLarge => _$this._isLarge;
+  set isLarge(bool isLarge) => _$this._isLarge = isLarge;
 
   String _plan;
   String get plan => _$this._plan;
@@ -3503,6 +3522,7 @@ class CompanyEntityBuilder
       _defaultQuantity = _$v.defaultQuantity;
       _showProductDetails = _$v.showProductDetails;
       _clientCanRegister = _$v.clientCanRegister;
+      _isLarge = _$v.isLarge;
       _plan = _$v.plan;
       _companyKey = _$v.companyKey;
       _firstDayOfWeek = _$v.firstDayOfWeek;
@@ -3588,6 +3608,7 @@ class CompanyEntityBuilder
               defaultQuantity: defaultQuantity,
               showProductDetails: showProductDetails,
               clientCanRegister: clientCanRegister,
+              isLarge: isLarge,
               plan: plan,
               companyKey: companyKey,
               firstDayOfWeek: firstDayOfWeek,

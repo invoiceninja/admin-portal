@@ -219,7 +219,8 @@ Middleware<AppState> _createLoadState(
       AppBuilder.of(action.context).rebuild();
       store.dispatch(LoadStateSuccess(appState));
 
-      if (appState.staticState.isStale) {
+      if (appState.isStale) {
+        print('## Load state: is stale - refreshing...');
         store.dispatch(RefreshData());
       }
 
@@ -366,16 +367,25 @@ Middleware<AppState> _createPersistData(
 
     next(action);
 
-    _persistDataDebouncer.run(() {
-      if (!store.state.isDataLoaded) {
-        return;
-      }
-
+    void saveState() {
       final AppState state = store.state;
       final index = state.uiState.selectedCompanyIndex;
       companyRepositories[index]
           .saveCompanyState(state.userCompanyStates[index]);
-    });
+    }
+
+    // When a company is deleted the app switches to another company
+    // so we need to save it immediately before the selection changes
+    if (action is DeleteCompanySuccess) {
+      saveState();
+    } else {
+      _persistDataDebouncer.run(() {
+        if (!store.state.isLoaded) {
+          return;
+        }
+        saveState();
+      });
+    }
   };
 }
 
@@ -414,8 +424,13 @@ Middleware<AppState> _createAccountLoaded() {
     final action = dynamicAction as LoadAccountSuccess;
     final response = action.loginResponse;
     final selectedCompanyIndex = store.state.uiState.selectedCompanyIndex;
+    final loadedStaticData = response.static.currencies.isNotEmpty;
 
-    store.dispatch(LoadStaticSuccess(data: response.static));
+    if (loadedStaticData) {
+      store.dispatch(LoadStaticSuccess(data: response.static));
+    }
+
+    print('## userCompanies.length: ${response.userCompanies.length}');
 
     for (int i = 0; i < response.userCompanies.length; i++) {
       final UserCompanyEntity userCompany = response.userCompanies[i];
@@ -425,14 +440,23 @@ Middleware<AppState> _createAccountLoaded() {
         prefs.setString(kSharedPrefToken, userCompany.token.obscuredToken);
       }
 
-      store.dispatch(SelectCompany(i));
+      store.dispatch(
+          SelectCompany(companyIndex: i, clearSelection: loadedStaticData));
       store.dispatch(LoadCompanySuccess(userCompany));
+      if (!userCompany.company.isLarge) {
+        store.dispatch(PersistData());
+      }
     }
 
-    store.dispatch(SelectCompany(selectedCompanyIndex));
+    store.dispatch(SelectCompany(
+        companyIndex: selectedCompanyIndex, clearSelection: loadedStaticData));
     store.dispatch(UserLoginSuccess());
 
-    if (store.state.clientState.isStale) {
+    print('## Account is loaded');
+    if (!store.state.userCompanyState.isLoaded &&
+        response.userCompanies.isNotEmpty && // TODO remove this check
+        response.userCompanies[selectedCompanyIndex].company.isLarge) {
+      print('## Loading clients..');
       store.dispatch(LoadClients());
     }
 

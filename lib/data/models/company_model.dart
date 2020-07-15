@@ -68,6 +68,7 @@ abstract class CompanyEntity extends Object
       slackWebhookUrl: '',
       googleAnalyticsKey: '',
       clientCanRegister: true,
+      isLarge: false,
       convertProductExchangeRate: false,
       enableCustomSurchargeTaxes1: false,
       enableCustomSurchargeTaxes2: false,
@@ -159,6 +160,9 @@ abstract class CompanyEntity extends Object
 
   @BuiltValueField(wireName: 'client_can_register')
   bool get clientCanRegister;
+
+  @BuiltValueField(wireName: 'is_large')
+  bool get isLarge;
 
   // TODO remove this
   @nullable
@@ -277,9 +281,6 @@ abstract class CompanyEntity extends Object
   bool get enableSecondItemTaxRate => (numberOfItemTaxRates ?? 0) >= 2;
 
   bool get enableThirdItemTaxRate => (numberOfItemTaxRates ?? 0) >= 3;
-
-  bool get hasData =>
-      clients.isNotEmpty || products.isNotEmpty || tasks.isNotEmpty;
 
   bool get hasInvoiceTaxes => numberOfInvoiceTaxRates > 0;
 

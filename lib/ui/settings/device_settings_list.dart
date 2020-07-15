@@ -128,6 +128,14 @@ class _DeviceSettingsState extends State<DeviceSettings> {
                         : FontAwesomeIcons.solidCheckSquare),
                     activeColor: Theme.of(context).accentColor,
                   ),
+                  SwitchListTile(
+                    title: Text(localization.alwaysShowSidebar),
+                    value: prefState.alwaysShowFilterSidebar,
+                    onChanged: (value) =>
+                        viewModel.onAlwaysShowSidebarChanged(context, value),
+                    secondary: Icon(Icons.chrome_reader_mode),
+                    activeColor: Theme.of(context).accentColor,
+                  ),
                   FutureBuilder(
                     future: viewModel.authenticationSupported,
                     builder: (BuildContext context, AsyncSnapshot snapshot) {
@@ -158,14 +166,6 @@ class _DeviceSettingsState extends State<DeviceSettings> {
                     activeColor: Theme.of(context).accentColor,
                   ),
                    */
-                  SwitchListTile(
-                    title: Text(localization.fullHeightFilter),
-                    value: prefState.fullHeightFilter,
-                    onChanged: (value) =>
-                        viewModel.onFullHeightFilterChanged(context, value),
-                    secondary: Icon(Icons.filter_list),
-                    activeColor: Theme.of(context).accentColor,
-                  ),
                   viewModel.state.company.isModuleEnabled(EntityType.task)
                       ? SwitchListTile(
                           title:

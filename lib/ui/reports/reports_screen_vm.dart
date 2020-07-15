@@ -317,7 +317,8 @@ class ReportsScreenVM {
               csvData += '\n';
               for (var i = 0; i < row.length; i++) {
                 final column = reportResult.columns[i];
-                csvData += '${row[i].renderText(context, column)},';
+                final value = row[i].renderText(context, column).trim();
+                csvData += value.contains(' ') ? '"$value",' : '$value,';
               }
               csvData = csvData.substring(0, csvData.length - 1);
             });
@@ -344,7 +345,8 @@ class ReportsScreenVM {
               csvData += '$group,${row['count'].toInt()}';
 
               columns.forEach((column) {
-                csvData += ',' + row[column].toString();
+                final value = row[column].toString();
+                csvData += value.contains(' ') ? '"$value",' : '$value,';
               });
 
               csvData += '\n';

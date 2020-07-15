@@ -67,10 +67,9 @@ class LoadGroupActivity {
 }
 
 class LoadGroups {
-  LoadGroups({this.completer, this.force = false});
+  LoadGroups({this.completer});
 
   final Completer completer;
-  final bool force;
 }
 
 class LoadGroupRequest implements StartLoading {}
@@ -110,7 +109,7 @@ class LoadGroupsFailure implements StopLoading {
   }
 }
 
-class LoadGroupsSuccess implements StopLoading, PersistData {
+class LoadGroupsSuccess implements StopLoading {
   LoadGroupsSuccess(this.groups);
 
   final BuiltList<GroupEntity> groups;

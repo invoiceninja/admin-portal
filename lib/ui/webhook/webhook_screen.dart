@@ -24,7 +24,6 @@ class WebhookScreen extends StatelessWidget {
     @required this.viewModel,
   }) : super(key: key);
 
-
   static const String route = '/$kSettings/$kSettingsWebhooks';
 
   final WebhookScreenVM viewModel;
@@ -90,12 +89,11 @@ class WebhookScreen extends StatelessWidget {
         tableColumns: WebhookPresenter.getAllTableFields(userCompany),
         defaultTableColumns:
             WebhookPresenter.getDefaultTableFields(userCompany),
-        onRefreshPressed: () => store.dispatch(LoadWebhooks(force: true)),
         onSelectedSortField: (value) {
           store.dispatch(SortWebhooks(value));
         },
         sortFields: [
-          WebhookFields.name,
+          WebhookFields.targetUrl,
         ],
         onSelectedState: (EntityState state, value) {
           store.dispatch(FilterWebhooksByState(state));

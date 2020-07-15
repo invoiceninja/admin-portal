@@ -68,10 +68,9 @@ class LoadProjectActivity {
 }
 
 class LoadProjects {
-  LoadProjects({this.completer, this.force = false});
+  LoadProjects({this.completer});
 
   final Completer completer;
-  final bool force;
 }
 
 class LoadProjectRequest implements StartLoading {}
@@ -111,7 +110,7 @@ class LoadProjectsFailure implements StopLoading {
   }
 }
 
-class LoadProjectsSuccess implements StopLoading, PersistData {
+class LoadProjectsSuccess implements StopLoading {
   LoadProjectsSuccess(this.projects);
 
   final BuiltList<ProjectEntity> projects;

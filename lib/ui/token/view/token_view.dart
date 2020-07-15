@@ -1,7 +1,14 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:invoiceninja_flutter/data/models/models.dart';
+import 'package:invoiceninja_flutter/data/models/token_model.dart';
+import 'package:invoiceninja_flutter/redux/token/token_actions.dart';
+import 'package:invoiceninja_flutter/ui/app/entity_header.dart';
+import 'package:invoiceninja_flutter/ui/app/lists/list_divider.dart';
 import 'package:invoiceninja_flutter/ui/app/view_scaffold.dart';
 import 'package:invoiceninja_flutter/ui/token/view/token_view_vm.dart';
+import 'package:invoiceninja_flutter/utils/formatting.dart';
+import 'package:invoiceninja_flutter/utils/localization.dart';
 
 class TokenView extends StatefulWidget {
   const TokenView({
@@ -20,16 +27,53 @@ class TokenView extends StatefulWidget {
 class _TokenViewState extends State<TokenView> {
   @override
   Widget build(BuildContext context) {
+    final localization = AppLocalization.of(context);
     final viewModel = widget.viewModel;
-    //final userCompany = viewModel.state.userCompany;
     final token = viewModel.token;
+    final user = viewModel.state.userState.get(token.createdUserId);
 
     return ViewScaffold(
       isFilter: widget.isFilter,
+      onBackPressed: () => viewModel.onBackPressed(),
       entity: token,
       body: ListView(
-        children: <Widget>[],
+        children: <Widget>[
+          EntityHeader(
+            entity: token,
+            label: localization.user,
+            value: user.fullName,
+            secondLabel: localization.createdOn,
+            secondValue: formatDate(
+                convertTimestampToDateString(token.createdAt), context),
+          ),
+          ListDivider(),
+          _TokenListTile(token),
+          ListDivider(),
+        ],
       ),
+    );
+  }
+}
+
+class _TokenListTile extends StatelessWidget {
+  const _TokenListTile(this.token);
+
+  final TokenEntity token;
+
+  @override
+  Widget build(BuildContext context) {
+    return ListTile(
+      contentPadding: const EdgeInsets.all(22),
+      title: Padding(
+        padding: const EdgeInsets.only(right: 16),
+        child: Text(
+          token.token.substring(0, 10) + 'XXXXXXXXXX',
+        ),
+      ),
+      trailing: Icon(Icons.content_copy),
+      onTap: () {
+        handleTokenAction(context, [token], EntityAction.copy);
+      },
     );
   }
 }

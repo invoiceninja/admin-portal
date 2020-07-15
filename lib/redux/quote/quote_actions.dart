@@ -82,10 +82,9 @@ class LoadQuote {
 }
 
 class LoadQuotes {
-  LoadQuotes({this.completer, this.force = false});
+  LoadQuotes({this.completer});
 
   final Completer completer;
-  final bool force;
 }
 
 class LoadQuoteRequest implements StartLoading {}
@@ -125,7 +124,7 @@ class LoadQuotesFailure implements StopLoading {
   }
 }
 
-class LoadQuotesSuccess implements StopLoading, PersistData {
+class LoadQuotesSuccess implements StopLoading {
   LoadQuotesSuccess(this.quotes);
 
   final BuiltList<InvoiceEntity> quotes;

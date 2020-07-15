@@ -18,7 +18,6 @@ import 'package:invoiceninja_flutter/redux/token/token_selectors.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/redux/token/token_actions.dart';
-import 'package:invoiceninja_flutter/utils/platforms.dart';
 
 class TokenListBuilder extends StatelessWidget {
   const TokenListBuilder({Key key}) : super(key: key);
@@ -29,7 +28,6 @@ class TokenListBuilder extends StatelessWidget {
       converter: TokenListVM.fromStore,
       builder: (context, viewModel) {
         return EntityList(
-            isLoaded: viewModel.isLoaded,
             entityType: EntityType.token,
             presenter: TokenPresenter(),
             state: viewModel.state,
@@ -91,7 +89,6 @@ class TokenListVM {
     @required this.tokenMap,
     @required this.filter,
     @required this.isLoading,
-    @required this.isLoaded,
     @required this.onTokenTap,
     @required this.listState,
     @required this.onRefreshed,
@@ -109,7 +106,7 @@ class TokenListVM {
       }
       final completer = snackBarCompleter<Null>(
           context, AppLocalization.of(context).refreshComplete);
-      store.dispatch(LoadTokens(completer: completer, force: true));
+      store.dispatch(RefreshData(completer: completer));
       return completer.future;
     }
 
@@ -123,7 +120,6 @@ class TokenListVM {
           state.tokenState.map, state.tokenState.list, state.tokenListState),
       tokenMap: state.tokenState.map,
       isLoading: state.isLoading,
-      isLoaded: state.tokenState.isLoaded,
       filter: state.tokenUIState.listUIState.filter,
       onClearEntityFilterPressed: () => store.dispatch(ClearEntityFilter()),
       onViewEntityFilterPressed: (BuildContext context) => viewEntityById(
@@ -131,13 +127,8 @@ class TokenListVM {
           entityId: state.tokenListState.filterEntityId,
           entityType: state.tokenListState.filterEntityType),
       onTokenTap: (context, token) {
-        if (store.state.tokenListState.isInMultiselect()) {
+        if (store.state.userListState.isInMultiselect()) {
           handleTokenAction(context, [token], EntityAction.toggleMultiselect);
-        } else if (isDesktop(context) && state.uiState.isEditing) {
-          viewEntity(context: context, entity: token);
-        } else if (isDesktop(context) &&
-            state.tokenUIState.selectedId == token.id) {
-          editEntity(context: context, entity: token);
         } else {
           viewEntity(context: context, entity: token);
         }
@@ -160,7 +151,6 @@ class TokenListVM {
   final ListUIState listState;
   final String filter;
   final bool isLoading;
-  final bool isLoaded;
   final Function(BuildContext, BaseEntity) onTokenTap;
   final Function(BuildContext) onRefreshed;
   final Function(BuildContext, List<BaseEntity>, EntityAction) onEntityAction;

@@ -29,12 +29,7 @@ class _$TokenStateSerializer implements StructuredSerializer<TokenState> {
           specifiedType:
               const FullType(BuiltList, const [const FullType(String)])),
     ];
-    if (object.lastUpdated != null) {
-      result
-        ..add('lastUpdated')
-        ..add(serializers.serialize(object.lastUpdated,
-            specifiedType: const FullType(int)));
-    }
+
     return result;
   }
 
@@ -49,10 +44,6 @@ class _$TokenStateSerializer implements StructuredSerializer<TokenState> {
       iterator.moveNext();
       final dynamic value = iterator.current;
       switch (key) {
-        case 'lastUpdated':
-          result.lastUpdated = serializers.deserialize(value,
-              specifiedType: const FullType(int)) as int;
-          break;
         case 'map':
           result.map.replace(serializers.deserialize(value,
               specifiedType: const FullType(BuiltMap, const [
@@ -134,8 +125,6 @@ class _$TokenUIStateSerializer implements StructuredSerializer<TokenUIState> {
 
 class _$TokenState extends TokenState {
   @override
-  final int lastUpdated;
-  @override
   final BuiltMap<String, TokenEntity> map;
   @override
   final BuiltList<String> list;
@@ -143,7 +132,7 @@ class _$TokenState extends TokenState {
   factory _$TokenState([void Function(TokenStateBuilder) updates]) =>
       (new TokenStateBuilder()..update(updates)).build();
 
-  _$TokenState._({this.lastUpdated, this.map, this.list}) : super._() {
+  _$TokenState._({this.map, this.list}) : super._() {
     if (map == null) {
       throw new BuiltValueNullFieldError('TokenState', 'map');
     }
@@ -162,23 +151,18 @@ class _$TokenState extends TokenState {
   @override
   bool operator ==(Object other) {
     if (identical(other, this)) return true;
-    return other is TokenState &&
-        lastUpdated == other.lastUpdated &&
-        map == other.map &&
-        list == other.list;
+    return other is TokenState && map == other.map && list == other.list;
   }
 
   int __hashCode;
   @override
   int get hashCode {
-    return __hashCode ??= $jf(
-        $jc($jc($jc(0, lastUpdated.hashCode), map.hashCode), list.hashCode));
+    return __hashCode ??= $jf($jc($jc(0, map.hashCode), list.hashCode));
   }
 
   @override
   String toString() {
     return (newBuiltValueToStringHelper('TokenState')
-          ..add('lastUpdated', lastUpdated)
           ..add('map', map)
           ..add('list', list))
         .toString();
@@ -187,10 +171,6 @@ class _$TokenState extends TokenState {
 
 class TokenStateBuilder implements Builder<TokenState, TokenStateBuilder> {
   _$TokenState _$v;
-
-  int _lastUpdated;
-  int get lastUpdated => _$this._lastUpdated;
-  set lastUpdated(int lastUpdated) => _$this._lastUpdated = lastUpdated;
 
   MapBuilder<String, TokenEntity> _map;
   MapBuilder<String, TokenEntity> get map =>
@@ -205,7 +185,6 @@ class TokenStateBuilder implements Builder<TokenState, TokenStateBuilder> {
 
   TokenStateBuilder get _$this {
     if (_$v != null) {
-      _lastUpdated = _$v.lastUpdated;
       _map = _$v.map?.toBuilder();
       _list = _$v.list?.toBuilder();
       _$v = null;
@@ -230,9 +209,8 @@ class TokenStateBuilder implements Builder<TokenState, TokenStateBuilder> {
   _$TokenState build() {
     _$TokenState _$result;
     try {
-      _$result = _$v ??
-          new _$TokenState._(
-              lastUpdated: lastUpdated, map: map.build(), list: list.build());
+      _$result =
+          _$v ?? new _$TokenState._(map: map.build(), list: list.build());
     } catch (_) {
       String _$failedField;
       try {

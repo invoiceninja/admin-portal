@@ -59,9 +59,21 @@ class MenuDrawerVM {
       selectedCompanyIndex: state.uiState.selectedCompanyIndex.toString(),
       onCompanyChanged:
           (BuildContext context, String companyIndex, CompanyEntity company) {
+        final index = int.parse(companyIndex);
+
+        if (index == state.uiState.selectedCompanyIndex) {
+          return;
+        }
+
         store.dispatch(ClearEntityFilter());
-        store.dispatch(SelectCompany(int.parse(companyIndex)));
-        store.dispatch(LoadClients());
+        store.dispatch(SelectCompany(companyIndex: index));
+        if (store.state.isStale) {
+          if (!store.state.isLoaded && store.state.company.isLarge) {
+            store.dispatch(LoadClients());
+          } else {
+            store.dispatch(RefreshData());
+          }
+        }
         AppBuilder.of(context).rebuild();
 
         if (state.uiState.isInSettings) {

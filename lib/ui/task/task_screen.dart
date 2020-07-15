@@ -87,7 +87,6 @@ class TaskScreen extends StatelessWidget {
         entityType: EntityType.task,
         tableColumns: TaskPresenter.getAllTableFields(userCompany),
         defaultTableColumns: TaskPresenter.getDefaultTableFields(userCompany),
-        onRefreshPressed: () => store.dispatch(LoadTasks(force: true)),
         onSelectedSortField: (value) => store.dispatch(SortTasks(value)),
         onSelectedStatus: (EntityStatus status, value) {
           store.dispatch(FilterTasksByStatus(status));

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:invoiceninja_flutter/redux/auth/auth_actions.dart';
 import 'package:redux/redux.dart';
 import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:invoiceninja_flutter/utils/platforms.dart';
@@ -89,10 +90,8 @@ Middleware<AppState> _viewTokenList() {
 
     next(action);
 
-    if (store.state.staticState.isStale) {
+    if (store.state.isStale) {
       store.dispatch(RefreshData());
-    } else if (store.state.tokenState.isStale) {
-      store.dispatch(LoadTokens());
     }
 
     store.dispatch(UpdateCurrentRoute(TokenScreen.route));
@@ -190,7 +189,9 @@ Middleware<AppState> _saveToken(TokenRepository repository) {
       } else {
         store.dispatch(SaveTokenSuccess(token));
       }
-
+      if (action.password != null) {
+        store.dispatch(UserVerifiedPassword());
+      }
       action.completer.complete(token);
     }).catchError((Object error) {
       print(error);
@@ -236,20 +237,13 @@ Middleware<AppState> _loadTokens(TokenRepository repository) {
     final action = dynamicAction as LoadTokens;
     final AppState state = store.state;
 
-    if (!state.tokenState.isStale && !action.force) {
-      next(action);
-      return;
-    }
-
     if (state.isLoading) {
       next(action);
       return;
     }
 
-    final int updatedAt = (state.tokenState.lastUpdated / 1000).round();
-
     store.dispatch(LoadTokensRequest());
-    repository.loadList(state.credentials, updatedAt).then((data) {
+    repository.loadList(state.credentials).then((data) {
       store.dispatch(LoadTokensSuccess(data));
 
       if (action.completer != null) {

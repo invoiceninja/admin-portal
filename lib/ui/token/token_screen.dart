@@ -89,7 +89,6 @@ class TokenScreen extends StatelessWidget {
         entityType: EntityType.token,
         tableColumns: TokenPresenter.getAllTableFields(userCompany),
         defaultTableColumns: TokenPresenter.getDefaultTableFields(userCompany),
-        onRefreshPressed: () => store.dispatch(LoadTokens(force: true)),
         onSelectedSortField: (value) {
           store.dispatch(SortTokens(value));
         },

@@ -8,7 +8,6 @@ import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/redux/auth/auth_actions.dart';
-import 'package:invoiceninja_flutter/redux/client/client_actions.dart';
 import 'package:invoiceninja_flutter/redux/dashboard/dashboard_actions.dart';
 import 'package:invoiceninja_flutter/redux/ui/pref_state.dart';
 import 'package:invoiceninja_flutter/ui/app/app_builder.dart';
@@ -45,11 +44,10 @@ class DeviceSettingsVM {
     @required this.onAutoStartTasksChanged,
     @required this.onRequireAuthenticationChanged,
     @required this.onLongPressSelectionIsDefault,
+    @required this.onAlwaysShowSidebarChanged,
     @required this.authenticationSupported,
     @required this.onMenuModeChanged,
     @required this.onHistoryModeChanged,
-    @required this.onFullHeightFilterChanged,
-    @required this.onFullWidthEditorChanged,
   });
 
   static DeviceSettingsVM fromStore(Store<AppState> store) {
@@ -73,7 +71,6 @@ class DeviceSettingsVM {
               ));
 
       AppBuilder.of(context).rebuild();
-      store.dispatch(LoadClients());
     }
 
     return DeviceSettingsVM(
@@ -105,11 +102,8 @@ class DeviceSettingsVM {
       onHistoryModeChanged: (context, value) async {
         store.dispatch(UserPreferencesChanged(historyMode: value));
       },
-      onFullHeightFilterChanged: (context, value) async {
-        store.dispatch(UserPreferencesChanged(fullHeightFilter: value));
-      },
-      onFullWidthEditorChanged: (context, value) async {
-        store.dispatch(UserPreferencesChanged(fullWidthEditor: value));
+      onAlwaysShowSidebarChanged: (context, value) {
+        store.dispatch(UserPreferencesChanged(alwaysShowFilterSidebar: value));
       },
       onLayoutChanged: (BuildContext context, AppLayout value) async {
         if (store.state.prefState.appLayout == value) {
@@ -160,8 +154,6 @@ class DeviceSettingsVM {
   final AppState state;
   final Function(BuildContext) onLogoutTap;
   final Function(BuildContext) onRefreshTap;
-  final Function(BuildContext, bool) onFullHeightFilterChanged;
-  final Function(BuildContext, bool) onFullWidthEditorChanged;
   final Function(BuildContext, bool) onDarkModeChanged;
   final Function(BuildContext, AppLayout) onLayoutChanged;
   final Function(BuildContext, AppSidebarMode) onMenuModeChanged;
@@ -169,5 +161,6 @@ class DeviceSettingsVM {
   final Function(BuildContext, bool) onAutoStartTasksChanged;
   final Function(BuildContext, bool) onLongPressSelectionIsDefault;
   final Function(BuildContext, bool) onRequireAuthenticationChanged;
+  final Function(BuildContext, bool) onAlwaysShowSidebarChanged;
   final Future<bool> authenticationSupported;
 }

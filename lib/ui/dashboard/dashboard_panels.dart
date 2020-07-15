@@ -209,9 +209,9 @@ class DashboardPanels extends StatelessWidget {
   }
 
   Widget _invoiceChart(BuildContext context) {
-    final isLoaded = viewModel.state.invoiceState.isLoaded;
     final settings = viewModel.dashboardUIState;
     final state = viewModel.state;
+    final isLoaded = state.isLoaded || state.invoiceState.list.isNotEmpty;
     final currentData = memoizedChartInvoices(
         state.staticState.currencyMap,
         state.company,
@@ -241,9 +241,9 @@ class DashboardPanels extends StatelessWidget {
   }
 
   Widget _paymentChart(BuildContext context) {
-    final isLoaded = viewModel.state.paymentState.isLoaded;
     final settings = viewModel.dashboardUIState;
     final state = viewModel.state;
+    final isLoaded = state.isLoaded || state.paymentState.list.isNotEmpty;
     final currentData = memoizedChartPayments(
         state.staticState.currencyMap,
         state.company,
@@ -276,7 +276,7 @@ class DashboardPanels extends StatelessWidget {
   Widget _quoteChart(BuildContext context) {
     final settings = viewModel.dashboardUIState;
     final state = viewModel.state;
-    final isLoaded = state.quoteState.isLoaded;
+    final isLoaded = state.isLoaded || state.quoteState.list.isNotEmpty;
     final currentData = memoizedChartQuotes(
       state.staticState.currencyMap,
       state.company,
@@ -309,8 +309,7 @@ class DashboardPanels extends StatelessWidget {
   Widget _taskChart(BuildContext context) {
     final settings = viewModel.dashboardUIState;
     final state = viewModel.state;
-    final isLoaded = state.taskState.isLoaded;
-
+    final isLoaded = state.isLoaded || state.taskState.list.isNotEmpty;
     final currentData = memoizedChartTasks(
       state.staticState.currencyMap,
       state.company,
@@ -347,7 +346,7 @@ class DashboardPanels extends StatelessWidget {
   Widget _expenseChart(BuildContext context) {
     final settings = viewModel.dashboardUIState;
     final state = viewModel.state;
-    final isLoaded = state.expenseState.isLoaded;
+    final isLoaded = state.isLoaded || state.expenseState.list.isNotEmpty;
     final currentData = memoizedChartExpenses(
         state.staticState.currencyMap,
         state.company,

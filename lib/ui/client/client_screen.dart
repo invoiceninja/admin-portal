@@ -88,7 +88,6 @@ class ClientScreen extends StatelessWidget {
         entityType: EntityType.client,
         tableColumns: ClientPresenter.getAllTableFields(userCompany),
         defaultTableColumns: ClientPresenter.getDefaultTableFields(userCompany),
-        onRefreshPressed: () => store.dispatch(LoadClients(force: true)),
         onSelectedSortField: (value) {
           store.dispatch(SortClients(value));
         },

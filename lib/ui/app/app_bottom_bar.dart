@@ -22,7 +22,6 @@ class AppBottomBar extends StatefulWidget {
     @required this.onSelectedSortField,
     @required this.onSelectedState,
     @required this.onCheckboxPressed,
-    @required this.onRefreshPressed,
     this.defaultTableColumns,
     this.tableColumns,
     this.onSelectedStatus,
@@ -48,7 +47,6 @@ class AppBottomBar extends StatefulWidget {
   final Function(String) onSelectedCustom2;
   final Function(String) onSelectedCustom3;
   final Function(String) onSelectedCustom4;
-  final Function onRefreshPressed;
   final List<String> customValues1;
   final List<String> customValues2;
   final List<String> customValues3;
@@ -481,7 +479,7 @@ class _AppBottomBarState extends State<AppBottomBar> {
                     ),
                   IconButton(
                     icon: Icon(Icons.refresh),
-                    onPressed: widget.onRefreshPressed,
+                    onPressed: () => store.dispatch(RefreshData()),
                     tooltip: localization.refresh,
                   ),
                 ],

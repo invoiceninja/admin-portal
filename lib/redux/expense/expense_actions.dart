@@ -66,10 +66,9 @@ class LoadExpenseActivity {
 }
 
 class LoadExpenses {
-  LoadExpenses({this.completer, this.force = false});
+  LoadExpenses({this.completer});
 
   final Completer completer;
-  final bool force;
 }
 
 class LoadExpenseRequest implements StartLoading {}
@@ -109,7 +108,7 @@ class LoadExpensesFailure implements StopLoading {
   }
 }
 
-class LoadExpensesSuccess implements StopLoading, PersistData {
+class LoadExpensesSuccess implements StopLoading {
   LoadExpensesSuccess(this.expenses);
 
   final BuiltList<ExpenseEntity> expenses;

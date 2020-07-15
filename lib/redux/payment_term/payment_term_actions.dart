@@ -68,10 +68,9 @@ class LoadPaymentTermActivity {
 }
 
 class LoadPaymentTerms {
-  LoadPaymentTerms({this.completer, this.force = false});
+  LoadPaymentTerms({this.completer});
 
   final Completer completer;
-  final bool force;
 }
 
 class LoadPaymentTermRequest implements StartLoading {}
@@ -111,7 +110,7 @@ class LoadPaymentTermsFailure implements StopLoading {
   }
 }
 
-class LoadPaymentTermsSuccess implements StopLoading, PersistData {
+class LoadPaymentTermsSuccess implements StopLoading {
   LoadPaymentTermsSuccess(this.paymentTerms);
 
   final BuiltList<PaymentTermEntity> paymentTerms;

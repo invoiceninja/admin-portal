@@ -27,9 +27,8 @@ class UserListBuilder extends StatelessWidget {
       converter: UserListVM.fromStore,
       builder: (context, viewModel) {
         return EntityList(
-            isLoaded: viewModel.isLoaded,
-            entityType: EntityType.user,
             //presenter: ClientPresenter(),
+            entityType: EntityType.user,
             state: viewModel.state,
             entityList: viewModel.userList,
             onEntityTap: viewModel.onUserTap,
@@ -74,7 +73,6 @@ class UserListVM {
     @required this.userMap,
     @required this.filter,
     @required this.isLoading,
-    @required this.isLoaded,
     @required this.onUserTap,
     @required this.listState,
     @required this.onRefreshed,
@@ -90,7 +88,7 @@ class UserListVM {
       }
       final completer = snackBarCompleter<Null>(
           context, AppLocalization.of(context).refreshComplete);
-      store.dispatch(LoadUsers(completer: completer, force: true));
+      store.dispatch(RefreshData(completer: completer));
       return completer.future;
     }
 
@@ -104,7 +102,6 @@ class UserListVM {
           state.userState.list, state.userListState, state.user.id),
       userMap: state.userState.map,
       isLoading: state.isLoading,
-      isLoaded: state.userState.isLoaded,
       filter: state.userUIState.listUIState.filter,
       onClearEntityFilterPressed: () => store.dispatch(ClearEntityFilter()),
       onViewEntityFilterPressed: (BuildContext context) => viewEntityById(
@@ -130,7 +127,6 @@ class UserListVM {
   final ListUIState listState;
   final String filter;
   final bool isLoading;
-  final bool isLoaded;
   final Function(BuildContext, BaseEntity) onUserTap;
   final Function(BuildContext) onRefreshed;
   final Function onClearEntityFilterPressed;

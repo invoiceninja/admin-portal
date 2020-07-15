@@ -87,7 +87,6 @@ class StubScreen extends StatelessWidget {
         entityType: EntityType.stub,
         tableColumns: StubPresenter.getAllTableFields(userCompany),
         defaultTableColumns: StubPresenter.getDefaultTableFields(userCompany),
-        onRefreshPressed: () => store.dispatch(LoadStubs(force: true)),
         onSelectedSortField: (value) {
           store.dispatch(SortStubs(value));
         },

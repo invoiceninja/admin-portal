@@ -1,5 +1,7 @@
 import 'dart:async';
 import 'package:built_collection/built_collection.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
@@ -67,10 +69,9 @@ class LoadTokenActivity {
 }
 
 class LoadTokens {
-  LoadTokens({this.completer, this.force = false});
+  LoadTokens({this.completer});
 
   final Completer completer;
-  final bool force;
 }
 
 class LoadTokenRequest implements StartLoading {}
@@ -110,7 +111,7 @@ class LoadTokensFailure implements StopLoading {
   }
 }
 
-class LoadTokensSuccess implements StopLoading, PersistData {
+class LoadTokensSuccess implements StopLoading {
   LoadTokensSuccess(this.tokens);
 
   final BuiltList<TokenEntity> tokens;
@@ -261,6 +262,12 @@ void handleTokenAction(
   final tokenIds = tokens.map((token) => token.id).toList();
 
   switch (action) {
+    case EntityAction.copy:
+      Clipboard.setData(ClipboardData(text: token.token));
+      Scaffold.of(context).showSnackBar(SnackBar(
+          content: Text(
+              localization.copiedToClipboard.replaceFirst(':value ', ''))));
+      break;
     case EntityAction.edit:
       editEntity(context: context, entity: token);
       break;

@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:invoiceninja_flutter/redux/app/app_middleware.dart';
-import 'package:invoiceninja_flutter/redux/client/client_actions.dart';
 import 'package:invoiceninja_flutter/redux/document/document_actions.dart';
 import 'package:invoiceninja_flutter/utils/platforms.dart';
 import 'package:redux/redux.dart';
@@ -91,10 +90,8 @@ Middleware<AppState> _viewExpenseList() {
 
     next(action);
 
-    if (store.state.staticState.isStale) {
+    if (store.state.isStale) {
       store.dispatch(RefreshData());
-    } else if (store.state.expenseState.isStale) {
-      store.dispatch(LoadExpenses());
     }
 
     store.dispatch(UpdateCurrentRoute(ExpenseScreen.route));
@@ -245,34 +242,19 @@ Middleware<AppState> _loadExpenses(ExpenseRepository repository) {
     final action = dynamicAction as LoadExpenses;
     final AppState state = store.state;
 
-    if (!state.expenseState.isStale && !action.force) {
-      next(action);
-      return;
-    }
-
     if (state.isLoading) {
       next(action);
       return;
     }
 
-    final int updatedAt = (state.expenseState.lastUpdated / 1000).round();
-
     store.dispatch(LoadExpensesRequest());
-    repository.loadList(store.state.credentials, updatedAt).then((data) {
+    repository.loadList(store.state.credentials).then((data) {
       store.dispatch(LoadExpensesSuccess(data));
 
       if (action.completer != null) {
         action.completer.complete(null);
       }
-      if (state.isEnterprisePlan) {
-        if (state.documentState.isStale) {
-          store.dispatch(LoadDocuments());
-        }
-      } else {
-        if (state.clientState.isStale) {
-          store.dispatch(LoadClients());
-        }
-      }
+      store.dispatch(LoadDocuments());
     }).catchError((Object error) {
       print(error);
       store.dispatch(LoadExpensesFailure(error));

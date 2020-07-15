@@ -15,8 +15,13 @@ mixin LocalizationsProvider on LocaleCodeAware {
   static final Map<String, Map<String, String>> _localizedValues = {
     'en': {
       // STARTER: lang key - do not remove comment
-      'must_be_online':
-          'Please restart the app once connected to the interenet',
+      'always_show_sidebar': 'Always Show Sidebar',
+      'show_sidebar': 'Show Sidebar',
+      'hide_sidebar': 'Hide Sidebar',
+      'event_type': 'Event Type',
+      'target_url': 'Target URL',
+      'copy': 'Copy',
+      'must_be_online': 'Please restart the app once connected to the internet',
       'crons_not_enabled': 'The crons need to be enabled',
       'manage_webhooks': 'Manage Webhooks',
       'search_webhooks': 'Search Webhooks',
@@ -71,8 +76,6 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'deleted_payment_term': 'Successfully deleted payment term',
       'removed_payment_term': 'Successfully removed payment term',
       'restored_payment_term': 'Successfully restored payment term',
-      'full_width_editor': 'Full Width Editor',
-      'full_height_filter': 'Full Height Filter',
       'email_sign_in': 'Sign in with email',
       'change': 'Change',
       'change_to_mobile_layout': 'Change to the mobile layout?',
@@ -962,6 +965,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'language': 'Language',
       'currency': 'Currency',
       'created_at': 'Created At',
+      'created_on': 'Created On',
       'updated_at': 'Updated At',
       'tax': 'Tax',
       'please_enter_an_invoice_number': 'Please enter an invoice number',
@@ -995,7 +999,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'payment_date': 'Payment Date',
       'payment_status': 'Payment Status',
       'payment_status_1': 'Pending',
-      'payment_status_2': 'Voided',
+      'payment_status_2': 'Cancelled',
       'payment_status_3': 'Failed',
       'payment_status_4': 'Completed',
       'payment_status_5': 'Partially Refunded',
@@ -36451,6 +36455,8 @@ mixin LocalizationsProvider on LocaleCodeAware {
 
   String get createdAt => _localizedValues[localeCode]['created_at'] ?? '';
 
+  String get createdOn => _localizedValues[localeCode]['created_on'] ?? '';
+
   String get updatedAt => _localizedValues[localeCode]['updated_at'] ?? '';
 
   String get tax => _localizedValues[localeCode]['tax'] ?? '';
@@ -38690,12 +38696,6 @@ mixin LocalizationsProvider on LocaleCodeAware {
 
   String get emailSignIn => _localizedValues[localeCode]['email_sign_in'] ?? '';
 
-  String get fullWidthEditor =>
-      _localizedValues[localeCode]['full_width_editor'] ?? '';
-
-  String get fullHeightFilter =>
-      _localizedValues[localeCode]['full_height_filter'] ?? '';
-
   String get configurePaymentTerms =>
       _localizedValues[localeCode]['configure_payment_terms'] ?? '';
 
@@ -38761,6 +38761,19 @@ mixin LocalizationsProvider on LocaleCodeAware {
 
   String get mustBeOnline =>
       _localizedValues[localeCode]['must_be_online'] ?? '';
+
+  String get copy => _localizedValues[localeCode]['copy'] ?? '';
+
+  String get targetUrl => _localizedValues[localeCode]['target_url'] ?? '';
+
+  String get eventType => _localizedValues[localeCode]['event_type'] ?? '';
+
+  String get showSidebar => _localizedValues[localeCode]['show_sidebar'] ?? '';
+
+  String get hideSidebar => _localizedValues[localeCode]['hide_sidebar'] ?? '';
+
+  String get alwaysShowSidebar =>
+      _localizedValues[localeCode]['always_show_sidebar'] ?? '';
 
   String lookup(String key) {
     final lookupKey = toSnakeCase(key);

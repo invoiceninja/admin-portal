@@ -73,7 +73,7 @@ class TaxRateListItem extends StatelessWidget {
             children: <Widget>[
               Expanded(
                 child: Text(
-                  taxRate.name,
+                  '${taxRate.name} • ${formatNumber(taxRate.rate, context, formatNumberType: FormatNumberType.percent)}',
                   style: Theme.of(context).textTheme.headline6,
                 ),
               ),

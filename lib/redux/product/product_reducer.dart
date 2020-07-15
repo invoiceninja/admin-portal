@@ -56,7 +56,7 @@ Reducer<String> selectedIdReducer = combineReducers([
   TypedReducer<String, ViewProduct>((selectedId, action) => action.productId),
   TypedReducer<String, AddProductSuccess>(
       (selectedId, action) => action.product.id),
-  TypedReducer<String, SelectCompany>((selectedId, action) => ''),
+  TypedReducer<String, SelectCompany>((selectedId, action) => action.clearSelection ? '' : selectedId),
   TypedReducer<String, DeleteProductsSuccess>((selectedId, action) => ''),
   TypedReducer<String, ArchiveProductsSuccess>((selectedId, action) => ''),
   TypedReducer<String, ClearEntityFilter>((selectedId, action) => ''),
@@ -299,7 +299,5 @@ ProductState _setLoadedProducts(
 ProductState _setLoadedCompany(
     ProductState productState, LoadCompanySuccess action) {
   final company = action.userCompany.company;
-  return company.hasData
-      ? productState.loadProducts(company.products)
-      : productState;
+  return productState.loadProducts(company.products);
 }

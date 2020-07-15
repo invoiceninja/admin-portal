@@ -82,10 +82,9 @@ class LoadCredit {
 }
 
 class LoadCredits {
-  LoadCredits({this.completer, this.force = false});
+  LoadCredits({this.completer});
 
   final Completer completer;
-  final bool force;
 }
 
 class LoadCreditRequest implements StartLoading {}
@@ -125,7 +124,7 @@ class LoadCreditsFailure implements StopLoading {
   }
 }
 
-class LoadCreditsSuccess implements StopLoading, PersistData {
+class LoadCreditsSuccess implements StopLoading {
   LoadCreditsSuccess(this.credits);
 
   final BuiltList<InvoiceEntity> credits;

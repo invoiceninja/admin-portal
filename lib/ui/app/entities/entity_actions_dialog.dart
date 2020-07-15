@@ -6,6 +6,7 @@ import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/redux/client/client_actions.dart';
 import 'package:invoiceninja_flutter/redux/company_gateway/company_gateway_actions.dart';
+import 'package:invoiceninja_flutter/redux/credit/credit_actions.dart';
 import 'package:invoiceninja_flutter/redux/design/design_actions.dart';
 import 'package:invoiceninja_flutter/redux/expense/expense_actions.dart';
 import 'package:invoiceninja_flutter/redux/group/group_actions.dart';
@@ -17,8 +18,10 @@ import 'package:invoiceninja_flutter/redux/project/project_actions.dart';
 import 'package:invoiceninja_flutter/redux/quote/quote_actions.dart';
 import 'package:invoiceninja_flutter/redux/task/task_actions.dart';
 import 'package:invoiceninja_flutter/redux/tax_rate/tax_rate_actions.dart';
+import 'package:invoiceninja_flutter/redux/token/token_actions.dart';
 import 'package:invoiceninja_flutter/redux/user/user_actions.dart';
 import 'package:invoiceninja_flutter/redux/vendor/vendor_actions.dart';
+import 'package:invoiceninja_flutter/redux/webhook/webhook_actions.dart';
 import 'package:invoiceninja_flutter/utils/icons.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 
@@ -110,6 +113,9 @@ class EntityActionListTile extends StatelessWidget {
           case EntityType.quote:
             handleQuoteAction(mainContext, entities, action);
             break;
+          case EntityType.credit:
+            handleCreditAction(mainContext, entities, action);
+            break;
           case EntityType.task:
             handleTaskAction(mainContext, entities, action);
             break;
@@ -139,6 +145,12 @@ class EntityActionListTile extends StatelessWidget {
             break;
           case EntityType.paymentTerm:
             handlePaymentTermAction(mainContext, entities, action);
+            break;
+          case EntityType.token:
+            handleTokenAction(mainContext, entities, action);
+            break;
+          case EntityType.webhook:
+            handleWebhookAction(mainContext, entities, action);
             break;
           // TODO add to starter.sh
           default:

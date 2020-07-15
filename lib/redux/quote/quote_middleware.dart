@@ -3,7 +3,6 @@ import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:invoiceninja_flutter/redux/app/app_middleware.dart';
 import 'package:invoiceninja_flutter/redux/credit/credit_actions.dart';
-import 'package:invoiceninja_flutter/redux/invoice/invoice_actions.dart';
 import 'package:invoiceninja_flutter/redux/quote/quote_actions.dart';
 import 'package:invoiceninja_flutter/redux/ui/ui_actions.dart';
 import 'package:invoiceninja_flutter/ui/quote/edit/quote_edit_vm.dart';
@@ -82,10 +81,8 @@ Middleware<AppState> _viewQuoteList() {
 
     next(action);
 
-    if (store.state.staticState.isStale) {
+    if (store.state.isStale) {
       store.dispatch(RefreshData());
-    } else if (store.state.quoteState.isStale) {
-      store.dispatch(LoadQuotes());
     }
 
     store.dispatch(UpdateCurrentRoute(QuoteScreen.route));
@@ -221,7 +218,7 @@ Middleware<AppState> _convertQuote(QuoteRepository repository) {
             store.state.credentials, action.quoteIds, EntityAction.convert)
         .then((quotes) {
       store.dispatch(ConvertQuoteSuccess(quotes: quotes));
-      store.dispatch(LoadInvoices(force: true));
+      store.dispatch(RefreshData());
       action.completer.complete(null);
     }).catchError((Object error) {
       print(error);
@@ -342,27 +339,18 @@ Middleware<AppState> _loadQuotes(QuoteRepository repository) {
     final action = dynamicAction as LoadQuotes;
     final AppState state = store.state;
 
-    if (!state.quoteState.isStale && !action.force) {
-      next(action);
-      return;
-    }
-
     if (state.isLoading) {
       next(action);
       return;
     }
 
-    final int updatedAt = (state.quoteState.lastUpdated / 1000).round();
-
     store.dispatch(LoadQuotesRequest());
-    repository.loadList(store.state.credentials, updatedAt).then((data) {
+    repository.loadList(store.state.credentials).then((data) {
       store.dispatch(LoadQuotesSuccess(data));
       if (action.completer != null) {
         action.completer.complete(null);
       }
-      if (state.creditState.isStale) {
-        store.dispatch(LoadCredits());
-      }
+      store.dispatch(LoadCredits());
     }).catchError((Object error) {
       print(error);
       store.dispatch(LoadQuotesFailure(error));

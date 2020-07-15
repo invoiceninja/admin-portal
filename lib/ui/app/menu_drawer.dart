@@ -156,52 +156,8 @@ class MenuDrawer extends StatelessWidget {
             },
           );
 
-    /*
-    final _expandedCompanySelector = viewModel.companies.isEmpty
-        ? SizedBox()
-        : DropdownButtonHideUnderline(
-            child: DropdownButton<String>(
-            isExpanded: true,
-            icon: Icon(Icons.arrow_drop_down),
-            value: viewModel.selectedCompanyIndex,
-            items: [
-              ...viewModel.companies
-                  .map((CompanyEntity company) => DropdownMenuItem<String>(
-                        value:
-                            (viewModel.companies.indexOf(company)).toString(),
-                        child: _companyListItem(company),
-                      ))
-                  .toList(),
-              if (viewModel.state.userCompany.isAdmin)
-                DropdownMenuItem<String>(
-                  value: null,
-                  child: Row(
-                    children: <Widget>[
-                      SizedBox(width: 2),
-                      Icon(Icons.add_circle, size: 32),
-                      SizedBox(width: 28),
-                      Text(localization.addCompany),
-                    ],
-                  ),
-                ),
-            ],
-            onChanged: (value) {
-              if (value == null) {
-                viewModel.onAddCompany(context);
-              } else {
-                viewModel.onCompanyChanged(
-                    context, value, viewModel.companies[int.parse(value)]);
-              }
-            },
-          ));
-  */
-
-    return AnimatedContainer(
+    return Container(
       width: state.isMenuCollapsed ? 65 : kDrawerWidth,
-      duration: Duration(
-          milliseconds:
-              state.prefState.fullHeightFilter ? 0 : kDefaultAnimationDuration),
-      curve: Curves.easeInOutCubic,
       child: Drawer(
         child: SafeArea(
           child: Column(
@@ -409,7 +365,7 @@ class _DrawerTileState extends State<DrawerTile> {
 
     final isSelected = uiState.currentRoute.startsWith('/$route') &&
         (state.uiState.filterEntityType == null ||
-            !state.prefState.fullHeightFilter);
+            !state.prefState.isFilterSidebarShown);
 
     final textColor = Theme.of(context)
         .textTheme
@@ -531,32 +487,44 @@ class SidebarFooter extends StatelessWidget {
           if (state.isMenuCollapsed) ...[
             Expanded(child: SizedBox())
           ] else ...[
-            if (!account.isCronEnabled)
-              IconButton(
-                icon: Icon(
-                  Icons.warning,
-                  color: Colors.red,
-                ),
-                onPressed: () => showMessageDialog(
-                  context: context,
-                  message: localization.cronsNotEnabled,
-                  secondaryAction: FlatButton(
-                    child: Text(localization.learnMore.toUpperCase()),
-                    onPressed: () {
-                      launch(kCronsHelpUrl,
-                          forceSafariVC: false, forceWebView: false);
-                    },
+            if (!Config.DEMO_MODE)
+              if (!account.isCronEnabled)
+                IconButton(
+                  icon: Icon(
+                    Icons.warning,
+                    color: Colors.red,
                   ),
+                  onPressed: () => showMessageDialog(
+                    context: context,
+                    message: localization.cronsNotEnabled,
+                    secondaryAction: FlatButton(
+                      child: Text(localization.learnMore.toUpperCase()),
+                      onPressed: () {
+                        launch(kCronsHelpUrl,
+                            forceSafariVC: false, forceWebView: false);
+                      },
+                    ),
+                  ),
+                )
+              else if (state.credentials.token.isEmpty)
+                IconButton(
+                  icon: Icon(
+                    Icons.warning,
+                    color: Colors.red,
+                  ),
+                  onPressed: () => showErrorDialog(
+                    context: context,
+                    clearErrorOnDismiss: true,
+                  ),
+                )
+              else if (account.isUpdateAvailable)
+                IconButton(
+                  icon: Icon(
+                    Icons.warning,
+                    color: Theme.of(context).accentColor,
+                  ),
+                  onPressed: () => _showUpdate(context),
                 ),
-              )
-            else if (account.isUpdateAvailable)
-              IconButton(
-                icon: Icon(
-                  Icons.warning,
-                  color: Theme.of(context).accentColor,
-                ),
-                onPressed: () => _showUpdate(context),
-              ),
             IconButton(
               icon: Icon(Icons.mail),
               onPressed: () => _showContactUs(context),
@@ -664,7 +632,7 @@ class SidebarFooterCollapsed extends StatelessWidget {
       width: double.infinity,
       color: Theme.of(context).cardColor,
       child: state.uiState.filterEntityType != null &&
-              state.prefState.fullHeightFilter
+              state.prefState.isFilterSidebarShown
           ? PopupMenuButton<String>(
               icon: isUpdateAvailable
                   ? Icon(Icons.warning, color: Theme.of(context).accentColor)

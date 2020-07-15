@@ -1,6 +1,5 @@
 import 'dart:async';
 
-import 'package:invoiceninja_flutter/constants.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:built_value/built_value.dart';
 import 'package:built_value/serializer.dart';
@@ -14,7 +13,6 @@ abstract class ProductState
     implements Built<ProductState, ProductStateBuilder> {
   factory ProductState() {
     return _$ProductState._(
-      lastUpdated: 0,
       map: BuiltMap<String, ProductEntity>(),
       list: BuiltList<String>(),
     );
@@ -25,20 +23,8 @@ abstract class ProductState
   @memoized
   int get hashCode;
 
-  @nullable
-  int get lastUpdated;
-
   BuiltMap<String, ProductEntity> get map;
   BuiltList<String> get list;
-
-  bool get isStale {
-    if (!isLoaded) {
-      return true;
-    }
-
-    return DateTime.now().millisecondsSinceEpoch - lastUpdated >
-        kMillisecondsToRefreshData;
-  }
 
   ProductState loadProducts(BuiltList<ProductEntity> clients) {
     final map = Map<String, ProductEntity>.fromIterable(
@@ -48,12 +34,9 @@ abstract class ProductState
     );
 
     return rebuild((b) => b
-      ..lastUpdated = DateTime.now().millisecondsSinceEpoch
       ..map.addAll(map)
       ..list.replace((map.keys.toList() + list.toList()).toSet().toList()));
   }
-
-  bool get isLoaded => lastUpdated != null && lastUpdated > 0;
 
   static Serializer<ProductState> get serializer => _$productStateSerializer;
 }

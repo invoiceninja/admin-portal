@@ -19,7 +19,7 @@ Reducer<String> selectedIdReducer = combineReducers([
   TypedReducer<String, ViewPayment>((selectedId, action) => action.paymentId),
   TypedReducer<String, AddPaymentSuccess>(
       (selectedId, action) => action.payment.id),
-  TypedReducer<String, SelectCompany>((selectedId, action) => ''),
+  TypedReducer<String, SelectCompany>((selectedId, action) => action.clearSelection ? '' : selectedId),
   TypedReducer<String, DeletePaymentsSuccess>((selectedId, action) => ''),
   TypedReducer<String, ArchivePaymentsSuccess>((selectedId, action) => ''),
   TypedReducer<String, ClearEntityFilter>((selectedId, action) => ''),
@@ -321,7 +321,5 @@ PaymentState _setLoadedPayments(
 PaymentState _setLoadedCompany(
     PaymentState paymentState, LoadCompanySuccess action) {
   final company = action.userCompany.company;
-  return company.hasData
-      ? paymentState.loadPayments(company.payments)
-      : paymentState;
+  return paymentState.loadPayments(company.payments);
 }

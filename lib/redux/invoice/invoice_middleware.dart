@@ -1,15 +1,9 @@
-import 'dart:async';
-
 import 'package:flutter/material.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:invoiceninja_flutter/redux/app/app_middleware.dart';
-import 'package:invoiceninja_flutter/redux/credit/credit_actions.dart';
-import 'package:invoiceninja_flutter/redux/expense/expense_actions.dart';
 import 'package:invoiceninja_flutter/redux/invoice/invoice_actions.dart';
 import 'package:invoiceninja_flutter/redux/payment/payment_actions.dart';
-import 'package:invoiceninja_flutter/redux/product/product_actions.dart';
-import 'package:invoiceninja_flutter/redux/task/task_actions.dart';
 import 'package:invoiceninja_flutter/redux/ui/ui_actions.dart';
 import 'package:invoiceninja_flutter/ui/invoice/invoice_email_vm.dart';
 import 'package:invoiceninja_flutter/ui/invoice/edit/invoice_edit_vm.dart';
@@ -72,10 +66,8 @@ Middleware<AppState> _viewInvoiceList() {
 
     next(action);
 
-    if (store.state.staticState.isStale) {
+    if (store.state.isStale) {
       store.dispatch(RefreshData());
-    } else if (store.state.invoiceState.isStale) {
-      store.dispatch(LoadInvoices());
     }
 
     store.dispatch(UpdateCurrentRoute(InvoiceScreen.route));
@@ -154,7 +146,7 @@ Middleware<AppState> _cancelInvoices(InvoiceRepository repository) {
             store.state.credentials, action.invoiceIds, EntityAction.cancel)
         .then((List<InvoiceEntity> invoices) {
       store.dispatch(CancelInvoicesSuccess(invoices));
-      store.dispatch(LoadClients(force: true));
+      store.dispatch(RefreshData());
       if (action.completer != null) {
         action.completer.complete(null);
       }
@@ -178,11 +170,7 @@ Middleware<AppState> _reverseInvoices(InvoiceRepository repository) {
             store.state.credentials, action.invoiceIds, EntityAction.reverse)
         .then((List<InvoiceEntity> invoices) {
       store.dispatch(ReverseInvoicesSuccess(invoices));
-      final completer = Completer<Null>();
-      completer.future.then((value) {
-        store.dispatch(LoadCredits(force: true));
-      });
-      store.dispatch(LoadClients(force: true, completer: completer));
+      store.dispatch(RefreshData());
       if (action.completer != null) {
         action.completer.complete(null);
       }
@@ -310,12 +298,7 @@ Middleware<AppState> _markInvoicePaid(InvoiceRepository repository) {
             store.state.credentials, action.invoiceIds, EntityAction.markPaid)
         .then((invoices) {
       store.dispatch(MarkInvoicesPaidSuccess(invoices));
-      final Completer<Null> completer = Completer<Null>();
-      completer.future.then((_) {
-        store.dispatch(LoadPayments(force: true));
-      });
-      store.dispatch(
-          LoadClient(clientId: invoices.first.clientId, completer: completer));
+      store.dispatch(RefreshData());
       if (action.completer != null) {
         action.completer.complete(null);
       }
@@ -373,14 +356,7 @@ Middleware<AppState> _saveInvoice(InvoiceRepository repository) {
       } else {
         store.dispatch(SaveInvoiceSuccess(invoice));
       }
-      if (invoice.hasTasks) {
-        store.dispatch(LoadTasks(force: true));
-      } else if (invoice.hasExpenses) {
-        store.dispatch(LoadExpenses(force: true));
-      } else {
-        // TODO add check if auto-update is enabled
-        store.dispatch(LoadProducts(force: true));
-      }
+      store.dispatch(RefreshData());
       action.completer.complete(invoice);
     }).catchError((Object error) {
       print(error);
@@ -429,27 +405,18 @@ Middleware<AppState> _loadInvoices(InvoiceRepository repository) {
     final action = dynamicAction as LoadInvoices;
     final AppState state = store.state;
 
-    if (!state.invoiceState.isStale && !action.force) {
-      next(action);
-      return;
-    }
-
     if (state.isLoading) {
       next(action);
       return;
     }
 
-    final int updatedAt = (state.invoiceState.lastUpdated / 1000).round();
-
     store.dispatch(LoadInvoicesRequest());
-    repository.loadList(store.state.credentials, updatedAt).then((data) {
+    repository.loadList(store.state.credentials).then((data) {
       store.dispatch(LoadInvoicesSuccess(data));
       if (action.completer != null) {
         action.completer.complete(null);
       }
-      if (state.paymentState.isStale) {
-        store.dispatch(LoadPayments());
-      }
+      store.dispatch(LoadPayments());
     }).catchError((Object error) {
       print(error);
       store.dispatch(LoadInvoicesFailure(error));

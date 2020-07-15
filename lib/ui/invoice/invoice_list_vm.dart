@@ -31,7 +31,6 @@ class InvoiceListBuilder extends StatelessWidget {
       builder: (context, viewModel) {
         final state = viewModel.state;
         return EntityList(
-            isLoaded: viewModel.isLoaded,
             entityType: EntityType.invoice,
             presenter: InvoicePresenter(),
             state: viewModel.state,
@@ -171,7 +170,7 @@ class InvoiceListVM extends EntityListVM {
       }
       final completer = snackBarCompleter<Null>(
           context, AppLocalization.of(context).refreshComplete);
-      store.dispatch(LoadInvoices(completer: completer, force: true));
+      store.dispatch(RefreshData(completer: completer));
       return completer.future;
     }
 
@@ -192,7 +191,6 @@ class InvoiceListVM extends EntityListVM {
       invoiceMap: state.invoiceState.map,
       clientMap: state.clientState.map,
       isLoading: state.isLoading,
-      isLoaded: state.invoiceState.isLoaded && state.clientState.isLoaded,
       filter: state.invoiceListState.filter,
       onInvoiceTap: (context, invoice) {
         if (store.state.invoiceListState.isInMultiselect()) {
