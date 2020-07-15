@@ -9,12 +9,14 @@ class ActionMenuButton extends StatelessWidget {
     @required this.onSelected,
     this.isSaving = false,
     this.entityActions,
+    this.color,
   });
 
   final BaseEntity entity;
   final List<EntityAction> entityActions;
   final Function(BuildContext, EntityAction) onSelected;
   final bool isSaving;
+  final Color color;
 
   @override
   Widget build(BuildContext context) {
@@ -39,7 +41,10 @@ class ActionMenuButton extends StatelessWidget {
           value: action,
           child: Row(
             children: <Widget>[
-              Icon(getEntityActionIcon(action)),
+              Icon(
+                getEntityActionIcon(action),
+                color: Theme.of(context).accentColor,
+              ),
               SizedBox(width: 16.0),
               Text(AppLocalization.of(context).lookup(action.toString()) ?? ''),
             ],
@@ -49,7 +54,10 @@ class ActionMenuButton extends StatelessWidget {
     });
 
     return PopupMenuButton<EntityAction>(
-      icon: Icon(Icons.more_vert),
+      icon: Icon(
+        Icons.more_vert,
+        color: color,
+      ),
       itemBuilder: (BuildContext context) => actions,
       onSelected: (EntityAction action) {
         onSelected(context, action);
