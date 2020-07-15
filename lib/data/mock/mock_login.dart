@@ -75,6 +75,7 @@ const dynamic kMockLogin = '''
                 "subdomain": "",
                 "portal_mode": "subdomain",
                 "portal_domain": "",
+                "is_large": false,
                 "settings": {
                     "auto_archive_invoice": false,
                     "lock_sent_invoices": false,
