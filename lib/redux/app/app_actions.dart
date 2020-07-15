@@ -102,8 +102,8 @@ class UserPreferencesChanged implements PersistPrefs {
     this.accentColor,
     this.menuMode,
     this.historyMode,
-    this.fullHeightFilter,
-    this.fullWidthEditor,
+    this.showFilterSidebar,
+    this.alwaysShowFilterSidebar,
   });
 
   final AppLayout layout;
@@ -117,8 +117,8 @@ class UserPreferencesChanged implements PersistPrefs {
   final bool autoStartTasks;
   final bool isPreviewVisible;
   final bool addDocumentsToInvoice;
-  final bool fullWidthEditor;
-  final bool fullHeightFilter;
+  final bool showFilterSidebar;
+  final bool alwaysShowFilterSidebar;
   final String accentColor;
 }
 

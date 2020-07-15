@@ -205,7 +205,8 @@ String _parseError(int code, String response) {
     final dynamic jsonResponse = json.decode(response);
     message = jsonResponse['message'] ?? jsonResponse;
 
-    if (jsonResponse['errors'] != null) {
+    if (jsonResponse['errors'] != null &&
+        (jsonResponse['errors'] as List).isNotEmpty) {
       message += '\n';
       try {
         jsonResponse['errors'].forEach((String field, dynamic errors) {

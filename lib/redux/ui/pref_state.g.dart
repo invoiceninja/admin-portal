@@ -135,11 +135,11 @@ class _$PrefStateSerializer implements StructuredSerializer<PrefState> {
       'enableDarkMode',
       serializers.serialize(object.enableDarkMode,
           specifiedType: const FullType(bool)),
-      'fullHeightFilter',
-      serializers.serialize(object.fullHeightFilter,
+      'showFilterSidebar',
+      serializers.serialize(object.showFilterSidebar,
           specifiedType: const FullType(bool)),
-      'fullWidthEditor',
-      serializers.serialize(object.fullWidthEditor,
+      'alwaysShowFilterSidebar',
+      serializers.serialize(object.alwaysShowFilterSidebar,
           specifiedType: const FullType(bool)),
       'longPressSelectionIsDefault',
       serializers.serialize(object.longPressSelectionIsDefault,
@@ -208,12 +208,12 @@ class _$PrefStateSerializer implements StructuredSerializer<PrefState> {
           result.enableDarkMode = serializers.deserialize(value,
               specifiedType: const FullType(bool)) as bool;
           break;
-        case 'fullHeightFilter':
-          result.fullHeightFilter = serializers.deserialize(value,
+        case 'showFilterSidebar':
+          result.showFilterSidebar = serializers.deserialize(value,
               specifiedType: const FullType(bool)) as bool;
           break;
-        case 'fullWidthEditor':
-          result.fullWidthEditor = serializers.deserialize(value,
+        case 'alwaysShowFilterSidebar':
+          result.alwaysShowFilterSidebar = serializers.deserialize(value,
               specifiedType: const FullType(bool)) as bool;
           break;
         case 'longPressSelectionIsDefault':
@@ -438,9 +438,9 @@ class _$PrefState extends PrefState {
   @override
   final bool enableDarkMode;
   @override
-  final bool fullHeightFilter;
+  final bool showFilterSidebar;
   @override
-  final bool fullWidthEditor;
+  final bool alwaysShowFilterSidebar;
   @override
   final bool longPressSelectionIsDefault;
   @override
@@ -466,8 +466,8 @@ class _$PrefState extends PrefState {
       this.isMenuVisible,
       this.isHistoryVisible,
       this.enableDarkMode,
-      this.fullHeightFilter,
-      this.fullWidthEditor,
+      this.showFilterSidebar,
+      this.alwaysShowFilterSidebar,
       this.longPressSelectionIsDefault,
       this.requireAuthentication,
       this.emailPayment,
@@ -499,11 +499,12 @@ class _$PrefState extends PrefState {
     if (enableDarkMode == null) {
       throw new BuiltValueNullFieldError('PrefState', 'enableDarkMode');
     }
-    if (fullHeightFilter == null) {
-      throw new BuiltValueNullFieldError('PrefState', 'fullHeightFilter');
+    if (showFilterSidebar == null) {
+      throw new BuiltValueNullFieldError('PrefState', 'showFilterSidebar');
     }
-    if (fullWidthEditor == null) {
-      throw new BuiltValueNullFieldError('PrefState', 'fullWidthEditor');
+    if (alwaysShowFilterSidebar == null) {
+      throw new BuiltValueNullFieldError(
+          'PrefState', 'alwaysShowFilterSidebar');
     }
     if (longPressSelectionIsDefault == null) {
       throw new BuiltValueNullFieldError(
@@ -545,8 +546,8 @@ class _$PrefState extends PrefState {
         isMenuVisible == other.isMenuVisible &&
         isHistoryVisible == other.isHistoryVisible &&
         enableDarkMode == other.enableDarkMode &&
-        fullHeightFilter == other.fullHeightFilter &&
-        fullWidthEditor == other.fullWidthEditor &&
+        showFilterSidebar == other.showFilterSidebar &&
+        alwaysShowFilterSidebar == other.alwaysShowFilterSidebar &&
         longPressSelectionIsDefault == other.longPressSelectionIsDefault &&
         requireAuthentication == other.requireAuthentication &&
         emailPayment == other.emailPayment &&
@@ -587,8 +588,8 @@ class _$PrefState extends PrefState {
                                                 isMenuVisible.hashCode),
                                             isHistoryVisible.hashCode),
                                         enableDarkMode.hashCode),
-                                    fullHeightFilter.hashCode),
-                                fullWidthEditor.hashCode),
+                                    showFilterSidebar.hashCode),
+                                alwaysShowFilterSidebar.hashCode),
                             longPressSelectionIsDefault.hashCode),
                         requireAuthentication.hashCode),
                     emailPayment.hashCode),
@@ -608,8 +609,8 @@ class _$PrefState extends PrefState {
           ..add('isMenuVisible', isMenuVisible)
           ..add('isHistoryVisible', isHistoryVisible)
           ..add('enableDarkMode', enableDarkMode)
-          ..add('fullHeightFilter', fullHeightFilter)
-          ..add('fullWidthEditor', fullWidthEditor)
+          ..add('showFilterSidebar', showFilterSidebar)
+          ..add('alwaysShowFilterSidebar', alwaysShowFilterSidebar)
           ..add('longPressSelectionIsDefault', longPressSelectionIsDefault)
           ..add('requireAuthentication', requireAuthentication)
           ..add('emailPayment', emailPayment)
@@ -662,15 +663,15 @@ class PrefStateBuilder implements Builder<PrefState, PrefStateBuilder> {
   set enableDarkMode(bool enableDarkMode) =>
       _$this._enableDarkMode = enableDarkMode;
 
-  bool _fullHeightFilter;
-  bool get fullHeightFilter => _$this._fullHeightFilter;
-  set fullHeightFilter(bool fullHeightFilter) =>
-      _$this._fullHeightFilter = fullHeightFilter;
+  bool _showFilterSidebar;
+  bool get showFilterSidebar => _$this._showFilterSidebar;
+  set showFilterSidebar(bool showFilterSidebar) =>
+      _$this._showFilterSidebar = showFilterSidebar;
 
-  bool _fullWidthEditor;
-  bool get fullWidthEditor => _$this._fullWidthEditor;
-  set fullWidthEditor(bool fullWidthEditor) =>
-      _$this._fullWidthEditor = fullWidthEditor;
+  bool _alwaysShowFilterSidebar;
+  bool get alwaysShowFilterSidebar => _$this._alwaysShowFilterSidebar;
+  set alwaysShowFilterSidebar(bool alwaysShowFilterSidebar) =>
+      _$this._alwaysShowFilterSidebar = alwaysShowFilterSidebar;
 
   bool _longPressSelectionIsDefault;
   bool get longPressSelectionIsDefault => _$this._longPressSelectionIsDefault;
@@ -714,8 +715,8 @@ class PrefStateBuilder implements Builder<PrefState, PrefStateBuilder> {
       _isMenuVisible = _$v.isMenuVisible;
       _isHistoryVisible = _$v.isHistoryVisible;
       _enableDarkMode = _$v.enableDarkMode;
-      _fullHeightFilter = _$v.fullHeightFilter;
-      _fullWidthEditor = _$v.fullWidthEditor;
+      _showFilterSidebar = _$v.showFilterSidebar;
+      _alwaysShowFilterSidebar = _$v.alwaysShowFilterSidebar;
       _longPressSelectionIsDefault = _$v.longPressSelectionIsDefault;
       _requireAuthentication = _$v.requireAuthentication;
       _emailPayment = _$v.emailPayment;
@@ -754,8 +755,8 @@ class PrefStateBuilder implements Builder<PrefState, PrefStateBuilder> {
               isMenuVisible: isMenuVisible,
               isHistoryVisible: isHistoryVisible,
               enableDarkMode: enableDarkMode,
-              fullHeightFilter: fullHeightFilter,
-              fullWidthEditor: fullWidthEditor,
+              showFilterSidebar: showFilterSidebar,
+              alwaysShowFilterSidebar: alwaysShowFilterSidebar,
               longPressSelectionIsDefault: longPressSelectionIsDefault,
               requireAuthentication: requireAuthentication,
               emailPayment: emailPayment,

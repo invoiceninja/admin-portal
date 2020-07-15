@@ -50,8 +50,10 @@ PrefState prefReducer(
     ..isMenuVisible = menuVisibleReducer(state.isMenuVisible, action)
     ..isHistoryVisible = historyVisibleReducer(state.isHistoryVisible, action)
     ..enableDarkMode = darkModeReducer(state.enableDarkMode, action)
-    ..fullWidthEditor = fullWidthEditorReducer(state.fullWidthEditor, action)
-    ..fullHeightFilter = fullHeightFilterReducer(state.fullHeightFilter, action)
+    ..showFilterSidebar =
+        showFilterSidebarReducer(state.showFilterSidebar, action)
+    ..alwaysShowFilterSidebar =
+        alwaysShowFilterSidebarReducer(state.alwaysShowFilterSidebar, action)
     ..longPressSelectionIsDefault =
         longPressReducer(state.longPressSelectionIsDefault, action)
     ..autoStartTasks = autoStartTasksReducer(state.autoStartTasks, action)
@@ -144,15 +146,15 @@ Reducer<bool> darkModeReducer = combineReducers([
   }),
 ]);
 
-Reducer<bool> fullWidthEditorReducer = combineReducers([
+Reducer<bool> alwaysShowFilterSidebarReducer = combineReducers([
   TypedReducer<bool, UserPreferencesChanged>((value, action) {
-    return action.fullWidthEditor ?? value;
+    return action.alwaysShowFilterSidebar ?? value;
   }),
 ]);
 
-Reducer<bool> fullHeightFilterReducer = combineReducers([
+Reducer<bool> showFilterSidebarReducer = combineReducers([
   TypedReducer<bool, UserPreferencesChanged>((value, action) {
-    return action.fullHeightFilter ?? value;
+    return action.showFilterSidebar ?? value;
   }),
 ]);
 

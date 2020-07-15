@@ -90,7 +90,7 @@ class MainScreen extends StatelessWidget {
         }
       } else {
         bool editingFilterEntity = false;
-        if (prefState.fullHeightFilter &&
+        if (prefState.isFilterSidebarShown &&
             uiState.filterEntityId != null &&
             subRoute == '/edit') {
           if (mainRoute == '/${uiState.filterEntityType}') {
@@ -535,7 +535,7 @@ class EntityScreens extends StatelessWidget {
     Widget leftFilterChild;
     Widget topFilterChild;
 
-    if (prefState.fullHeightFilter) {
+    if (prefState.isFilterSidebarShown) {
       if (uiState.filterEntityType != null) {
         switch (uiState.filterEntityType) {
           case EntityType.client:
@@ -690,8 +690,8 @@ class _EntityFilter extends StatelessWidget {
                   leading: IconButton(
                     tooltip: localization.showSidebar,
                     icon: Icon(Icons.chrome_reader_mode),
-                    onPressed: () => store.dispatch(
-                        UserPreferencesChanged(fullHeightFilter: true)),
+                    onPressed: () => store
+                        .dispatch(UserPreferencesChanged(showFilterSidebar: true)),
                   ),
                   title: Align(
                     alignment: Alignment.centerLeft,

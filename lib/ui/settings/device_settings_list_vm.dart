@@ -44,6 +44,7 @@ class DeviceSettingsVM {
     @required this.onAutoStartTasksChanged,
     @required this.onRequireAuthenticationChanged,
     @required this.onLongPressSelectionIsDefault,
+    @required this.onAlwaysShowSidebarChanged,
     @required this.authenticationSupported,
     @required this.onMenuModeChanged,
     @required this.onHistoryModeChanged,
@@ -101,6 +102,9 @@ class DeviceSettingsVM {
       onHistoryModeChanged: (context, value) async {
         store.dispatch(UserPreferencesChanged(historyMode: value));
       },
+      onAlwaysShowSidebarChanged: (context, value) {
+        store.dispatch(UserPreferencesChanged(alwaysShowFilterSidebar: value));
+      },
       onLayoutChanged: (BuildContext context, AppLayout value) async {
         if (store.state.prefState.appLayout == value) {
           return;
@@ -157,5 +161,6 @@ class DeviceSettingsVM {
   final Function(BuildContext, bool) onAutoStartTasksChanged;
   final Function(BuildContext, bool) onLongPressSelectionIsDefault;
   final Function(BuildContext, bool) onRequireAuthenticationChanged;
+  final Function(BuildContext, bool) onAlwaysShowSidebarChanged;
   final Future<bool> authenticationSupported;
 }
