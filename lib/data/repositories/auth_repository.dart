@@ -100,16 +100,16 @@ class AuthRepository {
   }
 
   Future<LoginResponse> refresh(
-      {String url, String token, int updatedAt}) async {
+      {@required String url,
+      @required String token,
+      @required int updatedAt,
+      @required bool includeStatic}) async {
     url = formatApiUrl(url) + '/refresh';
 
-    bool includeStatic = false;
     if (updatedAt > 0) {
-
       // TODO re-enable this
       //url += '?updated_at=$updatedAt';
-
-      includeStatic =
+      includeStatic = includeStatic ||
           DateTime.now().millisecondsSinceEpoch - (updatedAt * 1000) >
               kMillisecondsToRefreshStaticData;
     } else {
