@@ -14,8 +14,7 @@ class ProductRepository {
 
   final WebClient webClient;
 
-  Future<BuiltList<ProductEntity>> loadList(
-      Credentials credentials) async {
+  Future<BuiltList<ProductEntity>> loadList(Credentials credentials) async {
     final url = credentials.url + '/products?';
 
     final dynamic response = await webClient.get(url, credentials.token);

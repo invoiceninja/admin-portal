@@ -137,15 +137,13 @@ class SaveUserRequest implements StartSaving {
   final String password;
 }
 
-class SaveUserSuccess
-    implements StopSaving, PersistData, PersistUI {
+class SaveUserSuccess implements StopSaving, PersistData, PersistUI {
   SaveUserSuccess(this.user);
 
   final UserEntity user;
 }
 
-class AddUserSuccess
-    implements StopSaving, PersistData, PersistUI {
+class AddUserSuccess implements StopSaving, PersistData, PersistUI {
   AddUserSuccess(this.user);
 
   final UserEntity user;

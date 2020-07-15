@@ -24,8 +24,7 @@ class TokenRepository {
     return tokenResponse.data;
   }
 
-  Future<BuiltList<TokenEntity>> loadList(
-      Credentials credentials) async {
+  Future<BuiltList<TokenEntity>> loadList(Credentials credentials) async {
     final url = credentials.url + '/tokens?';
 
     final dynamic response = await webClient.get(url, credentials.token);

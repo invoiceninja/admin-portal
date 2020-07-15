@@ -437,11 +437,18 @@ Future handleQuoteAction(
           context: context));
       break;
     case EntityAction.cloneToInvoice:
-      createEntity(context: context, entity: quote.clone);
+      createEntity(
+          context: context,
+          entity:
+              quote.clone.rebuild((b) => b..entityType = EntityType.invoice));
       break;
     case EntityAction.cloneToQuote:
       createEntity(context: context, entity: quote.clone);
-      createEntity(context: context, entity: quote.clone);
+      break;
+    case EntityAction.cloneToCredit:
+      createEntity(
+          context: context,
+          entity: quote.clone.rebuild((b) => b..entityType = EntityType.quote));
       break;
     case EntityAction.restore:
       store.dispatch(RestoreQuotesRequest(

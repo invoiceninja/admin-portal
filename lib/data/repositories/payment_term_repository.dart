@@ -26,8 +26,7 @@ class PaymentTermRepository {
     return paymentTermResponse.data;
   }
 
-  Future<BuiltList<PaymentTermEntity>> loadList(
-      Credentials credentials) async {
+  Future<BuiltList<PaymentTermEntity>> loadList(Credentials credentials) async {
     final url = credentials.url + '/payment_terms?';
 
     final dynamic response = await webClient.get(url, credentials.token);

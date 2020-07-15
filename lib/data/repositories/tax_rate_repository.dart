@@ -25,8 +25,7 @@ class TaxRateRepository {
     return taxRateResponse.data;
   }
 
-  Future<BuiltList<TaxRateEntity>> loadList(
-      Credentials credentials) async {
+  Future<BuiltList<TaxRateEntity>> loadList(Credentials credentials) async {
     final url = credentials.url + '/tax_rates?';
 
     final dynamic response = await webClient.get(url, credentials.token);

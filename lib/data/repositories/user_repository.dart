@@ -25,8 +25,7 @@ class UserRepository {
     return userResponse.data;
   }
 
-  Future<BuiltList<UserEntity>> loadList(
-      Credentials credentials) async {
+  Future<BuiltList<UserEntity>> loadList(Credentials credentials) async {
     final url = credentials.url + '/users?include=company_user';
 
     final dynamic response = await webClient.get(url, credentials.token);

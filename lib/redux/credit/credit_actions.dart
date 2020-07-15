@@ -425,10 +425,18 @@ Future handleCreditAction(
           context: context));
       break;
     case EntityAction.cloneToInvoice:
-      createEntity(context: context, entity: credit.clone);
+      createEntity(
+          context: context,
+          entity:
+              credit.clone.rebuild((b) => b..entityType = EntityType.invoice));
+      break;
+    case EntityAction.cloneToQuote:
+      createEntity(
+          context: context,
+          entity:
+              credit.clone.rebuild((b) => b..entityType = EntityType.quote));
       break;
     case EntityAction.cloneToCredit:
-      createEntity(context: context, entity: credit.clone);
       createEntity(context: context, entity: credit.clone);
       break;
     case EntityAction.newPayment:

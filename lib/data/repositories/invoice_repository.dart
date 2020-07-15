@@ -25,8 +25,7 @@ class InvoiceRepository {
     return invoiceResponse.data;
   }
 
-  Future<BuiltList<InvoiceEntity>> loadList(
-      Credentials credentials) async {
+  Future<BuiltList<InvoiceEntity>> loadList(Credentials credentials) async {
     final url = credentials.url + '/invoices?'; // invoice_type_id=1
 
     final dynamic response = await webClient.get(url, credentials.token);

@@ -20,7 +20,8 @@ Reducer<String> selectedIdReducer = combineReducers([
       (String selectedId, dynamic action) => action.designId),
   TypedReducer<String, AddDesignSuccess>(
       (String selectedId, dynamic action) => action.design.id),
-  TypedReducer<String, SelectCompany>((selectedId, action) => action.clearSelection ? '' : selectedId),
+  TypedReducer<String, SelectCompany>(
+      (selectedId, action) => action.clearSelection ? '' : selectedId),
   TypedReducer<String, DeleteDesignsSuccess>((selectedId, action) => ''),
   TypedReducer<String, ArchiveDesignsSuccess>((selectedId, action) => ''),
   TypedReducer<String, ClearEntityFilter>((selectedId, action) => ''),

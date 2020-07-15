@@ -20,7 +20,8 @@ Reducer<String> selectedIdReducer = combineReducers([
       (String selectedId, dynamic action) => action.paymentTermId),
   TypedReducer<String, AddPaymentTermSuccess>(
       (String selectedId, dynamic action) => action.paymentTerm.id),
-  TypedReducer<String, SelectCompany>((selectedId, action) => action.clearSelection ? '' : selectedId),
+  TypedReducer<String, SelectCompany>(
+      (selectedId, action) => action.clearSelection ? '' : selectedId),
   TypedReducer<String, DeletePaymentTermsSuccess>((selectedId, action) => ''),
   TypedReducer<String, ArchivePaymentTermsSuccess>((selectedId, action) => ''),
   TypedReducer<String, ClearEntityFilter>((selectedId, action) => ''),
