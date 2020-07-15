@@ -492,43 +492,44 @@ class SidebarFooter extends StatelessWidget {
           if (state.isMenuCollapsed) ...[
             Expanded(child: SizedBox())
           ] else ...[
-            if (!account.isCronEnabled)
-              IconButton(
-                icon: Icon(
-                  Icons.warning,
-                  color: Colors.red,
-                ),
-                onPressed: () => showMessageDialog(
-                  context: context,
-                  message: localization.cronsNotEnabled,
-                  secondaryAction: FlatButton(
-                    child: Text(localization.learnMore.toUpperCase()),
-                    onPressed: () {
-                      launch(kCronsHelpUrl,
-                          forceSafariVC: false, forceWebView: false);
-                    },
+            if (!Config.DEMO_MODE)
+              if (!account.isCronEnabled)
+                IconButton(
+                  icon: Icon(
+                    Icons.warning,
+                    color: Colors.red,
                   ),
+                  onPressed: () => showMessageDialog(
+                    context: context,
+                    message: localization.cronsNotEnabled,
+                    secondaryAction: FlatButton(
+                      child: Text(localization.learnMore.toUpperCase()),
+                      onPressed: () {
+                        launch(kCronsHelpUrl,
+                            forceSafariVC: false, forceWebView: false);
+                      },
+                    ),
+                  ),
+                )
+              else if (state.credentials.token.isEmpty)
+                IconButton(
+                  icon: Icon(
+                    Icons.warning,
+                    color: Colors.red,
+                  ),
+                  onPressed: () => showErrorDialog(
+                    context: context,
+                    clearErrorOnDismiss: true,
+                  ),
+                )
+              else if (account.isUpdateAvailable)
+                IconButton(
+                  icon: Icon(
+                    Icons.warning,
+                    color: Theme.of(context).accentColor,
+                  ),
+                  onPressed: () => _showUpdate(context),
                 ),
-              )
-            else if (state.credentials.token.isEmpty)
-              IconButton(
-                icon: Icon(
-                  Icons.warning,
-                  color: Colors.red,
-                ),
-                onPressed: () => showErrorDialog(
-                  context: context,
-                  clearErrorOnDismiss: true,
-                ),
-              )
-            else if (account.isUpdateAvailable)
-              IconButton(
-                icon: Icon(
-                  Icons.warning,
-                  color: Theme.of(context).accentColor,
-                ),
-                onPressed: () => _showUpdate(context),
-              ),
             IconButton(
               icon: Icon(Icons.mail),
               onPressed: () => _showContactUs(context),

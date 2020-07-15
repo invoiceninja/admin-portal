@@ -11454,11 +11454,13 @@ const dynamic kMockLogin = '''
                 ]
             },
             "token": {
+                "id": "23123412",
                 "token": "yubtV9tGh8eXdw7FTVmPwxa4VXDDe2TXC4tFXmngKnpEemwiJsjBpK2LglKJaB6L",
                 "name": "test token",
                 "updated_at": 0,
                 "archived_at": 0,
-                "created_at": 0
+                "created_at": 0,
+                "is_system": false
             },
             "account": {
                 "id": "Wpmbk5ezJn",
