@@ -58,8 +58,17 @@ class EntityListTile extends StatelessWidget {
 
     Widget trailing;
     if (isNotMobile(context) && isFilter != null && !isFilter) {
-      trailing = Icon(Icons.filter_list,
-          color: isFilteredBy ? Theme.of(context).accentColor : null);
+      if (isFilteredBy) {
+        trailing = IconButton(
+          icon: Icon(Icons.chevron_right),
+          onPressed: () => viewEntity(entity: entity, context: context),
+        );
+      } else {
+        trailing = IconButton(
+          icon: Icon(Icons.filter_list),
+          onPressed: onTap,
+        );
+      }
     } else {
       Icon(Icons.navigate_next);
     }
@@ -68,11 +77,13 @@ class EntityListTile extends StatelessWidget {
       mainAxisSize: MainAxisSize.min,
       children: <Widget>[
         Material(
-          color: Theme.of(context).cardColor,
+          color: Theme
+              .of(context)
+              .cardColor,
           child: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 10),
             child: ListTile(
-              contentPadding: const EdgeInsets.only(left: 8, right: 12),
+              contentPadding: const EdgeInsets.only(left: 8, right: 8),
               title: EntityStateTitle(entity: entity),
               subtitle: subtitle != null && subtitle.isNotEmpty
                   ? Text(subtitle ?? '')
@@ -130,9 +141,9 @@ class EntitiesListTile extends StatelessWidget {
             ),
             trailing: isFilter
                 ? IconButton(
-                    icon: Icon(Icons.add_circle_outline),
-                    onPressed: onLongPress,
-                  )
+              icon: Icon(Icons.add_circle_outline),
+              onPressed: onLongPress,
+            )
                 : Icon(Icons.navigate_next),
             onTap: onTap,
             onLongPress: onLongPress,
