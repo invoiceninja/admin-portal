@@ -18,16 +18,14 @@ class AppBorder extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    const borderWidth = 1.5;
     final Store<AppState> store = StoreProvider.of<AppState>(context);
     final state = store.state;
     final enableDarkMode = state.prefState.enableDarkMode;
-    const borderWidth = 1.5;
 
     final color = enableDarkMode
         ? convertHexStringToColor(kDefaultDarkBorderColor)
-        : (isTop == true)
-            ? convertHexStringToColor(kDefaultLightBorderColor)
-            : Colors.white;
+        : convertHexStringToColor(kDefaultLightBorderColor);
 
     return Container(
         decoration: BoxDecoration(

@@ -156,14 +156,8 @@ class MenuDrawer extends StatelessWidget {
             },
           );
 
-    return AnimatedContainer(
+    return Container(
       width: state.isMenuCollapsed ? 65 : kDrawerWidth,
-      duration: Duration(
-          milliseconds: state.uiState.filterEntityType != null ||
-                  state.prefState.alwaysShowFilterSidebar
-              ? 0
-              : kDefaultAnimationDuration),
-      curve: Curves.easeInOutCubic,
       child: Drawer(
         child: SafeArea(
           child: Column(

@@ -107,10 +107,11 @@ class MainScreen extends StatelessWidget {
                   child: DashboardScreenBuilder(),
                   flex: 5,
                 ),
-                if (prefState.showHistory) ...[
-                  _CustomDivider(),
-                  HistoryDrawerBuilder(),
-                ],
+                if (prefState.showHistory)
+                  AppBorder(
+                    child: HistoryDrawerBuilder(),
+                    isLeft: true,
+                  ),
               ],
             );
             break;
@@ -216,10 +217,11 @@ class MainScreen extends StatelessWidget {
                   child: ReportsScreenBuilder(),
                   flex: 5,
                 ),
-                if (prefState.showHistory) ...[
-                  _CustomDivider(),
-                  HistoryDrawerBuilder(),
-                ],
+                if (prefState.showHistory)
+                  AppBorder(
+                    child: HistoryDrawerBuilder(),
+                    isLeft: true,
+                  )
               ],
             );
             break;
@@ -300,10 +302,7 @@ class MainScreen extends StatelessWidget {
               appLayout: prefState.appLayout,
               suggestedLayout: AppLayout.desktop,
               child: Row(children: <Widget>[
-                if (prefState.showMenu) ...[
-                  MenuDrawerBuilder(),
-                  _CustomDivider(),
-                ],
+                if (prefState.showMenu) MenuDrawerBuilder(),
                 Expanded(
                     child: AppBorder(
                   child: screen,
@@ -465,7 +464,6 @@ class SettingsScreens extends StatelessWidget {
         child: SettingsScreenBuilder(),
         flex: 2,
       ),
-      _CustomDivider(),
       Expanded(
         flex: 3,
         child: AppBorder(
@@ -473,10 +471,11 @@ class SettingsScreens extends StatelessWidget {
           isLeft: true,
         ),
       ),
-      if (prefState.showHistory) ...[
-        _CustomDivider(),
-        HistoryDrawerBuilder(),
-      ],
+      if (prefState.showHistory)
+        AppBorder(
+          child: HistoryDrawerBuilder(),
+          isLeft: true,
+        ),
     ]);
   }
 }
@@ -599,7 +598,6 @@ class EntityScreens extends StatelessWidget {
           ),
           flex: listFlex,
         ),
-        _CustomDivider(),
         if (prefState.isModuleList || isPreviewShown)
           Expanded(
             flex: previewFlex,
@@ -608,13 +606,11 @@ class EntityScreens extends StatelessWidget {
               isLeft: true,
             ),
           ),
-        if (prefState.showHistory) ...[
-          _CustomDivider(),
+        if (prefState.showHistory)
           AppBorder(
             child: HistoryDrawerBuilder(),
             isLeft: true,
           ),
-        ],
       ],
     );
   }
@@ -637,18 +633,6 @@ class BlankScreen extends StatelessWidget {
         color: Theme.of(context).cardColor,
         child: HelpText(message ?? ''),
       ),
-    );
-  }
-}
-
-class _CustomDivider extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    //VerticalDivider(width: isDarkMode(context) ? 1 : .5, color: Colors.black),
-    return Container(
-      width: .5,
-      height: double.infinity,
-      color: Colors.black38,
     );
   }
 }
@@ -690,8 +674,8 @@ class _EntityFilter extends StatelessWidget {
                   leading: IconButton(
                     tooltip: localization.showSidebar,
                     icon: Icon(Icons.chrome_reader_mode),
-                    onPressed: () => store
-                        .dispatch(UserPreferencesChanged(showFilterSidebar: true)),
+                    onPressed: () => store.dispatch(
+                        UserPreferencesChanged(showFilterSidebar: true)),
                   ),
                   title: Align(
                     alignment: Alignment.centerLeft,
