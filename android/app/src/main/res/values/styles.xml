@@ -8,4 +8,9 @@
         <!-- https://github.com/flutter/flutter/issues/16810#issuecomment-416962229 -->
         <item name="android:defaultFocusHighlightEnabled">false</item>
     </style>
+
+
+    <style name="NormalTheme" parent="@android:style/Theme.Black.NoTitleBar">
+        <item name="android:windowBackground">@drawable/launch_background</item>
+    </style>
 </resources>
