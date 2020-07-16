@@ -52,14 +52,7 @@ class ViewScaffold extends StatelessWidget {
         leading = IconButton(
           icon: Icon(Icons.clear),
           onPressed: () {
-            if (state.prefState.alwaysShowFilterSidebar) {
-              store.dispatch(FilterByEntity(
-                entityType: state.uiState.filterEntityType,
-                entityId: state.uiState.filterEntityId,
-              ));
-            } else {
-              store.dispatch(UserPreferencesChanged(showFilterSidebar: false));
-            }
+            store.dispatch(UserPreferencesChanged(showFilterSidebar: false));
           },
         );
       } else if (isSettings) {

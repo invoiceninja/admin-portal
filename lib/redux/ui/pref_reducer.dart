@@ -52,8 +52,6 @@ PrefState prefReducer(
     ..enableDarkMode = darkModeReducer(state.enableDarkMode, action)
     ..showFilterSidebar =
         showFilterSidebarReducer(state.showFilterSidebar, action)
-    ..alwaysShowFilterSidebar =
-        alwaysShowFilterSidebarReducer(state.alwaysShowFilterSidebar, action)
     ..longPressSelectionIsDefault =
         longPressReducer(state.longPressSelectionIsDefault, action)
     ..autoStartTasks = autoStartTasksReducer(state.autoStartTasks, action)
@@ -143,12 +141,6 @@ Reducer<bool> emailPaymentReducer = combineReducers([
 Reducer<bool> darkModeReducer = combineReducers([
   TypedReducer<bool, UserPreferencesChanged>((enableDarkMode, action) {
     return action.enableDarkMode ?? enableDarkMode;
-  }),
-]);
-
-Reducer<bool> alwaysShowFilterSidebarReducer = combineReducers([
-  TypedReducer<bool, UserPreferencesChanged>((value, action) {
-    return action.alwaysShowFilterSidebar ?? value;
   }),
 ]);
 

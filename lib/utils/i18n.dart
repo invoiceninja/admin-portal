@@ -15,7 +15,6 @@ mixin LocalizationsProvider on LocaleCodeAware {
   static final Map<String, Map<String, String>> _localizedValues = {
     'en': {
       // STARTER: lang key - do not remove comment
-      'always_show_sidebar': 'Always Show Sidebar',
       'show_sidebar': 'Show Sidebar',
       'hide_sidebar': 'Hide Sidebar',
       'event_type': 'Event Type',
@@ -38771,9 +38770,6 @@ mixin LocalizationsProvider on LocaleCodeAware {
   String get showSidebar => _localizedValues[localeCode]['show_sidebar'] ?? '';
 
   String get hideSidebar => _localizedValues[localeCode]['hide_sidebar'] ?? '';
-
-  String get alwaysShowSidebar =>
-      _localizedValues[localeCode]['always_show_sidebar'] ?? '';
 
   String lookup(String key) {
     final lookupKey = toSnakeCase(key);

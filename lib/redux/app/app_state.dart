@@ -592,7 +592,7 @@ abstract class AppState implements Built<AppState, AppStateBuilder> {
 
   bool get isMenuCollapsed =>
       (prefState.isNotMobile &&
-          prefState.isFilterSidebarShown &&
+          prefState.showFilterSidebar &&
           prefState.showMenu &&
           uiState.filterEntityType != null) ||
       prefState.isMenuCollapsed;

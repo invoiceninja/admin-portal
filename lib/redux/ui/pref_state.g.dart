@@ -138,9 +138,6 @@ class _$PrefStateSerializer implements StructuredSerializer<PrefState> {
       'showFilterSidebar',
       serializers.serialize(object.showFilterSidebar,
           specifiedType: const FullType(bool)),
-      'alwaysShowFilterSidebar',
-      serializers.serialize(object.alwaysShowFilterSidebar,
-          specifiedType: const FullType(bool)),
       'longPressSelectionIsDefault',
       serializers.serialize(object.longPressSelectionIsDefault,
           specifiedType: const FullType(bool)),
@@ -210,10 +207,6 @@ class _$PrefStateSerializer implements StructuredSerializer<PrefState> {
           break;
         case 'showFilterSidebar':
           result.showFilterSidebar = serializers.deserialize(value,
-              specifiedType: const FullType(bool)) as bool;
-          break;
-        case 'alwaysShowFilterSidebar':
-          result.alwaysShowFilterSidebar = serializers.deserialize(value,
               specifiedType: const FullType(bool)) as bool;
           break;
         case 'longPressSelectionIsDefault':
@@ -440,8 +433,6 @@ class _$PrefState extends PrefState {
   @override
   final bool showFilterSidebar;
   @override
-  final bool alwaysShowFilterSidebar;
-  @override
   final bool longPressSelectionIsDefault;
   @override
   final bool requireAuthentication;
@@ -467,7 +458,6 @@ class _$PrefState extends PrefState {
       this.isHistoryVisible,
       this.enableDarkMode,
       this.showFilterSidebar,
-      this.alwaysShowFilterSidebar,
       this.longPressSelectionIsDefault,
       this.requireAuthentication,
       this.emailPayment,
@@ -501,10 +491,6 @@ class _$PrefState extends PrefState {
     }
     if (showFilterSidebar == null) {
       throw new BuiltValueNullFieldError('PrefState', 'showFilterSidebar');
-    }
-    if (alwaysShowFilterSidebar == null) {
-      throw new BuiltValueNullFieldError(
-          'PrefState', 'alwaysShowFilterSidebar');
     }
     if (longPressSelectionIsDefault == null) {
       throw new BuiltValueNullFieldError(
@@ -547,7 +533,6 @@ class _$PrefState extends PrefState {
         isHistoryVisible == other.isHistoryVisible &&
         enableDarkMode == other.enableDarkMode &&
         showFilterSidebar == other.showFilterSidebar &&
-        alwaysShowFilterSidebar == other.alwaysShowFilterSidebar &&
         longPressSelectionIsDefault == other.longPressSelectionIsDefault &&
         requireAuthentication == other.requireAuthentication &&
         emailPayment == other.emailPayment &&
@@ -574,22 +559,20 @@ class _$PrefState extends PrefState {
                                                     $jc(
                                                         $jc(
                                                             $jc(
-                                                                $jc(
-                                                                    0,
-                                                                    appLayout
-                                                                        .hashCode),
-                                                                moduleLayout
+                                                                0,
+                                                                appLayout
                                                                     .hashCode),
-                                                            menuSidebarMode
+                                                            moduleLayout
                                                                 .hashCode),
-                                                        historySidebarMode
+                                                        menuSidebarMode
                                                             .hashCode),
-                                                    isPreviewVisible.hashCode),
-                                                isMenuVisible.hashCode),
-                                            isHistoryVisible.hashCode),
-                                        enableDarkMode.hashCode),
-                                    showFilterSidebar.hashCode),
-                                alwaysShowFilterSidebar.hashCode),
+                                                    historySidebarMode
+                                                        .hashCode),
+                                                isPreviewVisible.hashCode),
+                                            isMenuVisible.hashCode),
+                                        isHistoryVisible.hashCode),
+                                    enableDarkMode.hashCode),
+                                showFilterSidebar.hashCode),
                             longPressSelectionIsDefault.hashCode),
                         requireAuthentication.hashCode),
                     emailPayment.hashCode),
@@ -610,7 +593,6 @@ class _$PrefState extends PrefState {
           ..add('isHistoryVisible', isHistoryVisible)
           ..add('enableDarkMode', enableDarkMode)
           ..add('showFilterSidebar', showFilterSidebar)
-          ..add('alwaysShowFilterSidebar', alwaysShowFilterSidebar)
           ..add('longPressSelectionIsDefault', longPressSelectionIsDefault)
           ..add('requireAuthentication', requireAuthentication)
           ..add('emailPayment', emailPayment)
@@ -668,11 +650,6 @@ class PrefStateBuilder implements Builder<PrefState, PrefStateBuilder> {
   set showFilterSidebar(bool showFilterSidebar) =>
       _$this._showFilterSidebar = showFilterSidebar;
 
-  bool _alwaysShowFilterSidebar;
-  bool get alwaysShowFilterSidebar => _$this._alwaysShowFilterSidebar;
-  set alwaysShowFilterSidebar(bool alwaysShowFilterSidebar) =>
-      _$this._alwaysShowFilterSidebar = alwaysShowFilterSidebar;
-
   bool _longPressSelectionIsDefault;
   bool get longPressSelectionIsDefault => _$this._longPressSelectionIsDefault;
   set longPressSelectionIsDefault(bool longPressSelectionIsDefault) =>
@@ -716,7 +693,6 @@ class PrefStateBuilder implements Builder<PrefState, PrefStateBuilder> {
       _isHistoryVisible = _$v.isHistoryVisible;
       _enableDarkMode = _$v.enableDarkMode;
       _showFilterSidebar = _$v.showFilterSidebar;
-      _alwaysShowFilterSidebar = _$v.alwaysShowFilterSidebar;
       _longPressSelectionIsDefault = _$v.longPressSelectionIsDefault;
       _requireAuthentication = _$v.requireAuthentication;
       _emailPayment = _$v.emailPayment;
@@ -756,7 +732,6 @@ class PrefStateBuilder implements Builder<PrefState, PrefStateBuilder> {
               isHistoryVisible: isHistoryVisible,
               enableDarkMode: enableDarkMode,
               showFilterSidebar: showFilterSidebar,
-              alwaysShowFilterSidebar: alwaysShowFilterSidebar,
               longPressSelectionIsDefault: longPressSelectionIsDefault,
               requireAuthentication: requireAuthentication,
               emailPayment: emailPayment,

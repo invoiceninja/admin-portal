@@ -363,7 +363,7 @@ class _DrawerTileState extends State<DrawerTile> {
 
     final isSelected = uiState.currentRoute.startsWith('/$route') &&
         (state.uiState.filterEntityType == null ||
-            !state.prefState.isFilterSidebarShown);
+            !state.prefState.showFilterSidebar);
 
     final textColor = Theme.of(context)
         .textTheme
@@ -630,7 +630,7 @@ class SidebarFooterCollapsed extends StatelessWidget {
       width: double.infinity,
       color: Theme.of(context).cardColor,
       child: state.uiState.filterEntityType != null &&
-              state.prefState.isFilterSidebarShown
+              state.prefState.showFilterSidebar
           ? PopupMenuButton<String>(
               icon: isUpdateAvailable
                   ? Icon(Icons.warning, color: Theme.of(context).accentColor)

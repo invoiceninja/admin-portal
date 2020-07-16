@@ -90,7 +90,7 @@ class MainScreen extends StatelessWidget {
         }
       } else {
         bool editingFilterEntity = false;
-        if (prefState.isFilterSidebarShown &&
+        if (prefState.showFilterSidebar &&
             uiState.filterEntityId != null &&
             subRoute == '/edit') {
           if (mainRoute == '/${uiState.filterEntityType}') {
@@ -535,7 +535,7 @@ class EntityScreens extends StatelessWidget {
     Widget topFilterChild;
 
     if (uiState.filterEntityType != null) {
-      if (prefState.isFilterSidebarShown) {
+      if (prefState.showFilterSidebar) {
         switch (uiState.filterEntityType) {
           case EntityType.client:
             leftFilterChild = editingFIlterEntity
@@ -569,7 +569,7 @@ class EntityScreens extends StatelessWidget {
     topFilterChild = _EntityFilter(
       show: uiState.filterEntityType != null,
     );
-    
+
     return Row(
       children: <Widget>[
         if (leftFilterChild != null)
@@ -671,7 +671,7 @@ class _EntityFilter extends StatelessWidget {
                   color: Theme.of(context).cardColor,
                 )
               : AppBar(
-                  leading: state.prefState.isFilterSidebarShown
+                  leading: state.prefState.showFilterSidebar
                       ? null
                       : IconButton(
                           tooltip: localization.showSidebar,
@@ -684,7 +684,7 @@ class _EntityFilter extends StatelessWidget {
                     alignment: Alignment.centerLeft,
                     child: FlatButton(
                       padding: EdgeInsets.only(
-                          left: state.prefState.isFilterSidebarShown ? 4 : 0),
+                          left: state.prefState.showFilterSidebar ? 4 : 0),
                       child: Text(
                         '${localization.lookup('$filterEntityType')}  ›  ${filterEntity.listDisplayName}',
                         style: TextStyle(fontSize: 17),

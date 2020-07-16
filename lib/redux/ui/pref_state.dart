@@ -22,7 +22,6 @@ abstract class PrefState implements Built<PrefState, PrefStateBuilder> {
       emailPayment: false,
       autoStartTasks: false,
       showFilterSidebar: false,
-      alwaysShowFilterSidebar: false,
       longPressSelectionIsDefault: false,
       addDocumentsToInvoice: false,
       companyPrefs: BuiltList(
@@ -56,8 +55,6 @@ abstract class PrefState implements Built<PrefState, PrefStateBuilder> {
   bool get enableDarkMode;
 
   bool get showFilterSidebar;
-
-  bool get alwaysShowFilterSidebar;
 
   bool get longPressSelectionIsDefault;
 
@@ -101,8 +98,6 @@ abstract class PrefState implements Built<PrefState, PrefStateBuilder> {
       isNotMobile &&
       menuSidebarMode == AppSidebarMode.collapse &&
       !isMenuVisible;
-
-  bool get isFilterSidebarShown => alwaysShowFilterSidebar || showFilterSidebar;
 
   static Serializer<PrefState> get serializer => _$prefStateSerializer;
 }
