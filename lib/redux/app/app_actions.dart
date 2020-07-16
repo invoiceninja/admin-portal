@@ -1167,7 +1167,8 @@ void selectEntity({
     viewEntity(context: context, entity: entity);
   } else if (isDesktop(context) &&
       !entity.entityType.isSetting &&
-      state.getUIState(entity.entityType).selectedId == entity.id) {
+      (state.getUIState(entity.entityType).selectedId == entity.id &&
+          state.prefState.isPreviewVisible)) {
     editEntity(context: context, entity: entity);
   } else {
     viewEntity(context: context, entity: entity);
