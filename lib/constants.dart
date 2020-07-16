@@ -18,15 +18,12 @@ const String kAppProductionUrl =
     'https://staging.invoicing.co'; // TODO remove staging
 const String kAppStagingUrl = 'https://staging.invoicing.co';
 const String kAppDemoUrl = 'https://demo.invoiceninja.com';
-
 const String kWhiteLabelUrl =
     'https://app.invoiceninja.com/buy_now/?account_key=AsFmBAeLXF0IKf7tmi0eiyZfmWW9hxMT&product_id=3';
-
 const String kAppPlansURL =
     'https://www.invoiceninja.com/invoicing-pricing-plans/';
 const String kPrivacyPolicyURL = 'https://www.invoiceninja.com/privacy-policy';
 const String kTermsOfServiceURL = 'https://www.invoiceninja.com/terms';
-
 const String kAppleStoreUrl =
     'https://itunes.apple.com/us/app/invoice-ninja/id1435514417?ls=1&mt=8';
 const String kGoogleStoreUrl =
@@ -34,6 +31,14 @@ const String kGoogleStoreUrl =
 const String kCapterralUrl = 'https://www.capterra.com/p/145215/Invoice-Ninja/';
 const String kCronsHelpUrl =
     'https://invoiceninja.github.io/selfhost.html#cron-configuration';
+
+enum AppEnvironment {
+  hosted,
+  selfhosted,
+  demo,
+  staging,
+  develop,
+}
 
 const String kSharedPrefs = 'shared_prefs';
 const String kSharedPrefAppVersion = 'app_version';

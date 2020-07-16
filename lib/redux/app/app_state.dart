@@ -557,18 +557,18 @@ abstract class AppState implements Built<AppState, AppStateBuilder> {
     }
   }
 
-  String get environment {
+  AppEnvironment get environment {
     if (isHosted) {
       final url = cleanApiUrl(authState.url);
       if (url == kAppDemoUrl) {
-        return 'demo';
+        return AppEnvironment.demo;
       } else if (url == kAppStagingUrl) {
-        return 'staging';
+        return AppEnvironment.staging;
       } else {
-        return 'hosted';
+        return AppEnvironment.hosted;
       }
     } else {
-      return 'selfhosted';
+      return AppEnvironment.selfhosted;
     }
   }
 
