@@ -85,7 +85,7 @@ class _VendorEditContactsState extends State<VendorEditContacts> {
         ..addAll(contacts)
         ..add(Padding(
           padding: const EdgeInsets.symmetric(horizontal: 16.0),
-          child: ElevatedButton(
+          child: AppButton(
             label: localization.addContact.toUpperCase(),
             onPressed: () => viewModel.onAddContactPressed(),
           ),
@@ -233,7 +233,7 @@ class VendorContactEditDetailsState extends State<VendorContactEditDetails> {
                       Expanded(
                         child: Container(),
                       ),
-                      ElevatedButton(
+                      AppButton(
                         color: Colors.red,
                         iconData: Icons.delete,
                         label: localization.remove,
@@ -248,7 +248,7 @@ class VendorContactEditDetailsState extends State<VendorContactEditDetails> {
                       SizedBox(
                         width: 10.0,
                       ),
-                      ElevatedButton(
+                      AppButton(
                         iconData: Icons.check_circle,
                         label: localization.done,
                         onPressed: () {

@@ -46,7 +46,7 @@ class _GroupViewState extends State<GroupView> {
         children: <Widget>[
           Padding(
             padding: const EdgeInsets.all(16),
-            child: ElevatedButton(
+            child: AppButton(
               label: localization.configureSettings.toUpperCase(),
               iconData: Icons.settings,
               onPressed: () =>

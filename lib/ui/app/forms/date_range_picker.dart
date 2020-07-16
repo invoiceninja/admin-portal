@@ -151,7 +151,7 @@ class _DateRangePickerState extends State<DateRangePicker> {
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.end,
                       children: <Widget>[
-                        ElevatedButton(
+                        AppButton(
                           label: localization.done,
                           onPressed: () {
                             // TODO replace with form validation

@@ -127,7 +127,7 @@ class ClientEditShippingAddressState extends State<ClientEditShippingAddress> {
       client.hasBillingAddress && client.areAddressesDifferent
           ? Padding(
               padding: const EdgeInsets.symmetric(horizontal: 16.0),
-              child: ElevatedButton(
+              child: AppButton(
                 label: localization.copyBilling.toUpperCase(),
                 onPressed: () {
                   viewModel.copyBillingAddress();

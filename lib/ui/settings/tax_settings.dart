@@ -119,7 +119,7 @@ class _TaxSettingsState extends State<TaxSettings> {
           if (!state.uiState.settingsUIState.isFiltered)
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 16.0),
-              child: ElevatedButton(
+              child: AppButton(
                 iconData: Icons.settings,
                 label: localization.configureRates.toUpperCase(),
                 onPressed: () => viewModel.onConfigureRatesPressed(context),

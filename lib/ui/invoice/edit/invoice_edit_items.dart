@@ -208,7 +208,7 @@ class ItemEditDetailsState extends State<ItemEditDetails> {
               mainAxisAlignment: MainAxisAlignment.end,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: <Widget>[
-                ElevatedButton(
+                AppButton(
                   color: Colors.red,
                   iconData: Icons.delete,
                   label: localization.remove,
@@ -220,7 +220,7 @@ class ItemEditDetailsState extends State<ItemEditDetails> {
                 SizedBox(
                   width: 10.0,
                 ),
-                ElevatedButton(
+                AppButton(
                   iconData: Icons.check_circle,
                   label: localization.done,
                   onPressed: () {

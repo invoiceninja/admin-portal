@@ -25,7 +25,7 @@ class ProgressButton extends StatelessWidget {
               child: CircularProgressIndicator(),
             ),
           )
-        : ElevatedButton(
+        : AppButton(
             width: double.infinity,
             label: label,
             onPressed: () => onPressed(),

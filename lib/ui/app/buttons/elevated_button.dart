@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:invoiceninja_flutter/ui/app/icon_text.dart';
 
-class ElevatedButton extends StatelessWidget {
-  const ElevatedButton({
+class AppButton extends StatelessWidget {
+  const AppButton({
     @required this.label,
     @required this.onPressed,
     this.iconData,

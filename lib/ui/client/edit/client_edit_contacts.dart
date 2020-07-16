@@ -89,7 +89,7 @@ class _ClientEditContactsState extends State<ClientEditContacts> {
         ..addAll(contacts)
         ..add(Padding(
           padding: const EdgeInsets.symmetric(horizontal: 16.0),
-          child: ElevatedButton(
+          child: AppButton(
             label: localization.addContact.toUpperCase(),
             onPressed: () => viewModel.onAddContactPressed(),
           ),
@@ -256,7 +256,7 @@ class ContactEditDetailsState extends State<ContactEditDetails> {
                       Expanded(
                         child: Container(),
                       ),
-                      ElevatedButton(
+                      AppButton(
                         color: Colors.red,
                         iconData: Icons.delete,
                         label: localization.remove,
@@ -271,7 +271,7 @@ class ContactEditDetailsState extends State<ContactEditDetails> {
                       SizedBox(
                         width: 10.0,
                       ),
-                      ElevatedButton(
+                      AppButton(
                         iconData: Icons.check_circle,
                         label: localization.done,
                         onPressed: () {

@@ -224,7 +224,7 @@ class _UpgradeDialogState extends State<UpgradeDialog> {
                 onTap: () => redeemPurchase(purchase),
               )),
         if (_purchases != null)
-          ElevatedButton(
+          AppButton(
             label: _showPastPurchases
                 ? localization.back
                 : localization.pastPurchases,
