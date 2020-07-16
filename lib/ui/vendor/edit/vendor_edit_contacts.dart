@@ -147,7 +147,8 @@ class VendorContactEditDetails extends StatefulWidget {
   final bool areButtonsVisible;
 
   @override
-  VendorContactEditDetailsState createState() => VendorContactEditDetailsState();
+  VendorContactEditDetailsState createState() =>
+      VendorContactEditDetailsState();
 }
 
 class VendorContactEditDetailsState extends State<VendorContactEditDetails> {

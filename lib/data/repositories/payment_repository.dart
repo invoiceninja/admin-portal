@@ -14,8 +14,7 @@ class PaymentRepository {
 
   final WebClient webClient;
 
-  Future<BuiltList<PaymentEntity>> loadList(
-      Credentials credentials) async {
+  Future<BuiltList<PaymentEntity>> loadList(Credentials credentials) async {
     final url = credentials.url + '/payments?include=paymentables';
 
     final dynamic response = await webClient.get(url, credentials.token);

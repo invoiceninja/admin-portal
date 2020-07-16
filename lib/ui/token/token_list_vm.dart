@@ -32,7 +32,6 @@ class TokenListBuilder extends StatelessWidget {
             presenter: TokenPresenter(),
             state: viewModel.state,
             entityList: viewModel.tokenList,
-            onEntityTap: viewModel.onTokenTap,
             tableColumns: viewModel.tableColumns,
             onRefreshed: viewModel.onRefreshed,
             onClearEntityFilterPressed: viewModel.onClearEntityFilterPressed,
@@ -59,20 +58,6 @@ class TokenListBuilder extends StatelessWidget {
                     handleTokenAction(context, [token], action);
                   }
                 },
-                onTap: () => viewModel.onTokenTap(context, token),
-                onLongPress: () async {
-                  final longPressIsSelection =
-                      state.prefState.longPressSelectionIsDefault ?? true;
-                  if (longPressIsSelection && !isInMultiselect) {
-                    handleTokenAction(
-                        context, [token], EntityAction.toggleMultiselect);
-                  } else {
-                    showEntityActionsDialog(
-                      entities: [token],
-                      context: context,
-                    );
-                  }
-                },
                 isChecked: isInMultiselect && listState.isSelected(token.id),
               );
             });
@@ -89,7 +74,6 @@ class TokenListVM {
     @required this.tokenMap,
     @required this.filter,
     @required this.isLoading,
-    @required this.onTokenTap,
     @required this.listState,
     @required this.onRefreshed,
     @required this.onEntityAction,
@@ -126,13 +110,6 @@ class TokenListVM {
           context: context,
           entityId: state.tokenListState.filterEntityId,
           entityType: state.tokenListState.filterEntityType),
-      onTokenTap: (context, token) {
-        if (store.state.userListState.isInMultiselect()) {
-          handleTokenAction(context, [token], EntityAction.toggleMultiselect);
-        } else {
-          viewEntity(context: context, entity: token);
-        }
-      },
       onEntityAction: (BuildContext context, List<BaseEntity> tokens,
               EntityAction action) =>
           handleTokenAction(context, tokens, action),
@@ -151,7 +128,6 @@ class TokenListVM {
   final ListUIState listState;
   final String filter;
   final bool isLoading;
-  final Function(BuildContext, BaseEntity) onTokenTap;
   final Function(BuildContext) onRefreshed;
   final Function(BuildContext, List<BaseEntity>, EntityAction) onEntityAction;
   final Function onClearEntityFilterPressed;

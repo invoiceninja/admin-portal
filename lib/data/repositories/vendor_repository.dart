@@ -25,8 +25,7 @@ class VendorRepository {
     return vendorResponse.data;
   }
 
-  Future<BuiltList<VendorEntity>> loadList(
-      Credentials credentials) async {
+  Future<BuiltList<VendorEntity>> loadList(Credentials credentials) async {
     final url = credentials.url + '/vendors?';
 
     final dynamic response = await webClient.get(url, credentials.token);

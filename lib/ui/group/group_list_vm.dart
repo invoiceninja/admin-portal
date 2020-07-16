@@ -32,7 +32,6 @@ class GroupListBuilder extends StatelessWidget {
             //presenter: ClientPresenter(),
             state: viewModel.state,
             entityList: viewModel.groupList,
-            onEntityTap: viewModel.onGroupTap,
             //tableColumns: viewModel.tableColumns,
             onRefreshed: viewModel.onRefreshed,
             onClearEntityFilterPressed: viewModel.onClearEntityFilterPressed,
@@ -54,22 +53,11 @@ class GroupListBuilder extends StatelessWidget {
                 user: viewModel.userCompany.user,
                 filter: viewModel.filter,
                 group: group,
-                onTap: () => viewModel.onGroupTap(context, group),
                 onEntityAction: (EntityAction action) {
                   if (action == EntityAction.more) {
                     showDialog();
                   } else {
                     handleGroupAction(context, [group], action);
-                  }
-                },
-                onLongPress: () async {
-                  final longPressIsSelection =
-                      state.prefState.longPressSelectionIsDefault ?? true;
-                  if (longPressIsSelection && !isInMultiselect) {
-                    handleGroupAction(
-                        context, [group], EntityAction.toggleMultiselect);
-                  } else {
-                    showDialog();
                   }
                 },
                 isChecked: isInMultiselect && listState.isSelected(group.id),
@@ -88,7 +76,6 @@ class GroupListVM {
     @required this.groupMap,
     @required this.filter,
     @required this.isLoading,
-    @required this.onGroupTap,
     @required this.listState,
     @required this.onRefreshed,
     @required this.onClearEntityFilterPressed,
@@ -123,13 +110,6 @@ class GroupListVM {
           context: context,
           entityId: state.groupListState.filterEntityId,
           entityType: state.groupListState.filterEntityType),
-      onGroupTap: (context, group) {
-        if (store.state.groupListState.isInMultiselect()) {
-          handleGroupAction(context, [group], EntityAction.toggleMultiselect);
-        } else {
-          viewEntity(context: context, entity: group);
-        }
-      },
       onRefreshed: (context) => _handleRefresh(context),
       onSortColumn: (field) => store.dispatch(SortGroups(field)),
     );
@@ -142,7 +122,6 @@ class GroupListVM {
   final ListUIState listState;
   final String filter;
   final bool isLoading;
-  final Function(BuildContext, BaseEntity) onGroupTap;
   final Function(BuildContext) onRefreshed;
   final Function onClearEntityFilterPressed;
   final Function(BuildContext) onViewEntityFilterPressed;

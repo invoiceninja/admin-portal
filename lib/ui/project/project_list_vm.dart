@@ -17,7 +17,6 @@ import 'package:invoiceninja_flutter/ui/project/project_list_item.dart';
 import 'package:invoiceninja_flutter/ui/project/project_presenter.dart';
 import 'package:invoiceninja_flutter/utils/completers.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
-import 'package:invoiceninja_flutter/utils/platforms.dart';
 import 'package:redux/redux.dart';
 
 class ProjectListBuilder extends StatelessWidget {
@@ -33,7 +32,6 @@ class ProjectListBuilder extends StatelessWidget {
             presenter: ProjectPresenter(),
             state: viewModel.state,
             entityList: viewModel.projectList,
-            onEntityTap: viewModel.onProjectTap,
             tableColumns: viewModel.tableColumns,
             onRefreshed: viewModel.onRefreshed,
             onClearEntityFilterPressed: viewModel.onClearEntityFilterPressed,
@@ -59,22 +57,11 @@ class ProjectListBuilder extends StatelessWidget {
                 filter: viewModel.filter,
                 project: project,
                 client: viewModel.clientMap[project.clientId] ?? ClientEntity(),
-                onTap: () => viewModel.onProjectTap(context, project),
                 onEntityAction: (EntityAction action) {
                   if (action == EntityAction.more) {
                     showDialog();
                   } else {
                     handleProjectAction(context, [project], action);
-                  }
-                },
-                onLongPress: () async {
-                  final longPressIsSelection =
-                      state.prefState.longPressSelectionIsDefault ?? true;
-                  if (longPressIsSelection && !isInMultiselect) {
-                    handleProjectAction(
-                        context, [project], EntityAction.toggleMultiselect);
-                  } else {
-                    showDialog();
                   }
                 },
                 isChecked: isInMultiselect && listState.isSelected(project.id),
@@ -94,7 +81,6 @@ class ProjectListVM {
     @required this.listState,
     @required this.filter,
     @required this.isLoading,
-    @required this.onProjectTap,
     @required this.onRefreshed,
     @required this.tableColumns,
     @required this.onClearEntityFilterPressed,
@@ -134,19 +120,6 @@ class ProjectListVM {
           context: context,
           entityId: state.projectListState.filterEntityId,
           entityType: state.projectListState.filterEntityType),
-      onProjectTap: (context, project) {
-        if (store.state.projectListState.isInMultiselect()) {
-          handleProjectAction(
-              context, [project], EntityAction.toggleMultiselect);
-        } else if (isDesktop(context) && state.uiState.isEditing) {
-          viewEntity(context: context, entity: project);
-        } else if (isDesktop(context) &&
-            state.projectUIState.selectedId == project.id) {
-          editEntity(context: context, entity: project);
-        } else {
-          viewEntity(context: context, entity: project);
-        }
-      },
       onRefreshed: (context) => _handleRefresh(context),
       tableColumns:
           state.userCompany.settings.getTableColumns(EntityType.project) ??
@@ -162,7 +135,6 @@ class ProjectListVM {
   final ListUIState listState;
   final String filter;
   final bool isLoading;
-  final Function(BuildContext, BaseEntity) onProjectTap;
   final Function(BuildContext) onRefreshed;
   final Function onClearEntityFilterPressed;
   final Function(BuildContext) onViewEntityFilterPressed;

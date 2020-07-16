@@ -25,8 +25,7 @@ class GroupRepository {
     return groupResponse.data;
   }
 
-  Future<BuiltList<GroupEntity>> loadList(
-      Credentials credentials) async {
+  Future<BuiltList<GroupEntity>> loadList(Credentials credentials) async {
     final url = credentials.url + '/group_settings?';
 
     final dynamic response = await webClient.get(url, credentials.token);

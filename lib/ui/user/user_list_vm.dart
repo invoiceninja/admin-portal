@@ -31,7 +31,6 @@ class UserListBuilder extends StatelessWidget {
             entityType: EntityType.user,
             state: viewModel.state,
             entityList: viewModel.userList,
-            onEntityTap: viewModel.onUserTap,
             //tableColumns: viewModel.tableColumns,
             onRefreshed: viewModel.onRefreshed,
             onClearEntityFilterPressed: viewModel.onClearEntityFilterPressed,
@@ -49,7 +48,6 @@ class UserListBuilder extends StatelessWidget {
               return UserListItem(
                 user: user,
                 filter: viewModel.filter,
-                onTap: () => viewModel.onUserTap(context, user),
                 onEntityAction: (EntityAction action) {
                   if (action == EntityAction.more) {
                     showDialog();
@@ -73,7 +71,6 @@ class UserListVM {
     @required this.userMap,
     @required this.filter,
     @required this.isLoading,
-    @required this.onUserTap,
     @required this.listState,
     @required this.onRefreshed,
     @required this.onClearEntityFilterPressed,
@@ -108,13 +105,6 @@ class UserListVM {
           context: context,
           entityId: state.userListState.filterEntityId,
           entityType: state.userListState.filterEntityType),
-      onUserTap: (context, user) {
-        if (store.state.userListState.isInMultiselect()) {
-          handleUserAction(context, [user], EntityAction.toggleMultiselect);
-        } else {
-          viewEntity(context: context, entity: user);
-        }
-      },
       onRefreshed: (context) => _handleRefresh(context),
       onSortColumn: (field) => store.dispatch(SortUsers(field)),
     );
@@ -127,7 +117,6 @@ class UserListVM {
   final ListUIState listState;
   final String filter;
   final bool isLoading;
-  final Function(BuildContext, BaseEntity) onUserTap;
   final Function(BuildContext) onRefreshed;
   final Function onClearEntityFilterPressed;
   final Function(BuildContext) onViewEntityFilterPressed;

@@ -237,7 +237,6 @@ Middleware<AppState> _loadGroups(GroupRepository repository) {
     final action = dynamicAction as LoadGroups;
     final AppState state = store.state;
 
-
     if (state.isLoading) {
       next(action);
       return;

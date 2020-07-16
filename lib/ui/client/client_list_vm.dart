@@ -16,7 +16,6 @@ import 'package:invoiceninja_flutter/ui/client/client_list_item.dart';
 import 'package:invoiceninja_flutter/ui/client/client_presenter.dart';
 import 'package:invoiceninja_flutter/utils/completers.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
-import 'package:invoiceninja_flutter/utils/platforms.dart';
 import 'package:redux/redux.dart';
 
 class ClientListBuilder extends StatelessWidget {
@@ -32,7 +31,6 @@ class ClientListBuilder extends StatelessWidget {
             presenter: ClientPresenter(),
             state: viewModel.state,
             entityList: viewModel.clientList,
-            onEntityTap: viewModel.onClientTap,
             tableColumns: viewModel.tableColumns,
             onRefreshed: viewModel.onRefreshed,
             onClearEntityFilterPressed: viewModel.onClearEntityFilterPressed,
@@ -59,20 +57,6 @@ class ClientListBuilder extends StatelessWidget {
                     handleClientAction(context, [client], action);
                   }
                 },
-                onTap: () => viewModel.onClientTap(context, client),
-                onLongPress: () async {
-                  final longPressIsSelection =
-                      state.prefState.longPressSelectionIsDefault ?? true;
-                  if (longPressIsSelection && !isInMultiselect) {
-                    handleClientAction(
-                        context, [client], EntityAction.toggleMultiselect);
-                  } else {
-                    showEntityActionsDialog(
-                      entities: [client],
-                      context: context,
-                    );
-                  }
-                },
                 isChecked: isInMultiselect && listState.isSelected(client.id),
               );
             });
@@ -88,7 +72,6 @@ class ClientListVM {
     @required this.clientMap,
     @required this.isLoading,
     @required this.filter,
-    @required this.onClientTap,
     @required this.onRefreshed,
     @required this.tableColumns,
     @required this.onEntityAction,
@@ -102,7 +85,6 @@ class ClientListVM {
   final BuiltMap<String, BaseEntity> clientMap;
   final String filter;
   final bool isLoading;
-  final Function(BuildContext, BaseEntity) onClientTap;
   final Function(BuildContext) onRefreshed;
   final Function(BuildContext, List<BaseEntity>, EntityAction) onEntityAction;
   final Function onClearEntityFilterPressed;
@@ -135,18 +117,6 @@ class ClientListVM {
       clientMap: state.clientState.map,
       isLoading: state.isLoading,
       filter: state.clientListState.filter,
-      onClientTap: (context, client) {
-        if (store.state.clientListState.isInMultiselect()) {
-          handleClientAction(context, [client], EntityAction.toggleMultiselect);
-        } else if (isDesktop(context) && state.uiState.isEditing) {
-          viewEntity(context: context, entity: client);
-        } else if (isDesktop(context) &&
-            state.clientUIState.selectedId == client.id) {
-          editEntity(context: context, entity: client);
-        } else {
-          viewEntity(context: context, entity: client);
-        }
-      },
       onRefreshed: (context) => _handleRefresh(context),
       onEntityAction: (BuildContext context, List<BaseEntity> client,
               EntityAction action) =>

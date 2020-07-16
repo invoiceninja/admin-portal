@@ -16,11 +16,11 @@ class QuoteListItem extends StatelessWidget {
   const QuoteListItem({
     @required this.user,
     @required this.onEntityAction,
-    @required this.onTap,
-    @required this.onLongPress,
     @required this.quote,
     @required this.client,
     @required this.filter,
+    this.onTap,
+    this.onLongPress,
     this.onCheckboxChanged,
     this.isChecked = false,
   });
@@ -74,10 +74,13 @@ class QuoteListItem extends StatelessWidget {
             builder: (BuildContext context, BoxConstraints constraints) {
           return constraints.maxWidth > kTableListWidthCutoff
               ? InkWell(
-                  onTap: isInMultiselect
-                      ? () => onEntityAction(EntityAction.toggleMultiselect)
-                      : onTap,
-                  onLongPress: onLongPress,
+                  onTap: () => onTap != null
+                      ? onTap()
+                      : selectEntity(entity: quote, context: context),
+                  onLongPress: () => onLongPress != null
+                      ? onLongPress()
+                      : selectEntity(
+                          entity: quote, context: context, longPress: true),
                   child: Padding(
                     padding: const EdgeInsets.only(
                       left: 12,
@@ -170,10 +173,13 @@ class QuoteListItem extends StatelessWidget {
                   ),
                 )
               : ListTile(
-                  onTap: isInMultiselect
-                      ? () => onEntityAction(EntityAction.toggleMultiselect)
-                      : onTap,
-                  onLongPress: onLongPress,
+                  onTap: () => onTap != null
+                      ? onTap()
+                      : selectEntity(entity: quote, context: context),
+                  onLongPress: () => onLongPress != null
+                      ? onLongPress()
+                      : selectEntity(
+                          entity: quote, context: context, longPress: true),
                   leading: showCheckbox
                       ? IgnorePointer(
                           ignoring: listUIState.isInMultiselect(),

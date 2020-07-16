@@ -16,7 +16,6 @@ import 'package:invoiceninja_flutter/ui/expense/expense_list_item.dart';
 import 'package:invoiceninja_flutter/ui/expense/expense_presenter.dart';
 import 'package:invoiceninja_flutter/utils/completers.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
-import 'package:invoiceninja_flutter/utils/platforms.dart';
 import 'package:redux/redux.dart';
 
 class ExpenseListBuilder extends StatelessWidget {
@@ -32,7 +31,6 @@ class ExpenseListBuilder extends StatelessWidget {
             presenter: ExpensePresenter(),
             state: viewModel.state,
             entityList: viewModel.expenseList,
-            onEntityTap: viewModel.onExpenseTap,
             tableColumns: viewModel.tableColumns,
             onRefreshed: viewModel.onRefreshed,
             onClearEntityFilterPressed: viewModel.onClearEntityFilterPressed,
@@ -59,22 +57,11 @@ class ExpenseListBuilder extends StatelessWidget {
                 expense: expense,
                 client: client,
                 vendor: vendor,
-                onTap: () => viewModel.onExpenseTap(context, expense),
                 onEntityAction: (EntityAction action) {
                   if (action == EntityAction.more) {
                     showDialog();
                   } else {
                     handleExpenseAction(context, [expense], action);
-                  }
-                },
-                onLongPress: () async {
-                  final longPressIsSelection =
-                      state.prefState.longPressSelectionIsDefault ?? true;
-                  if (longPressIsSelection && !isInMultiselect) {
-                    handleExpenseAction(
-                        context, [expense], EntityAction.toggleMultiselect);
-                  } else {
-                    showDialog();
                   }
                 },
                 isChecked:
@@ -94,7 +81,6 @@ class ExpenseListVM {
     @required this.expenseMap,
     @required this.filter,
     @required this.isLoading,
-    @required this.onExpenseTap,
     @required this.listState,
     @required this.onRefreshed,
     @required this.tableColumns,
@@ -135,19 +121,6 @@ class ExpenseListVM {
           context: context,
           entityId: state.expenseListState.filterEntityId,
           entityType: state.expenseListState.filterEntityType),
-      onExpenseTap: (context, expense) {
-        if (store.state.expenseListState.isInMultiselect()) {
-          handleExpenseAction(
-              context, [expense], EntityAction.toggleMultiselect);
-        } else if (isDesktop(context) && state.uiState.isEditing) {
-          viewEntity(context: context, entity: expense);
-        } else if (isDesktop(context) &&
-            state.expenseUIState.selectedId == expense.id) {
-          editEntity(context: context, entity: expense);
-        } else {
-          viewEntity(context: context, entity: expense);
-        }
-      },
       onRefreshed: (context) => _handleRefresh(context),
       tableColumns:
           state.userCompany.settings.getTableColumns(EntityType.expense) ??
@@ -163,7 +136,6 @@ class ExpenseListVM {
   final ListUIState listState;
   final String filter;
   final bool isLoading;
-  final Function(BuildContext, BaseEntity) onExpenseTap;
   final Function(BuildContext) onRefreshed;
   final Function onClearEntityFilterPressed;
   final Function(BuildContext) onViewEntityFilterPressed;

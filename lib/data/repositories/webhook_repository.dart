@@ -25,8 +25,7 @@ class WebhookRepository {
     return webhookResponse.data;
   }
 
-  Future<BuiltList<WebhookEntity>> loadList(
-      Credentials credentials) async {
+  Future<BuiltList<WebhookEntity>> loadList(Credentials credentials) async {
     final url = credentials.url + '/webhooks?';
 
     final dynamic response = await webClient.get(url, credentials.token);

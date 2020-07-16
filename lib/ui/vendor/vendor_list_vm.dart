@@ -16,7 +16,6 @@ import 'package:invoiceninja_flutter/ui/vendor/vendor_list_item.dart';
 import 'package:invoiceninja_flutter/ui/vendor/vendor_presenter.dart';
 import 'package:invoiceninja_flutter/utils/completers.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
-import 'package:invoiceninja_flutter/utils/platforms.dart';
 import 'package:redux/redux.dart';
 
 class VendorListBuilder extends StatelessWidget {
@@ -32,7 +31,6 @@ class VendorListBuilder extends StatelessWidget {
           presenter: VendorPresenter(),
           state: viewModel.state,
           entityList: viewModel.vendorList,
-          onEntityTap: viewModel.onVendorTap,
           tableColumns: viewModel.tableColumns,
           onRefreshed: viewModel.onRefreshed,
           onClearEntityFilterPressed: viewModel.onClearEntityFilterPressed,
@@ -54,22 +52,11 @@ class VendorListBuilder extends StatelessWidget {
               userCompany: viewModel.state.userCompany,
               filter: viewModel.filter,
               vendor: vendor,
-              onTap: () => viewModel.onVendorTap(context, vendor),
               onEntityAction: (EntityAction action) {
                 if (action == EntityAction.more) {
                   showDialog();
                 } else {
                   handleVendorAction(context, [vendor], action);
-                }
-              },
-              onLongPress: () async {
-                final longPressIsSelection =
-                    state.prefState.longPressSelectionIsDefault ?? true;
-                if (longPressIsSelection && !isInMultiselect) {
-                  handleVendorAction(
-                      context, [vendor], EntityAction.toggleMultiselect);
-                } else {
-                  showDialog();
                 }
               },
               isChecked: isInMultiselect && listUIState.isSelected(vendor.id),
@@ -88,7 +75,6 @@ class VendorListVM {
     @required this.vendorMap,
     @required this.filter,
     @required this.isLoading,
-    @required this.onVendorTap,
     @required this.listState,
     @required this.onRefreshed,
     @required this.tableColumns,
@@ -123,18 +109,6 @@ class VendorListVM {
           context: context,
           entityId: state.vendorListState.filterEntityId,
           entityType: state.vendorListState.filterEntityType),
-      onVendorTap: (context, vendor) {
-        if (store.state.vendorListState.isInMultiselect()) {
-          handleVendorAction(context, [vendor], EntityAction.toggleMultiselect);
-        } else if (isDesktop(context) && state.uiState.isEditing) {
-          viewEntity(context: context, entity: vendor);
-        } else if (isDesktop(context) &&
-            state.vendorUIState.selectedId == vendor.id) {
-          editEntity(context: context, entity: vendor);
-        } else {
-          viewEntity(context: context, entity: vendor);
-        }
-      },
       onRefreshed: (context) => _handleRefresh(context),
       tableColumns:
           state.userCompany.settings.getTableColumns(EntityType.vendor) ??
@@ -149,7 +123,6 @@ class VendorListVM {
   final ListUIState listState;
   final String filter;
   final bool isLoading;
-  final Function(BuildContext, BaseEntity) onVendorTap;
   final Function(BuildContext) onRefreshed;
   final Function onClearEntityFilterPressed;
   final Function(BuildContext) onViewEntityFilterPressed;

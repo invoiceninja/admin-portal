@@ -1,5 +1,6 @@
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:invoiceninja_flutter/data/models/payment_term_model.dart';
+import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/ui/app/entity_state_label.dart';
 import 'package:invoiceninja_flutter/utils/formatting.dart';
@@ -12,10 +13,10 @@ class PaymentTermListItem extends StatelessWidget {
   const PaymentTermListItem({
     @required this.user,
     @required this.onEntityAction,
-    @required this.onTap,
-    @required this.onLongPress,
     @required this.paymentTerm,
     @required this.filter,
+    this.onTap,
+    this.onLongPress,
     this.onCheckboxChanged,
     this.isChecked = false,
   });
@@ -56,10 +57,13 @@ class PaymentTermListItem extends StatelessWidget {
               : paymentTermUIState.selectedId),
       onEntityAction: onEntityAction,
       child: ListTile(
-        onTap: isInMultiselect
-            ? () => onEntityAction(EntityAction.toggleMultiselect)
-            : onTap,
-        onLongPress: onLongPress,
+        onTap: () => onTap != null
+            ? onTap()
+            : selectEntity(entity: paymentTerm, context: context),
+        onLongPress: () => onLongPress != null
+            ? onLongPress()
+            : selectEntity(
+                entity: paymentTerm, context: context, longPress: true),
         leading: showCheckbox
             ? IgnorePointer(
                 ignoring: listUIState.isInMultiselect(),

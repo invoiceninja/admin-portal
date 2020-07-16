@@ -16,7 +16,6 @@ import 'package:invoiceninja_flutter/ui/product/product_list_item.dart';
 import 'package:invoiceninja_flutter/ui/product/product_presenter.dart';
 import 'package:invoiceninja_flutter/utils/completers.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
-import 'package:invoiceninja_flutter/utils/platforms.dart';
 import 'package:redux/redux.dart';
 
 class ProductListBuilder extends StatelessWidget {
@@ -32,7 +31,6 @@ class ProductListBuilder extends StatelessWidget {
             presenter: ProductPresenter(),
             state: viewModel.state,
             entityList: viewModel.productList,
-            onEntityTap: viewModel.onProductTap,
             tableColumns: viewModel.tableColumns,
             onRefreshed: viewModel.onRefreshed,
             onSortColumn: viewModel.onSortColumn,
@@ -57,20 +55,6 @@ class ProductListBuilder extends StatelessWidget {
                     handleProductAction(context, [product], action);
                   }
                 },
-                onTap: () => viewModel.onProductTap(context, product),
-                onLongPress: () async {
-                  final longPressIsSelection =
-                      state.prefState.longPressSelectionIsDefault ?? true;
-                  if (longPressIsSelection && !isInMultiselect) {
-                    handleProductAction(
-                        context, [product], EntityAction.toggleMultiselect);
-                  } else {
-                    showEntityActionsDialog(
-                      entities: [product],
-                      context: context,
-                    );
-                  }
-                },
                 isChecked: isInMultiselect && listState.isSelected(product.id),
               );
             });
@@ -86,7 +70,6 @@ class ProductListVM {
     @required this.productMap,
     @required this.filter,
     @required this.isLoading,
-    @required this.onProductTap,
     @required this.onRefreshed,
     @required this.tableColumns,
     @required this.onSortColumn,
@@ -112,19 +95,6 @@ class ProductListVM {
       productMap: state.productState.map,
       isLoading: state.isLoading,
       filter: state.productUIState.listUIState.filter,
-      onProductTap: (context, product) {
-        if (store.state.productListState.isInMultiselect()) {
-          handleProductAction(
-              context, [product], EntityAction.toggleMultiselect);
-        } else if (isDesktop(context) && state.uiState.isEditing) {
-          viewEntity(context: context, entity: product);
-        } else if (isDesktop(context) &&
-            state.productUIState.selectedId == product.id) {
-          editEntity(context: context, entity: product);
-        } else {
-          viewEntity(context: context, entity: product);
-        }
-      },
       onRefreshed: (context) => _handleRefresh(context),
       tableColumns:
           state.userCompany.settings.getTableColumns(EntityType.product) ??
@@ -138,7 +108,6 @@ class ProductListVM {
   final BuiltMap<String, BaseEntity> productMap;
   final String filter;
   final bool isLoading;
-  final Function(BuildContext, BaseEntity) onProductTap;
   final Function(BuildContext) onRefreshed;
   final List<String> tableColumns;
   final Function(String) onSortColumn;

@@ -111,7 +111,6 @@ abstract class UserCompanyState
 
   TokenEntity get token => userCompany.token;
 
-
   bool get isStale {
     if (!isLoaded) {
       return true;

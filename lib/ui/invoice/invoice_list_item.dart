@@ -16,11 +16,11 @@ class InvoiceListItem extends StatelessWidget {
   const InvoiceListItem({
     @required this.user,
     @required this.onEntityAction,
-    @required this.onTap,
-    @required this.onLongPress,
     @required this.invoice,
     @required this.client,
     @required this.filter,
+    this.onTap,
+    this.onLongPress,
     this.onCheckboxChanged,
     this.isChecked = false,
   });
@@ -79,10 +79,13 @@ class InvoiceListItem extends StatelessWidget {
             builder: (BuildContext context, BoxConstraints constraints) {
           return constraints.maxWidth > kTableListWidthCutoff
               ? InkWell(
-                  onTap: isInMultiselect
-                      ? () => onEntityAction(EntityAction.toggleMultiselect)
-                      : onTap,
-                  onLongPress: onLongPress,
+                  onTap: () => onTap != null
+                      ? onTap()
+                      : selectEntity(entity: invoice, context: context),
+                  onLongPress: () => onLongPress != null
+                      ? onLongPress()
+                      : selectEntity(
+                          entity: invoice, context: context, longPress: true),
                   child: Padding(
                     padding: const EdgeInsets.only(
                       left: 12,
@@ -179,10 +182,13 @@ class InvoiceListItem extends StatelessWidget {
                   ),
                 )
               : ListTile(
-                  onTap: isInMultiselect
-                      ? () => onEntityAction(EntityAction.toggleMultiselect)
-                      : onTap,
-                  onLongPress: onLongPress,
+                  onTap: () => onTap != null
+                      ? onTap()
+                      : selectEntity(entity: invoice, context: context),
+                  onLongPress: () => onLongPress != null
+                      ? onLongPress()
+                      : selectEntity(
+                          entity: invoice, context: context, longPress: true),
                   leading: showCheckbox
                       ? IgnorePointer(
                           ignoring: listUIState.isInMultiselect(),

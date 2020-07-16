@@ -16,11 +16,11 @@ class CreditListItem extends StatelessWidget {
   const CreditListItem({
     @required this.user,
     @required this.onEntityAction,
-    @required this.onTap,
-    @required this.onLongPress,
     @required this.credit,
     @required this.client,
     @required this.filter,
+    this.onTap,
+    this.onLongPress,
     this.onCheckboxChanged,
     this.isChecked = false,
   });
@@ -68,10 +68,13 @@ class CreditListItem extends StatelessWidget {
           builder: (BuildContext context, BoxConstraints constraints) {
         return constraints.maxWidth > kTableListWidthCutoff
             ? InkWell(
-                onTap: isInMultiselect
-                    ? () => onEntityAction(EntityAction.toggleMultiselect)
-                    : onTap,
-                onLongPress: onLongPress,
+                onTap: () => onTap != null
+                    ? onTap()
+                    : selectEntity(entity: credit, context: context),
+                onLongPress: () => onLongPress != null
+                    ? onLongPress()
+                    : selectEntity(
+                        entity: credit, context: context, longPress: true),
                 child: Padding(
                   padding: const EdgeInsets.only(
                     left: 12,
@@ -161,10 +164,13 @@ class CreditListItem extends StatelessWidget {
                 ),
               )
             : ListTile(
-                onTap: isInMultiselect
-                    ? () => onEntityAction(EntityAction.toggleMultiselect)
-                    : onTap,
-                onLongPress: onLongPress,
+                onTap: () => onTap != null
+                    ? onTap()
+                    : selectEntity(entity: credit, context: context),
+                onLongPress: () => onLongPress != null
+                    ? onLongPress()
+                    : selectEntity(
+                        entity: credit, context: context, longPress: true),
                 leading: showCheckbox
                     ? IgnorePointer(
                         ignoring: listUIState.isInMultiselect(),

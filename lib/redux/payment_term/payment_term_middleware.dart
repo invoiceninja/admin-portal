@@ -240,7 +240,6 @@ Middleware<AppState> _loadPaymentTerms(PaymentTermRepository repository) {
     final action = dynamicAction as LoadPaymentTerms;
     final AppState state = store.state;
 
-
     if (state.isLoading) {
       next(action);
       return;

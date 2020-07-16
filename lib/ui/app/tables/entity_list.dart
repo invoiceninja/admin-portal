@@ -21,7 +21,6 @@ class EntityList extends StatefulWidget {
     @required this.state,
     @required this.entityType,
     @required this.entityList,
-    @required this.onEntityTap,
     @required this.onRefreshed,
     @required this.onSortColumn,
     @required this.itemBuilder,
@@ -35,7 +34,6 @@ class EntityList extends StatefulWidget {
   final EntityType entityType;
   final List<String> tableColumns;
   final List<String> entityList;
-  final Function(BuildContext, BaseEntity) onEntityTap;
   final Function(BuildContext) onRefreshed;
   final Function onClearEntityFilterPressed;
   final Function(BuildContext) onViewEntityFilterPressed;
@@ -68,7 +66,8 @@ class _EntityListState extends State<EntityList> {
       entityList: entityList.toList(),
       entityMap: entityMap,
       entityPresenter: widget.presenter,
-      onTap: (BaseEntity entity) => widget.onEntityTap(context, entity),
+      onTap: (BaseEntity entity) =>
+          selectEntity(entity: entity, context: context),
     );
   }
 

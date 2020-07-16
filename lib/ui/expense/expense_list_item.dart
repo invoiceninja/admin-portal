@@ -1,5 +1,6 @@
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:invoiceninja_flutter/constants.dart';
+import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/ui/app/entity_state_label.dart';
 import 'package:invoiceninja_flutter/utils/formatting.dart';
@@ -12,12 +13,12 @@ import 'package:invoiceninja_flutter/utils/localization.dart';
 class ExpenseListItem extends StatelessWidget {
   const ExpenseListItem({
     @required this.userCompany,
-    @required this.onTap,
     @required this.expense,
     @required this.client,
     @required this.vendor,
     @required this.filter,
     this.onEntityAction,
+    this.onTap,
     this.onLongPress,
     this.onCheckboxChanged,
     this.isChecked = false,
@@ -89,10 +90,12 @@ class ExpenseListItem extends StatelessWidget {
       entity: expense,
       onEntityAction: onEntityAction,
       child: ListTile(
-        onTap: isInMultiselect
-            ? () => onEntityAction(EntityAction.toggleMultiselect)
-            : onTap,
-        onLongPress: onLongPress,
+        onTap: () => onTap != null
+            ? onTap()
+            : selectEntity(entity: expense, context: context),
+        onLongPress: () => onLongPress != null
+            ? onLongPress()
+            : selectEntity(entity: expense, context: context, longPress: true),
         leading: showCheckbox
             ? IgnorePointer(
                 ignoring: listUIState.isInMultiselect(),

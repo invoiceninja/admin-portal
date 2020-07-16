@@ -37,7 +37,8 @@ Reducer<String> selectedIdReducer = combineReducers([
       (selectedId, action) => action.credit.id),
   TypedReducer<String, ShowEmailCredit>(
       (selectedId, action) => action.credit.id),
-  TypedReducer<String, SelectCompany>((selectedId, action) => action.clearSelection ? '' : selectedId),
+  TypedReducer<String, SelectCompany>(
+      (selectedId, action) => action.clearSelection ? '' : selectedId),
   TypedReducer<String, DeleteCreditsSuccess>((selectedId, action) => ''),
   TypedReducer<String, ArchiveCreditsSuccess>((selectedId, action) => ''),
   TypedReducer<String, ClearEntityFilter>((selectedId, action) => ''),
