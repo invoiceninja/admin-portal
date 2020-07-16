@@ -63,6 +63,7 @@ import 'package:invoiceninja_flutter/redux/company_gateway/company_gateway_state
 import 'package:invoiceninja_flutter/redux/group/group_state.dart';
 import 'package:invoiceninja_flutter/ui/tax_rate/edit/tax_rate_edit_vm.dart';
 import 'package:invoiceninja_flutter/utils/formatting.dart';
+import 'package:timeago/timeago.dart' as timeago;
 
 part 'app_state.g.dart';
 
@@ -598,12 +599,22 @@ abstract class AppState implements Built<AppState, AppStateBuilder> {
 
   @override
   String toString() {
+    final companyUpdated = userCompanyState.lastUpdated == null
+        ? 'null'
+        : timeago.format(convertTimestampToDate(
+            (userCompanyState.lastUpdated / 1000).round()));
+    final staticUpdated = userCompanyState.lastUpdated == null
+        ? 'null'
+        : timeago.format(
+            convertTimestampToDate((staticState.updatedAt / 1000).round()));
+
     //return 'latestVersion: ${account.latestVersion}';
     //return 'Last Updated: ${userCompanyStates.map((state) => state.lastUpdated).join(',')}';
     //return 'Names: ${userCompanyStates.map((state) => state.company.id).join(',')}';
     //return 'Client Count: ${userCompanyState.clientState.list.length}, Last Updated: ${userCompanyState.lastUpdated}';
     //return 'Token: ${credentials.token} - ${userCompanyStates.map((state) => state?.token?.token ?? '').where((name) => name.isNotEmpty).join(',')}';
-    return 'URL: ${authState.url}, Route: ${uiState.currentRoute} Prev: ${uiState.previousRoute}';
+    return '\n\nURL: ${authState.url}\nRoute: ${uiState.currentRoute}\nPrev: ${uiState.previousRoute}\nCompany: $companyUpdated${userCompanyState.isStale ? ' [S]' : ''}\nStatic: $staticUpdated${staticState.isStale ? ' [S]' : ''}\n';
+    ;
   }
 }
 
