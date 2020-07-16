@@ -50,7 +50,6 @@ class _ClientViewState extends State<ClientView>
     final store = StoreProvider.of<AppState>(context);
     final viewModel = widget.viewModel;
     final client = viewModel.client;
-    final company = viewModel.company;
     final userCompany = viewModel.state.userCompany;
 
     return ViewScaffold(
@@ -124,7 +123,7 @@ class _ClientViewState extends State<ClientView>
           showDialog<SimpleDialog>(
             context: context,
             builder: (BuildContext context) => SimpleDialog(children: <Widget>[
-              userCompany.canCreate(EntityType.client)
+              userCompany.canViewOrCreate(EntityType.client)
                   ? ListTile(
                       //dense: true,
                       leading: Icon(Icons.add_circle_outline),
@@ -136,7 +135,7 @@ class _ClientViewState extends State<ClientView>
                       },
                     )
                   : Container(),
-              userCompany.canCreate(EntityType.payment)
+              userCompany.canViewOrCreate(EntityType.payment)
                   ? ListTile(
                       //dense: true,
                       leading: Icon(Icons.add_circle_outline),
@@ -148,8 +147,7 @@ class _ClientViewState extends State<ClientView>
                       },
                     )
                   : Container(),
-              company.isModuleEnabled(EntityType.quote) &&
-                      userCompany.canCreate(EntityType.quote)
+              userCompany.canViewOrCreate(EntityType.quote)
                   ? ListTile(
                       //dense: true,
                       leading: Icon(Icons.add_circle_outline),
@@ -161,8 +159,7 @@ class _ClientViewState extends State<ClientView>
                       },
                     )
                   : Container(),
-              company.isModuleEnabled(EntityType.project) &&
-                      userCompany.canCreate(EntityType.project)
+              userCompany.canViewOrCreate(EntityType.project)
                   ? ListTile(
                       //dense: true,
                       leading: Icon(Icons.add_circle_outline),
@@ -174,8 +171,7 @@ class _ClientViewState extends State<ClientView>
                       },
                     )
                   : Container(),
-              company.isModuleEnabled(EntityType.task) &&
-                      userCompany.canCreate(EntityType.task)
+              userCompany.canViewOrCreate(EntityType.task)
                   ? ListTile(
                       //dense: true,
                       leading: Icon(Icons.add_circle_outline),
@@ -187,8 +183,7 @@ class _ClientViewState extends State<ClientView>
                       },
                     )
                   : Container(),
-              company.isModuleEnabled(EntityType.expense) &&
-                      userCompany.canCreate(EntityType.expense)
+              userCompany.canViewOrCreate(EntityType.expense)
                   ? ListTile(
                       //dense: true,
                       leading: Icon(Icons.add_circle_outline),

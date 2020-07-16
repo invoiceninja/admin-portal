@@ -83,6 +83,7 @@ class _AccountManagementState extends State<AccountManagement>
               FormCard(
                   // TODO change to kModules.keys
                   children: [
+                kModuleInvoices,
                 kModuleQuotes,
                 kModuleCredits,
               ].map((module) {

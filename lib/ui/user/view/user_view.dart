@@ -27,7 +27,7 @@ class UserView extends StatelessWidget {
     final localization = AppLocalization.of(context);
     final user = viewModel.user;
     final state = StoreProvider.of<AppState>(context).state;
-    final company = state.company;
+    final userCompany = state.userCompany;
 
     return ViewScaffold(
       isFilter: isFilter,
@@ -55,7 +55,7 @@ class UserView extends StatelessWidget {
                 memoizedInvoiceStatsForUser(user.id, state.invoiceState.map)
                     .present(localization.active, localization.archived),
           ),
-          company.isModuleEnabled(EntityType.quote)
+          userCompany.canViewOrCreate(EntityType.quote)
               ? EntitiesListTile(
                   isFilter: isFilter,
                   entityType: EntityType.quote,
@@ -70,7 +70,7 @@ class UserView extends StatelessWidget {
                   ).present(localization.active, localization.archived),
                 )
               : Container(),
-          company.isModuleEnabled(EntityType.credit)
+          userCompany.canViewOrCreate(EntityType.credit)
               ? EntitiesListTile(
                   isFilter: isFilter,
                   entityType: EntityType.credit,
@@ -86,7 +86,7 @@ class UserView extends StatelessWidget {
                 )
               : Container(),
           /*
-        company.isModuleEnabled(EntityType.project)
+        userCompany.canViewOrCreate(EntityType.project)
             ? EntityListTile(
           bottomPadding: 1,
           icon: getEntityIcon(EntityType.project),
@@ -102,7 +102,7 @@ class UserView extends StatelessWidget {
               localization.archived),
         )
             : Container(),
-        company.isModuleEnabled(EntityType.task)
+        userCompany.canViewOrCreate(EntityType.task)
             ? EntityListTile(
           bottomPadding: 1,
           icon: getEntityIcon(EntityType.task),
@@ -118,7 +118,7 @@ class UserView extends StatelessWidget {
               localization.archived),
         )
             : Container(),
-        company.isModuleEnabled(EntityType.expense)
+        userCompany.canViewOrCreate(EntityType.expense)
             ? EntityListTile(
           bottomPadding: 1,
           icon: getEntityIcon(EntityType.expense),

@@ -441,7 +441,6 @@ const int kModuleRecurringExpenses = 512;
 const int kModuleRecurringTasks = 1024;
 const int kModuleRecurringQuotes = 2048;
 const int kModuleInvoices = 4096;
-const int kModulePayments = 8192;
 
 Color kColorRed = convertHexStringToColor('#8D3E3F');
 Color kColorGreen = convertHexStringToColor('#407535');
@@ -459,6 +458,7 @@ const Map<int, String> kModules = {
   kModuleRecurringTasks: 'recurring_tasks',
   kModuleRecurringExpenses: 'recurring_expenses',
   kModuleRecurringQuotes: 'recurring_quotes',
+  kModuleInvoices: 'invoices',
 };
 
 class InvoiceStatusColors {

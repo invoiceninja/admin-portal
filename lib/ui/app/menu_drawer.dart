@@ -348,8 +348,6 @@ class _DrawerTileState extends State<DrawerTile> {
       if (widget.entityType != null &&
           !userCompany.canViewOrCreate(widget.entityType)) {
         return Container();
-      } else if (!widget.company.isModuleEnabled(widget.entityType)) {
-        return Container();
       }
     }
 
