@@ -599,14 +599,17 @@ abstract class AppState implements Built<AppState, AppStateBuilder> {
 
   @override
   String toString() {
-    final companyUpdated = userCompanyState.lastUpdated == null
-        ? 'null'
-        : timeago.format(convertTimestampToDate(
-            (userCompanyState.lastUpdated / 1000).round()));
-    final staticUpdated = userCompanyState.lastUpdated == null
-        ? 'null'
-        : timeago.format(
-            convertTimestampToDate((staticState.updatedAt / 1000).round()));
+    final companyUpdated =
+        userCompanyState.lastUpdated == null || userCompanyState.lastUpdated == 0
+            ? 'Blank'
+            : timeago.format(convertTimestampToDate(
+                (userCompanyState.lastUpdated / 1000).round()));
+
+    final staticUpdated =
+        staticState.updatedAt == null || staticState.updatedAt == 0
+            ? 'Blank'
+            : timeago.format(
+                convertTimestampToDate((staticState.updatedAt / 1000).round()));
 
     //return 'latestVersion: ${account.latestVersion}';
     //return 'Last Updated: ${userCompanyStates.map((state) => state.lastUpdated).join(',')}';
