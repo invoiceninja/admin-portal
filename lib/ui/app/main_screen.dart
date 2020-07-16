@@ -534,8 +534,8 @@ class EntityScreens extends StatelessWidget {
     Widget leftFilterChild;
     Widget topFilterChild;
 
-    if (prefState.isFilterSidebarShown) {
-      if (uiState.filterEntityType != null) {
+    if (uiState.filterEntityType != null) {
+      if (prefState.isFilterSidebarShown) {
         switch (uiState.filterEntityType) {
           case EntityType.client:
             leftFilterChild = editingFIlterEntity
@@ -564,12 +564,12 @@ class EntityScreens extends StatelessWidget {
             break;
         }
       }
-    } else {
-      topFilterChild = _EntityFilter(
-        show: uiState.filterEntityType != null,
-      );
     }
 
+    topFilterChild = _EntityFilter(
+      show: uiState.filterEntityType != null,
+    );
+    
     return Row(
       children: <Widget>[
         if (leftFilterChild != null)
@@ -671,16 +671,20 @@ class _EntityFilter extends StatelessWidget {
                   color: Theme.of(context).cardColor,
                 )
               : AppBar(
-                  leading: IconButton(
-                    tooltip: localization.showSidebar,
-                    icon: Icon(Icons.chrome_reader_mode),
-                    onPressed: () => store.dispatch(
-                        UserPreferencesChanged(showFilterSidebar: true)),
-                  ),
+                  leading: state.prefState.isFilterSidebarShown
+                      ? null
+                      : IconButton(
+                          tooltip: localization.showSidebar,
+                          icon: Icon(Icons.chrome_reader_mode),
+                          onPressed: () => store.dispatch(
+                              UserPreferencesChanged(showFilterSidebar: true)),
+                        ),
+                  automaticallyImplyLeading: false,
                   title: Align(
                     alignment: Alignment.centerLeft,
                     child: FlatButton(
-                      padding: const EdgeInsets.only(left: 0),
+                      padding: EdgeInsets.only(
+                          left: state.prefState.isFilterSidebarShown ? 4 : 0),
                       child: Text(
                         '${localization.lookup('$filterEntityType')}  ›  ${filterEntity.listDisplayName}',
                         style: TextStyle(fontSize: 17),
