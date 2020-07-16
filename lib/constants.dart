@@ -371,6 +371,10 @@ const String kReportTask = 'task';
 const String kReportTaxRate = 'taxRate';
 const String kReportQuote = 'quote';
 
+const String LockInvoicesOff = 'off';
+const String LockInvoicesSent = 'when_sent';
+const String LockInvoicesPaid = 'when_paid';
+
 const String kPdfFieldsClientDetails = 'client_details';
 const String kPdfFieldsCompanyDetails = 'company_details';
 const String kPdfFieldsCompanyAddress = 'company_address';
@@ -431,6 +435,8 @@ const int kModuleProposals = 256;
 const int kModuleRecurringExpenses = 512;
 const int kModuleRecurringTasks = 1024;
 const int kModuleRecurringQuotes = 2048;
+const int kModuleInvoices = 4096;
+const int kModulePayments = 8192;
 
 Color kColorRed = convertHexStringToColor('#8D3E3F');
 Color kColorGreen = convertHexStringToColor('#407535');

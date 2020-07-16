@@ -48,8 +48,7 @@ Future<Event> getSentryEvent(
   return Event(
     release: kClientVersion,
     //release: packageInfo.version,
-    environment:
-        state == null ? 'Unknown' : (state.isHosted ? 'Hosted' : 'Selfhosted'),
+    environment: state?.environment ?? 'Unknown',
     stackTrace: stackTrace,
     exception: exception,
     contexts: Contexts(
