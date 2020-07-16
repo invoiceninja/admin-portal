@@ -24,9 +24,10 @@ class _ClientViewActivityState extends State<ClientViewActivity> {
 
   @override
   Widget build(BuildContext context) {
-    final activities = widget.viewModel.client.activities;
+    final client = widget.viewModel.client;
+    final activities = client.activities;
 
-    if (activities.isEmpty) {
+    if (!client.areActivitiesLoaded) {
       return LoadingIndicator();
     }
 

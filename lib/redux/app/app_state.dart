@@ -617,7 +617,6 @@ abstract class AppState implements Built<AppState, AppStateBuilder> {
     //return 'Client Count: ${userCompanyState.clientState.list.length}, Last Updated: ${userCompanyState.lastUpdated}';
     //return 'Token: ${credentials.token} - ${userCompanyStates.map((state) => state?.token?.token ?? '').where((name) => name.isNotEmpty).join(',')}';
     return '\n\nURL: ${authState.url}\nRoute: ${uiState.currentRoute}\nPrev: ${uiState.previousRoute}\nCompany: $companyUpdated${userCompanyState.isStale ? ' [S]' : ''}\nStatic: $staticUpdated${staticState.isStale ? ' [S]' : ''}\n';
-    ;
   }
 }
 

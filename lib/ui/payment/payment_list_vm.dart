@@ -43,7 +43,7 @@ class PaymentListBuilder extends StatelessWidget {
               final payment = state.paymentState.map[paymentId];
               final client = state.clientState.map[payment.clientId] ??
                   ClientEntity(id: payment.clientId);
-              final listState = state.getListState(EntityType.client);
+              final listState = state.getListState(EntityType.payment);
               final isInMultiselect = listState.isInMultiselect();
 
               void showDialog() => showEntityActionsDialog(
