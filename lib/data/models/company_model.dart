@@ -364,8 +364,9 @@ abstract class CompanyEntity extends Object
       return false;
     }
 
-    if (entityType == EntityType.recurringInvoice &&
-        enabledModules & kModuleRecurringInvoices == 0) {
+    if ((entityType == EntityType.invoice ||
+            entityType == EntityType.payment) &&
+        enabledModules & kModuleInvoices == 0) {
       return false;
     } else if (entityType == EntityType.credit &&
         enabledModules & kModuleCredits == 0) {
@@ -378,6 +379,9 @@ abstract class CompanyEntity extends Object
       return false;
     } else if ([EntityType.expense, EntityType.vendor].contains(entityType) &&
         enabledModules & kModuleExpenses == 0) {
+      return false;
+    } else if (entityType == EntityType.recurringInvoice &&
+        enabledModules & kModuleRecurringInvoices == 0) {
       return false;
     }
 
@@ -530,6 +534,10 @@ abstract class UserCompanyEntity
 
   bool can(UserPermission permission, EntityType entityType) {
     if (entityType == null) {
+      return false;
+    }
+
+    if (!company.isModuleEnabled(entityType)) {
       return false;
     }
 

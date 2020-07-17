@@ -142,7 +142,7 @@ class TimeEditDetailsState extends State<TimeEditDetails> {
               mainAxisAlignment: MainAxisAlignment.end,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: <Widget>[
-                ElevatedButton(
+                AppButton(
                   color: Colors.red,
                   iconData: Icons.delete,
                   label: localization.remove,
@@ -154,7 +154,7 @@ class TimeEditDetailsState extends State<TimeEditDetails> {
                 SizedBox(
                   width: 10.0,
                 ),
-                ElevatedButton(
+                AppButton(
                   iconData: Icons.check_circle,
                   label: localization.done,
                   onPressed: () {

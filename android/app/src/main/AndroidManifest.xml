@@ -7,7 +7,6 @@
     <uses-permission android:name="com.android.vending.BILLING" />
 
     <application
-        android:name="io.flutter.app.FlutterApplication"
         android:label="Invoice Ninja"
         android:icon="@mipmap/ic_launcher">
         <activity
@@ -17,17 +16,20 @@
             android:configChanges="orientation|keyboardHidden|keyboard|screenSize|locale|layoutDirection|fontScale|screenLayout|density|uiMode"
             android:hardwareAccelerated="true"
             android:windowSoftInputMode="adjustResize">
-            <!-- This keeps the window background of the activity showing
-                 until Flutter renders its first frame. It can be removed if
-                 there is no splash screen (such as the default splash screen
-                 defined in @style/LaunchTheme). -->
-            <meta-data
-                android:name="io.flutter.app.android.SplashScreenUntilFirstFrame"
-                android:value="true" />
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
+            <!-- Specify that the launch screen should continue being displayed -->
+            <!-- until Flutter renders its first frame. -->
+            <meta-data
+                android:name="io.flutter.embedding.android.SplashScreenDrawable"
+                android:resource="@drawable/launch_background" />
+            <!-- Theme to apply as soon as Flutter begins rendering frames -->
+            <meta-data
+                android:name="io.flutter.embedding.android.NormalTheme"
+                android:resource="@style/NormalTheme"
+                />
         </activity>
         <provider
             android:name="androidx.core.content.FileProvider"
@@ -39,4 +41,7 @@
                 android:resource="@xml/provider_paths"/>
         </provider>
     </application>
+    <meta-data
+        android:name="flutterEmbedding"
+        android:value="2" />
 </manifest>

@@ -632,10 +632,10 @@ abstract class InvoiceEntity extends Object
 
     if (userCompany.canCreate(EntityType.invoice) && !multiselect) {
       actions.add(EntityAction.cloneToInvoice);
-      if (userCompany.company?.isModuleEnabled(EntityType.quote) ?? false) {
+      if (userCompany.canCreate(EntityType.quote)) {
         actions.add(EntityAction.cloneToQuote);
       }
-      if (userCompany.company?.isModuleEnabled(EntityType.credit) ?? false) {
+      if (userCompany.canCreate(EntityType.credit)) {
         actions.add(EntityAction.cloneToCredit);
       }
       actions.add(null);
@@ -647,8 +647,7 @@ abstract class InvoiceEntity extends Object
           actions.add(EntityAction.cancel);
         }
 
-        if (userCompany.company.isModuleEnabled(EntityType.credit) &&
-            !isReversed) {
+        if (userCompany.canCreate(EntityType.credit) && !isReversed) {
           actions.add(EntityAction.reverse);
         }
       }
@@ -692,6 +691,8 @@ abstract class InvoiceEntity extends Object
   bool isBetween(String startDate, String endDate) {
     return startDate.compareTo(date) <= 0 && endDate.compareTo(date) >= 0;
   }
+
+  bool get isInvoice => entityType == EntityType.invoice;
 
   bool get isQuote => entityType == EntityType.quote;
 

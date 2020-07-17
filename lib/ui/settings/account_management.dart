@@ -83,6 +83,7 @@ class _AccountManagementState extends State<AccountManagement>
               FormCard(
                   // TODO change to kModules.keys
                   children: [
+                kModuleInvoices,
                 kModuleQuotes,
                 kModuleCredits,
               ].map((module) {
@@ -131,7 +132,7 @@ class _AccountOverview extends StatelessWidget {
         SizedBox(height: 14),
         Padding(
           padding: const EdgeInsets.all(16),
-          child: ElevatedButton(
+          child: AppButton(
             label: localization.manageTokens.toUpperCase(),
             iconData: getEntityIcon(EntityType.token),
             onPressed: () {
@@ -144,7 +145,7 @@ class _AccountOverview extends StatelessWidget {
         ),
         Padding(
           padding: const EdgeInsets.all(16),
-          child: ElevatedButton(
+          child: AppButton(
             label: localization.manageWebhooks.toUpperCase(),
             iconData: getEntityIcon(EntityType.webhook),
             onPressed: () {
@@ -184,7 +185,7 @@ class _AccountOverview extends StatelessWidget {
                */
         Padding(
           padding: const EdgeInsets.all(16),
-          child: ElevatedButton(
+          child: AppButton(
             label: localization.purchaseLicense.toUpperCase(),
             iconData: Icons.cloud_download,
             onPressed: () async {
@@ -196,7 +197,7 @@ class _AccountOverview extends StatelessWidget {
         ),
         Padding(
           padding: const EdgeInsets.all(16),
-          child: ElevatedButton(
+          child: AppButton(
             label: localization.applyLicense.toUpperCase(),
             iconData: Icons.cloud_done,
             onPressed: () {
@@ -230,7 +231,7 @@ class _AccountOverview extends StatelessWidget {
         ),
         Padding(
           padding: const EdgeInsets.all(16),
-          child: ElevatedButton(
+          child: AppButton(
             label: companies.length == 1
                 ? localization.cancelAccount.toUpperCase()
                 : localization.deleteCompany.toUpperCase(),

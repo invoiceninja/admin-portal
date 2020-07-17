@@ -18,15 +18,12 @@ const String kAppProductionUrl =
     'https://staging.invoicing.co'; // TODO remove staging
 const String kAppStagingUrl = 'https://staging.invoicing.co';
 const String kAppDemoUrl = 'https://demo.invoiceninja.com';
-
 const String kWhiteLabelUrl =
     'https://app.invoiceninja.com/buy_now/?account_key=AsFmBAeLXF0IKf7tmi0eiyZfmWW9hxMT&product_id=3';
-
 const String kAppPlansURL =
     'https://www.invoiceninja.com/invoicing-pricing-plans/';
 const String kPrivacyPolicyURL = 'https://www.invoiceninja.com/privacy-policy';
 const String kTermsOfServiceURL = 'https://www.invoiceninja.com/terms';
-
 const String kAppleStoreUrl =
     'https://itunes.apple.com/us/app/invoice-ninja/id1435514417?ls=1&mt=8';
 const String kGoogleStoreUrl =
@@ -34,6 +31,14 @@ const String kGoogleStoreUrl =
 const String kCapterralUrl = 'https://www.capterra.com/p/145215/Invoice-Ninja/';
 const String kCronsHelpUrl =
     'https://invoiceninja.github.io/selfhost.html#cron-configuration';
+
+enum AppEnvironment {
+  hosted,
+  selfhosted,
+  demo,
+  staging,
+  develop,
+}
 
 const String kSharedPrefs = 'shared_prefs';
 const String kSharedPrefAppVersion = 'app_version';
@@ -371,6 +376,10 @@ const String kReportTask = 'task';
 const String kReportTaxRate = 'taxRate';
 const String kReportQuote = 'quote';
 
+const String LockInvoicesOff = 'off';
+const String LockInvoicesSent = 'when_sent';
+const String LockInvoicesPaid = 'when_paid';
+
 const String kPdfFieldsClientDetails = 'client_details';
 const String kPdfFieldsCompanyDetails = 'company_details';
 const String kPdfFieldsCompanyAddress = 'company_address';
@@ -431,6 +440,7 @@ const int kModuleProposals = 256;
 const int kModuleRecurringExpenses = 512;
 const int kModuleRecurringTasks = 1024;
 const int kModuleRecurringQuotes = 2048;
+const int kModuleInvoices = 4096;
 
 Color kColorRed = convertHexStringToColor('#8D3E3F');
 Color kColorGreen = convertHexStringToColor('#407535');
@@ -448,6 +458,7 @@ const Map<int, String> kModules = {
   kModuleRecurringTasks: 'recurring_tasks',
   kModuleRecurringExpenses: 'recurring_expenses',
   kModuleRecurringQuotes: 'recurring_quotes',
+  kModuleInvoices: 'invoices',
 };
 
 class InvoiceStatusColors {

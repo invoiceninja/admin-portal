@@ -128,6 +128,7 @@ class _DeviceSettingsState extends State<DeviceSettings> {
                         : FontAwesomeIcons.solidCheckSquare),
                     activeColor: Theme.of(context).accentColor,
                   ),
+                  /*
                   SwitchListTile(
                     title: Text(localization.alwaysShowSidebar),
                     value: prefState.alwaysShowFilterSidebar,
@@ -135,7 +136,8 @@ class _DeviceSettingsState extends State<DeviceSettings> {
                         viewModel.onAlwaysShowSidebarChanged(context, value),
                     secondary: Icon(Icons.chrome_reader_mode),
                     activeColor: Theme.of(context).accentColor,
-                  ),
+                  ),                  
+                   */
                   FutureBuilder(
                     future: viewModel.authenticationSupported,
                     builder: (BuildContext context, AsyncSnapshot snapshot) {

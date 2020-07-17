@@ -649,7 +649,7 @@ class _LoginState extends State<LoginView> {
                     if (isOneTimePassword && !viewModel.isLoading)
                       Padding(
                         padding: EdgeInsets.only(top: 12.0, bottom: 12.0),
-                        child: ElevatedButton(
+                        child: AppButton(
                           label: localization.cancel.toUpperCase(),
                           color: Colors.grey,
                           onPressed: () {

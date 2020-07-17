@@ -59,7 +59,11 @@ abstract class AuthState implements Built<AuthState, AuthStateBuilder> {
       return true;
     }
 
-    if (cleanUrl == kAppProductionUrl || cleanUrl == kAppStagingUrl) {
+    if ([
+      kAppProductionUrl,
+      kAppDemoUrl,
+      kAppStagingUrl,
+    ].contains(cleanUrl)) {
       return true;
     }
 

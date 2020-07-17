@@ -327,7 +327,7 @@ class _CompanyDetailsState extends State<CompanyDetails>
                       children: <Widget>[
                         if ('${settings.companyLogo ?? ''}'.isNotEmpty) ...[
                           Expanded(
-                            child: ElevatedButton(
+                            child: AppButton(
                               width: double.infinity,
                               color: Colors.redAccent,
                               label: localization.delete,
@@ -343,7 +343,7 @@ class _CompanyDetailsState extends State<CompanyDetails>
                           SizedBox(width: 20),
                         ],
                         Expanded(
-                          child: ElevatedButton(
+                          child: AppButton(
                             width: double.infinity,
                             label: localization.uploadLogo,
                             iconData: Icons.cloud_upload,
@@ -475,7 +475,7 @@ class _CompanyDetailsState extends State<CompanyDetails>
                   if (!state.uiState.settingsUIState.isFiltered)
                     Padding(
                       padding: const EdgeInsets.only(top: 25, bottom: 10),
-                      child: ElevatedButton(
+                      child: AppButton(
                         iconData: Icons.settings,
                         label: localization.configurePaymentTerms.toUpperCase(),
                         onPressed: () =>

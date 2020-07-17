@@ -42,7 +42,7 @@ class DocumentGrid extends StatelessWidget {
               children: <Widget>[
                 if (!kIsWeb)
                   Expanded(
-                    child: ElevatedButton(
+                    child: AppButton(
                       iconData: Icons.camera_alt,
                       label: localization.takePicture,
                       onPressed: () async {
@@ -59,7 +59,7 @@ class DocumentGrid extends StatelessWidget {
                     width: 14,
                   ),
                 Expanded(
-                  child: ElevatedButton(
+                  child: AppButton(
                     iconData: Icons.insert_drive_file,
                     label: localization.uploadFile,
                     onPressed: () async {

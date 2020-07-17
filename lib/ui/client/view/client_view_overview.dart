@@ -111,28 +111,30 @@ class ClientOverview extends StatelessWidget {
             isFilter: isFilter,
           ),
         FieldGrid(fields),
-        EntitiesListTile(
-          isFilter: isFilter,
-          entityType: EntityType.invoice,
-          title: localization.invoices,
-          onTap: () => viewModel.onEntityPressed(context, EntityType.invoice),
-          onLongPress: () =>
-              viewModel.onEntityPressed(context, EntityType.invoice, true),
-          subtitle:
-              memoizedInvoiceStatsForClient(client.id, state.invoiceState.map)
-                  .present(localization.active, localization.archived),
-        ),
-        EntitiesListTile(
-          isFilter: isFilter,
-          entityType: EntityType.payment,
-          title: localization.payments,
-          onTap: () => viewModel.onEntityPressed(context, EntityType.payment),
-          onLongPress: () =>
-              viewModel.onEntityPressed(context, EntityType.payment, true),
-          subtitle: memoizedPaymentStatsForClient(
-                  client.id, state.paymentState.map, state.invoiceState.map)
-              .present(localization.active, localization.archived),
-        ),
+        if (company.isModuleEnabled(EntityType.invoice))
+          EntitiesListTile(
+            isFilter: isFilter,
+            entityType: EntityType.invoice,
+            title: localization.invoices,
+            onTap: () => viewModel.onEntityPressed(context, EntityType.invoice),
+            onLongPress: () =>
+                viewModel.onEntityPressed(context, EntityType.invoice, true),
+            subtitle:
+                memoizedInvoiceStatsForClient(client.id, state.invoiceState.map)
+                    .present(localization.active, localization.archived),
+          ),
+        if (company.isModuleEnabled(EntityType.payment))
+          EntitiesListTile(
+            isFilter: isFilter,
+            entityType: EntityType.payment,
+            title: localization.payments,
+            onTap: () => viewModel.onEntityPressed(context, EntityType.payment),
+            onLongPress: () =>
+                viewModel.onEntityPressed(context, EntityType.payment, true),
+            subtitle: memoizedPaymentStatsForClient(
+                    client.id, state.paymentState.map, state.invoiceState.map)
+                .present(localization.active, localization.archived),
+          ),
         if (company.isModuleEnabled(EntityType.quote))
           EntitiesListTile(
             isFilter: isFilter,

@@ -285,7 +285,7 @@ class ReportsScreen extends StatelessWidget {
                   children: [
                     Builder(builder: (BuildContext context) {
                       return Expanded(
-                        child: ElevatedButton(
+                        child: AppButton(
                           label: localization.columns,
                           onPressed: () {
                             multiselectDialog(
@@ -304,7 +304,7 @@ class ReportsScreen extends StatelessWidget {
                     }),
                     SizedBox(width: kGutterWidth),
                     Expanded(
-                      child: ElevatedButton(
+                      child: AppButton(
                         label: localization.export,
                         onPressed: () {
                           viewModel.onExportPressed(context);

@@ -88,7 +88,7 @@ class _InvoiceEditState extends State<InvoiceEdit>
           ? null
           : TabBar(
               controller: _controller,
-              //isScrollable: true,
+              isScrollable: true,
               tabs: [
                 Tab(
                   text: localization.details,

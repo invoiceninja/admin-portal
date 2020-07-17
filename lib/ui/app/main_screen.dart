@@ -90,7 +90,7 @@ class MainScreen extends StatelessWidget {
         }
       } else {
         bool editingFilterEntity = false;
-        if (prefState.isFilterSidebarShown &&
+        if (prefState.showFilterSidebar &&
             uiState.filterEntityId != null &&
             subRoute == '/edit') {
           if (mainRoute == '/${uiState.filterEntityType}') {
@@ -534,8 +534,8 @@ class EntityScreens extends StatelessWidget {
     Widget leftFilterChild;
     Widget topFilterChild;
 
-    if (prefState.isFilterSidebarShown) {
-      if (uiState.filterEntityType != null) {
+    if (uiState.filterEntityType != null) {
+      if (prefState.showFilterSidebar) {
         switch (uiState.filterEntityType) {
           case EntityType.client:
             leftFilterChild = editingFIlterEntity
@@ -546,6 +546,16 @@ class EntityScreens extends StatelessWidget {
             leftFilterChild = editingFIlterEntity
                 ? InvoiceViewScreen()
                 : InvoiceViewScreen(isFilter: true);
+            break;
+          case EntityType.quote:
+            leftFilterChild = editingFIlterEntity
+                ? QuoteViewScreen()
+                : QuoteViewScreen(isFilter: true);
+            break;
+          case EntityType.credit:
+            leftFilterChild = editingFIlterEntity
+                ? CreditViewScreen()
+                : CreditViewScreen(isFilter: true);
             break;
           case EntityType.payment:
             leftFilterChild = editingFIlterEntity
@@ -564,11 +574,11 @@ class EntityScreens extends StatelessWidget {
             break;
         }
       }
-    } else {
-      topFilterChild = _EntityFilter(
-        show: uiState.filterEntityType != null,
-      );
     }
+
+    topFilterChild = _EntityFilter(
+      show: uiState.filterEntityType != null,
+    );
 
     return Row(
       children: <Widget>[
@@ -671,16 +681,20 @@ class _EntityFilter extends StatelessWidget {
                   color: Theme.of(context).cardColor,
                 )
               : AppBar(
-                  leading: IconButton(
-                    tooltip: localization.showSidebar,
-                    icon: Icon(Icons.chrome_reader_mode),
-                    onPressed: () => store.dispatch(
-                        UserPreferencesChanged(showFilterSidebar: true)),
-                  ),
+                  leading: state.prefState.showFilterSidebar
+                      ? null
+                      : IconButton(
+                          tooltip: localization.showSidebar,
+                          icon: Icon(Icons.chrome_reader_mode),
+                          onPressed: () => store.dispatch(
+                              UserPreferencesChanged(showFilterSidebar: true)),
+                        ),
+                  automaticallyImplyLeading: false,
                   title: Align(
                     alignment: Alignment.centerLeft,
                     child: FlatButton(
-                      padding: const EdgeInsets.only(left: 0),
+                      padding: EdgeInsets.only(
+                          left: state.prefState.showFilterSidebar ? 4 : 0),
                       child: Text(
                         '${localization.lookup('$filterEntityType')}  ›  ${filterEntity.listDisplayName}',
                         style: TextStyle(fontSize: 17),
