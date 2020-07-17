@@ -227,6 +227,7 @@ abstract class CompanyEntity extends Object
 
   BuiltList<DesignEntity> get designs;
 
+  @BuiltValueField(wireName: 'tokens_hashed')
   BuiltList<TokenEntity> get tokens;
 
   BuiltList<WebhookEntity> get webhooks;

@@ -184,7 +184,7 @@ class _$CompanyEntitySerializer implements StructuredSerializer<CompanyEntity> {
       serializers.serialize(object.designs,
           specifiedType:
               const FullType(BuiltList, const [const FullType(DesignEntity)])),
-      'tokens',
+      'tokens_hashed',
       serializers.serialize(object.tokens,
           specifiedType:
               const FullType(BuiltList, const [const FullType(TokenEntity)])),
@@ -500,7 +500,7 @@ class _$CompanyEntitySerializer implements StructuredSerializer<CompanyEntity> {
                       BuiltList, const [const FullType(DesignEntity)]))
               as BuiltList<Object>);
           break;
-        case 'tokens':
+        case 'tokens_hashed':
           result.tokens.replace(serializers.deserialize(value,
                   specifiedType: const FullType(
                       BuiltList, const [const FullType(TokenEntity)]))

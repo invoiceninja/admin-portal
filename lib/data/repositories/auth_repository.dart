@@ -107,7 +107,6 @@ class AuthRepository {
     url = formatApiUrl(url) + '/refresh';
 
     if (updatedAt > 0) {
-      // TODO re-enable this
       //url += '?updated_at=$updatedAt';
       includeStatic = includeStatic ||
           DateTime.now().millisecondsSinceEpoch - (updatedAt * 1000) >
