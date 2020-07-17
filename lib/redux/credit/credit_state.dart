@@ -16,13 +16,23 @@ abstract class CreditState implements Built<CreditState, CreditStateBuilder> {
       list: BuiltList<String>(),
     );
   }
+
   CreditState._();
+
+  InvoiceEntity get(String creditId) {
+    if (map.containsKey(creditId)) {
+      return map[creditId];
+    } else {
+      return InvoiceEntity(id: creditId, entityType: EntityType.credit);
+    }
+  }
 
   @override
   @memoized
   int get hashCode;
 
   BuiltMap<String, InvoiceEntity> get map;
+
   BuiltList<String> get list;
 
   CreditState loadCredits(BuiltList<InvoiceEntity> clients) {
@@ -50,6 +60,7 @@ abstract class CreditUIState extends Object
       selectedId: '',
     );
   }
+
   CreditUIState._();
 
   @override

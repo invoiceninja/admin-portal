@@ -692,6 +692,8 @@ abstract class InvoiceEntity extends Object
     return startDate.compareTo(date) <= 0 && endDate.compareTo(date) >= 0;
   }
 
+  bool get isInvoice => entityType == EntityType.invoice;
+
   bool get isQuote => entityType == EntityType.quote;
 
   bool get isCredit => entityType == EntityType.credit;

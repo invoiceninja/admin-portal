@@ -35,10 +35,16 @@ class InvoiceOverview extends StatelessWidget {
     final company = viewModel.company;
 
     final state = StoreProvider.of<AppState>(context).state;
-    final payments = invoice.isQuote
-        ? <PaymentEntity>[]
-        : memoizedPaymentsByInvoice(
-            invoice.id, state.paymentState.map, state.paymentState.list);
+    final payments = invoice.isInvoice
+        ? memoizedPaymentsByInvoice(
+            invoice.id, state.paymentState.map, state.paymentState.list)
+        : <PaymentEntity>[];
+    final credits = <InvoiceEntity>[];
+    payments.forEach((payment) {
+      payment.creditPaymentables.forEach((paymentable) {
+        credits.add(state.creditState.get(paymentable.creditId));
+      });
+    });
 
     Map<String, String> statuses;
     Map<String, Color> colors;
@@ -160,6 +166,28 @@ class InvoiceOverview extends StatelessWidget {
                 formatNumber(payment.amount, context, clientId: client.id) +
                     ' • ' +
                     formatDate(payment.date, context),
+          ),
+        );
+      });
+
+      widgets.addAll([
+        ListDivider(),
+      ]);
+    }
+
+    if (credits.isNotEmpty) {
+      credits.forEach((credit) {
+        widgets.add(
+          EntityListTile(
+            isFilter: isFilter,
+            entity: credit,
+            onTap: () => inspectEntity(context: context, entity: credit),
+            onLongPress: () => inspectEntity(
+                context: context, entity: credit, longPress: true),
+            subtitle:
+                formatNumber(credit.amount, context, clientId: client.id) +
+                    ' • ' +
+                    formatDate(credit.date, context),
           ),
         );
       });

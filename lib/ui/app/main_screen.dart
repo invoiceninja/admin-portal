@@ -547,6 +547,16 @@ class EntityScreens extends StatelessWidget {
                 ? InvoiceViewScreen()
                 : InvoiceViewScreen(isFilter: true);
             break;
+          case EntityType.quote:
+            leftFilterChild = editingFIlterEntity
+                ? QuoteViewScreen()
+                : QuoteViewScreen(isFilter: true);
+            break;
+          case EntityType.credit:
+            leftFilterChild = editingFIlterEntity
+                ? CreditViewScreen()
+                : CreditViewScreen(isFilter: true);
+            break;
           case EntityType.payment:
             leftFilterChild = editingFIlterEntity
                 ? PaymentEditScreen()
