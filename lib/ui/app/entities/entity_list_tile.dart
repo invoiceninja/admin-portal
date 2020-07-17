@@ -4,10 +4,11 @@ import 'package:invoiceninja_flutter/data/models/entities.dart';
 import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/ui/app/actions_menu_button.dart';
-import 'package:invoiceninja_flutter/ui/app/entities/entity_state_title.dart';
+import 'package:invoiceninja_flutter/ui/app/entity_state_label.dart';
 import 'package:invoiceninja_flutter/ui/app/lists/list_divider.dart';
 import 'package:invoiceninja_flutter/ui/app/lists/selected_indicator.dart';
 import 'package:invoiceninja_flutter/utils/icons.dart';
+import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:invoiceninja_flutter/utils/platforms.dart';
 
 class EntityListTile extends StatelessWidget {
@@ -31,6 +32,7 @@ class EntityListTile extends StatelessWidget {
       return SizedBox();
     }
 
+    final localization = AppLocalization.of(context);
     final store = StoreProvider.of<AppState>(context);
     final state = store.state;
     final isFilteredBy = state.uiState.filterEntityId == entity.id &&
@@ -89,12 +91,19 @@ class EntityListTile extends StatelessWidget {
             padding: const EdgeInsets.symmetric(horizontal: 10),
             child: ListTile(
               contentPadding: const EdgeInsets.only(left: 8, right: 8),
-              title: EntityStateTitle(entity: entity),
-              subtitle: subtitle != null && subtitle.isNotEmpty
-                  ? Text(subtitle ?? '')
-                  : null,
+              title: Text(localization.lookup('${entity.entityType}') +
+                  '  ›  ' +
+                  entity.listDisplayName),
+              subtitle: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  if ((subtitle ?? '').isNotEmpty) Text(subtitle),
+                  if (!entity.isActive) EntityStateLabel(entity),
+                ],
+              ),
               leading: leading,
               trailing: trailing,
+              isThreeLine: (subtitle ?? '').isNotEmpty && !entity.isActive,
               onTap: () => onTap(),
               onLongPress: onLongPress,
             ),
