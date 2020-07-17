@@ -95,7 +95,7 @@ class _PaymentViewState extends State<PaymentView> {
                       onLongPress: () => inspectEntity(
                           context: context, entity: client, longPress: true),
                     ),
-                    for (final paymentable in payment.paymentables)
+                    for (final paymentable in payment.invoicePaymentables)
                       EntityListTile(
                           isFilter: widget.isFilter,
                           entity: state.invoiceState.map[paymentable.invoiceId],
@@ -113,6 +113,25 @@ class _PaymentViewState extends State<PaymentView> {
                               context: context,
                               entity:
                                   state.invoiceState.get(paymentable.invoiceId),
+                              longPress: true)),
+                    for (final paymentable in payment.creditPaymentables)
+                      EntityListTile(
+                          isFilter: widget.isFilter,
+                          entity: state.creditState.map[paymentable.creditId],
+                          subtitle: formatNumber(paymentable.amount, context) +
+                              ' • ' +
+                              formatDate(
+                                  convertTimestampToDateString(
+                                      paymentable.createdAt),
+                                  context),
+                          onTap: () => inspectEntity(
+                              context: context,
+                              entity:
+                                  state.creditState.get(paymentable.creditId)),
+                          onLongPress: () => inspectEntity(
+                              context: context,
+                              entity:
+                                  state.creditState.get(paymentable.creditId),
                               longPress: true)),
                     payment.privateNotes != null &&
                             payment.privateNotes.isNotEmpty
