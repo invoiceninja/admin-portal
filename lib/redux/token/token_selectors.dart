@@ -12,11 +12,6 @@ List<String> dropdownTokensSelector(BuiltMap<String, TokenEntity> tokenMap,
     BuiltList<String> tokenList, String clientId) {
   final list = tokenList.where((tokenId) {
     final token = tokenMap[tokenId];
-    /*
-    if (clientId != null && clientId > 0 && token.clientId != clientId) {
-      return false;
-    }
-    */
     return token.isActive;
   }).toList();
 
@@ -40,7 +35,9 @@ List<String> filteredTokensSelector(BuiltMap<String, TokenEntity> tokenMap,
     if (tokenListState.filterEntityId != null &&
         token.id != tokenListState.filterEntityId) {
       return false;
-    } else {}
+    } else {
+      //
+    }
 
     if (!token.matchesStates(tokenListState.stateFilters)) {
       return false;
