@@ -82,18 +82,22 @@ class EntityListTile extends StatelessWidget {
     return Column(
       mainAxisSize: MainAxisSize.min,
       children: <Widget>[
-        Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 10),
-          child: ListTile(
-            contentPadding: const EdgeInsets.only(left: 8, right: 8),
-            title: EntityStateTitle(entity: entity),
-            subtitle: subtitle != null && subtitle.isNotEmpty
-                ? Text(subtitle ?? '')
-                : null,
-            leading: leading,
-            trailing: trailing,
-            onTap: () => onTap(),
-            onLongPress: onLongPress,
+        SelectedIndicator(
+          isSelected: isFilteredBy,
+          isMenu: true,
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 10),
+            child: ListTile(
+              contentPadding: const EdgeInsets.only(left: 8, right: 8),
+              title: EntityStateTitle(entity: entity),
+              subtitle: subtitle != null && subtitle.isNotEmpty
+                  ? Text(subtitle ?? '')
+                  : null,
+              leading: leading,
+              trailing: trailing,
+              onTap: () => onTap(),
+              onLongPress: onLongPress,
+            ),
           ),
         ),
         ListDivider(),

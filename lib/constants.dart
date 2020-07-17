@@ -420,8 +420,8 @@ const String kDefaultAccentColor = '#0091EA';
 const String kDefaultDarkSelectedColorMenu = '#1E252F';
 const String kDefaultDarkSelectedColor = '#253750';
 const String kDefaultDarkBorderColor = '#393A3C';
-const String kDefaultLightSelectedColorMenu = '#D3EAFD';
-const String kDefaultLightSelectedColor = '#D3EAFD';
+const String kDefaultLightSelectedColorMenu = '#f2faff';
+const String kDefaultLightSelectedColor = '#e5f5ff';
 const String kDefaultLightBorderColor = '#E7EBEE';
 
 const String kReportGroupDay = 'day';
