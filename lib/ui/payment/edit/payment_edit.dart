@@ -359,12 +359,14 @@ class _PaymentableEditorState extends State<PaymentableEditor> {
               labelText: AppLocalization.of(context).invoice,
               entityId: paymentable.invoiceId,
               entityList: memoizedDropdownInvoiceList(
-                  state.invoiceState.map,
-                  state.clientState.map,
-                  state.invoiceState.list,
-                  payment.clientId,
-                  state.staticState,
-                  state.userState.map),
+                state.invoiceState.map,
+                state.clientState.map,
+                state.invoiceState.list,
+                payment.clientId,
+                state.staticState,
+                state.userState.map,
+                payment.invoices.map((p) => p.invoiceId).toList(),
+              ),
               onSelected: (selected) {
                 final invoice = selected as InvoiceEntity;
                 _amountController.text = formatNumber(invoice.balance, context,
@@ -387,7 +389,8 @@ class _PaymentableEditorState extends State<PaymentableEditor> {
                   state.creditState.list,
                   payment.clientId,
                   state.staticState,
-                  state.userState.map),
+                  state.userState.map,
+                  payment.credits.map((p) => p.creditId).toList()),
               onSelected: (selected) {
                 final credit = selected as InvoiceEntity;
                 _amountController.text = formatNumber(credit.balance, context,
