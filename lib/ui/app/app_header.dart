@@ -1,21 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:invoiceninja_flutter/data/models/entities.dart';
-import 'package:invoiceninja_flutter/ui/app/entities/entity_status_chip.dart';
 
-class EntityHeader extends StatelessWidget {
-  const EntityHeader({
-    @required this.entity,
+class AppHeader extends StatelessWidget {
+  const AppHeader({
     @required this.label,
     @required this.value,
     this.secondLabel,
     this.secondValue,
-    this.statusLabel,
-    this.statusColor,
   });
 
-  final BaseEntity entity;
-  final Color statusColor;
-  final String statusLabel;
   final String label;
   final String value;
   final String secondLabel;
@@ -78,26 +70,13 @@ class EntityHeader extends StatelessWidget {
     return Container(
       child: Padding(
         padding: EdgeInsets.only(left: 20, top: 30, right: 20, bottom: 25),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
+        child: Row(
           children: [
-            Row(
-              children: [
-                Expanded(child: _value1()),
-                if ((secondValue ?? '').isNotEmpty) ...[
-                  SizedBox(width: 8),
-                  Expanded(child: _value2()),
-                ],
-              ],
-            ),
-            if (statusLabel != null)
-              Padding(
-                padding: const EdgeInsets.only(top: 25, bottom: 5),
-                child: EntityStatusChip(
-                  entity: entity,
-                  width: 120,
-                ),
-              ),
+            Expanded(child: _value1()),
+            if ((secondValue ?? '').isNotEmpty) ...[
+              SizedBox(width: 8),
+              Expanded(child: _value2()),
+            ],
           ],
         ),
       ),

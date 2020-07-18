@@ -6,6 +6,7 @@ import 'package:invoiceninja_flutter/data/models/entities.dart';
 import 'package:invoiceninja_flutter/data/web_client.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/redux/settings/settings_actions.dart';
+import 'package:invoiceninja_flutter/ui/app/app_header.dart';
 import 'package:invoiceninja_flutter/ui/app/buttons/elevated_button.dart';
 import 'package:invoiceninja_flutter/ui/app/form_card.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/app_form.dart';
@@ -13,6 +14,7 @@ import 'package:invoiceninja_flutter/ui/app/edit_scaffold.dart';
 import 'package:invoiceninja_flutter/ui/app/lists/list_divider.dart';
 import 'package:invoiceninja_flutter/ui/settings/account_management_vm.dart';
 import 'package:invoiceninja_flutter/utils/dialogs.dart';
+import 'package:invoiceninja_flutter/utils/formatting.dart';
 import 'package:invoiceninja_flutter/utils/icons.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -125,64 +127,18 @@ class _AccountOverview extends StatelessWidget {
     final store = StoreProvider.of<AppState>(context);
     final localization = AppLocalization.of(context);
     final state = viewModel.state;
+    final account = state.account;
     final companies = state.companies;
 
     return ListView(
+      shrinkWrap: true,
       children: <Widget>[
-        SizedBox(height: 14),
-        Padding(
-          padding: const EdgeInsets.all(16),
-          child: AppButton(
-            label: localization.manageTokens.toUpperCase(),
-            iconData: getEntityIcon(EntityType.token),
-            onPressed: () {
-              store.dispatch(ViewSettings(
-                navigator: Navigator.of(context),
-                section: kSettingsTokens,
-              ));
-            },
-          ),
+        AppHeader(
+          label: localization.plan,
+          value: account.plan.isEmpty ? localization.free : account.plan,
+          secondLabel: localization.expiresOn,
+          secondValue: formatDate(account.planExpires, context),
         ),
-        Padding(
-          padding: const EdgeInsets.all(16),
-          child: AppButton(
-            label: localization.manageWebhooks.toUpperCase(),
-            iconData: getEntityIcon(EntityType.webhook),
-            onPressed: () {
-              store.dispatch(ViewSettings(
-                navigator: Navigator.of(context),
-                section: kSettingsWebhooks,
-              ));
-            },
-          ),
-        ),
-        Padding(
-          padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 16),
-          child: ListDivider(),
-        ),
-        /*
-              Padding(
-                padding: const EdgeInsets.all(16),
-                child: ElevatedButton(
-                  label: localization.purgeData.toUpperCase(),
-                  color: Colors.red,
-                  iconData: Icons.delete,
-                  onPressed: () {
-                    confirmCallback(
-                        context: context,
-                        message: localization.purgeDataMessage,
-                        callback: () {
-                          passwordCallback(
-                              alwaysRequire: true,
-                              context: context,
-                              callback: (password) {
-                                viewModel.onPurgeData(context, password);
-                              });
-                        });
-                  },
-                ),
-              ),              
-               */
         Padding(
           padding: const EdgeInsets.all(16),
           child: AppButton(
@@ -222,6 +178,59 @@ class _AccountOverview extends StatelessWidget {
                       showErrorDialog(context: context, message: '$error');
                     });
                   });
+            },
+          ),
+        ),
+        Padding(
+          padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 16),
+          child: ListDivider(),
+        ),
+        /*
+              Padding(
+                padding: const EdgeInsets.all(16),
+                child: ElevatedButton(
+                  label: localization.purgeData.toUpperCase(),
+                  color: Colors.red,
+                  iconData: Icons.delete,
+                  onPressed: () {
+                    confirmCallback(
+                        context: context,
+                        message: localization.purgeDataMessage,
+                        callback: () {
+                          passwordCallback(
+                              alwaysRequire: true,
+                              context: context,
+                              callback: (password) {
+                                viewModel.onPurgeData(context, password);
+                              });
+                        });
+                  },
+                ),
+              ),              
+               */
+        Padding(
+          padding: const EdgeInsets.all(16),
+          child: AppButton(
+            label: localization.manageTokens.toUpperCase(),
+            iconData: getEntityIcon(EntityType.token),
+            onPressed: () {
+              store.dispatch(ViewSettings(
+                navigator: Navigator.of(context),
+                section: kSettingsTokens,
+              ));
+            },
+          ),
+        ),
+        Padding(
+          padding: const EdgeInsets.all(16),
+          child: AppButton(
+            label: localization.manageWebhooks.toUpperCase(),
+            iconData: getEntityIcon(EntityType.webhook),
+            onPressed: () {
+              store.dispatch(ViewSettings(
+                navigator: Navigator.of(context),
+                section: kSettingsWebhooks,
+              ));
             },
           ),
         ),

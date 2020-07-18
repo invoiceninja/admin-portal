@@ -26,6 +26,9 @@ class _$AccountEntitySerializer implements StructuredSerializer<AccountEntity> {
           specifiedType: const FullType(String)),
       'plan',
       serializers.serialize(object.plan, specifiedType: const FullType(String)),
+      'plan_expires',
+      serializers.serialize(object.planExpires,
+          specifiedType: const FullType(String)),
       'latest_version',
       serializers.serialize(object.latestVersion,
           specifiedType: const FullType(String)),
@@ -70,6 +73,10 @@ class _$AccountEntitySerializer implements StructuredSerializer<AccountEntity> {
           result.plan = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String;
           break;
+        case 'plan_expires':
+          result.planExpires = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String;
+          break;
         case 'latest_version':
           result.latestVersion = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String;
@@ -95,6 +102,8 @@ class _$AccountEntity extends AccountEntity {
   @override
   final String plan;
   @override
+  final String planExpires;
+  @override
   final String latestVersion;
   @override
   final String currentVersion;
@@ -107,6 +116,7 @@ class _$AccountEntity extends AccountEntity {
       this.defaultUrl,
       this.reportErrors,
       this.plan,
+      this.planExpires,
       this.latestVersion,
       this.currentVersion})
       : super._() {
@@ -118,6 +128,9 @@ class _$AccountEntity extends AccountEntity {
     }
     if (plan == null) {
       throw new BuiltValueNullFieldError('AccountEntity', 'plan');
+    }
+    if (planExpires == null) {
+      throw new BuiltValueNullFieldError('AccountEntity', 'planExpires');
     }
     if (latestVersion == null) {
       throw new BuiltValueNullFieldError('AccountEntity', 'latestVersion');
@@ -142,6 +155,7 @@ class _$AccountEntity extends AccountEntity {
         defaultUrl == other.defaultUrl &&
         reportErrors == other.reportErrors &&
         plan == other.plan &&
+        planExpires == other.planExpires &&
         latestVersion == other.latestVersion &&
         currentVersion == other.currentVersion;
   }
@@ -152,9 +166,11 @@ class _$AccountEntity extends AccountEntity {
     return __hashCode ??= $jf($jc(
         $jc(
             $jc(
-                $jc($jc($jc(0, id.hashCode), defaultUrl.hashCode),
-                    reportErrors.hashCode),
-                plan.hashCode),
+                $jc(
+                    $jc($jc($jc(0, id.hashCode), defaultUrl.hashCode),
+                        reportErrors.hashCode),
+                    plan.hashCode),
+                planExpires.hashCode),
             latestVersion.hashCode),
         currentVersion.hashCode));
   }
@@ -166,6 +182,7 @@ class _$AccountEntity extends AccountEntity {
           ..add('defaultUrl', defaultUrl)
           ..add('reportErrors', reportErrors)
           ..add('plan', plan)
+          ..add('planExpires', planExpires)
           ..add('latestVersion', latestVersion)
           ..add('currentVersion', currentVersion))
         .toString();
@@ -192,6 +209,10 @@ class AccountEntityBuilder
   String get plan => _$this._plan;
   set plan(String plan) => _$this._plan = plan;
 
+  String _planExpires;
+  String get planExpires => _$this._planExpires;
+  set planExpires(String planExpires) => _$this._planExpires = planExpires;
+
   String _latestVersion;
   String get latestVersion => _$this._latestVersion;
   set latestVersion(String latestVersion) =>
@@ -210,6 +231,7 @@ class AccountEntityBuilder
       _defaultUrl = _$v.defaultUrl;
       _reportErrors = _$v.reportErrors;
       _plan = _$v.plan;
+      _planExpires = _$v.planExpires;
       _latestVersion = _$v.latestVersion;
       _currentVersion = _$v.currentVersion;
       _$v = null;
@@ -238,6 +260,7 @@ class AccountEntityBuilder
             defaultUrl: defaultUrl,
             reportErrors: reportErrors,
             plan: plan,
+            planExpires: planExpires,
             latestVersion: latestVersion,
             currentVersion: currentVersion);
     replace(_$result);

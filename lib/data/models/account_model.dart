@@ -11,6 +11,7 @@ abstract class AccountEntity
       id: '',
       defaultUrl: '',
       plan: '',
+      planExpires: '',
       latestVersion: '',
       currentVersion: '',
       reportErrors: false,
@@ -33,6 +34,9 @@ abstract class AccountEntity
   bool get reportErrors;
 
   String get plan;
+
+  @BuiltValueField(wireName: 'plan_expires')
+  String get planExpires;
 
   @BuiltValueField(wireName: 'latest_version')
   String get latestVersion;
