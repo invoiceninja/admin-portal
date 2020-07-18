@@ -1166,6 +1166,7 @@ void selectEntity({
   } else if (isDesktop(context) && state.uiState.isEditing) {
     viewEntity(context: context, entity: entity);
   } else if (isDesktop(context) &&
+      state.uiState.isViewing &&
       !entity.entityType.isSetting &&
       (state.getUIState(entity.entityType).selectedId == entity.id &&
           state.prefState.isPreviewVisible)) {
