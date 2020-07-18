@@ -107,7 +107,7 @@ class AuthRepository {
     url = formatApiUrl(url) + '/refresh';
 
     if (updatedAt > 0) {
-      //url += '?updated_at=$updatedAt';
+      url += '?updated_at=$updatedAt';
       includeStatic = includeStatic ||
           DateTime.now().millisecondsSinceEpoch - (updatedAt * 1000) >
               kMillisecondsToRefreshStaticData;

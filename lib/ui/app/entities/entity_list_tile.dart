@@ -94,13 +94,15 @@ class EntityListTile extends StatelessWidget {
               title: Text(localization.lookup('${entity.entityType}') +
                   '  ›  ' +
                   entity.listDisplayName),
-              subtitle: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  if ((subtitle ?? '').isNotEmpty) Text(subtitle),
-                  if (!entity.isActive) EntityStateLabel(entity),
-                ],
-              ),
+              subtitle: (subtitle ?? '').isEmpty && entity.isActive
+                  ? null
+                  : Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        if ((subtitle ?? '').isNotEmpty) Text(subtitle),
+                        if (!entity.isActive) EntityStateLabel(entity),
+                      ],
+                    ),
               leading: leading,
               trailing: trailing,
               isThreeLine: (subtitle ?? '').isNotEmpty && !entity.isActive,
