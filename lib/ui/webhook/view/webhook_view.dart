@@ -36,7 +36,8 @@ class _WebhookViewState extends State<WebhookView> {
           EntityHeader(
             entity: webhook,
             label: localization.eventType,
-            value: ' ',
+            value:
+                localization.lookup(webhook.eventType),
             secondLabel: localization.createdOn,
             secondValue: formatDate(
                 convertTimestampToDateString(webhook.createdAt), context),

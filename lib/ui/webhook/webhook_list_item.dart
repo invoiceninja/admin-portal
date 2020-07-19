@@ -8,6 +8,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/ui/app/dismissible_entity.dart';
+import 'package:invoiceninja_flutter/utils/localization.dart';
 
 class WebhookListItem extends StatelessWidget {
   const WebhookListItem({
@@ -34,6 +35,7 @@ class WebhookListItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final localization = AppLocalization.of(context);
     final store = StoreProvider.of<AppState>(context);
     final state = store.state;
     final uiState = state.uiState;
@@ -91,6 +93,7 @@ class WebhookListItem extends StatelessWidget {
         subtitle: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
+            Text(localization.lookup(webhook.eventType)),
             subtitle != null && subtitle.isNotEmpty
                 ? Text(
                     subtitle,

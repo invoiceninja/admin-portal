@@ -163,6 +163,8 @@ abstract class WebhookEntity extends Object
     return targetUrl;
   }
 
+  String get eventType => EVENT_MAP[eventId];
+
   int compareTo(WebhookEntity webhook, String sortField, bool sortAscending) {
     int response = 0;
     final WebhookEntity webhookA = sortAscending ? this : webhook;
