@@ -363,6 +363,25 @@ class _PaymentableEditorState extends State<PaymentableEditor> {
     final paymentable = widget.paymentable;
     final localization = AppLocalization.of(context);
 
+    final paymentList = memoizedDropdownInvoiceList(
+      state.invoiceState.map,
+      state.clientState.map,
+      state.invoiceState.list,
+      payment.clientId,
+      state.staticState,
+      state.userState.map,
+      payment.invoices.map((p) => p.invoiceId).toList(),
+    );
+
+    final creditList = memoizedDropdownCreditList(
+        state.creditState.map,
+        state.clientState.map,
+        state.creditState.list,
+        payment.clientId,
+        state.staticState,
+        state.userState.map,
+        payment.credits.map((p) => p.creditId).toList());
+
     return Row(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
@@ -373,15 +392,7 @@ class _PaymentableEditorState extends State<PaymentableEditor> {
               entityType: EntityType.invoice,
               labelText: AppLocalization.of(context).invoice,
               entityId: paymentable.invoiceId,
-              entityList: memoizedDropdownInvoiceList(
-                state.invoiceState.map,
-                state.clientState.map,
-                state.invoiceState.list,
-                payment.clientId,
-                state.staticState,
-                state.userState.map,
-                payment.invoices.map((p) => p.invoiceId).toList(),
-              ),
+              entityList: paymentList,
               onSelected: (selected) {
                 final invoice = selected as InvoiceEntity;
                 final amount = widget.limit != null
@@ -394,21 +405,16 @@ class _PaymentableEditorState extends State<PaymentableEditor> {
               },
             ),
           ),
-        if (widget.entityType == EntityType.credit)
+        if (widget.entityType == EntityType.credit &&
+            creditList.isNotEmpty &&
+            (payment.clientId ?? '').isNotEmpty)
           Expanded(
             child: EntityDropdown(
               key: Key('__credit_${payment.clientId}__'),
               entityType: EntityType.credit,
               labelText: AppLocalization.of(context).credit,
               entityId: paymentable.creditId,
-              entityList: memoizedDropdownCreditList(
-                  state.creditState.map,
-                  state.clientState.map,
-                  state.creditState.list,
-                  payment.clientId,
-                  state.staticState,
-                  state.userState.map,
-                  payment.credits.map((p) => p.creditId).toList()),
+              entityList: creditList,
               onSelected: (selected) {
                 final credit = selected as InvoiceEntity;
                 _amountController.text = formatNumber(credit.balance, context,
