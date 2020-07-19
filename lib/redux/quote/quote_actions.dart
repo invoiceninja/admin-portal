@@ -350,7 +350,7 @@ class FilterQuotesByCustom4 implements PersistUI {
   final String value;
 }
 
-class ConvertQuotes implements PersistData {
+class ConvertQuotes implements StartSaving {
   ConvertQuotes(this.completer, this.quoteIds);
 
   final List<String> quoteIds;
