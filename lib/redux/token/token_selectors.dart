@@ -39,6 +39,10 @@ List<String> filteredTokensSelector(BuiltMap<String, TokenEntity> tokenMap,
       //
     }
 
+    if (!token.isSystem) {
+      return false;
+    }
+
     if (!token.matchesStates(tokenListState.stateFilters)) {
       return false;
     }

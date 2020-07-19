@@ -90,6 +90,8 @@ abstract class TokenEntity extends Object
 
   String get obscuredToken => base64Encode(utf8.encode(token));
 
+  bool get isMasked => token.substring(10) == 'xxxxxxxxxxx';
+
   static String unobscureToken(String value) {
     if (value == null || value.isEmpty) {
       return null;
@@ -152,7 +154,9 @@ abstract class TokenEntity extends Object
       bool multiselect = false}) {
     final actions = <EntityAction>[];
 
-    actions.add(EntityAction.copy);
+    if (!isMasked) {
+      actions.add(EntityAction.copy);
+    }
 
     // TODO remove ??
     if (!(isDeleted ?? false)) {
