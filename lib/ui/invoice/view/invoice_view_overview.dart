@@ -146,9 +146,11 @@ class InvoiceOverview extends StatelessWidget {
           InvoiceEntity(id: invoice.invoiceId);
       if ((invoice.invoiceId ?? '').isNotEmpty) {
         widgets.add(EntityListTile(
-          isFilter: null,
+          isFilter: isFilter,
           entity: relatedInvoice,
-          onTap: () => viewEntity(context: context, entity: relatedInvoice),
+          onTap: () => inspectEntity(context: context, entity: relatedInvoice),
+          onLongPress: () => inspectEntity(
+              context: context, entity: relatedInvoice, longPress: true),
         ));
       }
     }
