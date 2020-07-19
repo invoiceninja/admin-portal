@@ -542,6 +542,7 @@ void handleInvoiceAction(BuildContext context, List<BaseEntity> invoices,
           ..isForInvoice = true
           ..clientId = invoice.clientId
           ..invoices.addAll(invoices
+              .where((invoice) => !(invoice as InvoiceEntity).isPaid)
               .map((invoice) => PaymentableEntity.fromInvoice(invoice))
               .toList())),
         filterEntity: state.clientState.map[invoice.clientId],
