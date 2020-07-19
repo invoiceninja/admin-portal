@@ -11,6 +11,7 @@ import 'package:flutter/material.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/ui/app/dismissible_entity.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
+import 'package:invoiceninja_flutter/utils/platforms.dart';
 
 class PaymentListItem extends StatelessWidget {
   const PaymentListItem({
@@ -65,7 +66,7 @@ class PaymentListItem extends StatelessWidget {
     }
 
     return DismissibleEntity(
-      isSelected: payment.id ==
+      isSelected: isDesktop(context) && payment.id ==
           (uiState.isEditing
               ? paymentUIState.editing.id
               : paymentUIState.selectedId),

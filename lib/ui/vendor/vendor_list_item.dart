@@ -7,6 +7,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/ui/app/dismissible_entity.dart';
+import 'package:invoiceninja_flutter/utils/platforms.dart';
 
 class VendorListItem extends StatelessWidget {
   const VendorListItem({
@@ -46,7 +47,7 @@ class VendorListItem extends StatelessWidget {
         : null;
 
     return DismissibleEntity(
-      isSelected: vendor.id ==
+      isSelected: isDesktop(context) && vendor.id ==
           (uiState.isEditing
               ? vendorUIState.editing.id
               : vendorUIState.selectedId),

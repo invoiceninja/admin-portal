@@ -7,6 +7,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/ui/app/dismissible_entity.dart';
+import 'package:invoiceninja_flutter/utils/platforms.dart';
 
 class ProjectListItem extends StatelessWidget {
   const ProjectListItem({
@@ -49,7 +50,7 @@ class ProjectListItem extends StatelessWidget {
     final subtitle = filterMatch ?? client.displayName;
 
     return DismissibleEntity(
-      isSelected: project.id ==
+      isSelected: isDesktop(context) && project.id ==
           (uiState.isEditing
               ? projectUIState.editing.id
               : projectUIState.selectedId),

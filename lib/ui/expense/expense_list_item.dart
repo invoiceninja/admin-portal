@@ -9,6 +9,7 @@ import 'package:flutter/material.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/ui/app/dismissible_entity.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
+import 'package:invoiceninja_flutter/utils/platforms.dart';
 
 class ExpenseListItem extends StatelessWidget {
   const ExpenseListItem({
@@ -82,7 +83,7 @@ class ExpenseListItem extends StatelessWidget {
     final showCheckbox = onCheckboxChanged != null || isInMultiselect;
 
     return DismissibleEntity(
-      isSelected: expense.id ==
+      isSelected: isDesktop(context) && expense.id ==
           (uiState.isEditing
               ? expenseUIState.editing.id
               : expenseUIState.selectedId),

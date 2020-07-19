@@ -9,6 +9,7 @@ import 'package:invoiceninja_flutter/ui/app/actions_menu_button.dart';
 import 'package:invoiceninja_flutter/ui/app/dismissible_entity.dart';
 import 'package:invoiceninja_flutter/ui/app/entity_state_label.dart';
 import 'package:invoiceninja_flutter/utils/formatting.dart';
+import 'package:invoiceninja_flutter/utils/platforms.dart';
 
 class ClientListItem extends StatelessWidget {
   const ClientListItem({
@@ -48,7 +49,7 @@ class ClientListItem extends StatelessWidget {
     final textStyle = TextStyle(fontSize: 16);
 
     return DismissibleEntity(
-      isSelected: client.id ==
+      isSelected: isDesktop(context) && client.id ==
           (uiState.isEditing
               ? clientUIState.editing.id
               : clientUIState.selectedId),
