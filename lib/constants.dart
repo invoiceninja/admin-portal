@@ -459,21 +459,21 @@ const Map<int, String> kModules = {
 
 class InvoiceStatusColors {
   static var colors = {
-    kInvoiceStatusDraft: Colors.black,
+    kInvoiceStatusDraft: convertHexStringToColor('#444444'),
     kInvoiceStatusSent: convertHexStringToColor('#505F73'),
     //kInvoiceStatusViewed: Colors.orange,
     //kInvoiceStatusApproved: Colors.green,
     kInvoiceStatusPartial: Colors.deepPurple,
     kInvoiceStatusPaid: kColorGreen,
     kInvoiceStatusPastDue: kColorRed,
-    kInvoiceStatusCancelled: convertHexStringToColor('#444444'),
-    kInvoiceStatusReversed: convertHexStringToColor('#444444'),
+    kInvoiceStatusCancelled: Colors.black,
+    kInvoiceStatusReversed: Colors.black,
   };
 }
 
 class CreditStatusColors {
   static var colors = {
-    kCreditStatusDraft: Colors.black,
+    kCreditStatusDraft: convertHexStringToColor('#444444'),
     kCreditStatusSent: convertHexStringToColor('#505F73'),
     //kInvoiceStatusViewed: Colors.orange,
     //kInvoiceStatusApproved: Colors.green,
@@ -484,7 +484,7 @@ class CreditStatusColors {
 
 class QuoteStatusColors {
   static var colors = {
-    kQuoteStatusDraft: Colors.black,
+    kQuoteStatusDraft: convertHexStringToColor('#444444'),
     kQuoteStatusSent: convertHexStringToColor('#505F73'),
     kQuoteStatusApproved: Colors.deepPurple,
     kQuoteStatusConverted: kColorGreen,
