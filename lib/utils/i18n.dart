@@ -15,6 +15,8 @@ mixin LocalizationsProvider on LocaleCodeAware {
   static final Map<String, Map<String, String>> _localizedValues = {
     'en': {
       // STARTER: lang key - do not remove comment
+      'off': 'Off',
+      'when_paid': 'When Paid',
       'expires_on': 'Expires On',
       'free': 'Free',
       'plan': 'Plan',
@@ -1134,7 +1136,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'custom_message_unpaid_invoice': 'Custom Unpaid Invoice Message',
       'custom_message_paid_invoice': 'Custom Paid Invoice Message',
       'custom_message_unapproved_quote': 'Custom Unapproved Quote Message',
-      'lock_sent_invoices': 'Lock Sent Invoices',
+      'lock_invoices': 'Lock Invoices',
       'translations': 'Translations',
       'task_number_pattern': 'Task Number Pattern',
       'task_number_counter': 'Task Number Counter',
@@ -37734,8 +37736,8 @@ mixin LocalizationsProvider on LocaleCodeAware {
   String get customMessageUnapprovedQuote =>
       _localizedValues[localeCode]['custom_message_unapproved_quote'] ?? '';
 
-  String get lockSentInvoices =>
-      _localizedValues[localeCode]['lock_sent_invoices'] ?? '';
+  String get lockInvoices =>
+      _localizedValues[localeCode]['lock_invoices'] ?? '';
 
   String get translations => _localizedValues[localeCode]['translations'] ?? '';
 
@@ -38780,6 +38782,9 @@ mixin LocalizationsProvider on LocaleCodeAware {
 
   String get expiresOn => _localizedValues[localeCode]['expires_on'] ?? '';
 
+  String get off => _localizedValues[localeCode]['off'] ?? '';
+
+  String get whenPaid => _localizedValues[localeCode]['when_paid'] ?? '';
 
   String lookup(String key) {
     final lookupKey = toSnakeCase(key);

@@ -376,10 +376,6 @@ const String kReportTask = 'task';
 const String kReportTaxRate = 'taxRate';
 const String kReportQuote = 'quote';
 
-const String LockInvoicesOff = 'off';
-const String LockInvoicesSent = 'when_sent';
-const String LockInvoicesPaid = 'when_paid';
-
 const String kPdfFieldsClientDetails = 'client_details';
 const String kPdfFieldsCompanyDetails = 'company_details';
 const String kPdfFieldsCompanyAddress = 'company_address';

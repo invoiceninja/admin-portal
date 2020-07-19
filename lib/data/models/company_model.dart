@@ -684,6 +684,7 @@ abstract class ReportSettingsEntity
 
 abstract class SettingsEntity
     implements Built<SettingsEntity, SettingsEntityBuilder> {
+
   factory SettingsEntity({
     SettingsEntity companySettings,
     SettingsEntity groupSettings,
@@ -1132,6 +1133,10 @@ abstract class SettingsEntity
 
   static const EMAIL_SENDING_METHOD_DEFAULT = 'default';
   static const EMAIL_SENDING_METHOD_GMAIL = 'gmail';
+
+  static const LOCK_INVOICES_OFF = 'off';
+  static const LOCK_INVOICES_SENT = 'when_sent';
+  static const LOCK_INVOICES_PAID = 'when_paid';
 
   @nullable
   @BuiltValueField(wireName: 'timezone_id')
@@ -1748,6 +1753,10 @@ abstract class SettingsEntity
   @nullable
   @BuiltValueField(wireName: 'client_portal_privacy_policy')
   String get clientPortalPrivacy;
+
+  @nullable
+  @BuiltValueField(wireName: 'lock_invoices')
+  String get lockInvoices;
 
   // TODO remove this field
   @nullable

@@ -205,7 +205,6 @@ class SettingsViewer extends StatelessWidget {
           settings.customMessagePaidInvoice?.toString(),
       localization.customMessageUnapprovedQuote:
           settings.customMessageUnapprovedQuote?.toString(),
-      localization.lockSentInvoices: settings.lockSentInvoices?.toString(),
       localization.autoArchiveInvoice: settings.autoArchiveInvoice?.toString(),
       localization.autoArchiveQuote: settings.autoArchiveQuote?.toString(),
       localization.autoEmailInvoice: settings.autoEmailInvoice?.toString(),
@@ -291,6 +290,7 @@ class SettingsViewer extends StatelessWidget {
       //localization.lateFeePercent1: settings.lateFeePercent1,
       //localization.lateFeePercent2: settings.lateFeePercent2,
       //localization.lateFeePercent3: settings.lateFeePercent3,
+      localization.lockInvoices: localization.lookup(settings.lockInvoices),
     });
   }
 }
