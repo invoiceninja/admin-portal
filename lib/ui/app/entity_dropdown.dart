@@ -129,6 +129,7 @@ class _EntityDropdownState extends State<EntityDropdown> {
   bool get showClear =>
       widget.allowClearing &&
       widget.entityId != null &&
+      widget.entityId != '0' &&
       widget.entityId.isNotEmpty;
 
   @override

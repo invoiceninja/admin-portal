@@ -4,15 +4,16 @@ import 'package:built_collection/built_collection.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/redux/ui/list_ui_state.dart';
 
-var memoizedDropdownInvoiceList = memo6(
+var memoizedDropdownInvoiceList = memo7(
     (BuiltMap<String, InvoiceEntity> invoiceMap,
             BuiltMap<String, ClientEntity> clientMap,
             BuiltList<String> invoiceList,
             String clientId,
             StaticState staticState,
-            BuiltMap<String, UserEntity> userMap) =>
+            BuiltMap<String, UserEntity> userMap,
+            List<String> excludedIds) =>
         dropdownInvoiceSelector(invoiceMap, clientMap, invoiceList, clientId,
-            staticState, userMap));
+            staticState, userMap, excludedIds));
 
 List<String> dropdownInvoiceSelector(
     BuiltMap<String, InvoiceEntity> invoiceMap,
@@ -20,9 +21,13 @@ List<String> dropdownInvoiceSelector(
     BuiltList<String> invoiceList,
     String clientId,
     StaticState staticState,
-    BuiltMap<String, UserEntity> userMap) {
+    BuiltMap<String, UserEntity> userMap,
+    List<String> excludedIds) {
   final list = invoiceList.where((invoiceId) {
     final invoice = invoiceMap[invoiceId];
+    if (excludedIds.contains(invoiceId)) {
+      return false;
+    }
     if (clientId != null &&
         clientId.isNotEmpty &&
         invoice.clientId != clientId) {

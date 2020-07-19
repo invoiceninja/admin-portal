@@ -48,7 +48,9 @@ class PaymentPresenter extends EntityPresenter {
                 state.invoiceState.map[paymentable.invoiceId]?.number ?? '')
             .toList()
             .join(', ');
-        return Text(numbers.substring(0, numbers.length - 2));
+        return Text(numbers.length > 2
+            ? numbers.substring(0, numbers.length - 2)
+            : numbers);
       case PaymentFields.client:
         return Text(
             state.clientState.map[payment.clientId]?.listDisplayName ?? '');

@@ -13,6 +13,7 @@ import 'package:invoiceninja_flutter/ui/app/history_drawer_vm.dart';
 import 'package:invoiceninja_flutter/ui/app/menu_drawer_vm.dart';
 import 'package:invoiceninja_flutter/ui/app/help_text.dart';
 import 'package:invoiceninja_flutter/ui/app/screen_imports.dart';
+import 'package:invoiceninja_flutter/ui/credit/credit_email_vm.dart';
 import 'package:invoiceninja_flutter/ui/credit/credit_screen.dart';
 import 'package:invoiceninja_flutter/ui/credit/credit_screen_vm.dart';
 import 'package:invoiceninja_flutter/ui/credit/edit/credit_edit_vm.dart';
@@ -158,6 +159,7 @@ class MainScreen extends StatelessWidget {
               listWidget: QuoteScreenBuilder(),
               viewWidget: QuoteViewScreen(),
               editWidget: QuoteEditScreen(),
+              emailWidget: QuoteEmailScreen(),
               editingFIlterEntity: editingFilterEntity,
             );
             break;
@@ -167,6 +169,7 @@ class MainScreen extends StatelessWidget {
               listWidget: CreditScreenBuilder(),
               viewWidget: CreditViewScreen(),
               editWidget: CreditEditScreen(),
+              emailWidget: CreditEmailScreen(),
               editingFIlterEntity: editingFilterEntity,
             );
             break;
