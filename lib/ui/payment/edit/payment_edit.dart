@@ -108,6 +108,11 @@ class _PaymentEditState extends State<PaymentEdit> {
       creditPaymentables.add(PaymentableEntity());
     }
 
+    double paymentTotal = 0;
+    invoicePaymentables.forEach((invoice) {
+      paymentTotal += invoice.amount;
+    });
+
     return EditScaffold(
       entity: payment,
       title: viewModel.payment.isNew
@@ -162,7 +167,9 @@ class _PaymentEditState extends State<PaymentEdit> {
                       autocorrect: false,
                       keyboardType:
                           TextInputType.numberWithOptions(decimal: true),
-                      label: localization.amount,
+                      label: paymentTotal == 0
+                          ? localization.amount
+                          : '${localization.amount} • ${formatNumber(paymentTotal, context, clientId: payment.clientId)}',
                     ),
                 ],
                 if (payment.isForCredit != true)
