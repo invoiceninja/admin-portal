@@ -3,7 +3,6 @@ import 'package:invoiceninja_flutter/constants.dart';
 import 'package:invoiceninja_flutter/data/models/entities.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/data/models/quote_model.dart';
-import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/redux/payment/payment_selectors.dart';
 import 'package:invoiceninja_flutter/ui/app/FieldGrid.dart';
@@ -124,9 +123,6 @@ class InvoiceOverview extends StatelessWidget {
       EntityListTile(
         isFilter: isFilter,
         entity: client,
-        onTap: () => inspectEntity(context: context, entity: client),
-        onLongPress: () =>
-            inspectEntity(context: context, entity: client, longPress: true),
       ),
     );
 
@@ -135,9 +131,6 @@ class InvoiceOverview extends StatelessWidget {
       widgets.add(EntityListTile(
         isFilter: isFilter,
         entity: assignedUser,
-        onTap: () => inspectEntity(context: context, entity: assignedUser),
-        onLongPress: () => inspectEntity(
-            context: context, entity: assignedUser, longPress: true),
       ));
     }
 
@@ -148,9 +141,6 @@ class InvoiceOverview extends StatelessWidget {
         widgets.add(EntityListTile(
           isFilter: isFilter,
           entity: relatedInvoice,
-          onTap: () => inspectEntity(context: context, entity: relatedInvoice),
-          onLongPress: () => inspectEntity(
-              context: context, entity: relatedInvoice, longPress: true),
         ));
       }
     }
@@ -161,9 +151,6 @@ class InvoiceOverview extends StatelessWidget {
           EntityListTile(
             isFilter: isFilter,
             entity: payment,
-            onTap: () => inspectEntity(context: context, entity: payment),
-            onLongPress: () => inspectEntity(
-                context: context, entity: payment, longPress: true),
             subtitle:
                 formatNumber(payment.amount, context, clientId: client.id) +
                     ' • ' +
@@ -183,9 +170,6 @@ class InvoiceOverview extends StatelessWidget {
           EntityListTile(
             isFilter: isFilter,
             entity: credit,
-            onTap: () => inspectEntity(context: context, entity: credit),
-            onLongPress: () => inspectEntity(
-                context: context, entity: credit, longPress: true),
             subtitle:
                 formatNumber(credit.amount, context, clientId: client.id) +
                     ' • ' +
