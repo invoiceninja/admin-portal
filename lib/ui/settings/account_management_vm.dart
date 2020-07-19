@@ -57,20 +57,26 @@ class AccountManagementVM {
           final selectedCompanyIndex = state.uiState.selectedCompanyIndex;
           final completer = Completer<Null>()
             ..future.then((value) {
-              final companies = state.companies;
-              if (companies.length > 1) {
-                int index;
-                for (int i = 0; i < 10; i++) {
-                  index = i;
-                  if (index != selectedCompanyIndex) {
-                    break;
+              final completer = Completer<Null>()
+                ..future.then((value) {
+                  final companies = state.companies;
+                  if (companies.length > 1) {
+                    int index;
+                    for (int i = 0; i < 10; i++) {
+                      index = i;
+                      if (index != selectedCompanyIndex) {
+                        break;
+                      }
+                    }
+                    store.dispatch(SelectCompany(companyIndex: index));
+                    store.dispatch(
+                        ViewDashboard(navigator: Navigator.of(context)));
+                  } else {
+                    store.dispatch(UserLogout(context));
                   }
-                }
-                store.dispatch(SelectCompany(companyIndex: index));
-                store.dispatch(ViewDashboard(navigator: Navigator.of(context)));
-              } else {
-                store.dispatch(UserLogout(context));
-              }
+                });
+              store
+                  .dispatch(RefreshData(clearData: true, completer: completer));
             }).catchError((Object error) {
               showDialog<ErrorDialog>(
                   context: context,
