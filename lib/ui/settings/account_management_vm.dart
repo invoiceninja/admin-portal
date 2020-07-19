@@ -54,21 +54,12 @@ class AccountManagementVM {
         onCompanyChanged: (company) =>
             store.dispatch(UpdateCompany(company: company)),
         onCompanyDelete: (context, password) {
-          final selectedCompanyIndex = state.uiState.selectedCompanyIndex;
           final completer = Completer<Null>()
             ..future.then((value) {
               final completer = Completer<Null>()
                 ..future.then((value) {
-                  final companies = state.companies;
-                  if (companies.length > 1) {
-                    int index;
-                    for (int i = 0; i < 10; i++) {
-                      index = i;
-                      if (index != selectedCompanyIndex) {
-                        break;
-                      }
-                    }
-                    store.dispatch(SelectCompany(companyIndex: index));
+                  if (store.state.companies.isNotEmpty) {
+                    store.dispatch(SelectCompany(companyIndex: 0));
                     store.dispatch(
                         ViewDashboard(navigator: Navigator.of(context)));
                   } else {

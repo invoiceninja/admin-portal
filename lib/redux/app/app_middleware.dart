@@ -455,6 +455,7 @@ Middleware<AppState> _createAccountLoaded() {
     print('## Account is loaded');
     if (!store.state.userCompanyState.isLoaded &&
         response.userCompanies.isNotEmpty && // TODO remove this check
+        response.userCompanies.length > selectedCompanyIndex &&
         response.userCompanies[selectedCompanyIndex].company.isLarge) {
       print('## Loading clients..');
       store.dispatch(LoadClients());
