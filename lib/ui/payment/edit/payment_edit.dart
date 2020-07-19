@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:invoiceninja_flutter/constants.dart';
@@ -183,7 +185,31 @@ class _PaymentEditState extends State<PaymentEdit> {
                       paymentable: invoicePaymentables[index],
                       index: index,
                       entityType: EntityType.invoice,
+                      limit: payment.amount == 0
+                          ? null
+                          : payment.amount - paymentTotal,
                     ),
+                DatePicker(
+                  validator: (String val) => val.trim().isEmpty
+                      ? AppLocalization.of(context).pleaseSelectADate
+                      : null,
+                  autoValidate: autoValidate,
+                  labelText: localization.paymentDate,
+                  selectedDate: payment.date,
+                  onSelected: (date) {
+                    viewModel.onChanged(payment.rebuild((b) => b..date = date));
+                  },
+                ),
+                EntityDropdown(
+                  key: ValueKey('__payment_type_${payment.typeId}__'),
+                  entityType: EntityType.paymentType,
+                  entityList: memoizedPaymentTypeList(
+                      viewModel.staticState.paymentTypeMap),
+                  labelText: localization.paymentType,
+                  entityId: payment.typeId,
+                  onSelected: (paymentType) => viewModel.onChanged(
+                      payment.rebuild((b) => b..typeId = paymentType.id)),
+                ),
                 if (payment.isForInvoice != true)
                   if (state.company.isModuleEnabled(EntityType.credit))
                     for (var index = 0;
@@ -196,28 +222,8 @@ class _PaymentEditState extends State<PaymentEdit> {
                         paymentable: creditPaymentables[index],
                         index: index,
                         entityType: EntityType.credit,
+                        limit: 0,
                       ),
-                EntityDropdown(
-                  key: ValueKey('__payment_type_${payment.typeId}__'),
-                  entityType: EntityType.paymentType,
-                  entityList: memoizedPaymentTypeList(
-                      viewModel.staticState.paymentTypeMap),
-                  labelText: localization.paymentType,
-                  entityId: payment.typeId,
-                  onSelected: (paymentType) => viewModel.onChanged(
-                      payment.rebuild((b) => b..typeId = paymentType.id)),
-                ),
-                DatePicker(
-                  validator: (String val) => val.trim().isEmpty
-                      ? AppLocalization.of(context).pleaseSelectADate
-                      : null,
-                  autoValidate: autoValidate,
-                  labelText: localization.paymentDate,
-                  selectedDate: payment.date,
-                  onSelected: (date) {
-                    viewModel.onChanged(payment.rebuild((b) => b..date = date));
-                  },
-                ),
                 DecoratedFormField(
                   controller: _transactionReferenceController,
                   label: localization.transactionReference,
@@ -255,12 +261,14 @@ class PaymentableEditor extends StatefulWidget {
     @required this.paymentable,
     @required this.index,
     @required this.entityType,
+    @required this.limit,
   }) : super(key: key);
 
   final PaymentEditVM viewModel;
   final PaymentableEntity paymentable;
   final int index;
   final EntityType entityType;
+  final double limit;
 
   @override
   _PaymentableEditorState createState() => _PaymentableEditorState();
@@ -376,7 +384,10 @@ class _PaymentableEditorState extends State<PaymentableEditor> {
               ),
               onSelected: (selected) {
                 final invoice = selected as InvoiceEntity;
-                _amountController.text = formatNumber(invoice.balance, context,
+                final amount = widget.limit != null
+                    ? min(widget.limit, invoice.balance)
+                    : invoice.balance;
+                _amountController.text = formatNumber(amount, context,
                     formatNumberType: FormatNumberType.input);
                 _invoiceId = invoice.id;
                 _onChanged(invoice.clientId);
