@@ -81,7 +81,7 @@ class EntityListTile extends StatelessWidget {
       mainAxisSize: MainAxisSize.min,
       children: <Widget>[
         SelectedIndicator(
-          isSelected: isFilteredBy,
+          isSelected: isFilteredBy && isDesktop(context),
           isMenu: true,
           child: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 10),
