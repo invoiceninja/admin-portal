@@ -15,6 +15,27 @@ mixin LocalizationsProvider on LocaleCodeAware {
   static final Map<String, Map<String, String>> _localizedValues = {
     'en': {
       // STARTER: lang key - do not remove comment
+      'create_client': 'Create Client',
+      'create_invoice': 'Create Invoice',
+      'create_quote': 'Create Quote',
+      'create_payment': 'Create Payment',
+      'create_vendor': 'Create Vendor',
+      'update_quote': 'Update Quote',
+      'delete_quote': 'Delete Quote',
+      'update_invoice': 'Update Invoice',
+      'delete_invoice': 'Delete Invoice',
+      'update_client': 'Update Client',
+      'delete_client': 'Delete Client',
+      'delete_payment': 'Delete Payment',
+      'update_vendor': 'Update Vendor',
+      'delete_vendor': 'Delete Vendor',
+      'create_expense': 'Create Expense',
+      'update_expense': 'Update Expense',
+      'delete_expense': 'Delete Expense',
+      'create_task': 'Create Task',
+      'update_task': 'Update Task',
+      'delete_task': 'Delete Task',
+      'approve_quote': 'Approve Quote',
       'off': 'Off',
       'when_paid': 'When Paid',
       'expires_on': 'Expires On',
@@ -51,7 +72,6 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'deleted_token': 'Successfully deleted token',
       'removed_token': 'Successfully removed token',
       'restored_token': 'Successfully restored token',
-
       'client_registration': 'Client Registration',
       'client_registration_help':
           'Enable clients to self register in the portal',
@@ -38228,7 +38248,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
 
   String get appUpdated => _localizedValues[localeCode]['app_updated'] ?? '';
 
-  // STARTER: lang field - do not remove comment
+// STARTER: lang field - do not remove comment
   String get webhook => _localizedValues[localeCode]['webhook'] ?? '';
 
   String get webhooks => _localizedValues[localeCode]['webhooks'] ?? '';
@@ -38785,6 +38805,63 @@ mixin LocalizationsProvider on LocaleCodeAware {
   String get off => _localizedValues[localeCode]['off'] ?? '';
 
   String get whenPaid => _localizedValues[localeCode]['when_paid'] ?? '';
+
+  String get createClient =>
+      _localizedValues[localeCode]['create_client'] ?? '';
+
+  String get createInvoice =>
+      _localizedValues[localeCode]['create_invoice'] ?? '';
+
+  String get createQuote => _localizedValues[localeCode]['create_quote'] ?? '';
+
+  String get createPayment =>
+      _localizedValues[localeCode]['create_payment'] ?? '';
+
+  String get createVendor =>
+      _localizedValues[localeCode]['create_vendor'] ?? '';
+
+  String get updateQuote => _localizedValues[localeCode]['update_quote'] ?? '';
+
+  String get deleteQuote => _localizedValues[localeCode]['delete_quote'] ?? '';
+
+  String get updateInvoice =>
+      _localizedValues[localeCode]['update_invoice'] ?? '';
+
+  String get deleteInvoice =>
+      _localizedValues[localeCode]['delete_invoice'] ?? '';
+
+  String get updateClient =>
+      _localizedValues[localeCode]['update_client'] ?? '';
+
+  String get deleteClient =>
+      _localizedValues[localeCode]['delete_client'] ?? '';
+
+  String get deletePayment =>
+      _localizedValues[localeCode]['delete_payment'] ?? '';
+
+  String get updateVendor =>
+      _localizedValues[localeCode]['update_vendor'] ?? '';
+
+  String get deleteVendor =>
+      _localizedValues[localeCode]['delete_vendor'] ?? '';
+
+  String get createExpense =>
+      _localizedValues[localeCode]['create_expense'] ?? '';
+
+  String get updateExpense =>
+      _localizedValues[localeCode]['update_expense'] ?? '';
+
+  String get deleteExpense =>
+      _localizedValues[localeCode]['delete_expense'] ?? '';
+
+  String get createTask => _localizedValues[localeCode]['create_task'] ?? '';
+
+  String get updateTask => _localizedValues[localeCode]['update_task'] ?? '';
+
+  String get deleteTask => _localizedValues[localeCode]['delete_task'] ?? '';
+
+  String get approveQuote =>
+      _localizedValues[localeCode]['approve_quote'] ?? '';
 
   String lookup(String key) {
     final lookupKey = toSnakeCase(key);

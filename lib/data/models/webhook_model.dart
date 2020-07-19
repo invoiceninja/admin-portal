@@ -69,6 +69,78 @@ abstract class WebhookEntity extends Object
 
   WebhookEntity._();
 
+  static const EVENT_CREATE_CLIENT = '1';
+  static const EVENT_CREATE_INVOICE = '2';
+  static const EVENT_CREATE_QUOTE = '3';
+  static const EVENT_CREATE_PAYMENT = '4';
+  static const EVENT_CREATE_VENDOR = '5';
+  static const EVENT_UPDATE_QUOTE = '6';
+  static const EVENT_DELETE_QUOTE = '7';
+  static const EVENT_UPDATE_INVOICE = '8';
+  static const EVENT_DELETE_INVOICE = '9';
+  static const EVENT_UPDATE_CLIENT = '10';
+  static const EVENT_DELETE_CLIENT = '11';
+  static const EVENT_DELETE_PAYMENT = '12';
+  static const EVENT_UPDATE_VENDOR = '13';
+  static const EVENT_DELETE_VENDOR = '14';
+  static const EVENT_CREATE_EXPENSE = '15';
+  static const EVENT_UPDATE_EXPENSE = '16';
+  static const EVENT_DELETE_EXPENSE = '17';
+  static const EVENT_CREATE_TASK = '18';
+  static const EVENT_UPDATE_TASK = '19';
+  static const EVENT_DELETE_TASK = '20';
+  static const EVENT_APPROVE_QUOTE = '21';
+
+  static const EVENT_MAP = {
+    EVENT_CREATE_CLIENT: 'create_client',
+    EVENT_UPDATE_CLIENT: 'update_client',
+    EVENT_DELETE_CLIENT: 'delete_client',
+    EVENT_CREATE_INVOICE: 'create_invoice',
+    EVENT_UPDATE_INVOICE: 'update_invoice',
+    EVENT_DELETE_INVOICE: 'delete_invoice',
+    EVENT_CREATE_QUOTE: 'create_quote',
+    EVENT_APPROVE_QUOTE: 'approve_quote',
+    EVENT_UPDATE_QUOTE: 'update_quote',
+    EVENT_DELETE_QUOTE: 'delete_quote',
+    EVENT_CREATE_PAYMENT: 'create_payment',
+    EVENT_DELETE_PAYMENT: 'delete_payment',
+    EVENT_CREATE_VENDOR: 'create_vendor',
+    EVENT_UPDATE_VENDOR: 'update_vendor',
+    EVENT_DELETE_VENDOR: 'delete_vendor',
+    EVENT_CREATE_EXPENSE: 'create_expense',
+    EVENT_UPDATE_EXPENSE: 'update_expense',
+    EVENT_DELETE_EXPENSE: 'delete_expense',
+    EVENT_CREATE_TASK: 'create_task',
+    EVENT_UPDATE_TASK: 'update_task',
+    EVENT_DELETE_TASK: 'delete_task',
+  };
+
+  static const EVENTS = [
+    EVENT_CREATE_CLIENT,
+    EVENT_UPDATE_CLIENT,
+    EVENT_DELETE_CLIENT,
+    EVENT_CREATE_INVOICE,
+    EVENT_UPDATE_INVOICE,
+    EVENT_DELETE_INVOICE,
+    EVENT_CREATE_PAYMENT,
+    EVENT_DELETE_PAYMENT,
+    EVENT_CREATE_QUOTE,
+    EVENT_UPDATE_QUOTE,
+    EVENT_APPROVE_QUOTE,
+    EVENT_DELETE_QUOTE,
+    /*
+    EVENT_CREATE_VENDOR,
+    EVENT_UPDATE_VENDOR,
+    EVENT_DELETE_VENDOR,
+    EVENT_CREATE_EXPENSE,
+    EVENT_UPDATE_EXPENSE,
+    EVENT_DELETE_EXPENSE,
+    EVENT_CREATE_TASK,
+    EVENT_UPDATE_TASK,
+    EVENT_DELETE_TASK,
+     */
+  ];
+
   @override
   @memoized
   int get hashCode;
