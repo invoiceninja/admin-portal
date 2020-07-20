@@ -53,7 +53,6 @@ class InvoiceListBuilder extends StatelessWidget {
                   );
 
               return InvoiceListItem(
-                user: state.user,
                 filter: viewModel.filter,
                 invoice: invoice,
                 client: viewModel.clientMap[invoice.clientId] ?? ClientEntity(),

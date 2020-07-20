@@ -15,7 +15,6 @@ import 'package:invoiceninja_flutter/utils/platforms.dart';
 
 class InvoiceListItem extends StatelessWidget {
   const InvoiceListItem({
-    @required this.user,
     @required this.onEntityAction,
     @required this.invoice,
     @required this.client,
@@ -26,7 +25,6 @@ class InvoiceListItem extends StatelessWidget {
     this.isChecked = false,
   });
 
-  final UserEntity user;
   final Function(EntityAction) onEntityAction;
   final GestureTapCallback onTap;
   final GestureTapCallback onLongPress;
