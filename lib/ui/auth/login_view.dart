@@ -7,6 +7,7 @@ import 'package:invoiceninja_flutter/constants.dart';
 import 'package:invoiceninja_flutter/redux/ui/pref_state.dart';
 import 'package:invoiceninja_flutter/ui/app/buttons/elevated_button.dart';
 import 'package:invoiceninja_flutter/ui/app/dialogs/alert_dialog.dart';
+import 'package:invoiceninja_flutter/ui/app/forms/app_toggle_buttons.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/decorated_form_field.dart';
 import 'package:invoiceninja_flutter/ui/app/link_text.dart';
 import 'package:invoiceninja_flutter/ui/auth/login_vm.dart';
@@ -356,7 +357,7 @@ class _LoginState extends State<LoginView> {
                         children: <Widget>[
                           SizedBox(height: 10),
                           if (!kReleaseMode)
-                            _ToggleButtons(
+                            AppToggleButtons(
                               tabLabels: [
                                 localization.hosted,
                                 localization.selfhosted,
@@ -372,7 +373,7 @@ class _LoginState extends State<LoginView> {
                               },
                             ),
                           if (!_isSelfHosted)
-                            _ToggleButtons(
+                            AppToggleButtons(
                               tabLabels: [
                                 localization.signUp,
                                 localization.login,
@@ -386,7 +387,7 @@ class _LoginState extends State<LoginView> {
                               },
                             ),
                           if (!_isSelfHosted)
-                            _ToggleButtons(
+                            AppToggleButtons(
                               tabLabels: [
                                 'Google',
                                 localization.email,
@@ -666,46 +667,6 @@ class _LoginState extends State<LoginView> {
           ],
         ),
       ],
-    );
-  }
-}
-
-class _ToggleButtons extends StatelessWidget {
-  const _ToggleButtons({
-    @required this.selectedIndex,
-    @required this.onTabChanged,
-    @required this.tabLabels,
-  });
-
-  final List<String> tabLabels;
-  final int selectedIndex;
-  final Function(int) onTabChanged;
-
-  @override
-  Widget build(BuildContext context) {
-    final bool isDesktop = calculateLayout(context) != AppLayout.mobile;
-    final width = MediaQuery.of(context).size.width;
-    final double toggleWidth = isDesktop ? 178 : (width - 70) / 2;
-
-    return Padding(
-      padding: const EdgeInsets.only(bottom: 20),
-      child: ToggleButtons(
-        constraints: BoxConstraints(),
-        children: [
-          Container(
-            width: toggleWidth,
-            height: 40,
-            child: Center(child: Text(tabLabels[0].toUpperCase())),
-          ),
-          Container(
-            width: toggleWidth,
-            height: 40,
-            child: Center(child: Text(tabLabels[1].toUpperCase())),
-          ),
-        ],
-        isSelected: selectedIndex == 0 ? [true, false] : [false, true],
-        onPressed: (index) => onTabChanged(index),
-      ),
     );
   }
 }
