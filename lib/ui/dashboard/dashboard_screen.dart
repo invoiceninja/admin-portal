@@ -33,18 +33,33 @@ class _DashboardScreenState extends State<DashboardScreen>
   TabController _sideTabController;
   ScrollController _scrollController;
 
+
+
   @override
   void initState() {
     super.initState();
     _mainTabController = TabController(vsync: this, length: 2);
     _sideTabController = TabController(vsync: this, length: 3);
     _scrollController = ScrollController();
+    _scrollController.addListener(onScrollListener);
+  }
+
+  void onScrollListener() {
+    final offset = _scrollController.position.pixels;
+    final offsetIndex = ((offset + 120) / 500).floor();
+
+    if (_sideTabController.index != offsetIndex) {
+      _sideTabController.index = offsetIndex;
+    }
+
+    print('## SCROLLED - Offset: $offset, ${(offset / 500).floor()}');
   }
 
   @override
   void dispose() {
     _mainTabController.dispose();
     _sideTabController.dispose();
+    _scrollController.removeListener(onScrollListener);
     _scrollController.dispose();
     super.dispose();
   }

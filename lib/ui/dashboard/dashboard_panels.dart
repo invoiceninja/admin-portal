@@ -402,6 +402,9 @@ class DashboardPanels extends StatelessWidget {
             company.isModuleEnabled(EntityType.expense)
                 ? _expenseChart(context)
                 : SizedBox(),
+            SizedBox(
+              height: 500,
+            )
           ],
         ),
         ConstrainedBox(
