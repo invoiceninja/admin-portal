@@ -33,6 +33,7 @@ class _DashboardScreenState extends State<DashboardScreen>
   TabController _sideTabController;
   ScrollController _scrollController;
 
+  // TODO fix this
   static const DASHBOARD_PANEL_HEIGHT = 501;
 
   @override
@@ -238,13 +239,15 @@ class _SidebarScaffold extends StatelessWidget {
         controller: tabController,
         children: [
           _DashboardSidebar(
-            label2: localization.pastDue,
+            label1: localization.upcomingInvoices,
+            label2: localization.pastDueInvoices,
           ),
           _DashboardSidebar(
-            label1: localization.recent,
+            label1: localization.recentPayments,
           ),
           _DashboardSidebar(
-            label2: localization.expired,
+            label1: localization.upcomingQuotes,
+            label2: localization.expiredQuotes,
           ),
         ],
       ),
@@ -254,8 +257,8 @@ class _SidebarScaffold extends StatelessWidget {
 
 class _DashboardSidebar extends StatelessWidget {
   const _DashboardSidebar({
-    this.label1,
-    this.label2,
+    @required this.label1,
+    @required this.label2,
   });
 
   final String label1;
@@ -264,15 +267,22 @@ class _DashboardSidebar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final localization = AppLocalization.of(context);
+    final textTheme = Theme.of(context).textTheme;
 
     return Column(
       children: [
-        Text(label1 ?? localization.upcoming),
+        Container(
+          child: Text(label1, style: textTheme.bodyText2),
+          padding: const EdgeInsets.symmetric(vertical: 12),
+        ),
         Expanded(
           child: Placeholder(),
         ),
         if (label2 != null) ...[
-          Text(label2 ?? localization.pastDue),
+          Container(
+            child: Text(label2, style: textTheme.bodyText2),
+            padding: const EdgeInsets.symmetric(vertical: 12),
+          ),
           Expanded(
             child: Placeholder(),
           ),
