@@ -279,7 +279,7 @@ class _DashboardSidebar extends StatelessWidget {
           child: Placeholder(),
         ),
         if (label2 != null) ...[
-          Text(localization.pastDue),
+          Text(label2 ?? localization.pastDue),
           Expanded(
             child: Placeholder(),
           ),
