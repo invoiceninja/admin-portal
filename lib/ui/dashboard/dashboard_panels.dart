@@ -18,9 +18,11 @@ class DashboardPanels extends StatelessWidget {
   const DashboardPanels({
     Key key,
     @required this.viewModel,
+    @required this.scrollController,
   }) : super(key: key);
 
   final DashboardVM viewModel;
+  final ScrollController scrollController;
 
   void _showDateOptions(BuildContext context) {
     showDialog<DateRangePicker>(
@@ -384,6 +386,7 @@ class DashboardPanels extends StatelessWidget {
     return Stack(
       children: <Widget>[
         ListView(
+          controller: scrollController,
           children: <Widget>[
             SizedBox(
               height: 74.0,

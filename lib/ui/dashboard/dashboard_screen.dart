@@ -10,6 +10,7 @@ import 'package:invoiceninja_flutter/ui/app/list_filter.dart';
 import 'package:invoiceninja_flutter/ui/dashboard/dashboard_activity.dart';
 import 'package:invoiceninja_flutter/ui/dashboard/dashboard_panels.dart';
 import 'package:invoiceninja_flutter/ui/dashboard/dashboard_screen_vm.dart';
+import 'package:invoiceninja_flutter/utils/formatting.dart';
 import 'package:invoiceninja_flutter/utils/icons.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:invoiceninja_flutter/utils/platforms.dart';
@@ -30,18 +31,21 @@ class _DashboardScreenState extends State<DashboardScreen>
     with TickerProviderStateMixin {
   TabController _mainTabController;
   TabController _sideTabController;
+  ScrollController _scrollController;
 
   @override
   void initState() {
     super.initState();
     _mainTabController = TabController(vsync: this, length: 2);
     _sideTabController = TabController(vsync: this, length: 3);
+    _scrollController = ScrollController();
   }
 
   @override
   void dispose() {
     _mainTabController.dispose();
     _sideTabController.dispose();
+    _scrollController.dispose();
     super.dispose();
   }
 
@@ -100,7 +104,8 @@ class _DashboardScreenState extends State<DashboardScreen>
       ),
       body: _CustomTabBarView(
         viewModel: widget.viewModel,
-        controller: _mainTabController,
+        tabController: _mainTabController,
+        scrollController: _scrollController,
       ),
     );
 
@@ -115,7 +120,8 @@ class _DashboardScreenState extends State<DashboardScreen>
                 ),
                 Flexible(
                   child: _SidebarScaffold(
-                    controller: _sideTabController,
+                    tabController: _sideTabController,
+                    scrollController: _scrollController,
                   ),
                   flex: 2,
                 ),
@@ -129,11 +135,13 @@ class _DashboardScreenState extends State<DashboardScreen>
 class _CustomTabBarView extends StatelessWidget {
   const _CustomTabBarView({
     @required this.viewModel,
-    @required this.controller,
+    @required this.tabController,
+    @required this.scrollController,
   });
 
   final DashboardVM viewModel;
-  final TabController controller;
+  final TabController tabController;
+  final ScrollController scrollController;
 
   @override
   Widget build(BuildContext context) {
@@ -158,11 +166,14 @@ class _CustomTabBarView extends StatelessWidget {
     }
 
     return TabBarView(
-      controller: controller,
+      controller: tabController,
       children: <Widget>[
         RefreshIndicator(
           onRefresh: () => viewModel.onRefreshed(context),
-          child: DashboardPanels(viewModel: viewModel),
+          child: DashboardPanels(
+            viewModel: viewModel,
+            scrollController: scrollController,
+          ),
         ),
         RefreshIndicator(
           onRefresh: () => viewModel.onRefreshed(context),
@@ -174,9 +185,13 @@ class _CustomTabBarView extends StatelessWidget {
 }
 
 class _SidebarScaffold extends StatelessWidget {
-  const _SidebarScaffold({@required this.controller});
+  const _SidebarScaffold({
+    @required this.tabController,
+    @required this.scrollController,
+  });
 
-  final TabController controller;
+  final TabController tabController;
+  final ScrollController scrollController;
 
   @override
   Widget build(BuildContext context) {
@@ -187,7 +202,17 @@ class _SidebarScaffold extends StatelessWidget {
         automaticallyImplyLeading: false,
         title: TabBar(
           isScrollable: true,
-          controller: controller,
+          controller: tabController,
+          onTap: (int index) {
+            print('## index: $index');
+            scrollController.jumpTo((index.toDouble() * 500) + 1);
+            /*
+            scrollController.animateTo(index.toDouble() * 500,
+                duration: Duration(milliseconds: 400),
+                curve: Curves.easeInOutCubic);
+
+             */
+          },
           tabs: [
             Tab(
               text: localization.invoices,
@@ -200,27 +225,16 @@ class _SidebarScaffold extends StatelessWidget {
             ),
           ],
         ),
-        /*
-        bottom: PreferredSize(
-          preferredSize: const Size.fromHeight(48.0),
-          child: AppToggleButtons(
-            tabLabels: [
-              localization.upcoming,
-              localization.recent,
-            ],
-            onTabChanged: (_) => null,
-            selectedIndex: 0,
-          ),
-        ),
-         */
       ),
       body: TabBarView(
-        controller: controller,
+        controller: tabController,
         children: [
           _DashboardSidebar(
             label2: localization.pastDue,
           ),
-          _DashboardSidebar(),
+          _DashboardSidebar(
+            label1: localization.recent,
+          ),
           _DashboardSidebar(
             label2: localization.expired,
           ),

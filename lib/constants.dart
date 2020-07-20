@@ -437,6 +437,8 @@ const int kModuleRecurringExpenses = 512;
 const int kModuleRecurringTasks = 1024;
 const int kModuleRecurringQuotes = 2048;
 const int kModuleInvoices = 4096;
+const int kModuleProformaInvoices = 8192;
+const int kModulePurchaseOrders = 16384;
 
 Color kColorRed = convertHexStringToColor('#8D3E3F');
 Color kColorGreen = convertHexStringToColor('#407535');
