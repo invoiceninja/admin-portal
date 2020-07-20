@@ -303,7 +303,10 @@ class _InvoiceSidebar extends StatelessWidget {
         shrinkWrap: true,
         itemCount: invoices.length,
         itemBuilder: (BuildContext context, int index) {
-          return InvoiceListItem(invoice: invoices[index]);
+          return InvoiceListItem(
+            invoice: invoices[index],
+            showCheckbox: false,
+          );
         },
       ),
       label2: localization.pastDueInvoices,

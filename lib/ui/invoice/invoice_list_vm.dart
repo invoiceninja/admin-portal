@@ -26,7 +26,6 @@ class InvoiceListBuilder extends StatelessWidget {
     return StoreConnector<AppState, InvoiceListVM>(
       converter: InvoiceListVM.fromStore,
       builder: (context, viewModel) {
-        final state = viewModel.state;
         return EntityList(
             entityType: EntityType.invoice,
             presenter: InvoicePresenter(),
@@ -40,14 +39,10 @@ class InvoiceListBuilder extends StatelessWidget {
             itemBuilder: (BuildContext context, index) {
               final invoiceId = viewModel.invoiceList[index];
               final invoice = viewModel.invoiceMap[invoiceId];
-              final listUIState = state.getListState(EntityType.invoice);
-              final isInMultiselect = listUIState.isInMultiselect();
 
               return InvoiceListItem(
                 filter: viewModel.filter,
                 invoice: invoice,
-                isChecked:
-                    isInMultiselect && listUIState.isSelected(invoice.id),
               );
             });
       },
