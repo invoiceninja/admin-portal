@@ -718,6 +718,8 @@ abstract class InvoiceEntity extends Object
 
   bool get isCancelledOrReversed => isCancelled || isReversed;
 
+  bool get isUpcoming => isActive && !isPaid && !isPastDue && isSent;
+
   String get calculatedStatusId {
     if (isPastDue && !isCancelledOrReversed) {
       return kInvoiceStatusPastDue;

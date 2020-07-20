@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
+import 'package:invoiceninja_flutter/redux/dashboard/dashboard_sidebar_selectors.dart';
 import 'package:invoiceninja_flutter/redux/ui/pref_state.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/app_toggle_buttons.dart';
 import 'package:invoiceninja_flutter/ui/app/history_drawer_vm.dart';
@@ -283,7 +284,7 @@ class _DashboardSidebar extends StatelessWidget {
             padding: const EdgeInsets.symmetric(vertical: 12),
           ),
           Expanded(
-            child: list2,
+            child: list2 ?? Container(color: Theme.of(context).cardColor),
           ),
         ]
       ],
@@ -295,28 +296,19 @@ class _InvoiceSidebar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final localization = AppLocalization.of(context);
-    print('## BUILD INVOICES');
-
-    return Placeholder();
+    final store = StoreProvider.of<AppState>(context);
+    final state = store.state;
+    final invoices = memoizedUpcomingInvoices(state.invoiceState.map);
+    print('## BUILD INVOICES: ${invoices.length}');
 
     return _DashboardSidebar(
       label1: localization.upcomingInvoices,
       list1: ListView.builder(
         shrinkWrap: true,
-        /*
-              itemCount: matches.length,
-              itemBuilder: (BuildContext context, int index) {
-                final entityId = matches[index];
-                final entity = widget.entityMap[entityId];
-                return _EntityListTile(
-                  entity: entity,
-                  filter: _filter,
-                  onTap: (entity) => _selectEntity(entity),
-                  overrideSuggestedAmount: widget.overrideSuggestedAmount,
-                  overrideSuggestedLabel: widget.overrideSuggestedLabel,
-                );
-              },              
-               */
+        itemCount: invoices.length,
+        itemBuilder: (BuildContext context, int index) {
+          return Text(invoices[index].number);
+        },
       ),
       label2: localization.pastDueInvoices,
     );
