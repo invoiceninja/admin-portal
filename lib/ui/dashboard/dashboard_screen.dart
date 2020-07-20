@@ -4,6 +4,7 @@ import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/redux/dashboard/dashboard_sidebar_selectors.dart';
 import 'package:invoiceninja_flutter/redux/ui/pref_state.dart';
+import 'package:invoiceninja_flutter/ui/app/app_border.dart';
 import 'package:invoiceninja_flutter/ui/app/history_drawer_vm.dart';
 import 'package:invoiceninja_flutter/ui/app/menu_drawer_vm.dart';
 import 'package:invoiceninja_flutter/ui/app/list_filter.dart';
@@ -133,9 +134,12 @@ class _DashboardScreenState extends State<DashboardScreen>
                   flex: 3,
                 ),
                 Flexible(
-                  child: _SidebarScaffold(
-                    tabController: _sideTabController,
-                    scrollController: _scrollController,
+                  child: AppBorder(
+                    isLeft: true,
+                    child: _SidebarScaffold(
+                      tabController: _sideTabController,
+                      scrollController: _scrollController,
+                    ),
                   ),
                   flex: 2,
                 ),
