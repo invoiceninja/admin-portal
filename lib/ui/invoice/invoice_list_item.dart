@@ -15,18 +15,14 @@ import 'package:invoiceninja_flutter/utils/platforms.dart';
 
 class InvoiceListItem extends StatelessWidget {
   const InvoiceListItem({
-    @required this.onEntityAction,
     @required this.invoice,
     @required this.filter,
-    this.onTap,
-    this.onLongPress,
+    @required this.onEntityAction,
     this.onCheckboxChanged,
     this.isChecked = false,
   });
 
   final Function(EntityAction) onEntityAction;
-  final GestureTapCallback onTap;
-  final GestureTapCallback onLongPress;
   final InvoiceEntity invoice;
   final String filter;
   final Function(bool) onCheckboxChanged;
@@ -78,12 +74,8 @@ class InvoiceListItem extends StatelessWidget {
             builder: (BuildContext context, BoxConstraints constraints) {
           return constraints.maxWidth > kTableListWidthCutoff
               ? InkWell(
-                  onTap: () => onTap != null
-                      ? onTap()
-                      : selectEntity(entity: invoice, context: context),
-                  onLongPress: () => onLongPress != null
-                      ? onLongPress()
-                      : selectEntity(
+                  onTap: () => selectEntity(entity: invoice, context: context),
+                  onLongPress: () => selectEntity(
                           entity: invoice, context: context, longPress: true),
                   child: Padding(
                     padding: const EdgeInsets.only(
@@ -181,12 +173,8 @@ class InvoiceListItem extends StatelessWidget {
                   ),
                 )
               : ListTile(
-                  onTap: () => onTap != null
-                      ? onTap()
-                      : selectEntity(entity: invoice, context: context),
-                  onLongPress: () => onLongPress != null
-                      ? onLongPress()
-                      : selectEntity(
+                  onTap: () => selectEntity(entity: invoice, context: context),
+                  onLongPress: () => selectEntity(
                           entity: invoice, context: context, longPress: true),
                   leading: showCheckbox
                       ? IgnorePointer(

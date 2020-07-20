@@ -214,7 +214,7 @@ Middleware<AppState> _createRefreshRequest(AuthRepository repository) {
       url: url,
       token: token,
       updatedAt: updatedAt - kUpdatedAtBufferSeconds,
-      includeStatic: action.includeStatic,
+      includeStatic: action.includeStatic || store.state.staticState.isStale,
     )
         .then((data) {
       if (action.clearData) {
