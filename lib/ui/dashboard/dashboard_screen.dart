@@ -10,6 +10,7 @@ import 'package:invoiceninja_flutter/ui/app/list_filter.dart';
 import 'package:invoiceninja_flutter/ui/dashboard/dashboard_activity.dart';
 import 'package:invoiceninja_flutter/ui/dashboard/dashboard_panels.dart';
 import 'package:invoiceninja_flutter/ui/dashboard/dashboard_screen_vm.dart';
+import 'package:invoiceninja_flutter/ui/invoice/invoice_list_item.dart';
 import 'package:invoiceninja_flutter/utils/icons.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:invoiceninja_flutter/utils/platforms.dart';
@@ -239,10 +240,7 @@ class _SidebarScaffold extends StatelessWidget {
         children: [
           _InvoiceSidebar(),
           _PaymentSidebar(),
-          _DashboardSidebar(
-            label1: localization.upcomingQuotes,
-            label2: localization.expiredQuotes,
-          ),
+          _QuoteSidebar(),
         ],
       ),
     );
@@ -305,7 +303,7 @@ class _InvoiceSidebar extends StatelessWidget {
         shrinkWrap: true,
         itemCount: invoices.length,
         itemBuilder: (BuildContext context, int index) {
-          return Text(invoices[index].number);
+          return InvoiceListItem(invoice: invoices[index]);
         },
       ),
       label2: localization.pastDueInvoices,
@@ -316,8 +314,13 @@ class _InvoiceSidebar extends StatelessWidget {
 class _PaymentSidebar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    print('## BUILD PAYMENTS');
+    return Container();
+  }
+}
 
+class _QuoteSidebar extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
     return Container();
   }
 }

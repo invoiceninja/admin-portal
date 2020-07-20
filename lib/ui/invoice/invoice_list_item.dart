@@ -16,7 +16,7 @@ import 'package:invoiceninja_flutter/utils/platforms.dart';
 class InvoiceListItem extends StatelessWidget {
   const InvoiceListItem({
     @required this.invoice,
-    @required this.filter,
+    this.filter,
     this.onCheckboxChanged,
     this.isChecked = false,
   });
@@ -73,7 +73,7 @@ class InvoiceListItem extends StatelessWidget {
               ? InkWell(
                   onTap: () => selectEntity(entity: invoice, context: context),
                   onLongPress: () => selectEntity(
-                          entity: invoice, context: context, longPress: true),
+                      entity: invoice, context: context, longPress: true),
                   child: Padding(
                     padding: const EdgeInsets.only(
                       left: 12,
@@ -172,7 +172,7 @@ class InvoiceListItem extends StatelessWidget {
               : ListTile(
                   onTap: () => selectEntity(entity: invoice, context: context),
                   onLongPress: () => selectEntity(
-                          entity: invoice, context: context, longPress: true),
+                      entity: invoice, context: context, longPress: true),
                   leading: showCheckbox
                       ? IgnorePointer(
                           ignoring: listUIState.isInMultiselect(),
