@@ -17,7 +17,6 @@ class InvoiceListItem extends StatelessWidget {
   const InvoiceListItem({
     @required this.onEntityAction,
     @required this.invoice,
-    @required this.client,
     @required this.filter,
     this.onTap,
     this.onLongPress,
@@ -29,7 +28,6 @@ class InvoiceListItem extends StatelessWidget {
   final GestureTapCallback onTap;
   final GestureTapCallback onLongPress;
   final InvoiceEntity invoice;
-  final ClientEntity client;
   final String filter;
   final Function(bool) onCheckboxChanged;
   final bool isChecked;
@@ -38,6 +36,7 @@ class InvoiceListItem extends StatelessWidget {
   Widget build(BuildContext context) {
     final store = StoreProvider.of<AppState>(context);
     final state = store.state;
+    final client = state.clientState.get(invoice.clientId);
     final uiState = state.uiState;
     final invoiceUIState = uiState.invoiceUIState;
     final listUIState = state.getUIState(invoice.entityType).listUIState;

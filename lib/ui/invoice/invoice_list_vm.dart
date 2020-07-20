@@ -55,7 +55,6 @@ class InvoiceListBuilder extends StatelessWidget {
               return InvoiceListItem(
                 filter: viewModel.filter,
                 invoice: invoice,
-                client: viewModel.clientMap[invoice.clientId] ?? ClientEntity(),
                 onEntityAction: (EntityAction action) {
                   if (action == EntityAction.more) {
                     showDialog();
