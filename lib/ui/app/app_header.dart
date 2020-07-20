@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:invoiceninja_flutter/ui/app/form_card.dart';
 
 class AppHeader extends StatelessWidget {
   const AppHeader({
@@ -67,18 +68,15 @@ class AppHeader extends StatelessWidget {
       );
     }
 
-    return Container(
-      child: Padding(
-        padding: EdgeInsets.only(left: 20, top: 30, right: 20, bottom: 25),
-        child: Row(
-          children: [
-            Expanded(child: _value1()),
-            if ((secondValue ?? '').isNotEmpty) ...[
-              SizedBox(width: 8),
-              Expanded(child: _value2()),
-            ],
+    return FormCard(
+      child: Row(
+        children: [
+          Expanded(child: _value1()),
+          if ((secondValue ?? '').isNotEmpty) ...[
+            SizedBox(width: 8),
+            Expanded(child: _value2()),
           ],
-        ),
+        ],
       ),
     );
   }

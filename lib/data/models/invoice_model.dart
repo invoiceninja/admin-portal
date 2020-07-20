@@ -57,7 +57,7 @@ class InvoiceFields {
   static const String invoiceNumber = 'invoice_number';
   static const String discount = 'discount';
   static const String poNumber = 'po_number';
-  static const String invoiceDate = 'invoice_date';
+  static const String date = 'invoice_date';
   static const String dueDate = 'due_date';
   static const String terms = 'terms';
   static const String footer = 'footer';
@@ -406,7 +406,7 @@ abstract class InvoiceEntity extends Object
       case EntityFields.archivedAt:
         response = invoiceA.archivedAt.compareTo(invoiceB.archivedAt);
         break;
-      case InvoiceFields.invoiceDate:
+      case InvoiceFields.date:
       case QuoteFields.date:
       case CreditFields.date:
         response = invoiceA.date.compareTo(invoiceB.date);

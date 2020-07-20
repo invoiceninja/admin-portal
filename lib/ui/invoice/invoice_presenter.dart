@@ -15,7 +15,7 @@ class InvoicePresenter extends EntityPresenter {
       InvoiceFields.amount,
       InvoiceFields.balance,
       InvoiceFields.status,
-      InvoiceFields.invoiceDate,
+      InvoiceFields.date,
       InvoiceFields.dueDate,
     ];
   }
@@ -55,7 +55,7 @@ class InvoicePresenter extends EntityPresenter {
         return Text((state.clientState.map[invoice.clientId] ??
                 ClientEntity(id: invoice.clientId))
             .listDisplayName);
-      case InvoiceFields.invoiceDate:
+      case InvoiceFields.date:
         return Text(formatDate(invoice.date, context));
       case InvoiceFields.amount:
         return Align(

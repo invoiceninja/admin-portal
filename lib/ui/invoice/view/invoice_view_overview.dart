@@ -90,7 +90,12 @@ class InvoiceOverview extends StatelessWidget {
     }
 
     final Map<String, String> fields = {
-      InvoiceFields.invoiceDate: formatDate(invoice.date, context),
+      if (invoice.isQuote)
+        QuoteFields.date: formatDate(invoice.date, context)
+      else if (invoice.isCredit)
+        CreditFields.date: formatDate(invoice.date, context)
+      else
+        InvoiceFields.date: formatDate(invoice.date, context),
       dueDateField: formatDate(invoice.dueDate, context),
       InvoiceFields.partial: formatNumber(invoice.partial, context,
           clientId: invoice.clientId, zeroIsNull: true),

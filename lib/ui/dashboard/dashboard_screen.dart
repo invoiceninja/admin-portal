@@ -26,18 +26,21 @@ class DashboardScreen extends StatefulWidget {
 }
 
 class _DashboardScreenState extends State<DashboardScreen>
-    with SingleTickerProviderStateMixin {
-  TabController _controller;
+    with TickerProviderStateMixin {
+  TabController _mainTabController;
+  TabController _sideTabController;
 
   @override
   void initState() {
     super.initState();
-    _controller = TabController(vsync: this, length: 2);
+    _mainTabController = TabController(vsync: this, length: 2);
+    _sideTabController = TabController(vsync: this, length: 3);
   }
 
   @override
   void dispose() {
-    _controller.dispose();
+    _mainTabController.dispose();
+    _sideTabController.dispose();
     super.dispose();
   }
 
@@ -47,66 +50,83 @@ class _DashboardScreenState extends State<DashboardScreen>
     final store = StoreProvider.of<AppState>(context);
     final state = store.state;
 
-    return WillPopScope(
-      onWillPop: () async => true,
-      child: Scaffold(
-        drawer: isMobile(context) || state.prefState.isMenuFloated
-            ? MenuDrawerBuilder()
-            : null,
-        endDrawer: isMobile(context) || state.prefState.isHistoryFloated
-            ? HistoryDrawerBuilder()
-            : null,
-        appBar: AppBar(
-          centerTitle: false,
-          leading: isMobile(context) || state.prefState.isMenuFloated
-              ? null
-              : SizedBox(),
-          title: ListFilter(
-            placeholder: localization.searchCompany,
-            filter: state.uiState.filter,
-            onFilterChanged: (value) {
-              store.dispatch(FilterCompany(value));
-            },
-          ),
-          actions: [
-            if (isMobile(context) || !state.prefState.isHistoryVisible)
-              Builder(
-                builder: (context) => IconButton(
-                  icon: Icon(Icons.menu),
-                  onPressed: () {
-                    if (isMobile(context) || state.prefState.isHistoryFloated) {
-                      Scaffold.of(context).openEndDrawer();
-                    } else {
-                      store.dispatch(
-                          UserPreferencesChanged(sidebar: AppSidebar.history));
-                    }
-                  },
-                ),
-              ),
-          ],
-          bottom: TabBar(
-            controller: _controller,
-            tabs: [
-              Tab(
-                text: localization.overview,
-              ),
-              Tab(
-                text: localization.activity,
-              ),
-            ],
-          ),
+    final mainScaffold = Scaffold(
+      drawer: isMobile(context) || state.prefState.isMenuFloated
+          ? MenuDrawerBuilder()
+          : null,
+      endDrawer: isMobile(context) || state.prefState.isHistoryFloated
+          ? HistoryDrawerBuilder()
+          : null,
+      appBar: AppBar(
+        centerTitle: false,
+        leading: isMobile(context) || state.prefState.isMenuFloated
+            ? null
+            : SizedBox(),
+        title: ListFilter(
+          placeholder: localization.searchCompany,
+          filter: state.uiState.filter,
+          onFilterChanged: (value) {
+            store.dispatch(FilterCompany(value));
+          },
         ),
-        body: CustomTabBarView(
-          viewModel: widget.viewModel,
-          controller: _controller,
+        actions: [
+          if (isMobile(context) || !state.prefState.isHistoryVisible)
+            Builder(
+              builder: (context) => IconButton(
+                icon: Icon(Icons.menu),
+                onPressed: () {
+                  if (isMobile(context) || state.prefState.isHistoryFloated) {
+                    Scaffold.of(context).openEndDrawer();
+                  } else {
+                    store.dispatch(
+                        UserPreferencesChanged(sidebar: AppSidebar.history));
+                  }
+                },
+              ),
+            ),
+        ],
+        bottom: TabBar(
+          controller: _mainTabController,
+          tabs: [
+            Tab(
+              text: localization.overview,
+            ),
+            Tab(
+              text: localization.activity,
+            ),
+          ],
         ),
       ),
+      body: _CustomTabBarView(
+        viewModel: widget.viewModel,
+        controller: _mainTabController,
+      ),
+    );
+
+    return WillPopScope(
+      onWillPop: () async => true,
+      child: isDesktop(context)
+          ? Row(
+              children: [
+                Flexible(
+                  child: mainScaffold,
+                  flex: 3,
+                ),
+                Flexible(
+                  child: _SidebarScaffold(
+                    controller: _sideTabController,
+                  ),
+                  flex: 2,
+                ),
+              ],
+            )
+          : mainScaffold,
     );
   }
 }
 
-class CustomTabBarView extends StatelessWidget {
-  const CustomTabBarView({
+class _CustomTabBarView extends StatelessWidget {
+  const _CustomTabBarView({
     @required this.viewModel,
     @required this.controller,
   });
@@ -139,21 +159,53 @@ class CustomTabBarView extends StatelessWidget {
     return TabBarView(
       controller: controller,
       children: <Widget>[
-        /*
         RefreshIndicator(
           onRefresh: () => viewModel.onRefreshed(context),
-          child: DashboardPanels(
-            viewModel: viewModel,
-          ),
-        ),
-        */
-        DashboardPanels(
-          viewModel: viewModel,
+          child: DashboardPanels(viewModel: viewModel),
         ),
         RefreshIndicator(
-            onRefresh: () => viewModel.onRefreshed(context),
-            child: DashboardActivity(viewModel: viewModel)),
+          onRefresh: () => viewModel.onRefreshed(context),
+          child: DashboardActivity(viewModel: viewModel),
+        ),
       ],
+    );
+  }
+}
+
+class _SidebarScaffold extends StatelessWidget {
+  const _SidebarScaffold({@required this.controller});
+
+  final TabController controller;
+
+  @override
+  Widget build(BuildContext context) {
+    final localization = AppLocalization.of(context);
+
+    return Scaffold(
+      appBar: AppBar(
+        bottom: TabBar(
+          controller: controller,
+          tabs: [
+            Tab(
+              text: localization.invoices,
+            ),
+            Tab(
+              text: localization.payments,
+            ),
+            Tab(
+              text: localization.payments,
+            ),
+          ],
+        ),
+      ),
+      body: TabBarView(
+        controller: controller,
+        children: [
+          Placeholder(),
+          Placeholder(),
+          Placeholder(),
+        ],
+      ),
     );
   }
 }
