@@ -8,7 +8,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_redux/flutter_redux.dart';
-import 'package:invoiceninja_flutter/redux/ui/list_ui_state.dart';
 import 'package:invoiceninja_flutter/ui/app/entities/entity_actions_dialog.dart';
 import 'package:invoiceninja_flutter/ui/app/tables/entity_list.dart';
 import 'package:invoiceninja_flutter/ui/quote/quote_list_item.dart';
@@ -56,7 +55,7 @@ class QuoteListBuilder extends StatelessWidget {
                   );
 
               return QuoteListItem(
-                user: viewModel.user,
+                user: state.user,
                 filter: viewModel.filter,
                 quote: invoice,
                 client: viewModel.clientMap[invoice.clientId] ?? ClientEntity(),
@@ -78,8 +77,6 @@ class QuoteListBuilder extends StatelessWidget {
 class QuoteListVM extends EntityListVM {
   QuoteListVM({
     AppState state,
-    UserEntity user,
-    ListUIState listState,
     List<String> invoiceList,
     BuiltMap<String, InvoiceEntity> invoiceMap,
     BuiltMap<String, ClientEntity> clientMap,
@@ -95,8 +92,6 @@ class QuoteListVM extends EntityListVM {
     Function(String) onSortColumn,
   }) : super(
           state: state,
-          user: user,
-          listState: listState,
           invoiceList: invoiceList,
           invoiceMap: invoiceMap,
           clientMap: clientMap,
@@ -126,8 +121,6 @@ class QuoteListVM extends EntityListVM {
 
     return QuoteListVM(
       state: state,
-      user: state.user,
-      listState: state.quoteListState,
       invoiceList: memoizedFilteredQuoteList(
           state.quoteState.map,
           state.quoteState.list,

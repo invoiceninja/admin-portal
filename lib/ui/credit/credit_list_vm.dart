@@ -8,7 +8,6 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:invoiceninja_flutter/redux/invoice/invoice_actions.dart';
-import 'package:invoiceninja_flutter/redux/ui/list_ui_state.dart';
 import 'package:invoiceninja_flutter/ui/app/entities/entity_actions_dialog.dart';
 import 'package:invoiceninja_flutter/ui/app/tables/entity_list.dart';
 import 'package:invoiceninja_flutter/ui/credit/credit_list_item.dart';
@@ -56,7 +55,7 @@ class CreditListBuilder extends StatelessWidget {
                     );
 
                 return CreditListItem(
-                  user: viewModel.user,
+                  user: state.user,
                   filter: viewModel.filter,
                   credit: invoice,
                   client:
@@ -79,8 +78,6 @@ class CreditListBuilder extends StatelessWidget {
 class CreditListVM extends EntityListVM {
   CreditListVM({
     AppState state,
-    UserEntity user,
-    ListUIState listState,
     List<String> invoiceList,
     BuiltMap<String, InvoiceEntity> invoiceMap,
     BuiltMap<String, ClientEntity> clientMap,
@@ -96,8 +93,6 @@ class CreditListVM extends EntityListVM {
     Function(String) onSortColumn,
   }) : super(
           state: state,
-          user: user,
-          listState: listState,
           invoiceList: invoiceList,
           invoiceMap: invoiceMap,
           clientMap: clientMap,
@@ -127,8 +122,6 @@ class CreditListVM extends EntityListVM {
 
     return CreditListVM(
       state: state,
-      user: state.user,
-      listState: state.creditListState,
       invoiceList: memoizedFilteredCreditList(
           state.creditState.map,
           state.creditState.list,
