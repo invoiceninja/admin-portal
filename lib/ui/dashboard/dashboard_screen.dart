@@ -33,6 +33,8 @@ class _DashboardScreenState extends State<DashboardScreen>
   TabController _sideTabController;
   ScrollController _scrollController;
 
+  static const DASHBOARD_PANEL_HEIGHT = 501;
+
   @override
   void initState() {
     super.initState();
@@ -44,7 +46,7 @@ class _DashboardScreenState extends State<DashboardScreen>
 
   void onScrollListener() {
     final offset = _scrollController.position.pixels;
-    final offsetIndex = ((offset + 120) / 500).floor();
+    final offsetIndex = ((offset + 120) / DASHBOARD_PANEL_HEIGHT).floor();
 
     if (_sideTabController.index != offsetIndex) {
       _sideTabController.index = offsetIndex;
@@ -215,7 +217,9 @@ class _SidebarScaffold extends StatelessWidget {
           isScrollable: true,
           controller: tabController,
           onTap: (int index) {
-            scrollController.jumpTo((index.toDouble() * 500) + 1);
+            scrollController.jumpTo((index.toDouble() *
+                    _DashboardScreenState.DASHBOARD_PANEL_HEIGHT) +
+                1);
           },
           tabs: [
             Tab(

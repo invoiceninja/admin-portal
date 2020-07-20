@@ -89,127 +89,129 @@ class _DashboardChartState extends State<DashboardChart> {
       ),
     );
 
-    return FormCard(
-      children: <Widget>[
-        Padding(
-          padding: EdgeInsets.all(16),
-          child: Text(
-            widget.title,
-            style: theme.textTheme.headline5,
-          ),
-        ),
-        Divider(height: 1.0),
-        Container(
-          width: double.infinity,
-          height: state.dashboardUIState.enableComparison ? 106 : 86,
-          child: ListView(
-            shrinkWrap: true,
-            scrollDirection: Axis.horizontal,
-            children: widget.data.map((dataGroup) {
-              final int index = widget.data.indexOf(dataGroup);
-              final bool isSelected = index == _selectedIndex;
-              final bool isIncrease = dataGroup.total > dataGroup.previousTotal;
-              final String changeAmount = (isIncrease ? '+' : '') +
-                  formatNumber(
-                      dataGroup.total - dataGroup.previousTotal, context,
-                      currencyId: widget.currencyId);
-              final changePercent = (isIncrease ? '+' : '') +
-                  formatNumber(
-                      dataGroup.total != 0 && dataGroup.previousTotal != 0
-                          ? round(
-                              (dataGroup.total - dataGroup.previousTotal) /
-                                  dataGroup.previousTotal *
-                                  100,
-                              2)
-                          : 0.0,
-                      context,
-                      formatNumberType: FormatNumberType.percent,
-                      currencyId: widget.currencyId);
-              final String changeString = dataGroup.total == 0 ||
-                      dataGroup.previousTotal == 0 ||
-                      dataGroup.total == dataGroup.previousTotal
-                  ? (state.dashboardUIState.enableComparison ? ' ' : '')
-                  : '$changeAmount ($changePercent)';
-
-              return GestureDetector(
-                onTap: () {
-                  setState(() {
-                    _selectedIndex = index;
-                    _selected = null;
-                  });
-                },
-                child: Container(
-                  color: isSelected ? Colors.blue : theme.cardColor,
-                  padding:
-                      EdgeInsets.only(left: 16, top: 8, right: 32, bottom: 8),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: <Widget>[
-                      Text(localization.lookup(dataGroup.name),
-                          style: theme.textTheme.headline5.copyWith(
-                              color: isSelected ? Colors.white : null,
-                              fontWeight: FontWeight.w400)),
-                      SizedBox(height: 4.0),
-                      Text(
-                          formatNumber(dataGroup.total, context,
-                              currencyId: widget.currencyId),
-                          style: theme.textTheme.headline5.copyWith(
-                              color: isSelected ? Colors.white : null)),
-                      SizedBox(height: 2.0),
-                      changeString.isNotEmpty
-                          ? Text(
-                              changeString,
-                              style: TextStyle(
-                                fontSize: 16.0,
-                                color: isSelected
-                                    ? Colors.white
-                                    : (isIncrease ? Colors.green : Colors.red),
-                                fontWeight: FontWeight.bold,
-                              ),
-                            )
-                          : SizedBox(),
-                    ],
-                  ),
-                ),
-              );
-            }).toList(),
-          ),
-        ),
-        Divider(height: 1.0),
-        SizedBox(
-          height: 240.0,
-          child: Padding(
-            padding: const EdgeInsets.all(16.0),
-            child: ClipRect(
-              child: chart,
+    return Container(
+      child: FormCard(
+        children: <Widget>[
+          Padding(
+            padding: EdgeInsets.all(16),
+            child: Text(
+              widget.title,
+              style: theme.textTheme.headline5,
             ),
           ),
-        ),
-        Divider(height: 1.0),
-        Container(
-          padding: const EdgeInsets.all(16.0),
-          child: Row(
-            mainAxisSize: MainAxisSize.max,
-            children: <Widget>[
-              Expanded(
-                child: Text(
-                  localization.average +
-                      ': ' +
-                      formatNumber(series.average, context,
-                          currencyId: widget.currencyId),
-                  style: theme.textTheme.headline5,
-                ),
-              ),
-              _selected != null
-                  ? Text(
-                      _selected,
-                      style: theme.textTheme.headline5,
-                    )
-                  : SizedBox(),
-            ],
+          Divider(height: 1.0),
+          Container(
+            width: double.infinity,
+            height: state.dashboardUIState.enableComparison ? 106 : 86,
+            child: ListView(
+              shrinkWrap: true,
+              scrollDirection: Axis.horizontal,
+              children: widget.data.map((dataGroup) {
+                final int index = widget.data.indexOf(dataGroup);
+                final bool isSelected = index == _selectedIndex;
+                final bool isIncrease = dataGroup.total > dataGroup.previousTotal;
+                final String changeAmount = (isIncrease ? '+' : '') +
+                    formatNumber(
+                        dataGroup.total - dataGroup.previousTotal, context,
+                        currencyId: widget.currencyId);
+                final changePercent = (isIncrease ? '+' : '') +
+                    formatNumber(
+                        dataGroup.total != 0 && dataGroup.previousTotal != 0
+                            ? round(
+                                (dataGroup.total - dataGroup.previousTotal) /
+                                    dataGroup.previousTotal *
+                                    100,
+                                2)
+                            : 0.0,
+                        context,
+                        formatNumberType: FormatNumberType.percent,
+                        currencyId: widget.currencyId);
+                final String changeString = dataGroup.total == 0 ||
+                        dataGroup.previousTotal == 0 ||
+                        dataGroup.total == dataGroup.previousTotal
+                    ? (state.dashboardUIState.enableComparison ? ' ' : '')
+                    : '$changeAmount ($changePercent)';
+
+                return GestureDetector(
+                  onTap: () {
+                    setState(() {
+                      _selectedIndex = index;
+                      _selected = null;
+                    });
+                  },
+                  child: Container(
+                    color: isSelected ? Colors.blue : theme.cardColor,
+                    padding:
+                        EdgeInsets.only(left: 16, top: 8, right: 32, bottom: 8),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: <Widget>[
+                        Text(localization.lookup(dataGroup.name),
+                            style: theme.textTheme.headline5.copyWith(
+                                color: isSelected ? Colors.white : null,
+                                fontWeight: FontWeight.w400)),
+                        SizedBox(height: 4.0),
+                        Text(
+                            formatNumber(dataGroup.total, context,
+                                currencyId: widget.currencyId),
+                            style: theme.textTheme.headline5.copyWith(
+                                color: isSelected ? Colors.white : null)),
+                        SizedBox(height: 2.0),
+                        changeString.isNotEmpty
+                            ? Text(
+                                changeString,
+                                style: TextStyle(
+                                  fontSize: 16.0,
+                                  color: isSelected
+                                      ? Colors.white
+                                      : (isIncrease ? Colors.green : Colors.red),
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              )
+                            : SizedBox(),
+                      ],
+                    ),
+                  ),
+                );
+              }).toList(),
+            ),
           ),
-        ),
-      ],
+          Divider(height: 1.0),
+          SizedBox(
+            height: 240.0,
+            child: Padding(
+              padding: const EdgeInsets.all(16.0),
+              child: ClipRect(
+                child: chart,
+              ),
+            ),
+          ),
+          Divider(height: 1.0),
+          Container(
+            padding: const EdgeInsets.all(16.0),
+            child: Row(
+              mainAxisSize: MainAxisSize.max,
+              children: <Widget>[
+                Expanded(
+                  child: Text(
+                    localization.average +
+                        ': ' +
+                        formatNumber(series.average, context,
+                            currencyId: widget.currencyId),
+                    style: theme.textTheme.headline5,
+                  ),
+                ),
+                _selected != null
+                    ? Text(
+                        _selected,
+                        style: theme.textTheme.headline5,
+                      )
+                    : SizedBox(),
+              ],
+            ),
+          ),
+        ],
+      ),
     );
   }
 }
