@@ -11,7 +11,6 @@ import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/redux/payment/payment_actions.dart';
 import 'package:invoiceninja_flutter/redux/payment/payment_selectors.dart';
 import 'package:invoiceninja_flutter/redux/ui/list_ui_state.dart';
-import 'package:invoiceninja_flutter/ui/app/entities/entity_actions_dialog.dart';
 import 'package:invoiceninja_flutter/ui/app/tables/entity_list.dart';
 import 'package:invoiceninja_flutter/ui/payment/payment_list_item.dart';
 import 'package:invoiceninja_flutter/ui/payment/payment_presenter.dart';
@@ -41,28 +40,13 @@ class PaymentListBuilder extends StatelessWidget {
               final paymentId = viewModel.paymentList[index];
               final state = viewModel.state;
               final payment = state.paymentState.map[paymentId];
-              final client = state.clientState.map[payment.clientId] ??
-                  ClientEntity(id: payment.clientId);
               final listState = state.getListState(EntityType.payment);
               final isInMultiselect = listState.isInMultiselect();
-
-              void showDialog() => showEntityActionsDialog(
-                    entities: [payment],
-                    context: context,
-                    client: client,
-                  );
 
               return PaymentListItem(
                 user: viewModel.user,
                 filter: viewModel.filter,
                 payment: payment,
-                onEntityAction: (EntityAction action) {
-                  if (action == EntityAction.more) {
-                    showDialog();
-                  } else {
-                    handlePaymentAction(context, [payment], action);
-                  }
-                },
                 isChecked: isInMultiselect && listState.isSelected(payment.id),
               );
             });

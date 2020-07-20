@@ -18,7 +18,6 @@ class ExpenseListItem extends StatelessWidget {
     @required this.client,
     @required this.vendor,
     @required this.filter,
-    this.onEntityAction,
     this.onTap,
     this.onLongPress,
     this.onCheckboxChanged,
@@ -26,7 +25,6 @@ class ExpenseListItem extends StatelessWidget {
   });
 
   final UserCompanyEntity userCompany;
-  final Function(EntityAction) onEntityAction;
   final GestureTapCallback onTap;
   final GestureTapCallback onLongPress;
   final ValueChanged<bool> onCheckboxChanged;
@@ -89,7 +87,6 @@ class ExpenseListItem extends StatelessWidget {
               : expenseUIState.selectedId),
       userCompany: userCompany,
       entity: expense,
-      onEntityAction: onEntityAction,
       child: ListTile(
         onTap: () => onTap != null
             ? onTap()

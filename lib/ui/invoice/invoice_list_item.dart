@@ -17,12 +17,10 @@ class InvoiceListItem extends StatelessWidget {
   const InvoiceListItem({
     @required this.invoice,
     @required this.filter,
-    @required this.onEntityAction,
     this.onCheckboxChanged,
     this.isChecked = false,
   });
 
-  final Function(EntityAction) onEntityAction;
   final InvoiceEntity invoice;
   final String filter;
   final Function(bool) onCheckboxChanged;
@@ -69,7 +67,6 @@ class InvoiceListItem extends StatelessWidget {
                     : invoiceUIState.selectedId),
         userCompany: state.userCompany,
         entity: invoice,
-        onEntityAction: onEntityAction,
         child: LayoutBuilder(
             builder: (BuildContext context, BoxConstraints constraints) {
           return constraints.maxWidth > kTableListWidthCutoff

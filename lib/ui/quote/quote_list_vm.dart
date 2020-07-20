@@ -1,14 +1,12 @@
 import 'dart:async';
 import 'package:built_collection/built_collection.dart';
 import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
-import 'package:invoiceninja_flutter/redux/invoice/invoice_actions.dart';
 import 'package:invoiceninja_flutter/redux/quote/quote_actions.dart';
 import 'package:invoiceninja_flutter/redux/quote/quote_selectors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_redux/flutter_redux.dart';
-import 'package:invoiceninja_flutter/ui/app/entities/entity_actions_dialog.dart';
 import 'package:invoiceninja_flutter/ui/app/tables/entity_list.dart';
 import 'package:invoiceninja_flutter/ui/quote/quote_list_item.dart';
 import 'package:invoiceninja_flutter/ui/quote/quote_presenter.dart';
@@ -43,29 +41,14 @@ class QuoteListBuilder extends StatelessWidget {
             itemBuilder: (BuildContext context, index) {
               final invoiceId = viewModel.invoiceList[index];
               final invoice = viewModel.invoiceMap[invoiceId];
-              final client =
-                  viewModel.clientMap[invoice.clientId] ?? ClientEntity();
               final listState = state.getListState(EntityType.quote);
               final isInMultiselect = listState.isInMultiselect();
-
-              void showDialog() => showEntityActionsDialog(
-                    entities: [invoice],
-                    context: context,
-                    client: client,
-                  );
 
               return QuoteListItem(
                 user: state.user,
                 filter: viewModel.filter,
                 quote: invoice,
                 client: viewModel.clientMap[invoice.clientId] ?? ClientEntity(),
-                onEntityAction: (EntityAction action) {
-                  if (action == EntityAction.more) {
-                    showDialog();
-                  } else {
-                    handleInvoiceAction(context, [invoice], action);
-                  }
-                },
                 isChecked: isInMultiselect && listState.isSelected(invoice.id),
               );
             });

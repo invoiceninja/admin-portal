@@ -16,7 +16,6 @@ import 'package:invoiceninja_flutter/utils/platforms.dart';
 class PaymentListItem extends StatelessWidget {
   const PaymentListItem({
     @required this.user,
-    @required this.onEntityAction,
     @required this.payment,
     @required this.filter,
     this.onTap,
@@ -26,7 +25,6 @@ class PaymentListItem extends StatelessWidget {
   });
 
   final UserEntity user;
-  final Function(EntityAction) onEntityAction;
   final GestureTapCallback onTap;
   final GestureTapCallback onLongPress;
   final PaymentEntity payment;
@@ -72,7 +70,6 @@ class PaymentListItem extends StatelessWidget {
               : paymentUIState.selectedId),
       userCompany: state.userCompany,
       entity: payment,
-      onEntityAction: onEntityAction,
       child: LayoutBuilder(
           builder: (BuildContext context, BoxConstraints constraints) {
         return constraints.maxWidth > kTableListWidthCutoff

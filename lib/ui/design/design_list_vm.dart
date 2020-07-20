@@ -1,6 +1,5 @@
 import 'dart:async';
 import 'package:invoiceninja_flutter/data/models/design_model.dart';
-import 'package:invoiceninja_flutter/ui/app/entities/entity_actions_dialog.dart';
 import 'package:invoiceninja_flutter/ui/app/tables/entity_list.dart';
 import 'package:invoiceninja_flutter/ui/design/design_list_item.dart';
 import 'package:invoiceninja_flutter/ui/design/design_presenter.dart';
@@ -44,22 +43,10 @@ class DesignListBuilder extends StatelessWidget {
               final listState = state.getListState(EntityType.design);
               final isInMultiselect = listState.isInMultiselect();
 
-              void showDialog() => showEntityActionsDialog(
-                    entities: [design],
-                    context: context,
-                  );
-
               return DesignListItem(
                 user: viewModel.state.user,
                 filter: viewModel.filter,
                 design: design,
-                onEntityAction: (EntityAction action) {
-                  if (action == EntityAction.more) {
-                    showDialog();
-                  } else {
-                    handleDesignAction(context, [design], action);
-                  }
-                },
                 isChecked: isInMultiselect && listState.isSelected(design.id),
               );
             });

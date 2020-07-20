@@ -15,7 +15,6 @@ import 'package:invoiceninja_flutter/utils/localization.dart';
 class QuoteListItem extends StatelessWidget {
   const QuoteListItem({
     @required this.user,
-    @required this.onEntityAction,
     @required this.quote,
     @required this.client,
     @required this.filter,
@@ -26,7 +25,6 @@ class QuoteListItem extends StatelessWidget {
   });
 
   final UserEntity user;
-  final Function(EntityAction) onEntityAction;
   final GestureTapCallback onTap;
   final GestureTapCallback onLongPress;
   final InvoiceEntity quote;
@@ -69,7 +67,6 @@ class QuoteListItem extends StatelessWidget {
                 : quoteUIState.selectedId),
         userCompany: state.userCompany,
         entity: quote,
-        onEntityAction: onEntityAction,
         child: LayoutBuilder(
             builder: (BuildContext context, BoxConstraints constraints) {
           return constraints.maxWidth > kTableListWidthCutoff

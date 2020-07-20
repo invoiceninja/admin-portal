@@ -12,7 +12,6 @@ import 'package:invoiceninja_flutter/utils/platforms.dart';
 class VendorListItem extends StatelessWidget {
   const VendorListItem({
     @required this.userCompany,
-    @required this.onEntityAction,
     @required this.vendor,
     @required this.filter,
     this.onTap,
@@ -22,7 +21,6 @@ class VendorListItem extends StatelessWidget {
   });
 
   final UserCompanyEntity userCompany;
-  final Function(EntityAction) onEntityAction;
   final GestureTapCallback onTap;
   final GestureTapCallback onLongPress;
   final Function(bool) onCheckboxChanged;
@@ -53,7 +51,6 @@ class VendorListItem extends StatelessWidget {
               : vendorUIState.selectedId),
       userCompany: userCompany,
       entity: vendor,
-      onEntityAction: onEntityAction,
       child: ListTile(
         onTap: () => onTap != null
             ? onTap()

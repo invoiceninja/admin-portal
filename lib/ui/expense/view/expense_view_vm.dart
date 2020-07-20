@@ -102,8 +102,7 @@ class ExpenseViewVM {
               break;
             case EntityType.invoice:
               if (longPress) {
-                showEntityActionsDialog(
-                    context: context, entities: [invoice], client: client);
+                showEntityActionsDialog(context: context, entities: [invoice]);
               } else {
                 viewEntity(context: context, entity: invoice);
               }

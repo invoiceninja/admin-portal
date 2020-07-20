@@ -16,7 +16,6 @@ class ProductListItem extends StatelessWidget {
     @required this.userCompany,
     @required this.product,
     @required this.filter,
-    this.onEntityAction,
     this.onTap,
     this.onLongPress,
     this.onCheckboxChanged,
@@ -24,7 +23,6 @@ class ProductListItem extends StatelessWidget {
   });
 
   final UserCompanyEntity userCompany;
-  final Function(EntityAction) onEntityAction;
   final GestureTapCallback onTap;
   final GestureTapCallback onLongPress;
   final Function(bool) onCheckboxChanged;
@@ -58,7 +56,6 @@ class ProductListItem extends StatelessWidget {
               : productUIState.selectedId),
       userCompany: userCompany,
       entity: product,
-      onEntityAction: onEntityAction,
       child: LayoutBuilder(
           builder: (BuildContext context, BoxConstraints constraints) {
         return constraints.maxWidth > kTableListWidthCutoff

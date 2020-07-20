@@ -6,6 +6,7 @@ import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:invoiceninja_flutter/data/models/tax_rate_model.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
+import 'package:invoiceninja_flutter/ui/app/entities/entity_actions_dialog.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:invoiceninja_flutter/utils/completers.dart';
 
@@ -284,6 +285,13 @@ void handleTaxRateAction(
         }
       }
       break;
+    case EntityAction.more:
+      showEntityActionsDialog(
+        entities: [taxRate],
+        context: context,
+      );
+      break;
+
   }
 }
 

@@ -12,7 +12,6 @@ import 'package:invoiceninja_flutter/utils/platforms.dart';
 class ProjectListItem extends StatelessWidget {
   const ProjectListItem({
     @required this.userCompany,
-    @required this.onEntityAction,
     @required this.project,
     @required this.filter,
     @required this.client,
@@ -23,7 +22,6 @@ class ProjectListItem extends StatelessWidget {
   });
 
   final UserCompanyEntity userCompany;
-  final Function(EntityAction) onEntityAction;
   final GestureTapCallback onTap;
   final GestureTapCallback onLongPress;
   final Function(bool) onCheckboxChanged;
@@ -56,7 +54,6 @@ class ProjectListItem extends StatelessWidget {
               : projectUIState.selectedId),
       userCompany: userCompany,
       entity: project,
-      onEntityAction: onEntityAction,
       child: ListTile(
         onTap: () => onTap != null
             ? onTap()

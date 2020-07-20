@@ -13,7 +13,6 @@ import 'package:invoiceninja_flutter/utils/localization.dart';
 class WebhookListItem extends StatelessWidget {
   const WebhookListItem({
     @required this.user,
-    @required this.onEntityAction,
     @required this.webhook,
     @required this.filter,
     this.onTap,
@@ -23,7 +22,6 @@ class WebhookListItem extends StatelessWidget {
   });
 
   final UserEntity user;
-  final Function(EntityAction) onEntityAction;
   final GestureTapCallback onTap;
   final GestureTapCallback onLongPress;
   final WebhookEntity webhook;
@@ -56,7 +54,6 @@ class WebhookListItem extends StatelessWidget {
           (uiState.isEditing
               ? webhookUIState.editing.id
               : webhookUIState.selectedId),
-      onEntityAction: onEntityAction,
       child: ListTile(
         onTap: () => onTap != null
             ? onTap()

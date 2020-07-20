@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
+import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:invoiceninja_flutter/ui/app/lists/selected_indicator.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:flutter_redux/flutter_redux.dart';
@@ -12,7 +13,6 @@ class DismissibleEntity extends StatelessWidget {
     @required this.userCompany,
     @required this.entity,
     @required this.child,
-    @required this.onEntityAction,
     @required this.isSelected,
   });
 
@@ -20,15 +20,10 @@ class DismissibleEntity extends StatelessWidget {
   final BaseEntity entity;
   final Widget child;
   final bool isSelected;
-  final Function(EntityAction entityAction) onEntityAction;
 
   @override
   Widget build(BuildContext context) {
     if (!userCompany.canEditEntity(entity)) {
-      return child;
-    }
-
-    if (onEntityAction == null) {
       return child;
     }
 
@@ -46,14 +41,15 @@ class DismissibleEntity extends StatelessWidget {
           color: Colors.teal,
           foregroundColor: Colors.white,
           icon: Icons.check_box,
-          onTap: () => onEntityAction(EntityAction.toggleMultiselect),
+          onTap: () => handleEntityAction(
+              context, entity, EntityAction.toggleMultiselect),
         ),
         IconSlideAction(
           caption: localization.more,
           color: Colors.black45,
           foregroundColor: Colors.white,
           icon: Icons.more_vert,
-          onTap: () => onEntityAction(EntityAction.more),
+          onTap: () => handleEntityAction(context, entity, EntityAction.more),
         ),
       ],
       secondaryActions: <Widget>[
@@ -63,14 +59,16 @@ class DismissibleEntity extends StatelessWidget {
                 color: Colors.orange,
                 foregroundColor: Colors.white,
                 icon: Icons.archive,
-                onTap: () => onEntityAction(EntityAction.archive),
+                onTap: () =>
+                    handleEntityAction(context, entity, EntityAction.archive),
               )
             : IconSlideAction(
                 caption: localization.restore,
                 color: Colors.blue,
                 foregroundColor: Colors.white,
                 icon: Icons.restore,
-                onTap: () => onEntityAction(EntityAction.restore),
+                onTap: () =>
+                    handleEntityAction(context, entity, EntityAction.restore),
               ),
         entity.isDeleted ?? false
             ? IconSlideAction(
@@ -78,14 +76,16 @@ class DismissibleEntity extends StatelessWidget {
                 color: Colors.blue,
                 foregroundColor: Colors.white,
                 icon: Icons.restore,
-                onTap: () => onEntityAction(EntityAction.restore),
+                onTap: () =>
+                    handleEntityAction(context, entity, EntityAction.restore),
               )
             : IconSlideAction(
                 caption: localization.delete,
                 color: Colors.red,
                 foregroundColor: Colors.white,
                 icon: Icons.delete,
-                onTap: () => onEntityAction(EntityAction.delete),
+                onTap: () =>
+                    handleEntityAction(context, entity, EntityAction.delete),
               ),
       ],
       child: SelectedIndicator(

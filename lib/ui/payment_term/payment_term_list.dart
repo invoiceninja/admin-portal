@@ -1,8 +1,5 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:invoiceninja_flutter/data/models/models.dart';
-import 'package:invoiceninja_flutter/redux/payment_term/payment_term_actions.dart';
-import 'package:invoiceninja_flutter/ui/app/entities/entity_actions_dialog.dart';
 import 'package:invoiceninja_flutter/ui/app/help_text.dart';
 import 'package:invoiceninja_flutter/ui/app/lists/list_divider.dart';
 import 'package:invoiceninja_flutter/ui/app/loading_indicator.dart';
@@ -52,16 +49,6 @@ class _PaymentTermListState extends State<PaymentTermList> {
               user: viewModel.state.user,
               filter: viewModel.filter,
               paymentTerm: paymentTerm,
-              onEntityAction: (EntityAction action) {
-                if (action == EntityAction.more) {
-                  showEntityActionsDialog(
-                    entities: [paymentTerm],
-                    context: context,
-                  );
-                } else {
-                  handlePaymentTermAction(context, [paymentTerm], action);
-                }
-              },
               isChecked:
                   isInMultiselect && listUIState.isSelected(paymentTerm.id),
             );

@@ -10,7 +10,6 @@ import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/redux/client/client_actions.dart';
 import 'package:invoiceninja_flutter/redux/client/client_selectors.dart';
-import 'package:invoiceninja_flutter/ui/app/entities/entity_actions_dialog.dart';
 import 'package:invoiceninja_flutter/ui/app/tables/entity_list.dart';
 import 'package:invoiceninja_flutter/ui/client/client_list_item.dart';
 import 'package:invoiceninja_flutter/ui/client/client_presenter.dart';
@@ -47,16 +46,6 @@ class ClientListBuilder extends StatelessWidget {
                 user: viewModel.state.user,
                 filter: viewModel.filter,
                 client: client,
-                onEntityAction: (EntityAction action) {
-                  if (action == EntityAction.more) {
-                    showEntityActionsDialog(
-                      entities: [client],
-                      context: context,
-                    );
-                  } else {
-                    handleClientAction(context, [client], action);
-                  }
-                },
                 isChecked: isInMultiselect && listState.isSelected(client.id),
               );
             });

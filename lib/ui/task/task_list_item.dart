@@ -18,7 +18,6 @@ class TaskListItem extends StatelessWidget {
     @required this.project,
     @required this.task,
     @required this.filter,
-    this.onEntityAction,
     this.onTap,
     this.onLongPress,
     this.onCheckboxChanged,
@@ -28,7 +27,6 @@ class TaskListItem extends StatelessWidget {
   final UserCompanyEntity userCompany;
   final ClientEntity client;
   final ProjectEntity project;
-  final Function(EntityAction) onEntityAction;
   final GestureTapCallback onTap;
   final GestureTapCallback onLongPress;
   final Function(bool) onCheckboxChanged;
@@ -71,7 +69,6 @@ class TaskListItem extends StatelessWidget {
           (uiState.isEditing ? taskUIState.editing.id : taskUIState.selectedId),
       userCompany: userCompany,
       entity: task,
-      onEntityAction: onEntityAction,
       child: ListTile(
         onTap: () => onTap != null
             ? onTap()

@@ -7,8 +7,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_redux/flutter_redux.dart';
-import 'package:invoiceninja_flutter/redux/invoice/invoice_actions.dart';
-import 'package:invoiceninja_flutter/ui/app/entities/entity_actions_dialog.dart';
 import 'package:invoiceninja_flutter/ui/app/tables/entity_list.dart';
 import 'package:invoiceninja_flutter/ui/credit/credit_list_item.dart';
 import 'package:invoiceninja_flutter/ui/credit/credit_presenter.dart';
@@ -43,16 +41,8 @@ class CreditListBuilder extends StatelessWidget {
                 final state = viewModel.state;
                 final invoiceId = viewModel.invoiceList[index];
                 final invoice = viewModel.invoiceMap[invoiceId];
-                final client =
-                    viewModel.clientMap[invoice.clientId] ?? ClientEntity();
                 final listUIState = state.getListState(EntityType.credit);
                 final isInMultiselect = listUIState.isInMultiselect();
-
-                void showDialog() => showEntityActionsDialog(
-                      entities: [invoice],
-                      context: context,
-                      client: client,
-                    );
 
                 return CreditListItem(
                   user: state.user,
@@ -60,13 +50,6 @@ class CreditListBuilder extends StatelessWidget {
                   credit: invoice,
                   client:
                       viewModel.clientMap[invoice.clientId] ?? ClientEntity(),
-                  onEntityAction: (EntityAction action) {
-                    if (action == EntityAction.more) {
-                      showDialog();
-                    } else {
-                      handleInvoiceAction(context, [invoice], action);
-                    }
-                  },
                   isChecked:
                       isInMultiselect && listUIState.isSelected(invoice.id),
                 );

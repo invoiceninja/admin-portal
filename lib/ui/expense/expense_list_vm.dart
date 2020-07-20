@@ -10,7 +10,6 @@ import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/redux/expense/expense_actions.dart';
 import 'package:invoiceninja_flutter/redux/expense/expense_selectors.dart';
 import 'package:invoiceninja_flutter/redux/ui/list_ui_state.dart';
-import 'package:invoiceninja_flutter/ui/app/entities/entity_actions_dialog.dart';
 import 'package:invoiceninja_flutter/ui/app/tables/entity_list.dart';
 import 'package:invoiceninja_flutter/ui/expense/expense_list_item.dart';
 import 'package:invoiceninja_flutter/ui/expense/expense_presenter.dart';
@@ -45,25 +44,12 @@ class ExpenseListBuilder extends StatelessWidget {
               final listUIState = state.getListState(EntityType.expense);
               final isInMultiselect = listUIState.isInMultiselect();
 
-              void showDialog() => showEntityActionsDialog(
-                    entities: [expense],
-                    context: context,
-                    client: client,
-                  );
-
               return ExpenseListItem(
                 userCompany: viewModel.state.userCompany,
                 filter: viewModel.filter,
                 expense: expense,
                 client: client,
                 vendor: vendor,
-                onEntityAction: (EntityAction action) {
-                  if (action == EntityAction.more) {
-                    showDialog();
-                  } else {
-                    handleExpenseAction(context, [expense], action);
-                  }
-                },
                 isChecked:
                     isInMultiselect && listUIState.isSelected(expense.id),
               );

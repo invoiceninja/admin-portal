@@ -12,7 +12,6 @@ import 'package:invoiceninja_flutter/ui/app/dismissible_entity.dart';
 class UserListItem extends StatelessWidget {
   const UserListItem({
     @required this.user,
-    @required this.onEntityAction,
     @required this.filter,
     this.onTap,
     this.onLongPress,
@@ -21,7 +20,6 @@ class UserListItem extends StatelessWidget {
   });
 
   final UserEntity user;
-  final Function(EntityAction) onEntityAction;
   final GestureTapCallback onTap;
   final GestureTapCallback onLongPress;
   final String filter;
@@ -49,7 +47,6 @@ class UserListItem extends StatelessWidget {
       userCompany: state.userCompany,
       entity: user,
       isSelected: false,
-      onEntityAction: onEntityAction,
       child: ListTile(
         onTap: () => onTap != null
             ? onTap()

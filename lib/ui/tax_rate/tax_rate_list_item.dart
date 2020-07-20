@@ -12,7 +12,6 @@ import 'package:invoiceninja_flutter/ui/app/dismissible_entity.dart';
 class TaxRateListItem extends StatelessWidget {
   const TaxRateListItem({
     @required this.user,
-    @required this.onEntityAction,
     @required this.taxRate,
     @required this.filter,
     this.onTap,
@@ -22,7 +21,6 @@ class TaxRateListItem extends StatelessWidget {
   });
 
   final UserEntity user;
-  final Function(EntityAction) onEntityAction;
   final GestureTapCallback onTap;
   final GestureTapCallback onLongPress;
   final TaxRateEntity taxRate;
@@ -51,7 +49,6 @@ class TaxRateListItem extends StatelessWidget {
       userCompany: state.userCompany,
       entity: taxRate,
       isSelected: false,
-      onEntityAction: onEntityAction,
       child: ListTile(
         onTap: () => onTap != null
             ? onTap()

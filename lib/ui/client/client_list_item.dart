@@ -14,7 +14,6 @@ import 'package:invoiceninja_flutter/utils/platforms.dart';
 class ClientListItem extends StatelessWidget {
   const ClientListItem({
     @required this.user,
-    @required this.onEntityAction,
     @required this.client,
     @required this.filter,
     this.onTap,
@@ -24,7 +23,6 @@ class ClientListItem extends StatelessWidget {
   });
 
   final UserEntity user;
-  final Function(EntityAction) onEntityAction;
   final GestureTapCallback onTap;
   final GestureTapCallback onLongPress;
   final ClientEntity client;
@@ -54,7 +52,6 @@ class ClientListItem extends StatelessWidget {
               ? clientUIState.editing.id
               : clientUIState.selectedId),
       userCompany: store.state.userCompany,
-      onEntityAction: onEntityAction,
       entity: client,
       child: LayoutBuilder(
           builder: (BuildContext context, BoxConstraints constraints) {
