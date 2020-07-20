@@ -185,15 +185,8 @@ class _SidebarScaffold extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         automaticallyImplyLeading: false,
-        title: AppToggleButtons(
-          tabLabels: [
-            localization.upcoming,
-            localization.recent,
-          ],
-          onTabChanged: (_) => null,
-          selectedIndex: 0,
-        ),
-        bottom: TabBar(
+        title: TabBar(
+          isScrollable: true,
           controller: controller,
           tabs: [
             Tab(
@@ -203,19 +196,66 @@ class _SidebarScaffold extends StatelessWidget {
               text: localization.payments,
             ),
             Tab(
-              text: localization.payments,
+              text: localization.quotes,
             ),
           ],
         ),
+        /*
+        bottom: PreferredSize(
+          preferredSize: const Size.fromHeight(48.0),
+          child: AppToggleButtons(
+            tabLabels: [
+              localization.upcoming,
+              localization.recent,
+            ],
+            onTabChanged: (_) => null,
+            selectedIndex: 0,
+          ),
+        ),
+         */
       ),
       body: TabBarView(
         controller: controller,
         children: [
-          Placeholder(),
-          Placeholder(),
-          Placeholder(),
+          _DashboardSidebar(
+            label2: localization.pastDue,
+          ),
+          _DashboardSidebar(),
+          _DashboardSidebar(
+            label2: localization.expired,
+          ),
         ],
       ),
+    );
+  }
+}
+
+class _DashboardSidebar extends StatelessWidget {
+  const _DashboardSidebar({
+    this.label1,
+    this.label2,
+  });
+
+  final String label1;
+  final String label2;
+
+  @override
+  Widget build(BuildContext context) {
+    final localization = AppLocalization.of(context);
+
+    return Column(
+      children: [
+        Text(label1 ?? localization.upcoming),
+        Expanded(
+          child: Placeholder(),
+        ),
+        if (label2 != null) ...[
+          Text(localization.pastDue),
+          Expanded(
+            child: Placeholder(),
+          ),
+        ]
+      ],
     );
   }
 }
