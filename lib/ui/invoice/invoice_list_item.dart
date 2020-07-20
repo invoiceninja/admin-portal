@@ -59,6 +59,7 @@ class InvoiceListItem extends StatelessWidget {
 
     return DismissibleEntity(
         isSelected: isDesktop(context) &&
+            showCheckbox &&
             invoice.id ==
                 (uiState.isEditing
                     ? invoiceUIState.editing.id
@@ -69,7 +70,10 @@ class InvoiceListItem extends StatelessWidget {
             builder: (BuildContext context, BoxConstraints constraints) {
           return constraints.maxWidth > kTableListWidthCutoff
               ? InkWell(
-                  onTap: () => selectEntity(entity: invoice, context: context, forceView: !showCheckbox),
+                  onTap: () => selectEntity(
+                      entity: invoice,
+                      context: context,
+                      forceView: !showCheckbox),
                   onLongPress: () => selectEntity(
                       entity: invoice, context: context, longPress: true),
                   child: Padding(
@@ -167,7 +171,10 @@ class InvoiceListItem extends StatelessWidget {
                   ),
                 )
               : ListTile(
-                  onTap: () => selectEntity(entity: invoice, context: context, forceView: !showCheckbox),
+                  onTap: () => selectEntity(
+                      entity: invoice,
+                      context: context,
+                      forceView: !showCheckbox),
                   onLongPress: () => selectEntity(
                       entity: invoice, context: context, longPress: true),
                   leading: isInMultiselect
