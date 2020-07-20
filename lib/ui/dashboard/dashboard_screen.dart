@@ -33,8 +33,6 @@ class _DashboardScreenState extends State<DashboardScreen>
   TabController _sideTabController;
   ScrollController _scrollController;
 
-
-
   @override
   void initState() {
     super.initState();
@@ -51,8 +49,6 @@ class _DashboardScreenState extends State<DashboardScreen>
     if (_sideTabController.index != offsetIndex) {
       _sideTabController.index = offsetIndex;
     }
-
-    print('## SCROLLED - Offset: $offset, ${(offset / 500).floor()}');
   }
 
   @override
@@ -219,14 +215,7 @@ class _SidebarScaffold extends StatelessWidget {
           isScrollable: true,
           controller: tabController,
           onTap: (int index) {
-            print('## index: $index');
             scrollController.jumpTo((index.toDouble() * 500) + 1);
-            /*
-            scrollController.animateTo(index.toDouble() * 500,
-                duration: Duration(milliseconds: 400),
-                curve: Curves.easeInOutCubic);
-
-             */
           },
           tabs: [
             Tab(
