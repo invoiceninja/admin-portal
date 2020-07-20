@@ -238,13 +238,8 @@ class _SidebarScaffold extends StatelessWidget {
       body: TabBarView(
         controller: tabController,
         children: [
-          _DashboardSidebar(
-            label1: localization.upcomingInvoices,
-            label2: localization.pastDueInvoices,
-          ),
-          _DashboardSidebar(
-            label1: localization.recentPayments,
-          ),
+          _InvoiceSidebar(),
+          _PaymentSidebar(),
           _DashboardSidebar(
             label1: localization.upcomingQuotes,
             label2: localization.expiredQuotes,
@@ -258,15 +253,19 @@ class _SidebarScaffold extends StatelessWidget {
 class _DashboardSidebar extends StatelessWidget {
   const _DashboardSidebar({
     @required this.label1,
-    @required this.label2,
+    this.label2,
+    @required this.list1,
+    this.list2,
   });
 
   final String label1;
   final String label2;
 
+  final ListView list1;
+  final ListView list2;
+
   @override
   Widget build(BuildContext context) {
-    final localization = AppLocalization.of(context);
     final textTheme = Theme.of(context).textTheme;
 
     return Column(
@@ -276,7 +275,7 @@ class _DashboardSidebar extends StatelessWidget {
           padding: const EdgeInsets.symmetric(vertical: 12),
         ),
         Expanded(
-          child: Placeholder(),
+          child: list1,
         ),
         if (label2 != null) ...[
           Container(
@@ -284,10 +283,51 @@ class _DashboardSidebar extends StatelessWidget {
             padding: const EdgeInsets.symmetric(vertical: 12),
           ),
           Expanded(
-            child: Placeholder(),
+            child: list2,
           ),
         ]
       ],
     );
+  }
+}
+
+class _InvoiceSidebar extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    final localization = AppLocalization.of(context);
+    print('## BUILD INVOICES');
+
+    return Placeholder();
+
+    return _DashboardSidebar(
+      label1: localization.upcomingInvoices,
+      list1: ListView.builder(
+        shrinkWrap: true,
+        /*
+              itemCount: matches.length,
+              itemBuilder: (BuildContext context, int index) {
+                final entityId = matches[index];
+                final entity = widget.entityMap[entityId];
+                return _EntityListTile(
+                  entity: entity,
+                  filter: _filter,
+                  onTap: (entity) => _selectEntity(entity),
+                  overrideSuggestedAmount: widget.overrideSuggestedAmount,
+                  overrideSuggestedLabel: widget.overrideSuggestedLabel,
+                );
+              },              
+               */
+      ),
+      label2: localization.pastDueInvoices,
+    );
+  }
+}
+
+class _PaymentSidebar extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    print('## BUILD PAYMENTS');
+
+    return Container();
   }
 }
