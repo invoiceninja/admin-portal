@@ -14,12 +14,14 @@ class DismissibleEntity extends StatelessWidget {
     @required this.entity,
     @required this.child,
     @required this.isSelected,
+    this.showCheckbox = true,
   });
 
   final UserCompanyEntity userCompany;
   final BaseEntity entity;
   final Widget child;
   final bool isSelected;
+  final bool showCheckbox;
 
   @override
   Widget build(BuildContext context) {
@@ -36,14 +38,15 @@ class DismissibleEntity extends StatelessWidget {
       actionPane: SlidableDrawerActionPane(),
       key: Key('__${entity.entityKey}_${entity.entityState}__'),
       actions: <Widget>[
-        IconSlideAction(
-          caption: localization.select,
-          color: Colors.teal,
-          foregroundColor: Colors.white,
-          icon: Icons.check_box,
-          onTap: () => handleEntityAction(
-              context, entity, EntityAction.toggleMultiselect),
-        ),
+        if (showCheckbox)
+          IconSlideAction(
+            caption: localization.select,
+            color: Colors.teal,
+            foregroundColor: Colors.white,
+            icon: Icons.check_box,
+            onTap: () => handleEntityAction(
+                context, entity, EntityAction.toggleMultiselect),
+          ),
         IconSlideAction(
           caption: localization.more,
           color: Colors.black45,

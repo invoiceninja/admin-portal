@@ -64,6 +64,7 @@ class InvoiceListItem extends StatelessWidget {
                 (uiState.isEditing
                     ? invoiceUIState.editing.id
                     : invoiceUIState.selectedId),
+        showCheckbox: showCheckbox,
         userCompany: state.userCompany,
         entity: invoice,
         child: LayoutBuilder(
