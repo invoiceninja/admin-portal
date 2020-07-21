@@ -363,7 +363,8 @@ class _DashboardSidebar extends StatelessWidget {
             padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 16),
           ),
           Expanded(
-            child: list1 == null ? HelpText(localization.noRecordsFound) : list1,
+            child:
+                list1 == null ? HelpText(localization.noRecordsFound) : list1,
           ),
           if (label2 != null) ...[
             Container(
@@ -385,7 +386,8 @@ class _DashboardSidebar extends StatelessWidget {
               children: [
                 Container(
                   child: Text(label3 ?? '', style: textTheme.bodyText2),
-                  padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 16),
+                  padding:
+                      const EdgeInsets.symmetric(vertical: 16, horizontal: 16),
                 ),
                 Expanded(
                   child: list3 ?? SizedBox(),
