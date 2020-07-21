@@ -65,6 +65,8 @@ UIState uiReducer(UIState state, dynamic action) {
     ..invoiceUIState.replace(invoiceUIReducer(state.invoiceUIState, action))
     ..dashboardUIState
         .replace(dashboardUIReducer(state.dashboardUIState, action))
+    ..selectedEntities
+        .replace(selectedEntitiesReducer(state.selectedEntities, action))
     ..reportsUIState.replace(reportsUIReducer(state.reportsUIState, action))
     // STARTER: reducer - do not remove comment
     ..webhookUIState.replace(webhookUIReducer(state.webhookUIState, action))
