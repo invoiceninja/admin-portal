@@ -7,6 +7,7 @@ import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/redux/dashboard/dashboard_sidebar_selectors.dart';
 import 'package:invoiceninja_flutter/redux/ui/pref_state.dart';
 import 'package:invoiceninja_flutter/ui/app/app_border.dart';
+import 'package:invoiceninja_flutter/ui/app/help_text.dart';
 import 'package:invoiceninja_flutter/ui/app/history_drawer_vm.dart';
 import 'package:invoiceninja_flutter/ui/app/menu_drawer_vm.dart';
 import 'package:invoiceninja_flutter/ui/app/list_filter.dart';
@@ -352,43 +353,48 @@ class _DashboardSidebar extends StatelessWidget {
     final localization = AppLocalization.of(context);
     final textTheme = Theme.of(context).textTheme;
 
-    return Column(
-      mainAxisSize: MainAxisSize.max,
-      children: [
-        Container(
-          child: Text(label1, style: textTheme.bodyText2),
-          padding: const EdgeInsets.symmetric(vertical: 12),
-        ),
-        Expanded(
-          child: list1 == null ? Text(localization.noRecordsFound) : list1,
-        ),
-        if (label2 != null) ...[
+    return Container(
+      color: Theme.of(context).cardColor,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
           Container(
-            child: Text(label2, style: textTheme.bodyText2),
-            padding: const EdgeInsets.symmetric(vertical: 12),
+            child: Text(label1, style: textTheme.bodyText2),
+            padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 16),
           ),
           Expanded(
-            child: list2 == null ? Text(localization.noRecordsFound) : list2,
+            child: list1 == null ? HelpText(localization.noRecordsFound) : list1,
+          ),
+          if (label2 != null) ...[
+            Container(
+              child: Text(label2, style: textTheme.bodyText2),
+              padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 16),
+            ),
+            Expanded(
+              child:
+                  list2 == null ? HelpText(localization.noRecordsFound) : list2,
+            ),
+          ],
+          AnimatedContainer(
+            height: label3 == null
+                ? 0
+                : (MediaQuery.of(context).size.height - 100) / 2,
+            duration: Duration(milliseconds: kDefaultAnimationDuration),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Container(
+                  child: Text(label3 ?? '', style: textTheme.bodyText2),
+                  padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 16),
+                ),
+                Expanded(
+                  child: list3 ?? SizedBox(),
+                ),
+              ],
+            ),
           ),
         ],
-        AnimatedContainer(
-          height: label3 == null
-              ? 0
-              : (MediaQuery.of(context).size.height - 50) / 2,
-          duration: Duration(milliseconds: kDefaultAnimationDuration),
-          child: Column(
-            children: [
-              Container(
-                child: Text(label3 ?? '', style: textTheme.bodyText2),
-                padding: const EdgeInsets.symmetric(vertical: 12),
-              ),
-              Expanded(
-                child: list3 ?? SizedBox(),
-              ),
-            ],
-          ),
-        ),
-      ],
+      ),
     );
   }
 }
