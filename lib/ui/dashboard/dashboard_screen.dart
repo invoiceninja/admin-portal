@@ -281,70 +281,6 @@ class _SidebarScaffold extends StatelessWidget {
   }
 }
 
-class _DashboardSidebar extends StatelessWidget {
-  const _DashboardSidebar({
-    @required this.label1,
-    @required this.list1,
-    this.label2,
-    this.list2,
-    this.label3,
-    this.list3,
-  });
-
-  final String label1;
-  final String label2;
-  final String label3;
-
-  final ListView list1;
-  final ListView list2;
-  final ListView list3;
-
-  @override
-  Widget build(BuildContext context) {
-    final localization = AppLocalization.of(context);
-    final textTheme = Theme.of(context).textTheme;
-
-    return Column(
-      mainAxisSize: MainAxisSize.max,
-      children: [
-        Container(
-          child: Text(label1, style: textTheme.bodyText2),
-          padding: const EdgeInsets.symmetric(vertical: 12),
-        ),
-        Expanded(
-          child: list1 == null ? Text(localization.noRecordsFound) : list1,
-        ),
-        if (label2 != null) ...[
-          Container(
-            child: Text(label2, style: textTheme.bodyText2),
-            padding: const EdgeInsets.symmetric(vertical: 12),
-          ),
-          Expanded(
-            child: list2 == null ? Text(localization.noRecordsFound) : list2,
-          ),
-        ],
-        AnimatedContainer(
-          height: label3 == null
-              ? 0
-              : (MediaQuery.of(context).size.height - 50) / 2,
-          duration: Duration(milliseconds: kDefaultAnimationDuration),
-          child: Column(
-            children: [
-              Container(
-                child: Text(label3 ?? '', style: textTheme.bodyText2),
-                padding: const EdgeInsets.symmetric(vertical: 12),
-              ),
-              Expanded(
-                child: list3 ?? SizedBox(),
-              ),
-            ],
-          ),
-        ),
-      ],
-    );
-  }
-}
-
 class _InvoiceSidebar extends StatelessWidget {
   const _InvoiceSidebar({@required this.selectedIds});
 
@@ -420,5 +356,69 @@ class _QuoteSidebar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container();
+  }
+}
+
+class _DashboardSidebar extends StatelessWidget {
+  const _DashboardSidebar({
+    @required this.label1,
+    @required this.list1,
+    this.label2,
+    this.list2,
+    this.label3,
+    this.list3,
+  });
+
+  final String label1;
+  final String label2;
+  final String label3;
+
+  final ListView list1;
+  final ListView list2;
+  final ListView list3;
+
+  @override
+  Widget build(BuildContext context) {
+    final localization = AppLocalization.of(context);
+    final textTheme = Theme.of(context).textTheme;
+
+    return Column(
+      mainAxisSize: MainAxisSize.max,
+      children: [
+        Container(
+          child: Text(label1, style: textTheme.bodyText2),
+          padding: const EdgeInsets.symmetric(vertical: 12),
+        ),
+        Expanded(
+          child: list1 == null ? Text(localization.noRecordsFound) : list1,
+        ),
+        if (label2 != null) ...[
+          Container(
+            child: Text(label2, style: textTheme.bodyText2),
+            padding: const EdgeInsets.symmetric(vertical: 12),
+          ),
+          Expanded(
+            child: list2 == null ? Text(localization.noRecordsFound) : list2,
+          ),
+        ],
+        AnimatedContainer(
+          height: label3 == null
+              ? 0
+              : (MediaQuery.of(context).size.height - 50) / 2,
+          duration: Duration(milliseconds: kDefaultAnimationDuration),
+          child: Column(
+            children: [
+              Container(
+                child: Text(label3 ?? '', style: textTheme.bodyText2),
+                padding: const EdgeInsets.symmetric(vertical: 12),
+              ),
+              Expanded(
+                child: list3 ?? SizedBox(),
+              ),
+            ],
+          ),
+        ),
+      ],
+    );
   }
 }
