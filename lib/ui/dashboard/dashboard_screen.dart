@@ -359,6 +359,17 @@ class _InvoiceSidebar extends StatelessWidget {
         },
       ),
       label2: localization.pastDueInvoices,
+      label3: selectedIds != null ? localization.selectedInvoices : null,
+      list3: ListView.builder(
+        shrinkWrap: true,
+        itemCount: selectedIds?.length,
+        itemBuilder: (BuildContext context, int index) {
+          return InvoiceListItem(
+            invoice: state.invoiceState.get(selectedIds[index]),
+            showCheckbox: false,
+          );
+        },
+      ),
     );
   }
 }
