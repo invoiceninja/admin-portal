@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
+import 'package:invoiceninja_flutter/constants.dart';
 import 'package:invoiceninja_flutter/data/models/entities.dart';
 import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
@@ -300,35 +301,43 @@ class _DashboardSidebar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final localization = AppLocalization.of(context);
     final textTheme = Theme.of(context).textTheme;
 
     return Column(
+      mainAxisSize: MainAxisSize.max,
       children: [
         Container(
           child: Text(label1, style: textTheme.bodyText2),
           padding: const EdgeInsets.symmetric(vertical: 12),
         ),
-        Expanded(
-          child: list1,
+        Flexible(
+          child: list1 == null ? Text(localization.noRecordsFound) : list1,
         ),
         if (label2 != null) ...[
           Container(
             child: Text(label2, style: textTheme.bodyText2),
             padding: const EdgeInsets.symmetric(vertical: 12),
           ),
-          Expanded(
-            child: list2 ?? Container(color: Theme.of(context).cardColor),
+          Flexible(
+            child: list2 == null ? Text(localization.noRecordsFound) : list2,
           ),
         ],
-        if (label3 != null) ...[
-          Container(
-            child: Text(label3, style: textTheme.bodyText2),
-            padding: const EdgeInsets.symmetric(vertical: 12),
+        AnimatedContainer(
+          height: label3 == null ? 0 : 200,
+          duration: Duration(milliseconds: kDefaultAnimationDuration),
+          child: Column(
+            children: [
+              Container(
+                child: Text(label3 ?? '', style: textTheme.bodyText2),
+                padding: const EdgeInsets.symmetric(vertical: 12),
+              ),
+              Expanded(
+                child: list3 ?? SizedBox(),
+              ),
+            ],
           ),
-          Expanded(
-            child: list3 ?? Container(color: Theme.of(context).cardColor),
-          ),
-        ]
+        ),
       ],
     );
   }
@@ -348,18 +357,32 @@ class _InvoiceSidebar extends StatelessWidget {
 
     return _DashboardSidebar(
       label1: localization.upcomingInvoices,
-      list1: ListView.builder(
-        shrinkWrap: true,
-        itemCount: invoices.length,
-        itemBuilder: (BuildContext context, int index) {
-          return InvoiceListItem(
-            invoice: invoices[index],
-            showCheckbox: false,
-          );
-        },
-      ),
+      list1: invoices.isEmpty
+          ? null
+          : ListView.builder(
+              shrinkWrap: true,
+              itemCount: invoices.length,
+              itemBuilder: (BuildContext context, int index) {
+                return InvoiceListItem(
+                  invoice: invoices[index],
+                  showCheckbox: false,
+                );
+              },
+            ),
       label2: localization.pastDueInvoices,
-      label3: selectedIds != null ? localization.selectedInvoices : null,
+      list2: invoices.isEmpty
+          ? null
+          : ListView.builder(
+              shrinkWrap: true,
+              itemCount: invoices.length,
+              itemBuilder: (BuildContext context, int index) {
+                return InvoiceListItem(
+                  invoice: invoices[index],
+                  showCheckbox: false,
+                );
+              },
+            ),
+      label3: selectedIds == null ? null : localization.selectedInvoices,
       list3: ListView.builder(
         shrinkWrap: true,
         itemCount: selectedIds?.length,
