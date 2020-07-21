@@ -19,12 +19,10 @@ class DashboardPanels extends StatelessWidget {
     Key key,
     @required this.viewModel,
     @required this.scrollController,
-    @required this.onDateSelected,
   }) : super(key: key);
 
   final DashboardVM viewModel;
   final ScrollController scrollController;
-  final Function(EntityType, List<String>) onDateSelected;
 
   void _showDateOptions(BuildContext context) {
     showDialog<DateRangePicker>(
@@ -429,28 +427,28 @@ class DashboardPanels extends StatelessWidget {
             if (company.isModuleEnabled(EntityType.invoice))
               _invoiceChart(
                   context: context,
-                  onDateSelected: (entityIds) =>
-                      onDateSelected(EntityType.invoice, entityIds)),
+                  onDateSelected: (entityIds) => viewModel.onSelectionChanged(
+                      EntityType.invoice, entityIds)),
             if (company.isModuleEnabled(EntityType.invoice))
               _paymentChart(
                   context: context,
-                  onDateSelected: (entityIds) =>
-                      onDateSelected(EntityType.payment, entityIds)),
+                  onDateSelected: (entityIds) => viewModel.onSelectionChanged(
+                      EntityType.payment, entityIds)),
             if (company.isModuleEnabled(EntityType.invoice))
               _quoteChart(
                   context: context,
-                  onDateSelected: (entityIds) =>
-                      onDateSelected(EntityType.quote, entityIds)),
+                  onDateSelected: (entityIds) => viewModel.onSelectionChanged(
+                      EntityType.quote, entityIds)),
             if (company.isModuleEnabled(EntityType.invoice))
               _taskChart(
                   context: context,
                   onDateSelected: (entityIds) =>
-                      onDateSelected(EntityType.task, entityIds)),
+                      viewModel.onSelectionChanged(EntityType.task, entityIds)),
             if (company.isModuleEnabled(EntityType.invoice))
               _expenseChart(
                   context: context,
-                  onDateSelected: (entityIds) =>
-                      onDateSelected(EntityType.expense, entityIds)),
+                  onDateSelected: (entityIds) => viewModel.onSelectionChanged(
+                      EntityType.expense, entityIds)),
             SizedBox(
               height: 500,
             )

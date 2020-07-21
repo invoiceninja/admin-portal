@@ -36,9 +36,6 @@ class _DashboardScreenState extends State<DashboardScreen>
   TabController _sideTabController;
   ScrollController _scrollController;
 
-  EntityType _selectedEntityType;
-  List<String> _selectedEntityIds;
-
   // TODO fix this
   static const DASHBOARD_PANEL_HEIGHT = 501;
 
@@ -126,13 +123,6 @@ class _DashboardScreenState extends State<DashboardScreen>
         viewModel: widget.viewModel,
         tabController: _mainTabController,
         scrollController: _scrollController,
-        onDateSelected: (entityType, entityIds) {
-          print('## onDateSelected - $entityType: $entityIds');
-          setState(() {
-            _selectedEntityType = entityType;
-            _selectedEntityIds = entityIds;
-          });
-        },
       ),
     );
 
@@ -151,8 +141,6 @@ class _DashboardScreenState extends State<DashboardScreen>
                     child: _SidebarScaffold(
                       tabController: _sideTabController,
                       scrollController: _scrollController,
-                      selectedEntityIds: _selectedEntityIds,
-                      selectedEntityType: _selectedEntityType,
                     ),
                   ),
                   flex: 2,
@@ -169,13 +157,11 @@ class _CustomTabBarView extends StatelessWidget {
     @required this.viewModel,
     @required this.tabController,
     @required this.scrollController,
-    @required this.onDateSelected,
   });
 
   final DashboardVM viewModel;
   final TabController tabController;
   final ScrollController scrollController;
-  final Function(EntityType, List<String>) onDateSelected;
 
   @override
   Widget build(BuildContext context) {
@@ -207,7 +193,6 @@ class _CustomTabBarView extends StatelessWidget {
           child: DashboardPanels(
             viewModel: viewModel,
             scrollController: scrollController,
-            onDateSelected: onDateSelected,
           ),
         ),
         RefreshIndicator(
@@ -223,14 +208,10 @@ class _SidebarScaffold extends StatelessWidget {
   const _SidebarScaffold({
     @required this.tabController,
     @required this.scrollController,
-    @required this.selectedEntityType,
-    @required this.selectedEntityIds,
   });
 
   final TabController tabController;
   final ScrollController scrollController;
-  final EntityType selectedEntityType;
-  final List<String> selectedEntityIds;
 
   @override
   Widget build(BuildContext context) {
@@ -263,18 +244,9 @@ class _SidebarScaffold extends StatelessWidget {
       body: TabBarView(
         controller: tabController,
         children: [
-          _InvoiceSidebar(
-              selectedIds: selectedEntityType == EntityType.invoice
-                  ? selectedEntityIds
-                  : null),
-          _PaymentSidebar(
-              selectedIds: selectedEntityType == EntityType.payment
-                  ? selectedEntityIds
-                  : null),
-          _QuoteSidebar(
-              selectedIds: selectedEntityType == EntityType.quote
-                  ? selectedEntityIds
-                  : null),
+          _InvoiceSidebar(),
+          _PaymentSidebar(),
+          _QuoteSidebar(),
         ],
       ),
     );
@@ -282,9 +254,7 @@ class _SidebarScaffold extends StatelessWidget {
 }
 
 class _InvoiceSidebar extends StatelessWidget {
-  const _InvoiceSidebar({@required this.selectedIds});
-
-  final List<String> selectedIds;
+  const _InvoiceSidebar();
 
   @override
   Widget build(BuildContext context) {
@@ -292,6 +262,8 @@ class _InvoiceSidebar extends StatelessWidget {
     final store = StoreProvider.of<AppState>(context);
     final state = store.state;
     final invoices = memoizedUpcomingInvoices(state.invoiceState.map);
+    final selectedIds =
+        state.dashboardUIState.selectedEntities[EntityType.invoice];
 
     return _DashboardSidebar(
       label1: localization.upcomingInvoices,
@@ -338,9 +310,7 @@ class _InvoiceSidebar extends StatelessWidget {
 }
 
 class _PaymentSidebar extends StatelessWidget {
-  const _PaymentSidebar({@required this.selectedIds});
-
-  final List<String> selectedIds;
+  const _PaymentSidebar();
 
   @override
   Widget build(BuildContext context) {
@@ -349,9 +319,7 @@ class _PaymentSidebar extends StatelessWidget {
 }
 
 class _QuoteSidebar extends StatelessWidget {
-  const _QuoteSidebar({@required this.selectedIds});
-
-  final List<String> selectedIds;
+  const _QuoteSidebar();
 
   @override
   Widget build(BuildContext context) {

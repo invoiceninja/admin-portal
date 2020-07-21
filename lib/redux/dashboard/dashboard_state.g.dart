@@ -46,6 +46,12 @@ class _$DashboardUIStateSerializer
       'currencyId',
       serializers.serialize(object.currencyId,
           specifiedType: const FullType(String)),
+      'selectedEntities',
+      serializers.serialize(object.selectedEntities,
+          specifiedType: const FullType(BuiltMap, const [
+            const FullType(EntityType),
+            const FullType(BuiltList, const [const FullType(String)])
+          ])),
     ];
 
     return result;
@@ -100,6 +106,13 @@ class _$DashboardUIStateSerializer
           result.currencyId = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String;
           break;
+        case 'selectedEntities':
+          result.selectedEntities.replace(serializers.deserialize(value,
+              specifiedType: const FullType(BuiltMap, const [
+                const FullType(EntityType),
+                const FullType(BuiltList, const [const FullType(String)])
+              ])));
+          break;
       }
     }
 
@@ -126,6 +139,8 @@ class _$DashboardUIState extends DashboardUIState {
   final int offset;
   @override
   final String currencyId;
+  @override
+  final BuiltMap<EntityType, BuiltList<String>> selectedEntities;
 
   factory _$DashboardUIState(
           [void Function(DashboardUIStateBuilder) updates]) =>
@@ -140,7 +155,8 @@ class _$DashboardUIState extends DashboardUIState {
       this.compareCustomStartDate,
       this.compareCustomEndDate,
       this.offset,
-      this.currencyId})
+      this.currencyId,
+      this.selectedEntities})
       : super._() {
     if (dateRange == null) {
       throw new BuiltValueNullFieldError('DashboardUIState', 'dateRange');
@@ -173,6 +189,10 @@ class _$DashboardUIState extends DashboardUIState {
     if (currencyId == null) {
       throw new BuiltValueNullFieldError('DashboardUIState', 'currencyId');
     }
+    if (selectedEntities == null) {
+      throw new BuiltValueNullFieldError(
+          'DashboardUIState', 'selectedEntities');
+    }
   }
 
   @override
@@ -195,7 +215,8 @@ class _$DashboardUIState extends DashboardUIState {
         compareCustomStartDate == other.compareCustomStartDate &&
         compareCustomEndDate == other.compareCustomEndDate &&
         offset == other.offset &&
-        currencyId == other.currencyId;
+        currencyId == other.currencyId &&
+        selectedEntities == other.selectedEntities;
   }
 
   int __hashCode;
@@ -208,15 +229,17 @@ class _$DashboardUIState extends DashboardUIState {
                     $jc(
                         $jc(
                             $jc(
-                                $jc($jc(0, dateRange.hashCode),
-                                    customStartDate.hashCode),
-                                customEndDate.hashCode),
-                            enableComparison.hashCode),
-                        compareDateRange.hashCode),
-                    compareCustomStartDate.hashCode),
-                compareCustomEndDate.hashCode),
-            offset.hashCode),
-        currencyId.hashCode));
+                                $jc(
+                                    $jc($jc(0, dateRange.hashCode),
+                                        customStartDate.hashCode),
+                                    customEndDate.hashCode),
+                                enableComparison.hashCode),
+                            compareDateRange.hashCode),
+                        compareCustomStartDate.hashCode),
+                    compareCustomEndDate.hashCode),
+                offset.hashCode),
+            currencyId.hashCode),
+        selectedEntities.hashCode));
   }
 
   @override
@@ -230,7 +253,8 @@ class _$DashboardUIState extends DashboardUIState {
           ..add('compareCustomStartDate', compareCustomStartDate)
           ..add('compareCustomEndDate', compareCustomEndDate)
           ..add('offset', offset)
-          ..add('currencyId', currencyId))
+          ..add('currencyId', currencyId)
+          ..add('selectedEntities', selectedEntities))
         .toString();
   }
 }
@@ -281,6 +305,14 @@ class DashboardUIStateBuilder
   String get currencyId => _$this._currencyId;
   set currencyId(String currencyId) => _$this._currencyId = currencyId;
 
+  MapBuilder<EntityType, BuiltList<String>> _selectedEntities;
+  MapBuilder<EntityType, BuiltList<String>> get selectedEntities =>
+      _$this._selectedEntities ??=
+          new MapBuilder<EntityType, BuiltList<String>>();
+  set selectedEntities(
+          MapBuilder<EntityType, BuiltList<String>> selectedEntities) =>
+      _$this._selectedEntities = selectedEntities;
+
   DashboardUIStateBuilder();
 
   DashboardUIStateBuilder get _$this {
@@ -294,6 +326,7 @@ class DashboardUIStateBuilder
       _compareCustomEndDate = _$v.compareCustomEndDate;
       _offset = _$v.offset;
       _currencyId = _$v.currencyId;
+      _selectedEntities = _$v.selectedEntities?.toBuilder();
       _$v = null;
     }
     return this;
@@ -314,17 +347,31 @@ class DashboardUIStateBuilder
 
   @override
   _$DashboardUIState build() {
-    final _$result = _$v ??
-        new _$DashboardUIState._(
-            dateRange: dateRange,
-            customStartDate: customStartDate,
-            customEndDate: customEndDate,
-            enableComparison: enableComparison,
-            compareDateRange: compareDateRange,
-            compareCustomStartDate: compareCustomStartDate,
-            compareCustomEndDate: compareCustomEndDate,
-            offset: offset,
-            currencyId: currencyId);
+    _$DashboardUIState _$result;
+    try {
+      _$result = _$v ??
+          new _$DashboardUIState._(
+              dateRange: dateRange,
+              customStartDate: customStartDate,
+              customEndDate: customEndDate,
+              enableComparison: enableComparison,
+              compareDateRange: compareDateRange,
+              compareCustomStartDate: compareCustomStartDate,
+              compareCustomEndDate: compareCustomEndDate,
+              offset: offset,
+              currencyId: currencyId,
+              selectedEntities: selectedEntities.build());
+    } catch (_) {
+      String _$failedField;
+      try {
+        _$failedField = 'selectedEntities';
+        selectedEntities.build();
+      } catch (e) {
+        throw new BuiltValueNestedFieldError(
+            'DashboardUIState', _$failedField, e.toString());
+      }
+      rethrow;
+    }
     replace(_$result);
     return _$result;
   }

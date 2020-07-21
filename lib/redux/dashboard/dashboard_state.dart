@@ -1,3 +1,4 @@
+import 'package:built_collection/built_collection.dart';
 import 'package:invoiceninja_flutter/constants.dart';
 import 'package:invoiceninja_flutter/data/models/dashboard_model.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
@@ -21,6 +22,7 @@ abstract class DashboardUIState
       compareCustomEndDate: convertDateTimeToSqlDate(),
       offset: 0,
       currencyId: kCurrencyAll,
+      selectedEntities: BuiltMap<EntityType, List<String>>(),
     );
   }
 
@@ -48,8 +50,9 @@ abstract class DashboardUIState
 
   String get currencyId;
 
-  static Serializer<DashboardUIState> get serializer =>
-      _$dashboardUIStateSerializer;
+  BuiltMap<EntityType, BuiltList<String>> get selectedEntities;
+
+  static Serializer<DashboardUIState> get serializer => _$dashboardUIStateSerializer;
 
   bool matchesCurrency(String match) {
     if (currencyId == null ||

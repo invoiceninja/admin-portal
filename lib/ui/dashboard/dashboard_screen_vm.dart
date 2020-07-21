@@ -46,6 +46,7 @@ class DashboardVM {
     @required this.filteredList,
     @required this.onRefreshed,
     @required this.onSettingsChanged,
+    @required this.onSelectionChanged,
     @required this.onOffsetChanged,
     @required this.onCurrencyChanged,
   });
@@ -78,6 +79,11 @@ class DashboardVM {
       onRefreshed: (context) => _handleRefresh(context),
       onSettingsChanged: (DashboardSettings settings) =>
           store.dispatch(UpdateDashboardSettings(settings: settings)),
+      onSelectionChanged: (entityType, entityIds) =>
+          store.dispatch(UpdateDashboardSelection(
+        entityType: entityType,
+        entityIds: entityIds,
+      )),
       onOffsetChanged: (offset) =>
           store.dispatch(UpdateDashboardSettings(offset: offset)),
       onCurrencyChanged: (currencyId) =>
@@ -96,6 +102,7 @@ class DashboardVM {
   final bool isNextEnabled;
   final Function(BuildContext) onRefreshed;
   final Function(DashboardSettings) onSettingsChanged;
+  final Function(EntityType, List<String>) onSelectionChanged;
   final Function(int) onOffsetChanged;
   final Function(String) onCurrencyChanged;
 
