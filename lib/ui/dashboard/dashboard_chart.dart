@@ -88,7 +88,7 @@ class _DashboardChartState extends State<DashboardChart> {
       behaviors: [
         charts.SeriesLegend(
           outsideJustification: charts.OutsideJustification.endDrawArea,
-        )
+        ),
       ],
       domainAxis: charts.DateTimeAxisSpec(
           renderSpec: charts.SmallTickRendererSpec(
