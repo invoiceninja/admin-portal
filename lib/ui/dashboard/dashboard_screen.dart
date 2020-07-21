@@ -289,7 +289,8 @@ class _InvoiceSidebar extends StatelessWidget {
 
     return _DashboardSidebar(
       entityType: EntityType.invoice,
-      label1: localization.upcomingInvoices,
+      label1: localization.upcomingInvoices +
+          (upcomingInvoices.isNotEmpty ? ' (${upcomingInvoices.length})' : ''),
       list1: upcomingInvoices.isEmpty
           ? null
           : ListView.separated(
@@ -303,7 +304,8 @@ class _InvoiceSidebar extends StatelessWidget {
               },
               separatorBuilder: (context, index) => ListDivider(),
             ),
-      label2: localization.pastDueInvoices,
+      label2: localization.pastDueInvoices +
+          (pastDueInvoices.isNotEmpty ? ' (${pastDueInvoices.length})' : ''),
       list2: pastDueInvoices.isEmpty
           ? null
           : ListView.separated(
@@ -319,7 +321,7 @@ class _InvoiceSidebar extends StatelessWidget {
             ),
       label3: (selectedIds ?? <String>[]).isEmpty
           ? null
-          : localization.selectedInvoices,
+          : localization.selectedInvoices + ' (${selectedIds.length})',
       list3: (selectedIds ?? <String>[]).isEmpty
           ? null
           : ListView.separated(
