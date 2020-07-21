@@ -197,8 +197,10 @@ class QuoteListItem extends StatelessWidget {
                           child: Text(
                             client.displayName,
                             style: Theme.of(context).textTheme.headline6,
+                            overflow: TextOverflow.ellipsis,
                           ),
                         ),
+                        SizedBox(width: 4),
                         Text(
                             formatNumber(
                                 quote.balance > 0

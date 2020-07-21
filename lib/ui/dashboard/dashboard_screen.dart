@@ -311,7 +311,7 @@ class _DashboardSidebar extends StatelessWidget {
           child: Text(label1, style: textTheme.bodyText2),
           padding: const EdgeInsets.symmetric(vertical: 12),
         ),
-        Flexible(
+        Expanded(
           child: list1 == null ? Text(localization.noRecordsFound) : list1,
         ),
         if (label2 != null) ...[
@@ -319,12 +319,14 @@ class _DashboardSidebar extends StatelessWidget {
             child: Text(label2, style: textTheme.bodyText2),
             padding: const EdgeInsets.symmetric(vertical: 12),
           ),
-          Flexible(
+          Expanded(
             child: list2 == null ? Text(localization.noRecordsFound) : list2,
           ),
         ],
         AnimatedContainer(
-          height: label3 == null ? 0 : 200,
+          height: label3 == null
+              ? 0
+              : (MediaQuery.of(context).size.height - 50) / 2,
           duration: Duration(milliseconds: kDefaultAnimationDuration),
           child: Column(
             children: [
@@ -383,16 +385,18 @@ class _InvoiceSidebar extends StatelessWidget {
               },
             ),
       label3: selectedIds == null ? null : localization.selectedInvoices,
-      list3: ListView.builder(
-        shrinkWrap: true,
-        itemCount: selectedIds?.length,
-        itemBuilder: (BuildContext context, int index) {
-          return InvoiceListItem(
-            invoice: state.invoiceState.get(selectedIds[index]),
-            showCheckbox: false,
-          );
-        },
-      ),
+      list3: selectedIds == null
+          ? null
+          : ListView.builder(
+              shrinkWrap: true,
+              itemCount: selectedIds?.length,
+              itemBuilder: (BuildContext context, int index) {
+                return InvoiceListItem(
+                  invoice: state.invoiceState.get(selectedIds[index]),
+                  showCheckbox: false,
+                );
+              },
+            ),
     );
   }
 }
