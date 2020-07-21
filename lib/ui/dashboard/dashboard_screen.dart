@@ -261,39 +261,41 @@ class _InvoiceSidebar extends StatelessWidget {
     final localization = AppLocalization.of(context);
     final store = StoreProvider.of<AppState>(context);
     final state = store.state;
-    final invoices = memoizedUpcomingInvoices(state.invoiceState.map);
-    final selectedIds =
-        state.uiState.selectedEntities[EntityType.invoice];
+    final upcomingInvoices = memoizedUpcomingInvoices(state.invoiceState.map);
+    final pastDueInvoices = memoizedPastDueInvoices(state.invoiceState.map);
+    final selectedIds = state.uiState.selectedEntities[EntityType.invoice];
 
     return _DashboardSidebar(
       label1: localization.upcomingInvoices,
-      list1: invoices.isEmpty
+      list1: upcomingInvoices.isEmpty
           ? null
           : ListView.builder(
               shrinkWrap: true,
-              itemCount: invoices.length,
+              itemCount: upcomingInvoices.length,
               itemBuilder: (BuildContext context, int index) {
                 return InvoiceListItem(
-                  invoice: invoices[index],
+                  invoice: upcomingInvoices[index],
                   showCheckbox: false,
                 );
               },
             ),
       label2: localization.pastDueInvoices,
-      list2: invoices.isEmpty
+      list2: pastDueInvoices.isEmpty
           ? null
           : ListView.builder(
               shrinkWrap: true,
-              itemCount: invoices.length,
+              itemCount: pastDueInvoices.length,
               itemBuilder: (BuildContext context, int index) {
                 return InvoiceListItem(
-                  invoice: invoices[index],
+                  invoice: pastDueInvoices[index],
                   showCheckbox: false,
                 );
               },
             ),
-      label3: selectedIds == null ? null : localization.selectedInvoices,
-      list3: selectedIds == null
+      label3: (selectedIds ?? <String>[]).isEmpty
+          ? null
+          : localization.selectedInvoices,
+      list3: (selectedIds ?? <String>[]).isEmpty
           ? null
           : ListView.builder(
               shrinkWrap: true,
