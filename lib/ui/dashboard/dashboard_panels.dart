@@ -472,7 +472,7 @@ class _InvoiceChart extends StatelessWidget {
 
     List<ChartDataGroup> previousData;
     if (settings.enableComparison) {
-      previousData = memoizedChartInvoices(
+      previousData = memoizedPreviousChartInvoices(
         state.staticState.currencyMap,
         state.company,
         settings.rebuild((b) => b..offset += 1),

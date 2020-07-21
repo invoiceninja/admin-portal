@@ -44,6 +44,22 @@ var memoizedChartInvoices = memo6((
         groupMap: groupMap,
         clientMap: clientMap));
 
+var memoizedPreviousChartInvoices = memo6((
+    BuiltMap<String, CurrencyEntity> currencyMap,
+    CompanyEntity company,
+    DashboardUIState settings,
+    BuiltMap<String, InvoiceEntity> invoiceMap,
+    BuiltMap<String, ClientEntity> clientMap,
+    BuiltMap<String, GroupEntity> groupMap,
+    ) =>
+    _chartInvoices(
+        currencyMap: currencyMap,
+        company: company,
+        settings: settings,
+        invoiceMap: invoiceMap,
+        groupMap: groupMap,
+        clientMap: clientMap));
+
 List<ChartDataGroup> _chartInvoices({
   BuiltMap<String, CurrencyEntity> currencyMap,
   CompanyEntity company,
@@ -52,7 +68,6 @@ List<ChartDataGroup> _chartInvoices({
   BuiltMap<String, ClientEntity> clientMap,
   BuiltMap<String, GroupEntity> groupMap,
 }) {
-  print('## chartInvoices...');
   const STATUS_ACTIVE = 'active';
   const STATUS_OUTSTANDING = 'outstanding';
 
@@ -174,8 +189,6 @@ List<ChartDataGroup> chartQuotes({
   BuiltMap<String, ClientEntity> clientMap,
   BuiltMap<String, GroupEntity> groupMap,
 }) {
-  print('## chartQuotes...');
-
   const STATUS_ACTIVE = 'active';
   const STATUS_APPROVED = 'approved';
   const STATUS_UNAPPROVED = 'unapproved';
@@ -297,8 +310,6 @@ List<ChartDataGroup> chartPayments(
   BuiltMap<String, GroupEntity> groupMap,
   BuiltMap<String, PaymentEntity> paymentMap,
 ) {
-  print('## chartPayments...');
-
   const STATUS_ACTIVE = 'active';
   const STATUS_REFUNDED = 'refunded';
 
