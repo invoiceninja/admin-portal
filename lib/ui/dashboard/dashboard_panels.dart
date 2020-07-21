@@ -333,17 +333,17 @@ class DashboardPanels extends StatelessWidget {
                   context: context,
                   onDateSelected: (entityIds) => viewModel.onSelectionChanged(
                       EntityType.payment, entityIds)),
-            if (company.isModuleEnabled(EntityType.invoice))
+            if (company.isModuleEnabled(EntityType.quote))
               _quoteChart(
                   context: context,
                   onDateSelected: (entityIds) => viewModel.onSelectionChanged(
                       EntityType.quote, entityIds)),
-            if (company.isModuleEnabled(EntityType.invoice))
+            if (company.isModuleEnabled(EntityType.task))
               _taskChart(
                   context: context,
                   onDateSelected: (entityIds) =>
                       viewModel.onSelectionChanged(EntityType.task, entityIds)),
-            if (company.isModuleEnabled(EntityType.invoice))
+            if (company.isModuleEnabled(EntityType.expense))
               _expenseChart(
                   context: context,
                   onDateSelected: (entityIds) => viewModel.onSelectionChanged(
