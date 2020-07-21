@@ -45,8 +45,6 @@ class _DashboardScreenState extends State<DashboardScreen>
   @override
   void initState() {
     super.initState();
-    print(
-        '## INIT: ${widget.viewModel.state.company.isModuleEnabled(EntityType.invoice)}');
 
     final company = widget.viewModel.state.company;
     int countTabs = 0;
