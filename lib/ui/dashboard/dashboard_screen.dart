@@ -4,6 +4,7 @@ import 'package:invoiceninja_flutter/constants.dart';
 import 'package:invoiceninja_flutter/data/models/entities.dart';
 import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
+import 'package:invoiceninja_flutter/redux/dashboard/dashboard_actions.dart';
 import 'package:invoiceninja_flutter/redux/dashboard/dashboard_sidebar_selectors.dart';
 import 'package:invoiceninja_flutter/redux/ui/pref_state.dart';
 import 'package:invoiceninja_flutter/ui/app/app_border.dart';
@@ -268,6 +269,7 @@ class _InvoiceSidebar extends StatelessWidget {
     final selectedIds = state.uiState.selectedEntities[EntityType.invoice];
 
     return _DashboardSidebar(
+      entityType: EntityType.invoice,
       label1: localization.upcomingInvoices,
       list1: upcomingInvoices.isEmpty
           ? null
@@ -336,6 +338,7 @@ class _QuoteSidebar extends StatelessWidget {
 
 class _DashboardSidebar extends StatelessWidget {
   const _DashboardSidebar({
+    @required this.entityType,
     @required this.label1,
     @required this.list1,
     this.label2,
@@ -344,10 +347,10 @@ class _DashboardSidebar extends StatelessWidget {
     this.list3,
   });
 
+  final EntityType entityType;
   final String label1;
   final String label2;
   final String label3;
-
   final ListView list1;
   final ListView list2;
   final ListView list3;
@@ -356,6 +359,7 @@ class _DashboardSidebar extends StatelessWidget {
   Widget build(BuildContext context) {
     final localization = AppLocalization.of(context);
     final textTheme = Theme.of(context).textTheme;
+    final store = StoreProvider.of<AppState>(context);
 
     return Container(
       color: Theme.of(context).cardColor,
@@ -396,6 +400,7 @@ class _DashboardSidebar extends StatelessWidget {
                 ? 0
                 : (MediaQuery.of(context).size.height - 100) / 2,
             duration: Duration(milliseconds: kDefaultAnimationDuration),
+            curve: Curves.easeInOutCubic,
             child: AppBorder(
               isTop: true,
               child: Column(
@@ -414,7 +419,10 @@ class _DashboardSidebar extends StatelessWidget {
                             visualDensity: VisualDensity.compact,
                             icon: Icon(Icons.clear),
                             onPressed: () {
-                              //
+                              store.dispatch(UpdateDashboardSelection(
+                                entityIds: null,
+                                entityType: entityType,
+                              ));
                             },
                           )
                         ],
