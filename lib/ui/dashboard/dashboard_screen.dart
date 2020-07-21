@@ -397,8 +397,9 @@ class _DashboardSidebar extends StatelessWidget {
             ),
           ),
           Expanded(
-            child:
-                list1 == null ? HelpText(localization.noRecordsFound) : list1,
+            child: list1 == null
+                ? HelpText(localization.noRecordsFound)
+                : ClipRRect(child: list1),
           ),
           if (label2 != null) ...[
             Material(
@@ -412,8 +413,9 @@ class _DashboardSidebar extends StatelessWidget {
               ),
             ),
             Expanded(
-              child:
-                  list2 == null ? HelpText(localization.noRecordsFound) : list2,
+              child: list2 == null
+                  ? HelpText(localization.noRecordsFound)
+                  : ClipRRect(child: list2),
             ),
           ],
           AnimatedContainer(
@@ -454,7 +456,7 @@ class _DashboardSidebar extends StatelessWidget {
                     ),
                   ),
                   Expanded(
-                    child: list3 ?? SizedBox(),
+                    child: ClipRRect(child: list3 ?? SizedBox()),
                   ),
                 ],
               ),
