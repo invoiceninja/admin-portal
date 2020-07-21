@@ -95,9 +95,8 @@ Reducer<BuiltMap<EntityType, BuiltList<String>>> selectedEntitiesReducer =
     combineReducers([
   TypedReducer<BuiltMap<EntityType, BuiltList<String>>,
       UpdateDashboardSelection>((state, action) {
-    return state.rebuild((b) => b
-      ..[action.entityType] =
-          action.entityIds == null ? null : BuiltList(action.entityIds));
+    return state.rebuild((b) =>
+        b..[action.entityType] = BuiltList(action.entityIds ?? <String>[]));
   }),
 ]);
 

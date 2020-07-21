@@ -174,6 +174,8 @@ List<ChartDataGroup> chartQuotes({
   BuiltMap<String, ClientEntity> clientMap,
   BuiltMap<String, GroupEntity> groupMap,
 }) {
+  print('## chartQuotes...');
+
   const STATUS_ACTIVE = 'active';
   const STATUS_APPROVED = 'approved';
   const STATUS_UNAPPROVED = 'unapproved';
@@ -295,6 +297,8 @@ List<ChartDataGroup> chartPayments(
   BuiltMap<String, GroupEntity> groupMap,
   BuiltMap<String, PaymentEntity> paymentMap,
 ) {
+  print('## chartPayments...');
+
   const STATUS_ACTIVE = 'active';
   const STATUS_REFUNDED = 'refunded';
 
