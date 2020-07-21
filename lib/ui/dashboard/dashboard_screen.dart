@@ -45,8 +45,23 @@ class _DashboardScreenState extends State<DashboardScreen>
   @override
   void initState() {
     super.initState();
+    print(
+        '## INIT: ${widget.viewModel.state.company.isModuleEnabled(EntityType.invoice)}');
+
+    final company = widget.viewModel.state.company;
+    int countTabs = 0;
+    [
+      EntityType.invoice,
+      EntityType.payment,
+      EntityType.quote,
+    ].forEach((entityType) {
+      if (company.isModuleEnabled(entityType)) {
+        countTabs++;
+      }
+    });
+
     _mainTabController = TabController(vsync: this, length: 2);
-    _sideTabController = TabController(vsync: this, length: 3);
+    _sideTabController = TabController(vsync: this, length: countTabs);
     _scrollController = ScrollController();
     _scrollController.addListener(onScrollListener);
   }
@@ -219,6 +234,9 @@ class _SidebarScaffold extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final localization = AppLocalization.of(context);
+    final store = StoreProvider.of<AppState>(context);
+    final state = store.state;
+    final company = state.company;
 
     return Scaffold(
       appBar: AppBar(
@@ -232,24 +250,27 @@ class _SidebarScaffold extends StatelessWidget {
                 1);
           },
           tabs: [
-            Tab(
-              text: localization.invoices,
-            ),
-            Tab(
-              text: localization.payments,
-            ),
-            Tab(
-              text: localization.quotes,
-            ),
+            if (company.isModuleEnabled(EntityType.invoice))
+              Tab(
+                text: localization.invoices,
+              ),
+            if (company.isModuleEnabled(EntityType.payment))
+              Tab(
+                text: localization.payments,
+              ),
+            if (company.isModuleEnabled(EntityType.quote))
+              Tab(
+                text: localization.quotes,
+              ),
           ],
         ),
       ),
       body: TabBarView(
         controller: tabController,
         children: [
-          _InvoiceSidebar(),
-          _PaymentSidebar(),
-          _QuoteSidebar(),
+          if (company.isModuleEnabled(EntityType.invoice)) _InvoiceSidebar(),
+          if (company.isModuleEnabled(EntityType.payment)) _PaymentSidebar(),
+          if (company.isModuleEnabled(EntityType.quote)) _QuoteSidebar(),
         ],
       ),
     );
