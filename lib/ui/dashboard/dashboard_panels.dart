@@ -145,74 +145,6 @@ class DashboardPanels extends StatelessWidget {
     );
   }
 
-  Widget _buildChart({
-    @required BuildContext context,
-    @required String title,
-    @required List<ChartDataGroup> currentData,
-    @required List<ChartDataGroup> previousData,
-    @required bool isLoaded,
-    @required Function(int, String) onDateSelected,
-  }) {
-    final localization = AppLocalization.of(context);
-    final settings = viewModel.dashboardUIState;
-    final state = viewModel.state;
-
-    if (!isLoaded) {
-      return LoadingIndicator(useCard: true);
-    }
-
-    currentData.forEach((dataGroup) {
-      final index = currentData.indexOf(dataGroup);
-      dataGroup.chartSeries = <Series<dynamic, DateTime>>[
-        charts.Series<ChartMoneyData, DateTime>(
-          domainFn: (ChartMoneyData chartData, _) => chartData.date,
-          measureFn: (ChartMoneyData chartData, _) => chartData.amount,
-          colorFn: (ChartMoneyData chartData, _) =>
-              charts.MaterialPalette.blue.shadeDefault,
-          id: DashboardChart.PERIOD_CURRENT,
-          displayName: settings.enableComparison ? localization.current : title,
-          data: dataGroup.rawSeries,
-        )
-      ];
-
-      if (settings.enableComparison) {
-        final List<ChartMoneyData> previous = [];
-        final currentSeries = dataGroup.rawSeries;
-        final previousSeries = previousData[index].rawSeries;
-
-        dataGroup.previousTotal = previousData[index].total;
-
-        for (int i = 0;
-            i < min(currentSeries.length, previousSeries.length);
-            i++) {
-          previous.add(
-              ChartMoneyData(currentSeries[i].date, previousSeries[i].amount));
-        }
-
-        dataGroup.chartSeries.add(
-          charts.Series<ChartMoneyData, DateTime>(
-            domainFn: (ChartMoneyData chartData, _) => chartData.date,
-            measureFn: (ChartMoneyData chartData, _) => chartData.amount,
-            colorFn: (ChartMoneyData chartData, _) =>
-                charts.MaterialPalette.gray.shadeDefault,
-            id: DashboardChart.PERIOD_PREVIOUS,
-            displayName: localization.previous,
-            data: previous,
-          ),
-        );
-      }
-    });
-
-    return DashboardChart(
-      data: currentData,
-      title: title,
-      onDateSelected: onDateSelected,
-      currencyId: (settings.currencyId ?? '').isNotEmpty
-          ? settings.currencyId
-          : state.company.currencyId,
-    );
-  }
-
   Widget _invoiceChart({
     @required BuildContext context,
     @required Function(List<String>) onDateSelected,
@@ -240,7 +172,8 @@ class DashboardPanels extends StatelessWidget {
       );
     }
 
-    return _buildChart(
+    return _DashboardPanel(
+      viewModel: viewModel,
       context: context,
       currentData: currentData,
       previousData: previousData,
@@ -279,7 +212,8 @@ class DashboardPanels extends StatelessWidget {
           state.paymentState.map);
     }
 
-    return _buildChart(
+    return _DashboardPanel(
+      viewModel: viewModel,
       context: context,
       currentData: currentData,
       previousData: previousData,
@@ -318,7 +252,8 @@ class DashboardPanels extends StatelessWidget {
       );
     }
 
-    return _buildChart(
+    return _DashboardPanel(
+      viewModel: viewModel,
       context: context,
       currentData: currentData,
       previousData: previousData,
@@ -361,7 +296,8 @@ class DashboardPanels extends StatelessWidget {
       );
     }
 
-    return _buildChart(
+    return _DashboardPanel(
+      viewModel: viewModel,
       context: context,
       currentData: currentData,
       previousData: previousData,
@@ -396,7 +332,8 @@ class DashboardPanels extends StatelessWidget {
           state.expenseState.map);
     }
 
-    return _buildChart(
+    return _DashboardPanel(
+      viewModel: viewModel,
       context: context,
       currentData: currentData,
       previousData: previousData,
@@ -461,6 +398,88 @@ class DashboardPanels extends StatelessWidget {
           ),
         ),
       ],
+    );
+  }
+}
+
+class _DashboardPanel extends StatelessWidget {
+  const _DashboardPanel({
+    @required this.viewModel,
+    @required this.context,
+    @required this.title,
+    @required this.currentData,
+    @required this.previousData,
+    @required this.isLoaded,
+    @required this.onDateSelected,
+  });
+
+  final DashboardVM viewModel;
+  final BuildContext context;
+  final String title;
+  final List<ChartDataGroup> currentData;
+  final List<ChartDataGroup> previousData;
+  final bool isLoaded;
+  final Function(int, String) onDateSelected;
+
+  @override
+  Widget build(BuildContext context) {
+    final localization = AppLocalization.of(context);
+    final settings = viewModel.dashboardUIState;
+    final state = viewModel.state;
+
+    if (!isLoaded) {
+      return LoadingIndicator(useCard: true);
+    }
+
+    currentData.forEach((dataGroup) {
+      final index = currentData.indexOf(dataGroup);
+      dataGroup.chartSeries = <Series<dynamic, DateTime>>[
+        charts.Series<ChartMoneyData, DateTime>(
+          domainFn: (ChartMoneyData chartData, _) => chartData.date,
+          measureFn: (ChartMoneyData chartData, _) => chartData.amount,
+          colorFn: (ChartMoneyData chartData, _) =>
+              charts.MaterialPalette.blue.shadeDefault,
+          id: DashboardChart.PERIOD_CURRENT,
+          displayName: settings.enableComparison ? localization.current : title,
+          data: dataGroup.rawSeries,
+        )
+      ];
+
+      if (settings.enableComparison) {
+        final List<ChartMoneyData> previous = [];
+        final currentSeries = dataGroup.rawSeries;
+        final previousSeries = previousData[index].rawSeries;
+
+        dataGroup.previousTotal = previousData[index].total;
+
+        for (int i = 0;
+            i < min(currentSeries.length, previousSeries.length);
+            i++) {
+          previous.add(
+              ChartMoneyData(currentSeries[i].date, previousSeries[i].amount));
+        }
+
+        dataGroup.chartSeries.add(
+          charts.Series<ChartMoneyData, DateTime>(
+            domainFn: (ChartMoneyData chartData, _) => chartData.date,
+            measureFn: (ChartMoneyData chartData, _) => chartData.amount,
+            colorFn: (ChartMoneyData chartData, _) =>
+                charts.MaterialPalette.gray.shadeDefault,
+            id: DashboardChart.PERIOD_PREVIOUS,
+            displayName: localization.previous,
+            data: previous,
+          ),
+        );
+      }
+    });
+
+    return DashboardChart(
+      data: currentData,
+      title: title,
+      onDateSelected: onDateSelected,
+      currencyId: (settings.currencyId ?? '').isNotEmpty
+          ? settings.currencyId
+          : state.company.currencyId,
     );
   }
 }
