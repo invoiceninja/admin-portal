@@ -9,6 +9,7 @@ import 'package:invoiceninja_flutter/redux/ui/pref_state.dart';
 import 'package:invoiceninja_flutter/ui/app/app_border.dart';
 import 'package:invoiceninja_flutter/ui/app/help_text.dart';
 import 'package:invoiceninja_flutter/ui/app/history_drawer_vm.dart';
+import 'package:invoiceninja_flutter/ui/app/lists/list_divider.dart';
 import 'package:invoiceninja_flutter/ui/app/menu_drawer_vm.dart';
 import 'package:invoiceninja_flutter/ui/app/list_filter.dart';
 import 'package:invoiceninja_flutter/ui/dashboard/dashboard_activity.dart';
@@ -137,12 +138,9 @@ class _DashboardScreenState extends State<DashboardScreen>
                   flex: 3,
                 ),
                 Flexible(
-                  child: AppBorder(
-                    isLeft: true,
-                    child: _SidebarScaffold(
-                      tabController: _sideTabController,
-                      scrollController: _scrollController,
-                    ),
+                  child: _SidebarScaffold(
+                    tabController: _sideTabController,
+                    scrollController: _scrollController,
                   ),
                   flex: 2,
                 ),
@@ -270,7 +268,7 @@ class _InvoiceSidebar extends StatelessWidget {
       label1: localization.upcomingInvoices,
       list1: upcomingInvoices.isEmpty
           ? null
-          : ListView.builder(
+          : ListView.separated(
               shrinkWrap: true,
               itemCount: upcomingInvoices.length,
               itemBuilder: (BuildContext context, int index) {
@@ -279,11 +277,12 @@ class _InvoiceSidebar extends StatelessWidget {
                   showCheckbox: false,
                 );
               },
+              separatorBuilder: (context, index) => ListDivider(),
             ),
       label2: localization.pastDueInvoices,
       list2: pastDueInvoices.isEmpty
           ? null
-          : ListView.builder(
+          : ListView.separated(
               shrinkWrap: true,
               itemCount: pastDueInvoices.length,
               itemBuilder: (BuildContext context, int index) {
@@ -292,13 +291,14 @@ class _InvoiceSidebar extends StatelessWidget {
                   showCheckbox: false,
                 );
               },
+              separatorBuilder: (context, index) => ListDivider(),
             ),
       label3: (selectedIds ?? <String>[]).isEmpty
           ? null
           : localization.selectedInvoices,
       list3: (selectedIds ?? <String>[]).isEmpty
           ? null
-          : ListView.builder(
+          : ListView.separated(
               shrinkWrap: true,
               itemCount: selectedIds?.length,
               itemBuilder: (BuildContext context, int index) {
@@ -307,6 +307,7 @@ class _InvoiceSidebar extends StatelessWidget {
                   showCheckbox: false,
                 );
               },
+              separatorBuilder: (context, index) => ListDivider(),
             ),
     );
   }
@@ -358,18 +359,28 @@ class _DashboardSidebar extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Container(
-            child: Text(label1, style: textTheme.bodyText2),
-            padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 16),
+          Material(
+            elevation: 4,
+            child: Container(
+              child: Text(label1, style: textTheme.bodyText2),
+              padding: const EdgeInsets.all(16),
+              color: Theme.of(context).scaffoldBackgroundColor,
+              width: double.infinity,
+            ),
           ),
           Expanded(
             child:
                 list1 == null ? HelpText(localization.noRecordsFound) : list1,
           ),
           if (label2 != null) ...[
-            Container(
-              child: Text(label2, style: textTheme.bodyText2),
-              padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 16),
+            Material(
+              elevation: 4,
+              child: Container(
+                child: Text(label2, style: textTheme.bodyText2),
+                padding: const EdgeInsets.all(16),
+                color: Theme.of(context).scaffoldBackgroundColor,
+                width: double.infinity,
+              ),
             ),
             Expanded(
               child:
@@ -381,18 +392,25 @@ class _DashboardSidebar extends StatelessWidget {
                 ? 0
                 : (MediaQuery.of(context).size.height - 100) / 2,
             duration: Duration(milliseconds: kDefaultAnimationDuration),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Container(
-                  child: Text(label3 ?? '', style: textTheme.bodyText2),
-                  padding:
-                      const EdgeInsets.symmetric(vertical: 16, horizontal: 16),
-                ),
-                Expanded(
-                  child: list3 ?? SizedBox(),
-                ),
-              ],
+            child: AppBorder(
+              isTop: true,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Material(
+                    elevation: 4,
+                    child: Container(
+                      child: Text(label3 ?? '', style: textTheme.bodyText2),
+                      padding: const EdgeInsets.all(16),
+                      color: Theme.of(context).scaffoldBackgroundColor,
+                      width: double.infinity,
+                    ),
+                  ),
+                  Expanded(
+                    child: list3 ?? SizedBox(),
+                  ),
+                ],
+              ),
             ),
           ),
         ],
