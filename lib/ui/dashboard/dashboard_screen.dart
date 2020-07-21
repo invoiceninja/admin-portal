@@ -364,10 +364,10 @@ class _DashboardSidebar extends StatelessWidget {
         children: [
           Material(
             elevation: 4,
+            color: Theme.of(context).scaffoldBackgroundColor,
             child: Container(
               child: Text(label1, style: textTheme.bodyText2),
-              padding: const EdgeInsets.all(16),
-              color: Theme.of(context).scaffoldBackgroundColor,
+              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
               width: double.infinity,
             ),
           ),
@@ -378,10 +378,11 @@ class _DashboardSidebar extends StatelessWidget {
           if (label2 != null) ...[
             Material(
               elevation: 4,
+              color: Theme.of(context).scaffoldBackgroundColor,
               child: Container(
                 child: Text(label2, style: textTheme.bodyText2),
-                padding: const EdgeInsets.all(16),
-                color: Theme.of(context).scaffoldBackgroundColor,
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
                 width: double.infinity,
               ),
             ),
@@ -402,10 +403,24 @@ class _DashboardSidebar extends StatelessWidget {
                 children: [
                   Material(
                     elevation: 4,
+                    color: Theme.of(context).scaffoldBackgroundColor,
                     child: Container(
-                      child: Text(label3 ?? '', style: textTheme.bodyText2),
-                      padding: const EdgeInsets.all(16),
-                      color: Theme.of(context).scaffoldBackgroundColor,
+                      child: Row(
+                        children: [
+                          Expanded(
+                              child: Text(label3 ?? '',
+                                  style: textTheme.bodyText2)),
+                          IconButton(
+                            visualDensity: VisualDensity.compact,
+                            icon: Icon(Icons.clear),
+                            onPressed: () {
+                              //
+                            },
+                          )
+                        ],
+                      ),
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 16, vertical: 8),
                       width: double.infinity,
                     ),
                   ),
