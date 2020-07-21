@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
+import 'package:invoiceninja_flutter/data/models/entities.dart';
 import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/redux/dashboard/dashboard_sidebar_selectors.dart';
@@ -33,6 +34,9 @@ class _DashboardScreenState extends State<DashboardScreen>
   TabController _mainTabController;
   TabController _sideTabController;
   ScrollController _scrollController;
+
+  EntityType _selectedEntityType;
+  List<String> _selectedEntityIds;
 
   // TODO fix this
   static const DASHBOARD_PANEL_HEIGHT = 501;
@@ -121,6 +125,13 @@ class _DashboardScreenState extends State<DashboardScreen>
         viewModel: widget.viewModel,
         tabController: _mainTabController,
         scrollController: _scrollController,
+        onDateSelected: (entityType, entityIds) {
+          print('## onDateSelected - $entityType: $entityIds');
+          setState(() {
+            _selectedEntityType = entityType;
+            _selectedEntityIds = entityIds;
+          });
+        },
       ),
     );
 
@@ -139,6 +150,8 @@ class _DashboardScreenState extends State<DashboardScreen>
                     child: _SidebarScaffold(
                       tabController: _sideTabController,
                       scrollController: _scrollController,
+                      selectedEntityIds: _selectedEntityIds,
+                      selectedEntityType: _selectedEntityType,
                     ),
                   ),
                   flex: 2,
@@ -155,11 +168,13 @@ class _CustomTabBarView extends StatelessWidget {
     @required this.viewModel,
     @required this.tabController,
     @required this.scrollController,
+    @required this.onDateSelected,
   });
 
   final DashboardVM viewModel;
   final TabController tabController;
   final ScrollController scrollController;
+  final Function(EntityType, List<String>) onDateSelected;
 
   @override
   Widget build(BuildContext context) {
@@ -191,9 +206,7 @@ class _CustomTabBarView extends StatelessWidget {
           child: DashboardPanels(
             viewModel: viewModel,
             scrollController: scrollController,
-            onDateSelected: (entityType, entityIds) {
-              print('## onDateSelected - $entityType: $entityIds');
-            },
+            onDateSelected: onDateSelected,
           ),
         ),
         RefreshIndicator(
@@ -209,10 +222,14 @@ class _SidebarScaffold extends StatelessWidget {
   const _SidebarScaffold({
     @required this.tabController,
     @required this.scrollController,
+    @required this.selectedEntityType,
+    @required this.selectedEntityIds,
   });
 
   final TabController tabController;
   final ScrollController scrollController;
+  final EntityType selectedEntityType;
+  final List<String> selectedEntityIds;
 
   @override
   Widget build(BuildContext context) {
@@ -245,9 +262,18 @@ class _SidebarScaffold extends StatelessWidget {
       body: TabBarView(
         controller: tabController,
         children: [
-          _InvoiceSidebar(),
-          _PaymentSidebar(),
-          _QuoteSidebar(),
+          _InvoiceSidebar(
+              selectedIds: selectedEntityType == EntityType.invoice
+                  ? selectedEntityIds
+                  : null),
+          _PaymentSidebar(
+              selectedIds: selectedEntityType == EntityType.payment
+                  ? selectedEntityIds
+                  : null),
+          _QuoteSidebar(
+              selectedIds: selectedEntityType == EntityType.quote
+                  ? selectedEntityIds
+                  : null),
         ],
       ),
     );
@@ -257,16 +283,20 @@ class _SidebarScaffold extends StatelessWidget {
 class _DashboardSidebar extends StatelessWidget {
   const _DashboardSidebar({
     @required this.label1,
-    this.label2,
     @required this.list1,
+    this.label2,
     this.list2,
+    this.label3,
+    this.list3,
   });
 
   final String label1;
   final String label2;
+  final String label3;
 
   final ListView list1;
   final ListView list2;
+  final ListView list3;
 
   @override
   Widget build(BuildContext context) {
@@ -289,6 +319,15 @@ class _DashboardSidebar extends StatelessWidget {
           Expanded(
             child: list2 ?? Container(color: Theme.of(context).cardColor),
           ),
+        ],
+        if (label3 != null) ...[
+          Container(
+            child: Text(label3, style: textTheme.bodyText2),
+            padding: const EdgeInsets.symmetric(vertical: 12),
+          ),
+          Expanded(
+            child: list3 ?? Container(color: Theme.of(context).cardColor),
+          ),
         ]
       ],
     );
@@ -296,6 +335,10 @@ class _DashboardSidebar extends StatelessWidget {
 }
 
 class _InvoiceSidebar extends StatelessWidget {
+  const _InvoiceSidebar({@required this.selectedIds});
+
+  final List<String> selectedIds;
+
   @override
   Widget build(BuildContext context) {
     final localization = AppLocalization.of(context);
@@ -321,6 +364,10 @@ class _InvoiceSidebar extends StatelessWidget {
 }
 
 class _PaymentSidebar extends StatelessWidget {
+  const _PaymentSidebar({@required this.selectedIds});
+
+  final List<String> selectedIds;
+
   @override
   Widget build(BuildContext context) {
     return Container();
@@ -328,6 +375,10 @@ class _PaymentSidebar extends StatelessWidget {
 }
 
 class _QuoteSidebar extends StatelessWidget {
+  const _QuoteSidebar({@required this.selectedIds});
+
+  final List<String> selectedIds;
+
   @override
   Widget build(BuildContext context) {
     return Container();
