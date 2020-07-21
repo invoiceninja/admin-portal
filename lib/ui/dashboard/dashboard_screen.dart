@@ -263,7 +263,7 @@ class _InvoiceSidebar extends StatelessWidget {
     final state = store.state;
     final invoices = memoizedUpcomingInvoices(state.invoiceState.map);
     final selectedIds =
-        state.dashboardUIState.selectedEntities[EntityType.invoice];
+        state.uiState.selectedEntities[EntityType.invoice];
 
     return _DashboardSidebar(
       label1: localization.upcomingInvoices,

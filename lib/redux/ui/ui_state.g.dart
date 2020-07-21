@@ -21,6 +21,12 @@ class _$UIStateSerializer implements StructuredSerializer<UIState> {
       'selectedCompanyIndex',
       serializers.serialize(object.selectedCompanyIndex,
           specifiedType: const FullType(int)),
+      'selectedEntities',
+      serializers.serialize(object.selectedEntities,
+          specifiedType: const FullType(BuiltMap, const [
+            const FullType(EntityType),
+            const FullType(BuiltList, const [const FullType(String)])
+          ])),
       'currentRoute',
       serializers.serialize(object.currentRoute,
           specifiedType: const FullType(String)),
@@ -132,6 +138,13 @@ class _$UIStateSerializer implements StructuredSerializer<UIState> {
         case 'selectedCompanyIndex':
           result.selectedCompanyIndex = serializers.deserialize(value,
               specifiedType: const FullType(int)) as int;
+          break;
+        case 'selectedEntities':
+          result.selectedEntities.replace(serializers.deserialize(value,
+              specifiedType: const FullType(BuiltMap, const [
+                const FullType(EntityType),
+                const FullType(BuiltList, const [const FullType(String)])
+              ])));
           break;
         case 'currentRoute':
           result.currentRoute = serializers.deserialize(value,
@@ -261,6 +274,8 @@ class _$UIState extends UIState {
   @override
   final int selectedCompanyIndex;
   @override
+  final BuiltMap<EntityType, BuiltList<String>> selectedEntities;
+  @override
   final String currentRoute;
   @override
   final String previousRoute;
@@ -322,6 +337,7 @@ class _$UIState extends UIState {
 
   _$UIState._(
       {this.selectedCompanyIndex,
+      this.selectedEntities,
       this.currentRoute,
       this.previousRoute,
       this.filterEntityId,
@@ -353,6 +369,9 @@ class _$UIState extends UIState {
       : super._() {
     if (selectedCompanyIndex == null) {
       throw new BuiltValueNullFieldError('UIState', 'selectedCompanyIndex');
+    }
+    if (selectedEntities == null) {
+      throw new BuiltValueNullFieldError('UIState', 'selectedEntities');
     }
     if (currentRoute == null) {
       throw new BuiltValueNullFieldError('UIState', 'currentRoute');
@@ -443,6 +462,7 @@ class _$UIState extends UIState {
     if (identical(other, this)) return true;
     return other is UIState &&
         selectedCompanyIndex == other.selectedCompanyIndex &&
+        selectedEntities == other.selectedEntities &&
         currentRoute == other.currentRoute &&
         previousRoute == other.previousRoute &&
         filterEntityId == other.filterEntityId &&
@@ -494,7 +514,7 @@ class _$UIState extends UIState {
                                                                 $jc(
                                                                     $jc(
                                                                         $jc(
-                                                                            $jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc(0, selectedCompanyIndex.hashCode), currentRoute.hashCode), previousRoute.hashCode), filterEntityId.hashCode), filterEntityType.hashCode), filter.hashCode), filterClearedAt.hashCode), dashboardUIState.hashCode), productUIState.hashCode), clientUIState.hashCode),
+                                                                            $jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc(0, selectedCompanyIndex.hashCode), selectedEntities.hashCode), currentRoute.hashCode), previousRoute.hashCode), filterEntityId.hashCode), filterEntityType.hashCode), filter.hashCode), filterClearedAt.hashCode), dashboardUIState.hashCode), productUIState.hashCode), clientUIState.hashCode),
                                                                                 invoiceUIState.hashCode),
                                                                             webhookUIState.hashCode),
                                                                         tokenUIState.hashCode),
@@ -520,6 +540,7 @@ class _$UIState extends UIState {
   String toString() {
     return (newBuiltValueToStringHelper('UIState')
           ..add('selectedCompanyIndex', selectedCompanyIndex)
+          ..add('selectedEntities', selectedEntities)
           ..add('currentRoute', currentRoute)
           ..add('previousRoute', previousRoute)
           ..add('filterEntityId', filterEntityId)
@@ -559,6 +580,14 @@ class UIStateBuilder implements Builder<UIState, UIStateBuilder> {
   int get selectedCompanyIndex => _$this._selectedCompanyIndex;
   set selectedCompanyIndex(int selectedCompanyIndex) =>
       _$this._selectedCompanyIndex = selectedCompanyIndex;
+
+  MapBuilder<EntityType, BuiltList<String>> _selectedEntities;
+  MapBuilder<EntityType, BuiltList<String>> get selectedEntities =>
+      _$this._selectedEntities ??=
+          new MapBuilder<EntityType, BuiltList<String>>();
+  set selectedEntities(
+          MapBuilder<EntityType, BuiltList<String>> selectedEntities) =>
+      _$this._selectedEntities = selectedEntities;
 
   String _currentRoute;
   String get currentRoute => _$this._currentRoute;
@@ -726,6 +755,7 @@ class UIStateBuilder implements Builder<UIState, UIStateBuilder> {
   UIStateBuilder get _$this {
     if (_$v != null) {
       _selectedCompanyIndex = _$v.selectedCompanyIndex;
+      _selectedEntities = _$v.selectedEntities?.toBuilder();
       _currentRoute = _$v.currentRoute;
       _previousRoute = _$v.previousRoute;
       _filterEntityId = _$v.filterEntityId;
@@ -779,6 +809,7 @@ class UIStateBuilder implements Builder<UIState, UIStateBuilder> {
       _$result = _$v ??
           new _$UIState._(
               selectedCompanyIndex: selectedCompanyIndex,
+              selectedEntities: selectedEntities.build(),
               currentRoute: currentRoute,
               previousRoute: previousRoute,
               filterEntityId: filterEntityId,
@@ -810,6 +841,9 @@ class UIStateBuilder implements Builder<UIState, UIStateBuilder> {
     } catch (_) {
       String _$failedField;
       try {
+        _$failedField = 'selectedEntities';
+        selectedEntities.build();
+
         _$failedField = 'dashboardUIState';
         dashboardUIState.build();
         _$failedField = 'productUIState';

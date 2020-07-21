@@ -1,4 +1,3 @@
-import 'package:built_collection/built_collection.dart';
 import 'package:invoiceninja_flutter/redux/company/company_actions.dart';
 import 'package:invoiceninja_flutter/redux/dashboard/dashboard_actions.dart';
 import 'package:invoiceninja_flutter/redux/dashboard/dashboard_state.dart';
@@ -21,11 +20,6 @@ DashboardUIState dashboardUIReducer(DashboardUIState state, dynamic action) {
     } else if (action.currencyId != null) {
       return state.rebuild((b) => b..currencyId = action.currencyId);
     }
-  } else if (action is UpdateDashboardSelection) {
-    return state.rebuild((b) => b
-      ..selectedEntities[action.entityType] = action.entityIds == null
-          ? null
-          : BuiltList<String>(action.entityIds));
   } else if (action is SelectCompany) {
     //return state.rebuild((b) => b..currencyId = action.company.currencyId);
     // TODO re-enable
