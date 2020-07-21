@@ -14,12 +14,16 @@ List<InvoiceEntity> _upcomingInvoices(
       invoices.add(invoice);
     }
   });
+
+  invoices.sort(
+      (invoiceA, invoiceB) => invoiceA.dueDate.compareTo(invoiceB.dueDate));
+
   return invoices;
 }
 
 var memoizedPastDueInvoices = memo1(
-        (BuiltMap<String, InvoiceEntity> invoiceMap) =>
-            _pastDueInvoices(invoiceMap: invoiceMap));
+    (BuiltMap<String, InvoiceEntity> invoiceMap) =>
+        _pastDueInvoices(invoiceMap: invoiceMap));
 
 List<InvoiceEntity> _pastDueInvoices(
     {BuiltMap<String, InvoiceEntity> invoiceMap}) {
@@ -29,5 +33,9 @@ List<InvoiceEntity> _pastDueInvoices(
       invoices.add(invoice);
     }
   });
+
+  invoices.sort(
+      (invoiceA, invoiceB) => invoiceA.dueDate.compareTo(invoiceB.dueDate));
+
   return invoices;
 }
