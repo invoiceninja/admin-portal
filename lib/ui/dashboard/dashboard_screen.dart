@@ -138,9 +138,12 @@ class _DashboardScreenState extends State<DashboardScreen>
                   flex: 3,
                 ),
                 Flexible(
-                  child: _SidebarScaffold(
-                    tabController: _sideTabController,
-                    scrollController: _scrollController,
+                  child: AppBorder(
+                    isLeft: true,
+                    child: _SidebarScaffold(
+                      tabController: _sideTabController,
+                      scrollController: _scrollController,
+                    ),
                   ),
                   flex: 2,
                 ),
