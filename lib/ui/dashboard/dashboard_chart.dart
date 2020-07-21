@@ -7,7 +7,11 @@ import 'package:invoiceninja_flutter/utils/formatting.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 
 class DashboardChart extends StatefulWidget {
-  const DashboardChart({this.data, this.title, this.currencyId});
+  const DashboardChart({
+    this.data,
+    this.title,
+    this.currencyId,
+  });
 
   final List<ChartDataGroup> data;
   final String title;
@@ -109,7 +113,8 @@ class _DashboardChartState extends State<DashboardChart> {
               children: widget.data.map((dataGroup) {
                 final int index = widget.data.indexOf(dataGroup);
                 final bool isSelected = index == _selectedIndex;
-                final bool isIncrease = dataGroup.total > dataGroup.previousTotal;
+                final bool isIncrease =
+                    dataGroup.total > dataGroup.previousTotal;
                 final String changeAmount = (isIncrease ? '+' : '') +
                     formatNumber(
                         dataGroup.total - dataGroup.previousTotal, context,
@@ -164,7 +169,9 @@ class _DashboardChartState extends State<DashboardChart> {
                                   fontSize: 16.0,
                                   color: isSelected
                                       ? Colors.white
-                                      : (isIncrease ? Colors.green : Colors.red),
+                                      : (isIncrease
+                                          ? Colors.green
+                                          : Colors.red),
                                   fontWeight: FontWeight.bold,
                                 ),
                               )
