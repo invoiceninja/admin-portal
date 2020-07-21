@@ -25,7 +25,7 @@ class DashboardScreenBuilder extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return StoreConnector<AppState, DashboardVM>(
-      distinct: true,
+      //distinct: true,
       //onInit: (Store<AppState> store) => isMobile(context) ? store.dispatch(LoadClients()) : null,
       converter: DashboardVM.fromStore,
       builder: (context, viewModel) {
@@ -106,19 +106,21 @@ class DashboardVM {
   final Function(int) onOffsetChanged;
   final Function(String) onCurrencyChanged;
 
+  /*
   @override
   bool operator ==(dynamic other) =>
-      //dashboardUIState == other.dashboardUIState &&
-      //currencyMap == other.currencyMap &&
-      //isLoading == other.isLoading &&
+      dashboardUIState == other.dashboardUIState &&
+      currencyMap == other.currencyMap &&
+      isLoading == other.isLoading &&
       filter == other.filter &&
       filteredList == other.filteredList;
 
   @override
   int get hashCode =>
-      //dashboardUIState.hashCode ^
-      //currencyMap.hashCode ^
-      //isLoading.hashCode ^
+      dashboardUIState.hashCode ^
+      currencyMap.hashCode ^
+      isLoading.hashCode ^
       filter.hashCode ^
       filteredList.hashCode;
+   */
 }
