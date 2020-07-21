@@ -8,14 +8,16 @@ import 'package:invoiceninja_flutter/utils/localization.dart';
 
 class DashboardChart extends StatefulWidget {
   const DashboardChart({
-    this.data,
-    this.title,
-    this.currencyId,
+    @required this.data,
+    @required this.title,
+    @required this.currencyId,
+    @required this.onDateSelected,
   });
 
   final List<ChartDataGroup> data;
   final String title;
   final String currencyId;
+  final Function(int, String) onDateSelected;
 
   static const PERIOD_CURRENT = 'current';
   static const PERIOD_PREVIOUS = 'previous';
@@ -55,6 +57,8 @@ class _DashboardChartState extends State<DashboardChart> {
         _selected = null;
       }
     });
+
+    widget.onDateSelected(_selectedIndex, convertDateTimeToSqlDate(date));
   }
 
   @override

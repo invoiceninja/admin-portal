@@ -19,10 +19,12 @@ class DashboardPanels extends StatelessWidget {
     Key key,
     @required this.viewModel,
     @required this.scrollController,
+    @required this.onDateSelected,
   }) : super(key: key);
 
   final DashboardVM viewModel;
   final ScrollController scrollController;
+  final Function(EntityType, List<String>) onDateSelected;
 
   void _showDateOptions(BuildContext context) {
     showDialog<DateRangePicker>(
@@ -145,12 +147,14 @@ class DashboardPanels extends StatelessWidget {
     );
   }
 
-  Widget _buildChart(
-      {BuildContext context,
-      String title,
-      List<ChartDataGroup> currentData,
-      List<ChartDataGroup> previousData,
-      bool isLoaded}) {
+  Widget _buildChart({
+    @required BuildContext context,
+    @required String title,
+    @required List<ChartDataGroup> currentData,
+    @required List<ChartDataGroup> previousData,
+    @required bool isLoaded,
+    @required Function(int, String) onDateSelected,
+  }) {
     final localization = AppLocalization.of(context);
     final settings = viewModel.dashboardUIState;
     final state = viewModel.state;
@@ -204,13 +208,17 @@ class DashboardPanels extends StatelessWidget {
     return DashboardChart(
       data: currentData,
       title: title,
+      onDateSelected: onDateSelected,
       currencyId: (settings.currencyId ?? '').isNotEmpty
           ? settings.currencyId
           : state.company.currencyId,
     );
   }
 
-  Widget _invoiceChart(BuildContext context) {
+  Widget _invoiceChart({
+    @required BuildContext context,
+    @required Function(List<String>) onDateSelected,
+  }) {
     final settings = viewModel.dashboardUIState;
     final state = viewModel.state;
     final isLoaded = state.isLoaded || state.invoiceState.list.isNotEmpty;
@@ -235,14 +243,20 @@ class DashboardPanels extends StatelessWidget {
     }
 
     return _buildChart(
-        context: context,
-        currentData: currentData,
-        previousData: previousData,
-        isLoaded: isLoaded,
-        title: AppLocalization.of(context).invoices);
+      context: context,
+      currentData: currentData,
+      previousData: previousData,
+      isLoaded: isLoaded,
+      title: AppLocalization.of(context).invoices,
+      onDateSelected: (index, date) =>
+          onDateSelected(currentData[index].entityMap[date]),
+    );
   }
 
-  Widget _paymentChart(BuildContext context) {
+  Widget _paymentChart({
+    @required BuildContext context,
+    @required Function(List<String>) onDateSelected,
+  }) {
     final settings = viewModel.dashboardUIState;
     final state = viewModel.state;
     final isLoaded = state.isLoaded || state.paymentState.list.isNotEmpty;
@@ -268,14 +282,20 @@ class DashboardPanels extends StatelessWidget {
     }
 
     return _buildChart(
-        context: context,
-        currentData: currentData,
-        previousData: previousData,
-        isLoaded: isLoaded,
-        title: AppLocalization.of(context).payments);
+      context: context,
+      currentData: currentData,
+      previousData: previousData,
+      isLoaded: isLoaded,
+      title: AppLocalization.of(context).payments,
+      onDateSelected: (index, date) =>
+          onDateSelected(currentData[index].entityMap[date]),
+    );
   }
 
-  Widget _quoteChart(BuildContext context) {
+  Widget _quoteChart({
+    @required BuildContext context,
+    @required Function(List<String>) onDateSelected,
+  }) {
     final settings = viewModel.dashboardUIState;
     final state = viewModel.state;
     final isLoaded = state.isLoaded || state.quoteState.list.isNotEmpty;
@@ -301,14 +321,20 @@ class DashboardPanels extends StatelessWidget {
     }
 
     return _buildChart(
-        context: context,
-        currentData: currentData,
-        previousData: previousData,
-        isLoaded: isLoaded,
-        title: AppLocalization.of(context).quotes);
+      context: context,
+      currentData: currentData,
+      previousData: previousData,
+      isLoaded: isLoaded,
+      title: AppLocalization.of(context).quotes,
+      onDateSelected: (index, date) =>
+          onDateSelected(currentData[index].entityMap[date]),
+    );
   }
 
-  Widget _taskChart(BuildContext context) {
+  Widget _taskChart({
+    @required BuildContext context,
+    @required Function(List<String>) onDateSelected,
+  }) {
     final settings = viewModel.dashboardUIState;
     final state = viewModel.state;
     final isLoaded = state.isLoaded || state.taskState.list.isNotEmpty;
@@ -338,14 +364,20 @@ class DashboardPanels extends StatelessWidget {
     }
 
     return _buildChart(
-        context: context,
-        currentData: currentData,
-        previousData: previousData,
-        isLoaded: isLoaded,
-        title: AppLocalization.of(context).tasks);
+      context: context,
+      currentData: currentData,
+      previousData: previousData,
+      isLoaded: isLoaded,
+      title: AppLocalization.of(context).tasks,
+      onDateSelected: (index, date) =>
+          onDateSelected(currentData[index].entityMap[date]),
+    );
   }
 
-  Widget _expenseChart(BuildContext context) {
+  Widget _expenseChart({
+    @required BuildContext context,
+    @required Function(List<String>) onDateSelected,
+  }) {
     final settings = viewModel.dashboardUIState;
     final state = viewModel.state;
     final isLoaded = state.isLoaded || state.expenseState.list.isNotEmpty;
@@ -367,11 +399,14 @@ class DashboardPanels extends StatelessWidget {
     }
 
     return _buildChart(
-        context: context,
-        currentData: currentData,
-        previousData: previousData,
-        isLoaded: isLoaded,
-        title: AppLocalization.of(context).expenses);
+      context: context,
+      currentData: currentData,
+      previousData: previousData,
+      isLoaded: isLoaded,
+      title: AppLocalization.of(context).expenses,
+      onDateSelected: (index, date) =>
+          onDateSelected(currentData[index].entityMap[date]),
+    );
   }
 
   @override
@@ -391,17 +426,31 @@ class DashboardPanels extends StatelessWidget {
             SizedBox(
               height: 74.0,
             ),
-            _invoiceChart(context),
-            _paymentChart(context),
-            company.isModuleEnabled(EntityType.quote)
-                ? _quoteChart(context)
-                : SizedBox(),
-            company.isModuleEnabled(EntityType.task)
-                ? _taskChart(context)
-                : SizedBox(),
-            company.isModuleEnabled(EntityType.expense)
-                ? _expenseChart(context)
-                : SizedBox(),
+            if (company.isModuleEnabled(EntityType.invoice))
+              _invoiceChart(
+                  context: context,
+                  onDateSelected: (entityIds) =>
+                      onDateSelected(EntityType.invoice, entityIds)),
+            if (company.isModuleEnabled(EntityType.invoice))
+              _paymentChart(
+                  context: context,
+                  onDateSelected: (entityIds) =>
+                      onDateSelected(EntityType.payment, entityIds)),
+            if (company.isModuleEnabled(EntityType.invoice))
+              _quoteChart(
+                  context: context,
+                  onDateSelected: (entityIds) =>
+                      onDateSelected(EntityType.quote, entityIds)),
+            if (company.isModuleEnabled(EntityType.invoice))
+              _taskChart(
+                  context: context,
+                  onDateSelected: (entityIds) =>
+                      onDateSelected(EntityType.task, entityIds)),
+            if (company.isModuleEnabled(EntityType.invoice))
+              _expenseChart(
+                  context: context,
+                  onDateSelected: (entityIds) =>
+                      onDateSelected(EntityType.expense, entityIds)),
             SizedBox(
               height: 500,
             )

@@ -191,6 +191,9 @@ class _CustomTabBarView extends StatelessWidget {
           child: DashboardPanels(
             viewModel: viewModel,
             scrollController: scrollController,
+            onDateSelected: (entityType, entityIds) {
+              print('## onDateSelected - $entityType: $entityIds');
+            },
           ),
         ),
         RefreshIndicator(
@@ -299,7 +302,6 @@ class _InvoiceSidebar extends StatelessWidget {
     final store = StoreProvider.of<AppState>(context);
     final state = store.state;
     final invoices = memoizedUpcomingInvoices(state.invoiceState.map);
-    print('## BUILD INVOICES: ${invoices.length}');
 
     return _DashboardSidebar(
       label1: localization.upcomingInvoices,

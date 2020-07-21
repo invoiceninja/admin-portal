@@ -14,6 +14,7 @@ class ChartDataGroup {
 
   final String name;
   final List<ChartMoneyData> rawSeries = [];
+  Map<String, List<String>> entityMap = {};
   List<Series<dynamic, DateTime>> chartSeries;
   double total = 0.0;
   double average = 0.0;
@@ -54,6 +55,9 @@ List<ChartDataGroup> chartInvoices({
   const STATUS_ACTIVE = 'active';
   const STATUS_OUTSTANDING = 'outstanding';
 
+  final ChartDataGroup activeData = ChartDataGroup(STATUS_ACTIVE);
+  final ChartDataGroup outstandingData = ChartDataGroup(STATUS_OUTSTANDING);
+
   final Map<String, int> counts = {
     STATUS_ACTIVE: 0,
     STATUS_OUTSTANDING: 0,
@@ -84,6 +88,8 @@ List<ChartDataGroup> chartInvoices({
       if (totals[STATUS_ACTIVE][date] == null) {
         totals[STATUS_ACTIVE][date] = 0.0;
         totals[STATUS_OUTSTANDING][date] = 0.0;
+        activeData.entityMap[date] = [];
+        outstandingData.entityMap[date] = [];
       }
 
       double amount = invoice.amount;
@@ -102,14 +108,13 @@ List<ChartDataGroup> chartInvoices({
       totals[STATUS_OUTSTANDING][date] += balance;
 
       counts[STATUS_ACTIVE]++;
+      activeData.entityMap[date].add(invoice.id);
       if (invoice.balance > 0) {
         counts[STATUS_OUTSTANDING]++;
+        outstandingData.entityMap[date].add(invoice.id);
       }
     }
   });
-
-  final ChartDataGroup activeData = ChartDataGroup(STATUS_ACTIVE);
-  final ChartDataGroup outstandingData = ChartDataGroup(STATUS_OUTSTANDING);
 
   var date = DateTime.parse(settings.startDate(company));
   final endDate = DateTime.parse(settings.endDate(company));
