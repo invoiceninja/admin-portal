@@ -36,7 +36,7 @@ var memoizedChartInvoices = memo6((
   BuiltMap<String, ClientEntity> clientMap,
   BuiltMap<String, GroupEntity> groupMap,
 ) =>
-    chartInvoices(
+    _chartInvoices(
         currencyMap: currencyMap,
         company: company,
         settings: settings,
@@ -44,7 +44,7 @@ var memoizedChartInvoices = memo6((
         groupMap: groupMap,
         clientMap: clientMap));
 
-List<ChartDataGroup> chartInvoices({
+List<ChartDataGroup> _chartInvoices({
   BuiltMap<String, CurrencyEntity> currencyMap,
   CompanyEntity company,
   DashboardUIState settings,
@@ -52,6 +52,7 @@ List<ChartDataGroup> chartInvoices({
   BuiltMap<String, ClientEntity> clientMap,
   BuiltMap<String, GroupEntity> groupMap,
 }) {
+  print('## chartInvoices...');
   const STATUS_ACTIVE = 'active';
   const STATUS_OUTSTANDING = 'outstanding';
 

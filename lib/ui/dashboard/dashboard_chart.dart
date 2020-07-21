@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
@@ -6,6 +7,7 @@ import 'package:charts_flutter/flutter.dart' as charts;
 import 'package:invoiceninja_flutter/utils/formatting.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:invoiceninja_flutter/utils/platforms.dart';
+import 'package:charts_common/common.dart' hide Axis, TextStyle;
 
 class DashboardChart extends StatefulWidget {
   const DashboardChart({
@@ -30,6 +32,8 @@ class DashboardChart extends StatefulWidget {
 class _DashboardChartState extends State<DashboardChart> {
   String _selected;
   int _selectedIndex = 0;
+
+  List<Series<dynamic, DateTime>> _lastSeries;
 
   void _onSelectionChanged(charts.SelectionModel model) {
     final selectedDatum = model.selectedDatum;
@@ -74,6 +78,9 @@ class _DashboardChartState extends State<DashboardChart> {
         : charts.MaterialPalette.gray.shade700;
 
     final series = widget.data[_selectedIndex];
+
+    print('## EQUAL: ${listEquals(_lastSeries, series.chartSeries) ? 'YES' : 'NO'}');
+    _lastSeries = series.chartSeries;
 
     final chart = charts.TimeSeriesChart(
       series.chartSeries,

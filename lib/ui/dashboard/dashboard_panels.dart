@@ -145,45 +145,6 @@ class DashboardPanels extends StatelessWidget {
     );
   }
 
-  Widget _invoiceChart({
-    @required BuildContext context,
-    @required Function(List<String>) onDateSelected,
-  }) {
-    final settings = viewModel.dashboardUIState;
-    final state = viewModel.state;
-    final isLoaded = state.isLoaded || state.invoiceState.list.isNotEmpty;
-    final currentData = memoizedChartInvoices(
-        state.staticState.currencyMap,
-        state.company,
-        settings,
-        state.invoiceState.map,
-        state.clientState.map,
-        state.groupState.map);
-
-    List<ChartDataGroup> previousData;
-    if (settings.enableComparison) {
-      previousData = memoizedChartInvoices(
-        state.staticState.currencyMap,
-        state.company,
-        settings.rebuild((b) => b..offset += 1),
-        state.invoiceState.map,
-        state.clientState.map,
-        state.groupState.map,
-      );
-    }
-
-    return _DashboardPanel(
-      viewModel: viewModel,
-      context: context,
-      currentData: currentData,
-      previousData: previousData,
-      isLoaded: isLoaded,
-      title: AppLocalization.of(context).invoices,
-      onDateSelected: (index, date) =>
-          onDateSelected(currentData[index].entityMap[date]),
-    );
-  }
-
   Widget _paymentChart({
     @required BuildContext context,
     @required Function(List<String>) onDateSelected,
@@ -362,7 +323,8 @@ class DashboardPanels extends StatelessWidget {
               height: 74.0,
             ),
             if (company.isModuleEnabled(EntityType.invoice))
-              _invoiceChart(
+              _InvoiceChart(
+                  viewModel: viewModel,
                   context: context,
                   onDateSelected: (entityIds) => viewModel.onSelectionChanged(
                       EntityType.invoice, entityIds)),
@@ -480,6 +442,55 @@ class _DashboardPanel extends StatelessWidget {
       currencyId: (settings.currencyId ?? '').isNotEmpty
           ? settings.currencyId
           : state.company.currencyId,
+    );
+  }
+}
+
+class _InvoiceChart extends StatelessWidget {
+  const _InvoiceChart({
+    @required this.viewModel,
+    @required this.context,
+    @required this.onDateSelected,
+  });
+
+  final DashboardVM viewModel;
+  final BuildContext context;
+  final Function(List<String>) onDateSelected;
+
+  @override
+  Widget build(BuildContext context) {
+    final settings = viewModel.dashboardUIState;
+    final state = viewModel.state;
+    final isLoaded = state.isLoaded || state.invoiceState.list.isNotEmpty;
+    final currentData = memoizedChartInvoices(
+        state.staticState.currencyMap,
+        state.company,
+        settings,
+        state.invoiceState.map,
+        state.clientState.map,
+        state.groupState.map);
+
+    List<ChartDataGroup> previousData;
+    if (settings.enableComparison) {
+      previousData = memoizedChartInvoices(
+        state.staticState.currencyMap,
+        state.company,
+        settings.rebuild((b) => b..offset += 1),
+        state.invoiceState.map,
+        state.clientState.map,
+        state.groupState.map,
+      );
+    }
+
+    return _DashboardPanel(
+      viewModel: viewModel,
+      context: context,
+      currentData: currentData,
+      previousData: previousData,
+      isLoaded: isLoaded,
+      title: AppLocalization.of(context).invoices,
+      onDateSelected: (index, date) =>
+          onDateSelected(currentData[index].entityMap[date]),
     );
   }
 }
