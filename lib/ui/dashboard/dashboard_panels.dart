@@ -163,7 +163,7 @@ class DashboardPanels extends StatelessWidget {
 
     List<ChartDataGroup> previousData;
     if (settings.enableComparison) {
-      previousData = memoizedChartPayments(
+      previousData = memoizedPreviousChartPayments(
           state.staticState.currencyMap,
           state.company,
           settings.rebuild((b) => b..offset += 1),
@@ -203,7 +203,7 @@ class DashboardPanels extends StatelessWidget {
 
     List<ChartDataGroup> previousData;
     if (settings.enableComparison) {
-      previousData = memoizedChartQuotes(
+      previousData = memoizedPreviousChartQuotes(
         state.staticState.currencyMap,
         state.company,
         settings.rebuild((b) => b..offset += 1),
@@ -245,7 +245,7 @@ class DashboardPanels extends StatelessWidget {
 
     List<ChartDataGroup> previousData;
     if (settings.enableComparison) {
-      previousData = memoizedChartTasks(
+      previousData = memoizedPreviousChartTasks(
         state.staticState.currencyMap,
         state.company,
         settings.rebuild((b) => b..offset += 1),
@@ -285,7 +285,7 @@ class DashboardPanels extends StatelessWidget {
 
     List<ChartDataGroup> previousData;
     if (settings.enableComparison) {
-      previousData = memoizedChartExpenses(
+      previousData = memoizedPreviousChartExpenses(
           state.staticState.currencyMap,
           state.company,
           settings.rebuild((b) => b..offset += 1),
