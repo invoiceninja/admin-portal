@@ -364,7 +364,7 @@ class DashboardPanels extends StatelessWidget {
   }
 }
 
-class _DashboardPanel extends StatelessWidget {
+class _DashboardPanel extends StatefulWidget {
   const _DashboardPanel({
     @required this.viewModel,
     @required this.context,
@@ -384,17 +384,37 @@ class _DashboardPanel extends StatelessWidget {
   final Function(int, String) onDateSelected;
 
   @override
+  __DashboardPanelState createState() => __DashboardPanelState();
+}
+
+class __DashboardPanelState extends State<_DashboardPanel> {
+  List<ChartDataGroup> _currentData;
+  List<ChartDataGroup> _previousData;
+  Widget _chart;
+
+  @override
   Widget build(BuildContext context) {
     final localization = AppLocalization.of(context);
-    final settings = viewModel.dashboardUIState;
-    final state = viewModel.state;
+    final settings = widget.viewModel.dashboardUIState;
+    final state = widget.viewModel.state;
 
-    if (!isLoaded) {
+    if (!widget.isLoaded) {
       return LoadingIndicator(useCard: true);
     }
 
-    currentData.forEach((dataGroup) {
-      final index = currentData.indexOf(dataGroup);
+    // Cache chart to retain user's selection
+    // https://github.com/google/charts/issues/286
+    if (_chart != null &&
+        _currentData == widget.currentData &&
+        _previousData == widget.previousData) {
+      return _chart;
+    }
+
+    _currentData = widget.currentData;
+    _previousData = widget.previousData;
+
+    widget.currentData.forEach((dataGroup) {
+      final index = widget.currentData.indexOf(dataGroup);
       dataGroup.chartSeries = <Series<dynamic, DateTime>>[
         charts.Series<ChartMoneyData, DateTime>(
           domainFn: (ChartMoneyData chartData, _) => chartData.date,
@@ -402,7 +422,8 @@ class _DashboardPanel extends StatelessWidget {
           colorFn: (ChartMoneyData chartData, _) =>
               charts.MaterialPalette.blue.shadeDefault,
           id: DashboardChart.PERIOD_CURRENT,
-          displayName: settings.enableComparison ? localization.current : title,
+          displayName:
+              settings.enableComparison ? localization.current : widget.title,
           data: dataGroup.rawSeries,
         )
       ];
@@ -410,9 +431,9 @@ class _DashboardPanel extends StatelessWidget {
       if (settings.enableComparison) {
         final List<ChartMoneyData> previous = [];
         final currentSeries = dataGroup.rawSeries;
-        final previousSeries = previousData[index].rawSeries;
+        final previousSeries = widget.previousData[index].rawSeries;
 
-        dataGroup.previousTotal = previousData[index].total;
+        dataGroup.previousTotal = widget.previousData[index].total;
 
         for (int i = 0;
             i < min(currentSeries.length, previousSeries.length);
@@ -435,14 +456,16 @@ class _DashboardPanel extends StatelessWidget {
       }
     });
 
-    return DashboardChart(
-      data: currentData,
-      title: title,
-      onDateSelected: onDateSelected,
+    _chart = DashboardChart(
+      data: widget.currentData,
+      title: widget.title,
+      onDateSelected: widget.onDateSelected,
       currencyId: (settings.currencyId ?? '').isNotEmpty
           ? settings.currencyId
           : state.company.currencyId,
     );
+
+    return _chart;
   }
 }
 
