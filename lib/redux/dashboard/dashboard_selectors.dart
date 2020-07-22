@@ -153,10 +153,12 @@ List<ChartDataGroup> _chartInvoices({
     date = date.add(Duration(days: 1));
   }
 
-  activeData.average =
-      round(activeData.total ?? 0 / counts[STATUS_ACTIVE] ?? 0, 2);
-  outstandingData.average =
-      round(outstandingData.total ?? 0 / counts[STATUS_OUTSTANDING] ?? 0, 2);
+  activeData.average = (counts[STATUS_ACTIVE] ?? 0) > 0
+      ? round(activeData.total / counts[STATUS_ACTIVE], 2)
+      : 0;
+  outstandingData.average = (counts[STATUS_OUTSTANDING] ?? 0) > 0
+      ? round(outstandingData.total / counts[STATUS_OUTSTANDING], 2)
+      : 0;
 
   final List<ChartDataGroup> data = [
     activeData,
@@ -301,12 +303,15 @@ List<ChartDataGroup> chartQuotes({
     date = date.add(Duration(days: 1));
   }
 
-  activeData.average =
-      round(activeData.total ?? 0 / counts[STATUS_ACTIVE] ?? 0, 2);
-  approvedData.average =
-      round(approvedData.total ?? 0 / counts[STATUS_APPROVED] ?? 0, 2);
-  unapprovedData.average =
-      round(unapprovedData.total ?? 0 / counts[STATUS_UNAPPROVED] ?? 0, 2);
+  activeData.average = (counts[STATUS_ACTIVE] ?? 0) > 0
+      ? round(activeData.total / counts[STATUS_ACTIVE], 2)
+      : 0;
+  approvedData.average = (counts[STATUS_APPROVED] ?? 0) > 0
+      ? round(approvedData.total / counts[STATUS_APPROVED], 2)
+      : 0;
+  unapprovedData.average = (counts[STATUS_UNAPPROVED] ?? 0) > 0
+      ? round(unapprovedData.total / counts[STATUS_UNAPPROVED], 2)
+      : 0;
 
   final List<ChartDataGroup> data = [
     activeData,
@@ -433,10 +438,12 @@ List<ChartDataGroup> chartPayments(
     date = date.add(Duration(days: 1));
   }
 
-  activeData.average =
-      round(activeData.total ?? 0 / counts[STATUS_ACTIVE] ?? 0, 2);
-  refundedData.average =
-      round(refundedData.total ?? 0 / counts[STATUS_REFUNDED] ?? 0, 2);
+  activeData.average = (counts[STATUS_ACTIVE] ?? 0) > 0
+      ? round(activeData.total / counts[STATUS_ACTIVE], 2)
+      : 0;
+  refundedData.average = (counts[STATUS_REFUNDED] ?? 0) > 0
+      ? round(refundedData.total / counts[STATUS_REFUNDED], 2)
+      : 0;
 
   final List<ChartDataGroup> data = [
     activeData,
@@ -582,11 +589,15 @@ List<ChartDataGroup> chartTasks(
     date = date.add(Duration(days: 1));
   }
 
-  loggedData.average =
-      round(loggedData.total ?? 0 / counts[STATUS_LOGGED] ?? 0, 2);
-  invoicedData.average =
-      round(invoicedData.total ?? 0 / counts[STATUS_INVOICED] ?? 0, 2);
-  paidData.average = round(paidData.total ?? 0 / counts[STATUS_PAID] ?? 0, 2);
+  loggedData.average = (counts[STATUS_LOGGED] ?? 0) > 0
+      ? round(loggedData.total / counts[STATUS_LOGGED], 2)
+      : 0;
+  invoicedData.average = (counts[STATUS_INVOICED] ?? 0) > 0
+      ? round(invoicedData.total / counts[STATUS_INVOICED], 2)
+      : 0;
+  paidData.average = (counts[STATUS_PAID] ?? 0) > 0
+      ? round(paidData.total / counts[STATUS_PAID], 2)
+      : 0;
 
   final List<ChartDataGroup> data = [
     loggedData,
@@ -708,13 +719,18 @@ List<ChartDataGroup> chartExpenses(
     date = date.add(Duration(days: 1));
   }
 
-  loggedData.average =
-      round(loggedData.total ?? 0 / counts[STATUS_LOGGED] ?? 0, 2);
-  pendingData.average =
-      round(pendingData.total ?? 0 / counts[STATUS_PENDING] ?? 0, 2);
-  invoicedData.average =
-      round(invoicedData.total ?? 0 / counts[STATUS_INVOICED] ?? 0, 2);
-  paidData.average = round(paidData.total ?? 0 / counts[STATUS_PAID] ?? 0, 2);
+  loggedData.average = (counts[STATUS_LOGGED] ?? 0) > 0
+      ? round(loggedData.total / counts[STATUS_LOGGED], 2)
+      : 0;
+  pendingData.average = (counts[STATUS_PENDING] ?? 0) > 0
+      ? round(pendingData.total / counts[STATUS_PENDING], 2)
+      : 0;
+  invoicedData.average = (counts[STATUS_INVOICED] ?? 0) > 0
+      ? round(invoicedData.total / counts[STATUS_INVOICED], 2)
+      : 0;
+  paidData.average = (counts[STATUS_PAID] ?? 0) > 0
+      ? round(paidData.total / counts[STATUS_PAID], 2)
+      : 0;
 
   final List<ChartDataGroup> data = [
     loggedData,
