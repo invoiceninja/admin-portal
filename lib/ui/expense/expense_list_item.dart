@@ -79,10 +79,11 @@ class ExpenseListItem extends StatelessWidget {
     final showCheckbox = onCheckboxChanged != null || isInMultiselect;
 
     return DismissibleEntity(
-      isSelected: isDesktop(context) && expense.id ==
-          (uiState.isEditing
-              ? expenseUIState.editing.id
-              : expenseUIState.selectedId),
+      isSelected: isDesktop(context) &&
+          expense.id ==
+              (uiState.isEditing
+                  ? expenseUIState.editing.id
+                  : expenseUIState.selectedId),
       userCompany: userCompany,
       entity: expense,
       child: ListTile(

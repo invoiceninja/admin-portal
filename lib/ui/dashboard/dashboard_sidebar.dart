@@ -51,17 +51,17 @@ class SidebarScaffold extends StatelessWidget {
       body: TabBarView(
         controller: tabController,
         children: [
-          if (company.isModuleEnabled(EntityType.invoice)) _InvoiceSidebar(),
-          if (company.isModuleEnabled(EntityType.payment)) _PaymentSidebar(),
-          if (company.isModuleEnabled(EntityType.quote)) _QuoteSidebar(),
+          if (company.isModuleEnabled(EntityType.invoice)) InvoiceSidebar(),
+          if (company.isModuleEnabled(EntityType.payment)) PaymentSidebar(),
+          if (company.isModuleEnabled(EntityType.quote)) QuoteSidebar(),
         ],
       ),
     );
   }
 }
 
-class _InvoiceSidebar extends StatelessWidget {
-  const _InvoiceSidebar();
+class InvoiceSidebar extends StatelessWidget {
+  const InvoiceSidebar();
 
   @override
   Widget build(BuildContext context) {
@@ -70,7 +70,8 @@ class _InvoiceSidebar extends StatelessWidget {
     final state = store.state;
     final upcomingInvoices = memoizedUpcomingInvoices(state.invoiceState.map);
     final pastDueInvoices = memoizedPastDueInvoices(state.invoiceState.map);
-    final selectedIds = state.dashboardUIState.selectedEntities[EntityType.invoice];
+    final selectedIds =
+        state.dashboardUIState.selectedEntities[EntityType.invoice];
 
     return _DashboardSidebar(
       entityType: EntityType.invoice,
@@ -124,8 +125,8 @@ class _InvoiceSidebar extends StatelessWidget {
   }
 }
 
-class _PaymentSidebar extends StatelessWidget {
-  const _PaymentSidebar();
+class PaymentSidebar extends StatelessWidget {
+  const PaymentSidebar();
 
   @override
   Widget build(BuildContext context) {
@@ -133,7 +134,8 @@ class _PaymentSidebar extends StatelessWidget {
     final store = StoreProvider.of<AppState>(context);
     final state = store.state;
     final recentPayments = memoizedRecentPayments(state.paymentState.map);
-    final selectedIds = state.dashboardUIState.selectedEntities[EntityType.payment];
+    final selectedIds =
+        state.dashboardUIState.selectedEntities[EntityType.payment];
 
     return _DashboardSidebar(
       entityType: EntityType.payment,
@@ -172,8 +174,8 @@ class _PaymentSidebar extends StatelessWidget {
   }
 }
 
-class _QuoteSidebar extends StatelessWidget {
-  const _QuoteSidebar();
+class QuoteSidebar extends StatelessWidget {
+  const QuoteSidebar();
 
   @override
   Widget build(BuildContext context) {
@@ -182,7 +184,8 @@ class _QuoteSidebar extends StatelessWidget {
     final state = store.state;
     final upcomingQuotes = memoizedUpcomingQuotes(state.quoteState.map);
     final expriedQuotes = memoizedExpiredQuotes(state.quoteState.map);
-    final selectedIds = state.dashboardUIState.selectedEntities[EntityType.quote];
+    final selectedIds =
+        state.dashboardUIState.selectedEntities[EntityType.quote];
 
     return _DashboardSidebar(
       entityType: EntityType.quote,

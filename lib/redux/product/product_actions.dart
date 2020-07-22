@@ -277,7 +277,6 @@ void handleProductAction(
         context: context,
       );
       break;
-
   }
 }
 

@@ -490,7 +490,6 @@ Future handleQuoteAction(
         context: context,
       );
       break;
-
   }
 }
 

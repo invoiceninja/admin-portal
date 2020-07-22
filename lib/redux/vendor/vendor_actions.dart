@@ -342,7 +342,6 @@ void handleVendorAction(
         context: context,
       );
       break;
-
   }
 }
 

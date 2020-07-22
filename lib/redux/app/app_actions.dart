@@ -290,10 +290,23 @@ void viewEntityById({
   EntityType entityType,
   bool force = false,
   bool showError = true,
+  BaseEntity filterEntity,
 }) {
   final store = StoreProvider.of<AppState>(context);
   final state = store.state;
   final navigator = Navigator.of(context);
+  final uiState = store.state.uiState;
+
+  if (filterEntity != null) {
+    if (uiState.filterEntityType != filterEntity.entityType ||
+        uiState.filterEntityId != filterEntity.id) {
+      store.dispatch(ClearEntitySelection(entityType: entityType));
+      store.dispatch(FilterByEntity(
+        entityId: filterEntity.id,
+        entityType: filterEntity.entityType,
+      ));
+    }
+  }
 
   if (entityId != null &&
       showError &&
@@ -450,12 +463,17 @@ void viewEntityById({
 }
 
 void viewEntity(
-        {BuildContext context, BaseEntity entity, bool force = false}) =>
+        {BuildContext context,
+        BaseEntity entity,
+        bool force = false,
+        BaseEntity filterEntity}) =>
     viewEntityById(
-        context: context,
-        entityId: entity.id,
-        entityType: entity.entityType,
-        force: force);
+      context: context,
+      entityId: entity.id,
+      entityType: entity.entityType,
+      force: force,
+      filterEntity: filterEntity,
+    );
 
 void createEntityByType(
     {BuildContext context, EntityType entityType, bool force = false}) {
@@ -1145,6 +1163,7 @@ void selectEntity({
   @required BaseEntity entity,
   bool longPress = false,
   bool forceView = false,
+  BaseEntity filterEntity,
 }) {
   final store = StoreProvider.of<AppState>(context);
   final state = store.state;
@@ -1174,7 +1193,12 @@ void selectEntity({
           state.prefState.isPreviewVisible)) {
     editEntity(context: context, entity: entity);
   } else {
-    viewEntity(context: context, entity: entity);
+    ClientEntity client;
+    if (forceView && entity is BelongsToClient) {
+      client = state.clientState.get((entity as BelongsToClient).clientId);
+    }
+
+    viewEntity(context: context, entity: entity, filterEntity: client);
   }
 }
 

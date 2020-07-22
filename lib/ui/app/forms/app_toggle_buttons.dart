@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:invoiceninja_flutter/redux/ui/pref_state.dart';
 import 'package:invoiceninja_flutter/utils/platforms.dart';

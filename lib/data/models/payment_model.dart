@@ -175,9 +175,6 @@ abstract class PaymentEntity extends Object
   @nullable
   bool get isForInvoice;
 
-  @nullable
-  bool get isForCredit;
-
   BuiltList<PaymentableEntity> get paymentables;
 
   BuiltList<PaymentableEntity> get invoices;

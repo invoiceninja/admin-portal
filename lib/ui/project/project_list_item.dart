@@ -46,10 +46,11 @@ class ProjectListItem extends StatelessWidget {
     final subtitle = filterMatch ?? client.displayName;
 
     return DismissibleEntity(
-      isSelected: isDesktop(context) && project.id ==
-          (uiState.isEditing
-              ? projectUIState.editing.id
-              : projectUIState.selectedId),
+      isSelected: isDesktop(context) &&
+          project.id ==
+              (uiState.isEditing
+                  ? projectUIState.editing.id
+                  : projectUIState.selectedId),
       userCompany: userCompany,
       entity: project,
       child: ListTile(

@@ -103,17 +103,34 @@ class _PaymentEditState extends State<PaymentEdit> {
     }
 
     final creditPaymentables = payment.credits.toList();
-    if ((payment.isForCredit != true || creditPaymentables.isEmpty) &&
-        creditPaymentables
-            .where((paymentable) => paymentable.isEmpty)
-            .isEmpty) {
+    if (creditPaymentables
+        .where((paymentable) => paymentable.isEmpty)
+        .isEmpty) {
       creditPaymentables.add(PaymentableEntity());
     }
 
     double paymentTotal = 0;
+    double creditTotal = 0;
     invoicePaymentables.forEach((invoice) {
       paymentTotal += invoice.amount;
     });
+    creditPaymentables.forEach((credit) {
+      creditTotal += credit.amount;
+    });
+
+    String amountPlaceholder;
+    if (paymentTotal != 0) {
+      amountPlaceholder = '${localization.amount} ';
+      if (creditTotal == 0) {
+        amountPlaceholder +=
+            formatNumber(paymentTotal, context, clientId: payment.clientId);
+      } else {
+        amountPlaceholder += formatNumber(paymentTotal - creditTotal, context,
+                clientId: payment.clientId) +
+            ' + ${localization.credit} ' +
+            formatNumber(creditTotal, context, clientId: payment.clientId);
+      }
+    }
 
     return EditScaffold(
       entity: payment,
@@ -143,6 +160,7 @@ class _PaymentEditState extends State<PaymentEdit> {
               children: <Widget>[
                 if (payment.isNew) ...[
                   EntityDropdown(
+                    allowClearing: true,
                     key: Key('__client_${payment.clientId}__'),
                     entityType: EntityType.client,
                     labelText: AppLocalization.of(context).client,
@@ -152,9 +170,12 @@ class _PaymentEditState extends State<PaymentEdit> {
                         ? AppLocalization.of(context).pleaseSelectAClient
                         : null,
                     onSelected: (client) {
-                      viewModel.onChanged(payment.rebuild((b) => b
-                        ..clientId = client.id
-                        ..invoices.clear()));
+                      viewModel.onChanged(payment.rebuild(
+                        (b) => b
+                          ..clientId = client?.id ?? ''
+                          ..credits.clear()
+                          ..invoices.clear(),
+                      ));
                     },
                     entityList: memoizedDropdownClientList(
                         state.clientState.map,
@@ -162,8 +183,7 @@ class _PaymentEditState extends State<PaymentEdit> {
                         state.userState.map,
                         state.staticState),
                   ),
-                  if (payment.isForInvoice != true &&
-                      payment.isForCredit != true)
+                  if (payment.isForInvoice != true)
                     DecoratedFormField(
                       controller: _amountController,
                       autocorrect: false,
@@ -171,24 +191,21 @@ class _PaymentEditState extends State<PaymentEdit> {
                           TextInputType.numberWithOptions(decimal: true),
                       label: paymentTotal == 0
                           ? localization.amount
-                          : '${localization.amount} • ${formatNumber(paymentTotal, context, clientId: payment.clientId)}',
+                          : amountPlaceholder,
                     ),
                 ],
-                if (payment.isForCredit != true)
-                  for (var index = 0;
-                      index < invoicePaymentables.length;
-                      index++)
-                    PaymentableEditor(
-                      key: ValueKey(
-                          '__paymentable_${index}_${invoicePaymentables[index].id}__'),
-                      viewModel: viewModel,
-                      paymentable: invoicePaymentables[index],
-                      index: index,
-                      entityType: EntityType.invoice,
-                      limit: payment.amount == 0
-                          ? null
-                          : payment.amount - paymentTotal,
-                    ),
+                for (var index = 0; index < invoicePaymentables.length; index++)
+                  PaymentableEditor(
+                    key: ValueKey(
+                        '__paymentable_${index}_${invoicePaymentables[index].id}__'),
+                    viewModel: viewModel,
+                    paymentable: invoicePaymentables[index],
+                    index: index,
+                    entityType: EntityType.invoice,
+                    limit: payment.amount == 0
+                        ? null
+                        : payment.amount - paymentTotal,
+                  ),
                 DatePicker(
                   validator: (String val) => val.trim().isEmpty
                       ? AppLocalization.of(context).pleaseSelectADate
@@ -201,29 +218,30 @@ class _PaymentEditState extends State<PaymentEdit> {
                   },
                 ),
                 EntityDropdown(
+                  allowClearing: true,
                   key: ValueKey('__payment_type_${payment.typeId}__'),
                   entityType: EntityType.paymentType,
                   entityList: memoizedPaymentTypeList(
                       viewModel.staticState.paymentTypeMap),
                   labelText: localization.paymentType,
                   entityId: payment.typeId,
-                  onSelected: (paymentType) => viewModel.onChanged(
-                      payment.rebuild((b) => b..typeId = paymentType.id)),
+                  onSelected: (paymentType) => viewModel.onChanged(payment
+                      .rebuild((b) => b..typeId = paymentType?.id ?? '')),
                 ),
-                if (payment.isForInvoice != true)
-                  if (state.company.isModuleEnabled(EntityType.credit))
-                    for (var index = 0;
-                        index < creditPaymentables.length;
-                        index++)
-                      PaymentableEditor(
-                        key: ValueKey(
-                            '__paymentable_${index}_${creditPaymentables[index].id}__'),
-                        viewModel: viewModel,
-                        paymentable: creditPaymentables[index],
-                        index: index,
-                        entityType: EntityType.credit,
-                        limit: 0,
-                      ),
+                if (payment.isForInvoice != true &&
+                    state.company.isModuleEnabled(EntityType.credit))
+                  for (var index = 0;
+                      index < creditPaymentables.length;
+                      index++)
+                    PaymentableEditor(
+                      key: ValueKey(
+                          '__paymentable_${index}_${creditPaymentables[index].id}__'),
+                      viewModel: viewModel,
+                      paymentable: creditPaymentables[index],
+                      index: index,
+                      entityType: EntityType.credit,
+                      limit: 0,
+                    ),
                 DecoratedFormField(
                   controller: _transactionReferenceController,
                   label: localization.transactionReference,
@@ -382,6 +400,14 @@ class _PaymentableEditorState extends State<PaymentableEditor> {
         state.userState.map,
         payment.credits.map((p) => p.creditId).toList());
 
+    // If a client isn't selected or a client is selected but the client
+    // doesn't have any more credits then don't show the picker
+    if (widget.entityType == EntityType.credit &&
+        ((payment.clientId ?? '').isEmpty ||
+            (creditList.isEmpty && (paymentable.creditId ?? '').isEmpty))) {
+      return SizedBox();
+    }
+
     return Row(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
@@ -405,9 +431,7 @@ class _PaymentableEditorState extends State<PaymentableEditor> {
               },
             ),
           ),
-        if (widget.entityType == EntityType.credit &&
-            creditList.isNotEmpty &&
-            (payment.clientId ?? '').isNotEmpty)
+        if (widget.entityType == EntityType.credit)
           Expanded(
             child: EntityDropdown(
               key: Key('__credit_${payment.clientId}__'),
@@ -443,7 +467,6 @@ class _PaymentableEditorState extends State<PaymentableEditor> {
                 _invoiceId != null) ||
             (widget.entityType == EntityType.credit &&
                 payment.credits.isNotEmpty &&
-                payment.isForCredit != true &&
                 _creditId != null)) ...[
           SizedBox(
             width: kTableColumnGap,

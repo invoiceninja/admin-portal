@@ -301,7 +301,6 @@ void handleDocumentAction(
         context: context,
       );
       break;
-
   }
 }
 

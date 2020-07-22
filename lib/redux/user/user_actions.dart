@@ -406,7 +406,6 @@ void handleUserAction(
         context: context,
       );
       break;
-
   }
 }
 

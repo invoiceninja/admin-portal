@@ -239,8 +239,13 @@ Middleware<AppState> _createLoadState(
             isFirst = false;
           });
         } else {
-          store.dispatch(
-              UpdateCurrentRoute(routes.isEmpty ? '/dashboard' : routes.last));
+          if (routes.isEmpty || routes.last == DashboardScreenBuilder.route) {
+            store.dispatch(
+                ViewDashboard(navigator: Navigator.of(action.context)));
+          } else {
+            store.dispatch(UpdateCurrentRoute(routes.last));
+          }
+
           store.dispatch(
               ViewMainScreen(navigator: Navigator.of(action.context)));
         }

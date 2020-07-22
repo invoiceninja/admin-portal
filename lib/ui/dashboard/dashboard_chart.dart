@@ -84,12 +84,18 @@ class _DashboardChartState extends State<DashboardChart> {
         charts.SelectionModelConfig(
           type: charts.SelectionModelType.info,
           changedListener: _onSelectionChanged,
-        )
+        ),
       ],
       behaviors: [
         charts.SeriesLegend(
           outsideJustification: charts.OutsideJustification.endDrawArea,
         ),
+        /*
+        charts.InitialSelection(selectedDataConfig: [
+          charts.SeriesDatumConfig<String>(
+              DashboardChart.PERIOD_CURRENT, '...')
+        ]),
+         */
       ],
       domainAxis: charts.DateTimeAxisSpec(
           renderSpec: charts.SmallTickRendererSpec(

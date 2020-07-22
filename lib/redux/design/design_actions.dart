@@ -301,7 +301,6 @@ void handleDesignAction(
         context: context,
       );
       break;
-
   }
 }
 

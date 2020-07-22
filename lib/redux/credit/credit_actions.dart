@@ -444,7 +444,6 @@ Future handleCreditAction(
       createEntity(
         context: context,
         entity: PaymentEntity(state: state).rebuild((b) => b
-          ..isForCredit = true
           ..clientId = credit.clientId
           ..credits.addAll(credits
               .map((credit) => PaymentableEntity.fromCredit(credit))
@@ -490,7 +489,6 @@ Future handleCreditAction(
         context: context,
       );
       break;
-
   }
 }
 
