@@ -228,20 +228,20 @@ class _PaymentEditState extends State<PaymentEdit> {
                   onSelected: (paymentType) => viewModel.onChanged(payment
                       .rebuild((b) => b..typeId = paymentType?.id ?? '')),
                 ),
-                if (payment.isForInvoice != true)
-                  if (state.company.isModuleEnabled(EntityType.credit))
-                    for (var index = 0;
-                        index < creditPaymentables.length;
-                        index++)
-                      PaymentableEditor(
-                        key: ValueKey(
-                            '__paymentable_${index}_${creditPaymentables[index].id}__'),
-                        viewModel: viewModel,
-                        paymentable: creditPaymentables[index],
-                        index: index,
-                        entityType: EntityType.credit,
-                        limit: 0,
-                      ),
+                if (payment.isForInvoice != true &&
+                    state.company.isModuleEnabled(EntityType.credit))
+                  for (var index = 0;
+                      index < creditPaymentables.length;
+                      index++)
+                    PaymentableEditor(
+                      key: ValueKey(
+                          '__paymentable_${index}_${creditPaymentables[index].id}__'),
+                      viewModel: viewModel,
+                      paymentable: creditPaymentables[index],
+                      index: index,
+                      entityType: EntityType.credit,
+                      limit: 0,
+                    ),
                 DecoratedFormField(
                   controller: _transactionReferenceController,
                   label: localization.transactionReference,
@@ -399,6 +399,14 @@ class _PaymentableEditorState extends State<PaymentableEditor> {
         state.staticState,
         state.userState.map,
         payment.credits.map((p) => p.creditId).toList());
+
+    // If a client isn't selected or a client is selected but the client
+    // doesn't have any more credits then don't show the picker
+    if (widget.entityType == EntityType.credit &&
+        ((payment.clientId ?? '').isEmpty ||
+            (creditList.isEmpty && (paymentable.creditId ?? '').isEmpty))) {
+      return SizedBox();
+    }
 
     return Row(
       crossAxisAlignment: CrossAxisAlignment.start,
