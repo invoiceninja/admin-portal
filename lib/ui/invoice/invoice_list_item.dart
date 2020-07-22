@@ -71,9 +71,10 @@ class InvoiceListItem extends StatelessWidget {
           return constraints.maxWidth > kTableListWidthCutoff
               ? InkWell(
                   onTap: () => selectEntity(
-                      entity: invoice,
-                      context: context,
-                      forceView: !showCheckbox),
+                    entity: invoice,
+                    context: context,
+                    forceView: !showCheckbox,
+                  ),
                   onLongPress: () => selectEntity(
                       entity: invoice, context: context, longPress: true),
                   child: Padding(
