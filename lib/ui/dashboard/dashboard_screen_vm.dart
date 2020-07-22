@@ -67,6 +67,7 @@ class DashboardVM {
 
     final state = store.state;
     final filter = state.uiState.filter;
+    final settings = state.dashboardUIState.settings;
 
     return DashboardVM(
       state: state,
@@ -74,7 +75,7 @@ class DashboardVM {
       currencyMap: state.staticState.currencyMap,
       isLoading: state.isLoading,
       isNextEnabled:
-          DateTime.parse(state.dashboardUIState.endDate(state.company))
+          DateTime.parse(settings.endDate(state.company))
               .isBefore(DateTime.now()),
       onRefreshed: (context) => _handleRefresh(context),
       onSettingsChanged: (DashboardSettings settings) =>

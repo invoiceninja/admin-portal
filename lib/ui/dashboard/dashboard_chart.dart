@@ -75,6 +75,7 @@ class _DashboardChartState extends State<DashboardChart> {
         : charts.MaterialPalette.gray.shade700;
 
     final series = widget.data[_selectedIndex];
+    final settings = state.dashboardUIState.settings;
 
     final chart = charts.TimeSeriesChart(
       series.chartSeries,
@@ -114,7 +115,7 @@ class _DashboardChartState extends State<DashboardChart> {
           Divider(height: 1.0),
           Container(
             width: double.infinity,
-            height: state.dashboardUIState.enableComparison ? 106 : 86,
+            height: settings.enableComparison ? 106 : 86,
             child: ListView(
               shrinkWrap: true,
               scrollDirection: Axis.horizontal,
@@ -142,7 +143,7 @@ class _DashboardChartState extends State<DashboardChart> {
                 final String changeString = dataGroup.total == 0 ||
                         dataGroup.previousTotal == 0 ||
                         dataGroup.total == dataGroup.previousTotal
-                    ? (state.dashboardUIState.enableComparison ? ' ' : '')
+                    ? (settings.enableComparison ? ' ' : '')
                     : '$changeAmount ($changePercent)';
 
                 return GestureDetector(

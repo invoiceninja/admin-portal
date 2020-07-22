@@ -35,11 +35,11 @@ class DashboardPanels extends StatelessWidget {
   }
 
   Widget _header(BuildContext context) {
-    final uiState = viewModel.dashboardUIState;
     final state = viewModel.state;
     final company = state.company;
     final clientMap = state.clientState.map;
     final groupMap = state.groupState.map;
+    final settings = state.dashboardUIState.settings;
 
     // Add "All" if more than one currency
     final currencies = memoizedGetCurrencyIds(company, clientMap, groupMap);
@@ -77,8 +77,8 @@ class DashboardPanels extends StatelessWidget {
                   children: <Widget>[
                     Flexible(
                       child: Text(
-                        formatDateRange(uiState.startDate(company),
-                            uiState.endDate(company), context),
+                        formatDateRange(settings.startDate(company),
+                            settings.endDate(company), context),
                         style: Theme.of(context)
                             .textTheme
                             .headline6
@@ -108,7 +108,7 @@ class DashboardPanels extends StatelessWidget {
                       .toList(),
                   onChanged: (currencyId) =>
                       viewModel.onCurrencyChanged(currencyId),
-                  value: state.dashboardUIState.currencyId,
+                  value: settings.currencyId,
                 ),
               ),
               SizedBox(
@@ -149,7 +149,7 @@ class DashboardPanels extends StatelessWidget {
     @required BuildContext context,
     @required Function(List<String>) onDateSelected,
   }) {
-    final settings = viewModel.dashboardUIState;
+    final settings = viewModel.dashboardUIState.settings;
     final state = viewModel.state;
     final isLoaded = state.isLoaded || state.paymentState.list.isNotEmpty;
     final currentData = memoizedChartPayments(
@@ -189,7 +189,7 @@ class DashboardPanels extends StatelessWidget {
     @required BuildContext context,
     @required Function(List<String>) onDateSelected,
   }) {
-    final settings = viewModel.dashboardUIState;
+    final settings = viewModel.dashboardUIState.settings;
     final state = viewModel.state;
     final isLoaded = state.isLoaded || state.quoteState.list.isNotEmpty;
     final currentData = memoizedChartQuotes(
@@ -229,7 +229,7 @@ class DashboardPanels extends StatelessWidget {
     @required BuildContext context,
     @required Function(List<String>) onDateSelected,
   }) {
-    final settings = viewModel.dashboardUIState;
+    final settings = viewModel.dashboardUIState.settings;
     final state = viewModel.state;
     final isLoaded = state.isLoaded || state.taskState.list.isNotEmpty;
     final currentData = memoizedChartTasks(
@@ -273,7 +273,7 @@ class DashboardPanels extends StatelessWidget {
     @required BuildContext context,
     @required Function(List<String>) onDateSelected,
   }) {
-    final settings = viewModel.dashboardUIState;
+    final settings = viewModel.dashboardUIState.settings;
     final state = viewModel.state;
     final isLoaded = state.isLoaded || state.expenseState.list.isNotEmpty;
     final currentData = memoizedChartExpenses(
@@ -395,7 +395,7 @@ class __DashboardPanelState extends State<_DashboardPanel> {
   @override
   Widget build(BuildContext context) {
     final localization = AppLocalization.of(context);
-    final settings = widget.viewModel.dashboardUIState;
+    final settings = widget.viewModel.dashboardUIState.settings;
     final state = widget.viewModel.state;
 
     if (!widget.isLoaded) {
@@ -482,7 +482,7 @@ class _InvoiceChart extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final settings = viewModel.dashboardUIState;
+    final settings = viewModel.dashboardUIState.settings;
     final state = viewModel.state;
     final isLoaded = state.isLoaded || state.invoiceState.list.isNotEmpty;
     final currentData = memoizedChartInvoices(

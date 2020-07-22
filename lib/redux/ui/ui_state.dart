@@ -1,4 +1,3 @@
-import 'package:built_collection/built_collection.dart';
 import 'package:built_value/built_value.dart';
 import 'package:built_value/serializer.dart';
 import 'package:invoiceninja_flutter/data/models/entities.dart';
@@ -37,7 +36,6 @@ abstract class UIState implements Built<UIState, UIStateBuilder> {
       currentRoute: currentRoute ?? LoginScreen.route,
       previousRoute: '',
       dashboardUIState: DashboardUIState(),
-      selectedEntities: BuiltMap<EntityType, BuiltList<String>>(),
       productUIState: ProductUIState(),
       clientUIState: ClientUIState(),
       invoiceUIState: InvoiceUIState(),
@@ -70,8 +68,6 @@ abstract class UIState implements Built<UIState, UIStateBuilder> {
   int get hashCode;
 
   int get selectedCompanyIndex;
-
-  BuiltMap<EntityType, BuiltList<String>> get selectedEntities;
 
   String get currentRoute;
 

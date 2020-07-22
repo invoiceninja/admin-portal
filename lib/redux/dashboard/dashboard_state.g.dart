@@ -8,6 +8,8 @@ part of 'dashboard_state.dart';
 
 Serializer<DashboardUIState> _$dashboardUIStateSerializer =
     new _$DashboardUIStateSerializer();
+Serializer<DashboardUISettings> _$dashboardUISettingsSerializer =
+    new _$DashboardUISettingsSerializer();
 
 class _$DashboardUIStateSerializer
     implements StructuredSerializer<DashboardUIState> {
@@ -18,6 +20,66 @@ class _$DashboardUIStateSerializer
 
   @override
   Iterable<Object> serialize(Serializers serializers, DashboardUIState object,
+      {FullType specifiedType = FullType.unspecified}) {
+    final result = <Object>[
+      'settings',
+      serializers.serialize(object.settings,
+          specifiedType: const FullType(DashboardUISettings)),
+      'selectedEntities',
+      serializers.serialize(object.selectedEntities,
+          specifiedType: const FullType(BuiltMap, const [
+            const FullType(EntityType),
+            const FullType(BuiltList, const [const FullType(String)])
+          ])),
+    ];
+
+    return result;
+  }
+
+  @override
+  DashboardUIState deserialize(
+      Serializers serializers, Iterable<Object> serialized,
+      {FullType specifiedType = FullType.unspecified}) {
+    final result = new DashboardUIStateBuilder();
+
+    final iterator = serialized.iterator;
+    while (iterator.moveNext()) {
+      final key = iterator.current as String;
+      iterator.moveNext();
+      final dynamic value = iterator.current;
+      switch (key) {
+        case 'settings':
+          result.settings.replace(serializers.deserialize(value,
+                  specifiedType: const FullType(DashboardUISettings))
+              as DashboardUISettings);
+          break;
+        case 'selectedEntities':
+          result.selectedEntities.replace(serializers.deserialize(value,
+              specifiedType: const FullType(BuiltMap, const [
+                const FullType(EntityType),
+                const FullType(BuiltList, const [const FullType(String)])
+              ])));
+          break;
+      }
+    }
+
+    return result.build();
+  }
+}
+
+class _$DashboardUISettingsSerializer
+    implements StructuredSerializer<DashboardUISettings> {
+  @override
+  final Iterable<Type> types = const [
+    DashboardUISettings,
+    _$DashboardUISettings
+  ];
+  @override
+  final String wireName = 'DashboardUISettings';
+
+  @override
+  Iterable<Object> serialize(
+      Serializers serializers, DashboardUISettings object,
       {FullType specifiedType = FullType.unspecified}) {
     final result = <Object>[
       'dateRange',
@@ -52,10 +114,10 @@ class _$DashboardUIStateSerializer
   }
 
   @override
-  DashboardUIState deserialize(
+  DashboardUISettings deserialize(
       Serializers serializers, Iterable<Object> serialized,
       {FullType specifiedType = FullType.unspecified}) {
-    final result = new DashboardUIStateBuilder();
+    final result = new DashboardUISettingsBuilder();
 
     final iterator = serialized.iterator;
     while (iterator.moveNext()) {
@@ -109,6 +171,126 @@ class _$DashboardUIStateSerializer
 
 class _$DashboardUIState extends DashboardUIState {
   @override
+  final DashboardUISettings settings;
+  @override
+  final BuiltMap<EntityType, BuiltList<String>> selectedEntities;
+
+  factory _$DashboardUIState(
+          [void Function(DashboardUIStateBuilder) updates]) =>
+      (new DashboardUIStateBuilder()..update(updates)).build();
+
+  _$DashboardUIState._({this.settings, this.selectedEntities}) : super._() {
+    if (settings == null) {
+      throw new BuiltValueNullFieldError('DashboardUIState', 'settings');
+    }
+    if (selectedEntities == null) {
+      throw new BuiltValueNullFieldError(
+          'DashboardUIState', 'selectedEntities');
+    }
+  }
+
+  @override
+  DashboardUIState rebuild(void Function(DashboardUIStateBuilder) updates) =>
+      (toBuilder()..update(updates)).build();
+
+  @override
+  DashboardUIStateBuilder toBuilder() =>
+      new DashboardUIStateBuilder()..replace(this);
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(other, this)) return true;
+    return other is DashboardUIState &&
+        settings == other.settings &&
+        selectedEntities == other.selectedEntities;
+  }
+
+  int __hashCode;
+  @override
+  int get hashCode {
+    return __hashCode ??=
+        $jf($jc($jc(0, settings.hashCode), selectedEntities.hashCode));
+  }
+
+  @override
+  String toString() {
+    return (newBuiltValueToStringHelper('DashboardUIState')
+          ..add('settings', settings)
+          ..add('selectedEntities', selectedEntities))
+        .toString();
+  }
+}
+
+class DashboardUIStateBuilder
+    implements Builder<DashboardUIState, DashboardUIStateBuilder> {
+  _$DashboardUIState _$v;
+
+  DashboardUISettingsBuilder _settings;
+  DashboardUISettingsBuilder get settings =>
+      _$this._settings ??= new DashboardUISettingsBuilder();
+  set settings(DashboardUISettingsBuilder settings) =>
+      _$this._settings = settings;
+
+  MapBuilder<EntityType, BuiltList<String>> _selectedEntities;
+  MapBuilder<EntityType, BuiltList<String>> get selectedEntities =>
+      _$this._selectedEntities ??=
+          new MapBuilder<EntityType, BuiltList<String>>();
+  set selectedEntities(
+          MapBuilder<EntityType, BuiltList<String>> selectedEntities) =>
+      _$this._selectedEntities = selectedEntities;
+
+  DashboardUIStateBuilder();
+
+  DashboardUIStateBuilder get _$this {
+    if (_$v != null) {
+      _settings = _$v.settings?.toBuilder();
+      _selectedEntities = _$v.selectedEntities?.toBuilder();
+      _$v = null;
+    }
+    return this;
+  }
+
+  @override
+  void replace(DashboardUIState other) {
+    if (other == null) {
+      throw new ArgumentError.notNull('other');
+    }
+    _$v = other as _$DashboardUIState;
+  }
+
+  @override
+  void update(void Function(DashboardUIStateBuilder) updates) {
+    if (updates != null) updates(this);
+  }
+
+  @override
+  _$DashboardUIState build() {
+    _$DashboardUIState _$result;
+    try {
+      _$result = _$v ??
+          new _$DashboardUIState._(
+              settings: settings.build(),
+              selectedEntities: selectedEntities.build());
+    } catch (_) {
+      String _$failedField;
+      try {
+        _$failedField = 'settings';
+        settings.build();
+        _$failedField = 'selectedEntities';
+        selectedEntities.build();
+      } catch (e) {
+        throw new BuiltValueNestedFieldError(
+            'DashboardUIState', _$failedField, e.toString());
+      }
+      rethrow;
+    }
+    replace(_$result);
+    return _$result;
+  }
+}
+
+class _$DashboardUISettings extends DashboardUISettings {
+  @override
   final DateRange dateRange;
   @override
   final String customStartDate;
@@ -127,11 +309,11 @@ class _$DashboardUIState extends DashboardUIState {
   @override
   final String currencyId;
 
-  factory _$DashboardUIState(
-          [void Function(DashboardUIStateBuilder) updates]) =>
-      (new DashboardUIStateBuilder()..update(updates)).build();
+  factory _$DashboardUISettings(
+          [void Function(DashboardUISettingsBuilder) updates]) =>
+      (new DashboardUISettingsBuilder()..update(updates)).build();
 
-  _$DashboardUIState._(
+  _$DashboardUISettings._(
       {this.dateRange,
       this.customStartDate,
       this.customEndDate,
@@ -143,50 +325,53 @@ class _$DashboardUIState extends DashboardUIState {
       this.currencyId})
       : super._() {
     if (dateRange == null) {
-      throw new BuiltValueNullFieldError('DashboardUIState', 'dateRange');
+      throw new BuiltValueNullFieldError('DashboardUISettings', 'dateRange');
     }
     if (customStartDate == null) {
-      throw new BuiltValueNullFieldError('DashboardUIState', 'customStartDate');
+      throw new BuiltValueNullFieldError(
+          'DashboardUISettings', 'customStartDate');
     }
     if (customEndDate == null) {
-      throw new BuiltValueNullFieldError('DashboardUIState', 'customEndDate');
+      throw new BuiltValueNullFieldError(
+          'DashboardUISettings', 'customEndDate');
     }
     if (enableComparison == null) {
       throw new BuiltValueNullFieldError(
-          'DashboardUIState', 'enableComparison');
+          'DashboardUISettings', 'enableComparison');
     }
     if (compareDateRange == null) {
       throw new BuiltValueNullFieldError(
-          'DashboardUIState', 'compareDateRange');
+          'DashboardUISettings', 'compareDateRange');
     }
     if (compareCustomStartDate == null) {
       throw new BuiltValueNullFieldError(
-          'DashboardUIState', 'compareCustomStartDate');
+          'DashboardUISettings', 'compareCustomStartDate');
     }
     if (compareCustomEndDate == null) {
       throw new BuiltValueNullFieldError(
-          'DashboardUIState', 'compareCustomEndDate');
+          'DashboardUISettings', 'compareCustomEndDate');
     }
     if (offset == null) {
-      throw new BuiltValueNullFieldError('DashboardUIState', 'offset');
+      throw new BuiltValueNullFieldError('DashboardUISettings', 'offset');
     }
     if (currencyId == null) {
-      throw new BuiltValueNullFieldError('DashboardUIState', 'currencyId');
+      throw new BuiltValueNullFieldError('DashboardUISettings', 'currencyId');
     }
   }
 
   @override
-  DashboardUIState rebuild(void Function(DashboardUIStateBuilder) updates) =>
+  DashboardUISettings rebuild(
+          void Function(DashboardUISettingsBuilder) updates) =>
       (toBuilder()..update(updates)).build();
 
   @override
-  DashboardUIStateBuilder toBuilder() =>
-      new DashboardUIStateBuilder()..replace(this);
+  DashboardUISettingsBuilder toBuilder() =>
+      new DashboardUISettingsBuilder()..replace(this);
 
   @override
   bool operator ==(Object other) {
     if (identical(other, this)) return true;
-    return other is DashboardUIState &&
+    return other is DashboardUISettings &&
         dateRange == other.dateRange &&
         customStartDate == other.customStartDate &&
         customEndDate == other.customEndDate &&
@@ -221,7 +406,7 @@ class _$DashboardUIState extends DashboardUIState {
 
   @override
   String toString() {
-    return (newBuiltValueToStringHelper('DashboardUIState')
+    return (newBuiltValueToStringHelper('DashboardUISettings')
           ..add('dateRange', dateRange)
           ..add('customStartDate', customStartDate)
           ..add('customEndDate', customEndDate)
@@ -235,9 +420,9 @@ class _$DashboardUIState extends DashboardUIState {
   }
 }
 
-class DashboardUIStateBuilder
-    implements Builder<DashboardUIState, DashboardUIStateBuilder> {
-  _$DashboardUIState _$v;
+class DashboardUISettingsBuilder
+    implements Builder<DashboardUISettings, DashboardUISettingsBuilder> {
+  _$DashboardUISettings _$v;
 
   DateRange _dateRange;
   DateRange get dateRange => _$this._dateRange;
@@ -281,9 +466,9 @@ class DashboardUIStateBuilder
   String get currencyId => _$this._currencyId;
   set currencyId(String currencyId) => _$this._currencyId = currencyId;
 
-  DashboardUIStateBuilder();
+  DashboardUISettingsBuilder();
 
-  DashboardUIStateBuilder get _$this {
+  DashboardUISettingsBuilder get _$this {
     if (_$v != null) {
       _dateRange = _$v.dateRange;
       _customStartDate = _$v.customStartDate;
@@ -300,22 +485,22 @@ class DashboardUIStateBuilder
   }
 
   @override
-  void replace(DashboardUIState other) {
+  void replace(DashboardUISettings other) {
     if (other == null) {
       throw new ArgumentError.notNull('other');
     }
-    _$v = other as _$DashboardUIState;
+    _$v = other as _$DashboardUISettings;
   }
 
   @override
-  void update(void Function(DashboardUIStateBuilder) updates) {
+  void update(void Function(DashboardUISettingsBuilder) updates) {
     if (updates != null) updates(this);
   }
 
   @override
-  _$DashboardUIState build() {
+  _$DashboardUISettings build() {
     final _$result = _$v ??
-        new _$DashboardUIState._(
+        new _$DashboardUISettings._(
             dateRange: dateRange,
             customStartDate: customStartDate,
             customEndDate: customEndDate,

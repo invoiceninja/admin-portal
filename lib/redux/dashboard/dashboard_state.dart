@@ -1,3 +1,4 @@
+import 'package:built_collection/built_collection.dart';
 import 'package:invoiceninja_flutter/constants.dart';
 import 'package:invoiceninja_flutter/data/models/dashboard_model.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
@@ -12,6 +13,29 @@ abstract class DashboardUIState
     implements Built<DashboardUIState, DashboardUIStateBuilder> {
   factory DashboardUIState() {
     return _$DashboardUIState._(
+      settings: DashboardUISettings(),
+      selectedEntities: BuiltMap<EntityType, BuiltList<String>>(),
+    );
+  }
+
+  DashboardUIState._();
+
+  @override
+  @memoized
+  int get hashCode;
+
+  DashboardUISettings get settings;
+
+  BuiltMap<EntityType, BuiltList<String>> get selectedEntities;
+
+  static Serializer<DashboardUIState> get serializer =>
+      _$dashboardUIStateSerializer;
+}
+
+abstract class DashboardUISettings
+    implements Built<DashboardUISettings, DashboardUISettingsBuilder> {
+  factory DashboardUISettings() {
+    return _$DashboardUISettings._(
       dateRange: DateRange.last30Days,
       customStartDate: '',
       customEndDate: convertDateTimeToSqlDate(),
@@ -24,7 +48,7 @@ abstract class DashboardUIState
     );
   }
 
-  DashboardUIState._();
+  DashboardUISettings._();
 
   @override
   @memoized
@@ -48,7 +72,8 @@ abstract class DashboardUIState
 
   String get currencyId;
 
-  static Serializer<DashboardUIState> get serializer => _$dashboardUIStateSerializer;
+  static Serializer<DashboardUISettings> get serializer =>
+      _$dashboardUISettingsSerializer;
 
   bool matchesCurrency(String match) {
     if (currencyId == null ||

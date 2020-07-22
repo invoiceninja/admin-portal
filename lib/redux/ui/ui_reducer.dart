@@ -1,4 +1,3 @@
-import 'package:built_collection/built_collection.dart';
 import 'package:invoiceninja_flutter/data/models/entities.dart';
 import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:invoiceninja_flutter/redux/client/client_actions.dart';
@@ -65,8 +64,6 @@ UIState uiReducer(UIState state, dynamic action) {
     ..invoiceUIState.replace(invoiceUIReducer(state.invoiceUIState, action))
     ..dashboardUIState
         .replace(dashboardUIReducer(state.dashboardUIState, action))
-    ..selectedEntities
-        .replace(selectedEntitiesReducer(state.selectedEntities, action))
     ..reportsUIState.replace(reportsUIReducer(state.reportsUIState, action))
     // STARTER: reducer - do not remove comment
     ..webhookUIState.replace(webhookUIReducer(state.webhookUIState, action))
@@ -90,15 +87,6 @@ UIState uiReducer(UIState state, dynamic action) {
     ..settingsUIState
         .replace(settingsUIReducer(state.settingsUIState, action)));
 }
-
-Reducer<BuiltMap<EntityType, BuiltList<String>>> selectedEntitiesReducer =
-    combineReducers([
-  TypedReducer<BuiltMap<EntityType, BuiltList<String>>,
-      UpdateDashboardSelection>((state, action) {
-    return state.rebuild((b) =>
-        b..[action.entityType] = BuiltList(action.entityIds ?? <String>[]));
-  }),
-]);
 
 Reducer<String> filterReducer = combineReducers([
   TypedReducer<String, FilterCompany>((filter, action) {
