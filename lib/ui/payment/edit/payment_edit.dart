@@ -143,6 +143,7 @@ class _PaymentEditState extends State<PaymentEdit> {
               children: <Widget>[
                 if (payment.isNew) ...[
                   EntityDropdown(
+                    allowClearing: true,
                     key: Key('__client_${payment.clientId}__'),
                     entityType: EntityType.client,
                     labelText: AppLocalization.of(context).client,
@@ -153,7 +154,7 @@ class _PaymentEditState extends State<PaymentEdit> {
                         : null,
                     onSelected: (client) {
                       viewModel.onChanged(payment.rebuild((b) => b
-                        ..clientId = client.id
+                        ..clientId = client?.id ?? ''
                         ..invoices.clear()));
                     },
                     entityList: memoizedDropdownClientList(
@@ -201,6 +202,7 @@ class _PaymentEditState extends State<PaymentEdit> {
                   },
                 ),
                 EntityDropdown(
+                  allowClearing: true,
                   key: ValueKey('__payment_type_${payment.typeId}__'),
                   entityType: EntityType.paymentType,
                   entityList: memoizedPaymentTypeList(
@@ -208,7 +210,7 @@ class _PaymentEditState extends State<PaymentEdit> {
                   labelText: localization.paymentType,
                   entityId: payment.typeId,
                   onSelected: (paymentType) => viewModel.onChanged(
-                      payment.rebuild((b) => b..typeId = paymentType.id)),
+                      payment.rebuild((b) => b..typeId = paymentType?.id ?? '')),
                 ),
                 if (payment.isForInvoice != true)
                   if (state.company.isModuleEnabled(EntityType.credit))
