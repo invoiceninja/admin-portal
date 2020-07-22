@@ -5,7 +5,6 @@ import 'package:invoiceninja_flutter/data/models/entities.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/redux/dashboard/dashboard_actions.dart';
 import 'package:invoiceninja_flutter/redux/dashboard/dashboard_sidebar_selectors.dart';
-import 'package:invoiceninja_flutter/ui/app/app_border.dart';
 import 'package:invoiceninja_flutter/ui/app/help_text.dart';
 import 'package:invoiceninja_flutter/ui/app/lists/list_divider.dart';
 import 'package:invoiceninja_flutter/ui/invoice/invoice_list_item.dart';
@@ -309,42 +308,39 @@ class _DashboardSidebar extends StatelessWidget {
                 : (MediaQuery.of(context).size.height - 100) / 2,
             duration: Duration(milliseconds: kDefaultAnimationDuration),
             curve: Curves.easeInOutCubic,
-            child: AppBorder(
-              isTop: true,
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Material(
-                    elevation: 4,
-                    color: Theme.of(context).scaffoldBackgroundColor,
-                    child: Container(
-                      child: Row(
-                        children: [
-                          Expanded(
-                              child: Text(label3 ?? '',
-                                  style: textTheme.bodyText2)),
-                          IconButton(
-                            visualDensity: VisualDensity.compact,
-                            icon: Icon(Icons.clear),
-                            onPressed: () {
-                              store.dispatch(UpdateDashboardSelection(
-                                entityIds: null,
-                                entityType: entityType,
-                              ));
-                            },
-                          )
-                        ],
-                      ),
-                      padding: const EdgeInsets.symmetric(
-                          horizontal: 16, vertical: 8),
-                      width: double.infinity,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Material(
+                  elevation: 4,
+                  color: Theme.of(context).scaffoldBackgroundColor,
+                  child: Container(
+                    child: Row(
+                      children: [
+                        Expanded(
+                            child: Text(label3 ?? '',
+                                style: textTheme.bodyText2)),
+                        IconButton(
+                          visualDensity: VisualDensity.compact,
+                          icon: Icon(Icons.clear),
+                          onPressed: () {
+                            store.dispatch(UpdateDashboardSelection(
+                              entityIds: null,
+                              entityType: entityType,
+                            ));
+                          },
+                        )
+                      ],
                     ),
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: 16, vertical: 8),
+                    width: double.infinity,
                   ),
-                  Expanded(
-                    child: ClipRRect(child: list3 ?? SizedBox()),
-                  ),
-                ],
-              ),
+                ),
+                Expanded(
+                  child: ClipRRect(child: list3 ?? SizedBox()),
+                ),
+              ],
             ),
           ),
         ],
