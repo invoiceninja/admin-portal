@@ -212,12 +212,6 @@ class _$PaymentEntitySerializer implements StructuredSerializer<PaymentEntity> {
         ..add(serializers.serialize(object.isForInvoice,
             specifiedType: const FullType(bool)));
     }
-    if (object.isForCredit != null) {
-      result
-        ..add('isForCredit')
-        ..add(serializers.serialize(object.isForCredit,
-            specifiedType: const FullType(bool)));
-    }
     if (object.isChanged != null) {
       result
         ..add('isChanged')
@@ -335,10 +329,6 @@ class _$PaymentEntitySerializer implements StructuredSerializer<PaymentEntity> {
           break;
         case 'isForInvoice':
           result.isForInvoice = serializers.deserialize(value,
-              specifiedType: const FullType(bool)) as bool;
-          break;
-        case 'isForCredit':
-          result.isForCredit = serializers.deserialize(value,
               specifiedType: const FullType(bool)) as bool;
           break;
         case 'paymentables':
@@ -718,8 +708,6 @@ class _$PaymentEntity extends PaymentEntity {
   @override
   final bool isForInvoice;
   @override
-  final bool isForCredit;
-  @override
   final BuiltList<PaymentableEntity> paymentables;
   @override
   final BuiltList<PaymentableEntity> invoices;
@@ -766,7 +754,6 @@ class _$PaymentEntity extends PaymentEntity {
       this.projectId,
       this.vendorId,
       this.isForInvoice,
-      this.isForCredit,
       this.paymentables,
       this.invoices,
       this.credits,
@@ -885,7 +872,6 @@ class _$PaymentEntity extends PaymentEntity {
         projectId == other.projectId &&
         vendorId == other.vendorId &&
         isForInvoice == other.isForInvoice &&
-        isForCredit == other.isForCredit &&
         paymentables == other.paymentables &&
         invoices == other.invoices &&
         credits == other.credits &&
@@ -920,15 +906,15 @@ class _$PaymentEntity extends PaymentEntity {
                                                                 $jc(
                                                                     $jc(
                                                                         $jc(
-                                                                            $jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc(0, amount.hashCode), applied.hashCode), refunded.hashCode), number.hashCode), clientId.hashCode), statusId.hashCode), transactionReference.hashCode), date.hashCode), typeId.hashCode), privateNotes.hashCode), customValue1.hashCode), customValue2.hashCode), customValue3.hashCode),
-                                                                                customValue4.hashCode),
-                                                                            exchangeRate.hashCode),
-                                                                        exchangeCurrencyId.hashCode),
-                                                                    isManual.hashCode),
-                                                                projectId.hashCode),
-                                                            vendorId.hashCode),
-                                                        isForInvoice.hashCode),
-                                                    isForCredit.hashCode),
+                                                                            $jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc(0, amount.hashCode), applied.hashCode), refunded.hashCode), number.hashCode), clientId.hashCode), statusId.hashCode), transactionReference.hashCode), date.hashCode), typeId.hashCode), privateNotes.hashCode), customValue1.hashCode), customValue2.hashCode),
+                                                                                customValue3.hashCode),
+                                                                            customValue4.hashCode),
+                                                                        exchangeRate.hashCode),
+                                                                    exchangeCurrencyId.hashCode),
+                                                                isManual.hashCode),
+                                                            projectId.hashCode),
+                                                        vendorId.hashCode),
+                                                    isForInvoice.hashCode),
                                                 paymentables.hashCode),
                                             invoices.hashCode),
                                         credits.hashCode),
@@ -965,7 +951,6 @@ class _$PaymentEntity extends PaymentEntity {
           ..add('projectId', projectId)
           ..add('vendorId', vendorId)
           ..add('isForInvoice', isForInvoice)
-          ..add('isForCredit', isForCredit)
           ..add('paymentables', paymentables)
           ..add('invoices', invoices)
           ..add('credits', credits)
@@ -1067,10 +1052,6 @@ class PaymentEntityBuilder
   bool get isForInvoice => _$this._isForInvoice;
   set isForInvoice(bool isForInvoice) => _$this._isForInvoice = isForInvoice;
 
-  bool _isForCredit;
-  bool get isForCredit => _$this._isForCredit;
-  set isForCredit(bool isForCredit) => _$this._isForCredit = isForCredit;
-
   ListBuilder<PaymentableEntity> _paymentables;
   ListBuilder<PaymentableEntity> get paymentables =>
       _$this._paymentables ??= new ListBuilder<PaymentableEntity>();
@@ -1147,7 +1128,6 @@ class PaymentEntityBuilder
       _projectId = _$v.projectId;
       _vendorId = _$v.vendorId;
       _isForInvoice = _$v.isForInvoice;
-      _isForCredit = _$v.isForCredit;
       _paymentables = _$v.paymentables?.toBuilder();
       _invoices = _$v.invoices?.toBuilder();
       _credits = _$v.credits?.toBuilder();
@@ -1203,7 +1183,6 @@ class PaymentEntityBuilder
               projectId: projectId,
               vendorId: vendorId,
               isForInvoice: isForInvoice,
-              isForCredit: isForCredit,
               paymentables: paymentables.build(),
               invoices: invoices.build(),
               credits: credits.build(),

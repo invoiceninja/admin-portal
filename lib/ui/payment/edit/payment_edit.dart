@@ -103,10 +103,9 @@ class _PaymentEditState extends State<PaymentEdit> {
     }
 
     final creditPaymentables = payment.credits.toList();
-    if ((payment.isForCredit != true || creditPaymentables.isEmpty) &&
-        creditPaymentables
-            .where((paymentable) => paymentable.isEmpty)
-            .isEmpty) {
+    if (creditPaymentables
+        .where((paymentable) => paymentable.isEmpty)
+        .isEmpty) {
       creditPaymentables.add(PaymentableEntity());
     }
 
@@ -184,8 +183,7 @@ class _PaymentEditState extends State<PaymentEdit> {
                         state.userState.map,
                         state.staticState),
                   ),
-                  if (payment.isForInvoice != true &&
-                      payment.isForCredit != true)
+                  if (payment.isForInvoice != true)
                     DecoratedFormField(
                       controller: _amountController,
                       autocorrect: false,
@@ -196,21 +194,18 @@ class _PaymentEditState extends State<PaymentEdit> {
                           : amountPlaceholder,
                     ),
                 ],
-                if (payment.isForCredit != true)
-                  for (var index = 0;
-                      index < invoicePaymentables.length;
-                      index++)
-                    PaymentableEditor(
-                      key: ValueKey(
-                          '__paymentable_${index}_${invoicePaymentables[index].id}__'),
-                      viewModel: viewModel,
-                      paymentable: invoicePaymentables[index],
-                      index: index,
-                      entityType: EntityType.invoice,
-                      limit: payment.amount == 0
-                          ? null
-                          : payment.amount - paymentTotal,
-                    ),
+                for (var index = 0; index < invoicePaymentables.length; index++)
+                  PaymentableEditor(
+                    key: ValueKey(
+                        '__paymentable_${index}_${invoicePaymentables[index].id}__'),
+                    viewModel: viewModel,
+                    paymentable: invoicePaymentables[index],
+                    index: index,
+                    entityType: EntityType.invoice,
+                    limit: payment.amount == 0
+                        ? null
+                        : payment.amount - paymentTotal,
+                  ),
                 DatePicker(
                   validator: (String val) => val.trim().isEmpty
                       ? AppLocalization.of(context).pleaseSelectADate
@@ -464,7 +459,6 @@ class _PaymentableEditorState extends State<PaymentableEditor> {
                 _invoiceId != null) ||
             (widget.entityType == EntityType.credit &&
                 payment.credits.isNotEmpty &&
-                payment.isForCredit != true &&
                 _creditId != null)) ...[
           SizedBox(
             width: kTableColumnGap,
