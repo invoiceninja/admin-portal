@@ -40,7 +40,10 @@ class _DashboardScreenState extends State<DashboardScreen>
   void initState() {
     super.initState();
 
-    final company = widget.viewModel.state.company;
+    final state = widget.viewModel.state;
+    final company = state.company;
+    final entityType = state.dashboardUIState.selectedEntityType;
+
     [
       EntityType.invoice,
       EntityType.payment,
@@ -51,10 +54,15 @@ class _DashboardScreenState extends State<DashboardScreen>
       }
     });
 
+    final index = _tabs.contains(entityType) ? _tabs.indexOf(entityType) : 0;
+
     _mainTabController = TabController(vsync: this, length: 2);
-    _sideTabController = TabController(vsync: this, length: _tabs.length)
-      ..addListener(onTabListener);
-    _scrollController = ScrollController()..addListener(onScrollListener);
+    _sideTabController =
+        TabController(vsync: this, length: _tabs.length, initialIndex: index)
+          ..addListener(onTabListener);
+    _scrollController =
+        ScrollController(initialScrollOffset: index * kDashboardPanelHeight)
+          ..addListener(onScrollListener);
   }
 
   void onScrollListener() {
