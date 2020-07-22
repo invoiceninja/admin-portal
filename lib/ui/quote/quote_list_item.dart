@@ -14,33 +14,24 @@ import 'package:invoiceninja_flutter/utils/localization.dart';
 
 class QuoteListItem extends StatelessWidget {
   const QuoteListItem({
-    @required this.user,
     @required this.quote,
-    @required this.client,
-    @required this.filter,
-    this.onTap,
-    this.onLongPress,
-    this.onCheckboxChanged,
-    this.isChecked = false,
+    this.filter,
+    this.showCheckbox = true,
   });
 
-  final UserEntity user;
-  final GestureTapCallback onTap;
-  final GestureTapCallback onLongPress;
   final InvoiceEntity quote;
-  final ClientEntity client;
   final String filter;
-  final Function(bool) onCheckboxChanged;
-  final bool isChecked;
+  final bool showCheckbox;
 
   @override
   Widget build(BuildContext context) {
     final state = StoreProvider.of<AppState>(context).state;
+    final client = state.clientState.get(quote.clientId);
     final uiState = state.uiState;
     final quoteUIState = uiState.quoteUIState;
     final listUIState = state.getUIState(quote.entityType).listUIState;
-    final isInMultiselect = listUIState.isInMultiselect();
-    final showCheckbox = onCheckboxChanged != null || isInMultiselect;
+    final isInMultiselect = showCheckbox && listUIState.isInMultiselect();
+    final isChecked = isInMultiselect && listUIState.isSelected(quote.id);
     final textStyle = TextStyle(fontSize: 16);
     final localization = AppLocalization.of(context);
     final textColor = Theme.of(context).textTheme.bodyText1.color;
@@ -66,17 +57,14 @@ class QuoteListItem extends StatelessWidget {
                 ? quoteUIState.editing.id
                 : quoteUIState.selectedId),
         userCompany: state.userCompany,
+        showCheckbox: showCheckbox,
         entity: quote,
         child: LayoutBuilder(
             builder: (BuildContext context, BoxConstraints constraints) {
           return constraints.maxWidth > kTableListWidthCutoff
               ? InkWell(
-                  onTap: () => onTap != null
-                      ? onTap()
-                      : selectEntity(entity: quote, context: context),
-                  onLongPress: () => onLongPress != null
-                      ? onLongPress()
-                      : selectEntity(
+                  onTap: () => selectEntity(entity: quote, context: context),
+                  onLongPress: () => selectEntity(
                           entity: quote, context: context, longPress: true),
                   child: Padding(
                     padding: const EdgeInsets.only(
@@ -96,8 +84,7 @@ class QuoteListItem extends StatelessWidget {
                                       value: isChecked,
                                       materialTapTargetSize:
                                           MaterialTapTargetSize.shrinkWrap,
-                                      onChanged: (value) =>
-                                          onCheckboxChanged(value),
+                                      onChanged: (value) => null,
                                       activeColor:
                                           Theme.of(context).accentColor,
                                     ),
@@ -170,12 +157,8 @@ class QuoteListItem extends StatelessWidget {
                   ),
                 )
               : ListTile(
-                  onTap: () => onTap != null
-                      ? onTap()
-                      : selectEntity(entity: quote, context: context),
-                  onLongPress: () => onLongPress != null
-                      ? onLongPress()
-                      : selectEntity(
+                  onTap: () => selectEntity(entity: quote, context: context),
+                  onLongPress: () => selectEntity(
                           entity: quote, context: context, longPress: true),
                   leading: showCheckbox
                       ? IgnorePointer(
@@ -184,7 +167,7 @@ class QuoteListItem extends StatelessWidget {
                             value: isChecked,
                             materialTapTargetSize:
                                 MaterialTapTargetSize.shrinkWrap,
-                            onChanged: (value) => onCheckboxChanged(value),
+                            onChanged: (value) => null,
                             activeColor: Theme.of(context).accentColor,
                           ),
                         )

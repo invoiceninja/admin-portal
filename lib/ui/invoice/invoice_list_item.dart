@@ -59,7 +59,6 @@ class InvoiceListItem extends StatelessWidget {
 
     return DismissibleEntity(
         isSelected: isDesktop(context) &&
-            showCheckbox &&
             invoice.id ==
                 (uiState.isEditing
                     ? invoiceUIState.editing.id

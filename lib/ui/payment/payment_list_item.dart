@@ -55,7 +55,6 @@ class PaymentListItem extends StatelessWidget {
 
     return DismissibleEntity(
       isSelected: isDesktop(context) &&
-          showCheckbox &&
           payment.id ==
               (uiState.isEditing
                   ? paymentUIState.editing.id

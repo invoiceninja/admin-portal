@@ -27,7 +27,6 @@ class QuoteListBuilder extends StatelessWidget {
     return StoreConnector<AppState, QuoteListVM>(
       converter: QuoteListVM.fromStore,
       builder: (context, viewModel) {
-        final state = viewModel.state;
         return EntityList(
             entityType: EntityType.quote,
             presenter: QuotePresenter(),
@@ -41,15 +40,10 @@ class QuoteListBuilder extends StatelessWidget {
             itemBuilder: (BuildContext context, index) {
               final invoiceId = viewModel.invoiceList[index];
               final invoice = viewModel.invoiceMap[invoiceId];
-              final listState = state.getListState(EntityType.quote);
-              final isInMultiselect = listState.isInMultiselect();
 
               return QuoteListItem(
-                user: state.user,
                 filter: viewModel.filter,
                 quote: invoice,
-                client: viewModel.clientMap[invoice.clientId] ?? ClientEntity(),
-                isChecked: isInMultiselect && listState.isSelected(invoice.id),
               );
             });
       },

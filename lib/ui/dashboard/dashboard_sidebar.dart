@@ -9,6 +9,7 @@ import 'package:invoiceninja_flutter/ui/app/help_text.dart';
 import 'package:invoiceninja_flutter/ui/app/lists/list_divider.dart';
 import 'package:invoiceninja_flutter/ui/invoice/invoice_list_item.dart';
 import 'package:invoiceninja_flutter/ui/payment/payment_list_item.dart';
+import 'package:invoiceninja_flutter/ui/quote/quote_list_item.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 
 class SidebarScaffold extends StatelessWidget {
@@ -185,37 +186,37 @@ class _QuoteSidebar extends StatelessWidget {
     final localization = AppLocalization.of(context);
     final store = StoreProvider.of<AppState>(context);
     final state = store.state;
-    final upcomingInvoices = memoizedUpcomingInvoices(state.invoiceState.map);
-    final pastDueInvoices = memoizedPastDueInvoices(state.invoiceState.map);
-    final selectedIds = state.uiState.selectedEntities[EntityType.invoice];
+    final upcomingQuotes = memoizedUpcomingQuotes(state.quoteState.map);
+    final expriedQuotes = memoizedExpiredQuotes(state.quoteState.map);
+    final selectedIds = state.uiState.selectedEntities[EntityType.quote];
 
     return _DashboardSidebar(
-      entityType: EntityType.invoice,
-      label1: localization.upcomingInvoices +
-          (upcomingInvoices.isNotEmpty ? ' (${upcomingInvoices.length})' : ''),
-      list1: upcomingInvoices.isEmpty
+      entityType: EntityType.quote,
+      label1: localization.upcomingQuotes +
+          (upcomingQuotes.isNotEmpty ? ' (${upcomingQuotes.length})' : ''),
+      list1: upcomingQuotes.isEmpty
           ? null
           : ListView.separated(
               shrinkWrap: true,
-              itemCount: upcomingInvoices.length,
+              itemCount: upcomingQuotes.length,
               itemBuilder: (BuildContext context, int index) {
-                return InvoiceListItem(
-                  invoice: upcomingInvoices[index],
+                return QuoteListItem(
+                  quote: upcomingQuotes[index],
                   showCheckbox: false,
                 );
               },
               separatorBuilder: (context, index) => ListDivider(),
             ),
       label2: localization.pastDueInvoices +
-          (pastDueInvoices.isNotEmpty ? ' (${pastDueInvoices.length})' : ''),
-      list2: pastDueInvoices.isEmpty
+          (expriedQuotes.isNotEmpty ? ' (${expriedQuotes.length})' : ''),
+      list2: expriedQuotes.isEmpty
           ? null
           : ListView.separated(
               shrinkWrap: true,
-              itemCount: pastDueInvoices.length,
+              itemCount: expriedQuotes.length,
               itemBuilder: (BuildContext context, int index) {
-                return InvoiceListItem(
-                  invoice: pastDueInvoices[index],
+                return QuoteListItem(
+                  quote: expriedQuotes[index],
                   showCheckbox: false,
                 );
               },
@@ -230,8 +231,8 @@ class _QuoteSidebar extends StatelessWidget {
               shrinkWrap: true,
               itemCount: selectedIds?.length,
               itemBuilder: (BuildContext context, int index) {
-                return InvoiceListItem(
-                  invoice: state.invoiceState.get(selectedIds[index]),
+                return QuoteListItem(
+                  quote: state.quoteState.get(selectedIds[index]),
                   showCheckbox: false,
                 );
               },

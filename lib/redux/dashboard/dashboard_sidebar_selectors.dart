@@ -61,3 +61,36 @@ List<PaymentEntity> _recentPayments(
 
   return payments;
 }
+
+var memoizedUpcomingQuotes = memo1((BuiltMap<String, InvoiceEntity> quoteMap) =>
+    _upcomingQuotes(quoteMap: quoteMap));
+
+List<InvoiceEntity> _upcomingQuotes(
+    {BuiltMap<String, InvoiceEntity> quoteMap}) {
+  final quotes = <InvoiceEntity>[];
+  quoteMap.forEach((index, quote) {
+    if (quote.isUpcoming) {
+      quotes.add(quote);
+    }
+  });
+
+  quotes.sort((quoteA, quoteB) => quoteA.dueDate.compareTo(quoteB.dueDate));
+
+  return quotes;
+}
+
+var memoizedExpiredQuotes = memo1((BuiltMap<String, InvoiceEntity> quoteMap) =>
+    _expiredQuotes(quoteMap: quoteMap));
+
+List<InvoiceEntity> _expiredQuotes({BuiltMap<String, InvoiceEntity> quoteMap}) {
+  final quotes = <InvoiceEntity>[];
+  quoteMap.forEach((index, quote) {
+    if (quote.isPastDue) {
+      quotes.add(quote);
+    }
+  });
+
+  quotes.sort((quoteA, quoteB) => quoteA.dueDate.compareTo(quoteB.dueDate));
+
+  return quotes;
+}
