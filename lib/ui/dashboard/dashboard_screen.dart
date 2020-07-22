@@ -59,13 +59,12 @@ class _DashboardScreenState extends State<DashboardScreen>
 
     if (state.prefState.isMobile) {
       mainTabCount += _tabs.length;
-    } else {
-      _sideTabController =
-          TabController(vsync: this, length: _tabs.length, initialIndex: index)
-            ..addListener(onTabListener);
     }
 
     _mainTabController = TabController(vsync: this, length: mainTabCount);
+    _sideTabController =
+        TabController(vsync: this, length: _tabs.length, initialIndex: index)
+          ..addListener(onTabListener);
     _scrollController =
         ScrollController(initialScrollOffset: index * kDashboardPanelHeight)
           ..addListener(onScrollListener);

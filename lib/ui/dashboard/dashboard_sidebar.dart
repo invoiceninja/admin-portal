@@ -11,7 +11,6 @@ import 'package:invoiceninja_flutter/ui/invoice/invoice_list_item.dart';
 import 'package:invoiceninja_flutter/ui/payment/payment_list_item.dart';
 import 'package:invoiceninja_flutter/ui/quote/quote_list_item.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
-import 'package:invoiceninja_flutter/utils/platforms.dart';
 
 class SidebarScaffold extends StatelessWidget {
   const SidebarScaffold({
@@ -301,48 +300,47 @@ class _DashboardSidebar extends StatelessWidget {
                   : ClipRRect(child: list2),
             ),
           ],
-          if (isDesktop(context))
-            AnimatedContainer(
-              height: label3 == null
-                  ? 0
-                  : (MediaQuery.of(context).size.height - 100) / 2,
-              duration: Duration(milliseconds: kDefaultAnimationDuration),
-              curve: Curves.easeInOutCubic,
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Material(
-                    elevation: 4,
-                    color: Theme.of(context).scaffoldBackgroundColor,
-                    child: Container(
-                      child: Row(
-                        children: [
-                          Expanded(
-                              child: Text(label3 ?? '',
-                                  style: textTheme.bodyText2)),
-                          IconButton(
-                            visualDensity: VisualDensity.compact,
-                            icon: Icon(Icons.clear),
-                            onPressed: () {
-                              store.dispatch(UpdateDashboardSelection(
-                                entityIds: null,
-                                entityType: entityType,
-                              ));
-                            },
-                          )
-                        ],
-                      ),
-                      padding: const EdgeInsets.symmetric(
-                          horizontal: 16, vertical: 8),
-                      width: double.infinity,
+          AnimatedContainer(
+            height: label3 == null
+                ? 0
+                : (MediaQuery.of(context).size.height - 100) / 2,
+            duration: Duration(milliseconds: kDefaultAnimationDuration),
+            curve: Curves.easeInOutCubic,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Material(
+                  elevation: 4,
+                  color: Theme.of(context).scaffoldBackgroundColor,
+                  child: Container(
+                    child: Row(
+                      children: [
+                        Expanded(
+                            child:
+                                Text(label3 ?? '', style: textTheme.bodyText2)),
+                        IconButton(
+                          visualDensity: VisualDensity.compact,
+                          icon: Icon(Icons.clear),
+                          onPressed: () {
+                            store.dispatch(UpdateDashboardSelection(
+                              entityIds: null,
+                              entityType: entityType,
+                            ));
+                          },
+                        )
+                      ],
                     ),
+                    padding:
+                        const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                    width: double.infinity,
                   ),
-                  Expanded(
-                    child: ClipRRect(child: list3 ?? SizedBox()),
-                  ),
-                ],
-              ),
+                ),
+                Expanded(
+                  child: ClipRRect(child: list3 ?? SizedBox()),
+                ),
+              ],
             ),
+          ),
         ],
       ),
     );
