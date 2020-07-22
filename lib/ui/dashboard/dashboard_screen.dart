@@ -62,17 +62,23 @@ class _DashboardScreenState extends State<DashboardScreen>
     final offsetIndex = ((offset + 120) / kDashboardPanelHeight).floor();
 
     if (_sideTabController.index != offsetIndex) {
+      _sideTabController.removeListener(onTabListener);
       _sideTabController.index = offsetIndex;
+      _sideTabController.addListener(onTabListener);
 
-      // This causes a bit of jank
-      //widget.viewModel.onEntityTypeChanged(_tabs[offsetIndex]);
+      widget.viewModel.onEntityTypeChanged(_tabs[offsetIndex]);
     }
   }
 
   void onTabListener() {
     final index = _sideTabController.index;
-    _scrollController.jumpTo((index.toDouble() * kDashboardPanelHeight) + 1);
-    widget.viewModel.onEntityTypeChanged(_tabs[index]);
+    final offset = _scrollController.position.pixels;
+    final offsetIndex = ((offset + 120) / kDashboardPanelHeight).floor();
+
+    if (index != offsetIndex) {
+      _scrollController.jumpTo((index.toDouble() * kDashboardPanelHeight) + 1);
+      widget.viewModel.onEntityTypeChanged(_tabs[index]);
+    }
   }
 
   @override
