@@ -35,3 +35,9 @@ class UpdateDashboardSelection implements PersistUI {
   EntityType entityType;
   List<String> entityIds;
 }
+
+class UpdateDashboardEntityType implements PersistUI {
+  UpdateDashboardEntityType({this.entityType});
+
+  EntityType entityType;
+}

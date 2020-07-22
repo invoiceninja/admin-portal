@@ -25,6 +25,9 @@ class _$DashboardUIStateSerializer
       'settings',
       serializers.serialize(object.settings,
           specifiedType: const FullType(DashboardUISettings)),
+      'selectedEntityType',
+      serializers.serialize(object.selectedEntityType,
+          specifiedType: const FullType(EntityType)),
       'selectedEntities',
       serializers.serialize(object.selectedEntities,
           specifiedType: const FullType(BuiltMap, const [
@@ -52,6 +55,10 @@ class _$DashboardUIStateSerializer
           result.settings.replace(serializers.deserialize(value,
                   specifiedType: const FullType(DashboardUISettings))
               as DashboardUISettings);
+          break;
+        case 'selectedEntityType':
+          result.selectedEntityType = serializers.deserialize(value,
+              specifiedType: const FullType(EntityType)) as EntityType;
           break;
         case 'selectedEntities':
           result.selectedEntities.replace(serializers.deserialize(value,
@@ -173,15 +180,23 @@ class _$DashboardUIState extends DashboardUIState {
   @override
   final DashboardUISettings settings;
   @override
+  final EntityType selectedEntityType;
+  @override
   final BuiltMap<EntityType, BuiltList<String>> selectedEntities;
 
   factory _$DashboardUIState(
           [void Function(DashboardUIStateBuilder) updates]) =>
       (new DashboardUIStateBuilder()..update(updates)).build();
 
-  _$DashboardUIState._({this.settings, this.selectedEntities}) : super._() {
+  _$DashboardUIState._(
+      {this.settings, this.selectedEntityType, this.selectedEntities})
+      : super._() {
     if (settings == null) {
       throw new BuiltValueNullFieldError('DashboardUIState', 'settings');
+    }
+    if (selectedEntityType == null) {
+      throw new BuiltValueNullFieldError(
+          'DashboardUIState', 'selectedEntityType');
     }
     if (selectedEntities == null) {
       throw new BuiltValueNullFieldError(
@@ -202,20 +217,23 @@ class _$DashboardUIState extends DashboardUIState {
     if (identical(other, this)) return true;
     return other is DashboardUIState &&
         settings == other.settings &&
+        selectedEntityType == other.selectedEntityType &&
         selectedEntities == other.selectedEntities;
   }
 
   int __hashCode;
   @override
   int get hashCode {
-    return __hashCode ??=
-        $jf($jc($jc(0, settings.hashCode), selectedEntities.hashCode));
+    return __hashCode ??= $jf($jc(
+        $jc($jc(0, settings.hashCode), selectedEntityType.hashCode),
+        selectedEntities.hashCode));
   }
 
   @override
   String toString() {
     return (newBuiltValueToStringHelper('DashboardUIState')
           ..add('settings', settings)
+          ..add('selectedEntityType', selectedEntityType)
           ..add('selectedEntities', selectedEntities))
         .toString();
   }
@@ -231,6 +249,11 @@ class DashboardUIStateBuilder
   set settings(DashboardUISettingsBuilder settings) =>
       _$this._settings = settings;
 
+  EntityType _selectedEntityType;
+  EntityType get selectedEntityType => _$this._selectedEntityType;
+  set selectedEntityType(EntityType selectedEntityType) =>
+      _$this._selectedEntityType = selectedEntityType;
+
   MapBuilder<EntityType, BuiltList<String>> _selectedEntities;
   MapBuilder<EntityType, BuiltList<String>> get selectedEntities =>
       _$this._selectedEntities ??=
@@ -244,6 +267,7 @@ class DashboardUIStateBuilder
   DashboardUIStateBuilder get _$this {
     if (_$v != null) {
       _settings = _$v.settings?.toBuilder();
+      _selectedEntityType = _$v.selectedEntityType;
       _selectedEntities = _$v.selectedEntities?.toBuilder();
       _$v = null;
     }
@@ -270,12 +294,14 @@ class DashboardUIStateBuilder
       _$result = _$v ??
           new _$DashboardUIState._(
               settings: settings.build(),
+              selectedEntityType: selectedEntityType,
               selectedEntities: selectedEntities.build());
     } catch (_) {
       String _$failedField;
       try {
         _$failedField = 'settings';
         settings.build();
+
         _$failedField = 'selectedEntities';
         selectedEntities.build();
       } catch (e) {

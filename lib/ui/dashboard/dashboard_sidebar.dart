@@ -15,11 +15,9 @@ import 'package:invoiceninja_flutter/utils/localization.dart';
 class SidebarScaffold extends StatelessWidget {
   const SidebarScaffold({
     @required this.tabController,
-    @required this.scrollController,
   });
 
   final TabController tabController;
-  final ScrollController scrollController;
 
   @override
   Widget build(BuildContext context) {
@@ -34,10 +32,6 @@ class SidebarScaffold extends StatelessWidget {
         title: TabBar(
           isScrollable: true,
           controller: tabController,
-          onTap: (int index) {
-            scrollController
-                .jumpTo((index.toDouble() * kDashboardPanelHeight) + 1);
-          },
           tabs: [
             if (company.isModuleEnabled(EntityType.invoice))
               Tab(

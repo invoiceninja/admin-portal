@@ -34,27 +34,27 @@ class _DashboardScreenState extends State<DashboardScreen>
   TabController _mainTabController;
   TabController _sideTabController;
   ScrollController _scrollController;
+  final List<EntityType> _tabs = [];
 
   @override
   void initState() {
     super.initState();
 
     final company = widget.viewModel.state.company;
-    int countTabs = 0;
     [
       EntityType.invoice,
       EntityType.payment,
       EntityType.quote,
     ].forEach((entityType) {
       if (company.isModuleEnabled(entityType)) {
-        countTabs++;
+        _tabs.add(entityType);
       }
     });
 
     _mainTabController = TabController(vsync: this, length: 2);
-    _sideTabController = TabController(vsync: this, length: countTabs);
-    _scrollController = ScrollController();
-    _scrollController.addListener(onScrollListener);
+    _sideTabController = TabController(vsync: this, length: _tabs.length)
+      ..addListener(onTabListener);
+    _scrollController = ScrollController()..addListener(onScrollListener);
   }
 
   void onScrollListener() {
@@ -63,15 +63,27 @@ class _DashboardScreenState extends State<DashboardScreen>
 
     if (_sideTabController.index != offsetIndex) {
       _sideTabController.index = offsetIndex;
+
+      // This causes a bit of jank
+      //widget.viewModel.onEntityTypeChanged(_tabs[offsetIndex]);
     }
+  }
+
+  void onTabListener() {
+    final index = _sideTabController.index;
+    _scrollController.jumpTo((index.toDouble() * kDashboardPanelHeight) + 1);
+    widget.viewModel.onEntityTypeChanged(_tabs[index]);
   }
 
   @override
   void dispose() {
     _mainTabController.dispose();
-    _sideTabController.dispose();
-    _scrollController.removeListener(onScrollListener);
-    _scrollController.dispose();
+    _sideTabController
+      ..removeListener(onTabListener)
+      ..dispose();
+    _scrollController
+      ..removeListener(onScrollListener)
+      ..dispose();
     super.dispose();
   }
 
@@ -149,7 +161,6 @@ class _DashboardScreenState extends State<DashboardScreen>
                     isLeft: true,
                     child: SidebarScaffold(
                       tabController: _sideTabController,
-                      scrollController: _scrollController,
                     ),
                   ),
                   flex: 2,

@@ -45,6 +45,7 @@ class DashboardVM {
     @required this.filter,
     @required this.filteredList,
     @required this.onRefreshed,
+    @required this.onEntityTypeChanged,
     @required this.onSettingsChanged,
     @required this.onSelectionChanged,
     @required this.onOffsetChanged,
@@ -74,10 +75,11 @@ class DashboardVM {
       dashboardUIState: state.dashboardUIState,
       currencyMap: state.staticState.currencyMap,
       isLoading: state.isLoading,
-      isNextEnabled:
-          DateTime.parse(settings.endDate(state.company))
-              .isBefore(DateTime.now()),
+      isNextEnabled: DateTime.parse(settings.endDate(state.company))
+          .isBefore(DateTime.now()),
       onRefreshed: (context) => _handleRefresh(context),
+      onEntityTypeChanged: (entityType) =>
+          store.dispatch(UpdateDashboardEntityType(entityType: entityType)),
       onSettingsChanged: (DashboardSettings settings) =>
           store.dispatch(UpdateDashboardSettings(settings: settings)),
       onSelectionChanged: (entityType, entityIds) {
@@ -105,6 +107,7 @@ class DashboardVM {
   final Function(BuildContext) onRefreshed;
   final Function(DashboardSettings) onSettingsChanged;
   final Function(EntityType, List<String>) onSelectionChanged;
+  final Function(EntityType) onEntityTypeChanged;
   final Function(int) onOffsetChanged;
   final Function(String) onCurrencyChanged;
 

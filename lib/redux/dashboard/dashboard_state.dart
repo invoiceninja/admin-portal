@@ -15,6 +15,7 @@ abstract class DashboardUIState
     return _$DashboardUIState._(
       settings: DashboardUISettings(),
       selectedEntities: BuiltMap<EntityType, BuiltList<String>>(),
+      selectedEntityType: EntityType.invoice,
     );
   }
 
@@ -25,6 +26,8 @@ abstract class DashboardUIState
   int get hashCode;
 
   DashboardUISettings get settings;
+
+  EntityType get selectedEntityType;
 
   BuiltMap<EntityType, BuiltList<String>> get selectedEntities;
 
