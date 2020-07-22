@@ -16,6 +16,10 @@ mixin LocalizationsProvider on LocaleCodeAware {
     'en': {
       // STARTER: lang key - do not remove comment
       'selected_invoices': 'Selected Invoices',
+      'selected_payments': 'Selected Payments',
+      'selected_quotes': 'Selected Quotes',
+      'selected_tasks': 'Selected Tasks',
+      'selected_expenses': 'Selected Expenses',
       'upcoming_invoices': 'Upcoming Invoices',
       'past_due_invoices': 'Past Due Invoices',
       'recent_payments': 'Recent Payments',
@@ -38886,6 +38890,18 @@ mixin LocalizationsProvider on LocaleCodeAware {
 
   String get selectedInvoices =>
       _localizedValues[localeCode]['selected_invoices'] ?? '';
+
+  String get selectedPayments =>
+      _localizedValues[localeCode]['selected_payments'] ?? '';
+
+  String get selectedQuotes =>
+      _localizedValues[localeCode]['selected_quotes'] ?? '';
+
+  String get selectedTasks =>
+      _localizedValues[localeCode]['selected_tasks'] ?? '';
+
+  String get selectedExpenses =>
+      _localizedValues[localeCode]['selected_expenses'] ?? '';
 
   String lookup(String key) {
     final lookupKey = toSnakeCase(key);

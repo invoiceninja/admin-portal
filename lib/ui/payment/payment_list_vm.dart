@@ -37,17 +37,13 @@ class PaymentListBuilder extends StatelessWidget {
             onViewEntityFilterPressed: viewModel.onViewEntityFilterPressed,
             onSortColumn: viewModel.onSortColumn,
             itemBuilder: (BuildContext context, index) {
-              final paymentId = viewModel.paymentList[index];
               final state = viewModel.state;
+              final paymentId = viewModel.paymentList[index];
               final payment = state.paymentState.map[paymentId];
-              final listState = state.getListState(EntityType.payment);
-              final isInMultiselect = listState.isInMultiselect();
 
               return PaymentListItem(
-                user: viewModel.user,
                 filter: viewModel.filter,
                 payment: payment,
-                isChecked: isInMultiselect && listState.isSelected(payment.id),
               );
             });
       },

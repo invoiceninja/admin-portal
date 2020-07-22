@@ -17,6 +17,7 @@ import 'package:invoiceninja_flutter/ui/dashboard/dashboard_activity.dart';
 import 'package:invoiceninja_flutter/ui/dashboard/dashboard_panels.dart';
 import 'package:invoiceninja_flutter/ui/dashboard/dashboard_screen_vm.dart';
 import 'package:invoiceninja_flutter/ui/invoice/invoice_list_item.dart';
+import 'package:invoiceninja_flutter/ui/payment/payment_list_item.dart';
 import 'package:invoiceninja_flutter/utils/icons.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:invoiceninja_flutter/utils/platforms.dart';
@@ -344,7 +345,46 @@ class _PaymentSidebar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container();
+    final localization = AppLocalization.of(context);
+    final store = StoreProvider.of<AppState>(context);
+    final state = store.state;
+    final recentPayments = memoizedRecentPayments(state.paymentState.map);
+    final selectedIds = state.uiState.selectedEntities[EntityType.payment];
+
+    return _DashboardSidebar(
+      entityType: EntityType.payment,
+      label1: localization.recentPayments +
+          (recentPayments.isNotEmpty ? ' (${recentPayments.length})' : ''),
+      list1: recentPayments.isEmpty
+          ? null
+          : ListView.separated(
+        shrinkWrap: true,
+        itemCount: recentPayments.length,
+        itemBuilder: (BuildContext context, int index) {
+          return PaymentListItem(
+            payment: recentPayments[index],
+            showCheckbox: false,
+          );
+        },
+        separatorBuilder: (context, index) => ListDivider(),
+      ),
+      label3: (selectedIds ?? <String>[]).isEmpty
+          ? null
+          : localization.selectedPayments + ' (${selectedIds.length})',
+      list3: (selectedIds ?? <String>[]).isEmpty
+          ? null
+          : ListView.separated(
+        shrinkWrap: true,
+        itemCount: selectedIds?.length,
+        itemBuilder: (BuildContext context, int index) {
+          return PaymentListItem(
+            payment: state.paymentState.get(selectedIds[index]),
+            showCheckbox: false,
+          );
+        },
+        separatorBuilder: (context, index) => ListDivider(),
+      ),
+    );
   }
 }
 
@@ -353,7 +393,62 @@ class _QuoteSidebar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container();
+    final localization = AppLocalization.of(context);
+    final store = StoreProvider.of<AppState>(context);
+    final state = store.state;
+    final upcomingInvoices = memoizedUpcomingInvoices(state.invoiceState.map);
+    final pastDueInvoices = memoizedPastDueInvoices(state.invoiceState.map);
+    final selectedIds = state.uiState.selectedEntities[EntityType.invoice];
+
+    return _DashboardSidebar(
+      entityType: EntityType.invoice,
+      label1: localization.upcomingInvoices +
+          (upcomingInvoices.isNotEmpty ? ' (${upcomingInvoices.length})' : ''),
+      list1: upcomingInvoices.isEmpty
+          ? null
+          : ListView.separated(
+        shrinkWrap: true,
+        itemCount: upcomingInvoices.length,
+        itemBuilder: (BuildContext context, int index) {
+          return InvoiceListItem(
+            invoice: upcomingInvoices[index],
+            showCheckbox: false,
+          );
+        },
+        separatorBuilder: (context, index) => ListDivider(),
+      ),
+      label2: localization.pastDueInvoices +
+          (pastDueInvoices.isNotEmpty ? ' (${pastDueInvoices.length})' : ''),
+      list2: pastDueInvoices.isEmpty
+          ? null
+          : ListView.separated(
+        shrinkWrap: true,
+        itemCount: pastDueInvoices.length,
+        itemBuilder: (BuildContext context, int index) {
+          return InvoiceListItem(
+            invoice: pastDueInvoices[index],
+            showCheckbox: false,
+          );
+        },
+        separatorBuilder: (context, index) => ListDivider(),
+      ),
+      label3: (selectedIds ?? <String>[]).isEmpty
+          ? null
+          : localization.selectedInvoices + ' (${selectedIds.length})',
+      list3: (selectedIds ?? <String>[]).isEmpty
+          ? null
+          : ListView.separated(
+        shrinkWrap: true,
+        itemCount: selectedIds?.length,
+        itemBuilder: (BuildContext context, int index) {
+          return InvoiceListItem(
+            invoice: state.invoiceState.get(selectedIds[index]),
+            showCheckbox: false,
+          );
+        },
+        separatorBuilder: (context, index) => ListDivider(),
+      ),
+    );
   }
 }
 
