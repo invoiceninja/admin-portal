@@ -79,11 +79,12 @@ class DashboardVM {
       onRefreshed: (context) => _handleRefresh(context),
       onSettingsChanged: (DashboardSettings settings) =>
           store.dispatch(UpdateDashboardSettings(settings: settings)),
-      onSelectionChanged: (entityType, entityIds) =>
-          store.dispatch(UpdateDashboardSelection(
-        entityType: entityType,
-        entityIds: entityIds,
-      )),
+      onSelectionChanged: (entityType, entityIds) {
+        store.dispatch(UpdateDashboardSelection(
+          entityType: entityType,
+          entityIds: entityIds,
+        ));
+      },
       onOffsetChanged: (offset) =>
           store.dispatch(UpdateDashboardSettings(offset: offset)),
       onCurrencyChanged: (currencyId) =>
@@ -106,7 +107,7 @@ class DashboardVM {
   final Function(int) onOffsetChanged;
   final Function(String) onCurrencyChanged;
 
-  /*
+/*
   @override
   bool operator ==(dynamic other) =>
       dashboardUIState == other.dashboardUIState &&
