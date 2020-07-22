@@ -407,9 +407,7 @@ class _PaymentableEditorState extends State<PaymentableEditor> {
               },
             ),
           ),
-        if (widget.entityType == EntityType.credit &&
-            creditList.isNotEmpty &&
-            (payment.clientId ?? '').isNotEmpty)
+        if (widget.entityType == EntityType.credit)
           Expanded(
             child: EntityDropdown(
               key: Key('__credit_${payment.clientId}__'),
