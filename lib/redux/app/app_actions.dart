@@ -1143,7 +1143,8 @@ void handleEntitiesActions(
 void selectEntity({
   @required BuildContext context,
   @required BaseEntity entity,
-  bool longPress,
+  bool longPress = false,
+  bool forceView = false,
 }) {
   final store = StoreProvider.of<AppState>(context);
   final state = store.state;
@@ -1161,11 +1162,12 @@ void selectEntity({
         context: context,
       );
     }
-  } else if (isInMultiselect) {
+  } else if (isInMultiselect && forceView != true) {
     handleEntityAction(context, entity, EntityAction.toggleMultiselect);
   } else if (isDesktop(context) && state.uiState.isEditing) {
     viewEntity(context: context, entity: entity);
   } else if (isDesktop(context) &&
+      !forceView &&
       state.uiState.isViewing &&
       !entity.entityType.isSetting &&
       (state.getUIState(entity.entityType).selectedId == entity.id &&

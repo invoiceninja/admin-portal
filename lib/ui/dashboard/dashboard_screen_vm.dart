@@ -45,7 +45,9 @@ class DashboardVM {
     @required this.filter,
     @required this.filteredList,
     @required this.onRefreshed,
+    @required this.onEntityTypeChanged,
     @required this.onSettingsChanged,
+    @required this.onSelectionChanged,
     @required this.onOffsetChanged,
     @required this.onCurrencyChanged,
   });
@@ -66,18 +68,26 @@ class DashboardVM {
 
     final state = store.state;
     final filter = state.uiState.filter;
+    final settings = state.dashboardUIState.settings;
 
     return DashboardVM(
       state: state,
       dashboardUIState: state.dashboardUIState,
       currencyMap: state.staticState.currencyMap,
       isLoading: state.isLoading,
-      isNextEnabled:
-          DateTime.parse(state.dashboardUIState.endDate(state.company))
-              .isBefore(DateTime.now()),
+      isNextEnabled: DateTime.parse(settings.endDate(state.company))
+          .isBefore(DateTime.now()),
       onRefreshed: (context) => _handleRefresh(context),
+      onEntityTypeChanged: (entityType) =>
+          store.dispatch(UpdateDashboardEntityType(entityType: entityType)),
       onSettingsChanged: (DashboardSettings settings) =>
           store.dispatch(UpdateDashboardSettings(settings: settings)),
+      onSelectionChanged: (entityType, entityIds) {
+        store.dispatch(UpdateDashboardSelection(
+          entityType: entityType,
+          entityIds: entityIds,
+        ));
+      },
       onOffsetChanged: (offset) =>
           store.dispatch(UpdateDashboardSettings(offset: offset)),
       onCurrencyChanged: (currencyId) =>
@@ -96,13 +106,14 @@ class DashboardVM {
   final bool isNextEnabled;
   final Function(BuildContext) onRefreshed;
   final Function(DashboardSettings) onSettingsChanged;
+  final Function(EntityType, List<String>) onSelectionChanged;
+  final Function(EntityType) onEntityTypeChanged;
   final Function(int) onOffsetChanged;
   final Function(String) onCurrencyChanged;
 
 /*
   @override
   bool operator ==(dynamic other) =>
-      dashboardState == other.dashboardState &&
       dashboardUIState == other.dashboardUIState &&
       currencyMap == other.currencyMap &&
       isLoading == other.isLoading &&
@@ -111,7 +122,6 @@ class DashboardVM {
 
   @override
   int get hashCode =>
-      dashboardState.hashCode ^
       dashboardUIState.hashCode ^
       currencyMap.hashCode ^
       isLoading.hashCode ^

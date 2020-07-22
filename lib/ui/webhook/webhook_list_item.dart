@@ -8,11 +8,11 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/ui/app/dismissible_entity.dart';
+import 'package:invoiceninja_flutter/utils/localization.dart';
 
 class WebhookListItem extends StatelessWidget {
   const WebhookListItem({
     @required this.user,
-    @required this.onEntityAction,
     @required this.webhook,
     @required this.filter,
     this.onTap,
@@ -22,7 +22,6 @@ class WebhookListItem extends StatelessWidget {
   });
 
   final UserEntity user;
-  final Function(EntityAction) onEntityAction;
   final GestureTapCallback onTap;
   final GestureTapCallback onLongPress;
   final WebhookEntity webhook;
@@ -30,10 +29,9 @@ class WebhookListItem extends StatelessWidget {
   final Function(bool) onCheckboxChanged;
   final bool isChecked;
 
-  static final webhookItemKey = (int id) => Key('__webhook_item_${id}__');
-
   @override
   Widget build(BuildContext context) {
+    final localization = AppLocalization.of(context);
     final store = StoreProvider.of<AppState>(context);
     final state = store.state;
     final uiState = state.uiState;
@@ -54,7 +52,6 @@ class WebhookListItem extends StatelessWidget {
           (uiState.isEditing
               ? webhookUIState.editing.id
               : webhookUIState.selectedId),
-      onEntityAction: onEntityAction,
       child: ListTile(
         onTap: () => onTap != null
             ? onTap()
@@ -91,6 +88,7 @@ class WebhookListItem extends StatelessWidget {
         subtitle: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
+            Text(localization.lookup(webhook.eventType)),
             subtitle != null && subtitle.isNotEmpty
                 ? Text(
                     subtitle,

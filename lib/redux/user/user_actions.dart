@@ -6,6 +6,7 @@ import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:invoiceninja_flutter/data/models/user_model.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
+import 'package:invoiceninja_flutter/ui/app/entities/entity_actions_dialog.dart';
 import 'package:invoiceninja_flutter/utils/dialogs.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:invoiceninja_flutter/utils/completers.dart';
@@ -272,6 +273,7 @@ void handleUserAction(
   }
 
   final store = StoreProvider.of<AppState>(context);
+  final state = store.state;
   final localization = AppLocalization.of(context);
   final user = users.first as UserEntity;
   final userIds = users.map((user) => user.id).toList();
@@ -279,6 +281,57 @@ void handleUserAction(
   switch (action) {
     case EntityAction.edit:
       editEntity(context: context, entity: user);
+      break;
+    case EntityAction.newInvoice:
+      createEntity(
+          context: context,
+          entity: InvoiceEntity(state: state)
+              .rebuild((b) => b.assignedUserId = user.id),
+          filterEntity: user);
+      break;
+    case EntityAction.newQuote:
+      createEntity(
+        context: context,
+        entity: InvoiceEntity(
+          state: state,
+          entityType: EntityType.quote,
+        ).rebuild((b) => b.assignedUserId = user.id),
+        filterEntity: user,
+      );
+      break;
+    case EntityAction.newCredit:
+      createEntity(
+        context: context,
+        entity: InvoiceEntity(
+          state: state,
+          entityType: EntityType.credit,
+        ).rebuild((b) => b.assignedUserId = user.id),
+        filterEntity: user,
+      );
+      break;
+    case EntityAction.newExpense:
+      createEntity(
+        context: context,
+        entity: ExpenseEntity(state: state)
+            .rebuild((b) => b.assignedUserId = user.id),
+        filterEntity: user,
+      );
+      break;
+    case EntityAction.newPayment:
+      createEntity(
+        context: context,
+        entity: PaymentEntity(state: state)
+            .rebuild((b) => b.assignedUserId = user.id),
+        filterEntity: user,
+      );
+      break;
+    case EntityAction.newProject:
+      createEntity(
+        context: context,
+        entity: ProjectEntity(state: state)
+            .rebuild((b) => b.assignedUserId = user.id),
+        filterEntity: user,
+      );
       break;
     case EntityAction.restore:
       final dispatch = ([String password]) => store.dispatch(RestoreUserRequest(
@@ -347,6 +400,13 @@ void handleUserAction(
         }
       }
       break;
+    case EntityAction.more:
+      showEntityActionsDialog(
+        entities: [user],
+        context: context,
+      );
+      break;
+
   }
 }
 

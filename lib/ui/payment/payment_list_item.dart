@@ -11,29 +11,18 @@ import 'package:flutter/material.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/ui/app/dismissible_entity.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
+import 'package:invoiceninja_flutter/utils/platforms.dart';
 
 class PaymentListItem extends StatelessWidget {
   const PaymentListItem({
-    @required this.user,
-    @required this.onEntityAction,
     @required this.payment,
-    @required this.filter,
-    this.onTap,
-    this.onLongPress,
-    this.onCheckboxChanged,
-    this.isChecked = false,
+    this.filter,
+    this.showCheckbox = true,
   });
 
-  final UserEntity user;
-  final Function(EntityAction) onEntityAction;
-  final GestureTapCallback onTap;
-  final GestureTapCallback onLongPress;
   final PaymentEntity payment;
   final String filter;
-  final Function(bool) onCheckboxChanged;
-  final bool isChecked;
-
-  static final paymentItemKey = (int id) => Key('__payment_${id}__');
+  final bool showCheckbox;
 
   @override
   Widget build(BuildContext context) {
@@ -41,8 +30,8 @@ class PaymentListItem extends StatelessWidget {
     final uiState = state.uiState;
     final paymentUIState = uiState.paymentUIState;
     final listUIState = paymentUIState.listUIState;
-    final isInMultiselect = listUIState.isInMultiselect();
-    final showCheckbox = onCheckboxChanged != null || isInMultiselect;
+    final isInMultiselect = showCheckbox && listUIState.isInMultiselect();
+    final isChecked = isInMultiselect && listUIState.isSelected(payment.id);
     final textStyle = TextStyle(fontSize: 16);
     final client = state.clientState.map[payment.clientId];
     final localization = AppLocalization.of(context);
@@ -65,24 +54,21 @@ class PaymentListItem extends StatelessWidget {
     }
 
     return DismissibleEntity(
-      isSelected: payment.id ==
-          (uiState.isEditing
-              ? paymentUIState.editing.id
-              : paymentUIState.selectedId),
+      isSelected: isDesktop(context) &&
+          payment.id ==
+              (uiState.isEditing
+                  ? paymentUIState.editing.id
+                  : paymentUIState.selectedId),
+      showCheckbox: showCheckbox,
       userCompany: state.userCompany,
       entity: payment,
-      onEntityAction: onEntityAction,
       child: LayoutBuilder(
           builder: (BuildContext context, BoxConstraints constraints) {
         return constraints.maxWidth > kTableListWidthCutoff
             ? InkWell(
-                onTap: () => onTap != null
-                    ? onTap()
-                    : selectEntity(entity: payment, context: context),
-                onLongPress: () => onLongPress != null
-                    ? onLongPress()
-                    : selectEntity(
-                        entity: payment, context: context, longPress: true),
+                onTap: () => selectEntity(entity: payment, context: context),
+                onLongPress: () => selectEntity(
+                    entity: payment, context: context, longPress: true),
                 child: Padding(
                   padding: const EdgeInsets.only(
                     left: 12,
@@ -94,15 +80,14 @@ class PaymentListItem extends StatelessWidget {
                     children: <Widget>[
                       Padding(
                           padding: const EdgeInsets.only(right: 16),
-                          child: showCheckbox
+                          child: isInMultiselect
                               ? IgnorePointer(
                                   ignoring: listUIState.isInMultiselect(),
                                   child: Checkbox(
                                     value: isChecked,
                                     materialTapTargetSize:
                                         MaterialTapTargetSize.shrinkWrap,
-                                    onChanged: (value) =>
-                                        onCheckboxChanged(value),
+                                    onChanged: (value) => null,
                                     activeColor: Theme.of(context).accentColor,
                                   ),
                                 )
@@ -166,21 +151,17 @@ class PaymentListItem extends StatelessWidget {
                 ),
               )
             : ListTile(
-                onTap: () => onTap != null
-                    ? onTap()
-                    : selectEntity(entity: payment, context: context),
-                onLongPress: () => onLongPress != null
-                    ? onLongPress()
-                    : selectEntity(
-                        entity: payment, context: context, longPress: true),
-                leading: showCheckbox
+                onTap: () => selectEntity(entity: payment, context: context),
+                onLongPress: () => selectEntity(
+                    entity: payment, context: context, longPress: true),
+                leading: isInMultiselect
                     ? IgnorePointer(
                         ignoring: listUIState.isInMultiselect(),
                         child: Checkbox(
                           value: isChecked,
                           materialTapTargetSize:
                               MaterialTapTargetSize.shrinkWrap,
-                          onChanged: (value) => onCheckboxChanged(value),
+                          onChanged: (value) => null,
                           activeColor: Theme.of(context).accentColor,
                         ),
                       )

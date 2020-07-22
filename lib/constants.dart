@@ -70,6 +70,7 @@ const double kMobileDialogPadding = 12;
 const double kDrawerWidth = 300;
 const double kTableColumnGap = 20;
 const double kTopBottomBarHeight = 50;
+const double kDashboardPanelHeight = 501; // TODO remove this
 
 const double kTabletLayoutWidth = 1100;
 const double kTabletDialogPadding = 250;
@@ -107,7 +108,7 @@ const int kMillisecondsToRefreshData = 1000 * 60 * 15; // 15 minutes
 const int kUpdatedAtBufferSeconds = 600;
 const int kMillisecondsToRefreshActivities = 1000 * 60 * 60 * 24; // 1 day
 const int kMillisecondsToRefreshStaticData = 1000 * 60 * 60 * 24; // 1 day
-const int kMillisecondsToReenterPassword = 1000 * 60 * 10; // 10 minutes
+const int kMillisecondsToReenterPassword = 1000 * 60 * 30; // 30 minutes
 const int kMillisecondsToDebounceStateSave = 1000 * 2; // 2 seconds
 
 const String kLanguageEnglish = '1';
@@ -376,10 +377,6 @@ const String kReportTask = 'task';
 const String kReportTaxRate = 'taxRate';
 const String kReportQuote = 'quote';
 
-const String LockInvoicesOff = 'off';
-const String LockInvoicesSent = 'when_sent';
-const String LockInvoicesPaid = 'when_paid';
-
 const String kPdfFieldsClientDetails = 'client_details';
 const String kPdfFieldsCompanyDetails = 'company_details';
 const String kPdfFieldsCompanyAddress = 'company_address';
@@ -441,6 +438,8 @@ const int kModuleRecurringExpenses = 512;
 const int kModuleRecurringTasks = 1024;
 const int kModuleRecurringQuotes = 2048;
 const int kModuleInvoices = 4096;
+const int kModuleProformaInvoices = 8192;
+const int kModulePurchaseOrders = 16384;
 
 Color kColorRed = convertHexStringToColor('#8D3E3F');
 Color kColorGreen = convertHexStringToColor('#407535');
@@ -463,21 +462,21 @@ const Map<int, String> kModules = {
 
 class InvoiceStatusColors {
   static var colors = {
-    kInvoiceStatusDraft: Colors.black,
+    kInvoiceStatusDraft: convertHexStringToColor('#444444'),
     kInvoiceStatusSent: convertHexStringToColor('#505F73'),
     //kInvoiceStatusViewed: Colors.orange,
     //kInvoiceStatusApproved: Colors.green,
     kInvoiceStatusPartial: Colors.deepPurple,
     kInvoiceStatusPaid: kColorGreen,
     kInvoiceStatusPastDue: kColorRed,
-    kInvoiceStatusCancelled: convertHexStringToColor('#444444'),
-    kInvoiceStatusReversed: convertHexStringToColor('#444444'),
+    kInvoiceStatusCancelled: Colors.black,
+    kInvoiceStatusReversed: Colors.black,
   };
 }
 
 class CreditStatusColors {
   static var colors = {
-    kCreditStatusDraft: Colors.black,
+    kCreditStatusDraft: convertHexStringToColor('#444444'),
     kCreditStatusSent: convertHexStringToColor('#505F73'),
     //kInvoiceStatusViewed: Colors.orange,
     //kInvoiceStatusApproved: Colors.green,
@@ -488,7 +487,7 @@ class CreditStatusColors {
 
 class QuoteStatusColors {
   static var colors = {
-    kQuoteStatusDraft: Colors.black,
+    kQuoteStatusDraft: convertHexStringToColor('#444444'),
     kQuoteStatusSent: convertHexStringToColor('#505F73'),
     kQuoteStatusApproved: Colors.deepPurple,
     kQuoteStatusConverted: kColorGreen,

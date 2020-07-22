@@ -1,7 +1,6 @@
 import 'dart:async';
 import 'package:invoiceninja_flutter/data/models/tax_rate_model.dart';
 import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
-import 'package:invoiceninja_flutter/ui/app/entities/entity_actions_dialog.dart';
 import 'package:invoiceninja_flutter/ui/app/tables/entity_list.dart';
 import 'package:invoiceninja_flutter/ui/tax_rate/tax_rate_list_item.dart';
 import 'package:redux/redux.dart';
@@ -43,22 +42,10 @@ class TaxRateListBuilder extends StatelessWidget {
               final listState = state.getListState(EntityType.taxRate);
               final isInMultiselect = listState.isInMultiselect();
 
-              void showDialog() => showEntityActionsDialog(
-                    entities: [taxRate],
-                    context: context,
-                  );
-
               return TaxRateListItem(
                 user: viewModel.userCompany.user,
                 filter: viewModel.filter,
                 taxRate: taxRate,
-                onEntityAction: (EntityAction action) {
-                  if (action == EntityAction.more) {
-                    showDialog();
-                  } else {
-                    handleTaxRateAction(context, [taxRate], action);
-                  }
-                },
                 isChecked: isInMultiselect && listState.isSelected(taxRate.id),
               );
             });

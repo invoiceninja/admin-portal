@@ -3,7 +3,6 @@ import 'package:invoiceninja_flutter/constants.dart';
 import 'package:invoiceninja_flutter/data/models/entities.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/data/models/quote_model.dart';
-import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/redux/payment/payment_selectors.dart';
 import 'package:invoiceninja_flutter/ui/app/FieldGrid.dart';
@@ -91,7 +90,12 @@ class InvoiceOverview extends StatelessWidget {
     }
 
     final Map<String, String> fields = {
-      InvoiceFields.invoiceDate: formatDate(invoice.date, context),
+      if (invoice.isQuote)
+        QuoteFields.date: formatDate(invoice.date, context)
+      else if (invoice.isCredit)
+        CreditFields.date: formatDate(invoice.date, context)
+      else
+        InvoiceFields.date: formatDate(invoice.date, context),
       dueDateField: formatDate(invoice.dueDate, context),
       InvoiceFields.partial: formatNumber(invoice.partial, context,
           clientId: invoice.clientId, zeroIsNull: true),
@@ -124,9 +128,6 @@ class InvoiceOverview extends StatelessWidget {
       EntityListTile(
         isFilter: isFilter,
         entity: client,
-        onTap: () => inspectEntity(context: context, entity: client),
-        onLongPress: () =>
-            inspectEntity(context: context, entity: client, longPress: true),
       ),
     );
 
@@ -135,9 +136,6 @@ class InvoiceOverview extends StatelessWidget {
       widgets.add(EntityListTile(
         isFilter: isFilter,
         entity: assignedUser,
-        onTap: () => inspectEntity(context: context, entity: assignedUser),
-        onLongPress: () => inspectEntity(
-            context: context, entity: assignedUser, longPress: true),
       ));
     }
 
@@ -146,9 +144,8 @@ class InvoiceOverview extends StatelessWidget {
           InvoiceEntity(id: invoice.invoiceId);
       if ((invoice.invoiceId ?? '').isNotEmpty) {
         widgets.add(EntityListTile(
-          isFilter: null,
+          isFilter: isFilter,
           entity: relatedInvoice,
-          onTap: () => viewEntity(context: context, entity: relatedInvoice),
         ));
       }
     }
@@ -159,9 +156,6 @@ class InvoiceOverview extends StatelessWidget {
           EntityListTile(
             isFilter: isFilter,
             entity: payment,
-            onTap: () => inspectEntity(context: context, entity: payment),
-            onLongPress: () => inspectEntity(
-                context: context, entity: payment, longPress: true),
             subtitle:
                 formatNumber(payment.amount, context, clientId: client.id) +
                     ' • ' +
@@ -181,9 +175,6 @@ class InvoiceOverview extends StatelessWidget {
           EntityListTile(
             isFilter: isFilter,
             entity: credit,
-            onTap: () => inspectEntity(context: context, entity: credit),
-            onLongPress: () => inspectEntity(
-                context: context, entity: credit, longPress: true),
             subtitle:
                 formatNumber(credit.amount, context, clientId: client.id) +
                     ' • ' +

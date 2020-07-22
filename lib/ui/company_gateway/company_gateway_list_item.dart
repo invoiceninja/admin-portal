@@ -14,7 +14,6 @@ class CompanyGatewayListItem extends StatelessWidget {
   const CompanyGatewayListItem({
     Key key,
     @required this.user,
-    @required this.onEntityAction,
     @required this.onTap,
     @required this.companyGateway,
     @required this.filter,
@@ -25,7 +24,6 @@ class CompanyGatewayListItem extends StatelessWidget {
   }) : super(key: key);
 
   final UserEntity user;
-  final Function(EntityAction) onEntityAction;
   final GestureTapCallback onTap;
   final GestureTapCallback onLongPress;
   final CompanyGatewayEntity companyGateway;
@@ -54,7 +52,6 @@ class CompanyGatewayListItem extends StatelessWidget {
       userCompany: state.userCompany,
       entity: companyGateway,
       isSelected: false,
-      onEntityAction: onEntityAction,
       child: ListTile(
         onTap: () => onTap != null
             ? onTap()

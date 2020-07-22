@@ -83,8 +83,7 @@ class UserViewVM {
         switch (entityType) {
           case EntityType.invoice:
             if (longPress && user.isActive) {
-              createEntity(
-                  context: context, entity: InvoiceEntity(state: state));
+              handleUserAction(context, [user], EntityAction.newInvoice);
             } else {
               viewEntitiesByType(
                   context: context,
@@ -94,10 +93,7 @@ class UserViewVM {
             break;
           case EntityType.quote:
             if (longPress && user.isActive) {
-              createEntity(
-                  context: context,
-                  entity: InvoiceEntity(
-                      state: state, entityType: EntityType.quote));
+              handleUserAction(context, [user], EntityAction.newQuote);
             } else {
               viewEntitiesByType(
                   context: context,
@@ -107,10 +103,7 @@ class UserViewVM {
             break;
           case EntityType.credit:
             if (longPress && user.isActive) {
-              createEntity(
-                  context: context,
-                  entity: InvoiceEntity(
-                      state: state, entityType: EntityType.credit));
+              handleUserAction(context, [user], EntityAction.newCredit);
             } else {
               viewEntitiesByType(
                   context: context,
@@ -120,8 +113,7 @@ class UserViewVM {
             break;
           case EntityType.payment:
             if (longPress && user.isActive) {
-              createEntity(
-                  context: context, entity: PaymentEntity(state: state));
+              handleUserAction(context, [user], EntityAction.newPayment);
             } else {
               viewEntitiesByType(
                   context: context,
@@ -131,7 +123,7 @@ class UserViewVM {
             break;
           case EntityType.project:
             if (longPress && user.isActive) {
-              createEntity(context: context, entity: ProjectEntity());
+              handleUserAction(context, [user], EntityAction.newProject);
             } else {
               viewEntitiesByType(
                   context: context,
@@ -141,7 +133,7 @@ class UserViewVM {
             break;
           case EntityType.task:
             if (longPress && user.isActive) {
-              createEntity(context: context, entity: TaskEntity(state: state));
+              handleUserAction(context, [user], EntityAction.newTask);
             } else {
               viewEntitiesByType(
                   context: context,
@@ -151,8 +143,7 @@ class UserViewVM {
             break;
           case EntityType.expense:
             if (longPress && user.isActive) {
-              createEntityByType(
-                  context: context, entityType: EntityType.expense);
+              handleUserAction(context, [user], EntityAction.newExpense);
             } else {
               viewEntitiesByType(
                   context: context,

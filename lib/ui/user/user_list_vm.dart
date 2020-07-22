@@ -48,13 +48,6 @@ class UserListBuilder extends StatelessWidget {
               return UserListItem(
                 user: user,
                 filter: viewModel.filter,
-                onEntityAction: (EntityAction action) {
-                  if (action == EntityAction.more) {
-                    showDialog();
-                  } else {
-                    handleUserAction(context, [user], action);
-                  }
-                },
                 onLongPress: () => showDialog(),
               );
             });

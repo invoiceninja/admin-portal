@@ -599,11 +599,11 @@ abstract class AppState implements Built<AppState, AppStateBuilder> {
 
   @override
   String toString() {
-    final companyUpdated =
-        userCompanyState.lastUpdated == null || userCompanyState.lastUpdated == 0
-            ? 'Blank'
-            : timeago.format(convertTimestampToDate(
-                (userCompanyState.lastUpdated / 1000).round()));
+    final companyUpdated = userCompanyState.lastUpdated == null ||
+            userCompanyState.lastUpdated == 0
+        ? 'Blank'
+        : timeago.format(convertTimestampToDate(
+            (userCompanyState.lastUpdated / 1000).round()));
 
     final staticUpdated =
         staticState.updatedAt == null || staticState.updatedAt == 0
@@ -616,7 +616,9 @@ abstract class AppState implements Built<AppState, AppStateBuilder> {
     //return 'Names: ${userCompanyStates.map((state) => state.company.id).join(',')}';
     //return 'Client Count: ${userCompanyState.clientState.list.length}, Last Updated: ${userCompanyState.lastUpdated}';
     //return 'Token: ${credentials.token} - ${userCompanyStates.map((state) => state?.token?.token ?? '').where((name) => name.isNotEmpty).join(',')}';
-    return '\n\nURL: ${authState.url}\nRoute: ${uiState.currentRoute}\nPrev: ${uiState.previousRoute}\nCompany: $companyUpdated${userCompanyState.isStale ? ' [S]' : ''}\nStatic: $staticUpdated${staticState.isStale ? ' [S]' : ''}\n';
+    //return 'Payment Terms: ${company.settings.defaultPaymentTerms}';
+    return 'Dashboard: ${uiState.dashboardUIState.selectedEntityType}';
+    return '\n\nURL: ${authState.url}\nRoute: ${uiState.currentRoute}\nPrev: ${uiState.previousRoute}\nis Large: ${(company?.isLarge ?? false) ? 'Yes' : 'No'}\nCompany: $companyUpdated${userCompanyState.isStale ? ' [S]' : ''}\nStatic: $staticUpdated${staticState.isStale ? ' [S]' : ''}\n';
   }
 }
 

@@ -12,7 +12,6 @@ import 'package:invoiceninja_flutter/utils/formatting.dart';
 class GroupListItem extends StatelessWidget {
   const GroupListItem({
     @required this.user,
-    @required this.onEntityAction,
     @required this.group,
     @required this.filter,
     this.onTap,
@@ -22,15 +21,12 @@ class GroupListItem extends StatelessWidget {
   });
 
   final UserEntity user;
-  final Function(EntityAction) onEntityAction;
   final GestureTapCallback onTap;
   final GestureTapCallback onLongPress;
   final GroupEntity group;
   final String filter;
   final Function(bool) onCheckboxChanged;
   final bool isChecked;
-
-  static final groupItemKey = (int id) => Key('__group_item_${id}__');
 
   @override
   Widget build(BuildContext context) {
@@ -50,7 +46,6 @@ class GroupListItem extends StatelessWidget {
       userCompany: state.userCompany,
       entity: group,
       isSelected: false,
-      onEntityAction: onEntityAction,
       child: ListTile(
         onTap: () => onTap != null
             ? onTap()

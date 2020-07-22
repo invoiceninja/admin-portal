@@ -11,7 +11,6 @@ import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/redux/task/task_actions.dart';
 import 'package:invoiceninja_flutter/redux/task/task_selectors.dart';
 import 'package:invoiceninja_flutter/redux/ui/list_ui_state.dart';
-import 'package:invoiceninja_flutter/ui/app/entities/entity_actions_dialog.dart';
 import 'package:invoiceninja_flutter/ui/app/tables/entity_list.dart';
 import 'package:invoiceninja_flutter/ui/task/task_list_item.dart';
 import 'package:invoiceninja_flutter/ui/task/task_presenter.dart';
@@ -40,17 +39,9 @@ class TaskListBuilder extends StatelessWidget {
             itemBuilder: (BuildContext context, index) {
               final taskId = viewModel.taskList[index];
               final task = viewModel.taskMap[taskId];
-              final client =
-                  viewModel.clientMap[task.clientId] ?? ClientEntity();
               final state = viewModel.state;
               final listUIState = state.getListState(EntityType.client);
               final isInMultiselect = listUIState.isInMultiselect();
-
-              void showDialog() => showEntityActionsDialog(
-                    entities: [task],
-                    context: context,
-                    client: client,
-                  );
 
               return TaskListItem(
                 userCompany: viewModel.state.userCompany,
@@ -58,13 +49,6 @@ class TaskListBuilder extends StatelessWidget {
                 task: task,
                 client: viewModel.clientMap[task.clientId] ?? ClientEntity(),
                 project: viewModel.state.projectState.map[task.projectId],
-                onEntityAction: (EntityAction action) {
-                  if (action == EntityAction.more) {
-                    showDialog();
-                  } else {
-                    handleTaskAction(context, [task], action);
-                  }
-                },
                 isChecked: isInMultiselect && listUIState.isSelected(task.id),
               );
             });

@@ -293,6 +293,13 @@ void handleStubAction(
         }
       }
       break;
+      case EntityAction.more:
+        showEntityActionsDialog(
+          entities: [stub],
+          context: context,
+          client: state.clientState.get(stub.clientId),
+        );
+        break;
   }
 }
 

@@ -10,7 +10,6 @@ import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/redux/product/product_actions.dart';
 import 'package:invoiceninja_flutter/redux/product/product_selectors.dart';
-import 'package:invoiceninja_flutter/ui/app/entities/entity_actions_dialog.dart';
 import 'package:invoiceninja_flutter/ui/app/tables/entity_list.dart';
 import 'package:invoiceninja_flutter/ui/product/product_list_item.dart';
 import 'package:invoiceninja_flutter/ui/product/product_presenter.dart';
@@ -45,16 +44,6 @@ class ProductListBuilder extends StatelessWidget {
                 userCompany: viewModel.state.userCompany,
                 filter: viewModel.filter,
                 product: product,
-                onEntityAction: (EntityAction action) {
-                  if (action == EntityAction.more) {
-                    showEntityActionsDialog(
-                      entities: [product],
-                      context: context,
-                    );
-                  } else {
-                    handleProductAction(context, [product], action);
-                  }
-                },
                 isChecked: isInMultiselect && listState.isSelected(product.id),
               );
             });

@@ -9,6 +9,7 @@ import 'package:flutter/material.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/ui/app/dismissible_entity.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
+import 'package:invoiceninja_flutter/utils/platforms.dart';
 
 class ExpenseListItem extends StatelessWidget {
   const ExpenseListItem({
@@ -17,7 +18,6 @@ class ExpenseListItem extends StatelessWidget {
     @required this.client,
     @required this.vendor,
     @required this.filter,
-    this.onEntityAction,
     this.onTap,
     this.onLongPress,
     this.onCheckboxChanged,
@@ -25,7 +25,6 @@ class ExpenseListItem extends StatelessWidget {
   });
 
   final UserCompanyEntity userCompany;
-  final Function(EntityAction) onEntityAction;
   final GestureTapCallback onTap;
   final GestureTapCallback onLongPress;
   final ValueChanged<bool> onCheckboxChanged;
@@ -34,8 +33,6 @@ class ExpenseListItem extends StatelessWidget {
   final bool isChecked;
   final VendorEntity vendor;
   final String filter;
-
-  static final expenseItemKey = (int id) => Key('__expense_item_${id}__');
 
   @override
   Widget build(BuildContext context) {
@@ -82,13 +79,12 @@ class ExpenseListItem extends StatelessWidget {
     final showCheckbox = onCheckboxChanged != null || isInMultiselect;
 
     return DismissibleEntity(
-      isSelected: expense.id ==
+      isSelected: isDesktop(context) && expense.id ==
           (uiState.isEditing
               ? expenseUIState.editing.id
               : expenseUIState.selectedId),
       userCompany: userCompany,
       entity: expense,
-      onEntityAction: onEntityAction,
       child: ListTile(
         onTap: () => onTap != null
             ? onTap()

@@ -9,8 +9,6 @@ import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/redux/invoice/invoice_actions.dart';
 import 'package:invoiceninja_flutter/redux/invoice/invoice_selectors.dart';
-import 'package:invoiceninja_flutter/redux/ui/list_ui_state.dart';
-import 'package:invoiceninja_flutter/ui/app/entities/entity_actions_dialog.dart';
 import 'package:invoiceninja_flutter/ui/app/tables/entity_list.dart';
 import 'package:invoiceninja_flutter/ui/invoice/invoice_list_item.dart';
 import 'package:invoiceninja_flutter/ui/invoice/invoice_presenter.dart';
@@ -28,7 +26,6 @@ class InvoiceListBuilder extends StatelessWidget {
     return StoreConnector<AppState, InvoiceListVM>(
       converter: InvoiceListVM.fromStore,
       builder: (context, viewModel) {
-        final state = viewModel.state;
         return EntityList(
             entityType: EntityType.invoice,
             presenter: InvoicePresenter(),
@@ -42,31 +39,10 @@ class InvoiceListBuilder extends StatelessWidget {
             itemBuilder: (BuildContext context, index) {
               final invoiceId = viewModel.invoiceList[index];
               final invoice = viewModel.invoiceMap[invoiceId];
-              final client =
-                  viewModel.clientMap[invoice.clientId] ?? ClientEntity();
-              final listUIState = state.getListState(EntityType.invoice);
-              final isInMultiselect = listUIState.isInMultiselect();
-
-              void showDialog() => showEntityActionsDialog(
-                    entities: [invoice],
-                    context: context,
-                    client: client,
-                  );
 
               return InvoiceListItem(
-                user: viewModel.user,
                 filter: viewModel.filter,
                 invoice: invoice,
-                client: viewModel.clientMap[invoice.clientId] ?? ClientEntity(),
-                onEntityAction: (EntityAction action) {
-                  if (action == EntityAction.more) {
-                    showDialog();
-                  } else {
-                    handleInvoiceAction(context, [invoice], action);
-                  }
-                },
-                isChecked:
-                    isInMultiselect && listUIState.isSelected(invoice.id),
               );
             });
       },
@@ -78,8 +54,6 @@ class EntityListVM {
   EntityListVM({
     @required this.state,
     @required this.entityType,
-    @required this.user,
-    @required this.listState,
     @required this.invoiceList,
     @required this.invoiceMap,
     @required this.clientMap,
@@ -95,8 +69,6 @@ class EntityListVM {
 
   final AppState state;
   final EntityType entityType;
-  final UserEntity user;
-  final ListUIState listState;
   final List<String> invoiceList;
   final BuiltMap<String, InvoiceEntity> invoiceMap;
   final BuiltMap<String, ClientEntity> clientMap;
@@ -113,8 +85,6 @@ class EntityListVM {
 class InvoiceListVM extends EntityListVM {
   InvoiceListVM({
     AppState state,
-    UserEntity user,
-    ListUIState listState,
     List<String> invoiceList,
     BuiltMap<String, InvoiceEntity> invoiceMap,
     BuiltMap<String, ClientEntity> clientMap,
@@ -130,8 +100,6 @@ class InvoiceListVM extends EntityListVM {
     Function(String) onSortColumn,
   }) : super(
           state: state,
-          user: user,
-          listState: listState,
           invoiceList: invoiceList,
           invoiceMap: invoiceMap,
           clientMap: clientMap,
@@ -161,8 +129,6 @@ class InvoiceListVM extends EntityListVM {
 
     return InvoiceListVM(
       state: state,
-      user: state.user,
-      listState: state.invoiceListState,
       invoiceList: memoizedFilteredInvoiceList(
           state.invoiceState.map,
           state.invoiceState.list,

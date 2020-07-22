@@ -51,6 +51,9 @@ Future<Event> getSentryEvent(
     environment: state?.environment ?? 'Unknown',
     stackTrace: stackTrace,
     exception: exception,
+    extra: <String, dynamic>{
+      'server_version': state?.account?.currentVersion ?? 'Unknown',
+    },
     contexts: Contexts(
         operatingSystem: os,
         device: device,

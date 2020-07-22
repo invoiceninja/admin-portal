@@ -92,7 +92,7 @@ class ViewScaffold extends StatelessWidget {
                         })
                       : Container(),
                   ViewActionMenuButton(
-                    isSaving: state.isSaving,
+                    isSaving: state.isSaving && !isFilter,
                     entity: entity,
                     onSelected: (context, action) => handleEntityAction(
                         context, entity, action,

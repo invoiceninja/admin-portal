@@ -1,6 +1,5 @@
 import 'dart:async';
 import 'package:invoiceninja_flutter/data/models/token_model.dart';
-import 'package:invoiceninja_flutter/ui/app/entities/entity_actions_dialog.dart';
 import 'package:invoiceninja_flutter/ui/app/tables/entity_list.dart';
 import 'package:invoiceninja_flutter/ui/token/token_list_item.dart';
 import 'package:invoiceninja_flutter/ui/token/token_presenter.dart';
@@ -48,16 +47,6 @@ class TokenListBuilder extends StatelessWidget {
                 user: viewModel.state.user,
                 filter: viewModel.filter,
                 token: token,
-                onEntityAction: (EntityAction action) {
-                  if (action == EntityAction.more) {
-                    showEntityActionsDialog(
-                      entities: [token],
-                      context: context,
-                    );
-                  } else {
-                    handleTokenAction(context, [token], action);
-                  }
-                },
                 isChecked: isInMultiselect && listState.isSelected(token.id),
               );
             });

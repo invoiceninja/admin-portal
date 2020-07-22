@@ -7,6 +7,7 @@ import 'package:flutter_redux/flutter_redux.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
+import 'package:invoiceninja_flutter/ui/app/entities/entity_actions_dialog.dart';
 import 'package:invoiceninja_flutter/utils/completers.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:invoiceninja_flutter/utils/pdf.dart';
@@ -350,7 +351,7 @@ class FilterQuotesByCustom4 implements PersistUI {
   final String value;
 }
 
-class ConvertQuotes implements PersistData {
+class ConvertQuotes implements StartSaving {
   ConvertQuotes(this.completer, this.quoteIds);
 
   final List<String> quoteIds;
@@ -483,6 +484,13 @@ Future handleQuoteAction(
         }
       }
       break;
+    case EntityAction.more:
+      showEntityActionsDialog(
+        entities: [quote],
+        context: context,
+      );
+      break;
+
   }
 }
 

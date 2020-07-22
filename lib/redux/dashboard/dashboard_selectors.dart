@@ -14,6 +14,7 @@ class ChartDataGroup {
 
   final String name;
   final List<ChartMoneyData> rawSeries = [];
+  Map<String, List<String>> entityMap = {};
   List<Series<dynamic, DateTime>> chartSeries;
   double total = 0.0;
   double average = 0.0;
@@ -30,12 +31,12 @@ class ChartMoneyData {
 var memoizedChartInvoices = memo6((
   BuiltMap<String, CurrencyEntity> currencyMap,
   CompanyEntity company,
-  DashboardUIState settings,
+  DashboardUISettings settings,
   BuiltMap<String, InvoiceEntity> invoiceMap,
   BuiltMap<String, ClientEntity> clientMap,
   BuiltMap<String, GroupEntity> groupMap,
 ) =>
-    chartInvoices(
+    _chartInvoices(
         currencyMap: currencyMap,
         company: company,
         settings: settings,
@@ -43,16 +44,35 @@ var memoizedChartInvoices = memo6((
         groupMap: groupMap,
         clientMap: clientMap));
 
-List<ChartDataGroup> chartInvoices({
+var memoizedPreviousChartInvoices = memo6((
   BuiltMap<String, CurrencyEntity> currencyMap,
   CompanyEntity company,
-  DashboardUIState settings,
+  DashboardUISettings settings,
+  BuiltMap<String, InvoiceEntity> invoiceMap,
+  BuiltMap<String, ClientEntity> clientMap,
+  BuiltMap<String, GroupEntity> groupMap,
+) =>
+    _chartInvoices(
+        currencyMap: currencyMap,
+        company: company,
+        settings: settings,
+        invoiceMap: invoiceMap,
+        groupMap: groupMap,
+        clientMap: clientMap));
+
+List<ChartDataGroup> _chartInvoices({
+  BuiltMap<String, CurrencyEntity> currencyMap,
+  CompanyEntity company,
+  DashboardUISettings settings,
   BuiltMap<String, InvoiceEntity> invoiceMap,
   BuiltMap<String, ClientEntity> clientMap,
   BuiltMap<String, GroupEntity> groupMap,
 }) {
   const STATUS_ACTIVE = 'active';
   const STATUS_OUTSTANDING = 'outstanding';
+
+  final ChartDataGroup activeData = ChartDataGroup(STATUS_ACTIVE);
+  final ChartDataGroup outstandingData = ChartDataGroup(STATUS_OUTSTANDING);
 
   final Map<String, int> counts = {
     STATUS_ACTIVE: 0,
@@ -84,6 +104,9 @@ List<ChartDataGroup> chartInvoices({
       if (totals[STATUS_ACTIVE][date] == null) {
         totals[STATUS_ACTIVE][date] = 0.0;
         totals[STATUS_OUTSTANDING][date] = 0.0;
+
+        activeData.entityMap[date] = [];
+        outstandingData.entityMap[date] = [];
       }
 
       double amount = invoice.amount;
@@ -102,14 +125,14 @@ List<ChartDataGroup> chartInvoices({
       totals[STATUS_OUTSTANDING][date] += balance;
 
       counts[STATUS_ACTIVE]++;
+      activeData.entityMap[date].add(invoice.id);
+
       if (invoice.balance > 0) {
         counts[STATUS_OUTSTANDING]++;
+        outstandingData.entityMap[date].add(invoice.id);
       }
     }
   });
-
-  final ChartDataGroup activeData = ChartDataGroup(STATUS_ACTIVE);
-  final ChartDataGroup outstandingData = ChartDataGroup(STATUS_OUTSTANDING);
 
   var date = DateTime.parse(settings.startDate(company));
   final endDate = DateTime.parse(settings.endDate(company));
@@ -146,7 +169,24 @@ List<ChartDataGroup> chartInvoices({
 var memoizedChartQuotes = memo6((
   BuiltMap<String, CurrencyEntity> currencyMap,
   CompanyEntity company,
-  DashboardUIState settings,
+  DashboardUISettings settings,
+  BuiltMap<String, InvoiceEntity> quoteMap,
+  BuiltMap<String, ClientEntity> clientMap,
+  BuiltMap<String, GroupEntity> groupMap,
+) =>
+    chartQuotes(
+      currencyMap: currencyMap,
+      company: company,
+      settings: settings,
+      quoteMap: quoteMap,
+      clientMap: clientMap,
+      groupMap: groupMap,
+    ));
+
+var memoizedPreviousChartQuotes = memo6((
+  BuiltMap<String, CurrencyEntity> currencyMap,
+  CompanyEntity company,
+  DashboardUISettings settings,
   BuiltMap<String, InvoiceEntity> quoteMap,
   BuiltMap<String, ClientEntity> clientMap,
   BuiltMap<String, GroupEntity> groupMap,
@@ -163,7 +203,7 @@ var memoizedChartQuotes = memo6((
 List<ChartDataGroup> chartQuotes({
   BuiltMap<String, CurrencyEntity> currencyMap,
   CompanyEntity company,
-  DashboardUIState settings,
+  DashboardUISettings settings,
   BuiltMap<String, InvoiceEntity> quoteMap,
   BuiltMap<String, ClientEntity> clientMap,
   BuiltMap<String, GroupEntity> groupMap,
@@ -184,11 +224,16 @@ List<ChartDataGroup> chartQuotes({
     STATUS_UNAPPROVED: {},
   };
 
+  final ChartDataGroup activeData = ChartDataGroup(STATUS_ACTIVE);
+  final ChartDataGroup approvedData = ChartDataGroup(STATUS_APPROVED);
+  final ChartDataGroup unapprovedData = ChartDataGroup(STATUS_UNAPPROVED);
+
   quoteMap.forEach((int, quote) {
     final client =
         clientMap[quote.clientId] ?? ClientEntity(id: quote.clientId);
     final group = groupMap[client.groupId] ?? GroupEntity();
     final currencyId = client.getCurrencyId(company: company, group: group);
+    final date = quote.date;
 
     if (!quote.isSent || quote.isDeleted || client.isDeleted) {
       // skip it
@@ -198,10 +243,14 @@ List<ChartDataGroup> chartQuotes({
     } else if (!settings.matchesCurrency(currencyId)) {
       // skip it
     } else {
-      if (totals[STATUS_ACTIVE][quote.date] == null) {
-        totals[STATUS_ACTIVE][quote.date] = 0.0;
-        totals[STATUS_APPROVED][quote.date] = 0.0;
-        totals[STATUS_UNAPPROVED][quote.date] = 0.0;
+      if (totals[STATUS_ACTIVE][date] == null) {
+        totals[STATUS_ACTIVE][date] = 0.0;
+        totals[STATUS_APPROVED][date] = 0.0;
+        totals[STATUS_UNAPPROVED][date] = 0.0;
+
+        activeData.entityMap[date] = [];
+        approvedData.entityMap[date] = [];
+        unapprovedData.entityMap[date] = [];
       }
 
       double amount = quote.amount;
@@ -215,19 +264,19 @@ List<ChartDataGroup> chartQuotes({
 
       totals[STATUS_ACTIVE][quote.date] += amount;
       counts[STATUS_ACTIVE]++;
+      activeData.entityMap[date].add(quote.id);
+
       if (quote.isApproved) {
         totals[STATUS_APPROVED][quote.date] += quote.amount;
         counts[STATUS_APPROVED]++;
+        approvedData.entityMap[date].add(quote.id);
       } else {
         totals[STATUS_UNAPPROVED][quote.date] += quote.amount;
         counts[STATUS_UNAPPROVED]++;
+        unapprovedData.entityMap[date].add(quote.id);
       }
     }
   });
-
-  final ChartDataGroup activeData = ChartDataGroup(STATUS_ACTIVE);
-  final ChartDataGroup approvedData = ChartDataGroup(STATUS_APPROVED);
-  final ChartDataGroup unapprovedData = ChartDataGroup(STATUS_UNAPPROVED);
 
   var date = DateTime.parse(settings.startDate(company));
   final endDate = DateTime.parse(settings.endDate(company));
@@ -271,7 +320,19 @@ List<ChartDataGroup> chartQuotes({
 var memoizedChartPayments = memo7((
   BuiltMap<String, CurrencyEntity> currencyMap,
   CompanyEntity company,
-  DashboardUIState settings,
+  DashboardUISettings settings,
+  BuiltMap<String, InvoiceEntity> invoiceMap,
+  BuiltMap<String, ClientEntity> clientMap,
+  BuiltMap<String, GroupEntity> groupMap,
+  BuiltMap<String, PaymentEntity> paymentMap,
+) =>
+    chartPayments(currencyMap, company, settings, invoiceMap, clientMap,
+        groupMap, paymentMap));
+
+var memoizedPreviousChartPayments = memo7((
+  BuiltMap<String, CurrencyEntity> currencyMap,
+  CompanyEntity company,
+  DashboardUISettings settings,
   BuiltMap<String, InvoiceEntity> invoiceMap,
   BuiltMap<String, ClientEntity> clientMap,
   BuiltMap<String, GroupEntity> groupMap,
@@ -283,7 +344,7 @@ var memoizedChartPayments = memo7((
 List<ChartDataGroup> chartPayments(
   BuiltMap<String, CurrencyEntity> currencyMap,
   CompanyEntity company,
-  DashboardUIState settings,
+  DashboardUISettings settings,
   BuiltMap<String, InvoiceEntity> invoiceMap,
   BuiltMap<String, ClientEntity> clientMap,
   BuiltMap<String, GroupEntity> groupMap,
@@ -302,11 +363,15 @@ List<ChartDataGroup> chartPayments(
     STATUS_REFUNDED: {},
   };
 
+  final ChartDataGroup activeData = ChartDataGroup(STATUS_ACTIVE);
+  final ChartDataGroup refundedData = ChartDataGroup(STATUS_REFUNDED);
+
   paymentMap.forEach((int, payment) {
     final client =
         clientMap[payment.clientId] ?? ClientEntity(id: payment.clientId);
     final group = groupMap[client.groupId] ?? GroupEntity();
     final currencyId = client.getCurrencyId(company: company, group: group);
+    final date = payment.date;
 
     if (payment.isDeleted || client.isDeleted) {
       // skip it
@@ -316,9 +381,12 @@ List<ChartDataGroup> chartPayments(
     } else if (!settings.matchesCurrency(currencyId)) {
       // skip it
     } else {
-      if (totals[STATUS_ACTIVE][payment.date] == null) {
-        totals[STATUS_ACTIVE][payment.date] = 0.0;
-        totals[STATUS_REFUNDED][payment.date] = 0.0;
+      if (totals[STATUS_ACTIVE][date] == null) {
+        totals[STATUS_ACTIVE][date] = 0.0;
+        totals[STATUS_REFUNDED][date] = 0.0;
+
+        activeData.entityMap[date] = [];
+        refundedData.entityMap[date] = [];
       }
 
       double completedAmount = payment.completedAmount;
@@ -337,14 +405,14 @@ List<ChartDataGroup> chartPayments(
       totals[STATUS_REFUNDED][payment.date] += refunded ?? 0;
 
       counts[STATUS_ACTIVE]++;
+      activeData.entityMap[date].add(payment.id);
+
       if ((payment.refunded ?? 0) > 0) {
         counts[STATUS_REFUNDED]++;
+        refundedData.entityMap[date].add(payment.id);
       }
     }
   });
-
-  final ChartDataGroup activeData = ChartDataGroup(STATUS_ACTIVE);
-  final ChartDataGroup refundedData = ChartDataGroup(STATUS_REFUNDED);
 
   var date = DateTime.parse(settings.startDate(company));
   final endDate = DateTime.parse(settings.endDate(company));
@@ -381,7 +449,20 @@ List<ChartDataGroup> chartPayments(
 var memoizedChartTasks = memo8((
   BuiltMap<String, CurrencyEntity> currencyMap,
   CompanyEntity company,
-  DashboardUIState settings,
+  DashboardUISettings settings,
+  BuiltMap<String, TaskEntity> taskMap,
+  BuiltMap<String, InvoiceEntity> invoiceMap,
+  BuiltMap<String, ProjectEntity> projectMap,
+  BuiltMap<String, GroupEntity> groupMap,
+  BuiltMap<String, ClientEntity> clientMap,
+) =>
+    chartTasks(currencyMap, company, settings, taskMap, invoiceMap, projectMap,
+        groupMap, clientMap));
+
+var memoizedPreviousChartTasks = memo8((
+  BuiltMap<String, CurrencyEntity> currencyMap,
+  CompanyEntity company,
+  DashboardUISettings settings,
   BuiltMap<String, TaskEntity> taskMap,
   BuiltMap<String, InvoiceEntity> invoiceMap,
   BuiltMap<String, ProjectEntity> projectMap,
@@ -394,7 +475,7 @@ var memoizedChartTasks = memo8((
 List<ChartDataGroup> chartTasks(
     BuiltMap<String, CurrencyEntity> currencyMap,
     CompanyEntity company,
-    DashboardUIState settings,
+    DashboardUISettings settings,
     BuiltMap<String, TaskEntity> taskMap,
     BuiltMap<String, InvoiceEntity> invoiceMap,
     BuiltMap<String, ProjectEntity> projectMap,
@@ -415,6 +496,10 @@ List<ChartDataGroup> chartTasks(
     STATUS_INVOICED: {},
     STATUS_PAID: {},
   };
+
+  final ChartDataGroup loggedData = ChartDataGroup(STATUS_LOGGED);
+  final ChartDataGroup invoicedData = ChartDataGroup(STATUS_INVOICED);
+  final ChartDataGroup paidData = ChartDataGroup(STATUS_PAID);
 
   taskMap.forEach((int, task) {
     final client = clientMap[task.clientId] ?? ClientEntity(id: task.clientId);
@@ -437,6 +522,10 @@ List<ChartDataGroup> chartTasks(
             totals[STATUS_LOGGED][date] = 0.0;
             totals[STATUS_INVOICED][date] = 0.0;
             totals[STATUS_PAID][date] = 0.0;
+
+            loggedData.entityMap[date] = [];
+            invoicedData.entityMap[date] = [];
+            paidData.entityMap[date] = [];
           }
 
           final taskRate = taskRateSelector(
@@ -455,22 +544,21 @@ List<ChartDataGroup> chartTasks(
                 invoiceMap[task.invoiceId].isPaid) {
               totals[STATUS_PAID][date] += amount;
               counts[STATUS_PAID]++;
+              paidData.entityMap[date].add(task.id);
             } else {
               totals[STATUS_INVOICED][date] += amount;
               counts[STATUS_INVOICED]++;
+              invoicedData.entityMap[date].add(task.id);
             }
           } else {
             totals[STATUS_LOGGED][date] += amount;
             counts[STATUS_LOGGED]++;
+            loggedData.entityMap[date].add(task.id);
           }
         });
       });
     }
   });
-
-  final ChartDataGroup loggedData = ChartDataGroup(STATUS_LOGGED);
-  final ChartDataGroup invoicedData = ChartDataGroup(STATUS_INVOICED);
-  final ChartDataGroup paidData = ChartDataGroup(STATUS_PAID);
 
   var date = DateTime.parse(settings.startDate(company));
   final endDate = DateTime.parse(settings.endDate(company));
@@ -512,7 +600,7 @@ List<ChartDataGroup> chartTasks(
 List<ChartDataGroup> chartExpenses(
     BuiltMap<String, CurrencyEntity> currencyMap,
     CompanyEntity company,
-    DashboardUIState settings,
+    DashboardUISettings settings,
     BuiltMap<String, InvoiceEntity> invoiceMap,
     BuiltMap<String, ExpenseEntity> expenseMap) {
   const STATUS_LOGGED = 'logged';
@@ -534,6 +622,11 @@ List<ChartDataGroup> chartExpenses(
     STATUS_PAID: {},
   };
 
+  final ChartDataGroup loggedData = ChartDataGroup(STATUS_LOGGED);
+  final ChartDataGroup pendingData = ChartDataGroup(STATUS_PENDING);
+  final ChartDataGroup invoicedData = ChartDataGroup(STATUS_INVOICED);
+  final ChartDataGroup paidData = ChartDataGroup(STATUS_PAID);
+
   expenseMap.forEach((int, expense) {
     final currencyId = expense.expenseCurrencyId;
     final date = expense.expenseDate;
@@ -552,6 +645,11 @@ List<ChartDataGroup> chartExpenses(
         totals[STATUS_PENDING][date] = 0.0;
         totals[STATUS_INVOICED][date] = 0.0;
         totals[STATUS_PAID][date] = 0.0;
+
+        loggedData.entityMap[date] = [];
+        pendingData.entityMap[date] = [];
+        invoicedData.entityMap[date] = [];
+        paidData.entityMap[date] = [];
       }
 
       // Handle "All"
@@ -566,24 +664,23 @@ List<ChartDataGroup> chartExpenses(
         if (invoice.isPaid) {
           totals[STATUS_PAID][date] += amount;
           counts[STATUS_PAID]++;
+          paidData.entityMap[date].add(expense.id);
         } else {
           totals[STATUS_INVOICED][date] += amount;
           counts[STATUS_INVOICED]++;
+          invoicedData.entityMap[date].add(expense.id);
         }
       } else if (expense.isPending) {
         totals[STATUS_PENDING][date] += amount;
         counts[STATUS_PENDING]++;
+        pendingData.entityMap[date].add(expense.id);
       } else {
         totals[STATUS_LOGGED][date] += amount;
         counts[STATUS_LOGGED]++;
+        loggedData.entityMap[date].add(expense.id);
       }
     }
   });
-
-  final ChartDataGroup loggedData = ChartDataGroup(STATUS_LOGGED);
-  final ChartDataGroup pendingData = ChartDataGroup(STATUS_PENDING);
-  final ChartDataGroup invoicedData = ChartDataGroup(STATUS_INVOICED);
-  final ChartDataGroup paidData = ChartDataGroup(STATUS_PAID);
 
   var date = DateTime.parse(settings.startDate(company));
   final endDate = DateTime.parse(settings.endDate(company));
@@ -631,7 +728,15 @@ List<ChartDataGroup> chartExpenses(
 
 var memoizedChartExpenses = memo5((BuiltMap<String, CurrencyEntity> currencyMap,
         CompanyEntity company,
-        DashboardUIState settings,
+        DashboardUISettings settings,
         BuiltMap<String, InvoiceEntity> invoiceMap,
         BuiltMap<String, ExpenseEntity> expenseMap) =>
     chartExpenses(currencyMap, company, settings, invoiceMap, expenseMap));
+
+var memoizedPreviousChartExpenses = memo5(
+    (BuiltMap<String, CurrencyEntity> currencyMap,
+            CompanyEntity company,
+            DashboardUISettings settings,
+            BuiltMap<String, InvoiceEntity> invoiceMap,
+            BuiltMap<String, ExpenseEntity> expenseMap) =>
+        chartExpenses(currencyMap, company, settings, invoiceMap, expenseMap));

@@ -1,5 +1,6 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/ui/app/edit_scaffold.dart';
 import 'package:invoiceninja_flutter/ui/app/form_card.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/app_dropdown_button.dart';
@@ -110,16 +111,13 @@ class _WebhookEditState extends State<WebhookEdit> {
                       value: webhook.eventId,
                       onChanged: (dynamic value) => viewModel.onChanged(
                           webhook.rebuild((b) => b..eventId = value)),
-                      items: [
-                        DropdownMenuItem(
-                          child: Text('TEST 1'),
-                          value: '1',
-                        ),
-                        DropdownMenuItem(
-                          child: Text('TEST 2'),
-                          value: '2',
-                        ),
-                      ],
+                      items: WebhookEntity.EVENTS
+                          .map((eventId) => DropdownMenuItem(
+                                child: Text(localization
+                                    .lookup(WebhookEntity.EVENT_MAP[eventId])),
+                                value: eventId,
+                              ))
+                          .toList(),
                     ),
                   ],
                 ),

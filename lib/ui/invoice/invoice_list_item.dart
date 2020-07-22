@@ -11,39 +11,29 @@ import 'package:flutter/material.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/ui/app/dismissible_entity.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
+import 'package:invoiceninja_flutter/utils/platforms.dart';
 
 class InvoiceListItem extends StatelessWidget {
   const InvoiceListItem({
-    @required this.user,
-    @required this.onEntityAction,
     @required this.invoice,
-    @required this.client,
-    @required this.filter,
-    this.onTap,
-    this.onLongPress,
-    this.onCheckboxChanged,
-    this.isChecked = false,
+    this.filter,
+    this.showCheckbox = true,
   });
 
-  final UserEntity user;
-  final Function(EntityAction) onEntityAction;
-  final GestureTapCallback onTap;
-  final GestureTapCallback onLongPress;
   final InvoiceEntity invoice;
-  final ClientEntity client;
   final String filter;
-  final Function(bool) onCheckboxChanged;
-  final bool isChecked;
+  final bool showCheckbox;
 
   @override
   Widget build(BuildContext context) {
     final store = StoreProvider.of<AppState>(context);
     final state = store.state;
+    final client = state.clientState.get(invoice.clientId);
     final uiState = state.uiState;
     final invoiceUIState = uiState.invoiceUIState;
     final listUIState = state.getUIState(invoice.entityType).listUIState;
-    final isInMultiselect = listUIState.isInMultiselect();
-    final showCheckbox = onCheckboxChanged != null || isInMultiselect;
+    final isInMultiselect = showCheckbox && listUIState.isInMultiselect();
+    final isChecked = isInMultiselect && listUIState.isSelected(invoice.id);
     final textStyle = TextStyle(fontSize: 16);
     final localization = AppLocalization.of(context);
     final filterMatch = filter != null && filter.isNotEmpty
@@ -68,24 +58,24 @@ class InvoiceListItem extends StatelessWidget {
     }
 
     return DismissibleEntity(
-        isSelected: invoice.id ==
-            (uiState.isEditing
-                ? invoiceUIState.editing.id
-                : invoiceUIState.selectedId),
+        isSelected: isDesktop(context) &&
+            invoice.id ==
+                (uiState.isEditing
+                    ? invoiceUIState.editing.id
+                    : invoiceUIState.selectedId),
+        showCheckbox: showCheckbox,
         userCompany: state.userCompany,
         entity: invoice,
-        onEntityAction: onEntityAction,
         child: LayoutBuilder(
             builder: (BuildContext context, BoxConstraints constraints) {
           return constraints.maxWidth > kTableListWidthCutoff
               ? InkWell(
-                  onTap: () => onTap != null
-                      ? onTap()
-                      : selectEntity(entity: invoice, context: context),
-                  onLongPress: () => onLongPress != null
-                      ? onLongPress()
-                      : selectEntity(
-                          entity: invoice, context: context, longPress: true),
+                  onTap: () => selectEntity(
+                      entity: invoice,
+                      context: context,
+                      forceView: !showCheckbox),
+                  onLongPress: () => selectEntity(
+                      entity: invoice, context: context, longPress: true),
                   child: Padding(
                     padding: const EdgeInsets.only(
                       left: 12,
@@ -97,15 +87,14 @@ class InvoiceListItem extends StatelessWidget {
                       children: <Widget>[
                         Padding(
                             padding: const EdgeInsets.only(right: 16),
-                            child: showCheckbox
+                            child: isInMultiselect
                                 ? IgnorePointer(
                                     ignoring: listUIState.isInMultiselect(),
                                     child: Checkbox(
                                       value: isChecked,
                                       materialTapTargetSize:
                                           MaterialTapTargetSize.shrinkWrap,
-                                      onChanged: (value) =>
-                                          onCheckboxChanged(value),
+                                      onChanged: (value) => null,
                                       activeColor:
                                           Theme.of(context).accentColor,
                                     ),
@@ -182,21 +171,20 @@ class InvoiceListItem extends StatelessWidget {
                   ),
                 )
               : ListTile(
-                  onTap: () => onTap != null
-                      ? onTap()
-                      : selectEntity(entity: invoice, context: context),
-                  onLongPress: () => onLongPress != null
-                      ? onLongPress()
-                      : selectEntity(
-                          entity: invoice, context: context, longPress: true),
-                  leading: showCheckbox
+                  onTap: () => selectEntity(
+                      entity: invoice,
+                      context: context,
+                      forceView: !showCheckbox),
+                  onLongPress: () => selectEntity(
+                      entity: invoice, context: context, longPress: true),
+                  leading: isInMultiselect
                       ? IgnorePointer(
                           ignoring: listUIState.isInMultiselect(),
                           child: Checkbox(
                             value: isChecked,
                             materialTapTargetSize:
                                 MaterialTapTargetSize.shrinkWrap,
-                            onChanged: (value) => onCheckboxChanged(value),
+                            onChanged: (value) => null,
                             activeColor: Theme.of(context).accentColor,
                           ),
                         )
@@ -209,8 +197,10 @@ class InvoiceListItem extends StatelessWidget {
                           child: Text(
                             client.displayName,
                             style: Theme.of(context).textTheme.headline6,
+                            overflow: TextOverflow.ellipsis,
                           ),
                         ),
+                        SizedBox(width: 4),
                         Text(
                             formatNumber(
                                 invoice.balance > 0

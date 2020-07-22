@@ -11,7 +11,6 @@ import 'package:invoiceninja_flutter/utils/formatting.dart';
 class DocumentListItem extends StatelessWidget {
   const DocumentListItem({
     @required this.userCompany,
-    @required this.onEntityAction,
     //@required this.onCheckboxChanged,
     @required this.document,
     @required this.filter,
@@ -22,7 +21,6 @@ class DocumentListItem extends StatelessWidget {
   });
 
   final UserCompanyEntity userCompany;
-  final Function(EntityAction) onEntityAction;
   final GestureTapCallback onTap;
   final GestureTapCallback onLongPress;
   final Function(bool) onCheckboxChanged;
@@ -31,8 +29,6 @@ class DocumentListItem extends StatelessWidget {
   //final ValueChanged<bool> onCheckboxChanged;
   final DocumentEntity document;
   final String filter;
-
-  static final documentItemKey = (int id) => Key('__document_item_${id}__');
 
   @override
   Widget build(BuildContext context) {
@@ -54,7 +50,6 @@ class DocumentListItem extends StatelessWidget {
               : documentUIState.selectedId),
       userCompany: userCompany,
       entity: document,
-      onEntityAction: onEntityAction,
       child: ListTile(
         onTap: () => onTap != null
             ? onTap()

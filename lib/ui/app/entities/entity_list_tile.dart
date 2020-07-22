@@ -15,13 +15,9 @@ class EntityListTile extends StatelessWidget {
   const EntityListTile({
     @required this.entity,
     @required this.isFilter,
-    this.onTap,
-    this.onLongPress,
     this.subtitle,
   });
 
-  final Function onTap;
-  final Function onLongPress;
   final String subtitle;
   final BaseEntity entity;
   final bool isFilter;
@@ -57,7 +53,7 @@ class EntityListTile extends StatelessWidget {
     } else {
       leading = IconButton(
         icon: Icon(getEntityIcon(entity.entityType), size: 18.0),
-        onPressed: onTap,
+        onPressed: () => inspectEntity(context: context, entity: entity),
       );
     }
 
@@ -74,7 +70,7 @@ class EntityListTile extends StatelessWidget {
       } else {
         trailing = IconButton(
           icon: Icon(Icons.filter_list),
-          onPressed: onTap,
+          onPressed: () => inspectEntity(entity: entity, context: context),
         );
       }
     } else {
@@ -85,11 +81,14 @@ class EntityListTile extends StatelessWidget {
       mainAxisSize: MainAxisSize.min,
       children: <Widget>[
         SelectedIndicator(
-          isSelected: isFilteredBy,
+          isSelected: isFilteredBy && isDesktop(context),
           isMenu: true,
           child: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 10),
             child: ListTile(
+              onTap: () => inspectEntity(context: context, entity: entity),
+              onLongPress: () => inspectEntity(
+                  context: context, entity: entity, longPress: true),
               contentPadding: const EdgeInsets.only(left: 8, right: 8),
               title: Text(localization.lookup('${entity.entityType}') +
                   '  ›  ' +
@@ -106,8 +105,6 @@ class EntityListTile extends StatelessWidget {
               leading: leading,
               trailing: trailing,
               isThreeLine: (subtitle ?? '').isNotEmpty && !entity.isActive,
-              onTap: () => onTap(),
-              onLongPress: onLongPress,
             ),
           ),
         ),

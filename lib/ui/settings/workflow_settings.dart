@@ -1,7 +1,9 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:invoiceninja_flutter/data/models/company_model.dart';
 import 'package:invoiceninja_flutter/ui/app/form_card.dart';
+import 'package:invoiceninja_flutter/ui/app/forms/app_dropdown_button.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/app_form.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/bool_dropdown_button.dart';
 import 'package:invoiceninja_flutter/ui/app/edit_scaffold.dart';
@@ -71,25 +73,43 @@ class _WorkflowSettingsState extends State<WorkflowSettings>
           children: <Widget>[
             ListView(
               children: <Widget>[
+                FormCard(children: <Widget>[
+                  BoolDropdownButton(
+                    label: localization.autoEmailInvoice,
+                    helpLabel: localization.autoEmailInvoiceHelp,
+                    value: settings.autoEmailInvoice,
+                    onChanged: (value) => viewModel.onSettingsChanged(
+                        settings.rebuild((b) => b..autoEmailInvoice = value)),
+                    iconData:
+                        kIsWeb ? Icons.email : FontAwesomeIcons.solidEnvelope,
+                  ),
+                  BoolDropdownButton(
+                    label: localization.autoArchiveInvoice,
+                    helpLabel: localization.autoArchiveInvoiceHelp,
+                    value: settings.autoArchiveInvoice,
+                    onChanged: (value) => viewModel.onSettingsChanged(
+                        settings.rebuild((b) => b..autoArchiveInvoice = value)),
+                    iconData: kIsWeb ? Icons.archive : FontAwesomeIcons.archive,
+                  ),
+                ]),
                 FormCard(
                   children: <Widget>[
-                    BoolDropdownButton(
-                      label: localization.autoEmailInvoice,
-                      helpLabel: localization.autoEmailInvoiceHelp,
-                      value: settings.autoEmailInvoice,
-                      onChanged: (value) => viewModel.onSettingsChanged(
-                          settings.rebuild((b) => b..autoEmailInvoice = value)),
-                      iconData:
-                          kIsWeb ? Icons.email : FontAwesomeIcons.solidEnvelope,
-                    ),
-                    BoolDropdownButton(
-                      label: localization.autoArchiveInvoice,
-                      helpLabel: localization.autoArchiveInvoiceHelp,
-                      value: settings.autoArchiveInvoice,
-                      onChanged: (value) => viewModel.onSettingsChanged(settings
-                          .rebuild((b) => b..autoArchiveInvoice = value)),
-                      iconData:
-                          kIsWeb ? Icons.archive : FontAwesomeIcons.archive,
+                    AppDropdownButton<String>(
+                      showUseDefault: true,
+                      value: settings.lockInvoices,
+                      onChanged: (dynamic value) => viewModel.onSettingsChanged(
+                          settings.rebuild((b) => b..lockInvoices = value)),
+                      labelText: localization.lockInvoices,
+                      items: [
+                        SettingsEntity.LOCK_INVOICES_OFF,
+                        SettingsEntity.LOCK_INVOICES_SENT,
+                        SettingsEntity.LOCK_INVOICES_PAID,
+                      ]
+                          .map((option) => DropdownMenuItem(
+                                child: Text(localization.lookup(option)),
+                                value: option,
+                              ))
+                          .toList(),
                     ),
                   ],
                 ),

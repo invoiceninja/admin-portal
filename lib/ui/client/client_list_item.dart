@@ -9,11 +9,11 @@ import 'package:invoiceninja_flutter/ui/app/actions_menu_button.dart';
 import 'package:invoiceninja_flutter/ui/app/dismissible_entity.dart';
 import 'package:invoiceninja_flutter/ui/app/entity_state_label.dart';
 import 'package:invoiceninja_flutter/utils/formatting.dart';
+import 'package:invoiceninja_flutter/utils/platforms.dart';
 
 class ClientListItem extends StatelessWidget {
   const ClientListItem({
     @required this.user,
-    @required this.onEntityAction,
     @required this.client,
     @required this.filter,
     this.onTap,
@@ -23,15 +23,12 @@ class ClientListItem extends StatelessWidget {
   });
 
   final UserEntity user;
-  final Function(EntityAction) onEntityAction;
   final GestureTapCallback onTap;
   final GestureTapCallback onLongPress;
   final ClientEntity client;
   final String filter;
   final Function(bool) onCheckboxChanged;
   final bool isChecked;
-
-  static final clientItemKey = (int id) => Key('__client_item_${id}__');
 
   @override
   Widget build(BuildContext context) {
@@ -48,12 +45,11 @@ class ClientListItem extends StatelessWidget {
     final textStyle = TextStyle(fontSize: 16);
 
     return DismissibleEntity(
-      isSelected: client.id ==
+      isSelected: isDesktop(context) && client.id ==
           (uiState.isEditing
               ? clientUIState.editing.id
               : clientUIState.selectedId),
       userCompany: store.state.userCompany,
-      onEntityAction: onEntityAction,
       entity: client,
       child: LayoutBuilder(
           builder: (BuildContext context, BoxConstraints constraints) {

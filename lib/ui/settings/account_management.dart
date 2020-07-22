@@ -141,44 +141,51 @@ class _AccountOverview extends StatelessWidget {
         ),
         Padding(
           padding: const EdgeInsets.all(16),
-          child: AppButton(
-            label: localization.purchaseLicense.toUpperCase(),
-            iconData: Icons.cloud_download,
-            onPressed: () async {
-              if (await canLaunch(kWhiteLabelUrl)) {
-                launch(kWhiteLabelUrl, forceSafariVC: false);
-              }
-            },
-          ),
-        ),
-        Padding(
-          padding: const EdgeInsets.all(16),
-          child: AppButton(
-            label: localization.applyLicense.toUpperCase(),
-            iconData: Icons.cloud_done,
-            onPressed: () {
-              fieldCallback(
-                  context: context,
-                  title: localization.applyLicense,
-                  field: localization.license,
-                  maxLength: 24,
-                  callback: (value) {
-                    final state = viewModel.state;
-                    final credentials = state.credentials;
-                    final url =
-                        '${credentials.url}/claim_license?license_key=$value';
-                    WebClient()
-                        .post(
-                      url,
-                      credentials.token,
-                    )
-                        .then((dynamic response) {
-                      viewModel.onAppliedLicense();
-                    }).catchError((dynamic error) {
-                      showErrorDialog(context: context, message: '$error');
-                    });
-                  });
-            },
+          child: Row(
+            children: [
+              Expanded(
+                child: AppButton(
+                  label: localization.purchaseLicense.toUpperCase(),
+                  iconData: Icons.cloud_download,
+                  onPressed: () async {
+                    if (await canLaunch(kWhiteLabelUrl)) {
+                      launch(kWhiteLabelUrl, forceSafariVC: false);
+                    }
+                  },
+                ),
+              ),
+              SizedBox(width: kGutterWidth),
+              Expanded(
+                child: AppButton(
+                  label: localization.applyLicense.toUpperCase(),
+                  iconData: Icons.cloud_done,
+                  onPressed: () {
+                    fieldCallback(
+                        context: context,
+                        title: localization.applyLicense,
+                        field: localization.license,
+                        maxLength: 24,
+                        callback: (value) {
+                          final state = viewModel.state;
+                          final credentials = state.credentials;
+                          final url =
+                              '${credentials.url}/claim_license?license_key=$value';
+                          WebClient()
+                              .post(
+                            url,
+                            credentials.token,
+                          )
+                              .then((dynamic response) {
+                            viewModel.onAppliedLicense();
+                          }).catchError((dynamic error) {
+                            showErrorDialog(
+                                context: context, message: '$error');
+                          });
+                        });
+                  },
+                ),
+              ),
+            ],
           ),
         ),
         Padding(
@@ -209,31 +216,34 @@ class _AccountOverview extends StatelessWidget {
               ),              
                */
         Padding(
-          padding: const EdgeInsets.all(16),
-          child: AppButton(
-            label: localization.manageTokens.toUpperCase(),
-            iconData: getEntityIcon(EntityType.token),
-            onPressed: () {
-              store.dispatch(ViewSettings(
-                navigator: Navigator.of(context),
-                section: kSettingsTokens,
-              ));
-            },
-          ),
-        ),
-        Padding(
-          padding: const EdgeInsets.all(16),
-          child: AppButton(
-            label: localization.manageWebhooks.toUpperCase(),
-            iconData: getEntityIcon(EntityType.webhook),
-            onPressed: () {
-              store.dispatch(ViewSettings(
-                navigator: Navigator.of(context),
-                section: kSettingsWebhooks,
-              ));
-            },
-          ),
-        ),
+            padding: const EdgeInsets.all(16),
+            child: Row(children: [
+              Expanded(
+                child: AppButton(
+                  label: localization.manageTokens.toUpperCase(),
+                  iconData: getEntityIcon(EntityType.token),
+                  onPressed: () {
+                    store.dispatch(ViewSettings(
+                      navigator: Navigator.of(context),
+                      section: kSettingsTokens,
+                    ));
+                  },
+                ),
+              ),
+              SizedBox(width: kGutterWidth),
+              Expanded(
+                child: AppButton(
+                  label: localization.manageWebhooks.toUpperCase(),
+                  iconData: getEntityIcon(EntityType.webhook),
+                  onPressed: () {
+                    store.dispatch(ViewSettings(
+                      navigator: Navigator.of(context),
+                      section: kSettingsWebhooks,
+                    ));
+                  },
+                ),
+              ),
+            ])),
         Padding(
           padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 16),
           child: ListDivider(),

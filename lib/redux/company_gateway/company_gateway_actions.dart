@@ -7,6 +7,7 @@ import 'package:invoiceninja_flutter/data/models/company_gateway_model.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
+import 'package:invoiceninja_flutter/ui/app/entities/entity_actions_dialog.dart';
 import 'package:invoiceninja_flutter/utils/completers.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 
@@ -304,6 +305,13 @@ void handleCompanyGatewayAction(BuildContext context,
         }
       }
       break;
+    case EntityAction.more:
+      showEntityActionsDialog(
+        entities: [companyGateway],
+        context: context,
+      );
+      break;
+
   }
 }
 

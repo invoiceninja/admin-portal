@@ -28,7 +28,6 @@ import 'package:invoiceninja_flutter/utils/localization.dart';
 Future<void> showEntityActionsDialog(
     {@required BuildContext context,
     @required List<BaseEntity> entities,
-    ClientEntity client,
     Completer completer,
     bool multiselect = false}) async {
   if (entities == null) {
@@ -37,8 +36,12 @@ Future<void> showEntityActionsDialog(
   final mainContext = context;
   final state = StoreProvider.of<AppState>(context).state;
   final actions = <Widget>[];
+  final first = entities[0];
+  final ClientEntity client = first is BelongsToClient
+      ? state.clientState.get((first as BelongsToClient).clientId)
+      : null;
 
-  actions.addAll(entities[0]
+  actions.addAll(first
       .getActions(
     userCompany: state.userCompany,
     includeEdit: true,

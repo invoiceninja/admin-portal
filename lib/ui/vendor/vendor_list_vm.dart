@@ -10,7 +10,6 @@ import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/redux/ui/list_ui_state.dart';
 import 'package:invoiceninja_flutter/redux/vendor/vendor_actions.dart';
 import 'package:invoiceninja_flutter/redux/vendor/vendor_selectors.dart';
-import 'package:invoiceninja_flutter/ui/app/entities/entity_actions_dialog.dart';
 import 'package:invoiceninja_flutter/ui/app/tables/entity_list.dart';
 import 'package:invoiceninja_flutter/ui/vendor/vendor_list_item.dart';
 import 'package:invoiceninja_flutter/ui/vendor/vendor_presenter.dart';
@@ -43,22 +42,10 @@ class VendorListBuilder extends StatelessWidget {
             final listUIState = state.getListState(EntityType.vendor);
             final isInMultiselect = listUIState.isInMultiselect();
 
-            void showDialog() => showEntityActionsDialog(
-                  entities: [vendor],
-                  context: context,
-                );
-
             return VendorListItem(
               userCompany: viewModel.state.userCompany,
               filter: viewModel.filter,
               vendor: vendor,
-              onEntityAction: (EntityAction action) {
-                if (action == EntityAction.more) {
-                  showDialog();
-                } else {
-                  handleVendorAction(context, [vendor], action);
-                }
-              },
               isChecked: isInMultiselect && listUIState.isSelected(vendor.id),
             );
           },

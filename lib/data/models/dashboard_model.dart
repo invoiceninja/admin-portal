@@ -48,14 +48,14 @@ class DashboardSettings {
   String compareEndDate;
 
   static DashboardSettings fromState(DashboardUIState state) {
-    final settings = DashboardSettings()
-      ..dateRange = state.dateRange
-      ..startDate = state.customStartDate
-      ..endDate = state.customEndDate
-      ..enableComparison = state.enableComparison
-      ..compareDateRange = state.compareDateRange
-      ..compareStartDate = state.compareCustomStartDate
-      ..compareEndDate = state.compareCustomEndDate;
-    return settings;
+    final settings = state.settings;
+    return DashboardSettings()
+      ..dateRange = settings.dateRange
+      ..startDate = settings.customStartDate
+      ..endDate = settings.customEndDate
+      ..enableComparison = settings.enableComparison
+      ..compareDateRange = settings.compareDateRange
+      ..compareStartDate = settings.compareCustomStartDate
+      ..compareEndDate = settings.compareCustomEndDate;
   }
 }

@@ -11,7 +11,6 @@ import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/redux/document/document_actions.dart';
 import 'package:invoiceninja_flutter/redux/document/document_selectors.dart';
 import 'package:invoiceninja_flutter/redux/ui/list_ui_state.dart';
-import 'package:invoiceninja_flutter/ui/app/entities/entity_actions_dialog.dart';
 import 'package:invoiceninja_flutter/ui/app/tables/entity_list.dart';
 import 'package:invoiceninja_flutter/ui/document/document_list_item.dart';
 import 'package:invoiceninja_flutter/utils/completers.dart';
@@ -43,22 +42,10 @@ class DocumentListBuilder extends StatelessWidget {
               final listState = state.getListState(EntityType.document);
               final isInMultiselect = listState.isInMultiselect();
 
-              void showDialog() => showEntityActionsDialog(
-                    entities: [document],
-                    context: context,
-                  );
-
               return DocumentListItem(
                 userCompany: state.userCompany,
                 filter: viewModel.filter,
                 document: document,
-                onEntityAction: (EntityAction action) {
-                  if (action == EntityAction.more) {
-                    showDialog();
-                  } else {
-                    viewModel.onEntityAction(context, [document], action);
-                  }
-                },
                 isChecked: isInMultiselect && listState.isSelected(document.id),
               );
             });

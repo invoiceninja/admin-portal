@@ -6,6 +6,7 @@ import 'package:flutter_redux/flutter_redux.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
+import 'package:invoiceninja_flutter/ui/app/entities/entity_actions_dialog.dart';
 import 'package:invoiceninja_flutter/utils/completers.dart';
 import 'package:invoiceninja_flutter/utils/dialogs.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
@@ -579,6 +580,12 @@ void handleInvoiceAction(BuildContext context, List<BaseEntity> invoices,
           store.dispatch(RemoveFromInvoiceMultiselect(entity: invoice));
         }
       }
+      break;
+    case EntityAction.more:
+      showEntityActionsDialog(
+        entities: [invoice],
+        context: context,
+      );
       break;
   }
 }

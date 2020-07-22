@@ -66,11 +66,9 @@ class _TokenListTile extends StatelessWidget {
       contentPadding: const EdgeInsets.all(22),
       title: Padding(
         padding: const EdgeInsets.only(right: 16),
-        child: Text(
-          token.token.substring(0, 10) + 'XXXXXXXXXX',
-        ),
+        child: Text(token.token),
       ),
-      trailing: Icon(Icons.content_copy),
+      trailing: token.isMasked ? null : Icon(Icons.content_copy),
       onTap: () {
         handleTokenAction(context, [token], EntityAction.copy);
       },

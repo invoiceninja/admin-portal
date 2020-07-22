@@ -7,11 +7,11 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/ui/app/dismissible_entity.dart';
+import 'package:invoiceninja_flutter/utils/platforms.dart';
 
 class VendorListItem extends StatelessWidget {
   const VendorListItem({
     @required this.userCompany,
-    @required this.onEntityAction,
     @required this.vendor,
     @required this.filter,
     this.onTap,
@@ -21,7 +21,6 @@ class VendorListItem extends StatelessWidget {
   });
 
   final UserCompanyEntity userCompany;
-  final Function(EntityAction) onEntityAction;
   final GestureTapCallback onTap;
   final GestureTapCallback onLongPress;
   final Function(bool) onCheckboxChanged;
@@ -29,8 +28,6 @@ class VendorListItem extends StatelessWidget {
 
   final VendorEntity vendor;
   final String filter;
-
-  static final vendorItemKey = (int id) => Key('__vendor_item_${id}__');
 
   @override
   Widget build(BuildContext context) {
@@ -46,13 +43,12 @@ class VendorListItem extends StatelessWidget {
         : null;
 
     return DismissibleEntity(
-      isSelected: vendor.id ==
+      isSelected: isDesktop(context) && vendor.id ==
           (uiState.isEditing
               ? vendorUIState.editing.id
               : vendorUIState.selectedId),
       userCompany: userCompany,
       entity: vendor,
-      onEntityAction: onEntityAction,
       child: ListTile(
         onTap: () => onTap != null
             ? onTap()

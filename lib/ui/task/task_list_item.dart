@@ -9,6 +9,7 @@ import 'package:flutter/material.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/ui/app/dismissible_entity.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
+import 'package:invoiceninja_flutter/utils/platforms.dart';
 
 class TaskListItem extends StatelessWidget {
   const TaskListItem({
@@ -17,7 +18,6 @@ class TaskListItem extends StatelessWidget {
     @required this.project,
     @required this.task,
     @required this.filter,
-    this.onEntityAction,
     this.onTap,
     this.onLongPress,
     this.onCheckboxChanged,
@@ -27,15 +27,12 @@ class TaskListItem extends StatelessWidget {
   final UserCompanyEntity userCompany;
   final ClientEntity client;
   final ProjectEntity project;
-  final Function(EntityAction) onEntityAction;
   final GestureTapCallback onTap;
   final GestureTapCallback onLongPress;
   final Function(bool) onCheckboxChanged;
   final bool isChecked;
   final TaskEntity task;
   final String filter;
-
-  static final taskItemKey = (int id) => Key('__task_item_${id}__');
 
   @override
   Widget build(BuildContext context) {
@@ -66,11 +63,10 @@ class TaskListItem extends StatelessWidget {
     }
 
     return DismissibleEntity(
-      isSelected: task.id ==
+      isSelected: isDesktop(context) && task.id ==
           (uiState.isEditing ? taskUIState.editing.id : taskUIState.selectedId),
       userCompany: userCompany,
       entity: task,
-      onEntityAction: onEntityAction,
       child: ListTile(
         onTap: () => onTap != null
             ? onTap()

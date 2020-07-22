@@ -1,6 +1,5 @@
 import 'dart:async';
 import 'package:invoiceninja_flutter/data/models/webhook_model.dart';
-import 'package:invoiceninja_flutter/ui/app/entities/entity_actions_dialog.dart';
 import 'package:invoiceninja_flutter/ui/app/tables/entity_list.dart';
 import 'package:invoiceninja_flutter/ui/webhook/webhook_list_item.dart';
 import 'package:invoiceninja_flutter/ui/webhook/webhook_presenter.dart';
@@ -48,16 +47,6 @@ class WebhookListBuilder extends StatelessWidget {
                 user: viewModel.state.user,
                 filter: viewModel.filter,
                 webhook: webhook,
-                onEntityAction: (EntityAction action) {
-                  if (action == EntityAction.more) {
-                    showEntityActionsDialog(
-                      entities: [webhook],
-                      context: context,
-                    );
-                  } else {
-                    handleWebhookAction(context, [webhook], action);
-                  }
-                },
                 isChecked: isInMultiselect && listState.isSelected(webhook.id),
               );
             });

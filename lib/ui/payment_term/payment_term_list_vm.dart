@@ -1,6 +1,5 @@
 import 'dart:async';
 import 'package:invoiceninja_flutter/data/models/payment_term_model.dart';
-import 'package:invoiceninja_flutter/ui/app/entities/entity_actions_dialog.dart';
 import 'package:invoiceninja_flutter/ui/app/tables/entity_list.dart';
 import 'package:invoiceninja_flutter/ui/payment_term/payment_term_list_item.dart';
 import 'package:redux/redux.dart';
@@ -46,16 +45,6 @@ class PaymentTermListBuilder extends StatelessWidget {
                 user: viewModel.state.user,
                 filter: viewModel.filter,
                 paymentTerm: paymentTerm,
-                onEntityAction: (EntityAction action) {
-                  if (action == EntityAction.more) {
-                    showEntityActionsDialog(
-                      entities: [paymentTerm],
-                      context: context,
-                    );
-                  } else {
-                    handlePaymentTermAction(context, [paymentTerm], action);
-                  }
-                },
                 isChecked:
                     isInMultiselect && listState.isSelected(paymentTerm.id),
               );

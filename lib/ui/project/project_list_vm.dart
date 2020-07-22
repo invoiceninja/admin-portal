@@ -11,7 +11,6 @@ import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/redux/project/project_actions.dart';
 import 'package:invoiceninja_flutter/redux/project/project_selectors.dart';
 import 'package:invoiceninja_flutter/redux/ui/list_ui_state.dart';
-import 'package:invoiceninja_flutter/ui/app/entities/entity_actions_dialog.dart';
 import 'package:invoiceninja_flutter/ui/app/tables/entity_list.dart';
 import 'package:invoiceninja_flutter/ui/project/project_list_item.dart';
 import 'package:invoiceninja_flutter/ui/project/project_presenter.dart';
@@ -41,29 +40,14 @@ class ProjectListBuilder extends StatelessWidget {
               final state = viewModel.state;
               final projectId = viewModel.projectList[index];
               final project = viewModel.projectMap[projectId];
-              final client = viewModel.clientMap[project.clientId] ??
-                  ClientEntity(id: project.clientId);
               final listState = state.getListState(EntityType.project);
               final isInMultiselect = listState.isInMultiselect();
-
-              void showDialog() => showEntityActionsDialog(
-                    entities: [project],
-                    context: context,
-                    client: client,
-                  );
 
               return ProjectListItem(
                 userCompany: viewModel.state.userCompany,
                 filter: viewModel.filter,
                 project: project,
                 client: viewModel.clientMap[project.clientId] ?? ClientEntity(),
-                onEntityAction: (EntityAction action) {
-                  if (action == EntityAction.more) {
-                    showDialog();
-                  } else {
-                    handleProjectAction(context, [project], action);
-                  }
-                },
                 isChecked: isInMultiselect && listState.isSelected(project.id),
               );
             });

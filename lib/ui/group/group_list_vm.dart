@@ -12,7 +12,6 @@ import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/redux/group/group_actions.dart';
 import 'package:invoiceninja_flutter/redux/group/group_selectors.dart';
 import 'package:invoiceninja_flutter/redux/ui/list_ui_state.dart';
-import 'package:invoiceninja_flutter/ui/app/entities/entity_actions_dialog.dart';
 import 'package:invoiceninja_flutter/ui/app/tables/entity_list.dart';
 import 'package:invoiceninja_flutter/ui/group/group_list_item.dart';
 import 'package:invoiceninja_flutter/utils/completers.dart';
@@ -44,22 +43,10 @@ class GroupListBuilder extends StatelessWidget {
               final listState = state.getListState(EntityType.group);
               final isInMultiselect = listState.isInMultiselect();
 
-              void showDialog() => showEntityActionsDialog(
-                    entities: [group],
-                    context: context,
-                  );
-
               return GroupListItem(
                 user: viewModel.userCompany.user,
                 filter: viewModel.filter,
                 group: group,
-                onEntityAction: (EntityAction action) {
-                  if (action == EntityAction.more) {
-                    showDialog();
-                  } else {
-                    handleGroupAction(context, [group], action);
-                  }
-                },
                 isChecked: isInMultiselect && listState.isSelected(group.id),
               );
             });

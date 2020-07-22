@@ -9,13 +9,13 @@ import 'package:invoiceninja_flutter/ui/app/actions_menu_button.dart';
 import 'package:invoiceninja_flutter/ui/app/dismissible_entity.dart';
 import 'package:invoiceninja_flutter/ui/app/entity_state_label.dart';
 import 'package:invoiceninja_flutter/utils/formatting.dart';
+import 'package:invoiceninja_flutter/utils/platforms.dart';
 
 class ProductListItem extends StatelessWidget {
   const ProductListItem({
     @required this.userCompany,
     @required this.product,
     @required this.filter,
-    this.onEntityAction,
     this.onTap,
     this.onLongPress,
     this.onCheckboxChanged,
@@ -23,7 +23,6 @@ class ProductListItem extends StatelessWidget {
   });
 
   final UserCompanyEntity userCompany;
-  final Function(EntityAction) onEntityAction;
   final GestureTapCallback onTap;
   final GestureTapCallback onLongPress;
   final Function(bool) onCheckboxChanged;
@@ -32,8 +31,6 @@ class ProductListItem extends StatelessWidget {
   //final ValueChanged<bool> onCheckboxChanged;
   final ProductEntity product;
   final String filter;
-
-  static final productItemKey = (int id) => Key('__product_item_${id}__');
 
   @override
   Widget build(BuildContext context) {
@@ -51,13 +48,12 @@ class ProductListItem extends StatelessWidget {
     final textStyle = TextStyle(fontSize: 16);
 
     return DismissibleEntity(
-      isSelected: product.id ==
+      isSelected: isDesktop(context) && product.id ==
           (uiState.isEditing
               ? productUIState.editing.id
               : productUIState.selectedId),
       userCompany: userCompany,
       entity: product,
-      onEntityAction: onEntityAction,
       child: LayoutBuilder(
           builder: (BuildContext context, BoxConstraints constraints) {
         return constraints.maxWidth > kTableListWidthCutoff

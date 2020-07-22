@@ -7,11 +7,11 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/ui/app/dismissible_entity.dart';
+import 'package:invoiceninja_flutter/utils/platforms.dart';
 
 class ProjectListItem extends StatelessWidget {
   const ProjectListItem({
     @required this.userCompany,
-    @required this.onEntityAction,
     @required this.project,
     @required this.filter,
     @required this.client,
@@ -22,7 +22,6 @@ class ProjectListItem extends StatelessWidget {
   });
 
   final UserCompanyEntity userCompany;
-  final Function(EntityAction) onEntityAction;
   final GestureTapCallback onTap;
   final GestureTapCallback onLongPress;
   final Function(bool) onCheckboxChanged;
@@ -31,8 +30,6 @@ class ProjectListItem extends StatelessWidget {
   final ProjectEntity project;
   final ClientEntity client;
   final String filter;
-
-  static final projectItemKey = (int id) => Key('__project_item_${id}__');
 
   @override
   Widget build(BuildContext context) {
@@ -49,13 +46,12 @@ class ProjectListItem extends StatelessWidget {
     final subtitle = filterMatch ?? client.displayName;
 
     return DismissibleEntity(
-      isSelected: project.id ==
+      isSelected: isDesktop(context) && project.id ==
           (uiState.isEditing
               ? projectUIState.editing.id
               : projectUIState.selectedId),
       userCompany: userCompany,
       entity: project,
-      onEntityAction: onEntityAction,
       child: ListTile(
         onTap: () => onTap != null
             ? onTap()

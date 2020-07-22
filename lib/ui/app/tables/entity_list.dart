@@ -150,45 +150,59 @@ class _EntityListState extends State<EntityList> {
           return SizedBox();
         }
 
-        return SingleChildScrollView(
-          child: Padding(
-            padding: const EdgeInsets.symmetric(vertical: 24),
-            child: AppPaginatedDataTable(
-              onSelectAll: (value) {
-                final entities = entityList
-                    .map((String entityId) => entityMap[entityId])
-                    .where((invoice) =>
-                        value != listUIState.isSelected(invoice.id))
-                    .map((entity) => entity as BaseEntity)
-                    .toList();
-                handleEntitiesActions(
-                    context, entities, EntityAction.toggleMultiselect);
-              },
-              columns: [
-                if (!listUIState.isInMultiselect())
-                  DataColumn(label: SizedBox()),
-                ...widget.tableColumns.map((field) => DataColumn(
-                    label: Container(
-                      constraints: BoxConstraints(
-                        minWidth: kTableColumnWidthMin,
-                        maxWidth: kTableColumnWidthMax,
-                      ),
-                      child: Text(
-                        AppLocalization.of(context).lookup(field),
-                        overflow: TextOverflow.ellipsis,
-                      ),
-                    ),
-                    numeric: EntityPresenter.isFieldNumeric(field),
-                    onSort: (int columnIndex, bool ascending) {
-                      widget.onSortColumn(field);
-                    })),
-              ],
-              source: dataTableSource,
-              sortColumnIndex:
-                  widget.tableColumns.indexOf(listUIState.sortField),
-              sortAscending: listUIState.sortAscending,
+        return Column(
+          mainAxisSize: MainAxisSize.max,
+          children: [
+            if (listState.filterEntityId != null && isMobile(context))
+              ListFilterMessage(
+                filterEntityId: listState.filterEntityId,
+                filterEntityType: listState.filterEntityType,
+                onPressed: widget.onViewEntityFilterPressed,
+                onClearPressed: widget.onClearEntityFilterPressed,
+              ),
+            Expanded(
+              child: SingleChildScrollView(
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 24),
+                  child: AppPaginatedDataTable(
+                    onSelectAll: (value) {
+                      final entities = entityList
+                          .map((String entityId) => entityMap[entityId])
+                          .where((invoice) =>
+                              value != listUIState.isSelected(invoice.id))
+                          .map((entity) => entity as BaseEntity)
+                          .toList();
+                      handleEntitiesActions(
+                          context, entities, EntityAction.toggleMultiselect);
+                    },
+                    columns: [
+                      if (!listUIState.isInMultiselect())
+                        DataColumn(label: SizedBox()),
+                      ...widget.tableColumns.map((field) => DataColumn(
+                          label: Container(
+                            constraints: BoxConstraints(
+                              minWidth: kTableColumnWidthMin,
+                              maxWidth: kTableColumnWidthMax,
+                            ),
+                            child: Text(
+                              AppLocalization.of(context).lookup(field),
+                              overflow: TextOverflow.ellipsis,
+                            ),
+                          ),
+                          numeric: EntityPresenter.isFieldNumeric(field),
+                          onSort: (int columnIndex, bool ascending) {
+                            widget.onSortColumn(field);
+                          })),
+                    ],
+                    source: dataTableSource,
+                    sortColumnIndex:
+                        widget.tableColumns.indexOf(listUIState.sortField),
+                    sortAscending: listUIState.sortAscending,
+                  ),
+                ),
+              ),
             ),
-          ),
+          ],
         );
       }
     };

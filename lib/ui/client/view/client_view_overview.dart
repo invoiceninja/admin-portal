@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:invoiceninja_flutter/data/models/client_model.dart';
 import 'package:invoiceninja_flutter/data/models/entities.dart';
-import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:invoiceninja_flutter/redux/credit/credit_selectors.dart';
 import 'package:invoiceninja_flutter/redux/expense/expense_selectors.dart';
 import 'package:invoiceninja_flutter/redux/invoice/invoice_selectors.dart';
@@ -97,17 +96,11 @@ class ClientOverview extends StatelessWidget {
         if (client.hasGroup)
           EntityListTile(
             entity: group,
-            onTap: () => inspectEntity(context: context, entity: group),
-            onLongPress: () =>
-                inspectEntity(context: context, entity: group, longPress: true),
             isFilter: isFilter,
           ),
         if (client.hasUser)
           EntityListTile(
             entity: user,
-            onTap: () => inspectEntity(context: context, entity: user),
-            onLongPress: () =>
-                inspectEntity(context: context, entity: user, longPress: true),
             isFilter: isFilter,
           ),
         FieldGrid(fields),

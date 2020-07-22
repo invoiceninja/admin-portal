@@ -15,7 +15,6 @@ import 'package:invoiceninja_flutter/utils/localization.dart';
 class CreditListItem extends StatelessWidget {
   const CreditListItem({
     @required this.user,
-    @required this.onEntityAction,
     @required this.credit,
     @required this.client,
     @required this.filter,
@@ -26,7 +25,6 @@ class CreditListItem extends StatelessWidget {
   });
 
   final UserEntity user;
-  final Function(EntityAction) onEntityAction;
   final GestureTapCallback onTap;
   final GestureTapCallback onLongPress;
   final InvoiceEntity credit;
@@ -63,7 +61,6 @@ class CreditListItem extends StatelessWidget {
               : creditUIState.selectedId),
       userCompany: state.userCompany,
       entity: credit,
-      onEntityAction: onEntityAction,
       child: LayoutBuilder(
           builder: (BuildContext context, BoxConstraints constraints) {
         return constraints.maxWidth > kTableListWidthCutoff
@@ -191,8 +188,10 @@ class CreditListItem extends StatelessWidget {
                         child: Text(
                           client.displayName,
                           style: Theme.of(context).textTheme.headline6,
+                          overflow: TextOverflow.ellipsis,
                         ),
                       ),
+                      SizedBox(width: 4),
                       Text(
                           formatNumber(
                               credit.balance > 0

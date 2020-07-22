@@ -220,7 +220,8 @@ class SettingsListTile extends StatelessWidget {
     return Container(
       color: Theme.of(context).cardColor,
       child: SelectedIndicator(
-        isSelected: viewModel.state.uiState.containsRoute('/$section'),
+        isSelected: viewModel.state.uiState.containsRoute('/$section') &&
+            isDesktop(context),
         child: ListTile(
           leading: Padding(
             padding: const EdgeInsets.only(left: 6, top: 2),
