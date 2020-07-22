@@ -291,7 +291,6 @@ void handleTaxRateAction(
         context: context,
       );
       break;
-
   }
 }
 

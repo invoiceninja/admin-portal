@@ -387,7 +387,6 @@ void handleClientAction(
         context: context,
       );
       break;
-
   }
 }
 

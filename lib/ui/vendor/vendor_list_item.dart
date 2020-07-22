@@ -43,10 +43,11 @@ class VendorListItem extends StatelessWidget {
         : null;
 
     return DismissibleEntity(
-      isSelected: isDesktop(context) && vendor.id ==
-          (uiState.isEditing
-              ? vendorUIState.editing.id
-              : vendorUIState.selectedId),
+      isSelected: isDesktop(context) &&
+          vendor.id ==
+              (uiState.isEditing
+                  ? vendorUIState.editing.id
+                  : vendorUIState.selectedId),
       userCompany: userCompany,
       entity: vendor,
       child: ListTile(

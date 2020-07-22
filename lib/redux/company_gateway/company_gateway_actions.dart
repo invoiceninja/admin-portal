@@ -311,7 +311,6 @@ void handleCompanyGatewayAction(BuildContext context,
         context: context,
       );
       break;
-
   }
 }
 

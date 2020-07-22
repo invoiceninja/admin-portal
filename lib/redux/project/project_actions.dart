@@ -332,7 +332,6 @@ void handleProjectAction(
         context: context,
       );
       break;
-
   }
 }
 

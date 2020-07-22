@@ -310,7 +310,6 @@ void handleTokenAction(
         context: context,
       );
       break;
-
   }
 }
 

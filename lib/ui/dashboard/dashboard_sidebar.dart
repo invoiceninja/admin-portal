@@ -70,7 +70,8 @@ class _InvoiceSidebar extends StatelessWidget {
     final state = store.state;
     final upcomingInvoices = memoizedUpcomingInvoices(state.invoiceState.map);
     final pastDueInvoices = memoizedPastDueInvoices(state.invoiceState.map);
-    final selectedIds = state.dashboardUIState.selectedEntities[EntityType.invoice];
+    final selectedIds =
+        state.dashboardUIState.selectedEntities[EntityType.invoice];
 
     return _DashboardSidebar(
       entityType: EntityType.invoice,
@@ -133,7 +134,8 @@ class _PaymentSidebar extends StatelessWidget {
     final store = StoreProvider.of<AppState>(context);
     final state = store.state;
     final recentPayments = memoizedRecentPayments(state.paymentState.map);
-    final selectedIds = state.dashboardUIState.selectedEntities[EntityType.payment];
+    final selectedIds =
+        state.dashboardUIState.selectedEntities[EntityType.payment];
 
     return _DashboardSidebar(
       entityType: EntityType.payment,
@@ -182,7 +184,8 @@ class _QuoteSidebar extends StatelessWidget {
     final state = store.state;
     final upcomingQuotes = memoizedUpcomingQuotes(state.quoteState.map);
     final expriedQuotes = memoizedExpiredQuotes(state.quoteState.map);
-    final selectedIds = state.dashboardUIState.selectedEntities[EntityType.quote];
+    final selectedIds =
+        state.dashboardUIState.selectedEntities[EntityType.quote];
 
     return _DashboardSidebar(
       entityType: EntityType.quote,

@@ -63,8 +63,11 @@ class TaskListItem extends StatelessWidget {
     }
 
     return DismissibleEntity(
-      isSelected: isDesktop(context) && task.id ==
-          (uiState.isEditing ? taskUIState.editing.id : taskUIState.selectedId),
+      isSelected: isDesktop(context) &&
+          task.id ==
+              (uiState.isEditing
+                  ? taskUIState.editing.id
+                  : taskUIState.selectedId),
       userCompany: userCompany,
       entity: task,
       child: ListTile(

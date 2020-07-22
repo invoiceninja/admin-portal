@@ -387,7 +387,6 @@ void handleTaskAction(
         context: context,
       );
       break;
-
   }
 }
 

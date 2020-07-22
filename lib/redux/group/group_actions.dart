@@ -298,7 +298,6 @@ void handleGroupAction(
         context: context,
       );
       break;
-
   }
 }
 

@@ -684,7 +684,6 @@ abstract class ReportSettingsEntity
 
 abstract class SettingsEntity
     implements Built<SettingsEntity, SettingsEntityBuilder> {
-
   factory SettingsEntity({
     SettingsEntity companySettings,
     SettingsEntity groupSettings,

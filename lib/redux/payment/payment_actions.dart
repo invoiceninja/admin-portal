@@ -375,6 +375,5 @@ void handlePaymentAction(
         context: context,
       );
       break;
-
   }
 }

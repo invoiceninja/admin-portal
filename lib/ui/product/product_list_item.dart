@@ -48,10 +48,11 @@ class ProductListItem extends StatelessWidget {
     final textStyle = TextStyle(fontSize: 16);
 
     return DismissibleEntity(
-      isSelected: isDesktop(context) && product.id ==
-          (uiState.isEditing
-              ? productUIState.editing.id
-              : productUIState.selectedId),
+      isSelected: isDesktop(context) &&
+          product.id ==
+              (uiState.isEditing
+                  ? productUIState.editing.id
+                  : productUIState.selectedId),
       userCompany: userCompany,
       entity: product,
       child: LayoutBuilder(

@@ -490,7 +490,6 @@ Future handleCreditAction(
         context: context,
       );
       break;
-
   }
 }
 

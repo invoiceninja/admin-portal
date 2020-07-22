@@ -45,10 +45,11 @@ class ClientListItem extends StatelessWidget {
     final textStyle = TextStyle(fontSize: 16);
 
     return DismissibleEntity(
-      isSelected: isDesktop(context) && client.id ==
-          (uiState.isEditing
-              ? clientUIState.editing.id
-              : clientUIState.selectedId),
+      isSelected: isDesktop(context) &&
+          client.id ==
+              (uiState.isEditing
+                  ? clientUIState.editing.id
+                  : clientUIState.selectedId),
       userCompany: store.state.userCompany,
       entity: client,
       child: LayoutBuilder(
