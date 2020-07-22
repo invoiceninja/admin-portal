@@ -111,9 +111,27 @@ class _PaymentEditState extends State<PaymentEdit> {
     }
 
     double paymentTotal = 0;
+    double creditTotal = 0;
     invoicePaymentables.forEach((invoice) {
       paymentTotal += invoice.amount;
     });
+    creditPaymentables.forEach((credit) {
+      creditTotal += credit.amount;
+    });
+
+    String amountPlaceholder;
+    if (paymentTotal != 0) {
+      amountPlaceholder = '${localization.amount} ';
+      if (creditTotal == 0) {
+        amountPlaceholder +=
+            formatNumber(paymentTotal, context, clientId: payment.clientId);
+      } else {
+        amountPlaceholder += formatNumber(paymentTotal - creditTotal, context,
+                clientId: payment.clientId) +
+            ' + ${localization.credit} ' +
+            formatNumber(creditTotal, context, clientId: payment.clientId);
+      }
+    }
 
     return EditScaffold(
       entity: payment,
@@ -172,7 +190,7 @@ class _PaymentEditState extends State<PaymentEdit> {
                           TextInputType.numberWithOptions(decimal: true),
                       label: paymentTotal == 0
                           ? localization.amount
-                          : '${localization.amount} • ${formatNumber(paymentTotal, context, clientId: payment.clientId)}',
+                          : amountPlaceholder,
                     ),
                 ],
                 if (payment.isForCredit != true)
@@ -209,8 +227,8 @@ class _PaymentEditState extends State<PaymentEdit> {
                       viewModel.staticState.paymentTypeMap),
                   labelText: localization.paymentType,
                   entityId: payment.typeId,
-                  onSelected: (paymentType) => viewModel.onChanged(
-                      payment.rebuild((b) => b..typeId = paymentType?.id ?? '')),
+                  onSelected: (paymentType) => viewModel.onChanged(payment
+                      .rebuild((b) => b..typeId = paymentType?.id ?? '')),
                 ),
                 if (payment.isForInvoice != true)
                   if (state.company.isModuleEnabled(EntityType.credit))
