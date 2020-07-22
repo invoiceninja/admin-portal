@@ -207,7 +207,7 @@ class _QuoteSidebar extends StatelessWidget {
               },
               separatorBuilder: (context, index) => ListDivider(),
             ),
-      label2: localization.pastDueInvoices +
+      label2: localization.expiredQuotes +
           (expriedQuotes.isNotEmpty ? ' (${expriedQuotes.length})' : ''),
       list2: expriedQuotes.isEmpty
           ? null
@@ -224,7 +224,7 @@ class _QuoteSidebar extends StatelessWidget {
             ),
       label3: (selectedIds ?? <String>[]).isEmpty
           ? null
-          : localization.selectedInvoices + ' (${selectedIds.length})',
+          : localization.selectedQuotes + ' (${selectedIds.length})',
       list3: (selectedIds ?? <String>[]).isEmpty
           ? null
           : ListView.separated(
@@ -319,8 +319,8 @@ class _DashboardSidebar extends StatelessWidget {
                     child: Row(
                       children: [
                         Expanded(
-                            child: Text(label3 ?? '',
-                                style: textTheme.bodyText2)),
+                            child:
+                                Text(label3 ?? '', style: textTheme.bodyText2)),
                         IconButton(
                           visualDensity: VisualDensity.compact,
                           icon: Icon(Icons.clear),
@@ -333,8 +333,8 @@ class _DashboardSidebar extends StatelessWidget {
                         )
                       ],
                     ),
-                    padding: const EdgeInsets.symmetric(
-                        horizontal: 16, vertical: 8),
+                    padding:
+                        const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
                     width: double.infinity,
                   ),
                 ),

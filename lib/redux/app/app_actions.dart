@@ -1143,8 +1143,8 @@ void handleEntitiesActions(
 void selectEntity({
   @required BuildContext context,
   @required BaseEntity entity,
-  bool longPress,
-  bool forceView,
+  bool longPress = false,
+  bool forceView = false,
 }) {
   final store = StoreProvider.of<AppState>(context);
   final state = store.state;

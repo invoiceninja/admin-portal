@@ -77,7 +77,7 @@ class QuoteListItem extends StatelessWidget {
                       children: <Widget>[
                         Padding(
                             padding: const EdgeInsets.only(right: 16),
-                            child: showCheckbox
+                            child: isInMultiselect
                                 ? IgnorePointer(
                                     ignoring: listUIState.isInMultiselect(),
                                     child: Checkbox(
@@ -160,7 +160,7 @@ class QuoteListItem extends StatelessWidget {
                   onTap: () => selectEntity(entity: quote, context: context),
                   onLongPress: () => selectEntity(
                           entity: quote, context: context, longPress: true),
-                  leading: showCheckbox
+                  leading: isInMultiselect
                       ? IgnorePointer(
                           ignoring: listUIState.isInMultiselect(),
                           child: Checkbox(
