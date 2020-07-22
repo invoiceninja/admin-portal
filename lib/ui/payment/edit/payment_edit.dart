@@ -171,9 +171,12 @@ class _PaymentEditState extends State<PaymentEdit> {
                         ? AppLocalization.of(context).pleaseSelectAClient
                         : null,
                     onSelected: (client) {
-                      viewModel.onChanged(payment.rebuild((b) => b
-                        ..clientId = client?.id ?? ''
-                        ..invoices.clear()));
+                      viewModel.onChanged(payment.rebuild(
+                        (b) => b
+                          ..clientId = client?.id ?? ''
+                          ..credits.clear()
+                          ..invoices.clear(),
+                      ));
                     },
                     entityList: memoizedDropdownClientList(
                         state.clientState.map,
