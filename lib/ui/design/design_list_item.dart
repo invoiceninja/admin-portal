@@ -28,8 +28,6 @@ class DesignListItem extends StatelessWidget {
   final Function(bool) onCheckboxChanged;
   final bool isChecked;
 
-  static final designItemKey = (int id) => Key('__design_item_${id}__');
-
   @override
   Widget build(BuildContext context) {
     final store = StoreProvider.of<AppState>(context);

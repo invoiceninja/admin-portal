@@ -32,8 +32,6 @@ class ProductListItem extends StatelessWidget {
   final ProductEntity product;
   final String filter;
 
-  static final productItemKey = (int id) => Key('__product_item_${id}__');
-
   @override
   Widget build(BuildContext context) {
     final filterMatch = filter != null && filter.isNotEmpty

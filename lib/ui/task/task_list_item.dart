@@ -34,8 +34,6 @@ class TaskListItem extends StatelessWidget {
   final TaskEntity task;
   final String filter;
 
-  static final taskItemKey = (int id) => Key('__task_item_${id}__');
-
   @override
   Widget build(BuildContext context) {
     final state = StoreProvider.of<AppState>(context).state;

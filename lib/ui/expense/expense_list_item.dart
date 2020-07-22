@@ -34,8 +34,6 @@ class ExpenseListItem extends StatelessWidget {
   final VendorEntity vendor;
   final String filter;
 
-  static final expenseItemKey = (int id) => Key('__expense_item_${id}__');
-
   @override
   Widget build(BuildContext context) {
     final localization = AppLocalization.of(context);

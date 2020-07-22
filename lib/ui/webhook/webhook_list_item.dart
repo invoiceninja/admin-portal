@@ -29,8 +29,6 @@ class WebhookListItem extends StatelessWidget {
   final Function(bool) onCheckboxChanged;
   final bool isChecked;
 
-  static final webhookItemKey = (int id) => Key('__webhook_item_${id}__');
-
   @override
   Widget build(BuildContext context) {
     final localization = AppLocalization.of(context);

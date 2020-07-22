@@ -29,8 +29,6 @@ class VendorListItem extends StatelessWidget {
   final VendorEntity vendor;
   final String filter;
 
-  static final vendorItemKey = (int id) => Key('__vendor_item_${id}__');
-
   @override
   Widget build(BuildContext context) {
     final store = StoreProvider.of<AppState>(context);

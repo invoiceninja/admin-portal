@@ -24,15 +24,13 @@ class PaymentListItem extends StatelessWidget {
   final String filter;
   final bool showCheckbox;
 
-  static final paymentItemKey = (int id) => Key('__payment_${id}__');
-
   @override
   Widget build(BuildContext context) {
     final state = StoreProvider.of<AppState>(context).state;
     final uiState = state.uiState;
     final paymentUIState = uiState.paymentUIState;
     final listUIState = paymentUIState.listUIState;
-    final isInMultiselect = listUIState.isInMultiselect();
+    final isInMultiselect = showCheckbox && listUIState.isInMultiselect();
     final isChecked = isInMultiselect && listUIState.isSelected(payment.id);
     final textStyle = TextStyle(fontSize: 16);
     final client = state.clientState.map[payment.clientId];
@@ -57,10 +55,12 @@ class PaymentListItem extends StatelessWidget {
 
     return DismissibleEntity(
       isSelected: isDesktop(context) &&
+          showCheckbox &&
           payment.id ==
               (uiState.isEditing
                   ? paymentUIState.editing.id
                   : paymentUIState.selectedId),
+      showCheckbox: showCheckbox,
       userCompany: state.userCompany,
       entity: payment,
       child: LayoutBuilder(
@@ -81,7 +81,7 @@ class PaymentListItem extends StatelessWidget {
                     children: <Widget>[
                       Padding(
                           padding: const EdgeInsets.only(right: 16),
-                          child: showCheckbox
+                          child: isInMultiselect
                               ? IgnorePointer(
                                   ignoring: listUIState.isInMultiselect(),
                                   child: Checkbox(
@@ -155,7 +155,7 @@ class PaymentListItem extends StatelessWidget {
                 onTap: () => selectEntity(entity: payment, context: context),
                 onLongPress: () => selectEntity(
                     entity: payment, context: context, longPress: true),
-                leading: showCheckbox
+                leading: isInMultiselect
                     ? IgnorePointer(
                         ignoring: listUIState.isInMultiselect(),
                         child: Checkbox(

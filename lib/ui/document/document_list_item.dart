@@ -30,8 +30,6 @@ class DocumentListItem extends StatelessWidget {
   final DocumentEntity document;
   final String filter;
 
-  static final documentItemKey = (int id) => Key('__document_item_${id}__');
-
   @override
   Widget build(BuildContext context) {
     final store = StoreProvider.of<AppState>(context);

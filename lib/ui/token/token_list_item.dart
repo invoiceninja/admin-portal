@@ -27,8 +27,6 @@ class TokenListItem extends StatelessWidget {
   final Function(bool) onCheckboxChanged;
   final bool isChecked;
 
-  static final tokenItemKey = (int id) => Key('__token_item_${id}__');
-
   @override
   Widget build(BuildContext context) {
     final store = StoreProvider.of<AppState>(context);

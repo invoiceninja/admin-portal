@@ -31,8 +31,6 @@ class ProjectListItem extends StatelessWidget {
   final ClientEntity client;
   final String filter;
 
-  static final projectItemKey = (int id) => Key('__project_item_${id}__');
-
   @override
   Widget build(BuildContext context) {
     final store = StoreProvider.of<AppState>(context);
