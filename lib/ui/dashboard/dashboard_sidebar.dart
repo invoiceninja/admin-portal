@@ -11,6 +11,7 @@ import 'package:invoiceninja_flutter/ui/invoice/invoice_list_item.dart';
 import 'package:invoiceninja_flutter/ui/payment/payment_list_item.dart';
 import 'package:invoiceninja_flutter/ui/quote/quote_list_item.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
+import 'package:invoiceninja_flutter/utils/platforms.dart';
 
 class SidebarScaffold extends StatelessWidget {
   const SidebarScaffold({
@@ -51,17 +52,17 @@ class SidebarScaffold extends StatelessWidget {
       body: TabBarView(
         controller: tabController,
         children: [
-          if (company.isModuleEnabled(EntityType.invoice)) _InvoiceSidebar(),
-          if (company.isModuleEnabled(EntityType.payment)) _PaymentSidebar(),
-          if (company.isModuleEnabled(EntityType.quote)) _QuoteSidebar(),
+          if (company.isModuleEnabled(EntityType.invoice)) InvoiceSidebar(),
+          if (company.isModuleEnabled(EntityType.payment)) PaymentSidebar(),
+          if (company.isModuleEnabled(EntityType.quote)) QuoteSidebar(),
         ],
       ),
     );
   }
 }
 
-class _InvoiceSidebar extends StatelessWidget {
-  const _InvoiceSidebar();
+class InvoiceSidebar extends StatelessWidget {
+  const InvoiceSidebar();
 
   @override
   Widget build(BuildContext context) {
@@ -125,8 +126,8 @@ class _InvoiceSidebar extends StatelessWidget {
   }
 }
 
-class _PaymentSidebar extends StatelessWidget {
-  const _PaymentSidebar();
+class PaymentSidebar extends StatelessWidget {
+  const PaymentSidebar();
 
   @override
   Widget build(BuildContext context) {
@@ -174,8 +175,8 @@ class _PaymentSidebar extends StatelessWidget {
   }
 }
 
-class _QuoteSidebar extends StatelessWidget {
-  const _QuoteSidebar();
+class QuoteSidebar extends StatelessWidget {
+  const QuoteSidebar();
 
   @override
   Widget build(BuildContext context) {
@@ -300,47 +301,48 @@ class _DashboardSidebar extends StatelessWidget {
                   : ClipRRect(child: list2),
             ),
           ],
-          AnimatedContainer(
-            height: label3 == null
-                ? 0
-                : (MediaQuery.of(context).size.height - 100) / 2,
-            duration: Duration(milliseconds: kDefaultAnimationDuration),
-            curve: Curves.easeInOutCubic,
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Material(
-                  elevation: 4,
-                  color: Theme.of(context).scaffoldBackgroundColor,
-                  child: Container(
-                    child: Row(
-                      children: [
-                        Expanded(
-                            child:
-                                Text(label3 ?? '', style: textTheme.bodyText2)),
-                        IconButton(
-                          visualDensity: VisualDensity.compact,
-                          icon: Icon(Icons.clear),
-                          onPressed: () {
-                            store.dispatch(UpdateDashboardSelection(
-                              entityIds: null,
-                              entityType: entityType,
-                            ));
-                          },
-                        )
-                      ],
+          if (isDesktop(context))
+            AnimatedContainer(
+              height: label3 == null
+                  ? 0
+                  : (MediaQuery.of(context).size.height - 100) / 2,
+              duration: Duration(milliseconds: kDefaultAnimationDuration),
+              curve: Curves.easeInOutCubic,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Material(
+                    elevation: 4,
+                    color: Theme.of(context).scaffoldBackgroundColor,
+                    child: Container(
+                      child: Row(
+                        children: [
+                          Expanded(
+                              child: Text(label3 ?? '',
+                                  style: textTheme.bodyText2)),
+                          IconButton(
+                            visualDensity: VisualDensity.compact,
+                            icon: Icon(Icons.clear),
+                            onPressed: () {
+                              store.dispatch(UpdateDashboardSelection(
+                                entityIds: null,
+                                entityType: entityType,
+                              ));
+                            },
+                          )
+                        ],
+                      ),
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 16, vertical: 8),
+                      width: double.infinity,
                     ),
-                    padding:
-                        const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-                    width: double.infinity,
                   ),
-                ),
-                Expanded(
-                  child: ClipRRect(child: list3 ?? SizedBox()),
-                ),
-              ],
+                  Expanded(
+                    child: ClipRRect(child: list3 ?? SizedBox()),
+                  ),
+                ],
+              ),
             ),
-          ),
         ],
       ),
     );

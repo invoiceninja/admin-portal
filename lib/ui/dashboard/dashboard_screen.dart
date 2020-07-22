@@ -55,17 +55,27 @@ class _DashboardScreenState extends State<DashboardScreen>
     });
 
     final index = _tabs.contains(entityType) ? _tabs.indexOf(entityType) : 0;
+    int mainTabCount = 2;
 
-    _mainTabController = TabController(vsync: this, length: 2);
-    _sideTabController =
-        TabController(vsync: this, length: _tabs.length, initialIndex: index)
-          ..addListener(onTabListener);
+    if (state.prefState.isMobile) {
+      mainTabCount += _tabs.length;
+    } else {
+      _sideTabController =
+          TabController(vsync: this, length: _tabs.length, initialIndex: index)
+            ..addListener(onTabListener);
+    }
+
+    _mainTabController = TabController(vsync: this, length: mainTabCount);
     _scrollController =
         ScrollController(initialScrollOffset: index * kDashboardPanelHeight)
           ..addListener(onScrollListener);
   }
 
   void onScrollListener() {
+    if (isMobile(context)) {
+      return;
+    }
+
     final offset = _scrollController.position.pixels;
     final offsetIndex = ((offset + 120) / kDashboardPanelHeight).floor();
 
@@ -79,6 +89,10 @@ class _DashboardScreenState extends State<DashboardScreen>
   }
 
   void onTabListener() {
+    if (isMobile(context)) {
+      return;
+    }
+
     final index = _sideTabController.index;
     final offset = _scrollController.position.pixels;
     final offsetIndex = ((offset + 120) / kDashboardPanelHeight).floor();
@@ -106,6 +120,7 @@ class _DashboardScreenState extends State<DashboardScreen>
     final localization = AppLocalization.of(context);
     final store = StoreProvider.of<AppState>(context);
     final state = store.state;
+    final company = state.company;
 
     final mainScaffold = Scaffold(
       drawer: isMobile(context) || state.prefState.isMenuFloated
@@ -144,6 +159,7 @@ class _DashboardScreenState extends State<DashboardScreen>
         ],
         bottom: TabBar(
           controller: _mainTabController,
+          isScrollable: isMobile(context),
           tabs: [
             Tab(
               text: localization.overview,
@@ -151,6 +167,20 @@ class _DashboardScreenState extends State<DashboardScreen>
             Tab(
               text: localization.activity,
             ),
+            if (isMobile(context) &&
+                company.isModuleEnabled(EntityType.invoice))
+              Tab(
+                text: localization.invoices,
+              ),
+            if (isMobile(context) &&
+                company.isModuleEnabled(EntityType.payment))
+              Tab(
+                text: localization.payments,
+              ),
+            if (isMobile(context) && company.isModuleEnabled(EntityType.quote))
+              Tab(
+                text: localization.quotes,
+              ),
           ],
         ),
       ),
@@ -199,6 +229,8 @@ class _CustomTabBarView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final company = viewModel.state.company;
+
     if ((viewModel.filter ?? '').isNotEmpty) {
       return ListView.builder(
           itemCount: viewModel.filteredList.length,
@@ -233,6 +265,12 @@ class _CustomTabBarView extends StatelessWidget {
           onRefresh: () => viewModel.onRefreshed(context),
           child: DashboardActivity(viewModel: viewModel),
         ),
+        if (isMobile(context) && company.isModuleEnabled(EntityType.invoice))
+          InvoiceSidebar(),
+        if (isMobile(context) && company.isModuleEnabled(EntityType.payment))
+          PaymentSidebar(),
+        if (isMobile(context) && company.isModuleEnabled(EntityType.quote))
+          QuoteSidebar(),
       ],
     );
   }
