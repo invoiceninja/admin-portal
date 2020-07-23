@@ -99,7 +99,7 @@ class MenuDrawer extends StatelessWidget {
             .toList(),
         if (state.userCompany.isOwner)
           PopupMenuItem<String>(
-            value: null,
+            value: '',
             child: Row(
               children: <Widget>[
                 SizedBox(width: 2),
@@ -111,7 +111,7 @@ class MenuDrawer extends StatelessWidget {
           ),
       ],
       onSelected: (String companyId) {
-        if (companyId == null) {
+        if (companyId.isEmpty) {
           viewModel.onAddCompany(context);
         } else {
           final company =
