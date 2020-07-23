@@ -190,6 +190,9 @@ class _$InvoiceEntitySerializer implements StructuredSerializer<InvoiceEntity> {
       'partial',
       serializers.serialize(object.partial,
           specifiedType: const FullType(double)),
+      'total_taxes',
+      serializers.serialize(object.totalTaxes,
+          specifiedType: const FullType(double)),
       'partial_due_date',
       serializers.serialize(object.partialDueDate,
           specifiedType: const FullType(String)),
@@ -424,6 +427,10 @@ class _$InvoiceEntitySerializer implements StructuredSerializer<InvoiceEntity> {
           break;
         case 'partial':
           result.partial = serializers.deserialize(value,
+              specifiedType: const FullType(double)) as double;
+          break;
+        case 'total_taxes':
+          result.totalTaxes = serializers.deserialize(value,
               specifiedType: const FullType(double)) as double;
           break;
         case 'partial_due_date':
@@ -1120,6 +1127,8 @@ class _$InvoiceEntity extends InvoiceEntity {
   @override
   final double partial;
   @override
+  final double totalTaxes;
+  @override
   final String partialDueDate;
   @override
   final bool hasTasks;
@@ -1207,6 +1216,7 @@ class _$InvoiceEntity extends InvoiceEntity {
       this.taxRate3,
       this.isAmountDiscount,
       this.partial,
+      this.totalTaxes,
       this.partialDueDate,
       this.hasTasks,
       this.autoBill,
@@ -1307,6 +1317,9 @@ class _$InvoiceEntity extends InvoiceEntity {
     if (partial == null) {
       throw new BuiltValueNullFieldError('InvoiceEntity', 'partial');
     }
+    if (totalTaxes == null) {
+      throw new BuiltValueNullFieldError('InvoiceEntity', 'totalTaxes');
+    }
     if (partialDueDate == null) {
       throw new BuiltValueNullFieldError('InvoiceEntity', 'partialDueDate');
     }
@@ -1397,6 +1410,7 @@ class _$InvoiceEntity extends InvoiceEntity {
         taxRate3 == other.taxRate3 &&
         isAmountDiscount == other.isAmountDiscount &&
         partial == other.partial &&
+        totalTaxes == other.totalTaxes &&
         partialDueDate == other.partialDueDate &&
         hasTasks == other.hasTasks &&
         autoBill == other.autoBill &&
@@ -1450,7 +1464,7 @@ class _$InvoiceEntity extends InvoiceEntity {
                                                                 $jc(
                                                                     $jc(
                                                                         $jc(
-                                                                            $jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc(0, amount.hashCode), balance.hashCode), clientId.hashCode), statusId.hashCode), number.hashCode), discount.hashCode), poNumber.hashCode), date.hashCode), dueDate.hashCode), publicNotes.hashCode), privateNotes.hashCode), terms.hashCode), footer.hashCode), designId.hashCode), usesInclusiveTaxes.hashCode), taxName1.hashCode), taxRate1.hashCode), taxName2.hashCode), taxRate2.hashCode), taxName3.hashCode), taxRate3.hashCode), isAmountDiscount.hashCode), partial.hashCode), partialDueDate.hashCode), hasTasks.hashCode), autoBill.hashCode), customValue1.hashCode), customValue2.hashCode), customValue3.hashCode), customValue4.hashCode), customSurcharge1.hashCode), customSurcharge2.hashCode), customSurcharge3.hashCode), customSurcharge4.hashCode),
+                                                                            $jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc(0, amount.hashCode), balance.hashCode), clientId.hashCode), statusId.hashCode), number.hashCode), discount.hashCode), poNumber.hashCode), date.hashCode), dueDate.hashCode), publicNotes.hashCode), privateNotes.hashCode), terms.hashCode), footer.hashCode), designId.hashCode), usesInclusiveTaxes.hashCode), taxName1.hashCode), taxRate1.hashCode), taxName2.hashCode), taxRate2.hashCode), taxName3.hashCode), taxRate3.hashCode), isAmountDiscount.hashCode), partial.hashCode), totalTaxes.hashCode), partialDueDate.hashCode), hasTasks.hashCode), autoBill.hashCode), customValue1.hashCode), customValue2.hashCode), customValue3.hashCode), customValue4.hashCode), customSurcharge1.hashCode), customSurcharge2.hashCode), customSurcharge3.hashCode), customSurcharge4.hashCode),
                                                                                 customTaxes1.hashCode),
                                                                             customTaxes2.hashCode),
                                                                         customTaxes3.hashCode),
@@ -1498,6 +1512,7 @@ class _$InvoiceEntity extends InvoiceEntity {
           ..add('taxRate3', taxRate3)
           ..add('isAmountDiscount', isAmountDiscount)
           ..add('partial', partial)
+          ..add('totalTaxes', totalTaxes)
           ..add('partialDueDate', partialDueDate)
           ..add('hasTasks', hasTasks)
           ..add('autoBill', autoBill)
@@ -1629,6 +1644,10 @@ class InvoiceEntityBuilder
   double _partial;
   double get partial => _$this._partial;
   set partial(double partial) => _$this._partial = partial;
+
+  double _totalTaxes;
+  double get totalTaxes => _$this._totalTaxes;
+  set totalTaxes(double totalTaxes) => _$this._totalTaxes = totalTaxes;
 
   String _partialDueDate;
   String get partialDueDate => _$this._partialDueDate;
@@ -1790,6 +1809,7 @@ class InvoiceEntityBuilder
       _taxRate3 = _$v.taxRate3;
       _isAmountDiscount = _$v.isAmountDiscount;
       _partial = _$v.partial;
+      _totalTaxes = _$v.totalTaxes;
       _partialDueDate = _$v.partialDueDate;
       _hasTasks = _$v.hasTasks;
       _autoBill = _$v.autoBill;
@@ -1867,6 +1887,7 @@ class InvoiceEntityBuilder
               taxRate3: taxRate3,
               isAmountDiscount: isAmountDiscount,
               partial: partial,
+              totalTaxes: totalTaxes,
               partialDueDate: partialDueDate,
               hasTasks: hasTasks,
               autoBill: autoBill,
