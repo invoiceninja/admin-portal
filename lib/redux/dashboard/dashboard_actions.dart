@@ -3,7 +3,7 @@ import 'package:invoiceninja_flutter/data/models/dashboard_model.dart';
 import 'package:invoiceninja_flutter/data/models/entities.dart';
 import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 
-class ViewDashboard extends AbstractNavigatorAction implements PersistUI {
+class ViewDashboard extends AbstractNavigatorAction implements PersistUI, ClearEntityFilter {
   ViewDashboard({
     @required NavigatorState navigator,
     this.force = false,
