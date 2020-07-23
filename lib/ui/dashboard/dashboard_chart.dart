@@ -6,7 +6,6 @@ import 'package:invoiceninja_flutter/redux/dashboard/dashboard_selectors.dart';
 import 'package:charts_flutter/flutter.dart' as charts;
 import 'package:invoiceninja_flutter/utils/formatting.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
-import 'package:invoiceninja_flutter/utils/platforms.dart';
 
 class DashboardChart extends StatefulWidget {
   const DashboardChart({
@@ -60,9 +59,7 @@ class _DashboardChartState extends State<DashboardChart> {
       }
     });
 
-    if (isDesktop(context)) {
-      widget.onDateSelected(_selectedIndex, convertDateTimeToSqlDate(date));
-    }
+    widget.onDateSelected(_selectedIndex, convertDateTimeToSqlDate(date));
   }
 
   @override
