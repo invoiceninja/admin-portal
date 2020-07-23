@@ -62,6 +62,7 @@ class SettingsList extends StatelessWidget {
                   ? viewModel.onViewClientPressed
                   : viewModel.onViewGroupPressed,
               onClearPressed: viewModel.onClearSettingsFilterPressed,
+              isSettings: true,
             ),
           ),
         Container(
