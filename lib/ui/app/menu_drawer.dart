@@ -114,10 +114,10 @@ class MenuDrawer extends StatelessWidget {
         if (companyId == null) {
           viewModel.onAddCompany(context);
         } else {
-          /*
-          viewModel.onCompanyChanged(
-              context, value, viewModel.companies[int.parse(value)]);
-           */
+          final company =
+              state.companies.firstWhere((company) => company.id == companyId);
+          final index = state.companies.indexOf(company);
+          viewModel.onCompanyChanged(context, index, company);
         }
       },
     );
@@ -150,8 +150,9 @@ class MenuDrawer extends StatelessWidget {
               if (value == null) {
                 viewModel.onAddCompany(context);
               } else {
+                final index = int.parse(value);
                 viewModel.onCompanyChanged(
-                    context, value, state.companies[int.parse(value)]);
+                    context, index, state.companies[index]);
               }
             },
           );

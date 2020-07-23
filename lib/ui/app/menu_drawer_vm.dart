@@ -43,7 +43,7 @@ class MenuDrawerVM {
   final CompanyEntity selectedCompany;
   final UserEntity user;
   final String selectedCompanyIndex;
-  final Function(BuildContext context, String, CompanyEntity) onCompanyChanged;
+  final Function(BuildContext context, int, CompanyEntity) onCompanyChanged;
   final Function(BuildContext context) onAddCompany;
 
   final bool isLoading;
@@ -58,8 +58,7 @@ class MenuDrawerVM {
       selectedCompany: state.company,
       selectedCompanyIndex: state.uiState.selectedCompanyIndex.toString(),
       onCompanyChanged:
-          (BuildContext context, String companyIndex, CompanyEntity company) {
-        final index = int.parse(companyIndex);
+          (BuildContext context, int index, CompanyEntity company) {
 
         if (index == state.uiState.selectedCompanyIndex) {
           return;
