@@ -203,10 +203,11 @@ String _parseError(int code, String response) {
 
   try {
     final dynamic jsonResponse = json.decode(response);
+
     message = jsonResponse['message'] ?? jsonResponse;
 
     if (jsonResponse['errors'] != null &&
-        (jsonResponse['errors'] as List).isNotEmpty) {
+        (jsonResponse['errors'] as Map).isNotEmpty) {
       message += '\n';
       try {
         jsonResponse['errors'].forEach((String field, dynamic errors) {
@@ -214,13 +215,11 @@ String _parseError(int code, String response) {
               .forEach((dynamic error) => message += '\n • $error');
         });
       } catch (error) {
-        print('parse error');
-        print(error);
-        // do nothing
+        print('Failed to parse error: $error');
       }
     }
   } catch (error) {
-    // do nothing
+    print('Failed to parse error: $error');
   }
 
   return '$code: $message';
