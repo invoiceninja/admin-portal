@@ -29,7 +29,13 @@ class DashboardScreenBuilder extends StatelessWidget {
       //onInit: (Store<AppState> store) => isMobile(context) ? store.dispatch(LoadClients()) : null,
       converter: DashboardVM.fromStore,
       builder: (context, viewModel) {
-        return DashboardScreen(viewModel: viewModel);
+        final state = viewModel.state;
+        final company = state.company;
+        return DashboardScreen(
+          viewModel: viewModel,
+          key: ValueKey(
+              '__${company.enabledModules}_${state.prefState.isDesktop}__'),
+        );
       },
     );
   }
