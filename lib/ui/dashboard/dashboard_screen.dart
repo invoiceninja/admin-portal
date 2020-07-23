@@ -88,7 +88,7 @@ class _DashboardScreenState extends State<DashboardScreen>
   }
 
   void onTabListener() {
-    if (isMobile(context)) {
+    if (isMobile(context) || _mainTabController.index != 0) {
       return;
     }
 

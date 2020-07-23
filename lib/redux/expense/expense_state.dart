@@ -24,6 +24,14 @@ abstract class ExpenseState
   @memoized
   int get hashCode;
 
+  ExpenseEntity get(String expenseId) {
+    if (map.containsKey(expenseId)) {
+      return map[expenseId];
+    } else {
+      return ExpenseEntity(id: expenseId);
+    }
+  }
+
   BuiltMap<String, ExpenseEntity> get map;
   BuiltList<String> get list;
 

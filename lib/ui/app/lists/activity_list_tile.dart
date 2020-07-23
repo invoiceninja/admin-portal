@@ -24,16 +24,24 @@ class ActivityListTile extends StatelessWidget {
     final store = StoreProvider.of<AppState>(context);
     final state = store.state;
 
+    final user = state.userState.map[activity.userId];
+    final client = state.clientState.map[activity.clientId];
+    final invoice = state.invoiceState.map[activity.invoiceId];
+    final quote = state.quoteState.map[activity.invoiceId];
+    final payment = state.paymentState.map[activity.paymentId];
+    final task = state.taskState.map[activity.taskId];
+    final expense = state.expenseState.map[activity.expenseId];
+
     String title = localization.lookup('activity_${activity.activityTypeId}');
     title = activity.getDescription(
       title,
-      user: state.userState.map[activity.userId],
-      client: state.clientState.map[activity.clientId],
-      invoice: state.invoiceState.map[activity.invoiceId],
-      quote: state.quoteState.map[activity.invoiceId],
-      payment: state.paymentState.map[activity.paymentId],
-      task: state.taskState.map[activity.taskId],
-      expense: state.expenseState.map[activity.expenseId],
+      user: user,
+      client: client,
+      invoice: invoice,
+      quote: quote,
+      payment: payment,
+      task: task,
+      expense: expense,
     );
 
     return ListTile(
@@ -45,9 +53,11 @@ class ActivityListTile extends StatelessWidget {
               switch (activity.entityType) {
                 case EntityType.task:
                   viewEntityById(
-                      context: context,
-                      entityId: activity.taskId,
-                      entityType: EntityType.task);
+                    context: context,
+                    entityId: activity.taskId,
+                    entityType: EntityType.task,
+                    filterEntity: client,
+                  );
                   break;
                 case EntityType.client:
                   viewEntityById(
@@ -57,33 +67,43 @@ class ActivityListTile extends StatelessWidget {
                   break;
                 case EntityType.invoice:
                   viewEntityById(
-                      context: context,
-                      entityId: activity.invoiceId,
-                      entityType: EntityType.invoice);
+                    context: context,
+                    entityId: activity.invoiceId,
+                    entityType: EntityType.invoice,
+                    filterEntity: client,
+                  );
                   break;
                 case EntityType.quote:
                   viewEntityById(
-                      context: context,
-                      entityId: activity.invoiceId,
-                      entityType: EntityType.quote);
+                    context: context,
+                    entityId: activity.invoiceId,
+                    entityType: EntityType.quote,
+                    filterEntity: client,
+                  );
                   break;
                 case EntityType.credit:
                   viewEntityById(
-                      context: context,
-                      entityId: activity.creditId,
-                      entityType: EntityType.credit);
+                    context: context,
+                    entityId: activity.creditId,
+                    entityType: EntityType.credit,
+                    filterEntity: client,
+                  );
                   break;
                 case EntityType.payment:
                   viewEntityById(
-                      context: context,
-                      entityId: activity.paymentId,
-                      entityType: EntityType.payment);
+                    context: context,
+                    entityId: activity.paymentId,
+                    entityType: EntityType.payment,
+                    filterEntity: client,
+                  );
                   break;
                 case EntityType.expense:
                   viewEntityById(
-                      context: context,
-                      entityId: activity.expenseId,
-                      entityType: EntityType.expense);
+                    context: context,
+                    entityId: activity.expenseId,
+                    entityType: EntityType.expense,
+                    filterEntity: client,
+                  );
                   break;
               }
             },

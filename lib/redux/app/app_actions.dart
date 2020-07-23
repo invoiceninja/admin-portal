@@ -189,6 +189,10 @@ void filterByEntity({
   @required BuildContext context,
   @required BaseEntity entity,
 }) {
+  if (entity.isNew) {
+    return;
+  }
+
   final store = StoreProvider.of<AppState>(context);
   store.dispatch(FilterByEntity(
     entityId: entity.id,
@@ -297,15 +301,14 @@ void viewEntityById({
   final navigator = Navigator.of(context);
   final uiState = store.state.uiState;
 
-  if (filterEntity != null) {
-    if (uiState.filterEntityType != filterEntity.entityType ||
-        uiState.filterEntityId != filterEntity.id) {
-      store.dispatch(ClearEntitySelection(entityType: entityType));
-      store.dispatch(FilterByEntity(
-        entityId: filterEntity.id,
-        entityType: filterEntity.entityType,
-      ));
-    }
+  if (filterEntity != null &&
+      (uiState.filterEntityType != filterEntity.entityType ||
+          uiState.filterEntityId != filterEntity.id)) {
+    store.dispatch(ClearEntitySelection(entityType: entityType));
+    store.dispatch(FilterByEntity(
+      entityId: filterEntity.id,
+      entityType: filterEntity.entityType,
+    ));
   }
 
   if (entityId != null &&

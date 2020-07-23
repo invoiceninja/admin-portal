@@ -90,12 +90,13 @@ abstract class InvoiceEntity extends Object
       id: id ?? BaseEntity.nextId,
       entityType: entityType ?? EntityType.invoice,
       isChanged: false,
-      amount: 0.0,
-      balance: 0.0,
+      amount: 0,
+      balance: 0,
       clientId: client?.id ?? '',
       statusId: '',
       number: '',
-      discount: 0.0,
+      discount: 0,
+      totalTaxes: 0,
       poNumber: '',
       date: convertDateTimeToSqlDate(),
       dueDate: '',
@@ -255,6 +256,9 @@ abstract class InvoiceEntity extends Object
   bool get isAmountDiscount;
 
   double get partial;
+
+  @BuiltValueField(wireName: 'total_taxes')
+  double get totalTaxes;
 
   @BuiltValueField(wireName: 'partial_due_date')
   String get partialDueDate;

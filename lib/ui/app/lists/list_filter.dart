@@ -11,12 +11,14 @@ class ListFilterMessage extends StatelessWidget {
     @required this.filterEntityType,
     @required this.onPressed,
     @required this.onClearPressed,
+    this.isSettings = false,
   });
 
   final String filterEntityId;
   final EntityType filterEntityType;
   final Function(BuildContext) onPressed;
   final Function() onClearPressed;
+  final bool isSettings;
 
   @override
   Widget build(BuildContext context) {
@@ -27,10 +29,12 @@ class ListFilterMessage extends StatelessWidget {
       color: Colors.orange,
       elevation: 6.0,
       child: FilterListTile(
-          entityType: filterEntityType,
-          entity: filteredEntity,
-          onPressed: onPressed,
-          onClearPressed: onClearPressed),
+        entityType: filterEntityType,
+        entity: filteredEntity,
+        onPressed: onPressed,
+        onClearPressed: onClearPressed,
+        isSettings: isSettings,
+      ),
     );
   }
 }
@@ -41,16 +45,35 @@ class FilterListTile extends StatelessWidget {
     @required this.entity,
     @required this.onPressed,
     @required this.onClearPressed,
+    this.isSettings = false,
   });
 
   final EntityType entityType;
   final BaseEntity entity;
   final Function(BuildContext) onPressed;
   final Function() onClearPressed;
+  final bool isSettings;
 
   @override
   Widget build(BuildContext context) {
     final localization = AppLocalization.of(context);
+
+    String title;
+    String subtitle;
+
+    if (isSettings) {
+      subtitle = entity.listDisplayName;
+      if (entityType == EntityType.client) {
+        title = localization.clientSettings;
+      } else if (entityType == EntityType.group) {
+        title = localization.groupSettings;
+      }
+    } else {
+      title = localization.filteredBy
+          .replaceFirst(':value', entity.listDisplayName);
+      subtitle = localization.lookup(entityType.toString());
+    }
+
     return ClipRect(
       child: Padding(
         padding: const EdgeInsets.only(top: 2),
@@ -68,9 +91,8 @@ class FilterListTile extends StatelessWidget {
               leading: constraints.maxWidth > 250
                   ? Icon(getEntityIcon(entityType))
                   : null,
-              title: Text(localization.filteredBy
-                  .replaceFirst(':value', entity.listDisplayName)),
-              subtitle: Text(localization.lookup(entityType.toString())),
+              title: Text(title),
+              subtitle: Text(subtitle),
               onTap: () => onPressed(context),
               trailing: IconButton(
                 icon: Icon(Icons.clear),
