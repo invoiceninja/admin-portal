@@ -19,11 +19,13 @@ class UpdateDashboardSettings implements PersistUI {
     this.settings,
     this.offset,
     this.currencyId,
+    this.includeTaxes,
   });
 
   DashboardSettings settings;
   int offset;
   String currencyId;
+  bool includeTaxes;
 }
 
 class UpdateDashboardSelection implements PersistUI {

@@ -33,7 +33,8 @@ class DashboardScreenBuilder extends StatelessWidget {
         final company = state.company;
         return DashboardScreen(
           viewModel: viewModel,
-          key: ValueKey('__${company.enabledModules}_${state.prefState.isDesktop}__'),
+          key: ValueKey(
+              '__${company.enabledModules}_${state.prefState.isDesktop}__'),
         );
       },
     );
@@ -55,6 +56,7 @@ class DashboardVM {
     @required this.onSelectionChanged,
     @required this.onOffsetChanged,
     @required this.onCurrencyChanged,
+    @required this.onTaxesChanged,
   });
 
   static DashboardVM fromStore(Store<AppState> store) {
@@ -87,6 +89,8 @@ class DashboardVM {
           store.dispatch(UpdateDashboardEntityType(entityType: entityType)),
       onSettingsChanged: (DashboardSettings settings) =>
           store.dispatch(UpdateDashboardSettings(settings: settings)),
+      onTaxesChanged: (value) =>
+          store.dispatch(UpdateDashboardSettings(includeTaxes: value)),
       onSelectionChanged: (entityType, entityIds) {
         store.dispatch(UpdateDashboardSelection(
           entityType: entityType,
@@ -115,6 +119,7 @@ class DashboardVM {
   final Function(EntityType) onEntityTypeChanged;
   final Function(int) onOffsetChanged;
   final Function(String) onCurrencyChanged;
+  final Function(bool) onTaxesChanged;
 
 /*
   @override

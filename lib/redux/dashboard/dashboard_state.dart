@@ -48,6 +48,7 @@ abstract class DashboardUISettings
       compareCustomEndDate: convertDateTimeToSqlDate(),
       offset: 0,
       currencyId: kCurrencyAll,
+      includeTaxes: true,
     );
   }
 
@@ -74,6 +75,8 @@ abstract class DashboardUISettings
   int get offset;
 
   String get currencyId;
+
+  bool get includeTaxes;
 
   static Serializer<DashboardUISettings> get serializer =>
       _$dashboardUISettingsSerializer;

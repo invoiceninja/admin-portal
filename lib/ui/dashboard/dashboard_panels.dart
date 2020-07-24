@@ -54,22 +54,21 @@ class DashboardPanels extends StatelessWidget {
       color: Theme.of(context).cardColor,
       elevation: 6.0,
       child: Padding(
-        padding: const EdgeInsets.only(top: 16),
+        padding: const EdgeInsets.only(top: 16, left: 8, right: 8),
         child: Row(
           children: <Widget>[
-            SizedBox(width: 8.0),
             IconButton(
               icon: Icon(Icons.navigate_before),
               onPressed: () => viewModel.onOffsetChanged(1),
             ),
-            SizedBox(width: 8.0),
+            SizedBox(width: 8),
             IconButton(
               icon: Icon(Icons.navigate_next),
               onPressed: viewModel.isNextEnabled
                   ? () => viewModel.onOffsetChanged(-1)
                   : null,
             ),
-            SizedBox(width: 16),
+            SizedBox(width: 8),
             Expanded(
               child: InkWell(
                 child: Row(
@@ -92,9 +91,31 @@ class DashboardPanels extends StatelessWidget {
                 onTap: () => _showDateOptions(context),
               ),
             ),
+            if (company.hasTaxes) ...[
+              SizedBox(
+                  width: 8
+              ),
+              DropdownButtonHideUnderline(
+                child: DropdownButton<bool>(
+                  items: [
+                    DropdownMenuItem(
+                      child: Text(localization.gross),
+                      value: true,
+                    ),
+                    DropdownMenuItem(
+                      child: Text(localization.net),
+                      value: false,
+                    ),
+                  ],
+                  onChanged: (value) =>
+                      viewModel.onTaxesChanged(value),
+                  value: settings.includeTaxes,
+                ),
+              ),
+            ],
             if (hasMultipleCurrencies) ...[
               SizedBox(
-                width: 12,
+                width: 8
               ),
               DropdownButtonHideUnderline(
                 child: DropdownButton<String>(
@@ -111,34 +132,7 @@ class DashboardPanels extends StatelessWidget {
                   value: settings.currencyId,
                 ),
               ),
-              SizedBox(
-                width: 12,
-              ),
-            ]
-            /*
-              Row(
-                mainAxisSize: MainAxisSize.max,
-                children: <Widget>[
-                  SizedBox(width: 8.0),
-                  DropdownButtonHideUnderline(
-                    child: DropdownButton<String>(
-                      items: memoizedGetCurrencyIds(company, clientMap, groupMap)
-                          .map((currencyId) => DropdownMenuItem<String>(
-                                child: Text(currencyId == kCurrencyAll
-                                    ? localization.all
-                                    : viewModel.currencyMap[currencyId]?.code),
-                                value: currencyId,
-                              ))
-                          .toList(),
-                      onChanged: (currencyId) =>
-                          viewModel.onCurrencyChanged(currencyId),
-                      value: state.dashboardUIState.currencyId,
-                    ),
-                  ),
-                  SizedBox(width: 16.0),
-                ],
-              ),
-               */
+            ],
           ],
         ),
       ),
