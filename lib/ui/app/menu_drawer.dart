@@ -486,7 +486,7 @@ class SidebarFooter extends StatelessWidget {
           if (state.isMenuCollapsed) ...[
             Expanded(child: SizedBox())
           ] else ...[
-            if (!Config.DEMO_MODE)
+            if (!Config.DEMO_MODE && !state.isDemo)
               if (!account.isCronEnabled)
                 IconButton(
                   icon: Icon(
