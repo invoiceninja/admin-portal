@@ -189,9 +189,8 @@ class ReportsScreen extends StatelessWidget {
             : null,
         appBar: AppBar(
           centerTitle: false,
-          leading: isMobile(context) || state.prefState.isMenuFloated
-              ? null
-              : SizedBox(),
+          automaticallyImplyLeading: isMobile(context) ||
+              state.prefState.isMenuFloated,
           title: Row(
             mainAxisSize: MainAxisSize.min,
             children: <Widget>[

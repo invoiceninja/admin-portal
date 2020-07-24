@@ -33,10 +33,6 @@ enum InvoiceReportFields {
   custom_value2,
   custom_value3,
   custom_value4,
-  custom_taxes1,
-  custom_taxes2,
-  custom_taxes3,
-  custom_taxes4,
   has_expenses,
   custom_surcharge1,
   custom_surcharge2,
@@ -45,6 +41,7 @@ enum InvoiceReportFields {
   updated_at,
   archived_at,
   is_deleted,
+  tax_amount,
 }
 
 var memoizedInvoiceReport = memo6((
@@ -173,18 +170,6 @@ ReportResult invoiceReport(
         case InvoiceReportFields.custom_value4:
           value = invoice.customValue4;
           break;
-        case InvoiceReportFields.custom_taxes1:
-          value = invoice.customTaxes1;
-          break;
-        case InvoiceReportFields.custom_taxes2:
-          value = invoice.customTaxes2;
-          break;
-        case InvoiceReportFields.custom_taxes3:
-          value = invoice.customTaxes3;
-          break;
-        case InvoiceReportFields.custom_taxes4:
-          value = invoice.customTaxes4;
-          break;
         case InvoiceReportFields.has_expenses:
           value = invoice.hasExpenses;
           break;
@@ -208,6 +193,9 @@ ReportResult invoiceReport(
           break;
         case InvoiceReportFields.is_deleted:
           value = invoice.isDeleted;
+          break;
+        case InvoiceReportFields.tax_amount:
+          value = invoice.taxAmount;
           break;
       }
 
