@@ -71,6 +71,8 @@ class EntityPresenter {
         'tax_rate',
         'tax_amount',
         'tax_paid',
-        'payment_amount'
+        'payment_amount',
+        'net_amount',
+        'net_balance',
       ].contains(field);
 }

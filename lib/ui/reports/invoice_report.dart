@@ -42,6 +42,8 @@ enum InvoiceReportFields {
   archived_at,
   is_deleted,
   tax_amount,
+  net_amount,
+  net_balance,
 }
 
 var memoizedInvoiceReport = memo6((
@@ -197,6 +199,13 @@ ReportResult invoiceReport(
         case InvoiceReportFields.tax_amount:
           value = invoice.taxAmount;
           break;
+        case InvoiceReportFields.net_amount:
+          value = invoice.amount - invoice.taxAmount;
+          break;
+        case InvoiceReportFields.net_balance:
+          value = invoice.balance -
+              (invoice.taxAmount * invoice.balance / invoice.amount);
+          break;
       }
 
       if (!ReportResult.matchField(
@@ -211,11 +220,11 @@ ReportResult invoiceReport(
       if (value.runtimeType == bool) {
         row.add(invoice.getReportBool(value: value));
       } else if (column == InvoiceReportFields.age) {
-        row.add(invoice.getReportAge(
-            value: value, currencyId: client.settings.currencyId));
+        row.add(
+            invoice.getReportAge(value: value, currencyId: client.currencyId));
       } else if (value.runtimeType == double || value.runtimeType == int) {
         row.add(invoice.getReportNumber(
-            value: value, currencyId: client.settings.currencyId));
+            value: value, currencyId: client.currencyId));
       } else {
         row.add(invoice.getReportString(value: value));
       }
