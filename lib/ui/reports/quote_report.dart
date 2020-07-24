@@ -38,6 +38,7 @@ enum QuoteReportFields {
   is_deleted,
   is_approved,
   tax_amount,
+  net_amount,
 }
 
 var memoizedQuoteReport = memo7((
@@ -187,6 +188,9 @@ ReportResult quoteReport(
           break;
         case QuoteReportFields.tax_amount:
           value = quote.taxAmount;
+          break;
+        case QuoteReportFields.net_amount:
+          value = quote.netAmount;
           break;
       }
 

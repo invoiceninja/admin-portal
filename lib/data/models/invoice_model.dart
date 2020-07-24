@@ -343,6 +343,10 @@ abstract class InvoiceEntity extends Object
 
   bool get hasInvoice => '${invoiceId ?? ''}'.isNotEmpty;
 
+  double get netAmount => amount - taxAmount;
+
+  double get netBalance => balance - (taxAmount * balance / amount);
+
   @override
   bool get isEditable {
     if (isDeleted) {

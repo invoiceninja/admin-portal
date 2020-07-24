@@ -40,6 +40,8 @@ enum CreditReportFields {
   archived_at,
   is_deleted,
   tax_amount,
+  net_amount,
+  net_remaining,
 }
 
 var memoizedCreditReport = memo6((
@@ -190,6 +192,12 @@ ReportResult creditReport(
           break;
         case CreditReportFields.tax_amount:
           value = credit.taxAmount;
+          break;
+        case CreditReportFields.net_amount:
+          value = credit.netAmount;
+          break;
+        case CreditReportFields.net_remaining:
+          value = credit.netBalance;
           break;
       }
 

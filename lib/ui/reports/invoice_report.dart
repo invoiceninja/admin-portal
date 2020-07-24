@@ -200,11 +200,10 @@ ReportResult invoiceReport(
           value = invoice.taxAmount;
           break;
         case InvoiceReportFields.net_amount:
-          value = invoice.amount - invoice.taxAmount;
+          value = invoice.netAmount;
           break;
         case InvoiceReportFields.net_balance:
-          value = invoice.balance -
-              (invoice.taxAmount * invoice.balance / invoice.amount);
+          value = invoice.netBalance;
           break;
       }
 
