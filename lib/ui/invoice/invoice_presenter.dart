@@ -33,6 +33,7 @@ class InvoicePresenter extends EntityPresenter {
       InvoiceFields.customValue2,
       InvoiceFields.customValue3,
       InvoiceFields.customValue4,
+      InvoiceFields.taxAmount,
     ];
   }
 
@@ -94,6 +95,9 @@ class InvoicePresenter extends EntityPresenter {
         return Text(invoice.poNumber);
       case InvoiceFields.documents:
         return Text('${invoice.documents.length}');
+      case InvoiceFields.taxAmount:
+        return Text(formatNumber(invoice.taxAmount, context,
+            clientId: invoice.clientId));
     }
 
     return super.getField(field: field, context: context);

@@ -64,4 +64,5 @@ class CreditFields {
   static const String archivedAt = 'archived_at';
   static const String isDeleted = 'is_deleted';
   static const String documents = 'documents';
+  static const String taxAmount = 'tax_amount';
 }
