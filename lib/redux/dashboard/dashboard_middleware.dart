@@ -25,15 +25,11 @@ Middleware<AppState> _createViewDashboard() {
       return;
     }
 
-    if (store.state.staticState.isStale) {
+    next(action);
+
+    if (store.state.isStale) {
       store.dispatch(RefreshData());
     }
-
-    /*
-    if (store.state.dashboardState.isStale) {
-      store.dispatch(LoadActivities());
-    }
-     */
 
     store.dispatch(UpdateCurrentRoute(DashboardScreenBuilder.route));
 
@@ -41,7 +37,5 @@ Middleware<AppState> _createViewDashboard() {
       Navigator.of(action.context).pushNamedAndRemoveUntil(
           DashboardScreenBuilder.route, (Route<dynamic> route) => false);
     }
-
-    next(action);
   };
 }
