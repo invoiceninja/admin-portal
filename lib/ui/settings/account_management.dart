@@ -128,6 +128,7 @@ class _AccountOverview extends StatelessWidget {
     final localization = AppLocalization.of(context);
     final state = viewModel.state;
     final account = state.account;
+    final company = state.company;
     final companies = state.companies;
 
     return ListView(
@@ -261,8 +262,11 @@ class _AccountOverview extends StatelessWidget {
                   ? localization.cancelAccountMessage
                   : localization.deleteCompanyMessage;
 
-              message =
-                  message.replaceFirst(':company', state.company.displayName);
+              message = message.replaceFirst(
+                  ':company',
+                  company.displayName.isEmpty
+                      ? localization.untitledCompany
+                      : company.displayName);
 
               confirmCallback(
                   context: context,
