@@ -6,6 +6,7 @@ import 'package:invoiceninja_flutter/redux/product/product_state.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:built_value/built_value.dart';
 import 'package:built_value/serializer.dart';
+
 // STARTER: import - do not remove comment
 import 'package:invoiceninja_flutter/redux/webhook/webhook_state.dart';
 import 'package:invoiceninja_flutter/redux/token/token_state.dart';
@@ -122,7 +123,6 @@ abstract class UserCompanyState
 
   bool get isLoaded => lastUpdated != null && lastUpdated > 0;
 
-  //factory CompanyState([void updates(CompanyStateBuilder b)]) = _$CompanyState;
   static Serializer<UserCompanyState> get serializer =>
       _$userCompanyStateSerializer;
 }

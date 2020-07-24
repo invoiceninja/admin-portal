@@ -1,5 +1,5 @@
 import 'package:built_collection/built_collection.dart';
-import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
+import 'package:invoiceninja_flutter/redux/credit/credit_actions.dart';
 import 'package:invoiceninja_flutter/redux/reports/reports_actions.dart';
 import 'package:invoiceninja_flutter/redux/settings/settings_actions.dart';
 import 'package:redux/redux.dart';
@@ -16,7 +16,6 @@ import 'package:invoiceninja_flutter/redux/task/task_reducer.dart';
 import 'package:invoiceninja_flutter/redux/project/project_reducer.dart';
 import 'package:invoiceninja_flutter/redux/payment/payment_reducer.dart';
 import 'package:invoiceninja_flutter/redux/quote/quote_reducer.dart';
-
 // STARTER: import - do not remove comment
 import 'package:invoiceninja_flutter/redux/webhook/webhook_reducer.dart';
 import 'package:invoiceninja_flutter/redux/token/token_reducer.dart';
@@ -185,7 +184,7 @@ Reducer<int> lastUpdatedReducer = combineReducers([
         ? state
         : DateTime.now().millisecondsSinceEpoch;
   }),
-  TypedReducer<int, PersistData>((state, action) {
+  TypedReducer<int, LoadCreditsSuccess>((state, action) {
     return DateTime.now().millisecondsSinceEpoch;
   }),
 ]);
