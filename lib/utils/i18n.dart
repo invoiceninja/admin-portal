@@ -38919,6 +38919,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
   String get gross =>
       _localizedValues[localeCode]['gross'] ?? '';
 
+
   String lookup(String key) {
     final lookupKey = toSnakeCase(key);
     return _localizedValues[localeCode][lookupKey] ??

@@ -13,6 +13,7 @@ import 'package:invoiceninja_flutter/ui/dashboard/dashboard_chart.dart';
 import 'package:invoiceninja_flutter/ui/dashboard/dashboard_screen_vm.dart';
 import 'package:invoiceninja_flutter/utils/formatting.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
+import 'package:invoiceninja_flutter/utils/platforms.dart';
 
 class DashboardPanels extends StatelessWidget {
   const DashboardPanels({
@@ -60,6 +61,7 @@ class DashboardPanels extends StatelessWidget {
             IconButton(
               icon: Icon(Icons.navigate_before),
               onPressed: () => viewModel.onOffsetChanged(1),
+              visualDensity: VisualDensity.compact,
             ),
             SizedBox(width: 8),
             IconButton(
@@ -67,6 +69,7 @@ class DashboardPanels extends StatelessWidget {
               onPressed: viewModel.isNextEnabled
                   ? () => viewModel.onOffsetChanged(-1)
                   : null,
+              visualDensity: VisualDensity.compact,
             ),
             SizedBox(width: 8),
             Expanded(
@@ -91,48 +94,45 @@ class DashboardPanels extends StatelessWidget {
                 onTap: () => _showDateOptions(context),
               ),
             ),
-            if (company.hasTaxes) ...[
-              SizedBox(
-                  width: 8
-              ),
-              DropdownButtonHideUnderline(
-                child: DropdownButton<bool>(
-                  items: [
-                    DropdownMenuItem(
-                      child: Text(localization.gross),
-                      value: true,
-                    ),
-                    DropdownMenuItem(
-                      child: Text(localization.net),
-                      value: false,
-                    ),
-                  ],
-                  onChanged: (value) =>
-                      viewModel.onTaxesChanged(value),
-                  value: settings.includeTaxes,
+            if (company.hasTaxes)
+              Padding(
+                padding: const EdgeInsets.only(left: 16),
+                child: DropdownButtonHideUnderline(
+                  child: DropdownButton<bool>(
+                    items: [
+                      DropdownMenuItem(
+                        child: Text(localization.gross),
+                        value: true,
+                      ),
+                      DropdownMenuItem(
+                        child: Text(localization.net),
+                        value: false,
+                      ),
+                    ],
+                    onChanged: (value) => viewModel.onTaxesChanged(value),
+                    value: settings.includeTaxes,
+                  ),
                 ),
               ),
-            ],
-            if (hasMultipleCurrencies) ...[
-              SizedBox(
-                width: 8
-              ),
-              DropdownButtonHideUnderline(
-                child: DropdownButton<String>(
-                  items: memoizedGetCurrencyIds(company, clientMap, groupMap)
-                      .map((currencyId) => DropdownMenuItem<String>(
-                            child: Text(currencyId == kCurrencyAll
-                                ? localization.all
-                                : viewModel.currencyMap[currencyId]?.code),
-                            value: currencyId,
-                          ))
-                      .toList(),
-                  onChanged: (currencyId) =>
-                      viewModel.onCurrencyChanged(currencyId),
-                  value: settings.currencyId,
+            if (hasMultipleCurrencies)
+              Padding(
+                padding: const EdgeInsets.only(left: 16),
+                child: DropdownButtonHideUnderline(
+                  child: DropdownButton<String>(
+                    items: memoizedGetCurrencyIds(company, clientMap, groupMap)
+                        .map((currencyId) => DropdownMenuItem<String>(
+                              child: Text(currencyId == kCurrencyAll
+                                  ? localization.all
+                                  : viewModel.currencyMap[currencyId]?.code),
+                              value: currencyId,
+                            ))
+                        .toList(),
+                    onChanged: (currencyId) =>
+                        viewModel.onCurrencyChanged(currencyId),
+                    value: settings.currencyId,
+                  ),
                 ),
               ),
-            ],
           ],
         ),
       ),
