@@ -71,7 +71,7 @@ class DashboardPanels extends StatelessWidget {
                   : null,
               visualDensity: VisualDensity.compact,
             ),
-            SizedBox(width: 8),
+            SizedBox(width: 16),
             Expanded(
               child: InkWell(
                 child: Row(
