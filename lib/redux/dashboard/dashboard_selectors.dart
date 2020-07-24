@@ -109,8 +109,10 @@ List<ChartDataGroup> _chartInvoices({
         outstandingData.entityMap[date] = [];
       }
 
-      double amount = invoice.amount;
-      double balance = invoice.balance;
+      double amount =
+          settings.includeTaxes ? invoice.amount : invoice.netAmount;
+      double balance =
+          settings.includeTaxes ? invoice.balance : invoice.netBalance;
 
       // Handle "All"
       if (settings.currencyId == kCurrencyAll &&
@@ -255,7 +257,7 @@ List<ChartDataGroup> chartQuotes({
         unapprovedData.entityMap[date] = [];
       }
 
-      double amount = quote.amount;
+      double amount = settings.includeTaxes ? quote.amount : quote.netAmount;
 
       // Handle "All"
       if (settings.currencyId == kCurrencyAll &&
@@ -269,11 +271,11 @@ List<ChartDataGroup> chartQuotes({
       activeData.entityMap[date].add(quote.id);
 
       if (quote.isApproved) {
-        totals[STATUS_APPROVED][quote.date] += quote.amount;
+        totals[STATUS_APPROVED][quote.date] += amount;
         counts[STATUS_APPROVED]++;
         approvedData.entityMap[date].add(quote.id);
       } else {
-        totals[STATUS_UNAPPROVED][quote.date] += quote.amount;
+        totals[STATUS_UNAPPROVED][quote.date] += amount;
         counts[STATUS_UNAPPROVED]++;
         unapprovedData.entityMap[date].add(quote.id);
       }
