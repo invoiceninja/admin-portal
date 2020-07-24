@@ -559,15 +559,12 @@ abstract class AppState implements Built<AppState, AppStateBuilder> {
   }
 
   AppEnvironment get environment {
-    if (isHosted) {
-      final url = cleanApiUrl(authState.url);
-      if (url == kAppDemoUrl) {
-        return AppEnvironment.demo;
-      } else if (url == kAppStagingUrl) {
-        return AppEnvironment.staging;
-      } else {
-        return AppEnvironment.hosted;
-      }
+    if (isDemo) {
+      return AppEnvironment.demo;
+    } else if (isStaging) {
+      return AppEnvironment.staging;
+    } else if (isHosted) {
+      return AppEnvironment.hosted;
     } else {
       return AppEnvironment.selfhosted;
     }
@@ -578,6 +575,10 @@ abstract class AppState implements Built<AppState, AppStateBuilder> {
   bool get isHosted => authState.isHosted ?? false;
 
   bool get isSelfHosted => authState.isSelfHost ?? false;
+
+  bool get isDemo => cleanApiUrl(authState.url) == kAppDemoUrl;
+
+  bool get isStaging => cleanApiUrl(authState.url) == kAppStagingUrl;
 
   bool get isWhiteLabeled => isSelfHosted || account.plan == kPlanWhiteLabel;
 
