@@ -9,7 +9,7 @@ class Constants {
 }
 
 // TODO remove version once #46609 is fixed
-const String kClientVersion = '5.0.14';
+const String kClientVersion = '5.0.15';
 const String kMinServerVersion = '5.0.4';
 
 const String kSiteUrl = 'https://invoiceninja.com';
@@ -48,7 +48,6 @@ const String kSharedPrefToken = 'checksum';
 
 // TODO remove these
 const String kSharedPrefAddDocumentsToInvoice = 'add_documents_to_invoice';
-const String kSharedPrefEmailPayment = 'email_payment';
 const String kSharedPrefAutoStartTasks = 'auto_start_tasks';
 
 const String kProductPlanPro = 'v1_pro_yearly';

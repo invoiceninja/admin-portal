@@ -115,6 +115,9 @@ class _$DashboardUISettingsSerializer
       'currencyId',
       serializers.serialize(object.currencyId,
           specifiedType: const FullType(String)),
+      'includeTaxes',
+      serializers.serialize(object.includeTaxes,
+          specifiedType: const FullType(bool)),
     ];
 
     return result;
@@ -168,6 +171,10 @@ class _$DashboardUISettingsSerializer
         case 'currencyId':
           result.currencyId = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String;
+          break;
+        case 'includeTaxes':
+          result.includeTaxes = serializers.deserialize(value,
+              specifiedType: const FullType(bool)) as bool;
           break;
       }
     }
@@ -334,6 +341,8 @@ class _$DashboardUISettings extends DashboardUISettings {
   final int offset;
   @override
   final String currencyId;
+  @override
+  final bool includeTaxes;
 
   factory _$DashboardUISettings(
           [void Function(DashboardUISettingsBuilder) updates]) =>
@@ -348,7 +357,8 @@ class _$DashboardUISettings extends DashboardUISettings {
       this.compareCustomStartDate,
       this.compareCustomEndDate,
       this.offset,
-      this.currencyId})
+      this.currencyId,
+      this.includeTaxes})
       : super._() {
     if (dateRange == null) {
       throw new BuiltValueNullFieldError('DashboardUISettings', 'dateRange');
@@ -383,6 +393,9 @@ class _$DashboardUISettings extends DashboardUISettings {
     if (currencyId == null) {
       throw new BuiltValueNullFieldError('DashboardUISettings', 'currencyId');
     }
+    if (includeTaxes == null) {
+      throw new BuiltValueNullFieldError('DashboardUISettings', 'includeTaxes');
+    }
   }
 
   @override
@@ -406,7 +419,8 @@ class _$DashboardUISettings extends DashboardUISettings {
         compareCustomStartDate == other.compareCustomStartDate &&
         compareCustomEndDate == other.compareCustomEndDate &&
         offset == other.offset &&
-        currencyId == other.currencyId;
+        currencyId == other.currencyId &&
+        includeTaxes == other.includeTaxes;
   }
 
   int __hashCode;
@@ -419,15 +433,17 @@ class _$DashboardUISettings extends DashboardUISettings {
                     $jc(
                         $jc(
                             $jc(
-                                $jc($jc(0, dateRange.hashCode),
-                                    customStartDate.hashCode),
-                                customEndDate.hashCode),
-                            enableComparison.hashCode),
-                        compareDateRange.hashCode),
-                    compareCustomStartDate.hashCode),
-                compareCustomEndDate.hashCode),
-            offset.hashCode),
-        currencyId.hashCode));
+                                $jc(
+                                    $jc($jc(0, dateRange.hashCode),
+                                        customStartDate.hashCode),
+                                    customEndDate.hashCode),
+                                enableComparison.hashCode),
+                            compareDateRange.hashCode),
+                        compareCustomStartDate.hashCode),
+                    compareCustomEndDate.hashCode),
+                offset.hashCode),
+            currencyId.hashCode),
+        includeTaxes.hashCode));
   }
 
   @override
@@ -441,7 +457,8 @@ class _$DashboardUISettings extends DashboardUISettings {
           ..add('compareCustomStartDate', compareCustomStartDate)
           ..add('compareCustomEndDate', compareCustomEndDate)
           ..add('offset', offset)
-          ..add('currencyId', currencyId))
+          ..add('currencyId', currencyId)
+          ..add('includeTaxes', includeTaxes))
         .toString();
   }
 }
@@ -492,6 +509,10 @@ class DashboardUISettingsBuilder
   String get currencyId => _$this._currencyId;
   set currencyId(String currencyId) => _$this._currencyId = currencyId;
 
+  bool _includeTaxes;
+  bool get includeTaxes => _$this._includeTaxes;
+  set includeTaxes(bool includeTaxes) => _$this._includeTaxes = includeTaxes;
+
   DashboardUISettingsBuilder();
 
   DashboardUISettingsBuilder get _$this {
@@ -505,6 +526,7 @@ class DashboardUISettingsBuilder
       _compareCustomEndDate = _$v.compareCustomEndDate;
       _offset = _$v.offset;
       _currencyId = _$v.currencyId;
+      _includeTaxes = _$v.includeTaxes;
       _$v = null;
     }
     return this;
@@ -535,7 +557,8 @@ class DashboardUISettingsBuilder
             compareCustomStartDate: compareCustomStartDate,
             compareCustomEndDate: compareCustomEndDate,
             offset: offset,
-            currencyId: currencyId);
+            currencyId: currencyId,
+            includeTaxes: includeTaxes);
     replace(_$result);
     return _$result;
   }

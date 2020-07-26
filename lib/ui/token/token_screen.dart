@@ -53,7 +53,8 @@ class TokenScreen extends StatelessWidget {
         handleTokenAction(context, tokens, EntityAction.toggleMultiselect);
       },
       appBarTitle: ListFilter(
-        placeholder: localization.searchTokens,
+        entityType: EntityType.token,
+        entityIds: viewModel.tokenList,
         filter: state.tokenListState.filter,
         onFilterChanged: (value) {
           store.dispatch(FilterTokens(value));

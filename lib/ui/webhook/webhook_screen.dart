@@ -52,7 +52,8 @@ class WebhookScreen extends StatelessWidget {
         handleWebhookAction(context, webhooks, EntityAction.toggleMultiselect);
       },
       appBarTitle: ListFilter(
-        placeholder: localization.searchWebhooks,
+        entityType: EntityType.webhook,
+        entityIds: viewModel.webhookList,
         filter: state.webhookListState.filter,
         onFilterChanged: (value) {
           store.dispatch(FilterWebhooks(value));

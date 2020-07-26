@@ -33,10 +33,6 @@ enum InvoiceReportFields {
   custom_value2,
   custom_value3,
   custom_value4,
-  custom_taxes1,
-  custom_taxes2,
-  custom_taxes3,
-  custom_taxes4,
   has_expenses,
   custom_surcharge1,
   custom_surcharge2,
@@ -45,6 +41,9 @@ enum InvoiceReportFields {
   updated_at,
   archived_at,
   is_deleted,
+  tax_amount,
+  net_amount,
+  net_balance,
 }
 
 var memoizedInvoiceReport = memo6((
@@ -173,18 +172,6 @@ ReportResult invoiceReport(
         case InvoiceReportFields.custom_value4:
           value = invoice.customValue4;
           break;
-        case InvoiceReportFields.custom_taxes1:
-          value = invoice.customTaxes1;
-          break;
-        case InvoiceReportFields.custom_taxes2:
-          value = invoice.customTaxes2;
-          break;
-        case InvoiceReportFields.custom_taxes3:
-          value = invoice.customTaxes3;
-          break;
-        case InvoiceReportFields.custom_taxes4:
-          value = invoice.customTaxes4;
-          break;
         case InvoiceReportFields.has_expenses:
           value = invoice.hasExpenses;
           break;
@@ -209,6 +196,15 @@ ReportResult invoiceReport(
         case InvoiceReportFields.is_deleted:
           value = invoice.isDeleted;
           break;
+        case InvoiceReportFields.tax_amount:
+          value = invoice.taxAmount;
+          break;
+        case InvoiceReportFields.net_amount:
+          value = invoice.netAmount;
+          break;
+        case InvoiceReportFields.net_balance:
+          value = invoice.netBalance;
+          break;
       }
 
       if (!ReportResult.matchField(
@@ -223,11 +219,11 @@ ReportResult invoiceReport(
       if (value.runtimeType == bool) {
         row.add(invoice.getReportBool(value: value));
       } else if (column == InvoiceReportFields.age) {
-        row.add(invoice.getReportAge(
-            value: value, currencyId: client.settings.currencyId));
+        row.add(
+            invoice.getReportAge(value: value, currencyId: client.currencyId));
       } else if (value.runtimeType == double || value.runtimeType == int) {
         row.add(invoice.getReportNumber(
-            value: value, currencyId: client.settings.currencyId));
+            value: value, currencyId: client.currencyId));
       } else {
         row.add(invoice.getReportString(value: value));
       }

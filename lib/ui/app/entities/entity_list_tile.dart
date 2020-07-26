@@ -51,9 +51,11 @@ class EntityListTile extends StatelessWidget {
             handleEntityAction(context, entity, action),
       );
     } else {
-      leading = IconButton(
-        icon: Icon(getEntityIcon(entity.entityType), size: 18.0),
-        onPressed: () => inspectEntity(context: context, entity: entity),
+      leading = IgnorePointer(
+        child: IconButton(
+          icon: Icon(getEntityIcon(entity.entityType), size: 18.0),
+          onPressed: () => null,
+        ),
       );
     }
 
@@ -68,13 +70,20 @@ class EntityListTile extends StatelessWidget {
           onPressed: () => viewEntity(entity: entity, context: context),
         );
       } else {
-        trailing = IconButton(
-          icon: Icon(Icons.filter_list),
-          onPressed: () => inspectEntity(entity: entity, context: context),
+        trailing = IgnorePointer(
+          child: IconButton(
+            icon: Icon(Icons.filter_list),
+            onPressed: () => null,
+          ),
         );
       }
     } else {
-      Icon(Icons.navigate_next);
+      trailing = IgnorePointer(
+        child: IconButton(
+          icon: Icon(Icons.navigate_next),
+          onPressed: () => null,
+        ),
+      );
     }
 
     return Column(
@@ -83,29 +92,26 @@ class EntityListTile extends StatelessWidget {
         SelectedIndicator(
           isSelected: isFilteredBy && isDesktop(context),
           isMenu: true,
-          child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 10),
-            child: ListTile(
-              onTap: () => inspectEntity(context: context, entity: entity),
-              onLongPress: () => inspectEntity(
-                  context: context, entity: entity, longPress: true),
-              contentPadding: const EdgeInsets.only(left: 8, right: 8),
-              title: Text(localization.lookup('${entity.entityType}') +
-                  '  ›  ' +
-                  entity.listDisplayName),
-              subtitle: (subtitle ?? '').isEmpty && entity.isActive
-                  ? null
-                  : Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        if ((subtitle ?? '').isNotEmpty) Text(subtitle),
-                        if (!entity.isActive) EntityStateLabel(entity),
-                      ],
-                    ),
-              leading: leading,
-              trailing: trailing,
-              isThreeLine: (subtitle ?? '').isNotEmpty && !entity.isActive,
-            ),
+          child: ListTile(
+            contentPadding: const EdgeInsets.symmetric(horizontal: 16),
+            onTap: () => inspectEntity(context: context, entity: entity),
+            onLongPress: () => inspectEntity(
+                context: context, entity: entity, longPress: true),
+            title: Text(localization.lookup('${entity.entityType}') +
+                '  ›  ' +
+                entity.listDisplayName),
+            subtitle: (subtitle ?? '').isEmpty && entity.isActive
+                ? null
+                : Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      if ((subtitle ?? '').isNotEmpty) Text(subtitle),
+                      if (!entity.isActive) EntityStateLabel(entity),
+                    ],
+                  ),
+            leading: leading,
+            trailing: trailing,
+            isThreeLine: (subtitle ?? '').isNotEmpty && !entity.isActive,
           ),
         ),
         ListDivider(),
@@ -145,7 +151,7 @@ class EntitiesListTile extends StatelessWidget {
           isSelected: isFilterMatch,
           isMenu: true,
           child: ListTile(
-            contentPadding: const EdgeInsets.only(left: 16, right: 16),
+            contentPadding: const EdgeInsets.symmetric(horizontal: 16),
             title: Text(title),
             subtitle: Text(subtitle ?? ''),
             leading: IconButton(
@@ -157,7 +163,12 @@ class EntitiesListTile extends StatelessWidget {
                     icon: Icon(Icons.add_circle_outline),
                     onPressed: onLongPress,
                   )
-                : Icon(Icons.navigate_next),
+                : IgnorePointer(
+                    child: IconButton(
+                      icon: Icon(Icons.navigate_next),
+                      onPressed: () => null,
+                    ),
+                  ),
             onTap: onTap,
             onLongPress: onLongPress,
           ),

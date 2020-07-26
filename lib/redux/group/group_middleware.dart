@@ -4,7 +4,6 @@ import 'package:invoiceninja_flutter/data/models/group_model.dart';
 import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:redux/redux.dart';
 import 'package:invoiceninja_flutter/utils/platforms.dart';
-import 'package:invoiceninja_flutter/redux/app/app_middleware.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/redux/ui/ui_actions.dart';
 import 'package:invoiceninja_flutter/ui/group/group_screen.dart';
@@ -44,11 +43,6 @@ Middleware<AppState> _editGroup() {
   return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
     final action = dynamicAction as EditGroup;
 
-    if (!action.force &&
-        hasChanges(store: store, context: action.context, action: action)) {
-      return;
-    }
-
     next(action);
 
     store.dispatch(UpdateCurrentRoute(GroupEditScreen.route));
@@ -64,10 +58,7 @@ Middleware<AppState> _viewGroup() {
       NextDispatcher next) async {
     final action = dynamicAction as ViewGroup;
 
-    if (!action.force &&
-        hasChanges(store: store, context: action.context, action: action)) {
-      return;
-    }
+
 
     next(action);
 
@@ -83,10 +74,7 @@ Middleware<AppState> _viewGroupList() {
   return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
     final action = dynamicAction as ViewGroupList;
 
-    if (!action.force &&
-        hasChanges(store: store, context: action.context, action: action)) {
-      return;
-    }
+
 
     next(action);
 

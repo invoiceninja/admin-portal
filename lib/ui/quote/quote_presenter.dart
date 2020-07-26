@@ -33,6 +33,7 @@ class QuotePresenter extends EntityPresenter {
       QuoteFields.customValue2,
       QuoteFields.customValue3,
       QuoteFields.customValue4,
+      QuoteFields.taxAmount,
     ];
   }
 
@@ -89,6 +90,9 @@ class QuotePresenter extends EntityPresenter {
         return Text(quote.poNumber);
       case QuoteFields.documents:
         return Text('${quote.documents.length}');
+      case QuoteFields.taxAmount:
+        return Text(formatNumber(quote.taxAmount, context,
+            clientId: quote.clientId));
     }
 
     return super.getField(field: field, context: context);

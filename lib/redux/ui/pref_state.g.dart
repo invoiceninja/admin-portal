@@ -144,9 +144,6 @@ class _$PrefStateSerializer implements StructuredSerializer<PrefState> {
       'requireAuthentication',
       serializers.serialize(object.requireAuthentication,
           specifiedType: const FullType(bool)),
-      'emailPayment',
-      serializers.serialize(object.emailPayment,
-          specifiedType: const FullType(bool)),
       'autoStartTasks',
       serializers.serialize(object.autoStartTasks,
           specifiedType: const FullType(bool)),
@@ -215,10 +212,6 @@ class _$PrefStateSerializer implements StructuredSerializer<PrefState> {
           break;
         case 'requireAuthentication':
           result.requireAuthentication = serializers.deserialize(value,
-              specifiedType: const FullType(bool)) as bool;
-          break;
-        case 'emailPayment':
-          result.emailPayment = serializers.deserialize(value,
               specifiedType: const FullType(bool)) as bool;
           break;
         case 'autoStartTasks':
@@ -437,8 +430,6 @@ class _$PrefState extends PrefState {
   @override
   final bool requireAuthentication;
   @override
-  final bool emailPayment;
-  @override
   final bool autoStartTasks;
   @override
   final bool addDocumentsToInvoice;
@@ -460,7 +451,6 @@ class _$PrefState extends PrefState {
       this.showFilterSidebar,
       this.longPressSelectionIsDefault,
       this.requireAuthentication,
-      this.emailPayment,
       this.autoStartTasks,
       this.addDocumentsToInvoice,
       this.companyPrefs})
@@ -499,9 +489,6 @@ class _$PrefState extends PrefState {
     if (requireAuthentication == null) {
       throw new BuiltValueNullFieldError('PrefState', 'requireAuthentication');
     }
-    if (emailPayment == null) {
-      throw new BuiltValueNullFieldError('PrefState', 'emailPayment');
-    }
     if (autoStartTasks == null) {
       throw new BuiltValueNullFieldError('PrefState', 'autoStartTasks');
     }
@@ -535,7 +522,6 @@ class _$PrefState extends PrefState {
         showFilterSidebar == other.showFilterSidebar &&
         longPressSelectionIsDefault == other.longPressSelectionIsDefault &&
         requireAuthentication == other.requireAuthentication &&
-        emailPayment == other.emailPayment &&
         autoStartTasks == other.autoStartTasks &&
         addDocumentsToInvoice == other.addDocumentsToInvoice &&
         companyPrefs == other.companyPrefs;
@@ -557,25 +543,18 @@ class _$PrefState extends PrefState {
                                             $jc(
                                                 $jc(
                                                     $jc(
-                                                        $jc(
-                                                            $jc(
-                                                                0,
-                                                                appLayout
-                                                                    .hashCode),
-                                                            moduleLayout
-                                                                .hashCode),
-                                                        menuSidebarMode
-                                                            .hashCode),
-                                                    historySidebarMode
-                                                        .hashCode),
-                                                isPreviewVisible.hashCode),
-                                            isMenuVisible.hashCode),
-                                        isHistoryVisible.hashCode),
-                                    enableDarkMode.hashCode),
-                                showFilterSidebar.hashCode),
-                            longPressSelectionIsDefault.hashCode),
-                        requireAuthentication.hashCode),
-                    emailPayment.hashCode),
+                                                        $jc(0,
+                                                            appLayout.hashCode),
+                                                        moduleLayout.hashCode),
+                                                    menuSidebarMode.hashCode),
+                                                historySidebarMode.hashCode),
+                                            isPreviewVisible.hashCode),
+                                        isMenuVisible.hashCode),
+                                    isHistoryVisible.hashCode),
+                                enableDarkMode.hashCode),
+                            showFilterSidebar.hashCode),
+                        longPressSelectionIsDefault.hashCode),
+                    requireAuthentication.hashCode),
                 autoStartTasks.hashCode),
             addDocumentsToInvoice.hashCode),
         companyPrefs.hashCode));
@@ -595,7 +574,6 @@ class _$PrefState extends PrefState {
           ..add('showFilterSidebar', showFilterSidebar)
           ..add('longPressSelectionIsDefault', longPressSelectionIsDefault)
           ..add('requireAuthentication', requireAuthentication)
-          ..add('emailPayment', emailPayment)
           ..add('autoStartTasks', autoStartTasks)
           ..add('addDocumentsToInvoice', addDocumentsToInvoice)
           ..add('companyPrefs', companyPrefs))
@@ -660,10 +638,6 @@ class PrefStateBuilder implements Builder<PrefState, PrefStateBuilder> {
   set requireAuthentication(bool requireAuthentication) =>
       _$this._requireAuthentication = requireAuthentication;
 
-  bool _emailPayment;
-  bool get emailPayment => _$this._emailPayment;
-  set emailPayment(bool emailPayment) => _$this._emailPayment = emailPayment;
-
   bool _autoStartTasks;
   bool get autoStartTasks => _$this._autoStartTasks;
   set autoStartTasks(bool autoStartTasks) =>
@@ -695,7 +669,6 @@ class PrefStateBuilder implements Builder<PrefState, PrefStateBuilder> {
       _showFilterSidebar = _$v.showFilterSidebar;
       _longPressSelectionIsDefault = _$v.longPressSelectionIsDefault;
       _requireAuthentication = _$v.requireAuthentication;
-      _emailPayment = _$v.emailPayment;
       _autoStartTasks = _$v.autoStartTasks;
       _addDocumentsToInvoice = _$v.addDocumentsToInvoice;
       _companyPrefs = _$v.companyPrefs?.toBuilder();
@@ -734,7 +707,6 @@ class PrefStateBuilder implements Builder<PrefState, PrefStateBuilder> {
               showFilterSidebar: showFilterSidebar,
               longPressSelectionIsDefault: longPressSelectionIsDefault,
               requireAuthentication: requireAuthentication,
-              emailPayment: emailPayment,
               autoStartTasks: autoStartTasks,
               addDocumentsToInvoice: addDocumentsToInvoice,
               companyPrefs: companyPrefs.build());

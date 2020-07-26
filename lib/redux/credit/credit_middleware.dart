@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
-import 'package:invoiceninja_flutter/redux/app/app_middleware.dart';
 import 'package:invoiceninja_flutter/redux/project/project_actions.dart';
 import 'package:invoiceninja_flutter/redux/credit/credit_actions.dart';
 import 'package:invoiceninja_flutter/redux/ui/ui_actions.dart';
@@ -53,11 +52,6 @@ Middleware<AppState> _viewCredit() {
       NextDispatcher next) async {
     final action = dynamicAction as ViewCredit;
 
-    if (!action.force &&
-        hasChanges(store: store, context: action.context, action: action)) {
-      return;
-    }
-
     next(action);
 
     store.dispatch(UpdateCurrentRoute(CreditViewScreen.route));
@@ -72,10 +66,7 @@ Middleware<AppState> _viewCreditList() {
   return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
     final action = dynamicAction as ViewCreditList;
 
-    if (!action.force &&
-        hasChanges(store: store, context: action.context, action: action)) {
-      return;
-    }
+
 
     next(action);
 
@@ -96,10 +87,7 @@ Middleware<AppState> _editCredit() {
   return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
     final action = dynamicAction as EditCredit;
 
-    if (!action.force &&
-        hasChanges(store: store, context: action.context, action: action)) {
-      return;
-    }
+
 
     next(action);
 

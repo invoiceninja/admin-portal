@@ -114,10 +114,13 @@ class InvoiceSidebar extends StatelessWidget {
               shrinkWrap: true,
               itemCount: selectedIds?.length,
               itemBuilder: (BuildContext context, int index) {
-                return InvoiceListItem(
-                  invoice: state.invoiceState.get(selectedIds[index]),
-                  showCheckbox: false,
-                );
+                final invoice = state.invoiceState.map[selectedIds[index]];
+                return invoice == null
+                    ? SizedBox()
+                    : InvoiceListItem(
+                        invoice: invoice,
+                        showCheckbox: false,
+                      );
               },
               separatorBuilder: (context, index) => ListDivider(),
             ),
@@ -163,10 +166,13 @@ class PaymentSidebar extends StatelessWidget {
               shrinkWrap: true,
               itemCount: selectedIds?.length,
               itemBuilder: (BuildContext context, int index) {
-                return PaymentListItem(
-                  payment: state.paymentState.get(selectedIds[index]),
-                  showCheckbox: false,
-                );
+                final payment = state.paymentState.map[selectedIds[index]];
+                return payment == null
+                    ? SizedBox()
+                    : PaymentListItem(
+                        payment: payment,
+                        showCheckbox: false,
+                      );
               },
               separatorBuilder: (context, index) => ListDivider(),
             ),
@@ -228,10 +234,13 @@ class QuoteSidebar extends StatelessWidget {
               shrinkWrap: true,
               itemCount: selectedIds?.length,
               itemBuilder: (BuildContext context, int index) {
-                return QuoteListItem(
-                  quote: state.quoteState.get(selectedIds[index]),
-                  showCheckbox: false,
-                );
+                final quote = state.quoteState.map[selectedIds[index]];
+                return quote == null
+                    ? SizedBox()
+                    : QuoteListItem(
+                        quote: quote,
+                        showCheckbox: false,
+                      );
               },
               separatorBuilder: (context, index) => ListDivider(),
             ),

@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
-import 'package:invoiceninja_flutter/redux/app/app_middleware.dart';
 import 'package:invoiceninja_flutter/redux/document/document_actions.dart';
 import 'package:invoiceninja_flutter/utils/platforms.dart';
 import 'package:redux/redux.dart';
@@ -44,11 +43,6 @@ Middleware<AppState> _editExpense() {
   return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
     final action = dynamicAction as EditExpense;
 
-    if (!action.force &&
-        hasChanges(store: store, context: action.context, action: action)) {
-      return;
-    }
-
     next(action);
 
     store.dispatch(UpdateCurrentRoute(ExpenseEditScreen.route));
@@ -64,10 +58,7 @@ Middleware<AppState> _viewExpense() {
       NextDispatcher next) async {
     final action = dynamicAction as ViewExpense;
 
-    if (!action.force &&
-        hasChanges(store: store, context: action.context, action: action)) {
-      return;
-    }
+
 
     next(action);
 
@@ -83,10 +74,7 @@ Middleware<AppState> _viewExpenseList() {
   return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
     final action = dynamicAction as ViewExpenseList;
 
-    if (!action.force &&
-        hasChanges(store: store, context: action.context, action: action)) {
-      return;
-    }
+
 
     next(action);
 

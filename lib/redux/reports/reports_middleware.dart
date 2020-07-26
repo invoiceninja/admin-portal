@@ -1,4 +1,4 @@
-import 'package:invoiceninja_flutter/redux/app/app_middleware.dart';
+import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/redux/reports/reports_actions.dart';
 import 'package:invoiceninja_flutter/redux/ui/ui_actions.dart';
@@ -19,24 +19,25 @@ Middleware<AppState> _viewReports() {
   return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
     final action = dynamicAction as ViewReports;
 
-    if (!action.force &&
-        hasChanges(store: store, context: action.context, action: action)) {
-      return;
-    }
+    checkForChanges(
+        store: store,
+        context: action.context,
+        force: action.force,
+        callback: () {
+          const route = ReportsScreen.route;
 
-    const route = ReportsScreen.route;
+          next(action);
 
-    next(action);
+          store.dispatch(UpdateCurrentRoute(route));
 
-    store.dispatch(UpdateCurrentRoute(route));
-
-    if (isMobile(action.context)) {
-      if (action.report == null) {
-        Navigator.of(action.context).pushNamedAndRemoveUntil(
-            ReportsScreen.route, (Route<dynamic> route) => false);
-      } else {
-        Navigator.of(action.context).pushNamed(route);
-      }
-    }
+          if (isMobile(action.context)) {
+            if (action.report == null) {
+              Navigator.of(action.context).pushNamedAndRemoveUntil(
+                  ReportsScreen.route, (Route<dynamic> route) => false);
+            } else {
+              Navigator.of(action.context).pushNamed(route);
+            }
+          }
+        });
   };
 }

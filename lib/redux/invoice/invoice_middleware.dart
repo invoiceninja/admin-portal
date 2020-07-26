@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
-import 'package:invoiceninja_flutter/redux/app/app_middleware.dart';
 import 'package:invoiceninja_flutter/redux/invoice/invoice_actions.dart';
 import 'package:invoiceninja_flutter/redux/payment/payment_actions.dart';
 import 'package:invoiceninja_flutter/redux/ui/ui_actions.dart';
@@ -59,10 +58,7 @@ Middleware<AppState> _viewInvoiceList() {
   return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
     final action = dynamicAction as ViewInvoiceList;
 
-    if (!action.force &&
-        hasChanges(store: store, context: action.context, action: action)) {
-      return;
-    }
+
 
     next(action);
 
@@ -84,10 +80,7 @@ Middleware<AppState> _viewInvoice() {
       NextDispatcher next) async {
     final action = dynamicAction as ViewInvoice;
 
-    if (!action.force &&
-        hasChanges(store: store, context: action.context, action: action)) {
-      return;
-    }
+
 
     next(action);
 
@@ -103,10 +96,7 @@ Middleware<AppState> _editInvoice() {
   return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
     final action = dynamicAction as EditInvoice;
 
-    if (!action.force &&
-        hasChanges(store: store, context: action.context, action: action)) {
-      return;
-    }
+
 
     next(action);
 

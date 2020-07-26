@@ -28,7 +28,7 @@ class ViewSettings extends AbstractNavigatorAction
   final String section;
 }
 
-class ClearSettingsFilter {}
+class ClearSettingsFilter implements PersistUI {}
 
 class ResetSettings {}
 

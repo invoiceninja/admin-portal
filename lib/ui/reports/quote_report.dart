@@ -28,10 +28,6 @@ enum QuoteReportFields {
   custom_value2,
   custom_value3,
   custom_value4,
-  custom_taxes1,
-  custom_taxes2,
-  custom_taxes3,
-  custom_taxes4,
   has_expenses,
   custom_surcharge1,
   custom_surcharge2,
@@ -41,6 +37,8 @@ enum QuoteReportFields {
   archived_at,
   is_deleted,
   is_approved,
+  tax_amount,
+  net_amount,
 }
 
 var memoizedQuoteReport = memo7((
@@ -161,18 +159,6 @@ ReportResult quoteReport(
         case QuoteReportFields.custom_value4:
           value = quote.customValue4;
           break;
-        case QuoteReportFields.custom_taxes1:
-          value = quote.customTaxes1;
-          break;
-        case QuoteReportFields.custom_taxes2:
-          value = quote.customTaxes2;
-          break;
-        case QuoteReportFields.custom_taxes3:
-          value = quote.customTaxes3;
-          break;
-        case QuoteReportFields.custom_taxes4:
-          value = quote.customTaxes4;
-          break;
         case QuoteReportFields.has_expenses:
           value = quote.hasExpenses;
           break;
@@ -199,6 +185,12 @@ ReportResult quoteReport(
           break;
         case QuoteReportFields.is_approved:
           value = quote.isApproved;
+          break;
+        case QuoteReportFields.tax_amount:
+          value = quote.taxAmount;
+          break;
+        case QuoteReportFields.net_amount:
+          value = quote.netAmount;
           break;
       }
 

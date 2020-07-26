@@ -50,7 +50,8 @@ class DesignScreen extends StatelessWidget {
         handleDesignAction(context, designs, EntityAction.toggleMultiselect);
       },
       appBarTitle: ListFilter(
-        placeholder: localization.searchDesigns,
+        entityType: EntityType.design,
+        entityIds: viewModel.designList,
         filter: state.designListState.filter,
         onFilterChanged: (value) {
           store.dispatch(FilterDesigns(value));

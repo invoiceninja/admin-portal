@@ -21,6 +21,10 @@ Reducer<BuiltMap<EntityType, BuiltList<String>>> selectedEntitiesReducer =
     return state.rebuild((b) =>
         b..[action.entityType] = BuiltList(action.entityIds ?? <String>[]));
   }),
+  TypedReducer<BuiltMap<EntityType, BuiltList<String>>, SelectCompany>(
+      (state, action) {
+    return state.rebuild((b) => b..clear());
+  }),
 ]);
 
 Reducer<EntityType> selectedEntityTypeReducer = combineReducers([
@@ -43,6 +47,8 @@ DashboardUISettings dashboardSettingsReducer(
         ..compareCustomStartDate = settings.compareStartDate
         ..compareCustomStartDate = settings.compareEndDate
         ..offset = 0);
+    } else if (action.includeTaxes != null) {
+      return state.rebuild((b) => b..includeTaxes = action.includeTaxes);
     } else if (action.offset != null) {
       return state.rebuild((b) => b..offset += action.offset);
     } else if (action.currencyId != null) {

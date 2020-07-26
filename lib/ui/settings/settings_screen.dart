@@ -7,7 +7,6 @@ import 'package:invoiceninja_flutter/ui/app/list_scaffold.dart';
 import 'package:invoiceninja_flutter/ui/app/list_filter.dart';
 import 'package:invoiceninja_flutter/ui/settings/settings_list_vm.dart';
 import 'package:invoiceninja_flutter/ui/settings/settings_screen_vm.dart';
-import 'package:invoiceninja_flutter/utils/localization.dart';
 
 class SettingsScreen extends StatelessWidget {
   const SettingsScreen({
@@ -21,14 +20,14 @@ class SettingsScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final localization = AppLocalization.of(context);
     final store = StoreProvider.of<AppState>(context);
     final state = store.state;
 
     return ListScaffold(
       entityType: EntityType.settings,
       appBarTitle: ListFilter(
-        placeholder: localization.searchSettings,
+        entityType: EntityType.settings,
+        entityIds: [],
         filter: state.settingsUIState.filter,
         onFilterChanged: (value) {
           store.dispatch(FilterSettings(value));

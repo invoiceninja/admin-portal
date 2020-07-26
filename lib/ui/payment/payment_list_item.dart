@@ -33,7 +33,7 @@ class PaymentListItem extends StatelessWidget {
     final isInMultiselect = showCheckbox && listUIState.isInMultiselect();
     final isChecked = isInMultiselect && listUIState.isSelected(payment.id);
     final textStyle = TextStyle(fontSize: 16);
-    final client = state.clientState.map[payment.clientId];
+    final client = state.clientState.get(payment.clientId);
     final localization = AppLocalization.of(context);
     final filterMatch = filter != null && filter.isNotEmpty
         ? payment.matchesFilterValue(filter)

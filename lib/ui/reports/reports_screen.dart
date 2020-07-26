@@ -19,6 +19,7 @@ import 'package:invoiceninja_flutter/ui/app/forms/app_dropdown_button.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/date_picker.dart';
 import 'package:invoiceninja_flutter/ui/app/history_drawer_vm.dart';
 import 'package:invoiceninja_flutter/ui/app/menu_drawer_vm.dart';
+import 'package:invoiceninja_flutter/ui/app/presenters/entity_presenter.dart';
 import 'package:invoiceninja_flutter/ui/reports/report_charts.dart';
 import 'package:invoiceninja_flutter/ui/reports/reports_screen_vm.dart';
 import 'package:invoiceninja_flutter/utils/dates.dart';
@@ -188,9 +189,8 @@ class ReportsScreen extends StatelessWidget {
             : null,
         appBar: AppBar(
           centerTitle: false,
-          leading: isMobile(context) || state.prefState.isMenuFloated
-              ? null
-              : SizedBox(),
+          automaticallyImplyLeading: isMobile(context) ||
+              state.prefState.isMenuFloated,
           title: Row(
             mainAxisSize: MainAxisSize.min,
             children: <Widget>[
@@ -541,21 +541,7 @@ ReportColumnType getReportColumnType(String column, BuildContext context) {
     return ReportColumnType.date;
   } else if (column == 'age') {
     return ReportColumnType.age;
-  } else if ([
-    'balance',
-    'paid_to_date',
-    'amount',
-    'quantity',
-    'price',
-    'cost',
-    'total',
-    'invoice_amount',
-    'invoice_balance',
-    'tax_rate',
-    'tax_amount',
-    'tax_paid',
-    'payment_amount'
-  ].contains(column)) {
+  } else if (EntityPresenter.isFieldNumeric(column)) {
     return ReportColumnType.number;
   } else if (['is_active'].contains(column)) {
     return ReportColumnType.bool;

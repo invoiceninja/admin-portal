@@ -9,6 +9,7 @@ import 'package:invoiceninja_flutter/ui/app/entity_dropdown.dart';
 import 'package:invoiceninja_flutter/ui/app/form_card.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/app_dropdown_button.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/app_form.dart';
+import 'package:invoiceninja_flutter/ui/app/forms/bool_dropdown_button.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/custom_field.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/decorated_form_field.dart';
 import 'package:invoiceninja_flutter/ui/app/resources/cached_image.dart';
@@ -493,37 +494,66 @@ class _CompanyDetailsState extends State<CompanyDetails>
                 ],
               ),
               FormCard(
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: <Widget>[
+                    if (!state.settingsUIState.isFiltered)
+                      BoolDropdownButton(
+                        value: settings.clientManualPaymentNotification,
+                        onChanged: (value) => viewModel.onSettingsChanged(
+                            settings.rebuild((b) =>
+                                b..clientManualPaymentNotification = value)),
+                        label: localization.manualPaymentEmail,
+                        helpLabel: localization.emailReceipt,
+                        iconData: Icons.email,
+                      ),
+                    BoolDropdownButton(
+                      value: settings.clientOnlinePaymentNotification,
+                      onChanged: (value) => viewModel.onSettingsChanged(
+                          settings.rebuild((b) =>
+                              b..clientOnlinePaymentNotification = value)),
+                      label: localization.onlinePaymentEmail,
+                      helpLabel: localization.emailReceipt,
+                      iconData: Icons.email,
+                    ),
+                  ]),
+              FormCard(
                 children: <Widget>[
-                  DecoratedFormField(
-                    label: localization.invoiceTerms,
-                    controller: _invoiceTermsController,
-                    maxLines: 4,
-                  ),
-                  DecoratedFormField(
-                    label: localization.invoiceFooter,
-                    controller: _invoiceFooterController,
-                    maxLines: 4,
-                  ),
-                  DecoratedFormField(
-                    label: localization.quoteTerms,
-                    controller: _quoteTermsController,
-                    maxLines: 4,
-                  ),
-                  DecoratedFormField(
-                    label: localization.quoteFooter,
-                    controller: _quoteFooterController,
-                    maxLines: 4,
-                  ),
-                  DecoratedFormField(
-                    label: localization.creditTerms,
-                    controller: _creditTermsController,
-                    maxLines: 4,
-                  ),
-                  DecoratedFormField(
-                    label: localization.creditFooter,
-                    controller: _creditFooterController,
-                    maxLines: 4,
-                  ),
+                  if (company.isModuleEnabled(EntityType.invoice)) ...[
+                    DecoratedFormField(
+                      label: localization.invoiceTerms,
+                      controller: _invoiceTermsController,
+                      maxLines: 4,
+                    ),
+                    DecoratedFormField(
+                      label: localization.invoiceFooter,
+                      controller: _invoiceFooterController,
+                      maxLines: 4,
+                    ),
+                  ],
+                  if (company.isModuleEnabled(EntityType.quote)) ...[
+                    DecoratedFormField(
+                      label: localization.quoteTerms,
+                      controller: _quoteTermsController,
+                      maxLines: 4,
+                    ),
+                    DecoratedFormField(
+                      label: localization.quoteFooter,
+                      controller: _quoteFooterController,
+                      maxLines: 4,
+                    ),
+                  ],
+                  if (company.isModuleEnabled(EntityType.credit)) ...[
+                    DecoratedFormField(
+                      label: localization.creditTerms,
+                      controller: _creditTermsController,
+                      maxLines: 4,
+                    ),
+                    DecoratedFormField(
+                      label: localization.creditFooter,
+                      controller: _creditFooterController,
+                      maxLines: 4,
+                    ),
+                  ],
                 ],
               )
             ],

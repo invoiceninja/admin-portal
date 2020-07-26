@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:invoiceninja_flutter/utils/strings.dart';
 
 abstract class LocaleCodeAware {
@@ -15,6 +16,13 @@ mixin LocalizationsProvider on LocaleCodeAware {
   static final Map<String, Map<String, String>> _localizedValues = {
     'en': {
       // STARTER: lang key - do not remove comment
+      'client_created': 'Client Created',
+      'online_payment_email': 'Online Payment Email',
+      'manual_payment_email': 'Manual Payment Email',
+      'completed': 'Completed',
+      'gross': 'Gross',
+      'net_amount': 'Net Amount',
+      'net_balance': 'Net Balance',
       'client_settings': 'Client Settings',
       'selected_invoices': 'Selected Invoices',
       'selected_payments': 'Selected Payments',
@@ -60,7 +68,8 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'must_be_online': 'Please restart the app once connected to the internet',
       'crons_not_enabled': 'The crons need to be enabled',
       'manage_webhooks': 'Manage Webhooks',
-      'search_webhooks': 'Search Webhooks',
+      'search_webhooks': 'Search :count Webhooks',
+      'search_webhook': 'Search 1 Webhook',
       'webhook': 'Webhook',
       'webhooks': 'Webhooks',
       'new_webhook': 'New Webhook',
@@ -72,7 +81,8 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'removed_webhook': 'Successfully removed webhook',
       'restored_webhook': 'Successfully restored webhook',
       'manage_tokens': 'Manage Tokens',
-      'search_tokens': 'Search Tokens',
+      'search_tokens': 'Search :count Tokens',
+      'search_token': 'Search 1 Token',
       'token': 'Token',
       'tokens': 'Tokens',
       'new_token': 'New Token',
@@ -85,7 +95,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'restored_token': 'Successfully restored token',
       'client_registration': 'Client Registration',
       'client_registration_help':
-          'Enable clients to self register in the portal',
+      'Enable clients to self register in the portal',
       'customize_and_preview': 'Customize & Preview',
       'email_invoice': 'Email Invoice',
       'email_quote': 'Email Quote',
@@ -127,23 +137,38 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'hide_menu': 'Hide Menu',
       'show_menu': 'Show Menu',
       'partially_refunded': 'Partially Refunded',
-      'search_documents': 'Search Documents',
-      'search_designs': 'Search Designs',
-      'search_invoices': 'Search Invoices',
-      'search_clients': 'Search Clients',
-      'search_products': 'Search Products',
-      'search_quotes': 'Search Quotes',
-      'search_credits': 'Search Credits',
-      'search_vendors': 'Search Vendors',
-      'search_users': 'Search Users',
-      'search_tax_rates': 'Search Tax Rates',
-      'search_tasks': 'Search Tasks',
+      'search_documents': 'Search :count Documents',
+      'search_designs': 'Search :count Designs',
+      'search_invoices': 'Search :count Invoices',
+      'search_clients': 'Search :count Clients',
+      'search_products': 'Search :count Products',
+      'search_quotes': 'Search :count Quotes',
+      'search_credits': 'Search :count Credits',
+      'search_vendors': 'Search :count Vendors',
+      'search_users': 'Search :count Users',
+      'search_tax_rates': 'Search :count Tax Rates',
+      'search_tasks': 'Search :count Tasks',
       'search_settings': 'Search Settings',
-      'search_projects': 'Search Projects',
-      'search_expenses': 'Search Expenses',
-      'search_payments': 'Search Payments',
-      'search_groups': 'Search Groups',
+      'search_projects': 'Search :count Projects',
+      'search_expenses': 'Search :count Expenses',
+      'search_payments': 'Search :count Payments',
+      'search_groups': 'Search :count Groups',
       'search_company': 'Search Company',
+      'search_document': 'Search 1 Document',
+      'search_design': 'Search 1 Design',
+      'search_invoice': 'Search 1 Invoice',
+      'search_client': 'Search 1 Client',
+      'search_product': 'Search 1 Product',
+      'search_quote': 'Search 1 Quote',
+      'search_credit': 'Search 1 Credit',
+      'search_vendor': 'Search 1 Vendor',
+      'search_user': 'Search 1 User',
+      'search_tax_rate': 'Search 1 Tax Rate',
+      'search_task': 'Search 1 Tasks',
+      'search_project': 'Search 1 Project',
+      'search_expense': 'Search 1 Expense',
+      'search_payment': 'Search 1 Payment',
+      'search_group': 'Search 1 Group',
       'refund_payment': 'Refund Payment',
       'cancelled_invoice': 'Successfully cancelled invoice',
       'cancelled_invoices': 'Successfully cancelled invoices',
@@ -162,7 +187,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'purge_data': 'Purge Data',
       'purge_successful': 'Successfully purged company data',
       'purge_data_message':
-          'Warning: This will permanently erase your data, there is no undo.',
+      'Warning: This will permanently erase your data, there is no undo.',
       'invoice_balance': 'Invoice Balance',
       'age_group_0': '0 - 30 Days',
       'age_group_30': '30 - 60 Days',
@@ -197,10 +222,10 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'apply_license': 'Apply License',
       'cancel_account': 'Delete Account',
       'cancel_account_message':
-          'Warning: This will permanently delete your account [:company], there is no undo',
+      'Warning: This will permanently delete your account [:company], there is no undo',
       'delete_company': 'Delete Company',
       'delete_company_message':
-          'Warning: This will permanently delete your company [:company], there is no undo',
+      'Warning: This will permanently delete your company [:company], there is no undo',
       'enable_modules': 'Enable Modules',
       'converted_quote': 'Successfully converted quote',
       'credit_design': 'Credit Design',
@@ -352,12 +377,12 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'applied': 'Applied',
       'include_recent_errors': 'Include recent errors from the logs',
       'your_message_has_been_received':
-          'We have received your message and will try to respond promptly.',
+      'We have received your message and will try to respond promptly.',
       'message': 'Message',
       'from': 'From',
       'show_product_details': 'Show Product Details',
       'show_product_details_help':
-          'Include the description and cost in the product dropdown',
+      'Include the description and cost in the product dropdown',
       'pdf_min_requirements': 'The PDF renderer requires :version',
       'adjust_fee_percent': 'Adjust Fee Percent',
       'adjust_fee_percent_help': 'Ensure client fee matches the gateway fee',
@@ -374,7 +399,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'domain_url': 'Domain URL',
       'password_is_too_short': 'Password must be at least 8 character long',
       'password_is_too_easy':
-          'Password must contain an upper case character and a number',
+      'Password must contain an upper case character and a number',
       'client_portal_tasks': 'Client Portal Tasks',
       'client_portal_dashboard': 'Client Portal Dashboard',
       'please_enter_a_value': 'Please enter a value',
@@ -401,16 +426,16 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'third_custom': 'Third Custom',
       'show_cost': 'Show Cost',
       'show_cost_help':
-          'Display a product cost field to track the markup/profit',
+      'Display a product cost field to track the markup/profit',
       'show_product_quantity': 'Show Product Quantity',
       'show_product_quantity_help':
-          'Display a product quantity field, otherwise default to one',
+      'Display a product quantity field, otherwise default to one',
       'show_invoice_quantity': 'Show Invoice Quantity',
       'show_invoice_quantity_help':
-          'Display a line item quantity field, otherwise default to one',
+      'Display a line item quantity field, otherwise default to one',
       'default_quantity': 'Default Quantity',
       'default_quantity_help':
-          'Automatically set the line item quantity to one',
+      'Automatically set the line item quantity to one',
       'one_tax_rate': 'One Tax Rate',
       'two_tax_rates': 'Two Tax Rates',
       'three_tax_rates': 'Three Tax Rates',
@@ -455,7 +480,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'filtered_by_user': 'Filtered by User',
       'administrator': 'Administrator',
       'administrator_help':
-          'Allow user to manage users, change settings and modify all records',
+      'Allow user to manage users, change settings and modify all records',
       'user_management': 'User Management',
       'users': 'Users',
       'new_user': 'New User',
@@ -470,7 +495,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'invoice_options': 'Invoice Options',
       'hide_paid_to_date': 'Hide Paid to Date',
       'hide_paid_to_date_help':
-          'Only display the "Paid to Date" area on your invoices once a payment has been received.',
+      'Only display the "Paid to Date" area on your invoices once a payment has been received.',
       'invoice_embed_documents': 'Embed Documents',
       'invoice_embed_documents_help': 'Include attached images in the invoice.',
       'all_pages_header': 'Show Header on',
@@ -493,16 +518,16 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'quote_footer': 'Quote Footer',
       'auto_email_invoice': 'Auto Email',
       'auto_email_invoice_help':
-          'Automatically email recurring invoices when they are created.',
+      'Automatically email recurring invoices when they are created.',
       'auto_archive_invoice': 'Auto Archive',
       'auto_archive_invoice_help':
-          'Automatically archive invoices when they are paid.',
+      'Automatically archive invoices when they are paid.',
       'auto_archive_quote': 'Auto Archive',
       'auto_archive_quote_help':
-          'Automatically archive quotes when they are converted.',
+      'Automatically archive quotes when they are converted.',
       'auto_convert_quote': 'Auto Convert',
       'auto_convert_quote_help':
-          'Automatically convert a quote to an invoice when approved by a client.',
+      'Automatically convert a quote to an invoice when approved by a client.',
       'workflow_settings': 'Workflow Settings',
       'freq_daily': 'Daily',
       'freq_weekly': 'Weekly',
@@ -548,27 +573,27 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'custom_javascript': 'Custom JavaScript',
       'signature_on_pdf': 'Show on PDF',
       'signature_on_pdf_help':
-          'Show the client signature on the invoice/quote PDF.',
+      'Show the client signature on the invoice/quote PDF.',
       'show_accept_invoice_terms': 'Invoice Terms Checkbox',
       'show_accept_invoice_terms_help':
-          'Require client to confirm that they accept the invoice terms.',
+      'Require client to confirm that they accept the invoice terms.',
       'show_accept_quote_terms': 'Quote Terms Checkbox',
       'show_accept_quote_terms_help':
-          'Require client to confirm that they accept the quote terms.',
+      'Require client to confirm that they accept the quote terms.',
       'require_invoice_signature': 'Invoice Signature',
       'require_invoice_signature_help':
-          'Require client to provide their signature.',
+      'Require client to provide their signature.',
       'require_quote_signature': 'Quote Signature',
       'enable_portal_password': 'Password Protect Invoices',
       'enable_portal_password_help':
-          'Allows you to set a password for each contact. If a password is set, the contact will be required to enter a password before viewing invoices.',
+      'Allows you to set a password for each contact. If a password is set, the contact will be required to enter a password before viewing invoices.',
       'authorization': 'Authorization',
       'subdomain': 'Subdomain',
       'domain': 'Domain',
       'portal_mode': 'Portal Mode',
       'email_signature': 'Email Signature',
       'enable_email_markup_help':
-          'Make it easier for your clients to pay you by adding schema.org markup to your emails.',
+      'Make it easier for your clients to pay you by adding schema.org markup to your emails.',
       'plain': 'Plain',
       'light': 'Light',
       'dark': 'Dark',
@@ -597,9 +622,9 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'accepted_card_logos': 'Accepted Card Logos',
       'credentials': 'Credentials',
       'require_billing_address_help':
-          'Require client to provide their billing address',
+      'Require client to provide their billing address',
       'require_shipping_address_help':
-          'Require client to provide their shipping address',
+      'Require client to provide their shipping address',
       'update_address': 'Update address',
       'update_address_help': 'Update client\'s address with provided details',
       'rate': 'Rate',
@@ -613,13 +638,13 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'restored_tax_rate': 'Successfully restored tax rate',
       'fill_products': 'Fill Products',
       'fill_products_help':
-          'Selecting a product will automatically fill in the description and cost',
+      'Selecting a product will automatically fill in the description and cost',
       'update_products': 'Update Products',
       'update_products_help':
-          'Updating an invoice will automatically update the product library',
+      'Updating an invoice will automatically update the product library',
       'convert_products': 'Convert Products',
       'convert_products_help':
-          'Automatically convert product prices to the client\'s currency',
+      'Automatically convert product prices to the client\'s currency',
       'fees': 'Fees',
       'limits': 'Limits',
       'provider': 'Provider',
@@ -719,7 +744,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'please_enter_a_first_name': 'Please enter a first name',
       'please_enter_a_last_name': 'Please enter a last name',
       'please_agree_to_terms_and_privacy':
-          'Please agree to the terms of service and privacy policy to create an account.',
+      'Please agree to the terms of service and privacy policy to create an account.',
       'i_agree_to_the': 'I agree to the',
       'terms_of_service_link': 'terms of service',
       'privacy_policy_link': 'privacy policy',
@@ -818,7 +843,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'average': 'Average',
       'unapproved': 'Unapproved',
       'authenticate_to_change_setting':
-          'Please authenticate to change this setting',
+      'Please authenticate to change this setting',
       'locked': 'Locked',
       'authenticate': 'Authenticate',
       'please_authenticate': 'Please authenticate',
@@ -1019,7 +1044,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'marked_invoices_as_paid': 'Successfully marked invoices as paid',
       'done': 'Done',
       'please_enter_a_client_or_contact_name':
-          'Please enter a client or contact name',
+      'Please enter a client or contact name',
       'dark_mode': 'Dark Mode',
       'restart_app_to_apply_change': 'Restart the app to apply the change',
       'refresh_data': 'Refresh Data',
@@ -1200,7 +1225,8 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'email_subject_quote': 'Email Quote Subject',
       'email_subject_payment': 'Email Payment Subject',
       'email_subject_payment_partial': 'Email Partial Payment Subject',
-      'switch_list_table': 'Switch List Table',
+      'show_table': 'Show Table',
+      'show_list': 'Show List',
       'client_city': 'Client City',
       'client_state': 'Client State',
       'client_country': 'Client Country',
@@ -1281,23 +1307,23 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'hide_menu': 'Hide Menu',
       'show_menu': 'Show Menu',
       'partially_refunded': 'Partially Refunded',
-      'search_documents': 'Search Documents',
-      'search_designs': 'Search Designs',
-      'search_invoices': 'Search Invoices',
-      'search_clients': 'Search Clients',
-      'search_products': 'Search Products',
-      'search_quotes': 'Search Quotes',
-      'search_credits': 'Search Credits',
-      'search_vendors': 'Search Vendors',
-      'search_users': 'Search Users',
-      'search_tax_rates': 'Search Tax Rates',
-      'search_tasks': 'Search Tasks',
-      'search_settings': 'Search Settings',
-      'search_projects': 'Search Projects',
-      'search_expenses': 'Search Expenses',
-      'search_payments': 'Search Payments',
-      'search_groups': 'Search Groups',
-      'search_company': 'Search Company',
+      'search_documents': 'Search :count Documents',
+      'search_designs': 'Search :count Designs',
+      'search_invoices': 'Search :count Invoices',
+      'search_clients': 'Search :count Clients',
+      'search_products': 'Search :count Products',
+      'search_quotes': 'Search :count Quotes',
+      'search_credits': 'Search :count Credits',
+      'search_vendors': 'Search :count Vendors',
+      'search_users': 'Search :count Users',
+      'search_tax_rates': 'Search :count Tax Rates',
+      'search_tasks': 'Search :count Tasks',
+      'search_settings': 'Search :count Settings',
+      'search_projects': 'Search :count Projects',
+      'search_expenses': 'Search :count Expenses',
+      'search_payments': 'Search :count Payments',
+      'search_groups': 'Search :count Groups',
+      'search_company': 'Search :count Company',
       'refund_payment': 'Rimburso pagesën',
       'cancelled_invoice': 'Successfully cancelled invoice',
       'cancelled_invoices': 'Successfully cancelled invoices',
@@ -1316,7 +1342,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'purge_data': 'Purge Data',
       'purge_successful': 'Successfully purged company data',
       'purge_data_message':
-          'Warning: This will permanently erase your data, there is no undo.',
+      'Warning: This will permanently erase your data, there is no undo.',
       'invoice_balance': 'Invoice Balance',
       'age_group_0': '0 - 30 Days',
       'age_group_30': '30 - 60 Days',
@@ -1351,10 +1377,10 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'apply_license': 'Apply License',
       'cancel_account': 'Fshi llogarinë',
       'cancel_account_message':
-          'Warning: This will permanently delete your account, there is no undo.',
+      'Warning: This will permanently delete your account, there is no undo.',
       'delete_company': 'Delete Company',
       'delete_company_message':
-          'Warning: This will permanently delete your company, there is no undo.',
+      'Warning: This will permanently delete your company, there is no undo.',
       'enable_modules': 'Enable Modules',
       'converted_quote': 'Successfully converted quote',
       'credit_design': 'Credit Design',
@@ -1506,12 +1532,12 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'applied': 'Applied',
       'include_recent_errors': 'Include recent errors from the logs',
       'your_message_has_been_received':
-          'We have received your message and will try to respond promptly.',
+      'We have received your message and will try to respond promptly.',
       'message': 'Mesazhi',
       'from': 'Nga',
       'show_product_details': 'Show Product Details',
       'show_product_details_help':
-          'Include the description and cost in the product dropdown',
+      'Include the description and cost in the product dropdown',
       'pdf_min_requirements': 'The PDF renderer requires :version',
       'adjust_fee_percent': 'Adjust Fee Percent',
       'adjust_fee_percent_help': 'Adjust percent to account for fee',
@@ -1528,7 +1554,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'domain_url': 'Domain URL',
       'password_is_too_short': 'Password is too short',
       'password_is_too_easy':
-          'Password must contain an upper case character and a number',
+      'Password must contain an upper case character and a number',
       'client_portal_tasks': 'Client Portal Tasks',
       'client_portal_dashboard': 'Client Portal Dashboard',
       'please_enter_a_value': 'Please enter a value',
@@ -1555,16 +1581,16 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'third_custom': 'Third Custom',
       'show_cost': 'Show Cost',
       'show_cost_help':
-          'Display a product cost field to track the markup/profit',
+      'Display a product cost field to track the markup/profit',
       'show_product_quantity': 'Show Product Quantity',
       'show_product_quantity_help':
-          'Display a product quantity field, otherwise default to one',
+      'Display a product quantity field, otherwise default to one',
       'show_invoice_quantity': 'Show Invoice Quantity',
       'show_invoice_quantity_help':
-          'Display a line item quantity field, otherwise default to one',
+      'Display a line item quantity field, otherwise default to one',
       'default_quantity': 'Default Quantity',
       'default_quantity_help':
-          'Automatically set the line item quantity to one',
+      'Automatically set the line item quantity to one',
       'one_tax_rate': 'One Tax Rate',
       'two_tax_rates': 'Two Tax Rates',
       'three_tax_rates': 'Three Tax Rates',
@@ -1609,7 +1635,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'filtered_by_user': 'Filtered by User',
       'administrator': 'Administrator',
       'administrator_help':
-          'Lejon përdoruesit të menaxhoj përdoruesit, të ndryshojë rregullimet dhe të modifikojë të gjitha shënimet.',
+      'Lejon përdoruesit të menaxhoj përdoruesit, të ndryshojë rregullimet dhe të modifikojë të gjitha shënimet.',
       'user_management': 'Menaxhimi i përdoruesve',
       'users': 'Përdorues',
       'new_user': 'Përdorues i ri',
@@ -1624,7 +1650,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'invoice_options': 'Opsionet e faturës',
       'hide_paid_to_date': 'Fshihe Paguar deri më tash',
       'hide_paid_to_date_help':
-          'Shfaqni \"Paguar deri më tash\" në faturat tuaja pasi të jetë pranuar pagesa.',
+      'Shfaqni \"Paguar deri më tash\" në faturat tuaja pasi të jetë pranuar pagesa.',
       'invoice_embed_documents': 'Dokumentet e lidhura',
       'invoice_embed_documents_help': 'Vendos fotografinë në faturë.',
       'all_pages_header': 'Shfaqe Header',
@@ -1647,16 +1673,16 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'quote_footer': 'Footer i Ofertës',
       'auto_email_invoice': 'Auto Email',
       'auto_email_invoice_help':
-          'Automatically email recurring invoices when they are created.',
+      'Automatically email recurring invoices when they are created.',
       'auto_archive_invoice': 'Auto Archive',
       'auto_archive_invoice_help':
-          'Automatically archive invoices when they are paid.',
+      'Automatically archive invoices when they are paid.',
       'auto_archive_quote': 'Auto Archive',
       'auto_archive_quote_help':
-          'Automatically archive quotes when they are converted.',
+      'Automatically archive quotes when they are converted.',
       'auto_convert_quote': 'Auto Convert',
       'auto_convert_quote_help':
-          'Automatikisht konverto ofertën në faturë kur pranohet nga klienti.',
+      'Automatikisht konverto ofertën në faturë kur pranohet nga klienti.',
       'workflow_settings': 'Workflow Settings',
       'freq_daily': 'Daily',
       'freq_weekly': 'Javore',
@@ -1702,27 +1728,27 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'custom_javascript': 'Custom JavaScript',
       'signature_on_pdf': 'Show on PDF',
       'signature_on_pdf_help':
-          'Show the client signature on the invoice/quote PDF.',
+      'Show the client signature on the invoice/quote PDF.',
       'show_accept_invoice_terms': 'Invoice Terms Checkbox',
       'show_accept_invoice_terms_help':
-          'Require client to confirm that they accept the invoice terms.',
+      'Require client to confirm that they accept the invoice terms.',
       'show_accept_quote_terms': 'Quote Terms Checkbox',
       'show_accept_quote_terms_help':
-          'Require client to confirm that they accept the quote terms.',
+      'Require client to confirm that they accept the quote terms.',
       'require_invoice_signature': 'Invoice Signature',
       'require_invoice_signature_help':
-          'Require client to provide their signature.',
+      'Require client to provide their signature.',
       'require_quote_signature': 'Quote Signature',
       'enable_portal_password': 'Password Protect Invoices',
       'enable_portal_password_help':
-          'Ju mundëson të vendosni fjalëkalim për secilin kontakt. Nëse vendoset fjalëkalimi, kontakti duhet të vendos fjalëkalimin para se t\'i sheh faturat.',
+      'Ju mundëson të vendosni fjalëkalim për secilin kontakt. Nëse vendoset fjalëkalimi, kontakti duhet të vendos fjalëkalimin para se t\'i sheh faturat.',
       'authorization': 'Authorization',
       'subdomain': 'Subdomain',
       'domain': 'Domain',
       'portal_mode': 'Portal Mode',
       'email_signature': 'Përshëndetje',
       'enable_email_markup_help':
-          'Bëjeni më të lehtë për klientët tuaj të realizojnë pagesat duke vendosur schema.org markimin në emailat tuaj.',
+      'Bëjeni më të lehtë për klientët tuaj të realizojnë pagesat duke vendosur schema.org markimin në emailat tuaj.',
       'plain': 'E thjeshtë',
       'light': 'E lehtë',
       'dark': 'E mbylltë',
@@ -1751,12 +1777,12 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'accepted_card_logos': 'Accepted Card Logos',
       'credentials': 'Credentials',
       'require_billing_address_help':
-          'Require client to provide their billing address',
+      'Require client to provide their billing address',
       'require_shipping_address_help':
-          'Require client to provide their shipping address',
+      'Require client to provide their shipping address',
       'update_address': 'Perditeso Adresën',
       'update_address_help':
-          'Perditeso adresën e klientit me detajet e ofruara',
+      'Perditeso adresën e klientit me detajet e ofruara',
       'rate': 'Norma',
       'tax_rate': 'Norma e taksave',
       'new_tax_rate': 'Normë e re e taksave',
@@ -1768,13 +1794,13 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'restored_tax_rate': 'Successfully restored tax rate',
       'fill_products': 'Plotëso-automatikisht produktet',
       'fill_products_help':
-          'Duke zgjedhur produktin, automatikisht do të plotësohen <b>fill in the description and cost</b>',
+      'Duke zgjedhur produktin, automatikisht do të plotësohen <b>fill in the description and cost</b>',
       'update_products': 'Perditeso-automatikisht produktet',
       'update_products_help':
-          'Perditesimi i faturës automatikisht do të <b>perditesoje librarine e produktit</b>',
+      'Perditesimi i faturës automatikisht do të <b>perditesoje librarine e produktit</b>',
       'convert_products': 'Convert Products',
       'convert_products_help':
-          'Automatically convert product prices to the client\'s currency',
+      'Automatically convert product prices to the client\'s currency',
       'fees': 'Fees',
       'limits': 'Limits',
       'provider': 'Provider',
@@ -1874,7 +1900,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'please_enter_a_first_name': 'Please enter a first name',
       'please_enter_a_last_name': 'Please enter a last name',
       'please_agree_to_terms_and_privacy':
-          'Please agree to the terms of service and privacy policy to create an account.',
+      'Please agree to the terms of service and privacy policy to create an account.',
       'i_agree_to_the': 'I agree to the',
       'terms_of_service_link': 'terms of service',
       'privacy_policy_link': 'privacy policy',
@@ -1973,7 +1999,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'average': 'Average',
       'unapproved': 'Unapproved',
       'authenticate_to_change_setting':
-          'Please authenticate to change this setting',
+      'Please authenticate to change this setting',
       'locked': 'Locked',
       'authenticate': 'Authenticate',
       'please_authenticate': 'Please authenticate',
@@ -2173,7 +2199,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'marked_invoices_as_paid': 'Successfully marked invoices as paid',
       'done': 'Përfundo',
       'please_enter_a_client_or_contact_name':
-          'Please enter a client or contact name',
+      'Please enter a client or contact name',
       'dark_mode': 'Modeli i errët',
       'restart_app_to_apply_change': 'Restart the app to apply the change',
       'refresh_data': 'Refresh Data',
@@ -2255,7 +2281,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'activity_8': ':user ka arkivuar faturën :invoice',
       'activity_9': ':user ka fshirë faturën :invoice',
       'activity_10':
-          ':contact entered payment :payment for :payment_amount on invoice :invoice for :client',
+      ':contact entered payment :payment for :payment_amount on invoice :invoice for :client',
       'activity_11': ':user ka perditesuar pagesën :payment',
       'activity_12': ':user ka arkivuar pagesën :payment',
       'activity_13': ':user ka fshirë pagesën :payment',
@@ -2285,7 +2311,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'activity_37': ':user restored expense :expense',
       'activity_39': ':user cancelled a :payment_amount payment :payment',
       'activity_40':
-          ':user refunded :adjustment of a :payment_amount payment :payment',
+      ':user refunded :adjustment of a :payment_amount payment :payment',
       'activity_41': ':payment_amount payment (:payment) ka dështuar',
       'activity_42': ':user created task :task',
       'activity_43': ':user updated task :task',
@@ -2437,23 +2463,6 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'hide_menu': 'Hide Menu',
       'show_menu': 'Show Menu',
       'partially_refunded': 'Partially Refunded',
-      'search_documents': 'Search Documents',
-      'search_designs': 'Search Designs',
-      'search_invoices': 'Search Invoices',
-      'search_clients': 'Search Clients',
-      'search_products': 'Search Products',
-      'search_quotes': 'Search Quotes',
-      'search_credits': 'Search Credits',
-      'search_vendors': 'Search Vendors',
-      'search_users': 'Search Users',
-      'search_tax_rates': 'Search Tax Rates',
-      'search_tasks': 'Search Tasks',
-      'search_settings': 'Search Settings',
-      'search_projects': 'Search Projects',
-      'search_expenses': 'Search Expenses',
-      'search_payments': 'Search Payments',
-      'search_groups': 'Search Groups',
-      'search_company': 'Search Company',
       'refund_payment': 'Възстановяване на плащане',
       'cancelled_invoice': 'Successfully cancelled invoice',
       'cancelled_invoices': 'Successfully cancelled invoices',
@@ -2472,7 +2481,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'purge_data': 'Изчистване на данни',
       'purge_successful': 'Успешно изчистени фирмени данни',
       'purge_data_message':
-          'Внимание: Това ще изтрие данните перманентно без възможност за възстановяване.',
+      'Внимание: Това ще изтрие данните перманентно без възможност за възстановяване.',
       'invoice_balance': 'Invoice Balance',
       'age_group_0': '0 - 30 дни',
       'age_group_30': '30 - 60 дни',
@@ -2507,10 +2516,10 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'apply_license': 'Въведете лиценз',
       'cancel_account': 'Изтрий Профил',
       'cancel_account_message':
-          'ВНИМАНИЕ: Това действие ще изтрие перманентно вашият профил и данните в него. След това данните няма как да бъдат възстановени.',
+      'ВНИМАНИЕ: Това действие ще изтрие перманентно вашият профил и данните в него. След това данните няма как да бъдат възстановени.',
       'delete_company': 'Изтриване на фирма',
       'delete_company_message':
-          'Внимание: Това ще изтрие перманентно фирматаВи без възможност за възстановяване.',
+      'Внимание: Това ще изтрие перманентно фирматаВи без възможност за възстановяване.',
       'enable_modules': 'Enable Modules',
       'converted_quote': 'Successfully converted quote',
       'credit_design': 'Credit Design',
@@ -2662,12 +2671,12 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'applied': 'Applied',
       'include_recent_errors': 'Include recent errors from the logs',
       'your_message_has_been_received':
-          'We have received your message and will try to respond promptly.',
+      'We have received your message and will try to respond promptly.',
       'message': 'Съобщение',
       'from': 'От',
       'show_product_details': 'Show Product Details',
       'show_product_details_help':
-          'Include the description and cost in the product dropdown',
+      'Include the description and cost in the product dropdown',
       'pdf_min_requirements': 'The PDF renderer requires :version',
       'adjust_fee_percent': 'Adjust Fee Percent',
       'adjust_fee_percent_help': 'Adjust percent to account for fee',
@@ -2684,7 +2693,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'domain_url': 'Domain URL',
       'password_is_too_short': 'Паролата е твърде кратка',
       'password_is_too_easy':
-          'Password must contain an upper case character and a number',
+      'Password must contain an upper case character and a number',
       'client_portal_tasks': 'Client Portal Tasks',
       'client_portal_dashboard': 'Client Portal Dashboard',
       'please_enter_a_value': 'Please enter a value',
@@ -2711,16 +2720,16 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'third_custom': 'Third Custom',
       'show_cost': 'Show Cost',
       'show_cost_help':
-          'Display a product cost field to track the markup/profit',
+      'Display a product cost field to track the markup/profit',
       'show_product_quantity': 'Show Product Quantity',
       'show_product_quantity_help':
-          'Display a product quantity field, otherwise default to one',
+      'Display a product quantity field, otherwise default to one',
       'show_invoice_quantity': 'Show Invoice Quantity',
       'show_invoice_quantity_help':
-          'Display a line item quantity field, otherwise default to one',
+      'Display a line item quantity field, otherwise default to one',
       'default_quantity': 'Default Quantity',
       'default_quantity_help':
-          'Automatically set the line item quantity to one',
+      'Automatically set the line item quantity to one',
       'one_tax_rate': 'One Tax Rate',
       'two_tax_rates': 'Two Tax Rates',
       'three_tax_rates': 'Three Tax Rates',
@@ -2765,7 +2774,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'filtered_by_user': 'Филтрирано по Потребител',
       'administrator': 'Администратор',
       'administrator_help':
-          'Даване на права на потребителя да управлява другите потребители, да променя настойки и да редактира всички записи',
+      'Даване на права на потребителя да управлява другите потребители, да променя настойки и да редактира всички записи',
       'user_management': 'Управление на потребителите',
       'users': 'Потребители',
       'new_user': 'Нов потребител',
@@ -2780,10 +2789,10 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'invoice_options': 'Опции на фактурата',
       'hide_paid_to_date': 'Скрий \"Изплатено до момента\"',
       'hide_paid_to_date_help':
-          'Покажи \"Изплатено до момента\" във фактурите, след като е получено плащане.',
+      'Покажи \"Изплатено до момента\" във фактурите, след като е получено плащане.',
       'invoice_embed_documents': 'Свързани документи',
       'invoice_embed_documents_help':
-          'Включване на прикачените изображения във фактурата.',
+      'Включване на прикачените изображения във фактурата.',
       'all_pages_header': 'Показване на хедъра на',
       'all_pages_footer': 'Показване на футъра на',
       'first_page': 'Първа страница',
@@ -2804,16 +2813,16 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'quote_footer': 'Футър на оферта',
       'auto_email_invoice': 'Auto Email',
       'auto_email_invoice_help':
-          'Автоматично изпращане на периодични фактури при създаването им',
+      'Автоматично изпращане на периодични фактури при създаването им',
       'auto_archive_invoice': 'Auto Archive',
       'auto_archive_invoice_help':
-          'Автоматично архивиране на фактури при плащането им',
+      'Автоматично архивиране на фактури при плащането им',
       'auto_archive_quote': 'Auto Archive',
       'auto_archive_quote_help':
-          'Автоматично архивиране на оферти при конвертирането им',
+      'Автоматично архивиране на оферти при конвертирането им',
       'auto_convert_quote': 'Автоматично конвертиране',
       'auto_convert_quote_help':
-          'Автоматично конвертиране на оферта във фактура при одобрение от клиента.',
+      'Автоматично конвертиране на оферта във фактура при одобрение от клиента.',
       'workflow_settings': 'Настройки на работния процес',
       'freq_daily': 'Ежедневно',
       'freq_weekly': 'Седмично',
@@ -2859,26 +2868,26 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'custom_javascript': 'Custom JavaScript',
       'signature_on_pdf': 'Показване в PDF документа',
       'signature_on_pdf_help':
-          'Показване на подписа на клиента в PDF фактурата / офертата.',
+      'Показване на подписа на клиента в PDF фактурата / офертата.',
       'show_accept_invoice_terms': 'Чек-бокс за условия на фактура',
       'show_accept_invoice_terms_help':
-          'Изискване клиенът да потвърди, че приема условията на фактурата',
+      'Изискване клиенът да потвърди, че приема условията на фактурата',
       'show_accept_quote_terms': 'Чек-бокс за условия на офертата',
       'show_accept_quote_terms_help':
-          'Изискване клиенът да потвърди, че приема условията на офертата',
+      'Изискване клиенът да потвърди, че приема условията на офертата',
       'require_invoice_signature': 'Подпис на фактурата',
       'require_invoice_signature_help': 'Изискване клиентът да подпише',
       'require_quote_signature': 'Подпис на офертата',
       'enable_portal_password': 'Защита на фактурите с парола',
       'enable_portal_password_help':
-          'Дава възможност да заложите парола за всеки контакт. Ако такава е заложена, контактното лице ще трябва да я въведе преди да види фактурите,',
+      'Дава възможност да заложите парола за всеки контакт. Ако такава е заложена, контактното лице ще трябва да я въведе преди да види фактурите,',
       'authorization': 'Оторизация',
       'subdomain': 'Subdomain',
       'domain': 'Домейн',
       'portal_mode': 'Portal Mode',
       'email_signature': 'Поздрави,',
       'enable_email_markup_help':
-          'Направете плащането към Вас по-лесно за клиентите си като добавите в имейлите си schema.org markup.',
+      'Направете плащането към Вас по-лесно за клиентите си като добавите в имейлите си schema.org markup.',
       'plain': 'Изчистено',
       'light': 'Светло',
       'dark': 'Тъмно',
@@ -2907,12 +2916,12 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'accepted_card_logos': 'Лога на приемани карти',
       'credentials': 'Credentials',
       'require_billing_address_help':
-          'Изискване клиента да предостави адрес за фактуриране',
+      'Изискване клиента да предостави адрес за фактуриране',
       'require_shipping_address_help':
-          'Изискване клиента да предостави адрес за доставка',
+      'Изискване клиента да предостави адрес за доставка',
       'update_address': 'Актуализация на адреса',
       'update_address_help':
-          'Актуализация на адреса на клиента с предоставените данни',
+      'Актуализация на адреса на клиента с предоставените данни',
       'rate': 'Размер',
       'tax_rate': 'Данъчна ставка',
       'new_tax_rate': 'Нова такса',
@@ -2924,13 +2933,13 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'restored_tax_rate': 'Successfully restored tax rate',
       'fill_products': 'Автоматично попълвай продукти',
       'fill_products_help':
-          'Избирането на продукт автоматично <b>ще попълни описанието и цената</b>',
+      'Избирането на продукт автоматично <b>ще попълни описанието и цената</b>',
       'update_products': 'Автоматично обнови продукти',
       'update_products_help':
-          'Промяната на фактура автоматично <b>ще обнови продуктовия каталог</b>',
+      'Промяната на фактура автоматично <b>ще обнови продуктовия каталог</b>',
       'convert_products': 'Конвертиране на продукти',
       'convert_products_help':
-          'Автоматично конвертиране на цените на продуктите във валутата на клиента',
+      'Автоматично конвертиране на цените на продуктите във валутата на клиента',
       'fees': 'Такси',
       'limits': 'Лимити',
       'provider': 'Provider',
@@ -3030,7 +3039,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'please_enter_a_first_name': 'Моля въведете собствено име',
       'please_enter_a_last_name': 'Моля въведете фамилно име',
       'please_agree_to_terms_and_privacy':
-          'Моля съгласете се с общите условия и политиката за поверителност за да създадете профил.',
+      'Моля съгласете се с общите условия и политиката за поверителност за да създадете профил.',
       'i_agree_to_the': 'Съгласявам се с',
       'terms_of_service_link': 'условията за ползване',
       'privacy_policy_link': 'политиката за поверителност',
@@ -3122,7 +3131,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'restored_project': 'Успешно възстановен проект',
       'new_project': 'Нов проект',
       'thank_you_for_using_our_app':
-          'Благодарим Ви, че използвате нашето приложение!',
+      'Благодарим Ви, че използвате нашето приложение!',
       'if_you_like_it': 'Ако го харесвате Ви молим',
       'click_here': 'натиснете тук',
       'click_here_capital': 'Click here',
@@ -3130,7 +3139,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'average': 'Средно',
       'unapproved': 'Неодобрено',
       'authenticate_to_change_setting':
-          'Моля, влезте в профила си за промяна на тази настойка',
+      'Моля, влезте в профила си за промяна на тази настойка',
       'locked': 'Блокирано',
       'authenticate': 'Вход в профила',
       'please_authenticate': 'Моля, влезте в профила си',
@@ -3330,10 +3339,10 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'marked_invoices_as_paid': 'Successfully marked invoices as paid',
       'done': 'Готово',
       'please_enter_a_client_or_contact_name':
-          'Моля, въведете клиент или лице за контакт',
+      'Моля, въведете клиент или лице за контакт',
       'dark_mode': 'Тъмен режим',
       'restart_app_to_apply_change':
-          'Рестартирайте приложението за прилагане на промяната',
+      'Рестартирайте приложението за прилагане на промяната',
       'refresh_data': 'Опресняване на данни',
       'blank_contact': 'Празен контакт',
       'activity': 'Активност',
@@ -3413,7 +3422,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'activity_8': ':user архивира фактура :invoice',
       'activity_9': ':user изтри фактура :invoice',
       'activity_10':
-          ':contact въведе плащане :payment в размер на :payment_amount по фактура :invoice за :client',
+      ':contact въведе плащане :payment в размер на :payment_amount по фактура :invoice за :client',
       'activity_11': ':user актуализира плащане :payment',
       'activity_12': ':user архивира плащане :payment',
       'activity_13': ':user изтри плащане :payment',
@@ -3443,7 +3452,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'activity_37': ':user възстанови покупка :expense',
       'activity_39': ':user е отказал :payment_amount за плащане :payment',
       'activity_40':
-          ':user е възстановил :adjustment на стойност :payment_amount за плащане :payment',
+      ':user е възстановил :adjustment на стойност :payment_amount за плащане :payment',
       'activity_41': 'Отказани :payment_amount по плащане (:payment)',
       'activity_42': ':user създаде задача :task',
       'activity_43': ':user актуализира задача :task',
@@ -3595,23 +3604,23 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'hide_menu': 'Hide Menu',
       'show_menu': 'Show Menu',
       'partially_refunded': 'Partially Refunded',
-      'search_documents': 'Search Documents',
-      'search_designs': 'Search Designs',
-      'search_invoices': 'Search Invoices',
-      'search_clients': 'Search Clients',
-      'search_products': 'Search Products',
-      'search_quotes': 'Search Quotes',
-      'search_credits': 'Search Credits',
-      'search_vendors': 'Search Vendors',
-      'search_users': 'Search Users',
-      'search_tax_rates': 'Search Tax Rates',
-      'search_tasks': 'Search Tasks',
-      'search_settings': 'Search Settings',
-      'search_projects': 'Search Projects',
-      'search_expenses': 'Search Expenses',
-      'search_payments': 'Search Payments',
-      'search_groups': 'Search Groups',
-      'search_company': 'Search Company',
+      'search_documents': 'Search :count Documents',
+      'search_designs': 'Search :count Designs',
+      'search_invoices': 'Search :count Invoices',
+      'search_clients': 'Search :count Clients',
+      'search_products': 'Search :count Products',
+      'search_quotes': 'Search :count Quotes',
+      'search_credits': 'Search :count Credits',
+      'search_vendors': 'Search :count Vendors',
+      'search_users': 'Search :count Users',
+      'search_tax_rates': 'Search :count Tax Rates',
+      'search_tasks': 'Search :count Tasks',
+      'search_settings': 'Search :count Settings',
+      'search_projects': 'Search :count Projects',
+      'search_expenses': 'Search :count Expenses',
+      'search_payments': 'Search :count Payments',
+      'search_groups': 'Search :count Groups',
+      'search_company': 'Search :count Company',
       'refund_payment': '已退款的支付',
       'cancelled_invoice': 'Successfully cancelled invoice',
       'cancelled_invoices': 'Successfully cancelled invoices',
@@ -3817,12 +3826,12 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'applied': 'Applied',
       'include_recent_errors': 'Include recent errors from the logs',
       'your_message_has_been_received':
-          'We have received your message and will try to respond promptly.',
+      'We have received your message and will try to respond promptly.',
       'message': '訊息',
       'from': '從',
       'show_product_details': 'Show Product Details',
       'show_product_details_help':
-          'Include the description and cost in the product dropdown',
+      'Include the description and cost in the product dropdown',
       'pdf_min_requirements': 'The PDF renderer requires :version',
       'adjust_fee_percent': 'Adjust Fee Percent',
       'adjust_fee_percent_help': '調整百分比以計入費用',
@@ -3839,7 +3848,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'domain_url': 'Domain URL',
       'password_is_too_short': '密碼太短',
       'password_is_too_easy':
-          'Password must contain an upper case character and a number',
+      'Password must contain an upper case character and a number',
       'client_portal_tasks': 'Client Portal Tasks',
       'client_portal_dashboard': 'Client Portal Dashboard',
       'please_enter_a_value': 'Please enter a value',
@@ -3866,16 +3875,16 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'third_custom': 'Third Custom',
       'show_cost': 'Show Cost',
       'show_cost_help':
-          'Display a product cost field to track the markup/profit',
+      'Display a product cost field to track the markup/profit',
       'show_product_quantity': 'Show Product Quantity',
       'show_product_quantity_help':
-          'Display a product quantity field, otherwise default to one',
+      'Display a product quantity field, otherwise default to one',
       'show_invoice_quantity': 'Show Invoice Quantity',
       'show_invoice_quantity_help':
-          'Display a line item quantity field, otherwise default to one',
+      'Display a line item quantity field, otherwise default to one',
       'default_quantity': 'Default Quantity',
       'default_quantity_help':
-          'Automatically set the line item quantity to one',
+      'Automatically set the line item quantity to one',
       'one_tax_rate': 'One Tax Rate',
       'two_tax_rates': 'Two Tax Rates',
       'three_tax_rates': 'Three Tax Rates',
@@ -4016,7 +4025,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'require_quote_signature': '報價單簽名',
       'enable_portal_password': '用以保護發票的密碼',
       'enable_portal_password_help':
-          '使您能夠為每位聯絡人設定密碼。若設定密碼，聯絡人將會在查看發票之前被要求輸入密碼。',
+      '使您能夠為每位聯絡人設定密碼。若設定密碼，聯絡人將會在查看發票之前被要求輸入密碼。',
       'authorization': '授權',
       'subdomain': '子網域',
       'domain': '網域',
@@ -4546,7 +4555,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'activity_8': ':user 已將發票 :invoice 歸檔',
       'activity_9': ':user 已刪除發票 :invoice',
       'activity_10':
-          ':contact entered payment :payment for :payment_amount on invoice :invoice for :client',
+      ':contact entered payment :payment for :payment_amount on invoice :invoice for :client',
       'activity_11': ':user 已更新付款資料 :payment',
       'activity_12': ':user 已將付款資料 :payment 歸檔',
       'activity_13': ':user 已刪除付款資料 :payment',
@@ -4727,23 +4736,23 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'hide_menu': 'Hide Menu',
       'show_menu': 'Show Menu',
       'partially_refunded': 'Partially Refunded',
-      'search_documents': 'Search Documents',
-      'search_designs': 'Search Designs',
-      'search_invoices': 'Search Invoices',
-      'search_clients': 'Search Clients',
-      'search_products': 'Search Products',
-      'search_quotes': 'Search Quotes',
-      'search_credits': 'Search Credits',
-      'search_vendors': 'Search Vendors',
-      'search_users': 'Search Users',
-      'search_tax_rates': 'Search Tax Rates',
-      'search_tasks': 'Search Tasks',
-      'search_settings': 'Search Settings',
-      'search_projects': 'Search Projects',
-      'search_expenses': 'Search Expenses',
-      'search_payments': 'Search Payments',
-      'search_groups': 'Search Groups',
-      'search_company': 'Search Company',
+      'search_documents': 'Search :count Documents',
+      'search_designs': 'Search :count Designs',
+      'search_invoices': 'Search :count Invoices',
+      'search_clients': 'Search :count Clients',
+      'search_products': 'Search :count Products',
+      'search_quotes': 'Search :count Quotes',
+      'search_credits': 'Search :count Credits',
+      'search_vendors': 'Search :count Vendors',
+      'search_users': 'Search :count Users',
+      'search_tax_rates': 'Search :count Tax Rates',
+      'search_tasks': 'Search :count Tasks',
+      'search_settings': 'Search :count Settings',
+      'search_projects': 'Search :count Projects',
+      'search_expenses': 'Search :count Expenses',
+      'search_payments': 'Search :count Payments',
+      'search_groups': 'Search :count Groups',
+      'search_company': 'Search :count Company',
       'refund_payment': 'Refund Payment',
       'cancelled_invoice': 'Successfully cancelled invoice',
       'cancelled_invoices': 'Successfully cancelled invoices',
@@ -4762,7 +4771,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'purge_data': 'Purge Data',
       'purge_successful': 'Successfully purged company data',
       'purge_data_message':
-          'Warning: This will permanently erase your data, there is no undo.',
+      'Warning: This will permanently erase your data, there is no undo.',
       'invoice_balance': 'Invoice Balance',
       'age_group_0': '0 - 30 dana',
       'age_group_30': '30 - 60 dana',
@@ -4797,10 +4806,10 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'apply_license': 'Apply License',
       'cancel_account': 'Izbriši korisnički račun',
       'cancel_account_message':
-          'Pozor: Ovo će trajno obrisati sve vaše podatke, nema povratka.',
+      'Pozor: Ovo će trajno obrisati sve vaše podatke, nema povratka.',
       'delete_company': 'Delete Company',
       'delete_company_message':
-          'Warning: This will permanently delete your company, there is no undo.',
+      'Warning: This will permanently delete your company, there is no undo.',
       'enable_modules': 'Enable Modules',
       'converted_quote': 'Successfully converted quote',
       'credit_design': 'Credit Design',
@@ -4952,12 +4961,12 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'applied': 'Applied',
       'include_recent_errors': 'Include recent errors from the logs',
       'your_message_has_been_received':
-          'We have received your message and will try to respond promptly.',
+      'We have received your message and will try to respond promptly.',
       'message': 'Poruka',
       'from': 'Šalje',
       'show_product_details': 'Show Product Details',
       'show_product_details_help':
-          'Include the description and cost in the product dropdown',
+      'Include the description and cost in the product dropdown',
       'pdf_min_requirements': 'The PDF renderer requires :version',
       'adjust_fee_percent': 'Adjust Fee Percent',
       'adjust_fee_percent_help': 'Adjust percent to account for fee',
@@ -4974,7 +4983,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'domain_url': 'Domain URL',
       'password_is_too_short': 'Password is too short',
       'password_is_too_easy':
-          'Password must contain an upper case character and a number',
+      'Password must contain an upper case character and a number',
       'client_portal_tasks': 'Client Portal Tasks',
       'client_portal_dashboard': 'Client Portal Dashboard',
       'please_enter_a_value': 'Please enter a value',
@@ -5001,16 +5010,16 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'third_custom': 'Third Custom',
       'show_cost': 'Show Cost',
       'show_cost_help':
-          'Display a product cost field to track the markup/profit',
+      'Display a product cost field to track the markup/profit',
       'show_product_quantity': 'Show Product Quantity',
       'show_product_quantity_help':
-          'Display a product quantity field, otherwise default to one',
+      'Display a product quantity field, otherwise default to one',
       'show_invoice_quantity': 'Show Invoice Quantity',
       'show_invoice_quantity_help':
-          'Display a line item quantity field, otherwise default to one',
+      'Display a line item quantity field, otherwise default to one',
       'default_quantity': 'Default Quantity',
       'default_quantity_help':
-          'Automatically set the line item quantity to one',
+      'Automatically set the line item quantity to one',
       'one_tax_rate': 'One Tax Rate',
       'two_tax_rates': 'Two Tax Rates',
       'three_tax_rates': 'Three Tax Rates',
@@ -5055,7 +5064,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'filtered_by_user': 'Filtered by User',
       'administrator': 'Administrator',
       'administrator_help':
-          'Allow user to manage users, change settings and modify all records',
+      'Allow user to manage users, change settings and modify all records',
       'user_management': 'Upravljanje korisnicima',
       'users': 'Korisnici',
       'new_user': 'Novi korisnik',
@@ -5070,7 +5079,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'invoice_options': 'Opcije računa',
       'hide_paid_to_date': 'Sakrij datum plaćanja',
       'hide_paid_to_date_help':
-          'Prikažite \"Datum plaćanja\" na računima, onda kada je uplata primljena.',
+      'Prikažite \"Datum plaćanja\" na računima, onda kada je uplata primljena.',
       'invoice_embed_documents': 'Ugrađeni dokumenti',
       'invoice_embed_documents_help': 'Ubaci dodane dokumente u račun.',
       'all_pages_header': 'Prikaži zaglavlje na',
@@ -5093,16 +5102,16 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'quote_footer': 'Podnožje ponude',
       'auto_email_invoice': 'Auto Email',
       'auto_email_invoice_help':
-          'Automatically email recurring invoices when they are created.',
+      'Automatically email recurring invoices when they are created.',
       'auto_archive_invoice': 'Auto Archive',
       'auto_archive_invoice_help':
-          'Automatically archive invoices when they are paid.',
+      'Automatically archive invoices when they are paid.',
       'auto_archive_quote': 'Auto Archive',
       'auto_archive_quote_help':
-          'Automatically archive quotes when they are converted.',
+      'Automatically archive quotes when they are converted.',
       'auto_convert_quote': 'Auto Convert',
       'auto_convert_quote_help':
-          'Automatski konvertirajte ponudu u račun nakon što je odobrena od strane klijenta.',
+      'Automatski konvertirajte ponudu u račun nakon što je odobrena od strane klijenta.',
       'workflow_settings': 'Workflow Settings',
       'freq_daily': 'Daily',
       'freq_weekly': 'Weekly',
@@ -5148,27 +5157,27 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'custom_javascript': 'Custom JavaScript',
       'signature_on_pdf': 'Pokaži na PDF-u',
       'signature_on_pdf_help':
-          'Show the client signature on the invoice/quote PDF.',
+      'Show the client signature on the invoice/quote PDF.',
       'show_accept_invoice_terms': 'Invoice Terms Checkbox',
       'show_accept_invoice_terms_help':
-          'Require client to confirm that they accept the invoice terms.',
+      'Require client to confirm that they accept the invoice terms.',
       'show_accept_quote_terms': 'Quote Terms Checkbox',
       'show_accept_quote_terms_help':
-          'Require client to confirm that they accept the quote terms.',
+      'Require client to confirm that they accept the quote terms.',
       'require_invoice_signature': 'Invoice Signature',
       'require_invoice_signature_help':
-          'Require client to provide their signature.',
+      'Require client to provide their signature.',
       'require_quote_signature': 'Quote Signature',
       'enable_portal_password': 'Password Protect Invoices',
       'enable_portal_password_help':
-          'Allows you to set a password for each contact. If a password is set, the contact will be required to enter a password before viewing invoices.',
+      'Allows you to set a password for each contact. If a password is set, the contact will be required to enter a password before viewing invoices.',
       'authorization': 'Authorization',
       'subdomain': 'Poddomena',
       'domain': 'Domain',
       'portal_mode': 'Portal Mode',
       'email_signature': 'Srdačno,',
       'enable_email_markup_help':
-          'Olakšajte svojim klijentima plaćanje dodavanjem schema.org markupa vašoj e-pošti.',
+      'Olakšajte svojim klijentima plaćanje dodavanjem schema.org markupa vašoj e-pošti.',
       'plain': 'Obično',
       'light': 'Svijetlo',
       'dark': 'Tamno',
@@ -5197,9 +5206,9 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'accepted_card_logos': 'Accepted Card Logos',
       'credentials': 'Credentials',
       'require_billing_address_help':
-          'Require client to provide their billing address',
+      'Require client to provide their billing address',
       'require_shipping_address_help':
-          'Require client to provide their shipping address',
+      'Require client to provide their shipping address',
       'update_address': 'Ažuriraj adresu',
       'update_address_help': 'Ažuriraj adresu klijenta uz osigurane detalje',
       'rate': 'Stopa',
@@ -5213,13 +5222,13 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'restored_tax_rate': 'Successfully restored tax rate',
       'fill_products': 'Proizvodi sa samoispunom',
       'fill_products_help':
-          'Odabir proizvoda će automatski <b>ispuniti opis i cijenu</b>',
+      'Odabir proizvoda će automatski <b>ispuniti opis i cijenu</b>',
       'update_products': 'Proizvidi sa autoažuriranjem',
       'update_products_help':
-          'Ažuriranje računa automatski <b>ažurirati registar proizvoda</b>',
+      'Ažuriranje računa automatski <b>ažurirati registar proizvoda</b>',
       'convert_products': 'Convert Products',
       'convert_products_help':
-          'Automatically convert product prices to the client\'s currency',
+      'Automatically convert product prices to the client\'s currency',
       'fees': 'Fees',
       'limits': 'Limits',
       'provider': 'Provider',
@@ -5319,7 +5328,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'please_enter_a_first_name': 'Please enter a first name',
       'please_enter_a_last_name': 'Please enter a last name',
       'please_agree_to_terms_and_privacy':
-          'Please agree to the terms of service and privacy policy to create an account.',
+      'Please agree to the terms of service and privacy policy to create an account.',
       'i_agree_to_the': 'I agree to the',
       'terms_of_service_link': 'terms of service',
       'privacy_policy_link': 'privacy policy',
@@ -5418,7 +5427,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'average': 'Average',
       'unapproved': 'Unapproved',
       'authenticate_to_change_setting':
-          'Please authenticate to change this setting',
+      'Please authenticate to change this setting',
       'locked': 'Locked',
       'authenticate': 'Authenticate',
       'please_authenticate': 'Please authenticate',
@@ -5618,10 +5627,10 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'marked_invoices_as_paid': 'Successfully marked invoices as paid',
       'done': 'Dovršeno',
       'please_enter_a_client_or_contact_name':
-          'Molimo upišite ime klijenta ili kontakta',
+      'Molimo upišite ime klijenta ili kontakta',
       'dark_mode': 'Tamni prikaz',
       'restart_app_to_apply_change':
-          'Ponovno pokrenite aplikaciju za primjenu promjena',
+      'Ponovno pokrenite aplikaciju za primjenu promjena',
       'refresh_data': 'Osvježi podatke',
       'blank_contact': 'Prazan kontakt',
       'activity': 'Aktivnost',
@@ -5730,7 +5739,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'activity_37': ':user restored expense :expense',
       'activity_39': ':user cancelled a :payment_amount payment :payment',
       'activity_40':
-          ':user refunded :adjustment of a :payment_amount payment :payment',
+      ':user refunded :adjustment of a :payment_amount payment :payment',
       'activity_41': ':payment_amount payment (:payment) failed',
       'activity_42': ':user created task :task',
       'activity_43': ':user updated task :task',
@@ -5882,23 +5891,23 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'hide_menu': 'Hide Menu',
       'show_menu': 'Show Menu',
       'partially_refunded': 'Partially Refunded',
-      'search_documents': 'Search Documents',
-      'search_designs': 'Search Designs',
-      'search_invoices': 'Search Invoices',
-      'search_clients': 'Search Clients',
-      'search_products': 'Search Products',
-      'search_quotes': 'Search Quotes',
-      'search_credits': 'Search Credits',
-      'search_vendors': 'Search Vendors',
-      'search_users': 'Search Users',
-      'search_tax_rates': 'Search Tax Rates',
-      'search_tasks': 'Search Tasks',
-      'search_settings': 'Search Settings',
-      'search_projects': 'Search Projects',
-      'search_expenses': 'Search Expenses',
-      'search_payments': 'Search Payments',
-      'search_groups': 'Search Groups',
-      'search_company': 'Search Company',
+      'search_documents': 'Search :count Documents',
+      'search_designs': 'Search :count Designs',
+      'search_invoices': 'Search :count Invoices',
+      'search_clients': 'Search :count Clients',
+      'search_products': 'Search :count Products',
+      'search_quotes': 'Search :count Quotes',
+      'search_credits': 'Search :count Credits',
+      'search_vendors': 'Search :count Vendors',
+      'search_users': 'Search :count Users',
+      'search_tax_rates': 'Search :count Tax Rates',
+      'search_tasks': 'Search :count Tasks',
+      'search_settings': 'Search :count Settings',
+      'search_projects': 'Search :count Projects',
+      'search_expenses': 'Search :count Expenses',
+      'search_payments': 'Search :count Payments',
+      'search_groups': 'Search :count Groups',
+      'search_company': 'Search :count Company',
       'refund_payment': 'Refund Payment',
       'cancelled_invoice': 'Successfully cancelled invoice',
       'cancelled_invoices': 'Successfully cancelled invoices',
@@ -5917,7 +5926,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'purge_data': 'Purge Data',
       'purge_successful': 'Successfully purged company data',
       'purge_data_message':
-          'Warning: This will permanently erase your data, there is no undo.',
+      'Warning: This will permanently erase your data, there is no undo.',
       'invoice_balance': 'Invoice Balance',
       'age_group_0': '0 - 30 Days',
       'age_group_30': '30 - 60 Days',
@@ -5952,10 +5961,10 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'apply_license': 'Apply License',
       'cancel_account': 'Smazat účet',
       'cancel_account_message':
-          'Varování: Toto permanentně odstraní Váš účet. Tato akce je nevratná.',
+      'Varování: Toto permanentně odstraní Váš účet. Tato akce je nevratná.',
       'delete_company': 'Delete Company',
       'delete_company_message':
-          'Warning: This will permanently delete your company, there is no undo.',
+      'Warning: This will permanently delete your company, there is no undo.',
       'enable_modules': 'Enable Modules',
       'converted_quote': 'Successfully converted quote',
       'credit_design': 'Credit Design',
@@ -6107,12 +6116,12 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'applied': 'Applied',
       'include_recent_errors': 'Include recent errors from the logs',
       'your_message_has_been_received':
-          'We have received your message and will try to respond promptly.',
+      'We have received your message and will try to respond promptly.',
       'message': 'Zpráva',
       'from': 'Od',
       'show_product_details': 'Show Product Details',
       'show_product_details_help':
-          'Include the description and cost in the product dropdown',
+      'Include the description and cost in the product dropdown',
       'pdf_min_requirements': 'The PDF renderer requires :version',
       'adjust_fee_percent': 'Adjust Fee Percent',
       'adjust_fee_percent_help': 'Adjust percent to account for fee',
@@ -6129,7 +6138,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'domain_url': 'Domain URL',
       'password_is_too_short': 'Password is too short',
       'password_is_too_easy':
-          'Password must contain an upper case character and a number',
+      'Password must contain an upper case character and a number',
       'client_portal_tasks': 'Client Portal Tasks',
       'client_portal_dashboard': 'Client Portal Dashboard',
       'please_enter_a_value': 'Please enter a value',
@@ -6156,16 +6165,16 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'third_custom': 'Third Custom',
       'show_cost': 'Show Cost',
       'show_cost_help':
-          'Display a product cost field to track the markup/profit',
+      'Display a product cost field to track the markup/profit',
       'show_product_quantity': 'Show Product Quantity',
       'show_product_quantity_help':
-          'Display a product quantity field, otherwise default to one',
+      'Display a product quantity field, otherwise default to one',
       'show_invoice_quantity': 'Show Invoice Quantity',
       'show_invoice_quantity_help':
-          'Display a line item quantity field, otherwise default to one',
+      'Display a line item quantity field, otherwise default to one',
       'default_quantity': 'Default Quantity',
       'default_quantity_help':
-          'Automatically set the line item quantity to one',
+      'Automatically set the line item quantity to one',
       'one_tax_rate': 'One Tax Rate',
       'two_tax_rates': 'Two Tax Rates',
       'three_tax_rates': 'Three Tax Rates',
@@ -6210,7 +6219,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'filtered_by_user': 'Filtered by User',
       'administrator': 'Administrátor',
       'administrator_help':
-          'Povolit uživatelům spravovat další uživatele, měnit nastavení a všechny záznamy',
+      'Povolit uživatelům spravovat další uživatele, měnit nastavení a všechny záznamy',
       'user_management': 'Správa uživatelů',
       'users': 'Uživatelé',
       'new_user': 'Nový uživatel',
@@ -6225,7 +6234,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'invoice_options': 'Možnosti faktury',
       'hide_paid_to_date': 'Skrýt Zaplaceno ke dni',
       'hide_paid_to_date_help':
-          'Zobrazit na faktuře \"Zaplaceno ke dni\" pouze když přijde platba.',
+      'Zobrazit na faktuře \"Zaplaceno ke dni\" pouze když přijde platba.',
       'invoice_embed_documents': 'Embed Documents',
       'invoice_embed_documents_help': 'Include attached images in the invoice.',
       'all_pages_header': 'Zobrazit hlavičku',
@@ -6248,16 +6257,16 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'quote_footer': 'Patička nabídky',
       'auto_email_invoice': 'Auto Email',
       'auto_email_invoice_help':
-          'Automatically email recurring invoices when they are created.',
+      'Automatically email recurring invoices when they are created.',
       'auto_archive_invoice': 'Auto Archive',
       'auto_archive_invoice_help':
-          'Automatically archive invoices when they are paid.',
+      'Automatically archive invoices when they are paid.',
       'auto_archive_quote': 'Auto Archive',
       'auto_archive_quote_help':
-          'Automatically archive quotes when they are converted.',
+      'Automatically archive quotes when they are converted.',
       'auto_convert_quote': 'Auto Convert',
       'auto_convert_quote_help':
-          'Automaticky zkonvertovat nabídku na fakturu po schválení klientem.',
+      'Automaticky zkonvertovat nabídku na fakturu po schválení klientem.',
       'workflow_settings': 'Workflow Settings',
       'freq_daily': 'Daily',
       'freq_weekly': 'týdně',
@@ -6303,27 +6312,27 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'custom_javascript': 'Custom JavaScript',
       'signature_on_pdf': 'Show on PDF',
       'signature_on_pdf_help':
-          'Show the client signature on the invoice/quote PDF.',
+      'Show the client signature on the invoice/quote PDF.',
       'show_accept_invoice_terms': 'Invoice Terms Checkbox',
       'show_accept_invoice_terms_help':
-          'Require client to confirm that they accept the invoice terms.',
+      'Require client to confirm that they accept the invoice terms.',
       'show_accept_quote_terms': 'Quote Terms Checkbox',
       'show_accept_quote_terms_help':
-          'Require client to confirm that they accept the quote terms.',
+      'Require client to confirm that they accept the quote terms.',
       'require_invoice_signature': 'Invoice Signature',
       'require_invoice_signature_help':
-          'Require client to provide their signature.',
+      'Require client to provide their signature.',
       'require_quote_signature': 'Quote Signature',
       'enable_portal_password': 'Password Protect Invoices',
       'enable_portal_password_help':
-          'Umožní Vám nastavit heslo pro každý kontakt. Pokud heslo nastavíte, tak kontakt ho bude pro zobrazení faktury vždy použít.',
+      'Umožní Vám nastavit heslo pro každý kontakt. Pokud heslo nastavíte, tak kontakt ho bude pro zobrazení faktury vždy použít.',
       'authorization': 'Schválení',
       'subdomain': 'subdoména',
       'domain': 'Domain',
       'portal_mode': 'Portal Mode',
       'email_signature': 'S pozdravem,',
       'enable_email_markup_help':
-          'Přidejte si mikroznačky schema.org do emailu a usnadněte tak vašim klientům platby.',
+      'Přidejte si mikroznačky schema.org do emailu a usnadněte tak vašim klientům platby.',
       'plain': 'Prostý text',
       'light': 'Světlý',
       'dark': 'Tmavý',
@@ -6352,9 +6361,9 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'accepted_card_logos': 'Accepted Card Logos',
       'credentials': 'Credentials',
       'require_billing_address_help':
-          'Require client to provide their billing address',
+      'Require client to provide their billing address',
       'require_shipping_address_help':
-          'Require client to provide their shipping address',
+      'Require client to provide their shipping address',
       'update_address': 'Změnit adresu',
       'update_address_help': 'Změnit adresu klienta podle poskytnutých detailů',
       'rate': 'Sazba',
@@ -6368,13 +6377,13 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'restored_tax_rate': 'Successfully restored tax rate',
       'fill_products': 'Automaticky předvyplnit produkty',
       'fill_products_help':
-          'Výběr produktu automaticky <b>vyplní popis a cenu</b>',
+      'Výběr produktu automaticky <b>vyplní popis a cenu</b>',
       'update_products': 'Automaticky aktualizovat produkty',
       'update_products_help':
-          'Změna na faktuře automaticky <b>aktualizuje katalog produktů</b>',
+      'Změna na faktuře automaticky <b>aktualizuje katalog produktů</b>',
       'convert_products': 'Convert Products',
       'convert_products_help':
-          'Automatically convert product prices to the client\'s currency',
+      'Automatically convert product prices to the client\'s currency',
       'fees': 'Fees',
       'limits': 'Limits',
       'provider': 'Provider',
@@ -6474,7 +6483,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'please_enter_a_first_name': 'Please enter a first name',
       'please_enter_a_last_name': 'Please enter a last name',
       'please_agree_to_terms_and_privacy':
-          'Please agree to the terms of service and privacy policy to create an account.',
+      'Please agree to the terms of service and privacy policy to create an account.',
       'i_agree_to_the': 'I agree to the',
       'terms_of_service_link': 'terms of service',
       'privacy_policy_link': 'privacy policy',
@@ -6573,7 +6582,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'average': 'Average',
       'unapproved': 'Unapproved',
       'authenticate_to_change_setting':
-          'Please authenticate to change this setting',
+      'Please authenticate to change this setting',
       'locked': 'Locked',
       'authenticate': 'Authenticate',
       'please_authenticate': 'Please authenticate',
@@ -6773,7 +6782,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'marked_invoices_as_paid': 'Successfully marked invoices as paid',
       'done': 'Hotovo',
       'please_enter_a_client_or_contact_name':
-          'Please enter a client or contact name',
+      'Please enter a client or contact name',
       'dark_mode': 'Tmavý mód',
       'restart_app_to_apply_change': 'Restart the app to apply the change',
       'refresh_data': 'Refresh Data',
@@ -6851,12 +6860,12 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'activity_4': ':user vytvořil fakturu :invoice',
       'activity_5': ':user změnil fakturu :invoice',
       'activity_6':
-          ':user poslal email s fakturou :invoice pro :client na :contact',
+      ':user poslal email s fakturou :invoice pro :client na :contact',
       'activity_7': 'Klient :contact zobrazil fakturu :invoice pro :client',
       'activity_8': ':user archivoval fakturu :invoice',
       'activity_9': ':user smazal fakturu :invoice',
       'activity_10':
-          ':contact entered payment :payment for :payment_amount on invoice :invoice for :client',
+      ':contact entered payment :payment for :payment_amount on invoice :invoice for :client',
       'activity_11': ':user změnil platbu :payment',
       'activity_12': ':user archivoval platbu :payment',
       'activity_13': ':user smazal platbu :payment',
@@ -6886,7 +6895,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'activity_37': ':user restored expense :expense',
       'activity_39': ':user cancelled a :payment_amount payment :payment',
       'activity_40':
-          ':user refunded :adjustment of a :payment_amount payment :payment',
+      ':user refunded :adjustment of a :payment_amount payment :payment',
       'activity_41': ':payment_amount payment (:payment) failed',
       'activity_42': ':user created task :task',
       'activity_43': ':user updated task :task',
@@ -7038,23 +7047,23 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'hide_menu': 'Hide Menu',
       'show_menu': 'Show Menu',
       'partially_refunded': 'Partially Refunded',
-      'search_documents': 'Search Documents',
-      'search_designs': 'Search Designs',
-      'search_invoices': 'Search Invoices',
-      'search_clients': 'Search Clients',
-      'search_products': 'Search Products',
-      'search_quotes': 'Search Quotes',
-      'search_credits': 'Search Credits',
-      'search_vendors': 'Search Vendors',
-      'search_users': 'Search Users',
-      'search_tax_rates': 'Search Tax Rates',
-      'search_tasks': 'Search Tasks',
-      'search_settings': 'Search Settings',
-      'search_projects': 'Search Projects',
-      'search_expenses': 'Search Expenses',
-      'search_payments': 'Search Payments',
-      'search_groups': 'Search Groups',
-      'search_company': 'Search Company',
+      'search_documents': 'Search :count Documents',
+      'search_designs': 'Search :count Designs',
+      'search_invoices': 'Search :count Invoices',
+      'search_clients': 'Search :count Clients',
+      'search_products': 'Search :count Products',
+      'search_quotes': 'Search :count Quotes',
+      'search_credits': 'Search :count Credits',
+      'search_vendors': 'Search :count Vendors',
+      'search_users': 'Search :count Users',
+      'search_tax_rates': 'Search :count Tax Rates',
+      'search_tasks': 'Search :count Tasks',
+      'search_settings': 'Search :count Settings',
+      'search_projects': 'Search :count Projects',
+      'search_expenses': 'Search :count Expenses',
+      'search_payments': 'Search :count Payments',
+      'search_groups': 'Search :count Groups',
+      'search_company': 'Search :count Company',
       'refund_payment': 'Refunder betaling',
       'cancelled_invoice': 'Successfully cancelled invoice',
       'cancelled_invoices': 'Successfully cancelled invoices',
@@ -7073,7 +7082,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'purge_data': 'Purge Data',
       'purge_successful': 'Successfully purged company data',
       'purge_data_message':
-          'Advarsel: Dette vil slette dine data permanent, der er ingen måder at fortryde.',
+      'Advarsel: Dette vil slette dine data permanent, der er ingen måder at fortryde.',
       'invoice_balance': 'Invoice Balance',
       'age_group_0': '0 - 30 dage',
       'age_group_30': '30 - 60 dage',
@@ -7108,10 +7117,10 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'apply_license': 'Anvend licens',
       'cancel_account': 'Annuller konto',
       'cancel_account_message':
-          'ADVARSEL: Dette vil permanent slette din konto, der er INGEN mulighed for at fortryde.',
+      'ADVARSEL: Dette vil permanent slette din konto, der er INGEN mulighed for at fortryde.',
       'delete_company': 'Delete Company',
       'delete_company_message':
-          'Warning: This will permanently delete your company, there is no undo.',
+      'Warning: This will permanently delete your company, there is no undo.',
       'enable_modules': 'Enable Modules',
       'converted_quote': 'Successfully converted quote',
       'credit_design': 'Credit Design',
@@ -7263,12 +7272,12 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'applied': 'Applied',
       'include_recent_errors': 'Include recent errors from the logs',
       'your_message_has_been_received':
-          'We have received your message and will try to respond promptly.',
+      'We have received your message and will try to respond promptly.',
       'message': 'Besked',
       'from': 'Fra',
       'show_product_details': 'Show Product Details',
       'show_product_details_help':
-          'Include the description and cost in the product dropdown',
+      'Include the description and cost in the product dropdown',
       'pdf_min_requirements': 'The PDF renderer requires :version',
       'adjust_fee_percent': 'Adjust Fee Percent',
       'adjust_fee_percent_help': 'Adjust percent to account for fee',
@@ -7285,7 +7294,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'domain_url': 'Domain URL',
       'password_is_too_short': 'Password is too short',
       'password_is_too_easy':
-          'Password must contain an upper case character and a number',
+      'Password must contain an upper case character and a number',
       'client_portal_tasks': 'Client Portal Tasks',
       'client_portal_dashboard': 'Client Portal Dashboard',
       'please_enter_a_value': 'Please enter a value',
@@ -7312,16 +7321,16 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'third_custom': 'Third Custom',
       'show_cost': 'Show Cost',
       'show_cost_help':
-          'Display a product cost field to track the markup/profit',
+      'Display a product cost field to track the markup/profit',
       'show_product_quantity': 'Show Product Quantity',
       'show_product_quantity_help':
-          'Display a product quantity field, otherwise default to one',
+      'Display a product quantity field, otherwise default to one',
       'show_invoice_quantity': 'Show Invoice Quantity',
       'show_invoice_quantity_help':
-          'Display a line item quantity field, otherwise default to one',
+      'Display a line item quantity field, otherwise default to one',
       'default_quantity': 'Default Quantity',
       'default_quantity_help':
-          'Automatically set the line item quantity to one',
+      'Automatically set the line item quantity to one',
       'one_tax_rate': 'One Tax Rate',
       'two_tax_rates': 'Two Tax Rates',
       'three_tax_rates': 'Three Tax Rates',
@@ -7366,7 +7375,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'filtered_by_user': 'Filtered by User',
       'administrator': 'Administrator',
       'administrator_help':
-          'Allow user to manage users, change settings and modify all records',
+      'Allow user to manage users, change settings and modify all records',
       'user_management': 'Brugerhåndtering',
       'users': 'Brugere',
       'new_user': 'New User',
@@ -7381,7 +7390,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'invoice_options': 'Fakturaindstillinger',
       'hide_paid_to_date': 'Skjul delbetalinger',
       'hide_paid_to_date_help':
-          'Vis kun delbetalinger hvis der er forekommet en delbetaling.',
+      'Vis kun delbetalinger hvis der er forekommet en delbetaling.',
       'invoice_embed_documents': 'Embed Documents',
       'invoice_embed_documents_help': 'Include attached images in the invoice.',
       'all_pages_header': 'Show header on',
@@ -7404,16 +7413,16 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'quote_footer': 'Quote Footer',
       'auto_email_invoice': 'Auto Email',
       'auto_email_invoice_help':
-          'Automatically email recurring invoices when they are created.',
+      'Automatically email recurring invoices when they are created.',
       'auto_archive_invoice': 'Auto Archive',
       'auto_archive_invoice_help':
-          'Automatically archive invoices when they are paid.',
+      'Automatically archive invoices when they are paid.',
       'auto_archive_quote': 'Auto Archive',
       'auto_archive_quote_help':
-          'Automatically archive quotes when they are converted.',
+      'Automatically archive quotes when they are converted.',
       'auto_convert_quote': 'Auto konvertering',
       'auto_convert_quote_help':
-          'Automatically convert a quote to an invoice when approved by a client.',
+      'Automatically convert a quote to an invoice when approved by a client.',
       'workflow_settings': 'Workflow Settings',
       'freq_daily': 'Daglig',
       'freq_weekly': 'Ugentlig',
@@ -7459,27 +7468,27 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'custom_javascript': 'Custom JavaScript',
       'signature_on_pdf': 'Show on PDF',
       'signature_on_pdf_help':
-          'Show the client signature on the invoice/quote PDF.',
+      'Show the client signature on the invoice/quote PDF.',
       'show_accept_invoice_terms': 'Afkrydsningsfelt for fakturavilkår',
       'show_accept_invoice_terms_help':
-          'Bed kunden om at bekræfte, at de accepterer fakturavilkårene.',
+      'Bed kunden om at bekræfte, at de accepterer fakturavilkårene.',
       'show_accept_quote_terms': 'Tilbuds Betingelser Afkrydsningsfelt',
       'show_accept_quote_terms_help':
-          'Bed kunden om at bekræfte, at de accepterer tilbudsbetingelserne.',
+      'Bed kunden om at bekræfte, at de accepterer tilbudsbetingelserne.',
       'require_invoice_signature': 'Fakturasignatur',
       'require_invoice_signature_help':
-          'Kræv at klienten giver deres underskrift.',
+      'Kræv at klienten giver deres underskrift.',
       'require_quote_signature': 'Tilbuds underskrift',
       'enable_portal_password': 'Adgangskodebeskyttet Fakturaer',
       'enable_portal_password_help':
-          'Lader dig indtaste en adgangskode til hver kontakt. Hvis en adgangskode ikke er lavet, vil kontakten blive pålagt at indtaste en adgangskode før det er muligt at se fakturaer.',
+      'Lader dig indtaste en adgangskode til hver kontakt. Hvis en adgangskode ikke er lavet, vil kontakten blive pålagt at indtaste en adgangskode før det er muligt at se fakturaer.',
       'authorization': 'Autorisation',
       'subdomain': 'Underdomain',
       'domain': 'Domæne',
       'portal_mode': 'Portal Mode',
       'email_signature': 'Venlig hilsen,',
       'enable_email_markup_help':
-          'Gør det lettere for dine klienter at betale dig ved at tilføje schema.org markup i dine e-mails.',
+      'Gør det lettere for dine klienter at betale dig ved at tilføje schema.org markup i dine e-mails.',
       'plain': 'Plain',
       'light': 'Light',
       'dark': 'Dark',
@@ -7508,9 +7517,9 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'accepted_card_logos': 'Accepted Card Logos',
       'credentials': 'Credentials',
       'require_billing_address_help':
-          'Require client to provide their billing address',
+      'Require client to provide their billing address',
       'require_shipping_address_help':
-          'Require client to provide their shipping address',
+      'Require client to provide their shipping address',
       'update_address': 'Opdater adresse',
       'update_address_help': 'Opdater kundens adresse med de opgivne detaljer',
       'rate': 'Sats',
@@ -7524,13 +7533,13 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'restored_tax_rate': 'Successfully restored tax rate',
       'fill_products': 'Automatisk-udfyld produkter',
       'fill_products_help':
-          'Valg af produkt vil automatisk udfylde <b>beskrivelse og pris</b>',
+      'Valg af produkt vil automatisk udfylde <b>beskrivelse og pris</b>',
       'update_products': 'Automatisk opdatering af produkter',
       'update_products_help':
-          'En opdatering af en faktura vil automatisk <b>opdaterer Produkt biblioteket</b>',
+      'En opdatering af en faktura vil automatisk <b>opdaterer Produkt biblioteket</b>',
       'convert_products': 'Convert Products',
       'convert_products_help':
-          'Automatically convert product prices to the client\'s currency',
+      'Automatically convert product prices to the client\'s currency',
       'fees': 'Gebyrer',
       'limits': 'Grænser',
       'provider': 'Provider',
@@ -7630,7 +7639,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'please_enter_a_first_name': 'Please enter a first name',
       'please_enter_a_last_name': 'Please enter a last name',
       'please_agree_to_terms_and_privacy':
-          'Please agree to the terms of service and privacy policy to create an account.',
+      'Please agree to the terms of service and privacy policy to create an account.',
       'i_agree_to_the': 'I agree to the',
       'terms_of_service_link': 'terms of service',
       'privacy_policy_link': 'privacy policy',
@@ -7729,7 +7738,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'average': 'Average',
       'unapproved': 'Unapproved',
       'authenticate_to_change_setting':
-          'Please authenticate to change this setting',
+      'Please authenticate to change this setting',
       'locked': 'Locked',
       'authenticate': 'Authenticate',
       'please_authenticate': 'Please authenticate',
@@ -7929,7 +7938,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'marked_invoices_as_paid': 'Successfully marked invoices as paid',
       'done': 'Færdig',
       'please_enter_a_client_or_contact_name':
-          'Please enter a client or contact name',
+      'Please enter a client or contact name',
       'dark_mode': 'Mørk tilstand',
       'restart_app_to_apply_change': 'Restart the app to apply the change',
       'refresh_data': 'Refresh Data',
@@ -8007,12 +8016,12 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'activity_4': ':user oprettede faktura :invoice',
       'activity_5': ':user ajourførte faktura :invoice',
       'activity_6':
-          ':user emailede fakturaen :invoice for :client til :contact',
+      ':user emailede fakturaen :invoice for :client til :contact',
       'activity_7': ':contact læste faktura :invoice for :client',
       'activity_8': ':user arkiverede faktura :invoice',
       'activity_9': ':user slettede faktura :invoice',
       'activity_10':
-          ':contact indtastede betaling :payment for :payment_amout i fakturaen :invoice for :client',
+      ':contact indtastede betaling :payment for :payment_amout i fakturaen :invoice for :client',
       'activity_11': ':user ajourførte betaling :payment',
       'activity_12': ':user arkiverede betaling :payment',
       'activity_13': ':user slettede betaling :payment',
@@ -8042,7 +8051,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'activity_37': ':user genskabte udgiften :expense',
       'activity_39': ':user annullerede en :payment_amount betaling :payment',
       'activity_40':
-          ':bruger refunderet :justering af en :betaling_beløb betaling :betaling',
+      ':bruger refunderet :justering af en :betaling_beløb betaling :betaling',
       'activity_41': ':payment_amount betaling (:betaling) mislykkedes',
       'activity_42': ':user oprettede opgaven :task',
       'activity_43': ':user opdaterede opgaven :task',
@@ -8194,23 +8203,23 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'hide_menu': 'Hide Menu',
       'show_menu': 'Show Menu',
       'partially_refunded': 'Partially Refunded',
-      'search_documents': 'Search Documents',
-      'search_designs': 'Search Designs',
-      'search_invoices': 'Search Invoices',
-      'search_clients': 'Search Clients',
-      'search_products': 'Search Products',
-      'search_quotes': 'Search Quotes',
-      'search_credits': 'Search Credits',
-      'search_vendors': 'Search Vendors',
-      'search_users': 'Search Users',
-      'search_tax_rates': 'Search Tax Rates',
-      'search_tasks': 'Search Tasks',
-      'search_settings': 'Search Settings',
-      'search_projects': 'Search Projects',
-      'search_expenses': 'Search Expenses',
-      'search_payments': 'Search Payments',
-      'search_groups': 'Search Groups',
-      'search_company': 'Search Company',
+      'search_documents': 'Search :count Documents',
+      'search_designs': 'Search :count Designs',
+      'search_invoices': 'Search :count Invoices',
+      'search_clients': 'Search :count Clients',
+      'search_products': 'Search :count Products',
+      'search_quotes': 'Search :count Quotes',
+      'search_credits': 'Search :count Credits',
+      'search_vendors': 'Search :count Vendors',
+      'search_users': 'Search :count Users',
+      'search_tax_rates': 'Search :count Tax Rates',
+      'search_tasks': 'Search :count Tasks',
+      'search_settings': 'Search :count Settings',
+      'search_projects': 'Search :count Projects',
+      'search_expenses': 'Search :count Expenses',
+      'search_payments': 'Search :count Payments',
+      'search_groups': 'Search :count Groups',
+      'search_company': 'Search :count Company',
       'refund_payment': 'Terugbetalen',
       'cancelled_invoice': 'Successfully cancelled invoice',
       'cancelled_invoices': 'Successfully cancelled invoices',
@@ -8229,7 +8238,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'purge_data': 'Wis gegevens',
       'purge_successful': 'De bedrijfsgegevens zijn gewist',
       'purge_data_message':
-          'Waarschuwing: Dit zal uw gegevens verwijderen. Er is geen manier om dit ongedaan te maken.',
+      'Waarschuwing: Dit zal uw gegevens verwijderen. Er is geen manier om dit ongedaan te maken.',
       'invoice_balance': 'Invoice Balance',
       'age_group_0': '0 - 30 dagen',
       'age_group_30': '30 - 60 dagen',
@@ -8264,10 +8273,10 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'apply_license': 'Activeer licentie',
       'cancel_account': 'Account verwijderen',
       'cancel_account_message':
-          'Waarschuwing: Dit zal uw account verwijderen. Er is geen manier om dit ongedaan te maken.',
+      'Waarschuwing: Dit zal uw account verwijderen. Er is geen manier om dit ongedaan te maken.',
       'delete_company': 'Verwijder bedrijf',
       'delete_company_message':
-          'Waarschuwing: Hiermee verwijder je permanent je bedrijf, dit kan niet worden ontdaan.',
+      'Waarschuwing: Hiermee verwijder je permanent je bedrijf, dit kan niet worden ontdaan.',
       'enable_modules': 'Enable Modules',
       'converted_quote': 'Successfully converted quote',
       'credit_design': 'Credit Design',
@@ -8419,16 +8428,16 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'applied': 'Toegepast',
       'include_recent_errors': 'Include recent errors from the logs',
       'your_message_has_been_received':
-          'We hebben uw bericht ontvangen, en zullen zo spoedig mogelijk reageren.',
+      'We hebben uw bericht ontvangen, en zullen zo spoedig mogelijk reageren.',
       'message': 'Bericht',
       'from': 'Van',
       'show_product_details': 'toon product details',
       'show_product_details_help':
-          'Include the description and cost in the product dropdown',
+      'Include the description and cost in the product dropdown',
       'pdf_min_requirements': 'The PDF renderer requires :version',
       'adjust_fee_percent': 'Adjust Fee Percent',
       'adjust_fee_percent_help':
-          'Pas percentage aan om rekening te houden met de kosten',
+      'Pas percentage aan om rekening te houden met de kosten',
       'configure_settings': 'Configure Settings',
       'support_forum': 'Support Forum',
       'about': 'Over',
@@ -8442,7 +8451,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'domain_url': 'Domain URL',
       'password_is_too_short': 'Wachtwoord is te kort',
       'password_is_too_easy':
-          'Password must contain an upper case character and a number',
+      'Password must contain an upper case character and a number',
       'client_portal_tasks': 'Client Portal Tasks',
       'client_portal_dashboard': 'Client Portal Dashboard',
       'please_enter_a_value': 'Please enter a value',
@@ -8469,16 +8478,16 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'third_custom': 'Third Custom',
       'show_cost': 'Show Cost',
       'show_cost_help':
-          'Display a product cost field to track the markup/profit',
+      'Display a product cost field to track the markup/profit',
       'show_product_quantity': 'Show Product Quantity',
       'show_product_quantity_help':
-          'Display a product quantity field, otherwise default to one',
+      'Display a product quantity field, otherwise default to one',
       'show_invoice_quantity': 'Show Invoice Quantity',
       'show_invoice_quantity_help':
-          'Display a line item quantity field, otherwise default to one',
+      'Display a line item quantity field, otherwise default to one',
       'default_quantity': 'Default Quantity',
       'default_quantity_help':
-          'Automatically set the line item quantity to one',
+      'Automatically set the line item quantity to one',
       'one_tax_rate': 'One Tax Rate',
       'two_tax_rates': 'Two Tax Rates',
       'three_tax_rates': 'Three Tax Rates',
@@ -8523,7 +8532,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'filtered_by_user': 'Gefilterd door gebruiker',
       'administrator': 'Beheerder',
       'administrator_help':
-          'Geef gebruiker de toestemming om andere gebruikers te beheren, instellingen te wijzigen en alle regels te bewerken.',
+      'Geef gebruiker de toestemming om andere gebruikers te beheren, instellingen te wijzigen en alle regels te bewerken.',
       'user_management': 'Gebruikersbeheer',
       'users': 'Gebruikers',
       'new_user': 'Nieuwe Gebruiker',
@@ -8538,10 +8547,10 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'invoice_options': 'Factuuropties',
       'hide_paid_to_date': 'Verberg \"Reeds betaald\"',
       'hide_paid_to_date_help':
-          'Toon alleen het \"Reeds betaald\" gebied op je facturen als er een betaling gemaakt is.',
+      'Toon alleen het \"Reeds betaald\" gebied op je facturen als er een betaling gemaakt is.',
       'invoice_embed_documents': 'Documenten invoegen',
       'invoice_embed_documents_help':
-          'Bijgevoegde afbeeldingen weergeven in de factuur.',
+      'Bijgevoegde afbeeldingen weergeven in de factuur.',
       'all_pages_header': 'Toon header op',
       'all_pages_footer': 'Toon footer op',
       'first_page': 'eerste pagina',
@@ -8562,16 +8571,16 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'quote_footer': 'Offertevoettekst',
       'auto_email_invoice': 'Automatisch e-mailen',
       'auto_email_invoice_help':
-          'Verzend terugkerende facturen automatisch wanneer ze worden gemaakt.',
+      'Verzend terugkerende facturen automatisch wanneer ze worden gemaakt.',
       'auto_archive_invoice': 'Automatisch archiveren',
       'auto_archive_invoice_help':
-          'Facturen automatisch archiveren wanneer ze worden betaald.',
+      'Facturen automatisch archiveren wanneer ze worden betaald.',
       'auto_archive_quote': 'Automatisch archiveren',
       'auto_archive_quote_help':
-          'Offertes automatisch archiveren wanneer ze zijn omgezet.',
+      'Offertes automatisch archiveren wanneer ze zijn omgezet.',
       'auto_convert_quote': 'Automatisch omzetten',
       'auto_convert_quote_help':
-          'Zet een offerte automatisch om in een factuur zodra deze door een klant wordt goedgekeurd.',
+      'Zet een offerte automatisch om in een factuur zodra deze door een klant wordt goedgekeurd.',
       'workflow_settings': 'Workflow instellingen',
       'freq_daily': 'Dagelijks',
       'freq_weekly': 'Wekelijks',
@@ -8617,27 +8626,27 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'custom_javascript': 'Zelfgeschreven JavaScript',
       'signature_on_pdf': 'Weergeven op PDF',
       'signature_on_pdf_help':
-          'Toon de handtekening van de klant op de factuur/offerte PDF.',
+      'Toon de handtekening van de klant op de factuur/offerte PDF.',
       'show_accept_invoice_terms': 'Factuurvoorwaarden checkbox',
       'show_accept_invoice_terms_help':
-          'Verplicht de klant om akkoord te gaan met de factuurvoorwaarden.',
+      'Verplicht de klant om akkoord te gaan met de factuurvoorwaarden.',
       'show_accept_quote_terms': 'Offertevoorwaarden checkbox',
       'show_accept_quote_terms_help':
-          'Verplicht de klant om akkoord te gaan met de offertevoorwaarden.',
+      'Verplicht de klant om akkoord te gaan met de offertevoorwaarden.',
       'require_invoice_signature': 'Factuur handtekening',
       'require_invoice_signature_help':
-          'Verplicht de klant om zijn handtekening te zetten.',
+      'Verplicht de klant om zijn handtekening te zetten.',
       'require_quote_signature': 'Offerte handtekening',
       'enable_portal_password': 'Facturen beveiligen met een wachtwoord',
       'enable_portal_password_help':
-          'Geeft u de mogelijkheid om een wachtwoord in te stellen voor elke contactpersoon. Als er een wachtwoord is ingesteld moet de contactpersoon het wachtwoord invoeren voordat deze facturen kan bekijken.',
+      'Geeft u de mogelijkheid om een wachtwoord in te stellen voor elke contactpersoon. Als er een wachtwoord is ingesteld moet de contactpersoon het wachtwoord invoeren voordat deze facturen kan bekijken.',
       'authorization': 'Autorisatie',
       'subdomain': 'Subdomein',
       'domain': 'Domein',
       'portal_mode': 'portaalmodus',
       'email_signature': 'Met vriendelijke groeten,',
       'enable_email_markup_help':
-          'Maak het gemakkelijker voor uw klanten om te betalen door scherma.org opmaak toe te voegen aan uw e-mails.',
+      'Maak het gemakkelijker voor uw klanten om te betalen door scherma.org opmaak toe te voegen aan uw e-mails.',
       'plain': 'Platte tekst',
       'light': 'Licht',
       'dark': 'Donker',
@@ -8666,12 +8675,12 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'accepted_card_logos': 'Geaccepteerde kaart logo\'s',
       'credentials': 'Gegevens',
       'require_billing_address_help':
-          'Verplicht de klant om zijn factuuradres op te geven',
+      'Verplicht de klant om zijn factuuradres op te geven',
       'require_shipping_address_help':
-          'Verplicht de klant om zijn verzendadres op te geven',
+      'Verplicht de klant om zijn verzendadres op te geven',
       'update_address': 'Adres aanpassen',
       'update_address_help':
-          'Pas het adres van de klant aan met de ingevulde gegevens',
+      'Pas het adres van de klant aan met de ingevulde gegevens',
       'rate': 'Tarief',
       'tax_rate': 'BTW-tarief',
       'new_tax_rate': 'Nieuw BTW-tarief',
@@ -8683,13 +8692,13 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'restored_tax_rate': 'De BTW heffing is teruggezet',
       'fill_products': 'Producten Automatisch aanvullen',
       'fill_products_help':
-          'Een product selecteren zal automatisch <b>de beschrijving en kosten instellen</b>',
+      'Een product selecteren zal automatisch <b>de beschrijving en kosten instellen</b>',
       'update_products': 'Producten automatisch wijzigen',
       'update_products_help':
-          'Het wijzigen van een factuur zal automatisch <b>de producten aanpassen</b>',
+      'Het wijzigen van een factuur zal automatisch <b>de producten aanpassen</b>',
       'convert_products': 'Producten omzetten',
       'convert_products_help':
-          'Productprijzen automatisch converteren naar het valuta van de klant',
+      'Productprijzen automatisch converteren naar het valuta van de klant',
       'fees': 'Transactiekosten',
       'limits': 'Limieten',
       'provider': 'Provider',
@@ -8789,7 +8798,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'please_enter_a_first_name': 'Vul een voornaam in aub',
       'please_enter_a_last_name': 'Vul een naam in aub',
       'please_agree_to_terms_and_privacy':
-          'Ga akkoord met de servicevoorwaarden en het privacybeleid om een account aan te maken.',
+      'Ga akkoord met de servicevoorwaarden en het privacybeleid om een account aan te maken.',
       'i_agree_to_the': 'Ik ga akkoord met',
       'terms_of_service_link': 'de servicevoorwaarden',
       'privacy_policy_link': 'het privacybeleid',
@@ -8888,7 +8897,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'average': 'Gemiddeld',
       'unapproved': 'Afgekeurd',
       'authenticate_to_change_setting':
-          'Gelieve te authenticeren om deze instelling te wijzigen',
+      'Gelieve te authenticeren om deze instelling te wijzigen',
       'locked': 'Vergrendeld',
       'authenticate': 'Authenticeer',
       'please_authenticate': 'Gelieve te authenticeren',
@@ -9073,7 +9082,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'updated_at': 'Bijgewerkt',
       'tax': 'Belasting',
       'please_enter_an_invoice_number':
-          'Gelieve een factuurnummer in te voeren',
+      'Gelieve een factuurnummer in te voeren',
       'please_enter_a_quote_number': 'Gelieve een offertenummer in te voeren',
       'past_due': 'Verlopen',
       'draft': 'Concept',
@@ -9089,10 +9098,10 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'marked_invoices_as_paid': 'Successfully marked invoices as paid',
       'done': 'Klaar',
       'please_enter_a_client_or_contact_name':
-          'Gelieve een bedrijfsnaam of contactpersoon in te voeren',
+      'Gelieve een bedrijfsnaam of contactpersoon in te voeren',
       'dark_mode': 'Donkere modus',
       'restart_app_to_apply_change':
-          'Herstart de applicatie om de wijziging toe te passen',
+      'Herstart de applicatie om de wijziging toe te passen',
       'refresh_data': 'Gegevens verversen',
       'blank_contact': 'Leeg contact',
       'activity': 'Activiteit',
@@ -9168,12 +9177,12 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'activity_4': ':user heeft factuur :invoice aangemaakt',
       'activity_5': ':user heeft factuur :invoice bijgewerkt',
       'activity_6':
-          ':user heeft factuur :invoice voor :client naar :contact verstuurd',
+      ':user heeft factuur :invoice voor :client naar :contact verstuurd',
       'activity_7': ':contact heeft factuur :invoice voor :client bekeken',
       'activity_8': ':user heeft factuur :invoice gearchiveerd',
       'activity_9': ':user heeft factuur :invoice verwijderd',
       'activity_10':
-          ':contact heeft betaling :payment van :payment_amount ingevoerd voor factuur :invoice voor :client',
+      ':contact heeft betaling :payment van :payment_amount ingevoerd voor factuur :invoice voor :client',
       'activity_11': ':user heeft betaling :payment bijgewerkt',
       'activity_12': ':user heeft betaling :payment gearchiveerd',
       'activity_13': ':user heeft betaling :payment verwijderd',
@@ -9184,7 +9193,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'activity_18': ':user heeft offerte :quote aangemaakt',
       'activity_19': ':user heeft offerte :quote bijgewerkt',
       'activity_20':
-          ':user heeft offerte :quote voor :client verstuurd naar :contact',
+      ':user heeft offerte :quote voor :client verstuurd naar :contact',
       'activity_21': ':contact heeft offerte :quote bekeken',
       'activity_22': ':user heeft offerte :quote gearchiveerd',
       'activity_23': ':user heeft offerte :quote verwijderd',
@@ -9203,9 +9212,9 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'activity_36': ':user heeft uitgave :expense verwijderd',
       'activity_37': ':user heeft uitgave :expense hersteld',
       'activity_39':
-          ':user heeft een a :payment_amount betaling geannuleerd :payment',
+      ':user heeft een a :payment_amount betaling geannuleerd :payment',
       'activity_40':
-          ':user heeft :adjustment van een :payment_amount betaling :payment',
+      ':user heeft :adjustment van een :payment_amount betaling :payment',
       'activity_41': 'Betaling van :payment_amount mislukt (:payment)',
       'activity_42': ':user heeft taak :task aangemaakt',
       'activity_43': ':user heeft taak :task bijgewerkt',
@@ -9357,23 +9366,23 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'hide_menu': 'Hide Menu',
       'show_menu': 'Show Menu',
       'partially_refunded': 'Partially Refunded',
-      'search_documents': 'Search Documents',
-      'search_designs': 'Search Designs',
-      'search_invoices': 'Search Invoices',
-      'search_clients': 'Search Clients',
-      'search_products': 'Search Products',
-      'search_quotes': 'Search Quotes',
-      'search_credits': 'Search Credits',
-      'search_vendors': 'Search Vendors',
-      'search_users': 'Search Users',
-      'search_tax_rates': 'Search Tax Rates',
-      'search_tasks': 'Search Tasks',
-      'search_settings': 'Search Settings',
-      'search_projects': 'Search Projects',
-      'search_expenses': 'Search Expenses',
-      'search_payments': 'Search Payments',
-      'search_groups': 'Search Groups',
-      'search_company': 'Search Company',
+      'search_documents': 'Search :count Documents',
+      'search_designs': 'Search :count Designs',
+      'search_invoices': 'Search :count Invoices',
+      'search_clients': 'Search :count Clients',
+      'search_products': 'Search :count Products',
+      'search_quotes': 'Search :count Quotes',
+      'search_credits': 'Search :count Credits',
+      'search_vendors': 'Search :count Vendors',
+      'search_users': 'Search :count Users',
+      'search_tax_rates': 'Search :count Tax Rates',
+      'search_tasks': 'Search :count Tasks',
+      'search_settings': 'Search :count Settings',
+      'search_projects': 'Search :count Projects',
+      'search_expenses': 'Search :count Expenses',
+      'search_payments': 'Search :count Payments',
+      'search_groups': 'Search :count Groups',
+      'search_company': 'Search :count Company',
       'refund_payment': 'Refund Payment',
       'cancelled_invoice': 'Successfully cancelled invoice',
       'cancelled_invoices': 'Successfully cancelled invoices',
@@ -9392,7 +9401,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'purge_data': 'Purge Data',
       'purge_successful': 'Successfully purged company data',
       'purge_data_message':
-          'Warning: This will permanently erase your data, there is no undo.',
+      'Warning: This will permanently erase your data, there is no undo.',
       'invoice_balance': 'Invoice Balance',
       'age_group_0': '0 - 30 Days',
       'age_group_30': '30 - 60 Days',
@@ -9427,10 +9436,10 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'apply_license': 'Apply License',
       'cancel_account': 'Delete Account',
       'cancel_account_message':
-          'Warning: This will permanently delete your account, there is no undo.',
+      'Warning: This will permanently delete your account, there is no undo.',
       'delete_company': 'Delete Company',
       'delete_company_message':
-          'Warning: This will permanently delete your company, there is no undo.',
+      'Warning: This will permanently delete your company, there is no undo.',
       'enable_modules': 'Enable Modules',
       'converted_quote': 'Successfully converted quote',
       'credit_design': 'Credit Design',
@@ -9582,12 +9591,12 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'applied': 'Applied',
       'include_recent_errors': 'Include recent errors from the logs',
       'your_message_has_been_received':
-          'We have received your message and will try to respond promptly.',
+      'We have received your message and will try to respond promptly.',
       'message': 'Message',
       'from': 'From',
       'show_product_details': 'Show Product Details',
       'show_product_details_help':
-          'Include the description and cost in the product dropdown',
+      'Include the description and cost in the product dropdown',
       'pdf_min_requirements': 'The PDF renderer requires :version',
       'adjust_fee_percent': 'Adjust Fee Percent',
       'adjust_fee_percent_help': 'Adjust percent to account for fee',
@@ -9604,7 +9613,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'domain_url': 'Domain URL',
       'password_is_too_short': 'Password is too short',
       'password_is_too_easy':
-          'Password must contain an upper case character and a number',
+      'Password must contain an upper case character and a number',
       'client_portal_tasks': 'Customer Portal Tasks',
       'client_portal_dashboard': 'Customer Portal Dashboard',
       'please_enter_a_value': 'Please enter a value',
@@ -9631,16 +9640,16 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'third_custom': 'Third Custom',
       'show_cost': 'Show Cost',
       'show_cost_help':
-          'Display a product cost field to track the markup/profit',
+      'Display a product cost field to track the markup/profit',
       'show_product_quantity': 'Show Product Quantity',
       'show_product_quantity_help':
-          'Display a product quantity field, otherwise default to one',
+      'Display a product quantity field, otherwise default to one',
       'show_invoice_quantity': 'Show Invoice Quantity',
       'show_invoice_quantity_help':
-          'Display a line item quantity field, otherwise default to one',
+      'Display a line item quantity field, otherwise default to one',
       'default_quantity': 'Default Quantity',
       'default_quantity_help':
-          'Automatically set the line item quantity to one',
+      'Automatically set the line item quantity to one',
       'one_tax_rate': 'One Tax Rate',
       'two_tax_rates': 'Two Tax Rates',
       'three_tax_rates': 'Three Tax Rates',
@@ -9685,7 +9694,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'filtered_by_user': 'Filtered by User',
       'administrator': 'Administrator',
       'administrator_help':
-          'Allow user to manage users, change settings and modify all records',
+      'Allow user to manage users, change settings and modify all records',
       'user_management': 'User Management',
       'users': 'Users',
       'new_user': 'New User',
@@ -9700,7 +9709,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'invoice_options': 'Invoice Options',
       'hide_paid_to_date': 'Hide Paid to Date',
       'hide_paid_to_date_help':
-          'Only display the \"Paid to Date\" area on your invoices once a payment has been received.',
+      'Only display the \"Paid to Date\" area on your invoices once a payment has been received.',
       'invoice_embed_documents': 'Embed Documents',
       'invoice_embed_documents_help': 'Include attached images in the invoice.',
       'all_pages_header': 'Show Header on',
@@ -9723,16 +9732,16 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'quote_footer': 'Quote Footer',
       'auto_email_invoice': 'Auto Email',
       'auto_email_invoice_help':
-          'Automatically email recurring invoices when they are created.',
+      'Automatically email recurring invoices when they are created.',
       'auto_archive_invoice': 'Auto Archive',
       'auto_archive_invoice_help':
-          'Automatically archive invoices when they are paid.',
+      'Automatically archive invoices when they are paid.',
       'auto_archive_quote': 'Auto Archive',
       'auto_archive_quote_help':
-          'Automatically archive quotes when they are converted.',
+      'Automatically archive quotes when they are converted.',
       'auto_convert_quote': 'Auto Convert',
       'auto_convert_quote_help':
-          'Automatically convert a quote to an invoice when approved by a customer.',
+      'Automatically convert a quote to an invoice when approved by a customer.',
       'workflow_settings': 'Workflow Settings',
       'freq_daily': 'Daily',
       'freq_weekly': 'Weekly',
@@ -9778,27 +9787,27 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'custom_javascript': 'Custom JavaScript',
       'signature_on_pdf': 'Show on PDF',
       'signature_on_pdf_help':
-          'Show the customer signature on the invoice/quote PDF.',
+      'Show the customer signature on the invoice/quote PDF.',
       'show_accept_invoice_terms': 'Invoice Terms Checkbox',
       'show_accept_invoice_terms_help':
-          'Require customer to confirm that they accept the invoice terms.',
+      'Require customer to confirm that they accept the invoice terms.',
       'show_accept_quote_terms': 'Quote Terms Checkbox',
       'show_accept_quote_terms_help':
-          'Require customer to confirm that they accept the quote terms.',
+      'Require customer to confirm that they accept the quote terms.',
       'require_invoice_signature': 'Invoice Signature',
       'require_invoice_signature_help':
-          'Require customer to provide their signature.',
+      'Require customer to provide their signature.',
       'require_quote_signature': 'Quote Signature',
       'enable_portal_password': 'Password Protect Invoices',
       'enable_portal_password_help':
-          'Allows you to set a password for each contact. If a password is set, the contact will be required to enter a password before viewing invoices.',
+      'Allows you to set a password for each contact. If a password is set, the contact will be required to enter a password before viewing invoices.',
       'authorization': 'Authorisation',
       'subdomain': 'Subdomain',
       'domain': 'Domain',
       'portal_mode': 'Portal Mode',
       'email_signature': 'Regards,',
       'enable_email_markup_help':
-          'Make it easier for your customers to pay you by adding schema.org markup to your emails.',
+      'Make it easier for your customers to pay you by adding schema.org markup to your emails.',
       'plain': 'Plain',
       'light': 'Light',
       'dark': 'Dark',
@@ -9827,9 +9836,9 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'accepted_card_logos': 'Accepted Card Logos',
       'credentials': 'Credentials',
       'require_billing_address_help':
-          'Require customer to provide their billing address',
+      'Require customer to provide their billing address',
       'require_shipping_address_help':
-          'Require customer to provide their shipping address',
+      'Require customer to provide their shipping address',
       'update_address': 'Update Address',
       'update_address_help': 'Update customer\'s address with provided details',
       'rate': 'Rate',
@@ -9843,13 +9852,13 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'restored_tax_rate': 'Successfully restored tax rate',
       'fill_products': 'Auto-fill products',
       'fill_products_help':
-          'Selecting a product will automatically <b>fill in the description and price</b>',
+      'Selecting a product will automatically <b>fill in the description and price</b>',
       'update_products': 'Auto-update products',
       'update_products_help':
-          'Updating an invoice will automatically <b>update the product library</b>',
+      'Updating an invoice will automatically <b>update the product library</b>',
       'convert_products': 'Convert Products',
       'convert_products_help':
-          'Automatically convert product prices to the customer\'s currency',
+      'Automatically convert product prices to the customer\'s currency',
       'fees': 'Fees',
       'limits': 'Limits',
       'provider': 'Provider',
@@ -9949,7 +9958,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'please_enter_a_first_name': 'Please enter a first name',
       'please_enter_a_last_name': 'Please enter a last name',
       'please_agree_to_terms_and_privacy':
-          'Please agree to the terms of service and privacy policy to create an account.',
+      'Please agree to the terms of service and privacy policy to create an account.',
       'i_agree_to_the': 'I agree to the',
       'terms_of_service_link': 'terms of service',
       'privacy_policy_link': 'privacy policy',
@@ -10048,7 +10057,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'average': 'Average',
       'unapproved': 'Unapproved',
       'authenticate_to_change_setting':
-          'Please authenticate to change this setting',
+      'Please authenticate to change this setting',
       'locked': 'Locked',
       'authenticate': 'Authenticate',
       'please_authenticate': 'Please authenticate',
@@ -10248,7 +10257,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'marked_invoices_as_paid': 'Successfully marked invoices as paid',
       'done': 'Done',
       'please_enter_a_client_or_contact_name':
-          'Please enter a customer or contact name',
+      'Please enter a customer or contact name',
       'dark_mode': 'Dark Mode',
       'restart_app_to_apply_change': 'Restart the app to apply the change',
       'refresh_data': 'Refresh Data',
@@ -10330,7 +10339,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'activity_8': ':user archived invoice :invoice',
       'activity_9': ':user deleted invoice :invoice',
       'activity_10':
-          ':contact entered payment :payment for :payment_amount on invoice :invoice for :client',
+      ':contact entered payment :payment for :payment_amount on invoice :invoice for :client',
       'activity_11': ':user updated payment :payment',
       'activity_12': ':user archived payment :payment',
       'activity_13': ':user deleted payment :payment',
@@ -10360,7 +10369,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'activity_37': ':user restored expense :expense',
       'activity_39': ':user cancelled a :payment_amount payment :payment',
       'activity_40':
-          ':user refunded :adjustment of a :payment_amount payment :payment',
+      ':user refunded :adjustment of a :payment_amount payment :payment',
       'activity_41': ':payment_amount payment (:payment) failed',
       'activity_42': ':user created task :task',
       'activity_43': ':user updated task :task',
@@ -10512,23 +10521,23 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'hide_menu': 'Hide Menu',
       'show_menu': 'Show Menu',
       'partially_refunded': 'Partially Refunded',
-      'search_documents': 'Search Documents',
-      'search_designs': 'Search Designs',
-      'search_invoices': 'Search Invoices',
-      'search_clients': 'Search Clients',
-      'search_products': 'Search Products',
-      'search_quotes': 'Search Quotes',
-      'search_credits': 'Search Credits',
-      'search_vendors': 'Search Vendors',
-      'search_users': 'Search Users',
-      'search_tax_rates': 'Search Tax Rates',
-      'search_tasks': 'Search Tasks',
-      'search_settings': 'Search Settings',
-      'search_projects': 'Search Projects',
-      'search_expenses': 'Search Expenses',
-      'search_payments': 'Search Payments',
-      'search_groups': 'Search Groups',
-      'search_company': 'Search Company',
+      'search_documents': 'Search :count Documents',
+      'search_designs': 'Search :count Designs',
+      'search_invoices': 'Search :count Invoices',
+      'search_clients': 'Search :count Clients',
+      'search_products': 'Search :count Products',
+      'search_quotes': 'Search :count Quotes',
+      'search_credits': 'Search :count Credits',
+      'search_vendors': 'Search :count Vendors',
+      'search_users': 'Search :count Users',
+      'search_tax_rates': 'Search :count Tax Rates',
+      'search_tasks': 'Search :count Tasks',
+      'search_settings': 'Search :count Settings',
+      'search_projects': 'Search :count Projects',
+      'search_expenses': 'Search :count Expenses',
+      'search_payments': 'Search :count Payments',
+      'search_groups': 'Search :count Groups',
+      'search_company': 'Search :count Company',
       'refund_payment': 'Refund Payment',
       'cancelled_invoice': 'Successfully cancelled invoice',
       'cancelled_invoices': 'Successfully cancelled invoices',
@@ -10547,7 +10556,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'purge_data': 'Purge Data',
       'purge_successful': 'Successfully purged company data',
       'purge_data_message':
-          'Warning: This will permanently erase your data, there is no undo.',
+      'Warning: This will permanently erase your data, there is no undo.',
       'invoice_balance': 'Invoice Balance',
       'age_group_0': '0 - 30 Days',
       'age_group_30': '30 - 60 Days',
@@ -10582,10 +10591,10 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'apply_license': 'Apply License',
       'cancel_account': 'Delete Account',
       'cancel_account_message':
-          'Warning: This will permanently delete your account, there is no undo.',
+      'Warning: This will permanently delete your account, there is no undo.',
       'delete_company': 'Delete Company',
       'delete_company_message':
-          'Warning: This will permanently delete your company, there is no undo.',
+      'Warning: This will permanently delete your company, there is no undo.',
       'enable_modules': 'Enable Modules',
       'converted_quote': 'Successfully converted quote',
       'credit_design': 'Credit Design',
@@ -10737,12 +10746,12 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'applied': 'Applied',
       'include_recent_errors': 'Include recent errors from the logs',
       'your_message_has_been_received':
-          'We have received your message and will try to respond promptly.',
+      'We have received your message and will try to respond promptly.',
       'message': 'Message',
       'from': 'From',
       'show_product_details': 'Show Product Details',
       'show_product_details_help':
-          'Include the description and cost in the product dropdown',
+      'Include the description and cost in the product dropdown',
       'pdf_min_requirements': 'The PDF renderer requires :version',
       'adjust_fee_percent': 'Adjust Fee Percent',
       'adjust_fee_percent_help': 'Adjust percent to account for fee',
@@ -10759,7 +10768,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'domain_url': 'Domain URL',
       'password_is_too_short': 'Password is too short',
       'password_is_too_easy':
-          'Password must contain an upper case character and a number',
+      'Password must contain an upper case character and a number',
       'client_portal_tasks': 'Client Portal Tasks',
       'client_portal_dashboard': 'Client Portal Dashboard',
       'please_enter_a_value': 'Please enter a value',
@@ -10786,16 +10795,16 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'third_custom': 'Third Custom',
       'show_cost': 'Show Cost',
       'show_cost_help':
-          'Display a product cost field to track the markup/profit',
+      'Display a product cost field to track the markup/profit',
       'show_product_quantity': 'Show Product Quantity',
       'show_product_quantity_help':
-          'Display a product quantity field, otherwise default to one',
+      'Display a product quantity field, otherwise default to one',
       'show_invoice_quantity': 'Show Invoice Quantity',
       'show_invoice_quantity_help':
-          'Display a line item quantity field, otherwise default to one',
+      'Display a line item quantity field, otherwise default to one',
       'default_quantity': 'Default Quantity',
       'default_quantity_help':
-          'Automatically set the line item quantity to one',
+      'Automatically set the line item quantity to one',
       'one_tax_rate': 'One Tax Rate',
       'two_tax_rates': 'Two Tax Rates',
       'three_tax_rates': 'Three Tax Rates',
@@ -10840,7 +10849,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'filtered_by_user': 'Filtered by User',
       'administrator': 'Administrator',
       'administrator_help':
-          'Allow user to manage users, change settings and modify all records',
+      'Allow user to manage users, change settings and modify all records',
       'user_management': 'User Management',
       'users': 'Users',
       'new_user': 'New User',
@@ -10855,7 +10864,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'invoice_options': 'Invoice Options',
       'hide_paid_to_date': 'Hide Paid to Date',
       'hide_paid_to_date_help':
-          'Only display the \"Paid to Date\" area on your invoices once a payment has been received.',
+      'Only display the \"Paid to Date\" area on your invoices once a payment has been received.',
       'invoice_embed_documents': 'Embed Documents',
       'invoice_embed_documents_help': 'Include attached images in the invoice.',
       'all_pages_header': 'Show Header on',
@@ -10878,16 +10887,16 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'quote_footer': 'Quote Footer',
       'auto_email_invoice': 'Auto Email',
       'auto_email_invoice_help':
-          'Automatically email recurring invoices when they are created.',
+      'Automatically email recurring invoices when they are created.',
       'auto_archive_invoice': 'Auto Archive',
       'auto_archive_invoice_help':
-          'Automatically archive invoices when they are paid.',
+      'Automatically archive invoices when they are paid.',
       'auto_archive_quote': 'Auto Archive',
       'auto_archive_quote_help':
-          'Automatically archive quotes when they are converted.',
+      'Automatically archive quotes when they are converted.',
       'auto_convert_quote': 'Auto Convert',
       'auto_convert_quote_help':
-          'Automatically convert a quote to an invoice when approved by a client.',
+      'Automatically convert a quote to an invoice when approved by a client.',
       'workflow_settings': 'Workflow Settings',
       'freq_daily': 'Daily',
       'freq_weekly': 'Weekly',
@@ -10933,27 +10942,27 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'custom_javascript': 'Custom JavaScript',
       'signature_on_pdf': 'Show on PDF',
       'signature_on_pdf_help':
-          'Show the client signature on the invoice/quote PDF.',
+      'Show the client signature on the invoice/quote PDF.',
       'show_accept_invoice_terms': 'Invoice Terms Checkbox',
       'show_accept_invoice_terms_help':
-          'Require client to confirm that they accept the invoice terms.',
+      'Require client to confirm that they accept the invoice terms.',
       'show_accept_quote_terms': 'Quote Terms Checkbox',
       'show_accept_quote_terms_help':
-          'Require client to confirm that they accept the quote terms.',
+      'Require client to confirm that they accept the quote terms.',
       'require_invoice_signature': 'Invoice Signature',
       'require_invoice_signature_help':
-          'Require client to provide their signature.',
+      'Require client to provide their signature.',
       'require_quote_signature': 'Quote Signature',
       'enable_portal_password': 'Password Protect Invoices',
       'enable_portal_password_help':
-          'Allows you to set a password for each contact. If a password is set, the contact will be required to enter a password before viewing invoices.',
+      'Allows you to set a password for each contact. If a password is set, the contact will be required to enter a password before viewing invoices.',
       'authorization': 'Authorisation',
       'subdomain': 'Subdomain',
       'domain': 'Domain',
       'portal_mode': 'Portal Mode',
       'email_signature': 'Regards,',
       'enable_email_markup_help':
-          'Make it easier for your clients to pay you by adding schema.org markup to your emails.',
+      'Make it easier for your clients to pay you by adding schema.org markup to your emails.',
       'plain': 'Plain',
       'light': 'Light',
       'dark': 'Dark',
@@ -10982,9 +10991,9 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'accepted_card_logos': 'Accepted Card Logos',
       'credentials': 'Credentials',
       'require_billing_address_help':
-          'Require client to provide their billing address',
+      'Require client to provide their billing address',
       'require_shipping_address_help':
-          'Require client to provide their shipping address',
+      'Require client to provide their shipping address',
       'update_address': 'Update Address',
       'update_address_help': 'Update client\'s address with provided details',
       'rate': 'Rate',
@@ -10998,13 +11007,13 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'restored_tax_rate': 'Successfully restored tax rate',
       'fill_products': 'Auto-fill products',
       'fill_products_help':
-          'Selecting a product will automatically <b>fill in the description and cost</b>',
+      'Selecting a product will automatically <b>fill in the description and cost</b>',
       'update_products': 'Auto-update products',
       'update_products_help':
-          'Updating an invoice will automatically <b>update the product library</b>',
+      'Updating an invoice will automatically <b>update the product library</b>',
       'convert_products': 'Convert Products',
       'convert_products_help':
-          'Automatically convert product prices to the client\'s currency',
+      'Automatically convert product prices to the client\'s currency',
       'fees': 'Fees',
       'limits': 'Limits',
       'provider': 'Provider',
@@ -11104,7 +11113,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'please_enter_a_first_name': 'Please enter a first name',
       'please_enter_a_last_name': 'Please enter a last name',
       'please_agree_to_terms_and_privacy':
-          'Please agree to the terms of service and privacy policy to create an account.',
+      'Please agree to the terms of service and privacy policy to create an account.',
       'i_agree_to_the': 'I agree to the',
       'terms_of_service_link': 'terms of service',
       'privacy_policy_link': 'privacy policy',
@@ -11203,7 +11212,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'average': 'Average',
       'unapproved': 'Unapproved',
       'authenticate_to_change_setting':
-          'Please authenticate to change this setting',
+      'Please authenticate to change this setting',
       'locked': 'Locked',
       'authenticate': 'Authenticate',
       'please_authenticate': 'Please authenticate',
@@ -11403,7 +11412,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'marked_invoices_as_paid': 'Successfully marked invoices as paid',
       'done': 'Done',
       'please_enter_a_client_or_contact_name':
-          'Please enter a client or contact name',
+      'Please enter a client or contact name',
       'dark_mode': 'Dark Mode',
       'restart_app_to_apply_change': 'Restart the app to apply the change',
       'refresh_data': 'Refresh Data',
@@ -11485,7 +11494,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'activity_8': ':user archived invoice :invoice',
       'activity_9': ':user deleted invoice :invoice',
       'activity_10':
-          ':contact entered payment :payment for :payment_amount on invoice :invoice for :client',
+      ':contact entered payment :payment for :payment_amount on invoice :invoice for :client',
       'activity_11': ':user updated payment :payment',
       'activity_12': ':user archived payment :payment',
       'activity_13': ':user deleted payment :payment',
@@ -11515,7 +11524,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'activity_37': ':user restored expense :expense',
       'activity_39': ':user cancelled a :payment_amount payment :payment',
       'activity_40':
-          ':user refunded :adjustment of a :payment_amount payment :payment',
+      ':user refunded :adjustment of a :payment_amount payment :payment',
       'activity_41': ':payment_amount payment (:payment) failed',
       'activity_42': ':user created task :task',
       'activity_43': ':user updated task :task',
@@ -11667,23 +11676,23 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'hide_menu': 'Hide Menu',
       'show_menu': 'Show Menu',
       'partially_refunded': 'Partially Refunded',
-      'search_documents': 'Search Documents',
-      'search_designs': 'Search Designs',
-      'search_invoices': 'Search Invoices',
-      'search_clients': 'Search Clients',
-      'search_products': 'Search Products',
-      'search_quotes': 'Search Quotes',
-      'search_credits': 'Search Credits',
-      'search_vendors': 'Search Vendors',
-      'search_users': 'Search Users',
-      'search_tax_rates': 'Search Tax Rates',
-      'search_tasks': 'Search Tasks',
-      'search_settings': 'Search Settings',
-      'search_projects': 'Search Projects',
-      'search_expenses': 'Search Expenses',
-      'search_payments': 'Search Payments',
-      'search_groups': 'Search Groups',
-      'search_company': 'Search Company',
+      'search_documents': 'Search :count Documents',
+      'search_designs': 'Search :count Designs',
+      'search_invoices': 'Search :count Invoices',
+      'search_clients': 'Search :count Clients',
+      'search_products': 'Search :count Products',
+      'search_quotes': 'Search :count Quotes',
+      'search_credits': 'Search :count Credits',
+      'search_vendors': 'Search :count Vendors',
+      'search_users': 'Search :count Users',
+      'search_tax_rates': 'Search :count Tax Rates',
+      'search_tasks': 'Search :count Tasks',
+      'search_settings': 'Search :count Settings',
+      'search_projects': 'Search :count Projects',
+      'search_expenses': 'Search :count Expenses',
+      'search_payments': 'Search :count Payments',
+      'search_groups': 'Search :count Groups',
+      'search_company': 'Search :count Company',
       'refund_payment': 'Refund maksu',
       'cancelled_invoice': 'Successfully cancelled invoice',
       'cancelled_invoices': 'Successfully cancelled invoices',
@@ -11702,7 +11711,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'purge_data': 'Purge Data',
       'purge_successful': 'onnistuneesti purged yritys data',
       'purge_data_message':
-          'Warning: tämä will pysyvästi erase sinun data, there is no undo.',
+      'Warning: tämä will pysyvästi erase sinun data, there is no undo.',
       'invoice_balance': 'Invoice Balance',
       'age_group_0': '0 - 30 päivää',
       'age_group_30': '30 - 60 päivää',
@@ -11737,10 +11746,10 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'apply_license': 'Apply lisenssi',
       'cancel_account': 'Poista tili',
       'cancel_account_message':
-          'Varoitus: Tämä poistaa tilisi pysyvästi. Tietoja ei pysty palauttamaan.',
+      'Varoitus: Tämä poistaa tilisi pysyvästi. Tietoja ei pysty palauttamaan.',
       'delete_company': 'Poista yritys',
       'delete_company_message':
-          'Warning: tämä will pysyvästi poista sinun yritys, there is no undo.',
+      'Warning: tämä will pysyvästi poista sinun yritys, there is no undo.',
       'enable_modules': 'Enable Modules',
       'converted_quote': 'Successfully converted quote',
       'credit_design': 'Credit Design',
@@ -11892,12 +11901,12 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'applied': 'Applied',
       'include_recent_errors': 'Include recent errors from the logs',
       'your_message_has_been_received':
-          'We have received your message and will try to respond promptly.',
+      'We have received your message and will try to respond promptly.',
       'message': 'Viesti',
       'from': 'Lähettäjä',
       'show_product_details': 'Show Product Details',
       'show_product_details_help':
-          'Include the description and cost in the product dropdown',
+      'Include the description and cost in the product dropdown',
       'pdf_min_requirements': 'The PDF renderer requires :version',
       'adjust_fee_percent': 'Adjust Fee Percent',
       'adjust_fee_percent_help': 'Adjust percent  tili  palkkio',
@@ -11914,7 +11923,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'domain_url': 'Domain URL',
       'password_is_too_short': 'salasana on liian lyhyt',
       'password_is_too_easy':
-          'Password must contain an upper case character and a number',
+      'Password must contain an upper case character and a number',
       'client_portal_tasks': 'Client Portal Tasks',
       'client_portal_dashboard': 'Client Portal Dashboard',
       'please_enter_a_value': 'Please enter a value',
@@ -11941,16 +11950,16 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'third_custom': 'Third Custom',
       'show_cost': 'Show Cost',
       'show_cost_help':
-          'Display a product cost field to track the markup/profit',
+      'Display a product cost field to track the markup/profit',
       'show_product_quantity': 'Show Product Quantity',
       'show_product_quantity_help':
-          'Display a product quantity field, otherwise default to one',
+      'Display a product quantity field, otherwise default to one',
       'show_invoice_quantity': 'Show Invoice Quantity',
       'show_invoice_quantity_help':
-          'Display a line item quantity field, otherwise default to one',
+      'Display a line item quantity field, otherwise default to one',
       'default_quantity': 'Default Quantity',
       'default_quantity_help':
-          'Automatically set the line item quantity to one',
+      'Automatically set the line item quantity to one',
       'one_tax_rate': 'One Tax Rate',
       'two_tax_rates': 'Two Tax Rates',
       'three_tax_rates': 'Three Tax Rates',
@@ -11995,7 +12004,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'filtered_by_user': 'Filtered by User',
       'administrator': 'Ylläpitäjä',
       'administrator_help':
-          'Allow käyttäjä  manage users, change asetus ja modify kaikki records',
+      'Allow käyttäjä  manage users, change asetus ja modify kaikki records',
       'user_management': 'Käyttäjänhallinta',
       'users': 'Käyttäjät',
       'new_user': 'Uusi käyttäjä',
@@ -12010,7 +12019,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'invoice_options': 'Laskun valinnat',
       'hide_paid_to_date': 'Piilota \"Maksettu tähän asti\"',
       'hide_paid_to_date_help':
-          'Näytä \"Maksettava päivämäärään mennessä\" kenttä laskuillasi vain maksetuilla laskuilla.',
+      'Näytä \"Maksettava päivämäärään mennessä\" kenttä laskuillasi vain maksetuilla laskuilla.',
       'invoice_embed_documents': 'Embed Documents',
       'invoice_embed_documents_help': 'Include attached images in  lasku.',
       'all_pages_header': 'näytä Header on',
@@ -12033,16 +12042,16 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'quote_footer': 'Tarjouksen alatunniste',
       'auto_email_invoice': 'automaattinen Email',
       'auto_email_invoice_help':
-          'automaattisesti sähköposti toistuva laskut when they on luotu.',
+      'automaattisesti sähköposti toistuva laskut when they on luotu.',
       'auto_archive_invoice': 'automaattinen Arkistoi',
       'auto_archive_invoice_help':
-          'automaattisesti archive laskut when they on paid.',
+      'automaattisesti archive laskut when they on paid.',
       'auto_archive_quote': 'automaattinen Arkistoi',
       'auto_archive_quote_help':
-          'automaattisesti archive quotes when they on converted.',
+      'automaattisesti archive quotes when they on converted.',
       'auto_convert_quote': 'automaattinen Convert',
       'auto_convert_quote_help':
-          'automaattisesti convert  tarjous   lasku when approved by  asiakas.',
+      'automaattisesti convert  tarjous   lasku when approved by  asiakas.',
       'workflow_settings': 'Workflow asetukset',
       'freq_daily': 'päivittäin',
       'freq_weekly': 'viikoittain',
@@ -12088,27 +12097,27 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'custom_javascript': 'muokattu JavaScript',
       'signature_on_pdf': 'näytä on PDF',
       'signature_on_pdf_help':
-          'näytä  asiakas allekirjoitus on  lasku/tarjous PDF.',
+      'näytä  asiakas allekirjoitus on  lasku/tarjous PDF.',
       'show_accept_invoice_terms': 'Lasku Terms Checkbox',
       'show_accept_invoice_terms_help':
-          'Require asiakas  vahvista that they accept  lasku terms.',
+      'Require asiakas  vahvista that they accept  lasku terms.',
       'show_accept_quote_terms': 'tarjous Terms Checkbox',
       'show_accept_quote_terms_help':
-          'Require asiakas  vahvista that they accept  tarjous terms.',
+      'Require asiakas  vahvista that they accept  tarjous terms.',
       'require_invoice_signature': 'Lasku Signature',
       'require_invoice_signature_help':
-          'Vaadi asiakasta täyttämään allekirjoitus.',
+      'Vaadi asiakasta täyttämään allekirjoitus.',
       'require_quote_signature': 'tarjous Signature',
       'enable_portal_password': 'salasana suojaa laskut',
       'enable_portal_password_help':
-          'Allows you  set  salasana  each kontakti. If  salasana is set,  kontakti  required  syötä  salasana before viewing laskut.',
+      'Allows you  set  salasana  each kontakti. If  salasana is set,  kontakti  required  syötä  salasana before viewing laskut.',
       'authorization': 'Authorization',
       'subdomain': 'Alidomain',
       'domain': 'Domain',
       'portal_mode': 'Portal Mode',
       'email_signature': 'Ystävällisesti,',
       'enable_email_markup_help':
-          'Make it easier  sinun asiakkaat  pay you by adding schema.org markup  sinun sähköpostit.',
+      'Make it easier  sinun asiakkaat  pay you by adding schema.org markup  sinun sähköpostit.',
       'plain': 'Yksinkertainen',
       'light': 'Vaalea',
       'dark': 'Tumma',
@@ -12137,9 +12146,9 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'accepted_card_logos': 'Accepted kortti Logos',
       'credentials': 'Credentials',
       'require_billing_address_help':
-          'Require asiakas  provide their laskutus osoite',
+      'Require asiakas  provide their laskutus osoite',
       'require_shipping_address_help':
-          'Require asiakas  provide their shipping osoite',
+      'Require asiakas  provide their shipping osoite',
       'update_address': 'Päivitä osoite',
       'update_address_help': 'Päivitä asiakkaan osoite annetuilla tiedoilla',
       'rate': 'á hinta',
@@ -12153,13 +12162,13 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'restored_tax_rate': 'onnistuneesti palautettu tax rate',
       'fill_products': 'Lisää automaattisesti tuotteita',
       'fill_products_help':
-          'Tuotteen valinta <b>täyttää kuvauksen ja hinnan</b> automaattisesti',
+      'Tuotteen valinta <b>täyttää kuvauksen ja hinnan</b> automaattisesti',
       'update_products': 'Päivitä automaattisesti tuotteet',
       'update_products_help':
-          'Laskun päivittäminen <b>päivittää tuotetietokannan</b> automaattisesti',
+      'Laskun päivittäminen <b>päivittää tuotetietokannan</b> automaattisesti',
       'convert_products': 'Convert tuotteet',
       'convert_products_help':
-          'automaattisesti convert tuote prices    asiakas\'s currency',
+      'automaattisesti convert tuote prices    asiakas\'s currency',
       'fees': 'palkkiot',
       'limits': 'Limits',
       'provider': 'Provider',
@@ -12259,7 +12268,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'please_enter_a_first_name': 'syötä  etunimi',
       'please_enter_a_last_name': 'syötä  sukunimi',
       'please_agree_to_terms_and_privacy':
-          'agree    terms  service ja privacy policy  create  tili.',
+      'agree    terms  service ja privacy policy  create  tili.',
       'i_agree_to_the': 'I agree  the',
       'terms_of_service_link': 'terms  service',
       'privacy_policy_link': 'privacy policy',
@@ -12557,7 +12566,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'marked_invoices_as_paid': 'Successfully marked invoices as paid',
       'done': 'Valmis',
       'please_enter_a_client_or_contact_name':
-          'syötä  asiakas tai kontakti name',
+      'syötä  asiakas tai kontakti name',
       'dark_mode': 'Tumma tila',
       'restart_app_to_apply_change': 'Restart  app  apply  change',
       'refresh_data': 'Refresh Data',
@@ -12639,7 +12648,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'activity_8': ':käyttäjä arkistoi laskun :invoice',
       'activity_9': ':käyttäjä poisti laskun :invoice',
       'activity_10':
-          ':kontakti entered maksu :maksu for :payment_amount on lasku :lasku for :asiakas',
+      ':kontakti entered maksu :maksu for :payment_amount on lasku :lasku for :asiakas',
       'activity_11': ':käyttäjä päivitti maksun :maksu',
       'activity_12': ':käyttäjä arkistoi maksun :maksu',
       'activity_13': ':käyttäjä poisti maksun :maksu',
@@ -12650,7 +12659,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'activity_18': ':käyttäjä loi tarjouksen :quote',
       'activity_19': ':käyttäjä päivitti tarjouksen :quote',
       'activity_20':
-          ':käyttäjä emailed tarjous :tarjous for :asiakas   :kontakti',
+      ':käyttäjä emailed tarjous :tarjous for :asiakas   :kontakti',
       'activity_21': ':kontakti luki tarjouksen :quote',
       'activity_22': ':käyttäjä arkistoi tarjouksen :quote',
       'activity_23': ':käyttäjä poisti tarjouksen :quote',
@@ -12670,7 +12679,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'activity_37': ':käyttäjä palautti kulun :kulu',
       'activity_39': ':käyttäjä cancelled a :payment_amount maksu :maksu',
       'activity_40':
-          ':käyttäjä refunded :adjustment  a :payment_amount maksu :maksu',
+      ':käyttäjä refunded :adjustment  a :payment_amount maksu :maksu',
       'activity_41': ':payment_amount maksu (:maksu) failed',
       'activity_42': ':käyttäjä loi tehtävän :tehtävä',
       'activity_43': ':käyttäjä päivitti tehtävän :tehtävä',
@@ -12822,23 +12831,23 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'hide_menu': 'Hide Menu',
       'show_menu': 'Show Menu',
       'partially_refunded': 'Partially Refunded',
-      'search_documents': 'Search Documents',
-      'search_designs': 'Search Designs',
-      'search_invoices': 'Search Invoices',
-      'search_clients': 'Search Clients',
-      'search_products': 'Search Products',
-      'search_quotes': 'Search Quotes',
-      'search_credits': 'Search Credits',
-      'search_vendors': 'Search Vendors',
-      'search_users': 'Search Users',
-      'search_tax_rates': 'Search Tax Rates',
-      'search_tasks': 'Search Tasks',
-      'search_settings': 'Search Settings',
-      'search_projects': 'Search Projects',
-      'search_expenses': 'Search Expenses',
-      'search_payments': 'Search Payments',
-      'search_groups': 'Search Groups',
-      'search_company': 'Search Company',
+      'search_documents': 'Search :count Documents',
+      'search_designs': 'Search :count Designs',
+      'search_invoices': 'Search :count Invoices',
+      'search_clients': 'Search :count Clients',
+      'search_products': 'Search :count Products',
+      'search_quotes': 'Search :count Quotes',
+      'search_credits': 'Search :count Credits',
+      'search_vendors': 'Search :count Vendors',
+      'search_users': 'Search :count Users',
+      'search_tax_rates': 'Search :count Tax Rates',
+      'search_tasks': 'Search :count Tasks',
+      'search_settings': 'Search :count Settings',
+      'search_projects': 'Search :count Projects',
+      'search_expenses': 'Search :count Expenses',
+      'search_payments': 'Search :count Payments',
+      'search_groups': 'Search :count Groups',
+      'search_company': 'Search :count Company',
       'refund_payment': 'Remboursement du paiement',
       'cancelled_invoice': 'Successfully cancelled invoice',
       'cancelled_invoices': 'Successfully cancelled invoices',
@@ -12856,9 +12865,9 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'license': 'License',
       'purge_data': 'Purger les données',
       'purge_successful':
-          'Les données de l\'entreprise ont été purgées avec succès',
+      'Les données de l\'entreprise ont été purgées avec succès',
       'purge_data_message':
-          'Attention : Cette action va supprimer vos données et est irréversible',
+      'Attention : Cette action va supprimer vos données et est irréversible',
       'invoice_balance': 'Invoice Balance',
       'age_group_0': '0 - 30 jours',
       'age_group_30': '30 -60 jours',
@@ -12893,10 +12902,10 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'apply_license': 'Activer la licence',
       'cancel_account': 'Supprimer le compte',
       'cancel_account_message':
-          'Attention : Ceci va supprimer définitivement votre compte, il n\'y a pas d\'annulation possible.',
+      'Attention : Ceci va supprimer définitivement votre compte, il n\'y a pas d\'annulation possible.',
       'delete_company': 'Supprimer la société',
       'delete_company_message':
-          'Attention : Ceci supprimera définitivement votre société, il n\'y a pas d\'annulation.',
+      'Attention : Ceci supprimera définitivement votre société, il n\'y a pas d\'annulation.',
       'enable_modules': 'Enable Modules',
       'converted_quote': 'Successfully converted quote',
       'credit_design': 'Credit Design',
@@ -13048,14 +13057,14 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'applied': 'Applied',
       'include_recent_errors': 'Contient les erreurs récentes des journaux',
       'your_message_has_been_received':
-          'Nous avons reçu votre message et répondrons dans les meilleurs délais',
+      'Nous avons reçu votre message et répondrons dans les meilleurs délais',
       'message': 'Message',
       'from': 'De',
       'show_product_details': 'Voir les détails du produit',
       'show_product_details_help':
-          'Include the description and cost in the product dropdown',
+      'Include the description and cost in the product dropdown',
       'pdf_min_requirements':
-          'Le générateur de PDF nécessite la version :version',
+      'Le générateur de PDF nécessite la version :version',
       'adjust_fee_percent': 'Adjust Fee Percent',
       'adjust_fee_percent_help': 'Ajuster le frais de pourcentage au compte',
       'configure_settings': 'Modifier les paramètres',
@@ -13071,7 +13080,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'domain_url': 'URL du domaine',
       'password_is_too_short': 'Mot de passe trop court',
       'password_is_too_easy':
-          'Le mot de passe doit comporter au moins une majuscule et un nombre',
+      'Le mot de passe doit comporter au moins une majuscule et un nombre',
       'client_portal_tasks': 'Tâche du portail client',
       'client_portal_dashboard': 'Tableau de bord du portail client',
       'please_enter_a_value': 'Saisissez une valeur',
@@ -13098,16 +13107,16 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'third_custom': 'Third Custom',
       'show_cost': 'Voir le coût',
       'show_cost_help':
-          'Afficher un champ coût du produit pour suivre la marge',
+      'Afficher un champ coût du produit pour suivre la marge',
       'show_product_quantity': 'Voir la quantité du produit',
       'show_product_quantity_help':
-          'Afficher un champ de quantité du produit, sinon en choisir un par défaut',
+      'Afficher un champ de quantité du produit, sinon en choisir un par défaut',
       'show_invoice_quantity': 'Voir la quantité sur la facture',
       'show_invoice_quantity_help':
-          'Afficher un champ de quantité pour la position, sinon en choisir un par défaut',
+      'Afficher un champ de quantité pour la position, sinon en choisir un par défaut',
       'default_quantity': 'Quantité par défaut',
       'default_quantity_help':
-          'Mettre automatiquement la quantité de la position à un',
+      'Mettre automatiquement la quantité de la position à un',
       'one_tax_rate': 'One Tax Rate',
       'two_tax_rates': 'Two Tax Rates',
       'three_tax_rates': 'Three Tax Rates',
@@ -13131,7 +13140,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'dropdown': 'Dropdown',
       'field_type': 'Type du champ',
       'recover_password_email_sent':
-          'Un courriel de récupération du mot de passe a été envoyé',
+      'Un courriel de récupération du mot de passe a été envoyé',
       'submit': 'Envoyer',
       'recover_password': 'Récupérer votre mot de passe',
       'late_fees': 'Frais de retard',
@@ -13153,7 +13162,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'filtered_by_user': 'Filtré par utilisateur',
       'administrator': 'Administrateur',
       'administrator_help':
-          'Permettre à l\'utilisateur de gérer les utilisateurs, modifier les paramètres et de modifier tous les enregistrements',
+      'Permettre à l\'utilisateur de gérer les utilisateurs, modifier les paramètres et de modifier tous les enregistrements',
       'user_management': 'Gestion des utilisateurs',
       'users': 'Utilisateurs',
       'new_user': 'Nouvel utilisateur',
@@ -13168,10 +13177,10 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'invoice_options': 'Options de facturation',
       'hide_paid_to_date': 'Masquer \"Payé à ce jour\"',
       'hide_paid_to_date_help':
-          'Afficher la ligne \"Payé à ce jour\" sur vos factures seulement une fois qu\'un paiement a été reçu.',
+      'Afficher la ligne \"Payé à ce jour\" sur vos factures seulement une fois qu\'un paiement a été reçu.',
       'invoice_embed_documents': 'Documents intégrés',
       'invoice_embed_documents_help':
-          'Inclure l\'image attachée dans la facture.',
+      'Inclure l\'image attachée dans la facture.',
       'all_pages_header': 'Voir les en-têtes sur',
       'all_pages_footer': 'Voir les pieds de page sur',
       'first_page': 'Première page',
@@ -13192,16 +13201,16 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'quote_footer': 'Pied de page des devis',
       'auto_email_invoice': 'Envoyer automatiquement par courriel',
       'auto_email_invoice_help':
-          'Envoyer automatiquement par courriel les factures récurrentes lorsqu\'elles sont créés.',
+      'Envoyer automatiquement par courriel les factures récurrentes lorsqu\'elles sont créés.',
       'auto_archive_invoice': 'Archiver automatiquement',
       'auto_archive_invoice_help':
-          'Archiver automatiquement les factures lorsqu\'elles sont payées.',
+      'Archiver automatiquement les factures lorsqu\'elles sont payées.',
       'auto_archive_quote': 'Archiver automatiquement',
       'auto_archive_quote_help':
-          'Archiver automatiquement les devis lorsqu\'ils sont convertis.',
+      'Archiver automatiquement les devis lorsqu\'ils sont convertis.',
       'auto_convert_quote': 'Convertir automatiquement',
       'auto_convert_quote_help':
-          'Convertir automatiquement un devis en facture dès qu\'il est approuvé par le client.',
+      'Convertir automatiquement un devis en facture dès qu\'il est approuvé par le client.',
       'workflow_settings': 'Paramètres de flux de travail',
       'freq_daily': 'Quotidien',
       'freq_weekly': 'Hebdomadaire',
@@ -13247,27 +13256,27 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'custom_javascript': 'JavaScript personnalisé',
       'signature_on_pdf': 'Afficher sur le PDF',
       'signature_on_pdf_help':
-          'Afficher la signature du client sur la facture / le devis PDF.',
+      'Afficher la signature du client sur la facture / le devis PDF.',
       'show_accept_invoice_terms':
-          'Case à cocher pour les conditions de facturation',
+      'Case à cocher pour les conditions de facturation',
       'show_accept_invoice_terms_help':
-          'Exiger que le client confirme qu\'il accepte les conditions de facturation',
+      'Exiger que le client confirme qu\'il accepte les conditions de facturation',
       'show_accept_quote_terms': 'Case à cocher pour les conditions d\'offre',
       'show_accept_quote_terms_help':
-          'Exiger que le client confirme qu\'il accepte les conditions de l\'offre',
+      'Exiger que le client confirme qu\'il accepte les conditions de l\'offre',
       'require_invoice_signature': 'Signature de facture',
       'require_invoice_signature_help': 'Exiger que le client signe',
       'require_quote_signature': 'Signature de l\'offre',
       'enable_portal_password': 'Protéger les factures avec un mot de passe',
       'enable_portal_password_help':
-          'Autoriser la création d\'un mot de passe pour chaque contact. Si un mot de passe est créé, le contact devra entrer un mot de passe avant de voir les factures.',
+      'Autoriser la création d\'un mot de passe pour chaque contact. Si un mot de passe est créé, le contact devra entrer un mot de passe avant de voir les factures.',
       'authorization': 'Autorisation',
       'subdomain': 'Sous-domaine',
       'domain': 'Domaine',
       'portal_mode': 'Mode portail',
       'email_signature': 'Cordialement,',
       'enable_email_markup_help':
-          'Rendez le règlement de vos clients plus facile en ajoutant les markup schema.org à vos courriels.',
+      'Rendez le règlement de vos clients plus facile en ajoutant les markup schema.org à vos courriels.',
       'plain': 'Brut',
       'light': 'Clair',
       'dark': 'Sombre',
@@ -13296,12 +13305,12 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'accepted_card_logos': 'Logos des cartes acceptées',
       'credentials': 'Identifiants',
       'require_billing_address_help':
-          'Le client doit fournir son adresse de facturation',
+      'Le client doit fournir son adresse de facturation',
       'require_shipping_address_help':
-          'Le client doit fournir son adresse de livraison',
+      'Le client doit fournir son adresse de livraison',
       'update_address': 'Mettre à jour l\'adresse',
       'update_address_help':
-          'Mettre à jour l\'adresse du client avec les détails fournis',
+      'Mettre à jour l\'adresse du client avec les détails fournis',
       'rate': 'Taux',
       'tax_rate': 'Taux de taxe',
       'new_tax_rate': 'Nouveau taux de taxe',
@@ -13313,13 +13322,13 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'restored_tax_rate': 'Le taux de taxe a été restauré avec succès',
       'fill_products': 'Remplissage auto des produits',
       'fill_products_help':
-          'La sélection d’un produit entrainera la MAJ de <b>la description et du prix</b>',
+      'La sélection d’un produit entrainera la MAJ de <b>la description et du prix</b>',
       'update_products': 'Mise à jour auto des produits',
       'update_products_help':
-          'La mise à jour d\'une facture entraîne la <b>mise à jour des produits</b>',
+      'La mise à jour d\'une facture entraîne la <b>mise à jour des produits</b>',
       'convert_products': 'Convertir les produits',
       'convert_products_help':
-          'Convertir automatiquement les prix des produits dans la devise du client',
+      'Convertir automatiquement les prix des produits dans la devise du client',
       'fees': 'Frais',
       'limits': 'Limites',
       'provider': 'Fournisseur',
@@ -13419,7 +13428,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'please_enter_a_first_name': 'Veuillez entrer un prénom',
       'please_enter_a_last_name': 'Veuillez entrer un nom',
       'please_agree_to_terms_and_privacy':
-          'Veuillez accepter les conditions d\'utilisation et la politique de confidentialité pour créer un compte.',
+      'Veuillez accepter les conditions d\'utilisation et la politique de confidentialité pour créer un compte.',
       'i_agree_to_the': 'J\'accepte les',
       'terms_of_service_link': 'Conditions d\'utilisation',
       'privacy_policy_link': 'Politique de confidentialité',
@@ -13433,7 +13442,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'create_new': 'Créer',
       'no_record_selected': 'Aucun enregistrement sélectionné',
       'error_unsaved_changes':
-          'Veuillez enregistrer ou annuler vos modifications',
+      'Veuillez enregistrer ou annuler vos modifications',
       'download': 'Télécharger',
       'requires_an_enterprise_plan': 'Χρειάζεται πλάνο επιχείρησης',
       'take_picture': 'Φωτογραφίσετε',
@@ -13519,7 +13528,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'average': 'Moyenne',
       'unapproved': 'Non approuvé',
       'authenticate_to_change_setting':
-          'Veuillez vous connecter pour changer ce paramètre',
+      'Veuillez vous connecter pour changer ce paramètre',
       'locked': 'Verrouillé',
       'authenticate': 'Connexion',
       'please_authenticate': 'Veuillez vous connecter',
@@ -13719,10 +13728,10 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'marked_invoices_as_paid': 'Successfully marked invoices as paid',
       'done': 'Terminé',
       'please_enter_a_client_or_contact_name':
-          'Veuillez introduire un nom de client',
+      'Veuillez introduire un nom de client',
       'dark_mode': 'Mode sombre',
       'restart_app_to_apply_change':
-          'Recommencer k\'app pour introduire l\'app change',
+      'Recommencer k\'app pour introduire l\'app change',
       'refresh_data': 'Rafraîchir les données',
       'blank_contact': 'Details pour contacter la Banque',
       'activity': 'Activité',
@@ -13802,7 +13811,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'activity_8': ':user a archivé la facture :invoice',
       'activity_9': ':user a supprimé la facture :invoice',
       'activity_10':
-          ':contact a saisi un paiement :payment concernant :invoice pour :client',
+      ':contact a saisi un paiement :payment concernant :invoice pour :client',
       'activity_11': ':user a mis à jour le moyen de paiement :payment',
       'activity_12': ':user a archivé le moyen de paiement :payment',
       'activity_13': ':user a supprimé le moyen de paiement :payment',
@@ -13832,7 +13841,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'activity_37': ':user a restauré la dépense :expense',
       'activity_39': ':user a annulé un paiement de :payment_amount (:payment)',
       'activity_40':
-          ':user a remboursé :adjustment d\'un paiement de :payment_amount (:payment)',
+      ':user a remboursé :adjustment d\'un paiement de :payment_amount (:payment)',
       'activity_41': 'Le paiement de :payment_amount a échoué (:payment)',
       'activity_42': ':user a créé la tâche :task',
       'activity_43': ':user a mis à jour la tâche :task',
@@ -13868,11 +13877,11 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'email_style_custom': 'Style de courriel personnalisé',
       'custom_message_dashboard': 'Message personnalisé du tableau de bord',
       'custom_message_unpaid_invoice':
-          'Message personnalisé pour une facture impayée',
+      'Message personnalisé pour une facture impayée',
       'custom_message_paid_invoice':
-          'Message personnalisé pour un paiement de facture',
+      'Message personnalisé pour un paiement de facture',
       'custom_message_unapproved_quote':
-          'Message personnalisé pour un devis refusé',
+      'Message personnalisé pour un devis refusé',
       'lock_sent_invoices': 'Verrouiller les factures envoyées',
       'translations': 'Traductions',
       'task_number_pattern': 'Modèle de numéro de tâche',
@@ -13987,23 +13996,23 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'hide_menu': 'Hide Menu',
       'show_menu': 'Show Menu',
       'partially_refunded': 'Partially Refunded',
-      'search_documents': 'Search Documents',
-      'search_designs': 'Search Designs',
-      'search_invoices': 'Search Invoices',
-      'search_clients': 'Search Clients',
-      'search_products': 'Search Products',
-      'search_quotes': 'Search Quotes',
-      'search_credits': 'Search Credits',
-      'search_vendors': 'Search Vendors',
-      'search_users': 'Search Users',
-      'search_tax_rates': 'Search Tax Rates',
-      'search_tasks': 'Search Tasks',
-      'search_settings': 'Search Settings',
-      'search_projects': 'Search Projects',
-      'search_expenses': 'Search Expenses',
-      'search_payments': 'Search Payments',
-      'search_groups': 'Search Groups',
-      'search_company': 'Search Company',
+      'search_documents': 'Search :count Documents',
+      'search_designs': 'Search :count Designs',
+      'search_invoices': 'Search :count Invoices',
+      'search_clients': 'Search :count Clients',
+      'search_products': 'Search :count Products',
+      'search_quotes': 'Search :count Quotes',
+      'search_credits': 'Search :count Credits',
+      'search_vendors': 'Search :count Vendors',
+      'search_users': 'Search :count Users',
+      'search_tax_rates': 'Search :count Tax Rates',
+      'search_tasks': 'Search :count Tasks',
+      'search_settings': 'Search :count Settings',
+      'search_projects': 'Search :count Projects',
+      'search_expenses': 'Search :count Expenses',
+      'search_payments': 'Search :count Payments',
+      'search_groups': 'Search :count Groups',
+      'search_company': 'Search :count Company',
       'refund_payment': 'Remboursement',
       'cancelled_invoice': 'Successfully cancelled invoice',
       'cancelled_invoices': 'Successfully cancelled invoices',
@@ -14021,9 +14030,9 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'license': 'License',
       'purge_data': 'Purger les données',
       'purge_successful':
-          'Toutes les données de l\'entreprise ont été supprimées',
+      'Toutes les données de l\'entreprise ont été supprimées',
       'purge_data_message':
-          'Avertissement: Cette action est irréversible et va supprimer vos données de façon définitive.',
+      'Avertissement: Cette action est irréversible et va supprimer vos données de façon définitive.',
       'invoice_balance': 'Invoice Balance',
       'age_group_0': '0 - 30 jours',
       'age_group_30': '30 - 60 jours',
@@ -14058,10 +14067,10 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'apply_license': 'Activer la licence',
       'cancel_account': 'Supprimer le compte',
       'cancel_account_message':
-          'Avertissement: Cette action est irréversible et va supprimer votre compte de façon définitive.',
+      'Avertissement: Cette action est irréversible et va supprimer votre compte de façon définitive.',
       'delete_company': 'Supprimer l\'entreprise',
       'delete_company_message':
-          'Avertissement: Cette entreprise sera définitivement supprimée.',
+      'Avertissement: Cette entreprise sera définitivement supprimée.',
       'enable_modules': 'Enable Modules',
       'converted_quote': 'Successfully converted quote',
       'credit_design': 'Credit Design',
@@ -14213,12 +14222,12 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'applied': 'Publié',
       'include_recent_errors': 'Inclut les erreurs récentes du relevé',
       'your_message_has_been_received':
-          'Nous avons reçu votre message et vous répondrons rapidement.',
+      'Nous avons reçu votre message et vous répondrons rapidement.',
       'message': 'Message',
       'from': 'De',
       'show_product_details': 'Afficher les détails du produit',
       'show_product_details_help':
-          'Veuillez inclure la description et le coût dans la liste déroulante du produit',
+      'Veuillez inclure la description et le coût dans la liste déroulante du produit',
       'pdf_min_requirements': 'Le moteur de rendu PDF nécessite :version',
       'adjust_fee_percent': 'Ajuster le pourcentage de frais',
       'adjust_fee_percent_help': 'Ajuster le frais de pourcentage au compte',
@@ -14235,7 +14244,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'domain_url': 'URL de domaine',
       'password_is_too_short': 'Le mot de passe est trop court',
       'password_is_too_easy':
-          'Le mot de passe doit contenir une majuscule et un nombre',
+      'Le mot de passe doit contenir une majuscule et un nombre',
       'client_portal_tasks': 'Tâches du portail client',
       'client_portal_dashboard': 'Tableau de bord du portail client',
       'please_enter_a_value': 'Veuillez saisir une valeur',
@@ -14262,16 +14271,16 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'third_custom': 'Troisième latéral',
       'show_cost': 'Afficher le coût',
       'show_cost_help':
-          'Afficher un champ de coût du produit pour suivre le profit',
+      'Afficher un champ de coût du produit pour suivre le profit',
       'show_product_quantity': 'Afficher la quantité de produit',
       'show_product_quantity_help':
-          'Afficher un champ Quantité de produit. 1 par défaut.',
+      'Afficher un champ Quantité de produit. 1 par défaut.',
       'show_invoice_quantity': 'Afficher la quantité de facture',
       'show_invoice_quantity_help':
-          'Afficher un champ Quantité d\'article par ligne. 1 par défaut.',
+      'Afficher un champ Quantité d\'article par ligne. 1 par défaut.',
       'default_quantity': 'Quantité par défaut',
       'default_quantity_help':
-          'Définit automatiquement la quantité d\'article par ligne à 1.',
+      'Définit automatiquement la quantité d\'article par ligne à 1.',
       'one_tax_rate': 'Un taux de taxe',
       'two_tax_rates': 'Deux taux de taxe',
       'three_tax_rates': 'Trois taux de taxes',
@@ -14295,7 +14304,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'dropdown': 'Liste déroulante',
       'field_type': 'Type de champ',
       'recover_password_email_sent':
-          'Un courriel a été envoyé pour la récupération du mot de passe',
+      'Un courriel a été envoyé pour la récupération du mot de passe',
       'submit': 'Envoyer',
       'recover_password': 'Récupérez votre mot de passe',
       'late_fees': 'Frais de retard',
@@ -14317,7 +14326,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'filtered_by_user': 'Filtré par utilisateur',
       'administrator': 'Administrateur',
       'administrator_help':
-          'Permet à un utilisateur de gérer d\'autres utilisateurs, modifier les paramètres et tous les enregistrements.',
+      'Permet à un utilisateur de gérer d\'autres utilisateurs, modifier les paramètres et tous les enregistrements.',
       'user_management': 'Gestion des utilisateurs',
       'users': 'Utilisateurs',
       'new_user': 'Nouvel utilisateur',
@@ -14332,10 +14341,10 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'invoice_options': 'Options de facturation',
       'hide_paid_to_date': 'Masquer \"Payé à ce jour\"',
       'hide_paid_to_date_help':
-          'Afficher seulement la ligne \"Payé à ce jour\"sur les factures pour lesquelles il y a au moins un paiement.',
+      'Afficher seulement la ligne \"Payé à ce jour\"sur les factures pour lesquelles il y a au moins un paiement.',
       'invoice_embed_documents': 'Documents intégrés',
       'invoice_embed_documents_help':
-          'Inclure les images jointes dans la facture.',
+      'Inclure les images jointes dans la facture.',
       'all_pages_header': 'Afficher l\'entête sur',
       'all_pages_footer': 'Afficher le pied de page sur',
       'first_page': 'première page',
@@ -14356,16 +14365,16 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'quote_footer': 'Pied de soumission par défaut',
       'auto_email_invoice': 'Envoi automatique',
       'auto_email_invoice_help':
-          'Envoi automatiquement les factures récurrentes lorsqu\'elles sont créées.',
+      'Envoi automatiquement les factures récurrentes lorsqu\'elles sont créées.',
       'auto_archive_invoice': 'Autoarchivage',
       'auto_archive_invoice_help':
-          'Archive automatiquement les soumissions lorsqu\'elles sont converties.',
+      'Archive automatiquement les soumissions lorsqu\'elles sont converties.',
       'auto_archive_quote': 'Autoarchivage',
       'auto_archive_quote_help':
-          'Archive automatiquement les soumissions lorsqu\'elles sont converties.',
+      'Archive automatiquement les soumissions lorsqu\'elles sont converties.',
       'auto_convert_quote': 'Autoconversion',
       'auto_convert_quote_help':
-          'Convertir automatiquement une soumission en facture lorsque le client l\'accepte.',
+      'Convertir automatiquement une soumission en facture lorsque le client l\'accepte.',
       'workflow_settings': 'Paramètres de flux de travail',
       'freq_daily': 'Quotidienne',
       'freq_weekly': 'Hebdomadaire',
@@ -14411,28 +14420,28 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'custom_javascript': 'JavaScript personnalisé',
       'signature_on_pdf': 'Afficher sur le PDF',
       'signature_on_pdf_help':
-          'Afficher la signature du client sur la facture/soumission PDF.',
+      'Afficher la signature du client sur la facture/soumission PDF.',
       'show_accept_invoice_terms':
-          'Case à cocher pour les conditions de facturation',
+      'Case à cocher pour les conditions de facturation',
       'show_accept_invoice_terms_help':
-          'Requiert du client qu\'il confirme et accepte les conditions de facturation',
+      'Requiert du client qu\'il confirme et accepte les conditions de facturation',
       'show_accept_quote_terms':
-          'Case à cocher pour les conditions de soumssion',
+      'Case à cocher pour les conditions de soumssion',
       'show_accept_quote_terms_help':
-          'Requiert du client qu\'il confirme et accepte les conditions de soumission',
+      'Requiert du client qu\'il confirme et accepte les conditions de soumission',
       'require_invoice_signature': 'Signature de facture',
       'require_invoice_signature_help': 'Requiert une signature du client',
       'require_quote_signature': 'Signature de soumission',
       'enable_portal_password': 'Protéger les factures avec un mot de passe',
       'enable_portal_password_help':
-          'Permet de spécifier un mot de passe pour chaque contact. Si un mot de passe est spécifié, le contact devra saisir ce mot de passe pour visualiser ses factures.',
+      'Permet de spécifier un mot de passe pour chaque contact. Si un mot de passe est spécifié, le contact devra saisir ce mot de passe pour visualiser ses factures.',
       'authorization': 'Autorisation',
       'subdomain': 'sous-domaine',
       'domain': 'Domaine',
       'portal_mode': 'Mode portail',
       'email_signature': 'Cordialement,',
       'enable_email_markup_help':
-          'rendez le paiement plus facile à vos client en ajoutant à vos courriel, le marquage de schema.org.',
+      'rendez le paiement plus facile à vos client en ajoutant à vos courriel, le marquage de schema.org.',
       'plain': 'Ordinaire',
       'light': 'Clair',
       'dark': 'Foncé',
@@ -14461,12 +14470,12 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'accepted_card_logos': 'Logos des cartes acceptées',
       'credentials': 'Identifiants',
       'require_billing_address_help':
-          'Le client doit fournir son adresse de facturation',
+      'Le client doit fournir son adresse de facturation',
       'require_shipping_address_help':
-          'Le client doit fournir son adresse de livraison',
+      'Le client doit fournir son adresse de livraison',
       'update_address': 'Mise à jour de l\\adresse',
       'update_address_help':
-          'Met à jour l\'adresse du client avec les informations fournies',
+      'Met à jour l\'adresse du client avec les informations fournies',
       'rate': 'Taux',
       'tax_rate': 'Taux de taxe',
       'new_tax_rate': 'Nouveau taux de taxe',
@@ -14478,13 +14487,13 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'restored_tax_rate': 'Le taux de taxe a été restauré',
       'fill_products': 'Remplissage auto des produits',
       'fill_products_help':
-          'La sélection d\'un produit entrainera la mise à jour de <b>la description et du prix</b>',
+      'La sélection d\'un produit entrainera la mise à jour de <b>la description et du prix</b>',
       'update_products': 'Mise à jour auto des produits',
       'update_products_help':
-          'La mise à jour d\'une facture entraîne la <b>mise à jour des produits</b>',
+      'La mise à jour d\'une facture entraîne la <b>mise à jour des produits</b>',
       'convert_products': 'Convertir les produits',
       'convert_products_help':
-          'Convertir automatiquement le prix des produits dans la devise du client',
+      'Convertir automatiquement le prix des produits dans la devise du client',
       'fees': 'Frais',
       'limits': 'Limites',
       'provider': 'Fournisseur',
@@ -14584,7 +14593,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'please_enter_a_first_name': 'Veuillez entrer votre prénom',
       'please_enter_a_last_name': 'Veuillez entrer votre nom',
       'please_agree_to_terms_and_privacy':
-          'Vous devez accepter les conditions et la politique de confidentialité pour créer un compte.',
+      'Vous devez accepter les conditions et la politique de confidentialité pour créer un compte.',
       'i_agree_to_the': 'J\'accepte',
       'terms_of_service_link': 'les conditions',
       'privacy_policy_link': 'la politique de confidentialité',
@@ -14598,7 +14607,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'create_new': 'Créer',
       'no_record_selected': 'Aucun enregistrement sélectionné',
       'error_unsaved_changes':
-          'Veuillez sauvegarder ou annuler vos modifications',
+      'Veuillez sauvegarder ou annuler vos modifications',
       'download': 'Télécharger',
       'requires_an_enterprise_plan': 'Le plan Entreprise est requis',
       'take_picture': 'Prendre un photo',
@@ -14684,7 +14693,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'average': 'Moyenne',
       'unapproved': 'Non approuvé',
       'authenticate_to_change_setting':
-          'Veuillez vous connecter pour changer ce paramètre',
+      'Veuillez vous connecter pour changer ce paramètre',
       'locked': 'Verrouillé',
       'authenticate': 'Connexion',
       'please_authenticate': 'Veuillez vous connecter',
@@ -14884,10 +14893,10 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'marked_invoices_as_paid': 'Successfully marked invoices as paid',
       'done': 'Valider',
       'please_enter_a_client_or_contact_name':
-          'Veuillez saisir un nom de client ou de contact',
+      'Veuillez saisir un nom de client ou de contact',
       'dark_mode': 'Mode foncé',
       'restart_app_to_apply_change':
-          'Redémarrez l\'app pour mettre à jour les changements',
+      'Redémarrez l\'app pour mettre à jour les changements',
       'refresh_data': 'Actualiser les données',
       'blank_contact': 'Contact vide',
       'activity': 'Activité',
@@ -14963,12 +14972,12 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'activity_4': ':user a créé la facture :invoice',
       'activity_5': ':user a mis à jour la facture :invoice',
       'activity_6':
-          ':user a envoyé par courriel la facture :invoice pour :client à :contact',
+      ':user a envoyé par courriel la facture :invoice pour :client à :contact',
       'activity_7': ':contact a visualisé la facture :invoice pour :client',
       'activity_8': ':user a archivé la facture :invoice',
       'activity_9': ':user a supprimé la facture :invoice',
       'activity_10':
-          ':contact a saisi le paiement :payment de :payment_amount de la facture :invoice pour :client',
+      ':contact a saisi le paiement :payment de :payment_amount de la facture :invoice pour :client',
       'activity_11': ':user a mis à jour le paiement :payment',
       'activity_12': ':user a archivé le paiement :payment',
       'activity_13': ':user a supprimé le paiement :payment',
@@ -14979,7 +14988,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'activity_18': ':user a créé la soumission :quote',
       'activity_19': ':user a mis à jour la soumission :quote',
       'activity_20':
-          ':user a envoyé par courriel la soumission :quote pour :client à :contact',
+      ':user a envoyé par courriel la soumission :quote pour :client à :contact',
       'activity_21': ':contact a visualisé la soumission :quote',
       'activity_22': ':user a archivé la soumission :quote',
       'activity_23': ':user a supprimé la soumission :quote',
@@ -14999,7 +15008,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'activity_37': ':user a restauré la dépense :expense',
       'activity_39': ':user a annulé un paiement :payment de :payment_amount',
       'activity_40':
-          ':user a remboursé :adjustment d\'un paiement :payment de :payment_amount',
+      ':user a remboursé :adjustment d\'un paiement :payment de :payment_amount',
       'activity_41': 'Le paiement de :payment_amount a échoué (:payment)',
       'activity_42': ':user a créé la tâche :task',
       'activity_43': ':user a mis à jour la tâche :task',
@@ -15017,7 +15026,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'activity_55': ':contact a répondu au billet :ticket',
       'activity_56': ':user a vu le billet :ticket',
       'activity_57':
-          'Le système n\'a pas pu envoyer le courriel de la facture :invoice',
+      'Le système n\'a pas pu envoyer le courriel de la facture :invoice',
       'activity_58': ':user reversed invoice :invoice',
       'activity_59': ':user cancelled invoice :invoice',
       'one_time_password': 'Mot de passe à usage unique',
@@ -15036,10 +15045,10 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'email_style_custom': 'Style de courriel personnalisé',
       'custom_message_dashboard': 'Message personnalisé du tableau de bord',
       'custom_message_unpaid_invoice':
-          'Message personnalisé pour facture impayée',
+      'Message personnalisé pour facture impayée',
       'custom_message_paid_invoice': 'Message personnalisé pour facture payée',
       'custom_message_unapproved_quote':
-          'Message personnalisé pour soumission non approuvée',
+      'Message personnalisé pour soumission non approuvée',
       'lock_sent_invoices': 'Verrouiller les factures envoyées',
       'translations': 'Traductions',
       'task_number_pattern': 'Modèle du numéro de tâche',
@@ -15154,23 +15163,23 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'hide_menu': 'Hide Menu',
       'show_menu': 'Show Menu',
       'partially_refunded': 'Partially Refunded',
-      'search_documents': 'Search Documents',
-      'search_designs': 'Search Designs',
-      'search_invoices': 'Search Invoices',
-      'search_clients': 'Search Clients',
-      'search_products': 'Search Products',
-      'search_quotes': 'Search Quotes',
-      'search_credits': 'Search Credits',
-      'search_vendors': 'Search Vendors',
-      'search_users': 'Search Users',
-      'search_tax_rates': 'Search Tax Rates',
-      'search_tasks': 'Search Tasks',
-      'search_settings': 'Search Settings',
-      'search_projects': 'Search Projects',
-      'search_expenses': 'Search Expenses',
-      'search_payments': 'Search Payments',
-      'search_groups': 'Search Groups',
-      'search_company': 'Search Company',
+      'search_documents': 'Search :count Documents',
+      'search_designs': 'Search :count Designs',
+      'search_invoices': 'Search :count Invoices',
+      'search_clients': 'Search :count Clients',
+      'search_products': 'Search :count Products',
+      'search_quotes': 'Search :count Quotes',
+      'search_credits': 'Search :count Credits',
+      'search_vendors': 'Search :count Vendors',
+      'search_users': 'Search :count Users',
+      'search_tax_rates': 'Search :count Tax Rates',
+      'search_tasks': 'Search :count Tasks',
+      'search_settings': 'Search :count Settings',
+      'search_projects': 'Search :count Projects',
+      'search_expenses': 'Search :count Expenses',
+      'search_payments': 'Search :count Payments',
+      'search_groups': 'Search :count Groups',
+      'search_company': 'Search :count Company',
       'refund_payment': 'Zahlung erstatten',
       'cancelled_invoice': 'Successfully cancelled invoice',
       'cancelled_invoices': 'Successfully cancelled invoices',
@@ -15189,7 +15198,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'purge_data': 'Daten säubern',
       'purge_successful': 'Die Kontodaten wurden erfolgreich gelöscht',
       'purge_data_message':
-          'Achtung: Alle Daten werden vollständig gelöscht. Dieser Vorgang kann nicht rückgängig gemacht werden.',
+      'Achtung: Alle Daten werden vollständig gelöscht. Dieser Vorgang kann nicht rückgängig gemacht werden.',
       'invoice_balance': 'Invoice Balance',
       'age_group_0': '0 - 30 Tage',
       'age_group_30': '30 - 60 Tage',
@@ -15224,10 +15233,10 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'apply_license': 'Lizenz anwenden',
       'cancel_account': 'Konto kündigen',
       'cancel_account_message':
-          'Warnung: Diese Aktion wird dein Konto unwiderruflich löschen.',
+      'Warnung: Diese Aktion wird dein Konto unwiderruflich löschen.',
       'delete_company': 'Firma löschen',
       'delete_company_message':
-          'Achtung: Dadurch wird Ihre Firma unwiderruflich gelöscht. Es gibt kein Zurück.',
+      'Achtung: Dadurch wird Ihre Firma unwiderruflich gelöscht. Es gibt kein Zurück.',
       'enable_modules': 'Enable Modules',
       'converted_quote': 'Successfully converted quote',
       'credit_design': 'Credit Design',
@@ -15379,12 +15388,12 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'applied': 'Angewendet',
       'include_recent_errors': 'Kürzliche Fehler aus den Logs einfügen',
       'your_message_has_been_received':
-          'Wir haben ihre Nachricht erhalten und bemühen uns schnellstmöglich zu antworten.',
+      'Wir haben ihre Nachricht erhalten und bemühen uns schnellstmöglich zu antworten.',
       'message': 'Nachricht',
       'from': 'Von',
       'show_product_details': 'Produktdetails anzeigen',
       'show_product_details_help':
-          'Beschreibung und Kosten in die Produkt-Dropdown-Liste einfügen',
+      'Beschreibung und Kosten in die Produkt-Dropdown-Liste einfügen',
       'pdf_min_requirements': 'Der PDF-Renderer benötigt :version',
       'adjust_fee_percent': 'Anpassungszuschlag Prozent',
       'adjust_fee_percent_help': 'Gebühren Prozentsatz an das Konto anpassen',
@@ -15401,7 +15410,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'domain_url': 'Domain-URL',
       'password_is_too_short': 'Das Passwort ist zu kurz',
       'password_is_too_easy':
-          'Das Passwort muss einen Großbuchstaben und eine Nummer enthalten',
+      'Das Passwort muss einen Großbuchstaben und eine Nummer enthalten',
       'client_portal_tasks': 'Kundenportal-Aufgaben',
       'client_portal_dashboard': 'Kundenportal-Übersicht',
       'please_enter_a_value': 'Bitte einen Wert eingeben',
@@ -15428,16 +15437,16 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'third_custom': 'Dritte benutzerdefinierte',
       'show_cost': 'Kosten anzeigen',
       'show_cost_help':
-          'Display a product cost field to track the markup/profit',
+      'Display a product cost field to track the markup/profit',
       'show_product_quantity': 'Produktanzahl anzeigen',
       'show_product_quantity_help':
-          'Display a product quantity field, otherwise default to one',
+      'Display a product quantity field, otherwise default to one',
       'show_invoice_quantity': 'Rechnungsanzahl anzeigen',
       'show_invoice_quantity_help':
-          'Display a line item quantity field, otherwise default to one',
+      'Display a line item quantity field, otherwise default to one',
       'default_quantity': 'Standardanzahl',
       'default_quantity_help':
-          'Automatically set the line item quantity to one',
+      'Automatically set the line item quantity to one',
       'one_tax_rate': 'Ein Steuersatz',
       'two_tax_rates': 'Zwei Steuersätze',
       'three_tax_rates': 'Drei Steuersätze',
@@ -15461,7 +15470,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'dropdown': 'Dropdown',
       'field_type': 'Feldtyp',
       'recover_password_email_sent':
-          'Eine Passwort-Wiederherstellungs-Mail wurde versendet',
+      'Eine Passwort-Wiederherstellungs-Mail wurde versendet',
       'submit': 'Abschicken',
       'recover_password': 'Passwort wiederherstellen',
       'late_fees': 'Verspätungszuschläge',
@@ -15483,7 +15492,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'filtered_by_user': 'Gefiltert nach Benutzer',
       'administrator': 'Administrator',
       'administrator_help':
-          'Dem Benutzer erlauben, andere Benutzer zu administrieren, Einstellungen zu ändern und alle Einträge zu bearbeiten',
+      'Dem Benutzer erlauben, andere Benutzer zu administrieren, Einstellungen zu ändern und alle Einträge zu bearbeiten',
       'user_management': 'Benutzerverwaltung',
       'users': 'Benutzer',
       'new_user': 'Neuer Benutzer',
@@ -15498,10 +15507,10 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'invoice_options': 'Rechnungsoptionen',
       'hide_paid_to_date': '\"Bereits gezahlt\" ausblenden',
       'hide_paid_to_date_help':
-          '\"Bereits gezahlt\" nur anzeigen, wenn eine Zahlung eingegangen ist.',
+      '\"Bereits gezahlt\" nur anzeigen, wenn eine Zahlung eingegangen ist.',
       'invoice_embed_documents': 'Dokumente einbetten',
       'invoice_embed_documents_help':
-          'Bildanhänge zu den Rechnungen hinzufügen.',
+      'Bildanhänge zu den Rechnungen hinzufügen.',
       'all_pages_header': 'Zeige Kopf auf',
       'all_pages_footer': 'Zeige Fußzeilen auf',
       'first_page': 'Erste Seite',
@@ -15522,16 +15531,16 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'quote_footer': 'Angebots-Fußzeile',
       'auto_email_invoice': 'Automatische Email',
       'auto_email_invoice_help':
-          'Senden Sie wiederkehrende Rechnungen automatisch per E-Mail, wenn sie erstellt werden.',
+      'Senden Sie wiederkehrende Rechnungen automatisch per E-Mail, wenn sie erstellt werden.',
       'auto_archive_invoice': 'Automatisches Archiv',
       'auto_archive_invoice_help':
-          'Archivieren Sie Rechnungen automatisch, wenn sie bezahlt sind.',
+      'Archivieren Sie Rechnungen automatisch, wenn sie bezahlt sind.',
       'auto_archive_quote': 'Automatisches Archiv',
       'auto_archive_quote_help':
-          'Archivieren Sie Angebote automatisch, wenn sie konvertiert werden.',
+      'Archivieren Sie Angebote automatisch, wenn sie konvertiert werden.',
       'auto_convert_quote': 'Automatisch konvertieren',
       'auto_convert_quote_help':
-          'Das Angebot automatisch in eine Rechnung umwandeln wenn es vom Kunden angenommen wird.',
+      'Das Angebot automatisch in eine Rechnung umwandeln wenn es vom Kunden angenommen wird.',
       'workflow_settings': 'Workflow Einstellungen',
       'freq_daily': 'Täglich',
       'freq_weekly': 'Wöchentlich',
@@ -15577,27 +15586,27 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'custom_javascript': 'Benutzerdefiniertes JavaScript',
       'signature_on_pdf': 'Auf PDF anzeigen',
       'signature_on_pdf_help':
-          'Unterschrift des Kunden auf dem Angebots/Rechnungs PDF anzeigen.',
+      'Unterschrift des Kunden auf dem Angebots/Rechnungs PDF anzeigen.',
       'show_accept_invoice_terms': 'Checkbox für Rechnungsbedingungen',
       'show_accept_invoice_terms_help':
-          'Erfordern Sie die Bestätigung der Rechnungsbedingungen durch den Kunden.',
+      'Erfordern Sie die Bestätigung der Rechnungsbedingungen durch den Kunden.',
       'show_accept_quote_terms': 'Checkbox für Angebotsbedingungen',
       'show_accept_quote_terms_help':
-          'Erfordern Sie die Bestätigung der Angebotsbedingungen durch den Kunden.',
+      'Erfordern Sie die Bestätigung der Angebotsbedingungen durch den Kunden.',
       'require_invoice_signature': 'Rechnungsunterschrift',
       'require_invoice_signature_help':
-          'Erfordern Sie die Unterschrift des Kunden bei Rechnungen.',
+      'Erfordern Sie die Unterschrift des Kunden bei Rechnungen.',
       'require_quote_signature': 'Angebotsunterschrift',
       'enable_portal_password': 'Rechnungen mit Passwort schützen',
       'enable_portal_password_help':
-          'Erlaubt Ihnen ein Passwort für jeden Kontakt zu erstellen. Wenn ein Passwort erstellt wurde, muss der Kunde dieses eingeben, bevor er eine Rechnung ansehen darf.',
+      'Erlaubt Ihnen ein Passwort für jeden Kontakt zu erstellen. Wenn ein Passwort erstellt wurde, muss der Kunde dieses eingeben, bevor er eine Rechnung ansehen darf.',
       'authorization': 'Genehmigung',
       'subdomain': 'Subdomäne',
       'domain': 'Domäne',
       'portal_mode': 'Portalmodus',
       'email_signature': 'Mit freundlichen Grüßen,',
       'enable_email_markup_help':
-          'Machen Sie es einfacher für Ihre Kunden zu bezahlen, indem Sie schema.org Markup zu Ihren E-Mails hinzufügen.',
+      'Machen Sie es einfacher für Ihre Kunden zu bezahlen, indem Sie schema.org Markup zu Ihren E-Mails hinzufügen.',
       'plain': 'Einfach',
       'light': 'Hell',
       'dark': 'Dunkel',
@@ -15626,11 +15635,11 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'accepted_card_logos': 'Logos der akzeptierten Kreditkarten',
       'credentials': 'Zugangsdaten',
       'require_billing_address_help':
-          'Kunde muss seine Rechnungsadresse angeben',
+      'Kunde muss seine Rechnungsadresse angeben',
       'require_shipping_address_help': 'Kunde muss seine Lieferadresse angeben',
       'update_address': 'Adresse aktualisieren',
       'update_address_help':
-          'Kundenadresse mit den gemachten Angaben aktualisieren',
+      'Kundenadresse mit den gemachten Angaben aktualisieren',
       'rate': 'Satz',
       'tax_rate': 'Steuersatz',
       'new_tax_rate': 'Neuer Steuersatz',
@@ -15642,13 +15651,13 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'restored_tax_rate': 'Steuersatz erfolgreich wiederhergestellt',
       'fill_products': 'Produkte automatisch ausfüllen',
       'fill_products_help':
-          'Beim Auswählen eines Produktes werden automatisch <strong>Beschreibung und Kosten ausgefüllt</strong>',
+      'Beim Auswählen eines Produktes werden automatisch <strong>Beschreibung und Kosten ausgefüllt</strong>',
       'update_products': 'Produkte automatisch aktualisieren',
       'update_products_help':
-          'Beim Aktualisieren einer Rechnung werden die <strong>Produkte automatisch aktualisiert</strong>',
+      'Beim Aktualisieren einer Rechnung werden die <strong>Produkte automatisch aktualisiert</strong>',
       'convert_products': 'Produkte konvertieren',
       'convert_products_help':
-          'Produktpreise automatisch in die Währung des Kunden konvertieren',
+      'Produktpreise automatisch in die Währung des Kunden konvertieren',
       'fees': 'Gebühren',
       'limits': 'Grenzwerte',
       'provider': 'Anbieter',
@@ -15748,7 +15757,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'please_enter_a_first_name': 'Bitte geben Sie einen Vornamen ein',
       'please_enter_a_last_name': 'Bitte geben Sie einen Nachnamen ein',
       'please_agree_to_terms_and_privacy':
-          'Bitte stimmen Sie den Nutzungsbedingungen und der Datenschutzerklärung zu, um ein Konto zu erstellen.',
+      'Bitte stimmen Sie den Nutzungsbedingungen und der Datenschutzerklärung zu, um ein Konto zu erstellen.',
       'i_agree_to_the': 'Ich stimme den',
       'terms_of_service_link': 'Nutzungsbedingungen',
       'privacy_policy_link': 'Datenschutzerklärung',
@@ -15762,7 +15771,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'create_new': 'Neu...',
       'no_record_selected': 'Kein Eintrag ausgewählt',
       'error_unsaved_changes':
-          'Bitte speichern oder verwerfen Sie Ihre Änderungen',
+      'Bitte speichern oder verwerfen Sie Ihre Änderungen',
       'download': 'Downloaden',
       'requires_an_enterprise_plan': 'Benötigt einen Enterprise Plan',
       'take_picture': 'Bild aufnehmen',
@@ -15848,7 +15857,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'average': 'Durchschnittlich',
       'unapproved': 'Nicht genehmigt',
       'authenticate_to_change_setting':
-          'Bitte authentifizieren Sie sich, um diese Einstellung zu ändern.',
+      'Bitte authentifizieren Sie sich, um diese Einstellung zu ändern.',
       'locked': 'Gesperrt',
       'authenticate': 'Authentifizieren',
       'please_authenticate': 'Bitte authentifizieren Sie sich',
@@ -15924,7 +15933,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'please_enter_your_password': 'Bitte geben Sie Ihr Passwort ein',
       'please_enter_your_url': 'Bitte geben Sie Ihre URL ein',
       'please_enter_a_product_key':
-          'Bitte geben Sie Ihren Produkt schlüssel ein',
+      'Bitte geben Sie Ihren Produkt schlüssel ein',
       'ascending': 'Aufsteigend',
       'descending': 'Absteigend',
       'save': 'Speichern',
@@ -16017,7 +16026,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'invoice_status_id': 'Rechnungs Status',
       'quote_status': 'Angebots Status',
       'click_plus_to_add_item':
-          'Klicken Sie auf +, um ein Element hinzuzufügen.',
+      'Klicken Sie auf +, um ein Element hinzuzufügen.',
       'click_plus_to_add_time': 'Klicken Sie auf +, um die Zeit hinzuzufügen.',
       'count_selected': ':count ausgewählt',
       'total': 'Gesamt',
@@ -16035,7 +16044,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'updated_at': 'Aktualisiert',
       'tax': 'Steuer',
       'please_enter_an_invoice_number':
-          'Bitte geben Sie eine Rechnungs Nummer ein',
+      'Bitte geben Sie eine Rechnungs Nummer ein',
       'please_enter_a_quote_number': 'Bitte geben Sie eine Angebots Nummer ein',
       'past_due': 'Überfällig',
       'draft': 'Entwurf',
@@ -16048,14 +16057,14 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'marked_invoice_as_sent': 'Rechnung erfolgreich als versendet markiert',
       'marked_invoice_as_paid': 'Successfully marked invoice as paid',
       'marked_invoices_as_sent':
-          'Erfolgreich Rechnungen als versendet markiert',
+      'Erfolgreich Rechnungen als versendet markiert',
       'marked_invoices_as_paid': 'Successfully marked invoices as paid',
       'done': 'Erledigt',
       'please_enter_a_client_or_contact_name':
-          'Bitte geben Sie einen Kunden- oder Kontaktnamen ein',
+      'Bitte geben Sie einen Kunden- oder Kontaktnamen ein',
       'dark_mode': 'Dunkler Modus',
       'restart_app_to_apply_change':
-          'Starten Sie die App neu, um die Änderung zu übernehmen.',
+      'Starten Sie die App neu, um die Änderung zu übernehmen.',
       'refresh_data': 'Daten aktualisieren',
       'blank_contact': 'Leerer Kontakt',
       'activity': 'Aktivität',
@@ -16135,7 +16144,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'activity_8': ':user archivierte Rechnung :invoice',
       'activity_9': ':user löschte Rechnung :invoice',
       'activity_10':
-          ':contact gab Zahlungsinformation :payment über :payment_amount für Rechnung :invoice für Kunde :client',
+      ':contact gab Zahlungsinformation :payment über :payment_amount für Rechnung :invoice für Kunde :client',
       'activity_11': ':user aktualisierte Zahlung :payment',
       'activity_12': ':user archivierte Zahlung :payment',
       'activity_13': ':user löschte Zahlung :payment',
@@ -16164,9 +16173,9 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'activity_36': ':user hat Ausgabe :expense gelöscht',
       'activity_37': ':user hat Ausgabe :expense wiederhergestellt',
       'activity_39':
-          ':user brach eine Zahlung über :payment_amount ab :payment',
+      ':user brach eine Zahlung über :payment_amount ab :payment',
       'activity_40':
-          ':user hat :adjustment von :payment_amount der Zahlung :payment zurück erstattet',
+      ':user hat :adjustment von :payment_amount der Zahlung :payment zurück erstattet',
       'activity_41': ':payment_amount Zahlung (:payment) schlug fehl',
       'activity_42': ':user hat Aufgabe :task erstellt',
       'activity_43': ':user hat Aufgabe :task bearbeitet',
@@ -16184,7 +16193,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'activity_55': ':contact hat auf Ticket :ticket geantwortet',
       'activity_56': ':user  hat Ticket :ticket angesehen',
       'activity_57':
-          'Das System konnte die Rechnung :invoice nicht per E-Mail versenden',
+      'Das System konnte die Rechnung :invoice nicht per E-Mail versenden',
       'activity_58': ':user reversed invoice :invoice',
       'activity_59': ':user cancelled invoice :invoice',
       'one_time_password': 'Einmaliges Passwort',
@@ -16203,11 +16212,11 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'email_style_custom': 'Benutzer definierter E-Mail-Stil',
       'custom_message_dashboard': 'Benutzerdefinierte Dashboard-Nachricht',
       'custom_message_unpaid_invoice':
-          'Benutzerdefinierte Nachricht für unbezahlte Rechnung',
+      'Benutzerdefinierte Nachricht für unbezahlte Rechnung',
       'custom_message_paid_invoice':
-          'Benutzerdefinierte Nachricht für bezahlte Rechnung',
+      'Benutzerdefinierte Nachricht für bezahlte Rechnung',
       'custom_message_unapproved_quote':
-          'Benutzerdefinierte Nachricht für nicht genehmigten Kostenvoranschlag',
+      'Benutzerdefinierte Nachricht für nicht genehmigten Kostenvoranschlag',
       'lock_sent_invoices': 'Lock Sent Invoices',
       'translations': 'Übersetzungen',
       'task_number_pattern': 'Aufgabennummernschema',
@@ -16322,23 +16331,23 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'hide_menu': 'Hide Menu',
       'show_menu': 'Show Menu',
       'partially_refunded': 'Partially Refunded',
-      'search_documents': 'Search Documents',
-      'search_designs': 'Search Designs',
-      'search_invoices': 'Search Invoices',
-      'search_clients': 'Search Clients',
-      'search_products': 'Search Products',
-      'search_quotes': 'Search Quotes',
-      'search_credits': 'Search Credits',
-      'search_vendors': 'Search Vendors',
-      'search_users': 'Search Users',
-      'search_tax_rates': 'Search Tax Rates',
-      'search_tasks': 'Search Tasks',
-      'search_settings': 'Search Settings',
-      'search_projects': 'Search Projects',
-      'search_expenses': 'Search Expenses',
-      'search_payments': 'Search Payments',
-      'search_groups': 'Search Groups',
-      'search_company': 'Search Company',
+      'search_documents': 'Search :count Documents',
+      'search_designs': 'Search :count Designs',
+      'search_invoices': 'Search :count Invoices',
+      'search_clients': 'Search :count Clients',
+      'search_products': 'Search :count Products',
+      'search_quotes': 'Search :count Quotes',
+      'search_credits': 'Search :count Credits',
+      'search_vendors': 'Search :count Vendors',
+      'search_users': 'Search :count Users',
+      'search_tax_rates': 'Search :count Tax Rates',
+      'search_tasks': 'Search :count Tasks',
+      'search_settings': 'Search :count Settings',
+      'search_projects': 'Search :count Projects',
+      'search_expenses': 'Search :count Expenses',
+      'search_payments': 'Search :count Payments',
+      'search_groups': 'Search :count Groups',
+      'search_company': 'Search :count Company',
       'refund_payment': 'Επιστροφή Πληρωμής',
       'cancelled_invoice': 'Successfully cancelled invoice',
       'cancelled_invoices': 'Successfully cancelled invoices',
@@ -16357,7 +16366,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'purge_data': 'Εκκαθάριση Δεδομένων',
       'purge_successful': 'Επιτυχής εκκαθάριση δεδομένων επιχείρησης',
       'purge_data_message':
-          'Προσοχή: Αυτό θα σβήσει όλα σας τα δεδομένα, χωρίς δυνατότητα αναίρεσης.',
+      'Προσοχή: Αυτό θα σβήσει όλα σας τα δεδομένα, χωρίς δυνατότητα αναίρεσης.',
       'invoice_balance': 'Invoice Balance',
       'age_group_0': '0 - 30 Ημέρες',
       'age_group_30': '30 - 60 Ημέρες',
@@ -16392,10 +16401,10 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'apply_license': 'Εφαρμογή Άδειας Χρήσης',
       'cancel_account': 'Διαγραφή Λογαριασμού',
       'cancel_account_message':
-          'Προσοχή: Αυτό θα σβήσει το λογαριασμό σας, χωρίς δυνατότητα αναίρεσης.',
+      'Προσοχή: Αυτό θα σβήσει το λογαριασμό σας, χωρίς δυνατότητα αναίρεσης.',
       'delete_company': 'Διαγραφή Επιχείρησης',
       'delete_company_message':
-          'Προειδοποίηση: Αυτό θα διαγράψει οριστικά την επιχείρηση, χωρίς αναίρεση.',
+      'Προειδοποίηση: Αυτό θα διαγράψει οριστικά την επιχείρηση, χωρίς αναίρεση.',
       'enable_modules': 'Enable Modules',
       'converted_quote': 'Successfully converted quote',
       'credit_design': 'Credit Design',
@@ -16546,18 +16555,18 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'verify_password': 'Επαλήθευση Κωδικού',
       'applied': 'Εγινε εφαρμογή',
       'include_recent_errors':
-          'Συμπερίληψη πρόσφατων σφαλμάτων απο αρχεία καταγραφής',
+      'Συμπερίληψη πρόσφατων σφαλμάτων απο αρχεία καταγραφής',
       'your_message_has_been_received':
-          'Εχουμε λάβει το μήνυμά σας και θα σας απαντήσουμε σύντομα.',
+      'Εχουμε λάβει το μήνυμά σας και θα σας απαντήσουμε σύντομα.',
       'message': 'Μήνυμα',
       'from': 'Από',
       'show_product_details': 'Εμφάνιση Λεπτομερειών Προιόντος',
       'show_product_details_help':
-          'Συμπερίληψη της περιγραφής και κόστους τιμής στη λίστα προιόντος',
+      'Συμπερίληψη της περιγραφής και κόστους τιμής στη λίστα προιόντος',
       'pdf_min_requirements': 'Ο κωδικοποιητής PDF απαιτεί :version',
       'adjust_fee_percent': 'Προσαρμογή του ποσοστού του τέλους',
       'adjust_fee_percent_help':
-          'Τροποποίηση του ποσοστού του λογαριασμού για τέλος',
+      'Τροποποίηση του ποσοστού του λογαριασμού για τέλος',
       'configure_settings': 'Προσαρμογή Ρυθμίσεων',
       'support_forum': 'φόρουμ υποστήριξης',
       'about': 'Περί',
@@ -16571,7 +16580,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'domain_url': 'Σύνδεσμος URL',
       'password_is_too_short': 'Ο κωδικός πρόσβασης είναι πολύ μικρός',
       'password_is_too_easy':
-          'Ο κωδικός πρόσβασης πρέπει να περιέχει ένα κεφαλαίο χαρακτήρα και έναν αριθμό',
+      'Ο κωδικός πρόσβασης πρέπει να περιέχει ένα κεφαλαίο χαρακτήρα και έναν αριθμό',
       'client_portal_tasks': 'Εργασίες πύλης πελάτη',
       'client_portal_dashboard': 'Πίνακας ελέγχου πύλης πελατών',
       'please_enter_a_value': 'Παρακαλούμε ορίστε μια τιμή',
@@ -16598,13 +16607,13 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'third_custom': 'Τρίτη Προσαρμογή',
       'show_cost': 'Εμφάνιση Κόστους',
       'show_cost_help':
-          'Εμφάνιση του πεδίου κόστους προϊόντος για να είναι δυνατή η εύρεση του κέρδους',
+      'Εμφάνιση του πεδίου κόστους προϊόντος για να είναι δυνατή η εύρεση του κέρδους',
       'show_product_quantity': 'Εμφάνισε την Ποσότητα Προϊόντος',
       'show_product_quantity_help':
-          'Εμφάνιση του πεδίου ποσότητας προϊόντος, αλλιώς ορισμός σε ένα',
+      'Εμφάνιση του πεδίου ποσότητας προϊόντος, αλλιώς ορισμός σε ένα',
       'show_invoice_quantity': 'Εμφάνισε την Ποσότητα Τιμολογίου',
       'show_invoice_quantity_help':
-          'Εμφάνιση του πεδίου ποσότητας γραμμής, αλλιώς ορισμός σε ένα',
+      'Εμφάνιση του πεδίου ποσότητας γραμμής, αλλιώς ορισμός σε ένα',
       'default_quantity': 'Προεπιλεγμένη Ποσότητα',
       'default_quantity_help': 'Αυτόματος ορισμός της ποσότητας γραμμής σε ένα',
       'one_tax_rate': 'Ένα Ποσοστό Φόρου',
@@ -16630,7 +16639,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'dropdown': 'Πτυσώμενο',
       'field_type': 'Τύπος Πεδίου',
       'recover_password_email_sent':
-          'Ένα email ανάκτησης κωδικού έχει αποσταλεί',
+      'Ένα email ανάκτησης κωδικού έχει αποσταλεί',
       'submit': 'Υποβολή',
       'recover_password': 'Ανάκτηση του κωδικού  πρόσβασής σας',
       'late_fees': 'Καθυστερούμενα Τέλη',
@@ -16652,7 +16661,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'filtered_by_user': 'Φιλτράρισμα από το Χρήστη',
       'administrator': 'Διαχειριστής',
       'administrator_help':
-          'Επιτρέψτε στο χρήστη να διαχειρίζεται χρήστες, να αλλάζει ρυθμίσεις και να τροποποιεί όλες τις εγγραφές',
+      'Επιτρέψτε στο χρήστη να διαχειρίζεται χρήστες, να αλλάζει ρυθμίσεις και να τροποποιεί όλες τις εγγραφές',
       'user_management': 'Διαχειριση Χρηστών',
       'users': 'Χρήστες',
       'new_user': 'Νέος Χρήστης',
@@ -16667,10 +16676,10 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'invoice_options': 'Επιλογές Τιμολογίου',
       'hide_paid_to_date': 'Απόκρυψη Εξοφλημένου Ποσού',
       'hide_paid_to_date_help':
-          'Εμφάνιση πεδίου \"Εξοφλημένο Ποσό\" μόνο στο παραστατικό όταν ληφθεί μια πληρωμή.',
+      'Εμφάνιση πεδίου \"Εξοφλημένο Ποσό\" μόνο στο παραστατικό όταν ληφθεί μια πληρωμή.',
       'invoice_embed_documents': 'Ενσωματωμένα Έγγραφα',
       'invoice_embed_documents_help':
-          'Συμπεριλάβετε τις συνημμένες εικόνες στο τιμολόγιο',
+      'Συμπεριλάβετε τις συνημμένες εικόνες στο τιμολόγιο',
       'all_pages_header': 'Εμφάνιση Κεφαλίδας',
       'all_pages_footer': 'Εμφάνιση Υποσέλιδου',
       'first_page': 'Πρώτη σελίδα',
@@ -16691,16 +16700,16 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'quote_footer': 'Υποσέλιδο Προσφοράς',
       'auto_email_invoice': 'Αυτόματο Email',
       'auto_email_invoice_help':
-          'Αυτόματη αποστολή επαναλαμβανόμενων τιμολογίων με email όταν δημιουργηθούν.',
+      'Αυτόματη αποστολή επαναλαμβανόμενων τιμολογίων με email όταν δημιουργηθούν.',
       'auto_archive_invoice': 'Αυτόματη Αρχειοθέτηση',
       'auto_archive_invoice_help':
-          'Αυτόματη αρχειοθέτηση τιμολογίων όταν εξοφληθούν.',
+      'Αυτόματη αρχειοθέτηση τιμολογίων όταν εξοφληθούν.',
       'auto_archive_quote': 'Αυτόματη Αρχειοθέτηση',
       'auto_archive_quote_help':
-          'Αυτόματη αρχειοθέτηση προσφορών όταν μετατραπούν.',
+      'Αυτόματη αρχειοθέτηση προσφορών όταν μετατραπούν.',
       'auto_convert_quote': 'Αυτόματη Μετατροπή',
       'auto_convert_quote_help':
-          'Αυτόματη μετατροπή της προσφοράς σε τιμολόγιο μόλις γίνει αποδεκτή από τον πελάτη.',
+      'Αυτόματη μετατροπή της προσφοράς σε τιμολόγιο μόλις γίνει αποδεκτή από τον πελάτη.',
       'workflow_settings': 'Ρυθμίσεις Ροής Εργασιών',
       'freq_daily': 'Ημερήσιο',
       'freq_weekly': 'Εβδομάδα',
@@ -16746,27 +16755,27 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'custom_javascript': 'Προσαρμοσμένη JavaScript',
       'signature_on_pdf': 'Εμφάνισε στο PDF',
       'signature_on_pdf_help':
-          'Εμφάνισε την υπογραφή του πελάτη στο PDF του τιμολογίου/προσφοράς.',
+      'Εμφάνισε την υπογραφή του πελάτη στο PDF του τιμολογίου/προσφοράς.',
       'show_accept_invoice_terms': 'Κουτάκι Όρων Τιμολογίου',
       'show_accept_invoice_terms_help':
-          'Απαίτηση από τον πελάτη να αποδεχθεί τους όρους του τιμολογίου',
+      'Απαίτηση από τον πελάτη να αποδεχθεί τους όρους του τιμολογίου',
       'show_accept_quote_terms': 'Κουτάκι Όρων Προσφοράς',
       'show_accept_quote_terms_help':
-          'Απαίτηση από τον πελάτη να αποδεχθεί τους όρους της προσφοράς',
+      'Απαίτηση από τον πελάτη να αποδεχθεί τους όρους της προσφοράς',
       'require_invoice_signature': 'Υπογραφή Τιμολογίου',
       'require_invoice_signature_help':
-          'Απαίτηση από τον πελάτη να συμπληρώσει την υπογραφή του.',
+      'Απαίτηση από τον πελάτη να συμπληρώσει την υπογραφή του.',
       'require_quote_signature': 'Υπογραφή Προσφοράς',
       'enable_portal_password': 'Προστασία Τιμολογίων με Κωδικό Πρόσβασης',
       'enable_portal_password_help':
-          'Επιτρέπει τον καθορισμό κωδικού πρόσβασης για κάθε επαφή. Αν έχει καθοριστεί κωδικός, η επαφή θα υποχρεούται να καταχωρήσει κωδικό πριν την προβολή των τιμολογίων.',
+      'Επιτρέπει τον καθορισμό κωδικού πρόσβασης για κάθε επαφή. Αν έχει καθοριστεί κωδικός, η επαφή θα υποχρεούται να καταχωρήσει κωδικό πριν την προβολή των τιμολογίων.',
       'authorization': 'Εξουσιοδότηση',
       'subdomain': 'Υποτομέας',
       'domain': 'Domain',
       'portal_mode': 'Portal Mode',
       'email_signature': 'Με εκτίμηση,',
       'enable_email_markup_help':
-          'Κάντε τη διαδικασία πληρωμής πιο εύκολη για τους πελάτες σας προσθέτοντας σήμανση από το schema.org στα emails σας.',
+      'Κάντε τη διαδικασία πληρωμής πιο εύκολη για τους πελάτες σας προσθέτοντας σήμανση από το schema.org στα emails σας.',
       'plain': 'Απλό',
       'light': 'Ανοιχτό',
       'dark': 'Σκούρο',
@@ -16795,12 +16804,12 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'accepted_card_logos': 'Λογότυπα Αποδεκτών Καρτών',
       'credentials': 'Στοιχεία εισόδου',
       'require_billing_address_help':
-          'Απαίτηση από τον πελάτη να συμπληρώσει τη διεύθυνση τιμολόγησης',
+      'Απαίτηση από τον πελάτη να συμπληρώσει τη διεύθυνση τιμολόγησης',
       'require_shipping_address_help':
-          'Απαίτηση από τον πελάτη να εισάγει την διεύθυνση αποστολής του',
+      'Απαίτηση από τον πελάτη να εισάγει την διεύθυνση αποστολής του',
       'update_address': 'Ενημέρωση Διεύθυνσης',
       'update_address_help':
-          'Ενημέρωση της διεύθυνσης του πελάτη με τα παρεχόμενα στοιχεία',
+      'Ενημέρωση της διεύθυνσης του πελάτη με τα παρεχόμενα στοιχεία',
       'rate': 'Ποσοστό',
       'tax_rate': 'Ποσοστό Φόρου',
       'new_tax_rate': 'Νέο Ποσοστό Φόρου',
@@ -16812,13 +16821,13 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'restored_tax_rate': 'Επιτυχής ανάκτηση ποσοστού φόρου',
       'fill_products': 'Αυτόματη συμπλήρωση προϊόντων',
       'fill_products_help':
-          'Επιλέγοντας ένα προϊόν, αυτόματα <b>θα συμπληρωθεί η περιγραφή και η αξία</b>',
+      'Επιλέγοντας ένα προϊόν, αυτόματα <b>θα συμπληρωθεί η περιγραφή και η αξία</b>',
       'update_products': 'Αυτόματη ενημέρωση προϊόντων',
       'update_products_help':
-          'Ενημερώνοντας ένα τιμολόγιο, αυτόματα <b>θα ενημερωθεί και η βιβλιοθήκη προϊόντων</b>',
+      'Ενημερώνοντας ένα τιμολόγιο, αυτόματα <b>θα ενημερωθεί και η βιβλιοθήκη προϊόντων</b>',
       'convert_products': 'Μετατροπή Τιμών Προϊόντων',
       'convert_products_help':
-          'Αυτόματη μετατροπή τιμών προϊόντων στο νόμισμα συναλλαγών του πελάτη',
+      'Αυτόματη μετατροπή τιμών προϊόντων στο νόμισμα συναλλαγών του πελάτη',
       'fees': 'Τέλη',
       'limits': 'Όρια',
       'provider': 'Provider',
@@ -16829,7 +16838,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'created_company_gateway': 'Επιτυχής δημιουργία πύλης πληρωμών (Gateway)',
       'updated_company_gateway': 'Επιτυχής ενημέρωση πύλης πληρωμών (Gateway)',
       'archived_company_gateway':
-          'Επιτυχής αρχειοθέτηση πύλης πληρωμών (Gateway)',
+      'Επιτυχής αρχειοθέτηση πύλης πληρωμών (Gateway)',
       'deleted_company_gateway': 'Επιτυχής διαγραφή πύλης πληρωμών (Gateway)',
       'restored_company_gateway': 'Επιτυχής επαναφορά πύλης πληρωμών (Gateway)',
       'continue_editing': 'Συνεχίστε την Επεξεργασία',
@@ -16919,7 +16928,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'please_enter_a_first_name': 'Παρακαλούμε εισάγετε μικρό όνομα',
       'please_enter_a_last_name': 'Παρακαλούμε εισάγετε επώνυμο',
       'please_agree_to_terms_and_privacy':
-          'Παρακαλούμε συμφωνήστε με τους όρους χρήσης και την πολιτική απορρήτου για να δημιουργήσετε ένα λογαριασμό.',
+      'Παρακαλούμε συμφωνήστε με τους όρους χρήσης και την πολιτική απορρήτου για να δημιουργήσετε ένα λογαριασμό.',
       'i_agree_to_the': 'Συμφωνώ με το',
       'terms_of_service_link': 'όροι της υπηρεσίας',
       'privacy_policy_link': 'πολιτική απορρήτου',
@@ -17011,7 +17020,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'restored_project': 'Επιτυχής ανάκτηση project',
       'new_project': 'Νέο Project',
       'thank_you_for_using_our_app':
-          'Ευχαριστούμε που χρησιμοποιήσατε την εφαρμογή μας!',
+      'Ευχαριστούμε που χρησιμοποιήσατε την εφαρμογή μας!',
       'if_you_like_it': 'Εάν σας αρέσει παρακαλούμε',
       'click_here': 'πατήστε εδώ',
       'click_here_capital': 'Πατήστε εδώ',
@@ -17019,7 +17028,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'average': 'Μέσος όρος',
       'unapproved': 'Μη εγκεκριμένη',
       'authenticate_to_change_setting':
-          'Παρακαλούμε αυθεντικοποιήστε για να αλλάξετε αυτή τη ρύθμιση',
+      'Παρακαλούμε αυθεντικοποιήστε για να αλλάξετε αυτή τη ρύθμιση',
       'locked': 'Κλειδωμένη',
       'authenticate': 'Αυθεντικοποιήστε',
       'please_authenticate': 'Παρακαλούμε αυθεντικοποιήστε',
@@ -17093,7 +17102,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'refresh_complete': 'Ανανέωση Ολοκληρώθηκε',
       'please_enter_your_email': 'Παρακαλώ εισάγετε το email σας',
       'please_enter_your_password':
-          'Παρακαλώ εισάγετε τον κωδικό πρόσβασής σας',
+      'Παρακαλώ εισάγετε τον κωδικό πρόσβασής σας',
       'please_enter_your_url': 'Παρακαλώ εισάγετε το URL σας',
       'please_enter_a_product_key': 'Παρακαλώ εισάγετε το κλειδί προϊόντος σας',
       'ascending': 'Αύξουσα σειρά',
@@ -17205,7 +17214,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'updated_at': 'Ενημερώθηκε',
       'tax': 'Φόρος',
       'please_enter_an_invoice_number':
-          'Παρακαλώ εισάγετε ένα αριθμό τιμολογίου',
+      'Παρακαλώ εισάγετε ένα αριθμό τιμολογίου',
       'please_enter_a_quote_number': 'Παρακαλώ εισάγετε ένα αριθμό προσφοράς',
       'past_due': 'Ληγμένα',
       'draft': 'Πρόχειρο',
@@ -17221,10 +17230,10 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'marked_invoices_as_paid': 'Successfully marked invoices as paid',
       'done': 'Έτοιμο',
       'please_enter_a_client_or_contact_name':
-          'Παρακαλώ εισάγετε ένα πελάτη ή το όνομα μίας επαφής',
+      'Παρακαλώ εισάγετε ένα πελάτη ή το όνομα μίας επαφής',
       'dark_mode': 'Σκοτεινό Περιβάλλον',
       'restart_app_to_apply_change':
-          'Επανεκκινήστε την εφαρμογή για να εφαρμόσετε την αλλαγή',
+      'Επανεκκινήστε την εφαρμογή για να εφαρμόσετε την αλλαγή',
       'refresh_data': 'Ανανέωση Δεδομένων',
       'blank_contact': 'Κενή Επαφή',
       'activity': 'Δραστηριότητα',
@@ -17300,13 +17309,13 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'activity_4': 'Ο χρήστης :user δημιούργησε το τιμολόγιο :invoice',
       'activity_5': 'Ο χρήστης :user ενημέρωσε το τιμολόγιο :invoice',
       'activity_6':
-          'Ο χρήστης :user έστειλε με email το τιμολόγιο :invoice για τον πελάτη :client στην επαφή :contact',
+      'Ο χρήστης :user έστειλε με email το τιμολόγιο :invoice για τον πελάτη :client στην επαφή :contact',
       'activity_7':
-          'Η επαφή :contact είδε το τιμολόγιο :invoice για τον πελάτη :client',
+      'Η επαφή :contact είδε το τιμολόγιο :invoice για τον πελάτη :client',
       'activity_8': 'Ο χρήστης :user αρχειοθέτησε το τιμολόγιο :invoice',
       'activity_9': 'Ο χρήστης :user διέγραψε το τιμολόγιο :invoice',
       'activity_10':
-          'Η επαφή :contact καταχώρησε την πληρωμή ποσού :payment_amount για το τιμολόγιο :invoice για τον πελάτη :client',
+      'Η επαφή :contact καταχώρησε την πληρωμή ποσού :payment_amount για το τιμολόγιο :invoice για τον πελάτη :client',
       'activity_11': 'Ο χρήστης :user ενημέρωσε την πληρωμή :payment',
       'activity_12': 'Ο χρήστης :user αρχειοθέτησε την πληρωμή :payment',
       'activity_13': 'Ο χρήστης :user διέγραψε την πληρωμή :payment',
@@ -17317,7 +17326,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'activity_18': 'Ο χρήστης :user δημιουργησε την προσφορά :quote',
       'activity_19': 'Ο χρήστης :user ενημέρωσε την προσφορά :quote',
       'activity_20':
-          'Ο χρήστης :user έστειλε με email την προσφορά :quote για τον πελάτη :client στην επαφή :contact',
+      'Ο χρήστης :user έστειλε με email την προσφορά :quote για τον πελάτη :client στην επαφή :contact',
       'activity_21': 'Η επαφή :contact είδε την προσφορά :quote',
       'activity_22': 'Ο χρήστης :user αρχειοθέτησε την προσφορά :quote',
       'activity_23': 'Ο χρήστης :user διέγραψε την προσφορά :quote',
@@ -17327,7 +17336,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'activity_27': 'Ο χρήστης :user επανέφερε την πληρωμή :payment',
       'activity_28': 'Ο χρήστης :user επανέφερε την πίστωση :credit',
       'activity_29':
-          'Η επαφή :contact αποδέχτηκε την προσφορά :quote για τον πελάτη :client',
+      'Η επαφή :contact αποδέχτηκε την προσφορά :quote για τον πελάτη :client',
       'activity_30': 'Ο χρήστης :user δημιούργησε τον προμηθευτή :vendor',
       'activity_31': 'Ο χρήστης :user αρχειοθέτησε τον προμηθευτή :vendor',
       'activity_32': 'Ο χρήστης :user διέγραψε τον προμηθευτή :vendor',
@@ -17338,7 +17347,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'activity_37': 'Ο χρήστης :user επανέφερε τη δαπάνη :expense',
       'activity_39': ':user ακύρωσε :payment_amount πληρωμής :payment',
       'activity_40':
-          ':user επέστρεψε :adjustment μιας :payment_amount πληρωμής :payment',
+      ':user επέστρεψε :adjustment μιας :payment_amount πληρωμής :payment',
       'activity_41': ':payment_amount πληρωμής (:payment) απέτυχε',
       'activity_42': 'Ο χρήστης :user δημιούργησε την εργασία :task',
       'activity_43': 'Ο χρήστης :user ενημέρωσε την εργασία :task',
@@ -17350,17 +17359,17 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'activity_49': 'Ο χρήστης :user έκλεισε το αίτημα υποστήριξης :ticket',
       'activity_50': 'Ο χρήστης :user συνένωσε το αίτημα υποστήριξης :ticket',
       'activity_51':
-          'Ο χρήστης :user διαίρεσε στα δύο το αίτημα υποστήριξης :ticket',
+      'Ο χρήστης :user διαίρεσε στα δύο το αίτημα υποστήριξης :ticket',
       'activity_52':
-          'Η επαφή :contact δημιούργησε το αίτημα υποστήριξης :ticket',
+      'Η επαφή :contact δημιούργησε το αίτημα υποστήριξης :ticket',
       'activity_53':
-          'Η επαφή :contact επαναδημιούργησε το αίτημα υποστήριξης :ticket',
+      'Η επαφή :contact επαναδημιούργησε το αίτημα υποστήριξης :ticket',
       'activity_54':
-          'Ο χρήστης :user επαναδημιούργησε το αίτημα υποστήριξης :ticket',
+      'Ο χρήστης :user επαναδημιούργησε το αίτημα υποστήριξης :ticket',
       'activity_55': 'Η επαφή :contact απάντησε στο αίτημα υποστήριξης :ticket',
       'activity_56': 'Ο χρήστης :user είδε το αίτημα υποστήριξης :ticket',
       'activity_57':
-          'Το σύστημα απέτυχε να στείλει με email το τιμολόγιο :invoice',
+      'Το σύστημα απέτυχε να στείλει με email το τιμολόγιο :invoice',
       'activity_58': ':user reversed invoice :invoice',
       'activity_59': ':user cancelled invoice :invoice',
       'one_time_password': 'Κωδικός Πρόσβασης μίας Φοράς',
@@ -17379,11 +17388,11 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'email_style_custom': 'Προσαρμοσμένο Στυλ Email',
       'custom_message_dashboard': 'Προσαρμοσμένο Μήνυμα Πίνακα Διαχείρισης',
       'custom_message_unpaid_invoice':
-          'Προσαρμοσμένο Μήνυμα Ανεξόφλητου Τιμολογίου',
+      'Προσαρμοσμένο Μήνυμα Ανεξόφλητου Τιμολογίου',
       'custom_message_paid_invoice':
-          'Προσαρμοσμένο Μήνυμα Εξοφλημένου Τιμολογίου',
+      'Προσαρμοσμένο Μήνυμα Εξοφλημένου Τιμολογίου',
       'custom_message_unapproved_quote':
-          'Προσαρμοσμένο Μήνυμα Μη Εγκεκριμένη Προσφοράς',
+      'Προσαρμοσμένο Μήνυμα Μη Εγκεκριμένη Προσφοράς',
       'lock_sent_invoices': 'Κλείδωμα Απεσταλένων Τιμολογίων',
       'translations': 'Μεταφράσεις',
       'task_number_pattern': 'Μοτίβο Αρίθμησης Εργασίας',
@@ -17407,7 +17416,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'reset_counter_date': 'Μηδενισμός Μετρητή Ημερομηνίας',
       'counter_padding': 'Αντισταθμιστής',
       'shared_invoice_quote_counter':
-          'Κοινόχρηστο παράθυρο παραγγελίας τιμολογίου',
+      'Κοινόχρηστο παράθυρο παραγγελίας τιμολογίου',
       'default_tax_name_1': 'Προεπιλεγμένη ονομασία φορολογικού συντελεστή 1',
       'default_tax_rate_1': 'Προεπιλεγμένος φορολογικός συντελεστής 1',
       'default_tax_name_2': 'Προεπιλεγμένη ονομασία φορολογικού συντελεστή 2',
@@ -17499,23 +17508,23 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'hide_menu': 'Hide Menu',
       'show_menu': 'Show Menu',
       'partially_refunded': 'Partially Refunded',
-      'search_documents': 'Search Documents',
-      'search_designs': 'Search Designs',
-      'search_invoices': 'Search Invoices',
-      'search_clients': 'Search Clients',
-      'search_products': 'Search Products',
-      'search_quotes': 'Search Quotes',
-      'search_credits': 'Search Credits',
-      'search_vendors': 'Search Vendors',
-      'search_users': 'Search Users',
-      'search_tax_rates': 'Search Tax Rates',
-      'search_tasks': 'Search Tasks',
-      'search_settings': 'Search Settings',
-      'search_projects': 'Search Projects',
-      'search_expenses': 'Search Expenses',
-      'search_payments': 'Search Payments',
-      'search_groups': 'Search Groups',
-      'search_company': 'Search Company',
+      'search_documents': 'Search :count Documents',
+      'search_designs': 'Search :count Designs',
+      'search_invoices': 'Search :count Invoices',
+      'search_clients': 'Search :count Clients',
+      'search_products': 'Search :count Products',
+      'search_quotes': 'Search :count Quotes',
+      'search_credits': 'Search :count Credits',
+      'search_vendors': 'Search :count Vendors',
+      'search_users': 'Search :count Users',
+      'search_tax_rates': 'Search :count Tax Rates',
+      'search_tasks': 'Search :count Tasks',
+      'search_settings': 'Search :count Settings',
+      'search_projects': 'Search :count Projects',
+      'search_expenses': 'Search :count Expenses',
+      'search_payments': 'Search :count Payments',
+      'search_groups': 'Search :count Groups',
+      'search_company': 'Search :count Company',
       'refund_payment': 'Rimborsa Pagamento',
       'cancelled_invoice': 'Successfully cancelled invoice',
       'cancelled_invoices': 'Successfully cancelled invoices',
@@ -17534,7 +17543,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'purge_data': 'Purge Data',
       'purge_successful': 'Successfully purged company data',
       'purge_data_message':
-          'Warning: This will permanently erase your data, there is no undo.',
+      'Warning: This will permanently erase your data, there is no undo.',
       'invoice_balance': 'Invoice Balance',
       'age_group_0': '0 - 30 Giorni',
       'age_group_30': '30 - 60 Giorni',
@@ -17569,10 +17578,10 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'apply_license': 'Apply License',
       'cancel_account': 'Elimina l\'account',
       'cancel_account_message':
-          'Attenzione: Questo eliminerà permanentemente il tuo account, non si potrà più tornare indietro.',
+      'Attenzione: Questo eliminerà permanentemente il tuo account, non si potrà più tornare indietro.',
       'delete_company': 'Delete Company',
       'delete_company_message':
-          'Warning: This will permanently delete your company, there is no undo.',
+      'Warning: This will permanently delete your company, there is no undo.',
       'enable_modules': 'Enable Modules',
       'converted_quote': 'Successfully converted quote',
       'credit_design': 'Credit Design',
@@ -17724,12 +17733,12 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'applied': 'Applied',
       'include_recent_errors': 'Include recent errors from the logs',
       'your_message_has_been_received':
-          'We have received your message and will try to respond promptly.',
+      'We have received your message and will try to respond promptly.',
       'message': 'Messaggio',
       'from': 'Da',
       'show_product_details': 'Show Product Details',
       'show_product_details_help':
-          'Include the description and cost in the product dropdown',
+      'Include the description and cost in the product dropdown',
       'pdf_min_requirements': 'The PDF renderer requires :version',
       'adjust_fee_percent': 'Adjust Fee Percent',
       'adjust_fee_percent_help': 'Adjust percent to account for fee',
@@ -17746,7 +17755,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'domain_url': 'Domain URL',
       'password_is_too_short': 'La parola chiave è troppo corta',
       'password_is_too_easy':
-          'Password must contain an upper case character and a number',
+      'Password must contain an upper case character and a number',
       'client_portal_tasks': 'Client Portal Tasks',
       'client_portal_dashboard': 'Client Portal Dashboard',
       'please_enter_a_value': 'Please enter a value',
@@ -17773,16 +17782,16 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'third_custom': 'Third Custom',
       'show_cost': 'Show Cost',
       'show_cost_help':
-          'Display a product cost field to track the markup/profit',
+      'Display a product cost field to track the markup/profit',
       'show_product_quantity': 'Show Product Quantity',
       'show_product_quantity_help':
-          'Display a product quantity field, otherwise default to one',
+      'Display a product quantity field, otherwise default to one',
       'show_invoice_quantity': 'Show Invoice Quantity',
       'show_invoice_quantity_help':
-          'Display a line item quantity field, otherwise default to one',
+      'Display a line item quantity field, otherwise default to one',
       'default_quantity': 'Default Quantity',
       'default_quantity_help':
-          'Automatically set the line item quantity to one',
+      'Automatically set the line item quantity to one',
       'one_tax_rate': 'One Tax Rate',
       'two_tax_rates': 'Two Tax Rates',
       'three_tax_rates': 'Three Tax Rates',
@@ -17827,7 +17836,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'filtered_by_user': 'Filtered by User',
       'administrator': 'Administrator',
       'administrator_help':
-          'Allow user to manage users, change settings and modify all records',
+      'Allow user to manage users, change settings and modify all records',
       'user_management': 'Gestione utente',
       'users': 'Utenti',
       'new_user': 'New User',
@@ -17842,7 +17851,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'invoice_options': 'Opzioni Fattura',
       'hide_paid_to_date': 'Nascondi la data di pagamento',
       'hide_paid_to_date_help':
-          'Visualizza l\'area \"Pagato alla data\" sulle fatture solo dopo aver ricevuto un pagamento.',
+      'Visualizza l\'area \"Pagato alla data\" sulle fatture solo dopo aver ricevuto un pagamento.',
       'invoice_embed_documents': 'Embed Documents',
       'invoice_embed_documents_help': 'Includi immagini allegate alla fattura.',
       'all_pages_header': 'Mostra l\'Intestazione nel',
@@ -17865,16 +17874,16 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'quote_footer': 'Piè di Pagina Preventivi',
       'auto_email_invoice': 'Auto Email',
       'auto_email_invoice_help':
-          'Invia automaticamente per email le fatture ricorrenti quando vengono create.',
+      'Invia automaticamente per email le fatture ricorrenti quando vengono create.',
       'auto_archive_invoice': 'Auto Archive',
       'auto_archive_invoice_help':
-          'Automatically archive invoices when they are paid.',
+      'Automatically archive invoices when they are paid.',
       'auto_archive_quote': 'Auto Archive',
       'auto_archive_quote_help':
-          'Automatically archive quotes when they are converted.',
+      'Automatically archive quotes when they are converted.',
       'auto_convert_quote': 'Conversione automatica',
       'auto_convert_quote_help':
-          'Converti automaticamente un preventivo in una fattura se approvato da un cliente.',
+      'Converti automaticamente un preventivo in una fattura se approvato da un cliente.',
       'workflow_settings': 'Workflow Settings',
       'freq_daily': 'Giornaliero',
       'freq_weekly': 'Settimanale',
@@ -17920,27 +17929,27 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'custom_javascript': 'Custom JavaScript',
       'signature_on_pdf': 'Show on PDF',
       'signature_on_pdf_help':
-          'Show the client signature on the invoice/quote PDF.',
+      'Show the client signature on the invoice/quote PDF.',
       'show_accept_invoice_terms': 'Invoice Terms Checkbox',
       'show_accept_invoice_terms_help':
-          'Setta come obbligatoria l\'accettazione dei termini della fattura.',
+      'Setta come obbligatoria l\'accettazione dei termini della fattura.',
       'show_accept_quote_terms': 'Quote Terms Checkbox',
       'show_accept_quote_terms_help':
-          'Setta come obbligatoria l\'accettazione dei termini del preventivo.',
+      'Setta come obbligatoria l\'accettazione dei termini del preventivo.',
       'require_invoice_signature': 'Firma Fattura',
       'require_invoice_signature_help':
-          'Richiedi al cliente di firmare la fattura.',
+      'Richiedi al cliente di firmare la fattura.',
       'require_quote_signature': 'Firma Bozza',
       'enable_portal_password': 'Fatture Protette da Password',
       'enable_portal_password_help':
-          'Allows you to set a password for each contact. If a password is set, the contact will be required to enter a password before viewing invoices.',
+      'Allows you to set a password for each contact. If a password is set, the contact will be required to enter a password before viewing invoices.',
       'authorization': 'Autorizzazione',
       'subdomain': 'Sottodominio',
       'domain': 'Dominio',
       'portal_mode': 'Portal Mode',
       'email_signature': 'Distinti saluti,',
       'enable_email_markup_help':
-          'Make it easier for your clients to pay you by adding schema.org markup to your emails.',
+      'Make it easier for your clients to pay you by adding schema.org markup to your emails.',
       'plain': 'Plain',
       'light': 'Light',
       'dark': 'Dark',
@@ -17969,12 +17978,12 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'accepted_card_logos': 'Accepted Card Logos',
       'credentials': 'Credentials',
       'require_billing_address_help':
-          'Require client to provide their billing address',
+      'Require client to provide their billing address',
       'require_shipping_address_help':
-          'Require client to provide their shipping address',
+      'Require client to provide their shipping address',
       'update_address': 'Aggiorna indirizzo',
       'update_address_help':
-          'Aggiorna l\'indirizzo del cliente con i dettagli forniti',
+      'Aggiorna l\'indirizzo del cliente con i dettagli forniti',
       'rate': 'Aliquota',
       'tax_rate': 'Tax Rate',
       'new_tax_rate': 'New Tax Rate',
@@ -17986,13 +17995,13 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'restored_tax_rate': 'Successfully restored tax rate',
       'fill_products': 'Riempimento automatico prodotti',
       'fill_products_help':
-          'Selezionare un prodotto farà automaticamente <b>inserire la descrizione ed il costo</b>',
+      'Selezionare un prodotto farà automaticamente <b>inserire la descrizione ed il costo</b>',
       'update_products': 'Aggiorna automaticamente i prodotti',
       'update_products_help':
-          'Aggiornare una fatura farà automaticamente <b>aggiornare i prodotti</b>',
+      'Aggiornare una fatura farà automaticamente <b>aggiornare i prodotti</b>',
       'convert_products': 'Convert Products',
       'convert_products_help':
-          'Automatically convert product prices to the client\'s currency',
+      'Automatically convert product prices to the client\'s currency',
       'fees': 'Commissioni',
       'limits': 'Limiti',
       'provider': 'Provider',
@@ -18092,7 +18101,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'please_enter_a_first_name': 'Please enter a first name',
       'please_enter_a_last_name': 'Please enter a last name',
       'please_agree_to_terms_and_privacy':
-          'Please agree to the terms of service and privacy policy to create an account.',
+      'Please agree to the terms of service and privacy policy to create an account.',
       'i_agree_to_the': 'I agree to the',
       'terms_of_service_link': 'terms of service',
       'privacy_policy_link': 'privacy policy',
@@ -18154,7 +18163,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'running': 'In corso',
       'resume': 'Riprendi',
       'task_errors':
-          'Si prega di correggere eventuali tempi di sovrapposizione',
+      'Si prega di correggere eventuali tempi di sovrapposizione',
       'start': 'Inizia',
       'stop': 'Ferma',
       'started_task': 'Attività iniziata con successo',
@@ -18192,7 +18201,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'average': 'Average',
       'unapproved': 'non approvato',
       'authenticate_to_change_setting':
-          'Please authenticate to change this setting',
+      'Please authenticate to change this setting',
       'locked': 'Locked',
       'authenticate': 'Authenticate',
       'please_authenticate': 'Please authenticate',
@@ -18392,7 +18401,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'marked_invoices_as_paid': 'Successfully marked invoices as paid',
       'done': 'Fatto',
       'please_enter_a_client_or_contact_name':
-          'Please enter a client or contact name',
+      'Please enter a client or contact name',
       'dark_mode': 'Modalità scura',
       'restart_app_to_apply_change': 'Restart the app to apply the change',
       'refresh_data': 'Refresh Data',
@@ -18470,12 +18479,12 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'activity_4': ':user ha creato la fattura :invoice',
       'activity_5': ':user ha aggiornato la fattura :invoice',
       'activity_6':
-          ':user ha inviato per email la fattura :invoice per:client a :contact',
+      ':user ha inviato per email la fattura :invoice per:client a :contact',
       'activity_7': ':contact ha visualizzato la fattura :invoice per :client',
       'activity_8': ':user ha archiviato la fattura :invoice',
       'activity_9': ':user ha cancellato la fattura :invoice',
       'activity_10':
-          ':contact ha registrato il pagamento :payment di :payment_amount sulla fattura :invoice per :client',
+      ':contact ha registrato il pagamento :payment di :payment_amount sulla fattura :invoice per :client',
       'activity_11': ':user ha aggiornato il pagamento :payment',
       'activity_12': ':user ha archiviato il pagamento :payment',
       'activity_13': ':user ha cancellato il pagamento :payment',
@@ -18486,7 +18495,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'activity_18': ':user created quote :quote',
       'activity_19': ':user updated quote :quote',
       'activity_20':
-          ':user ha inviato per email il preventivo :quote per :client a :contact',
+      ':user ha inviato per email il preventivo :quote per :client a :contact',
       'activity_21': ':contact ha visto il preventivo :quote',
       'activity_22': ':user archived quote :quote',
       'activity_23': ':user deleted quote :quote',
@@ -18505,9 +18514,9 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'activity_36': 'L\'utente :user ha eliminato la spesa :expense',
       'activity_37': 'L\'utente :user ha ripristinato la spesa :expense',
       'activity_39':
-          ':user ha annullato un pagamento :payment da :payment_amount',
+      ':user ha annullato un pagamento :payment da :payment_amount',
       'activity_40':
-          ':user ha rimborsato :adjustment di un pagamento :payment da :payment_amount',
+      ':user ha rimborsato :adjustment di un pagamento :payment da :payment_amount',
       'activity_41': 'pagamento di :payment_amount (:payment) fallito',
       'activity_42': 'L\'utente :user ha creato l\'attività :task',
       'activity_43': 'L\'utente :user ha aggiornato l\'attività :task',
@@ -18659,23 +18668,23 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'hide_menu': 'Hide Menu',
       'show_menu': 'Show Menu',
       'partially_refunded': 'Partially Refunded',
-      'search_documents': 'Search Documents',
-      'search_designs': 'Search Designs',
-      'search_invoices': 'Search Invoices',
-      'search_clients': 'Search Clients',
-      'search_products': 'Search Products',
-      'search_quotes': 'Search Quotes',
-      'search_credits': 'Search Credits',
-      'search_vendors': 'Search Vendors',
-      'search_users': 'Search Users',
-      'search_tax_rates': 'Search Tax Rates',
-      'search_tasks': 'Search Tasks',
-      'search_settings': 'Search Settings',
-      'search_projects': 'Search Projects',
-      'search_expenses': 'Search Expenses',
-      'search_payments': 'Search Payments',
-      'search_groups': 'Search Groups',
-      'search_company': 'Search Company',
+      'search_documents': 'Search :count Documents',
+      'search_designs': 'Search :count Designs',
+      'search_invoices': 'Search :count Invoices',
+      'search_clients': 'Search :count Clients',
+      'search_products': 'Search :count Products',
+      'search_quotes': 'Search :count Quotes',
+      'search_credits': 'Search :count Credits',
+      'search_vendors': 'Search :count Vendors',
+      'search_users': 'Search :count Users',
+      'search_tax_rates': 'Search :count Tax Rates',
+      'search_tasks': 'Search :count Tasks',
+      'search_settings': 'Search :count Settings',
+      'search_projects': 'Search :count Projects',
+      'search_expenses': 'Search :count Expenses',
+      'search_payments': 'Search :count Payments',
+      'search_groups': 'Search :count Groups',
+      'search_company': 'Search :count Company',
       'refund_payment': 'Refund Payment',
       'cancelled_invoice': 'Successfully cancelled invoice',
       'cancelled_invoices': 'Successfully cancelled invoices',
@@ -18694,7 +18703,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'purge_data': 'Purge Data',
       'purge_successful': 'Successfully purged company data',
       'purge_data_message':
-          'Warning: This will permanently erase your data, there is no undo.',
+      'Warning: This will permanently erase your data, there is no undo.',
       'invoice_balance': 'Invoice Balance',
       'age_group_0': '0 - 30 Days',
       'age_group_30': '30 - 60 Days',
@@ -18729,10 +18738,10 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'apply_license': 'Apply License',
       'cancel_account': 'アカウントのキャンセル',
       'cancel_account_message':
-          'Warning: This will permanently delete your account, there is no undo.',
+      'Warning: This will permanently delete your account, there is no undo.',
       'delete_company': 'Delete Company',
       'delete_company_message':
-          'Warning: This will permanently delete your company, there is no undo.',
+      'Warning: This will permanently delete your company, there is no undo.',
       'enable_modules': 'Enable Modules',
       'converted_quote': 'Successfully converted quote',
       'credit_design': 'Credit Design',
@@ -18884,12 +18893,12 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'applied': 'Applied',
       'include_recent_errors': 'Include recent errors from the logs',
       'your_message_has_been_received':
-          'We have received your message and will try to respond promptly.',
+      'We have received your message and will try to respond promptly.',
       'message': 'メッセージ',
       'from': 'From',
       'show_product_details': 'Show Product Details',
       'show_product_details_help':
-          'Include the description and cost in the product dropdown',
+      'Include the description and cost in the product dropdown',
       'pdf_min_requirements': 'The PDF renderer requires :version',
       'adjust_fee_percent': 'Adjust Fee Percent',
       'adjust_fee_percent_help': 'Adjust percent to account for fee',
@@ -18906,7 +18915,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'domain_url': 'Domain URL',
       'password_is_too_short': 'Password is too short',
       'password_is_too_easy':
-          'Password must contain an upper case character and a number',
+      'Password must contain an upper case character and a number',
       'client_portal_tasks': 'Client Portal Tasks',
       'client_portal_dashboard': 'Client Portal Dashboard',
       'please_enter_a_value': 'Please enter a value',
@@ -18933,16 +18942,16 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'third_custom': 'Third Custom',
       'show_cost': 'Show Cost',
       'show_cost_help':
-          'Display a product cost field to track the markup/profit',
+      'Display a product cost field to track the markup/profit',
       'show_product_quantity': 'Show Product Quantity',
       'show_product_quantity_help':
-          'Display a product quantity field, otherwise default to one',
+      'Display a product quantity field, otherwise default to one',
       'show_invoice_quantity': 'Show Invoice Quantity',
       'show_invoice_quantity_help':
-          'Display a line item quantity field, otherwise default to one',
+      'Display a line item quantity field, otherwise default to one',
       'default_quantity': 'Default Quantity',
       'default_quantity_help':
-          'Automatically set the line item quantity to one',
+      'Automatically set the line item quantity to one',
       'one_tax_rate': 'One Tax Rate',
       'two_tax_rates': 'Two Tax Rates',
       'three_tax_rates': 'Three Tax Rates',
@@ -18987,7 +18996,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'filtered_by_user': 'Filtered by User',
       'administrator': 'Administrator',
       'administrator_help':
-          'Allow user to manage users, change settings and modify all records',
+      'Allow user to manage users, change settings and modify all records',
       'user_management': 'ユーザ管理',
       'users': 'ユーザー',
       'new_user': '新しいユーザ',
@@ -19002,7 +19011,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'invoice_options': '請求書オプション',
       'hide_paid_to_date': 'Hide Paid to Date',
       'hide_paid_to_date_help':
-          'Only display the \"Paid to Date\" area on your invoices once a payment has been received.',
+      'Only display the \"Paid to Date\" area on your invoices once a payment has been received.',
       'invoice_embed_documents': 'Embed Documents',
       'invoice_embed_documents_help': 'Include attached images in the invoice.',
       'all_pages_header': 'Show header on',
@@ -19025,16 +19034,16 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'quote_footer': '見積書フッタ',
       'auto_email_invoice': 'Auto Email',
       'auto_email_invoice_help':
-          'Automatically email recurring invoices when they are created.',
+      'Automatically email recurring invoices when they are created.',
       'auto_archive_invoice': 'Auto Archive',
       'auto_archive_invoice_help':
-          'Automatically archive invoices when they are paid.',
+      'Automatically archive invoices when they are paid.',
       'auto_archive_quote': 'Auto Archive',
       'auto_archive_quote_help':
-          'Automatically archive quotes when they are converted.',
+      'Automatically archive quotes when they are converted.',
       'auto_convert_quote': 'Auto Convert',
       'auto_convert_quote_help':
-          'Automatically convert a quote to an invoice when approved by a client.',
+      'Automatically convert a quote to an invoice when approved by a client.',
       'workflow_settings': 'Workflow Settings',
       'freq_daily': 'Daily',
       'freq_weekly': 'Weekly',
@@ -19080,27 +19089,27 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'custom_javascript': 'Custom JavaScript',
       'signature_on_pdf': 'Show on PDF',
       'signature_on_pdf_help':
-          'Show the client signature on the invoice/quote PDF.',
+      'Show the client signature on the invoice/quote PDF.',
       'show_accept_invoice_terms': 'Invoice Terms Checkbox',
       'show_accept_invoice_terms_help':
-          'Require client to confirm that they accept the invoice terms.',
+      'Require client to confirm that they accept the invoice terms.',
       'show_accept_quote_terms': 'Quote Terms Checkbox',
       'show_accept_quote_terms_help':
-          'Require client to confirm that they accept the quote terms.',
+      'Require client to confirm that they accept the quote terms.',
       'require_invoice_signature': 'Invoice Signature',
       'require_invoice_signature_help':
-          'Require client to provide their signature.',
+      'Require client to provide their signature.',
       'require_quote_signature': 'Quote Signature',
       'enable_portal_password': 'Password Protect Invoices',
       'enable_portal_password_help':
-          'Allows you to set a password for each contact. If a password is set, the contact will be required to enter a password before viewing invoices.',
+      'Allows you to set a password for each contact. If a password is set, the contact will be required to enter a password before viewing invoices.',
       'authorization': 'Authorization',
       'subdomain': 'サブドメイン',
       'domain': 'Domain',
       'portal_mode': 'Portal Mode',
       'email_signature': 'どうぞよろしくお願いいたします。',
       'enable_email_markup_help':
-          'Make it easier for your clients to pay you by adding schema.org markup to your emails.',
+      'Make it easier for your clients to pay you by adding schema.org markup to your emails.',
       'plain': 'プレーン',
       'light': 'ライト',
       'dark': 'ダーク',
@@ -19129,9 +19138,9 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'accepted_card_logos': 'Accepted Card Logos',
       'credentials': 'Credentials',
       'require_billing_address_help':
-          'Require client to provide their billing address',
+      'Require client to provide their billing address',
       'require_shipping_address_help':
-          'Require client to provide their shipping address',
+      'Require client to provide their shipping address',
       'update_address': '住所を更新',
       'update_address_help': 'Update client\'s address with provided details',
       'rate': '率',
@@ -19145,13 +19154,13 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'restored_tax_rate': 'Successfully restored tax rate',
       'fill_products': 'Auto-fill products',
       'fill_products_help':
-          'Selecting a product will automatically <b>fill in the description and cost</b>',
+      'Selecting a product will automatically <b>fill in the description and cost</b>',
       'update_products': 'Auto-update products',
       'update_products_help':
-          'Updating an invoice will automatically <b>update the product library</b>',
+      'Updating an invoice will automatically <b>update the product library</b>',
       'convert_products': 'Convert Products',
       'convert_products_help':
-          'Automatically convert product prices to the client\'s currency',
+      'Automatically convert product prices to the client\'s currency',
       'fees': 'Fees',
       'limits': 'Limits',
       'provider': 'Provider',
@@ -19251,7 +19260,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'please_enter_a_first_name': 'Please enter a first name',
       'please_enter_a_last_name': 'Please enter a last name',
       'please_agree_to_terms_and_privacy':
-          'Please agree to the terms of service and privacy policy to create an account.',
+      'Please agree to the terms of service and privacy policy to create an account.',
       'i_agree_to_the': 'I agree to the',
       'terms_of_service_link': 'terms of service',
       'privacy_policy_link': 'privacy policy',
@@ -19350,7 +19359,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'average': 'Average',
       'unapproved': 'Unapproved',
       'authenticate_to_change_setting':
-          'Please authenticate to change this setting',
+      'Please authenticate to change this setting',
       'locked': 'Locked',
       'authenticate': 'Authenticate',
       'please_authenticate': 'Please authenticate',
@@ -19550,7 +19559,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'marked_invoices_as_paid': 'Successfully marked invoices as paid',
       'done': '完了',
       'please_enter_a_client_or_contact_name':
-          'Please enter a client or contact name',
+      'Please enter a client or contact name',
       'dark_mode': 'ダークモード',
       'restart_app_to_apply_change': 'Restart the app to apply the change',
       'refresh_data': 'Refresh Data',
@@ -19632,7 +19641,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'activity_8': ':user は 請求書 :invoice をアーカイブしました。',
       'activity_9': ':user は 請求書 :invoice をアーカイブしました。',
       'activity_10':
-          ':contact entered payment :payment for :payment_amount on invoice :invoice for :client',
+      ':contact entered payment :payment for :payment_amount on invoice :invoice for :client',
       'activity_11': ':user updated payment :payment',
       'activity_12': ':user archived payment :payment',
       'activity_13': ':user deleted payment :payment',
@@ -19662,7 +19671,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'activity_37': ':user restored expense :expense',
       'activity_39': ':user cancelled a :payment_amount payment :payment',
       'activity_40':
-          ':user refunded :adjustment of a :payment_amount payment :payment',
+      ':user refunded :adjustment of a :payment_amount payment :payment',
       'activity_41': ':payment_amount payment (:payment) failed',
       'activity_42': ':user created task :task',
       'activity_43': ':user updated task :task',
@@ -19814,23 +19823,23 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'hide_menu': 'Hide Menu',
       'show_menu': 'Show Menu',
       'partially_refunded': 'Partially Refunded',
-      'search_documents': 'Search Documents',
-      'search_designs': 'Search Designs',
-      'search_invoices': 'Search Invoices',
-      'search_clients': 'Search Clients',
-      'search_products': 'Search Products',
-      'search_quotes': 'Search Quotes',
-      'search_credits': 'Search Credits',
-      'search_vendors': 'Search Vendors',
-      'search_users': 'Search Users',
-      'search_tax_rates': 'Search Tax Rates',
-      'search_tasks': 'Search Tasks',
-      'search_settings': 'Search Settings',
-      'search_projects': 'Search Projects',
-      'search_expenses': 'Search Expenses',
-      'search_payments': 'Search Payments',
-      'search_groups': 'Search Groups',
-      'search_company': 'Search Company',
+      'search_documents': 'Search :count Documents',
+      'search_designs': 'Search :count Designs',
+      'search_invoices': 'Search :count Invoices',
+      'search_clients': 'Search :count Clients',
+      'search_products': 'Search :count Products',
+      'search_quotes': 'Search :count Quotes',
+      'search_credits': 'Search :count Credits',
+      'search_vendors': 'Search :count Vendors',
+      'search_users': 'Search :count Users',
+      'search_tax_rates': 'Search :count Tax Rates',
+      'search_tasks': 'Search :count Tasks',
+      'search_settings': 'Search :count Settings',
+      'search_projects': 'Search :count Projects',
+      'search_expenses': 'Search :count Expenses',
+      'search_payments': 'Search :count Payments',
+      'search_groups': 'Search :count Groups',
+      'search_company': 'Search :count Company',
       'refund_payment': 'Grąžinti',
       'cancelled_invoice': 'Successfully cancelled invoice',
       'cancelled_invoices': 'Successfully cancelled invoices',
@@ -19849,7 +19858,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'purge_data': 'Purge Data',
       'purge_successful': 'Successfully purged company data',
       'purge_data_message':
-          'Warning: This will permanently erase your data, there is no undo.',
+      'Warning: This will permanently erase your data, there is no undo.',
       'invoice_balance': 'Invoice Balance',
       'age_group_0': '0 - 30 Days',
       'age_group_30': '30 - 60 Days',
@@ -19884,10 +19893,10 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'apply_license': 'Apply License',
       'cancel_account': 'Cancel Account',
       'cancel_account_message':
-          'Warning: This will permanently delete your account, there is no undo.',
+      'Warning: This will permanently delete your account, there is no undo.',
       'delete_company': 'Delete Company',
       'delete_company_message':
-          'Warning: This will permanently delete your company, there is no undo.',
+      'Warning: This will permanently delete your company, there is no undo.',
       'enable_modules': 'Enable Modules',
       'converted_quote': 'Successfully converted quote',
       'credit_design': 'Credit Design',
@@ -20039,12 +20048,12 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'applied': 'Applied',
       'include_recent_errors': 'Include recent errors from the logs',
       'your_message_has_been_received':
-          'We have received your message and will try to respond promptly.',
+      'We have received your message and will try to respond promptly.',
       'message': 'Žinutė',
       'from': 'Pardavėjas',
       'show_product_details': 'Show Product Details',
       'show_product_details_help':
-          'Include the description and cost in the product dropdown',
+      'Include the description and cost in the product dropdown',
       'pdf_min_requirements': 'The PDF renderer requires :version',
       'adjust_fee_percent': 'Adjust Fee Percent',
       'adjust_fee_percent_help': 'Adjust percent to account for fee',
@@ -20061,7 +20070,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'domain_url': 'Domain URL',
       'password_is_too_short': 'Password is too short',
       'password_is_too_easy':
-          'Password must contain an upper case character and a number',
+      'Password must contain an upper case character and a number',
       'client_portal_tasks': 'Client Portal Tasks',
       'client_portal_dashboard': 'Client Portal Dashboard',
       'please_enter_a_value': 'Please enter a value',
@@ -20088,16 +20097,16 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'third_custom': 'Third Custom',
       'show_cost': 'Show Cost',
       'show_cost_help':
-          'Display a product cost field to track the markup/profit',
+      'Display a product cost field to track the markup/profit',
       'show_product_quantity': 'Show Product Quantity',
       'show_product_quantity_help':
-          'Display a product quantity field, otherwise default to one',
+      'Display a product quantity field, otherwise default to one',
       'show_invoice_quantity': 'Show Invoice Quantity',
       'show_invoice_quantity_help':
-          'Display a line item quantity field, otherwise default to one',
+      'Display a line item quantity field, otherwise default to one',
       'default_quantity': 'Default Quantity',
       'default_quantity_help':
-          'Automatically set the line item quantity to one',
+      'Automatically set the line item quantity to one',
       'one_tax_rate': 'One Tax Rate',
       'two_tax_rates': 'Two Tax Rates',
       'three_tax_rates': 'Three Tax Rates',
@@ -20142,7 +20151,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'filtered_by_user': 'Filtered by User',
       'administrator': 'Administratorius',
       'administrator_help':
-          'Allow user to manage users, change settings and modify all records',
+      'Allow user to manage users, change settings and modify all records',
       'user_management': 'User Management',
       'users': 'Vartotojai',
       'new_user': 'New User',
@@ -20157,7 +20166,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'invoice_options': 'Invoice Options',
       'hide_paid_to_date': 'Hide paid to date',
       'hide_paid_to_date_help':
-          'Only display the \"Paid to Date\" area on your invoices once a payment has been received.',
+      'Only display the \"Paid to Date\" area on your invoices once a payment has been received.',
       'invoice_embed_documents': 'Įkelti dokumentai',
       'invoice_embed_documents_help': 'Include attached images in the invoice.',
       'all_pages_header': 'Show header on',
@@ -20180,16 +20189,16 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'quote_footer': 'Quote Footer',
       'auto_email_invoice': 'Auto Email',
       'auto_email_invoice_help':
-          'Automatically email recurring invoices when they are created.',
+      'Automatically email recurring invoices when they are created.',
       'auto_archive_invoice': 'Auto Archive',
       'auto_archive_invoice_help':
-          'Automatically archive invoices when they are paid.',
+      'Automatically archive invoices when they are paid.',
       'auto_archive_quote': 'Auto Archive',
       'auto_archive_quote_help':
-          'Automatically archive quotes when they are converted.',
+      'Automatically archive quotes when they are converted.',
       'auto_convert_quote': 'Automatiškai Konvertuoti',
       'auto_convert_quote_help':
-          'Automatically convert a quote to an invoice when approved by a client.',
+      'Automatically convert a quote to an invoice when approved by a client.',
       'workflow_settings': 'Workflow Settings',
       'freq_daily': 'Kasdien',
       'freq_weekly': 'Kas savaitę',
@@ -20235,27 +20244,27 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'custom_javascript': 'Custom JavaScript',
       'signature_on_pdf': 'Show on PDF',
       'signature_on_pdf_help':
-          'Show the client signature on the invoice/quote PDF.',
+      'Show the client signature on the invoice/quote PDF.',
       'show_accept_invoice_terms': 'Invoice Terms Checkbox',
       'show_accept_invoice_terms_help':
-          'Require client to confirm that they accept the invoice terms.',
+      'Require client to confirm that they accept the invoice terms.',
       'show_accept_quote_terms': 'Quote Terms Checkbox',
       'show_accept_quote_terms_help':
-          'Require client to confirm that they accept the quote terms.',
+      'Require client to confirm that they accept the quote terms.',
       'require_invoice_signature': 'Invoice Signature',
       'require_invoice_signature_help':
-          'Require client to provide their signature.',
+      'Require client to provide their signature.',
       'require_quote_signature': 'Quote Signature',
       'enable_portal_password': 'Password Protect Invoices',
       'enable_portal_password_help':
-          'Allows you to set a password for each contact. If a password is set, the contact will be required to enter a password before viewing invoices.',
+      'Allows you to set a password for each contact. If a password is set, the contact will be required to enter a password before viewing invoices.',
       'authorization': 'Authorization',
       'subdomain': 'Subdomain',
       'domain': 'Domain',
       'portal_mode': 'Portal Mode',
       'email_signature': 'Linkiu geros dienos,',
       'enable_email_markup_help':
-          'Make it easier for your clients to pay you by adding schema.org markup to your emails.',
+      'Make it easier for your clients to pay you by adding schema.org markup to your emails.',
       'plain': 'Plain',
       'light': 'Light',
       'dark': 'Dark',
@@ -20284,9 +20293,9 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'accepted_card_logos': 'Accepted Card Logos',
       'credentials': 'Credentials',
       'require_billing_address_help':
-          'Require client to provide their billing address',
+      'Require client to provide their billing address',
       'require_shipping_address_help':
-          'Require client to provide their shipping address',
+      'Require client to provide their shipping address',
       'update_address': 'Update Address',
       'update_address_help': 'Update client\'s address with provided details',
       'rate': 'Įkainis',
@@ -20300,13 +20309,13 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'restored_tax_rate': 'Successfully restored tax rate',
       'fill_products': 'Auto-fill products',
       'fill_products_help':
-          'Selecting a product will automatically <b>fill in the description and cost</b>',
+      'Selecting a product will automatically <b>fill in the description and cost</b>',
       'update_products': 'Auto-update products',
       'update_products_help':
-          'Updating an invoice will automatically <b>update the product library</b>',
+      'Updating an invoice will automatically <b>update the product library</b>',
       'convert_products': 'Convert Products',
       'convert_products_help':
-          'Automatically convert product prices to the client\'s currency',
+      'Automatically convert product prices to the client\'s currency',
       'fees': 'Fees',
       'limits': 'Limits',
       'provider': 'Provider',
@@ -20406,7 +20415,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'please_enter_a_first_name': 'Please enter a first name',
       'please_enter_a_last_name': 'Please enter a last name',
       'please_agree_to_terms_and_privacy':
-          'Please agree to the terms of service and privacy policy to create an account.',
+      'Please agree to the terms of service and privacy policy to create an account.',
       'i_agree_to_the': 'I agree to the',
       'terms_of_service_link': 'terms of service',
       'privacy_policy_link': 'privacy policy',
@@ -20505,7 +20514,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'average': 'Average',
       'unapproved': 'Unapproved',
       'authenticate_to_change_setting':
-          'Please authenticate to change this setting',
+      'Please authenticate to change this setting',
       'locked': 'Locked',
       'authenticate': 'Authenticate',
       'please_authenticate': 'Please authenticate',
@@ -20705,7 +20714,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'marked_invoices_as_paid': 'Successfully marked invoices as paid',
       'done': 'Baigta',
       'please_enter_a_client_or_contact_name':
-          'Please enter a client or contact name',
+      'Please enter a client or contact name',
       'dark_mode': 'Dark Mode',
       'restart_app_to_apply_change': 'Restart the app to apply the change',
       'refresh_data': 'Refresh Data',
@@ -20787,7 +20796,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'activity_8': ':user archived invoice :invoice',
       'activity_9': ':user deleted invoice :invoice',
       'activity_10':
-          ':contact entered payment :payment for :payment_amount on invoice :invoice for :client',
+      ':contact entered payment :payment for :payment_amount on invoice :invoice for :client',
       'activity_11': ':user atnaujino mokėjimą :payment',
       'activity_12': ':user archived payment :payment',
       'activity_13': ':user deleted payment :payment',
@@ -20817,7 +20826,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'activity_37': ':user restored expense :expense',
       'activity_39': ':user cancelled a :payment_amount payment :payment',
       'activity_40':
-          ':user refunded :adjustment of a :payment_amount payment :payment',
+      ':user refunded :adjustment of a :payment_amount payment :payment',
       'activity_41': ':payment_amount mokėjimas (:payment) nepavyko',
       'activity_42': ':user created task :task',
       'activity_43': ':user updated task :task',
@@ -20969,23 +20978,23 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'hide_menu': 'Hide Menu',
       'show_menu': 'Show Menu',
       'partially_refunded': 'Partially Refunded',
-      'search_documents': 'Search Documents',
-      'search_designs': 'Search Designs',
-      'search_invoices': 'Search Invoices',
-      'search_clients': 'Search Clients',
-      'search_products': 'Search Products',
-      'search_quotes': 'Search Quotes',
-      'search_credits': 'Search Credits',
-      'search_vendors': 'Search Vendors',
-      'search_users': 'Search Users',
-      'search_tax_rates': 'Search Tax Rates',
-      'search_tasks': 'Search Tasks',
-      'search_settings': 'Search Settings',
-      'search_projects': 'Search Projects',
-      'search_expenses': 'Search Expenses',
-      'search_payments': 'Search Payments',
-      'search_groups': 'Search Groups',
-      'search_company': 'Search Company',
+      'search_documents': 'Search :count Documents',
+      'search_designs': 'Search :count Designs',
+      'search_invoices': 'Search :count Invoices',
+      'search_clients': 'Search :count Clients',
+      'search_products': 'Search :count Products',
+      'search_quotes': 'Search :count Quotes',
+      'search_credits': 'Search :count Credits',
+      'search_vendors': 'Search :count Vendors',
+      'search_users': 'Search :count Users',
+      'search_tax_rates': 'Search :count Tax Rates',
+      'search_tasks': 'Search :count Tasks',
+      'search_settings': 'Search :count Settings',
+      'search_projects': 'Search :count Projects',
+      'search_expenses': 'Search :count Expenses',
+      'search_payments': 'Search :count Payments',
+      'search_groups': 'Search :count Groups',
+      'search_company': 'Search :count Company',
       'refund_payment': 'Рефундирај плаќање',
       'cancelled_invoice': 'Successfully cancelled invoice',
       'cancelled_invoices': 'Successfully cancelled invoices',
@@ -21004,7 +21013,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'purge_data': 'Прочисти податоци',
       'purge_successful': 'Успешно прочистени податоци за компаанија',
       'purge_data_message':
-          'Предупредување: Ова трајно ќе ги избрише вашите податоци, нема враќање назад.',
+      'Предупредување: Ова трајно ќе ги избрише вашите податоци, нема враќање назад.',
       'invoice_balance': 'Invoice Balance',
       'age_group_0': '0 - 30 дена',
       'age_group_30': '30 - 60 дена',
@@ -21039,10 +21048,10 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'apply_license': 'Примени лиценца',
       'cancel_account': 'Избриши сметка',
       'cancel_account_message':
-          'Предупредување: Ова трајно ќе ја избрише вашата сметка, нема враќање.',
+      'Предупредување: Ова трајно ќе ја избрише вашата сметка, нема враќање.',
       'delete_company': 'Избриши компанија',
       'delete_company_message':
-          'Предупредување: Ова трајно ќе ја избрише вашата компанија, нема враќање назад.',
+      'Предупредување: Ова трајно ќе ја избрише вашата компанија, нема враќање назад.',
       'enable_modules': 'Enable Modules',
       'converted_quote': 'Successfully converted quote',
       'credit_design': 'Credit Design',
@@ -21194,12 +21203,12 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'applied': 'Applied',
       'include_recent_errors': 'Include recent errors from the logs',
       'your_message_has_been_received':
-          'We have received your message and will try to respond promptly.',
+      'We have received your message and will try to respond promptly.',
       'message': 'Порака',
       'from': 'Од',
       'show_product_details': 'Show Product Details',
       'show_product_details_help':
-          'Include the description and cost in the product dropdown',
+      'Include the description and cost in the product dropdown',
       'pdf_min_requirements': 'The PDF renderer requires :version',
       'adjust_fee_percent': 'Adjust Fee Percent',
       'adjust_fee_percent_help': 'Adjust percent to account for fee',
@@ -21216,7 +21225,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'domain_url': 'Domain URL',
       'password_is_too_short': 'Password is too short',
       'password_is_too_easy':
-          'Password must contain an upper case character and a number',
+      'Password must contain an upper case character and a number',
       'client_portal_tasks': 'Client Portal Tasks',
       'client_portal_dashboard': 'Client Portal Dashboard',
       'please_enter_a_value': 'Please enter a value',
@@ -21243,16 +21252,16 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'third_custom': 'Third Custom',
       'show_cost': 'Show Cost',
       'show_cost_help':
-          'Display a product cost field to track the markup/profit',
+      'Display a product cost field to track the markup/profit',
       'show_product_quantity': 'Show Product Quantity',
       'show_product_quantity_help':
-          'Display a product quantity field, otherwise default to one',
+      'Display a product quantity field, otherwise default to one',
       'show_invoice_quantity': 'Show Invoice Quantity',
       'show_invoice_quantity_help':
-          'Display a line item quantity field, otherwise default to one',
+      'Display a line item quantity field, otherwise default to one',
       'default_quantity': 'Default Quantity',
       'default_quantity_help':
-          'Automatically set the line item quantity to one',
+      'Automatically set the line item quantity to one',
       'one_tax_rate': 'One Tax Rate',
       'two_tax_rates': 'Two Tax Rates',
       'three_tax_rates': 'Three Tax Rates',
@@ -21297,7 +21306,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'filtered_by_user': 'Filtered by User',
       'administrator': 'Администратор',
       'administrator_help':
-          'Дозвола за корисникот да менаџира со корисниците, да ги менува поставките и да ги модифицира сите записи',
+      'Дозвола за корисникот да менаџира со корисниците, да ги менува поставките и да ги модифицира сите записи',
       'user_management': 'Управување со корисник',
       'users': 'Корисници',
       'new_user': 'Нов корисник',
@@ -21312,10 +21321,10 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'invoice_options': 'Поставки за фактура',
       'hide_paid_to_date': 'Сокриј Платено до датум',
       'hide_paid_to_date_help':
-          'Прикажи \"Платено до датум\" на фактурите откако ќе биде примено плаќањето.',
+      'Прикажи \"Платено до датум\" на фактурите откако ќе биде примено плаќањето.',
       'invoice_embed_documents': 'Вметни документи',
       'invoice_embed_documents_help':
-          'Вклучи ги прикачените слики во фактурата.',
+      'Вклучи ги прикачените слики во фактурата.',
       'all_pages_header': 'Прикажи заглавје на',
       'all_pages_footer': 'Прикажи футер на',
       'first_page': 'Прва страна',
@@ -21336,16 +21345,16 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'quote_footer': 'Футер на понуда',
       'auto_email_invoice': 'Автоматска е-пошта',
       'auto_email_invoice_help':
-          'Автоматски испрати рекурентни фактури по е-пошта кога ќе бидат креирани.',
+      'Автоматски испрати рекурентни фактури по е-пошта кога ќе бидат креирани.',
       'auto_archive_invoice': 'Автоматско архивирање',
       'auto_archive_invoice_help':
-          'Автоматски архивирај фактури кога ќе бидат платени.',
+      'Автоматски архивирај фактури кога ќе бидат платени.',
       'auto_archive_quote': 'Автоматско архивирање',
       'auto_archive_quote_help':
-          'Автоматски архивирај фактури кога ќе бидат конвертирани.',
+      'Автоматски архивирај фактури кога ќе бидат конвертирани.',
       'auto_convert_quote': 'Автоматско конвертирање',
       'auto_convert_quote_help':
-          'Автоматски конвертирај понуда во фактура кога истата ќе биде одобрена од клиентот.',
+      'Автоматски конвертирај понуда во фактура кога истата ќе биде одобрена од клиентот.',
       'workflow_settings': 'Подесувања на текот на работа',
       'freq_daily': 'Дневно',
       'freq_weekly': 'Неделно',
@@ -21391,27 +21400,27 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'custom_javascript': 'Custom JavaScript',
       'signature_on_pdf': 'Прикажи на PDF',
       'signature_on_pdf_help':
-          'Прикажи го потписот на клиентот на PDF фактура/понуда.',
+      'Прикажи го потписот на клиентот на PDF фактура/понуда.',
       'show_accept_invoice_terms': 'Поле за избор на услови за фактура',
       'show_accept_invoice_terms_help':
-          'Побарај од клиентот да потврди дека ги прифаќа условите на фактурата.',
+      'Побарај од клиентот да потврди дека ги прифаќа условите на фактурата.',
       'show_accept_quote_terms': 'Поле за избор на услови за понуда',
       'show_accept_quote_terms_help':
-          'Побарај од клиентот да потврди дека ги прифаќа условите на понудата.',
+      'Побарај од клиентот да потврди дека ги прифаќа условите на понудата.',
       'require_invoice_signature': 'Потпис на фактура',
       'require_invoice_signature_help':
-          'Побарај од клиентот да обезбеди потпис.',
+      'Побарај од клиентот да обезбеди потпис.',
       'require_quote_signature': 'Потпис на понуда',
       'enable_portal_password': 'Фактури заштитени со лозинка',
       'enable_portal_password_help':
-          'Ви дозволува поставување на лозинка за секој контакт. Ако поставите лозинка. контактот ќе мора да ја внесе лозинката пред да ги прегледа фактурите.',
+      'Ви дозволува поставување на лозинка за секој контакт. Ако поставите лозинка. контактот ќе мора да ја внесе лозинката пред да ги прегледа фактурите.',
       'authorization': 'Овластување',
       'subdomain': 'Поддомен',
       'domain': 'Домен',
       'portal_mode': 'Portal Mode',
       'email_signature': 'Со почит,',
       'enable_email_markup_help':
-          'Направете го полесно плаќањето за вашите клиенти со додавање на schema.org обележје на вашите е-пошти',
+      'Направете го полесно плаќањето за вашите клиенти со додавање на schema.org обележје на вашите е-пошти',
       'plain': 'Обично',
       'light': 'Светло',
       'dark': 'Темно',
@@ -21440,12 +21449,12 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'accepted_card_logos': 'Прифатени логоа на картичка',
       'credentials': 'Credentials',
       'require_billing_address_help':
-          'Require client to provide their billing address',
+      'Require client to provide their billing address',
       'require_shipping_address_help':
-          'Require client to provide their shipping address',
+      'Require client to provide their shipping address',
       'update_address': 'Ажурирај адреса',
       'update_address_help':
-          'Ажурирај ја адресата на клиентот со обезбедените детали',
+      'Ажурирај ја адресата на клиентот со обезбедените детали',
       'rate': 'Стапка',
       'tax_rate': 'Даночна стапка',
       'new_tax_rate': 'Нова стапка на данок',
@@ -21457,13 +21466,13 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'restored_tax_rate': 'Successfully restored tax rate',
       'fill_products': 'Автоматско пополнување на продукти',
       'fill_products_help':
-          'Избирањето на продукт автоматски ќе ги <b> исполни полињата за опис и цена</b>',
+      'Избирањето на продукт автоматски ќе ги <b> исполни полињата за опис и цена</b>',
       'update_products': 'Автоматско ажурирање на продукти',
       'update_products_help':
-          'Ажурирањето на факура автоматски ќе ја <b> ажурира библиотеката на продукти </b>',
+      'Ажурирањето на факура автоматски ќе ја <b> ажурира библиотеката на продукти </b>',
       'convert_products': 'Конвертирај продукти',
       'convert_products_help':
-          'Автоматски конвертирај ги цените на продуктите по валутите на клиентите',
+      'Автоматски конвертирај ги цените на продуктите по валутите на клиентите',
       'fees': 'Надоместоци',
       'limits': 'Ограничувања',
       'provider': 'Provider',
@@ -21563,7 +21572,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'please_enter_a_first_name': 'Please enter a first name',
       'please_enter_a_last_name': 'Please enter a last name',
       'please_agree_to_terms_and_privacy':
-          'Please agree to the terms of service and privacy policy to create an account.',
+      'Please agree to the terms of service and privacy policy to create an account.',
       'i_agree_to_the': 'I agree to the',
       'terms_of_service_link': 'terms of service',
       'privacy_policy_link': 'privacy policy',
@@ -21662,7 +21671,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'average': 'Average',
       'unapproved': 'Unapproved',
       'authenticate_to_change_setting':
-          'Please authenticate to change this setting',
+      'Please authenticate to change this setting',
       'locked': 'Locked',
       'authenticate': 'Authenticate',
       'please_authenticate': 'Please authenticate',
@@ -21862,7 +21871,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'marked_invoices_as_paid': 'Successfully marked invoices as paid',
       'done': 'Завршено',
       'please_enter_a_client_or_contact_name':
-          'Please enter a client or contact name',
+      'Please enter a client or contact name',
       'dark_mode': 'Темен режим',
       'restart_app_to_apply_change': 'Restart the app to apply the change',
       'refresh_data': 'Refresh Data',
@@ -21944,7 +21953,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'activity_8': ':user ја архивира фактурата :invoice',
       'activity_9': ':user ја избриша фактурата :invoice',
       'activity_10':
-          ':contact entered payment :payment for :payment_amount on invoice :invoice for :client',
+      ':contact entered payment :payment for :payment_amount on invoice :invoice for :client',
       'activity_11': ':user го ажурира плаќањето :payment',
       'activity_12': ':user го архивира плаќањето :payment',
       'activity_13': ':user го избриша плаќањето :payment',
@@ -21974,7 +21983,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'activity_37': ':user го поврати трошокот :expense',
       'activity_39': ':user го откажа :payment_amount плаќањето :payment',
       'activity_40':
-          ':user го рефундира :adjustment на :payment_amount плаќање :payment',
+      ':user го рефундира :adjustment на :payment_amount плаќање :payment',
       'activity_41': ':payment_amount плаќање (:payment) е неуспешно',
       'activity_42': ':user ја креира задачата :task',
       'activity_43': ':user ажурира задачата :task',
@@ -22126,23 +22135,23 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'hide_menu': 'Hide Menu',
       'show_menu': 'Show Menu',
       'partially_refunded': 'Partially Refunded',
-      'search_documents': 'Search Documents',
-      'search_designs': 'Search Designs',
-      'search_invoices': 'Search Invoices',
-      'search_clients': 'Search Clients',
-      'search_products': 'Search Products',
-      'search_quotes': 'Search Quotes',
-      'search_credits': 'Search Credits',
-      'search_vendors': 'Search Vendors',
-      'search_users': 'Search Users',
-      'search_tax_rates': 'Search Tax Rates',
-      'search_tasks': 'Search Tasks',
-      'search_settings': 'Search Settings',
-      'search_projects': 'Search Projects',
-      'search_expenses': 'Search Expenses',
-      'search_payments': 'Search Payments',
-      'search_groups': 'Search Groups',
-      'search_company': 'Search Company',
+      'search_documents': 'Search :count Documents',
+      'search_designs': 'Search :count Designs',
+      'search_invoices': 'Search :count Invoices',
+      'search_clients': 'Search :count Clients',
+      'search_products': 'Search :count Products',
+      'search_quotes': 'Search :count Quotes',
+      'search_credits': 'Search :count Credits',
+      'search_vendors': 'Search :count Vendors',
+      'search_users': 'Search :count Users',
+      'search_tax_rates': 'Search :count Tax Rates',
+      'search_tasks': 'Search :count Tasks',
+      'search_settings': 'Search :count Settings',
+      'search_projects': 'Search :count Projects',
+      'search_expenses': 'Search :count Expenses',
+      'search_payments': 'Search :count Payments',
+      'search_groups': 'Search :count Groups',
+      'search_company': 'Search :count Company',
       'refund_payment': 'Refunder betaling',
       'cancelled_invoice': 'Successfully cancelled invoice',
       'cancelled_invoices': 'Successfully cancelled invoices',
@@ -22161,7 +22170,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'purge_data': 'Fjern data',
       'purge_successful': 'Successfully purged company data',
       'purge_data_message':
-          'Advarsel: Dette sletter alle dine data permanent, og kan ikke gjennopprettes.',
+      'Advarsel: Dette sletter alle dine data permanent, og kan ikke gjennopprettes.',
       'invoice_balance': 'Invoice Balance',
       'age_group_0': '0 - 30 Dager',
       'age_group_30': '30 - 60 Dager',
@@ -22196,10 +22205,10 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'apply_license': 'aktiver lisens',
       'cancel_account': 'Kanseler Konto',
       'cancel_account_message':
-          'Advarsel: Dette vil permanent slette kontoen din, du kan ikke angre.',
+      'Advarsel: Dette vil permanent slette kontoen din, du kan ikke angre.',
       'delete_company': 'Slett Firma',
       'delete_company_message':
-          'Advarsel: Dette vil permanent slette ditt firma, dette kan ikke gjennopprettes.',
+      'Advarsel: Dette vil permanent slette ditt firma, dette kan ikke gjennopprettes.',
       'enable_modules': 'Enable Modules',
       'converted_quote': 'Successfully converted quote',
       'credit_design': 'Credit Design',
@@ -22351,12 +22360,12 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'applied': 'Applied',
       'include_recent_errors': 'Include recent errors from the logs',
       'your_message_has_been_received':
-          'We have received your message and will try to respond promptly.',
+      'We have received your message and will try to respond promptly.',
       'message': 'Beskjed',
       'from': 'Fra',
       'show_product_details': 'Show Product Details',
       'show_product_details_help':
-          'Include the description and cost in the product dropdown',
+      'Include the description and cost in the product dropdown',
       'pdf_min_requirements': 'The PDF renderer requires :version',
       'adjust_fee_percent': 'Adjust Fee Percent',
       'adjust_fee_percent_help': 'Adjust percent to account for fee',
@@ -22373,7 +22382,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'domain_url': 'Domain URL',
       'password_is_too_short': 'Password is too short',
       'password_is_too_easy':
-          'Password must contain an upper case character and a number',
+      'Password must contain an upper case character and a number',
       'client_portal_tasks': 'Client Portal Tasks',
       'client_portal_dashboard': 'Client Portal Dashboard',
       'please_enter_a_value': 'Please enter a value',
@@ -22400,16 +22409,16 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'third_custom': 'Third Custom',
       'show_cost': 'Show Cost',
       'show_cost_help':
-          'Display a product cost field to track the markup/profit',
+      'Display a product cost field to track the markup/profit',
       'show_product_quantity': 'Show Product Quantity',
       'show_product_quantity_help':
-          'Display a product quantity field, otherwise default to one',
+      'Display a product quantity field, otherwise default to one',
       'show_invoice_quantity': 'Show Invoice Quantity',
       'show_invoice_quantity_help':
-          'Display a line item quantity field, otherwise default to one',
+      'Display a line item quantity field, otherwise default to one',
       'default_quantity': 'Default Quantity',
       'default_quantity_help':
-          'Automatically set the line item quantity to one',
+      'Automatically set the line item quantity to one',
       'one_tax_rate': 'One Tax Rate',
       'two_tax_rates': 'Two Tax Rates',
       'three_tax_rates': 'Three Tax Rates',
@@ -22454,7 +22463,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'filtered_by_user': 'Filtered by User',
       'administrator': 'Administrator',
       'administrator_help':
-          'Allow user to manage users, change settings and modify all records',
+      'Allow user to manage users, change settings and modify all records',
       'user_management': 'Brukerhåndtering',
       'users': 'Brukere',
       'new_user': 'New User',
@@ -22469,7 +22478,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'invoice_options': 'Faktura alternativer',
       'hide_paid_to_date': 'Skjul delbetalinger',
       'hide_paid_to_date_help':
-          'Bare vis delbetalinger om det har forekommet en delbetaling.',
+      'Bare vis delbetalinger om det har forekommet en delbetaling.',
       'invoice_embed_documents': 'Embed Dokumenter',
       'invoice_embed_documents_help': 'Include attached images in the invoice.',
       'all_pages_header': 'Show header on',
@@ -22492,16 +22501,16 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'quote_footer': 'Tilbud Bunntekst',
       'auto_email_invoice': 'Auto Email',
       'auto_email_invoice_help':
-          'Automatically email recurring invoices when they are created.',
+      'Automatically email recurring invoices when they are created.',
       'auto_archive_invoice': 'Auto Archive',
       'auto_archive_invoice_help':
-          'Automatically archive invoices when they are paid.',
+      'Automatically archive invoices when they are paid.',
       'auto_archive_quote': 'Auto Archive',
       'auto_archive_quote_help':
-          'Automatically archive quotes when they are converted.',
+      'Automatically archive quotes when they are converted.',
       'auto_convert_quote': 'Auto Convert',
       'auto_convert_quote_help':
-          'Automatically convert a quote to an invoice when approved by a client.',
+      'Automatically convert a quote to an invoice when approved by a client.',
       'workflow_settings': 'Workflow Settings',
       'freq_daily': 'Daglig',
       'freq_weekly': 'Ukentlig',
@@ -22547,26 +22556,26 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'custom_javascript': 'Custom JavaScript',
       'signature_on_pdf': 'Show on PDF',
       'signature_on_pdf_help':
-          'Show the client signature on the invoice/quote PDF.',
+      'Show the client signature on the invoice/quote PDF.',
       'show_accept_invoice_terms': 'Invoice Terms Checkbox',
       'show_accept_invoice_terms_help':
-          'Require client to confirm that they accept the invoice terms.',
+      'Require client to confirm that they accept the invoice terms.',
       'show_accept_quote_terms': 'Quote Terms Checkbox',
       'show_accept_quote_terms_help':
-          'Require client to confirm that they accept the quote terms.',
+      'Require client to confirm that they accept the quote terms.',
       'require_invoice_signature': 'Faktura-signatur',
       'require_invoice_signature_help': 'Krever klients signatur.',
       'require_quote_signature': 'Tilbuds-signatur',
       'enable_portal_password': 'Passord-beskytt fakturaer',
       'enable_portal_password_help':
-          'Allows you to set a password for each contact. If a password is set, the contact will be required to enter a password before viewing invoices.',
+      'Allows you to set a password for each contact. If a password is set, the contact will be required to enter a password before viewing invoices.',
       'authorization': 'Autorisasjon',
       'subdomain': 'Subdomene',
       'domain': 'Domene',
       'portal_mode': 'Portal Mode',
       'email_signature': 'Med vennlig hilsen,',
       'enable_email_markup_help':
-          'Make it easier for your clients to pay you by adding schema.org markup to your emails.',
+      'Make it easier for your clients to pay you by adding schema.org markup to your emails.',
       'plain': 'Plain',
       'light': 'Light',
       'dark': 'Dark',
@@ -22595,9 +22604,9 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'accepted_card_logos': 'Accepted Card Logos',
       'credentials': 'Credentials',
       'require_billing_address_help':
-          'Require client to provide their billing address',
+      'Require client to provide their billing address',
       'require_shipping_address_help':
-          'Require client to provide their shipping address',
+      'Require client to provide their shipping address',
       'update_address': 'Oppdater Adresse',
       'update_address_help': 'Oppdater kundens adresse med oppgitte detaljer',
       'rate': 'Sats',
@@ -22611,13 +22620,13 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'restored_tax_rate': 'Successfully restored tax rate',
       'fill_products': 'Automatisk-utfyll produkter',
       'fill_products_help':
-          'Valg av produkt vil automatisk fylle ut <b>beskrivelse og kostnaden</b>',
+      'Valg av produkt vil automatisk fylle ut <b>beskrivelse og kostnaden</b>',
       'update_products': 'Automatisk oppdater produkter',
       'update_products_help':
-          'Å endre en faktura vil automatisk <b>oppdatere produktbilioteket</b>',
+      'Å endre en faktura vil automatisk <b>oppdatere produktbilioteket</b>',
       'convert_products': 'Convert Products',
       'convert_products_help':
-          'Automatically convert product prices to the client\'s currency',
+      'Automatically convert product prices to the client\'s currency',
       'fees': 'Avgifter',
       'limits': 'Begrensninger',
       'provider': 'Provider',
@@ -22717,7 +22726,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'please_enter_a_first_name': 'Please enter a first name',
       'please_enter_a_last_name': 'Please enter a last name',
       'please_agree_to_terms_and_privacy':
-          'Please agree to the terms of service and privacy policy to create an account.',
+      'Please agree to the terms of service and privacy policy to create an account.',
       'i_agree_to_the': 'I agree to the',
       'terms_of_service_link': 'terms of service',
       'privacy_policy_link': 'privacy policy',
@@ -22816,7 +22825,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'average': 'Average',
       'unapproved': 'Unapproved',
       'authenticate_to_change_setting':
-          'Please authenticate to change this setting',
+      'Please authenticate to change this setting',
       'locked': 'Låst',
       'authenticate': 'Authenticate',
       'please_authenticate': 'Please authenticate',
@@ -23016,7 +23025,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'marked_invoices_as_paid': 'Successfully marked invoices as paid',
       'done': 'Ferdig',
       'please_enter_a_client_or_contact_name':
-          'Please enter a client or contact name',
+      'Please enter a client or contact name',
       'dark_mode': 'Mørk Modus',
       'restart_app_to_apply_change': 'Restart the app to apply the change',
       'refresh_data': 'Refresh Data',
@@ -23098,7 +23107,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'activity_8': ':user arkiverte faktura :invoice',
       'activity_9': ':user slettet faktura :invoice',
       'activity_10':
-          ':contact entered payment :payment for :payment_amount on invoice :invoice for :client',
+      ':contact entered payment :payment for :payment_amount on invoice :invoice for :client',
       'activity_11': ':user oppdaterte betaling :payment',
       'activity_12': ':user arkiverte betaling :payment',
       'activity_13': ':user slettet betaling :payment',
@@ -23128,7 +23137,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'activity_37': ':user gjenopprettet utgift :expense',
       'activity_39': ':user cancelled a :payment_amount payment :payment',
       'activity_40':
-          ':user refunded :adjustment of a :payment_amount payment :payment',
+      ':user refunded :adjustment of a :payment_amount payment :payment',
       'activity_41': ':payment_amount payment (:payment) failed',
       'activity_42': ':user opprettet oppgave :task',
       'activity_43': ':user oppdaterte oppgave :task',
@@ -23280,23 +23289,23 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'hide_menu': 'Hide Menu',
       'show_menu': 'Show Menu',
       'partially_refunded': 'Partially Refunded',
-      'search_documents': 'Search Documents',
-      'search_designs': 'Search Designs',
-      'search_invoices': 'Search Invoices',
-      'search_clients': 'Search Clients',
-      'search_products': 'Search Products',
-      'search_quotes': 'Search Quotes',
-      'search_credits': 'Search Credits',
-      'search_vendors': 'Search Vendors',
-      'search_users': 'Search Users',
-      'search_tax_rates': 'Search Tax Rates',
-      'search_tasks': 'Search Tasks',
-      'search_settings': 'Search Settings',
-      'search_projects': 'Search Projects',
-      'search_expenses': 'Search Expenses',
-      'search_payments': 'Search Payments',
-      'search_groups': 'Search Groups',
-      'search_company': 'Search Company',
+      'search_documents': 'Search :count Documents',
+      'search_designs': 'Search :count Designs',
+      'search_invoices': 'Search :count Invoices',
+      'search_clients': 'Search :count Clients',
+      'search_products': 'Search :count Products',
+      'search_quotes': 'Search :count Quotes',
+      'search_credits': 'Search :count Credits',
+      'search_vendors': 'Search :count Vendors',
+      'search_users': 'Search :count Users',
+      'search_tax_rates': 'Search :count Tax Rates',
+      'search_tasks': 'Search :count Tasks',
+      'search_settings': 'Search :count Settings',
+      'search_projects': 'Search :count Projects',
+      'search_expenses': 'Search :count Expenses',
+      'search_payments': 'Search :count Payments',
+      'search_groups': 'Search :count Groups',
+      'search_company': 'Search :count Company',
       'refund_payment': 'Zwrot płatności',
       'cancelled_invoice': 'Successfully cancelled invoice',
       'cancelled_invoices': 'Successfully cancelled invoices',
@@ -23315,7 +23324,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'purge_data': 'Purge Data',
       'purge_successful': 'Successfully purged company data',
       'purge_data_message':
-          'Warning: This will permanently erase your data, there is no undo.',
+      'Warning: This will permanently erase your data, there is no undo.',
       'invoice_balance': 'Invoice Balance',
       'age_group_0': '0 - 30 dni',
       'age_group_30': '30 - 60 dni',
@@ -23350,10 +23359,10 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'apply_license': 'Zastosuj licencję',
       'cancel_account': 'Anuluj konto',
       'cancel_account_message':
-          'Ostrzeżenie: Nie można cofnąć tej operacji, wszystkie twoje dane zostaną usunięte.',
+      'Ostrzeżenie: Nie można cofnąć tej operacji, wszystkie twoje dane zostaną usunięte.',
       'delete_company': 'Delete Company',
       'delete_company_message':
-          'Warning: This will permanently delete your company, there is no undo.',
+      'Warning: This will permanently delete your company, there is no undo.',
       'enable_modules': 'Enable Modules',
       'converted_quote': 'Successfully converted quote',
       'credit_design': 'Credit Design',
@@ -23505,12 +23514,12 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'applied': 'Applied',
       'include_recent_errors': 'Include recent errors from the logs',
       'your_message_has_been_received':
-          'We have received your message and will try to respond promptly.',
+      'We have received your message and will try to respond promptly.',
       'message': 'Wiadomość',
       'from': 'Od',
       'show_product_details': 'Show Product Details',
       'show_product_details_help':
-          'Include the description and cost in the product dropdown',
+      'Include the description and cost in the product dropdown',
       'pdf_min_requirements': 'The PDF renderer requires :version',
       'adjust_fee_percent': 'Adjust Fee Percent',
       'adjust_fee_percent_help': 'Adjust percent to account for fee',
@@ -23527,7 +23536,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'domain_url': 'Domain URL',
       'password_is_too_short': 'Password is too short',
       'password_is_too_easy':
-          'Password must contain an upper case character and a number',
+      'Password must contain an upper case character and a number',
       'client_portal_tasks': 'Client Portal Tasks',
       'client_portal_dashboard': 'Client Portal Dashboard',
       'please_enter_a_value': 'Please enter a value',
@@ -23554,16 +23563,16 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'third_custom': 'Third Custom',
       'show_cost': 'Show Cost',
       'show_cost_help':
-          'Display a product cost field to track the markup/profit',
+      'Display a product cost field to track the markup/profit',
       'show_product_quantity': 'Show Product Quantity',
       'show_product_quantity_help':
-          'Display a product quantity field, otherwise default to one',
+      'Display a product quantity field, otherwise default to one',
       'show_invoice_quantity': 'Show Invoice Quantity',
       'show_invoice_quantity_help':
-          'Display a line item quantity field, otherwise default to one',
+      'Display a line item quantity field, otherwise default to one',
       'default_quantity': 'Default Quantity',
       'default_quantity_help':
-          'Automatically set the line item quantity to one',
+      'Automatically set the line item quantity to one',
       'one_tax_rate': 'One Tax Rate',
       'two_tax_rates': 'Two Tax Rates',
       'three_tax_rates': 'Three Tax Rates',
@@ -23608,7 +23617,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'filtered_by_user': 'Filtered by User',
       'administrator': 'Administrator',
       'administrator_help':
-          'Zezwól użytkownikowi na zarządzanie użytkownikami, edytowanie ustawień oraz wszystkich danych.',
+      'Zezwól użytkownikowi na zarządzanie użytkownikami, edytowanie ustawień oraz wszystkich danych.',
       'user_management': 'Zarządzanie użytkownikami',
       'users': 'Użytkownicy',
       'new_user': 'Nowy użytkownik',
@@ -23623,7 +23632,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'invoice_options': 'Opcje faktury',
       'hide_paid_to_date': 'Ukryj pole \"Zapłacono dotychczas\"',
       'hide_paid_to_date_help':
-          'Wyświetlaj \"Zapłacono dotychczas\" tylko przy tych fakturach, do których otrzymano płatność.',
+      'Wyświetlaj \"Zapłacono dotychczas\" tylko przy tych fakturach, do których otrzymano płatność.',
       'invoice_embed_documents': 'Załączniki',
       'invoice_embed_documents_help': 'Wstaw do faktury załączniki graficzne.',
       'all_pages_header': 'Pokaż nagłówek na',
@@ -23646,16 +23655,16 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'quote_footer': 'Stopka oferty',
       'auto_email_invoice': 'Auto Email',
       'auto_email_invoice_help':
-          'Automatically email recurring invoices when they are created.',
+      'Automatically email recurring invoices when they are created.',
       'auto_archive_invoice': 'Auto Archive',
       'auto_archive_invoice_help':
-          'Automatically archive invoices when they are paid.',
+      'Automatically archive invoices when they are paid.',
       'auto_archive_quote': 'Auto Archive',
       'auto_archive_quote_help':
-          'Automatically archive quotes when they are converted.',
+      'Automatically archive quotes when they are converted.',
       'auto_convert_quote': 'Automatycznie konwertuj',
       'auto_convert_quote_help':
-          'Utwórz automatycznie fakturę z oferty zaakceptowanej przez klienta.',
+      'Utwórz automatycznie fakturę z oferty zaakceptowanej przez klienta.',
       'workflow_settings': 'Workflow Settings',
       'freq_daily': 'Codziennie',
       'freq_weekly': 'Co tydzień',
@@ -23701,26 +23710,26 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'custom_javascript': 'Custom JavaScript',
       'signature_on_pdf': 'Show on PDF',
       'signature_on_pdf_help':
-          'Show the client signature on the invoice/quote PDF.',
+      'Show the client signature on the invoice/quote PDF.',
       'show_accept_invoice_terms': 'Przycisk wyboru do warunków faktury',
       'show_accept_invoice_terms_help':
-          'Wymagaj od klienta potwierdzenia, że akceptuje warunki faktury.',
+      'Wymagaj od klienta potwierdzenia, że akceptuje warunki faktury.',
       'show_accept_quote_terms': 'Przycisk wyboru do warunków oferty',
       'show_accept_quote_terms_help':
-          'Wymagaj od klienta potwierdzenia, że akceptuje warunki oferty.',
+      'Wymagaj od klienta potwierdzenia, że akceptuje warunki oferty.',
       'require_invoice_signature': 'Podpis na fakurze',
       'require_invoice_signature_help': 'Wymagaj od klienta podpisania faktury',
       'require_quote_signature': 'Podpis na ofercie',
       'enable_portal_password': 'Faktury chronione hasłem',
       'enable_portal_password_help':
-          'Zezwala na utworzenie haseł dla każdego kontaktu. Jeśli hasło zostanie ustanowione, użytkownik będzie musiał podać hasło, aby przeglądać faktury.',
+      'Zezwala na utworzenie haseł dla każdego kontaktu. Jeśli hasło zostanie ustanowione, użytkownik będzie musiał podać hasło, aby przeglądać faktury.',
       'authorization': 'Autoryzacja',
       'subdomain': 'Subdomena',
       'domain': 'Domena',
       'portal_mode': 'Portal Mode',
       'email_signature': 'Z wyrazami szacunku,',
       'enable_email_markup_help':
-          'Make it easier for your clients to pay you by adding schema.org markup to your emails.',
+      'Make it easier for your clients to pay you by adding schema.org markup to your emails.',
       'plain': 'Zwykły',
       'light': 'Jasny',
       'dark': 'Ciemny',
@@ -23749,12 +23758,12 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'accepted_card_logos': 'Accepted Card Logos',
       'credentials': 'Credentials',
       'require_billing_address_help':
-          'Require client to provide their billing address',
+      'Require client to provide their billing address',
       'require_shipping_address_help':
-          'Require client to provide their shipping address',
+      'Require client to provide their shipping address',
       'update_address': 'Aktualizuj adres',
       'update_address_help':
-          'Zaktualizuj dane adresowe klienta na podstawie dostarczonych informacji',
+      'Zaktualizuj dane adresowe klienta na podstawie dostarczonych informacji',
       'rate': 'Stawka',
       'tax_rate': 'Stawka podatkowa',
       'new_tax_rate': 'Nowa stawka podatkowa',
@@ -23766,13 +23775,13 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'restored_tax_rate': 'Successfully restored tax rate',
       'fill_products': 'Automatycznie uzupełniaj produkty',
       'fill_products_help':
-          'Wybieranie produktu automatycznie <b>uzupełni opis i kwotę</b>',
+      'Wybieranie produktu automatycznie <b>uzupełni opis i kwotę</b>',
       'update_products': 'Automatycznie aktualizuj produkty',
       'update_products_help':
-          'Zaktualizowanie faktury automatycznie <b>uaktualni produkt w bibliotece produktów</b>',
+      'Zaktualizowanie faktury automatycznie <b>uaktualni produkt w bibliotece produktów</b>',
       'convert_products': 'Convert Products',
       'convert_products_help':
-          'Automatycznie zamieniaj ceny produktu na walutę klienta',
+      'Automatycznie zamieniaj ceny produktu na walutę klienta',
       'fees': 'Opłaty',
       'limits': 'Limity',
       'provider': 'Provider',
@@ -23872,7 +23881,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'please_enter_a_first_name': 'Please enter a first name',
       'please_enter_a_last_name': 'Please enter a last name',
       'please_agree_to_terms_and_privacy':
-          'Please agree to the terms of service and privacy policy to create an account.',
+      'Please agree to the terms of service and privacy policy to create an account.',
       'i_agree_to_the': 'I agree to the',
       'terms_of_service_link': 'terms of service',
       'privacy_policy_link': 'privacy policy',
@@ -23971,7 +23980,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'average': 'Average',
       'unapproved': 'Unapproved',
       'authenticate_to_change_setting':
-          'Please authenticate to change this setting',
+      'Please authenticate to change this setting',
       'locked': 'Locked',
       'authenticate': 'Authenticate',
       'please_authenticate': 'Please authenticate',
@@ -24171,10 +24180,10 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'marked_invoices_as_paid': 'Successfully marked invoices as paid',
       'done': 'Gotowe',
       'please_enter_a_client_or_contact_name':
-          'Please enter a client or contact name',
+      'Please enter a client or contact name',
       'dark_mode': 'Tryb ciemny',
       'restart_app_to_apply_change':
-          'Uruchom ponownie aplikację, aby zastosować zmianę',
+      'Uruchom ponownie aplikację, aby zastosować zmianę',
       'refresh_data': 'Refresh Data',
       'blank_contact': 'Blank Contact',
       'activity': 'Dziennik aktywności',
@@ -24254,7 +24263,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'activity_8': ':user zarchiwizował fakturę :invoice',
       'activity_9': ':user usunął fakturę :invoice',
       'activity_10':
-          ':contact entered payment :payment for :payment_amount on invoice :invoice for :client',
+      ':contact entered payment :payment for :payment_amount on invoice :invoice for :client',
       'activity_11': ':user zaktualizował płatność :payment',
       'activity_12': ':user zarchiwizował płatność :payment',
       'activity_13': ':user usunął płatność :payment',
@@ -24284,7 +24293,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'activity_37': ':user przywrócił wydatek :expense',
       'activity_39': ':user anulował płatność na :payment_amount nr. :payment',
       'activity_40':
-          ':user refunded :adjustment of a :payment_amount payment :payment',
+      ':user refunded :adjustment of a :payment_amount payment :payment',
       'activity_41': 'płatność :payment_amount (:payment) nieudana',
       'activity_42': ':user stworzył zadanie :task',
       'activity_43': ':user zaktualizował zadanie :task',
@@ -24436,23 +24445,23 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'hide_menu': 'Hide Menu',
       'show_menu': 'Show Menu',
       'partially_refunded': 'Partially Refunded',
-      'search_documents': 'Search Documents',
-      'search_designs': 'Search Designs',
-      'search_invoices': 'Search Invoices',
-      'search_clients': 'Search Clients',
-      'search_products': 'Search Products',
-      'search_quotes': 'Search Quotes',
-      'search_credits': 'Search Credits',
-      'search_vendors': 'Search Vendors',
-      'search_users': 'Search Users',
-      'search_tax_rates': 'Search Tax Rates',
-      'search_tasks': 'Search Tasks',
-      'search_settings': 'Search Settings',
-      'search_projects': 'Search Projects',
-      'search_expenses': 'Search Expenses',
-      'search_payments': 'Search Payments',
-      'search_groups': 'Search Groups',
-      'search_company': 'Search Company',
+      'search_documents': 'Search :count Documents',
+      'search_designs': 'Search :count Designs',
+      'search_invoices': 'Search :count Invoices',
+      'search_clients': 'Search :count Clients',
+      'search_products': 'Search :count Products',
+      'search_quotes': 'Search :count Quotes',
+      'search_credits': 'Search :count Credits',
+      'search_vendors': 'Search :count Vendors',
+      'search_users': 'Search :count Users',
+      'search_tax_rates': 'Search :count Tax Rates',
+      'search_tasks': 'Search :count Tasks',
+      'search_settings': 'Search :count Settings',
+      'search_projects': 'Search :count Projects',
+      'search_expenses': 'Search :count Expenses',
+      'search_payments': 'Search :count Payments',
+      'search_groups': 'Search :count Groups',
+      'search_company': 'Search :count Company',
       'refund_payment': 'Reembolsar Pagamento',
       'cancelled_invoice': 'Successfully cancelled invoice',
       'cancelled_invoices': 'Successfully cancelled invoices',
@@ -24471,7 +24480,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'purge_data': 'Limpar Dados',
       'purge_successful': 'Dados da empresa limpos com sucesso',
       'purge_data_message':
-          'Aviso: Isto irá apagar seus dados permanentemente, não há como defazer esta ação.',
+      'Aviso: Isto irá apagar seus dados permanentemente, não há como defazer esta ação.',
       'invoice_balance': 'Invoice Balance',
       'age_group_0': '0 - 30 Dias',
       'age_group_30': '30 - 60 Dias',
@@ -24506,10 +24515,10 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'apply_license': 'Aplicar Licença',
       'cancel_account': 'Excluir Conta',
       'cancel_account_message':
-          'Aviso: Isso excluirá permanentemente sua conta, não há como desfazer esta ação.',
+      'Aviso: Isso excluirá permanentemente sua conta, não há como desfazer esta ação.',
       'delete_company': 'Excluir Empresa',
       'delete_company_message':
-          'Aviso: Isto irá excluir permanentemente sua empresa, não há como desfazer esta ação.',
+      'Aviso: Isto irá excluir permanentemente sua empresa, não há como desfazer esta ação.',
       'enable_modules': 'Enable Modules',
       'converted_quote': 'Successfully converted quote',
       'credit_design': 'Credit Design',
@@ -24661,14 +24670,14 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'applied': 'Aplicado',
       'include_recent_errors': 'Inclui erros recentes dos logs',
       'your_message_has_been_received':
-          'Recebemos sua mensagem e tentaremos responder rapidamente.',
+      'Recebemos sua mensagem e tentaremos responder rapidamente.',
       'message': 'Mensagem',
       'from': 'De',
       'show_product_details': 'Mostrar Detalhes do Produto',
       'show_product_details_help':
-          'Include the description and cost in the product dropdown',
+      'Include the description and cost in the product dropdown',
       'pdf_min_requirements':
-          'A renderização de PDF precisa da versão :version',
+      'A renderização de PDF precisa da versão :version',
       'adjust_fee_percent': 'Ajustar Porcentagem da Multa',
       'adjust_fee_percent_help': 'Ajustar o percentual de taxa a contabilizar',
       'configure_settings': 'Configurações Gerais',
@@ -24684,7 +24693,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'domain_url': 'URL do Domínio',
       'password_is_too_short': 'A senha é muito curta',
       'password_is_too_easy':
-          'Password must contain an upper case character and a number',
+      'Password must contain an upper case character and a number',
       'client_portal_tasks': 'Tarefas do Portal do Cliente',
       'client_portal_dashboard': 'Painel do Portal do Cliente',
       'please_enter_a_value': 'Por favor digite um valor',
@@ -24711,16 +24720,16 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'third_custom': 'Terceiro Personalizado',
       'show_cost': 'Mostrar Custo',
       'show_cost_help':
-          'Display a product cost field to track the markup/profit',
+      'Display a product cost field to track the markup/profit',
       'show_product_quantity': 'Mostrar Quantidade do Produto',
       'show_product_quantity_help':
-          'Mostrar um campo de quantidade de produto, caso contrário o padrão de um',
+      'Mostrar um campo de quantidade de produto, caso contrário o padrão de um',
       'show_invoice_quantity': 'Show Invoice Quantity',
       'show_invoice_quantity_help':
-          'Display a line item quantity field, otherwise default to one',
+      'Display a line item quantity field, otherwise default to one',
       'default_quantity': 'Quantidade Padrão',
       'default_quantity_help':
-          'Automatically set the line item quantity to one',
+      'Automatically set the line item quantity to one',
       'one_tax_rate': 'One Tax Rate',
       'two_tax_rates': 'Two Tax Rates',
       'three_tax_rates': 'Three Tax Rates',
@@ -24744,7 +24753,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'dropdown': 'Dropdown',
       'field_type': 'Tipo de Campo',
       'recover_password_email_sent':
-          'Foi enviado um e-mail de recuperação de senha',
+      'Foi enviado um e-mail de recuperação de senha',
       'submit': 'Enviar',
       'recover_password': 'Recupere sua senha',
       'late_fees': 'Late Fees',
@@ -24766,7 +24775,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'filtered_by_user': 'Filtrado por Usuário',
       'administrator': 'Administrador',
       'administrator_help':
-          'Permite ao usuário gerenciar usuários, mudar configurações e modificar todos os registros',
+      'Permite ao usuário gerenciar usuários, mudar configurações e modificar todos os registros',
       'user_management': 'Gerenciamento de Usuários',
       'users': 'Usuários',
       'new_user': 'Novo Usuário',
@@ -24781,7 +24790,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'invoice_options': 'Opções da Fatura',
       'hide_paid_to_date': 'Ocultar Pago até Hoje',
       'hide_paid_to_date_help':
-          'Apenas mostrar \"Pago até a Data\" em suas faturas uma vez que o pagamento for recebido.',
+      'Apenas mostrar \"Pago até a Data\" em suas faturas uma vez que o pagamento for recebido.',
       'invoice_embed_documents': 'Embutir Documentos',
       'invoice_embed_documents_help': 'Incluir imagens anexas na fatura.',
       'all_pages_header': 'Exibir Cabeçalho em',
@@ -24804,16 +24813,16 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'quote_footer': 'Rodapé do Orçamento',
       'auto_email_invoice': 'Email Automático',
       'auto_email_invoice_help':
-          'Enviar faturas recorrentes por email automaticamente quando forem criadas.',
+      'Enviar faturas recorrentes por email automaticamente quando forem criadas.',
       'auto_archive_invoice': 'Arquivar Automaticamente',
       'auto_archive_invoice_help':
-          'Arquivar automaticamente faturas quando forem pagas.',
+      'Arquivar automaticamente faturas quando forem pagas.',
       'auto_archive_quote': 'Arquivar Automaticamente',
       'auto_archive_quote_help':
-          'Arquivar automaticamente orçamentos quando forem convertidos.',
+      'Arquivar automaticamente orçamentos quando forem convertidos.',
       'auto_convert_quote': 'Auto Conversão',
       'auto_convert_quote_help':
-          'Converter automaticamente um orçamento quando for aprovado pelo cliente.',
+      'Converter automaticamente um orçamento quando for aprovado pelo cliente.',
       'workflow_settings': 'Configurações de Fluxo de Trabalho',
       'freq_daily': 'Diariamente',
       'freq_weekly': 'Semanalmente',
@@ -24859,27 +24868,27 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'custom_javascript': 'JavaScript Personalizado',
       'signature_on_pdf': 'Exibir em PDF',
       'signature_on_pdf_help':
-          'Exibir a assinatura do cliente no PDF da fatura/orçamento.',
+      'Exibir a assinatura do cliente no PDF da fatura/orçamento.',
       'show_accept_invoice_terms': 'Checkbox para Condições de Fatura',
       'show_accept_invoice_terms_help':
-          'Exigir que o cliente confirme que aceita as condições da fatura.',
+      'Exigir que o cliente confirme que aceita as condições da fatura.',
       'show_accept_quote_terms': 'Checkbox de Condições do Orçamento',
       'show_accept_quote_terms_help':
-          'Exigir que cliente confirme que aceita as Condições do Orçamento',
+      'Exigir que cliente confirme que aceita as Condições do Orçamento',
       'require_invoice_signature': 'Assinatura de Fatura',
       'require_invoice_signature_help':
-          'Exigir que o cliente providencie sua assinatura',
+      'Exigir que o cliente providencie sua assinatura',
       'require_quote_signature': 'Assinatura de Orçamento',
       'enable_portal_password': 'Proteger Faturas com Senha',
       'enable_portal_password_help':
-          'Permite definir uma senha para cada contato. Se uma senha for definida, o contato deverá informar uma senha antes de visualizar faturas.',
+      'Permite definir uma senha para cada contato. Se uma senha for definida, o contato deverá informar uma senha antes de visualizar faturas.',
       'authorization': 'Autorização',
       'subdomain': 'Subdomínio',
       'domain': 'Domínio',
       'portal_mode': 'Modo Portal',
       'email_signature': 'Atenciosamente,',
       'enable_email_markup_help':
-          'Tornar mais fácil para os seus clientes efetuarem seus pagamentos acrescentando marcações schema.org a seus emails.',
+      'Tornar mais fácil para os seus clientes efetuarem seus pagamentos acrescentando marcações schema.org a seus emails.',
       'plain': 'Plano',
       'light': 'Claro',
       'dark': 'Escuro',
@@ -24908,12 +24917,12 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'accepted_card_logos': 'Logos de Cartões Aceitos',
       'credentials': 'Credenciais',
       'require_billing_address_help':
-          'Require client to provide their billing address',
+      'Require client to provide their billing address',
       'require_shipping_address_help':
-          'Require client to provide their shipping address',
+      'Require client to provide their shipping address',
       'update_address': 'Atualizar Endereço',
       'update_address_help':
-          'Atualizar o endereço do cliente com os dados fornecidos',
+      'Atualizar o endereço do cliente com os dados fornecidos',
       'rate': 'Taxa',
       'tax_rate': 'Taxa do Imposto',
       'new_tax_rate': 'Nova Taxa de Imposto',
@@ -24925,13 +24934,13 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'restored_tax_rate': 'Successfully restored tax rate',
       'fill_products': 'Auto-preencher produtos',
       'fill_products_help':
-          'Ao selecionar um produto sua <b>descrição e preço</b> serão automaticamente preenchidos',
+      'Ao selecionar um produto sua <b>descrição e preço</b> serão automaticamente preenchidos',
       'update_products': 'Atualização automática dos produtos',
       'update_products_help':
-          'Atualizar uma fatura irá automaticamente<b>atualizar a biblioteca de produtos</b>',
+      'Atualizar uma fatura irá automaticamente<b>atualizar a biblioteca de produtos</b>',
       'convert_products': 'Converter Produtos',
       'convert_products_help':
-          'Converter automaticamente preços de produtos para a moeda do cliente',
+      'Converter automaticamente preços de produtos para a moeda do cliente',
       'fees': 'Taxas',
       'limits': 'Limites',
       'provider': 'Provedor',
@@ -25031,7 +25040,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'please_enter_a_first_name': 'Por favor digite o primeiro nome',
       'please_enter_a_last_name': 'Por favor digite o sobrenome',
       'please_agree_to_terms_and_privacy':
-          'Por favor, aceite os termos de serviço e política de privacidade para criar uma conta.',
+      'Por favor, aceite os termos de serviço e política de privacidade para criar uma conta.',
       'i_agree_to_the': 'Aceito os',
       'terms_of_service_link': 'termos do serviço',
       'privacy_policy_link': 'política de privacidade',
@@ -25130,7 +25139,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'average': 'Médio',
       'unapproved': 'Não Aprovado',
       'authenticate_to_change_setting':
-          'Por favor autentique-se para modificar esta configuração',
+      'Por favor autentique-se para modificar esta configuração',
       'locked': 'Travado',
       'authenticate': 'Autenticar',
       'please_authenticate': 'Por favor autentique-se',
@@ -25330,7 +25339,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'marked_invoices_as_paid': 'Successfully marked invoices as paid',
       'done': 'Concluído',
       'please_enter_a_client_or_contact_name':
-          'Por favor digite um cliente ou nome de contato',
+      'Por favor digite um cliente ou nome de contato',
       'dark_mode': 'Modo Escuro',
       'restart_app_to_apply_change': 'Reinicie o app para aplicar a mudança',
       'refresh_data': 'Atualizar Dados',
@@ -25412,7 +25421,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'activity_8': ':user arquivou a fatura :invoice',
       'activity_9': ':user excluiu a fatura :invoice',
       'activity_10':
-          ':contact efetuou o pagamento :payment de :payment_amount da fatura :invoice do cliente :client',
+      ':contact efetuou o pagamento :payment de :payment_amount da fatura :invoice do cliente :client',
       'activity_11': ':user atualizou o pagamento :payment',
       'activity_12': ':user arquivou o pagamento :payment',
       'activity_13': ':user excluiu o pagamento :payment',
@@ -25423,7 +25432,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'activity_18': ':user criou o orçamento :quote',
       'activity_19': ':user atualizou o orçamento :quote',
       'activity_20':
-          ':user enviou o orçamento :quote do cliente :client para o contato :contact',
+      ':user enviou o orçamento :quote do cliente :client para o contato :contact',
       'activity_21': ':contact visualizou o orçamento :quote',
       'activity_22': ':user arquivou o orçamento :quote',
       'activity_23': ':user excluiu o orçamento :quote',
@@ -25433,7 +25442,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'activity_27': ':user restaurou o pagamento :payment',
       'activity_28': ':user restaurou o crédito :credit',
       'activity_29':
-          ':contact aprovou o orçamento :quote para o cliente :client',
+      ':contact aprovou o orçamento :quote para o cliente :client',
       'activity_30': ':user criou o fornecedor :vendor',
       'activity_31': ':user arquivou o fornecedor :vendor',
       'activity_32': ':user excluiu :vendor',
@@ -25443,9 +25452,9 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'activity_36': ':user excluiu a despesa :expense',
       'activity_37': ':user restaurou a despesa :expense',
       'activity_39':
-          ':user cancelou um pagamento de :payment_amount em :payment',
+      ':user cancelou um pagamento de :payment_amount em :payment',
       'activity_40':
-          ':user reembolsou :adjustment de um pagamento :payment_amount em :payment',
+      ':user reembolsou :adjustment de um pagamento :payment_amount em :payment',
       'activity_41': 'Pagamento :payment_amount (:payment) falhou',
       'activity_42': ':user criou a tarefa :task',
       'activity_43': ':user atualizou a tarefa :task',
@@ -25481,10 +25490,10 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'email_style_custom': 'Estilo de E-mail Personalizado',
       'custom_message_dashboard': 'Mensagem de Painel Personalizada',
       'custom_message_unpaid_invoice':
-          'Mensagem Personalizada de Fatura Atrasada',
+      'Mensagem Personalizada de Fatura Atrasada',
       'custom_message_paid_invoice': 'Mensagem Personalizada de Fatura Paga',
       'custom_message_unapproved_quote':
-          'Mensagem Personalizada de Orçamento Não Aprovado',
+      'Mensagem Personalizada de Orçamento Não Aprovado',
       'lock_sent_invoices': 'Travar Faturas Enviadas',
       'translations': 'Traduções',
       'task_number_pattern': 'Padrão de Numeração de Tarefa',
@@ -25599,23 +25608,23 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'hide_menu': 'Hide Menu',
       'show_menu': 'Show Menu',
       'partially_refunded': 'Partially Refunded',
-      'search_documents': 'Search Documents',
-      'search_designs': 'Search Designs',
-      'search_invoices': 'Search Invoices',
-      'search_clients': 'Search Clients',
-      'search_products': 'Search Products',
-      'search_quotes': 'Search Quotes',
-      'search_credits': 'Search Credits',
-      'search_vendors': 'Search Vendors',
-      'search_users': 'Search Users',
-      'search_tax_rates': 'Search Tax Rates',
-      'search_tasks': 'Search Tasks',
-      'search_settings': 'Search Settings',
-      'search_projects': 'Search Projects',
-      'search_expenses': 'Search Expenses',
-      'search_payments': 'Search Payments',
-      'search_groups': 'Search Groups',
-      'search_company': 'Search Company',
+      'search_documents': 'Search :count Documents',
+      'search_designs': 'Search :count Designs',
+      'search_invoices': 'Search :count Invoices',
+      'search_clients': 'Search :count Clients',
+      'search_products': 'Search :count Products',
+      'search_quotes': 'Search :count Quotes',
+      'search_credits': 'Search :count Credits',
+      'search_vendors': 'Search :count Vendors',
+      'search_users': 'Search :count Users',
+      'search_tax_rates': 'Search :count Tax Rates',
+      'search_tasks': 'Search :count Tasks',
+      'search_settings': 'Search :count Settings',
+      'search_projects': 'Search :count Projects',
+      'search_expenses': 'Search :count Expenses',
+      'search_payments': 'Search :count Payments',
+      'search_groups': 'Search :count Groups',
+      'search_company': 'Search :count Company',
       'refund_payment': 'Reembolsar Pagamento',
       'cancelled_invoice': 'Successfully cancelled invoice',
       'cancelled_invoices': 'Successfully cancelled invoices',
@@ -25668,10 +25677,10 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'apply_license': 'Aplicar Linceça',
       'cancel_account': 'Cancelar Conta',
       'cancel_account_message':
-          'Aviso: Irá apagar permanentemente a sua conta.',
+      'Aviso: Irá apagar permanentemente a sua conta.',
       'delete_company': 'Delete Company',
       'delete_company_message':
-          'Warning: This will permanently delete your company, there is no undo.',
+      'Warning: This will permanently delete your company, there is no undo.',
       'enable_modules': 'Enable Modules',
       'converted_quote': 'Successfully converted quote',
       'credit_design': 'Credit Design',
@@ -25823,12 +25832,12 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'applied': 'Applied',
       'include_recent_errors': 'Include recent errors from the logs',
       'your_message_has_been_received':
-          'We have received your message and will try to respond promptly.',
+      'We have received your message and will try to respond promptly.',
       'message': 'Mensagem',
       'from': 'De',
       'show_product_details': 'Show Product Details',
       'show_product_details_help':
-          'Include the description and cost in the product dropdown',
+      'Include the description and cost in the product dropdown',
       'pdf_min_requirements': 'The PDF renderer requires :version',
       'adjust_fee_percent': 'Adjust Fee Percent',
       'adjust_fee_percent_help': 'Adjust percent to account for fee',
@@ -25845,7 +25854,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'domain_url': 'Domain URL',
       'password_is_too_short': 'Password is too short',
       'password_is_too_easy':
-          'Password must contain an upper case character and a number',
+      'Password must contain an upper case character and a number',
       'client_portal_tasks': 'Client Portal Tasks',
       'client_portal_dashboard': 'Client Portal Dashboard',
       'please_enter_a_value': 'Please enter a value',
@@ -25872,16 +25881,16 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'third_custom': 'Third Custom',
       'show_cost': 'Show Cost',
       'show_cost_help':
-          'Display a product cost field to track the markup/profit',
+      'Display a product cost field to track the markup/profit',
       'show_product_quantity': 'Show Product Quantity',
       'show_product_quantity_help':
-          'Display a product quantity field, otherwise default to one',
+      'Display a product quantity field, otherwise default to one',
       'show_invoice_quantity': 'Show Invoice Quantity',
       'show_invoice_quantity_help':
-          'Display a line item quantity field, otherwise default to one',
+      'Display a line item quantity field, otherwise default to one',
       'default_quantity': 'Default Quantity',
       'default_quantity_help':
-          'Automatically set the line item quantity to one',
+      'Automatically set the line item quantity to one',
       'one_tax_rate': 'One Tax Rate',
       'two_tax_rates': 'Two Tax Rates',
       'three_tax_rates': 'Three Tax Rates',
@@ -25926,7 +25935,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'filtered_by_user': 'Filtered by User',
       'administrator': 'Administrador',
       'administrator_help':
-          'Permite ao utilizador gerir utilizadores, alterar definições e modificar registos.',
+      'Permite ao utilizador gerir utilizadores, alterar definições e modificar registos.',
       'user_management': 'Gerir utilizadores',
       'users': 'Utilizadores',
       'new_user': 'Novo Utilizador',
@@ -25941,10 +25950,10 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'invoice_options': 'Opções da Nota Pag.',
       'hide_paid_to_date': 'Ocultar data de pagamento',
       'hide_paid_to_date_help':
-          'Apenas mostrar a \"Data de Pagamento\" quanto o pagamento tiver sido efetuado.',
+      'Apenas mostrar a \"Data de Pagamento\" quanto o pagamento tiver sido efetuado.',
       'invoice_embed_documents': 'Documentos Embutidos',
       'invoice_embed_documents_help':
-          'Incluir imagens anexadas na nota de pagamento.',
+      'Incluir imagens anexadas na nota de pagamento.',
       'all_pages_header': 'Mostrar cabeçalho ativo',
       'all_pages_footer': 'Mostrar rodapé ativo',
       'first_page': 'primeira página',
@@ -25965,16 +25974,16 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'quote_footer': 'Rodapé do Orçamento',
       'auto_email_invoice': 'Auto Email',
       'auto_email_invoice_help':
-          'Automatically email recurring invoices when they are created.',
+      'Automatically email recurring invoices when they are created.',
       'auto_archive_invoice': 'Auto Archive',
       'auto_archive_invoice_help':
-          'Automatically archive invoices when they are paid.',
+      'Automatically archive invoices when they are paid.',
       'auto_archive_quote': 'Auto Archive',
       'auto_archive_quote_help':
-          'Automatically archive quotes when they are converted.',
+      'Automatically archive quotes when they are converted.',
       'auto_convert_quote': 'Auto Convert',
       'auto_convert_quote_help':
-          'Converter automaticamente um orçamento quando for aprovado pelo cliente.',
+      'Converter automaticamente um orçamento quando for aprovado pelo cliente.',
       'workflow_settings': 'Workflow Settings',
       'freq_daily': 'Daily',
       'freq_weekly': 'Semanal',
@@ -26020,27 +26029,27 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'custom_javascript': 'Custom JavaScript',
       'signature_on_pdf': 'Show on PDF',
       'signature_on_pdf_help':
-          'Show the client signature on the invoice/quote PDF.',
+      'Show the client signature on the invoice/quote PDF.',
       'show_accept_invoice_terms': 'Checkbox para Termos da Nota de Pagamento',
       'show_accept_invoice_terms_help':
-          'Requer que o cliente confirme que aceita os termos da nota de pagamento.',
+      'Requer que o cliente confirme que aceita os termos da nota de pagamento.',
       'show_accept_quote_terms': 'Checkbox para Termos do Orçamento',
       'show_accept_quote_terms_help':
-          'Requer que o cliente confirme que aceita os termos do orçamento.',
+      'Requer que o cliente confirme que aceita os termos do orçamento.',
       'require_invoice_signature': 'Assinatura da Nota de Pagamento',
       'require_invoice_signature_help':
-          'Requer que o cliente introduza a sua assinatura.',
+      'Requer que o cliente introduza a sua assinatura.',
       'require_quote_signature': 'Assinatura de Orçamento',
       'enable_portal_password': 'Proteger notas de pag. com palavra-passe',
       'enable_portal_password_help':
-          'Permite definir uma palavra-passe para cada contacto. Se uma palavra-passe for definida, o contacto deverá introduzir a palavra-passe antes de visualizar a nota de pagamento.',
+      'Permite definir uma palavra-passe para cada contacto. Se uma palavra-passe for definida, o contacto deverá introduzir a palavra-passe antes de visualizar a nota de pagamento.',
       'authorization': 'Autorização',
       'subdomain': 'Subdomínio',
       'domain': 'Domínio',
       'portal_mode': 'Portal Mode',
       'email_signature': 'Atenciosamente,',
       'enable_email_markup_help':
-          'Tornar mais fácil para os seus clientes efetuarem os pagamentos, acrescentando marcação schema.org a seus e-mails.',
+      'Tornar mais fácil para os seus clientes efetuarem os pagamentos, acrescentando marcação schema.org a seus e-mails.',
       'plain': 'Plano',
       'light': 'Claro',
       'dark': 'Escuro',
@@ -26069,9 +26078,9 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'accepted_card_logos': 'Accepted Card Logos',
       'credentials': 'Credentials',
       'require_billing_address_help':
-          'Require client to provide their billing address',
+      'Require client to provide their billing address',
       'require_shipping_address_help':
-          'Require client to provide their shipping address',
+      'Require client to provide their shipping address',
       'update_address': 'Atualizar Morada',
       'update_address_help': 'Atualizar morada do cliente',
       'rate': 'Valor',
@@ -26085,13 +26094,13 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'restored_tax_rate': 'Successfully restored tax rate',
       'fill_products': 'Sugerir produtos',
       'fill_products_help':
-          'Selecionando o produto <b>descrição e preço</b> serão preenchidos automaticamente',
+      'Selecionando o produto <b>descrição e preço</b> serão preenchidos automaticamente',
       'update_products': 'Atualização automática dos produtos',
       'update_products_help':
-          'Atualizando na nota de pagamento o <b>produto também será atualizado</b>',
+      'Atualizando na nota de pagamento o <b>produto também será atualizado</b>',
       'convert_products': 'Convert Products',
       'convert_products_help':
-          'Automatically convert product prices to the client\'s currency',
+      'Automatically convert product prices to the client\'s currency',
       'fees': 'Taxas',
       'limits': 'Limites',
       'provider': 'Provider',
@@ -26191,7 +26200,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'please_enter_a_first_name': 'Please enter a first name',
       'please_enter_a_last_name': 'Please enter a last name',
       'please_agree_to_terms_and_privacy':
-          'Please agree to the terms of service and privacy policy to create an account.',
+      'Please agree to the terms of service and privacy policy to create an account.',
       'i_agree_to_the': 'I agree to the',
       'terms_of_service_link': 'terms of service',
       'privacy_policy_link': 'privacy policy',
@@ -26290,7 +26299,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'average': 'Average',
       'unapproved': 'Unapproved',
       'authenticate_to_change_setting':
-          'Please authenticate to change this setting',
+      'Please authenticate to change this setting',
       'locked': 'Locked',
       'authenticate': 'Authenticate',
       'please_authenticate': 'Please authenticate',
@@ -26490,7 +26499,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'marked_invoices_as_paid': 'Successfully marked invoices as paid',
       'done': 'Feito',
       'please_enter_a_client_or_contact_name':
-          'Please enter a client or contact name',
+      'Please enter a client or contact name',
       'dark_mode': 'Modo Escuro',
       'restart_app_to_apply_change': 'Restart the app to apply the change',
       'refresh_data': 'Refresh Data',
@@ -26572,7 +26581,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'activity_8': ':user arquivou a nota de pagamento :invoice',
       'activity_9': ':user removeu a nota de pagamento :invoice',
       'activity_10':
-          ':contact entered payment :payment for :payment_amount on invoice :invoice for :client',
+      ':contact entered payment :payment for :payment_amount on invoice :invoice for :client',
       'activity_11': ':user atualizou o pagamento :payment',
       'activity_12': ':user arquivou o pagamento :payment',
       'activity_13': ':user removeu o pagamento :payment',
@@ -26602,7 +26611,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'activity_37': ':user restaurou a despesa :expense',
       'activity_39': ':user cancelled a :payment_amount payment :payment',
       'activity_40':
-          ':user refunded :adjustment of a :payment_amount payment :payment',
+      ':user refunded :adjustment of a :payment_amount payment :payment',
       'activity_41': 'pagamento (:payment)  de :payment_amount falhou',
       'activity_42': ':user criou a tarefa :task',
       'activity_43': ':user atualizou a tarefa :task',
@@ -26754,23 +26763,23 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'hide_menu': 'Hide Menu',
       'show_menu': 'Show Menu',
       'partially_refunded': 'Partially Refunded',
-      'search_documents': 'Search Documents',
-      'search_designs': 'Search Designs',
-      'search_invoices': 'Search Invoices',
-      'search_clients': 'Search Clients',
-      'search_products': 'Search Products',
-      'search_quotes': 'Search Quotes',
-      'search_credits': 'Search Credits',
-      'search_vendors': 'Search Vendors',
-      'search_users': 'Search Users',
-      'search_tax_rates': 'Search Tax Rates',
-      'search_tasks': 'Search Tasks',
-      'search_settings': 'Search Settings',
-      'search_projects': 'Search Projects',
-      'search_expenses': 'Search Expenses',
-      'search_payments': 'Search Payments',
-      'search_groups': 'Search Groups',
-      'search_company': 'Search Company',
+      'search_documents': 'Search :count Documents',
+      'search_designs': 'Search :count Designs',
+      'search_invoices': 'Search :count Invoices',
+      'search_clients': 'Search :count Clients',
+      'search_products': 'Search :count Products',
+      'search_quotes': 'Search :count Quotes',
+      'search_credits': 'Search :count Credits',
+      'search_vendors': 'Search :count Vendors',
+      'search_users': 'Search :count Users',
+      'search_tax_rates': 'Search :count Tax Rates',
+      'search_tasks': 'Search :count Tasks',
+      'search_settings': 'Search :count Settings',
+      'search_projects': 'Search :count Projects',
+      'search_expenses': 'Search :count Expenses',
+      'search_payments': 'Search :count Payments',
+      'search_groups': 'Search :count Groups',
+      'search_company': 'Search :count Company',
       'refund_payment': 'Refund Payment',
       'cancelled_invoice': 'Successfully cancelled invoice',
       'cancelled_invoices': 'Successfully cancelled invoices',
@@ -26789,7 +26798,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'purge_data': 'Purge Data',
       'purge_successful': 'Successfully purged company data',
       'purge_data_message':
-          'Warning: This will permanently erase your data, there is no undo.',
+      'Warning: This will permanently erase your data, there is no undo.',
       'invoice_balance': 'Invoice Balance',
       'age_group_0': '0 - 30 Days',
       'age_group_30': '30 - 60 Days',
@@ -26824,10 +26833,10 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'apply_license': 'Aplică Licență',
       'cancel_account': 'Șterge cont',
       'cancel_account_message':
-          'ATENȚIE: Toate datele vor fi șterse definitiv, nu se pot recupera.',
+      'ATENȚIE: Toate datele vor fi șterse definitiv, nu se pot recupera.',
       'delete_company': 'Delete Company',
       'delete_company_message':
-          'Warning: This will permanently delete your company, there is no undo.',
+      'Warning: This will permanently delete your company, there is no undo.',
       'enable_modules': 'Enable Modules',
       'converted_quote': 'Successfully converted quote',
       'credit_design': 'Credit Design',
@@ -26979,12 +26988,12 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'applied': 'Applied',
       'include_recent_errors': 'Include recent errors from the logs',
       'your_message_has_been_received':
-          'We have received your message and will try to respond promptly.',
+      'We have received your message and will try to respond promptly.',
       'message': 'Mesaj',
       'from': 'De la',
       'show_product_details': 'Show Product Details',
       'show_product_details_help':
-          'Include the description and cost in the product dropdown',
+      'Include the description and cost in the product dropdown',
       'pdf_min_requirements': 'The PDF renderer requires :version',
       'adjust_fee_percent': 'Adjust Fee Percent',
       'adjust_fee_percent_help': 'Adjust percent to account for fee',
@@ -27001,7 +27010,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'domain_url': 'Domain URL',
       'password_is_too_short': 'Password is too short',
       'password_is_too_easy':
-          'Password must contain an upper case character and a number',
+      'Password must contain an upper case character and a number',
       'client_portal_tasks': 'Client Portal Tasks',
       'client_portal_dashboard': 'Client Portal Dashboard',
       'please_enter_a_value': 'Please enter a value',
@@ -27028,16 +27037,16 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'third_custom': 'Third Custom',
       'show_cost': 'Show Cost',
       'show_cost_help':
-          'Display a product cost field to track the markup/profit',
+      'Display a product cost field to track the markup/profit',
       'show_product_quantity': 'Show Product Quantity',
       'show_product_quantity_help':
-          'Display a product quantity field, otherwise default to one',
+      'Display a product quantity field, otherwise default to one',
       'show_invoice_quantity': 'Show Invoice Quantity',
       'show_invoice_quantity_help':
-          'Display a line item quantity field, otherwise default to one',
+      'Display a line item quantity field, otherwise default to one',
       'default_quantity': 'Default Quantity',
       'default_quantity_help':
-          'Automatically set the line item quantity to one',
+      'Automatically set the line item quantity to one',
       'one_tax_rate': 'One Tax Rate',
       'two_tax_rates': 'Two Tax Rates',
       'three_tax_rates': 'Three Tax Rates',
@@ -27082,7 +27091,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'filtered_by_user': 'Filtered by User',
       'administrator': 'Administrator',
       'administrator_help':
-          'Allow user to manage users, change settings and modify all records',
+      'Allow user to manage users, change settings and modify all records',
       'user_management': 'Utilizatori',
       'users': 'Utilizatori',
       'new_user': 'New User',
@@ -27097,7 +27106,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'invoice_options': 'Opțiuni Factură',
       'hide_paid_to_date': 'Ascunde câmpul \"Plătit până la\"',
       'hide_paid_to_date_help':
-          'Afișează \"Plătit pana la\" decât când plata a fost efectuată.',
+      'Afișează \"Plătit pana la\" decât când plata a fost efectuată.',
       'invoice_embed_documents': 'Embed Documents',
       'invoice_embed_documents_help': 'Include attached images in the invoice.',
       'all_pages_header': 'Show Header on',
@@ -27120,16 +27129,16 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'quote_footer': 'Subsol Proformă',
       'auto_email_invoice': 'Auto Email',
       'auto_email_invoice_help':
-          'Automatically email recurring invoices when they are created.',
+      'Automatically email recurring invoices when they are created.',
       'auto_archive_invoice': 'Auto Archive',
       'auto_archive_invoice_help':
-          'Automatically archive invoices when they are paid.',
+      'Automatically archive invoices when they are paid.',
       'auto_archive_quote': 'Auto Archive',
       'auto_archive_quote_help':
-          'Automatically archive quotes when they are converted.',
+      'Automatically archive quotes when they are converted.',
       'auto_convert_quote': 'Auto Convert',
       'auto_convert_quote_help':
-          'Automatically convert a quote to an invoice when approved by a client.',
+      'Automatically convert a quote to an invoice when approved by a client.',
       'workflow_settings': 'Workflow Settings',
       'freq_daily': 'Zilnic',
       'freq_weekly': 'Săptămânal',
@@ -27175,27 +27184,27 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'custom_javascript': 'Custom JavaScript',
       'signature_on_pdf': 'Show on PDF',
       'signature_on_pdf_help':
-          'Show the client signature on the invoice/quote PDF.',
+      'Show the client signature on the invoice/quote PDF.',
       'show_accept_invoice_terms': 'Invoice Terms Checkbox',
       'show_accept_invoice_terms_help':
-          'Require client to confirm that they accept the invoice terms.',
+      'Require client to confirm that they accept the invoice terms.',
       'show_accept_quote_terms': 'Quote Terms Checkbox',
       'show_accept_quote_terms_help':
-          'Require client to confirm that they accept the quote terms.',
+      'Require client to confirm that they accept the quote terms.',
       'require_invoice_signature': 'Invoice Signature',
       'require_invoice_signature_help':
-          'Require client to provide their signature.',
+      'Require client to provide their signature.',
       'require_quote_signature': 'Quote Signature',
       'enable_portal_password': 'Password Protect Invoices',
       'enable_portal_password_help':
-          'Allows you to set a password for each contact. If a password is set, the contact will be required to enter a password before viewing invoices.',
+      'Allows you to set a password for each contact. If a password is set, the contact will be required to enter a password before viewing invoices.',
       'authorization': 'Authorization',
       'subdomain': 'Subdomeniu',
       'domain': 'Domain',
       'portal_mode': 'Portal Mode',
       'email_signature': 'În legătură cu,',
       'enable_email_markup_help':
-          'Make it easier for your clients to pay you by adding schema.org markup to your emails.',
+      'Make it easier for your clients to pay you by adding schema.org markup to your emails.',
       'plain': 'Plain',
       'light': 'Light',
       'dark': 'Dark',
@@ -27224,12 +27233,12 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'accepted_card_logos': 'Accepted Card Logos',
       'credentials': 'Credentials',
       'require_billing_address_help':
-          'Require client to provide their billing address',
+      'Require client to provide their billing address',
       'require_shipping_address_help':
-          'Require client to provide their shipping address',
+      'Require client to provide their shipping address',
       'update_address': 'Actualizează Adresa',
       'update_address_help':
-          'Actualizează adresa clientului cu detaliile trimise',
+      'Actualizează adresa clientului cu detaliile trimise',
       'rate': 'Valoare',
       'tax_rate': 'Valoare Taxă',
       'new_tax_rate': 'New Tax Rate',
@@ -27241,13 +27250,13 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'restored_tax_rate': 'Successfully restored tax rate',
       'fill_products': 'Completează automat produsele',
       'fill_products_help':
-          'Alegând un produs <b> descrierea și prețul</b> vor fi completate automat',
+      'Alegând un produs <b> descrierea și prețul</b> vor fi completate automat',
       'update_products': 'Actualizare automată a produselor',
       'update_products_help':
-          'Actualizând o factură se va actualiza si <b>librăria de produse</b>',
+      'Actualizând o factură se va actualiza si <b>librăria de produse</b>',
       'convert_products': 'Convert Products',
       'convert_products_help':
-          'Automatically convert product prices to the client\'s currency',
+      'Automatically convert product prices to the client\'s currency',
       'fees': 'Fees',
       'limits': 'Limits',
       'provider': 'Provider',
@@ -27347,7 +27356,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'please_enter_a_first_name': 'Please enter a first name',
       'please_enter_a_last_name': 'Please enter a last name',
       'please_agree_to_terms_and_privacy':
-          'Please agree to the terms of service and privacy policy to create an account.',
+      'Please agree to the terms of service and privacy policy to create an account.',
       'i_agree_to_the': 'I agree to the',
       'terms_of_service_link': 'terms of service',
       'privacy_policy_link': 'privacy policy',
@@ -27446,7 +27455,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'average': 'Average',
       'unapproved': 'Unapproved',
       'authenticate_to_change_setting':
-          'Please authenticate to change this setting',
+      'Please authenticate to change this setting',
       'locked': 'Locked',
       'authenticate': 'Authenticate',
       'please_authenticate': 'Please authenticate',
@@ -27646,7 +27655,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'marked_invoices_as_paid': 'Successfully marked invoices as paid',
       'done': 'Gata',
       'please_enter_a_client_or_contact_name':
-          'Please enter a client or contact name',
+      'Please enter a client or contact name',
       'dark_mode': 'Mod întunecat',
       'restart_app_to_apply_change': 'Restart the app to apply the change',
       'refresh_data': 'Refresh Data',
@@ -27724,12 +27733,12 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'activity_4': ':user a creat factura :invoice',
       'activity_5': ':user a actualizat factura :invoice',
       'activity_6':
-          ':user a trimis pe email factura :invoice pentru :client la :contact',
+      ':user a trimis pe email factura :invoice pentru :client la :contact',
       'activity_7': ':contact a vizualizat factura :invoice pentru :client',
       'activity_8': ':user a arhivat factura :invoice',
       'activity_9': ':user a șters factura :invoice',
       'activity_10':
-          ':contact entered payment :payment for :payment_amount on invoice :invoice for :client',
+      ':contact entered payment :payment for :payment_amount on invoice :invoice for :client',
       'activity_11': ':user a actualizat plata :payment',
       'activity_12': ':user a arhivat plata :payment',
       'activity_13': ':user a șters plata :payment',
@@ -27740,7 +27749,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'activity_18': ':user a creat proforma :quote',
       'activity_19': ':user a actualizat proforma :quote',
       'activity_20':
-          ':user a trimis pe email proforma :quote pentru :client la :contact',
+      ':user a trimis pe email proforma :quote pentru :client la :contact',
       'activity_21': ':contact a vizualizat proforma :quote',
       'activity_22': ':user a arhivat proforma :quote',
       'activity_23': ':user a șters proforma :quote',
@@ -27760,7 +27769,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'activity_37': ':user a restaurat cheltuiala :expense',
       'activity_39': ':user cancelled a :payment_amount payment :payment',
       'activity_40':
-          ':user refunded :adjustment of a :payment_amount payment :payment',
+      ':user refunded :adjustment of a :payment_amount payment :payment',
       'activity_41': ':payment_amount payment (:payment) failed',
       'activity_42': ':user created task :task',
       'activity_43': ':user updated task :task',
@@ -27912,23 +27921,23 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'hide_menu': 'Hide Menu',
       'show_menu': 'Show Menu',
       'partially_refunded': 'Partially Refunded',
-      'search_documents': 'Search Documents',
-      'search_designs': 'Search Designs',
-      'search_invoices': 'Search Invoices',
-      'search_clients': 'Search Clients',
-      'search_products': 'Search Products',
-      'search_quotes': 'Search Quotes',
-      'search_credits': 'Search Credits',
-      'search_vendors': 'Search Vendors',
-      'search_users': 'Search Users',
-      'search_tax_rates': 'Search Tax Rates',
-      'search_tasks': 'Search Tasks',
-      'search_settings': 'Search Settings',
-      'search_projects': 'Search Projects',
-      'search_expenses': 'Search Expenses',
-      'search_payments': 'Search Payments',
-      'search_groups': 'Search Groups',
-      'search_company': 'Search Company',
+      'search_documents': 'Search :count Documents',
+      'search_designs': 'Search :count Designs',
+      'search_invoices': 'Search :count Invoices',
+      'search_clients': 'Search :count Clients',
+      'search_products': 'Search :count Products',
+      'search_quotes': 'Search :count Quotes',
+      'search_credits': 'Search :count Credits',
+      'search_vendors': 'Search :count Vendors',
+      'search_users': 'Search :count Users',
+      'search_tax_rates': 'Search :count Tax Rates',
+      'search_tasks': 'Search :count Tasks',
+      'search_settings': 'Search :count Settings',
+      'search_projects': 'Search :count Projects',
+      'search_expenses': 'Search :count Expenses',
+      'search_payments': 'Search :count Payments',
+      'search_groups': 'Search :count Groups',
+      'search_company': 'Search :count Company',
       'refund_payment': 'Refund Payment',
       'cancelled_invoice': 'Successfully cancelled invoice',
       'cancelled_invoices': 'Successfully cancelled invoices',
@@ -27947,7 +27956,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'purge_data': 'Purge Data',
       'purge_successful': 'Uspešno očišćeni podatci kompanije',
       'purge_data_message':
-          'Warning: This will permanently erase your data, there is no undo.',
+      'Warning: This will permanently erase your data, there is no undo.',
       'invoice_balance': 'Invoice Balance',
       'age_group_0': '0 - 30 Days',
       'age_group_30': '30 - 60 Days',
@@ -27982,10 +27991,10 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'apply_license': 'Apply License',
       'cancel_account': 'Delete Account',
       'cancel_account_message':
-          'Warning: This will permanently delete your account, there is no undo.',
+      'Warning: This will permanently delete your account, there is no undo.',
       'delete_company': 'Izbriši kompaniju',
       'delete_company_message':
-          'Upozorenje: Ovo će potpuno obrisati podatke o Vašooj komplaniji, nema mogućnosti povratka podataka.',
+      'Upozorenje: Ovo će potpuno obrisati podatke o Vašooj komplaniji, nema mogućnosti povratka podataka.',
       'enable_modules': 'Enable Modules',
       'converted_quote': 'Successfully converted quote',
       'credit_design': 'Credit Design',
@@ -28137,12 +28146,12 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'applied': 'Applied',
       'include_recent_errors': 'Include recent errors from the logs',
       'your_message_has_been_received':
-          'We have received your message and will try to respond promptly.',
+      'We have received your message and will try to respond promptly.',
       'message': 'Poruka',
       'from': 'Šalje',
       'show_product_details': 'Show Product Details',
       'show_product_details_help':
-          'Include the description and cost in the product dropdown',
+      'Include the description and cost in the product dropdown',
       'pdf_min_requirements': 'The PDF renderer requires :version',
       'adjust_fee_percent': 'Adjust Fee Percent',
       'adjust_fee_percent_help': 'Adjust percent to account for fee',
@@ -28159,7 +28168,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'domain_url': 'Domain URL',
       'password_is_too_short': 'Lozinka je prekratka',
       'password_is_too_easy':
-          'Password must contain an upper case character and a number',
+      'Password must contain an upper case character and a number',
       'client_portal_tasks': 'Client Portal Tasks',
       'client_portal_dashboard': 'Client Portal Dashboard',
       'please_enter_a_value': 'Please enter a value',
@@ -28186,16 +28195,16 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'third_custom': 'Third Custom',
       'show_cost': 'Show Cost',
       'show_cost_help':
-          'Display a product cost field to track the markup/profit',
+      'Display a product cost field to track the markup/profit',
       'show_product_quantity': 'Show Product Quantity',
       'show_product_quantity_help':
-          'Display a product quantity field, otherwise default to one',
+      'Display a product quantity field, otherwise default to one',
       'show_invoice_quantity': 'Show Invoice Quantity',
       'show_invoice_quantity_help':
-          'Display a line item quantity field, otherwise default to one',
+      'Display a line item quantity field, otherwise default to one',
       'default_quantity': 'Default Quantity',
       'default_quantity_help':
-          'Automatically set the line item quantity to one',
+      'Automatically set the line item quantity to one',
       'one_tax_rate': 'One Tax Rate',
       'two_tax_rates': 'Two Tax Rates',
       'three_tax_rates': 'Three Tax Rates',
@@ -28240,7 +28249,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'filtered_by_user': 'Filtered by User',
       'administrator': 'Administrator',
       'administrator_help':
-          'Allow user to manage users, change settings and modify all records',
+      'Allow user to manage users, change settings and modify all records',
       'user_management': 'Upravljanje korisnicima',
       'users': 'Korisnici',
       'new_user': 'New User',
@@ -28255,7 +28264,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'invoice_options': 'Opcije računa',
       'hide_paid_to_date': 'Sakrij datum plaćanja',
       'hide_paid_to_date_help':
-          'Prikažite \"Datum plaćanja\" na računima, onda kada je uplata primljena.',
+      'Prikažite \"Datum plaćanja\" na računima, onda kada je uplata primljena.',
       'invoice_embed_documents': 'Embed Documents',
       'invoice_embed_documents_help': 'Include attached images in the invoice.',
       'all_pages_header': 'Prikaži zaglavlje na',
@@ -28278,16 +28287,16 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'quote_footer': 'Podnožje ponude',
       'auto_email_invoice': 'Automatsko slanje ePošte',
       'auto_email_invoice_help':
-          'Automatski pošalji ponavljajuće račune u momentu kreiranja.',
+      'Automatski pošalji ponavljajuće račune u momentu kreiranja.',
       'auto_archive_invoice': 'AAutomatsko arhiviranje',
       'auto_archive_invoice_help':
-          'Automatski arhiviraj račune kada su plaćeni.',
+      'Automatski arhiviraj račune kada su plaćeni.',
       'auto_archive_quote': 'Automatsko Arhiviranje',
       'auto_archive_quote_help':
-          'Automatski arhiviraj ponude kada su konvertovane.',
+      'Automatski arhiviraj ponude kada su konvertovane.',
       'auto_convert_quote': 'Auto konverzija',
       'auto_convert_quote_help':
-          'Automatski konvertujte ponudu u račun nakon što je odobrena od strane klijenta.',
+      'Automatski konvertujte ponudu u račun nakon što je odobrena od strane klijenta.',
       'workflow_settings': 'Podešavanje toka rada',
       'freq_daily': 'Svakodnevno',
       'freq_weekly': 'Weekly',
@@ -28333,27 +28342,27 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'custom_javascript': 'Custom JavaScript',
       'signature_on_pdf': 'Prikaži u PDF-u',
       'signature_on_pdf_help':
-          'Prikazite potpis klijenta na PDF-u računa/ponude.',
+      'Prikazite potpis klijenta na PDF-u računa/ponude.',
       'show_accept_invoice_terms': 'Invoice Terms Checkbox',
       'show_accept_invoice_terms_help':
-          'Require client to confirm that they accept the invoice terms.',
+      'Require client to confirm that they accept the invoice terms.',
       'show_accept_quote_terms': 'Quote Terms Checkbox',
       'show_accept_quote_terms_help':
-          'Require client to confirm that they accept the quote terms.',
+      'Require client to confirm that they accept the quote terms.',
       'require_invoice_signature': 'Invoice Signature',
       'require_invoice_signature_help':
-          'Require client to provide their signature.',
+      'Require client to provide their signature.',
       'require_quote_signature': 'Quote Signature',
       'enable_portal_password': 'Password Protect Invoices',
       'enable_portal_password_help':
-          'Allows you to set a password for each contact. If a password is set, the contact will be required to enter a password before viewing invoices.',
+      'Allows you to set a password for each contact. If a password is set, the contact will be required to enter a password before viewing invoices.',
       'authorization': 'Authorization',
       'subdomain': 'Poddomena',
       'domain': 'Domain',
       'portal_mode': 'Portal Mode',
       'email_signature': 'Srdačno,',
       'enable_email_markup_help':
-          'Olakšajte svojim klijentima plaćanje dodavanjem schema.org markupa vašoj e-pošti.',
+      'Olakšajte svojim klijentima plaćanje dodavanjem schema.org markupa vašoj e-pošti.',
       'plain': 'Obično',
       'light': 'Svetlo',
       'dark': 'Tamno',
@@ -28382,9 +28391,9 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'accepted_card_logos': 'Logoi Prihvaćenih Kartica',
       'credentials': 'Credentials',
       'require_billing_address_help':
-          'Require client to provide their billing address',
+      'Require client to provide their billing address',
       'require_shipping_address_help':
-          'Require client to provide their shipping address',
+      'Require client to provide their shipping address',
       'update_address': 'Ažuriraj adresu',
       'update_address_help': 'Ažuriraj adresu klijenta uz osigurane detalje',
       'rate': 'Stopa',
@@ -28398,13 +28407,13 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'restored_tax_rate': 'Successfully restored tax rate',
       'fill_products': 'Proizvodi sa samoispunom',
       'fill_products_help':
-          'Odabir proizvoda će automatski <b>ispuniti opis i cijenu</b>',
+      'Odabir proizvoda će automatski <b>ispuniti opis i cijenu</b>',
       'update_products': 'Proizvodi sa autoažuriranjem',
       'update_products_help':
-          'Ažuriranje računa automatski <b>ažurirati registar proizvoda</b>',
+      'Ažuriranje računa automatski <b>ažurirati registar proizvoda</b>',
       'convert_products': 'Konvertuj proizvode',
       'convert_products_help':
-          'Automatski konvertuj cene proizvoda u valutu klijenta',
+      'Automatski konvertuj cene proizvoda u valutu klijenta',
       'fees': 'Fees',
       'limits': 'Limits',
       'provider': 'Provider',
@@ -28504,7 +28513,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'please_enter_a_first_name': 'Unesite ime',
       'please_enter_a_last_name': 'Unesite prezime',
       'please_agree_to_terms_and_privacy':
-          'Molimo Vas prihvatite uslove korišćenja i politiku privatnosti da biste registrovali korisnički nalog.',
+      'Molimo Vas prihvatite uslove korišćenja i politiku privatnosti da biste registrovali korisnički nalog.',
       'i_agree_to_the': 'Slažem se sa',
       'terms_of_service_link': 'uslovima korišćenja',
       'privacy_policy_link': 'politikom privatnosti',
@@ -28603,7 +28612,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'average': 'Prosek',
       'unapproved': 'Neodobreno',
       'authenticate_to_change_setting':
-          'Molimo Vas auotorizujte se da biste promenili ovu opciju',
+      'Molimo Vas auotorizujte se da biste promenili ovu opciju',
       'locked': 'Zaključano',
       'authenticate': 'Autorizuj se',
       'please_authenticate': 'Molimo Vas da se autorizujete',
@@ -28803,10 +28812,10 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'marked_invoices_as_paid': 'Successfully marked invoices as paid',
       'done': 'Završeno',
       'please_enter_a_client_or_contact_name':
-          'Unesite klijenta ili ime kontakta',
+      'Unesite klijenta ili ime kontakta',
       'dark_mode': 'Tamni prikaz',
       'restart_app_to_apply_change':
-          'Restartuje aplikaciju za aktiviranje izmene',
+      'Restartuje aplikaciju za aktiviranje izmene',
       'refresh_data': 'Osveži podatke',
       'blank_contact': 'Prazan kontakt',
       'activity': 'Aktivnost',
@@ -28886,7 +28895,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'activity_8': ':user arhivirao račun :invoice',
       'activity_9': ':user obrisao račun :invoce',
       'activity_10':
-          ':contact entered payment :payment for :payment_amount on invoice :invoice for :client',
+      ':contact entered payment :payment for :payment_amount on invoice :invoice for :client',
       'activity_11': ':user ažurirao uplatu :payment',
       'activity_12': ':user ahivirao uplatu :payment',
       'activity_13': ':user obrisao uplatu :payment',
@@ -28916,7 +28925,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'activity_37': ':user restored expense :expense',
       'activity_39': ':user je otkazao :payment_amount plaćanje :payment',
       'activity_40':
-          ':user vratio :adjustment od :payment_amount plaćanja :payment',
+      ':user vratio :adjustment od :payment_amount plaćanja :payment',
       'activity_41': ':payment_amount payment (:payment) failed',
       'activity_42': ':user created task :task',
       'activity_43': ':user updated task :task',
@@ -29068,23 +29077,23 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'hide_menu': 'Hide Menu',
       'show_menu': 'Show Menu',
       'partially_refunded': 'Partially Refunded',
-      'search_documents': 'Search Documents',
-      'search_designs': 'Search Designs',
-      'search_invoices': 'Search Invoices',
-      'search_clients': 'Search Clients',
-      'search_products': 'Search Products',
-      'search_quotes': 'Search Quotes',
-      'search_credits': 'Search Credits',
-      'search_vendors': 'Search Vendors',
-      'search_users': 'Search Users',
-      'search_tax_rates': 'Search Tax Rates',
-      'search_tasks': 'Search Tasks',
-      'search_settings': 'Search Settings',
-      'search_projects': 'Search Projects',
-      'search_expenses': 'Search Expenses',
-      'search_payments': 'Search Payments',
-      'search_groups': 'Search Groups',
-      'search_company': 'Search Company',
+      'search_documents': 'Search :count Documents',
+      'search_designs': 'Search :count Designs',
+      'search_invoices': 'Search :count Invoices',
+      'search_clients': 'Search :count Clients',
+      'search_products': 'Search :count Products',
+      'search_quotes': 'Search :count Quotes',
+      'search_credits': 'Search :count Credits',
+      'search_vendors': 'Search :count Vendors',
+      'search_users': 'Search :count Users',
+      'search_tax_rates': 'Search :count Tax Rates',
+      'search_tasks': 'Search :count Tasks',
+      'search_settings': 'Search :count Settings',
+      'search_projects': 'Search :count Projects',
+      'search_expenses': 'Search :count Expenses',
+      'search_payments': 'Search :count Payments',
+      'search_groups': 'Search :count Groups',
+      'search_company': 'Search :count Company',
       'refund_payment': 'Vračilo plačila',
       'cancelled_invoice': 'Successfully cancelled invoice',
       'cancelled_invoices': 'Successfully cancelled invoices',
@@ -29103,7 +29112,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'purge_data': 'Izprazni podatke',
       'purge_successful': 'Podatki podjetja uspešno odstranjeni',
       'purge_data_message':
-          'Opozorilo: Vaši podatki bodo trajno zbrisani. Razveljavitev kasneje ni mogoča.',
+      'Opozorilo: Vaši podatki bodo trajno zbrisani. Razveljavitev kasneje ni mogoča.',
       'invoice_balance': 'Invoice Balance',
       'age_group_0': '0 - 30 Dni',
       'age_group_30': '30 - 60 Dni',
@@ -29138,10 +29147,10 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'apply_license': 'Potrdi licenco',
       'cancel_account': 'Odstani račun',
       'cancel_account_message':
-          'Opozorilo: Vaš račun bo trajno zbrisan. Razveljavitev ni mogoča.',
+      'Opozorilo: Vaš račun bo trajno zbrisan. Razveljavitev ni mogoča.',
       'delete_company': 'Izbriši podjetje',
       'delete_company_message':
-          'Opozorilo: Vaše podjetne bo trajno zbrisano. Razveljavitev ni mogoča.',
+      'Opozorilo: Vaše podjetne bo trajno zbrisano. Razveljavitev ni mogoča.',
       'enable_modules': 'Enable Modules',
       'converted_quote': 'Successfully converted quote',
       'credit_design': 'Credit Design',
@@ -29293,12 +29302,12 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'applied': 'Applied',
       'include_recent_errors': 'Include recent errors from the logs',
       'your_message_has_been_received':
-          'We have received your message and will try to respond promptly.',
+      'We have received your message and will try to respond promptly.',
       'message': 'Sporočilo',
       'from': 'Od',
       'show_product_details': 'Show Product Details',
       'show_product_details_help':
-          'Include the description and cost in the product dropdown',
+      'Include the description and cost in the product dropdown',
       'pdf_min_requirements': 'The PDF renderer requires :version',
       'adjust_fee_percent': 'Adjust Fee Percent',
       'adjust_fee_percent_help': 'Adjust percent to account for fee',
@@ -29315,7 +29324,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'domain_url': 'Domain URL',
       'password_is_too_short': 'Password is too short',
       'password_is_too_easy':
-          'Password must contain an upper case character and a number',
+      'Password must contain an upper case character and a number',
       'client_portal_tasks': 'Client Portal Tasks',
       'client_portal_dashboard': 'Client Portal Dashboard',
       'please_enter_a_value': 'Please enter a value',
@@ -29342,16 +29351,16 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'third_custom': 'Third Custom',
       'show_cost': 'Show Cost',
       'show_cost_help':
-          'Display a product cost field to track the markup/profit',
+      'Display a product cost field to track the markup/profit',
       'show_product_quantity': 'Show Product Quantity',
       'show_product_quantity_help':
-          'Display a product quantity field, otherwise default to one',
+      'Display a product quantity field, otherwise default to one',
       'show_invoice_quantity': 'Show Invoice Quantity',
       'show_invoice_quantity_help':
-          'Display a line item quantity field, otherwise default to one',
+      'Display a line item quantity field, otherwise default to one',
       'default_quantity': 'Default Quantity',
       'default_quantity_help':
-          'Automatically set the line item quantity to one',
+      'Automatically set the line item quantity to one',
       'one_tax_rate': 'One Tax Rate',
       'two_tax_rates': 'Two Tax Rates',
       'three_tax_rates': 'Three Tax Rates',
@@ -29396,7 +29405,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'filtered_by_user': 'Filtered by User',
       'administrator': 'Upravljalec',
       'administrator_help':
-          'Dovoli uporabniku da upravlja z uporabniki, nastavitvami in vsemi zapisi',
+      'Dovoli uporabniku da upravlja z uporabniki, nastavitvami in vsemi zapisi',
       'user_management': 'Uporabniki',
       'users': 'Uporabniki',
       'new_user': 'Nov uporabnik',
@@ -29411,7 +29420,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'invoice_options': 'Možnosti računa',
       'hide_paid_to_date': 'Skrij datum plačila',
       'hide_paid_to_date_help':
-          'Prikaži le \"Plačano\" polje v računu, nakar je bilo plačilo prejeto.',
+      'Prikaži le \"Plačano\" polje v računu, nakar je bilo plačilo prejeto.',
       'invoice_embed_documents': 'Omogočeni dokumenti',
       'invoice_embed_documents_help': 'V računu vključi pripete slike.',
       'all_pages_header': 'Prikaži glavo na',
@@ -29434,15 +29443,15 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'quote_footer': 'Noga predračuna',
       'auto_email_invoice': 'Auto Email',
       'auto_email_invoice_help':
-          'Automatically email recurring invoices when they are created.',
+      'Automatically email recurring invoices when they are created.',
       'auto_archive_invoice': 'Auto Archive',
       'auto_archive_invoice_help':
-          'Automatically archive invoices when they are paid.',
+      'Automatically archive invoices when they are paid.',
       'auto_archive_quote': 'Auto Archive',
       'auto_archive_quote_help': 'Samodejno arhiviraj predračune po pretvorbi.',
       'auto_convert_quote': 'Samodejna Pretvorba',
       'auto_convert_quote_help':
-          'Samodejno pretvori predračun v račun, ki ga stranka potrdi.',
+      'Samodejno pretvori predračun v račun, ki ga stranka potrdi.',
       'workflow_settings': 'Workflow Settings',
       'freq_daily': 'Dnevno',
       'freq_weekly': 'Tedensko',
@@ -29488,27 +29497,27 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'custom_javascript': 'Custom JavaScript',
       'signature_on_pdf': 'Prikaži na PDF',
       'signature_on_pdf_help':
-          'Prikaži podpis stranke na PDF računu/predračunu.',
+      'Prikaži podpis stranke na PDF računu/predračunu.',
       'show_accept_invoice_terms': 'Potrditev pogojev računa',
       'show_accept_invoice_terms_help':
-          'Stranka mora potrditi strinjanje s pogoji na računu.',
+      'Stranka mora potrditi strinjanje s pogoji na računu.',
       'show_accept_quote_terms': 'Potrditev pogojev predračuna',
       'show_accept_quote_terms_help':
-          'Stranka mora potrditi strinjanje s pogoji na predračunu.',
+      'Stranka mora potrditi strinjanje s pogoji na predračunu.',
       'require_invoice_signature': 'Podpis računa',
       'require_invoice_signature_help':
-          'Zahteva od stranke, da zagotovi svoj podpis.',
+      'Zahteva od stranke, da zagotovi svoj podpis.',
       'require_quote_signature': 'Podpis predračuna',
       'enable_portal_password': 'Zaščiti račune z geslom',
       'enable_portal_password_help':
-          'Omogoča da nastavite geslo za vsako osebo. Če je geslo nastavljeno, ga bo uporabnik moral vnesti pred ogledom računa.',
+      'Omogoča da nastavite geslo za vsako osebo. Če je geslo nastavljeno, ga bo uporabnik moral vnesti pred ogledom računa.',
       'authorization': 'Overovitev',
       'subdomain': 'Poddomena',
       'domain': 'Domena',
       'portal_mode': 'Portal Mode',
       'email_signature': 'Lep pozdrav,',
       'enable_email_markup_help':
-          'Olajšajte strankam plačevanje z dodajanjem schema.org označb v vašo e-pošto.',
+      'Olajšajte strankam plačevanje z dodajanjem schema.org označb v vašo e-pošto.',
       'plain': 'Navadno',
       'light': 'Svetlo',
       'dark': 'Temno',
@@ -29537,9 +29546,9 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'accepted_card_logos': 'Prikazani logotipi katric',
       'credentials': 'Credentials',
       'require_billing_address_help':
-          'Require client to provide their billing address',
+      'Require client to provide their billing address',
       'require_shipping_address_help':
-          'Require client to provide their shipping address',
+      'Require client to provide their shipping address',
       'update_address': 'Posodobi naslov',
       'update_address_help': 'Posodobi naslov stranke z predloženimi podatki',
       'rate': 'Cena',
@@ -29553,13 +29562,13 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'restored_tax_rate': 'Successfully restored tax rate',
       'fill_products': 'Samodejno vnesi izdelke',
       'fill_products_help':
-          'Izbira izdelka bo samodejno <b>vnesla opis in ceno</b>',
+      'Izbira izdelka bo samodejno <b>vnesla opis in ceno</b>',
       'update_products': 'Samodejno posodobi izdelke',
       'update_products_help':
-          'Posodobitev računa bo samodejno <b>posodobila knjižnico izdelkov</b>',
+      'Posodobitev računa bo samodejno <b>posodobila knjižnico izdelkov</b>',
       'convert_products': 'Pretvori izdelke',
       'convert_products_help':
-          'Samodejno pretvori cene izdelkov v valuto stranke',
+      'Samodejno pretvori cene izdelkov v valuto stranke',
       'fees': 'Provizije',
       'limits': 'Omejitve',
       'provider': 'Provider',
@@ -29659,7 +29668,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'please_enter_a_first_name': 'Please enter a first name',
       'please_enter_a_last_name': 'Please enter a last name',
       'please_agree_to_terms_and_privacy':
-          'Please agree to the terms of service and privacy policy to create an account.',
+      'Please agree to the terms of service and privacy policy to create an account.',
       'i_agree_to_the': 'I agree to the',
       'terms_of_service_link': 'terms of service',
       'privacy_policy_link': 'privacy policy',
@@ -29758,7 +29767,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'average': 'Average',
       'unapproved': 'Unapproved',
       'authenticate_to_change_setting':
-          'Please authenticate to change this setting',
+      'Please authenticate to change this setting',
       'locked': 'Locked',
       'authenticate': 'Authenticate',
       'please_authenticate': 'Please authenticate',
@@ -29958,7 +29967,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'marked_invoices_as_paid': 'Successfully marked invoices as paid',
       'done': 'Končano',
       'please_enter_a_client_or_contact_name':
-          'Please enter a client or contact name',
+      'Please enter a client or contact name',
       'dark_mode': 'Temen način',
       'restart_app_to_apply_change': 'Restart the app to apply the change',
       'refresh_data': 'Refresh Data',
@@ -30040,7 +30049,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'activity_8': ':user je arhiviral račun :invoice',
       'activity_9': ':user je odstranil račun :invoice',
       'activity_10':
-          ':contact je vnesel plačilo :payment v znesku :payment_amount na računu :invoice za :client',
+      ':contact je vnesel plačilo :payment v znesku :payment_amount na računu :invoice za :client',
       'activity_11': ':user je posodobil plačilo :payment',
       'activity_12': ':user je arhiviral plačilo :payment',
       'activity_13': ':user je odstranil :payment',
@@ -30051,7 +30060,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'activity_18': ':user je ustvaril predračun :quote',
       'activity_19': ':user je posodobil predračun :quote',
       'activity_20':
-          ':user je predračun :quote za :client poslal osebi :contact',
+      ':user je predračun :quote za :client poslal osebi :contact',
       'activity_21': ':contact je pogledal predračun :quote',
       'activity_22': ':user je arhiviral predračun :quote',
       'activity_23': ':user je odstranil predračun :quote',
@@ -30070,9 +30079,9 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'activity_36': ':user je izbrisal strošek :expense',
       'activity_37': ':user je obnovil strošek :expense',
       'activity_39':
-          ':user je preklical plačilo :payment v znesku :payment_amount',
+      ':user je preklical plačilo :payment v znesku :payment_amount',
       'activity_40':
-          ':user je vrnil :adjustment od plačila :payment v znesku :payment_amount',
+      ':user je vrnil :adjustment od plačila :payment v znesku :payment_amount',
       'activity_41': ':payment_amount plačilo (:payment) ni uspelo',
       'activity_42': ':user je vnesel opravilo :task',
       'activity_43': ':user je posodobil opravilo :task',
@@ -30224,23 +30233,23 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'hide_menu': 'Hide Menu',
       'show_menu': 'Show Menu',
       'partially_refunded': 'Partially Refunded',
-      'search_documents': 'Search Documents',
-      'search_designs': 'Search Designs',
-      'search_invoices': 'Search Invoices',
-      'search_clients': 'Search Clients',
-      'search_products': 'Search Products',
-      'search_quotes': 'Search Quotes',
-      'search_credits': 'Search Credits',
-      'search_vendors': 'Search Vendors',
-      'search_users': 'Search Users',
-      'search_tax_rates': 'Search Tax Rates',
-      'search_tasks': 'Search Tasks',
-      'search_settings': 'Search Settings',
-      'search_projects': 'Search Projects',
-      'search_expenses': 'Search Expenses',
-      'search_payments': 'Search Payments',
-      'search_groups': 'Search Groups',
-      'search_company': 'Search Company',
+      'search_documents': 'Search :count Documents',
+      'search_designs': 'Search :count Designs',
+      'search_invoices': 'Search :count Invoices',
+      'search_clients': 'Search :count Clients',
+      'search_products': 'Search :count Products',
+      'search_quotes': 'Search :count Quotes',
+      'search_credits': 'Search :count Credits',
+      'search_vendors': 'Search :count Vendors',
+      'search_users': 'Search :count Users',
+      'search_tax_rates': 'Search :count Tax Rates',
+      'search_tasks': 'Search :count Tasks',
+      'search_settings': 'Search :count Settings',
+      'search_projects': 'Search :count Projects',
+      'search_expenses': 'Search :count Expenses',
+      'search_payments': 'Search :count Payments',
+      'search_groups': 'Search :count Groups',
+      'search_company': 'Search :count Company',
       'refund_payment': 'Refund Payment',
       'cancelled_invoice': 'Successfully cancelled invoice',
       'cancelled_invoices': 'Successfully cancelled invoices',
@@ -30259,7 +30268,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'purge_data': 'Purgar Datos',
       'purge_successful': 'Datos de la empresa purgados con éxito',
       'purge_data_message':
-          'Advertencia: Esto borrará definitivamente tus datos, no hay de deshacerlo.',
+      'Advertencia: Esto borrará definitivamente tus datos, no hay de deshacerlo.',
       'invoice_balance': 'Invoice Balance',
       'age_group_0': '0 - 30 Días',
       'age_group_30': '30 - 60 Días',
@@ -30294,10 +30303,10 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'apply_license': 'Activar Licencia',
       'cancel_account': 'Cancelar Cuenta',
       'cancel_account_message':
-          'AVISO: Esta acción eliminará tu cuenta de forma permanente.',
+      'AVISO: Esta acción eliminará tu cuenta de forma permanente.',
       'delete_company': 'Eliminar Empresa',
       'delete_company_message':
-          'Advertencia: Esto eliminará su empresa, no hay manera de deshacerlo.',
+      'Advertencia: Esto eliminará su empresa, no hay manera de deshacerlo.',
       'enable_modules': 'Enable Modules',
       'converted_quote': 'Successfully converted quote',
       'credit_design': 'Credit Design',
@@ -30449,12 +30458,12 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'applied': 'Applied',
       'include_recent_errors': 'Include recent errors from the logs',
       'your_message_has_been_received':
-          'We have received your message and will try to respond promptly.',
+      'We have received your message and will try to respond promptly.',
       'message': 'Mensaje',
       'from': 'De',
       'show_product_details': 'Show Product Details',
       'show_product_details_help':
-          'Include the description and cost in the product dropdown',
+      'Include the description and cost in the product dropdown',
       'pdf_min_requirements': 'The PDF renderer requires :version',
       'adjust_fee_percent': 'Adjust Fee Percent',
       'adjust_fee_percent_help': 'Adjust percent to account for fee',
@@ -30471,7 +30480,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'domain_url': 'Domain URL',
       'password_is_too_short': 'Password is too short',
       'password_is_too_easy':
-          'Password must contain an upper case character and a number',
+      'Password must contain an upper case character and a number',
       'client_portal_tasks': 'Client Portal Tasks',
       'client_portal_dashboard': 'Client Portal Dashboard',
       'please_enter_a_value': 'Please enter a value',
@@ -30498,16 +30507,16 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'third_custom': 'Third Custom',
       'show_cost': 'Show Cost',
       'show_cost_help':
-          'Display a product cost field to track the markup/profit',
+      'Display a product cost field to track the markup/profit',
       'show_product_quantity': 'Show Product Quantity',
       'show_product_quantity_help':
-          'Display a product quantity field, otherwise default to one',
+      'Display a product quantity field, otherwise default to one',
       'show_invoice_quantity': 'Show Invoice Quantity',
       'show_invoice_quantity_help':
-          'Display a line item quantity field, otherwise default to one',
+      'Display a line item quantity field, otherwise default to one',
       'default_quantity': 'Default Quantity',
       'default_quantity_help':
-          'Automatically set the line item quantity to one',
+      'Automatically set the line item quantity to one',
       'one_tax_rate': 'One Tax Rate',
       'two_tax_rates': 'Two Tax Rates',
       'three_tax_rates': 'Three Tax Rates',
@@ -30552,7 +30561,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'filtered_by_user': 'Filtered by User',
       'administrator': 'Administrador',
       'administrator_help':
-          'Permitir que administre usuarios, cambie configuraciones y modifique cualquier registro',
+      'Permitir que administre usuarios, cambie configuraciones y modifique cualquier registro',
       'user_management': 'Gestión de Usuarios',
       'users': 'Usuarios',
       'new_user': 'Nuevo Usuario',
@@ -30567,7 +30576,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'invoice_options': 'Opciones de Factura',
       'hide_paid_to_date': 'Ocultar Valor Pagado a la Fecha',
       'hide_paid_to_date_help':
-          'Solo mostrar la opción “Pagado a la fecha” en sus facturas cuando se ha recibido un pago.',
+      'Solo mostrar la opción “Pagado a la fecha” en sus facturas cuando se ha recibido un pago.',
       'invoice_embed_documents': 'Embed Documents',
       'invoice_embed_documents_help': 'Include attached images in the invoice.',
       'all_pages_header': 'Mostrar encabezado',
@@ -30590,16 +30599,16 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'quote_footer': 'Pie de la Cotización',
       'auto_email_invoice': 'Auto Email',
       'auto_email_invoice_help':
-          'Automatically email recurring invoices when they are created.',
+      'Automatically email recurring invoices when they are created.',
       'auto_archive_invoice': 'Auto Archive',
       'auto_archive_invoice_help':
-          'Automatically archive invoices when they are paid.',
+      'Automatically archive invoices when they are paid.',
       'auto_archive_quote': 'Auto Archive',
       'auto_archive_quote_help':
-          'Automatically archive quotes when they are converted.',
+      'Automatically archive quotes when they are converted.',
       'auto_convert_quote': 'Auto Convertir',
       'auto_convert_quote_help':
-          'Convierte un presupuesto en factura automaticamente cuando los aprueba el cliente.',
+      'Convierte un presupuesto en factura automaticamente cuando los aprueba el cliente.',
       'workflow_settings': 'Workflow Settings',
       'freq_daily': 'Diario',
       'freq_weekly': 'Weekly',
@@ -30645,27 +30654,27 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'custom_javascript': 'Custom JavaScript',
       'signature_on_pdf': 'Show on PDF',
       'signature_on_pdf_help':
-          'Show the client signature on the invoice/quote PDF.',
+      'Show the client signature on the invoice/quote PDF.',
       'show_accept_invoice_terms': 'Casilla de los Términos de la Factura',
       'show_accept_invoice_terms_help':
-          'Requerir que el cliente confirme que aceptó los términos de la factura.',
+      'Requerir que el cliente confirme que aceptó los términos de la factura.',
       'show_accept_quote_terms': 'Casilla de los Términos de la Cotización',
       'show_accept_quote_terms_help':
-          'Requerir que el cliente confirme que aceptó los términos de la cotización.',
+      'Requerir que el cliente confirme que aceptó los términos de la cotización.',
       'require_invoice_signature': 'Firma de la Facturra',
       'require_invoice_signature_help':
-          'Requerir que el cliente provea su firma.',
+      'Requerir que el cliente provea su firma.',
       'require_quote_signature': 'Firma de la Cotización',
       'enable_portal_password': 'Proteger Facturas con Contraseña',
       'enable_portal_password_help':
-          'Permite establecer una contraseña para cada contacto. Si una contraseña es establecida, se le será solicitada al contacto para acceder a sus facturas.',
+      'Permite establecer una contraseña para cada contacto. Si una contraseña es establecida, se le será solicitada al contacto para acceder a sus facturas.',
       'authorization': 'Autorización',
       'subdomain': 'Subdominio',
       'domain': 'Dominio',
       'portal_mode': 'Portal Mode',
       'email_signature': 'Un cordial saludo,',
       'enable_email_markup_help':
-          'Haga que sea fácil para sus clientes que paguen mediante la adición de marcas \"schema.org\" a sus correos electrónicos.',
+      'Haga que sea fácil para sus clientes que paguen mediante la adición de marcas \"schema.org\" a sus correos electrónicos.',
       'plain': 'Plano',
       'light': 'Claro',
       'dark': 'Oscuro',
@@ -30694,12 +30703,12 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'accepted_card_logos': 'Logos de Tarjetas Aceptadas',
       'credentials': 'Credentials',
       'require_billing_address_help':
-          'Require client to provide their billing address',
+      'Require client to provide their billing address',
       'require_shipping_address_help':
-          'Require client to provide their shipping address',
+      'Require client to provide their shipping address',
       'update_address': 'Actualizar Dirección',
       'update_address_help':
-          'Actualiza la dirección del cliente con los detalles proporcionados',
+      'Actualiza la dirección del cliente con los detalles proporcionados',
       'rate': 'Tasas',
       'tax_rate': 'Tasa de Impuesto',
       'new_tax_rate': 'Nueva Tasa de Impuesto',
@@ -30711,13 +30720,13 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'restored_tax_rate': 'Successfully restored tax rate',
       'fill_products': 'Auto-rellenar productos',
       'fill_products_help':
-          'Seleccionar un producto automáticamente <b>configurará la descripción y coste</b>',
+      'Seleccionar un producto automáticamente <b>configurará la descripción y coste</b>',
       'update_products': 'Auto-actualizar productos',
       'update_products_help':
-          'Actualizar una factura automáticamente <b>actualizará los productos</b>',
+      'Actualizar una factura automáticamente <b>actualizará los productos</b>',
       'convert_products': 'Convert Products',
       'convert_products_help':
-          'Automatically convert product prices to the client\'s currency',
+      'Automatically convert product prices to the client\'s currency',
       'fees': 'Tarifas',
       'limits': 'Límites',
       'provider': 'Provider',
@@ -30817,7 +30826,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'please_enter_a_first_name': 'Please enter a first name',
       'please_enter_a_last_name': 'Please enter a last name',
       'please_agree_to_terms_and_privacy':
-          'Please agree to the terms of service and privacy policy to create an account.',
+      'Please agree to the terms of service and privacy policy to create an account.',
       'i_agree_to_the': 'I agree to the',
       'terms_of_service_link': 'terms of service',
       'privacy_policy_link': 'privacy policy',
@@ -30879,7 +30888,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'running': 'Ejecutando',
       'resume': 'Continuar',
       'task_errors':
-          'Por favor corrija cualquier tiempo que se sobreponga con otro',
+      'Por favor corrija cualquier tiempo que se sobreponga con otro',
       'start': 'Iniciar',
       'stop': 'Detener',
       'started_task': 'Tarea iniciada con éxito',
@@ -30917,7 +30926,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'average': 'Average',
       'unapproved': 'Unapproved',
       'authenticate_to_change_setting':
-          'Please authenticate to change this setting',
+      'Please authenticate to change this setting',
       'locked': 'Locked',
       'authenticate': 'Authenticate',
       'please_authenticate': 'Please authenticate',
@@ -31117,7 +31126,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'marked_invoices_as_paid': 'Successfully marked invoices as paid',
       'done': 'Hecho',
       'please_enter_a_client_or_contact_name':
-          'Please enter a client or contact name',
+      'Please enter a client or contact name',
       'dark_mode': 'Modo Oscuro',
       'restart_app_to_apply_change': 'Restart the app to apply the change',
       'refresh_data': 'Refresh Data',
@@ -31156,7 +31165,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'body': 'Mensaje',
       'send_email': 'Enviar email',
       'email_receipt':
-          'Enviar por correo electrónico el recibo de pago al cliente',
+      'Enviar por correo electrónico el recibo de pago al cliente',
       'auto_billing': 'Auto billing',
       'button': 'Button',
       'preview': 'Preview',
@@ -31200,7 +31209,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'activity_8': ':user archivó la factura :invoice',
       'activity_9': ':user eliminó la factura :invoice',
       'activity_10':
-          ':contact entered payment :payment for :payment_amount on invoice :invoice for :client',
+      ':contact entered payment :payment for :payment_amount on invoice :invoice for :client',
       'activity_11': ':user actualizó el pago :payment',
       'activity_12': ':user archivó el pago :payment',
       'activity_13': ':user eliminó el pago :payment',
@@ -31230,7 +31239,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'activity_37': ':user restauró el gasto :expense',
       'activity_39': ':usaer canceló :payment_amount pago :payment',
       'activity_40':
-          ':user reembolsó :adjustment de un pago de :payment_amount :payment',
+      ':user reembolsó :adjustment de un pago de :payment_amount :payment',
       'activity_41': ':payment_amount payment (:payment) failed',
       'activity_42': ':user creó la tarea :task',
       'activity_43': ':user actualizó la tarea :task',
@@ -31382,23 +31391,23 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'hide_menu': 'Hide Menu',
       'show_menu': 'Show Menu',
       'partially_refunded': 'Partially Refunded',
-      'search_documents': 'Search Documents',
-      'search_designs': 'Search Designs',
-      'search_invoices': 'Search Invoices',
-      'search_clients': 'Search Clients',
-      'search_products': 'Search Products',
-      'search_quotes': 'Search Quotes',
-      'search_credits': 'Search Credits',
-      'search_vendors': 'Search Vendors',
-      'search_users': 'Search Users',
-      'search_tax_rates': 'Search Tax Rates',
-      'search_tasks': 'Search Tasks',
-      'search_settings': 'Search Settings',
-      'search_projects': 'Search Projects',
-      'search_expenses': 'Search Expenses',
-      'search_payments': 'Search Payments',
-      'search_groups': 'Search Groups',
-      'search_company': 'Search Company',
+      'search_documents': 'Search :count Documents',
+      'search_designs': 'Search :count Designs',
+      'search_invoices': 'Search :count Invoices',
+      'search_clients': 'Search :count Clients',
+      'search_products': 'Search :count Products',
+      'search_quotes': 'Search :count Quotes',
+      'search_credits': 'Search :count Credits',
+      'search_vendors': 'Search :count Vendors',
+      'search_users': 'Search :count Users',
+      'search_tax_rates': 'Search :count Tax Rates',
+      'search_tasks': 'Search :count Tasks',
+      'search_settings': 'Search :count Settings',
+      'search_projects': 'Search :count Projects',
+      'search_expenses': 'Search :count Expenses',
+      'search_payments': 'Search :count Payments',
+      'search_groups': 'Search :count Groups',
+      'search_company': 'Search :count Company',
       'refund_payment': 'Reembolsar Pago',
       'cancelled_invoice': 'Successfully cancelled invoice',
       'cancelled_invoices': 'Successfully cancelled invoices',
@@ -31417,7 +31426,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'purge_data': 'Purgar Datos',
       'purge_successful': 'Datos de la empresa purgados correctamente',
       'purge_data_message':
-          'Advertencia: Esto borrará definitivamente sus datos, no hay deshacer.',
+      'Advertencia: Esto borrará definitivamente sus datos, no hay deshacer.',
       'invoice_balance': 'Invoice Balance',
       'age_group_0': '0 - 30 Días',
       'age_group_30': '30 - 60 Días',
@@ -31452,10 +31461,10 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'apply_license': 'Renovar licencia',
       'cancel_account': 'Cancelar Cuenta',
       'cancel_account_message':
-          'Atención: Esta acción eliminará permanentemente tu cuenta y no se podrá deshacer.',
+      'Atención: Esta acción eliminará permanentemente tu cuenta y no se podrá deshacer.',
       'delete_company': 'Borrar Compañía',
       'delete_company_message':
-          'Advertencia: esto eliminará definitivamente su empresa, no hay deshacer.',
+      'Advertencia: esto eliminará definitivamente su empresa, no hay deshacer.',
       'enable_modules': 'Enable Modules',
       'converted_quote': 'Successfully converted quote',
       'credit_design': 'Credit Design',
@@ -31607,16 +31616,16 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'applied': 'Applied',
       'include_recent_errors': 'Include recent errors from the logs',
       'your_message_has_been_received':
-          'We have received your message and will try to respond promptly.',
+      'We have received your message and will try to respond promptly.',
       'message': 'Mensaje',
       'from': 'De',
       'show_product_details': 'Show Product Details',
       'show_product_details_help':
-          'Include the description and cost in the product dropdown',
+      'Include the description and cost in the product dropdown',
       'pdf_min_requirements': 'The PDF renderer requires :version',
       'adjust_fee_percent': 'Adjust Fee Percent',
       'adjust_fee_percent_help':
-          'Ajustar el porcentaje para dar cuenta de la tarifa',
+      'Ajustar el porcentaje para dar cuenta de la tarifa',
       'configure_settings': 'Configure Settings',
       'support_forum': 'Foro de soporte',
       'about': 'About',
@@ -31630,7 +31639,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'domain_url': 'Domain URL',
       'password_is_too_short': 'La contraseña es demasiado corta',
       'password_is_too_easy':
-          'Password must contain an upper case character and a number',
+      'Password must contain an upper case character and a number',
       'client_portal_tasks': 'Client Portal Tasks',
       'client_portal_dashboard': 'Client Portal Dashboard',
       'please_enter_a_value': 'Please enter a value',
@@ -31657,16 +31666,16 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'third_custom': 'Third Custom',
       'show_cost': 'Show Cost',
       'show_cost_help':
-          'Display a product cost field to track the markup/profit',
+      'Display a product cost field to track the markup/profit',
       'show_product_quantity': 'Show Product Quantity',
       'show_product_quantity_help':
-          'Display a product quantity field, otherwise default to one',
+      'Display a product quantity field, otherwise default to one',
       'show_invoice_quantity': 'Show Invoice Quantity',
       'show_invoice_quantity_help':
-          'Display a line item quantity field, otherwise default to one',
+      'Display a line item quantity field, otherwise default to one',
       'default_quantity': 'Default Quantity',
       'default_quantity_help':
-          'Automatically set the line item quantity to one',
+      'Automatically set the line item quantity to one',
       'one_tax_rate': 'One Tax Rate',
       'two_tax_rates': 'Two Tax Rates',
       'three_tax_rates': 'Three Tax Rates',
@@ -31711,7 +31720,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'filtered_by_user': 'Filtered by User',
       'administrator': 'Administrador',
       'administrator_help':
-          'Permitir que administre usuarios, cambie configuración y modifique cualquier registro',
+      'Permitir que administre usuarios, cambie configuración y modifique cualquier registro',
       'user_management': 'Administración de Usuarios',
       'users': 'Usuarios',
       'new_user': 'Nuevo Usuario',
@@ -31726,7 +31735,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'invoice_options': 'Opciones de Factura',
       'hide_paid_to_date': 'Ocultar el valor <i>Pagado a la Fecha</i>',
       'hide_paid_to_date_help':
-          'Solo mostrará el valor <i>Pagado a la Fecha</i> en sus Facturas cuando se ha recibido un Pago.',
+      'Solo mostrará el valor <i>Pagado a la Fecha</i> en sus Facturas cuando se ha recibido un Pago.',
       'invoice_embed_documents': 'Documentos anexados',
       'invoice_embed_documents_help': 'Incluye imagenes adjuntas en la factura',
       'all_pages_header': 'Mostrar Cabecera en',
@@ -31749,16 +31758,16 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'quote_footer': 'Pie del Presupuesto',
       'auto_email_invoice': 'Auto Email',
       'auto_email_invoice_help':
-          'Automáticamente enviar por email facturas recurrentes cuando sean creadas.',
+      'Automáticamente enviar por email facturas recurrentes cuando sean creadas.',
       'auto_archive_invoice': 'Auto Archivar',
       'auto_archive_invoice_help':
-          'Automáticamente archivar facturas cuando sean pagadas.',
+      'Automáticamente archivar facturas cuando sean pagadas.',
       'auto_archive_quote': 'Auto Archivar',
       'auto_archive_quote_help':
-          'Automáticamente archivar presupuestos cuando sean convertidos.',
+      'Automáticamente archivar presupuestos cuando sean convertidos.',
       'auto_convert_quote': 'Auto Convertir',
       'auto_convert_quote_help':
-          'Convertir un Presupuesto en Factura automáticamente cuando lo apruebe el cliente.',
+      'Convertir un Presupuesto en Factura automáticamente cuando lo apruebe el cliente.',
       'workflow_settings': 'Configuración de Flujos',
       'freq_daily': 'Diariamente',
       'freq_weekly': 'Semanal',
@@ -31804,29 +31813,29 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'custom_javascript': 'Custom JavaScript',
       'signature_on_pdf': 'Mostrar en PDF',
       'signature_on_pdf_help':
-          'Mostrar la firma del cliente en el PDF de la factura/presupuesto',
+      'Mostrar la firma del cliente en el PDF de la factura/presupuesto',
       'show_accept_invoice_terms':
-          'Mostrar aceptación de términos de la factura',
+      'Mostrar aceptación de términos de la factura',
       'show_accept_invoice_terms_help':
-          'Requerir que el cliente confirme que acepta los términos de la factura.',
+      'Requerir que el cliente confirme que acepta los términos de la factura.',
       'show_accept_quote_terms':
-          'Mostrar aceptación de términos del presupuesto',
+      'Mostrar aceptación de términos del presupuesto',
       'show_accept_quote_terms_help':
-          'Requerir que el cliente confirme que acepta los términos del presupuesto.',
+      'Requerir que el cliente confirme que acepta los términos del presupuesto.',
       'require_invoice_signature': 'Firma de la factura',
       'require_invoice_signature_help':
-          'Requerir que el cliente proporcione su firma.',
+      'Requerir que el cliente proporcione su firma.',
       'require_quote_signature': 'Firma del presupuesto.',
       'enable_portal_password': 'Proteger Facturas con Contraseña',
       'enable_portal_password_help':
-          'Habilite para seleccionar una contraseña para cada contacto. Si una contraseña esta especificada, se le será solicitada al contacto para acceder a sus facturas.',
+      'Habilite para seleccionar una contraseña para cada contacto. Si una contraseña esta especificada, se le será solicitada al contacto para acceder a sus facturas.',
       'authorization': 'Autorización',
       'subdomain': 'Subdominio',
       'domain': 'Dominio',
       'portal_mode': 'Portal Mode',
       'email_signature': 'Un cordial saludo,',
       'enable_email_markup_help':
-          'Haga que sea fácil para sus clientes que paguen mediante la adición de marcas \"schema.org\" a sus correos electrónicos.',
+      'Haga que sea fácil para sus clientes que paguen mediante la adición de marcas \"schema.org\" a sus correos electrónicos.',
       'plain': 'Plano',
       'light': 'Claro',
       'dark': 'Oscuro',
@@ -31855,12 +31864,12 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'accepted_card_logos': 'Logotipos de tarjetas aceptadas',
       'credentials': 'Credentials',
       'require_billing_address_help':
-          'Require client to provide their billing address',
+      'Require client to provide their billing address',
       'require_shipping_address_help':
-          'Require client to provide their shipping address',
+      'Require client to provide their shipping address',
       'update_address': 'Actualizar Dirección',
       'update_address_help':
-          'Actualizar la direccion del cliente con los datos provistos',
+      'Actualizar la direccion del cliente con los datos provistos',
       'rate': 'Precio',
       'tax_rate': 'Impuesto',
       'new_tax_rate': 'Nuevo Impuesto',
@@ -31872,13 +31881,13 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'restored_tax_rate': 'Successfully restored tax rate',
       'fill_products': 'Auto-rellenar Productos',
       'fill_products_help':
-          'Seleccionar un producto automáticamente <b>configurará la descripción y coste</b>',
+      'Seleccionar un producto automáticamente <b>configurará la descripción y coste</b>',
       'update_products': 'Auto-actualizar Productos',
       'update_products_help':
-          'Actualizar una Factura automáticamente <b>actualizará los Productos</b>',
+      'Actualizar una Factura automáticamente <b>actualizará los Productos</b>',
       'convert_products': 'Convertir Productos',
       'convert_products_help':
-          'Convertir automáticamente los precios de los productos a la divisa del cliente',
+      'Convertir automáticamente los precios de los productos a la divisa del cliente',
       'fees': 'Cargos',
       'limits': 'Limites',
       'provider': 'Proveedor',
@@ -31978,7 +31987,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'please_enter_a_first_name': 'Introduce tu nombre',
       'please_enter_a_last_name': 'Introduce tu apellido',
       'please_agree_to_terms_and_privacy':
-          'Por favor, acepta los términos de servicio y la política de privacidad para crear una cuenta',
+      'Por favor, acepta los términos de servicio y la política de privacidad para crear una cuenta',
       'i_agree_to_the': 'I agree to the',
       'terms_of_service_link': 'términos de servicio',
       'privacy_policy_link': 'política de privacidad',
@@ -32040,7 +32049,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'running': 'Ejecutando',
       'resume': 'Reanudar',
       'task_errors':
-          'Por favor corrija cualquier tiempo que se solape con otro',
+      'Por favor corrija cualquier tiempo que se solape con otro',
       'start': 'Iniciar',
       'stop': 'Parar',
       'started_task': 'Tarea empezada correctamente',
@@ -32078,7 +32087,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'average': 'Promedio',
       'unapproved': 'No aprobado',
       'authenticate_to_change_setting':
-          'Por favor, autenticarse para cambiar esta configuración',
+      'Por favor, autenticarse para cambiar esta configuración',
       'locked': 'Bloqueado',
       'authenticate': 'Autenticación',
       'please_authenticate': 'Por favor, autenticarse',
@@ -32263,9 +32272,9 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'updated_at': 'Actualizado',
       'tax': 'Impuesto',
       'please_enter_an_invoice_number':
-          'Por favor introduce un número de factura',
+      'Por favor introduce un número de factura',
       'please_enter_a_quote_number':
-          'Por favor introduce un número de presupuesto',
+      'Por favor introduce un número de presupuesto',
       'past_due': 'Vencido',
       'draft': 'Borrador',
       'sent': 'Enviada',
@@ -32280,7 +32289,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'marked_invoices_as_paid': 'Successfully marked invoices as paid',
       'done': 'Hecho',
       'please_enter_a_client_or_contact_name':
-          'Por favor introduce un cliente o nombre de contacto',
+      'Por favor introduce un cliente o nombre de contacto',
       'dark_mode': 'Modo Oscuro',
       'restart_app_to_apply_change': 'Reinicia la app para aplicar el cambio',
       'refresh_data': 'Actualizar Datos',
@@ -32358,12 +32367,12 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'activity_4': ':user archivó la factura :invoice',
       'activity_5': ':user actualizó la factura :invoice',
       'activity_6':
-          ':user ha enviado por mail la factura :invoice de :client a :contact',
+      ':user ha enviado por mail la factura :invoice de :client a :contact',
       'activity_7': ':contact ha visto la factura :invoice: de :client',
       'activity_8': ':user archivó la factura :invoice',
       'activity_9': ':user borró la factura :invoice',
       'activity_10':
-          ':contact entered payment :payment for :payment_amount on invoice :invoice for :client',
+      ':contact entered payment :payment for :payment_amount on invoice :invoice for :client',
       'activity_11': ':user actualizó el Pago :payment',
       'activity_12': ':user archivó el pago :payment',
       'activity_13': ':user borró el pago :payment',
@@ -32393,7 +32402,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'activity_37': ':user restauró el gasto :expense',
       'activity_39': ':user cancelo :payment_amount del pago :payment',
       'activity_40':
-          ':user reembolsó :adjustment de :payment_amount del pago :payment',
+      ':user reembolsó :adjustment de :payment_amount del pago :payment',
       'activity_41': 'Fallo el pago de :payment_amount para  (:payment)',
       'activity_42': ':user creó la tarea :task',
       'activity_43': ':user actualizó la tarea :task',
@@ -32545,23 +32554,23 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'hide_menu': 'Hide Menu',
       'show_menu': 'Show Menu',
       'partially_refunded': 'Partially Refunded',
-      'search_documents': 'Search Documents',
-      'search_designs': 'Search Designs',
-      'search_invoices': 'Search Invoices',
-      'search_clients': 'Search Clients',
-      'search_products': 'Search Products',
-      'search_quotes': 'Search Quotes',
-      'search_credits': 'Search Credits',
-      'search_vendors': 'Search Vendors',
-      'search_users': 'Search Users',
-      'search_tax_rates': 'Search Tax Rates',
-      'search_tasks': 'Search Tasks',
-      'search_settings': 'Search Settings',
-      'search_projects': 'Search Projects',
-      'search_expenses': 'Search Expenses',
-      'search_payments': 'Search Payments',
-      'search_groups': 'Search Groups',
-      'search_company': 'Search Company',
+      'search_documents': 'Search :count Documents',
+      'search_designs': 'Search :count Designs',
+      'search_invoices': 'Search :count Invoices',
+      'search_clients': 'Search :count Clients',
+      'search_products': 'Search :count Products',
+      'search_quotes': 'Search :count Quotes',
+      'search_credits': 'Search :count Credits',
+      'search_vendors': 'Search :count Vendors',
+      'search_users': 'Search :count Users',
+      'search_tax_rates': 'Search :count Tax Rates',
+      'search_tasks': 'Search :count Tasks',
+      'search_settings': 'Search :count Settings',
+      'search_projects': 'Search :count Projects',
+      'search_expenses': 'Search :count Expenses',
+      'search_payments': 'Search :count Payments',
+      'search_groups': 'Search :count Groups',
+      'search_company': 'Search :count Company',
       'refund_payment': 'Återbetala betalning',
       'cancelled_invoice': 'Successfully cancelled invoice',
       'cancelled_invoices': 'Successfully cancelled invoices',
@@ -32580,7 +32589,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'purge_data': 'Rensa uppgifter.',
       'purge_successful': 'Rensade utan problem företags data',
       'purge_data_message':
-          'Varning: Detta kommer permanent ta bort din information, det finns ingen återvända.',
+      'Varning: Detta kommer permanent ta bort din information, det finns ingen återvända.',
       'invoice_balance': 'Invoice Balance',
       'age_group_0': '0 - 30 Dagar',
       'age_group_30': '30 - 60 Dagar',
@@ -32615,10 +32624,10 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'apply_license': 'Uppge Licens',
       'cancel_account': 'Avsluta konto',
       'cancel_account_message':
-          'Varning: Detta kommer permanent ta bort ditt konto, detta går inte att ångra.',
+      'Varning: Detta kommer permanent ta bort ditt konto, detta går inte att ångra.',
       'delete_company': 'Ta bort företag',
       'delete_company_message':
-          'Varning: Detta kommer permanent ta bort till bolag, det finns ingen återvändo.',
+      'Varning: Detta kommer permanent ta bort till bolag, det finns ingen återvändo.',
       'enable_modules': 'Enable Modules',
       'converted_quote': 'Successfully converted quote',
       'credit_design': 'Credit Design',
@@ -32770,12 +32779,12 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'applied': 'Applied',
       'include_recent_errors': 'Include recent errors from the logs',
       'your_message_has_been_received':
-          'We have received your message and will try to respond promptly.',
+      'We have received your message and will try to respond promptly.',
       'message': 'Meddelande',
       'from': 'Från',
       'show_product_details': 'Show Product Details',
       'show_product_details_help':
-          'Include the description and cost in the product dropdown',
+      'Include the description and cost in the product dropdown',
       'pdf_min_requirements': 'The PDF renderer requires :version',
       'adjust_fee_percent': 'Adjust Fee Percent',
       'adjust_fee_percent_help': 'Adjust percent to account for fee',
@@ -32792,7 +32801,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'domain_url': 'Domain URL',
       'password_is_too_short': 'Password is too short',
       'password_is_too_easy':
-          'Password must contain an upper case character and a number',
+      'Password must contain an upper case character and a number',
       'client_portal_tasks': 'Client Portal Tasks',
       'client_portal_dashboard': 'Client Portal Dashboard',
       'please_enter_a_value': 'Please enter a value',
@@ -32819,16 +32828,16 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'third_custom': 'Third Custom',
       'show_cost': 'Show Cost',
       'show_cost_help':
-          'Display a product cost field to track the markup/profit',
+      'Display a product cost field to track the markup/profit',
       'show_product_quantity': 'Show Product Quantity',
       'show_product_quantity_help':
-          'Display a product quantity field, otherwise default to one',
+      'Display a product quantity field, otherwise default to one',
       'show_invoice_quantity': 'Show Invoice Quantity',
       'show_invoice_quantity_help':
-          'Display a line item quantity field, otherwise default to one',
+      'Display a line item quantity field, otherwise default to one',
       'default_quantity': 'Default Quantity',
       'default_quantity_help':
-          'Automatically set the line item quantity to one',
+      'Automatically set the line item quantity to one',
       'one_tax_rate': 'One Tax Rate',
       'two_tax_rates': 'Two Tax Rates',
       'three_tax_rates': 'Three Tax Rates',
@@ -32873,7 +32882,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'filtered_by_user': 'Filtered by User',
       'administrator': 'Administratör',
       'administrator_help':
-          'Tillåt användare att hantera användare, ändra inställningar och ändra alla värden',
+      'Tillåt användare att hantera användare, ändra inställningar och ändra alla värden',
       'user_management': 'Användarhantering',
       'users': 'Användare',
       'new_user': 'Ny användare',
@@ -32888,7 +32897,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'invoice_options': 'Fakturainställningar',
       'hide_paid_to_date': 'Dölj \"Betald till\"',
       'hide_paid_to_date_help':
-          'Visa bara \"Betald till\"-sektionen på fakturan när en betalning har mottagits.',
+      'Visa bara \"Betald till\"-sektionen på fakturan när en betalning har mottagits.',
       'invoice_embed_documents': 'Bädda in dokument',
       'invoice_embed_documents_help': 'Include attached images in the invoice.',
       'all_pages_header': 'Visa Header på',
@@ -32911,16 +32920,16 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'quote_footer': 'Offert footer',
       'auto_email_invoice': 'Auto Email',
       'auto_email_invoice_help':
-          'Automatically email recurring invoices when they are created.',
+      'Automatically email recurring invoices when they are created.',
       'auto_archive_invoice': 'Auto Archive',
       'auto_archive_invoice_help':
-          'Automatically archive invoices when they are paid.',
+      'Automatically archive invoices when they are paid.',
       'auto_archive_quote': 'Auto Archive',
       'auto_archive_quote_help':
-          'Automatically archive quotes when they are converted.',
+      'Automatically archive quotes when they are converted.',
       'auto_convert_quote': 'Auto Convert',
       'auto_convert_quote_help':
-          'Konvertera automatiskt en offert till en faktura när den godkänts av en klient.',
+      'Konvertera automatiskt en offert till en faktura när den godkänts av en klient.',
       'workflow_settings': 'Workflow Settings',
       'freq_daily': 'Dagligen',
       'freq_weekly': 'Veckovis',
@@ -32968,23 +32977,23 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'signature_on_pdf_help': 'Visa kundens signatur på fakturan/offerten.',
       'show_accept_invoice_terms': 'Faktura villkor kryssruta',
       'show_accept_invoice_terms_help':
-          'Kräv att klienten accepterar faktura villkoren.',
+      'Kräv att klienten accepterar faktura villkoren.',
       'show_accept_quote_terms': 'Offert villkors kryssruta',
       'show_accept_quote_terms_help':
-          'Kräv att klienten accepterar offert villkoren.',
+      'Kräv att klienten accepterar offert villkoren.',
       'require_invoice_signature': 'Faktura signatur',
       'require_invoice_signature_help': 'Kräv signatur av klient.',
       'require_quote_signature': 'Offert signatur',
       'enable_portal_password': 'Lösenordsskydda fakturor',
       'enable_portal_password_help':
-          'Tillåter dig att sätta ett lösenord för varje kontakt. Om ett lösenord är valt kommer kontakten vara tvungen att skriva in lösenordet innan den kan se fakturan.',
+      'Tillåter dig att sätta ett lösenord för varje kontakt. Om ett lösenord är valt kommer kontakten vara tvungen att skriva in lösenordet innan den kan se fakturan.',
       'authorization': 'Tillstånd',
       'subdomain': 'Underdomän',
       'domain': 'Domän',
       'portal_mode': 'Portal Mode',
       'email_signature': 'Vänliga hälsningar,',
       'enable_email_markup_help':
-          'Gör det enklare för dina klienter att betala genom att lägga till schema.org märkning till dina e-post.',
+      'Gör det enklare för dina klienter att betala genom att lägga till schema.org märkning till dina e-post.',
       'plain': 'Vanlig',
       'light': 'Ljus',
       'dark': 'Mörk',
@@ -33013,12 +33022,12 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'accepted_card_logos': 'Accepterade kort logos',
       'credentials': 'Credentials',
       'require_billing_address_help':
-          'Require client to provide their billing address',
+      'Require client to provide their billing address',
       'require_shipping_address_help':
-          'Require client to provide their shipping address',
+      'Require client to provide their shipping address',
       'update_address': 'Uppdatera adress',
       'update_address_help':
-          'Uppdatera kundens adress med tillhandahållna uppgifter',
+      'Uppdatera kundens adress med tillhandahållna uppgifter',
       'rate': '`a-pris',
       'tax_rate': 'Skattenivå',
       'new_tax_rate': 'Ny skatte nivå',
@@ -33030,13 +33039,13 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'restored_tax_rate': 'Successfully restored tax rate',
       'fill_products': 'Auto-ifyll produkter',
       'fill_products_help':
-          'Välj en produkt för att automatiskt <b>fylla i beskrivning och pris</b>',
+      'Välj en produkt för att automatiskt <b>fylla i beskrivning och pris</b>',
       'update_products': 'Auto-uppdaterade produkter',
       'update_products_help':
-          'Uppdatera en faktura för att automatiskt <b>uppdatera produktbiblioteket</b>',
+      'Uppdatera en faktura för att automatiskt <b>uppdatera produktbiblioteket</b>',
       'convert_products': 'Konvertera produkter',
       'convert_products_help':
-          'Konvertera automatiskt produkt priser till kundens valuta',
+      'Konvertera automatiskt produkt priser till kundens valuta',
       'fees': 'Avgifter',
       'limits': 'Gränser',
       'provider': 'Provider',
@@ -33136,7 +33145,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'please_enter_a_first_name': 'Please enter a first name',
       'please_enter_a_last_name': 'Please enter a last name',
       'please_agree_to_terms_and_privacy':
-          'Please agree to the terms of service and privacy policy to create an account.',
+      'Please agree to the terms of service and privacy policy to create an account.',
       'i_agree_to_the': 'I agree to the',
       'terms_of_service_link': 'terms of service',
       'privacy_policy_link': 'privacy policy',
@@ -33235,7 +33244,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'average': 'Average',
       'unapproved': 'Unapproved',
       'authenticate_to_change_setting':
-          'Please authenticate to change this setting',
+      'Please authenticate to change this setting',
       'locked': 'Locked',
       'authenticate': 'Authenticate',
       'please_authenticate': 'Please authenticate',
@@ -33435,7 +33444,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'marked_invoices_as_paid': 'Successfully marked invoices as paid',
       'done': 'Klar',
       'please_enter_a_client_or_contact_name':
-          'Please enter a client or contact name',
+      'Please enter a client or contact name',
       'dark_mode': 'Mörkt läge',
       'restart_app_to_apply_change': 'Restart the app to apply the change',
       'refresh_data': 'Refresh Data',
@@ -33517,7 +33526,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'activity_8': ':user arkiverade faktura :invoice',
       'activity_9': ':user raderade faktura :invoice',
       'activity_10':
-          ':contact entered payment :payment for :payment_amount on invoice :invoice for :client',
+      ':contact entered payment :payment for :payment_amount on invoice :invoice for :client',
       'activity_11': ':user uppdaterade betalning :payment',
       'activity_12': ':user arkiverade betalning :payment',
       'activity_13': ':user tog bort betalning :payment',
@@ -33547,7 +33556,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'activity_37': ':user återställde kostnad :expense',
       'activity_39': ':user avbröt en :payment_amount betalning :payment',
       'activity_40':
-          ':user återbetalade :adjustment av en :payment_amount betalning :payment',
+      ':user återbetalade :adjustment av en :payment_amount betalning :payment',
       'activity_41': ':payment_amount betalning (:payment) misslyckad',
       'activity_42': ':user skapade uppgift :task',
       'activity_43': ':user uppdaterade uppgift :task',
@@ -33699,23 +33708,23 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'hide_menu': 'Hide Menu',
       'show_menu': 'Show Menu',
       'partially_refunded': 'Partially Refunded',
-      'search_documents': 'Search Documents',
-      'search_designs': 'Search Designs',
-      'search_invoices': 'Search Invoices',
-      'search_clients': 'Search Clients',
-      'search_products': 'Search Products',
-      'search_quotes': 'Search Quotes',
-      'search_credits': 'Search Credits',
-      'search_vendors': 'Search Vendors',
-      'search_users': 'Search Users',
-      'search_tax_rates': 'Search Tax Rates',
-      'search_tasks': 'Search Tasks',
-      'search_settings': 'Search Settings',
-      'search_projects': 'Search Projects',
-      'search_expenses': 'Search Expenses',
-      'search_payments': 'Search Payments',
-      'search_groups': 'Search Groups',
-      'search_company': 'Search Company',
+      'search_documents': 'Search :count Documents',
+      'search_designs': 'Search :count Designs',
+      'search_invoices': 'Search :count Invoices',
+      'search_clients': 'Search :count Clients',
+      'search_products': 'Search :count Products',
+      'search_quotes': 'Search :count Quotes',
+      'search_credits': 'Search :count Credits',
+      'search_vendors': 'Search :count Vendors',
+      'search_users': 'Search :count Users',
+      'search_tax_rates': 'Search :count Tax Rates',
+      'search_tasks': 'Search :count Tasks',
+      'search_settings': 'Search :count Settings',
+      'search_projects': 'Search :count Projects',
+      'search_expenses': 'Search :count Expenses',
+      'search_payments': 'Search :count Payments',
+      'search_groups': 'Search :count Groups',
+      'search_company': 'Search :count Company',
       'refund_payment': 'การชำระเงินคืน',
       'cancelled_invoice': 'Successfully cancelled invoice',
       'cancelled_invoices': 'Successfully cancelled invoices',
@@ -33734,7 +33743,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'purge_data': 'ล้างข้อมูล',
       'purge_successful': 'Successfully purged company data',
       'purge_data_message':
-          'คำเตือน: การดำเนินการนี้จะลบข้อมูลของคุณอย่างถาวรและไม่สามารถนำคืนกลับมาได้',
+      'คำเตือน: การดำเนินการนี้จะลบข้อมูลของคุณอย่างถาวรและไม่สามารถนำคืนกลับมาได้',
       'invoice_balance': 'Invoice Balance',
       'age_group_0': '0 - 30 วัน',
       'age_group_30': '30 - 60 วัน',
@@ -33769,10 +33778,10 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'apply_license': 'สมัครไลเซนต์',
       'cancel_account': 'ลบบัญชี',
       'cancel_account_message':
-          'คำเตือน: การดำเนินการนี้จะลบบัญชีของคุณอย่างถาวรและไม่สามารถนำกลับมาได้',
+      'คำเตือน: การดำเนินการนี้จะลบบัญชีของคุณอย่างถาวรและไม่สามารถนำกลับมาได้',
       'delete_company': 'Delete Company',
       'delete_company_message':
-          'Warning: This will permanently delete your company, there is no undo.',
+      'Warning: This will permanently delete your company, there is no undo.',
       'enable_modules': 'Enable Modules',
       'converted_quote': 'Successfully converted quote',
       'credit_design': 'Credit Design',
@@ -33924,12 +33933,12 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'applied': 'Applied',
       'include_recent_errors': 'Include recent errors from the logs',
       'your_message_has_been_received':
-          'We have received your message and will try to respond promptly.',
+      'We have received your message and will try to respond promptly.',
       'message': 'ข้อความ',
       'from': 'จาก',
       'show_product_details': 'Show Product Details',
       'show_product_details_help':
-          'Include the description and cost in the product dropdown',
+      'Include the description and cost in the product dropdown',
       'pdf_min_requirements': 'The PDF renderer requires :version',
       'adjust_fee_percent': 'Adjust Fee Percent',
       'adjust_fee_percent_help': 'Adjust percent to account for fee',
@@ -33946,7 +33955,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'domain_url': 'Domain URL',
       'password_is_too_short': 'รหัสผ่านสั้นเกินไป',
       'password_is_too_easy':
-          'Password must contain an upper case character and a number',
+      'Password must contain an upper case character and a number',
       'client_portal_tasks': 'Client Portal Tasks',
       'client_portal_dashboard': 'Client Portal Dashboard',
       'please_enter_a_value': 'Please enter a value',
@@ -33973,16 +33982,16 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'third_custom': 'Third Custom',
       'show_cost': 'Show Cost',
       'show_cost_help':
-          'Display a product cost field to track the markup/profit',
+      'Display a product cost field to track the markup/profit',
       'show_product_quantity': 'Show Product Quantity',
       'show_product_quantity_help':
-          'Display a product quantity field, otherwise default to one',
+      'Display a product quantity field, otherwise default to one',
       'show_invoice_quantity': 'Show Invoice Quantity',
       'show_invoice_quantity_help':
-          'Display a line item quantity field, otherwise default to one',
+      'Display a line item quantity field, otherwise default to one',
       'default_quantity': 'Default Quantity',
       'default_quantity_help':
-          'Automatically set the line item quantity to one',
+      'Automatically set the line item quantity to one',
       'one_tax_rate': 'One Tax Rate',
       'two_tax_rates': 'Two Tax Rates',
       'three_tax_rates': 'Three Tax Rates',
@@ -34027,7 +34036,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'filtered_by_user': 'Filtered by User',
       'administrator': 'ผู้ดูแลระบบ',
       'administrator_help':
-          'อนุญาตให้ผู้ใช้ จัดการผู้ใช้อื่น เปลี่ยนแปลงการตั้งค่าและแก้ไขระเบียนทั้งหมด',
+      'อนุญาตให้ผู้ใช้ จัดการผู้ใช้อื่น เปลี่ยนแปลงการตั้งค่าและแก้ไขระเบียนทั้งหมด',
       'user_management': 'การจัดการผู้ใช้',
       'users': 'ผู้ใช้งาน',
       'new_user': 'ผู้ใช้ใหม่',
@@ -34042,7 +34051,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'invoice_options': 'ตัวเลือกใบเสนอราคา',
       'hide_paid_to_date': 'ซ่อนการจ่ายเงินไปยังวันที่',
       'hide_paid_to_date_help':
-          'แสดงเฉพาะพื้นที่ \"ชำระเงินถึงวันที่\" ในใบแจ้งหนี้ของคุณเมื่อได้รับการชำระเงินแล้ว',
+      'แสดงเฉพาะพื้นที่ \"ชำระเงินถึงวันที่\" ในใบแจ้งหนี้ของคุณเมื่อได้รับการชำระเงินแล้ว',
       'invoice_embed_documents': 'ฝังเอกสาร',
       'invoice_embed_documents_help': 'รวมภาพที่แนบมาในใบแจ้งหนี้',
       'all_pages_header': 'แสดงหัวเรื่อง',
@@ -34065,16 +34074,16 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'quote_footer': 'สุดท้ายใบเสนอราคา',
       'auto_email_invoice': 'Auto Email',
       'auto_email_invoice_help':
-          'Automatically email recurring invoices when they are created.',
+      'Automatically email recurring invoices when they are created.',
       'auto_archive_invoice': 'Auto Archive',
       'auto_archive_invoice_help':
-          'Automatically archive invoices when they are paid.',
+      'Automatically archive invoices when they are paid.',
       'auto_archive_quote': 'Auto Archive',
       'auto_archive_quote_help':
-          'Automatically archive quotes when they are converted.',
+      'Automatically archive quotes when they are converted.',
       'auto_convert_quote': 'แปลงอัตโนมัติ',
       'auto_convert_quote_help':
-          'แปลงใบเสนอราคาให้เป็นใบแจ้งหนี้โดยอัตโนมัติเมื่อได้รับอนุมัติจากลูกค้า',
+      'แปลงใบเสนอราคาให้เป็นใบแจ้งหนี้โดยอัตโนมัติเมื่อได้รับอนุมัติจากลูกค้า',
       'workflow_settings': 'Workflow Settings',
       'freq_daily': 'Daily',
       'freq_weekly': 'รายสัปดาห์',
@@ -34120,26 +34129,26 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'custom_javascript': 'Custom JavaScript',
       'signature_on_pdf': 'Show on PDF',
       'signature_on_pdf_help':
-          'Show the client signature on the invoice/quote PDF.',
+      'Show the client signature on the invoice/quote PDF.',
       'show_accept_invoice_terms': 'Checkbox เงื่อนไขในใบแจ้งหนี้',
       'show_accept_invoice_terms_help':
-          'กำหนดให้ลูกค้ายืนยันว่ายอมรับข้อกำหนดในใบแจ้งหนี้',
+      'กำหนดให้ลูกค้ายืนยันว่ายอมรับข้อกำหนดในใบแจ้งหนี้',
       'show_accept_quote_terms': 'Checkbox เงื่อนไขใบเสนอราคา',
       'show_accept_quote_terms_help':
-          'กำหนดให้ลูกค้ายืนยันว่ายอมรับเงื่อนไขการเสนอราคา',
+      'กำหนดให้ลูกค้ายืนยันว่ายอมรับเงื่อนไขการเสนอราคา',
       'require_invoice_signature': 'ลายเซ็นของใบแจ้งหนี้',
       'require_invoice_signature_help': 'กำหนดให้ลูกค้าจัดหาลายเซ็น',
       'require_quote_signature': 'ลายมือชื่อใบเสนอราคา',
       'enable_portal_password': 'รหัสผ่านป้องกันใบแจ้งหนี้',
       'enable_portal_password_help':
-          'ช่วยให้คุณสามารถตั้งรหัสผ่านสำหรับแต่ละรายชื่อ หากมีการตั้งรหัสผ่านผู้ติดต่อจะต้องป้อนรหัสผ่านก่อนดูใบแจ้งหนี้',
+      'ช่วยให้คุณสามารถตั้งรหัสผ่านสำหรับแต่ละรายชื่อ หากมีการตั้งรหัสผ่านผู้ติดต่อจะต้องป้อนรหัสผ่านก่อนดูใบแจ้งหนี้',
       'authorization': 'การอนุญาต',
       'subdomain': 'Subdomain',
       'domain': 'โดเมน',
       'portal_mode': 'Portal Mode',
       'email_signature': 'ด้วยความเคารพ',
       'enable_email_markup_help':
-          'ทำให้ลูกค้าของคุณสามารถจ่ายเงินให้คุณได้ง่ายขึ้นโดยการเพิ่มมาร์กอัป schema.org ลงในอีเมลของคุณ',
+      'ทำให้ลูกค้าของคุณสามารถจ่ายเงินให้คุณได้ง่ายขึ้นโดยการเพิ่มมาร์กอัป schema.org ลงในอีเมลของคุณ',
       'plain': 'ธรรมดา',
       'light': 'บาง',
       'dark': 'มืด',
@@ -34168,9 +34177,9 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'accepted_card_logos': 'ยอมรับโลโก้ของบัตร',
       'credentials': 'Credentials',
       'require_billing_address_help':
-          'Require client to provide their billing address',
+      'Require client to provide their billing address',
       'require_shipping_address_help':
-          'Require client to provide their shipping address',
+      'Require client to provide their shipping address',
       'update_address': 'อัปเดตที่อยู่',
       'update_address_help': 'อัปเดตที่อยู่ของลูกค้าโดยระบุรายละเอียดไว้',
       'rate': 'อัตรา',
@@ -34184,13 +34193,13 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'restored_tax_rate': 'Successfully restored tax rate',
       'fill_products': 'เติมข้อมูลอัตโนมัติ',
       'fill_products_help':
-          'การเลือกสินค้า <b>จะเติมคำอธิบายและค่าใช้จ่ายโดยอัตโนมัติ</b>',
+      'การเลือกสินค้า <b>จะเติมคำอธิบายและค่าใช้จ่ายโดยอัตโนมัติ</b>',
       'update_products': 'อัปเดตผลิตภัณฑ์โดยอัตโนมัติ',
       'update_products_help':
-          'การอัปเดตใบแจ้งหนี้ <b>จะอัปเดตสินค้าโดยอัตโนมัติ</b>',
+      'การอัปเดตใบแจ้งหนี้ <b>จะอัปเดตสินค้าโดยอัตโนมัติ</b>',
       'convert_products': 'Convert Products',
       'convert_products_help':
-          'Automatically convert product prices to the client\'s currency',
+      'Automatically convert product prices to the client\'s currency',
       'fees': 'ค่าธรรมเนียม',
       'limits': 'จำกัด',
       'provider': 'Provider',
@@ -34290,7 +34299,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'please_enter_a_first_name': 'Please enter a first name',
       'please_enter_a_last_name': 'Please enter a last name',
       'please_agree_to_terms_and_privacy':
-          'Please agree to the terms of service and privacy policy to create an account.',
+      'Please agree to the terms of service and privacy policy to create an account.',
       'i_agree_to_the': 'I agree to the',
       'terms_of_service_link': 'terms of service',
       'privacy_policy_link': 'privacy policy',
@@ -34389,7 +34398,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'average': 'ค่าเฉลี่ย',
       'unapproved': 'ไม่อนุมัติ',
       'authenticate_to_change_setting':
-          'Please authenticate to change this setting',
+      'Please authenticate to change this setting',
       'locked': 'Locked',
       'authenticate': 'Authenticate',
       'please_authenticate': 'Please authenticate',
@@ -34589,7 +34598,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'marked_invoices_as_paid': 'Successfully marked invoices as paid',
       'done': 'เรียบร้อย',
       'please_enter_a_client_or_contact_name':
-          'Please enter a client or contact name',
+      'Please enter a client or contact name',
       'dark_mode': 'โหมดกลางคืน',
       'restart_app_to_apply_change': 'Restart the app to apply the change',
       'refresh_data': 'Refresh Data',
@@ -34671,7 +34680,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'activity_8': ':user บันทึกใบแจ้งหนี้ :invoice',
       'activity_9': ':user ได้ลบใบแจ้งหนี้ :invoice',
       'activity_10':
-          ':contact entered payment :payment for :payment_amount on invoice :invoice for :client',
+      ':contact entered payment :payment for :payment_amount on invoice :invoice for :client',
       'activity_11': ':user  อัปเดตการชำระเงินที่แล้ว :payment',
       'activity_12': ':user เก็บบันทึกการจ่ายเงิน  :payment',
       'activity_13': ':user ลบการจ่ายเงิน :payment',
@@ -34701,7 +34710,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'activity_37': ':user ได้กู้คืนค่าใช้จ่าย :expense',
       'activity_39': ':user ยกเลิก :payment_amount  การชำระเงิน :payment',
       'activity_40':
-          ':usre คืนเงิน :adjustment ของ  :payment_amount การชำระเงิน :payment',
+      ':usre คืนเงิน :adjustment ของ  :payment_amount การชำระเงิน :payment',
       'activity_41': ':payment_amount จ่ายชำระเงิน (:payment) ล้มเหลว',
       'activity_42': ':user ได้สร้างงาน :task',
       'activity_43': ':user ได้อัปเดตงาน :task',
@@ -34853,23 +34862,23 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'hide_menu': 'Hide Menu',
       'show_menu': 'Show Menu',
       'partially_refunded': 'Partially Refunded',
-      'search_documents': 'Search Documents',
-      'search_designs': 'Search Designs',
-      'search_invoices': 'Search Invoices',
-      'search_clients': 'Search Clients',
-      'search_products': 'Search Products',
-      'search_quotes': 'Search Quotes',
-      'search_credits': 'Search Credits',
-      'search_vendors': 'Search Vendors',
-      'search_users': 'Search Users',
-      'search_tax_rates': 'Search Tax Rates',
-      'search_tasks': 'Search Tasks',
-      'search_settings': 'Search Settings',
-      'search_projects': 'Search Projects',
-      'search_expenses': 'Search Expenses',
-      'search_payments': 'Search Payments',
-      'search_groups': 'Search Groups',
-      'search_company': 'Search Company',
+      'search_documents': 'Search :count Documents',
+      'search_designs': 'Search :count Designs',
+      'search_invoices': 'Search :count Invoices',
+      'search_clients': 'Search :count Clients',
+      'search_products': 'Search :count Products',
+      'search_quotes': 'Search :count Quotes',
+      'search_credits': 'Search :count Credits',
+      'search_vendors': 'Search :count Vendors',
+      'search_users': 'Search :count Users',
+      'search_tax_rates': 'Search :count Tax Rates',
+      'search_tasks': 'Search :count Tasks',
+      'search_settings': 'Search :count Settings',
+      'search_projects': 'Search :count Projects',
+      'search_expenses': 'Search :count Expenses',
+      'search_payments': 'Search :count Payments',
+      'search_groups': 'Search :count Groups',
+      'search_company': 'Search :count Company',
       'refund_payment': 'Refund Payment',
       'cancelled_invoice': 'Successfully cancelled invoice',
       'cancelled_invoices': 'Successfully cancelled invoices',
@@ -34888,7 +34897,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'purge_data': 'Purge Data',
       'purge_successful': 'Successfully purged company data',
       'purge_data_message':
-          'Warning: This will permanently erase your data, there is no undo.',
+      'Warning: This will permanently erase your data, there is no undo.',
       'invoice_balance': 'Invoice Balance',
       'age_group_0': '0 - 30 Days',
       'age_group_30': '30 - 60 Days',
@@ -34923,10 +34932,10 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'apply_license': 'Apply License',
       'cancel_account': 'Hesabı Sil',
       'cancel_account_message':
-          'Warning: This will permanently delete your account, there is no undo.',
+      'Warning: This will permanently delete your account, there is no undo.',
       'delete_company': 'Delete Company',
       'delete_company_message':
-          'Warning: This will permanently delete your company, there is no undo.',
+      'Warning: This will permanently delete your company, there is no undo.',
       'enable_modules': 'Enable Modules',
       'converted_quote': 'Successfully converted quote',
       'credit_design': 'Credit Design',
@@ -35078,12 +35087,12 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'applied': 'Applied',
       'include_recent_errors': 'Include recent errors from the logs',
       'your_message_has_been_received':
-          'We have received your message and will try to respond promptly.',
+      'We have received your message and will try to respond promptly.',
       'message': 'Mesaj',
       'from': 'Kimden',
       'show_product_details': 'Show Product Details',
       'show_product_details_help':
-          'Include the description and cost in the product dropdown',
+      'Include the description and cost in the product dropdown',
       'pdf_min_requirements': 'The PDF renderer requires :version',
       'adjust_fee_percent': 'Adjust Fee Percent',
       'adjust_fee_percent_help': 'Adjust percent to account for fee',
@@ -35100,7 +35109,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'domain_url': 'Domain URL',
       'password_is_too_short': 'Password is too short',
       'password_is_too_easy':
-          'Password must contain an upper case character and a number',
+      'Password must contain an upper case character and a number',
       'client_portal_tasks': 'Client Portal Tasks',
       'client_portal_dashboard': 'Client Portal Dashboard',
       'please_enter_a_value': 'Please enter a value',
@@ -35127,16 +35136,16 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'third_custom': 'Third Custom',
       'show_cost': 'Show Cost',
       'show_cost_help':
-          'Display a product cost field to track the markup/profit',
+      'Display a product cost field to track the markup/profit',
       'show_product_quantity': 'Show Product Quantity',
       'show_product_quantity_help':
-          'Display a product quantity field, otherwise default to one',
+      'Display a product quantity field, otherwise default to one',
       'show_invoice_quantity': 'Show Invoice Quantity',
       'show_invoice_quantity_help':
-          'Display a line item quantity field, otherwise default to one',
+      'Display a line item quantity field, otherwise default to one',
       'default_quantity': 'Default Quantity',
       'default_quantity_help':
-          'Automatically set the line item quantity to one',
+      'Automatically set the line item quantity to one',
       'one_tax_rate': 'One Tax Rate',
       'two_tax_rates': 'Two Tax Rates',
       'three_tax_rates': 'Three Tax Rates',
@@ -35181,7 +35190,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'filtered_by_user': 'Filtered by User',
       'administrator': 'Administrator',
       'administrator_help':
-          'Allow user to manage users, change settings and modify all records',
+      'Allow user to manage users, change settings and modify all records',
       'user_management': 'Kullanıcı yönetimi',
       'users': 'Kullanıcılar',
       'new_user': 'Yeni Kullanıcı',
@@ -35196,7 +35205,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'invoice_options': 'Fatura Seçenekleri',
       'hide_paid_to_date': 'Ödeme Tarihini Gizle',
       'hide_paid_to_date_help':
-          'Bir ödeme alındığında yalnızca faturalarınızdaki \"Ödenen Tarihi\" alanını görüntüleyin.',
+      'Bir ödeme alındığında yalnızca faturalarınızdaki \"Ödenen Tarihi\" alanını görüntüleyin.',
       'invoice_embed_documents': 'Embed Documents',
       'invoice_embed_documents_help': 'Include attached images in the invoice.',
       'all_pages_header': 'Show Header on',
@@ -35219,16 +35228,16 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'quote_footer': 'Teklif Altbilgisi',
       'auto_email_invoice': 'Auto Email',
       'auto_email_invoice_help':
-          'Automatically email recurring invoices when they are created.',
+      'Automatically email recurring invoices when they are created.',
       'auto_archive_invoice': 'Auto Archive',
       'auto_archive_invoice_help':
-          'Automatically archive invoices when they are paid.',
+      'Automatically archive invoices when they are paid.',
       'auto_archive_quote': 'Auto Archive',
       'auto_archive_quote_help':
-          'Automatically archive quotes when they are converted.',
+      'Automatically archive quotes when they are converted.',
       'auto_convert_quote': 'Auto Convert',
       'auto_convert_quote_help':
-          'Automatically convert a quote to an invoice when approved by a client.',
+      'Automatically convert a quote to an invoice when approved by a client.',
       'workflow_settings': 'Workflow Settings',
       'freq_daily': 'Günlük',
       'freq_weekly': 'Haftalık',
@@ -35274,27 +35283,27 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'custom_javascript': 'Custom JavaScript',
       'signature_on_pdf': 'Show on PDF',
       'signature_on_pdf_help':
-          'Show the client signature on the invoice/quote PDF.',
+      'Show the client signature on the invoice/quote PDF.',
       'show_accept_invoice_terms': 'Invoice Terms Checkbox',
       'show_accept_invoice_terms_help':
-          'Require client to confirm that they accept the invoice terms.',
+      'Require client to confirm that they accept the invoice terms.',
       'show_accept_quote_terms': 'Quote Terms Checkbox',
       'show_accept_quote_terms_help':
-          'Require client to confirm that they accept the quote terms.',
+      'Require client to confirm that they accept the quote terms.',
       'require_invoice_signature': 'Invoice Signature',
       'require_invoice_signature_help':
-          'Require client to provide their signature.',
+      'Require client to provide their signature.',
       'require_quote_signature': 'Quote Signature',
       'enable_portal_password': 'Password Protect Invoices',
       'enable_portal_password_help':
-          'Allows you to set a password for each contact. If a password is set, the contact will be required to enter a password before viewing invoices.',
+      'Allows you to set a password for each contact. If a password is set, the contact will be required to enter a password before viewing invoices.',
       'authorization': 'Authorization',
       'subdomain': 'Alt etki alanı',
       'domain': 'Domain',
       'portal_mode': 'Portal Mode',
       'email_signature': 'Saygılarımızla,',
       'enable_email_markup_help':
-          'Müşterilerinizin e-postalarınıza schema.org işaretleme ekleyerek ödeme yapmalarını kolaylaştırın.',
+      'Müşterilerinizin e-postalarınıza schema.org işaretleme ekleyerek ödeme yapmalarını kolaylaştırın.',
       'plain': 'Düz',
       'light': 'Aydınlık',
       'dark': 'Koyu',
@@ -35323,12 +35332,12 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'accepted_card_logos': 'Accepted Card Logos',
       'credentials': 'Credentials',
       'require_billing_address_help':
-          'Require client to provide their billing address',
+      'Require client to provide their billing address',
       'require_shipping_address_help':
-          'Require client to provide their shipping address',
+      'Require client to provide their shipping address',
       'update_address': 'Adresi Güncelle',
       'update_address_help':
-          'Müşterinin adresini verilen ayrıntılarla güncelleyin',
+      'Müşterinin adresini verilen ayrıntılarla güncelleyin',
       'rate': 'Tarife',
       'tax_rate': 'Vergi Oranı',
       'new_tax_rate': 'Yeni Vergi Oranı',
@@ -35340,13 +35349,13 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'restored_tax_rate': 'Successfully restored tax rate',
       'fill_products': 'Otomatik doldurma ürünleri',
       'fill_products_help':
-          'Bir ürün seçmek <b>açıklama ve maliyeti</b> otomatik olarak dolduracaktır',
+      'Bir ürün seçmek <b>açıklama ve maliyeti</b> otomatik olarak dolduracaktır',
       'update_products': 'Ürünleri otomatik güncelle',
       'update_products_help':
-          'Faturayı güncellemek <b>ürün kütüphanesini</b> otomatik olarak dolduracaktır.',
+      'Faturayı güncellemek <b>ürün kütüphanesini</b> otomatik olarak dolduracaktır.',
       'convert_products': 'Convert Products',
       'convert_products_help':
-          'Automatically convert product prices to the client\'s currency',
+      'Automatically convert product prices to the client\'s currency',
       'fees': 'Fees',
       'limits': 'Limits',
       'provider': 'Provider',
@@ -35446,7 +35455,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'please_enter_a_first_name': 'Please enter a first name',
       'please_enter_a_last_name': 'Please enter a last name',
       'please_agree_to_terms_and_privacy':
-          'Please agree to the terms of service and privacy policy to create an account.',
+      'Please agree to the terms of service and privacy policy to create an account.',
       'i_agree_to_the': 'I agree to the',
       'terms_of_service_link': 'terms of service',
       'privacy_policy_link': 'privacy policy',
@@ -35545,7 +35554,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'average': 'Average',
       'unapproved': 'Unapproved',
       'authenticate_to_change_setting':
-          'Please authenticate to change this setting',
+      'Please authenticate to change this setting',
       'locked': 'Locked',
       'authenticate': 'Authenticate',
       'please_authenticate': 'Please authenticate',
@@ -35745,7 +35754,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'marked_invoices_as_paid': 'Successfully marked invoices as paid',
       'done': 'Tamam',
       'please_enter_a_client_or_contact_name':
-          'Please enter a client or contact name',
+      'Please enter a client or contact name',
       'dark_mode': 'Karanlık Mod',
       'restart_app_to_apply_change': 'Restart the app to apply the change',
       'refresh_data': 'Refresh Data',
@@ -35827,7 +35836,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'activity_8': ':user :invoice nolu faturayı arşivledi',
       'activity_9': ':user :invoice nolu faturayı sildi',
       'activity_10':
-          ':contact entered payment :payment for :payment_amount on invoice :invoice for :client',
+      ':contact entered payment :payment for :payment_amount on invoice :invoice for :client',
       'activity_11': ':user :payment tutarlı ödemeyi güncelledi',
       'activity_12': ':user :payment tutarlı ödemeyi arşivledi',
       'activity_13': ':user :payment tutarlı ödemeyi sildi',
@@ -35857,7 +35866,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'activity_37': ':user masraf geri yükledi :expense',
       'activity_39': ':user cancelled a :payment_amount payment :payment',
       'activity_40':
-          ':user refunded :adjustment of a :payment_amount payment :payment',
+      ':user refunded :adjustment of a :payment_amount payment :payment',
       'activity_41': ':payment_amount payment (:payment) failed',
       'activity_42': ':user :task görevini oluşturdu',
       'activity_43': ':user :task görevini güncelledi',
@@ -36534,7 +36543,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
 
   String get pleaseEnterAClientOrContactName =>
       _localizedValues[localeCode]['please_enter_a_client_or_contact_name'] ??
-      '';
+          '';
 
   String get darkMode => _localizedValues[localeCode]['dark_mode'] ?? '';
 
@@ -37926,8 +37935,11 @@ mixin LocalizationsProvider on LocaleCodeAware {
 
   String get newPayment => _localizedValues[localeCode]['new_payment'] ?? '';
 
-  String get switchListTable =>
-      _localizedValues[localeCode]['switch_list_table'] ?? '';
+  String get showTable =>
+      _localizedValues[localeCode]['show_table'] ?? '';
+
+  String get showList =>
+      _localizedValues[localeCode]['show_list'] ?? '';
 
   String get whenSaved => _localizedValues[localeCode]['when_saved'] ?? '';
 
@@ -38694,6 +38706,53 @@ mixin LocalizationsProvider on LocaleCodeAware {
   String get searchDesigns =>
       _localizedValues[localeCode]['search_designs'] ?? '';
 
+  String get searchInvoice =>
+      _localizedValues[localeCode]['search_invoice'] ?? '';
+
+  String get searchClient =>
+      _localizedValues[localeCode]['search_client'] ?? '';
+
+  String get searchProduct =>
+      _localizedValues[localeCode]['search_product'] ?? '';
+
+  String get searchQuote => _localizedValues[localeCode]['search_quote'] ?? '';
+
+  String get searchCredit =>
+      _localizedValues[localeCode]['search_credit'] ?? '';
+
+  String get searchVendor =>
+      _localizedValues[localeCode]['search_vendor'] ?? '';
+
+  String get searchUser => _localizedValues[localeCode]['search_user'] ?? '';
+
+  String get searchTaxRate =>
+      _localizedValues[localeCode]['search_tax_rate'] ?? '';
+
+  String get searchTask => _localizedValues[localeCode]['search_task'] ?? '';
+
+  String get searchProject =>
+      _localizedValues[localeCode]['search_project'] ?? '';
+
+  String get searchExpense =>
+      _localizedValues[localeCode]['search_expense'] ?? '';
+
+  String get searchPayment =>
+      _localizedValues[localeCode]['search_payment'] ?? '';
+
+  String get searchGroup => _localizedValues[localeCode]['search_group'] ?? '';
+
+  String get searchDocument =>
+      _localizedValues[localeCode]['search_document'] ?? '';
+
+  String get searchDesign =>
+      _localizedValues[localeCode]['search_design'] ?? '';
+
+  String get searchToken =>
+      _localizedValues[localeCode]['search_token'] ?? '';
+
+  String get searchWebhook =>
+      _localizedValues[localeCode]['search_webhook'] ?? '';
+
   String get partiallyRefunded =>
       _localizedValues[localeCode]['partially_refunded'] ?? '';
 
@@ -38907,8 +38966,33 @@ mixin LocalizationsProvider on LocaleCodeAware {
   String get clientSettings =>
       _localizedValues[localeCode]['client_settings'] ?? '';
 
+  String get netAmount => _localizedValues[localeCode]['net_amount'] ?? '';
+
+  String get netBalance => _localizedValues[localeCode]['net_balance'] ?? '';
+
+  String get gross => _localizedValues[localeCode]['gross'] ?? '';
+
+  String get completed => _localizedValues[localeCode]['completed'] ?? '';
+
+
+  String get onlinePaymentEmail =>
+      _localizedValues[localeCode]['online_payment_email'] ?? '';
+
+  String get manualPaymentEmail =>
+      _localizedValues[localeCode]['manual_payment_email'] ?? '';
+
+  String get clientCreated =>
+      _localizedValues[localeCode]['client_created'] ?? '';
+
+
+
   String lookup(String key) {
     final lookupKey = toSnakeCase(key);
+
+    if (!kReleaseMode && !_localizedValues[localeCode].containsKey(key)) {
+      print('ERROR: localization key not found - $key');
+    }
+
     return _localizedValues[localeCode][lookupKey] ??
         _localizedValues[localeCode][lookupKey.replaceFirst('_id', '')] ??
         key;

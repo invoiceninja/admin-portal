@@ -57,7 +57,6 @@ PrefState prefReducer(
     ..autoStartTasks = autoStartTasksReducer(state.autoStartTasks, action)
     ..requireAuthentication =
         requireAuthenticationReducer(state.requireAuthentication, action)
-    ..emailPayment = emailPaymentReducer(state.emailPayment, action)
     ..addDocumentsToInvoice =
         addDocumentsToInvoiceReducer(state.addDocumentsToInvoice, action));
 }
@@ -129,12 +128,6 @@ Reducer<AppSidebarMode> manuSidebarReducer = combineReducers([
 Reducer<AppSidebarMode> historySidebarReducer = combineReducers([
   TypedReducer<AppSidebarMode, UserPreferencesChanged>((mode, action) {
     return action.historyMode ?? mode;
-  }),
-]);
-
-Reducer<bool> emailPaymentReducer = combineReducers([
-  TypedReducer<bool, UserPreferencesChanged>((emailPayment, action) {
-    return action.emailPayment ?? emailPayment;
   }),
 ]);
 

@@ -1,20 +1,26 @@
 import 'package:flutter/material.dart';
+import 'package:invoiceninja_flutter/data/models/entities.dart';
 import 'package:invoiceninja_flutter/utils/colors.dart';
 import 'package:invoiceninja_flutter/constants.dart';
+import 'package:invoiceninja_flutter/utils/formatting.dart';
+import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:redux/redux.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 
 class ListFilter extends StatefulWidget {
   const ListFilter({
-    @required this.placeholder,
+    Key key,
+    @required this.entityType,
     @required this.filter,
     @required this.onFilterChanged,
-  });
+    @required this.entityIds,
+  }) : super(key: key);
 
-  final String placeholder;
+  final EntityType entityType;
   final String filter;
   final Function(String) onFilterChanged;
+  final List<String> entityIds;
 
   @override
   _ListFilterState createState() => new _ListFilterState();
@@ -23,26 +29,51 @@ class ListFilter extends StatefulWidget {
 class _ListFilterState extends State<ListFilter> {
   TextEditingController _filterController;
   FocusNode _focusNode;
-  String _placeholder = '';
 
   @override
   void initState() {
     super.initState();
     _filterController = TextEditingController();
     _focusNode = FocusNode()..addListener(onFocusChanged);
-    _placeholder = widget.placeholder;
   }
 
   void onFocusChanged() {
-    setState(() {
-      _placeholder = _focusNode.hasFocus ? '' : widget.placeholder;
-    });
+    setState(() {});
+  }
+
+  String get _getPlaceholder {
+    if (_focusNode.hasFocus) {
+      return '';
+    }
+
+    final localization = AppLocalization.of(context);
+    final count = widget.entityIds.length;
+
+    final isSingle = count == 1 ||
+        [EntityType.dashboard, EntityType.settings].contains(widget.entityType);
+    final key =
+        isSingle ? widget.entityType.toString() : widget.entityType.plural;
+    final placeholder = localization.lookup(
+        widget.entityType == EntityType.dashboard
+            ? 'search_company'
+            : 'search_$key');
+
+    return isSingle
+        ? placeholder
+        : placeholder.replaceFirst(
+            ':count',
+            formatNumber(count.toDouble(), context,
+                formatNumberType: FormatNumberType.int));
   }
 
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
     _filterController.text = widget.filter;
+
+    if (widget.filter != null) {
+      _focusNode.requestFocus();
+    }
   }
 
   @override
@@ -82,13 +113,13 @@ class _ListFilterState extends State<ListFilter> {
         ),
         child: TextField(
           focusNode: _focusNode,
-          textAlign: _focusNode.hasFocus || _filterController.text.isNotEmpty
+          textAlign: _filterController.text.isNotEmpty || _focusNode.hasFocus
               ? TextAlign.start
               : TextAlign.center,
           textAlignVertical: TextAlignVertical.center,
           decoration: InputDecoration(
             contentPadding: EdgeInsets.only(left: 8, right: 8, bottom: 6),
-            suffixIcon: _filterController.text.isNotEmpty
+            suffixIcon: _filterController.text.isNotEmpty || _focusNode.hasFocus
                 ? IconButton(
                     icon: Icon(
                       Icons.clear,
@@ -98,14 +129,11 @@ class _ListFilterState extends State<ListFilter> {
                       _filterController.text = '';
                       _focusNode.unfocus();
                       widget.onFilterChanged(null);
-                      setState(() {
-                        _placeholder = widget.placeholder;
-                      });
                     },
                   )
                 : Icon(Icons.search, color: textColor),
             border: InputBorder.none,
-            hintText: _placeholder,
+            hintText: _getPlaceholder,
           ),
           autocorrect: false,
           onChanged: (value) {

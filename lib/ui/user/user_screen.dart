@@ -54,7 +54,8 @@ class UserScreen extends StatelessWidget {
          */
       },
       appBarTitle: ListFilter(
-        placeholder: localization.searchUsers,
+        entityType: EntityType.user,
+        entityIds: viewModel.userList,
         filter: state.userListState.filter,
         onFilterChanged: (value) {
           store.dispatch(FilterUsers(value));

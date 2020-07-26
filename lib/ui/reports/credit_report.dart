@@ -31,10 +31,6 @@ enum CreditReportFields {
   custom_value2,
   custom_value3,
   custom_value4,
-  custom_taxes1,
-  custom_taxes2,
-  custom_taxes3,
-  custom_taxes4,
   has_expenses,
   custom_surcharge1,
   custom_surcharge2,
@@ -43,6 +39,9 @@ enum CreditReportFields {
   updated_at,
   archived_at,
   is_deleted,
+  tax_amount,
+  net_amount,
+  net_remaining,
 }
 
 var memoizedCreditReport = memo6((
@@ -167,18 +166,6 @@ ReportResult creditReport(
         case CreditReportFields.custom_value4:
           value = credit.customValue4;
           break;
-        case CreditReportFields.custom_taxes1:
-          value = credit.customTaxes1;
-          break;
-        case CreditReportFields.custom_taxes2:
-          value = credit.customTaxes2;
-          break;
-        case CreditReportFields.custom_taxes3:
-          value = credit.customTaxes3;
-          break;
-        case CreditReportFields.custom_taxes4:
-          value = credit.customTaxes4;
-          break;
         case CreditReportFields.has_expenses:
           value = credit.hasExpenses;
           break;
@@ -202,6 +189,15 @@ ReportResult creditReport(
           break;
         case CreditReportFields.is_deleted:
           value = credit.isDeleted;
+          break;
+        case CreditReportFields.tax_amount:
+          value = credit.taxAmount;
+          break;
+        case CreditReportFields.net_amount:
+          value = credit.netAmount;
+          break;
+        case CreditReportFields.net_remaining:
+          value = credit.netBalance;
           break;
       }
 

@@ -54,24 +54,26 @@ class DashboardPanels extends StatelessWidget {
       color: Theme.of(context).cardColor,
       elevation: 6.0,
       child: Padding(
-        padding: const EdgeInsets.only(top: 16),
+        padding: const EdgeInsets.only(top: 16, left: 16, right: 16),
         child: Row(
           children: <Widget>[
-            SizedBox(width: 8.0),
             IconButton(
               icon: Icon(Icons.navigate_before),
               onPressed: () => viewModel.onOffsetChanged(1),
+              visualDensity: VisualDensity.compact,
             ),
-            SizedBox(width: 8.0),
+            SizedBox(width: 8),
             IconButton(
               icon: Icon(Icons.navigate_next),
               onPressed: viewModel.isNextEnabled
                   ? () => viewModel.onOffsetChanged(-1)
                   : null,
+              visualDensity: VisualDensity.compact,
             ),
             SizedBox(width: 16),
-            Expanded(
-              child: InkWell(
+            InkWell(
+              child: Padding(
+                padding: const EdgeInsets.only(left: 4, top: 6, bottom: 6),
                 child: Row(
                   mainAxisSize: MainAxisSize.min,
                   children: <Widget>[
@@ -89,56 +91,49 @@ class DashboardPanels extends StatelessWidget {
                     Icon(Icons.arrow_drop_down),
                   ],
                 ),
-                onTap: () => _showDateOptions(context),
               ),
+              onTap: () => _showDateOptions(context),
             ),
-            if (hasMultipleCurrencies) ...[
-              SizedBox(
-                width: 12,
-              ),
-              DropdownButtonHideUnderline(
-                child: DropdownButton<String>(
-                  items: memoizedGetCurrencyIds(company, clientMap, groupMap)
-                      .map((currencyId) => DropdownMenuItem<String>(
-                            child: Text(currencyId == kCurrencyAll
-                                ? localization.all
-                                : viewModel.currencyMap[currencyId]?.code),
-                            value: currencyId,
-                          ))
-                      .toList(),
-                  onChanged: (currencyId) =>
-                      viewModel.onCurrencyChanged(currencyId),
-                  value: settings.currencyId,
+            Spacer(),
+            if (company.hasTaxes)
+              Padding(
+                padding: const EdgeInsets.only(left: 16),
+                child: DropdownButtonHideUnderline(
+                  child: DropdownButton<bool>(
+                    items: [
+                      DropdownMenuItem(
+                        child: Text(localization.gross),
+                        value: true,
+                      ),
+                      DropdownMenuItem(
+                        child: Text(localization.net),
+                        value: false,
+                      ),
+                    ],
+                    onChanged: (value) => viewModel.onTaxesChanged(value),
+                    value: settings.includeTaxes,
+                  ),
                 ),
               ),
-              SizedBox(
-                width: 12,
-              ),
-            ]
-            /*
-              Row(
-                mainAxisSize: MainAxisSize.max,
-                children: <Widget>[
-                  SizedBox(width: 8.0),
-                  DropdownButtonHideUnderline(
-                    child: DropdownButton<String>(
-                      items: memoizedGetCurrencyIds(company, clientMap, groupMap)
-                          .map((currencyId) => DropdownMenuItem<String>(
-                                child: Text(currencyId == kCurrencyAll
-                                    ? localization.all
-                                    : viewModel.currencyMap[currencyId]?.code),
-                                value: currencyId,
-                              ))
-                          .toList(),
-                      onChanged: (currencyId) =>
-                          viewModel.onCurrencyChanged(currencyId),
-                      value: state.dashboardUIState.currencyId,
-                    ),
+            if (hasMultipleCurrencies)
+              Padding(
+                padding: const EdgeInsets.only(left: 16),
+                child: DropdownButtonHideUnderline(
+                  child: DropdownButton<String>(
+                    items: memoizedGetCurrencyIds(company, clientMap, groupMap)
+                        .map((currencyId) => DropdownMenuItem<String>(
+                              child: Text(currencyId == kCurrencyAll
+                                  ? localization.all
+                                  : viewModel.currencyMap[currencyId]?.code),
+                              value: currencyId,
+                            ))
+                        .toList(),
+                    onChanged: (currencyId) =>
+                        viewModel.onCurrencyChanged(currencyId),
+                    value: settings.currencyId,
                   ),
-                  SizedBox(width: 16.0),
-                ],
+                ),
               ),
-               */
           ],
         ),
       ),

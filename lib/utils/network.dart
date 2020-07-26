@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'package:invoiceninja_flutter/data/models/serializers.dart';
 
 Future<bool> isOnline() async {
   try {
@@ -9,4 +10,8 @@ Future<bool> isOnline() async {
   } catch (_) {}
 
   return false;
+}
+
+dynamic computeDecode(dynamic list) {
+  return serializers.deserializeWith<dynamic>(list[0], list[1]);
 }

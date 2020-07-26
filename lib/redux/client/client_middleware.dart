@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/data/repositories/client_repository.dart';
 import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
-import 'package:invoiceninja_flutter/redux/app/app_middleware.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/redux/client/client_actions.dart';
 import 'package:invoiceninja_flutter/redux/product/product_actions.dart';
@@ -44,11 +43,6 @@ Middleware<AppState> _editClient() {
   return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
     final action = dynamicAction as EditClient;
 
-    if (!action.force &&
-        hasChanges(store: store, context: action.context, action: action)) {
-      return;
-    }
-
     next(action);
 
     store.dispatch(UpdateCurrentRoute(ClientEditScreen.route));
@@ -64,10 +58,6 @@ Middleware<AppState> _viewClient() {
       NextDispatcher next) async {
     final action = dynamicAction as ViewClient;
 
-    if (!action.force &&
-        hasChanges(store: store, context: action.context, action: action)) {
-      return;
-    }
 
     next(action);
 
@@ -82,11 +72,6 @@ Middleware<AppState> _viewClient() {
 Middleware<AppState> _viewClientList() {
   return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
     final action = dynamicAction as ViewClientList;
-
-    if (!action.force &&
-        hasChanges(store: store, context: action.context, action: action)) {
-      return;
-    }
 
     next(action);
 

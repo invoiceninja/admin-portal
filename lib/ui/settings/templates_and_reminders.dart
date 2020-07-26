@@ -201,6 +201,7 @@ class _TemplatesAndRemindersState extends State<TemplatesAndReminders>
     final viewModel = widget.viewModel;
     final state = viewModel.state;
     final settings = viewModel.settings;
+    final company = state.company;
 
     return EditScaffold(
       title: localization.templatesAndReminders,
@@ -236,6 +237,23 @@ class _TemplatesAndRemindersState extends State<TemplatesAndReminders>
                     _loadTemplate(_template);
                   }),
                   items: EmailTemplate.values
+                      .where((value) {
+                        if ([
+                              EmailTemplate.invoice,
+                              EmailTemplate.payment,
+                              EmailTemplate.partial_payment
+                            ].contains(value) &&
+                            !company.isModuleEnabled(EntityType.invoice)) {
+                          return false;
+                        } else if (value == EmailTemplate.quote &&
+                            !company.isModuleEnabled(EntityType.quote)) {
+                          return false;
+                        } else if (value == EmailTemplate.credit &&
+                            !company.isModuleEnabled(EntityType.credit)) {
+                          return false;
+                        }
+                        return true;
+                      })
                       .map((item) => DropdownMenuItem<EmailTemplate>(
                             child: Text(localization.lookup(item.name)),
                             value: item,

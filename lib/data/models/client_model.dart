@@ -285,6 +285,17 @@ abstract class ClientEntity extends Object
     }
   }
 
+  bool getManualPaymentEmail(
+      {@required CompanyEntity company, @required GroupEntity group}) {
+    if (settings.clientManualPaymentNotification != null) {
+      return settings.clientManualPaymentNotification;
+    } else if (group?.settings?.clientManualPaymentNotification != null) {
+      return group.settings.clientManualPaymentNotification;
+    } else {
+      return company.settings.clientManualPaymentNotification;
+    }
+  }
+
   Iterable<ActivityEntity> getActivities({String invoiceId, String typeId}) {
     return activities.where((activity) {
       if (invoiceId != null && activity.invoiceId != invoiceId) {

@@ -285,6 +285,10 @@ abstract class CompanyEntity extends Object
 
   bool get hasInvoiceTaxes => numberOfInvoiceTaxRates > 0;
 
+  bool get hasItemTaxes => numberOfItemTaxRates > 0;
+
+  bool get hasTaxes => hasInvoiceTaxes || hasItemTaxes;
+
   bool get hasCustomSurcharge =>
       hasCustomField(CustomFieldType.surcharge1) ||
       hasCustomField(CustomFieldType.surcharge2) ||

@@ -74,6 +74,7 @@ class InvoiceFields {
   static const String customValue2 = 'custom2';
   static const String customValue3 = 'custom3';
   static const String customValue4 = 'custom4';
+  static const String taxAmount = 'tax_amount';
 }
 
 abstract class InvoiceEntity extends Object
@@ -96,7 +97,7 @@ abstract class InvoiceEntity extends Object
       statusId: '',
       number: '',
       discount: 0,
-      totalTaxes: 0,
+      taxAmount: 0,
       poNumber: '',
       date: convertDateTimeToSqlDate(),
       dueDate: '',
@@ -258,7 +259,7 @@ abstract class InvoiceEntity extends Object
   double get partial;
 
   @BuiltValueField(wireName: 'total_taxes')
-  double get totalTaxes;
+  double get taxAmount;
 
   @BuiltValueField(wireName: 'partial_due_date')
   String get partialDueDate;
@@ -341,6 +342,10 @@ abstract class InvoiceEntity extends Object
   bool get hasClient => '${clientId ?? ''}'.isNotEmpty;
 
   bool get hasInvoice => '${invoiceId ?? ''}'.isNotEmpty;
+
+  double get netAmount => amount - taxAmount;
+
+  double get netBalance => balance - (taxAmount * balance / amount);
 
   @override
   bool get isEditable {

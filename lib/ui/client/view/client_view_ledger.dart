@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:invoiceninja_flutter/constants.dart';
+import 'package:invoiceninja_flutter/data/models/entities.dart';
 import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/ui/app/entities/entity_actions_dialog.dart';
@@ -41,13 +42,44 @@ class _ClientViewLedgerState extends State<ClientViewLedger> {
     return ListView.separated(
       shrinkWrap: true,
       padding: const EdgeInsets.symmetric(vertical: 16),
-      itemCount: client.ledger.length,
+      itemCount: client.ledger.length + 1,
       separatorBuilder: (context, index) => ListDivider(),
       itemBuilder: (BuildContext context, index) {
         final store = StoreProvider.of<AppState>(context);
         final localization = AppLocalization.of(context);
-        final ledger = client.ledger[index];
         final state = store.state;
+
+        if (index == client.ledger.length) {
+          return ListTile(
+            leading: Icon(getEntityIcon(EntityType.client)),
+            title: Row(
+                mainAxisSize: MainAxisSize.max,
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Flexible(child: Text(localization.clientCreated)),
+                  Padding(
+                    padding: const EdgeInsets.only(right: 2),
+                    child: Text(
+                      formatNumber(
+                        0,
+                        context,
+                        clientId: client.id,
+                      ),
+                      textAlign: TextAlign.end,
+                    ),
+                  ),
+                ]),
+            subtitle: Text(
+              formatDate(
+                convertTimestampToDateString(client.createdAt),
+                context,
+                showTime: true,
+              ),
+            ),
+          );
+        }
+
+        final ledger = client.ledger[index];
         final entity = state.getEntityMap(ledger.entityType)[ledger.entityId];
 
         return ListTile(
@@ -114,7 +146,6 @@ class _ClientViewLedgerState extends State<ClientViewLedger> {
             ],
           ),
           leading: Icon(getEntityIcon(ledger.entityType)),
-          trailing: Icon(Icons.chevron_right),
         );
       },
     );

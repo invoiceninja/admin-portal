@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:convert';
 import 'dart:core';
 import 'dart:io';
+import 'package:flutter/foundation.dart';
 import 'package:invoiceninja_flutter/.env.dart';
 import 'package:http/http.dart' as http;
 import 'package:invoiceninja_flutter/constants.dart';
@@ -61,7 +62,9 @@ class WebClient {
     }
 
     print('POST: $url');
-    printWrapped('Data: $data');
+    if (!kReleaseMode) {
+      printWrapped('Data: $data');
+    }
     http.Response response;
 
     if (filePath != null) {
@@ -102,8 +105,9 @@ class WebClient {
     }
 
     print('PUT: $url');
-    printWrapped('Data: $data');
-
+    if (!kReleaseMode) {
+      printWrapped('Data: $data');
+    }
     http.Response response;
 
     if (filePath != null) {
@@ -173,7 +177,9 @@ void _checkResponse(http.Response response) {
       wrapWidth: 1000);
   debugPrint('response: ${response.statusCode} ${response.body}');
    */
-  printWrapped('${response.statusCode} ${response.body}');
+  if (!kReleaseMode) {
+    printWrapped('${response.statusCode} ${response.body}');
+  }
   print('headers: ${response.headers}');
 
   final serverVersion = response.headers['x-app-version'];

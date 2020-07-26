@@ -59,11 +59,20 @@ class EntityPresenter {
   }
 
   static bool isFieldNumeric(String field) => [
-        'cost',
-        'price',
-        'amount',
-        'total',
         'balance',
-        'quantity'
+        'paid_to_date',
+        'amount',
+        'quantity',
+        'price',
+        'cost',
+        'total',
+        'invoice_amount',
+        'invoice_balance',
+        'tax_rate',
+        'tax_amount',
+        'tax_paid',
+        'payment_amount',
+        'net_amount',
+        'net_balance',
       ].contains(field);
 }

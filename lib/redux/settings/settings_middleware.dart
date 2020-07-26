@@ -4,7 +4,7 @@ import 'package:invoiceninja_flutter/data/models/company_model.dart';
 import 'package:invoiceninja_flutter/data/models/entities.dart';
 import 'package:invoiceninja_flutter/data/models/group_model.dart';
 import 'package:invoiceninja_flutter/data/repositories/settings_repository.dart';
-import 'package:invoiceninja_flutter/redux/app/app_middleware.dart';
+import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/redux/auth/auth_actions.dart';
 import 'package:invoiceninja_flutter/redux/client/client_actions.dart';
@@ -40,35 +40,33 @@ Middleware<AppState> _viewSettings() {
     final action = dynamicAction as ViewSettings;
     final uiState = store.state.uiState;
 
-    if (!action.force &&
-        hasChanges(store: store, context: action.context, action: action)) {
-      return;
-    }
+    checkForChanges(store: store, context: action.context, force: action.force, callback: () {
+      String route = SettingsScreen.route;
 
-    String route = SettingsScreen.route;
-
-    if (!store.state.userCompany.isAdmin) {
-      route += '/$kSettingsUserDetails';
-    } else if (action.section != null) {
-      route += '/${action.section}';
-    } else if (uiState.mainRoute == kSettings) {
-      route += '/$kSettingsCompanyDetails';
-    } else {
-      route += '/${uiState.settingsUIState.section}';
-    }
-
-    next(action);
-
-    store.dispatch(UpdateCurrentRoute(route));
-
-    if (isMobile(action.context)) {
-      if (action.section == null) {
-        Navigator.of(action.context).pushNamedAndRemoveUntil(
-            SettingsScreen.route, (Route<dynamic> route) => false);
+      if (!store.state.userCompany.isAdmin) {
+        route += '/$kSettingsUserDetails';
+      } else if (action.section != null) {
+        route += '/${action.section}';
+      } else if (uiState.mainRoute == kSettings) {
+        route += '/$kSettingsCompanyDetails';
       } else {
-        Navigator.of(action.context).pushNamed(route);
+        route += '/${uiState.settingsUIState.section}';
       }
-    }
+
+      next(action);
+
+      store.dispatch(UpdateCurrentRoute(route));
+
+      if (isMobile(action.context)) {
+        if (action.section == null) {
+          Navigator.of(action.context).pushNamedAndRemoveUntil(
+              SettingsScreen.route, (Route<dynamic> route) => false);
+        } else {
+          Navigator.of(action.context).pushNamed(route);
+        }
+      }
+    });
+
   };
 }
 
