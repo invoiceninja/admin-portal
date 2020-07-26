@@ -498,148 +498,154 @@ void createEntityByType(
   final state = store.state;
   final navigator = Navigator.of(context);
 
-  switch (entityType) {
-    case EntityType.client:
-      store.dispatch(EditClient(
-          client: ClientEntity(state: state),
-          navigator: navigator,
-          force: force));
-      break;
-    case EntityType.user:
-      store.dispatch(EditUser(
-        navigator: navigator,
-        force: force,
-        user: UserEntity(
-          state: state,
-          userCompany: UserCompanyEntity(),
-        ),
-      ));
-      break;
-    case EntityType.project:
-      store.dispatch(EditProject(
-          navigator: navigator,
-          force: force,
-          project: ProjectEntity(state: state)));
-      break;
-    case EntityType.taxRate:
-      store.dispatch(EditTaxRate(
-          navigator: navigator,
-          force: force,
-          taxRate: TaxRateEntity(state: state)));
-      break;
-    case EntityType.companyGateway:
-      store.dispatch(EditCompanyGateway(
-          navigator: navigator,
-          force: force,
-          companyGateway: CompanyGatewayEntity(state: state)));
-      break;
-    case EntityType.invoice:
-      store.dispatch(EditInvoice(
-        navigator: navigator,
-        force: force,
-        invoice: InvoiceEntity(state: state),
-      ));
-      break;
-    //case EntityType.recurringInvoice:
-    //store.dispatch(ViewRecurringInvoice(recurringInvoiceId: entityId, navigator: navigator));
-    //break;
-    case EntityType.quote:
-      store.dispatch(EditQuote(
-          navigator: navigator,
-          force: force,
-          quote: InvoiceEntity(
-            state: state,
-            entityType: EntityType.quote,
-          )));
-      break;
-    case EntityType.vendor:
-      store.dispatch(EditVendor(
-          navigator: navigator,
-          force: force,
-          vendor: VendorEntity(state: state)));
-      break;
-    case EntityType.product:
-      store.dispatch(EditProduct(
-          navigator: navigator,
-          force: force,
-          product: ProductEntity(state: state)));
-      break;
-    case EntityType.task:
-      store.dispatch(EditTask(
-        navigator: navigator,
-        force: force,
-        task: TaskEntity(state: state),
-      ));
-      break;
-    case EntityType.expense:
-      store.dispatch(EditExpense(
-          navigator: navigator,
-          force: force,
-          expense: ExpenseEntity(state: state)));
-      break;
-    //case EntityType.expenseCategory:
-    //store.dispatch(ViewExpenseCategory(taxRateId: entityId, navigator: navigator));
-    //break;
-    //case EntityType.credit:
-    //store.dispatch(ViewCredit(creditId: entityId, navigator: navigator));
-    //break;
-    case EntityType.payment:
-      store.dispatch(EditPayment(
-          navigator: navigator,
-          force: force,
-          payment: PaymentEntity(state: state)));
-      break;
-    case EntityType.group:
-      store.dispatch(EditGroup(
-        navigator: navigator,
-        force: force,
-        group: GroupEntity(state: state),
-      ));
-      break;
-    // STARTER: create type - do not remove comment
-    case EntityType.webhook:
-      store.dispatch(EditWebhook(
-        navigator: navigator,
-        force: force,
-        webhook: WebhookEntity(state: state),
-      ));
-      break;
+  checkForChanges(
+      store: store,
+      context: context,
+      force: force,
+      callback: () {
+        switch (entityType) {
+          case EntityType.client:
+            store.dispatch(EditClient(
+                client: ClientEntity(state: state),
+                navigator: navigator,
+                force: force));
+            break;
+          case EntityType.user:
+            store.dispatch(EditUser(
+              navigator: navigator,
+              force: force,
+              user: UserEntity(
+                state: state,
+                userCompany: UserCompanyEntity(),
+              ),
+            ));
+            break;
+          case EntityType.project:
+            store.dispatch(EditProject(
+                navigator: navigator,
+                force: force,
+                project: ProjectEntity(state: state)));
+            break;
+          case EntityType.taxRate:
+            store.dispatch(EditTaxRate(
+                navigator: navigator,
+                force: force,
+                taxRate: TaxRateEntity(state: state)));
+            break;
+          case EntityType.companyGateway:
+            store.dispatch(EditCompanyGateway(
+                navigator: navigator,
+                force: force,
+                companyGateway: CompanyGatewayEntity(state: state)));
+            break;
+          case EntityType.invoice:
+            store.dispatch(EditInvoice(
+              navigator: navigator,
+              force: force,
+              invoice: InvoiceEntity(state: state),
+            ));
+            break;
+          //case EntityType.recurringInvoice:
+          //store.dispatch(ViewRecurringInvoice(recurringInvoiceId: entityId, navigator: navigator));
+          //break;
+          case EntityType.quote:
+            store.dispatch(EditQuote(
+                navigator: navigator,
+                force: force,
+                quote: InvoiceEntity(
+                  state: state,
+                  entityType: EntityType.quote,
+                )));
+            break;
+          case EntityType.vendor:
+            store.dispatch(EditVendor(
+                navigator: navigator,
+                force: force,
+                vendor: VendorEntity(state: state)));
+            break;
+          case EntityType.product:
+            store.dispatch(EditProduct(
+                navigator: navigator,
+                force: force,
+                product: ProductEntity(state: state)));
+            break;
+          case EntityType.task:
+            store.dispatch(EditTask(
+              navigator: navigator,
+              force: force,
+              task: TaskEntity(state: state),
+            ));
+            break;
+          case EntityType.expense:
+            store.dispatch(EditExpense(
+                navigator: navigator,
+                force: force,
+                expense: ExpenseEntity(state: state)));
+            break;
+          //case EntityType.expenseCategory:
+          //store.dispatch(ViewExpenseCategory(taxRateId: entityId, navigator: navigator));
+          //break;
+          //case EntityType.credit:
+          //store.dispatch(ViewCredit(creditId: entityId, navigator: navigator));
+          //break;
+          case EntityType.payment:
+            store.dispatch(EditPayment(
+                navigator: navigator,
+                force: force,
+                payment: PaymentEntity(state: state)));
+            break;
+          case EntityType.group:
+            store.dispatch(EditGroup(
+              navigator: navigator,
+              force: force,
+              group: GroupEntity(state: state),
+            ));
+            break;
+          // STARTER: create type - do not remove comment
+          case EntityType.webhook:
+            store.dispatch(EditWebhook(
+              navigator: navigator,
+              force: force,
+              webhook: WebhookEntity(state: state),
+            ));
+            break;
 
-    case EntityType.token:
-      store.dispatch(EditToken(
-        navigator: navigator,
-        force: force,
-        token: TokenEntity(state: state),
-      ));
-      break;
+          case EntityType.token:
+            store.dispatch(EditToken(
+              navigator: navigator,
+              force: force,
+              token: TokenEntity(state: state),
+            ));
+            break;
 
-    case EntityType.paymentTerm:
-      store.dispatch(EditPaymentTerm(
-        navigator: navigator,
-        force: force,
-        paymentTerm: PaymentTermEntity(state: state),
-      ));
-      break;
+          case EntityType.paymentTerm:
+            store.dispatch(EditPaymentTerm(
+              navigator: navigator,
+              force: force,
+              paymentTerm: PaymentTermEntity(state: state),
+            ));
+            break;
 
-    case EntityType.design:
-      store.dispatch(EditDesign(
-        navigator: navigator,
-        force: force,
-        design: DesignEntity(state: state),
-      ));
-      break;
+          case EntityType.design:
+            store.dispatch(EditDesign(
+              navigator: navigator,
+              force: force,
+              design: DesignEntity(state: state),
+            ));
+            break;
 
-    case EntityType.credit:
-      store.dispatch(EditCredit(
-        navigator: navigator,
-        force: force,
-        credit: InvoiceEntity(
-          state: state,
-          entityType: EntityType.credit,
-        ),
-      ));
-      break;
-  }
+          case EntityType.credit:
+            store.dispatch(EditCredit(
+              navigator: navigator,
+              force: force,
+              credit: InvoiceEntity(
+                state: state,
+                entityType: EntityType.credit,
+              ),
+            ));
+            break;
+        }
+      });
 }
 
 void createEntity({
