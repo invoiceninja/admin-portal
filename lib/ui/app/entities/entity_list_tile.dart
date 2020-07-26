@@ -51,9 +51,12 @@ class EntityListTile extends StatelessWidget {
             handleEntityAction(context, entity, action),
       );
     } else {
-      leading = IconButton(
-        icon: Icon(getEntityIcon(entity.entityType), size: 18.0),
-        onPressed: () => inspectEntity(context: context, entity: entity),
+      leading = IgnorePointer(
+        ignoring: true,
+        child: IconButton(
+          icon: Icon(getEntityIcon(entity.entityType), size: 18.0),
+          onPressed: () => null,
+        ),
       );
     }
 
@@ -68,9 +71,12 @@ class EntityListTile extends StatelessWidget {
           onPressed: () => viewEntity(entity: entity, context: context),
         );
       } else {
-        trailing = IconButton(
-          icon: Icon(Icons.filter_list),
-          onPressed: () => inspectEntity(entity: entity, context: context),
+        trailing = IgnorePointer(
+          ignoring: true,
+          child: IconButton(
+            icon: Icon(Icons.filter_list),
+            onPressed: () => null,
+          ),
         );
       }
     } else {
