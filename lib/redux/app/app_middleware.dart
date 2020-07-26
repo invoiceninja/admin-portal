@@ -437,20 +437,25 @@ Middleware<AppState> _createAccountLoaded() {
 
     print('## userCompanies.length: ${response.userCompanies.length}');
 
-    for (int i = 0; i < response.userCompanies.length; i++) {
-      final UserCompanyEntity userCompany = response.userCompanies[i];
+    try {
+      for (int i = 0; i < response.userCompanies.length; i++) {
+        final UserCompanyEntity userCompany = response.userCompanies[i];
 
-      if (i == 0) {
-        final SharedPreferences prefs = await SharedPreferences.getInstance();
-        prefs.setString(kSharedPrefToken, userCompany.token.obscuredToken);
-      }
+        if (i == 0) {
+          final SharedPreferences prefs = await SharedPreferences.getInstance();
+          prefs.setString(kSharedPrefToken, userCompany.token.obscuredToken);
+        }
 
-      store.dispatch(
-          SelectCompany(companyIndex: i, clearSelection: loadedStaticData));
-      store.dispatch(LoadCompanySuccess(userCompany));
-      if (!userCompany.company.isLarge) {
-        store.dispatch(PersistData());
+        store.dispatch(
+            SelectCompany(companyIndex: i, clearSelection: loadedStaticData));
+        store.dispatch(LoadCompanySuccess(userCompany));
+        if (!userCompany.company.isLarge) {
+          store.dispatch(PersistData());
+        }
       }
+    } catch (error) {
+      action.completer.completeError(error);
+      rethrow;
     }
 
     store.dispatch(SelectCompany(
