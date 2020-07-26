@@ -52,6 +52,7 @@ class StubScreen extends StatelessWidget {
       },
       appBarTitle: ListFilter(
         placeholder: localization.searchStubs,
+        entityIds: viewModel.stubList,
         filter: state.stubListState.filter,
         onFilterChanged: (value) {
           store.dispatch(FilterStubs(value));

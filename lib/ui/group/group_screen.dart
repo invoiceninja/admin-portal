@@ -52,7 +52,8 @@ class GroupSettingsScreen extends StatelessWidget {
         handleGroupAction(context, groups, EntityAction.toggleMultiselect);
       },
       appBarTitle: ListFilter(
-        placeholder: localization.searchGroups,
+        entityType: EntityType.group,
+        entityIds: viewModel.groupList,
         filter: state.groupListState.filter,
         onFilterChanged: (value) {
           store.dispatch(FilterGroups(value));

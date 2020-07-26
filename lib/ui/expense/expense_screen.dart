@@ -53,7 +53,8 @@ class ExpenseScreen extends StatelessWidget {
         handleExpenseAction(context, expenses, EntityAction.toggleMultiselect);
       },
       appBarTitle: ListFilter(
-        placeholder: localization.searchExpenses,
+        entityType: EntityType.expense,
+        entityIds: viewModel.expenseList,
         filter: state.expenseListState.filter,
         onFilterChanged: (value) {
           store.dispatch(FilterExpenses(value));

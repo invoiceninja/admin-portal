@@ -49,7 +49,8 @@ class TaxRateSettingsScreen extends StatelessWidget {
         handleTaxRateAction(context, taxRates, EntityAction.toggleMultiselect);
       },
       appBarTitle: ListFilter(
-        placeholder: localization.searchTaxRates,
+        entityType: EntityType.taxRate,
+        entityIds: viewModel.taxRateList,
         filter: state.taxRateListState.filter,
         onFilterChanged: (value) {
           store.dispatch(FilterTaxRates(value));

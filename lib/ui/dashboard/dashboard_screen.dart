@@ -134,7 +134,8 @@ class _DashboardScreenState extends State<DashboardScreen>
             ? null
             : SizedBox(),
         title: ListFilter(
-          placeholder: localization.searchCompany,
+          entityType: EntityType.dashboard,
+          entityIds: [],
           filter: state.uiState.filter,
           onFilterChanged: (value) {
             store.dispatch(FilterCompany(value));
