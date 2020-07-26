@@ -52,7 +52,10 @@ class _ListFilterState extends State<ListFilter> {
         [EntityType.dashboard, EntityType.settings].contains(widget.entityType);
     final key =
         isSingle ? widget.entityType.toString() : widget.entityType.plural;
-    final placeholder = localization.lookup('search_$key');
+    final placeholder = localization.lookup(
+        widget.entityType == EntityType.dashboard
+            ? 'search_company'
+            : 'search_$key');
 
     return isSingle
         ? placeholder

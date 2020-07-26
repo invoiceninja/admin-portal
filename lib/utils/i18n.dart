@@ -146,12 +146,11 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'search_tax_rates': 'Search :count Tax Rates',
       'search_tasks': 'Search :count Tasks',
       'search_settings': 'Search Settings',
-      'search_dashboard': 'Search Dashboard',
       'search_projects': 'Search :count Projects',
       'search_expenses': 'Search :count Expenses',
       'search_payments': 'Search :count Payments',
       'search_groups': 'Search :count Groups',
-      'search_company': 'Search :count Company',
+      'search_company': 'Search Company',
       'search_document': 'Search 1 Document',
       'search_design': 'Search 1 Design',
       'search_invoice': 'Search 1 Invoice',
@@ -1223,7 +1222,8 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'email_subject_quote': 'Email Quote Subject',
       'email_subject_payment': 'Email Payment Subject',
       'email_subject_payment_partial': 'Email Partial Payment Subject',
-      'switch_list_table': 'Switch List Table',
+      'show_table': 'Show Table',
+      'show_list': 'Show List',
       'client_city': 'Client City',
       'client_state': 'Client State',
       'client_country': 'Client Country',
@@ -37932,8 +37932,11 @@ mixin LocalizationsProvider on LocaleCodeAware {
 
   String get newPayment => _localizedValues[localeCode]['new_payment'] ?? '';
 
-  String get switchListTable =>
-      _localizedValues[localeCode]['switch_list_table'] ?? '';
+  String get showTable =>
+      _localizedValues[localeCode]['show_table'] ?? '';
+
+  String get showList =>
+      _localizedValues[localeCode]['show_list'] ?? '';
 
   String get whenSaved => _localizedValues[localeCode]['when_saved'] ?? '';
 
@@ -38967,8 +38970,6 @@ mixin LocalizationsProvider on LocaleCodeAware {
   String get gross => _localizedValues[localeCode]['gross'] ?? '';
 
   String get completed => _localizedValues[localeCode]['completed'] ?? '';
-
-  String get searchDashboard => _localizedValues[localeCode]['search_dashboard'] ?? '';
 
   String lookup(String key) {
     final lookupKey = toSnakeCase(key);

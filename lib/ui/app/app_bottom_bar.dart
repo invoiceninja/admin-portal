@@ -357,7 +357,8 @@ class _AppBottomBarState extends State<AppBottomBar> {
                 ),
                 if (!widget.entityType.isSetting)
                   IconButton(
-                    tooltip: localization.switchListTable,
+                    tooltip:
+                        isList ? localization.showTable : localization.showList,
                     icon: Icon(isList ? Icons.table_chart : Icons.view_list),
                     onPressed: () {
                       store.dispatch(SwitchListTableLayout());
