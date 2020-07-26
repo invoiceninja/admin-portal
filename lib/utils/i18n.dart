@@ -145,7 +145,8 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'search_users': 'Search :count Users',
       'search_tax_rates': 'Search :count Tax Rates',
       'search_tasks': 'Search :count Tasks',
-      'search_settings': 'Search :count Settings',
+      'search_settings': 'Search Settings',
+      'search_dashboard': 'Search Dashboard',
       'search_projects': 'Search :count Projects',
       'search_expenses': 'Search :count Expenses',
       'search_payments': 'Search :count Payments',
@@ -38966,6 +38967,8 @@ mixin LocalizationsProvider on LocaleCodeAware {
   String get gross => _localizedValues[localeCode]['gross'] ?? '';
 
   String get completed => _localizedValues[localeCode]['completed'] ?? '';
+
+  String get searchDashboard => _localizedValues[localeCode]['search_dashboard'] ?? '';
 
   String lookup(String key) {
     final lookupKey = toSnakeCase(key);
