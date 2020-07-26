@@ -346,9 +346,9 @@ class InvoiceEditDesktopState extends State<InvoiceEditDesktop>
                     left: kMobileDialogPadding),
                 children: <Widget>[
                   TabBar(
+                    isScrollable: true,
                     controller: _tabController,
                     tabs: [
-                      Tab(text: localization.settings),
                       Tab(text: localization.publicNotes),
                       Tab(text: localization.privateNotes),
                       Tab(
@@ -363,6 +363,7 @@ class InvoiceEditDesktopState extends State<InvoiceEditDesktop>
                               : widget.entityType == EntityType.quote
                                   ? localization.quoteFooter
                                   : localization.invoiceFooter),
+                      Tab(text: localization.settings),
                     ],
                   ),
                   SizedBox(
@@ -370,29 +371,6 @@ class InvoiceEditDesktopState extends State<InvoiceEditDesktop>
                     child: TabBarView(
                       controller: _tabController,
                       children: <Widget>[
-                        Row(
-                          children: [
-                            Expanded(
-                              child: DesignPicker(
-                                initialValue: invoice.designId,
-                                onSelected: (value) => viewModel.onChanged(
-                                    invoice.rebuild(
-                                        (b) => b..designId = value.id)),
-                              ),
-                            ),
-                            SizedBox(
-                              width: 38,
-                            ),
-                            Expanded(
-                              child: UserPicker(
-                                userId: invoice.assignedUserId,
-                                onChanged: (userId) => viewModel.onChanged(
-                                    invoice.rebuild(
-                                        (b) => b..assignedUserId = userId)),
-                              ),
-                            ),
-                          ],
-                        ),
                         DecoratedFormField(
                           maxLines: 6,
                           controller: _publicNotesController,
@@ -416,6 +394,29 @@ class InvoiceEditDesktopState extends State<InvoiceEditDesktop>
                           controller: _footerController,
                           keyboardType: TextInputType.multiline,
                           label: '',
+                        ),
+                        Row(
+                          children: [
+                            Expanded(
+                              child: DesignPicker(
+                                initialValue: invoice.designId,
+                                onSelected: (value) => viewModel.onChanged(
+                                    invoice.rebuild(
+                                        (b) => b..designId = value.id)),
+                              ),
+                            ),
+                            SizedBox(
+                              width: 38,
+                            ),
+                            Expanded(
+                              child: UserPicker(
+                                userId: invoice.assignedUserId,
+                                onChanged: (userId) => viewModel.onChanged(
+                                    invoice.rebuild(
+                                        (b) => b..assignedUserId = userId)),
+                              ),
+                            ),
+                          ],
                         ),
                       ],
                     ),
