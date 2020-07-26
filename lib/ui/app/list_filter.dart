@@ -10,11 +10,12 @@ import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 
 class ListFilter extends StatefulWidget {
   const ListFilter({
+    Key key,
     @required this.entityType,
     @required this.filter,
     @required this.onFilterChanged,
     @required this.entityIds,
-  });
+  }) : super(key: key);
 
   final EntityType entityType;
   final String filter;
@@ -69,6 +70,10 @@ class _ListFilterState extends State<ListFilter> {
   void didChangeDependencies() {
     super.didChangeDependencies();
     _filterController.text = widget.filter;
+
+    if (widget.filter != null) {
+      _focusNode.requestFocus();
+    }
   }
 
   @override

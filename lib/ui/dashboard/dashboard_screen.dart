@@ -134,6 +134,7 @@ class _DashboardScreenState extends State<DashboardScreen>
             ? null
             : SizedBox(),
         title: ListFilter(
+          key: ValueKey('__${state.uiState.filterClearedAt}__'),
           entityType: EntityType.dashboard,
           entityIds: [],
           filter: state.uiState.filter,
