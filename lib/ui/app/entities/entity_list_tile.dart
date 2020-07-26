@@ -52,7 +52,6 @@ class EntityListTile extends StatelessWidget {
       );
     } else {
       leading = IgnorePointer(
-        ignoring: true,
         child: IconButton(
           icon: Icon(getEntityIcon(entity.entityType), size: 18.0),
           onPressed: () => null,
@@ -72,7 +71,6 @@ class EntityListTile extends StatelessWidget {
         );
       } else {
         trailing = IgnorePointer(
-          ignoring: true,
           child: IconButton(
             icon: Icon(Icons.filter_list),
             onPressed: () => null,
@@ -80,7 +78,12 @@ class EntityListTile extends StatelessWidget {
         );
       }
     } else {
-      Icon(Icons.navigate_next);
+      trailing = IgnorePointer(
+        child: IconButton(
+          icon: Icon(Icons.navigate_next),
+          onPressed: () => null,
+        ),
+      );
     }
 
     return Column(
@@ -90,10 +93,10 @@ class EntityListTile extends StatelessWidget {
           isSelected: isFilteredBy && isDesktop(context),
           isMenu: true,
           child: ListTile(
+            contentPadding: const EdgeInsets.symmetric(horizontal: 16),
             onTap: () => inspectEntity(context: context, entity: entity),
             onLongPress: () => inspectEntity(
                 context: context, entity: entity, longPress: true),
-            contentPadding: const EdgeInsets.only(left: 8, right: 8),
             title: Text(localization.lookup('${entity.entityType}') +
                 '  ›  ' +
                 entity.listDisplayName),
@@ -148,7 +151,7 @@ class EntitiesListTile extends StatelessWidget {
           isSelected: isFilterMatch,
           isMenu: true,
           child: ListTile(
-            contentPadding: const EdgeInsets.only(left: 16, right: 16),
+            contentPadding: const EdgeInsets.symmetric(horizontal: 16),
             title: Text(title),
             subtitle: Text(subtitle ?? ''),
             leading: IconButton(
@@ -160,7 +163,12 @@ class EntitiesListTile extends StatelessWidget {
                     icon: Icon(Icons.add_circle_outline),
                     onPressed: onLongPress,
                   )
-                : Icon(Icons.navigate_next),
+                : IgnorePointer(
+                    child: IconButton(
+                      icon: Icon(Icons.navigate_next),
+                      onPressed: () => null,
+                    ),
+                  ),
             onTap: onTap,
             onLongPress: onLongPress,
           ),
