@@ -7,11 +7,11 @@ import 'package:flutter/material.dart';
 import 'package:invoiceninja_flutter/.env.dart';
 import 'package:invoiceninja_flutter/constants.dart';
 import 'package:invoiceninja_flutter/data/mock/mock_login.dart';
-import 'package:invoiceninja_flutter/data/models/serializers.dart';
 import 'package:invoiceninja_flutter/data/models/entities.dart';
 import 'package:invoiceninja_flutter/data/web_client.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/utils/formatting.dart';
+import 'package:invoiceninja_flutter/utils/network.dart';
 
 class AuthRepository {
   const AuthRepository({
@@ -186,7 +186,8 @@ class AuthRepository {
           secret: secret, data: json.encode(data));
     }
 
-    return serializers.deserializeWith(LoginResponse.serializer, response);
+    return await compute<dynamic, dynamic>(
+        computeDecode, <dynamic>[LoginResponse.serializer, response]);
   }
 
   String get _tokenName => kIsWeb

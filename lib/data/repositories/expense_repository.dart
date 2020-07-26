@@ -2,10 +2,12 @@ import 'dart:async';
 import 'dart:convert';
 import 'dart:core';
 import 'package:built_collection/built_collection.dart';
+import 'package:flutter/foundation.dart';
 import 'package:invoiceninja_flutter/data/models/serializers.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/data/web_client.dart';
+import 'package:invoiceninja_flutter/utils/network.dart';
 
 class ExpenseRepository {
   const ExpenseRepository({
@@ -19,8 +21,8 @@ class ExpenseRepository {
     final dynamic response = await webClient.get(
         '${credentials.url}/expenses/$entityId', credentials.token);
 
-    final ExpenseItemResponse expenseResponse =
-        serializers.deserializeWith(ExpenseItemResponse.serializer, response);
+    final ExpenseItemResponse expenseResponse = await compute<dynamic, dynamic>(
+        computeDecode, <dynamic>[ExpenseItemResponse.serializer, response]);
 
     return expenseResponse.data;
   }
@@ -30,8 +32,8 @@ class ExpenseRepository {
 
     final dynamic response = await webClient.get(url, credentials.token);
 
-    final ExpenseListResponse expenseResponse =
-        serializers.deserializeWith(ExpenseListResponse.serializer, response);
+    final ExpenseListResponse expenseResponse = await compute<dynamic, dynamic>(
+        computeDecode, <dynamic>[ExpenseListResponse.serializer, response]);
 
     return expenseResponse.data;
   }

@@ -2,10 +2,12 @@ import 'dart:async';
 import 'dart:convert';
 import 'dart:core';
 import 'package:built_collection/built_collection.dart';
+import 'package:flutter/foundation.dart';
 import 'package:invoiceninja_flutter/data/models/serializers.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/data/web_client.dart';
+import 'package:invoiceninja_flutter/utils/network.dart';
 
 class QuoteRepository {
   const QuoteRepository({
@@ -19,8 +21,8 @@ class QuoteRepository {
     final dynamic response = await webClient.get(
         '${credentials.url}/quotes/$entityId?', credentials.token);
 
-    final InvoiceItemResponse quoteResponse =
-        serializers.deserializeWith(InvoiceItemResponse.serializer, response);
+    final InvoiceItemResponse quoteResponse = await compute<dynamic, dynamic>(
+        computeDecode, <dynamic>[InvoiceItemResponse.serializer, response]);
 
     return quoteResponse.data;
   }

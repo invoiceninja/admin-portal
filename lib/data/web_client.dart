@@ -62,7 +62,7 @@ class WebClient {
     }
 
     print('POST: $url');
-    if (!kIsWeb) {
+    if (!kReleaseMode) {
       printWrapped('Data: $data');
     }
     http.Response response;
@@ -105,7 +105,7 @@ class WebClient {
     }
 
     print('PUT: $url');
-    if (!kIsWeb) {
+    if (!kReleaseMode) {
       printWrapped('Data: $data');
     }
     http.Response response;
@@ -177,7 +177,7 @@ void _checkResponse(http.Response response) {
       wrapWidth: 1000);
   debugPrint('response: ${response.statusCode} ${response.body}');
    */
-  if (!kIsWeb) {
+  if (!kReleaseMode) {
     printWrapped('${response.statusCode} ${response.body}');
   }
   print('headers: ${response.headers}');

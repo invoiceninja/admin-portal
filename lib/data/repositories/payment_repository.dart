@@ -1,11 +1,13 @@
 import 'dart:async';
 import 'dart:convert';
 import 'dart:core';
+import 'package:flutter/foundation.dart';
 import 'package:invoiceninja_flutter/data/models/serializers.dart';
 import 'package:built_collection/built_collection.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/data/web_client.dart';
+import 'package:invoiceninja_flutter/utils/network.dart';
 
 class PaymentRepository {
   const PaymentRepository({
@@ -19,8 +21,8 @@ class PaymentRepository {
 
     final dynamic response = await webClient.get(url, credentials.token);
 
-    final PaymentListResponse paymentResponse =
-        serializers.deserializeWith(PaymentListResponse.serializer, response);
+    final PaymentListResponse paymentResponse = await compute<dynamic, dynamic>(
+        computeDecode, <dynamic>[PaymentListResponse.serializer, response]);
 
     return paymentResponse.data;
   }
