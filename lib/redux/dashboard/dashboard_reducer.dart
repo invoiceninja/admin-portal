@@ -21,6 +21,10 @@ Reducer<BuiltMap<EntityType, BuiltList<String>>> selectedEntitiesReducer =
     return state.rebuild((b) =>
         b..[action.entityType] = BuiltList(action.entityIds ?? <String>[]));
   }),
+  TypedReducer<BuiltMap<EntityType, BuiltList<String>>, SelectCompany>(
+      (state, action) {
+    return state.rebuild((b) => b..clear());
+  }),
 ]);
 
 Reducer<EntityType> selectedEntityTypeReducer = combineReducers([
