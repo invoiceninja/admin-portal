@@ -454,7 +454,7 @@ Middleware<AppState> _createAccountLoaded() {
         }
       }
     } catch (error) {
-      action.completer.completeError(error);
+      action.completer?.completeError(error);
       rethrow;
     }
 

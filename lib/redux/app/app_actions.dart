@@ -124,8 +124,8 @@ class UserPreferencesChanged implements PersistPrefs {
 
 class LoadAccountSuccess implements StopLoading {
   LoadAccountSuccess({
-    this.loginResponse,
-    this.completer,
+    @required this.completer,
+    @required this.loginResponse,
   });
 
   final Completer completer;
