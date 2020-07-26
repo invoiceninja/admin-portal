@@ -3,7 +3,6 @@ import 'package:flutter/widgets.dart';
 import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:redux/redux.dart';
 import 'package:invoiceninja_flutter/utils/platforms.dart';
-import 'package:invoiceninja_flutter/redux/app/app_middleware.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/redux/ui/ui_actions.dart';
 import 'package:invoiceninja_flutter/ui/design/design_screen.dart';
@@ -44,7 +43,7 @@ Middleware<AppState> _editDesign() {
     final action = dynamicAction as EditDesign;
 
     if (!action.force &&
-        hasChanges(store: store, context: action.context, action: action)) {
+        checkForChanges(store: store, context: action.context, callback: () => store.dispatch(action))) {
       return;
     }
 
@@ -64,7 +63,7 @@ Middleware<AppState> _viewDesign() {
     final action = dynamicAction as ViewDesign;
 
     if (!action.force &&
-        hasChanges(store: store, context: action.context, action: action)) {
+        checkForChanges(store: store, context: action.context, callback: () => store.dispatch(action))) {
       return;
     }
 
@@ -83,7 +82,7 @@ Middleware<AppState> _viewDesignList() {
     final action = dynamicAction as ViewDesignList;
 
     if (!action.force &&
-        hasChanges(store: store, context: action.context, action: action)) {
+        checkForChanges(store: store, context: action.context, callback: () => store.dispatch(action))) {
       return;
     }
 

@@ -5,7 +5,6 @@ import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:invoiceninja_flutter/ui/payment_term/view/payment_term_view_vm.dart';
 import 'package:redux/redux.dart';
 import 'package:invoiceninja_flutter/utils/platforms.dart';
-import 'package:invoiceninja_flutter/redux/app/app_middleware.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/redux/ui/ui_actions.dart';
 import 'package:invoiceninja_flutter/ui/payment_term/payment_term_screen.dart';
@@ -45,7 +44,7 @@ Middleware<AppState> _editPaymentTerm() {
     final action = dynamicAction as EditPaymentTerm;
 
     if (!action.force &&
-        hasChanges(store: store, context: action.context, action: action)) {
+        checkForChanges(store: store, context: action.context, callback: () => store.dispatch(action))) {
       return;
     }
 
@@ -65,7 +64,7 @@ Middleware<AppState> _viewPaymentTerm() {
     final action = dynamicAction as ViewPaymentTerm;
 
     if (!action.force &&
-        hasChanges(store: store, context: action.context, action: action)) {
+        checkForChanges(store: store, context: action.context, callback: () => store.dispatch(action))) {
       return;
     }
 
@@ -84,7 +83,7 @@ Middleware<AppState> _viewPaymentTermList() {
     final action = dynamicAction as ViewPaymentTermList;
 
     if (!action.force &&
-        hasChanges(store: store, context: action.context, action: action)) {
+        checkForChanges(store: store, context: action.context, callback: () => store.dispatch(action))) {
       return;
     }
 

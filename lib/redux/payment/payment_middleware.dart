@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
-import 'package:invoiceninja_flutter/redux/app/app_middleware.dart';
 import 'package:invoiceninja_flutter/redux/quote/quote_actions.dart';
 import 'package:invoiceninja_flutter/ui/payment/refund/payment_refund_vm.dart';
 import 'package:invoiceninja_flutter/utils/platforms.dart';
@@ -52,7 +51,7 @@ Middleware<AppState> _editPayment() {
     final action = dynamicAction as EditPayment;
 
     if (!action.force &&
-        hasChanges(store: store, context: action.context, action: action)) {
+        checkForChanges(store: store, context: action.context, callback: () => store.dispatch(action))) {
       return;
     }
 
@@ -71,7 +70,7 @@ Middleware<AppState> _viewRefundPayment() {
     final action = dynamicAction as ViewRefundPayment;
 
     if (!action.force &&
-        hasChanges(store: store, context: action.context, action: action)) {
+        checkForChanges(store: store, context: action.context, callback: () => store.dispatch(action))) {
       return;
     }
 
@@ -95,7 +94,7 @@ Middleware<AppState> _viewRefundPayment() {
 Middleware<AppState> _viewPayment() {
   return (Store<AppState> store, dynamic action, NextDispatcher next) async {
     if (!action.force &&
-        hasChanges(store: store, context: action.context, action: action)) {
+        checkForChanges(store: store, context: action.context, callback: () => store.dispatch(action))) {
       return;
     }
 
@@ -114,7 +113,7 @@ Middleware<AppState> _viewPaymentList() {
     final action = dynamicAction as ViewPaymentList;
 
     if (!action.force &&
-        hasChanges(store: store, context: action.context, action: action)) {
+        checkForChanges(store: store, context: action.context, callback: () => store.dispatch(action))) {
       return;
     }
 

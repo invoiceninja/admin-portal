@@ -1,4 +1,4 @@
-import 'package:invoiceninja_flutter/redux/app/app_middleware.dart';
+import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/redux/reports/reports_actions.dart';
 import 'package:invoiceninja_flutter/redux/ui/ui_actions.dart';
@@ -20,7 +20,7 @@ Middleware<AppState> _viewReports() {
     final action = dynamicAction as ViewReports;
 
     if (!action.force &&
-        hasChanges(store: store, context: action.context, action: action)) {
+        checkForChanges(store: store, context: action.context, callback: () => store.dispatch(action))) {
       return;
     }
 

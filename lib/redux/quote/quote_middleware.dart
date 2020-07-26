@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
-import 'package:invoiceninja_flutter/redux/app/app_middleware.dart';
 import 'package:invoiceninja_flutter/redux/credit/credit_actions.dart';
 import 'package:invoiceninja_flutter/redux/quote/quote_actions.dart';
 import 'package:invoiceninja_flutter/redux/ui/ui_actions.dart';
@@ -56,7 +55,7 @@ Middleware<AppState> _viewQuote() {
     final action = dynamicAction as ViewQuote;
 
     if (!action.force &&
-        hasChanges(store: store, context: action.context, action: action)) {
+        checkForChanges(store: store, context: action.context, callback: () => store.dispatch(action))) {
       return;
     }
 
@@ -75,7 +74,7 @@ Middleware<AppState> _viewQuoteList() {
     final action = dynamicAction as ViewQuoteList;
 
     if (!action.force &&
-        hasChanges(store: store, context: action.context, action: action)) {
+        checkForChanges(store: store, context: action.context, callback: () => store.dispatch(action))) {
       return;
     }
 
@@ -99,7 +98,7 @@ Middleware<AppState> _editQuote() {
     final action = dynamicAction as EditQuote;
 
     if (!action.force &&
-        hasChanges(store: store, context: action.context, action: action)) {
+        checkForChanges(store: store, context: action.context, callback: () => store.dispatch(action))) {
       return;
     }
 

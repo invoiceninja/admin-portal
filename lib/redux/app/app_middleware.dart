@@ -17,13 +17,11 @@ import 'package:invoiceninja_flutter/redux/client/client_actions.dart';
 import 'package:invoiceninja_flutter/redux/company/company_actions.dart';
 import 'package:invoiceninja_flutter/redux/company/company_state.dart';
 import 'package:invoiceninja_flutter/redux/dashboard/dashboard_actions.dart';
-import 'package:invoiceninja_flutter/redux/settings/settings_actions.dart';
 import 'package:invoiceninja_flutter/redux/static/static_state.dart';
 import 'package:invoiceninja_flutter/redux/ui/pref_state.dart';
 import 'package:invoiceninja_flutter/redux/ui/ui_actions.dart';
 import 'package:invoiceninja_flutter/redux/ui/ui_state.dart';
 import 'package:invoiceninja_flutter/ui/app/app_builder.dart';
-import 'package:invoiceninja_flutter/ui/app/dialogs/alert_dialog.dart';
 import 'package:invoiceninja_flutter/ui/app/main_screen.dart';
 import 'package:invoiceninja_flutter/ui/auth/login_vm.dart';
 import 'package:invoiceninja_flutter/ui/dashboard/dashboard_screen_vm.dart';
@@ -527,33 +525,4 @@ Middleware<AppState> _createViewMainScreen() {
       action.navigator.pushNamed(MainScreen.route);
     });
   };
-}
-
-bool hasChanges({
-  @required Store<AppState> store,
-  @required BuildContext context,
-  @required dynamic action,
-}) {
-  if (context == null) {
-    print('WARNING: context is null in hasChanges');
-    return false;
-  }
-
-  if (store.state.hasChanges() && !isMobile(context)) {
-    showDialog<MessageDialog>(
-        context: context,
-        builder: (BuildContext dialogContext) {
-          final localization = AppLocalization.of(context);
-
-          return MessageDialog(localization.errorUnsavedChanges,
-              dismissLabel: localization.continueEditing, onDiscard: () {
-            store.dispatch(DiscardChanges());
-            store.dispatch(ResetSettings());
-            store.dispatch(action);
-          });
-        });
-    return true;
-  } else {
-    return false;
-  }
 }

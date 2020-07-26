@@ -22,11 +22,13 @@ import 'package:invoiceninja_flutter/redux/payment/payment_actions.dart';
 import 'package:invoiceninja_flutter/redux/product/product_actions.dart';
 import 'package:invoiceninja_flutter/redux/project/project_actions.dart';
 import 'package:invoiceninja_flutter/redux/quote/quote_actions.dart';
+import 'package:invoiceninja_flutter/redux/settings/settings_actions.dart';
 import 'package:invoiceninja_flutter/redux/task/task_actions.dart';
 import 'package:invoiceninja_flutter/redux/tax_rate/tax_rate_actions.dart';
 import 'package:invoiceninja_flutter/redux/ui/pref_state.dart';
 import 'package:invoiceninja_flutter/redux/user/user_actions.dart';
 import 'package:invoiceninja_flutter/redux/vendor/vendor_actions.dart';
+import 'package:invoiceninja_flutter/ui/app/dialogs/alert_dialog.dart';
 import 'package:invoiceninja_flutter/ui/app/entities/entity_actions_dialog.dart';
 import 'package:invoiceninja_flutter/utils/completers.dart';
 import 'package:invoiceninja_flutter/utils/dialogs.dart';
@@ -39,6 +41,7 @@ import 'package:invoiceninja_flutter/redux/token/token_actions.dart';
 
 import 'package:invoiceninja_flutter/redux/payment_term/payment_term_actions.dart';
 import 'package:invoiceninja_flutter/utils/platforms.dart';
+import 'package:redux/redux.dart';
 
 class PersistUI {}
 
@@ -1224,5 +1227,35 @@ void inspectEntity({
     } else {
       viewEntity(context: context, entity: entity);
     }
+  }
+}
+
+bool checkForChanges({
+  @required Store<AppState> store,
+  @required BuildContext context,
+  Function callback,
+}) {
+  if (context == null) {
+    print('WARNING: context is null in hasChanges');
+    return false;
+  }
+
+  if (store.state.hasChanges() && !isMobile(context)) {
+    showDialog<MessageDialog>(
+        context: context,
+        builder: (BuildContext dialogContext) {
+          final localization = AppLocalization.of(context);
+          return MessageDialog(localization.errorUnsavedChanges,
+              dismissLabel: localization.continueEditing, onDiscard: () {
+                store.dispatch(DiscardChanges());
+                store.dispatch(ResetSettings());
+                if (callback != null) {
+                  callback();
+                }
+              });
+        });
+    return true;
+  } else {
+    return false;
   }
 }

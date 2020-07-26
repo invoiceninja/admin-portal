@@ -64,6 +64,11 @@ class MenuDrawerVM {
           return;
         }
 
+        if (checkForChanges(store: store, context: context)) {
+          return;
+        }
+
+
         store.dispatch(ClearEntityFilter());
         store.dispatch(SelectCompany(companyIndex: index));
         if (store.state.isStale) {
