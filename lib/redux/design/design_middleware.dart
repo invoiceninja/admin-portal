@@ -42,10 +42,7 @@ Middleware<AppState> _editDesign() {
   return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
     final action = dynamicAction as EditDesign;
 
-    if (!action.force &&
-        checkForChanges(store: store, context: action.context, callback: () => store.dispatch(action))) {
-      return;
-    }
+
 
     next(action);
 
@@ -62,11 +59,6 @@ Middleware<AppState> _viewDesign() {
       NextDispatcher next) async {
     final action = dynamicAction as ViewDesign;
 
-    if (!action.force &&
-        checkForChanges(store: store, context: action.context, callback: () => store.dispatch(action))) {
-      return;
-    }
-
     next(action);
 
     store.dispatch(UpdateCurrentRoute(DesignViewScreen.route));
@@ -81,10 +73,7 @@ Middleware<AppState> _viewDesignList() {
   return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
     final action = dynamicAction as ViewDesignList;
 
-    if (!action.force &&
-        checkForChanges(store: store, context: action.context, callback: () => store.dispatch(action))) {
-      return;
-    }
+
 
     next(action);
 

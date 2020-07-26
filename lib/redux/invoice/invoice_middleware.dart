@@ -58,10 +58,7 @@ Middleware<AppState> _viewInvoiceList() {
   return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
     final action = dynamicAction as ViewInvoiceList;
 
-    if (!action.force &&
-        checkForChanges(store: store, context: action.context, callback: () => store.dispatch(action))) {
-      return;
-    }
+
 
     next(action);
 
@@ -83,10 +80,7 @@ Middleware<AppState> _viewInvoice() {
       NextDispatcher next) async {
     final action = dynamicAction as ViewInvoice;
 
-    if (!action.force &&
-        checkForChanges(store: store, context: action.context, callback: () => store.dispatch(action))) {
-      return;
-    }
+
 
     next(action);
 
@@ -102,10 +96,7 @@ Middleware<AppState> _editInvoice() {
   return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
     final action = dynamicAction as EditInvoice;
 
-    if (!action.force &&
-        checkForChanges(store: store, context: action.context, callback: () => store.dispatch(action))) {
-      return;
-    }
+
 
     next(action);
 

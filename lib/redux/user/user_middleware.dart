@@ -45,10 +45,7 @@ Middleware<AppState> _editUser() {
   return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
     final action = dynamicAction as EditUser;
 
-    if (!action.force &&
-        checkForChanges(store: store, context: action.context, callback: () => store.dispatch(action))) {
-      return;
-    }
+
 
     next(action);
 
@@ -65,10 +62,7 @@ Middleware<AppState> _viewUser() {
       NextDispatcher next) async {
     final action = dynamicAction as ViewUser;
 
-    if (!action.force &&
-        checkForChanges(store: store, context: action.context, callback: () => store.dispatch(action))) {
-      return;
-    }
+
 
     next(action);
 
@@ -84,10 +78,7 @@ Middleware<AppState> _viewUserList() {
   return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
     final action = dynamicAction as ViewUserList;
 
-    if (!action.force &&
-        checkForChanges(store: store, context: action.context, callback: () => store.dispatch(action))) {
-      return;
-    }
+
 
     next(action);
 

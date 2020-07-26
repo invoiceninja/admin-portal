@@ -43,10 +43,7 @@ Middleware<AppState> _editVendor() {
   return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
     final action = dynamicAction as EditVendor;
 
-    if (!action.force &&
-        checkForChanges(store: store, context: action.context, callback: () => store.dispatch(action))) {
-      return;
-    }
+
 
     next(action);
 
@@ -63,10 +60,7 @@ Middleware<AppState> _viewVendor() {
       NextDispatcher next) async {
     final action = dynamicAction as ViewVendor;
 
-    if (!action.force &&
-        checkForChanges(store: store, context: action.context, callback: () => store.dispatch(action))) {
-      return;
-    }
+
 
     next(action);
 
@@ -82,10 +76,7 @@ Middleware<AppState> _viewVendorList() {
   return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
     final action = dynamicAction as ViewVendorList;
 
-    if (!action.force &&
-        checkForChanges(store: store, context: action.context, callback: () => store.dispatch(action))) {
-      return;
-    }
+
 
     next(action);
 

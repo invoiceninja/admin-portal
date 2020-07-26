@@ -43,11 +43,6 @@ Middleware<AppState> _editExpense() {
   return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
     final action = dynamicAction as EditExpense;
 
-    if (!action.force &&
-        checkForChanges(store: store, context: action.context, callback: () => store.dispatch(action))) {
-      return;
-    }
-
     next(action);
 
     store.dispatch(UpdateCurrentRoute(ExpenseEditScreen.route));
@@ -63,10 +58,7 @@ Middleware<AppState> _viewExpense() {
       NextDispatcher next) async {
     final action = dynamicAction as ViewExpense;
 
-    if (!action.force &&
-        checkForChanges(store: store, context: action.context, callback: () => store.dispatch(action))) {
-      return;
-    }
+
 
     next(action);
 
@@ -82,10 +74,7 @@ Middleware<AppState> _viewExpenseList() {
   return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
     final action = dynamicAction as ViewExpenseList;
 
-    if (!action.force &&
-        checkForChanges(store: store, context: action.context, callback: () => store.dispatch(action))) {
-      return;
-    }
+
 
     next(action);
 

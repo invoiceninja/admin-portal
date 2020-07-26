@@ -43,10 +43,7 @@ Middleware<AppState> _editPaymentTerm() {
   return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
     final action = dynamicAction as EditPaymentTerm;
 
-    if (!action.force &&
-        checkForChanges(store: store, context: action.context, callback: () => store.dispatch(action))) {
-      return;
-    }
+
 
     next(action);
 
@@ -63,10 +60,7 @@ Middleware<AppState> _viewPaymentTerm() {
       NextDispatcher next) async {
     final action = dynamicAction as ViewPaymentTerm;
 
-    if (!action.force &&
-        checkForChanges(store: store, context: action.context, callback: () => store.dispatch(action))) {
-      return;
-    }
+
 
     next(action);
 
@@ -82,10 +76,7 @@ Middleware<AppState> _viewPaymentTermList() {
   return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
     final action = dynamicAction as ViewPaymentTermList;
 
-    if (!action.force &&
-        checkForChanges(store: store, context: action.context, callback: () => store.dispatch(action))) {
-      return;
-    }
+
 
     next(action);
 

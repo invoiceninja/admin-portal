@@ -47,10 +47,7 @@ Middleware<AppState> _editCompanyGateway() {
   return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
     final action = dynamicAction as EditCompanyGateway;
 
-    if (!action.force &&
-        checkForChanges(store: store, context: action.context, callback: () => store.dispatch(action))) {
-      return;
-    }
+
 
     next(action);
 
@@ -67,10 +64,7 @@ Middleware<AppState> _viewCompanyGateway() {
       NextDispatcher next) async {
     final action = dynamicAction as ViewCompanyGateway;
 
-    if (!action.force &&
-        checkForChanges(store: store, context: action.context, callback: () => store.dispatch(action))) {
-      return;
-    }
+
 
     next(action);
 
@@ -85,11 +79,6 @@ Middleware<AppState> _viewCompanyGateway() {
 Middleware<AppState> _viewCompanyGatewayList() {
   return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
     final action = dynamicAction as ViewCompanyGatewayList;
-
-    if (!action.force &&
-        checkForChanges(store: store, context: action.context, callback: () => store.dispatch(action))) {
-      return;
-    }
 
     next(action);
 

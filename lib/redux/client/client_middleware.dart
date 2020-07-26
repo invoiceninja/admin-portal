@@ -43,14 +43,6 @@ Middleware<AppState> _editClient() {
   return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
     final action = dynamicAction as EditClient;
 
-    if (!action.force &&
-        checkForChanges(
-            store: store,
-            context: action.context,
-            callback: () => store.dispatch(action))) {
-      return;
-    }
-
     next(action);
 
     store.dispatch(UpdateCurrentRoute(ClientEditScreen.route));
@@ -66,11 +58,6 @@ Middleware<AppState> _viewClient() {
       NextDispatcher next) async {
     final action = dynamicAction as ViewClient;
 
-    if (!action.force &&
-        checkForChanges(
-            store: store, context: action.context, callback: () => store.dispatch(action))) {
-      return;
-    }
 
     next(action);
 
@@ -85,12 +72,6 @@ Middleware<AppState> _viewClient() {
 Middleware<AppState> _viewClientList() {
   return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
     final action = dynamicAction as ViewClientList;
-
-    if (!action.force &&
-        checkForChanges(
-            store: store, context: action.context, callback: () => store.dispatch(action))) {
-      return;
-    }
 
     next(action);
 

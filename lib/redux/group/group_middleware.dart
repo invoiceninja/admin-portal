@@ -43,11 +43,6 @@ Middleware<AppState> _editGroup() {
   return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
     final action = dynamicAction as EditGroup;
 
-    if (!action.force &&
-        checkForChanges(store: store, context: action.context, callback: () => store.dispatch(action))) {
-      return;
-    }
-
     next(action);
 
     store.dispatch(UpdateCurrentRoute(GroupEditScreen.route));
@@ -63,10 +58,7 @@ Middleware<AppState> _viewGroup() {
       NextDispatcher next) async {
     final action = dynamicAction as ViewGroup;
 
-    if (!action.force &&
-        checkForChanges(store: store, context: action.context, callback: () => store.dispatch(action))) {
-      return;
-    }
+
 
     next(action);
 
@@ -82,10 +74,7 @@ Middleware<AppState> _viewGroupList() {
   return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
     final action = dynamicAction as ViewGroupList;
 
-    if (!action.force &&
-        checkForChanges(store: store, context: action.context, callback: () => store.dispatch(action))) {
-      return;
-    }
+
 
     next(action);
 
