@@ -71,8 +71,9 @@ class DashboardPanels extends StatelessWidget {
               visualDensity: VisualDensity.compact,
             ),
             SizedBox(width: 16),
-            Expanded(
-              child: InkWell(
+            InkWell(
+              child: Padding(
+                padding: const EdgeInsets.only(left: 4, top: 6, bottom: 6),
                 child: Row(
                   mainAxisSize: MainAxisSize.min,
                   children: <Widget>[
@@ -90,9 +91,10 @@ class DashboardPanels extends StatelessWidget {
                     Icon(Icons.arrow_drop_down),
                   ],
                 ),
-                onTap: () => _showDateOptions(context),
               ),
+              onTap: () => _showDateOptions(context),
             ),
+            Spacer(),
             if (company.hasTaxes)
               Padding(
                 padding: const EdgeInsets.only(left: 16),
