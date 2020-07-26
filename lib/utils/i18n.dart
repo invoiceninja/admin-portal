@@ -1125,7 +1125,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'activity_7': ':contact viewed invoice :invoice',
       'activity_8': ':user archived invoice :invoice',
       'activity_9': ':user deleted invoice :invoice',
-      'activity_10': ':contact entered payment :payment for :invoice',
+      'activity_10': ':contact entered payment :payment for invoice :invoice',
       'activity_11': ':user updated payment :payment',
       'activity_12': ':user archived payment :payment',
       'activity_13': ':user deleted payment :payment',
