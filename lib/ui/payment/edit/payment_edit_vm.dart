@@ -2,7 +2,6 @@ import 'dart:async';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
-import 'package:invoiceninja_flutter/constants.dart';
 import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:invoiceninja_flutter/redux/static/static_state.dart';
 import 'package:invoiceninja_flutter/redux/ui/pref_state.dart';
@@ -15,7 +14,6 @@ import 'package:invoiceninja_flutter/redux/payment/payment_actions.dart';
 import 'package:invoiceninja_flutter/data/models/payment_model.dart';
 import 'package:invoiceninja_flutter/ui/payment/edit/payment_edit.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 class PaymentEditScreen extends StatelessWidget {
   const PaymentEditScreen({Key key}) : super(key: key);
@@ -45,7 +43,6 @@ class PaymentEditVM {
     @required this.origPayment,
     @required this.onChanged,
     @required this.onSavePressed,
-    @required this.onEmailChanged,
     @required this.prefState,
     @required this.staticState,
     @required this.onCancelPressed,
@@ -67,14 +64,6 @@ class PaymentEditVM {
       staticState: state.staticState,
       onChanged: (PaymentEntity payment) {
         store.dispatch(UpdatePayment(payment));
-      },
-      onEmailChanged: (value) async {
-        if (payment.isOld) {
-          return;
-        }
-        final SharedPreferences prefs = await SharedPreferences.getInstance();
-        prefs.setBool(kSharedPrefEmailPayment, value);
-        store.dispatch(UserPreferencesChanged(emailPayment: value));
       },
       onCancelPressed: (BuildContext context) {
         createEntity(context: context, entity: PaymentEntity(), force: true);
@@ -113,7 +102,6 @@ class PaymentEditVM {
   final Function(PaymentEntity) onChanged;
   final Function(BuildContext) onSavePressed;
   final Function(BuildContext) onCancelPressed;
-  final Function(bool) onEmailChanged;
   final PrefState prefState;
   final StaticState staticState;
   final bool isSaving;

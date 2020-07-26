@@ -102,6 +102,7 @@ abstract class PaymentEntity extends Object
       vendorId: '',
       projectId: '',
       number: '',
+      sendEmail: state?.company?.settings?.clientManualPaymentNotification,
     );
   }
 
@@ -174,6 +175,9 @@ abstract class PaymentEntity extends Object
 
   @nullable
   bool get isForInvoice;
+
+  @nullable
+  bool get sendEmail;
 
   BuiltList<PaymentableEntity> get paymentables;
 

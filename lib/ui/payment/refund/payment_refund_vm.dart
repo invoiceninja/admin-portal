@@ -4,7 +4,6 @@ import 'package:built_collection/built_collection.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
-import 'package:invoiceninja_flutter/constants.dart';
 import 'package:invoiceninja_flutter/data/models/invoice_model.dart';
 import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:invoiceninja_flutter/redux/static/static_state.dart';
@@ -18,7 +17,6 @@ import 'package:redux/redux.dart';
 import 'package:invoiceninja_flutter/redux/payment/payment_actions.dart';
 import 'package:invoiceninja_flutter/data/models/payment_model.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 class PaymentRefundScreen extends StatelessWidget {
   const PaymentRefundScreen({Key key}) : super(key: key);
@@ -48,7 +46,6 @@ class PaymentRefundVM {
     @required this.origPayment,
     @required this.onChanged,
     @required this.onRefundPressed,
-    @required this.onEmailChanged,
     @required this.prefState,
     @required this.invoiceMap,
     @required this.invoiceList,
@@ -74,11 +71,6 @@ class PaymentRefundVM {
       invoiceList: state.invoiceState.list,
       onChanged: (PaymentEntity payment) {
         store.dispatch(UpdatePayment(payment));
-      },
-      onEmailChanged: (value) async {
-        final SharedPreferences prefs = await SharedPreferences.getInstance();
-        prefs.setBool(kSharedPrefEmailPayment, value);
-        store.dispatch(UserPreferencesChanged(emailPayment: value));
       },
       onCancelPressed: (BuildContext context) {
         createEntity(context: context, entity: PaymentEntity(), force: true);
@@ -117,7 +109,6 @@ class PaymentRefundVM {
   final Function(PaymentEntity) onChanged;
   final Function(BuildContext, Completer<PaymentEntity>) onRefundPressed;
   final Function(BuildContext) onCancelPressed;
-  final Function(bool) onEmailChanged;
   final BuiltMap<String, InvoiceEntity> invoiceMap;
   final PrefState prefState;
   final BuiltList<String> invoiceList;

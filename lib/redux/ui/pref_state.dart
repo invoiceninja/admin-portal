@@ -19,7 +19,6 @@ abstract class PrefState implements Built<PrefState, PrefStateBuilder> {
       isHistoryVisible: false,
       enableDarkMode: false,
       requireAuthentication: false,
-      emailPayment: false,
       autoStartTasks: false,
       showFilterSidebar: false,
       longPressSelectionIsDefault: false,
@@ -59,8 +58,6 @@ abstract class PrefState implements Built<PrefState, PrefStateBuilder> {
   bool get longPressSelectionIsDefault;
 
   bool get requireAuthentication;
-
-  bool get emailPayment;
 
   bool get autoStartTasks;
 

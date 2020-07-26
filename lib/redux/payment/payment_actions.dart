@@ -134,7 +134,10 @@ class LoadPaymentsSuccess implements StopLoading {
 }
 
 class SavePaymentRequest implements StartSaving {
-  SavePaymentRequest({this.completer, this.payment});
+  SavePaymentRequest({
+    @required this.completer,
+    @required this.payment,
+  });
 
   final Completer completer;
   final PaymentEntity payment;
@@ -159,7 +162,10 @@ class SavePaymentFailure implements StopSaving {
 }
 
 class RefundPaymentRequest implements StartSaving {
-  RefundPaymentRequest({this.completer, this.payment});
+  RefundPaymentRequest({
+    @required this.completer,
+    @required this.payment,
+  });
 
   final Completer completer;
   final PaymentEntity payment;
@@ -314,6 +320,7 @@ void handlePaymentAction(
   }
 
   final store = StoreProvider.of<AppState>(context);
+  final company = store.state.company;
   final localization = AppLocalization.of(context);
   final paymentIds = payments.map((payment) => payment.id).toList();
   var payment = payments.first as PaymentEntity;
@@ -329,7 +336,8 @@ void handlePaymentAction(
       }
       store.dispatch(ViewRefundPayment(
         navigator: Navigator.of(context),
-        payment: payment,
+        payment: payment.rebuild((b) =>
+            b..sendEmail = company.settings.clientManualPaymentNotification),
       ));
       break;
     case EntityAction.emailPayment:

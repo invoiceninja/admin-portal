@@ -48,7 +48,6 @@ const String kSharedPrefToken = 'checksum';
 
 // TODO remove these
 const String kSharedPrefAddDocumentsToInvoice = 'add_documents_to_invoice';
-const String kSharedPrefEmailPayment = 'email_payment';
 const String kSharedPrefAutoStartTasks = 'auto_start_tasks';
 
 const String kProductPlanPro = 'v1_pro_yearly';

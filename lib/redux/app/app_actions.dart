@@ -96,7 +96,6 @@ class UserPreferencesChanged implements PersistPrefs {
     this.layout,
     this.sidebar,
     this.enableDarkMode,
-    this.emailPayment,
     this.requireAuthentication,
     this.autoStartTasks,
     this.longPressSelectionIsDefault,
@@ -115,7 +114,6 @@ class UserPreferencesChanged implements PersistPrefs {
   final AppSidebarMode historyMode;
   final bool enableDarkMode;
   final bool longPressSelectionIsDefault;
-  final bool emailPayment;
   final bool requireAuthentication;
   final bool autoStartTasks;
   final bool isPreviewVisible;

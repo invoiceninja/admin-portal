@@ -496,15 +496,16 @@ class _CompanyDetailsState extends State<CompanyDetails>
               FormCard(
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: <Widget>[
-                    BoolDropdownButton(
-                      value: settings.clientManualPaymentNotification,
-                      onChanged: (value) => viewModel.onSettingsChanged(
-                          settings.rebuild((b) =>
-                              b..clientManualPaymentNotification = value)),
-                      label: localization.manualPaymentEmail,
-                      helpLabel: localization.emailReceipt,
-                      iconData: Icons.email,
-                    ),
+                    if (!state.settingsUIState.isFiltered)
+                      BoolDropdownButton(
+                        value: settings.clientManualPaymentNotification,
+                        onChanged: (value) => viewModel.onSettingsChanged(
+                            settings.rebuild((b) =>
+                                b..clientManualPaymentNotification = value)),
+                        label: localization.manualPaymentEmail,
+                        helpLabel: localization.emailReceipt,
+                        iconData: Icons.email,
+                      ),
                     BoolDropdownButton(
                       value: settings.clientOnlinePaymentNotification,
                       onChanged: (value) => viewModel.onSettingsChanged(

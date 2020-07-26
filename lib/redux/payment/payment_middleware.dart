@@ -50,8 +50,6 @@ Middleware<AppState> _editPayment() {
   return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
     final action = dynamicAction as EditPayment;
 
-
-
     next(action);
 
     store.dispatch(UpdateCurrentRoute(PaymentEditScreen.route));
@@ -65,8 +63,6 @@ Middleware<AppState> _editPayment() {
 Middleware<AppState> _viewRefundPayment() {
   return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
     final action = dynamicAction as ViewRefundPayment;
-
-
 
     next(action);
 
@@ -87,8 +83,6 @@ Middleware<AppState> _viewRefundPayment() {
 
 Middleware<AppState> _viewPayment() {
   return (Store<AppState> store, dynamic action, NextDispatcher next) async {
-
-
     next(action);
 
     store.dispatch(UpdateCurrentRoute(PaymentViewScreen.route));
@@ -102,8 +96,6 @@ Middleware<AppState> _viewPayment() {
 Middleware<AppState> _viewPaymentList() {
   return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
     final action = dynamicAction as ViewPaymentList;
-
-
 
     next(action);
 
@@ -204,8 +196,7 @@ Middleware<AppState> _savePayment(PaymentRepository repository) {
   return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
     final action = dynamicAction as SavePaymentRequest;
     final PaymentEntity payment = action.payment;
-    final bool sendEmail =
-        payment.isNew ? store.state.prefState.emailPayment : false;
+    final bool sendEmail = payment.isNew ? payment.sendEmail : false;
     repository
         .saveData(store.state.credentials, action.payment, sendEmail: sendEmail)
         .then((PaymentEntity payment) {
@@ -229,11 +220,10 @@ Middleware<AppState> _savePayment(PaymentRepository repository) {
 Middleware<AppState> _refundPayment(PaymentRepository repository) {
   return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
     final action = dynamicAction as RefundPaymentRequest;
-    final bool sendEmail = store.state.prefState.emailPayment;
 
     repository
         .refundPayment(store.state.credentials, action.payment,
-            sendEmail: sendEmail)
+            sendEmail: action.payment.sendEmail)
         .then((PaymentEntity payment) {
       store.dispatch(SavePaymentSuccess(payment));
       store.dispatch(RefundPaymentSuccess(payment));
