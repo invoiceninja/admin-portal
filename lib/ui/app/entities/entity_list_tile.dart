@@ -83,29 +83,26 @@ class EntityListTile extends StatelessWidget {
         SelectedIndicator(
           isSelected: isFilteredBy && isDesktop(context),
           isMenu: true,
-          child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 10),
-            child: ListTile(
-              onTap: () => inspectEntity(context: context, entity: entity),
-              onLongPress: () => inspectEntity(
-                  context: context, entity: entity, longPress: true),
-              contentPadding: const EdgeInsets.only(left: 8, right: 8),
-              title: Text(localization.lookup('${entity.entityType}') +
-                  '  ›  ' +
-                  entity.listDisplayName),
-              subtitle: (subtitle ?? '').isEmpty && entity.isActive
-                  ? null
-                  : Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        if ((subtitle ?? '').isNotEmpty) Text(subtitle),
-                        if (!entity.isActive) EntityStateLabel(entity),
-                      ],
-                    ),
-              leading: leading,
-              trailing: trailing,
-              isThreeLine: (subtitle ?? '').isNotEmpty && !entity.isActive,
-            ),
+          child: ListTile(
+            onTap: () => inspectEntity(context: context, entity: entity),
+            onLongPress: () => inspectEntity(
+                context: context, entity: entity, longPress: true),
+            contentPadding: const EdgeInsets.only(left: 8, right: 8),
+            title: Text(localization.lookup('${entity.entityType}') +
+                '  ›  ' +
+                entity.listDisplayName),
+            subtitle: (subtitle ?? '').isEmpty && entity.isActive
+                ? null
+                : Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      if ((subtitle ?? '').isNotEmpty) Text(subtitle),
+                      if (!entity.isActive) EntityStateLabel(entity),
+                    ],
+                  ),
+            leading: leading,
+            trailing: trailing,
+            isThreeLine: (subtitle ?? '').isNotEmpty && !entity.isActive,
           ),
         ),
         ListDivider(),
