@@ -500,7 +500,7 @@ class _CompanyDetailsState extends State<CompanyDetails>
                       value: settings.clientManualPaymentNotification,
                       onChanged: (value) => viewModel.onSettingsChanged(
                           settings.rebuild((b) =>
-                          b..clientManualPaymentNotification = value)),
+                              b..clientManualPaymentNotification = value)),
                       label: localization.manualPaymentEmail,
                       helpLabel: localization.emailReceipt,
                       iconData: Icons.email,
@@ -509,7 +509,7 @@ class _CompanyDetailsState extends State<CompanyDetails>
                       value: settings.clientOnlinePaymentNotification,
                       onChanged: (value) => viewModel.onSettingsChanged(
                           settings.rebuild((b) =>
-                          b..clientOnlinePaymentNotification = value)),
+                              b..clientOnlinePaymentNotification = value)),
                       label: localization.onlinePaymentEmail,
                       helpLabel: localization.emailReceipt,
                       iconData: Icons.email,
