@@ -494,36 +494,42 @@ class _CompanyDetailsState extends State<CompanyDetails>
               ),
               FormCard(
                 children: <Widget>[
-                  DecoratedFormField(
-                    label: localization.invoiceTerms,
-                    controller: _invoiceTermsController,
-                    maxLines: 4,
-                  ),
-                  DecoratedFormField(
-                    label: localization.invoiceFooter,
-                    controller: _invoiceFooterController,
-                    maxLines: 4,
-                  ),
-                  DecoratedFormField(
-                    label: localization.quoteTerms,
-                    controller: _quoteTermsController,
-                    maxLines: 4,
-                  ),
-                  DecoratedFormField(
-                    label: localization.quoteFooter,
-                    controller: _quoteFooterController,
-                    maxLines: 4,
-                  ),
-                  DecoratedFormField(
-                    label: localization.creditTerms,
-                    controller: _creditTermsController,
-                    maxLines: 4,
-                  ),
-                  DecoratedFormField(
-                    label: localization.creditFooter,
-                    controller: _creditFooterController,
-                    maxLines: 4,
-                  ),
+                  if (company.isModuleEnabled(EntityType.invoice)) ...[
+                    DecoratedFormField(
+                      label: localization.invoiceTerms,
+                      controller: _invoiceTermsController,
+                      maxLines: 4,
+                    ),
+                    DecoratedFormField(
+                      label: localization.invoiceFooter,
+                      controller: _invoiceFooterController,
+                      maxLines: 4,
+                    ),
+                  ],
+                  if (company.isModuleEnabled(EntityType.quote)) ...[
+                    DecoratedFormField(
+                      label: localization.quoteTerms,
+                      controller: _quoteTermsController,
+                      maxLines: 4,
+                    ),
+                    DecoratedFormField(
+                      label: localization.quoteFooter,
+                      controller: _quoteFooterController,
+                      maxLines: 4,
+                    ),
+                  ],
+                  if (company.isModuleEnabled(EntityType.credit)) ...[
+                    DecoratedFormField(
+                      label: localization.creditTerms,
+                      controller: _creditTermsController,
+                      maxLines: 4,
+                    ),
+                    DecoratedFormField(
+                      label: localization.creditFooter,
+                      controller: _creditFooterController,
+                      maxLines: 4,
+                    ),
+                  ],
                 ],
               )
             ],
