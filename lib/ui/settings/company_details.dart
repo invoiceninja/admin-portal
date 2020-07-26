@@ -9,6 +9,7 @@ import 'package:invoiceninja_flutter/ui/app/entity_dropdown.dart';
 import 'package:invoiceninja_flutter/ui/app/form_card.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/app_dropdown_button.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/app_form.dart';
+import 'package:invoiceninja_flutter/ui/app/forms/bool_dropdown_button.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/custom_field.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/decorated_form_field.dart';
 import 'package:invoiceninja_flutter/ui/app/resources/cached_image.dart';
@@ -492,6 +493,28 @@ class _CompanyDetailsState extends State<CompanyDetails>
                    */
                 ],
               ),
+              FormCard(
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: <Widget>[
+                    BoolDropdownButton(
+                      value: settings.clientManualPaymentNotification,
+                      onChanged: (value) => viewModel.onSettingsChanged(
+                          settings.rebuild((b) =>
+                          b..clientManualPaymentNotification = value)),
+                      label: localization.manualPaymentEmail,
+                      helpLabel: localization.emailReceipt,
+                      iconData: Icons.email,
+                    ),
+                    BoolDropdownButton(
+                      value: settings.clientOnlinePaymentNotification,
+                      onChanged: (value) => viewModel.onSettingsChanged(
+                          settings.rebuild((b) =>
+                          b..clientOnlinePaymentNotification = value)),
+                      label: localization.onlinePaymentEmail,
+                      helpLabel: localization.emailReceipt,
+                      iconData: Icons.email,
+                    ),
+                  ]),
               FormCard(
                 children: <Widget>[
                   if (company.isModuleEnabled(EntityType.invoice)) ...[
