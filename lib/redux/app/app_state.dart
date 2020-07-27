@@ -619,6 +619,7 @@ abstract class AppState implements Built<AppState, AppStateBuilder> {
     //return 'Token: ${credentials.token} - ${userCompanyStates.map((state) => state?.token?.token ?? '').where((name) => name.isNotEmpty).join(',')}';
     //return 'Payment Terms: ${company.settings.defaultPaymentTerms}';
     //return 'Invitations: ${uiState.invoiceUIState.editing.invitations}';
+    //return 'Selection: ${clientUIState.selectedId}';
     return '\n\nURL: ${authState.url}\nRoute: ${uiState.currentRoute}\nPrev: ${uiState.previousRoute}\nis Large: ${(company?.isLarge ?? false) ? 'Yes' : 'No'}\nCompany: $companyUpdated${userCompanyState.isStale ? ' [S]' : ''}\nStatic: $staticUpdated${staticState.isStale ? ' [S]' : ''}\n';
   }
 }

@@ -13,6 +13,7 @@ import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/redux/client/client_actions.dart';
 import 'package:invoiceninja_flutter/redux/company_gateway/company_gateway_actions.dart';
 import 'package:invoiceninja_flutter/redux/credit/credit_actions.dart';
+import 'package:invoiceninja_flutter/redux/dashboard/dashboard_actions.dart';
 import 'package:invoiceninja_flutter/redux/design/design_actions.dart';
 import 'package:invoiceninja_flutter/redux/document/document_actions.dart';
 import 'package:invoiceninja_flutter/redux/expense/expense_actions.dart';
@@ -22,6 +23,7 @@ import 'package:invoiceninja_flutter/redux/payment/payment_actions.dart';
 import 'package:invoiceninja_flutter/redux/product/product_actions.dart';
 import 'package:invoiceninja_flutter/redux/project/project_actions.dart';
 import 'package:invoiceninja_flutter/redux/quote/quote_actions.dart';
+import 'package:invoiceninja_flutter/redux/reports/reports_actions.dart';
 import 'package:invoiceninja_flutter/redux/settings/settings_actions.dart';
 import 'package:invoiceninja_flutter/redux/task/task_actions.dart';
 import 'package:invoiceninja_flutter/redux/tax_rate/tax_rate_actions.dart';
@@ -229,6 +231,16 @@ void viewEntitiesByType({
         }
 
         switch (entityType) {
+          case EntityType.dashboard:
+            action = ViewDashboard(navigator: navigator);
+            break;
+          case EntityType.reports:
+            action = ViewReports(navigator: navigator);
+            break;
+          case EntityType.settings:
+            action = ViewSettings(
+                navigator: navigator, company: store.state.company);
+            break;
           case EntityType.client:
             action = ViewClientList(navigator: navigator);
             break;
@@ -272,11 +284,9 @@ void viewEntitiesByType({
           case EntityType.webhook:
             store.dispatch(ViewWebhookList(navigator: navigator));
             break;
-
           case EntityType.token:
             store.dispatch(ViewTokenList(navigator: navigator));
             break;
-
           case EntityType.paymentTerm:
             store.dispatch(ViewPaymentTermList(navigator: navigator));
             break;
