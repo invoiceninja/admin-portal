@@ -1,4 +1,6 @@
 // Import Flutter Driver API
+import 'dart:async';
+
 import 'package:flutter_driver/flutter_driver.dart';
 import 'package:test/test.dart';
 
@@ -9,14 +11,28 @@ void main() {
   group('LOGIN TEST', () {
     TestLocalization localization;
     FlutterDriver driver;
+    StreamSubscription streamSubscription;
+
     setUpAll(() async {
       localization = TestLocalization('en');
-      driver = await FlutterDriver.connect();
+      driver = await FlutterDriver.connect(printCommunication: false);
+
+      // https://github.com/flutter/flutter/issues/24703#issuecomment-526382318
+      streamSubscription = driver.serviceClient.onIsolateRunnable
+          .asBroadcastStream()
+          .listen((isolateRef) {
+        print(
+            'Resuming isolate: ${isolateRef.numberAsString}:${isolateRef.name}');
+        isolateRef.resume();
+      });
     });
 
     tearDownAll(() async {
       if (driver != null) {
         driver.close();
+      }
+      if (streamSubscription != null) {
+        streamSubscription.cancel();
       }
     });
 
