@@ -39,7 +39,7 @@ List<String> filteredTokensSelector(BuiltMap<String, TokenEntity> tokenMap,
       //
     }
 
-    if (!token.isSystem) {
+    if (token.isSystem) {
       return false;
     }
 
