@@ -221,7 +221,7 @@ class _AccountOverview extends StatelessWidget {
             child: Row(children: [
               Expanded(
                 child: AppButton(
-                  label: localization.manageTokens.toUpperCase(),
+                  label: localization.apiTokens.toUpperCase(),
                   iconData: getEntityIcon(EntityType.token),
                   onPressed: () {
                     store.dispatch(ViewSettings(
@@ -234,7 +234,7 @@ class _AccountOverview extends StatelessWidget {
               SizedBox(width: kGutterWidth),
               Expanded(
                 child: AppButton(
-                  label: localization.manageWebhooks.toUpperCase(),
+                  label: localization.apiWebhooks.toUpperCase(),
                   iconData: getEntityIcon(EntityType.webhook),
                   onPressed: () {
                     store.dispatch(ViewSettings(

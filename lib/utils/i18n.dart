@@ -66,7 +66,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'copy': 'Copy',
       'must_be_online': 'Please restart the app once connected to the internet',
       'crons_not_enabled': 'The crons need to be enabled',
-      'manage_webhooks': 'Manage Webhooks',
+      'api_webhooks': 'API Webhooks',
       'search_webhooks': 'Search :count Webhooks',
       'search_webhook': 'Search 1 Webhook',
       'webhook': 'Webhook',
@@ -79,7 +79,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'deleted_webhook': 'Successfully deleted webhook',
       'removed_webhook': 'Successfully removed webhook',
       'restored_webhook': 'Successfully restored webhook',
-      'manage_tokens': 'Manage Tokens',
+      'api_tokens': 'API Tokens',
       'search_tokens': 'Search :count Tokens',
       'search_token': 'Search 1 Token',
       'token': 'Token',
@@ -38843,11 +38843,11 @@ mixin LocalizationsProvider on LocaleCodeAware {
   String get searchWebhooks =>
       _localizedValues[localeCode]['search_webhooks'] ?? '';
 
-  String get manageTokens =>
-      _localizedValues[localeCode]['manage_tokens'] ?? '';
+  String get apiTokens =>
+      _localizedValues[localeCode]['api_tokens'] ?? '';
 
-  String get manageWebhooks =>
-      _localizedValues[localeCode]['manage_webhooks'] ?? '';
+  String get apiWebhooks =>
+      _localizedValues[localeCode]['api_webhooks'] ?? '';
 
   String get cronsNotEnabled =>
       _localizedValues[localeCode]['crons_not_enabled'] ?? '';
