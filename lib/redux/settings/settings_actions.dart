@@ -9,7 +9,7 @@ import 'package:invoiceninja_flutter/data/models/user_model.dart';
 import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 
 class ViewSettings extends AbstractNavigatorAction
-    implements PersistUI, ClearEntityFilter {
+    implements PersistUI {
   ViewSettings({
     @required NavigatorState navigator,
     this.company,

@@ -41,7 +41,7 @@ class _TokenViewState extends State<TokenView> {
           EntityHeader(
             entity: token,
             label: localization.user,
-            value: user.fullName,
+            value: user.listDisplayName,
             secondLabel: localization.createdOn,
             secondValue: formatDate(
                 convertTimestampToDateString(token.createdAt), context),

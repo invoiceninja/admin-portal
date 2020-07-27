@@ -636,8 +636,8 @@ abstract class ActivityEntity
     activity = activity.replaceFirst(':quote', quote?.number ?? '');
     activity = activity.replaceFirst(':contact',
         contact?.fullName ?? client?.displayName ?? user?.fullName ?? '');
-    activity =
-        activity.replaceFirst(':payment', payment?.transactionReference ?? '');
+    activity = activity.replaceFirst(
+        ':payment', payment?.transactionReferenceOrNumber ?? '');
     activity = activity.replaceFirst(':credit', credit?.privateNotes ?? '');
     activity = activity.replaceFirst(':task', task?.description ?? '');
     activity = activity.replaceFirst(':expense', expense?.privateNotes ?? '');

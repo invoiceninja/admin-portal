@@ -179,6 +179,9 @@ abstract class PaymentEntity extends Object
   @nullable
   bool get sendEmail;
 
+  String get transactionReferenceOrNumber =>
+      transactionReference.isNotEmpty ? transactionReference : number;
+
   BuiltList<PaymentableEntity> get paymentables;
 
   BuiltList<PaymentableEntity> get invoices;

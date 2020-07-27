@@ -189,8 +189,9 @@ class MenuDrawer extends StatelessWidget {
                             company: company,
                             icon: getEntityIcon(EntityType.dashboard),
                             title: localization.dashboard,
-                            onTap: () => store.dispatch(ViewDashboard(
-                                navigator: Navigator.of(context))),
+                            onTap: () => viewEntitiesByType(
+                                context: context,
+                                entityType: EntityType.dashboard),
                             onLongPress: () => store.dispatch(ViewDashboard(
                                 navigator: Navigator.of(context), filter: '')),
                           ),
@@ -269,20 +270,17 @@ class MenuDrawer extends StatelessWidget {
                             company: company,
                             icon: getEntityIcon(EntityType.reports),
                             title: localization.reports,
-                            onTap: () {
-                              store.dispatch(ViewReports(
-                                  navigator: Navigator.of(context)));
-                            },
+                            onTap: () => viewEntitiesByType(
+                                context: context,
+                                entityType: EntityType.reports),
                           ),
                           DrawerTile(
                             company: company,
                             icon: getEntityIcon(EntityType.settings),
                             title: localization.settings,
-                            onTap: () {
-                              store.dispatch(ViewSettings(
-                                  navigator: Navigator.of(context),
-                                  company: state.company));
-                            },
+                            onTap: () => viewEntitiesByType(
+                                context: context,
+                                entityType: EntityType.settings),
                           ),
                         ],
                       ),
