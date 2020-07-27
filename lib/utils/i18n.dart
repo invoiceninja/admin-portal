@@ -1,4 +1,3 @@
-import 'package:flutter/foundation.dart';
 import 'package:invoiceninja_flutter/utils/strings.dart';
 
 abstract class LocaleCodeAware {
@@ -38989,7 +38988,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
   String lookup(String key) {
     final lookupKey = toSnakeCase(key);
 
-    if (!kReleaseMode && !_localizedValues[localeCode].containsKey(key)) {
+    if (!_localizedValues[localeCode].containsKey(key)) {
       print('ERROR: localization key not found - $key');
     }
 
