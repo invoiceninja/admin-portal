@@ -139,9 +139,7 @@ class InvoiceEditDesktopState extends State<InvoiceEditDesktop>
   void _onChanged() {
     _debouncer.run(() {
       final invoice = widget.viewModel.invoice.rebuild((b) => b
-        ..number = widget.viewModel.invoice.isNew
-            ? ''
-            : _invoiceNumberController.text.trim()
+        ..number = _invoiceNumberController.text.trim()
         ..poNumber = _poNumberController.text.trim()
         ..discount = parseDouble(_discountController.text)
         ..partial = parseDouble(_partialController.text)
