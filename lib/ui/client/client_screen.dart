@@ -1,5 +1,3 @@
-import 'dart:async';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
@@ -7,9 +5,7 @@ import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/redux/client/client_actions.dart';
 import 'package:invoiceninja_flutter/ui/app/app_bottom_bar.dart';
-import 'package:invoiceninja_flutter/ui/app/forms/save_cancel_buttons.dart';
 import 'package:invoiceninja_flutter/ui/app/list_scaffold.dart';
-import 'package:invoiceninja_flutter/ui/app/entities/entity_actions_dialog.dart';
 import 'package:invoiceninja_flutter/ui/app/list_filter.dart';
 import 'package:invoiceninja_flutter/ui/client/client_list_vm.dart';
 import 'package:invoiceninja_flutter/ui/client/client_presenter.dart';
@@ -59,31 +55,6 @@ class ClientScreen extends StatelessWidget {
           store.dispatch(FilterClients(value));
         },
       ),
-      appBarActions: [
-        if (viewModel.isInMultiselect)
-          SaveCancelButtons(
-            saveLabel: localization.done,
-            onSavePressed: listUIState.selectedIds.isEmpty
-                ? null
-                : (context) async {
-                    final clients = listUIState.selectedIds
-                        .map<ClientEntity>(
-                            (clientId) => viewModel.clientMap[clientId])
-                        .toList();
-
-                    await showEntityActionsDialog(
-                      entities: clients,
-                      context: context,
-                      multiselect: true,
-                      completer: Completer<Null>()
-                        ..future.then<dynamic>(
-                            (_) => store.dispatch(ClearClientMultiselect())),
-                    );
-                  },
-            onCancelPressed: (context) =>
-                store.dispatch(ClearClientMultiselect()),
-          ),
-      ],
       body: ClientListBuilder(),
       bottomNavigationBar: AppBottomBar(
         entityType: EntityType.client,

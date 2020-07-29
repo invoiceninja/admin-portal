@@ -26,6 +26,7 @@ class ProductListBuilder extends StatelessWidget {
       converter: ProductListVM.fromStore,
       builder: (context, viewModel) {
         return EntityList(
+            onClearMultiselect: viewModel.onClearMultielsect,
             entityType: EntityType.product,
             presenter: ProductPresenter(),
             state: viewModel.state,
@@ -62,6 +63,7 @@ class ProductListVM {
     @required this.onRefreshed,
     @required this.tableColumns,
     @required this.onSortColumn,
+    @required this.onClearMultielsect,
   });
 
   static ProductListVM fromStore(Store<AppState> store) {
@@ -89,6 +91,7 @@ class ProductListVM {
           state.userCompany.settings.getTableColumns(EntityType.product) ??
               ProductPresenter.getAllTableFields(state.userCompany),
       onSortColumn: (field) => store.dispatch(SortProducts(field)),
+      onClearMultielsect: () => store.dispatch(ClearProductMultiselect()),
     );
   }
 
@@ -100,4 +103,4 @@ class ProductListVM {
   final Function(BuildContext) onRefreshed;
   final List<String> tableColumns;
   final Function(String) onSortColumn;
-}
+final Function onClearMultielsect;}

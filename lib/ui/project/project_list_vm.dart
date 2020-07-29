@@ -27,14 +27,13 @@ class ProjectListBuilder extends StatelessWidget {
       converter: ProjectListVM.fromStore,
       builder: (context, viewModel) {
         return EntityList(
+            onClearMultiselect: viewModel.onClearMultielsect,
             entityType: EntityType.project,
             presenter: ProjectPresenter(),
             state: viewModel.state,
             entityList: viewModel.projectList,
             tableColumns: viewModel.tableColumns,
             onRefreshed: viewModel.onRefreshed,
-            onClearEntityFilterPressed: viewModel.onClearEntityFilterPressed,
-            onViewEntityFilterPressed: viewModel.onViewEntityFilterPressed,
             onSortColumn: viewModel.onSortColumn,
             itemBuilder: (BuildContext context, index) {
               final state = viewModel.state;
@@ -67,9 +66,8 @@ class ProjectListVM {
     @required this.isLoading,
     @required this.onRefreshed,
     @required this.tableColumns,
-    @required this.onClearEntityFilterPressed,
-    @required this.onViewEntityFilterPressed,
-    @required this.onSortColumn,
+    @required this.onSortColumn, @required this.onClearMultielsect,
+
   });
 
   static ProjectListVM fromStore(Store<AppState> store) {
@@ -99,16 +97,12 @@ class ProjectListVM {
       clientMap: state.clientState.map,
       isLoading: state.isLoading,
       filter: state.projectUIState.listUIState.filter,
-      onClearEntityFilterPressed: () => store.dispatch(ClearEntityFilter()),
-      onViewEntityFilterPressed: (BuildContext context) => viewEntityById(
-          context: context,
-          entityId: state.projectListState.filterEntityId,
-          entityType: state.projectListState.filterEntityType),
       onRefreshed: (context) => _handleRefresh(context),
       tableColumns:
           state.userCompany.settings.getTableColumns(EntityType.project) ??
               ProjectPresenter.getAllTableFields(state.userCompany),
       onSortColumn: (field) => store.dispatch(SortProjects(field)),
+      onClearMultielsect: () => store.dispatch(ClearProjectMultiselect()),
     );
   }
 
@@ -120,8 +114,6 @@ class ProjectListVM {
   final String filter;
   final bool isLoading;
   final Function(BuildContext) onRefreshed;
-  final Function onClearEntityFilterPressed;
-  final Function(BuildContext) onViewEntityFilterPressed;
   final List<String> tableColumns;
   final Function(String) onSortColumn;
-}
+final Function onClearMultielsect;}

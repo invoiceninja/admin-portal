@@ -139,7 +139,6 @@ class _StubListState extends State<StubList> {
             source: dataTableSource,
             header: DatatableHeader(
               entityType: EntityType.stub,
-              onClearPressed: viewModel.onClearEntityFilterPressed,
             ),
           ),
         ));

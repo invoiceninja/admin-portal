@@ -26,14 +26,13 @@ class ExpenseListBuilder extends StatelessWidget {
       converter: ExpenseListVM.fromStore,
       builder: (context, viewModel) {
         return EntityList(
+            onClearMultiselect: viewModel.onClearMultielsect,
             entityType: EntityType.expense,
             presenter: ExpensePresenter(),
             state: viewModel.state,
             entityList: viewModel.expenseList,
             tableColumns: viewModel.tableColumns,
             onRefreshed: viewModel.onRefreshed,
-            onClearEntityFilterPressed: viewModel.onClearEntityFilterPressed,
-            onViewEntityFilterPressed: viewModel.onViewEntityFilterPressed,
             onSortColumn: viewModel.onSortColumn,
             itemBuilder: (BuildContext context, index) {
               final expenseId = viewModel.expenseList[index];
@@ -70,9 +69,8 @@ class ExpenseListVM {
     @required this.listState,
     @required this.onRefreshed,
     @required this.tableColumns,
-    @required this.onClearEntityFilterPressed,
-    @required this.onViewEntityFilterPressed,
     @required this.onSortColumn,
+    @required this.onClearMultielsect,
   });
 
   static ExpenseListVM fromStore(Store<AppState> store) {
@@ -102,16 +100,12 @@ class ExpenseListVM {
       expenseMap: state.expenseState.map,
       isLoading: state.isLoading,
       filter: state.expenseUIState.listUIState.filter,
-      onClearEntityFilterPressed: () => store.dispatch(FilterByEntity()),
-      onViewEntityFilterPressed: (BuildContext context) => viewEntityById(
-          context: context,
-          entityId: state.expenseListState.filterEntityId,
-          entityType: state.expenseListState.filterEntityType),
       onRefreshed: (context) => _handleRefresh(context),
       tableColumns:
           state.userCompany.settings.getTableColumns(EntityType.expense) ??
               ExpensePresenter.getAllTableFields(state.userCompany),
       onSortColumn: (field) => store.dispatch(SortExpenses(field)),
+      onClearMultielsect: () => store.dispatch(ClearExpenseMultiselect()),
     );
   }
 
@@ -123,8 +117,7 @@ class ExpenseListVM {
   final String filter;
   final bool isLoading;
   final Function(BuildContext) onRefreshed;
-  final Function onClearEntityFilterPressed;
-  final Function(BuildContext) onViewEntityFilterPressed;
   final List<String> tableColumns;
   final Function(String) onSortColumn;
+  final Function onClearMultielsect;
 }

@@ -27,14 +27,13 @@ class TokenListBuilder extends StatelessWidget {
       converter: TokenListVM.fromStore,
       builder: (context, viewModel) {
         return EntityList(
+            onClearMultiselect: viewModel.onClearMultielsect,
             entityType: EntityType.token,
             presenter: TokenPresenter(),
             state: viewModel.state,
             entityList: viewModel.tokenList,
             tableColumns: viewModel.tableColumns,
             onRefreshed: viewModel.onRefreshed,
-            onClearEntityFilterPressed: viewModel.onClearEntityFilterPressed,
-            onViewEntityFilterPressed: viewModel.onViewEntityFilterPressed,
             onSortColumn: viewModel.onSortColumn,
             itemBuilder: (BuildContext context, index) {
               final state = viewModel.state;
@@ -67,9 +66,7 @@ class TokenListVM {
     @required this.onRefreshed,
     @required this.onEntityAction,
     @required this.tableColumns,
-    @required this.onClearEntityFilterPressed,
-    @required this.onViewEntityFilterPressed,
-    @required this.onSortColumn,
+    @required this.onSortColumn, @required this.onClearMultielsect,
   });
 
   static TokenListVM fromStore(Store<AppState> store) {
@@ -94,11 +91,6 @@ class TokenListVM {
       tokenMap: state.tokenState.map,
       isLoading: state.isLoading,
       filter: state.tokenUIState.listUIState.filter,
-      onClearEntityFilterPressed: () => store.dispatch(ClearEntityFilter()),
-      onViewEntityFilterPressed: (BuildContext context) => viewEntityById(
-          context: context,
-          entityId: state.tokenListState.filterEntityId,
-          entityType: state.tokenListState.filterEntityType),
       onEntityAction: (BuildContext context, List<BaseEntity> tokens,
               EntityAction action) =>
           handleTokenAction(context, tokens, action),
@@ -107,6 +99,7 @@ class TokenListVM {
           state.userCompany.settings.getTableColumns(EntityType.token) ??
               TokenPresenter.getAllTableFields(state.userCompany),
       onSortColumn: (field) => store.dispatch(SortTokens(field)),
+      onClearMultielsect: () => store.dispatch(ClearTokenMultiselect()),
     );
   }
 
@@ -119,8 +112,6 @@ class TokenListVM {
   final bool isLoading;
   final Function(BuildContext) onRefreshed;
   final Function(BuildContext, List<BaseEntity>, EntityAction) onEntityAction;
-  final Function onClearEntityFilterPressed;
-  final Function(BuildContext) onViewEntityFilterPressed;
   final List<String> tableColumns;
   final Function(String) onSortColumn;
-}
+final Function onClearMultielsect;}

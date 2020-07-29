@@ -27,14 +27,13 @@ class WebhookListBuilder extends StatelessWidget {
       converter: WebhookListVM.fromStore,
       builder: (context, viewModel) {
         return EntityList(
+            onClearMultiselect: viewModel.onClearMultielsect,
             entityType: EntityType.webhook,
             presenter: WebhookPresenter(),
             state: viewModel.state,
             entityList: viewModel.webhookList,
             tableColumns: viewModel.tableColumns,
             onRefreshed: viewModel.onRefreshed,
-            onClearEntityFilterPressed: viewModel.onClearEntityFilterPressed,
-            onViewEntityFilterPressed: viewModel.onViewEntityFilterPressed,
             onSortColumn: viewModel.onSortColumn,
             itemBuilder: (BuildContext context, index) {
               final state = viewModel.state;
@@ -67,9 +66,8 @@ class WebhookListVM {
     @required this.onRefreshed,
     @required this.onEntityAction,
     @required this.tableColumns,
-    @required this.onClearEntityFilterPressed,
-    @required this.onViewEntityFilterPressed,
     @required this.onSortColumn,
+    @required this.onClearMultielsect,
   });
 
   static WebhookListVM fromStore(Store<AppState> store) {
@@ -94,11 +92,6 @@ class WebhookListVM {
       webhookMap: state.webhookState.map,
       isLoading: state.isLoading,
       filter: state.webhookUIState.listUIState.filter,
-      onClearEntityFilterPressed: () => store.dispatch(ClearEntityFilter()),
-      onViewEntityFilterPressed: (BuildContext context) => viewEntityById(
-          context: context,
-          entityId: state.webhookListState.filterEntityId,
-          entityType: state.webhookListState.filterEntityType),
       onEntityAction: (BuildContext context, List<BaseEntity> webhooks,
               EntityAction action) =>
           handleWebhookAction(context, webhooks, action),
@@ -107,6 +100,7 @@ class WebhookListVM {
           state.userCompany.settings.getTableColumns(EntityType.webhook) ??
               WebhookPresenter.getAllTableFields(state.userCompany),
       onSortColumn: (field) => store.dispatch(SortWebhooks(field)),
+      onClearMultielsect: () => store.dispatch(ClearWebhookMultiselect()),
     );
   }
 
@@ -119,8 +113,7 @@ class WebhookListVM {
   final bool isLoading;
   final Function(BuildContext) onRefreshed;
   final Function(BuildContext, List<BaseEntity>, EntityAction) onEntityAction;
-  final Function onClearEntityFilterPressed;
-  final Function(BuildContext) onViewEntityFilterPressed;
   final List<String> tableColumns;
   final Function(String) onSortColumn;
+  final Function onClearMultielsect;
 }

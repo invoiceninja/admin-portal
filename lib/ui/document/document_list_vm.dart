@@ -26,14 +26,13 @@ class DocumentListBuilder extends StatelessWidget {
       converter: DocumentListVM.fromStore,
       builder: (context, viewModel) {
         return EntityList(
+            onClearMultiselect: viewModel.onClearMultielsect,
             entityType: EntityType.document,
             state: viewModel.state,
             entityList: viewModel.documentList,
             //presenter: DocumentPresenter(),
             //tableColumns: viewModel.tableColumns,
             onRefreshed: viewModel.onRefreshed,
-            onClearEntityFilterPressed: viewModel.onClearEntityFilterPressed,
-            onViewEntityFilterPressed: viewModel.onViewEntityFilterPressed,
             onSortColumn: viewModel.onSortColumn,
             itemBuilder: (BuildContext context, index) {
               final state = viewModel.state;
@@ -64,9 +63,8 @@ class DocumentListVM {
     @required this.listState,
     @required this.onRefreshed,
     @required this.onEntityAction,
-    @required this.onClearEntityFilterPressed,
-    @required this.onViewEntityFilterPressed,
     @required this.onSortColumn,
+    @required this.onClearMultielsect,
   });
 
   static DocumentListVM fromStore(Store<AppState> store) {
@@ -90,16 +88,12 @@ class DocumentListVM {
       documentMap: state.documentState.map,
       isLoading: state.isLoading,
       filter: state.documentUIState.listUIState.filter,
-      onClearEntityFilterPressed: () => store.dispatch(FilterByEntity()),
-      onViewEntityFilterPressed: (BuildContext context) => viewEntityById(
-          context: context,
-          entityId: state.documentListState.filterEntityId,
-          entityType: state.documentListState.filterEntityType),
       onEntityAction: (BuildContext context, List<BaseEntity> documents,
               EntityAction action) =>
           handleDocumentAction(context, documents, action),
       onRefreshed: (context) => _handleRefresh(context),
       onSortColumn: (field) => store.dispatch(SortDocuments(field)),
+      onClearMultielsect: () => store.dispatch(ClearDocumentMultiselect()),
     );
   }
 
@@ -112,7 +106,6 @@ class DocumentListVM {
   final Function(BuildContext) onRefreshed;
   final Function(BuildContext, List<DocumentEntity>, EntityAction)
       onEntityAction;
-  final Function onClearEntityFilterPressed;
-  final Function(BuildContext) onViewEntityFilterPressed;
   final Function(String) onSortColumn;
+  final Function onClearMultielsect;
 }

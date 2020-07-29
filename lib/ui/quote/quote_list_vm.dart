@@ -28,14 +28,13 @@ class QuoteListBuilder extends StatelessWidget {
       converter: QuoteListVM.fromStore,
       builder: (context, viewModel) {
         return EntityList(
+            onClearMultiselect: viewModel.onClearMultiselect,
             entityType: EntityType.quote,
             presenter: QuotePresenter(),
             state: viewModel.state,
             entityList: viewModel.invoiceList,
             tableColumns: viewModel.tableColumns,
             onRefreshed: viewModel.onRefreshed,
-            onClearEntityFilterPressed: viewModel.onClearEntityFilterPressed,
-            onViewEntityFilterPressed: viewModel.onViewEntityFilterPressed,
             onSortColumn: viewModel.onSortColumn,
             itemBuilder: (BuildContext context, index) {
               final invoiceId = viewModel.invoiceList[index];
@@ -61,12 +60,11 @@ class QuoteListVM extends EntityListVM {
     bool isLoading,
     bool isLoaded,
     Function(BuildContext) onRefreshed,
-    Function onClearEntityFilterPressed,
-    Function(BuildContext) onViewEntityFilterPressed,
     Function(BuildContext, List<InvoiceEntity>, EntityAction) onEntityAction,
     List<String> tableColumns,
     EntityType entityType,
     Function(String) onSortColumn,
+    Function onClearMultiselect,
   }) : super(
           state: state,
           invoiceList: invoiceList,
@@ -76,11 +74,10 @@ class QuoteListVM extends EntityListVM {
           isLoading: isLoading,
           isLoaded: isLoaded,
           onRefreshed: onRefreshed,
-          onClearEntityFilterPressed: onClearEntityFilterPressed,
-          onViewEntityFilterPressed: onViewEntityFilterPressed,
           tableColumns: tableColumns,
           entityType: entityType,
           onSortColumn: onSortColumn,
+          onClearMultiselect: onClearMultiselect,
         );
 
   static QuoteListVM fromStore(Store<AppState> store) {
@@ -110,11 +107,6 @@ class QuoteListVM extends EntityListVM {
       isLoading: state.isLoading,
       filter: state.quoteListState.filter,
       onRefreshed: (context) => _handleRefresh(context),
-      onClearEntityFilterPressed: () => store.dispatch(ClearEntityFilter()),
-      onViewEntityFilterPressed: (BuildContext context) => viewEntityById(
-          context: context,
-          entityId: state.quoteListState.filterEntityId,
-          entityType: state.quoteListState.filterEntityType),
       onEntityAction: (BuildContext context, List<BaseEntity> quotes,
               EntityAction action) =>
           handleQuoteAction(context, quotes, action),

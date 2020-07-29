@@ -45,13 +45,7 @@ class ListScaffold extends StatelessWidget {
     final isSettings = entityType.isSetting;
 
     Widget leading = SizedBox();
-    if (showCheckbox && state.prefState.isModuleList) {
-      leading = Checkbox(
-          materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
-          onChanged: onCheckboxChanged,
-          activeColor: Theme.of(context).accentColor,
-          value: isChecked);
-    } else if (isSettings) {
+    if (isSettings) {
       leading = isMobile(context)
           ? IconButton(
               icon: Icon(Icons.arrow_back),
@@ -104,7 +98,7 @@ class ListScaffold extends StatelessWidget {
             leading: leading,
             title: appBarTitle,
             actions: [
-              ...appBarActions,
+              ...appBarActions ?? <Widget>[],
               if (!showCheckbox &&
                   !isSettings &&
                   (isMobile(context) || !state.prefState.isHistoryVisible))
