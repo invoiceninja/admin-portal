@@ -29,26 +29,10 @@ class PaymentTermScreen extends StatelessWidget {
     final state = store.state;
     final userCompany = state.userCompany;
     final localization = AppLocalization.of(context);
-    final listUIState = state.uiState.paymentTermUIState.listUIState;
-    final isInMultiselect = listUIState.isInMultiselect();
 
     return ListScaffold(
       entityType: EntityType.paymentTerm,
-      isChecked: isInMultiselect &&
-          listUIState.selectedIds.length == viewModel.paymentTermList.length,
-      showCheckbox: isInMultiselect,
       onHamburgerLongPress: () => store.dispatch(StartPaymentTermMultiselect()),
-      onCheckboxChanged: (value) {
-        final paymentTerms = viewModel.paymentTermList
-            .map<PaymentTermEntity>(
-                (paymentTermId) => viewModel.paymentTermMap[paymentTermId])
-            .where((paymentTerm) =>
-                value != listUIState.isSelected(paymentTerm.id))
-            .toList();
-
-        handlePaymentTermAction(
-            context, paymentTerms, EntityAction.toggleMultiselect);
-      },
       appBarTitle: Text(localization.paymentTerms),
       body: PaymentTermListBuilder(),
       bottomNavigationBar: AppBottomBar(

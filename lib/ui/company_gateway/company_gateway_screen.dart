@@ -33,26 +33,11 @@ class CompanyGatewayScreen extends StatelessWidget {
     final state = store.state;
     final localization = AppLocalization.of(context);
     final listUIState = state.uiState.companyGatewayUIState.listUIState;
-    final isInMultiselect = listUIState.isInMultiselect();
 
     return ListScaffold(
       entityType: EntityType.companyGateway,
-      isChecked: isInMultiselect &&
-          listUIState.selectedIds.length == viewModel.companyGatewayList.length,
-      showCheckbox: isInMultiselect,
       onHamburgerLongPress: () =>
           store.dispatch(StartCompanyGatewayMultiselect()),
-      onCheckboxChanged: (value) {
-        final companyGateways = viewModel.companyGatewayList
-            .map<CompanyGatewayEntity>((companyGatewayId) =>
-                viewModel.companyGatewayMap[companyGatewayId])
-            .where((companyGateway) =>
-                value != listUIState.isSelected(companyGateway.id))
-            .toList();
-
-        handleCompanyGatewayAction(
-            context, companyGateways, EntityAction.toggleMultiselect);
-      },
       appBarTitle: Text(localization.companyGateways),
       appBarActions: [
         if (viewModel.isInMultiselect)

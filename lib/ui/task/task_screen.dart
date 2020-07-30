@@ -30,23 +30,10 @@ class TaskScreen extends StatelessWidget {
     final company = store.state.company;
     final userCompany = store.state.userCompany;
     final localization = AppLocalization.of(context);
-    final listUIState = state.uiState.taskUIState.listUIState;
-    final isInMultiselect = listUIState.isInMultiselect();
 
     return ListScaffold(
       entityType: EntityType.task,
-      isChecked: isInMultiselect &&
-          listUIState.selectedIds.length == viewModel.taskList.length,
-      showCheckbox: isInMultiselect,
       onHamburgerLongPress: () => store.dispatch(StartTaskMultiselect()),
-      onCheckboxChanged: (value) {
-        final tasks = viewModel.taskList
-            .map<TaskEntity>((taskId) => viewModel.taskMap[taskId])
-            .where((task) => value != listUIState.isSelected(task.id))
-            .toList();
-
-        handleTaskAction(context, tasks, EntityAction.toggleMultiselect);
-      },
       appBarTitle: ListFilter(
         entityType: EntityType.task,
         entityIds: viewModel.taskList,

@@ -31,23 +31,10 @@ class ExpenseScreen extends StatelessWidget {
     final company = state.company;
     final userCompany = state.userCompany;
     final localization = AppLocalization.of(context);
-    final listUIState = state.uiState.expenseUIState.listUIState;
-    final isInMultiselect = listUIState.isInMultiselect();
 
     return ListScaffold(
       entityType: EntityType.expense,
-      isChecked: isInMultiselect &&
-          listUIState.selectedIds.length == viewModel.expenseList.length,
-      showCheckbox: isInMultiselect,
       onHamburgerLongPress: () => store.dispatch(StartExpenseMultiselect()),
-      onCheckboxChanged: (value) {
-        final expenses = viewModel.expenseList
-            .map<ExpenseEntity>((expenseId) => viewModel.expenseMap[expenseId])
-            .where((expense) => value != listUIState.isSelected(expense.id))
-            .toList();
-
-        handleExpenseAction(context, expenses, EntityAction.toggleMultiselect);
-      },
       appBarTitle: ListFilter(
         entityType: EntityType.expense,
         entityIds: viewModel.expenseList,

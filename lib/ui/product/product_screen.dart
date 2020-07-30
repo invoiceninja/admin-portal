@@ -29,22 +29,10 @@ class ProductScreen extends StatelessWidget {
     final company = state.company;
     final userCompany = state.userCompany;
     final localization = AppLocalization.of(context);
-    final listUIState = state.uiState.productUIState.listUIState;
-    final isInMultiselect = listUIState.isInMultiselect();
 
     return ListScaffold(
       entityType: EntityType.product,
-      isChecked: isInMultiselect &&
-          listUIState.selectedIds.length == viewModel.productList.length,
-      showCheckbox: isInMultiselect,
       onHamburgerLongPress: () => store.dispatch(StartProductMultiselect()),
-      onCheckboxChanged: (value) {
-        final products = viewModel.productList
-            .map<ProductEntity>((productId) => viewModel.productMap[productId])
-            .where((product) => value != listUIState.isSelected(product.id))
-            .toList();
-        handleProductAction(context, products, EntityAction.toggleMultiselect);
-      },
       appBarTitle: ListFilter(
         entityType: EntityType.product,
         entityIds: viewModel.productList,

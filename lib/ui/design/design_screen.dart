@@ -28,23 +28,10 @@ class DesignScreen extends StatelessWidget {
     final state = store.state;
     final userCompany = state.userCompany;
     final localization = AppLocalization.of(context);
-    final listUIState = state.uiState.designUIState.listUIState;
-    final isInMultiselect = listUIState.isInMultiselect();
 
     return ListScaffold(
       entityType: EntityType.design,
-      isChecked: isInMultiselect &&
-          listUIState.selectedIds.length == viewModel.designList.length,
-      showCheckbox: isInMultiselect,
       onHamburgerLongPress: () => store.dispatch(StartDesignMultiselect()),
-      onCheckboxChanged: (value) {
-        final designs = viewModel.designList
-            .map<DesignEntity>((designId) => viewModel.designMap[designId])
-            .where((design) => value != listUIState.isSelected(design.id))
-            .toList();
-
-        handleDesignAction(context, designs, EntityAction.toggleMultiselect);
-      },
       appBarTitle: ListFilter(
         entityType: EntityType.design,
         entityIds: viewModel.designList,

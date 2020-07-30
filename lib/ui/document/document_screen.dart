@@ -28,25 +28,10 @@ class DocumentScreen extends StatelessWidget {
     final state = store.state;
     final userCompany = state.userCompany;
     final localization = AppLocalization.of(context);
-    final listUIState = state.uiState.documentUIState.listUIState;
-    final isInMultiselect = listUIState.isInMultiselect();
 
     return ListScaffold(
       entityType: EntityType.document,
-      isChecked: isInMultiselect &&
-          listUIState.selectedIds.length == viewModel.documentList.length,
-      showCheckbox: isInMultiselect,
       onHamburgerLongPress: () => store.dispatch(StartDocumentMultiselect()),
-      onCheckboxChanged: (value) {
-        final documents = viewModel.documentList
-            .map<DocumentEntity>(
-                (documentId) => viewModel.documentMap[documentId])
-            .where((document) => value != listUIState.isSelected(document.id))
-            .toList();
-
-        handleDocumentAction(
-            context, documents, EntityAction.toggleMultiselect);
-      },
       appBarTitle: ListFilter(
         entityType: EntityType.document,
         entityIds: viewModel.documentList,

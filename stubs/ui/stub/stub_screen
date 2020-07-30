@@ -34,18 +34,7 @@ class StubScreen extends StatelessWidget {
 
     return ListScaffold(
       entityType: EntityType.stub,
-      isChecked: isInMultiselect &&
-          listUIState.selectedIds.length == viewModel.stubList.length,
-      showCheckbox: isInMultiselect,
       onHamburgerLongPress: () => store.dispatch(StartStubMultiselect()),
-      onCheckboxChanged: (value) {
-        final stubs = viewModel.stubList
-            .map<StubEntity>((stubId) => viewModel.stubMap[stubId])
-            .where((stub) => value != listUIState.isSelected(stub.id))
-            .toList();
-
-        handleStubAction(context, stubs, EntityAction.toggleMultiselect);
-      },
       appBarTitle: ListFilter(
         placeholder: localization.searchStubs,
         entityIds: viewModel.stubList,

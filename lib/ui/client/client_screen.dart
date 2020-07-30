@@ -30,23 +30,10 @@ class ClientScreen extends StatelessWidget {
     final company = state.company;
     final userCompany = state.userCompany;
     final localization = AppLocalization.of(context);
-    final listUIState = state.uiState.clientUIState.listUIState;
-    final isInMultiselect = listUIState.isInMultiselect();
 
     return ListScaffold(
       entityType: EntityType.client,
-      isChecked: isInMultiselect &&
-          listUIState.selectedIds.length == viewModel.clientList.length,
-      showCheckbox: isInMultiselect,
       onHamburgerLongPress: () => store.dispatch(StartClientMultiselect()),
-      onCheckboxChanged: (value) {
-        final clients = viewModel.clientList
-            .map<ClientEntity>((clientId) => viewModel.clientMap[clientId])
-            .where((client) => value != listUIState.isSelected(client.id))
-            .toList();
-
-        handleClientAction(context, clients, EntityAction.toggleMultiselect);
-      },
       appBarTitle: ListFilter(
         entityType: EntityType.client,
         entityIds: viewModel.clientList,

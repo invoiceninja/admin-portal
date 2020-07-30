@@ -30,23 +30,10 @@ class CreditScreen extends StatelessWidget {
     final company = state.company;
     final userCompany = state.userCompany;
     final localization = AppLocalization.of(context);
-    final listUIState = state.uiState.creditUIState.listUIState;
-    final isInMultiselect = listUIState.isInMultiselect();
 
     return ListScaffold(
       entityType: EntityType.credit,
-      isChecked: isInMultiselect &&
-          listUIState.selectedIds.length == viewModel.creditList.length,
-      showCheckbox: isInMultiselect,
       onHamburgerLongPress: () => store.dispatch(StartCreditMultiselect()),
-      onCheckboxChanged: (value) {
-        final credits = viewModel.creditList
-            .map<InvoiceEntity>((creditId) => viewModel.creditMap[creditId])
-            .where((credit) => value != listUIState.isSelected(credit.id))
-            .toList();
-
-        handleCreditAction(context, credits, EntityAction.toggleMultiselect);
-      },
       appBarTitle: ListFilter(
         entityType: EntityType.credit,
         entityIds: viewModel.creditList,

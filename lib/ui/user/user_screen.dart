@@ -29,26 +29,10 @@ class UserScreen extends StatelessWidget {
     final state = store.state;
     final userCompany = state.userCompany;
     final localization = AppLocalization.of(context);
-    final listUIState = state.uiState.userUIState.listUIState;
-    final isInMultiselect = listUIState.isInMultiselect();
 
     return ListScaffold(
       entityType: EntityType.user,
-      isChecked: isInMultiselect &&
-          listUIState.selectedIds.length == viewModel.userList.length,
-      showCheckbox: isInMultiselect,
       onHamburgerLongPress: () => store.dispatch(StartUserMultiselect()),
-      onCheckboxChanged: (value) {
-        /*
-        final users = viewModel.userList
-            .map<UserEntity>((userId) => viewModel.userMap[userId])
-            .where((user) => value != listUIState.isSelected(user))
-            .toList();
-
-        viewModel.onEntityAction(
-            context, users, EntityAction.toggleMultiselect);            
-         */
-      },
       appBarTitle: ListFilter(
         entityType: EntityType.user,
         entityIds: viewModel.userList,

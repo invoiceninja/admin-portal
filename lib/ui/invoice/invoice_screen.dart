@@ -31,23 +31,10 @@ class InvoiceScreen extends StatelessWidget {
     final company = state.company;
     final userCompany = store.state.userCompany;
     final localization = AppLocalization.of(context);
-    final listUIState = store.state.uiState.invoiceUIState.listUIState;
-    final isInMultiselect = listUIState.isInMultiselect();
 
     return ListScaffold(
       entityType: EntityType.invoice,
-      isChecked: isInMultiselect &&
-          listUIState.selectedIds.length == viewModel.invoiceList.length,
-      showCheckbox: isInMultiselect,
       onHamburgerLongPress: () => store.dispatch(StartInvoiceMultiselect()),
-      onCheckboxChanged: (value) {
-        final invoices = viewModel.invoiceList
-            .map<InvoiceEntity>((invoiceId) => viewModel.invoiceMap[invoiceId])
-            .where((invoice) => value != listUIState.isSelected(invoice.id))
-            .toList();
-
-        handleInvoiceAction(context, invoices, EntityAction.toggleMultiselect);
-      },
       appBarTitle: ListFilter(
         entityType: EntityType.invoice,
         entityIds: viewModel.invoiceList,

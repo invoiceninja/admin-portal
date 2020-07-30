@@ -29,23 +29,10 @@ class ProjectScreen extends StatelessWidget {
     final company = store.state.company;
     final userCompany = store.state.userCompany;
     final localization = AppLocalization.of(context);
-    final listUIState = state.uiState.projectUIState.listUIState;
-    final isInMultiselect = listUIState.isInMultiselect();
 
     return ListScaffold(
       entityType: EntityType.project,
-      isChecked: isInMultiselect &&
-          listUIState.selectedIds.length == viewModel.projectList.length,
-      showCheckbox: isInMultiselect,
       onHamburgerLongPress: () => store.dispatch(StartProjectMultiselect()),
-      onCheckboxChanged: (value) {
-        final projects = viewModel.projectList
-            .map<ProjectEntity>((projectId) => viewModel.projectMap[projectId])
-            .where((project) => value != listUIState.isSelected(project.id))
-            .toList();
-
-        handleProjectAction(context, projects, EntityAction.toggleMultiselect);
-      },
       appBarTitle: ListFilter(
         entityType: EntityType.project,
         entityIds: viewModel.projectList,

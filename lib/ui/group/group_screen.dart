@@ -30,23 +30,10 @@ class GroupSettingsScreen extends StatelessWidget {
     final state = store.state;
     final company = state.company;
     final localization = AppLocalization.of(context);
-    final listUIState = state.uiState.groupUIState.listUIState;
-    final isInMultiselect = listUIState.isInMultiselect();
 
     return ListScaffold(
       entityType: EntityType.group,
-      isChecked: isInMultiselect &&
-          listUIState.selectedIds.length == viewModel.groupList.length,
-      showCheckbox: isInMultiselect,
       onHamburgerLongPress: () => store.dispatch(StartGroupMultiselect()),
-      onCheckboxChanged: (value) {
-        final groups = viewModel.groupList
-            .map<GroupEntity>((groupId) => viewModel.groupMap[groupId])
-            .where((group) => value != listUIState.isSelected(group.id))
-            .toList();
-
-        handleGroupAction(context, groups, EntityAction.toggleMultiselect);
-      },
       appBarTitle: ListFilter(
         entityType: EntityType.group,
         entityIds: viewModel.groupList,

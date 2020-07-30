@@ -31,23 +31,10 @@ class TokenScreen extends StatelessWidget {
     //final company = state.company;
     final userCompany = state.userCompany;
     final localization = AppLocalization.of(context);
-    final listUIState = state.uiState.tokenUIState.listUIState;
-    final isInMultiselect = listUIState.isInMultiselect();
 
     return ListScaffold(
       entityType: EntityType.token,
-      isChecked: isInMultiselect &&
-          listUIState.selectedIds.length == viewModel.tokenList.length,
-      showCheckbox: isInMultiselect,
       onHamburgerLongPress: () => store.dispatch(StartTokenMultiselect()),
-      onCheckboxChanged: (value) {
-        final tokens = viewModel.tokenList
-            .map<TokenEntity>((tokenId) => viewModel.tokenMap[tokenId])
-            .where((token) => value != listUIState.isSelected(token.id))
-            .toList();
-
-        handleTokenAction(context, tokens, EntityAction.toggleMultiselect);
-      },
       appBarTitle: ListFilter(
         entityType: EntityType.token,
         entityIds: viewModel.tokenList,

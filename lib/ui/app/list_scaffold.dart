@@ -20,10 +20,7 @@ class ListScaffold extends StatelessWidget {
     this.appBarActions,
     this.bottomNavigationBar,
     this.floatingActionButton,
-    this.isChecked,
-    this.onCheckboxChanged,
     this.onHamburgerLongPress,
-    this.showCheckbox = false,
   });
 
   final EntityType entityType;
@@ -32,10 +29,7 @@ class ListScaffold extends StatelessWidget {
   final FloatingActionButton floatingActionButton;
   final Widget appBarTitle;
   final List<Widget> appBarActions;
-  final bool showCheckbox;
-  final Function(bool) onCheckboxChanged;
   final Function() onHamburgerLongPress;
-  final bool isChecked;
 
   @override
   Widget build(BuildContext context) {
@@ -99,8 +93,7 @@ class ListScaffold extends StatelessWidget {
             title: appBarTitle,
             actions: [
               ...appBarActions ?? <Widget>[],
-              if (!showCheckbox &&
-                  !isSettings &&
+              if (!isSettings &&
                   (isMobile(context) || !state.prefState.isHistoryVisible))
                 Builder(
                   builder: (context) => IconButton(

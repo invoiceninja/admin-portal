@@ -29,23 +29,10 @@ class VendorScreen extends StatelessWidget {
     final company = state.company;
     final userCompany = store.state.userCompany;
     final localization = AppLocalization.of(context);
-    final listUIState = state.uiState.vendorUIState.listUIState;
-    final isInMultiselect = listUIState.isInMultiselect();
 
     return ListScaffold(
       entityType: EntityType.vendor,
-      isChecked: isInMultiselect &&
-          listUIState.selectedIds.length == viewModel.vendorList.length,
-      showCheckbox: isInMultiselect,
       onHamburgerLongPress: () => store.dispatch(StartVendorMultiselect()),
-      onCheckboxChanged: (value) {
-        final vendors = viewModel.vendorList
-            .map<VendorEntity>((vendorId) => viewModel.vendorMap[vendorId])
-            .where((vendor) => value != listUIState.isSelected(vendor.id))
-            .toList();
-
-        handleVendorAction(context, vendors, EntityAction.toggleMultiselect);
-      },
       appBarTitle: ListFilter(
         entityType: EntityType.vendor,
         entityIds: viewModel.vendorList,

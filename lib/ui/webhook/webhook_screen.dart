@@ -30,23 +30,10 @@ class WebhookScreen extends StatelessWidget {
     final state = store.state;
     final userCompany = state.userCompany;
     final localization = AppLocalization.of(context);
-    final listUIState = state.uiState.webhookUIState.listUIState;
-    final isInMultiselect = listUIState.isInMultiselect();
 
     return ListScaffold(
       entityType: EntityType.webhook,
-      isChecked: isInMultiselect &&
-          listUIState.selectedIds.length == viewModel.webhookList.length,
-      showCheckbox: isInMultiselect,
       onHamburgerLongPress: () => store.dispatch(StartWebhookMultiselect()),
-      onCheckboxChanged: (value) {
-        final webhooks = viewModel.webhookList
-            .map<WebhookEntity>((webhookId) => viewModel.webhookMap[webhookId])
-            .where((webhook) => value != listUIState.isSelected(webhook.id))
-            .toList();
-
-        handleWebhookAction(context, webhooks, EntityAction.toggleMultiselect);
-      },
       appBarTitle: ListFilter(
         entityType: EntityType.webhook,
         entityIds: viewModel.webhookList,

@@ -27,23 +27,10 @@ class PaymentScreen extends StatelessWidget {
     final company = state.company;
     final userCompany = state.userCompany;
     final localization = AppLocalization.of(context);
-    final listUIState = state.uiState.paymentUIState.listUIState;
-    final isInMultiselect = listUIState.isInMultiselect();
 
     return ListScaffold(
       entityType: EntityType.payment,
-      isChecked: isInMultiselect &&
-          listUIState.selectedIds.length == viewModel.paymentList.length,
-      showCheckbox: isInMultiselect,
       onHamburgerLongPress: () => store.dispatch(StartPaymentMultiselect()),
-      onCheckboxChanged: (value) {
-        final payments = viewModel.paymentList
-            .map<PaymentEntity>((paymentId) => viewModel.paymentMap[paymentId])
-            .where((payment) => value != listUIState.isSelected(payment.id))
-            .toList();
-
-        handlePaymentAction(context, payments, EntityAction.toggleMultiselect);
-      },
       appBarTitle: ListFilter(
         entityType: EntityType.payment,
         entityIds: viewModel.paymentList,

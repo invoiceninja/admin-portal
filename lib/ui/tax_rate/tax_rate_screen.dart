@@ -27,23 +27,10 @@ class TaxRateSettingsScreen extends StatelessWidget {
     final store = StoreProvider.of<AppState>(context);
     final state = store.state;
     final localization = AppLocalization.of(context);
-    final listUIState = state.uiState.taxRateUIState.listUIState;
-    final isInMultiselect = listUIState.isInMultiselect();
 
     return ListScaffold(
       entityType: EntityType.taxRate,
-      isChecked: isInMultiselect &&
-          listUIState.selectedIds.length == viewModel.taxRateList.length,
-      showCheckbox: isInMultiselect,
       onHamburgerLongPress: () => store.dispatch(StartTaxRateMultiselect()),
-      onCheckboxChanged: (value) {
-        final taxRates = viewModel.taxRateList
-            .map<TaxRateEntity>((taxRateId) => viewModel.taxRateMap[taxRateId])
-            .where((taxRate) => value != listUIState.isSelected(taxRate.id))
-            .toList();
-
-        handleTaxRateAction(context, taxRates, EntityAction.toggleMultiselect);
-      },
       appBarTitle: ListFilter(
         entityType: EntityType.taxRate,
         entityIds: viewModel.taxRateList,
