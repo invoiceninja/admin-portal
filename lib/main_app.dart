@@ -48,6 +48,7 @@ import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:invoiceninja_flutter/utils/platforms.dart';
 import 'package:local_auth/local_auth.dart';
 import 'package:redux/redux.dart';
+
 // STARTER: import - do not remove comment
 import 'package:invoiceninja_flutter/ui/webhook/webhook_screen.dart';
 import 'package:invoiceninja_flutter/ui/webhook/edit/webhook_edit_vm.dart';
@@ -134,8 +135,6 @@ class InvoiceNinjaAppState extends State<InvoiceNinjaApp> {
 
   @override
   Widget build(BuildContext context) {
-
-
     return StoreProvider<AppState>(
       store: widget.store,
       child: AppBuilder(builder: (context) {
@@ -149,8 +148,8 @@ class InvoiceNinjaAppState extends State<InvoiceNinjaApp> {
         });
         Intl.defaultLocale = localeSelector(state);
 
-
-        print('## ACCENT COLOR: ${state.accentColor}, hasCOLOR: $hasAccentColor');
+        print(
+            '## ACCENT COLOR: ${state.accentColor}, hasCOLOR: $hasAccentColor');
 
         return MaterialApp(
           supportedLocales: kLanguages
@@ -186,7 +185,7 @@ class InvoiceNinjaAppState extends State<InvoiceNinjaApp> {
                   pageTransitionsTheme: pageTransitionsTheme,
                   accentColor: accentColor,
                   textSelectionColor: accentColor,
-                  //primaryColor: Colors.white,
+                  //primaryColor: hasAccentColor ? Colors.white : null,
                   primaryColorLight: const Color(0xFF5dabf4),
                   primaryColorDark: const Color(0xFF0D5D91),
                   buttonColor: const Color(0xFF0D5D91),
@@ -202,8 +201,12 @@ class InvoiceNinjaAppState extends State<InvoiceNinjaApp> {
                         ? Colors.white.withOpacity(.65)
                         : Colors.black.withOpacity(.65),
                   ),
-                  buttonTheme:
-                      ButtonThemeData(textTheme: ButtonTextTheme.accent),
+                  buttonTheme: ButtonThemeData(
+                    textTheme: ButtonTextTheme.primary,
+                    colorScheme: ColorScheme.light(
+                      primary: hasAccentColor ? Colors.white : Colors.black,
+                    ),
+                  ),
                   iconTheme: IconThemeData(
                     color: hasAccentColor ? Colors.white : Colors.blue,
                   ),
