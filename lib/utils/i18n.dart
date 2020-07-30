@@ -15,6 +15,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
   static final Map<String, Map<String, String>> _localizedValues = {
     'en': {
       // STARTER: lang key - do not remove comment
+      'count_records_selected': ':count records selected',
       'client_created': 'Client Created',
       'online_payment_email': 'Online Payment Email',
       'manual_payment_email': 'Manual Payment Email',
@@ -38982,6 +38983,10 @@ mixin LocalizationsProvider on LocaleCodeAware {
 
   String get clientCreated =>
       _localizedValues[localeCode]['client_created'] ?? '';
+
+  String get countRecordsSelected =>
+      _localizedValues[localeCode]['count_records_selected'] ?? '';
+
 
 
 

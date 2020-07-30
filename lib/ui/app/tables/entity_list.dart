@@ -257,16 +257,23 @@ class _EntityListState extends State<EntityList> {
                         value: entityList.length ==
                             (listUIState.selectedIds ?? <String>[]).length,
                       ),
+                      SizedBox(width: 16),
                       Expanded(
-                        child: SizedBox(),
+                        child: Text(localization.countRecordsSelected.replaceFirst(
+                            ':count',
+                            '${(listUIState.selectedIds ?? <String>[]).length}')),
                       ),
                       SaveCancelButtons(
                         saveLabel: localization.done,
                         onSavePressed: (context) async {
                           final entities = listUIState.selectedIds
-                              .map<ClientEntity>(
+                              .map<BaseEntity>(
                                   (entityId) => entityMap[entityId])
                               .toList();
+
+                          if (entities.isEmpty) {
+                            return;
+                          }
 
                           await showEntityActionsDialog(
                             entities: entities,
