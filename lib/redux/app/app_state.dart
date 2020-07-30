@@ -150,8 +150,10 @@ abstract class AppState implements Built<AppState, AppStateBuilder> {
   Credentials get credentials =>
       Credentials(token: userCompanyState.token.token, url: authState.url);
 
+  bool get hasAccentColor => userCompany?.settings?.accentColor != null;
+
   String get accentColor =>
-      user?.userCompany?.settings?.accentColor ?? kDefaultAccentColor;
+      userCompany?.settings?.accentColor ?? kDefaultAccentColor;
 
   String get appVersion =>
       '${account.currentVersion}-${kClientVersion.split('.').last}';

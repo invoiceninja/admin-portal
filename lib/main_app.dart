@@ -137,11 +137,14 @@ class InvoiceNinjaAppState extends State<InvoiceNinjaApp> {
 
   @override
   Widget build(BuildContext context) {
+
+
     return StoreProvider<AppState>(
       store: widget.store,
       child: AppBuilder(builder: (context) {
         final store = widget.store;
         final state = store.state;
+        final hasAccentColor = state.hasAccentColor;
         final accentColor = convertHexStringToColor(state.accentColor) ??
             Colors.lightBlueAccent;
         final fontFamily = kIsWeb ? 'Roboto' : null;
@@ -149,6 +152,9 @@ class InvoiceNinjaAppState extends State<InvoiceNinjaApp> {
           TargetPlatform.android: ZoomPageTransitionsBuilder(),
         });
         Intl.defaultLocale = localeSelector(state);
+
+
+        print('## ACCENT COLOR: ${state.accentColor}, hasCOLOR: $hasAccentColor');
 
         return MaterialApp(
           supportedLocales: kLanguages
@@ -195,22 +201,24 @@ class InvoiceNinjaAppState extends State<InvoiceNinjaApp> {
                   cardColor: Colors.white,
                   bottomAppBarColor: Colors.white,
                   tabBarTheme: TabBarTheme(
-                    labelColor: Colors.black,
-                    unselectedLabelColor: Colors.black.withOpacity(.65),
+                    labelColor: hasAccentColor ? Colors.white : Colors.black,
+                    unselectedLabelColor: hasAccentColor
+                        ? Colors.white.withOpacity(.65)
+                        : Colors.black.withOpacity(.65),
                   ),
                   buttonTheme:
                       ButtonThemeData(textTheme: ButtonTextTheme.accent),
                   iconTheme: IconThemeData(
-                    color: Colors.blue,
+                    color: hasAccentColor ? Colors.white : Colors.blue,
                   ),
                   appBarTheme: AppBarTheme(
-                    color: Colors.white,
+                    color: hasAccentColor ? accentColor : Colors.white,
                     iconTheme: IconThemeData(
-                      color: Colors.blue,
+                      color: hasAccentColor ? Colors.white : Colors.blue,
                     ),
                     textTheme: TextTheme(
                       headline6: TextStyle(
-                        color: Colors.black,
+                        color: hasAccentColor ? Colors.white : Colors.black,
                       ),
                     ),
                   ),
