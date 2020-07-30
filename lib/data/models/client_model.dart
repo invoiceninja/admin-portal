@@ -56,6 +56,7 @@ class ClientFields {
   static const String address2 = 'address2';
   static const String country = 'country';
   static const String balance = 'balance';
+  static const String creditBalance = 'credit_balance';
   static const String vatNumber = 'vat_number';
   static const String idNumber = 'id_number';
   static const String paidToDate = 'paid_to_date';
@@ -362,6 +363,9 @@ abstract class ClientEntity extends Object
         break;
       case ClientFields.balance:
         response = clientA.balance.compareTo(clientB.balance);
+        break;
+      case ClientFields.creditBalance:
+        response = clientA.creditBalance.compareTo(clientB.creditBalance);
         break;
       case ClientFields.paidToDate:
         response = clientA.paidToDate.compareTo(clientB.paidToDate);
