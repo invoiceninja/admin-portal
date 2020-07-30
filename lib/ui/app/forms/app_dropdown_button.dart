@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
@@ -37,7 +38,7 @@ class AppDropdownButton<T> extends StatelessWidget {
     final bool isEmpty = (checkedValue == null || checkedValue == '') &&
         (!state.settingsUIState.isFiltered || !showUseDefault);
 
-    final dropDownButton = DropdownButtonHideUnderline(
+    Widget dropDownButton = DropdownButtonHideUnderline(
       child: DropdownButton<T>(
         value: checkedValue,
         isExpanded: true,
@@ -57,15 +58,15 @@ class AppDropdownButton<T> extends StatelessWidget {
     );
 
     if (labelText != null) {
-      return InputDecorator(
+      dropDownButton = InputDecorator(
           decoration: InputDecoration(
             labelText: labelText,
             contentPadding: EdgeInsets.only(right: 12, top: 12, bottom: 12),
           ),
           isEmpty: isEmpty,
           child: dropDownButton);
-    } else {
-      return dropDownButton;
     }
+
+    return dropDownButton;
   }
 }
