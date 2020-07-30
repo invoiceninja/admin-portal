@@ -154,9 +154,11 @@ class EntitiesListTile extends StatelessWidget {
             contentPadding: const EdgeInsets.symmetric(horizontal: 16),
             title: Text(title),
             subtitle: Text(subtitle ?? ''),
-            leading: IconButton(
-              icon: Icon(getEntityIcon(entityType), size: 18.0),
-              onPressed: onTap,
+            leading: IgnorePointer(
+              child: IconButton(
+                icon: Icon(getEntityIcon(entityType), size: 18.0),
+                onPressed: onTap,
+              ),
             ),
             trailing: isFilter
                 ? IconButton(
