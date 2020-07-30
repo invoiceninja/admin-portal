@@ -11,7 +11,6 @@ import 'package:invoiceninja_flutter/ui/app/forms/date_range_picker.dart';
 import 'package:invoiceninja_flutter/ui/app/loading_indicator.dart';
 import 'package:invoiceninja_flutter/ui/dashboard/dashboard_chart.dart';
 import 'package:invoiceninja_flutter/ui/dashboard/dashboard_screen_vm.dart';
-import 'package:invoiceninja_flutter/utils/colors.dart';
 import 'package:invoiceninja_flutter/utils/formatting.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 
@@ -416,8 +415,7 @@ class __DashboardPanelState extends State<_DashboardPanel> {
           domainFn: (ChartMoneyData chartData, _) => chartData.date,
           measureFn: (ChartMoneyData chartData, _) => chartData.amount,
           colorFn: (ChartMoneyData chartData, _) =>
-              charts.ColorUtil.fromDartColor(
-                  convertHexStringToColor(state.accentColor)),
+              charts.ColorUtil.fromDartColor(state.accentColor),
           id: DashboardChart.PERIOD_CURRENT,
           displayName:
               settings.enableComparison ? localization.current : widget.title,

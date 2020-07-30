@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:invoiceninja_flutter/ui/app/form_card.dart';
 import 'package:invoiceninja_flutter/ui/reports/reports_screen.dart';
 import 'package:invoiceninja_flutter/ui/reports/reports_screen_vm.dart';
-import 'package:invoiceninja_flutter/utils/colors.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 
 class ReportCharts extends StatelessWidget {
@@ -55,8 +54,8 @@ class ReportCharts extends StatelessWidget {
           [
             charts.Series<dynamic, String>(
                 id: 'chart',
-                colorFn: (dynamic _, __) => charts.ColorUtil.fromDartColor(
-                    convertHexStringToColor(state.accentColor)),
+                colorFn: (dynamic _, __) =>
+                    charts.ColorUtil.fromDartColor(state.accentColor),
                 domainFn: (dynamic item, _) =>
                     columnType == ReportColumnType.age
                         ? localization.lookup(item['name'])
@@ -85,8 +84,8 @@ class ReportCharts extends StatelessWidget {
           [
             charts.Series<dynamic, DateTime>(
                 id: 'chart',
-                colorFn: (dynamic _, __) => charts.ColorUtil.fromDartColor(
-                    convertHexStringToColor(state.accentColor)),
+                colorFn: (dynamic _, __) =>
+                    charts.ColorUtil.fromDartColor(state.accentColor),
                 domainFn: (dynamic item, _) => DateTime.tryParse(item['name']),
                 measureFn: (dynamic item, _) => item['value'],
                 data: keys

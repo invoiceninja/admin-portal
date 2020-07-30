@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:built_collection/built_collection.dart';
 import 'package:built_value/built_value.dart';
 import 'package:built_value/serializer.dart';
@@ -62,6 +64,7 @@ import 'package:invoiceninja_flutter/redux/tax_rate/tax_rate_state.dart';
 import 'package:invoiceninja_flutter/redux/company_gateway/company_gateway_state.dart';
 import 'package:invoiceninja_flutter/redux/group/group_state.dart';
 import 'package:invoiceninja_flutter/ui/tax_rate/edit/tax_rate_edit_vm.dart';
+import 'package:invoiceninja_flutter/utils/colors.dart';
 import 'package:invoiceninja_flutter/utils/formatting.dart';
 import 'package:timeago/timeago.dart' as timeago;
 
@@ -152,8 +155,8 @@ abstract class AppState implements Built<AppState, AppStateBuilder> {
 
   bool get hasAccentColor => userCompany?.settings?.accentColor != null;
 
-  String get accentColor =>
-      userCompany?.settings?.accentColor ?? kDefaultAccentColor;
+  Color get accentColor => convertHexStringToColor(
+      userCompany?.settings?.accentColor ?? kDefaultAccentColor);
 
   String get appVersion =>
       '${account.currentVersion}-${kClientVersion.split('.').last}';

@@ -44,18 +44,15 @@ import 'package:invoiceninja_flutter/ui/tax_rate/view/tax_rate_view_vm.dart';
 import 'package:invoiceninja_flutter/ui/user/edit/user_edit_vm.dart';
 import 'package:invoiceninja_flutter/ui/user/user_screen.dart';
 import 'package:invoiceninja_flutter/ui/user/view/user_view_vm.dart';
-import 'package:invoiceninja_flutter/utils/colors.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:invoiceninja_flutter/utils/platforms.dart';
 import 'package:local_auth/local_auth.dart';
 import 'package:redux/redux.dart';
-
 // STARTER: import - do not remove comment
 import 'package:invoiceninja_flutter/ui/webhook/webhook_screen.dart';
 import 'package:invoiceninja_flutter/ui/webhook/edit/webhook_edit_vm.dart';
 import 'package:invoiceninja_flutter/ui/webhook/view/webhook_view_vm.dart';
 import 'package:invoiceninja_flutter/ui/webhook/webhook_screen_vm.dart';
-
 import 'package:invoiceninja_flutter/ui/token/token_screen.dart';
 import 'package:invoiceninja_flutter/ui/token/edit/token_edit_vm.dart';
 import 'package:invoiceninja_flutter/ui/token/view/token_view_vm.dart';
@@ -145,8 +142,7 @@ class InvoiceNinjaAppState extends State<InvoiceNinjaApp> {
         final store = widget.store;
         final state = store.state;
         final hasAccentColor = state.hasAccentColor;
-        final accentColor = convertHexStringToColor(state.accentColor) ??
-            Colors.lightBlueAccent;
+        final accentColor = state.accentColor;
         final fontFamily = kIsWeb ? 'Roboto' : null;
         final pageTransitionsTheme = PageTransitionsTheme(builders: {
           TargetPlatform.android: ZoomPageTransitionsBuilder(),
