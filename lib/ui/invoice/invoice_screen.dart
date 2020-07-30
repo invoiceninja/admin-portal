@@ -1,10 +1,6 @@
-import 'dart:async';
-
 import 'package:invoiceninja_flutter/constants.dart';
 import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
-import 'package:invoiceninja_flutter/ui/app/forms/save_cancel_buttons.dart';
 import 'package:invoiceninja_flutter/ui/app/list_scaffold.dart';
-import 'package:invoiceninja_flutter/ui/app/entities/entity_actions_dialog.dart';
 import 'package:invoiceninja_flutter/ui/app/list_filter.dart';
 import 'package:invoiceninja_flutter/ui/invoice/invoice_presenter.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
@@ -60,31 +56,6 @@ class InvoiceScreen extends StatelessWidget {
           store.dispatch(FilterInvoices(value));
         },
       ),
-      appBarActions: [
-        if (viewModel.isInMultiselect)
-          SaveCancelButtons(
-            saveLabel: localization.done,
-            onSavePressed: listUIState.selectedIds.isEmpty
-                ? null
-                : (context) async {
-                    final invoices = listUIState.selectedIds
-                        .map<InvoiceEntity>(
-                            (invoiceId) => viewModel.invoiceMap[invoiceId])
-                        .toList();
-
-                    await showEntityActionsDialog(
-                      entities: invoices,
-                      context: context,
-                      multiselect: true,
-                      completer: Completer<Null>()
-                        ..future.then<dynamic>(
-                            (_) => store.dispatch(ClearInvoiceMultiselect())),
-                    );
-                  },
-            onCancelPressed: (context) =>
-                store.dispatch(ClearInvoiceMultiselect()),
-          ),
-      ],
       body: InvoiceListBuilder(),
       bottomNavigationBar: AppBottomBar(
         entityType: EntityType.invoice,

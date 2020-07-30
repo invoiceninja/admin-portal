@@ -1,11 +1,7 @@
-import 'dart:async';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
-import 'package:invoiceninja_flutter/ui/app/forms/save_cancel_buttons.dart';
 import 'package:invoiceninja_flutter/ui/app/list_scaffold.dart';
-import 'package:invoiceninja_flutter/ui/app/entities/entity_actions_dialog.dart';
 import 'package:invoiceninja_flutter/ui/app/list_filter.dart';
 import 'package:invoiceninja_flutter/ui/payment/payment_presenter.dart';
 import 'package:invoiceninja_flutter/ui/payment/payment_screen_vm.dart';
@@ -56,31 +52,6 @@ class PaymentScreen extends StatelessWidget {
           store.dispatch(FilterPayments(value));
         },
       ),
-      appBarActions: [
-        if (viewModel.isInMultiselect)
-          SaveCancelButtons(
-            saveLabel: localization.done,
-            onSavePressed: listUIState.selectedIds.isEmpty
-                ? null
-                : (context) async {
-                    final payments = listUIState.selectedIds
-                        .map<PaymentEntity>(
-                            (paymentId) => viewModel.paymentMap[paymentId])
-                        .toList();
-
-                    await showEntityActionsDialog(
-                      entities: payments,
-                      context: context,
-                      multiselect: true,
-                      completer: Completer<Null>()
-                        ..future.then<dynamic>(
-                            (_) => store.dispatch(ClearPaymentMultiselect())),
-                    );
-                  },
-            onCancelPressed: (context) =>
-                store.dispatch(ClearPaymentMultiselect()),
-          ),
-      ],
       body: PaymentListBuilder(),
       bottomNavigationBar: AppBottomBar(
         entityType: EntityType.payment,

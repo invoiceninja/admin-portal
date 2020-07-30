@@ -1,5 +1,3 @@
-import 'dart:async';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
@@ -7,9 +5,7 @@ import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/redux/product/product_actions.dart';
 import 'package:invoiceninja_flutter/ui/app/app_bottom_bar.dart';
-import 'package:invoiceninja_flutter/ui/app/forms/save_cancel_buttons.dart';
 import 'package:invoiceninja_flutter/ui/app/list_scaffold.dart';
-import 'package:invoiceninja_flutter/ui/app/entities/entity_actions_dialog.dart';
 import 'package:invoiceninja_flutter/ui/app/list_filter.dart';
 import 'package:invoiceninja_flutter/ui/product/product_list_vm.dart';
 import 'package:invoiceninja_flutter/ui/product/product_presenter.dart';
@@ -57,30 +53,6 @@ class ProductScreen extends StatelessWidget {
           store.dispatch(FilterProducts(value));
         },
       ),
-      appBarActions: [
-        if (viewModel.isInMultiselect)
-          SaveCancelButtons(
-            saveLabel: localization.done,
-            onSavePressed: listUIState.selectedIds.isEmpty
-                ? null
-                : (context) async {
-                    final products = listUIState.selectedIds
-                        .map<ProductEntity>(
-                            (productId) => viewModel.productMap[productId])
-                        .toList();
-
-                    await showEntityActionsDialog(
-                        entities: products,
-                        context: context,
-                        multiselect: true,
-                        completer: Completer<Null>()
-                          ..future.then<dynamic>((_) =>
-                              store.dispatch(ClearProductMultiselect())));
-                  },
-            onCancelPressed: (context) =>
-                store.dispatch(ClearProductMultiselect()),
-          ),
-      ],
       body: ProductListBuilder(),
       bottomNavigationBar: AppBottomBar(
         entityType: EntityType.product,

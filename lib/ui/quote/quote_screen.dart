@@ -1,13 +1,9 @@
-import 'dart:async';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:invoiceninja_flutter/constants.dart';
 import 'package:invoiceninja_flutter/data/models/quote_model.dart';
 import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
-import 'package:invoiceninja_flutter/ui/app/forms/save_cancel_buttons.dart';
 import 'package:invoiceninja_flutter/ui/app/list_scaffold.dart';
-import 'package:invoiceninja_flutter/ui/app/entities/entity_actions_dialog.dart';
 import 'package:invoiceninja_flutter/ui/app/list_filter.dart';
 import 'package:invoiceninja_flutter/ui/quote/quote_presenter.dart';
 import 'package:invoiceninja_flutter/ui/quote/quote_screen_vm.dart';
@@ -60,31 +56,6 @@ class QuoteScreen extends StatelessWidget {
           store.dispatch(FilterQuotes(value));
         },
       ),
-      appBarActions: [
-        if (viewModel.isInMultiselect)
-          SaveCancelButtons(
-            saveLabel: localization.done,
-            onSavePressed: listUIState.selectedIds.isEmpty
-                ? null
-                : (context) async {
-                    final quotes = listUIState.selectedIds
-                        .map<InvoiceEntity>(
-                            (quoteId) => viewModel.quoteMap[quoteId])
-                        .toList();
-
-                    await showEntityActionsDialog(
-                      entities: quotes,
-                      context: context,
-                      multiselect: true,
-                      completer: Completer<Null>()
-                        ..future.then<dynamic>(
-                            (_) => store.dispatch(ClearQuoteMultiselect())),
-                    );
-                  },
-            onCancelPressed: (context) =>
-                store.dispatch(ClearQuoteMultiselect()),
-          ),
-      ],
       body: QuoteListBuilder(),
       bottomNavigationBar: AppBottomBar(
         entityType: EntityType.quote,

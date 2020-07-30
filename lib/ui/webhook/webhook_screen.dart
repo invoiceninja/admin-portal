@@ -1,5 +1,3 @@
-import 'dart:async';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:invoiceninja_flutter/constants.dart';
@@ -8,9 +6,7 @@ import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/redux/webhook/webhook_actions.dart';
 import 'package:invoiceninja_flutter/ui/app/app_bottom_bar.dart';
-import 'package:invoiceninja_flutter/ui/app/forms/save_cancel_buttons.dart';
 import 'package:invoiceninja_flutter/ui/app/list_scaffold.dart';
-import 'package:invoiceninja_flutter/ui/app/entities/entity_actions_dialog.dart';
 import 'package:invoiceninja_flutter/ui/app/list_filter.dart';
 import 'package:invoiceninja_flutter/ui/webhook/webhook_list_vm.dart';
 import 'package:invoiceninja_flutter/ui/webhook/webhook_presenter.dart';
@@ -59,31 +55,6 @@ class WebhookScreen extends StatelessWidget {
           store.dispatch(FilterWebhooks(value));
         },
       ),
-      appBarActions: [
-        if (viewModel.isInMultiselect)
-          SaveCancelButtons(
-            saveLabel: localization.done,
-            onSavePressed: listUIState.selectedIds.isEmpty
-                ? null
-                : (context) async {
-                    final webhooks = listUIState.selectedIds
-                        .map<WebhookEntity>(
-                            (webhookId) => viewModel.webhookMap[webhookId])
-                        .toList();
-
-                    await showEntityActionsDialog(
-                      entities: webhooks,
-                      context: context,
-                      multiselect: true,
-                      completer: Completer<Null>()
-                        ..future.then<dynamic>(
-                            (_) => store.dispatch(ClearWebhookMultiselect())),
-                    );
-                  },
-            onCancelPressed: (context) =>
-                store.dispatch(ClearWebhookMultiselect()),
-          ),
-      ],
       body: WebhookListBuilder(),
       bottomNavigationBar: AppBottomBar(
         entityType: EntityType.webhook,

@@ -1,12 +1,8 @@
-import 'dart:async';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:invoiceninja_flutter/constants.dart';
 import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
-import 'package:invoiceninja_flutter/ui/app/forms/save_cancel_buttons.dart';
 import 'package:invoiceninja_flutter/ui/app/list_scaffold.dart';
-import 'package:invoiceninja_flutter/ui/app/entities/entity_actions_dialog.dart';
 import 'package:invoiceninja_flutter/ui/app/list_filter.dart';
 import 'package:invoiceninja_flutter/ui/task/task_presenter.dart';
 import 'package:invoiceninja_flutter/ui/task/task_screen_vm.dart';
@@ -59,30 +55,6 @@ class TaskScreen extends StatelessWidget {
           store.dispatch(FilterTasks(value));
         },
       ),
-      appBarActions: [
-        if (viewModel.isInMultiselect)
-          SaveCancelButtons(
-            saveLabel: localization.done,
-            onSavePressed: listUIState.selectedIds.isEmpty
-                ? null
-                : (context) async {
-                    final tasks = listUIState.selectedIds
-                        .map<TaskEntity>((taskId) => viewModel.taskMap[taskId])
-                        .toList();
-
-                    await showEntityActionsDialog(
-                      entities: tasks,
-                      context: context,
-                      multiselect: true,
-                      completer: Completer<Null>()
-                        ..future.then<dynamic>(
-                            (_) => store.dispatch(ClearTaskMultiselect())),
-                    );
-                  },
-            onCancelPressed: (context) =>
-                store.dispatch(ClearTaskMultiselect()),
-          ),
-      ],
       body: TaskListBuilder(),
       bottomNavigationBar: AppBottomBar(
         entityType: EntityType.task,

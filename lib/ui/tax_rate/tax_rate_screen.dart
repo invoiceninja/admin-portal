@@ -1,12 +1,8 @@
-import 'dart:async';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:invoiceninja_flutter/constants.dart';
 import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
-import 'package:invoiceninja_flutter/ui/app/forms/save_cancel_buttons.dart';
 import 'package:invoiceninja_flutter/ui/app/list_scaffold.dart';
-import 'package:invoiceninja_flutter/ui/app/entities/entity_actions_dialog.dart';
 import 'package:invoiceninja_flutter/ui/app/list_filter.dart';
 import 'package:invoiceninja_flutter/ui/tax_rate/tax_rate_screen_vm.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
@@ -56,31 +52,6 @@ class TaxRateSettingsScreen extends StatelessWidget {
           store.dispatch(FilterTaxRates(value));
         },
       ),
-      appBarActions: [
-        if (viewModel.isInMultiselect)
-          SaveCancelButtons(
-            saveLabel: localization.done,
-            onSavePressed: listUIState.selectedIds.isEmpty
-                ? null
-                : (context) async {
-                    final taxRates = listUIState.selectedIds
-                        .map<TaxRateEntity>(
-                            (taxRateId) => viewModel.taxRateMap[taxRateId])
-                        .toList();
-
-                    await showEntityActionsDialog(
-                      entities: taxRates,
-                      context: context,
-                      multiselect: true,
-                      completer: Completer<Null>()
-                        ..future.then<dynamic>(
-                            (_) => store.dispatch(ClearTaxRateMultiselect())),
-                    );
-                  },
-            onCancelPressed: (context) =>
-                store.dispatch(ClearTaxRateMultiselect()),
-          ),
-      ],
       body: TaxRateListBuilder(),
       bottomNavigationBar: AppBottomBar(
         entityType: EntityType.taxRate,
