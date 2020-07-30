@@ -225,6 +225,12 @@ class _$CompanyEntitySerializer implements StructuredSerializer<CompanyEntity> {
       'id',
       serializers.serialize(object.id, specifiedType: const FullType(String)),
     ];
+    if (object.enableShopApi != null) {
+      result
+        ..add('enable_shop_api')
+        ..add(serializers.serialize(object.enableShopApi,
+            specifiedType: const FullType(bool)));
+    }
     if (object.plan != null) {
       result
         ..add('plan')
@@ -352,6 +358,10 @@ class _$CompanyEntitySerializer implements StructuredSerializer<CompanyEntity> {
           break;
         case 'is_large':
           result.isLarge = serializers.deserialize(value,
+              specifiedType: const FullType(bool)) as bool;
+          break;
+        case 'enable_shop_api':
+          result.enableShopApi = serializers.deserialize(value,
               specifiedType: const FullType(bool)) as bool;
           break;
         case 'plan':
@@ -2678,6 +2688,8 @@ class _$CompanyEntity extends CompanyEntity {
   @override
   final bool isLarge;
   @override
+  final bool enableShopApi;
+  @override
   final String plan;
   @override
   final String companyKey;
@@ -2788,6 +2800,7 @@ class _$CompanyEntity extends CompanyEntity {
       this.showProductDetails,
       this.clientCanRegister,
       this.isLarge,
+      this.enableShopApi,
       this.plan,
       this.companyKey,
       this.firstDayOfWeek,
@@ -3037,6 +3050,7 @@ class _$CompanyEntity extends CompanyEntity {
         showProductDetails == other.showProductDetails &&
         clientCanRegister == other.clientCanRegister &&
         isLarge == other.isLarge &&
+        enableShopApi == other.enableShopApi &&
         plan == other.plan &&
         companyKey == other.companyKey &&
         firstDayOfWeek == other.firstDayOfWeek &&
@@ -3104,7 +3118,7 @@ class _$CompanyEntity extends CompanyEntity {
                                                                 $jc(
                                                                     $jc(
                                                                         $jc(
-                                                                            $jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc(0, enableCustomSurchargeTaxes1.hashCode), enableCustomSurchargeTaxes2.hashCode), enableCustomSurchargeTaxes3.hashCode), enableCustomSurchargeTaxes4.hashCode), sizeId.hashCode), industryId.hashCode), subdomain.hashCode), portalMode.hashCode), portalDomain.hashCode), updateProducts.hashCode), convertProductExchangeRate.hashCode), fillProducts.hashCode), enableProductCost.hashCode), enableProductQuantity.hashCode), defaultQuantity.hashCode), showProductDetails.hashCode), clientCanRegister.hashCode), isLarge.hashCode), plan.hashCode), companyKey.hashCode), firstDayOfWeek.hashCode), firstMonthOfYear.hashCode), numberOfInvoiceTaxRates.hashCode), numberOfItemTaxRates.hashCode), groups.hashCode), activities.hashCode), taxRates.hashCode), taskStatuses.hashCode), taskStatusMap.hashCode), companyGateways.hashCode), expenseCategories.hashCode), expenseCategoryMap.hashCode), users.hashCode), clients.hashCode), products.hashCode), invoices.hashCode), payments.hashCode), quotes.hashCode), credits.hashCode), tasks.hashCode), projects.hashCode), expenses.hashCode), vendors.hashCode),
+                                                                            $jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc(0, enableCustomSurchargeTaxes1.hashCode), enableCustomSurchargeTaxes2.hashCode), enableCustomSurchargeTaxes3.hashCode), enableCustomSurchargeTaxes4.hashCode), sizeId.hashCode), industryId.hashCode), subdomain.hashCode), portalMode.hashCode), portalDomain.hashCode), updateProducts.hashCode), convertProductExchangeRate.hashCode), fillProducts.hashCode), enableProductCost.hashCode), enableProductQuantity.hashCode), defaultQuantity.hashCode), showProductDetails.hashCode), clientCanRegister.hashCode), isLarge.hashCode), enableShopApi.hashCode), plan.hashCode), companyKey.hashCode), firstDayOfWeek.hashCode), firstMonthOfYear.hashCode), numberOfInvoiceTaxRates.hashCode), numberOfItemTaxRates.hashCode), groups.hashCode), activities.hashCode), taxRates.hashCode), taskStatuses.hashCode), taskStatusMap.hashCode), companyGateways.hashCode), expenseCategories.hashCode), expenseCategoryMap.hashCode), users.hashCode), clients.hashCode), products.hashCode), invoices.hashCode), payments.hashCode), quotes.hashCode), credits.hashCode), tasks.hashCode), projects.hashCode), expenses.hashCode), vendors.hashCode),
                                                                                 designs.hashCode),
                                                                             tokens.hashCode),
                                                                         webhooks.hashCode),
@@ -3147,6 +3161,7 @@ class _$CompanyEntity extends CompanyEntity {
           ..add('showProductDetails', showProductDetails)
           ..add('clientCanRegister', clientCanRegister)
           ..add('isLarge', isLarge)
+          ..add('enableShopApi', enableShopApi)
           ..add('plan', plan)
           ..add('companyKey', companyKey)
           ..add('firstDayOfWeek', firstDayOfWeek)
@@ -3281,6 +3296,11 @@ class CompanyEntityBuilder
   bool _isLarge;
   bool get isLarge => _$this._isLarge;
   set isLarge(bool isLarge) => _$this._isLarge = isLarge;
+
+  bool _enableShopApi;
+  bool get enableShopApi => _$this._enableShopApi;
+  set enableShopApi(bool enableShopApi) =>
+      _$this._enableShopApi = enableShopApi;
 
   String _plan;
   String get plan => _$this._plan;
@@ -3533,6 +3553,7 @@ class CompanyEntityBuilder
       _showProductDetails = _$v.showProductDetails;
       _clientCanRegister = _$v.clientCanRegister;
       _isLarge = _$v.isLarge;
+      _enableShopApi = _$v.enableShopApi;
       _plan = _$v.plan;
       _companyKey = _$v.companyKey;
       _firstDayOfWeek = _$v.firstDayOfWeek;
@@ -3619,6 +3640,7 @@ class CompanyEntityBuilder
               showProductDetails: showProductDetails,
               clientCanRegister: clientCanRegister,
               isLarge: isLarge,
+              enableShopApi: enableShopApi,
               plan: plan,
               companyKey: companyKey,
               firstDayOfWeek: firstDayOfWeek,

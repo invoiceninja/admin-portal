@@ -15,6 +15,9 @@ mixin LocalizationsProvider on LocaleCodeAware {
   static final Map<String, Map<String, String>> _localizedValues = {
     'en': {
       // STARTER: lang key - do not remove comment
+      'company_key': 'Company Key',
+      'storefront': 'Storefront',
+      'storefront_help': 'Enable third-party apps to create invoices',
       'count_records_selected': ':count records selected',
       'client_created': 'Client Created',
       'online_payment_email': 'Online Payment Email',
@@ -37935,11 +37938,9 @@ mixin LocalizationsProvider on LocaleCodeAware {
 
   String get newPayment => _localizedValues[localeCode]['new_payment'] ?? '';
 
-  String get showTable =>
-      _localizedValues[localeCode]['show_table'] ?? '';
+  String get showTable => _localizedValues[localeCode]['show_table'] ?? '';
 
-  String get showList =>
-      _localizedValues[localeCode]['show_list'] ?? '';
+  String get showList => _localizedValues[localeCode]['show_list'] ?? '';
 
   String get whenSaved => _localizedValues[localeCode]['when_saved'] ?? '';
 
@@ -38747,8 +38748,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
   String get searchDesign =>
       _localizedValues[localeCode]['search_design'] ?? '';
 
-  String get searchToken =>
-      _localizedValues[localeCode]['search_token'] ?? '';
+  String get searchToken => _localizedValues[localeCode]['search_token'] ?? '';
 
   String get searchWebhook =>
       _localizedValues[localeCode]['search_webhook'] ?? '';
@@ -38844,11 +38844,9 @@ mixin LocalizationsProvider on LocaleCodeAware {
   String get searchWebhooks =>
       _localizedValues[localeCode]['search_webhooks'] ?? '';
 
-  String get apiTokens =>
-      _localizedValues[localeCode]['api_tokens'] ?? '';
+  String get apiTokens => _localizedValues[localeCode]['api_tokens'] ?? '';
 
-  String get apiWebhooks =>
-      _localizedValues[localeCode]['api_webhooks'] ?? '';
+  String get apiWebhooks => _localizedValues[localeCode]['api_webhooks'] ?? '';
 
   String get cronsNotEnabled =>
       _localizedValues[localeCode]['crons_not_enabled'] ?? '';
@@ -38974,7 +38972,6 @@ mixin LocalizationsProvider on LocaleCodeAware {
 
   String get completed => _localizedValues[localeCode]['completed'] ?? '';
 
-
   String get onlinePaymentEmail =>
       _localizedValues[localeCode]['online_payment_email'] ?? '';
 
@@ -38987,8 +38984,13 @@ mixin LocalizationsProvider on LocaleCodeAware {
   String get countRecordsSelected =>
       _localizedValues[localeCode]['count_records_selected'] ?? '';
 
+  String get storefront => _localizedValues[localeCode]['storefront'] ?? '';
 
+  String get storefrontHelp =>
+      _localizedValues[localeCode]['storefront_help'] ?? '';
 
+  String get companyKey =>
+      _localizedValues[localeCode]['company_key'] ?? '';
 
   String lookup(String key) {
     final lookupKey = toSnakeCase(key);
