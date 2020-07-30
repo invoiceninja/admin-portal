@@ -302,7 +302,7 @@ const dynamic kMockLogin = '''
                     }
                 },
                 "enabled_tax_rates": 0,
-                "enabled_modules": 0,
+                "enabled_modules": 16383,
                 "updated_at": 1584439517,
                 "archived_at": 0,
                 "created_at": 1584438164,
@@ -11466,6 +11466,7 @@ const dynamic kMockLogin = '''
                 "id": "Wpmbk5ezJn",
                 "default_url": "https:\/\/staging.invoicing.co",
                 "plan": "",
+                "plan_expires": "",
                 "latest_version": "0.0.0",
                 "current_version": "0.0.1",
                 "updated_at": 1584438164,
