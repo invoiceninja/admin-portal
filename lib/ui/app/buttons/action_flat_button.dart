@@ -8,12 +8,14 @@ class ActionFlatButton extends StatelessWidget {
     this.tooltip,
     this.isSaving = false,
     this.isVisible = true,
+    this.color,
   });
 
   final bool isSaving;
   final bool isVisible;
   final Function onPressed;
   final String tooltip;
+  final Color color;
 
   @override
   Widget build(BuildContext context) {
@@ -40,7 +42,7 @@ class ActionFlatButton extends StatelessWidget {
     return FlatButton(
       child: Text(
         tooltip,
-        style: TextStyle(color: store.state.headerTextColor),
+        style: TextStyle(color: color ?? store.state.headerTextColor),
       ),
       onPressed: onPressed,
     );
