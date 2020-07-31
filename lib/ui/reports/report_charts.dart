@@ -55,7 +55,7 @@ class ReportCharts extends StatelessWidget {
             charts.Series<dynamic, String>(
                 id: 'chart',
                 colorFn: (dynamic _, __) =>
-                    charts.MaterialPalette.blue.shadeDefault,
+                    charts.ColorUtil.fromDartColor(state.accentColor),
                 domainFn: (dynamic item, _) =>
                     columnType == ReportColumnType.age
                         ? localization.lookup(item['name'])
@@ -85,7 +85,7 @@ class ReportCharts extends StatelessWidget {
             charts.Series<dynamic, DateTime>(
                 id: 'chart',
                 colorFn: (dynamic _, __) =>
-                    charts.MaterialPalette.blue.shadeDefault,
+                    charts.ColorUtil.fromDartColor(state.accentColor),
                 domainFn: (dynamic item, _) => DateTime.tryParse(item['name']),
                 measureFn: (dynamic item, _) => item['value'],
                 data: keys

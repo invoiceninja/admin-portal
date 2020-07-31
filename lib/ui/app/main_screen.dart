@@ -640,7 +640,6 @@ class BlankScreen extends StatelessWidget {
       appBar: AppBar(
         centerTitle: false,
         automaticallyImplyLeading: isMobile(context),
-        backgroundColor: Theme.of(context).cardColor,
       ),
       body: Container(
         color: Theme.of(context).cardColor,
@@ -669,8 +668,13 @@ class _EntityFilter extends StatelessWidget {
     final filterEntity =
         entityMap != null ? entityMap[uiState.filterEntityId] : null;
 
+    final backgroundColor =
+        !state.prefState.enableDarkMode && state.hasAccentColor
+            ? state.accentColor
+            : Theme.of(context).cardColor;
+
     return Material(
-      color: Theme.of(context).cardColor,
+      color: backgroundColor,
       child: AnimatedContainer(
         height: show ? 46 : 0,
         duration: Duration(milliseconds: kDefaultAnimationDuration),
@@ -681,7 +685,7 @@ class _EntityFilter extends StatelessWidget {
           curve: Curves.easeInOutCubic,
           child: filterEntity == null
               ? Container(
-                  color: Theme.of(context).cardColor,
+                  color: backgroundColor,
                 )
               : AppBar(
                   leading: state.prefState.showFilterSidebar
@@ -700,7 +704,7 @@ class _EntityFilter extends StatelessWidget {
                           left: state.prefState.showFilterSidebar ? 4 : 0),
                       child: Text(
                         '${localization.lookup('$filterEntityType')}  ›  ${filterEntity.listDisplayName}',
-                        style: TextStyle(fontSize: 17),
+                        style: TextStyle(fontSize: 17, color: state.headerTextColor),
                         overflow: TextOverflow.ellipsis,
                         textAlign: TextAlign.start,
                         maxLines: 1,
@@ -721,7 +725,8 @@ class _EntityFilter extends StatelessWidget {
                                 : '${localization.lookup(routeEntityType.plural)}',
                             style: TextStyle(
                                 fontSize: 17,
-                                color: state.prefState.enableDarkMode
+                                color: state.prefState.enableDarkMode ||
+                                        state.hasAccentColor
                                     ? Colors.white
                                     : Theme.of(context).accentColor),
                           ),

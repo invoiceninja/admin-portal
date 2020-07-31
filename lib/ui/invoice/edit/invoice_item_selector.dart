@@ -6,6 +6,7 @@ import 'package:invoiceninja_flutter/redux/product/product_selectors.dart';
 import 'package:invoiceninja_flutter/redux/task/task_selectors.dart';
 import 'package:invoiceninja_flutter/redux/expense/expense_selectors.dart';
 import 'package:flutter/material.dart';
+import 'package:invoiceninja_flutter/ui/app/forms/app_tab_bar.dart';
 import 'package:invoiceninja_flutter/ui/app/responsive_padding.dart';
 import 'package:invoiceninja_flutter/ui/expense/expense_list_item.dart';
 import 'package:invoiceninja_flutter/ui/product/product_list_item.dart';
@@ -318,11 +319,7 @@ class _InvoiceItemSelectorState extends State<InvoiceItemSelector>
         child: Column(mainAxisSize: MainAxisSize.min, children: <Widget>[
           _headerRow(),
           showTabBar
-              ? TabBar(
-                  labelColor: state.prefState.enableDarkMode
-                      ? Colors.white
-                      : Colors.black,
-                  indicatorColor: Theme.of(context).accentColor,
+              ? AppTabBar(
                   controller: _tabController,
                   tabs: tabs,
                 )

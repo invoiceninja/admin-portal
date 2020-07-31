@@ -254,6 +254,14 @@ class _ClientPortalState extends State<ClientPortal>
                     onChanged: (value) => viewModel.onCompanyChanged(
                         company.rebuild((b) => b..clientCanRegister = value)),
                   ),
+                  BoolDropdownButton(
+                    label: localization.storefront,
+                    helpLabel: localization.storefrontHelp,
+                    value: company.enableShopApi,
+                    iconData: FontAwesomeIcons.shoppingCart,
+                    onChanged: (value) => viewModel.onCompanyChanged(
+                        company.rebuild((b) => b..enableShopApi = value)),
+                  ),
                   SizedBox(height: 16),
                   DecoratedFormField(
                     controller: _termsController,

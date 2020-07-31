@@ -44,7 +44,6 @@ import 'package:invoiceninja_flutter/ui/tax_rate/view/tax_rate_view_vm.dart';
 import 'package:invoiceninja_flutter/ui/user/edit/user_edit_vm.dart';
 import 'package:invoiceninja_flutter/ui/user/user_screen.dart';
 import 'package:invoiceninja_flutter/ui/user/view/user_view_vm.dart';
-import 'package:invoiceninja_flutter/utils/colors.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:invoiceninja_flutter/utils/platforms.dart';
 import 'package:local_auth/local_auth.dart';
@@ -55,7 +54,6 @@ import 'package:invoiceninja_flutter/ui/webhook/webhook_screen.dart';
 import 'package:invoiceninja_flutter/ui/webhook/edit/webhook_edit_vm.dart';
 import 'package:invoiceninja_flutter/ui/webhook/view/webhook_view_vm.dart';
 import 'package:invoiceninja_flutter/ui/webhook/webhook_screen_vm.dart';
-
 import 'package:invoiceninja_flutter/ui/token/token_screen.dart';
 import 'package:invoiceninja_flutter/ui/token/edit/token_edit_vm.dart';
 import 'package:invoiceninja_flutter/ui/token/view/token_view_vm.dart';
@@ -142,13 +140,16 @@ class InvoiceNinjaAppState extends State<InvoiceNinjaApp> {
       child: AppBuilder(builder: (context) {
         final store = widget.store;
         final state = store.state;
-        final accentColor = convertHexStringToColor(state.accentColor) ??
-            Colors.lightBlueAccent;
+        final hasAccentColor = state.hasAccentColor;
+        final accentColor = state.accentColor;
         final fontFamily = kIsWeb ? 'Roboto' : null;
         final pageTransitionsTheme = PageTransitionsTheme(builders: {
           TargetPlatform.android: ZoomPageTransitionsBuilder(),
         });
         Intl.defaultLocale = localeSelector(state);
+
+        print(
+            '## ACCENT COLOR: ${state.accentColor}, hasCOLOR: $hasAccentColor');
 
         return MaterialApp(
           supportedLocales: kLanguages
@@ -179,39 +180,51 @@ class InvoiceNinjaAppState extends State<InvoiceNinjaApp> {
                   cardColor: const Color(0xFF1B1C1E),
                   bottomAppBarColor: const Color(0xFF1B1C1E),
                   primaryColorDark: Colors.black,
+                  buttonColor: accentColor,
                 )
-              : ThemeData(fontFamily: fontFamily).copyWith(
+              : ThemeData(
                   pageTransitionsTheme: pageTransitionsTheme,
+                  primaryColor: accentColor,
                   accentColor: accentColor,
-                  textSelectionColor: accentColor,
-                  //primaryColor: Colors.white,
-                  primaryColorLight: const Color(0xFF5dabf4),
-                  primaryColorDark: const Color(0xFF0D5D91),
-                  buttonColor: const Color(0xFF0D5D91),
                   indicatorColor: accentColor,
+                  textSelectionColor: accentColor,
+                  fontFamily: fontFamily,
                   backgroundColor: Colors.white,
                   canvasColor: Colors.white,
-                  scaffoldBackgroundColor: const Color(0xFFE7EBEE),
                   cardColor: Colors.white,
                   bottomAppBarColor: Colors.white,
+                  primaryColorDark:
+                      hasAccentColor ? accentColor : const Color(0xFF0D5D91),
+                  primaryColorLight: const Color(0xFF5dabf4),
+                  buttonColor:
+                      hasAccentColor ? accentColor : const Color(0xFF0D5D91),
+                  scaffoldBackgroundColor: const Color(0xFFE7EBEE),
                   tabBarTheme: TabBarTheme(
-                    labelColor: Colors.black,
-                    unselectedLabelColor: Colors.black.withOpacity(.65),
+                    labelColor: hasAccentColor ? Colors.white : Colors.black,
+                    unselectedLabelColor: hasAccentColor
+                        ? Colors.white.withOpacity(.65)
+                        : Colors.black.withOpacity(.65),
                   ),
-                  buttonTheme:
-                      ButtonThemeData(textTheme: ButtonTextTheme.accent),
+                  /*
+                  buttonTheme: ButtonThemeData(
+                    textTheme: ButtonTextTheme.primary,
+                    colorScheme: ColorScheme.light(
+                      //primary: hasAccentColor ? Colors.white : Colors.black,
+                    ),
+                  ),
+                   */
                   iconTheme: IconThemeData(
-                    color: Colors.blue,
+                    color: hasAccentColor ? null : accentColor,
                   ),
                   appBarTheme: AppBarTheme(
-                    color: Colors.white,
+                    color: hasAccentColor ? accentColor : Colors.white,
                     iconTheme: IconThemeData(
-                      color: Colors.blue,
+                      color: hasAccentColor ? Colors.white : accentColor,
                     ),
                     textTheme: TextTheme(
-                      headline6: TextStyle(
-                        color: Colors.black,
-                      ),
+                      headline6: Theme.of(context).textTheme.headline6.copyWith(
+                            color: hasAccentColor ? Colors.white : Colors.black,
+                          ),
                     ),
                   ),
                 ),

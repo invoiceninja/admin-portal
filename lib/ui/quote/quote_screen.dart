@@ -1,13 +1,9 @@
-import 'dart:async';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:invoiceninja_flutter/constants.dart';
 import 'package:invoiceninja_flutter/data/models/quote_model.dart';
 import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
-import 'package:invoiceninja_flutter/ui/app/forms/save_cancel_buttons.dart';
 import 'package:invoiceninja_flutter/ui/app/list_scaffold.dart';
-import 'package:invoiceninja_flutter/ui/app/entities/entity_actions_dialog.dart';
 import 'package:invoiceninja_flutter/ui/app/list_filter.dart';
 import 'package:invoiceninja_flutter/ui/quote/quote_presenter.dart';
 import 'package:invoiceninja_flutter/ui/quote/quote_screen_vm.dart';
@@ -35,23 +31,10 @@ class QuoteScreen extends StatelessWidget {
     final company = store.state.company;
     final userCompany = store.state.userCompany;
     final localization = AppLocalization.of(context);
-    final listUIState = state.uiState.quoteUIState.listUIState;
-    final isInMultiselect = listUIState.isInMultiselect();
 
     return ListScaffold(
       entityType: EntityType.quote,
-      isChecked: isInMultiselect &&
-          listUIState.selectedIds.length == viewModel.quoteList.length,
-      showCheckbox: isInMultiselect,
       onHamburgerLongPress: () => store.dispatch(StartQuoteMultiselect()),
-      onCheckboxChanged: (value) {
-        final quotes = viewModel.quoteList
-            .map<InvoiceEntity>((quoteId) => viewModel.quoteMap[quoteId])
-            .where((quote) => value != listUIState.isSelected(quote.id))
-            .toList();
-
-        handleQuoteAction(context, quotes, EntityAction.toggleMultiselect);
-      },
       appBarTitle: ListFilter(
         entityType: EntityType.quote,
         entityIds: viewModel.quoteList,
@@ -60,31 +43,6 @@ class QuoteScreen extends StatelessWidget {
           store.dispatch(FilterQuotes(value));
         },
       ),
-      appBarActions: [
-        if (viewModel.isInMultiselect)
-          SaveCancelButtons(
-            saveLabel: localization.done,
-            onSavePressed: listUIState.selectedIds.isEmpty
-                ? null
-                : (context) async {
-                    final quotes = listUIState.selectedIds
-                        .map<InvoiceEntity>(
-                            (quoteId) => viewModel.quoteMap[quoteId])
-                        .toList();
-
-                    await showEntityActionsDialog(
-                      entities: quotes,
-                      context: context,
-                      multiselect: true,
-                      completer: Completer<Null>()
-                        ..future.then<dynamic>(
-                            (_) => store.dispatch(ClearQuoteMultiselect())),
-                    );
-                  },
-            onCancelPressed: (context) =>
-                store.dispatch(ClearQuoteMultiselect()),
-          ),
-      ],
       body: QuoteListBuilder(),
       bottomNavigationBar: AppBottomBar(
         entityType: EntityType.quote,

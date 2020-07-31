@@ -81,25 +81,39 @@ class BoolDropdownButton extends StatelessWidget {
               )
             : Row(
                 children: <Widget>[
-                  Radio<bool>(
-                    value: false,
-                    onChanged: (value) => onChanged(value),
-                    groupValue: value,
-                    activeColor: Theme.of(context).accentColor,
-                  ),
-                  GestureDetector(
-                    child: Text(falseLabel),
+                  InkWell(
                     onTap: () => onChanged(false),
+                    child: Row(
+                      children: [
+                        IgnorePointer(
+                          child: Radio<bool>(
+                            value: false,
+                            onChanged: (value) => null,
+                            groupValue: value,
+                            activeColor: Theme.of(context).accentColor,
+                          ),
+                        ),
+                        Text(falseLabel),
+                        SizedBox(width: 16),
+                      ],
+                    ),
                   ),
-                  Radio<bool>(
-                    value: true,
-                    onChanged: (value) => onChanged(value),
-                    groupValue: value,
-                    activeColor: Theme.of(context).accentColor,
-                  ),
-                  GestureDetector(
-                    child: Text(trueLabel),
+                  InkWell(
                     onTap: () => onChanged(true),
+                    child: Row(
+                      children: [
+                        IgnorePointer(
+                          child: Radio<bool>(
+                            value: true,
+                            onChanged: (value) => null,
+                            groupValue: value,
+                            activeColor: Theme.of(context).accentColor,
+                          ),
+                        ),
+                        Text(trueLabel),
+                        SizedBox(width: 16),
+                      ],
+                    ),
                   ),
                 ],
               ));

@@ -11,6 +11,7 @@ import 'package:invoiceninja_flutter/ui/app/tables/app_data_table.dart';
 import 'package:invoiceninja_flutter/ui/app/tables/app_data_table_source.dart';
 import 'package:invoiceninja_flutter/utils/colors.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
+import 'package:invoiceninja_flutter/utils/platforms.dart';
 
 class EntityDataTableSource extends AppDataTableSource {
   EntityDataTableSource(
@@ -72,7 +73,7 @@ class EntityDataTableSource extends AppDataTableSource {
       }
     }
 
-    final backgroundColor = isSelected
+    final backgroundColor = isSelected && isDesktop(context)
         ? convertHexStringToColor(state.prefState.enableDarkMode
             ? kDefaultDarkSelectedColor
             : kDefaultLightSelectedColor)

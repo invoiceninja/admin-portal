@@ -1,5 +1,3 @@
-import 'dart:async';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:invoiceninja_flutter/constants.dart';
@@ -9,9 +7,7 @@ import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/redux/payment_term/payment_term_actions.dart';
 import 'package:invoiceninja_flutter/ui/app/app_bottom_bar.dart';
-import 'package:invoiceninja_flutter/ui/app/forms/save_cancel_buttons.dart';
 import 'package:invoiceninja_flutter/ui/app/list_scaffold.dart';
-import 'package:invoiceninja_flutter/ui/app/entities/entity_actions_dialog.dart';
 import 'package:invoiceninja_flutter/ui/payment_term/payment_term_list_vm.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 
@@ -33,52 +29,11 @@ class PaymentTermScreen extends StatelessWidget {
     final state = store.state;
     final userCompany = state.userCompany;
     final localization = AppLocalization.of(context);
-    final listUIState = state.uiState.paymentTermUIState.listUIState;
-    final isInMultiselect = listUIState.isInMultiselect();
 
     return ListScaffold(
       entityType: EntityType.paymentTerm,
-      isChecked: isInMultiselect &&
-          listUIState.selectedIds.length == viewModel.paymentTermList.length,
-      showCheckbox: isInMultiselect,
       onHamburgerLongPress: () => store.dispatch(StartPaymentTermMultiselect()),
-      onCheckboxChanged: (value) {
-        final paymentTerms = viewModel.paymentTermList
-            .map<PaymentTermEntity>(
-                (paymentTermId) => viewModel.paymentTermMap[paymentTermId])
-            .where((paymentTerm) =>
-                value != listUIState.isSelected(paymentTerm.id))
-            .toList();
-
-        handlePaymentTermAction(
-            context, paymentTerms, EntityAction.toggleMultiselect);
-      },
       appBarTitle: Text(localization.paymentTerms),
-      appBarActions: [
-        if (viewModel.isInMultiselect)
-          SaveCancelButtons(
-            saveLabel: localization.done,
-            onSavePressed: listUIState.selectedIds.isEmpty
-                ? null
-                : (context) async {
-                    final paymentTerms = listUIState.selectedIds
-                        .map<PaymentTermEntity>((paymentTermId) =>
-                            viewModel.paymentTermMap[paymentTermId])
-                        .toList();
-
-                    await showEntityActionsDialog(
-                      entities: paymentTerms,
-                      context: context,
-                      multiselect: true,
-                      completer: Completer<Null>()
-                        ..future.then<dynamic>((_) =>
-                            store.dispatch(ClearPaymentTermMultiselect())),
-                    );
-                  },
-            onCancelPressed: (context) =>
-                store.dispatch(ClearPaymentTermMultiselect()),
-          ),
-      ],
       body: PaymentTermListBuilder(),
       bottomNavigationBar: AppBottomBar(
         entityType: EntityType.paymentTerm,

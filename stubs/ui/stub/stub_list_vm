@@ -36,9 +36,8 @@ class StubListBuilder extends StatelessWidget {
             onEntityTap: viewModel.onStubTap,
             tableColumns: viewModel.tableColumns,
             onRefreshed: viewModel.onRefreshed,
-            onClearEntityFilterPressed: viewModel.onClearEntityFilterPressed,
-            onViewEntityFilterPressed: viewModel.onViewEntityFilterPressed,
             onSortColumn: viewModel.onSortColumn,
+            onClearMultiselect: viewModel.onClearMultielsect,
             itemBuilder: (BuildContext context, index) {
               final state = viewModel.state;
               final stubId = viewModel.stubList[index];
@@ -81,9 +80,8 @@ class StubListVM {
     @required this.onRefreshed,
     @required this.onEntityAction,
     @required this.tableColumns,
-    @required this.onClearEntityFilterPressed,
-    @required this.onViewEntityFilterPressed,
     @required this.onSortColumn,
+    @required this.onClearMultielsect,
   });
 
   static StubListVM fromStore(Store<AppState> store) {
@@ -108,11 +106,6 @@ class StubListVM {
         stubMap: state.stubState.map,
         isLoading: state.isLoading,
         filter: state.stubUIState.listUIState.filter,
-        onClearEntityFilterPressed: () => store.dispatch(ClearEntityFilter()),
-      onViewEntityFilterPressed: (BuildContext context) => viewEntityById(
-          context: context,
-          entityId: state.stubListState.filterEntityId,
-          entityType: state.stubListState.filterEntityType),
       onEntityAction:
           (BuildContext context, List<BaseEntity> stubs, EntityAction action) =>
           handleStubAction(context, stubs, action),
@@ -121,6 +114,7 @@ class StubListVM {
                   state.userCompany.settings.getTableColumns(EntityType.stub) ??
                       StubPresenter.getAllTableFields(state.userCompany),
         onSortColumn: (field) => store.dispatch(SortStubs(field)),
+        onClearMultielsect: () => store.dispatch(ClearStubMultiselect()),
     );
   }
 
@@ -133,8 +127,7 @@ class StubListVM {
   final bool isLoading;
   final Function(BuildContext) onRefreshed;
   final Function(BuildContext, List<BaseEntity>, EntityAction) onEntityAction;
-  final Function onClearEntityFilterPressed;
-  final Function(BuildContext) onViewEntityFilterPressed;
   final List<String> tableColumns;
   final Function(String) onSortColumn;
-}
+  final Function onClearMultielsect;
+ }

@@ -26,13 +26,12 @@ class PaymentTermListBuilder extends StatelessWidget {
       converter: PaymentTermListVM.fromStore,
       builder: (context, viewModel) {
         return EntityList(
+            onClearMultiselect: viewModel.onClearMultielsect,
             entityType: EntityType.paymentTerm,
             state: viewModel.state,
             entityList: viewModel.paymentTermList,
             tableColumns: viewModel.tableColumns,
             onRefreshed: viewModel.onRefreshed,
-            onClearEntityFilterPressed: viewModel.onClearEntityFilterPressed,
-            onViewEntityFilterPressed: viewModel.onViewEntityFilterPressed,
             onSortColumn: viewModel.onSortColumn,
             itemBuilder: (BuildContext context, index) {
               final state = viewModel.state;
@@ -65,9 +64,7 @@ class PaymentTermListVM {
     @required this.listState,
     @required this.onRefreshed,
     @required this.onEntityAction,
-    @required this.onClearEntityFilterPressed,
-    @required this.onViewEntityFilterPressed,
-    @required this.onSortColumn,
+    @required this.onSortColumn, @required this.onClearMultielsect,
     this.tableColumns,
   });
 
@@ -95,16 +92,12 @@ class PaymentTermListVM {
       paymentTermMap: state.paymentTermState.map,
       isLoading: state.isLoading,
       filter: state.paymentTermUIState.listUIState.filter,
-      onClearEntityFilterPressed: () => store.dispatch(FilterByEntity()),
-      onViewEntityFilterPressed: (BuildContext context) => viewEntityById(
-          context: context,
-          entityId: state.paymentTermListState.filterEntityId,
-          entityType: state.paymentTermListState.filterEntityType),
       onEntityAction: (BuildContext context, List<BaseEntity> paymentTerms,
               EntityAction action) =>
           handlePaymentTermAction(context, paymentTerms, action),
       onRefreshed: (context) => _handleRefresh(context),
       onSortColumn: (field) => store.dispatch(SortPaymentTerms(field)),
+      onClearMultielsect: () => store.dispatch(ClearPaymentTermMultiselect()),
     );
   }
 
@@ -117,8 +110,6 @@ class PaymentTermListVM {
   final bool isLoading;
   final Function(BuildContext) onRefreshed;
   final Function(BuildContext, List<BaseEntity>, EntityAction) onEntityAction;
-  final Function onClearEntityFilterPressed;
-  final Function(BuildContext) onViewEntityFilterPressed;
   final List<String> tableColumns;
   final Function(String) onSortColumn;
-}
+final Function onClearMultielsect;}

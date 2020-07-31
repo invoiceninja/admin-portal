@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_redux/flutter_redux.dart';
+import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 
 class ActionFlatButton extends StatelessWidget {
   const ActionFlatButton({
@@ -6,15 +8,19 @@ class ActionFlatButton extends StatelessWidget {
     this.tooltip,
     this.isSaving = false,
     this.isVisible = true,
+    this.color,
   });
 
   final bool isSaving;
   final bool isVisible;
   final Function onPressed;
   final String tooltip;
+  final Color color;
 
   @override
   Widget build(BuildContext context) {
+    final store = StoreProvider.of<AppState>(context);
+
     if (!isVisible) {
       return Container();
     }
@@ -36,7 +42,7 @@ class ActionFlatButton extends StatelessWidget {
     return FlatButton(
       child: Text(
         tooltip,
-        //style: TextStyle(color: Colors.white),
+        style: TextStyle(color: color ?? store.state.headerTextColor),
       ),
       onPressed: onPressed,
     );

@@ -44,8 +44,6 @@ class CompanyGatewayListVM {
     @required this.onCompanyGatewayTap,
     @required this.listState,
     @required this.onRefreshed,
-    @required this.onClearEntityFilterPressed,
-    @required this.onViewEntityFilterPressed,
     @required this.onSortChanged,
     @required this.onRemovePressed,
   });
@@ -79,11 +77,6 @@ class CompanyGatewayListVM {
       companyGatewayMap: state.companyGatewayState.map,
       isLoading: state.isLoading,
       filter: state.companyGatewayUIState.listUIState.filter,
-      onClearEntityFilterPressed: () => store.dispatch(ClearEntityFilter()),
-      onViewEntityFilterPressed: (BuildContext context) => viewEntityById(
-          context: context,
-          entityId: state.companyGatewayListState.filterEntityId,
-          entityType: state.companyGatewayListState.filterEntityType),
       onCompanyGatewayTap: (context, companyGateway) {
         if (store.state.companyGatewayListState.isInMultiselect()) {
           handleCompanyGatewayAction(
@@ -120,8 +113,6 @@ class CompanyGatewayListVM {
   final bool isLoading;
   final Function(BuildContext, CompanyGatewayEntity) onCompanyGatewayTap;
   final Function(BuildContext) onRefreshed;
-  final Function onClearEntityFilterPressed;
-  final Function(BuildContext) onViewEntityFilterPressed;
   final Function(int, int) onSortChanged;
   final Function(String) onRemovePressed;
 }

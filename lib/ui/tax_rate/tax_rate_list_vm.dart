@@ -26,14 +26,13 @@ class TaxRateListBuilder extends StatelessWidget {
       converter: TaxRateListVM.fromStore,
       builder: (context, viewModel) {
         return EntityList(
+            onClearMultiselect: viewModel.onClearMultielsect,
             entityType: EntityType.taxRate,
             //presenter: ClientPresenter(),
             state: viewModel.state,
             entityList: viewModel.taxRateList,
             //tableColumns: viewModel.tableColumns,
             onRefreshed: viewModel.onRefreshed,
-            onClearEntityFilterPressed: viewModel.onClearEntityFilterPressed,
-            onViewEntityFilterPressed: viewModel.onViewEntityFilterPressed,
             onSortColumn: viewModel.onSortColumn,
             itemBuilder: (BuildContext context, index) {
               final state = viewModel.state;
@@ -64,9 +63,7 @@ class TaxRateListVM {
     @required this.isLoading,
     @required this.listState,
     @required this.onRefreshed,
-    @required this.onClearEntityFilterPressed,
-    @required this.onViewEntityFilterPressed,
-    @required this.onSortColumn,
+    @required this.onSortColumn, @required this.onClearMultielsect,
   });
 
   static TaxRateListVM fromStore(Store<AppState> store) {
@@ -91,13 +88,9 @@ class TaxRateListVM {
       taxRateMap: state.taxRateState.map,
       isLoading: state.isLoading,
       filter: state.taxRateUIState.listUIState.filter,
-      onClearEntityFilterPressed: () => store.dispatch(ClearEntityFilter()),
-      onViewEntityFilterPressed: (BuildContext context) => viewEntityById(
-          context: context,
-          entityId: state.taxRateListState.filterEntityId,
-          entityType: state.taxRateListState.filterEntityType),
       onRefreshed: (context) => _handleRefresh(context),
       onSortColumn: (field) => store.dispatch(SortTaxRates(field)),
+      onClearMultielsect: () => store.dispatch(ClearTaxRateMultiselect()),
     );
   }
 
@@ -109,7 +102,5 @@ class TaxRateListVM {
   final String filter;
   final bool isLoading;
   final Function(BuildContext) onRefreshed;
-  final Function onClearEntityFilterPressed;
-  final Function(BuildContext) onViewEntityFilterPressed;
   final Function(String) onSortColumn;
-}
+final Function onClearMultielsect;}

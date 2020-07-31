@@ -27,14 +27,13 @@ class PaymentListBuilder extends StatelessWidget {
       converter: PaymentListVM.fromStore,
       builder: (context, viewModel) {
         return EntityList(
+            onClearMultiselect: viewModel.onClearMultielsect,
             entityType: EntityType.payment,
             presenter: PaymentPresenter(),
             state: viewModel.state,
             entityList: viewModel.paymentList,
             tableColumns: viewModel.tableColumns,
             onRefreshed: viewModel.onRefreshed,
-            onClearEntityFilterPressed: viewModel.onClearEntityFilterPressed,
-            onViewEntityFilterPressed: viewModel.onViewEntityFilterPressed,
             onSortColumn: viewModel.onSortColumn,
             itemBuilder: (BuildContext context, index) {
               final state = viewModel.state;
@@ -61,11 +60,9 @@ class PaymentListVM {
     @required this.filter,
     @required this.isLoading,
     @required this.onRefreshed,
-    @required this.onClearEntityFilterPressed,
-    @required this.onViewEntityFilterPressed,
     @required this.listState,
     @required this.tableColumns,
-    @required this.onSortColumn,
+    @required this.onSortColumn, @required this.onClearMultielsect,
   });
 
   static PaymentListVM fromStore(Store<AppState> store) {
@@ -96,16 +93,12 @@ class PaymentListVM {
       isLoading: state.isLoading,
       filter: state.paymentUIState.listUIState.filter,
       listState: state.paymentListState,
-      onClearEntityFilterPressed: () => store.dispatch(FilterByEntity()),
-      onViewEntityFilterPressed: (BuildContext context) => viewEntityById(
-          context: context,
-          entityId: state.paymentListState.filterEntityId,
-          entityType: state.paymentListState.filterEntityType),
       onRefreshed: (context) => _handleRefresh(context),
       tableColumns:
           state.userCompany.settings.getTableColumns(EntityType.payment) ??
               PaymentPresenter.getAllTableFields(state.userCompany),
       onSortColumn: (field) => store.dispatch(SortPayments(field)),
+      onClearMultielsect: () => store.dispatch(ClearPaymentMultiselect()),
     );
   }
 
@@ -118,8 +111,6 @@ class PaymentListVM {
   final String filter;
   final bool isLoading;
   final Function(BuildContext) onRefreshed;
-  final Function onClearEntityFilterPressed;
-  final Function(BuildContext) onViewEntityFilterPressed;
   final List<String> tableColumns;
   final Function(String) onSortColumn;
-}
+final Function onClearMultielsect;}

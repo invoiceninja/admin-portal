@@ -1,10 +1,16 @@
+import 'dart:async';
+
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart' hide DataRow, DataCell, DataColumn;
+import 'package:flutter_redux/flutter_redux.dart';
 import 'package:invoiceninja_flutter/constants.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/redux/ui/pref_state.dart';
+import 'package:invoiceninja_flutter/ui/app/app_border.dart';
+import 'package:invoiceninja_flutter/ui/app/entities/entity_actions_dialog.dart';
+import 'package:invoiceninja_flutter/ui/app/forms/save_cancel_buttons.dart';
 import 'package:invoiceninja_flutter/ui/app/help_text.dart';
 import 'package:invoiceninja_flutter/ui/app/lists/list_divider.dart';
 import 'package:invoiceninja_flutter/ui/app/lists/list_filter.dart';
@@ -24,10 +30,9 @@ class EntityList extends StatefulWidget {
     @required this.onRefreshed,
     @required this.onSortColumn,
     @required this.itemBuilder,
+    @required this.onClearMultiselect,
     this.presenter,
     this.tableColumns,
-    this.onClearEntityFilterPressed,
-    this.onViewEntityFilterPressed,
   }) : super(key: ValueKey('__${entityType}_${tableColumns}__'));
 
   final AppState state;
@@ -35,11 +40,10 @@ class EntityList extends StatefulWidget {
   final List<String> tableColumns;
   final List<String> entityList;
   final Function(BuildContext) onRefreshed;
-  final Function onClearEntityFilterPressed;
-  final Function(BuildContext) onViewEntityFilterPressed;
   final EntityPresenter presenter;
   final Function(String) onSortColumn;
   final Function(BuildContext, int) itemBuilder;
+  final Function onClearMultiselect;
 
   @override
   _EntityListState createState() => _EntityListState();
@@ -87,12 +91,15 @@ class _EntityListState extends State<EntityList> {
 
   @override
   Widget build(BuildContext context) {
+    final store = StoreProvider.of<AppState>(context);
+    final localization = AppLocalization.of(context);
     final state = widget.state;
     final entityType = widget.entityType;
     final listState = state.getListState(entityType);
     final listUIState = state.getUIState(entityType).listUIState;
     final isList = state.prefState.moduleLayout == ModuleLayout.list ||
         widget.presenter == null;
+    final isInMultiselect = listUIState.isInMultiselect();
     final entityList = widget.entityList;
     final entityMap = state.getEntityMap(entityType);
 
@@ -125,8 +132,11 @@ class _EntityListState extends State<EntityList> {
             ListFilterMessage(
               filterEntityId: listState.filterEntityId,
               filterEntityType: listState.filterEntityType,
-              onPressed: widget.onViewEntityFilterPressed,
-              onClearPressed: widget.onClearEntityFilterPressed,
+              onPressed: (_) => viewEntityById(
+                  context: context,
+                  entityId: state.uiState.filterEntityId,
+                  entityType: state.uiState.filterEntityType),
+              onClearPressed: () => store.dispatch(ClearEntityFilter()),
             ),
           SizedBox(
             height: 32,
@@ -157,8 +167,15 @@ class _EntityListState extends State<EntityList> {
               ListFilterMessage(
                 filterEntityId: listState.filterEntityId,
                 filterEntityType: listState.filterEntityType,
-                onPressed: widget.onViewEntityFilterPressed,
-                onClearPressed: widget.onClearEntityFilterPressed,
+                onPressed: (_) {
+                  viewEntityById(
+                      context: context,
+                      entityId: state.uiState.filterEntityId,
+                      entityType: state.uiState.filterEntityType);
+                },
+                onClearPressed: () {
+                  store.dispatch(ClearEntityFilter());
+                },
               ),
             Expanded(
               child: SingleChildScrollView(
@@ -176,8 +193,7 @@ class _EntityListState extends State<EntityList> {
                           context, entities, EntityAction.toggleMultiselect);
                     },
                     columns: [
-                      if (!listUIState.isInMultiselect())
-                        DataColumn(label: SizedBox()),
+                      if (!isInMultiselect) DataColumn(label: SizedBox()),
                       ...widget.tableColumns.map((field) => DataColumn(
                           label: Container(
                             constraints: BoxConstraints(
@@ -209,13 +225,86 @@ class _EntityListState extends State<EntityList> {
 
     return RefreshIndicator(
         onRefresh: () => widget.onRefreshed(context),
-        child: Stack(
-          alignment: Alignment.topCenter,
-          children: <Widget>[
-            if (state.isLoading ||
-                (kEntitySettings.contains(entityType) && state.isSaving))
-              LinearProgressIndicator(),
-            listOrTable(),
+        child: Column(
+          children: [
+            AppBorder(
+              isTop: true,
+              child: AnimatedContainer(
+                padding: const EdgeInsets.symmetric(horizontal: 10),
+                color: Theme.of(context).cardColor,
+                height: isInMultiselect ? kTopBottomBarHeight : 0,
+                duration: Duration(milliseconds: kDefaultAnimationDuration),
+                curve: Curves.easeInOutCubic,
+                child: AnimatedOpacity(
+                  opacity: isInMultiselect ? 1 : 0,
+                  duration: Duration(milliseconds: kDefaultAnimationDuration),
+                  curve: Curves.easeInOutCubic,
+                  child: Row(
+                    children: [
+                      Checkbox(
+                        materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                        onChanged: (value) {
+                          final entities = entityList
+                              .where((entityId) =>
+                                  value != listUIState.isSelected(entityId))
+                              .map<BaseEntity>(
+                                  (entityId) => entityMap[entityId])
+                              .toList();
+                          handleEntitiesActions(context, entities,
+                              EntityAction.toggleMultiselect);
+                        },
+                        activeColor: Theme.of(context).accentColor,
+                        value: entityList.length ==
+                            (listUIState.selectedIds ?? <String>[]).length,
+                      ),
+                      SizedBox(width: 16),
+                      Expanded(
+                        child: Text(localization.countRecordsSelected.replaceFirst(
+                            ':count',
+                            '${(listUIState.selectedIds ?? <String>[]).length}')),
+                      ),
+                      SaveCancelButtons(
+                        color: state.prefState.enableDarkMode
+                            ? Colors.white
+                            : Colors.black,
+                        saveLabel: localization.done,
+                        onSavePressed: (context) async {
+                          final entities = listUIState.selectedIds
+                              .map<BaseEntity>(
+                                  (entityId) => entityMap[entityId])
+                              .toList();
+
+                          if (entities.isEmpty) {
+                            return;
+                          }
+
+                          await showEntityActionsDialog(
+                            entities: entities,
+                            context: context,
+                            multiselect: true,
+                            completer: Completer<Null>()
+                              ..future.then<dynamic>(
+                                  (_) => widget.onClearMultiselect()),
+                          );
+                        },
+                        onCancelPressed: (_) => widget.onClearMultiselect(),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            ),
+            Expanded(
+              child: Stack(
+                alignment: Alignment.topCenter,
+                children: <Widget>[
+                  if (state.isLoading ||
+                      (kEntitySettings.contains(entityType) && state.isSaving))
+                    LinearProgressIndicator(),
+                  listOrTable(),
+                ],
+              ),
+            ),
           ],
         ));
   }

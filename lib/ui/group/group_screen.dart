@@ -1,5 +1,3 @@
-import 'dart:async';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:invoiceninja_flutter/constants.dart';
@@ -9,9 +7,7 @@ import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/redux/group/group_actions.dart';
 import 'package:invoiceninja_flutter/ui/app/app_bottom_bar.dart';
-import 'package:invoiceninja_flutter/ui/app/forms/save_cancel_buttons.dart';
 import 'package:invoiceninja_flutter/ui/app/list_scaffold.dart';
-import 'package:invoiceninja_flutter/ui/app/entities/entity_actions_dialog.dart';
 import 'package:invoiceninja_flutter/ui/app/list_filter.dart';
 import 'package:invoiceninja_flutter/ui/group/group_list_vm.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
@@ -34,23 +30,10 @@ class GroupSettingsScreen extends StatelessWidget {
     final state = store.state;
     final company = state.company;
     final localization = AppLocalization.of(context);
-    final listUIState = state.uiState.groupUIState.listUIState;
-    final isInMultiselect = listUIState.isInMultiselect();
 
     return ListScaffold(
       entityType: EntityType.group,
-      isChecked: isInMultiselect &&
-          listUIState.selectedIds.length == viewModel.groupList.length,
-      showCheckbox: isInMultiselect,
       onHamburgerLongPress: () => store.dispatch(StartGroupMultiselect()),
-      onCheckboxChanged: (value) {
-        final groups = viewModel.groupList
-            .map<GroupEntity>((groupId) => viewModel.groupMap[groupId])
-            .where((group) => value != listUIState.isSelected(group.id))
-            .toList();
-
-        handleGroupAction(context, groups, EntityAction.toggleMultiselect);
-      },
       appBarTitle: ListFilter(
         entityType: EntityType.group,
         entityIds: viewModel.groupList,
@@ -59,31 +42,6 @@ class GroupSettingsScreen extends StatelessWidget {
           store.dispatch(FilterGroups(value));
         },
       ),
-      appBarActions: [
-        if (viewModel.isInMultiselect)
-          SaveCancelButtons(
-            saveLabel: localization.done,
-            onSavePressed: listUIState.selectedIds.isEmpty
-                ? null
-                : (context) async {
-                    final groups = listUIState.selectedIds
-                        .map<GroupEntity>(
-                            (groupId) => viewModel.groupMap[groupId])
-                        .toList();
-
-                    await showEntityActionsDialog(
-                      entities: groups,
-                      context: context,
-                      multiselect: true,
-                      completer: Completer<Null>()
-                        ..future.then<dynamic>(
-                            (_) => store.dispatch(ClearGroupMultiselect())),
-                    );
-                  },
-            onCancelPressed: (context) =>
-                store.dispatch(ClearGroupMultiselect()),
-          ),
-      ],
       body: GroupListBuilder(),
       bottomNavigationBar: AppBottomBar(
         entityType: EntityType.group,

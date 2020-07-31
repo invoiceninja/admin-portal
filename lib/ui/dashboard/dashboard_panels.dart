@@ -415,7 +415,7 @@ class __DashboardPanelState extends State<_DashboardPanel> {
           domainFn: (ChartMoneyData chartData, _) => chartData.date,
           measureFn: (ChartMoneyData chartData, _) => chartData.amount,
           colorFn: (ChartMoneyData chartData, _) =>
-              charts.MaterialPalette.blue.shadeDefault,
+              charts.ColorUtil.fromDartColor(state.accentColor),
           id: DashboardChart.PERIOD_CURRENT,
           displayName:
               settings.enableComparison ? localization.current : widget.title,

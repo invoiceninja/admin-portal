@@ -32,9 +32,8 @@ class ClientListBuilder extends StatelessWidget {
             entityList: viewModel.clientList,
             tableColumns: viewModel.tableColumns,
             onRefreshed: viewModel.onRefreshed,
-            onClearEntityFilterPressed: viewModel.onClearEntityFilterPressed,
-            onViewEntityFilterPressed: viewModel.onViewEntityFilterPressed,
             onSortColumn: viewModel.onSortColumn,
+            onClearMultiselect: viewModel.onClearMultielsect,
             itemBuilder: (BuildContext context, index) {
               final state = viewModel.state;
               final clientId = viewModel.clientList[index];
@@ -64,9 +63,8 @@ class ClientListVM {
     @required this.onRefreshed,
     @required this.tableColumns,
     @required this.onEntityAction,
-    @required this.onClearEntityFilterPressed,
-    @required this.onViewEntityFilterPressed,
     @required this.onSortColumn,
+    @required this.onClearMultielsect,
   });
 
   final AppState state;
@@ -76,10 +74,9 @@ class ClientListVM {
   final bool isLoading;
   final Function(BuildContext) onRefreshed;
   final Function(BuildContext, List<BaseEntity>, EntityAction) onEntityAction;
-  final Function onClearEntityFilterPressed;
-  final Function(BuildContext) onViewEntityFilterPressed;
   final List<String> tableColumns;
   final Function(String) onSortColumn;
+  final Function onClearMultielsect;
 
   static ClientListVM fromStore(Store<AppState> store) {
     Future<Null> _handleRefresh(BuildContext context) {
@@ -110,15 +107,11 @@ class ClientListVM {
       onEntityAction: (BuildContext context, List<BaseEntity> client,
               EntityAction action) =>
           handleClientAction(context, client, action),
-      onClearEntityFilterPressed: () => store.dispatch(ClearEntityFilter()),
-      onViewEntityFilterPressed: (BuildContext context) => viewEntityById(
-          context: context,
-          entityId: state.clientListState.filterEntityId,
-          entityType: state.clientListState.filterEntityType),
       tableColumns:
           state.userCompany.settings.getTableColumns(EntityType.client) ??
               ClientPresenter.getAllTableFields(state.userCompany),
       onSortColumn: (field) => store.dispatch(SortClients(field)),
+      onClearMultielsect: () => store.dispatch(ClearClientMultiselect()),
     );
   } //
 }

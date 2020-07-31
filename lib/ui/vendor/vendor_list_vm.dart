@@ -26,14 +26,13 @@ class VendorListBuilder extends StatelessWidget {
       converter: VendorListVM.fromStore,
       builder: (context, viewModel) {
         return EntityList(
+          onClearMultiselect: viewModel.onClearMultielsect,
           entityType: EntityType.vendor,
           presenter: VendorPresenter(),
           state: viewModel.state,
           entityList: viewModel.vendorList,
           tableColumns: viewModel.tableColumns,
           onRefreshed: viewModel.onRefreshed,
-          onClearEntityFilterPressed: viewModel.onClearEntityFilterPressed,
-          onViewEntityFilterPressed: viewModel.onViewEntityFilterPressed,
           onSortColumn: viewModel.onSortColumn,
           itemBuilder: (BuildContext context, index) {
             final vendorId = viewModel.vendorList[index];
@@ -65,9 +64,7 @@ class VendorListVM {
     @required this.listState,
     @required this.onRefreshed,
     @required this.tableColumns,
-    @required this.onClearEntityFilterPressed,
-    @required this.onViewEntityFilterPressed,
-    @required this.onSortColumn,
+    @required this.onSortColumn, @required this.onClearMultielsect,
   });
 
   static VendorListVM fromStore(Store<AppState> store) {
@@ -91,16 +88,12 @@ class VendorListVM {
       vendorMap: state.vendorState.map,
       isLoading: state.isLoading,
       filter: state.vendorUIState.listUIState.filter,
-      onClearEntityFilterPressed: () => store.dispatch(ClearEntityFilter()),
-      onViewEntityFilterPressed: (BuildContext context) => viewEntityById(
-          context: context,
-          entityId: state.vendorListState.filterEntityId,
-          entityType: state.vendorListState.filterEntityType),
       onRefreshed: (context) => _handleRefresh(context),
       tableColumns:
           state.userCompany.settings.getTableColumns(EntityType.vendor) ??
               VendorPresenter.getAllTableFields(state.userCompany),
       onSortColumn: (field) => store.dispatch(SortVendors(field)),
+      onClearMultielsect: () => store.dispatch(ClearVendorMultiselect()),
     );
   }
 
@@ -111,8 +104,6 @@ class VendorListVM {
   final String filter;
   final bool isLoading;
   final Function(BuildContext) onRefreshed;
-  final Function onClearEntityFilterPressed;
-  final Function(BuildContext) onViewEntityFilterPressed;
   final List<String> tableColumns;
   final Function(String) onSortColumn;
-}
+final Function onClearMultielsect;}

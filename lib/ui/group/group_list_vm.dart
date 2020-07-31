@@ -27,14 +27,13 @@ class GroupListBuilder extends StatelessWidget {
       converter: GroupListVM.fromStore,
       builder: (context, viewModel) {
         return EntityList(
+            onClearMultiselect: viewModel.onClearMultielsect,
             entityType: EntityType.group,
             //presenter: ClientPresenter(),
             state: viewModel.state,
             entityList: viewModel.groupList,
             //tableColumns: viewModel.tableColumns,
             onRefreshed: viewModel.onRefreshed,
-            onClearEntityFilterPressed: viewModel.onClearEntityFilterPressed,
-            onViewEntityFilterPressed: viewModel.onViewEntityFilterPressed,
             onSortColumn: viewModel.onSortColumn,
             itemBuilder: (BuildContext context, index) {
               final state = viewModel.state;
@@ -65,9 +64,7 @@ class GroupListVM {
     @required this.isLoading,
     @required this.listState,
     @required this.onRefreshed,
-    @required this.onClearEntityFilterPressed,
-    @required this.onViewEntityFilterPressed,
-    @required this.onSortColumn,
+    @required this.onSortColumn, @required this.onClearMultielsect,
   });
 
   static GroupListVM fromStore(Store<AppState> store) {
@@ -92,13 +89,9 @@ class GroupListVM {
       groupMap: state.groupState.map,
       isLoading: state.isLoading,
       filter: state.groupUIState.listUIState.filter,
-      onClearEntityFilterPressed: () => store.dispatch(ClearEntityFilter()),
-      onViewEntityFilterPressed: (BuildContext context) => viewEntityById(
-          context: context,
-          entityId: state.groupListState.filterEntityId,
-          entityType: state.groupListState.filterEntityType),
       onRefreshed: (context) => _handleRefresh(context),
       onSortColumn: (field) => store.dispatch(SortGroups(field)),
+      onClearMultielsect: () => store.dispatch(ClearGroupMultiselect()),
     );
   }
 
@@ -110,7 +103,5 @@ class GroupListVM {
   final String filter;
   final bool isLoading;
   final Function(BuildContext) onRefreshed;
-  final Function onClearEntityFilterPressed;
-  final Function(BuildContext) onViewEntityFilterPressed;
   final Function(String) onSortColumn;
-}
+final Function onClearMultielsect;}

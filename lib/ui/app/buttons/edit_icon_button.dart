@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_redux/flutter_redux.dart';
+import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 
 class EditIconButton extends StatelessWidget {
@@ -13,6 +15,7 @@ class EditIconButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final localization = AppLocalization.of(context);
+    final store = StoreProvider.of<AppState>(context);
 
     if (!isVisible) {
       return Container();
@@ -21,7 +24,7 @@ class EditIconButton extends StatelessWidget {
     return FlatButton(
       child: Text(
         localization.edit,
-        //style: TextStyle(color: Colors.white),
+        style: TextStyle(color: store.state.headerTextColor),
       ),
       onPressed: onPressed,
     );

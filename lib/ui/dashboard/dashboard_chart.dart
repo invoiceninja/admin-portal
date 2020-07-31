@@ -118,7 +118,7 @@ class _DashboardChartState extends State<DashboardChart> {
           Divider(height: 1.0),
           Container(
             width: double.infinity,
-            height: settings.enableComparison ? 106 : 86,
+            height: settings.enableComparison ? 114 : 94,
             child: ListView(
               shrinkWrap: true,
               scrollDirection: Axis.horizontal,
@@ -157,9 +157,9 @@ class _DashboardChartState extends State<DashboardChart> {
                     });
                   },
                   child: Container(
-                    color: isSelected ? Colors.blue : theme.cardColor,
-                    padding:
-                        EdgeInsets.only(left: 16, top: 8, right: 32, bottom: 8),
+                    color: isSelected ? state.accentColor : theme.cardColor,
+                    padding: EdgeInsets.only(
+                        left: 16, top: 16, right: 32, bottom: 16),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: <Widget>[

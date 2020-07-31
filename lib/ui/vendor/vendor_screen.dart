@@ -1,11 +1,7 @@
-import 'dart:async';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
-import 'package:invoiceninja_flutter/ui/app/forms/save_cancel_buttons.dart';
 import 'package:invoiceninja_flutter/ui/app/list_scaffold.dart';
-import 'package:invoiceninja_flutter/ui/app/entities/entity_actions_dialog.dart';
 import 'package:invoiceninja_flutter/ui/app/list_filter.dart';
 import 'package:invoiceninja_flutter/ui/vendor/vendor_presenter.dart';
 import 'package:invoiceninja_flutter/ui/vendor/vendor_screen_vm.dart';
@@ -33,23 +29,10 @@ class VendorScreen extends StatelessWidget {
     final company = state.company;
     final userCompany = store.state.userCompany;
     final localization = AppLocalization.of(context);
-    final listUIState = state.uiState.vendorUIState.listUIState;
-    final isInMultiselect = listUIState.isInMultiselect();
 
     return ListScaffold(
       entityType: EntityType.vendor,
-      isChecked: isInMultiselect &&
-          listUIState.selectedIds.length == viewModel.vendorList.length,
-      showCheckbox: isInMultiselect,
       onHamburgerLongPress: () => store.dispatch(StartVendorMultiselect()),
-      onCheckboxChanged: (value) {
-        final vendors = viewModel.vendorList
-            .map<VendorEntity>((vendorId) => viewModel.vendorMap[vendorId])
-            .where((vendor) => value != listUIState.isSelected(vendor.id))
-            .toList();
-
-        handleVendorAction(context, vendors, EntityAction.toggleMultiselect);
-      },
       appBarTitle: ListFilter(
         entityType: EntityType.vendor,
         entityIds: viewModel.vendorList,
@@ -58,31 +41,6 @@ class VendorScreen extends StatelessWidget {
           store.dispatch(FilterVendors(value));
         },
       ),
-      appBarActions: [
-        if (viewModel.isInMultiselect)
-          SaveCancelButtons(
-            saveLabel: localization.done,
-            onSavePressed: listUIState.selectedIds.isEmpty
-                ? null
-                : (context) async {
-                    final vendors = listUIState.selectedIds
-                        .map<VendorEntity>(
-                            (vendorId) => viewModel.vendorMap[vendorId])
-                        .toList();
-
-                    await showEntityActionsDialog(
-                      entities: vendors,
-                      context: context,
-                      multiselect: true,
-                      completer: Completer<Null>()
-                        ..future.then<dynamic>(
-                            (_) => store.dispatch(ClearVendorMultiselect())),
-                    );
-                  },
-            onCancelPressed: (context) =>
-                store.dispatch(ClearVendorMultiselect()),
-          ),
-      ],
       body: VendorListBuilder(),
       bottomNavigationBar: AppBottomBar(
         entityType: EntityType.vendor,

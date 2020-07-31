@@ -5,7 +5,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:invoiceninja_flutter/data/web_client.dart';
 import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
-import 'package:invoiceninja_flutter/redux/reports/reports_actions.dart';
 import 'package:invoiceninja_flutter/redux/ui/pref_state.dart';
 import 'package:invoiceninja_flutter/ui/app/dialogs/alert_dialog.dart';
 import 'package:invoiceninja_flutter/ui/app/dialogs/error_dialog.dart';
@@ -20,7 +19,6 @@ import 'package:invoiceninja_flutter/constants.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/redux/dashboard/dashboard_actions.dart';
-import 'package:invoiceninja_flutter/redux/settings/settings_actions.dart';
 import 'package:invoiceninja_flutter/ui/app/menu_drawer_vm.dart';
 import 'package:invoiceninja_flutter/ui/app/app_border.dart';
 import 'package:invoiceninja_flutter/utils/icons.dart';
@@ -58,29 +56,40 @@ class MenuDrawer extends StatelessWidget {
               )
             : Image.asset('assets/images/logo.png', width: 32);
 
-    Widget _companyListItem(CompanyEntity company) => Row(
-          mainAxisSize: MainAxisSize.max,
-          mainAxisAlignment: MainAxisAlignment.start,
-          children: <Widget>[
-            _companyLogo(company),
-            SizedBox(width: 28),
-            Expanded(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: <Widget>[
-                  Text(
-                    company.displayName.isEmpty
-                        ? localization.untitledCompany
-                        : company.displayName,
-                    style: Theme.of(context).textTheme.headline6,
-                    overflow: TextOverflow.ellipsis,
-                  ),
-                ],
-              ),
+    Widget _companyListItem(CompanyEntity company) {
+      final userCompany = state.userCompanyStates
+          .firstWhere(
+              (userCompanyState) => userCompanyState.company.id == company.id)
+          .userCompany;
+      return Row(
+        mainAxisSize: MainAxisSize.max,
+        mainAxisAlignment: MainAxisAlignment.start,
+        children: <Widget>[
+          _companyLogo(company),
+          SizedBox(width: 28),
+          Expanded(
+            child: Text(
+              company.displayName.isEmpty
+                  ? localization.untitledCompany
+                  : company.displayName,
+              style: Theme.of(context).textTheme.headline6,
+              overflow: TextOverflow.ellipsis,
             ),
-          ],
-        );
+          ),
+          if (userCompany.settings.accentColor != null)
+            Container(
+              padding: const EdgeInsets.only(right: 2),
+              decoration: BoxDecoration(
+                  shape: BoxShape.circle,
+                  color: convertHexStringToColor(
+                      userCompany.settings.accentColor)),
+              width: 10,
+              height: 10,
+              //color: Colors.red,
+            ),
+        ],
+      );
+    }
 
     final _collapsedCompanySelector = PopupMenuButton<String>(
       tooltip: localization.selectCompany,

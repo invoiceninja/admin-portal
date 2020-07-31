@@ -1,10 +1,6 @@
-import 'dart:async';
-
 import 'package:invoiceninja_flutter/constants.dart';
 import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
-import 'package:invoiceninja_flutter/ui/app/forms/save_cancel_buttons.dart';
 import 'package:invoiceninja_flutter/ui/app/list_scaffold.dart';
-import 'package:invoiceninja_flutter/ui/app/entities/entity_actions_dialog.dart';
 import 'package:invoiceninja_flutter/ui/app/list_filter.dart';
 import 'package:invoiceninja_flutter/ui/invoice/invoice_presenter.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
@@ -35,23 +31,10 @@ class InvoiceScreen extends StatelessWidget {
     final company = state.company;
     final userCompany = store.state.userCompany;
     final localization = AppLocalization.of(context);
-    final listUIState = store.state.uiState.invoiceUIState.listUIState;
-    final isInMultiselect = listUIState.isInMultiselect();
 
     return ListScaffold(
       entityType: EntityType.invoice,
-      isChecked: isInMultiselect &&
-          listUIState.selectedIds.length == viewModel.invoiceList.length,
-      showCheckbox: isInMultiselect,
       onHamburgerLongPress: () => store.dispatch(StartInvoiceMultiselect()),
-      onCheckboxChanged: (value) {
-        final invoices = viewModel.invoiceList
-            .map<InvoiceEntity>((invoiceId) => viewModel.invoiceMap[invoiceId])
-            .where((invoice) => value != listUIState.isSelected(invoice.id))
-            .toList();
-
-        handleInvoiceAction(context, invoices, EntityAction.toggleMultiselect);
-      },
       appBarTitle: ListFilter(
         entityType: EntityType.invoice,
         entityIds: viewModel.invoiceList,
@@ -60,31 +43,6 @@ class InvoiceScreen extends StatelessWidget {
           store.dispatch(FilterInvoices(value));
         },
       ),
-      appBarActions: [
-        if (viewModel.isInMultiselect)
-          SaveCancelButtons(
-            saveLabel: localization.done,
-            onSavePressed: listUIState.selectedIds.isEmpty
-                ? null
-                : (context) async {
-                    final invoices = listUIState.selectedIds
-                        .map<InvoiceEntity>(
-                            (invoiceId) => viewModel.invoiceMap[invoiceId])
-                        .toList();
-
-                    await showEntityActionsDialog(
-                      entities: invoices,
-                      context: context,
-                      multiselect: true,
-                      completer: Completer<Null>()
-                        ..future.then<dynamic>(
-                            (_) => store.dispatch(ClearInvoiceMultiselect())),
-                    );
-                  },
-            onCancelPressed: (context) =>
-                store.dispatch(ClearInvoiceMultiselect()),
-          ),
-      ],
       body: InvoiceListBuilder(),
       bottomNavigationBar: AppBottomBar(
         entityType: EntityType.invoice,

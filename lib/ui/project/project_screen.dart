@@ -1,11 +1,7 @@
-import 'dart:async';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
-import 'package:invoiceninja_flutter/ui/app/forms/save_cancel_buttons.dart';
 import 'package:invoiceninja_flutter/ui/app/list_scaffold.dart';
-import 'package:invoiceninja_flutter/ui/app/entities/entity_actions_dialog.dart';
 import 'package:invoiceninja_flutter/ui/app/list_filter.dart';
 import 'package:invoiceninja_flutter/ui/project/project_presenter.dart';
 import 'package:invoiceninja_flutter/ui/project/project_screen_vm.dart';
@@ -33,23 +29,10 @@ class ProjectScreen extends StatelessWidget {
     final company = store.state.company;
     final userCompany = store.state.userCompany;
     final localization = AppLocalization.of(context);
-    final listUIState = state.uiState.projectUIState.listUIState;
-    final isInMultiselect = listUIState.isInMultiselect();
 
     return ListScaffold(
       entityType: EntityType.project,
-      isChecked: isInMultiselect &&
-          listUIState.selectedIds.length == viewModel.projectList.length,
-      showCheckbox: isInMultiselect,
       onHamburgerLongPress: () => store.dispatch(StartProjectMultiselect()),
-      onCheckboxChanged: (value) {
-        final projects = viewModel.projectList
-            .map<ProjectEntity>((projectId) => viewModel.projectMap[projectId])
-            .where((project) => value != listUIState.isSelected(project.id))
-            .toList();
-
-        handleProjectAction(context, projects, EntityAction.toggleMultiselect);
-      },
       appBarTitle: ListFilter(
         entityType: EntityType.project,
         entityIds: viewModel.projectList,
@@ -58,31 +41,6 @@ class ProjectScreen extends StatelessWidget {
           store.dispatch(FilterProjects(value));
         },
       ),
-      appBarActions: [
-        if (viewModel.isInMultiselect)
-          SaveCancelButtons(
-            saveLabel: localization.done,
-            onSavePressed: listUIState.selectedIds.isEmpty
-                ? null
-                : (context) async {
-                    final projects = listUIState.selectedIds
-                        .map<ProjectEntity>(
-                            (projectId) => viewModel.projectMap[projectId])
-                        .toList();
-
-                    await showEntityActionsDialog(
-                      entities: projects,
-                      context: context,
-                      multiselect: true,
-                      completer: Completer<Null>()
-                        ..future.then<dynamic>(
-                            (_) => store.dispatch(ClearProjectMultiselect())),
-                    );
-                  },
-            onCancelPressed: (context) =>
-                store.dispatch(ClearProjectMultiselect()),
-          ),
-      ],
       body: ProjectListBuilder(),
       bottomNavigationBar: AppBottomBar(
         entityType: EntityType.project,

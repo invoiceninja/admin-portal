@@ -27,14 +27,13 @@ class InvoiceListBuilder extends StatelessWidget {
       converter: InvoiceListVM.fromStore,
       builder: (context, viewModel) {
         return EntityList(
+            onClearMultiselect: viewModel.onClearMultiselect,
             entityType: EntityType.invoice,
             presenter: InvoicePresenter(),
             state: viewModel.state,
             entityList: viewModel.invoiceList,
             tableColumns: viewModel.tableColumns,
             onRefreshed: viewModel.onRefreshed,
-            onClearEntityFilterPressed: viewModel.onClearEntityFilterPressed,
-            onViewEntityFilterPressed: viewModel.onViewEntityFilterPressed,
             onSortColumn: viewModel.onSortColumn,
             itemBuilder: (BuildContext context, index) {
               final invoiceId = viewModel.invoiceList[index];
@@ -61,10 +60,9 @@ class EntityListVM {
     @required this.isLoaded,
     @required this.filter,
     @required this.onRefreshed,
-    @required this.onClearEntityFilterPressed,
-    @required this.onViewEntityFilterPressed,
     @required this.tableColumns,
     @required this.onSortColumn,
+    @required this.onClearMultiselect,
   });
 
   final AppState state;
@@ -76,10 +74,9 @@ class EntityListVM {
   final bool isLoading;
   final bool isLoaded;
   final Function(BuildContext) onRefreshed;
-  final Function onClearEntityFilterPressed;
-  final Function(BuildContext) onViewEntityFilterPressed;
   final List<String> tableColumns;
   final Function(String) onSortColumn;
+  final Function onClearMultiselect;
 }
 
 class InvoiceListVM extends EntityListVM {
@@ -92,12 +89,11 @@ class InvoiceListVM extends EntityListVM {
     bool isLoading,
     bool isLoaded,
     Function(BuildContext) onRefreshed,
-    Function onClearEntityFilterPressed,
-    Function(BuildContext) onViewEntityFilterPressed,
     Function(BuildContext, List<InvoiceEntity>, EntityAction) onEntityAction,
     List<String> tableColumns,
     EntityType entityType,
     Function(String) onSortColumn,
+    Function onClearMultiselect,
   }) : super(
           state: state,
           invoiceList: invoiceList,
@@ -107,11 +103,10 @@ class InvoiceListVM extends EntityListVM {
           isLoading: isLoading,
           isLoaded: isLoaded,
           onRefreshed: onRefreshed,
-          onClearEntityFilterPressed: onClearEntityFilterPressed,
-          onViewEntityFilterPressed: onViewEntityFilterPressed,
           tableColumns: tableColumns,
           entityType: entityType,
           onSortColumn: onSortColumn,
+          onClearMultiselect: onClearMultiselect,
         );
 
   static InvoiceListVM fromStore(Store<AppState> store) {
@@ -142,11 +137,6 @@ class InvoiceListVM extends EntityListVM {
       isLoading: state.isLoading,
       filter: state.invoiceListState.filter,
       onRefreshed: (context) => _handleRefresh(context),
-      onClearEntityFilterPressed: () => store.dispatch(FilterByEntity()),
-      onViewEntityFilterPressed: (BuildContext context) => viewEntityById(
-          context: context,
-          entityId: state.invoiceListState.filterEntityId,
-          entityType: state.invoiceListState.filterEntityType),
       onEntityAction: (BuildContext context, List<BaseEntity> invoices,
               EntityAction action) =>
           handleInvoiceAction(context, invoices, action),
@@ -155,6 +145,7 @@ class InvoiceListVM extends EntityListVM {
               InvoicePresenter.getAllTableFields(state.userCompany),
       entityType: EntityType.invoice,
       onSortColumn: (field) => store.dispatch(SortInvoices(field)),
+      onClearMultiselect: () => store.dispatch(ClearInvoiceMultiselect()),
     );
   }
 }

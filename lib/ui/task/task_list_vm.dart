@@ -27,14 +27,13 @@ class TaskListBuilder extends StatelessWidget {
       converter: TaskListVM.fromStore,
       builder: (context, viewModel) {
         return EntityList(
+            onClearMultiselect: viewModel.onClearMultielsect,
             entityType: EntityType.taxRate,
             presenter: TaskPresenter(),
             state: viewModel.state,
             entityList: viewModel.taskList,
             tableColumns: viewModel.tableColumns,
             onRefreshed: viewModel.onRefreshed,
-            onClearEntityFilterPressed: viewModel.onClearEntityFilterPressed,
-            onViewEntityFilterPressed: viewModel.onViewEntityFilterPressed,
             onSortColumn: viewModel.onSortColumn,
             itemBuilder: (BuildContext context, index) {
               final taskId = viewModel.taskList[index];
@@ -69,9 +68,8 @@ class TaskListVM {
     @required this.listState,
     @required this.onRefreshed,
     @required this.tableColumns,
-    @required this.onClearEntityFilterPressed,
-    @required this.onViewEntityFilterPressed,
     @required this.onSortColumn,
+    @required this.onClearMultielsect,
   });
 
   static TaskListVM fromStore(Store<AppState> store) {
@@ -103,16 +101,12 @@ class TaskListVM {
       clientMap: state.clientState.map,
       isLoading: state.isLoading,
       filter: state.taskUIState.listUIState.filter,
-      onClearEntityFilterPressed: () => store.dispatch(ClearEntityFilter()),
-      onViewEntityFilterPressed: (BuildContext context) => viewEntityById(
-          context: context,
-          entityId: state.taskListState.filterEntityId,
-          entityType: state.taskListState.filterEntityType),
       onSortColumn: (field) => store.dispatch(SortTasks(field)),
       onRefreshed: (context) => _handleRefresh(context),
       tableColumns:
           state.userCompany.settings.getTableColumns(EntityType.task) ??
               TaskPresenter.getAllTableFields(state.userCompany),
+      onClearMultielsect: () => store.dispatch(ClearTaskMultiselect()),
     );
   }
 
@@ -125,8 +119,6 @@ class TaskListVM {
   final String filter;
   final bool isLoading;
   final Function(BuildContext) onRefreshed;
-  final Function onClearEntityFilterPressed;
-  final Function(BuildContext) onViewEntityFilterPressed;
   final List<String> tableColumns;
   final Function(String) onSortColumn;
-}
+final Function onClearMultielsect;}

@@ -69,6 +69,7 @@ abstract class CompanyEntity extends Object
       googleAnalyticsKey: '',
       clientCanRegister: true,
       isLarge: false,
+      enableShopApi: false,
       convertProductExchangeRate: false,
       enableCustomSurchargeTaxes1: false,
       enableCustomSurchargeTaxes2: false,
@@ -163,6 +164,11 @@ abstract class CompanyEntity extends Object
 
   @BuiltValueField(wireName: 'is_large')
   bool get isLarge;
+
+  // TODO remove this nullable
+  @nullable
+  @BuiltValueField(wireName: 'enable_shop_api')
+  bool get enableShopApi;
 
   // TODO remove this
   @nullable

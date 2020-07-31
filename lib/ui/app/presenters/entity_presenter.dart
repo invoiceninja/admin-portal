@@ -68,6 +68,7 @@ class EntityPresenter {
         'total',
         'invoice_amount',
         'invoice_balance',
+        'credit_balance',
         'tax_rate',
         'tax_amount',
         'tax_paid',

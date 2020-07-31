@@ -27,14 +27,13 @@ class DesignListBuilder extends StatelessWidget {
       converter: DesignListVM.fromStore,
       builder: (context, viewModel) {
         return EntityList(
+            onClearMultiselect: viewModel.onClearMultielsect,
             entityType: EntityType.design,
             //presenter: ClientPresenter(),
             state: viewModel.state,
             entityList: viewModel.designList,
             tableColumns: viewModel.tableColumns,
             onRefreshed: viewModel.onRefreshed,
-            onClearEntityFilterPressed: viewModel.onClearEntityFilterPressed,
-            onViewEntityFilterPressed: viewModel.onViewEntityFilterPressed,
             onSortColumn: viewModel.onSortColumn,
             itemBuilder: (BuildContext context, index) {
               final state = viewModel.state;
@@ -67,9 +66,7 @@ class DesignListVM {
     @required this.onRefreshed,
     @required this.onEntityAction,
     @required this.tableColumns,
-    @required this.onClearEntityFilterPressed,
-    @required this.onViewEntityFilterPressed,
-    @required this.onSortColumn,
+    @required this.onSortColumn, @required this.onClearMultielsect,
   });
 
   static DesignListVM fromStore(Store<AppState> store) {
@@ -94,17 +91,13 @@ class DesignListVM {
       designMap: state.designState.map,
       isLoading: state.isLoading,
       filter: state.designUIState.listUIState.filter,
-      onClearEntityFilterPressed: () => store.dispatch(ClearEntityFilter()),
-      onViewEntityFilterPressed: (BuildContext context) => viewEntityById(
-          context: context,
-          entityId: state.designListState.filterEntityId,
-          entityType: state.designListState.filterEntityType),
       onEntityAction: (BuildContext context, List<BaseEntity> designs,
               EntityAction action) =>
           handleDesignAction(context, designs, action),
       onRefreshed: (context) => _handleRefresh(context),
       tableColumns: DesignPresenter.getDefaultTableFields(state.userCompany),
       onSortColumn: (field) => store.dispatch(SortDesigns(field)),
+      onClearMultielsect: () => store.dispatch(ClearDesignMultiselect()),
     );
   }
 
@@ -117,8 +110,6 @@ class DesignListVM {
   final bool isLoading;
   final Function(BuildContext) onRefreshed;
   final Function(BuildContext, List<BaseEntity>, EntityAction) onEntityAction;
-  final Function onClearEntityFilterPressed;
-  final Function(BuildContext) onViewEntityFilterPressed;
   final List<String> tableColumns;
   final Function(String) onSortColumn;
-}
+final Function onClearMultielsect;}
