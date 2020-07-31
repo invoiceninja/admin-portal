@@ -668,8 +668,13 @@ class _EntityFilter extends StatelessWidget {
     final filterEntity =
         entityMap != null ? entityMap[uiState.filterEntityId] : null;
 
+    final backgroundColor =
+        !state.prefState.enableDarkMode && state.hasAccentColor
+            ? state.accentColor
+            : Theme.of(context).cardColor;
+
     return Material(
-      color: Theme.of(context).cardColor,
+      color: backgroundColor,
       child: AnimatedContainer(
         height: show ? 46 : 0,
         duration: Duration(milliseconds: kDefaultAnimationDuration),
@@ -680,7 +685,7 @@ class _EntityFilter extends StatelessWidget {
           curve: Curves.easeInOutCubic,
           child: filterEntity == null
               ? Container(
-                  color: Theme.of(context).cardColor,
+                  color: backgroundColor,
                 )
               : AppBar(
                   leading: state.prefState.showFilterSidebar
