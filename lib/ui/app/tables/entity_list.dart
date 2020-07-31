@@ -232,7 +232,7 @@ class _EntityListState extends State<EntityList> {
               child: AnimatedContainer(
                 padding: const EdgeInsets.symmetric(horizontal: 10),
                 color: Theme.of(context).cardColor,
-                height: isInMultiselect ? 46 : 0,
+                height: isInMultiselect ? kTopBottomBarHeight : 0,
                 duration: Duration(milliseconds: kDefaultAnimationDuration),
                 curve: Curves.easeInOutCubic,
                 child: AnimatedOpacity(
