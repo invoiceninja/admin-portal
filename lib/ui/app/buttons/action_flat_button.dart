@@ -20,6 +20,7 @@ class ActionFlatButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final store = StoreProvider.of<AppState>(context);
+    final state = store.state;
 
     if (!isVisible) {
       return Container();
@@ -33,7 +34,12 @@ class ActionFlatButton extends StatelessWidget {
           icon: SizedBox(
             width: 28,
             height: 28,
-            child: CircularProgressIndicator(),
+            child: CircularProgressIndicator(
+              valueColor: AlwaysStoppedAnimation<Color>(
+                  state.hasAccentColor || state.prefState.enableDarkMode
+                      ? Colors.white
+                      : state.accentColor),
+            ),
           ),
         ),
       );
