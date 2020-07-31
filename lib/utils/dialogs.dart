@@ -105,6 +105,7 @@ class _PasswordConfirmationState extends State<PasswordConfirmation> {
   @override
   Widget build(BuildContext context) {
     final localization = AppLocalization.of(context);
+    final store = StoreProvider.of<AppState>(context);
 
     return AlertDialog(
       title: Text(localization.verifyPassword),
@@ -129,6 +130,9 @@ class _PasswordConfirmationState extends State<PasswordConfirmation> {
       ),
       actions: <Widget>[
         SaveCancelButtons(
+          color: store.state.prefState.enableDarkMode
+              ? Colors.white
+              : Colors.black,
           saveLabel: localization.save.toUpperCase(),
           onSavePressed: (context) {
             if ((_password ?? '').isEmpty) {
@@ -195,6 +199,7 @@ class _FieldConfirmationState extends State<FieldConfirmation> {
   @override
   Widget build(BuildContext context) {
     final localization = AppLocalization.of(context);
+    final store = StoreProvider.of<AppState>(context);
 
     return AlertDialog(
       title: Text(widget.title),
@@ -211,6 +216,9 @@ class _FieldConfirmationState extends State<FieldConfirmation> {
       ),
       actions: <Widget>[
         SaveCancelButtons(
+          color: store.state.prefState.enableDarkMode
+              ? Colors.white
+              : Colors.black,
           saveLabel: localization.save.toUpperCase(),
           onSavePressed: (context) {
             if ((_field ?? '').isEmpty) {
