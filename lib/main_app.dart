@@ -185,7 +185,6 @@ class InvoiceNinjaAppState extends State<InvoiceNinjaApp> {
                   pageTransitionsTheme: pageTransitionsTheme,
                   accentColor: accentColor,
                   textSelectionColor: accentColor,
-                  //primaryColor: hasAccentColor ? Colors.white : null,
                   primaryColorLight: const Color(0xFF5dabf4),
                   primaryColorDark: const Color(0xFF0D5D91),
                   buttonColor: const Color(0xFF0D5D91),
@@ -208,7 +207,7 @@ class InvoiceNinjaAppState extends State<InvoiceNinjaApp> {
                     ),
                   ),
                   iconTheme: IconThemeData(
-                    color: hasAccentColor ? Colors.white : Colors.blue,
+                    color: accentColor,
                   ),
                   appBarTheme: AppBarTheme(
                     color: hasAccentColor ? accentColor : Colors.white,
@@ -216,9 +215,9 @@ class InvoiceNinjaAppState extends State<InvoiceNinjaApp> {
                       color: hasAccentColor ? Colors.white : Colors.blue,
                     ),
                     textTheme: TextTheme(
-                      headline6: TextStyle(
-                        color: hasAccentColor ? Colors.white : Colors.black,
-                      ),
+                      headline6: Theme.of(context).textTheme.headline6.copyWith(
+                            color: hasAccentColor ? Colors.white : Colors.black,
+                          ),
                     ),
                   ),
                 ),
