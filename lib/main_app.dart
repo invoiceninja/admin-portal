@@ -181,20 +181,22 @@ class InvoiceNinjaAppState extends State<InvoiceNinjaApp> {
                   bottomAppBarColor: const Color(0xFF1B1C1E),
                   primaryColorDark: Colors.black,
                 )
-              : ThemeData(fontFamily: fontFamily).copyWith(
+              : ThemeData(
                   pageTransitionsTheme: pageTransitionsTheme,
+                  primaryColor: accentColor,
                   accentColor: accentColor,
-                  textSelectionColor: accentColor,
-                  primaryColorLight: const Color(0xFF5dabf4),
-                  primaryColorDark:
-                      hasAccentColor ? accentColor : const Color(0xFF0D5D91),
-                  buttonColor: const Color(0xFF0D5D91),
                   indicatorColor: accentColor,
+                  textSelectionColor: accentColor,
+                  fontFamily: fontFamily,
                   backgroundColor: Colors.white,
                   canvasColor: Colors.white,
-                  scaffoldBackgroundColor: const Color(0xFFE7EBEE),
                   cardColor: Colors.white,
                   bottomAppBarColor: Colors.white,
+                  primaryColorDark:
+                      hasAccentColor ? accentColor : const Color(0xFF0D5D91),
+                  primaryColorLight: const Color(0xFF5dabf4),
+                  buttonColor: const Color(0xFF0D5D91),
+                  scaffoldBackgroundColor: const Color(0xFFE7EBEE),
                   tabBarTheme: TabBarTheme(
                     labelColor: hasAccentColor ? Colors.white : Colors.black,
                     unselectedLabelColor: hasAccentColor
@@ -213,7 +215,7 @@ class InvoiceNinjaAppState extends State<InvoiceNinjaApp> {
                   appBarTheme: AppBarTheme(
                     color: hasAccentColor ? accentColor : Colors.white,
                     iconTheme: IconThemeData(
-                      color: hasAccentColor ? Colors.white : Colors.blue,
+                      color: hasAccentColor ? Colors.white : accentColor,
                     ),
                     textTheme: TextTheme(
                       headline6: Theme.of(context).textTheme.headline6.copyWith(

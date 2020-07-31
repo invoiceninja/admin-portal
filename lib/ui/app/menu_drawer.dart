@@ -91,8 +91,6 @@ class MenuDrawer extends StatelessWidget {
       );
     }
 
-    ;
-
     final _collapsedCompanySelector = PopupMenuButton<String>(
       tooltip: localization.selectCompany,
       child: SizedBox(
