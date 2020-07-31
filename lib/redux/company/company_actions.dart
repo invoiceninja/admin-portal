@@ -4,8 +4,9 @@ import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:flutter/material.dart';
 import 'package:invoiceninja_flutter/data/models/company_model.dart';
 import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
+import 'package:invoiceninja_flutter/redux/client/client_actions.dart';
 
-class SelectCompany {
+class SelectCompany implements ClearClientMultiselect {
   SelectCompany({
     @required this.companyIndex,
     this.clearSelection = true,
