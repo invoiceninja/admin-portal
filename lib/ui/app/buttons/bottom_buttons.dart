@@ -28,9 +28,9 @@ class BottomButtons extends StatelessWidget {
     final localization = AppLocalization.of(context);
     final store = StoreProvider.of<AppState>(context);
     final state = store.state;
-    final textColor = state.prefState.enableDarkMode
+    final textColor = state.prefState.enableDarkMode || state.hasAccentColor
         ? Theme.of(context).textTheme.bodyText1.color
-        : Colors.blue;
+        : state.accentColor;
 
     return SizedBox(
       height: kTopBottomBarHeight,

@@ -186,7 +186,8 @@ class InvoiceNinjaAppState extends State<InvoiceNinjaApp> {
                   accentColor: accentColor,
                   textSelectionColor: accentColor,
                   primaryColorLight: const Color(0xFF5dabf4),
-                  primaryColorDark: const Color(0xFF0D5D91),
+                  primaryColorDark:
+                      hasAccentColor ? accentColor : const Color(0xFF0D5D91),
                   buttonColor: const Color(0xFF0D5D91),
                   indicatorColor: accentColor,
                   backgroundColor: Colors.white,
