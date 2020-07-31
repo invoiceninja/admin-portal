@@ -63,20 +63,28 @@ class MenuDrawer extends StatelessWidget {
             _companyLogo(company),
             SizedBox(width: 28),
             Expanded(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: <Widget>[
-                  Text(
-                    company.displayName.isEmpty
-                        ? localization.untitledCompany
-                        : company.displayName,
-                    style: Theme.of(context).textTheme.headline6,
-                    overflow: TextOverflow.ellipsis,
-                  ),
-                ],
+              child: Text(
+                company.displayName.isEmpty
+                    ? localization.untitledCompany
+                    : company.displayName,
+                style: Theme.of(context).textTheme.headline6,
+                overflow: TextOverflow.ellipsis,
               ),
             ),
+            Container(
+              decoration: BoxDecoration(
+                  shape: BoxShape.circle,
+                  color: convertHexStringToColor(state.userCompanyStates
+                      .firstWhere((userCompanyState) =>
+                          userCompanyState.company.id == company.id)
+                      .userCompany
+                      .settings
+                      .accentColor)),
+              width: 10,
+              height: 10,
+              //color: Colors.red,
+            ),
+            SizedBox(width: 2),
           ],
         );
 

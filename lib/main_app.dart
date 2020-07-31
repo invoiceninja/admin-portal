@@ -207,7 +207,7 @@ class InvoiceNinjaAppState extends State<InvoiceNinjaApp> {
                     ),
                   ),
                   iconTheme: IconThemeData(
-                    color: accentColor,
+                    color: hasAccentColor ? null : accentColor,
                   ),
                   appBarTheme: AppBarTheme(
                     color: hasAccentColor ? accentColor : Colors.white,

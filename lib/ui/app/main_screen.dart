@@ -640,7 +640,6 @@ class BlankScreen extends StatelessWidget {
       appBar: AppBar(
         centerTitle: false,
         automaticallyImplyLeading: isMobile(context),
-        backgroundColor: Theme.of(context).cardColor,
       ),
       body: Container(
         color: Theme.of(context).cardColor,
