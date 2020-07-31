@@ -264,7 +264,7 @@ class _EntityListState extends State<EntityList> {
                             '${(listUIState.selectedIds ?? <String>[]).length}')),
                       ),
                       SaveCancelButtons(
-                        color: state.prefState.enableDarkMode 
+                        color: state.prefState.enableDarkMode
                             ? Colors.white
                             : Colors.black,
                         saveLabel: localization.done,

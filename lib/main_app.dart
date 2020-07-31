@@ -180,6 +180,7 @@ class InvoiceNinjaAppState extends State<InvoiceNinjaApp> {
                   cardColor: const Color(0xFF1B1C1E),
                   bottomAppBarColor: const Color(0xFF1B1C1E),
                   primaryColorDark: Colors.black,
+                  buttonColor: accentColor,
                 )
               : ThemeData(
                   pageTransitionsTheme: pageTransitionsTheme,
@@ -195,7 +196,8 @@ class InvoiceNinjaAppState extends State<InvoiceNinjaApp> {
                   primaryColorDark:
                       hasAccentColor ? accentColor : const Color(0xFF0D5D91),
                   primaryColorLight: const Color(0xFF5dabf4),
-                  buttonColor: const Color(0xFF0D5D91),
+                  buttonColor:
+                      hasAccentColor ? accentColor : const Color(0xFF0D5D91),
                   scaffoldBackgroundColor: const Color(0xFFE7EBEE),
                   tabBarTheme: TabBarTheme(
                     labelColor: hasAccentColor ? Colors.white : Colors.black,
