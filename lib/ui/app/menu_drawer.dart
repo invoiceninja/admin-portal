@@ -56,37 +56,42 @@ class MenuDrawer extends StatelessWidget {
               )
             : Image.asset('assets/images/logo.png', width: 32);
 
-    Widget _companyListItem(CompanyEntity company) => Row(
-          mainAxisSize: MainAxisSize.max,
-          mainAxisAlignment: MainAxisAlignment.start,
-          children: <Widget>[
-            _companyLogo(company),
-            SizedBox(width: 28),
-            Expanded(
-              child: Text(
-                company.displayName.isEmpty
-                    ? localization.untitledCompany
-                    : company.displayName,
-                style: Theme.of(context).textTheme.headline6,
-                overflow: TextOverflow.ellipsis,
-              ),
+    Widget _companyListItem(CompanyEntity company) {
+      final userCompany = state.userCompanyStates
+          .firstWhere(
+              (userCompanyState) => userCompanyState.company.id == company.id)
+          .userCompany;
+      return Row(
+        mainAxisSize: MainAxisSize.max,
+        mainAxisAlignment: MainAxisAlignment.start,
+        children: <Widget>[
+          _companyLogo(company),
+          SizedBox(width: 28),
+          Expanded(
+            child: Text(
+              company.displayName.isEmpty
+                  ? localization.untitledCompany
+                  : company.displayName,
+              style: Theme.of(context).textTheme.headline6,
+              overflow: TextOverflow.ellipsis,
             ),
+          ),
+          if (userCompany.settings.accentColor != null)
             Container(
+              padding: const EdgeInsets.only(right: 2),
               decoration: BoxDecoration(
                   shape: BoxShape.circle,
-                  color: convertHexStringToColor(state.userCompanyStates
-                      .firstWhere((userCompanyState) =>
-                          userCompanyState.company.id == company.id)
-                      .userCompany
-                      .settings
-                      .accentColor)),
+                  color: convertHexStringToColor(
+                      userCompany.settings.accentColor)),
               width: 10,
               height: 10,
               //color: Colors.red,
             ),
-            SizedBox(width: 2),
-          ],
-        );
+        ],
+      );
+    }
+
+    ;
 
     final _collapsedCompanySelector = PopupMenuButton<String>(
       tooltip: localization.selectCompany,
