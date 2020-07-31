@@ -207,7 +207,8 @@ class ReportsScreen extends StatelessWidget {
             if (isDesktop(context))...[
               Builder(builder: (BuildContext context) {
                 return FlatButton(
-                  child: Text(localization.columns),
+                  child: Text(localization.columns,
+                    style: TextStyle(color: store.state.headerTextColor),),
                   onPressed: () {
                     multiselectDialog(
                       context: context,
@@ -222,7 +223,8 @@ class ReportsScreen extends StatelessWidget {
                 );
               }),
               FlatButton(
-                child: Text(localization.export),
+                child: Text(localization.export,
+                  style: TextStyle(color: store.state.headerTextColor),),
                 onPressed: () {
                   viewModel.onExportPressed(context);
                 },

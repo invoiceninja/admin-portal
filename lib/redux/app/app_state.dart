@@ -155,6 +155,10 @@ abstract class AppState implements Built<AppState, AppStateBuilder> {
 
   bool get hasAccentColor => userCompany?.settings?.accentColor != null;
 
+  Color get headerTextColor => prefState.enableDarkMode || hasAccentColor
+      ? convertHexStringToColor('#FFFFFF')
+      : convertHexStringToColor('#000000');
+
   Color get accentColor => convertHexStringToColor(
       userCompany?.settings?.accentColor ?? kDefaultAccentColor);
 

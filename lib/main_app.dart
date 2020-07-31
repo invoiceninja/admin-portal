@@ -203,12 +203,14 @@ class InvoiceNinjaAppState extends State<InvoiceNinjaApp> {
                         ? Colors.white.withOpacity(.65)
                         : Colors.black.withOpacity(.65),
                   ),
+                  /*
                   buttonTheme: ButtonThemeData(
                     textTheme: ButtonTextTheme.primary,
                     colorScheme: ColorScheme.light(
-                      primary: hasAccentColor ? Colors.white : Colors.black,
+                      //primary: hasAccentColor ? Colors.white : Colors.black,
                     ),
                   ),
+                   */
                   iconTheme: IconThemeData(
                     color: hasAccentColor ? null : accentColor,
                   ),
