@@ -1,10 +1,12 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:invoiceninja_flutter/ui/app/form_card.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/app_form.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/bool_dropdown_button.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/decorated_form_field.dart';
+import 'package:invoiceninja_flutter/ui/app/lists/list_divider.dart';
 import 'package:invoiceninja_flutter/ui/settings/client_portal_vm.dart';
 import 'package:invoiceninja_flutter/ui/app/edit_scaffold.dart';
 import 'package:invoiceninja_flutter/utils/completers.dart';
@@ -245,6 +247,7 @@ class _ClientPortalState extends State<ClientPortal>
                 ],
               ),
               FormCard(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   BoolDropdownButton(
                     label: localization.clientRegistration,
@@ -262,7 +265,32 @@ class _ClientPortalState extends State<ClientPortal>
                     onChanged: (value) => viewModel.onCompanyChanged(
                         company.rebuild((b) => b..enableShopApi = value)),
                   ),
-                  SizedBox(height: 16),
+                  if (company.enableShopApi) ...[
+                    SizedBox(height: 16),
+                    ListDivider(),
+                    Builder(builder: (BuildContext context) {
+                      return ListTile(
+                        title: Padding(
+                          padding: const EdgeInsets.all(16),
+                          child: Text(
+                            '${localization.companyKey}: ${company.companyKey.substring(0, 16)}...',
+                            style: Theme.of(context).textTheme.headline6,
+                            overflow: TextOverflow.ellipsis,
+                          ),
+                        ),
+                        trailing: Icon(Icons.content_copy),
+                        onTap: () {
+                          Clipboard.setData(
+                              ClipboardData(text: company.companyKey));
+                          Scaffold.of(context).showSnackBar(SnackBar(
+                              content: Text(localization.copiedToClipboard
+                                  .replaceFirst(
+                                      ':value ', company.companyKey))));
+                        },
+                      );
+                    }),
+                    ListDivider(),
+                  ],
                   DecoratedFormField(
                     controller: _termsController,
                     label: localization.termsOfService,
