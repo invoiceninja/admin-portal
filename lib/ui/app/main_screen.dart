@@ -725,7 +725,8 @@ class _EntityFilter extends StatelessWidget {
                                 : '${localization.lookup(routeEntityType.plural)}',
                             style: TextStyle(
                                 fontSize: 17,
-                                color: state.prefState.enableDarkMode
+                                color: state.prefState.enableDarkMode ||
+                                        state.hasAccentColor
                                     ? Colors.white
                                     : Theme.of(context).accentColor),
                           ),
