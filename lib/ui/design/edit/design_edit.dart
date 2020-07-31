@@ -8,6 +8,7 @@ import 'package:invoiceninja_flutter/data/models/design_model.dart';
 import 'package:invoiceninja_flutter/ui/app/edit_scaffold.dart';
 import 'package:invoiceninja_flutter/ui/app/form_card.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/app_form.dart';
+import 'package:invoiceninja_flutter/ui/app/forms/app_tab_bar.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/decorated_form_field.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/design_picker.dart';
 import 'package:invoiceninja_flutter/ui/design/edit/design_edit_vm.dart';
@@ -252,7 +253,7 @@ class _DesignEditState extends State<DesignEdit>
                     Expanded(
                       child: Column(
                         children: <Widget>[
-                          TabBar(
+                          AppTabBar(
                             controller: _tabController,
                             isScrollable: true,
                             tabs: <Widget>[
