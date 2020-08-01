@@ -14,18 +14,14 @@ class CompanyGatewayListItem extends StatelessWidget {
   const CompanyGatewayListItem({
     Key key,
     @required this.user,
-    @required this.onTap,
     @required this.companyGateway,
     @required this.filter,
     this.onRemovePressed,
-    this.onLongPress,
     this.onCheckboxChanged,
     this.isChecked = false,
   }) : super(key: key);
 
   final UserEntity user;
-  final GestureTapCallback onTap;
-  final GestureTapCallback onLongPress;
   final CompanyGatewayEntity companyGateway;
   final String filter;
   final Function(bool) onCheckboxChanged;
@@ -53,13 +49,7 @@ class CompanyGatewayListItem extends StatelessWidget {
       entity: companyGateway,
       isSelected: false,
       child: ListTile(
-        onTap: () => onTap != null
-            ? onTap()
-            : selectEntity(entity: companyGateway, context: context),
-        onLongPress: () => onLongPress != null
-            ? onLongPress()
-            : selectEntity(
-                entity: companyGateway, context: context, longPress: true),
+        onTap: () => selectEntity(entity: companyGateway, context: context),
         trailing: onRemovePressed == null
             ? null
             : FlatButton(
@@ -93,6 +83,7 @@ class CompanyGatewayListItem extends StatelessWidget {
           ),
         ),
         subtitle: Column(
+          mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
             subtitle != null && subtitle.isNotEmpty

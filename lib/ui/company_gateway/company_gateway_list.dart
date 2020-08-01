@@ -58,8 +58,6 @@ class CompanyGatewayList extends StatelessWidget {
                                 user: viewModel.userCompany.user,
                                 filter: viewModel.filter,
                                 companyGateway: companyGateway,
-                                onTap: () => viewModel.onCompanyGatewayTap(
-                                    context, companyGateway),
                                 onRemovePressed:
                                     viewModel.state.settingsUIState.isFiltered
                                         ? () => viewModel
