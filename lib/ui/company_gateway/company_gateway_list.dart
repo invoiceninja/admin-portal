@@ -25,6 +25,9 @@ class CompanyGatewayList extends StatelessWidget {
 
     return Column(
       children: <Widget>[
+        SizedBox(
+          height: 32,
+        ),
         Flexible(
           fit: FlexFit.tight,
           child: !viewModel.state.isLoaded &&
@@ -58,8 +61,6 @@ class CompanyGatewayList extends StatelessWidget {
                                 user: viewModel.userCompany.user,
                                 filter: viewModel.filter,
                                 companyGateway: companyGateway,
-                                onTap: () => viewModel.onCompanyGatewayTap(
-                                    context, companyGateway),
                                 onRemovePressed:
                                     viewModel.state.settingsUIState.isFiltered
                                         ? () => viewModel

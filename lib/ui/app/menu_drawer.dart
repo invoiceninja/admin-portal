@@ -76,7 +76,8 @@ class MenuDrawer extends StatelessWidget {
               overflow: TextOverflow.ellipsis,
             ),
           ),
-          if (userCompany.settings.accentColor != null)
+          if (userCompany.settings.accentColor != null &&
+              state.companies.length > 1)
             Container(
               padding: const EdgeInsets.only(right: 2),
               decoration: BoxDecoration(

@@ -74,7 +74,7 @@ class PaymentListItem extends StatelessWidget {
                     entity: payment, context: context, longPress: true),
                 child: Padding(
                   padding: const EdgeInsets.only(
-                    left: 12,
+                    left: 10,
                     right: 28,
                     top: 4,
                     bottom: 4,
