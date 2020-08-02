@@ -335,6 +335,8 @@ void viewEntityById({
             entityId: filterEntity.id,
             entityType: filterEntity.entityType,
           ));
+          // If the user selects a different entity of the same type as the current
+          // filter then we clear the selection so new records are auto-selected
         } else if (uiState.filterEntityType != null &&
             uiState.filterEntityId != entityId &&
             uiState.filterEntityType == entityType) {
