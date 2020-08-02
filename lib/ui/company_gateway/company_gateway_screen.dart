@@ -8,6 +8,7 @@ import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/redux/company_gateway/company_gateway_actions.dart';
+import 'package:invoiceninja_flutter/redux/settings/settings_actions.dart';
 import 'package:invoiceninja_flutter/ui/app/app_bottom_bar.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/save_cancel_buttons.dart';
 import 'package:invoiceninja_flutter/ui/app/list_scaffold.dart';
@@ -67,6 +68,7 @@ class CompanyGatewayScreen extends StatelessWidget {
           SaveCancelButtons(
             isSaving: state.isSaving,
             onSavePressed: viewModel.onSavePressed,
+            onCancelPressed: (_) => store.dispatch(ResetSettings()),
           ),
       ],
       body: CompanyGatewayListBuilder(),
