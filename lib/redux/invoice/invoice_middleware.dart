@@ -58,8 +58,6 @@ Middleware<AppState> _viewInvoiceList() {
   return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
     final action = dynamicAction as ViewInvoiceList;
 
-
-
     next(action);
 
     if (store.state.isStale) {
@@ -80,8 +78,6 @@ Middleware<AppState> _viewInvoice() {
       NextDispatcher next) async {
     final action = dynamicAction as ViewInvoice;
 
-
-
     next(action);
 
     store.dispatch(UpdateCurrentRoute(InvoiceViewScreen.route));
@@ -95,8 +91,6 @@ Middleware<AppState> _viewInvoice() {
 Middleware<AppState> _editInvoice() {
   return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
     final action = dynamicAction as EditInvoice;
-
-
 
     next(action);
 

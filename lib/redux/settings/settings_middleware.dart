@@ -40,33 +40,36 @@ Middleware<AppState> _viewSettings() {
     final action = dynamicAction as ViewSettings;
     final uiState = store.state.uiState;
 
-    checkForChanges(store: store, context: action.context, force: action.force, callback: () {
-      String route = SettingsScreen.route;
+    checkForChanges(
+        store: store,
+        context: action.context,
+        force: action.force,
+        callback: () {
+          String route = SettingsScreen.route;
 
-      if (!store.state.userCompany.isAdmin) {
-        route += '/$kSettingsUserDetails';
-      } else if (action.section != null) {
-        route += '/${action.section}';
-      } else if (uiState.mainRoute == kSettings) {
-        route += '/$kSettingsCompanyDetails';
-      } else {
-        route += '/${uiState.settingsUIState.section}';
-      }
+          if (!store.state.userCompany.isAdmin) {
+            route += '/$kSettingsUserDetails';
+          } else if (action.section != null) {
+            route += '/${action.section}';
+          } else if (uiState.mainRoute == kSettings) {
+            route += '/$kSettingsCompanyDetails';
+          } else {
+            route += '/${uiState.settingsUIState.section}';
+          }
 
-      next(action);
+          next(action);
 
-      store.dispatch(UpdateCurrentRoute(route));
+          store.dispatch(UpdateCurrentRoute(route));
 
-      if (isMobile(action.context)) {
-        if (action.section == null) {
-          Navigator.of(action.context).pushNamedAndRemoveUntil(
-              SettingsScreen.route, (Route<dynamic> route) => false);
-        } else {
-          Navigator.of(action.context).pushNamed(route);
-        }
-      }
-    });
-
+          if (isMobile(action.context)) {
+            if (action.section == null) {
+              Navigator.of(action.context).pushNamedAndRemoveUntil(
+                  SettingsScreen.route, (Route<dynamic> route) => false);
+            } else {
+              Navigator.of(action.context).pushNamed(route);
+            }
+          }
+        });
   };
 }
 

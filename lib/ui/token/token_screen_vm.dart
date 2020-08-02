@@ -48,7 +48,11 @@ class TokenScreenVM {
     return TokenScreenVM(
       tokenMap: state.tokenState.map,
       tokenList: memoizedFilteredTokenList(
-          state.tokenState.map, state.tokenState.list, state.tokenListState),
+          state.uiState.filterEntityId,
+          state.uiState.filterEntityType,
+          state.tokenState.map,
+          state.tokenState.list,
+          state.tokenListState),
       userCompany: state.userCompany,
       isInMultiselect: state.tokenListState.isInMultiselect(),
       onEntityAction: (BuildContext context, List<BaseEntity> tokens,

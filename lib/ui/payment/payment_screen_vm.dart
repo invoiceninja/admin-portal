@@ -45,6 +45,8 @@ class PaymentScreenVM {
     return PaymentScreenVM(
       paymentMap: state.paymentState.map,
       paymentList: memoizedFilteredPaymentList(
+          state.uiState.filterEntityId,
+          state.uiState.filterEntityType,
           state.paymentState.map,
           state.paymentState.list,
           state.invoiceState.map,

@@ -317,6 +317,10 @@ abstract class BaseEntity implements SelectableEntity {
     return actions;
   }
 
+  bool matchesEntityFilter(EntityType filterEntityType, String filterEntityId) {
+    return id == filterEntityId && entityType == filterEntityType;
+  }
+
   bool matchesStatuses(BuiltList<EntityStatus> statuses) {
     return true;
   }

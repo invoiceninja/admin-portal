@@ -54,8 +54,6 @@ Middleware<AppState> _viewQuote() {
       NextDispatcher next) async {
     final action = dynamicAction as ViewQuote;
 
-
-
     next(action);
 
     store.dispatch(UpdateCurrentRoute(QuoteViewScreen.route));
@@ -69,8 +67,6 @@ Middleware<AppState> _viewQuote() {
 Middleware<AppState> _viewQuoteList() {
   return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
     final action = dynamicAction as ViewQuoteList;
-
-
 
     next(action);
 
@@ -90,8 +86,6 @@ Middleware<AppState> _viewQuoteList() {
 Middleware<AppState> _editQuote() {
   return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
     final action = dynamicAction as EditQuote;
-
-
 
     next(action);
 

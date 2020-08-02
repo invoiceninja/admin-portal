@@ -64,31 +64,33 @@ class MenuDrawerVM {
         }
 
         checkForChanges(
-            store: store, context: context, callback: () {
-          store.dispatch(ClearEntityFilter());
-          store.dispatch(SelectCompany(companyIndex: index));
-          if (store.state.isStale) {
-            if (!store.state.isLoaded && store.state.company.isLarge) {
-              store.dispatch(LoadClients());
-            } else {
-              store.dispatch(RefreshData());
-            }
-          }
-          AppBuilder.of(context).rebuild();
+            store: store,
+            context: context,
+            callback: () {
+              store.dispatch(ClearEntityFilter());
+              store.dispatch(SelectCompany(companyIndex: index));
+              if (store.state.isStale) {
+                if (!store.state.isLoaded && store.state.company.isLarge) {
+                  store.dispatch(LoadClients());
+                } else {
+                  store.dispatch(RefreshData());
+                }
+              }
+              AppBuilder.of(context).rebuild();
 
-          if (state.uiState.isInSettings) {
-            String section = state.uiState.subRoute;
-            if ([kSettingsUserDetails].contains(section)) {
-              section = kSettingsCompanyDetails;
-            }
-            store.dispatch(ViewSettings(
-              navigator: Navigator.of(context),
-              company: company,
-              section: section,
-              force: true,
-            ));
-          }
-        });
+              if (state.uiState.isInSettings) {
+                String section = state.uiState.subRoute;
+                if ([kSettingsUserDetails].contains(section)) {
+                  section = kSettingsCompanyDetails;
+                }
+                store.dispatch(ViewSettings(
+                  navigator: Navigator.of(context),
+                  company: company,
+                  section: section,
+                  force: true,
+                ));
+              }
+            });
       },
       onAddCompany: (BuildContext context) {
         confirmCallback(

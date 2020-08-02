@@ -94,6 +94,8 @@ class ClientListVM {
     return ClientListVM(
       state: state,
       clientList: memoizedFilteredClientList(
+          state.uiState.filterEntityId,
+          state.uiState.filterEntityType,
           state.clientState.map,
           state.clientState.list,
           state.groupState.map,

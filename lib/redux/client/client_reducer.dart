@@ -110,7 +110,6 @@ final clientListReducer = combineReducers<ListUIState>([
   TypedReducer<ListUIState, SortClients>(_sortClients),
   TypedReducer<ListUIState, FilterClientsByState>(_filterClientsByState),
   TypedReducer<ListUIState, FilterClients>(_filterClients),
-  TypedReducer<ListUIState, FilterByEntity>(_filterClientsByEntity),
   TypedReducer<ListUIState, FilterClientsByCustom1>(_filterClientsByCustom1),
   TypedReducer<ListUIState, FilterClientsByCustom2>(_filterClientsByCustom2),
   TypedReducer<ListUIState, FilterClientsByCustom3>(_filterClientsByCustom3),
@@ -120,10 +119,6 @@ final clientListReducer = combineReducers<ListUIState>([
   TypedReducer<ListUIState, RemoveFromClientMultiselect>(
       _removeFromListMultiselect),
   TypedReducer<ListUIState, ClearClientMultiselect>(_clearListMultiselect),
-  TypedReducer<ListUIState, ClearEntityFilter>(
-      (state, action) => state.rebuild((b) => b
-        ..filterEntityId = null
-        ..filterEntityType = null)),
 ]);
 
 ListUIState _filterClientsByCustom1(
@@ -173,20 +168,6 @@ ListUIState _filterClientsByState(
   } else {
     return clientListState.rebuild((b) => b..stateFilters.add(action.state));
   }
-}
-
-ListUIState _filterClientsByEntity(
-    ListUIState clientListState, FilterByEntity action) {
-  if (clientListState.filterEntityId == action.entityId &&
-      clientListState.filterEntityType == action.entityType) {
-    return clientListState.rebuild((b) => b
-      ..filterEntityId = null
-      ..filterEntityType = null);
-  }
-
-  return clientListState.rebuild((b) => b
-    ..filterEntityId = action.entityId
-    ..filterEntityType = action.entityType);
 }
 
 ListUIState _filterClients(ListUIState clientListState, FilterClients action) {

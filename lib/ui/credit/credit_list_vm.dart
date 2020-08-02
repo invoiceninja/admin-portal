@@ -103,6 +103,8 @@ class CreditListVM extends EntityListVM {
     return CreditListVM(
       state: state,
       invoiceList: memoizedFilteredCreditList(
+          state.uiState.filterEntityId,
+          state.uiState.filterEntityType,
           state.creditState.map,
           state.creditState.list,
           state.clientState.map,

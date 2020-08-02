@@ -64,24 +64,12 @@ final userListReducer = combineReducers<ListUIState>([
   TypedReducer<ListUIState, FilterUsers>(_filterUsers),
   TypedReducer<ListUIState, FilterUsersByCustom1>(_filterUsersByCustom1),
   TypedReducer<ListUIState, FilterUsersByCustom2>(_filterUsersByCustom2),
-  TypedReducer<ListUIState, FilterByEntity>(_filterUsersByClient),
   TypedReducer<ListUIState, StartUserMultiselect>(_startListMultiselect),
   TypedReducer<ListUIState, AddToUserMultiselect>(_addToListMultiselect),
   TypedReducer<ListUIState, RemoveFromUserMultiselect>(
       _removeFromListMultiselect),
   TypedReducer<ListUIState, ClearUserMultiselect>(_clearListMultiselect),
-  TypedReducer<ListUIState, ClearEntityFilter>(
-      (state, action) => state.rebuild((b) => b
-        ..filterEntityId = null
-        ..filterEntityType = null)),
 ]);
-
-ListUIState _filterUsersByClient(
-    ListUIState userListState, FilterByEntity action) {
-  return userListState.rebuild((b) => b
-    ..filterEntityId = action.entityId
-    ..filterEntityType = action.entityType);
-}
 
 ListUIState _filterUsersByCustom1(
     ListUIState userListState, FilterUsersByCustom1 action) {

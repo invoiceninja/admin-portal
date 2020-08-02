@@ -43,8 +43,6 @@ Middleware<AppState> _editProject() {
   return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
     final action = dynamicAction as EditProject;
 
-
-
     next(action);
 
     store.dispatch(UpdateCurrentRoute(ProjectEditScreen.route));
@@ -60,8 +58,6 @@ Middleware<AppState> _viewProject() {
       NextDispatcher next) async {
     final action = dynamicAction as ViewProject;
 
-
-
     next(action);
 
     store.dispatch(UpdateCurrentRoute(ProjectViewScreen.route));
@@ -75,8 +71,6 @@ Middleware<AppState> _viewProject() {
 Middleware<AppState> _viewProjectList() {
   return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
     final action = dynamicAction as ViewProjectList;
-
-
 
     next(action);
 

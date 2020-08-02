@@ -54,17 +54,20 @@ List<String> dropdownPaymentsSelector(
   return list;
 }
 
-var memoizedFilteredPaymentList = memo6(
-    (BuiltMap<String, PaymentEntity> paymentMap,
-            BuiltList<String> paymentList,
-            BuiltMap<String, InvoiceEntity> invoiceMap,
-            BuiltMap<String, ClientEntity> clientMap,
-            BuiltMap<String, UserEntity> userMap,
-            ListUIState paymentListState) =>
-        filteredPaymentsSelector(paymentMap, paymentList, invoiceMap, clientMap,
-            userMap, paymentListState));
+var memoizedFilteredPaymentList = memo8((String filterEntityId,
+        EntityType filterEntityType,
+        BuiltMap<String, PaymentEntity> paymentMap,
+        BuiltList<String> paymentList,
+        BuiltMap<String, InvoiceEntity> invoiceMap,
+        BuiltMap<String, ClientEntity> clientMap,
+        BuiltMap<String, UserEntity> userMap,
+        ListUIState paymentListState) =>
+    filteredPaymentsSelector(filterEntityId, filterEntityType, paymentMap,
+        paymentList, invoiceMap, clientMap, userMap, paymentListState));
 
 List<String> filteredPaymentsSelector(
+    String filterEntityId,
+    EntityType filterEntityType,
     BuiltMap<String, PaymentEntity> paymentMap,
     BuiltList<String> paymentList,
     BuiltMap<String, InvoiceEntity> invoiceMap,
@@ -80,24 +83,23 @@ List<String> filteredPaymentsSelector(
     final client =
         clientMap[payment.clientId] ?? ClientEntity(id: payment.clientId);
 
-    if (!client.isActive && !paymentListState.entityMatchesFilter(client)) {
+    if (!client.isActive &&
+        !client.matchesEntityFilter(filterEntityType, filterEntityId)) {
       return false;
     }
 
-    if (paymentListState.filterEntityType == EntityType.client) {
-      if (payment.clientId != paymentListState.filterEntityId) {
-        return false;
-      }
-    } else if (paymentListState.filterEntityType == EntityType.invoice) {
+    if (filterEntityType == EntityType.client &&
+        payment.clientId != filterEntityId) {
+      return false;
+    } else if (filterEntityType == EntityType.invoice) {
       if (!payment.paymentables
           .map((p) => p.invoiceId)
-          .contains(paymentListState.filterEntityId)) {
+          .contains(filterEntityId)) {
         return false;
       }
-    } else if (paymentListState.filterEntityType == EntityType.user) {
-      if (payment.assignedUserId != paymentListState.filterEntityId) {
-        return false;
-      }
+    } else if (filterEntityType == EntityType.user &&
+        payment.assignedUserId != filterEntityId) {
+      return false;
     }
 
     return payment.matchesFilter(paymentListState.filter);

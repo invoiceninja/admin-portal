@@ -58,18 +58,6 @@ class _$ListUIStateSerializer implements StructuredSerializer<ListUIState> {
         ..add(serializers.serialize(object.filter,
             specifiedType: const FullType(String)));
     }
-    if (object.filterEntityId != null) {
-      result
-        ..add('filterEntityId')
-        ..add(serializers.serialize(object.filterEntityId,
-            specifiedType: const FullType(String)));
-    }
-    if (object.filterEntityType != null) {
-      result
-        ..add('filterEntityType')
-        ..add(serializers.serialize(object.filterEntityType,
-            specifiedType: const FullType(EntityType)));
-    }
     if (object.selectedIds != null) {
       result
         ..add('selectedIds')
@@ -98,14 +86,6 @@ class _$ListUIStateSerializer implements StructuredSerializer<ListUIState> {
         case 'filterClearedAt':
           result.filterClearedAt = serializers.deserialize(value,
               specifiedType: const FullType(int)) as int;
-          break;
-        case 'filterEntityId':
-          result.filterEntityId = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String;
-          break;
-        case 'filterEntityType':
-          result.filterEntityType = serializers.deserialize(value,
-              specifiedType: const FullType(EntityType)) as EntityType;
           break;
         case 'sortField':
           result.sortField = serializers.deserialize(value,
@@ -170,10 +150,6 @@ class _$ListUIState extends ListUIState {
   @override
   final int filterClearedAt;
   @override
-  final String filterEntityId;
-  @override
-  final EntityType filterEntityType;
-  @override
   final String sortField;
   @override
   final bool sortAscending;
@@ -198,8 +174,6 @@ class _$ListUIState extends ListUIState {
   _$ListUIState._(
       {this.filter,
       this.filterClearedAt,
-      this.filterEntityId,
-      this.filterEntityType,
       this.sortField,
       this.sortAscending,
       this.stateFilters,
@@ -252,8 +226,6 @@ class _$ListUIState extends ListUIState {
     return other is ListUIState &&
         filter == other.filter &&
         filterClearedAt == other.filterClearedAt &&
-        filterEntityId == other.filterEntityId &&
-        filterEntityType == other.filterEntityType &&
         sortField == other.sortField &&
         sortAscending == other.sortAscending &&
         stateFilters == other.stateFilters &&
@@ -277,12 +249,8 @@ class _$ListUIState extends ListUIState {
                             $jc(
                                 $jc(
                                     $jc(
-                                        $jc(
-                                            $jc(
-                                                $jc($jc(0, filter.hashCode),
-                                                    filterClearedAt.hashCode),
-                                                filterEntityId.hashCode),
-                                            filterEntityType.hashCode),
+                                        $jc($jc(0, filter.hashCode),
+                                            filterClearedAt.hashCode),
                                         sortField.hashCode),
                                     sortAscending.hashCode),
                                 stateFilters.hashCode),
@@ -299,8 +267,6 @@ class _$ListUIState extends ListUIState {
     return (newBuiltValueToStringHelper('ListUIState')
           ..add('filter', filter)
           ..add('filterClearedAt', filterClearedAt)
-          ..add('filterEntityId', filterEntityId)
-          ..add('filterEntityType', filterEntityType)
           ..add('sortField', sortField)
           ..add('sortAscending', sortAscending)
           ..add('stateFilters', stateFilters)
@@ -325,16 +291,6 @@ class ListUIStateBuilder implements Builder<ListUIState, ListUIStateBuilder> {
   int get filterClearedAt => _$this._filterClearedAt;
   set filterClearedAt(int filterClearedAt) =>
       _$this._filterClearedAt = filterClearedAt;
-
-  String _filterEntityId;
-  String get filterEntityId => _$this._filterEntityId;
-  set filterEntityId(String filterEntityId) =>
-      _$this._filterEntityId = filterEntityId;
-
-  EntityType _filterEntityType;
-  EntityType get filterEntityType => _$this._filterEntityType;
-  set filterEntityType(EntityType filterEntityType) =>
-      _$this._filterEntityType = filterEntityType;
 
   String _sortField;
   String get sortField => _$this._sortField;
@@ -393,8 +349,6 @@ class ListUIStateBuilder implements Builder<ListUIState, ListUIStateBuilder> {
     if (_$v != null) {
       _filter = _$v.filter;
       _filterClearedAt = _$v.filterClearedAt;
-      _filterEntityId = _$v.filterEntityId;
-      _filterEntityType = _$v.filterEntityType;
       _sortField = _$v.sortField;
       _sortAscending = _$v.sortAscending;
       _stateFilters = _$v.stateFilters?.toBuilder();
@@ -430,8 +384,6 @@ class ListUIStateBuilder implements Builder<ListUIState, ListUIStateBuilder> {
           new _$ListUIState._(
               filter: filter,
               filterClearedAt: filterClearedAt,
-              filterEntityId: filterEntityId,
-              filterEntityType: filterEntityType,
               sortField: sortField,
               sortAscending: sortAscending,
               stateFilters: stateFilters.build(),

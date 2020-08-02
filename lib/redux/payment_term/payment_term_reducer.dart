@@ -68,24 +68,12 @@ final paymentTermListReducer = combineReducers<ListUIState>([
       _filterPaymentTermsByCustom1),
   TypedReducer<ListUIState, FilterPaymentTermsByCustom2>(
       _filterPaymentTermsByCustom2),
-  TypedReducer<ListUIState, FilterByEntity>(_filterPaymentTermsByClient),
   TypedReducer<ListUIState, StartPaymentTermMultiselect>(_startListMultiselect),
   TypedReducer<ListUIState, AddToPaymentTermMultiselect>(_addToListMultiselect),
   TypedReducer<ListUIState, RemoveFromPaymentTermMultiselect>(
       _removeFromListMultiselect),
   TypedReducer<ListUIState, ClearPaymentTermMultiselect>(_clearListMultiselect),
-  TypedReducer<ListUIState, ClearEntityFilter>(
-      (state, action) => state.rebuild((b) => b
-        ..filterEntityId = null
-        ..filterEntityType = null)),
 ]);
-
-ListUIState _filterPaymentTermsByClient(
-    ListUIState paymentTermListState, FilterByEntity action) {
-  return paymentTermListState.rebuild((b) => b
-    ..filterEntityId = action.entityId
-    ..filterEntityType = action.entityType);
-}
 
 ListUIState _filterPaymentTermsByCustom1(
     ListUIState paymentTermListState, FilterPaymentTermsByCustom1 action) {

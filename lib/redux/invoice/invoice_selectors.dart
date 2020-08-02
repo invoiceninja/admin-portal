@@ -57,18 +57,29 @@ List<String> dropdownInvoiceSelector(
   return list;
 }
 
-var memoizedFilteredInvoiceList = memo7(
-    (BuiltMap<String, InvoiceEntity> invoiceMap,
-            BuiltList<String> invoiceList,
-            BuiltMap<String, ClientEntity> clientMap,
-            BuiltMap<String, PaymentEntity> paymentMap,
-            ListUIState invoiceListState,
-            StaticState staticState,
-            BuiltMap<String, UserEntity> userMap) =>
-        filteredInvoicesSelector(invoiceMap, invoiceList, clientMap, paymentMap,
-            invoiceListState, staticState, userMap));
+var memoizedFilteredInvoiceList = memo9((String filterEntityId,
+        EntityType filterEntityType,
+        BuiltMap<String, InvoiceEntity> invoiceMap,
+        BuiltList<String> invoiceList,
+        BuiltMap<String, ClientEntity> clientMap,
+        BuiltMap<String, PaymentEntity> paymentMap,
+        ListUIState invoiceListState,
+        StaticState staticState,
+        BuiltMap<String, UserEntity> userMap) =>
+    filteredInvoicesSelector(
+        filterEntityId,
+        filterEntityType,
+        invoiceMap,
+        invoiceList,
+        clientMap,
+        paymentMap,
+        invoiceListState,
+        staticState,
+        userMap));
 
 List<String> filteredInvoicesSelector(
+    String filterEntityId,
+    EntityType filterEntityType,
     BuiltMap<String, InvoiceEntity> invoiceMap,
     BuiltList<String> invoiceList,
     BuiltMap<String, ClientEntity> clientMap,
@@ -78,7 +89,7 @@ List<String> filteredInvoicesSelector(
     BuiltMap<String, UserEntity> userMap) {
   final Map<String, List<String>> invoicePaymentMap = {};
 
-  if (invoiceListState.filterEntityType == EntityType.payment) {
+  if (filterEntityType == EntityType.payment) {
     paymentMap.forEach((paymentId, payment) {
       payment.invoicePaymentables.forEach((invoicePaymentable) {
         final List<String> paymentIds =
@@ -94,22 +105,20 @@ List<String> filteredInvoicesSelector(
     final client =
         clientMap[invoice.clientId] ?? ClientEntity(id: invoice.clientId);
 
-    if (!client.isActive && !invoiceListState.entityMatchesFilter(client)) {
+    if (!client.isActive &&
+        !client.matchesEntityFilter(filterEntityType, filterEntityId)) {
       return false;
     }
 
-    if (invoiceListState.filterEntityType == EntityType.client) {
-      if (!invoiceListState.entityMatchesFilter(client)) {
-        return false;
-      }
-    } else if (invoiceListState.filterEntityType == EntityType.user) {
-      if (invoice.assignedUserId != invoiceListState.filterEntityId) {
-        return false;
-      }
-    } else if (invoiceListState.filterEntityType == EntityType.payment) {
+    if (filterEntityType == EntityType.client && client.id != filterEntityId) {
+      return false;
+    } else if (filterEntityType == EntityType.user &&
+        invoice.assignedUserId != filterEntityId) {
+      return false;
+    } else if (filterEntityType == EntityType.payment) {
       bool isMatch = false;
       (invoicePaymentMap[invoiceId] ?? []).forEach((paymentId) {
-        if (invoiceListState.filterEntityId == paymentId) {
+        if (filterEntityId == paymentId) {
           isMatch = true;
         }
       });

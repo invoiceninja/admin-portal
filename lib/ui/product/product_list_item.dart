@@ -38,7 +38,7 @@ class ProductListItem extends StatelessWidget {
         ? product.matchesFilterValue(filter)
         : null;
     final subtitle = filterMatch ?? product.notes;
-      final store = StoreProvider.of<AppState>(context);
+    final store = StoreProvider.of<AppState>(context);
     final state = store.state;
     final uiState = store.state.uiState;
     final productUIState = uiState.productUIState;

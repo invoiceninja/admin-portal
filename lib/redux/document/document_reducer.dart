@@ -54,24 +54,12 @@ final documentListReducer = combineReducers<ListUIState>([
       _filterDocumentsByCustom1),
   TypedReducer<ListUIState, FilterDocumentsByCustom2>(
       _filterDocumentsByCustom2),
-  TypedReducer<ListUIState, FilterByEntity>(_filterDocumentsByClient),
   TypedReducer<ListUIState, StartDocumentMultiselect>(_startListMultiselect),
   TypedReducer<ListUIState, AddToDocumentMultiselect>(_addToListMultiselect),
   TypedReducer<ListUIState, RemoveFromDocumentMultiselect>(
       _removeFromListMultiselect),
   TypedReducer<ListUIState, ClearDocumentMultiselect>(_clearListMultiselect),
-  TypedReducer<ListUIState, ClearEntityFilter>(
-      (state, action) => state.rebuild((b) => b
-        ..filterEntityId = null
-        ..filterEntityType = null)),
 ]);
-
-ListUIState _filterDocumentsByClient(
-    ListUIState documentListState, FilterByEntity action) {
-  return documentListState.rebuild((b) => b
-    ..filterEntityId = action.entityId
-    ..filterEntityType = action.entityType);
-}
 
 ListUIState _filterDocumentsByCustom1(
     ListUIState documentListState, FilterDocumentsByCustom1 action) {

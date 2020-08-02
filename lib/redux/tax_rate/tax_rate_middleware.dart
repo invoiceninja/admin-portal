@@ -42,8 +42,6 @@ Middleware<AppState> _editTaxRate() {
   return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
     final action = dynamicAction as EditTaxRate;
 
-
-
     next(action);
 
     store.dispatch(UpdateCurrentRoute(TaxRateEditScreen.route));
@@ -59,8 +57,6 @@ Middleware<AppState> _viewTaxRate() {
       NextDispatcher next) async {
     final action = dynamicAction as ViewTaxRate;
 
-
-
     next(action);
 
     store.dispatch(UpdateCurrentRoute(TaxRateViewScreen.route));
@@ -74,8 +70,6 @@ Middleware<AppState> _viewTaxRate() {
 Middleware<AppState> _viewTaxRateList() {
   return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
     final action = dynamicAction as ViewTaxRateList;
-
-
 
     next(action);
 

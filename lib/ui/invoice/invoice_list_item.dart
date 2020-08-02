@@ -80,8 +80,8 @@ class InvoiceListItem extends StatelessWidget {
                   child: Padding(
                     padding: const EdgeInsets.only(
                       left: 10,
-                    right: 28,
-                    top: 4,
+                      right: 28,
+                      top: 4,
                       bottom: 4,
                     ),
                     child: Row(

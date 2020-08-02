@@ -63,17 +63,20 @@ ClientEntity creditClientSelector(
   return clientMap[credit.clientId];
 }
 
-var memoizedFilteredCreditList = memo6(
-    (BuiltMap<String, InvoiceEntity> creditMap,
-            BuiltList<String> creditList,
-            BuiltMap<String, ClientEntity> clientMap,
-            ListUIState creditListState,
-            StaticState staticState,
-            BuiltMap<String, UserEntity> userMap) =>
-        filteredCreditsSelector(creditMap, creditList, clientMap,
-            creditListState, staticState, userMap));
+var memoizedFilteredCreditList = memo8((String filterEntityId,
+        EntityType filterEntityType,
+        BuiltMap<String, InvoiceEntity> creditMap,
+        BuiltList<String> creditList,
+        BuiltMap<String, ClientEntity> clientMap,
+        ListUIState creditListState,
+        StaticState staticState,
+        BuiltMap<String, UserEntity> userMap) =>
+    filteredCreditsSelector(filterEntityId, filterEntityType, creditMap,
+        creditList, clientMap, creditListState, staticState, userMap));
 
 List<String> filteredCreditsSelector(
+    String filterEntityId,
+    EntityType filterEntityType,
     BuiltMap<String, InvoiceEntity> creditMap,
     BuiltList<String> creditList,
     BuiltMap<String, ClientEntity> clientMap,
@@ -85,18 +88,16 @@ List<String> filteredCreditsSelector(
     final client =
         clientMap[credit.clientId] ?? ClientEntity(id: credit.clientId);
 
-    if (!client.isActive && !creditListState.entityMatchesFilter(client)) {
+    if (!client.isActive &&
+        !client.matchesEntityFilter(filterEntityType, filterEntityId)) {
       return false;
     }
 
-    if (creditListState.filterEntityType == EntityType.client) {
-      if (!creditListState.entityMatchesFilter(client)) {
-        return false;
-      }
-    } else if (creditListState.filterEntityType == EntityType.user) {
-      if (credit.assignedUserId != creditListState.filterEntityId) {
-        return false;
-      }
+    if (filterEntityType == EntityType.client && client.id != filterEntityId) {
+      return false;
+    } else if (filterEntityType == EntityType.user &&
+        credit.assignedUserId != filterEntityId) {
+      return false;
     }
 
     if (!credit.matchesStates(creditListState.stateFilters)) {

@@ -45,8 +45,6 @@ Middleware<AppState> _editUser() {
   return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
     final action = dynamicAction as EditUser;
 
-
-
     next(action);
 
     store.dispatch(UpdateCurrentRoute(UserEditScreen.route));
@@ -62,8 +60,6 @@ Middleware<AppState> _viewUser() {
       NextDispatcher next) async {
     final action = dynamicAction as ViewUser;
 
-
-
     next(action);
 
     store.dispatch(UpdateCurrentRoute(UserViewScreen.route));
@@ -77,8 +73,6 @@ Middleware<AppState> _viewUser() {
 Middleware<AppState> _viewUserList() {
   return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
     final action = dynamicAction as ViewUserList;
-
-
 
     next(action);
 

@@ -65,7 +65,8 @@ class UserListVM {
     @required this.isLoading,
     @required this.listState,
     @required this.onRefreshed,
-    @required this.onSortColumn, @required this.onClearMultielsect,
+    @required this.onSortColumn,
+    @required this.onClearMultielsect,
   });
 
   static UserListVM fromStore(Store<AppState> store) {
@@ -105,4 +106,5 @@ class UserListVM {
   final bool isLoading;
   final Function(BuildContext) onRefreshed;
   final Function(String) onSortColumn;
-final Function onClearMultielsect;}
+  final Function onClearMultielsect;
+}

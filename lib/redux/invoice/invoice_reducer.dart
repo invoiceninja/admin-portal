@@ -145,7 +145,6 @@ final invoiceListReducer = combineReducers<ListUIState>([
   TypedReducer<ListUIState, SortInvoices>(_sortInvoices),
   TypedReducer<ListUIState, FilterInvoicesByState>(_filterInvoicesByState),
   TypedReducer<ListUIState, FilterInvoicesByStatus>(_filterInvoicesByStatus),
-  TypedReducer<ListUIState, FilterByEntity>(_filterInvoicesByEntity),
   TypedReducer<ListUIState, FilterInvoices>(_filterInvoices),
   TypedReducer<ListUIState, FilterInvoicesByCustom1>(_filterInvoicesByCustom1),
   TypedReducer<ListUIState, FilterInvoicesByCustom2>(_filterInvoicesByCustom2),
@@ -156,10 +155,6 @@ final invoiceListReducer = combineReducers<ListUIState>([
   TypedReducer<ListUIState, RemoveFromInvoiceMultiselect>(
       _removeFromListMultiselect),
   TypedReducer<ListUIState, ClearInvoiceMultiselect>(_clearListMultiselect),
-  TypedReducer<ListUIState, ClearEntityFilter>(
-      (state, action) => state.rebuild((b) => b
-        ..filterEntityId = null
-        ..filterEntityType = null)),
 ]);
 
 ListUIState _filterInvoicesByCustom1(
@@ -220,20 +215,6 @@ ListUIState _filterInvoicesByStatus(
   } else {
     return invoiceListState.rebuild((b) => b..statusFilters.add(action.status));
   }
-}
-
-ListUIState _filterInvoicesByEntity(
-    ListUIState invoiceListState, FilterByEntity action) {
-  if (invoiceListState.filterEntityId == action.entityId &&
-      invoiceListState.filterEntityType == action.entityType) {
-    return invoiceListState.rebuild((b) => b
-      ..filterEntityId = null
-      ..filterEntityType = null);
-  }
-
-  return invoiceListState.rebuild((b) => b
-    ..filterEntityId = action.entityId
-    ..filterEntityType = action.entityType);
 }
 
 ListUIState _filterInvoices(

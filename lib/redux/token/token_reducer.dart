@@ -69,10 +69,6 @@ final tokenListReducer = combineReducers<ListUIState>([
   TypedReducer<ListUIState, RemoveFromTokenMultiselect>(
       _removeFromListMultiselect),
   TypedReducer<ListUIState, ClearTokenMultiselect>(_clearListMultiselect),
-  TypedReducer<ListUIState, ClearEntityFilter>(
-      (state, action) => state.rebuild((b) => b
-        ..filterEntityId = null
-        ..filterEntityType = null)),
 ]);
 
 ListUIState _filterTokensByCustom1(

@@ -704,7 +704,8 @@ class _EntityFilter extends StatelessWidget {
                           left: state.prefState.showFilterSidebar ? 4 : 0),
                       child: Text(
                         '${localization.lookup('$filterEntityType')}  ›  ${filterEntity.listDisplayName}',
-                        style: TextStyle(fontSize: 17, color: state.headerTextColor),
+                        style: TextStyle(
+                            fontSize: 17, color: state.headerTextColor),
                         overflow: TextOverflow.ellipsis,
                         textAlign: TextAlign.start,
                         maxLines: 1,

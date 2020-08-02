@@ -58,8 +58,6 @@ Middleware<AppState> _viewExpense() {
       NextDispatcher next) async {
     final action = dynamicAction as ViewExpense;
 
-
-
     next(action);
 
     store.dispatch(UpdateCurrentRoute(ExpenseViewScreen.route));
@@ -73,8 +71,6 @@ Middleware<AppState> _viewExpense() {
 Middleware<AppState> _viewExpenseList() {
   return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
     final action = dynamicAction as ViewExpenseList;
-
-
 
     next(action);
 

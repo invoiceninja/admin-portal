@@ -45,6 +45,8 @@ class ProjectScreenVM {
     return ProjectScreenVM(
       projectMap: state.projectState.map,
       projectList: memoizedFilteredProjectList(
+        state.uiState.filterEntityId,
+        state.uiState.filterEntityType,
         state.projectState.map,
         state.projectState.list,
         state.projectListState,

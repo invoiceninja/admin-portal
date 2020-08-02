@@ -87,17 +87,21 @@ List<String> dropdownTasksSelector(
   return list;
 }
 
-var memoizedFilteredTaskList = memo7((BuiltMap<String, TaskEntity> taskMap,
+var memoizedFilteredTaskList = memo9((String filterEntityId,
+        EntityType filterEntityType,
+        BuiltMap<String, TaskEntity> taskMap,
         BuiltMap<String, ClientEntity> clientMap,
         BuiltMap<String, UserEntity> userMap,
         BuiltMap<String, ProjectEntity> projectMap,
         BuiltMap<String, InvoiceEntity> invoiceMap,
         BuiltList<String> taskList,
         ListUIState taskListState) =>
-    filteredTasksSelector(taskMap, clientMap, userMap, projectMap, invoiceMap,
-        taskList, taskListState));
+    filteredTasksSelector(filterEntityId, filterEntityType, taskMap, clientMap,
+        userMap, projectMap, invoiceMap, taskList, taskListState));
 
 List<String> filteredTasksSelector(
+    String filterEntityId,
+    EntityType filterEntityType,
     BuiltMap<String, TaskEntity> taskMap,
     BuiltMap<String, ClientEntity> clientMap,
     BuiltMap<String, UserEntity> userMap,
@@ -111,7 +115,8 @@ List<String> filteredTasksSelector(
     final project =
         projectMap[task.projectId] ?? ProjectEntity(id: task.projectId);
 
-    if (!client.isActive && !taskListState.entityMatchesFilter(client)) {
+    if (!client.isActive &&
+        !client.matchesEntityFilter(filterEntityType, filterEntityId)) {
       return false;
     }
 
@@ -128,12 +133,12 @@ List<String> filteredTasksSelector(
       return false;
     }
 
-    if (taskListState.filterEntityId != null) {
-      if (taskListState.filterEntityType == EntityType.client &&
-          task.clientId != taskListState.filterEntityId) {
+    if (filterEntityId != null) {
+      if (filterEntityType == EntityType.client &&
+          task.clientId != filterEntityId) {
         return false;
-      } else if (taskListState.filterEntityType == EntityType.project &&
-          task.projectId != taskListState.filterEntityId) {
+      } else if (filterEntityType == EntityType.project &&
+          task.projectId != filterEntityId) {
         return false;
       }
     } else if (task.clientId != null && !client.isActive) {

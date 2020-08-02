@@ -43,8 +43,6 @@ Middleware<AppState> _editPaymentTerm() {
   return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
     final action = dynamicAction as EditPaymentTerm;
 
-
-
     next(action);
 
     store.dispatch(UpdateCurrentRoute(PaymentTermEditScreen.route));
@@ -60,8 +58,6 @@ Middleware<AppState> _viewPaymentTerm() {
       NextDispatcher next) async {
     final action = dynamicAction as ViewPaymentTerm;
 
-
-
     next(action);
 
     store.dispatch(UpdateCurrentRoute(PaymentTermViewScreen.route));
@@ -75,8 +71,6 @@ Middleware<AppState> _viewPaymentTerm() {
 Middleware<AppState> _viewPaymentTermList() {
   return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
     final action = dynamicAction as ViewPaymentTermList;
-
-
 
     next(action);
 

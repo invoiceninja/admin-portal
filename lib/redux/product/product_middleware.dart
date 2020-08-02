@@ -40,8 +40,6 @@ Middleware<AppState> _editProduct() {
   return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
     final action = dynamicAction as EditProduct;
 
-
-
     next(action);
 
     store.dispatch(UpdateCurrentRoute(ProductEditScreen.route));
@@ -57,8 +55,6 @@ Middleware<AppState> _viewProduct() {
       NextDispatcher next) async {
     final action = dynamicAction as ViewProduct;
 
-
-
     next(action);
 
     store.dispatch(UpdateCurrentRoute(ProductViewScreen.route));
@@ -72,8 +68,6 @@ Middleware<AppState> _viewProduct() {
 Middleware<AppState> _viewProductList() {
   return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
     final action = dynamicAction as ViewProductList;
-
-
 
     next(action);
 

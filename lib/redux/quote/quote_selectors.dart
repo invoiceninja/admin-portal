@@ -9,16 +9,20 @@ ClientEntity quoteClientSelector(
   return clientMap[quote.clientId];
 }
 
-var memoizedFilteredQuoteList = memo6((BuiltMap<String, InvoiceEntity> quoteMap,
+var memoizedFilteredQuoteList = memo8((String filterEntityId,
+        EntityType filterEntityType,
+        BuiltMap<String, InvoiceEntity> quoteMap,
         BuiltList<String> quoteList,
         BuiltMap<String, ClientEntity> clientMap,
         ListUIState quoteListState,
         StaticState staticState,
         BuiltMap<String, UserEntity> userMap) =>
-    filteredQuotesSelector(
-        quoteMap, quoteList, clientMap, quoteListState, staticState, userMap));
+    filteredQuotesSelector(filterEntityId, filterEntityType, quoteMap,
+        quoteList, clientMap, quoteListState, staticState, userMap));
 
 List<String> filteredQuotesSelector(
+    String filterEntityId,
+    EntityType filterEntityType,
     BuiltMap<String, InvoiceEntity> quoteMap,
     BuiltList<String> quoteList,
     BuiltMap<String, ClientEntity> clientMap,
@@ -30,18 +34,17 @@ List<String> filteredQuotesSelector(
     final client =
         clientMap[quote.clientId] ?? ClientEntity(id: quote.clientId);
 
-    if (!client.isActive && !quoteListState.entityMatchesFilter(client)) {
+    if (!client.isActive &&
+        !client.matchesEntityFilter(filterEntityType, filterEntityId)) {
       return false;
     }
 
-    if (quoteListState.filterEntityType == EntityType.client) {
-      if (!quoteListState.entityMatchesFilter(client)) {
-        return false;
-      }
-    } else if (quoteListState.filterEntityType == EntityType.user) {
-      if (quote.assignedUserId != quoteListState.filterEntityId) {
-        return false;
-      }
+    if (filterEntityType == EntityType.client &&
+        quote.clientId != filterEntityId) {
+      return false;
+    } else if (filterEntityType == EntityType.user &&
+        quote.assignedUserId != filterEntityId) {
+      return false;
     }
 
     if (!quote.matchesStates(quoteListState.stateFilters)) {

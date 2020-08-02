@@ -58,7 +58,6 @@ Middleware<AppState> _viewClient() {
       NextDispatcher next) async {
     final action = dynamicAction as ViewClient;
 
-
     next(action);
 
     store.dispatch(UpdateCurrentRoute(ClientViewScreen.route));

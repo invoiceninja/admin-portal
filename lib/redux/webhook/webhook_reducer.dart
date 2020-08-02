@@ -69,10 +69,6 @@ final webhookListReducer = combineReducers<ListUIState>([
   TypedReducer<ListUIState, RemoveFromWebhookMultiselect>(
       _removeFromListMultiselect),
   TypedReducer<ListUIState, ClearWebhookMultiselect>(_clearListMultiselect),
-  TypedReducer<ListUIState, ClearEntityFilter>(
-      (state, action) => state.rebuild((b) => b
-        ..filterEntityId = null
-        ..filterEntityType = null)),
 ]);
 
 ListUIState _filterWebhooksByCustom1(

@@ -134,7 +134,6 @@ final quoteListReducer = combineReducers<ListUIState>([
   TypedReducer<ListUIState, SortQuotes>(_sortQuotes),
   TypedReducer<ListUIState, FilterQuotesByState>(_filterQuotesByState),
   TypedReducer<ListUIState, FilterQuotesByStatus>(_filterQuotesByStatus),
-  TypedReducer<ListUIState, FilterByEntity>(_filterQuotesByEntity),
   TypedReducer<ListUIState, FilterQuotes>(_filterQuotes),
   TypedReducer<ListUIState, FilterQuotesByCustom1>(_filterQuotesByCustom1),
   TypedReducer<ListUIState, FilterQuotesByCustom2>(_filterQuotesByCustom2),
@@ -145,10 +144,6 @@ final quoteListReducer = combineReducers<ListUIState>([
   TypedReducer<ListUIState, RemoveFromQuoteMultiselect>(
       _removeFromListMultiselect),
   TypedReducer<ListUIState, ClearQuoteMultiselect>(_clearListMultiselect),
-  TypedReducer<ListUIState, ClearEntityFilter>(
-      (state, action) => state.rebuild((b) => b
-        ..filterEntityId = null
-        ..filterEntityType = null)),
 ]);
 
 ListUIState _filterQuotesByCustom1(
@@ -208,20 +203,6 @@ ListUIState _filterQuotesByStatus(
   } else {
     return quoteListState.rebuild((b) => b..statusFilters.add(action.status));
   }
-}
-
-ListUIState _filterQuotesByEntity(
-    ListUIState quoteListState, FilterByEntity action) {
-  if (quoteListState.filterEntityId == action.entityId &&
-      quoteListState.filterEntityType == action.entityType) {
-    return quoteListState.rebuild((b) => b
-      ..filterEntityId = null
-      ..filterEntityType = null);
-  }
-
-  return quoteListState.rebuild((b) => b
-    ..filterEntityId = action.entityId
-    ..filterEntityType = action.entityType);
 }
 
 ListUIState _filterQuotes(ListUIState quoteListState, FilterQuotes action) {

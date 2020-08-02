@@ -13,7 +13,7 @@ import 'package:invoiceninja_flutter/redux/company/company_selectors.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 
 double round(double value, int precision) {
-  if (value == null  || value.isNaN) {
+  if (value == null || value.isNaN) {
     return 0;
   }
 

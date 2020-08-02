@@ -43,8 +43,6 @@ Middleware<AppState> _editToken() {
   return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
     final action = dynamicAction as EditToken;
 
-
-
     next(action);
 
     store.dispatch(UpdateCurrentRoute(TokenEditScreen.route));
@@ -60,8 +58,6 @@ Middleware<AppState> _viewToken() {
       NextDispatcher next) async {
     final action = dynamicAction as ViewToken;
 
-
-
     next(action);
 
     store.dispatch(UpdateCurrentRoute(TokenViewScreen.route));
@@ -75,8 +71,6 @@ Middleware<AppState> _viewToken() {
 Middleware<AppState> _viewTokenList() {
   return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
     final action = dynamicAction as ViewTokenList;
-
-
 
     next(action);
 

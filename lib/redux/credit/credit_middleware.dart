@@ -66,8 +66,6 @@ Middleware<AppState> _viewCreditList() {
   return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
     final action = dynamicAction as ViewCreditList;
 
-
-
     next(action);
 
     if (store.state.isStale) {
@@ -86,8 +84,6 @@ Middleware<AppState> _viewCreditList() {
 Middleware<AppState> _editCredit() {
   return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
     final action = dynamicAction as EditCredit;
-
-
 
     next(action);
 

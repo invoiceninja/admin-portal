@@ -43,8 +43,6 @@ Middleware<AppState> _editTask() {
   return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
     final action = dynamicAction as EditTask;
 
-
-
     next(action);
 
     store.dispatch(UpdateCurrentRoute(TaskEditScreen.route));
@@ -60,8 +58,6 @@ Middleware<AppState> _viewTask() {
       NextDispatcher next) async {
     final action = dynamicAction as ViewTask;
 
-
-
     next(action);
 
     store.dispatch(UpdateCurrentRoute(TaskViewScreen.route));
@@ -75,8 +71,6 @@ Middleware<AppState> _viewTask() {
 Middleware<AppState> _viewTaskList() {
   return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
     final action = dynamicAction as ViewTaskList;
-
-
 
     next(action);
 

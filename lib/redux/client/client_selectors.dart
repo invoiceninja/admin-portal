@@ -28,17 +28,20 @@ List<String> dropdownClientsSelector(
   return list;
 }
 
-var memoizedFilteredClientList = memo6(
-    (BuiltMap<String, ClientEntity> clientMap,
-            BuiltList<String> clientList,
-            BuiltMap<String, GroupEntity> groupMap,
-            ListUIState clientListState,
-            BuiltMap<String, UserEntity> userMap,
-            StaticState staticState) =>
-        filteredClientsSelector(clientMap, clientList, groupMap,
-            clientListState, userMap, staticState));
+var memoizedFilteredClientList = memo8((String filterEntityId,
+        EntityType filterEntityType,
+        BuiltMap<String, ClientEntity> clientMap,
+        BuiltList<String> clientList,
+        BuiltMap<String, GroupEntity> groupMap,
+        ListUIState clientListState,
+        BuiltMap<String, UserEntity> userMap,
+        StaticState staticState) =>
+    filteredClientsSelector(filterEntityId, filterEntityType, clientMap,
+        clientList, groupMap, clientListState, userMap, staticState));
 
 List<String> filteredClientsSelector(
+    String filterEntityId,
+    EntityType filterEntityType,
     BuiltMap<String, ClientEntity> clientMap,
     BuiltList<String> clientList,
     BuiltMap<String, GroupEntity> groupMap,
@@ -49,14 +52,11 @@ List<String> filteredClientsSelector(
     final client = clientMap[clientId];
     final group = groupMap[client.groupId] ?? GroupEntity(id: client.groupId);
 
-    if (clientListState.filterEntityType == EntityType.group) {
-      if (!clientListState.entityMatchesFilter(group)) {
-        return false;
-      }
-    } else if (clientListState.filterEntityType == EntityType.user) {
-      if (client.assignedUserId != clientListState.filterEntityId) {
-        return false;
-      }
+    if (filterEntityType == EntityType.group && group.id != filterEntityId) {
+      return false;
+    } else if (filterEntityType == EntityType.user &&
+        client.assignedUserId != filterEntityId) {
+      return false;
     }
 
     if (!client.matchesStates(clientListState.stateFilters)) {

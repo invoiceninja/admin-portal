@@ -72,8 +72,6 @@ final companyGatewayListReducer = combineReducers<ListUIState>([
       _filterCompanyGatewaysByCustom1),
   TypedReducer<ListUIState, FilterCompanyGatewaysByCustom2>(
       _filterCompanyGatewaysByCustom2),
-  TypedReducer<ListUIState, FilterByEntity>(
-      _filterCompanyGatewaysByCompanyGateway),
   TypedReducer<ListUIState, StartCompanyGatewayMultiselect>(
       _startListMultiselect),
   TypedReducer<ListUIState, AddToCompanyGatewayMultiselect>(
@@ -82,18 +80,7 @@ final companyGatewayListReducer = combineReducers<ListUIState>([
       _removeFromListMultiselect),
   TypedReducer<ListUIState, ClearCompanyGatewayMultiselect>(
       _clearListMultiselect),
-  TypedReducer<ListUIState, ClearEntityFilter>(
-      (state, action) => state.rebuild((b) => b
-        ..filterEntityId = null
-        ..filterEntityType = null)),
 ]);
-
-ListUIState _filterCompanyGatewaysByCompanyGateway(
-    ListUIState companyGatewayListState, FilterByEntity action) {
-  return companyGatewayListState.rebuild((b) => b
-    ..filterEntityId = action.entityId
-    ..filterEntityType = action.entityType);
-}
 
 ListUIState _filterCompanyGatewaysByCustom1(ListUIState companyGatewayListState,
     FilterCompanyGatewaysByCustom1 action) {

@@ -261,9 +261,8 @@ class _PaymentEditState extends State<PaymentEdit> {
                       title: Text(localization.sendEmail),
                       value: payment.sendEmail,
                       subtitle: Text(localization.emailReceipt),
-                      onChanged: (value) => viewModel.onChanged(payment.rebuild((b) => b
-                          ..sendEmail = value
-                      )),
+                      onChanged: (value) => viewModel.onChanged(
+                          payment.rebuild((b) => b..sendEmail = value)),
                     ),
                   ])
                 : Container(),

@@ -42,8 +42,6 @@ Middleware<AppState> _editWebhook() {
   return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
     final action = dynamicAction as EditWebhook;
 
-
-
     next(action);
 
     store.dispatch(UpdateCurrentRoute(WebhookEditScreen.route));
@@ -59,8 +57,6 @@ Middleware<AppState> _viewWebhook() {
       NextDispatcher next) async {
     final action = dynamicAction as ViewWebhook;
 
-
-
     next(action);
 
     store.dispatch(UpdateCurrentRoute(WebhookViewScreen.route));
@@ -74,8 +70,6 @@ Middleware<AppState> _viewWebhook() {
 Middleware<AppState> _viewWebhookList() {
   return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
     final action = dynamicAction as ViewWebhookList;
-
-
 
     next(action);
 

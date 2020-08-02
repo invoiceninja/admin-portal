@@ -91,8 +91,8 @@ class QuotePresenter extends EntityPresenter {
       case QuoteFields.documents:
         return Text('${quote.documents.length}');
       case QuoteFields.taxAmount:
-        return Text(formatNumber(quote.taxAmount, context,
-            clientId: quote.clientId));
+        return Text(
+            formatNumber(quote.taxAmount, context, clientId: quote.clientId));
     }
 
     return super.getField(field: field, context: context);

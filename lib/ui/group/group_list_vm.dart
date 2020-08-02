@@ -64,7 +64,8 @@ class GroupListVM {
     @required this.isLoading,
     @required this.listState,
     @required this.onRefreshed,
-    @required this.onSortColumn, @required this.onClearMultielsect,
+    @required this.onSortColumn,
+    @required this.onClearMultielsect,
   });
 
   static GroupListVM fromStore(Store<AppState> store) {
@@ -104,4 +105,5 @@ class GroupListVM {
   final bool isLoading;
   final Function(BuildContext) onRefreshed;
   final Function(String) onSortColumn;
-final Function onClearMultielsect;}
+  final Function onClearMultielsect;
+}
