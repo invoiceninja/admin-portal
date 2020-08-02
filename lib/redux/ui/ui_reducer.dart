@@ -4,15 +4,25 @@ import 'package:invoiceninja_flutter/redux/client/client_actions.dart';
 import 'package:invoiceninja_flutter/redux/client/client_reducer.dart';
 import 'package:invoiceninja_flutter/redux/company/company_actions.dart';
 import 'package:invoiceninja_flutter/redux/company/company_state.dart';
+import 'package:invoiceninja_flutter/redux/company_gateway/company_gateway_actions.dart';
+import 'package:invoiceninja_flutter/redux/credit/credit_actions.dart';
 import 'package:invoiceninja_flutter/redux/dashboard/dashboard_actions.dart';
 import 'package:invoiceninja_flutter/redux/dashboard/dashboard_reducer.dart';
+import 'package:invoiceninja_flutter/redux/expense/expense_actions.dart';
 import 'package:invoiceninja_flutter/redux/group/group_actions.dart';
+import 'package:invoiceninja_flutter/redux/invoice/invoice_actions.dart';
+import 'package:invoiceninja_flutter/redux/payment/payment_actions.dart';
+import 'package:invoiceninja_flutter/redux/project/project_actions.dart';
+import 'package:invoiceninja_flutter/redux/quote/quote_actions.dart';
 import 'package:invoiceninja_flutter/redux/reports/reports_reducer.dart';
 import 'package:invoiceninja_flutter/redux/settings/settings_actions.dart';
+import 'package:invoiceninja_flutter/redux/task/task_actions.dart';
 import 'package:invoiceninja_flutter/redux/ui/ui_actions.dart';
 import 'package:invoiceninja_flutter/redux/ui/ui_state.dart';
 import 'package:invoiceninja_flutter/redux/product/product_reducer.dart';
 import 'package:invoiceninja_flutter/redux/invoice/invoice_reducer.dart';
+import 'package:invoiceninja_flutter/redux/user/user_actions.dart';
+import 'package:invoiceninja_flutter/redux/vendor/vendor_actions.dart';
 import 'package:redux/redux.dart';
 import 'package:invoiceninja_flutter/redux/document/document_reducer.dart';
 import 'package:invoiceninja_flutter/redux/expense/expense_reducer.dart';
@@ -51,6 +61,8 @@ UIState uiReducer(UIState state, dynamic action) {
   return state.rebuild((b) => b
     ..filter = filterReducer(state.filter, action)
     ..filterClearedAt = filterClearedAtReducer(state.filterClearedAt, action)
+    ..filterEntityId = filterEntityIdReducer(
+        state.filterEntityId, state.filterEntityType, action)
     ..selectedCompanyIndex =
         selectedCompanyIndexReducer(state.selectedCompanyIndex, action)
     ..previousRoute = state.currentRoute == currentRoute
@@ -86,6 +98,39 @@ UIState uiReducer(UIState state, dynamic action) {
     ..quoteUIState.replace(quoteUIReducer(state.quoteUIState, action))
     ..settingsUIState
         .replace(settingsUIReducer(state.settingsUIState, action)));
+}
+
+String filterEntityIdReducer(
+    String entityId, EntityType entityType, dynamic action) {
+  if (action is ViewClient && entityType == EntityType.client) {
+    return action.clientId;
+  } else if (action is ViewInvoice && entityType == EntityType.invoice) {
+    return action.invoiceId;
+  } else if (action is ViewPayment && entityType == EntityType.payment) {
+    return action.paymentId;
+  } else if (action is ViewQuote && entityType == EntityType.quote) {
+    return action.quoteId;
+  } else if (action is ViewCredit && entityType == EntityType.credit) {
+    return action.creditId;
+  } else if (action is ViewProject && entityType == EntityType.project) {
+    return action.projectId;
+  } else if (action is ViewTask && entityType == EntityType.task) {
+    return action.taskId;
+  } else if (action is ViewVendor && entityType == EntityType.vendor) {
+    return action.vendorId;
+  } else if (action is ViewExpense && entityType == EntityType.expense) {
+    return action.expenseId;
+  } else if (action is ViewGroup && entityType == EntityType.group) {
+    return action.groupId;
+  } else if (action is ViewCompanyGateway &&
+      entityType == EntityType.companyGateway) {
+    return action.companyGatewayId;
+    // TODO add to starter
+  } else if (action is ViewUser && entityType == EntityType.user) {
+    return action.userId;
+  }
+
+  return entityId;
 }
 
 Reducer<String> filterReducer = combineReducers([
