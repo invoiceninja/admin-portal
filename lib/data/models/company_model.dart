@@ -165,8 +165,6 @@ abstract class CompanyEntity extends Object
   @BuiltValueField(wireName: 'is_large')
   bool get isLarge;
 
-  // TODO remove this nullable
-  @nullable
   @BuiltValueField(wireName: 'enable_shop_api')
   bool get enableShopApi;
 

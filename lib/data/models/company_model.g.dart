@@ -85,6 +85,9 @@ class _$CompanyEntitySerializer implements StructuredSerializer<CompanyEntity> {
       'is_large',
       serializers.serialize(object.isLarge,
           specifiedType: const FullType(bool)),
+      'enable_shop_api',
+      serializers.serialize(object.enableShopApi,
+          specifiedType: const FullType(bool)),
       'company_key',
       serializers.serialize(object.companyKey,
           specifiedType: const FullType(String)),
@@ -225,12 +228,6 @@ class _$CompanyEntitySerializer implements StructuredSerializer<CompanyEntity> {
       'id',
       serializers.serialize(object.id, specifiedType: const FullType(String)),
     ];
-    if (object.enableShopApi != null) {
-      result
-        ..add('enable_shop_api')
-        ..add(serializers.serialize(object.enableShopApi,
-            specifiedType: const FullType(bool)));
-    }
     if (object.plan != null) {
       result
         ..add('plan')
@@ -2905,6 +2902,9 @@ class _$CompanyEntity extends CompanyEntity {
     }
     if (isLarge == null) {
       throw new BuiltValueNullFieldError('CompanyEntity', 'isLarge');
+    }
+    if (enableShopApi == null) {
+      throw new BuiltValueNullFieldError('CompanyEntity', 'enableShopApi');
     }
     if (companyKey == null) {
       throw new BuiltValueNullFieldError('CompanyEntity', 'companyKey');
