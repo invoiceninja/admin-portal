@@ -62,7 +62,9 @@ class _HealthCheckDialogState extends State<HealthCheckDialog> {
 
     return AlertDialog(
       content: _response == null
-          ? LoadingIndicator()
+          ? LoadingIndicator(
+              height: 100,
+            )
           : Column(
               mainAxisSize: MainAxisSize.min,
               children: [

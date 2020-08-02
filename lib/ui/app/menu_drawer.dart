@@ -776,7 +776,7 @@ void _showAbout(BuildContext context) async {
       ),
       //if (!state.isProduction) // TODO enable this check
       Padding(
-        padding: const EdgeInsets.only(top: 24),
+        padding: const EdgeInsets.only(top: 30),
         child: AppButton(
           label: localization.healthCheck.toUpperCase(),
           iconData: FontAwesomeIcons.shieldAlt,
