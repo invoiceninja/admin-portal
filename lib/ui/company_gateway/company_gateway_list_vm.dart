@@ -61,11 +61,17 @@ class CompanyGatewayListVM {
 
     final state = store.state;
     final uiState = state.uiState.settingsUIState;
+    String companyGatewayIds =
+        state.uiState.settingsUIState.settings.companyGatewayIds;
+    if ((companyGatewayIds ?? '').isEmpty) {
+      companyGatewayIds = state.companyGatewayState.list.join(',');
+    }
+
     final gatewayIds = memoizedFilteredCompanyGatewayList(
       state.companyGatewayState.map,
       state.companyGatewayState.list,
       state.companyGatewayListState,
-      state.uiState.settingsUIState.settings.companyGatewayIds,
+      companyGatewayIds,
       !state.uiState.settingsUIState.isFiltered,
     );
 

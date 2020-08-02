@@ -25,6 +25,9 @@ class CompanyGatewayList extends StatelessWidget {
 
     return Column(
       children: <Widget>[
+        SizedBox(
+          height: 32,
+        ),
         Flexible(
           fit: FlexFit.tight,
           child: !viewModel.state.isLoaded &&
