@@ -295,13 +295,15 @@ abstract class CompanyEntity extends Object
 
   bool get hasCustomSurcharge =>
       hasCustomField(CustomFieldType.surcharge1) ||
-      hasCustomField(CustomFieldType.surcharge2) ||
-      hasCustomField(CustomFieldType.surcharge3) ||
-      hasCustomField(CustomFieldType.surcharge4);
+          hasCustomField(CustomFieldType.surcharge2) ||
+          hasCustomField(CustomFieldType.surcharge3) ||
+          hasCustomField(CustomFieldType.surcharge4);
 
   String getCustomFieldLabel(String field) {
     if (customFields.containsKey(field)) {
-      return customFields[field].split('|').first;
+      return customFields[field]
+          .split('|')
+          .first;
     } else {
       return '';
     }
@@ -309,7 +311,9 @@ abstract class CompanyEntity extends Object
 
   String getCustomFieldType(String field) {
     if ((customFields[field] ?? '').contains('|')) {
-      final value = customFields[field].split('|').last;
+      final value = customFields[field]
+          .split('|')
+          .last;
       if ([kFieldTypeSingleLineText, kFieldTypeDate, kFieldTypeSwitch]
           .contains(value)) {
         return value;
@@ -346,7 +350,9 @@ abstract class CompanyEntity extends Object
   }
 
   // TODO make sure to clear everything
-  CompanyEntity get coreCompany => rebuild((b) => b
+  CompanyEntity get coreCompany =>
+      rebuild((b) =>
+      b
         ..clients.clear()
         ..products.clear()
         ..invoices.clear()
@@ -357,8 +363,8 @@ abstract class CompanyEntity extends Object
         ..projects.clear()
         ..vendors.clear()
         ..expenses.clear()
-      //..designs.clear()
-      //..companyGateways.clear()
+        //..designs.clear()
+        //..companyGateways.clear()
       );
 
   bool isModuleEnabled(EntityType entityType) {
@@ -374,7 +380,7 @@ abstract class CompanyEntity extends Object
     }
 
     if ((entityType == EntityType.invoice ||
-            entityType == EntityType.payment) &&
+        entityType == EntityType.payment) &&
         enabledModules & kModuleInvoices == 0) {
       return false;
     } else if (entityType == EntityType.credit &&
@@ -492,6 +498,7 @@ abstract class GatewayEntity extends Object
   FormatNumberType get listDisplayAmountType => null;
 }
 
+
 abstract class UserCompanyEntity
     implements Built<UserCompanyEntity, UserCompanyEntityBuilder> {
   factory UserCompanyEntity() {
@@ -503,9 +510,10 @@ abstract class UserCompanyEntity
       user: UserEntity(),
       token: TokenEntity(),
       account: AccountEntity(),
-      notifications: BuiltMap<String, BuiltList<String>>().rebuild((b) => b
+      notifications: BuiltMap<String, BuiltList<String>>().rebuild((b) =>
+      b
         ..[kNotificationChannelEmail] =
-            BuiltList<String>(<String>[kNotificationsAll])),
+        BuiltList<String>(<String>[kNotificationsAll])),
     );
   }
 
@@ -575,7 +583,7 @@ abstract class UserCompanyEntity
 
   bool receivesAllNotifications(String channel) =>
       notifications.containsKey(channel) &&
-      notifications[channel].contains(kNotificationsAll);
+          notifications[channel].contains(kNotificationsAll);
 
   bool canView(EntityType entityType) => can(UserPermission.view, entityType);
 
@@ -780,9 +788,9 @@ abstract class SettingsEntity
           groupSettings?.customMessagePaidInvoice ??
           companySettings?.customMessagePaidInvoice,
       customMessageUnapprovedQuote:
-          clientSettings?.customMessageUnapprovedQuote ??
-              groupSettings?.customMessageUnapprovedQuote ??
-              companySettings?.customMessageUnapprovedQuote,
+      clientSettings?.customMessageUnapprovedQuote ??
+          groupSettings?.customMessageUnapprovedQuote ??
+          companySettings?.customMessageUnapprovedQuote,
       lockSentInvoices: clientSettings?.lockSentInvoices ??
           groupSettings?.lockSentInvoices ??
           companySettings?.lockSentInvoices,
@@ -988,7 +996,7 @@ abstract class SettingsEntity
           groupSettings?.requireQuoteSignature ??
           companySettings?.requireQuoteSignature,
       name:
-          clientSettings?.name ?? groupSettings?.name ?? companySettings?.name,
+      clientSettings?.name ?? groupSettings?.name ?? companySettings?.name,
       companyLogo: clientSettings?.companyLogo ??
           groupSettings?.companyLogo ??
           companySettings?.companyLogo,
@@ -1002,7 +1010,7 @@ abstract class SettingsEntity
           groupSettings?.address2 ??
           companySettings?.address2,
       city:
-          clientSettings?.city ?? groupSettings?.city ?? companySettings?.city,
+      clientSettings?.city ?? groupSettings?.city ?? companySettings?.city,
       state: clientSettings?.state ??
           groupSettings?.state ??
           companySettings?.state,
@@ -1885,7 +1893,7 @@ abstract class SettingsEntity
 abstract class CompanyItemResponse
     implements Built<CompanyItemResponse, CompanyItemResponseBuilder> {
   factory CompanyItemResponse([void updates(CompanyItemResponseBuilder b)]) =
-      _$CompanyItemResponse;
+  _$CompanyItemResponse;
 
   CompanyItemResponse._();
 

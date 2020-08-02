@@ -3,11 +3,14 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:invoiceninja_flutter/data/web_client.dart';
 import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:invoiceninja_flutter/redux/ui/pref_state.dart';
+import 'package:invoiceninja_flutter/ui/app/buttons/elevated_button.dart';
 import 'package:invoiceninja_flutter/ui/app/dialogs/alert_dialog.dart';
 import 'package:invoiceninja_flutter/ui/app/dialogs/error_dialog.dart';
+import 'package:invoiceninja_flutter/ui/app/dialogs/health_check_dialog.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/app_dropdown_button.dart';
 import 'package:invoiceninja_flutter/ui/app/resources/cached_image.dart';
 import 'package:invoiceninja_flutter/ui/system/update_dialog.dart';
@@ -745,7 +748,7 @@ void _showAbout(BuildContext context) async {
     applicationLegalese: '© ${DateTime.now().year} Invoice Ninja',
     children: <Widget>[
       Padding(
-        padding: const EdgeInsets.only(top: 24.0),
+        padding: const EdgeInsets.only(top: 24),
         child: RichText(
           text: TextSpan(
             children: <TextSpan>[
@@ -769,6 +772,21 @@ void _showAbout(BuildContext context) async {
               ),
             ],
           ),
+        ),
+      ),
+      //if (!state.isProduction) // TODO enable this check
+      Padding(
+        padding: const EdgeInsets.only(top: 24),
+        child: AppButton(
+          label: localization.healthCheck.toUpperCase(),
+          iconData: FontAwesomeIcons.shieldAlt,
+          onPressed: () {
+            showDialog<HealthCheckDialog>(
+                context: context,
+                builder: (BuildContext context) {
+                  return HealthCheckDialog();
+                });
+          },
         ),
       ),
     ],

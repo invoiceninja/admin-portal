@@ -589,6 +589,8 @@ abstract class AppState implements Built<AppState, AppStateBuilder> {
 
   bool get isStaging => cleanApiUrl(authState.url) == kAppStagingUrl;
 
+  bool get isProduction => cleanApiUrl(authState.url) == kAppProductionUrl;
+
   bool get isWhiteLabeled => isSelfHosted || account.plan == kPlanWhiteLabel;
 
   /* TODO re-enable
