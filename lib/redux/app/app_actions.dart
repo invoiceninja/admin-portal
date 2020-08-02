@@ -168,10 +168,15 @@ class ClearEntitySelection {
 }
 
 class FilterByEntity implements PersistUI {
-  FilterByEntity({this.entityId, this.entityType});
+  FilterByEntity({
+    @required this.entityId,
+    @required this.entityType,
+    this.clearSelection = false,
+  });
 
   final String entityId;
   final EntityType entityType;
+  final bool clearSelection;
 }
 
 class FilterCompany implements PersistUI {
@@ -329,6 +334,14 @@ void viewEntityById({
           store.dispatch(FilterByEntity(
             entityId: filterEntity.id,
             entityType: filterEntity.entityType,
+          ));
+        } else if (uiState.filterEntityType != null &&
+            uiState.filterEntityId != entityId &&
+            uiState.filterEntityType == entityType) {
+          store.dispatch(FilterByEntity(
+            entityId: entityId,
+            entityType: entityType,
+            clearSelection: true,
           ));
         }
 

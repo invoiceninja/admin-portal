@@ -1,5 +1,6 @@
 import 'package:built_collection/built_collection.dart';
 import 'package:invoiceninja_flutter/data/models/company_gateway_model.dart';
+import 'package:invoiceninja_flutter/data/models/entities.dart';
 import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:invoiceninja_flutter/redux/company/company_actions.dart';
 import 'package:invoiceninja_flutter/redux/company_gateway/company_gateway_actions.dart';
@@ -27,6 +28,12 @@ Reducer<String> selectedIdReducer = combineReducers([
   TypedReducer<String, ArchiveCompanyGatewaySuccess>(
       (selectedId, action) => ''),
   TypedReducer<String, ClearEntityFilter>((selectedId, action) => ''),
+  TypedReducer<String, FilterByEntity>((selectedId, action) =>
+      action.clearSelection
+          ? ''
+          : action.entityType == EntityType.companyGateway
+              ? action.entityId
+              : selectedId),
 ]);
 
 final editingReducer = combineReducers<CompanyGatewayEntity>([

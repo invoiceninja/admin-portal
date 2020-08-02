@@ -146,7 +146,7 @@ class SettingsViewer extends StatelessWidget {
           ? staticState.paymentTypeMap[settings.defaultPaymentTypeId]?.name
           : null,
       localization.invoiceFields: settings.invoiceFields,
-      localization.emailSignature: settings.emailFooter,
+      localization.emailSignature: settings.emailSignature,
       localization.emailStyle: settings.emailStyle,
       localization.replyToEmail: settings.replyToEmail,
       localization.bccEmail: settings.bccEmail,

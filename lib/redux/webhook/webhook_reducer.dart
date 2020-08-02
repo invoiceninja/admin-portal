@@ -26,8 +26,10 @@ Reducer<String> selectedIdReducer = combineReducers([
   TypedReducer<String, DeleteWebhooksSuccess>((selectedId, action) => ''),
   TypedReducer<String, ArchiveWebhooksSuccess>((selectedId, action) => ''),
   TypedReducer<String, ClearEntityFilter>((selectedId, action) => ''),
-  TypedReducer<String, FilterByEntity>((selectedId, action) =>
-      action.entityType == EntityType.webhook ? action.entityId : selectedId),
+  TypedReducer<String, FilterByEntity>((selectedId, action) => action
+          .clearSelection
+      ? ''
+      : action.entityType == EntityType.webhook ? action.entityId : selectedId),
 ]);
 
 final editingReducer = combineReducers<WebhookEntity>([

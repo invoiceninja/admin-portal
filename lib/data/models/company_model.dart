@@ -921,9 +921,9 @@ abstract class SettingsEntity
       invoiceFields: clientSettings?.invoiceFields ??
           groupSettings?.invoiceFields ??
           companySettings?.invoiceFields,
-      emailFooter: clientSettings?.emailFooter ??
-          groupSettings?.emailFooter ??
-          companySettings?.emailFooter,
+      emailSignature: clientSettings?.emailSignature ??
+          groupSettings?.emailSignature ??
+          companySettings?.emailSignature,
       emailSubjectInvoice: clientSettings?.emailSubjectInvoice ??
           groupSettings?.emailSubjectInvoice ??
           companySettings?.emailSubjectInvoice,
@@ -1453,8 +1453,8 @@ abstract class SettingsEntity
   BuiltMap<String, BuiltList<String>> get pdfVariables;
 
   @nullable
-  @BuiltValueField(wireName: 'email_footer')
-  String get emailFooter;
+  @BuiltValueField(wireName: 'email_signature')
+  String get emailSignature;
 
   @nullable
   @BuiltValueField(wireName: 'email_subject_invoice')
