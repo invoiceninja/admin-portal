@@ -4,6 +4,7 @@ import 'package:invoiceninja_flutter/data/models/health_check.dart';
 import 'package:invoiceninja_flutter/data/models/serializers.dart';
 import 'package:invoiceninja_flutter/data/web_client.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
+import 'package:invoiceninja_flutter/ui/app/dialogs/error_dialog.dart';
 import 'package:invoiceninja_flutter/ui/app/loading_indicator.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 
@@ -16,25 +17,15 @@ class _HealthCheckDialogState extends State<HealthCheckDialog> {
   HealthCheckResponse _response;
 
   @override
-  void initState() {
-    super.initState();
-
-    print('## INIT STATE');
-  }
-
-  @override
   void didChangeDependencies() {
-    print('## didChangeDependencies');
-
     if (_response == null) {
       runCheck();
     }
+
     super.didChangeDependencies();
   }
 
   void runCheck() {
-    print('## RUN CHECK');
-
     setState(() {
       _response = null;
     });
@@ -45,14 +36,16 @@ class _HealthCheckDialogState extends State<HealthCheckDialog> {
     final url = '${credentials.url}/health_check';
 
     webClient.get(url, credentials.token).then((dynamic response) {
-      print('## response: $response');
       setState(() {
-        //_response = json.decode(response);
         _response = serializers.deserializeWith(
             HealthCheckResponse.serializer, response);
       });
     }).catchError((dynamic error) {
-      print('## error: $error');
+      showDialog<ErrorDialog>(
+          context: context,
+          builder: (BuildContext context) {
+            return ErrorDialog(error);
+          });
     });
   }
 
@@ -68,12 +61,33 @@ class _HealthCheckDialogState extends State<HealthCheckDialog> {
           : Column(
               mainAxisSize: MainAxisSize.min,
               children: [
-                ListTile(
-                  title: Text('System Health'),
-                  subtitle: Text(_response.systemHealth ? 'Passed' : 'Failed'),
-                  trailing: Icon(_response.systemHealth
-                      ? Icons.check_circle_outline
-                      : Icons.error_outline),
+                _HealthListTile(
+                  title: 'System Health',
+                  isValid: _response.systemHealth,
+                ),
+                _HealthListTile(
+                  title: 'Database Check',
+                  isValid: _response.dbCheck,
+                ),
+                _HealthListTile(
+                  title: '.env Writable',
+                  isValid: _response.envWritable,
+                ),
+                _HealthListTile(
+                  title: 'PHP Version',
+                  isValid: _response.phpVersion.isOkay,
+                  subtitle: (_response.phpVersion.currentPHPVersion ?? '')
+                      .split('+')[0],
+                ),
+                _HealthListTile(
+                  title: 'Node Version',
+                  isValid: _response.nodeStatus.isNotEmpty,
+                  subtitle: _response.nodeStatus.replaceFirst('v', ''),
+                ),
+                _HealthListTile(
+                  title: 'NPM Version',
+                  isValid: _response.npmStatus.isNotEmpty,
+                  subtitle: _response.npmStatus,
                 ),
               ],
             ),
@@ -89,6 +103,30 @@ class _HealthCheckDialogState extends State<HealthCheckDialog> {
                 onPressed: () => Navigator.of(context).pop(),
               )
             ],
+    );
+  }
+}
+
+class _HealthListTile extends StatelessWidget {
+  const _HealthListTile({
+    @required this.title,
+    @required this.isValid,
+    this.subtitle,
+  });
+
+  final String title;
+  final bool isValid;
+  final String subtitle;
+
+  @override
+  Widget build(BuildContext context) {
+    return ListTile(
+      title: Text(title),
+      subtitle: Text(isValid ? (subtitle ?? 'Passed') : 'Failed'),
+      trailing: Icon(
+        isValid ? Icons.check_circle_outline : Icons.error_outline,
+        color: isValid ? Colors.green : Colors.red,
+      ),
     );
   }
 }
