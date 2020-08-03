@@ -1,18 +1,24 @@
+import 'dart:io';
+
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
+import 'package:flutter_share/flutter_share.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
+import 'package:invoiceninja_flutter/data/web_client.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/ui/app/buttons/elevated_button.dart';
 import 'package:invoiceninja_flutter/ui/app/lists/list_divider.dart';
 import 'package:invoiceninja_flutter/utils/dialogs.dart';
 import 'package:invoiceninja_flutter/utils/formatting.dart';
 import 'package:invoiceninja_flutter/utils/icons.dart';
+import 'package:http/http.dart' as http;
 import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:invoiceninja_flutter/utils/web_stub.dart'
     if (dart.library.html) 'package:invoiceninja_flutter/utils/web.dart';
+import 'package:path_provider/path_provider.dart';
 
 class DocumentGrid extends StatelessWidget {
   const DocumentGrid({
@@ -163,6 +169,32 @@ class DocumentTile extends StatelessWidget {
                             });
                       },
                     ),
+              FlatButton(
+                child: Text(localization.download.toUpperCase()),
+                onPressed: () async {
+                  Directory directory;
+                  if (Platform.isAndroid) {
+                    directory = await getExternalStorageDirectory();
+                  } else {
+                    directory = await getApplicationDocumentsDirectory();
+                  }
+
+                  final String folder = '${directory.path}/documents';
+                  await Directory(folder).create(recursive: true);
+                  final filePath = '$folder/${document.name}';
+                  final store = StoreProvider.of<AppState>(context);
+
+                  final http.Response response = await WebClient().get(
+                      document.url, store.state.credentials.token,
+                      rawResponse: true);
+
+                  await File(filePath).writeAsBytes(response.bodyBytes);
+                  await FlutterShare.shareFile(
+                    title: '${localization.name}',
+                    filePath: filePath,
+                  );
+                },
+              ),
               FlatButton(
                 child: Text(localization.close.toUpperCase()),
                 onPressed: () {
