@@ -18,6 +18,7 @@ import 'package:invoiceninja_flutter/ui/credit/edit/credit_edit_items_vm.dart';
 import 'package:invoiceninja_flutter/ui/invoice/edit/invoice_edit_contacts_vm.dart';
 import 'package:invoiceninja_flutter/ui/invoice/edit/invoice_edit_details_vm.dart';
 import 'package:invoiceninja_flutter/ui/invoice/edit/invoice_edit_items_vm.dart';
+import 'package:invoiceninja_flutter/ui/invoice/edit/invoice_edit_vm.dart';
 import 'package:invoiceninja_flutter/ui/quote/edit/quote_edit_items_vm.dart';
 import 'package:invoiceninja_flutter/utils/completers.dart';
 import 'package:invoiceninja_flutter/utils/formatting.dart';
@@ -27,10 +28,12 @@ class InvoiceEditDesktop extends StatefulWidget {
   const InvoiceEditDesktop({
     Key key,
     @required this.viewModel,
+    @required this.entityViewModel,
     this.entityType = EntityType.invoice,
   }) : super(key: key);
 
   final EntityEditDetailsVM viewModel;
+  final EntityEditVM entityViewModel;
   final EntityType entityType;
 
   @override
@@ -258,6 +261,7 @@ class InvoiceEditDesktopState extends State<InvoiceEditDesktop>
                     controller: _partialController,
                     keyboardType:
                         TextInputType.numberWithOptions(decimal: true),
+                    onSavePressed: widget.entityViewModel.onSavePressed,
                   ),
                   if (invoice.partial != null && invoice.partial > 0)
                     DatePicker(
@@ -300,10 +304,12 @@ class InvoiceEditDesktopState extends State<InvoiceEditDesktop>
                             invoice.isOld
                         ? AppLocalization.of(context).pleaseEnterAnInvoiceNumber
                         : null,
+                    onSavePressed: widget.entityViewModel.onSavePressed,
                   ),
                   DecoratedFormField(
                     label: localization.poNumber,
                     controller: _poNumberController,
+                    onSavePressed: widget.entityViewModel.onSavePressed,
                   ),
                   DiscountField(
                     controller: _discountController,
@@ -328,10 +334,16 @@ class InvoiceEditDesktopState extends State<InvoiceEditDesktop>
           ],
         ),
         widget.entityType == EntityType.credit
-            ? CreditEditItemsScreen()
+            ? CreditEditItemsScreen(
+                viewModel: widget.entityViewModel,
+              )
             : widget.entityType == EntityType.quote
-                ? QuoteEditItemsScreen()
-                : InvoiceEditItemsScreen(),
+                ? QuoteEditItemsScreen(
+                    viewModel: widget.entityViewModel,
+                  )
+                : InvoiceEditItemsScreen(
+                    viewModel: widget.entityViewModel,
+                  ),
         Row(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
@@ -485,6 +497,7 @@ class InvoiceEditDesktopState extends State<InvoiceEditDesktop>
                           surcharge3Controller: _surcharge3Controller,
                           surcharge4Controller: _surcharge4Controller,
                           isAfterTaxes: true,
+                          onSavePressed: widget.entityViewModel.onSavePressed,
                         ),
                       TextFormField(
                         enabled: false,

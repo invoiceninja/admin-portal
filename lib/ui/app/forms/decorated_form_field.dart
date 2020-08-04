@@ -1,10 +1,12 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 class DecoratedFormField extends StatelessWidget {
   const DecoratedFormField({
     Key key,
-    @required this.controller,
-    @required this.label,
+    this.controller,
+    this.label,
+    this.onSavePressed,
     this.autovalidate = false,
     this.autocorrect = false,
     this.obscureText = false,
@@ -22,6 +24,7 @@ class DecoratedFormField extends StatelessWidget {
     this.expands = false,
     this.autofocus = false,
     this.autofillHints,
+    this.textAlign = TextAlign.start,
   }) : super(key: key);
 
   final TextEditingController controller;
@@ -43,18 +46,22 @@ class DecoratedFormField extends StatelessWidget {
   final ValueChanged<String> onChanged;
   final Icon suffixIcon;
   final Iterable<String> autofillHints;
+  final Function(BuildContext) onSavePressed;
+  final TextAlign textAlign;
 
   @override
   Widget build(BuildContext context) {
     return TextFormField(
-      key: ValueKey(label),
+      key: key ?? ValueKey(label),
       controller: controller,
       autofocus: autofocus,
-      decoration: InputDecoration(
-        labelText: label,
-        hintText: hint,
-        suffixIcon: suffixIcon,
-      ),
+      decoration: label == null
+          ? null
+          : InputDecoration(
+              labelText: label,
+              hintText: hint,
+              suffixIcon: suffixIcon,
+            ),
       validator: validator,
       keyboardType: keyboardType ?? TextInputType.text,
       maxLines: expands ? null : maxLines ?? 1,
@@ -70,16 +77,22 @@ class DecoratedFormField extends StatelessWidget {
               : TextInputAction.next),
       onChanged: onChanged,
       onFieldSubmitted: (value) {
+        print('## onFieldSubmitted');
         if (onFieldSubmitted != null) {
           return onFieldSubmitted(value);
         } else if (keyboardType == TextInputType.multiline) {
           return null;
+        } else if (kIsWeb && onSavePressed != null) {
+          print('## WEB');
+          onSavePressed(context);
         } else {
+          print('## FOUCY');
           FocusScope.of(context).nextFocus();
         }
       },
       enabled: enabled,
       autofillHints: autofillHints,
+      textAlign: textAlign,
     );
   }
 }

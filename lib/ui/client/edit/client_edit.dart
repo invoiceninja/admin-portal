@@ -89,7 +89,9 @@ class _ClientEditState extends State<ClientEdit>
             ClientEditDetails(
               viewModel: viewModel,
             ),
-            ClientEditContactsScreen(),
+            ClientEditContactsScreen(
+              viewModel: viewModel,
+            ),
             ClientEditNotes(
               viewModel: viewModel,
             ),

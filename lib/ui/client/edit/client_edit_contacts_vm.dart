@@ -2,13 +2,17 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:invoiceninja_flutter/ui/client/edit/client_edit_contacts.dart';
+import 'package:invoiceninja_flutter/ui/client/edit/client_edit_vm.dart';
 import 'package:redux/redux.dart';
 import 'package:invoiceninja_flutter/redux/client/client_actions.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 
 class ClientEditContactsScreen extends StatelessWidget {
-  const ClientEditContactsScreen({Key key}) : super(key: key);
+  const ClientEditContactsScreen({Key key, @required this.viewModel})
+      : super(key: key);
+
+  final ClientEditVM viewModel;
 
   @override
   Widget build(BuildContext context) {
@@ -19,6 +23,7 @@ class ClientEditContactsScreen extends StatelessWidget {
       builder: (context, vm) {
         return ClientEditContacts(
           viewModel: vm,
+          clientViewModel: viewModel,
         );
       },
     );
@@ -50,7 +55,10 @@ class ClientEditContactsVM {
           store.dispatch(EditContact(contact));
         },
         onRemoveContactPressed: (index) => store.dispatch(DeleteContact(index)),
-        onDoneContactPressed: () => store.dispatch(EditContact()),
+        onDoneContactPressed: (_) {
+          print('## onDoneContactPressed');
+          store.dispatch(EditContact());
+        },
         onChangedContact: (contact, index) {
           store.dispatch(UpdateContact(contact: contact, index: index));
         });
@@ -61,6 +69,6 @@ class ClientEditContactsVM {
   final ContactEntity contact;
   final Function() onAddContactPressed;
   final Function(int) onRemoveContactPressed;
-  final Function onDoneContactPressed;
+  final Function(BuildContext) onDoneContactPressed;
   final Function(ContactEntity, int) onChangedContact;
 }

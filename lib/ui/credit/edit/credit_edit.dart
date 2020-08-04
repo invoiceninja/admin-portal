@@ -99,13 +99,19 @@ class _CreditEditState extends State<CreditEdit>
       body: Form(
         key: _formKey,
         child: state.prefState.isDesktop
-            ? CreditEditDetailsScreen()
+            ? CreditEditDetailsScreen(
+          viewModel: widget.viewModel,
+        )
             : TabBarView(
                 key: ValueKey('__credit_${viewModel.invoice.id}__'),
                 controller: _controller,
                 children: <Widget>[
-                  CreditEditDetailsScreen(),
-                  CreditEditItemsScreen(),
+                  CreditEditDetailsScreen(
+                    viewModel: widget.viewModel,
+                  ),
+                  CreditEditItemsScreen(
+                    viewModel: widget.viewModel,
+                  ),
                   CreditEditNotesScreen(),
                 ],
               ),

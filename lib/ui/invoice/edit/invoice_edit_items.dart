@@ -6,6 +6,7 @@ import 'package:invoiceninja_flutter/ui/app/invoice/invoice_item_view.dart';
 import 'package:invoiceninja_flutter/ui/app/invoice/tax_rate_dropdown.dart';
 import 'package:invoiceninja_flutter/ui/app/responsive_padding.dart';
 import 'package:invoiceninja_flutter/ui/invoice/edit/invoice_edit_items_vm.dart';
+import 'package:invoiceninja_flutter/ui/invoice/edit/invoice_edit_vm.dart';
 import 'package:invoiceninja_flutter/utils/completers.dart';
 import 'package:invoiceninja_flutter/utils/formatting.dart';
 import 'package:flutter/material.dart';
@@ -17,9 +18,11 @@ class InvoiceEditItems extends StatefulWidget {
   const InvoiceEditItems({
     Key key,
     @required this.viewModel,
+    @required this.entityViewModel,
   }) : super(key: key);
 
   final EntityEditItemsVM viewModel;
+  final EntityEditVM entityViewModel;
 
   @override
   _InvoiceEditItemsState createState() => _InvoiceEditItemsState();
@@ -37,6 +40,7 @@ class _InvoiceEditItemsState extends State<InvoiceEditItems> {
 
           return ItemEditDetails(
             viewModel: viewModel,
+            entityViewModel: widget.entityViewModel,
             key: ValueKey('__${lineItemIndex}__'),
             invoiceItem: invoice.lineItems[lineItemIndex],
             index: lineItemIndex,
@@ -86,11 +90,13 @@ class ItemEditDetails extends StatefulWidget {
     @required this.index,
     @required this.invoiceItem,
     @required this.viewModel,
+    @required this.entityViewModel,
   }) : super(key: key);
 
   final int index;
   final InvoiceItemEntity invoiceItem;
   final EntityEditItemsVM viewModel;
+  final EntityEditVM entityViewModel;
 
   @override
   ItemEditDetailsState createState() => ItemEditDetailsState();
@@ -104,6 +110,8 @@ class ItemEditDetailsState extends State<ItemEditDetails> {
   final _discountController = TextEditingController();
   final _custom1Controller = TextEditingController();
   final _custom2Controller = TextEditingController();
+  final _custom3Controller = TextEditingController();
+  final _custom4Controller = TextEditingController();
 
   TaxRateEntity _taxRate1;
   TaxRateEntity _taxRate2;
@@ -129,6 +137,8 @@ class ItemEditDetailsState extends State<ItemEditDetails> {
         formatNumberType: FormatNumberType.input);
     _custom1Controller.text = invoiceItem.customValue1;
     _custom2Controller.text = invoiceItem.customValue2;
+    _custom3Controller.text = invoiceItem.customValue3;
+    _custom4Controller.text = invoiceItem.customValue4;
 
     _controllers = [
       _productKeyController,
@@ -138,6 +148,8 @@ class ItemEditDetailsState extends State<ItemEditDetails> {
       _discountController,
       _custom1Controller,
       _custom2Controller,
+      _custom3Controller,
+      _custom4Controller,
     ];
 
     _controllers.forEach(
@@ -177,7 +189,9 @@ class ItemEditDetailsState extends State<ItemEditDetails> {
       ..quantity = parseDouble(_qtyController.text)
       ..discount = parseDouble(_discountController.text)
       ..customValue1 = _custom1Controller.text.trim()
-      ..customValue2 = _custom2Controller.text.trim());
+      ..customValue2 = _custom2Controller.text.trim()
+      ..customValue3 = _custom3Controller.text.trim()
+      ..customValue4 = _custom4Controller.text.trim());
 
     if (_taxRate1 != null && !_taxRate1.isEmpty) {
       invoiceItem = invoiceItem.applyTax(_taxRate1);
@@ -233,6 +247,7 @@ class ItemEditDetailsState extends State<ItemEditDetails> {
             DecoratedFormField(
               label: localization.product,
               controller: _productKeyController,
+              onSavePressed: widget.entityViewModel.onSavePressed,
             ),
             DecoratedFormField(
               keyboardType: TextInputType.multiline,
@@ -241,18 +256,34 @@ class ItemEditDetailsState extends State<ItemEditDetails> {
               maxLines: 4,
             ),
             CustomField(
-                controller: _custom1Controller,
-                field: CustomFieldType.product1,
-                value: widget.invoiceItem.customValue1),
+              controller: _custom1Controller,
+              field: CustomFieldType.product1,
+              value: widget.invoiceItem.customValue1,
+              onSavePressed: widget.entityViewModel.onSavePressed,
+            ),
             CustomField(
               controller: _custom2Controller,
               field: CustomFieldType.product2,
               value: widget.invoiceItem.customValue2,
+              onSavePressed: widget.entityViewModel.onSavePressed,
+            ),
+            CustomField(
+              controller: _custom3Controller,
+              field: CustomFieldType.product3,
+              value: widget.invoiceItem.customValue3,
+              onSavePressed: widget.entityViewModel.onSavePressed,
+            ),
+            CustomField(
+              controller: _custom4Controller,
+              field: CustomFieldType.product4,
+              value: widget.invoiceItem.customValue4,
+              onSavePressed: widget.entityViewModel.onSavePressed,
             ),
             DecoratedFormField(
               label: localization.unitCost,
               controller: _costController,
               keyboardType: TextInputType.numberWithOptions(decimal: true),
+              onSavePressed: widget.entityViewModel.onSavePressed,
             ),
             company.settings.hasInvoiceField('quantity')
                 ? DecoratedFormField(
@@ -260,6 +291,7 @@ class ItemEditDetailsState extends State<ItemEditDetails> {
                     controller: _qtyController,
                     keyboardType:
                         TextInputType.numberWithOptions(decimal: true),
+                    onSavePressed: widget.entityViewModel.onSavePressed,
                   )
                 : Container(),
             company.settings.hasInvoiceField('discount')
@@ -268,6 +300,7 @@ class ItemEditDetailsState extends State<ItemEditDetails> {
                     controller: _discountController,
                     keyboardType:
                         TextInputType.numberWithOptions(decimal: true),
+                    onSavePressed: widget.entityViewModel.onSavePressed,
                   )
                 : Container(),
             if (company.enableFirstItemTaxRate)

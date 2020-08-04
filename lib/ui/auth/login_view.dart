@@ -351,6 +351,7 @@ class _LoginState extends State<LoginView> {
                       DecoratedFormField(
                         controller: _oneTimePasswordController,
                         label: localization.oneTimePassword,
+                        onSavePressed: (_) => _submitLoginForm(),
                       )
                     else
                       Column(
@@ -415,9 +416,8 @@ class _LoginState extends State<LoginView> {
                                   val.isEmpty || val.trim().isEmpty
                                       ? localization.pleaseEnterYourEmail
                                       : null,
-                              onFieldSubmitted: (String value) =>
-                                  FocusScope.of(context).nextFocus(),
                               autofillHints: [AutofillHints.email],
+                              onSavePressed: (_) => _submitLoginForm(),
                             ),
                           if (_emailLogin && !_recoverPassword)
                             TextFormField(

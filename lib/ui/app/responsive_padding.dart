@@ -9,6 +9,8 @@ class ResponsivePadding extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+
+    /*
     final double sidePadding = isMobile(context)
         ? kMobileDialogPadding
         : (MediaQuery.of(context).size.width - 500) / 2;
@@ -23,7 +25,8 @@ class ResponsivePadding extends StatelessWidget {
       child: child,
     );
 
-    /*
+     */
+
     if (isMobile(context)) {
       return Padding(
         padding: EdgeInsets.only(
@@ -44,6 +47,6 @@ class ResponsivePadding extends StatelessWidget {
         widthFactor: .5,
       );
     }
-     */
+
   }
 }

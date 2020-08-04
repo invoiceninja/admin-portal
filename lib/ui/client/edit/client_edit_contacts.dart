@@ -7,6 +7,7 @@ import 'package:invoiceninja_flutter/ui/app/forms/custom_field.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/decorated_form_field.dart';
 import 'package:invoiceninja_flutter/ui/app/responsive_padding.dart';
 import 'package:invoiceninja_flutter/ui/client/edit/client_edit_contacts_vm.dart';
+import 'package:invoiceninja_flutter/ui/client/edit/client_edit_vm.dart';
 import 'package:invoiceninja_flutter/utils/completers.dart';
 import 'package:invoiceninja_flutter/utils/dialogs.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
@@ -15,9 +16,11 @@ class ClientEditContacts extends StatefulWidget {
   const ClientEditContacts({
     Key key,
     @required this.viewModel,
+    @required this.clientViewModel,
   }) : super(key: key);
 
   final ClientEditContactsVM viewModel;
+  final ClientEditVM clientViewModel;
 
   @override
   _ClientEditContactsState createState() => _ClientEditContactsState();
@@ -36,6 +39,7 @@ class _ClientEditContactsState extends State<ClientEditContacts> {
           return ResponsivePadding(
             child: ContactEditDetails(
               viewModel: viewModel,
+              clientViewModel: widget.clientViewModel,
               key: Key(contact.entityKey),
               contact: contact,
               areButtonsVisible: client.contacts.length > 1,
@@ -66,6 +70,7 @@ class _ClientEditContactsState extends State<ClientEditContacts> {
       contacts = [
         ContactEditDetails(
           viewModel: viewModel,
+          clientViewModel: widget.clientViewModel,
           key: Key(contact.entityKey),
           contact: contact,
           areButtonsVisible: client.contacts.length > 1,
@@ -142,12 +147,14 @@ class ContactEditDetails extends StatefulWidget {
     @required this.index,
     @required this.contact,
     @required this.viewModel,
+    @required this.clientViewModel,
     @required this.areButtonsVisible,
   }) : super(key: key);
 
   final int index;
   final ContactEntity contact;
   final ClientEditContactsVM viewModel;
+  final ClientEditVM clientViewModel;
   final bool areButtonsVisible;
 
   @override
@@ -167,6 +174,15 @@ class ContactEditDetailsState extends State<ContactEditDetails> {
 
   final _debouncer = Debouncer();
   List<TextEditingController> _controllers = [];
+
+  void _onDoneContactPressed() {
+    if (widget.areButtonsVisible) {
+      widget.viewModel.onDoneContactPressed(context);
+      Navigator.of(context).pop();
+    } else {
+      widget.clientViewModel.onSavePressed(context);
+    }
+  }
 
   @override
   void didChangeDependencies() {
@@ -275,8 +291,7 @@ class ContactEditDetailsState extends State<ContactEditDetails> {
                         iconData: Icons.check_circle,
                         label: localization.done,
                         onPressed: () {
-                          viewModel.onDoneContactPressed();
-                          Navigator.of(context).pop();
+                          _onDoneContactPressed();
                         },
                       ),
                     ],
@@ -288,6 +303,7 @@ class ContactEditDetailsState extends State<ContactEditDetails> {
               validator: (String val) => !viewModel.client.hasNameSet
                   ? AppLocalization.of(context).pleaseEnterAClientOrContactName
                   : null,
+              onSavePressed: (_) => _onDoneContactPressed(),
             ),
             DecoratedFormField(
               controller: _lastNameController,
@@ -295,6 +311,7 @@ class ContactEditDetailsState extends State<ContactEditDetails> {
               validator: (String val) => !viewModel.client.hasNameSet
                   ? AppLocalization.of(context).pleaseEnterAClientOrContactName
                   : null,
+              onSavePressed: (_) => _onDoneContactPressed(),
             ),
             DecoratedFormField(
               controller: _emailController,
@@ -303,6 +320,7 @@ class ContactEditDetailsState extends State<ContactEditDetails> {
               validator: (value) => value.isNotEmpty && !value.contains('@')
                   ? localization.emailIsInvalid
                   : null,
+              onSavePressed: (_) => _onDoneContactPressed(),
             ),
             company.settings.enablePortalPassword ?? false
                 ? DecoratedFormField(
@@ -314,32 +332,38 @@ class ContactEditDetailsState extends State<ContactEditDetails> {
                     validator: (value) => value.isNotEmpty && value.length < 8
                         ? localization.passwordIsTooShort
                         : null,
+                    onSavePressed: (_) => _onDoneContactPressed(),
                   )
                 : SizedBox(),
             DecoratedFormField(
               controller: _phoneController,
               label: localization.phone,
               keyboardType: TextInputType.phone,
+              onSavePressed: (_) => _onDoneContactPressed(),
             ),
             CustomField(
               controller: _custom1Controller,
               field: CustomFieldType.contact1,
               value: widget.contact.customValue1,
+              onSavePressed: (_) => _onDoneContactPressed(),
             ),
             CustomField(
               controller: _custom2Controller,
               field: CustomFieldType.contact2,
               value: widget.contact.customValue2,
+              onSavePressed: (_) => _onDoneContactPressed(),
             ),
             CustomField(
               controller: _custom3Controller,
               field: CustomFieldType.contact3,
               value: widget.contact.customValue3,
+              onSavePressed: (_) => _onDoneContactPressed(),
             ),
             CustomField(
               controller: _custom4Controller,
               field: CustomFieldType.contact4,
               value: widget.contact.customValue4,
+              onSavePressed: (_) => _onDoneContactPressed(),
             ),
           ],
         ),

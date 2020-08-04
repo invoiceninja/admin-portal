@@ -192,6 +192,7 @@ class _PaymentEditState extends State<PaymentEdit> {
                       label: paymentTotal == 0
                           ? localization.amount
                           : amountPlaceholder,
+                      onSavePressed: viewModel.onSavePressed,
                     ),
                 ],
                 for (var index = 0; index < invoicePaymentables.length; index++)
@@ -245,6 +246,7 @@ class _PaymentEditState extends State<PaymentEdit> {
                 DecoratedFormField(
                   controller: _transactionReferenceController,
                   label: localization.transactionReference,
+                  onSavePressed: viewModel.onSavePressed,
                 ),
                 DecoratedFormField(
                   controller: _privateNotesController,

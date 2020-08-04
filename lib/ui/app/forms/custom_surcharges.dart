@@ -10,6 +10,7 @@ class CustomSurcharges extends StatelessWidget {
     @required this.surcharge2Controller,
     @required this.surcharge3Controller,
     @required this.surcharge4Controller,
+    this.onSavePressed,
     this.isAfterTaxes = false,
   });
 
@@ -17,6 +18,7 @@ class CustomSurcharges extends StatelessWidget {
   final TextEditingController surcharge2Controller;
   final TextEditingController surcharge3Controller;
   final TextEditingController surcharge4Controller;
+  final Function(BuildContext) onSavePressed;
   final bool isAfterTaxes;
 
   @override
@@ -33,6 +35,7 @@ class CustomSurcharges extends StatelessWidget {
             label: company.getCustomFieldLabel(CustomFieldType.surcharge1),
             controller: surcharge1Controller,
             keyboardType: TextInputType.numberWithOptions(decimal: true),
+            onSavePressed: onSavePressed,
           ),
         if (company.hasCustomField(CustomFieldType.surcharge2) &&
             ((isAfterTaxes && company.enableCustomSurchargeTaxes2) ||
@@ -41,6 +44,7 @@ class CustomSurcharges extends StatelessWidget {
             controller: surcharge2Controller,
             label: company.getCustomFieldLabel(CustomFieldType.surcharge2),
             keyboardType: TextInputType.numberWithOptions(decimal: true),
+            onSavePressed: onSavePressed,
           ),
         if (company.hasCustomField(CustomFieldType.surcharge3) &&
             ((isAfterTaxes && company.enableCustomSurchargeTaxes3) ||
@@ -49,6 +53,7 @@ class CustomSurcharges extends StatelessWidget {
             controller: surcharge3Controller,
             label: company.getCustomFieldLabel(CustomFieldType.surcharge3),
             keyboardType: TextInputType.numberWithOptions(decimal: true),
+            onSavePressed: onSavePressed,
           ),
         if (company.hasCustomField(CustomFieldType.surcharge4) &&
             ((isAfterTaxes && company.enableCustomSurchargeTaxes4) ||
@@ -57,6 +62,7 @@ class CustomSurcharges extends StatelessWidget {
             controller: surcharge4Controller,
             label: company.getCustomFieldLabel(CustomFieldType.surcharge4),
             keyboardType: TextInputType.numberWithOptions(decimal: true),
+            onSavePressed: onSavePressed,
           ),
       ],
     );

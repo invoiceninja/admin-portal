@@ -134,6 +134,7 @@ class ClientEditSettingsState extends State<ClientEditSettings> {
               controller: _taskRateController,
               keyboardType: TextInputType.numberWithOptions(decimal: true),
               label: localization.taskRate,
+              onSavePressed: viewModel.onSavePressed,
             ),
           ],
         ),

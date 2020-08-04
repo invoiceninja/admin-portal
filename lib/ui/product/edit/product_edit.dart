@@ -144,6 +144,7 @@ class _ProductEditState extends State<ProductEdit> {
                       ? localization.pleaseEnterAProductKey
                       : null,
                   autovalidate: _autoValidate,
+                  onSavePressed: viewModel.onSavePressed,
                 ),
                 DecoratedFormField(
                   keyboardType: TextInputType.multiline,
@@ -155,16 +156,19 @@ class _ProductEditState extends State<ProductEdit> {
                   controller: _custom1Controller,
                   field: CustomFieldType.product1,
                   value: product.customValue1,
+                  onSavePressed: viewModel.onSavePressed,
                 ),
                 CustomField(
                   controller: _custom2Controller,
                   field: CustomFieldType.product2,
                   value: product.customValue2,
+                  onSavePressed: viewModel.onSavePressed,
                 ),
                 DecoratedFormField(
                   label: localization.price,
                   controller: _priceController,
                   keyboardType: TextInputType.numberWithOptions(decimal: true),
+                  onSavePressed: viewModel.onSavePressed,
                 ),
                 if (company.enableProductQuantity)
                   DecoratedFormField(
@@ -172,6 +176,7 @@ class _ProductEditState extends State<ProductEdit> {
                     controller: _quantityController,
                     keyboardType:
                         TextInputType.numberWithOptions(decimal: true),
+                    onSavePressed: viewModel.onSavePressed,
                   ),
                 if (company.enableProductCost)
                   DecoratedFormField(
@@ -179,6 +184,7 @@ class _ProductEditState extends State<ProductEdit> {
                     controller: _costController,
                     keyboardType:
                         TextInputType.numberWithOptions(decimal: true),
+                    onSavePressed: viewModel.onSavePressed,
                   ),
                 if (company.enableFirstItemTaxRate)
                   TaxRateDropdown(

@@ -12,6 +12,7 @@ import 'package:invoiceninja_flutter/utils/localization.dart';
 class CustomField extends StatefulWidget {
   const CustomField({
     @required this.field,
+    this.onSavePressed,
     this.controller,
     this.onChanged,
     this.value,
@@ -20,6 +21,7 @@ class CustomField extends StatefulWidget {
 
   final TextEditingController controller;
   final Function(String) onChanged;
+  final Function(BuildContext) onSavePressed;
   final String field;
   final String value;
   final bool hideFieldLabel;
@@ -69,6 +71,7 @@ class _CustomFieldState extends State<CustomField> {
           maxLines: fieldType == kFieldTypeSingleLineText ? 1 : 3,
           label: widget.hideFieldLabel ? null : fieldLabel,
           onChanged: widget.onChanged,
+          onSavePressed: widget.onSavePressed,
         );
       case kFieldTypeSwitch:
         return BoolDropdownButton(

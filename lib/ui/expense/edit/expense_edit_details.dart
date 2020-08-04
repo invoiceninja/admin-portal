@@ -157,6 +157,7 @@ class ExpenseEditDetailsState extends State<ExpenseEditDetails> {
               controller: _amountController,
               keyboardType: TextInputType.numberWithOptions(decimal: true),
               label: localization.amount,
+              onSavePressed: viewModel.onSavePressed,
             ),
             EntityDropdown(
               key:
@@ -181,11 +182,13 @@ class ExpenseEditDetailsState extends State<ExpenseEditDetails> {
               controller: _custom1Controller,
               field: CustomFieldType.expense1,
               value: expense.customValue1,
+              onSavePressed: viewModel.onSavePressed,
             ),
             CustomField(
               controller: _custom2Controller,
               field: CustomFieldType.expense2,
               value: expense.customValue2,
+              onSavePressed: viewModel.onSavePressed,
             ),
           ],
         ),

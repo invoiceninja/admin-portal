@@ -15,7 +15,9 @@ import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 
 class InvoiceEditDetailsScreen extends StatelessWidget {
-  const InvoiceEditDetailsScreen({Key key}) : super(key: key);
+  const InvoiceEditDetailsScreen({Key key, @required this.viewModel}) : super(key: key);
+
+  final EntityEditVM viewModel;
 
   @override
   Widget build(BuildContext context) {
@@ -27,6 +29,7 @@ class InvoiceEditDetailsScreen extends StatelessWidget {
         if (viewModel.state.prefState.isDesktop) {
           return InvoiceEditDesktop(
             viewModel: viewModel,
+            entityViewModel: this.viewModel,
             key: ValueKey('__invoice_${viewModel.invoice.id}__'),
           );
         } else {

@@ -202,6 +202,7 @@ class ExpenseEditSettingsState extends State<ExpenseEditSettings> {
                         controller: _transactionReferenceController,
                         keyboardType: TextInputType.text,
                         label: localization.transactionReference,
+                        onSavePressed: viewModel.onSavePressed,
                       ),
                       SizedBox(height: 16),
                     ],

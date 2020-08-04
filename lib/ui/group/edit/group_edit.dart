@@ -94,6 +94,7 @@ class _GroupEditState extends State<GroupEdit> {
                     DecoratedFormField(
                       label: localization.name,
                       controller: _nameController,
+                      onSavePressed: viewModel.onSavePressed,
                     ),
                   ],
                 ),
