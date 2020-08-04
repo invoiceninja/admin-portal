@@ -254,7 +254,7 @@ abstract class BaseEntity implements SelectableEntity {
 
   String get entityKey => '__${entityType}__${id}__';
 
-  bool get isNew => id == null || (int.tryParse(id) ?? 0) < 0;
+  bool get isNew => (id ?? '').isEmpty || (int.tryParse(id) ?? 0) < 0;
 
   bool get isOld => !isNew;
 

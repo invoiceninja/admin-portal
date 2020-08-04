@@ -10,9 +10,13 @@ class EntityStateTitle extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final localization = AppLocalization.of(context);
-    final titleText = localization.lookup('${entity.entityType}') +
-        '  ›  ' +
-        entity.listDisplayName;
+
+    String titleText = '';
+    if (entity.isOld) {
+      titleText = localization.lookup('${entity.entityType}') +
+          '  ›  ' +
+          entity.listDisplayName;
+    }
 
     return Text(
       titleText,
