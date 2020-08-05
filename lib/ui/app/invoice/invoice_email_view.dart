@@ -50,7 +50,7 @@ class _InvoiceEmailViewState extends State<InvoiceEmailView>
   @override
   void initState() {
     super.initState();
-    _controller = TabController(vsync: this, length: 2);
+    _controller = TabController(vsync: this, length: 3);
     _controller.addListener(_loadTemplate);
     _controllers = [
       _subjectController,
@@ -331,7 +331,7 @@ class _InvoiceEmailViewState extends State<InvoiceEmailView>
     }
 
     return DefaultTabController(
-      length: 2,
+      length: 3,
       child: EditScaffold(
         entity: invoice,
         title: localization.sendEmail,
