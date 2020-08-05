@@ -273,12 +273,14 @@ class _InvoiceEmailViewState extends State<InvoiceEmailView>
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Expanded(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        _buildTemplateDropdown(context),
-                        _buildEdit(context),
-                      ],
+                    child: SingleChildScrollView(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          _buildTemplateDropdown(context),
+                          _buildEdit(context),
+                        ],
+                      ),
                     ),
                   ),
                   Expanded(
