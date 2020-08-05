@@ -87,16 +87,12 @@ class _InvoiceEmailViewState extends State<InvoiceEmailView>
   }
 
   void _onChanged() {
-    print('## ON CHANGED');
-
     _debouncer.run(() {
       _loadTemplate();
     });
   }
 
   void _loadTemplate() {
-    print('## LOAD TEMPLATE');
-
     if (_isLoading || (isMobile(context) && _controller.index != kTabPreview)) {
       return;
     }
