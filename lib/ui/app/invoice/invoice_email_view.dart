@@ -3,6 +3,8 @@ import 'package:invoiceninja_flutter/data/models/entities.dart';
 import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:invoiceninja_flutter/ui/app/form_card.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/decorated_form_field.dart';
+import 'package:invoiceninja_flutter/ui/app/help_text.dart';
+import 'package:invoiceninja_flutter/ui/app/lists/activity_list_tile.dart';
 import 'package:invoiceninja_flutter/ui/invoice/invoice_email_vm.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -54,6 +56,11 @@ class _InvoiceEmailViewState extends State<InvoiceEmailView>
       _subjectController,
       _bodyController,
     ];
+
+    final client = widget.viewModel.client;
+    if (client.areActivitiesStale) {
+      widget.viewModel.loadClient();
+    }
 
     switch (widget.viewModel.invoice.entityType) {
       case EntityType.invoice:
@@ -236,7 +243,6 @@ class _InvoiceEmailViewState extends State<InvoiceEmailView>
     );
   }
 
-  /*
   Widget _buildHistory(BuildContext context) {
     final localization = AppLocalization.of(context);
     final invoice = widget.viewModel.invoice;
@@ -245,7 +251,7 @@ class _InvoiceEmailViewState extends State<InvoiceEmailView>
         invoiceId: invoice.id, typeId: kActivityEmailInvoice);
 
     if (activities.isEmpty) {
-      return HelpText(localization.noHistorpy);
+      return HelpText(localization.noHistory);
     }
 
     return ListView.builder(
@@ -256,7 +262,6 @@ class _InvoiceEmailViewState extends State<InvoiceEmailView>
       },
     );
   }
-   */
 
   @override
   Widget build(BuildContext context) {
@@ -309,7 +314,7 @@ class _InvoiceEmailViewState extends State<InvoiceEmailView>
                               ),
                             ],
                           ),
-                          Placeholder(),
+                          _buildHistory(context),
                         ],
                       ),
                     ),
@@ -337,7 +342,7 @@ class _InvoiceEmailViewState extends State<InvoiceEmailView>
           tabs: [
             Tab(text: localization.preview),
             Tab(text: localization.customize),
-            //Tab(text: localization.history),
+            Tab(text: localization.history),
           ],
         ),
         saveLabel: localization.send,
@@ -356,7 +361,7 @@ class _InvoiceEmailViewState extends State<InvoiceEmailView>
               ],
             ),
             _buildEdit(context),
-            //_buildHistory(context),
+            _buildHistory(context),
           ],
         ),
       ),

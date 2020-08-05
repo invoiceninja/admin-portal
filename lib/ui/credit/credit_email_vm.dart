@@ -50,6 +50,7 @@ class EmailCreditVM extends EmailEntityVM {
     CompanyEntity company,
     InvoiceEntity invoice,
     ClientEntity client,
+    Function loadClient,
     Function(BuildContext, EmailTemplate, String, String) onSendPressed,
   }) : super(
           state: state,
@@ -58,6 +59,7 @@ class EmailCreditVM extends EmailEntityVM {
           company: company,
           invoice: invoice,
           client: client,
+          loadClient: loadClient,
           onSendPressed: onSendPressed,
         );
 
@@ -70,6 +72,9 @@ class EmailCreditVM extends EmailEntityVM {
         company: state.company,
         invoice: credit,
         client: state.clientState.map[credit.clientId],
+        loadClient: () {
+          store.dispatch(LoadClient(clientId: credit.clientId));
+        },
         onSendPressed: (context, template, subject, body) =>
             store.dispatch(EmailCreditRequest(
               completer: popCompleter(context, true),
