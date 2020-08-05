@@ -59,4 +59,20 @@ class ProductRepository {
 
     return productResponse.data;
   }
+
+  Future<ProductEntity> uploadDocument(
+      Credentials credentials, BaseEntity entity, String filePath) async {
+    final fields = <String, String>{
+      '_method': 'put',
+    };
+
+    final dynamic response = await webClient.post(
+        '${credentials.url}/products/${entity.id}', credentials.token,
+        data: fields, filePath: filePath, fileIndex: 'documents[]');
+
+    final ProductItemResponse productResponse =
+    serializers.deserializeWith(ProductItemResponse.serializer, response);
+
+    return productResponse.data;
+  }
 }

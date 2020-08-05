@@ -23,6 +23,7 @@ List<Middleware<AppState>> createStoreProductsMiddleware([
   final archiveProduct = _archiveProduct(repository);
   final deleteProduct = _deleteProduct(repository);
   final restoreProduct = _restoreProduct(repository);
+  final saveDocument = _saveDocument(repository);
 
   return [
     TypedMiddleware<AppState, ViewProductList>(viewProductList),
@@ -33,6 +34,7 @@ List<Middleware<AppState>> createStoreProductsMiddleware([
     TypedMiddleware<AppState, ArchiveProductsRequest>(archiveProduct),
     TypedMiddleware<AppState, DeleteProductsRequest>(deleteProduct),
     TypedMiddleware<AppState, RestoreProductsRequest>(restoreProduct),
+    TypedMiddleware<AppState, SaveProductDocumentRequest>(saveDocument),
   ];
 }
 
@@ -208,6 +210,31 @@ Middleware<AppState> _loadProducts(ProductRepository repository) {
         action.completer.completeError(error);
       }
     });
+
+    next(action);
+  };
+}
+
+Middleware<AppState> _saveDocument(ProductRepository repository) {
+  return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
+    final action = dynamicAction as SaveProductDocumentRequest;
+    if (store.state.isEnterprisePlan) {
+      repository
+          .uploadDocument(
+              store.state.credentials, action.product, action.filePath)
+          .then((product) {
+        store.dispatch(SaveProductSuccess(product));
+        action.completer.complete(null);
+      }).catchError((Object error) {
+        print(error);
+        store.dispatch(SaveProductDocumentFailure(error));
+        action.completer.completeError(error);
+      });
+    } else {
+      const error = 'Uploading documents requires an enterprise plan';
+      store.dispatch(SaveProductDocumentFailure(error));
+      action.completer.completeError(error);
+    }
 
     next(action);
   };
