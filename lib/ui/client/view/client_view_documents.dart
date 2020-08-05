@@ -1,18 +1,20 @@
 import 'package:flutter/material.dart';
-import 'package:invoiceninja_flutter/data/models/models.dart';
+import 'package:invoiceninja_flutter/ui/app/document_grid.dart';
+import 'package:invoiceninja_flutter/ui/client/view/client_view_vm.dart';
 
-class ClientViewDocuments extends StatefulWidget {
-  const ClientViewDocuments({this.client});
+class ClientViewDocuments extends StatelessWidget {
+  const ClientViewDocuments({@required this.viewModel});
 
-  final ClientEntity client;
+  final ClientViewVM viewModel;
 
-  @override
-  _ClientViewDocumentsState createState() => _ClientViewDocumentsState();
-}
-
-class _ClientViewDocumentsState extends State<ClientViewDocuments> {
   @override
   Widget build(BuildContext context) {
-    return Placeholder();
+    final client = viewModel.client;
+
+    return DocumentGrid(
+      documents: client.documents.toList(),
+      //onUploadDocument: (path) => viewModel.onUploadDocument(context, path),
+      //onDeleteDocument: (document) => viewModel.onDeleteDocument(context, document),
+    );
   }
 }

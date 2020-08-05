@@ -82,6 +82,7 @@ class ClientFields {
   static const String createdById = 'created_by_id';
   static const String cityStatePostal = 'city_state_postal';
   static const String postalCityState = 'postal_city_state';
+  static const String documents = 'documents';
 }
 
 abstract class ClientEntity extends Object
@@ -136,6 +137,7 @@ abstract class ClientEntity extends Object
       createdUserId: '',
       assignedUserId: '',
       createdAt: 0,
+      documents: BuiltList<DocumentEntity>(),
     );
   }
 
@@ -266,6 +268,9 @@ abstract class ClientEntity extends Object
 
   @BuiltValueField(wireName: 'gateway_tokens')
   BuiltList<GatewayTokenEntity> get gatewayTokens;
+
+  @nullable // TODO remove this nullable
+  BuiltList<DocumentEntity> get documents;
 
   //String get last_login;
   //String get custom_messages;
@@ -489,6 +494,10 @@ abstract class ClientEntity extends Object
         response = clientA.customValue4
             .toLowerCase()
             .compareTo(clientB.customValue4.toLowerCase());
+        break;
+      case ClientFields.documents:
+        response =
+            clientA.documents.length.compareTo(clientA.documents.length);
         break;
       default:
         print('## ERROR: sort by client.$sortField not implemented');

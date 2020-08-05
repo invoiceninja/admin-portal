@@ -240,6 +240,13 @@ class _$ClientEntitySerializer implements StructuredSerializer<ClientEntity> {
         ..add(serializers.serialize(object.lastUpdatedActivities,
             specifiedType: const FullType(int)));
     }
+    if (object.documents != null) {
+      result
+        ..add('documents')
+        ..add(serializers.serialize(object.documents,
+            specifiedType: const FullType(
+                BuiltList, const [const FullType(DocumentEntity)])));
+    }
     if (object.isChanged != null) {
       result
         ..add('isChanged')
@@ -432,6 +439,12 @@ class _$ClientEntitySerializer implements StructuredSerializer<ClientEntity> {
           result.gatewayTokens.replace(serializers.deserialize(value,
                   specifiedType: const FullType(
                       BuiltList, const [const FullType(GatewayTokenEntity)]))
+              as BuiltList<Object>);
+          break;
+        case 'documents':
+          result.documents.replace(serializers.deserialize(value,
+                  specifiedType: const FullType(
+                      BuiltList, const [const FullType(DocumentEntity)]))
               as BuiltList<Object>);
           break;
         case 'isChanged':
@@ -931,6 +944,8 @@ class _$ClientEntity extends ClientEntity {
   @override
   final BuiltList<GatewayTokenEntity> gatewayTokens;
   @override
+  final BuiltList<DocumentEntity> documents;
+  @override
   final bool isChanged;
   @override
   final int createdAt;
@@ -988,6 +1003,7 @@ class _$ClientEntity extends ClientEntity {
       this.activities,
       this.ledger,
       this.gatewayTokens,
+      this.documents,
       this.isChanged,
       this.createdAt,
       this.updatedAt,
@@ -1167,6 +1183,7 @@ class _$ClientEntity extends ClientEntity {
         activities == other.activities &&
         ledger == other.ledger &&
         gatewayTokens == other.gatewayTokens &&
+        documents == other.documents &&
         isChanged == other.isChanged &&
         createdAt == other.createdAt &&
         updatedAt == other.updatedAt &&
@@ -1198,18 +1215,18 @@ class _$ClientEntity extends ClientEntity {
                                                                 $jc(
                                                                     $jc(
                                                                         $jc(
-                                                                            $jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc(0, groupId.hashCode), lastUpdatedActivities.hashCode), name.hashCode), displayName.hashCode), balance.hashCode), creditBalance.hashCode), paidToDate.hashCode), address1.hashCode), address2.hashCode), city.hashCode), state.hashCode), postalCode.hashCode), countryId.hashCode), phone.hashCode), privateNotes.hashCode), publicNotes.hashCode), website.hashCode), industryId.hashCode), sizeId.hashCode), vatNumber.hashCode), idNumber.hashCode), shippingAddress1.hashCode), shippingAddress2.hashCode), shippingCity.hashCode), shippingState.hashCode), shippingPostalCode.hashCode),
-                                                                                shippingCountryId.hashCode),
-                                                                            settings.hashCode),
-                                                                        lastLogin.hashCode),
-                                                                    customValue1.hashCode),
-                                                                customValue2.hashCode),
-                                                            customValue3.hashCode),
-                                                        customValue4.hashCode),
-                                                    contacts.hashCode),
-                                                activities.hashCode),
-                                            ledger.hashCode),
-                                        gatewayTokens.hashCode),
+                                                                            $jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc(0, groupId.hashCode), lastUpdatedActivities.hashCode), name.hashCode), displayName.hashCode), balance.hashCode), creditBalance.hashCode), paidToDate.hashCode), address1.hashCode), address2.hashCode), city.hashCode), state.hashCode), postalCode.hashCode), countryId.hashCode), phone.hashCode), privateNotes.hashCode), publicNotes.hashCode), website.hashCode), industryId.hashCode), sizeId.hashCode), vatNumber.hashCode), idNumber.hashCode), shippingAddress1.hashCode), shippingAddress2.hashCode), shippingCity.hashCode), shippingState.hashCode), shippingPostalCode.hashCode), shippingCountryId.hashCode),
+                                                                                settings.hashCode),
+                                                                            lastLogin.hashCode),
+                                                                        customValue1.hashCode),
+                                                                    customValue2.hashCode),
+                                                                customValue3.hashCode),
+                                                            customValue4.hashCode),
+                                                        contacts.hashCode),
+                                                    activities.hashCode),
+                                                ledger.hashCode),
+                                            gatewayTokens.hashCode),
+                                        documents.hashCode),
                                     isChanged.hashCode),
                                 createdAt.hashCode),
                             updatedAt.hashCode),
@@ -1260,6 +1277,7 @@ class _$ClientEntity extends ClientEntity {
           ..add('activities', activities)
           ..add('ledger', ledger)
           ..add('gatewayTokens', gatewayTokens)
+          ..add('documents', documents)
           ..add('isChanged', isChanged)
           ..add('createdAt', createdAt)
           ..add('updatedAt', updatedAt)
@@ -1439,6 +1457,12 @@ class ClientEntityBuilder
   set gatewayTokens(ListBuilder<GatewayTokenEntity> gatewayTokens) =>
       _$this._gatewayTokens = gatewayTokens;
 
+  ListBuilder<DocumentEntity> _documents;
+  ListBuilder<DocumentEntity> get documents =>
+      _$this._documents ??= new ListBuilder<DocumentEntity>();
+  set documents(ListBuilder<DocumentEntity> documents) =>
+      _$this._documents = documents;
+
   bool _isChanged;
   bool get isChanged => _$this._isChanged;
   set isChanged(bool isChanged) => _$this._isChanged = isChanged;
@@ -1514,6 +1538,7 @@ class ClientEntityBuilder
       _activities = _$v.activities?.toBuilder();
       _ledger = _$v.ledger?.toBuilder();
       _gatewayTokens = _$v.gatewayTokens?.toBuilder();
+      _documents = _$v.documents?.toBuilder();
       _isChanged = _$v.isChanged;
       _createdAt = _$v.createdAt;
       _updatedAt = _$v.updatedAt;
@@ -1583,6 +1608,7 @@ class ClientEntityBuilder
               activities: activities.build(),
               ledger: ledger.build(),
               gatewayTokens: gatewayTokens.build(),
+              documents: _documents?.build(),
               isChanged: isChanged,
               createdAt: createdAt,
               updatedAt: updatedAt,
@@ -1605,6 +1631,8 @@ class ClientEntityBuilder
         ledger.build();
         _$failedField = 'gatewayTokens';
         gatewayTokens.build();
+        _$failedField = 'documents';
+        _documents?.build();
       } catch (e) {
         throw new BuiltValueNestedFieldError(
             'ClientEntity', _$failedField, e.toString());

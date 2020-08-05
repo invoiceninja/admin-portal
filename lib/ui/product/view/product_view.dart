@@ -76,8 +76,9 @@ class _ProductViewState extends State<ProductView>
                   RefreshIndicator(
                     onRefresh: () => viewModel.onRefreshed(context),
                     child: ProductViewDocuments(
-                        //client: viewModel.client,
-                        ),
+                      viewModel: viewModel,
+                      //client: viewModel.client,
+                    ),
                   ),
                 ],
               ),

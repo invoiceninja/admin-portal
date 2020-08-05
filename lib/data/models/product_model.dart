@@ -55,6 +55,7 @@ class ProductFields {
   static const String customValue2 = 'custom2';
   static const String customValue3 = 'custom3';
   static const String customValue4 = 'custom4';
+  static const String documents = 'documents';
 }
 
 abstract class ProductEntity extends Object
@@ -87,6 +88,7 @@ abstract class ProductEntity extends Object
       createdUserId: '',
       projectId: '',
       vendorId: '',
+      documents: BuiltList<DocumentEntity>(),
     );
   }
 
@@ -156,6 +158,8 @@ abstract class ProductEntity extends Object
   @nullable
   @BuiltValueField(wireName: 'vendor_id')
   String get vendorId;
+
+  BuiltList<DocumentEntity> get documents;
 
   @override
   String get listDisplayName {
@@ -248,6 +252,10 @@ abstract class ProductEntity extends Object
         response = productA.customValue4
             .toLowerCase()
             .compareTo(productB.customValue4.toLowerCase());
+        break;
+      case ProductFields.documents:
+        response =
+            productA.documents.length.compareTo(productB.documents.length);
         break;
       default:
         print('## ERROR: sort by product.$sortField is not implemented');

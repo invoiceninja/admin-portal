@@ -112,7 +112,7 @@ class _ClientViewState extends State<ClientView>
                   RefreshIndicator(
                     onRefresh: () => viewModel.onRefreshed(context),
                     child: ClientViewDocuments(
-                        //viewModel: viewModel,
+                        viewModel: viewModel,
                         //key: ValueKey(viewModel.client.id),
                         ),
                   ),
