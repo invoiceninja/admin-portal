@@ -16,6 +16,19 @@ class ProductRepository {
 
   final WebClient webClient;
 
+  Future<ProductEntity> loadItem(
+      Credentials credentials, String entityId) async {
+    final String url =
+        '${credentials.url}/products/$entityId?include=documents'; // TODO remove this include
+
+    final dynamic response = await webClient.get(url, credentials.token);
+
+    final ProductItemResponse productResponse = await compute<dynamic, dynamic>(
+        computeDecode, <dynamic>[ProductItemResponse.serializer, response]);
+
+    return productResponse.data;
+  }
+  
   Future<BuiltList<ProductEntity>> loadList(Credentials credentials) async {
     final url = credentials.url + '/products?';
 

@@ -104,10 +104,8 @@ class ProductViewVM {
       onDeleteDocument: (BuildContext context, DocumentEntity document) {
         final completer = snackBarCompleter<Null>(
             context, AppLocalization.of(context).deletedDocument);
-        /*
         completer.future.then<Null>(
-                (value) => store.dispatch(LoadProduct(product: product.id)));                
-         */
+                (value) => store.dispatch(LoadProduct(productId: product.id)));
         store.dispatch(DeleteDocumentRequest(completer, [document.id]));
       },
     );

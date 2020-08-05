@@ -51,6 +51,35 @@ class UpdateProduct implements PersistUI {
   final ProductEntity product;
 }
 
+class LoadProduct {
+  LoadProduct({this.completer, this.productId});
+
+  final Completer completer;
+  final String productId;
+}
+
+class LoadProductSuccess implements StopLoading, PersistData {
+  LoadProductSuccess(this.product);
+
+  final ProductEntity product;
+
+  @override
+  String toString() {
+    return 'LoadProductSuccess{product: $product}';
+  }
+}
+
+class LoadProductFailure implements StopLoading {
+  LoadProductFailure(this.error);
+
+  final dynamic error;
+
+  @override
+  String toString() {
+    return 'LoadProductFailure{error: $error}';
+  }
+}
+
 class LoadProducts {
   LoadProducts({this.completer});
 
@@ -295,7 +324,6 @@ class RemoveFromProductMultiselect {
 }
 
 class ClearProductMultiselect {}
-
 
 class SaveProductDocumentRequest implements StartSaving {
   SaveProductDocumentRequest({
