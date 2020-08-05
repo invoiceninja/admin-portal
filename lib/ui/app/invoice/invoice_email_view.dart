@@ -9,6 +9,7 @@ import 'package:invoiceninja_flutter/ui/app/loading_indicator.dart';
 import 'package:invoiceninja_flutter/ui/app/edit_scaffold.dart';
 import 'package:invoiceninja_flutter/ui/settings/templates_and_reminders.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
+import 'package:invoiceninja_flutter/utils/platforms.dart';
 import 'package:invoiceninja_flutter/utils/templates.dart';
 
 class InvoiceEmailView extends StatefulWidget {
@@ -118,76 +119,66 @@ class _InvoiceEmailViewState extends State<InvoiceEmailView>
         });
   }
 
-  Widget _buildPreview(BuildContext context) {
+  Widget _buildTemplateDropdown(BuildContext context) {
     final localization = AppLocalization.of(context);
 
-    return Column(
-      mainAxisSize: MainAxisSize.max,
-      children: <Widget>[
-        Container(
-          color: Theme.of(context).backgroundColor,
-          child: Padding(
-            padding: const EdgeInsets.all(16.0),
-            child: Row(
-              children: <Widget>[
-                DropdownButtonHideUnderline(
-                  child: DropdownButton<EmailTemplate>(
-                    value: selectedTemplate,
-                    onChanged: (template) {
-                      setState(() {
-                        _subjectController.text = '';
-                        _bodyController.text = '';
-                        selectedTemplate = template;
-                        _loadTemplate();
-                      });
-                    },
-                    items: [
-                      DropdownMenuItem<EmailTemplate>(
-                        child: Text(localization.initialEmail),
-                        value: widget.viewModel.invoice.emailTemplate,
-                      ),
-                      DropdownMenuItem<EmailTemplate>(
-                        child: Text(localization.firstReminder),
-                        value: EmailTemplate.reminder1,
-                      ),
-                      DropdownMenuItem<EmailTemplate>(
-                        child: Text(localization.secondReminder),
-                        value: EmailTemplate.reminder2,
-                      ),
-                      DropdownMenuItem<EmailTemplate>(
-                        child: Text(localization.thirdReminder),
-                        value: EmailTemplate.reminder3,
-                      ),
-                      DropdownMenuItem<EmailTemplate>(
-                        child: Text(localization.firstCustom),
-                        value: EmailTemplate.custom1,
-                      ),
-                      DropdownMenuItem<EmailTemplate>(
-                        child: Text(localization.secondCustom),
-                        value: EmailTemplate.custom2,
-                      ),
-                      DropdownMenuItem<EmailTemplate>(
-                        child: Text(localization.thirdCustom),
-                        value: EmailTemplate.custom3,
-                      ),
-                    ],
-                  ),
-                ),
-                Expanded(
-                  child: Container(),
-                ),
-              ],
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 16),
+      child: DropdownButtonHideUnderline(
+        child: DropdownButton<EmailTemplate>(
+          value: selectedTemplate,
+          onChanged: (template) {
+            setState(() {
+              _subjectController.text = '';
+              _bodyController.text = '';
+              selectedTemplate = template;
+              _loadTemplate();
+            });
+          },
+          items: [
+            DropdownMenuItem<EmailTemplate>(
+              child: Text(localization.initialEmail),
+              value: widget.viewModel.invoice.emailTemplate,
             ),
-          ),
+            DropdownMenuItem<EmailTemplate>(
+              child: Text(localization.firstReminder),
+              value: EmailTemplate.reminder1,
+            ),
+            DropdownMenuItem<EmailTemplate>(
+              child: Text(localization.secondReminder),
+              value: EmailTemplate.reminder2,
+            ),
+            DropdownMenuItem<EmailTemplate>(
+              child: Text(localization.thirdReminder),
+              value: EmailTemplate.reminder3,
+            ),
+            DropdownMenuItem<EmailTemplate>(
+              child: Text(localization.firstCustom),
+              value: EmailTemplate.custom1,
+            ),
+            DropdownMenuItem<EmailTemplate>(
+              child: Text(localization.secondCustom),
+              value: EmailTemplate.custom2,
+            ),
+            DropdownMenuItem<EmailTemplate>(
+              child: Text(localization.thirdCustom),
+              value: EmailTemplate.custom3,
+            ),
+          ],
         ),
-        Expanded(
-          child: EmailPreview(
-            isLoading: _isLoading,
-            subject: _subjectPreview,
-            body: _bodyPreview,
-          ),
-        ),
-      ],
+      ),
+    );
+  }
+
+  Widget _buildPreview(BuildContext context) {
+    if (widget.viewModel.isLoading) {
+      return LoadingIndicator();
+    }
+
+    return EmailPreview(
+      isLoading: _isLoading,
+      subject: _subjectPreview,
+      body: _bodyPreview,
     );
   }
 
@@ -247,25 +238,49 @@ class _InvoiceEmailViewState extends State<InvoiceEmailView>
         title: localization.sendEmail,
         onCancelPressed: (context) =>
             viewEntity(context: context, entity: invoice),
-        appBarBottom: TabBar(
-          controller: _controller,
-          tabs: [
-            Tab(text: localization.preview),
-            Tab(text: localization.customize),
-            //Tab(text: localization.history),
-          ],
-        ),
+        appBarBottom: isDesktop(context)
+            ? null
+            : TabBar(
+                controller: _controller,
+                tabs: [
+                  Tab(text: localization.preview),
+                  Tab(text: localization.customize),
+                  //Tab(text: localization.history),
+                ],
+              ),
         saveLabel: localization.send,
         onSavePressed: (context) {
           viewModel.onSendPressed(context, selectedTemplate,
               _subjectController.text, _bodyController.text);
         },
-        body: viewModel.isLoading
-            ? LoadingIndicator()
+        body: isDesktop(context)
+            ? Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Expanded(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        _buildTemplateDropdown(context),
+                        _buildEdit(context),
+                      ],
+                    ),
+                  ),
+                  Expanded(
+                    child: _buildPreview(context),
+                  ),
+                ],
+              )
             : TabBarView(
                 controller: _controller,
                 children: [
-                  _buildPreview(context),
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      _buildTemplateDropdown(context),
+                      Expanded(child: _buildPreview(context)),
+                    ],
+                  ),
                   _buildEdit(context),
                   //_buildHistory(context),
                 ],

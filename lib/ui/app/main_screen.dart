@@ -55,13 +55,18 @@ class MainScreen extends StatelessWidget {
       Widget screen = BlankScreen();
 
       bool isFullScreen = false;
+      bool isEdit = false;
+      bool isEmail = false;
+
       if (prefState.isDesktop) {
+        isEdit = subRoute == '/edit';
+        isEmail = subRoute == '/email';
         if ([
               InvoiceScreen.route,
               QuoteScreen.route,
               CreditScreen.route,
             ].contains(mainRoute) &&
-            subRoute == '/edit') {
+            (isEdit || isEmail)) {
           isFullScreen = true;
         }
       }
@@ -73,13 +78,13 @@ class MainScreen extends StatelessWidget {
       if (isFullScreen) {
         switch (mainRoute) {
           case InvoiceScreen.route:
-            screen = InvoiceEditScreen();
+            screen = isEmail ? InvoiceEmailScreen() : InvoiceEditScreen();
             break;
           case QuoteScreen.route:
-            screen = QuoteEditScreen();
+            screen = isEmail ? QuoteEmailScreen() : QuoteEditScreen();
             break;
           case CreditScreen.route:
-            screen = CreditEditScreen();
+            screen = isEmail ? CreditEmailScreen() : CreditEditScreen();
             break;
           default:
             switch (uiState.currentRoute) {
