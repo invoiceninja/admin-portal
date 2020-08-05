@@ -264,6 +264,67 @@ class _InvoiceEmailViewState extends State<InvoiceEmailView>
     final viewModel = widget.viewModel;
     final invoice = viewModel.invoice;
 
+    if (isDesktop(context)) {
+      return EditScaffold(
+        entity: invoice,
+        title: localization.sendEmail,
+        onCancelPressed: (context) =>
+            viewEntity(context: context, entity: invoice),
+        saveLabel: localization.send,
+        onSavePressed: (context) {
+          viewModel.onSendPressed(context, selectedTemplate,
+              _subjectController.text, _bodyController.text);
+        },
+        body: Row(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Expanded(
+              child: DefaultTabController(
+                length: 2,
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    TabBar(
+                      tabs: [
+                        Tab(
+                          child: Text(localization.customize),
+                        ),
+                        Tab(
+                          child: Text(localization.history),
+                        ),
+                      ],
+                    ),
+                    Expanded(
+                      child: TabBarView(
+                        children: [
+                          Column(
+                            mainAxisSize: MainAxisSize.min,
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              _buildTemplateDropdown(context),
+                              Expanded(
+                                child: SingleChildScrollView(
+                                  child: _buildEdit(context),
+                                ),
+                              ),
+                            ],
+                          ),
+                          Placeholder(),
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+            Expanded(
+              child: _buildPreview(context),
+            ),
+          ],
+        ),
+      );
+    }
+
     return DefaultTabController(
       length: 2,
       child: EditScaffold(
@@ -271,57 +332,33 @@ class _InvoiceEmailViewState extends State<InvoiceEmailView>
         title: localization.sendEmail,
         onCancelPressed: (context) =>
             viewEntity(context: context, entity: invoice),
-        appBarBottom: isDesktop(context)
-            ? null
-            : TabBar(
-                controller: _controller,
-                tabs: [
-                  Tab(text: localization.preview),
-                  Tab(text: localization.customize),
-                  //Tab(text: localization.history),
-                ],
-              ),
+        appBarBottom: TabBar(
+          controller: _controller,
+          tabs: [
+            Tab(text: localization.preview),
+            Tab(text: localization.customize),
+            //Tab(text: localization.history),
+          ],
+        ),
         saveLabel: localization.send,
         onSavePressed: (context) {
           viewModel.onSendPressed(context, selectedTemplate,
               _subjectController.text, _bodyController.text);
         },
-        body: isDesktop(context)
-            ? Row(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Expanded(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        _buildTemplateDropdown(context),
-                        Expanded(
-                          child: SingleChildScrollView(
-                            child: _buildEdit(context),
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                  Expanded(
-                    child: _buildPreview(context),
-                  ),
-                ],
-              )
-            : TabBarView(
-                controller: _controller,
-                children: [
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      _buildTemplateDropdown(context),
-                      Expanded(child: _buildPreview(context)),
-                    ],
-                  ),
-                  _buildEdit(context),
-                  //_buildHistory(context),
-                ],
-              ),
+        body: TabBarView(
+          controller: _controller,
+          children: [
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                _buildTemplateDropdown(context),
+                Expanded(child: _buildPreview(context)),
+              ],
+            ),
+            _buildEdit(context),
+            //_buildHistory(context),
+          ],
+        ),
       ),
     );
   }
