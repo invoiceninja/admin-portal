@@ -13,8 +13,8 @@ class ProductViewDocuments extends StatelessWidget {
 
     return DocumentGrid(
       documents: product.documents.toList(),
-      //onUploadDocument: (path) => viewModel.onUploadDocument(context, path),
-      //onDeleteDocument: (document) => viewModel.onDeleteDocument(context, document),
+      onUploadDocument: (path) => viewModel.onUploadDocument(context, path),
+      onDeleteDocument: (document) => viewModel.onDeleteDocument(context, document),
     );
   }
 }

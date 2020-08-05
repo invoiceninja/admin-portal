@@ -25,7 +25,7 @@ class DocumentGrid extends StatelessWidget {
     @required this.documents,
     @required this.onUploadDocument,
     @required this.onDeleteDocument,
-    @required this.onViewExpense,
+    this.onViewExpense,
   });
 
   final List<DocumentEntity> documents;
@@ -150,7 +150,7 @@ class DocumentTile extends StatelessWidget {
                 },
               ),
                */
-              isFromExpense
+              isFromExpense && onViewExpense != null
                   ? FlatButton(
                       child: Text(localization.expense.toUpperCase()),
                       onPressed: () {

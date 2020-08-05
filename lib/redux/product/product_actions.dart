@@ -295,3 +295,28 @@ class RemoveFromProductMultiselect {
 }
 
 class ClearProductMultiselect {}
+
+
+class SaveProductDocumentRequest implements StartSaving {
+  SaveProductDocumentRequest({
+    @required this.completer,
+    @required this.filePath,
+    @required this.product,
+  });
+
+  final Completer completer;
+  final String filePath;
+  final ProductEntity product;
+}
+
+class SaveProductDocumentSuccess implements StopSaving, PersistData, PersistUI {
+  SaveProductDocumentSuccess(this.document);
+
+  final DocumentEntity document;
+}
+
+class SaveProductDocumentFailure implements StopSaving {
+  SaveProductDocumentFailure(this.error);
+
+  final Object error;
+}
