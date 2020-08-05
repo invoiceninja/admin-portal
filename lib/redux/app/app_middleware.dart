@@ -360,7 +360,7 @@ Middleware<AppState> _createUserLoggedIn(
 }
 
 final _persistDataDebouncer =
-    Debouncer(milliseconds: kMillisecondsToDebounceStateSave);
+    Debouncer(milliseconds: kMillisecondsToDebounceSave);
 
 Middleware<AppState> _createPersistData(
   List<PersistenceRepository> companyRepositories,
@@ -393,7 +393,7 @@ Middleware<AppState> _createPersistData(
 }
 
 final _persistUIDebouncer =
-    Debouncer(milliseconds: kMillisecondsToDebounceStateSave);
+    Debouncer(milliseconds: kMillisecondsToDebounceSave);
 
 Middleware<AppState> _createPersistUI(PersistenceRepository uiRepository) {
   return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {

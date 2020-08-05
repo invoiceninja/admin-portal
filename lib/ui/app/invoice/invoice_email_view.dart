@@ -1,3 +1,4 @@
+import 'package:invoiceninja_flutter/constants.dart';
 import 'package:invoiceninja_flutter/data/models/entities.dart';
 import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:invoiceninja_flutter/ui/app/form_card.dart';
@@ -8,6 +9,7 @@ import 'package:flutter/material.dart';
 import 'package:invoiceninja_flutter/ui/app/loading_indicator.dart';
 import 'package:invoiceninja_flutter/ui/app/edit_scaffold.dart';
 import 'package:invoiceninja_flutter/ui/settings/templates_and_reminders.dart';
+import 'package:invoiceninja_flutter/utils/completers.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:invoiceninja_flutter/utils/platforms.dart';
 import 'package:invoiceninja_flutter/utils/templates.dart';
@@ -33,6 +35,7 @@ class _InvoiceEmailViewState extends State<InvoiceEmailView>
 
   final _subjectController = TextEditingController();
   final _bodyController = TextEditingController();
+  final _debouncer = Debouncer(milliseconds: kMillisecondsToDebounceSave);
 
   TabController _controller;
   List<TextEditingController> _controllers = [];
@@ -83,8 +86,18 @@ class _InvoiceEmailViewState extends State<InvoiceEmailView>
     super.dispose();
   }
 
+  void _onChanged() {
+    print('## ON CHANGED');
+
+    _debouncer.run(() {
+      _loadTemplate();
+    });
+  }
+
   void _loadTemplate() {
-    if (_isLoading || _controller.index != kTabPreview) {
+    print('## LOAD TEMPLATE');
+
+    if (_isLoading || (isMobile(context) && _controller.index != kTabPreview)) {
       return;
     }
 
@@ -191,12 +204,14 @@ class _InvoiceEmailViewState extends State<InvoiceEmailView>
           DecoratedFormField(
             controller: _subjectController,
             label: localization.subject,
+            onChanged: (_) => _onChanged(),
           ),
           DecoratedFormField(
             controller: _bodyController,
             label: localization.body,
             maxLines: 12,
             keyboardType: TextInputType.multiline,
+            onChanged: (_) => _onChanged(),
           ),
         ],
       ),
