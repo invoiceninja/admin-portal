@@ -14,6 +14,7 @@ import 'package:invoiceninja_flutter/ui/settings/templates_and_reminders.dart';
 import 'package:invoiceninja_flutter/utils/completers.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:invoiceninja_flutter/utils/platforms.dart';
+import 'package:invoiceninja_flutter/utils/strings.dart';
 import 'package:invoiceninja_flutter/utils/templates.dart';
 
 class InvoiceEmailView extends StatefulWidget {
@@ -202,11 +203,13 @@ class _InvoiceEmailViewState extends State<InvoiceEmailView>
 
   Widget _buildEdit(BuildContext context) {
     final localization = AppLocalization.of(context);
-    final invoice = widget.viewModel.invoice;
-    final client = widget.viewModel.client;
+    final viewModel = widget.viewModel;
+    final invoice = viewModel.invoice;
+    final client = viewModel.client;
     final contacts = invoice.invitations
-        .map((invitation) => client.contacts
-            .firstWhere((contact) => contact.id == invitation.contactId))
+        .map((invitation) => client.contacts.firstWhere(
+            (contact) => contact.id == invitation.contactId,
+            orElse: () => null))
         .toList();
 
     return SingleChildScrollView(
@@ -215,8 +218,10 @@ class _InvoiceEmailViewState extends State<InvoiceEmailView>
           DecoratedFormField(
             enabled: false,
             label: localization.to,
-            initialValue:
-                contacts.map((contact) => contact.fullNameWithEmail).join(', '),
+            initialValue: contacts
+                .where((contact) => contact != null)
+                .map((contact) => contact.fullNameWithEmail)
+                .join(', '),
             minLines: 1,
             maxLines: 4,
           ),
