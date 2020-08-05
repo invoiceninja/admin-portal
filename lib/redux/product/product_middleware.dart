@@ -220,8 +220,6 @@ Middleware<AppState> _loadProduct(ProductRepository repository) {
   };
 }
 
-
-
 Middleware<AppState> _loadProducts(ProductRepository repository) {
   return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
     final action = dynamicAction as LoadProducts;
