@@ -201,45 +201,42 @@ class _InvoiceEmailViewState extends State<InvoiceEmailView>
     final localization = AppLocalization.of(context);
     final invoice = widget.viewModel.invoice;
     final client = widget.viewModel.client;
-    print('## invoice: $invoice');
-    print('## client: $client');
     final contacts = invoice.invitations
         .map((invitation) => client.contacts
             .firstWhere((contact) => contact.id == invitation.contactId))
         .toList();
 
     return SingleChildScrollView(
-      child: _isLoading &&
+      child: FormCard(
+        children: <Widget>[
+          DecoratedFormField(
+            enabled: false,
+            label: localization.to,
+            initialValue:
+                contacts.map((contact) => contact.fullNameWithEmail).join(', '),
+            minLines: 1,
+            maxLines: 4,
+          ),
+          if (_isLoading &&
               _subjectController.text.isEmpty &&
-              _bodyController.text.isEmpty
-          ? LoadingIndicator(
-              height: 300,
-            )
-          : FormCard(
-              children: <Widget>[
-                DecoratedFormField(
-                  enabled: false,
-                  label: localization.to,
-                  initialValue: contacts
-                      .map((contact) => contact.fullNameWithEmail)
-                      .join(', '),
-                  minLines: 1,
-                  maxLines: 4,
-                ),
-                DecoratedFormField(
-                  controller: _subjectController,
-                  label: localization.subject,
-                  onChanged: (_) => _onChanged(),
-                ),
-                DecoratedFormField(
-                  controller: _bodyController,
-                  label: localization.body,
-                  maxLines: 12,
-                  keyboardType: TextInputType.multiline,
-                  onChanged: (_) => _onChanged(),
-                ),
-              ],
+              _bodyController.text.isEmpty)
+            LoadingIndicator(height: 300)
+          else ...[
+            DecoratedFormField(
+              controller: _subjectController,
+              label: localization.subject,
+              onChanged: (_) => _onChanged(),
             ),
+            DecoratedFormField(
+              controller: _bodyController,
+              label: localization.body,
+              maxLines: 12,
+              keyboardType: TextInputType.multiline,
+              onChanged: (_) => _onChanged(),
+            ),
+          ]
+        ],
+      ),
     );
   }
 
