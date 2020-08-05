@@ -81,7 +81,7 @@ class ProductViewVM {
   final ProductEntity product;
   final CompanyEntity company;
   final Function(BuildContext, EntityAction) onEntityAction;
-  final Function(BuildContext, bool) onRefreshed;
+  final Function(BuildContext) onRefreshed;
   final bool isSaving;
   final bool isLoading;
   final bool isDirty;

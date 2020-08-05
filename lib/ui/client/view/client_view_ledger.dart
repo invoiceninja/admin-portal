@@ -34,6 +34,8 @@ class _ClientViewLedgerState extends State<ClientViewLedger> {
   @override
   Widget build(BuildContext context) {
     final client = widget.viewModel.client;
+    final ledgers =
+        client.ledger.where((ledger) => ledger.adjustment != 0).toList();
 
     if (client.areActivitiesStale) {
       return LoadingIndicator();
@@ -42,14 +44,14 @@ class _ClientViewLedgerState extends State<ClientViewLedger> {
     return ListView.separated(
       shrinkWrap: true,
       padding: const EdgeInsets.symmetric(vertical: 16),
-      itemCount: client.ledger.length + 1,
+      itemCount: ledgers.length + 1,
       separatorBuilder: (context, index) => ListDivider(),
       itemBuilder: (BuildContext context, index) {
         final store = StoreProvider.of<AppState>(context);
         final localization = AppLocalization.of(context);
         final state = store.state;
 
-        if (index == client.ledger.length) {
+        if (index == ledgers.length) {
           return ListTile(
             leading: Icon(getEntityIcon(EntityType.client)),
             title: Row(
@@ -79,7 +81,7 @@ class _ClientViewLedgerState extends State<ClientViewLedger> {
           );
         }
 
-        final ledger = client.ledger[index];
+        final ledger = ledgers[index];
         final entity = state.getEntityMap(ledger.entityType)[ledger.entityId];
 
         return ListTile(
