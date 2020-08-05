@@ -199,22 +199,28 @@ class _InvoiceEmailViewState extends State<InvoiceEmailView>
     final localization = AppLocalization.of(context);
 
     return SingleChildScrollView(
-      child: FormCard(
-        children: <Widget>[
-          DecoratedFormField(
-            controller: _subjectController,
-            label: localization.subject,
-            onChanged: (_) => _onChanged(),
-          ),
-          DecoratedFormField(
-            controller: _bodyController,
-            label: localization.body,
-            maxLines: 12,
-            keyboardType: TextInputType.multiline,
-            onChanged: (_) => _onChanged(),
-          ),
-        ],
-      ),
+      child: _isLoading &&
+              _subjectController.text.isEmpty &&
+              _bodyController.text.isEmpty
+          ? LoadingIndicator(
+              height: 300,
+            )
+          : FormCard(
+              children: <Widget>[
+                DecoratedFormField(
+                  controller: _subjectController,
+                  label: localization.subject,
+                  onChanged: (_) => _onChanged(),
+                ),
+                DecoratedFormField(
+                  controller: _bodyController,
+                  label: localization.body,
+                  maxLines: 12,
+                  keyboardType: TextInputType.multiline,
+                  onChanged: (_) => _onChanged(),
+                ),
+              ],
+            ),
     );
   }
 
@@ -227,7 +233,7 @@ class _InvoiceEmailViewState extends State<InvoiceEmailView>
         invoiceId: invoice.id, typeId: kActivityEmailInvoice);
 
     if (activities.isEmpty) {
-      return HelpText(localization.noHistory);
+      return HelpText(localization.noHistorpy);
     }
 
     return ListView.builder(
