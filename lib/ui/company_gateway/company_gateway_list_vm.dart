@@ -94,8 +94,9 @@ class CompanyGatewayListVM {
       onRefreshed: (context) => _handleRefresh(context),
       onRemovePressed: (gatewayId) {
         gatewayIds.remove(gatewayId);
-        final settings = uiState.settings
-            .rebuild((b) => b..companyGatewayIds = gatewayIds.join(','));
+        final settings = uiState.settings.rebuild((b) => b
+          ..companyGatewayIds =
+              gatewayIds.isEmpty ? '0' : gatewayIds.join(','));
         store.dispatch(UpdateSettings(settings: settings));
       },
       onSortChanged: (int oldIndex, int newIndex) {
