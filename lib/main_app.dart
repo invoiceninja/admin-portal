@@ -148,9 +148,6 @@ class InvoiceNinjaAppState extends State<InvoiceNinjaApp> {
         });
         Intl.defaultLocale = localeSelector(state);
 
-        print(
-            '## ACCENT COLOR: ${state.accentColor}, hasCOLOR: $hasAccentColor');
-
         return MaterialApp(
           supportedLocales: kLanguages
               .map((String locale) => AppLocalization.createLocale(locale))

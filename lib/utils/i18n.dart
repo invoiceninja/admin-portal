@@ -15,7 +15,8 @@ mixin LocalizationsProvider on LocaleCodeAware {
   static final Map<String, Map<String, String>> _localizedValues = {
     'en': {
       // STARTER: lang key - do not remove comment
-      'health_check': 'Health Check',
+      'to': 'To',
+          'health_check': 'Health Check',
       'payment_type_id': 'Payment Type',
       'last_login_at': 'Last Login At',
       'company_key': 'Company Key',
@@ -39002,6 +39003,9 @@ mixin LocalizationsProvider on LocaleCodeAware {
 
   String get healthCheck =>
       _localizedValues[localeCode]['health_check'] ?? '';
+
+  String get to =>
+      _localizedValues[localeCode]['to'] ?? '';
 
 
   String lookup(String key) {

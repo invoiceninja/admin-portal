@@ -44,6 +44,7 @@ class CreditEmailScreen extends StatelessWidget {
 
 class EmailCreditVM extends EmailEntityVM {
   EmailCreditVM({
+    AppState state,
     bool isLoading,
     bool isSaving,
     CompanyEntity company,
@@ -51,6 +52,7 @@ class EmailCreditVM extends EmailEntityVM {
     ClientEntity client,
     Function(BuildContext, EmailTemplate, String, String) onSendPressed,
   }) : super(
+          state: state,
           isLoading: isLoading,
           isSaving: isSaving,
           company: company,

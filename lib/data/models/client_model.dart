@@ -760,6 +760,8 @@ abstract class ContactEntity extends Object
     return (firstName + ' ' + lastName).trim();
   }
 
+  String get fullNameWithEmail => '$fullName <$email>';
+
   @override
   EntityType get entityType {
     return EntityType.contact;

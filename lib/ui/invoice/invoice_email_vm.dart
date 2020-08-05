@@ -47,6 +47,7 @@ class InvoiceEmailScreen extends StatelessWidget {
 
 abstract class EmailEntityVM {
   EmailEntityVM({
+    @required this.state,
     @required this.isLoading,
     @required this.isSaving,
     @required this.company,
@@ -55,6 +56,7 @@ abstract class EmailEntityVM {
     @required this.onSendPressed,
   });
 
+  final AppState state;
   final bool isLoading;
   final bool isSaving;
   final CompanyEntity company;
@@ -65,6 +67,7 @@ abstract class EmailEntityVM {
 
 class EmailInvoiceVM extends EmailEntityVM {
   EmailInvoiceVM({
+    AppState state,
     bool isLoading,
     bool isSaving,
     CompanyEntity company,
@@ -72,6 +75,7 @@ class EmailInvoiceVM extends EmailEntityVM {
     ClientEntity client,
     Function(BuildContext, EmailTemplate, String, String) onSendPressed,
   }) : super(
+          state: state,
           isLoading: isLoading,
           isSaving: isSaving,
           company: company,
