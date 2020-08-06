@@ -43,6 +43,7 @@ class _ProductViewState extends State<ProductView>
     final localization = AppLocalization.of(context);
     final viewModel = widget.viewModel;
     final product = viewModel.product;
+    final documents = product.documents;
 
     return ViewScaffold(
       isFilter: widget.isFilter,
@@ -55,7 +56,9 @@ class _ProductViewState extends State<ProductView>
             text: localization.overview,
           ),
           Tab(
-            text: localization.documents,
+            text: documents.isEmpty
+                ? localization.documents
+                : '${localization.documents} (${documents.length})',
           ),
         ],
       ),

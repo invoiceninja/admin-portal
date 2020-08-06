@@ -51,6 +51,7 @@ class _ClientViewState extends State<ClientView>
     final store = StoreProvider.of<AppState>(context);
     final viewModel = widget.viewModel;
     final client = viewModel.client;
+    final documents = client.documents;
     final userCompany = viewModel.state.userCompany;
 
     return ViewScaffold(
@@ -73,7 +74,9 @@ class _ClientViewState extends State<ClientView>
             text: localization.activity,
           ),
           Tab(
-            text: localization.documents,
+            text: documents.isEmpty
+                ? localization.documents
+                : '${localization.documents} (${documents.length})',
           ),
         ],
       ),
