@@ -535,41 +535,29 @@ abstract class ClientEntity extends Object
 
   @override
   String matchesFilterValue(String filter) {
-    if (filter == null || filter.isEmpty) {
-      return null;
+    for (var i = 0; i < contacts.length; i++) {
+      final value = contacts[i].matchesFilterValue(filter);
+      if (value != null) {
+        return value;
+      }
     }
 
-    filter = filter.toLowerCase();
-    final contact = contacts.firstWhere(
-        (contact) => contact.matchesFilter(filter),
-        orElse: () => null);
-
-    if (vatNumber.toLowerCase().contains(filter)) {
-      return vatNumber;
-    } else if (idNumber.toLowerCase().contains(filter)) {
-      return idNumber;
-    } else if (phone.toLowerCase().contains(filter)) {
-      return phone;
-    } else if (address1.toLowerCase().contains(filter)) {
-      return address1;
-    } else if (city.toLowerCase().contains(filter)) {
-      return city;
-    } else if (postalCode.toLowerCase().contains(filter)) {
-      return postalCode;
-    } else if (contact != null) {
-      final match = contact.matchesFilterValue(filter);
-      return match == displayName ? null : match;
-    } else if (customValue1.toLowerCase().contains(filter)) {
-      return customValue1;
-    } else if (customValue2.toLowerCase().contains(filter)) {
-      return customValue2;
-    } else if (customValue3.toLowerCase().contains(filter)) {
-      return customValue3;
-    } else if (customValue4.toLowerCase().contains(filter)) {
-      return customValue4;
-    }
-
-    return null;
+    return matchesStringsValue(
+      haystacks: [
+        displayName,
+        vatNumber,
+        idNumber,
+        phone,
+        address1,
+        city,
+        postalCode,
+        customValue1,
+        customValue2,
+        customValue3,
+        customValue4,
+      ],
+      needle: filter,
+    );
   }
 
   @override
