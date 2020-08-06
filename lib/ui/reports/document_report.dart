@@ -13,6 +13,9 @@ import 'package:memoize/memoize.dart';
 
 enum DocumentReportFields {
   name,
+  size,
+  width,
+  height,
   file_type,
   record_type,
   record_name,
@@ -117,6 +120,15 @@ ReportResult documentReport(
         case DocumentReportFields.updated_at:
           value = convertTimestampToDateString(document.updatedAt);
           break;
+        case DocumentReportFields.size:
+          value = document.size;
+          break;
+        case DocumentReportFields.width:
+          value = document.width;
+          break;
+        case DocumentReportFields.height:
+          value = document.height;
+          break;
       }
 
       if (!ReportResult.matchField(
@@ -131,7 +143,9 @@ ReportResult documentReport(
 
       if (value.runtimeType == bool) {
         row.add(entity.getReportBool(value: value));
-      } else if (value.runtimeType == double || value.runtimeType == int) {
+      } else if (value.runtimeType == int) {
+        row.add(entity.getReportInt(value: value));
+      } else if (value.runtimeType == double) {
         row.add(entity.getReportNumber(value: value));
       } else if (value.runtimeType == EntityType) {
         row.add(entity.getReportEntityType());

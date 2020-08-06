@@ -275,8 +275,8 @@ abstract class BaseEntity implements SelectableEntity {
   ReportStringValue getReportString({String value}) =>
       ReportStringValue(entityId: id, entityType: entityType, value: value);
 
-  ReportEntityTypeValue getReportEntityType() =>
-      ReportEntityTypeValue(entityId: id, entityType: entityType, value: entityType);
+  ReportEntityTypeValue getReportEntityType() => ReportEntityTypeValue(
+      entityId: id, entityType: entityType, value: entityType);
 
   ReportBoolValue getReportBool({bool value}) =>
       ReportBoolValue(entityId: id, entityType: entityType, value: value);
@@ -297,6 +297,16 @@ abstract class BaseEntity implements SelectableEntity {
           value: value,
           currencyId: currencyId,
           formatNumberType: formatNumberType);
+
+  ReportIntValue getReportInt(
+          {int value,
+          String currencyId,
+          FormatNumberType formatNumberType}) =>
+      ReportIntValue(
+        entityId: id,
+        entityType: entityType,
+        value: value,
+      );
 
   List<EntityAction> getActions(
       {UserCompanyEntity userCompany,

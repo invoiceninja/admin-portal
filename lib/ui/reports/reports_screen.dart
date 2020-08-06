@@ -1320,6 +1320,25 @@ class ReportAgeValue extends ReportElement {
   }
 }
 
+class ReportIntValue extends ReportElement {
+  ReportIntValue({
+    dynamic value,
+    EntityType entityType,
+    String entityId,
+  }) : super(value: value, entityType: entityType, entityId: entityId);
+
+  @override
+  Widget renderWidget(BuildContext context, String column) {
+    return Text(renderText(context, column));
+  }
+
+  @override
+  String renderText(BuildContext context, String column) {
+    return formatNumber((value as int).toDouble(), context,
+        formatNumberType: FormatNumberType.int);
+  }
+}
+
 class ReportNumberValue extends ReportElement {
   ReportNumberValue({
     dynamic value,
