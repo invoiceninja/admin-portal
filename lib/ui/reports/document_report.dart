@@ -120,5 +120,6 @@ ReportResult documentReport(
     defaultColumns:
         defaultColumns.map((item) => EnumUtils.parse(item)).toList(),
     data: data,
+    showTotals: false,
   );
 }

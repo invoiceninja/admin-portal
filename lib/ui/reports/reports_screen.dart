@@ -442,25 +442,26 @@ class _ReportDataTableState extends State<ReportDataTable> {
               viewModel: widget.viewModel,
             ),
           ),
-        FormCard(
-          child: isMobile(context) ? SingleChildScrollView(
-            scrollDirection: Axis.horizontal,
-            child: TotalsDataTable(
-              viewModel: viewModel,
-              reportResult: reportResult,
-              reportSettings: reportSettings,
-            ),
-          ) : Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: <Widget>[
-              TotalsDataTable(
+        if (reportResult.showTotals)
+          FormCard(
+            child: isMobile(context) ? SingleChildScrollView(
+              scrollDirection: Axis.horizontal,
+              child: TotalsDataTable(
                 viewModel: viewModel,
                 reportResult: reportResult,
                 reportSettings: reportSettings,
               ),
-            ],
+            ) : Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: <Widget>[
+                TotalsDataTable(
+                  viewModel: viewModel,
+                  reportResult: reportResult,
+                  reportSettings: reportSettings,
+                ),
+              ],
+            ),
           ),
-        ),
         SingleChildScrollView(
           padding: const EdgeInsets.all(12),
           child: PaginatedDataTable(
@@ -602,12 +603,14 @@ class ReportResult {
     @required this.allColumns,
     @required this.defaultColumns,
     @required this.data,
+    this.showTotals = true,
   });
 
   final List<String> columns;
   final List<String> allColumns;
   final List<String> defaultColumns;
   final List<List<ReportElement>> data;
+  final bool showTotals;
 
   static bool matchField({
     String column,
