@@ -6,20 +6,27 @@ import 'package:invoiceninja_flutter/data/models/company_model.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/redux/reports/reports_state.dart';
 import 'package:invoiceninja_flutter/ui/reports/reports_screen.dart';
+import 'package:invoiceninja_flutter/utils/formatting.dart';
 import 'package:memoize/memoize.dart';
 
 enum DocumentReportFields {
   name,
-  type,
+  file_type,
+  record_type,
+  record_name,
+  created_at,
+  created_by,
+  updated_at,
 }
 
-var memoizedDocumentReport = memo6((
+var memoizedDocumentReport = memo7((
   UserCompanyEntity userCompany,
   ReportsUIState reportsUIState,
   BuiltMap<String, InvoiceEntity> invoiceMap,
   BuiltMap<String, ExpenseEntity> expenseMap,
   BuiltMap<String, ProjectEntity> projectMap,
   BuiltMap<String, VendorEntity> vendorMap,
+  BuiltMap<String, UserEntity> userMap,
 ) =>
     documentReport(
       userCompany,
@@ -28,6 +35,7 @@ var memoizedDocumentReport = memo6((
       expenseMap,
       projectMap,
       vendorMap,
+      userMap,
     ));
 
 ReportResult documentReport(
@@ -37,6 +45,7 @@ ReportResult documentReport(
   BuiltMap<String, ExpenseEntity> expenseMap,
   BuiltMap<String, ProjectEntity> projectMap,
   BuiltMap<String, VendorEntity> vendorMap,
+  BuiltMap<String, UserEntity> userMap,
 ) {
   final List<List<ReportElement>> data = [];
   BuiltList<DocumentReportFields> columns;
@@ -48,8 +57,10 @@ ReportResult documentReport(
           : ReportSettingsEntity();
 
   final defaultColumns = [
+    DocumentReportFields.record_type,
+    DocumentReportFields.record_name,
     DocumentReportFields.name,
-    DocumentReportFields.type,
+    DocumentReportFields.file_type,
   ];
 
   if (documentReportSettings.columns.isNotEmpty) {
@@ -60,7 +71,7 @@ ReportResult documentReport(
     columns = BuiltList(defaultColumns);
   }
 
-  List<ReportElement> _getRow(DocumentEntity document) {
+  List<ReportElement> _getRow(BaseEntity entity, DocumentEntity document) {
     if (document.isDeleted ?? false) {
       return null;
     }
@@ -74,8 +85,23 @@ ReportResult documentReport(
         case DocumentReportFields.name:
           value = document.name;
           break;
-        case DocumentReportFields.type:
+        case DocumentReportFields.file_type:
           value = document.type;
+          break;
+        case DocumentReportFields.created_at:
+          value = convertTimestampToDateString(document.createdAt);
+          break;
+        case DocumentReportFields.created_by:
+          value = userMap[document.createdUserId]?.listDisplayName ?? '';
+          break;
+        case DocumentReportFields.record_name:
+          value = entity.listDisplayName;
+          break;
+        case DocumentReportFields.record_type:
+          value = entity.entityType;
+          break;
+        case DocumentReportFields.updated_at:
+          value = convertTimestampToDateString(document.updatedAt);
           break;
       }
 
@@ -89,11 +115,13 @@ ReportResult documentReport(
       }
 
       if (value.runtimeType == bool) {
-        row.add(document.getReportBool(value: value));
+        row.add(entity.getReportBool(value: value));
       } else if (value.runtimeType == double || value.runtimeType == int) {
-        row.add(document.getReportNumber(value: value));
+        row.add(entity.getReportNumber(value: value));
+      } else if (value.runtimeType == EntityType) {
+        row.add(entity.getReportEntityType());
       } else {
-        row.add(document.getReportString(value: value));
+        row.add(entity.getReportString(value: value));
       }
     }
 
@@ -102,7 +130,7 @@ ReportResult documentReport(
 
   invoiceMap.forEach((invoiceId, invoice) {
     invoice.documents.forEach((document) {
-      final row = _getRow(document);
+      final row = _getRow(invoice, document);
       if (row != null) {
         data.add(row);
       }

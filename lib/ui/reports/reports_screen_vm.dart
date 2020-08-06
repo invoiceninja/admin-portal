@@ -114,6 +114,7 @@ class ReportsScreenVM {
           state.expenseState.map,
           state.projectState.map,
           state.vendorState.map,
+          state.userState.map,
         );
         break;
       case kReportExpense:

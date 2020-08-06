@@ -1278,6 +1278,24 @@ class ReportStringValue extends ReportElement {
   }
 }
 
+class ReportEntityTypeValue extends ReportElement {
+  ReportEntityTypeValue({
+    dynamic value,
+    EntityType entityType,
+    String entityId,
+  }) : super(value: value, entityType: entityType, entityId: entityId);
+
+  @override
+  Widget renderWidget(BuildContext context, String column) {
+    return Text(renderText(context, column));
+  }
+
+  @override
+  String renderText(BuildContext context, String column) {
+    return AppLocalization.of(context).lookup('$value');
+  }
+}
+
 class ReportAgeValue extends ReportElement {
   ReportAgeValue({
     @required dynamic value,
