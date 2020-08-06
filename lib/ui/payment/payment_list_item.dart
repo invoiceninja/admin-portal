@@ -36,7 +36,8 @@ class PaymentListItem extends StatelessWidget {
     final client = state.clientState.get(payment.clientId);
     final localization = AppLocalization.of(context);
     final filterMatch = filter != null && filter.isNotEmpty
-        ? payment.matchesFilterValue(filter)
+        ? (payment.matchesFilterValue(filter) ??
+            client.matchesFilterValue(filter))
         : null;
     final mobileSubtitle = filterMatch ??
         (payment.number ?? '') + ' • ' + formatDate(payment.date, context);
