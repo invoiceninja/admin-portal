@@ -24,6 +24,7 @@ class ProductPresenter extends EntityPresenter {
       ProductFields.customValue2,
       ProductFields.customValue3,
       ProductFields.customValue4,
+      ProductFields.documents,
     ];
   }
 
@@ -62,6 +63,8 @@ class ProductPresenter extends EntityPresenter {
         return Text(product.customValue3);
       case ProductFields.customValue4:
         return Text(product.customValue4);
+      case ProductFields.documents:
+        return Text('${product.documents.length}');
     }
 
     return super.getField(field: field, context: context);

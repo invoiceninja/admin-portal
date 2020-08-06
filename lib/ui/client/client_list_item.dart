@@ -117,7 +117,10 @@ class ClientListItem extends StatelessWidget {
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: <Widget>[
-                            Text(client.displayName, style: textStyle),
+                            Text(
+                                client.displayName +
+                                    (client.documents.isNotEmpty ? '  📎' : ''),
+                                style: textStyle),
                             if (filterMatch != null)
                               Text(
                                 filterMatch,
@@ -165,7 +168,8 @@ class ClientListItem extends StatelessWidget {
                     children: <Widget>[
                       Expanded(
                         child: Text(
-                          client.displayName,
+                          client.displayName +
+                              (client.documents.isNotEmpty ? '  📎' : ''),
                           style: Theme.of(context).textTheme.headline6,
                         ),
                       ),

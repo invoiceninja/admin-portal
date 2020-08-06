@@ -103,7 +103,8 @@ class ProductListItem extends StatelessWidget {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: <Widget>[
                             Text(
-                              product.productKey,
+                              product.productKey +
+                                  (product.documents.isNotEmpty ? '  📎' : ''),
                               style: textStyle,
                               overflow: TextOverflow.ellipsis,
                             ),
@@ -164,7 +165,8 @@ class ProductListItem extends StatelessWidget {
                     children: <Widget>[
                       Expanded(
                         child: Text(
-                          product.productKey,
+                          product.productKey +
+                              (product.documents.isNotEmpty ? '  📎' : ''),
                           style: Theme.of(context).textTheme.headline6,
                         ),
                       ),
