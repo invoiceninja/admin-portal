@@ -39011,8 +39011,8 @@ mixin LocalizationsProvider on LocaleCodeAware {
   String lookup(String key) {
     final lookupKey = toSnakeCase(key);
 
-    if (!_localizedValues[localeCode].containsKey(key)) {
-      print('ERROR: localization key not found - $key');
+    if (!_localizedValues[localeCode].containsKey(lookupKey)) {
+      print('ERROR: localization key not found - $lookupKey');
     }
 
     return _localizedValues[localeCode][lookupKey] ??

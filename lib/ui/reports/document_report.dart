@@ -5,46 +5,38 @@ import 'package:invoiceninja_flutter/data/models/document_model.dart';
 import 'package:invoiceninja_flutter/data/models/company_model.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/redux/reports/reports_state.dart';
-import 'package:invoiceninja_flutter/redux/static/static_state.dart';
 import 'package:invoiceninja_flutter/ui/reports/reports_screen.dart';
 import 'package:memoize/memoize.dart';
 
 enum DocumentReportFields {
   name,
   type,
-  invoice,
-  invoice_amount,
-  invoice_date,
-  invoice_due_date,
-  expense,
-  project,
-  vendor,
 }
 
-var memoizedDocumentReport = memo9((
+var memoizedDocumentReport = memo6((
   UserCompanyEntity userCompany,
   ReportsUIState reportsUIState,
-  BuiltMap<String, DocumentEntity> documentMap,
   BuiltMap<String, InvoiceEntity> invoiceMap,
   BuiltMap<String, ExpenseEntity> expenseMap,
   BuiltMap<String, ProjectEntity> projectMap,
   BuiltMap<String, VendorEntity> vendorMap,
-  BuiltMap<String, UserEntity> userMap,
-  StaticState staticState,
 ) =>
-    documentReport(userCompany, reportsUIState, documentMap, invoiceMap,
-        expenseMap, projectMap, vendorMap, userMap, staticState));
+    documentReport(
+      userCompany,
+      reportsUIState,
+      invoiceMap,
+      expenseMap,
+      projectMap,
+      vendorMap,
+    ));
 
 ReportResult documentReport(
   UserCompanyEntity userCompany,
   ReportsUIState reportsUIState,
-  BuiltMap<String, DocumentEntity> documentMap,
   BuiltMap<String, InvoiceEntity> invoiceMap,
   BuiltMap<String, ExpenseEntity> expenseMap,
   BuiltMap<String, ProjectEntity> projectMap,
   BuiltMap<String, VendorEntity> vendorMap,
-  BuiltMap<String, UserEntity> userMap,
-  StaticState staticState,
 ) {
   final List<List<ReportElement>> data = [];
   BuiltList<DocumentReportFields> columns;
@@ -58,9 +50,6 @@ ReportResult documentReport(
   final defaultColumns = [
     DocumentReportFields.name,
     DocumentReportFields.type,
-    DocumentReportFields.invoice,
-    DocumentReportFields.expense,
-    DocumentReportFields.vendor,
   ];
 
   if (documentReportSettings.columns.isNotEmpty) {
@@ -71,20 +60,16 @@ ReportResult documentReport(
     columns = BuiltList(defaultColumns);
   }
 
-  for (var documentId in documentMap.keys) {
-    final document = documentMap[documentId];
-
-    if (document.isDeleted) {
-      continue;
+  List<ReportElement> _getRow(DocumentEntity document) {
+    if (document.isDeleted ?? false) {
+      return null;
     }
 
-    bool skip = false;
     final List<ReportElement> row = [];
 
     for (var column in columns) {
-      const value = '';
+      dynamic value = '';
 
-      /*
       switch (column) {
         case DocumentReportFields.name:
           value = document.name;
@@ -93,7 +78,6 @@ ReportResult documentReport(
           value = document.type;
           break;
       }
-       */
 
       if (!ReportResult.matchField(
         value: value,
@@ -101,22 +85,29 @@ ReportResult documentReport(
         reportsUIState: reportsUIState,
         column: EnumUtils.parse(column),
       )) {
-        skip = true;
+        return null;
       }
 
       if (value.runtimeType == bool) {
-        //row.add(document.getReportBool(value: value));
+        row.add(document.getReportBool(value: value));
       } else if (value.runtimeType == double || value.runtimeType == int) {
-        //row.add(document.getReportNumber(value: value));
+        row.add(document.getReportNumber(value: value));
       } else {
         row.add(document.getReportString(value: value));
       }
     }
 
-    if (!skip) {
-      data.add(row);
-    }
+    return row;
   }
+
+  invoiceMap.forEach((invoiceId, invoice) {
+    invoice.documents.forEach((document) {
+      final row = _getRow(document);
+      if (row != null) {
+        data.add(row);
+      }
+    });
+  });
 
   final selectedColumns = columns.map((item) => EnumUtils.parse(item)).toList();
   data.sort((rowA, rowB) =>

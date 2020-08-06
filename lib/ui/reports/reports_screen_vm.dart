@@ -110,13 +110,10 @@ class ReportsScreenVM {
         reportResult = memoizedDocumentReport(
           state.userCompany,
           state.uiState.reportsUIState,
-          state.documentState.map,
           state.invoiceState.map,
           state.expenseState.map,
           state.projectState.map,
           state.vendorState.map,
-          state.userState.map,
-          state.staticState,
         );
         break;
       case kReportExpense:
