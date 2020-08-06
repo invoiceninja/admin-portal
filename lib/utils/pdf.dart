@@ -1,12 +1,14 @@
 import 'dart:async';
 import 'dart:convert';
 import 'dart:io' as file;
+import 'package:flutter_redux/flutter_redux.dart';
 import 'package:flutter_share/flutter_share.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
 import 'package:http/http.dart';
 import 'package:invoiceninja_flutter/data/models/invoice_model.dart';
 import 'package:flutter/foundation.dart';
+import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/ui/app/loading_indicator.dart';
 import 'package:invoiceninja_flutter/utils/dialogs.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
@@ -86,6 +88,7 @@ class _PDFScaffoldState extends State<PDFScaffold> {
 
   @override
   Widget build(BuildContext context) {
+    final store = StoreProvider.of<AppState>(context);
     final localization = AppLocalization.of(context);
     final invoice = widget.invoice;
 
@@ -101,7 +104,7 @@ class _PDFScaffoldState extends State<PDFScaffold> {
           FlatButton(
             child: Text(
               localization.download,
-              //style: TextStyle(color: Colors.white),
+              style: TextStyle(color: store.state.headerTextColor),
             ),
             onPressed: _response == null
                 ? null
