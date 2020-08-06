@@ -1,4 +1,5 @@
 import 'package:built_collection/built_collection.dart';
+import 'package:intl/intl.dart';
 import 'package:invoiceninja_flutter/utils/enums.dart';
 import 'package:invoiceninja_flutter/constants.dart';
 import 'package:invoiceninja_flutter/data/models/document_model.dart';
@@ -7,6 +8,7 @@ import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/redux/reports/reports_state.dart';
 import 'package:invoiceninja_flutter/ui/reports/reports_screen.dart';
 import 'package:invoiceninja_flutter/utils/formatting.dart';
+import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:memoize/memoize.dart';
 
 enum DocumentReportFields {
@@ -59,6 +61,8 @@ ReportResult documentReport(
   final List<List<ReportElement>> data = [];
   BuiltList<DocumentReportFields> columns;
 
+  final localization =
+      AppLocalization(AppLocalization.createLocale(Intl.defaultLocale));
   final reportSettings = userCompany.settings.reportSettings;
   final documentReportSettings =
       reportSettings != null && reportSettings.containsKey(kReportDocument)
@@ -120,6 +124,7 @@ ReportResult documentReport(
         userCompany: userCompany,
         reportsUIState: reportsUIState,
         column: EnumUtils.parse(column),
+        localization: localization,
       )) {
         skip = true;
       }

@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:flutter_typeahead/flutter_typeahead.dart';
-import 'package:intl/intl.dart';
 import 'package:invoiceninja_flutter/constants.dart';
 import 'package:invoiceninja_flutter/data/models/company_model.dart';
 import 'package:invoiceninja_flutter/data/models/dashboard_model.dart';
@@ -614,10 +613,11 @@ class ReportResult {
   final bool showTotals;
 
   static bool matchField({
-    String column,
-    dynamic value,
-    UserCompanyEntity userCompany,
-    ReportsUIState reportsUIState,
+    @required String column,
+    @required dynamic value,
+    @required UserCompanyEntity userCompany,
+    @required ReportsUIState reportsUIState,
+    AppLocalization localization,
   }) {
     if (reportsUIState.filters.containsKey(column)) {
       final filter = reportsUIState.filters[column];
@@ -647,8 +647,6 @@ class ReportResult {
             return false;
           }
         } else if (value.runtimeType == EntityType) {
-          final localization = AppLocalization(
-              AppLocalization.createLocale(Intl.defaultLocale));
           return filter == localization.lookup('$value');
         } else if (isValidDate(value)) {
           if (!ReportResult.matchDateTime(
