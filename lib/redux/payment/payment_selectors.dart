@@ -102,7 +102,12 @@ List<String> filteredPaymentsSelector(
       return false;
     }
 
-    return payment.matchesFilter(paymentListState.filter);
+    if (!payment.matchesFilter(paymentListState.filter) &&
+        !client.matchesFilter(paymentListState.filter)) {
+      return false;
+    }
+
+    return true;
   }).toList();
 
   list.sort((paymentAId, paymentBId) {
