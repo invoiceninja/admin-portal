@@ -19,10 +19,13 @@ enum DocumentReportFields {
   updated_at,
 }
 
-var memoizedDocumentReport = memo7((
+var memoizedDocumentReport = memo10((
   UserCompanyEntity userCompany,
   ReportsUIState reportsUIState,
+  BuiltMap<String, ClientEntity> clientMap,
+  BuiltMap<String, ProductEntity> productMap,
   BuiltMap<String, InvoiceEntity> invoiceMap,
+  BuiltMap<String, InvoiceEntity> quoteMap,
   BuiltMap<String, ExpenseEntity> expenseMap,
   BuiltMap<String, ProjectEntity> projectMap,
   BuiltMap<String, VendorEntity> vendorMap,
@@ -31,7 +34,10 @@ var memoizedDocumentReport = memo7((
     documentReport(
       userCompany,
       reportsUIState,
+      clientMap,
+      productMap,
       invoiceMap,
+      quoteMap,
       expenseMap,
       projectMap,
       vendorMap,
@@ -41,7 +47,10 @@ var memoizedDocumentReport = memo7((
 ReportResult documentReport(
   UserCompanyEntity userCompany,
   ReportsUIState reportsUIState,
+  BuiltMap<String, ClientEntity> clientMap,
+  BuiltMap<String, ProductEntity> productMap,
   BuiltMap<String, InvoiceEntity> invoiceMap,
+  BuiltMap<String, InvoiceEntity> quoteMap,
   BuiltMap<String, ExpenseEntity> expenseMap,
   BuiltMap<String, ProjectEntity> projectMap,
   BuiltMap<String, VendorEntity> vendorMap,
@@ -76,6 +85,7 @@ ReportResult documentReport(
       return null;
     }
 
+    bool skip = false;
     final List<ReportElement> row = [];
 
     for (var column in columns) {
@@ -111,7 +121,7 @@ ReportResult documentReport(
         reportsUIState: reportsUIState,
         column: EnumUtils.parse(column),
       )) {
-        return null;
+        skip = true;
       }
 
       if (value.runtimeType == bool) {
@@ -125,12 +135,42 @@ ReportResult documentReport(
       }
     }
 
-    return row;
+    return skip ? null : row;
   }
+
+  /* TODO enable this code
+  clientMap.forEach((clientId, client) {
+    client.documents.forEach((document) {
+      final row = _getRow(client, document);
+      if (row != null) {
+        data.add(row);
+      }
+    });
+  });
+
+   */
+
+  productMap.forEach((productId, product) {
+    product.documents.forEach((document) {
+      final row = _getRow(product, document);
+      if (row != null) {
+        data.add(row);
+      }
+    });
+  });
 
   invoiceMap.forEach((invoiceId, invoice) {
     invoice.documents.forEach((document) {
       final row = _getRow(invoice, document);
+      if (row != null) {
+        data.add(row);
+      }
+    });
+  });
+
+  quoteMap.forEach((quoteId, quote) {
+    quote.documents.forEach((document) {
+      final row = _getRow(quote, document);
       if (row != null) {
         data.add(row);
       }
