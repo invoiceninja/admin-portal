@@ -164,8 +164,9 @@ class ReportsScreen extends StatelessWidget {
         },
         items: reportResult.columns
             .where((column) =>
-        getReportColumnType(column, context) ==
-            ReportColumnType.number)
+            [ReportColumnType.number, ReportColumnType.age,].contains(
+                getReportColumnType(column, context))
+        )
             .map((column) =>
             DropdownMenuItem(
               child: Text(localization.lookup(column)),
@@ -576,7 +577,7 @@ class ReportDataTableSource extends DataTableSource {
   int get rowCount {
     final reportState = viewModel.reportState;
 
-    if (reportState.group.isEmpty || reportState.isGroupByFIltered) {
+    if (reportState.group.isEmpty || reportState.isGroupByFiltered) {
       return viewModel.reportResult.data.length + 1;
     } else {
       return viewModel.groupTotals.totals.length + 1;
@@ -1014,7 +1015,7 @@ class ReportResult {
     final groupBy = reportState.group;
     final sorted = sortedColumns(reportState);
 
-    if (groupBy.isEmpty || reportState.isGroupByFIltered) {
+    if (groupBy.isEmpty || reportState.isGroupByFiltered) {
       final row = data[index - 1];
       final cells = <DataCell>[];
       for (var j = 0; j < row.length; j++) {
@@ -1054,9 +1055,11 @@ class ReportResult {
             value = group;
           }
           value = value + ' (' + values['count'].floor().toString() + ')';
-        } else if (columnType ==
-            ReportColumnType.number) {
+        } else if (columnType == ReportColumnType.number) {
           value = formatNumber(values[column], context);
+        } else if (columnType == ReportColumnType.age) {
+          value = formatNumber(
+              values[column], context, formatNumberType: FormatNumberType.int);
         }
         cells.add(DataCell(Text(value), onTap: () {
           if (group.isEmpty) {

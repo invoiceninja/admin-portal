@@ -46,10 +46,13 @@ class ReportCharts extends StatelessWidget {
     Widget child;
     final columnType = getReportColumnType(reportState.group, context);
 
+    print('## DATA: ${viewModel.groupTotals.totals}');
+
     switch (columnType) {
-      case ReportColumnType.age:
       case ReportColumnType.string:
       case ReportColumnType.bool:
+      case ReportColumnType.number:
+      case ReportColumnType.age:
         child = charts.BarChart(
           [
             charts.Series<dynamic, String>(
@@ -61,13 +64,13 @@ class ReportCharts extends StatelessWidget {
                         ? localization.lookup(item['name'])
                         : item['name'],
                 measureFn: (dynamic item, _) => item['value'],
-                data: viewModel.groupTotals.rows
-                    .map((key) => {
-                          'name': key,
-                          'value': viewModel.groupTotals.totals[key]
-                              [reportState.chart]
-                        })
-                    .toList())
+                data: viewModel.groupTotals.rows.map((key) {
+                  return {
+                    'name': key,
+                    'value': viewModel.groupTotals.totals[key]
+                        [reportState.chart]
+                  };
+                }).toList())
           ],
           animate: true,
           primaryMeasureAxis: numericAxis,
@@ -88,13 +91,13 @@ class ReportCharts extends StatelessWidget {
                     charts.ColorUtil.fromDartColor(state.accentColor),
                 domainFn: (dynamic item, _) => DateTime.tryParse(item['name']),
                 measureFn: (dynamic item, _) => item['value'],
-                data: keys
-                    .map((key) => {
-                          'name': key,
-                          'value': viewModel.groupTotals.totals[key]
-                              [reportState.chart]
-                        })
-                    .toList())
+                data: keys.map((key) {
+                  return {
+                    'name': key,
+                    'value': viewModel.groupTotals.totals[key]
+                        [reportState.chart]
+                  };
+                }).toList())
           ],
           animate: true,
           primaryMeasureAxis: numericAxis,
@@ -108,7 +111,6 @@ class ReportCharts extends StatelessWidget {
            */
         );
         break;
-      case ReportColumnType.number:
     }
 
     return child == null
