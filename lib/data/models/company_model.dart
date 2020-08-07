@@ -13,6 +13,7 @@ import 'package:invoiceninja_flutter/data/models/payment_term_model.dart';
 import 'package:invoiceninja_flutter/data/models/task_model.dart';
 import 'package:invoiceninja_flutter/utils/formatting.dart';
 import 'package:invoiceninja_flutter/.env.dart';
+import 'package:invoiceninja_flutter/utils/strings.dart';
 
 part 'company_model.g.dart';
 
@@ -259,10 +260,64 @@ abstract class CompanyEntity extends Object
   String get displayName => settings.name ?? '';
 
   @override
-  bool matchesFilter(String filter) => false;
+  bool matchesFilter(String filter) {
+    for (final user in users) {
+      if (user.matchesFilter(filter)) {
+        return true;
+      }
+    }
+    for (final project in projects) {
+      if (project.matchesFilter(filter)) {
+        return true;
+      }
+    }
+    for (final product in products) {
+      if (product.matchesFilter(filter)) {
+        return true;
+      }
+    }
+
+    return matchesStrings(
+      haystacks: [
+        subdomain,
+        displayName,
+        companyKey
+      ],
+      needle: filter,
+    );
+  }
 
   @override
-  String matchesFilterValue(String filter) => null;
+  String matchesFilterValue(String filter) {
+
+    for (final user in users) {
+      final value = user.matchesFilterValue(filter);
+      if (value != null) {
+        return value;
+      }
+    }
+    for (final project in projects) {
+      final value = project.matchesFilterValue(filter);
+      if (value != null) {
+        return value;
+      }
+    }
+    for (final product in products) {
+      final value = product.matchesFilterValue(filter);
+      if (value != null) {
+        return value;
+      }
+    }
+
+    return matchesStringsValue(
+      haystacks: [
+        subdomain,
+        displayName,
+        companyKey
+      ],
+      needle: filter,
+    );
+  }
 
   @override
   double get listDisplayAmount => null;

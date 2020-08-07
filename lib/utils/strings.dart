@@ -104,3 +104,42 @@ bool matchesString({String haystack, String needle}) {
   });
   return RegExp(regExp).hasMatch(haystack.toLowerCase());
 }
+
+String matchesStringsValue({
+  List<String> haystacks,
+  String needle,
+}) {
+  if (needle == null || needle.isEmpty) {
+    return null;
+  }
+
+  String match;
+  haystacks.forEach((haystack) {
+    final value = matchesStringValue(
+      haystack: haystack,
+      needle: needle,
+    );
+    if (value != null) {
+      match = value;
+    }
+  });
+  return match;
+}
+
+String matchesStringValue({String haystack, String needle}) {
+  if (needle == null || needle.isEmpty) {
+    return null;
+  }
+
+  String regExp = '';
+  needle.toLowerCase().runes.forEach((int rune) {
+    final character = String.fromCharCode(rune);
+    regExp += character + '.*?';
+  });
+
+  if(RegExp(regExp).hasMatch(haystack.toLowerCase())) {
+    return haystack;
+  } else {
+    return null;
+  }
+}

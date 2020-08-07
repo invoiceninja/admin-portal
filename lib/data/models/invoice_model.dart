@@ -10,6 +10,7 @@ import 'package:invoiceninja_flutter/data/models/quote_model.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/redux/static/static_state.dart';
 import 'package:invoiceninja_flutter/utils/formatting.dart';
+import 'package:invoiceninja_flutter/utils/strings.dart';
 
 part 'invoice_model.g.dart';
 
@@ -534,52 +535,36 @@ abstract class InvoiceEntity extends Object
 
   @override
   bool matchesFilter(String filter) {
-    if (filter == null || filter.isEmpty) {
-      return true;
-    }
-
-    filter = filter.toLowerCase();
-
-    if (number != null && number.toLowerCase().contains(filter)) {
-      return true;
-    } else if (customValue1.isNotEmpty &&
-        customValue1.toLowerCase().contains(filter)) {
-      return true;
-    } else if (customValue2.isNotEmpty &&
-        customValue2.toLowerCase().contains(filter)) {
-      return true;
-    } else if (customValue3.isNotEmpty &&
-        customValue3.toLowerCase().contains(filter)) {
-      return true;
-    } else if (customValue4.isNotEmpty &&
-        customValue4.toLowerCase().contains(filter)) {
-      return true;
-    }
-
-    return false;
+    return matchesStrings(
+      haystacks: [
+        number,
+        poNumber,
+        publicNotes,
+        privateNotes,
+        customValue1,
+        customValue2,
+        customValue3,
+        customValue4,
+      ],
+      needle: filter,
+    );
   }
 
   @override
   String matchesFilterValue(String filter) {
-    if (filter == null || filter.isEmpty) {
-      return null;
-    }
-
-    filter = filter.toLowerCase();
-    if (customValue1.isNotEmpty &&
-        customValue1.toLowerCase().contains(filter)) {
-      return customValue1;
-    } else if (customValue2.isNotEmpty &&
-        customValue2.toLowerCase().contains(filter)) {
-      return customValue2;
-    } else if (customValue3.isNotEmpty &&
-        customValue3.toLowerCase().contains(filter)) {
-      return customValue3;
-    } else if (customValue4.isNotEmpty &&
-        customValue4.toLowerCase().contains(filter)) {
-      return customValue4;
-    }
-    return null;
+    return matchesStringsValue(
+      haystacks: [
+        number,
+        poNumber,
+        publicNotes,
+        privateNotes,
+        customValue1,
+        customValue2,
+        customValue3,
+        customValue4,
+      ],
+      needle: filter,
+    );
   }
 
   @override
