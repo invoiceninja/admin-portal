@@ -291,7 +291,6 @@ abstract class VendorEntity extends Object
 
     return matchesStringsValue(
       haystacks: [
-        name,
         vatNumber,
         idNumber,
         phone,

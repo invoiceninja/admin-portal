@@ -256,7 +256,6 @@ abstract class ProjectEntity extends Object
   String matchesFilterValue(String filter) {
     return matchesStringsValue(
       haystacks: [
-        name,
         customValue1,
         customValue2,
         customValue3,

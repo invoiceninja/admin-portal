@@ -129,9 +129,7 @@ abstract class GroupEntity extends Object
   @override
   String matchesFilterValue(String filter) {
     return matchesStringsValue(
-      haystacks: [
-        name,
-      ],
+      haystacks: [],
       needle: filter,
     );
   }

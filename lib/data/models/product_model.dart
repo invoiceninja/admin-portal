@@ -285,7 +285,6 @@ abstract class ProductEntity extends Object
   String matchesFilterValue(String filter) {
     return matchesStringsValue(
       haystacks: [
-        productKey,
         notes,
         customValue1,
         customValue2,

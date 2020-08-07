@@ -544,7 +544,6 @@ abstract class ClientEntity extends Object
 
     return matchesStringsValue(
       haystacks: [
-        displayName,
         vatNumber,
         idNumber,
         phone,

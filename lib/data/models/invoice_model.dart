@@ -554,7 +554,6 @@ abstract class InvoiceEntity extends Object
   String matchesFilterValue(String filter) {
     return matchesStringsValue(
       haystacks: [
-        number,
         poNumber,
         publicNotes,
         privateNotes,
