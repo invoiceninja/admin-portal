@@ -5,6 +5,7 @@ import 'package:invoiceninja_flutter/data/models/entities.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/utils/formatting.dart';
+import 'package:invoiceninja_flutter/utils/strings.dart';
 
 part 'vendor_model.g.dart';
 
@@ -255,76 +256,55 @@ abstract class VendorEntity extends Object
 
   @override
   bool matchesFilter(String filter) {
-    if (filter == null || filter.isEmpty) {
-      return true;
+    for(final contact in contacts) {
+      if (contact.matchesFilter(filter)) {
+        return true;
+      }
     }
 
-    filter = filter.toLowerCase();
-
-    if (name.toLowerCase().contains(filter)) {
-      return true;
-    } else if (vatNumber.toLowerCase().contains(filter)) {
-      return true;
-    } else if (idNumber.toLowerCase().contains(filter)) {
-      return true;
-    } else if (phone.toLowerCase().contains(filter)) {
-      return true;
-    } else if (address1.toLowerCase().contains(filter)) {
-      return true;
-    } else if (city.toLowerCase().contains(filter)) {
-      return true;
-    } else if (contacts
-        .where((contact) => contact.matchesFilter(filter))
-        .isNotEmpty) {
-      return true;
-    } else if (customValue1.toLowerCase().contains(filter)) {
-      return true;
-    } else if (customValue2.toLowerCase().contains(filter)) {
-      return true;
-    } else if (customValue3.toLowerCase().contains(filter)) {
-      return true;
-    } else if (customValue4.toLowerCase().contains(filter)) {
-      return true;
-    }
-
-    return false;
+    return matchesStrings(
+      haystacks: [
+        name,
+        vatNumber,
+        idNumber,
+        phone,
+        address1,
+        city,
+        postalCode,
+        customValue1,
+        customValue2,
+        customValue3,
+        customValue4,
+      ],
+      needle: filter,
+    );
   }
 
   @override
   String matchesFilterValue(String filter) {
-    if (filter == null || filter.isEmpty) {
-      return null;
+    for(final contact in contacts) {
+      final value = contact.matchesFilterValue(filter);
+      if (value != null) {
+        return value;
+      }
     }
 
-    filter = filter.toLowerCase();
-    final contact = contacts.firstWhere(
-        (contact) => contact.matchesFilter(filter),
-        orElse: () => null);
-
-    if (vatNumber.toLowerCase().contains(filter)) {
-      return vatNumber;
-    } else if (idNumber.toLowerCase().contains(filter)) {
-      return idNumber;
-    } else if (phone.toLowerCase().contains(filter)) {
-      return phone;
-    } else if (address1.toLowerCase().contains(filter)) {
-      return address1;
-    } else if (city.toLowerCase().contains(filter)) {
-      return city;
-    } else if (contact != null) {
-      final match = contact.matchesFilterValue(filter);
-      return match == name ? null : match;
-    } else if (customValue1.toLowerCase().contains(filter)) {
-      return customValue1;
-    } else if (customValue2.toLowerCase().contains(filter)) {
-      return customValue2;
-    } else if (customValue3.toLowerCase().contains(filter)) {
-      return customValue3;
-    } else if (customValue4.toLowerCase().contains(filter)) {
-      return customValue4;
-    }
-
-    return null;
+    return matchesStringsValue(
+      haystacks: [
+        name,
+        vatNumber,
+        idNumber,
+        phone,
+        address1,
+        city,
+        postalCode,
+        customValue1,
+        customValue2,
+        customValue3,
+        customValue4,
+      ],
+      needle: filter,
+    );
   }
 
   @override
