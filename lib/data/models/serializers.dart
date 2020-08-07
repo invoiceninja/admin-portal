@@ -7,7 +7,7 @@ import 'package:invoiceninja_flutter/data/models/company_model.dart';
 import 'package:invoiceninja_flutter/data/models/gateway_token_model.dart';
 import 'package:invoiceninja_flutter/data/models/expense_model.dart';
 import 'package:invoiceninja_flutter/data/models/group_model.dart';
-import 'package:invoiceninja_flutter/data/models/health_check.dart';
+import 'package:invoiceninja_flutter/data/models/health_check_model.dart';
 import 'package:invoiceninja_flutter/data/models/invoice_model.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/data/models/entities.dart';

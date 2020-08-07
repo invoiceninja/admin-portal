@@ -1,7 +1,7 @@
 import 'package:built_value/built_value.dart';
 import 'package:built_value/serializer.dart';
 
-part 'health_check.g.dart';
+part 'health_check_model.g.dart';
 
 abstract class HealthCheckResponse
     implements Built<HealthCheckResponse, HealthCheckResponseBuilder> {
@@ -52,7 +52,7 @@ abstract class HealthCheckPHPResponse
   int get hashCode;
 
   @BuiltValueField(wireName: 'minimum_php_version')
-  double get minimumPHPVersion;
+  String get minimumPHPVersion;
 
   @BuiltValueField(wireName: 'current_php_version')
   String get currentPHPVersion;

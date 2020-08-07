@@ -1,6 +1,6 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'health_check.dart';
+part of 'health_check_model.dart';
 
 // **************************************************************************
 // BuiltValueGenerator
@@ -110,7 +110,7 @@ class _$HealthCheckPHPResponseSerializer
     final result = <Object>[
       'minimum_php_version',
       serializers.serialize(object.minimumPHPVersion,
-          specifiedType: const FullType(double)),
+          specifiedType: const FullType(String)),
       'current_php_version',
       serializers.serialize(object.currentPHPVersion,
           specifiedType: const FullType(String)),
@@ -135,7 +135,7 @@ class _$HealthCheckPHPResponseSerializer
       switch (key) {
         case 'minimum_php_version':
           result.minimumPHPVersion = serializers.deserialize(value,
-              specifiedType: const FullType(double)) as double;
+              specifiedType: const FullType(String)) as String;
           break;
         case 'current_php_version':
           result.currentPHPVersion = serializers.deserialize(value,
@@ -333,7 +333,7 @@ class HealthCheckResponseBuilder
 
 class _$HealthCheckPHPResponse extends HealthCheckPHPResponse {
   @override
-  final double minimumPHPVersion;
+  final String minimumPHPVersion;
   @override
   final String currentPHPVersion;
   @override
@@ -399,9 +399,9 @@ class HealthCheckPHPResponseBuilder
     implements Builder<HealthCheckPHPResponse, HealthCheckPHPResponseBuilder> {
   _$HealthCheckPHPResponse _$v;
 
-  double _minimumPHPVersion;
-  double get minimumPHPVersion => _$this._minimumPHPVersion;
-  set minimumPHPVersion(double minimumPHPVersion) =>
+  String _minimumPHPVersion;
+  String get minimumPHPVersion => _$this._minimumPHPVersion;
+  set minimumPHPVersion(String minimumPHPVersion) =>
       _$this._minimumPHPVersion = minimumPHPVersion;
 
   String _currentPHPVersion;
