@@ -76,18 +76,18 @@ class _HealthCheckDialogState extends State<HealthCheckDialog> {
                 _HealthListTile(
                   title: 'PHP Version',
                   isValid: _response.phpVersion.isOkay,
-                  subtitle: (_response.phpVersion.currentPHPVersion ?? '')
+                  subtitle: 'v' + (_response.phpVersion.currentPHPVersion ?? '')
                       .split('+')[0],
                 ),
                 _HealthListTile(
                   title: 'Node Version',
                   isValid: _response.nodeStatus.isNotEmpty,
-                  subtitle: _response.nodeStatus.replaceFirst('v', ''),
+                  subtitle: _response.nodeStatus,
                 ),
                 _HealthListTile(
                   title: 'NPM Version',
                   isValid: _response.npmStatus.isNotEmpty,
-                  subtitle: _response.npmStatus,
+                  subtitle: 'v' + _response.npmStatus,
                 ),
               ],
             ),
