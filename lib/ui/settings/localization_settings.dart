@@ -235,7 +235,7 @@ class _LocalizationSettingsState extends State<LocalizationSettings>
                                 value: key,
                               ))
                           .toList(),
-                      hint: Text(localization.selectField),
+                      hint: Text(localization.selectLabel),
                       onChanged: (value) {
                         viewModel.onSettingsChanged(settings
                             .rebuild((b) => b..translations[value] = ''));
@@ -243,7 +243,23 @@ class _LocalizationSettingsState extends State<LocalizationSettings>
                     ),
                   ),
                   SizedBox(height: 16),
-                  for (var key in settings.translations.keys) Text(key),
+                  for (var key in settings.translations.keys)
+                    Row(
+                      children: [
+                        Expanded(child: Text(localization.lookup(key))),
+                        Expanded(
+                          child: TextFormField(),
+                        ),
+                        SizedBox(width: 16),
+                        IconButton(
+                          icon: Icon(Icons.clear),
+                          onPressed: () {
+                            viewModel.onSettingsChanged(settings
+                                .rebuild((b) => b..translations.remove(key)));
+                          },
+                        )
+                      ],
+                    )
                 ],
               ),
             ],
