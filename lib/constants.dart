@@ -69,6 +69,7 @@ const double kMobileDialogPadding = 12;
 const double kDrawerWidth = 300;
 const double kTableColumnGap = 20;
 const double kTopBottomBarHeight = 50;
+const double kDialogWidth = 400;
 const double kDashboardPanelHeight = 509; // TODO remove this
 
 const double kTabletLayoutWidth = 1100;

@@ -863,17 +863,15 @@ void createEntity({
       });
 }
 
-void editEntityById(
+void editEntity(
     {@required BuildContext context,
-    @required String entityId,
-    @required EntityType entityType,
+    @required BaseEntity entity,
     int subIndex,
     Completer completer}) {
   final store = StoreProvider.of<AppState>(context);
   final navigator = Navigator.of(context);
   final localization = AppLocalization.of(context);
-  final map = store.state.getEntityMap(entityType);
-  final entity = map[entityId] as BaseEntity;
+  final entityType = entity.entityType;
 
   if (!entity.isEditable) {
     return;
@@ -887,7 +885,7 @@ void editEntityById(
           case EntityType.client:
             store.dispatch(
               EditClient(
-                  client: map[entityId],
+                  client: entity,
                   navigator: navigator,
                   completer: completer ??
                       snackBarCompleter<ClientEntity>(
@@ -900,7 +898,7 @@ void editEntityById(
           case EntityType.user:
             store.dispatch(
               EditUser(
-                  user: map[entityId],
+                  user: entity,
                   navigator: navigator,
                   completer: completer ??
                       snackBarCompleter<UserEntity>(
@@ -912,7 +910,7 @@ void editEntityById(
             break;
           case EntityType.project:
             store.dispatch(EditProject(
-                project: map[entityId],
+                project: entity,
                 navigator: navigator,
                 completer: completer ??
                     snackBarCompleter<ProjectEntity>(
@@ -923,7 +921,7 @@ void editEntityById(
             break;
           case EntityType.taxRate:
             store.dispatch(EditTaxRate(
-                taxRate: map[entityId],
+                taxRate: entity,
                 navigator: navigator,
                 completer: completer ??
                     snackBarCompleter<TaxRateEntity>(
@@ -934,7 +932,7 @@ void editEntityById(
             break;
           case EntityType.companyGateway:
             store.dispatch(EditCompanyGateway(
-                companyGateway: map[entityId],
+                companyGateway: entity,
                 navigator: navigator,
                 completer: completer ??
                     snackBarCompleter<CompanyGatewayEntity>(
@@ -945,7 +943,7 @@ void editEntityById(
             break;
           case EntityType.invoice:
             store.dispatch(EditInvoice(
-              invoice: map[entityId],
+              invoice: entity,
               navigator: navigator,
               completer: completer ??
                   snackBarCompleter<InvoiceEntity>(
@@ -957,11 +955,11 @@ void editEntityById(
             ));
             break;
           //case EntityType.recurringInvoice:
-          //store.dispatch(EditRecurringInvoice(recurringInvoice: map[entityId], navigator: navigator));
+          //store.dispatch(EditRecurringInvoice(recurringInvoice: entity, navigator: navigator));
           //break;
           case EntityType.quote:
             store.dispatch(EditQuote(
-              quote: map[entityId],
+              quote: entity,
               navigator: navigator,
               completer: completer ??
                   snackBarCompleter<InvoiceEntity>(
@@ -974,7 +972,7 @@ void editEntityById(
             break;
           case EntityType.vendor:
             store.dispatch(EditVendor(
-              vendor: map[entityId],
+              vendor: entity,
               navigator: navigator,
               completer: completer ??
                   snackBarCompleter<VendorEntity>(
@@ -986,7 +984,7 @@ void editEntityById(
             break;
           case EntityType.product:
             store.dispatch(EditProduct(
-                product: map[entityId],
+                product: entity,
                 navigator: navigator,
                 completer: completer ??
                     snackBarCompleter<ProductEntity>(
@@ -997,7 +995,7 @@ void editEntityById(
             break;
           case EntityType.task:
             store.dispatch(EditTask(
-              task: map[entityId],
+              task: entity,
               navigator: navigator,
               completer: completer ??
                   snackBarCompleter<TaskEntity>(
@@ -1009,7 +1007,7 @@ void editEntityById(
             break;
           case EntityType.expense:
             store.dispatch(EditExpense(
-              expense: map[entityId],
+              expense: entity,
               navigator: navigator,
               completer: completer ??
                   snackBarCompleter<ExpenseEntity>(
@@ -1020,14 +1018,14 @@ void editEntityById(
             ));
             break;
           //case EntityType.expenseCategory:
-          //store.dispatch(EditExpenseCategory(taxRate: map[entityId], navigator: navigator));
+          //store.dispatch(EditExpenseCategory(taxRate: entity, navigator: navigator));
           //break;
           //case EntityType.credit:
-          //store.dispatch(EditCredit(credit: map[entityId], navigator: navigator));
+          //store.dispatch(EditCredit(credit: entity, navigator: navigator));
           //break;
           case EntityType.payment:
             store.dispatch(EditPayment(
-              payment: map[entityId],
+              payment: entity,
               navigator: navigator,
               completer: completer ??
                   snackBarCompleter<PaymentEntity>(
@@ -1039,7 +1037,7 @@ void editEntityById(
             break;
           case EntityType.group:
             store.dispatch(EditGroup(
-              group: map[entityId],
+              group: entity,
               navigator: navigator,
               completer: completer ??
                   snackBarCompleter<GroupEntity>(
@@ -1052,7 +1050,7 @@ void editEntityById(
           // STARTER: edit - do not remove comment
           case EntityType.webhook:
             store.dispatch(EditWebhook(
-              webhook: map[entityId],
+              webhook: entity,
               navigator: navigator,
               completer: completer ??
                   snackBarCompleter<WebhookEntity>(
@@ -1065,7 +1063,7 @@ void editEntityById(
 
           case EntityType.token:
             store.dispatch(EditToken(
-              token: map[entityId],
+              token: entity,
               navigator: navigator,
               completer: completer ??
                   snackBarCompleter<TokenEntity>(
@@ -1078,7 +1076,7 @@ void editEntityById(
 
           case EntityType.paymentTerm:
             store.dispatch(EditPaymentTerm(
-              paymentTerm: map[entityId],
+              paymentTerm: entity,
               navigator: navigator,
               completer: completer ??
                   snackBarCompleter<PaymentTermEntity>(
@@ -1091,7 +1089,7 @@ void editEntityById(
 
           case EntityType.design:
             store.dispatch(EditDesign(
-              design: map[entityId],
+              design: entity,
               navigator: navigator,
               completer: completer ??
                   snackBarCompleter<DesignEntity>(
@@ -1104,7 +1102,7 @@ void editEntityById(
 
           case EntityType.credit:
             store.dispatch(EditCredit(
-              credit: map[entityId],
+              credit: entity,
               navigator: navigator,
               completer: completer ??
                   snackBarCompleter<InvoiceEntity>(
@@ -1117,18 +1115,6 @@ void editEntityById(
         }
       });
 }
-
-void editEntity(
-        {@required BuildContext context,
-        @required BaseEntity entity,
-        int subIndex,
-        Completer completer}) =>
-    editEntityById(
-        context: context,
-        entityId: entity.id,
-        entityType: entity.entityType,
-        subIndex: subIndex,
-        completer: completer);
 
 void handleEntityAction(
     BuildContext context, BaseEntity entity, EntityAction action,

@@ -179,7 +179,10 @@ class _PaymentRefundState extends State<PaymentRefund> {
           actionsPadding: const EdgeInsets.only(right: 4),
           title: Text(localization.refundPayment),
           content: SingleChildScrollView(
-            child: body,
+            child: SizedBox(
+              child: body,
+              width: kDialogWidth,
+            ),
           ),
           actions: <Widget>[
             if (viewModel.state.isSaving)

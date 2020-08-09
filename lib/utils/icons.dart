@@ -61,6 +61,8 @@ IconData getEntityActionIcon(EntityAction entityAction) {
       return Icons.undo;
     case EntityAction.copy:
       return Icons.content_copy;
+    case EntityAction.apply:
+      return Icons.payment;
     default:
       return null;
   }

@@ -329,6 +329,11 @@ void handlePaymentAction(
     case EntityAction.edit:
       editEntity(context: context, entity: payment);
       break;
+    case EntityAction.apply:
+      editEntity(
+          context: context,
+          entity: payment.rebuild((b) => b..isApplying = true));
+      break;
     case EntityAction.refund:
       if (payment.invoicePaymentables.length == 1) {
         payment = payment.rebuild((b) =>

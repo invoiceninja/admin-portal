@@ -83,7 +83,11 @@ class PaymentEditVM {
               Navigator.of(context).pop(savedPayment);
             }
           } else {
-            viewEntity(context: context, entity: savedPayment, force: true);
+            if (payment.isApplying == true) {
+              Navigator.of(context).pop();
+            } else {
+              viewEntity(context: context, entity: savedPayment, force: true);
+            }
           }
         }).catchError((Object error) {
           showDialog<ErrorDialog>(

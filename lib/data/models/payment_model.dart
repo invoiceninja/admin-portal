@@ -178,6 +178,9 @@ abstract class PaymentEntity extends Object
   bool get isForInvoice;
 
   @nullable
+  bool get isApplying;
+
+  @nullable
   bool get sendEmail;
 
   String get transactionReferenceOrNumber =>
@@ -350,11 +353,15 @@ abstract class PaymentEntity extends Object
     final actions = <EntityAction>[];
 
     if (!isDeleted) {
-      if (includeEdit && userCompany.canEditEntity(this)) {
-        actions.add(EntityAction.edit);
-      }
-
       if (userCompany.canEditEntity(this)) {
+        if (includeEdit) {
+          actions.add(EntityAction.edit);
+        }
+
+        if (applied < amount) {
+          actions.add(EntityAction.apply);
+        }
+
         if (completedAmount > 0) {
           actions.add(EntityAction.refund);
         }

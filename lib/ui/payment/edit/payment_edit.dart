@@ -19,6 +19,7 @@ import 'package:invoiceninja_flutter/utils/completers.dart';
 import 'package:invoiceninja_flutter/utils/formatting.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:invoiceninja_flutter/ui/app/entity_dropdown.dart';
+import 'package:invoiceninja_flutter/utils/platforms.dart';
 
 class PaymentEdit extends StatefulWidget {
   const PaymentEdit({
@@ -132,69 +133,52 @@ class _PaymentEditState extends State<PaymentEdit> {
       }
     }
 
-    return EditScaffold(
-      entity: payment,
-      title: viewModel.payment.isNew
-          ? localization.enterPayment
-          : localization.editPayment,
-      onCancelPressed: (context) => viewModel.onCancelPressed(context),
-      onSavePressed: (context) {
-        final bool isValid = _formKey.currentState.validate();
-
-        setState(() {
-          autoValidate = !isValid;
-        });
-
-        if (!isValid) {
-          return;
-        }
-
-        viewModel.onSavePressed(context);
-      },
-      body: Form(
-        key: _formKey,
-        child: ListView(
-          key: ValueKey(viewModel.payment.id),
-          children: <Widget>[
-            FormCard(
-              children: <Widget>[
-                if (payment.isNew) ...[
-                  EntityDropdown(
-                    allowClearing: true,
-                    key: Key('__client_${payment.clientId}__'),
-                    entityType: EntityType.client,
-                    labelText: AppLocalization.of(context).client,
-                    entityId: payment.clientId,
-                    autoValidate: autoValidate,
-                    validator: (String val) => val.trim().isEmpty
-                        ? AppLocalization.of(context).pleaseSelectAClient
-                        : null,
-                    onSelected: (client) {
-                      viewModel.onChanged(payment.rebuild(
-                        (b) => b
-                          ..clientId = client?.id ?? ''
-                          ..credits.clear()
-                          ..invoices.clear(),
-                      ));
-                    },
-                    entityList: memoizedDropdownClientList(
-                        state.clientState.map,
-                        state.clientState.list,
-                        state.userState.map,
-                        state.staticState),
+    final body = Form(
+      key: _formKey,
+      child: Column(
+        key: ValueKey(viewModel.payment.id),
+        children: <Widget>[
+          FormCard(
+            children: <Widget>[
+              if (payment.isNew) ...[
+                EntityDropdown(
+                  allowClearing: true,
+                  key: Key('__client_${payment.clientId}__'),
+                  entityType: EntityType.client,
+                  labelText: AppLocalization.of(context).client,
+                  entityId: payment.clientId,
+                  autoValidate: autoValidate,
+                  validator: (String val) => val.trim().isEmpty
+                      ? AppLocalization.of(context).pleaseSelectAClient
+                      : null,
+                  onSelected: (client) {
+                    viewModel.onChanged(payment.rebuild(
+                      (b) => b
+                        ..clientId = client?.id ?? ''
+                        ..credits.clear()
+                        ..invoices.clear(),
+                    ));
+                  },
+                  entityList: memoizedDropdownClientList(
+                      state.clientState.map,
+                      state.clientState.list,
+                      state.userState.map,
+                      state.staticState),
+                ),
+                if (payment.isForInvoice != true)
+                  DecoratedFormField(
+                    controller: _amountController,
+                    textAlign: TextAlign.end,
+                    autocorrect: false,
+                    keyboardType:
+                        TextInputType.numberWithOptions(decimal: true),
+                    label: paymentTotal == 0
+                        ? localization.amount
+                        : amountPlaceholder,
+                    onSavePressed: viewModel.onSavePressed,
                   ),
-                  if (payment.isForInvoice != true)
-                    DecoratedFormField(
-                      controller: _amountController,
-                      autocorrect: false,
-                      keyboardType:
-                          TextInputType.numberWithOptions(decimal: true),
-                      label: paymentTotal == 0
-                          ? localization.amount
-                          : amountPlaceholder,
-                      onSavePressed: viewModel.onSavePressed,
-                    ),
-                ],
+              ],
+              if (payment.isNew || payment.isApplying == true)
                 for (var index = 0; index < invoicePaymentables.length; index++)
                   PaymentableEditor(
                     key: ValueKey(
@@ -207,6 +191,7 @@ class _PaymentEditState extends State<PaymentEdit> {
                         ? null
                         : payment.amount - paymentTotal,
                   ),
+              if (payment.isApplying != true)
                 DatePicker(
                   validator: (String val) => val.trim().isEmpty
                       ? AppLocalization.of(context).pleaseSelectADate
@@ -218,6 +203,7 @@ class _PaymentEditState extends State<PaymentEdit> {
                     viewModel.onChanged(payment.rebuild((b) => b..date = date));
                   },
                 ),
+              if (payment.isApplying != true)
                 EntityDropdown(
                   allowClearing: true,
                   key: ValueKey('__payment_type_${payment.typeId}__'),
@@ -229,6 +215,7 @@ class _PaymentEditState extends State<PaymentEdit> {
                   onSelected: (paymentType) => viewModel.onChanged(payment
                       .rebuild((b) => b..typeId = paymentType?.id ?? '')),
                 ),
+              if (payment.isNew || payment.isApplying == true)
                 if (payment.isForInvoice != true &&
                     state.company.isModuleEnabled(EntityType.credit))
                   for (var index = 0;
@@ -243,35 +230,97 @@ class _PaymentEditState extends State<PaymentEdit> {
                       entityType: EntityType.credit,
                       limit: 0,
                     ),
+              if (payment.isApplying != true)
                 DecoratedFormField(
                   controller: _transactionReferenceController,
                   label: localization.transactionReference,
                   onSavePressed: viewModel.onSavePressed,
                 ),
+              if (payment.isApplying != true)
                 DecoratedFormField(
                   controller: _privateNotesController,
                   label: localization.privateNotes,
                   keyboardType: TextInputType.multiline,
                   maxLines: 4,
                 ),
-              ],
-            ),
-            payment.isNew
-                ? FormCard(children: <Widget>[
-                    SwitchListTile(
-                      activeColor: Theme.of(context).accentColor,
-                      title: Text(localization.sendEmail),
-                      value: payment.sendEmail,
-                      subtitle: Text(localization.emailReceipt),
-                      onChanged: (value) => viewModel.onChanged(
-                          payment.rebuild((b) => b..sendEmail = value)),
-                    ),
-                  ])
-                : Container(),
-          ],
-        ),
+            ],
+          ),
+          payment.isNew
+              ? FormCard(children: <Widget>[
+                  SwitchListTile(
+                    activeColor: Theme.of(context).accentColor,
+                    title: Text(localization.sendEmail),
+                    value: payment.sendEmail ?? false,
+                    subtitle: Text(localization.emailReceipt),
+                    onChanged: (value) => viewModel.onChanged(
+                        payment.rebuild((b) => b..sendEmail = value)),
+                  ),
+                ])
+              : Container(),
+        ],
       ),
     );
+
+    void onSavePressed(BuildContext context) {
+      final bool isValid = _formKey.currentState.validate();
+
+      setState(() {
+        autoValidate = !isValid;
+      });
+
+      if (!isValid) {
+        return;
+      }
+
+      viewModel.onSavePressed(context);
+    }
+
+    if (payment.isApplying == true && isDesktop(context)) {
+      return AlertDialog(
+          backgroundColor: Theme.of(context).canvasColor,
+          contentPadding: const EdgeInsets.all(0),
+          actionsPadding: const EdgeInsets.only(right: 4),
+          title: Text(localization.applyPayment),
+          content: SingleChildScrollView(
+            child: SizedBox(
+              child: body,
+              width: kDialogWidth,
+            ),
+          ),
+          actions: <Widget>[
+            if (viewModel.state.isSaving)
+              Padding(
+                padding: const EdgeInsets.only(right: 16),
+                child: SizedBox(
+                  child: CircularProgressIndicator(),
+                  height: 30,
+                  width: 30,
+                ),
+              )
+            else ...[
+              FlatButton(
+                child: Text(localization.cancel.toUpperCase()),
+                onPressed: () => Navigator.of(context).pop(),
+              ),
+              FlatButton(
+                child: Text(localization.apply.toUpperCase()),
+                onPressed: () => onSavePressed(context),
+              ),
+            ],
+          ]);
+    } else {
+      return EditScaffold(
+        entity: payment,
+        title: viewModel.payment.isNew
+            ? localization.enterPayment
+            : payment.isApplying == true
+                ? localization.applyPayment
+                : localization.editPayment,
+        onCancelPressed: (context) => viewModel.onCancelPressed(context),
+        onSavePressed: onSavePressed,
+        body: body,
+      );
+    }
   }
 }
 
@@ -458,6 +507,7 @@ class _PaymentableEditorState extends State<PaymentableEditor> {
           Expanded(
             child: DecoratedFormField(
               controller: _amountController,
+              textAlign: TextAlign.end,
               label: payment.isForInvoice == true
                   ? localization.amount
                   : localization.applied,

@@ -52,10 +52,20 @@ Middleware<AppState> _editPayment() {
 
     next(action);
 
-    store.dispatch(UpdateCurrentRoute(PaymentEditScreen.route));
+    if (isMobile(action.context) || action.payment.isApplying != true) {
+      store.dispatch(UpdateCurrentRoute(PaymentEditScreen.route));
 
-    if (isMobile(action.context)) {
-      action.navigator.pushNamed(PaymentEditScreen.route);
+      if (isMobile(action.context)) {
+        action.navigator.pushNamed(PaymentEditScreen.route);
+      }
+    } else {
+      showDialog<PaymentEditScreen>(
+          context: action.context,
+          useRootNavigator: true,
+          barrierDismissible: false,
+          builder: (BuildContext context) {
+            return PaymentEditScreen();
+          });
     }
   };
 }
@@ -287,7 +297,6 @@ Middleware<AppState> _loadPayment(PaymentRepository repository) {
     next(action);
   };
 }
-
 
 Middleware<AppState> _loadPayments(PaymentRepository repository) {
   return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
