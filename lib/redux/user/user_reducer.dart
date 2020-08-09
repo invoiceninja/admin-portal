@@ -1,4 +1,5 @@
 import 'package:built_collection/built_collection.dart';
+import 'package:invoiceninja_flutter/redux/settings/settings_actions.dart';
 import 'package:redux/redux.dart';
 import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
@@ -136,6 +137,7 @@ ListUIState _clearListMultiselect(
 
 final usersReducer = combineReducers<UserState>([
   TypedReducer<UserState, SaveUserSuccess>(_updateUser),
+  TypedReducer<UserState, SaveAuthUserSuccess>(_updateAuthUser),
   TypedReducer<UserState, AddUserSuccess>(_addUser),
   TypedReducer<UserState, LoadUsersSuccess>(_setLoadedUsers),
   TypedReducer<UserState, LoadUserSuccess>(_setLoadedUser),
@@ -250,6 +252,10 @@ UserState _addUser(UserState userState, AddUserSuccess action) {
 }
 
 UserState _updateUser(UserState userState, SaveUserSuccess action) {
+  return userState.rebuild((b) => b..map[action.user.id] = action.user);
+}
+
+UserState _updateAuthUser(UserState userState, SaveAuthUserSuccess action) {
   return userState.rebuild((b) => b..map[action.user.id] = action.user);
 }
 
