@@ -15,6 +15,8 @@ mixin LocalizationsProvider on LocaleCodeAware {
   static final Map<String, Map<String, String>> _localizedValues = {
     'en': {
       // STARTER: lang key - do not remove comment
+      'select_field': 'Select Field',
+      'custom_labels': 'Custom Labels',
       'record_type': 'Record Type',
       'record_name': 'Record Name',
       'file_type': 'File Type',
@@ -39018,6 +39020,10 @@ mixin LocalizationsProvider on LocaleCodeAware {
   String get height => _localizedValues[localeCode]['height'] ?? '';
 
   String get width => _localizedValues[localeCode]['width'] ?? '';
+
+  String get customLabels => _localizedValues[localeCode]['custom_labels'] ?? '';
+
+  String get selectField => _localizedValues[localeCode]['select_field'] ?? '';
 
   String lookup(String key) {
     final lookupKey = toSnakeCase(key);

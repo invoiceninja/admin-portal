@@ -26,13 +26,15 @@ class LocalizationSettings extends StatefulWidget {
   _LocalizationSettingsState createState() => _LocalizationSettingsState();
 }
 
-class _LocalizationSettingsState extends State<LocalizationSettings> {
+class _LocalizationSettingsState extends State<LocalizationSettings>
+    with SingleTickerProviderStateMixin {
   static final GlobalKey<FormState> _formKey =
       GlobalKey<FormState>(debugLabel: '_localizationSettings');
 
   bool autoValidate = false;
 
   final _firstNameController = TextEditingController();
+  TabController _controller;
   FocusScopeNode _focusNode;
 
   List<TextEditingController> _controllers = [];
@@ -41,10 +43,12 @@ class _LocalizationSettingsState extends State<LocalizationSettings> {
   void initState() {
     super.initState();
     _focusNode = FocusScopeNode();
+    _controller = TabController(vsync: this, length: 2);
   }
 
   @override
   void dispose() {
+    _controller.dispose();
     _focusNode.dispose();
     _controllers.forEach((dynamic controller) {
       controller.removeListener(_onChanged);
@@ -84,85 +88,102 @@ class _LocalizationSettingsState extends State<LocalizationSettings> {
     return EditScaffold(
       title: localization.localization,
       onSavePressed: viewModel.onSavePressed,
-      body: AppForm(
+      appBarBottom: TabBar(
+        controller: _controller,
+        tabs: [
+          Tab(
+            text: localization.settings,
+          ),
+          Tab(
+            text: localization.customLabels,
+          ),
+        ],
+      ),
+      body: AppTabForm(
         formKey: _formKey,
         focusNode: _focusNode,
+        tabController: _controller,
         children: <Widget>[
-          FormCard(
-            children: <Widget>[
-              EntityDropdown(
-                allowClearing: state.settingsUIState.isFiltered,
-                key: ValueKey('__currency_${settings.currencyId}'),
-                entityType: EntityType.currency,
-                entityList: memoizedCurrencyList(state.staticState.currencyMap),
-                labelText: localization.currency,
-                entityId: settings.currencyId,
-                onSelected: (SelectableEntity currency) =>
-                    viewModel.onSettingsChanged(
-                        settings.rebuild((b) => b..currencyId = currency?.id)),
+          ListView(
+            children: [
+              FormCard(
+                children: <Widget>[
+                  EntityDropdown(
+                    allowClearing: state.settingsUIState.isFiltered,
+                    key: ValueKey('__currency_${settings.currencyId}'),
+                    entityType: EntityType.currency,
+                    entityList:
+                        memoizedCurrencyList(state.staticState.currencyMap),
+                    labelText: localization.currency,
+                    entityId: settings.currencyId,
+                    onSelected: (SelectableEntity currency) =>
+                        viewModel.onSettingsChanged(settings
+                            .rebuild((b) => b..currencyId = currency?.id)),
+                  ),
+                  BoolDropdownButton(
+                    value: settings.showCurrencyCode,
+                    label: localization.currencyFormat,
+                    onChanged: (value) => viewModel.onSettingsChanged(
+                        settings.rebuild((b) => b..showCurrencyCode = value)),
+                    enabledLabel: '${localization.code}: ' +
+                        formatNumber(1000, context,
+                            showCurrencyCode: true,
+                            currencyId: settings.currencyId),
+                    disabledLabel: '${localization.symbol}: ' +
+                        formatNumber(1000, context,
+                            showCurrencyCode: false,
+                            currencyId: settings.currencyId),
+                  ),
+                  EntityDropdown(
+                    allowClearing: state.settingsUIState.isFiltered,
+                    key: ValueKey('__language_${settings.languageId}'),
+                    entityType: EntityType.language,
+                    entityList:
+                        memoizedLanguageList(state.staticState.languageMap),
+                    labelText: localization.language,
+                    entityId: settings.languageId,
+                    onSelected: (SelectableEntity language) =>
+                        viewModel.onSettingsChanged(settings
+                            .rebuild((b) => b..languageId = language?.id)),
+                  ),
+                  EntityDropdown(
+                    allowClearing: state.settingsUIState.isFiltered,
+                    key: ValueKey('__timezone_${settings.timezoneId}'),
+                    entityType: EntityType.timezone,
+                    entityList:
+                        memoizedTimezoneList(state.staticState.timezoneMap),
+                    labelText: localization.timezone,
+                    entityId: settings.timezoneId,
+                    onSelected: (SelectableEntity timezone) =>
+                        viewModel.onSettingsChanged(settings
+                            .rebuild((b) => b..timezoneId = timezone?.id)),
+                  ),
+                  EntityDropdown(
+                    allowClearing: state.settingsUIState.isFiltered,
+                    key: ValueKey('__date_format_${settings.dateFormatId}'),
+                    entityType: EntityType.dateFormat,
+                    entityList:
+                        memoizedDateFormatList(state.staticState.dateFormatMap),
+                    labelText: localization.dateFormat,
+                    entityId: settings.dateFormatId,
+                    onSelected: (SelectableEntity dateFormat) =>
+                        viewModel.onSettingsChanged(settings
+                            .rebuild((b) => b..dateFormatId = dateFormat?.id)),
+                  ),
+                  BoolDropdownButton(
+                    iconData: kIsWeb ? Icons.timer : FontAwesomeIcons.clock,
+                    label: localization.militaryTime,
+                    helpLabel: localization.militaryTimeHelp,
+                    value: settings.enableMilitaryTime,
+                    onChanged: (value) => viewModel.onSettingsChanged(
+                        settings.rebuild((b) => b..enableMilitaryTime = value)),
+                  ),
+                ],
               ),
-              BoolDropdownButton(
-                value: settings.showCurrencyCode,
-                label: localization.currencyFormat,
-                onChanged: (value) => viewModel.onSettingsChanged(
-                    settings.rebuild((b) => b..showCurrencyCode = value)),
-                enabledLabel: '${localization.code}: ' +
-                    formatNumber(1000, context,
-                        showCurrencyCode: true,
-                        currencyId: settings.currencyId),
-                disabledLabel: '${localization.symbol}: ' +
-                    formatNumber(1000, context,
-                        showCurrencyCode: false,
-                        currencyId: settings.currencyId),
-              ),
-              EntityDropdown(
-                allowClearing: state.settingsUIState.isFiltered,
-                key: ValueKey('__language_${settings.languageId}'),
-                entityType: EntityType.language,
-                entityList: memoizedLanguageList(state.staticState.languageMap),
-                labelText: localization.language,
-                entityId: settings.languageId,
-                onSelected: (SelectableEntity language) =>
-                    viewModel.onSettingsChanged(
-                        settings.rebuild((b) => b..languageId = language?.id)),
-              ),
-              EntityDropdown(
-                allowClearing: state.settingsUIState.isFiltered,
-                key: ValueKey('__timezone_${settings.timezoneId}'),
-                entityType: EntityType.timezone,
-                entityList: memoizedTimezoneList(state.staticState.timezoneMap),
-                labelText: localization.timezone,
-                entityId: settings.timezoneId,
-                onSelected: (SelectableEntity timezone) =>
-                    viewModel.onSettingsChanged(
-                        settings.rebuild((b) => b..timezoneId = timezone?.id)),
-              ),
-              EntityDropdown(
-                allowClearing: state.settingsUIState.isFiltered,
-                key: ValueKey('__date_format_${settings.dateFormatId}'),
-                entityType: EntityType.dateFormat,
-                entityList:
-                    memoizedDateFormatList(state.staticState.dateFormatMap),
-                labelText: localization.dateFormat,
-                entityId: settings.dateFormatId,
-                onSelected: (SelectableEntity dateFormat) =>
-                    viewModel.onSettingsChanged(settings
-                        .rebuild((b) => b..dateFormatId = dateFormat?.id)),
-              ),
-              BoolDropdownButton(
-                iconData: kIsWeb ? Icons.timer : FontAwesomeIcons.clock,
-                label: localization.militaryTime,
-                helpLabel: localization.militaryTimeHelp,
-                value: settings.enableMilitaryTime,
-                onChanged: (value) => viewModel.onSettingsChanged(
-                    settings.rebuild((b) => b..enableMilitaryTime = value)),
-              ),
-            ],
-          ),
-          if (!state.settingsUIState.isFiltered)
-            FormCard(
-              children: <Widget>[
-                /*
+              if (!state.settingsUIState.isFiltered)
+                FormCard(
+                  children: <Widget>[
+                    /*
                 AppDropdownButton(
                   labelText: localization.firstDayOfTheWeek,
                   value: company.firstDayOfWeek,
@@ -180,24 +201,53 @@ class _LocalizationSettingsState extends State<LocalizationSettings> {
                       .toList(),
                 ),                
                  */
-                AppDropdownButton(
-                    showUseDefault: true,
-                    labelText: localization.firstMonthOfTheYear,
-                    value: company.firstMonthOfYear,
-                    onChanged: (dynamic value) => viewModel.onCompanyChanged(
-                        company.rebuild((b) => b..firstMonthOfYear = value)),
-                    items: kMonthsOfTheYear
-                        .map((id, month) =>
-                            MapEntry<String, DropdownMenuItem<String>>(
-                                id,
-                                DropdownMenuItem<String>(
-                                  child: Text(localization.lookup(month)),
-                                  value: id,
-                                )))
-                        .values
-                        .toList()),
-              ],
-            ),
+                    AppDropdownButton(
+                        showUseDefault: true,
+                        labelText: localization.firstMonthOfTheYear,
+                        value: company.firstMonthOfYear,
+                        onChanged: (dynamic value) =>
+                            viewModel.onCompanyChanged(company
+                                .rebuild((b) => b..firstMonthOfYear = value)),
+                        items: kMonthsOfTheYear
+                            .map((id, month) =>
+                                MapEntry<String, DropdownMenuItem<String>>(
+                                    id,
+                                    DropdownMenuItem<String>(
+                                      child: Text(localization.lookup(month)),
+                                      value: id,
+                                    )))
+                            .values
+                            .toList()),
+                  ],
+                ),
+            ],
+          ),
+          ListView(
+            children: [
+              FormCard(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  DropdownButtonHideUnderline(
+                    child: DropdownButton<String>(
+                      items: ['field1', 'field2', 'field3']
+                          .map((key) => DropdownMenuItem(
+                                child: Text(key),
+                                value: key,
+                              ))
+                          .toList(),
+                      hint: Text(localization.selectField),
+                      onChanged: (value) {
+                        viewModel.onSettingsChanged(settings
+                            .rebuild((b) => b..translations[value] = ''));
+                      },
+                    ),
+                  ),
+                  SizedBox(height: 16),
+                  for (var key in settings.translations.keys) Text(key),
+                ],
+              ),
+            ],
+          ),
         ],
       ),
     );
