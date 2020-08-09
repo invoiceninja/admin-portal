@@ -1,3 +1,4 @@
+import 'package:built_collection/built_collection.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -84,6 +85,7 @@ class _LocalizationSettingsState extends State<LocalizationSettings>
     final state = viewModel.state;
     final settings = viewModel.settings;
     final company = viewModel.company;
+    final translations = settings.translations ?? BuiltMap<String, String>();
 
     return EditScaffold(
       title: localization.localization,
@@ -230,8 +232,7 @@ class _LocalizationSettingsState extends State<LocalizationSettings>
                   DropdownButtonHideUnderline(
                     child: DropdownButton<String>(
                       items: ['field1', 'field2', 'field3']
-                          .where((key) =>
-                              !settings.translations.keys.contains(key))
+                          .where((key) => !translations.keys.contains(key))
                           .map((key) => DropdownMenuItem(
                                 child: Text(key),
                                 value: key,
@@ -245,13 +246,13 @@ class _LocalizationSettingsState extends State<LocalizationSettings>
                     ),
                   ),
                   SizedBox(height: 16),
-                  for (var key in settings.translations.keys)
+                  for (var key in translations.keys)
                     Row(
                       children: [
                         Expanded(child: Text(localization.lookup(key))),
                         Expanded(
                           child: TextFormField(
-                            initialValue: settings.translations[key] ?? '',
+                            initialValue: translations[key] ?? '',
                             onChanged: (value) => viewModel.onSettingsChanged(
                                 settings.rebuild((b) =>
                                     b..translations[key] = value.trim())),
