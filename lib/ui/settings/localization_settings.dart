@@ -250,7 +250,12 @@ class _LocalizationSettingsState extends State<LocalizationSettings>
                       children: [
                         Expanded(child: Text(localization.lookup(key))),
                         Expanded(
-                          child: TextFormField(),
+                          child: TextFormField(
+                            initialValue: settings.translations[key] ?? '',
+                            onChanged: (value) => viewModel.onSettingsChanged(
+                                settings.rebuild((b) =>
+                                    b..translations[key] = value.trim())),
+                          ),
                         ),
                         SizedBox(width: 16),
                         IconButton(
