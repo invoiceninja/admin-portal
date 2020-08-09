@@ -118,7 +118,11 @@ class ProductListItem extends StatelessWidget {
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: <Widget>[
-                            Text(product.notes, style: textStyle),
+                            Text(
+                              product.notes,
+                              style: textStyle,
+                              maxLines: 6,
+                            ),
                             if (filterMatch != null)
                               Text(
                                 filterMatch,
