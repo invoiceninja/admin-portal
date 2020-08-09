@@ -230,6 +230,8 @@ class _LocalizationSettingsState extends State<LocalizationSettings>
                   DropdownButtonHideUnderline(
                     child: DropdownButton<String>(
                       items: ['field1', 'field2', 'field3']
+                          .where((key) =>
+                              !settings.translations.keys.contains(key))
                           .map((key) => DropdownMenuItem(
                                 child: Text(key),
                                 value: key,
