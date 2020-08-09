@@ -252,6 +252,7 @@ class _LocalizationSettingsState extends State<LocalizationSettings>
                         Expanded(child: Text(localization.lookup(key))),
                         Expanded(
                           child: TextFormField(
+                            key: ValueKey('__${key}__'),
                             initialValue: translations[key] ?? '',
                             onChanged: (value) => viewModel.onSettingsChanged(
                                 settings.rebuild((b) =>
