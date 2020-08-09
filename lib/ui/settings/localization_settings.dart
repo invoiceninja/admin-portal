@@ -234,7 +234,7 @@ class _LocalizationSettingsState extends State<LocalizationSettings>
                       items: ['field1', 'field2', 'field3']
                           .where((key) => !translations.keys.contains(key))
                           .map((key) => DropdownMenuItem(
-                                child: Text(key),
+                                child: Text(localization.lookup(key)),
                                 value: key,
                               ))
                           .toList(),
