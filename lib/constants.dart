@@ -390,6 +390,7 @@ const String kPermissionCreateAll = 'create_all';
 const String kPermissionViewAll = 'view_all';
 const String kPermissionEditAll = 'edit_all';
 
+const String kPaymentStatusUnapplied = '-1';
 const String kPaymentStatusPending = '1';
 const String kPaymentStatusCancelled = '2';
 const String kPaymentStatusFailed = '3';
@@ -398,6 +399,7 @@ const String kPaymentStatusPartiallyRefunded = '5';
 const String kPaymentStatusRefunded = '6';
 
 const kPaymentStatuses = {
+  kPaymentStatusUnapplied: 'unapplied',
   kPaymentStatusPending: 'pending',
   kPaymentStatusCancelled: 'cancelled',
   kPaymentStatusFailed: 'failed',
@@ -502,6 +504,7 @@ class PaymentStatusColors {
     kPaymentStatusCompleted: kColorGreen,
     kPaymentStatusPartiallyRefunded: Colors.purple,
     kPaymentStatusRefunded: convertHexStringToColor('#8D3E3F'),
+    kPaymentStatusUnapplied: convertHexStringToColor('#444444'),
   };
 }
 

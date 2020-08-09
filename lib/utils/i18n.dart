@@ -15,6 +15,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
   static final Map<String, Map<String, String>> _localizedValues = {
     'en': {
       // STARTER: lang key - do not remove comment
+      'unapplied': 'Unapplied',
       'select_label': 'Select Label',
       'custom_labels': 'Custom Labels',
       'record_type': 'Record Type',
@@ -39024,6 +39025,8 @@ mixin LocalizationsProvider on LocaleCodeAware {
   String get customLabels => _localizedValues[localeCode]['custom_labels'] ?? '';
 
   String get selectLabel => _localizedValues[localeCode]['select_label'] ?? '';
+
+  String get unapplied => _localizedValues[localeCode]['unapplied'] ?? '';
 
   String lookup(String key) {
     final lookupKey = toSnakeCase(key);

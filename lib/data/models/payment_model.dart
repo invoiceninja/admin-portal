@@ -189,6 +189,14 @@ abstract class PaymentEntity extends Object
 
   BuiltList<PaymentableEntity> get credits;
 
+  String get calculatedStatusId {
+    if (applied < amount) {
+      return kPaymentStatusUnapplied;
+    }
+
+    return statusId;
+  }
+
   int compareTo(
       {PaymentEntity payment,
       String sortField,
