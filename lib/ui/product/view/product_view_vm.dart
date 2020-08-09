@@ -59,16 +59,15 @@ class ProductViewVM {
     final product = state.productState.map[state.productUIState.selectedId] ??
         ProductEntity(id: state.productUIState.selectedId);
 
-    /*
     Future<Null> _handleRefresh(BuildContext context) {
       final completer = snackBarCompleter<Null>(
           context, AppLocalization.of(context).refreshComplete);
       store.dispatch(LoadProduct(
-          completer: completer,
-          productId: product.id,));
+        completer: completer,
+        productId: product.id,
+      ));
       return completer.future;
     }
-    */
 
     return ProductViewVM(
       state: state,
@@ -77,11 +76,7 @@ class ProductViewVM {
       isDirty: product.isNew,
       product: product,
       company: state.company,
-      onRefreshed: null,
-      /*
-      onRefreshed: (context) =>
-          _handleRefresh(context),
-          */
+      onRefreshed: (context) => _handleRefresh(context),
       onEntityAction: (BuildContext context, EntityAction action) =>
           handleEntitiesActions(context, [product], action, autoPop: true),
       onUploadDocument: (BuildContext context, String filePath) {
@@ -105,7 +100,7 @@ class ProductViewVM {
         final completer = snackBarCompleter<Null>(
             context, AppLocalization.of(context).deletedDocument);
         completer.future.then<Null>(
-                (value) => store.dispatch(LoadProduct(productId: product.id)));
+            (value) => store.dispatch(LoadProduct(productId: product.id)));
         store.dispatch(DeleteDocumentRequest(completer, [document.id]));
       },
     );

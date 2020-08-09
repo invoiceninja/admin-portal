@@ -68,73 +68,77 @@ class _PaymentViewState extends State<PaymentView> {
       title: payment.number,
       body: Builder(
         builder: (BuildContext context) {
-          return Column(
-            children: <Widget>[
-              Expanded(
-                child: ListView(
-                  children: <Widget>[
-                    EntityHeader(
-                      entity: payment,
-                      statusColor: PaymentStatusColors.colors[payment.statusId],
-                      statusLabel: localization
-                          .lookup('payment_status_${payment.statusId}'),
-                      label: localization.amount,
-                      value: formatNumber(payment.amount, context,
-                          clientId: client.id),
-                      secondLabel: localization.applied,
-                      secondValue: formatNumber(payment.applied, context,
-                          clientId: client.id),
-                    ),
-                    ListDivider(),
-                    EntityListTile(
-                      isFilter: widget.isFilter,
-                      entity: client,
-                    ),
-                    for (final paymentable in payment.invoicePaymentables)
+          return RefreshIndicator(
+            onRefresh: () => viewModel.onRefreshed(context),
+            child: Column(
+              children: <Widget>[
+                Expanded(
+                  child: ListView(
+                    children: <Widget>[
+                      EntityHeader(
+                        entity: payment,
+                        statusColor:
+                            PaymentStatusColors.colors[payment.statusId],
+                        statusLabel: localization
+                            .lookup('payment_status_${payment.statusId}'),
+                        label: localization.amount,
+                        value: formatNumber(payment.amount, context,
+                            clientId: client.id),
+                        secondLabel: localization.applied,
+                        secondValue: formatNumber(payment.applied, context,
+                            clientId: client.id),
+                      ),
+                      ListDivider(),
                       EntityListTile(
                         isFilter: widget.isFilter,
-                        entity: state.invoiceState.map[paymentable.invoiceId],
-                        subtitle: formatNumber(paymentable.amount, context) +
-                            ' • ' +
-                            formatDate(
-                                convertTimestampToDateString(
-                                    paymentable.createdAt),
-                                context),
+                        entity: client,
                       ),
-                    for (final paymentable in payment.creditPaymentables)
-                      EntityListTile(
-                        isFilter: widget.isFilter,
-                        entity: state.creditState.map[paymentable.creditId],
-                        subtitle: formatNumber(paymentable.amount, context) +
-                            ' • ' +
-                            formatDate(
-                                convertTimestampToDateString(
-                                    paymentable.createdAt),
-                                context),
-                      ),
-                    payment.privateNotes != null &&
-                            payment.privateNotes.isNotEmpty
-                        ? Column(
-                            children: <Widget>[
-                              IconMessage(payment.privateNotes),
-                              Container(
-                                color: Theme.of(context).cardColor,
-                                height: 12.0,
-                              ),
-                            ],
-                          )
-                        : Container(),
-                    FieldGrid(fields),
-                  ],
+                      for (final paymentable in payment.invoicePaymentables)
+                        EntityListTile(
+                          isFilter: widget.isFilter,
+                          entity: state.invoiceState.map[paymentable.invoiceId],
+                          subtitle: formatNumber(paymentable.amount, context) +
+                              ' • ' +
+                              formatDate(
+                                  convertTimestampToDateString(
+                                      paymentable.createdAt),
+                                  context),
+                        ),
+                      for (final paymentable in payment.creditPaymentables)
+                        EntityListTile(
+                          isFilter: widget.isFilter,
+                          entity: state.creditState.map[paymentable.creditId],
+                          subtitle: formatNumber(paymentable.amount, context) +
+                              ' • ' +
+                              formatDate(
+                                  convertTimestampToDateString(
+                                      paymentable.createdAt),
+                                  context),
+                        ),
+                      payment.privateNotes != null &&
+                              payment.privateNotes.isNotEmpty
+                          ? Column(
+                              children: <Widget>[
+                                IconMessage(payment.privateNotes),
+                                Container(
+                                  color: Theme.of(context).cardColor,
+                                  height: 12.0,
+                                ),
+                              ],
+                            )
+                          : Container(),
+                      FieldGrid(fields),
+                    ],
+                  ),
                 ),
-              ),
-              BottomButtons(
-                entity: payment,
-                action1: EntityAction.refund,
-                action1Enabled: payment.refunded < payment.amount,
-                action2: EntityAction.archive,
-              ),
-            ],
+                BottomButtons(
+                  entity: payment,
+                  action1: EntityAction.refund,
+                  action1Enabled: payment.refunded < payment.amount,
+                  action2: EntityAction.archive,
+                ),
+              ],
+            ),
           );
         },
       ),
