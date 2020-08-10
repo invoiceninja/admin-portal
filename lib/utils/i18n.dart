@@ -15,6 +15,10 @@ mixin LocalizationsProvider on LocaleCodeAware {
   static final Map<String, Map<String, String>> _localizedValues = {
     'en': {
       // STARTER: lang key - do not remove comment
+      'hours': 'Hours',
+      'statement': 'Statement',
+      'taxes': 'Taxes',
+      'surcharge': 'Surcharge',
       'apply_payment': 'Apply Payment',
       'apply': 'Apply',
       'unapplied': 'Unapplied',
@@ -39024,7 +39028,8 @@ mixin LocalizationsProvider on LocaleCodeAware {
 
   String get width => _localizedValues[localeCode]['width'] ?? '';
 
-  String get customLabels => _localizedValues[localeCode]['custom_labels'] ?? '';
+  String get customLabels =>
+      _localizedValues[localeCode]['custom_labels'] ?? '';
 
   String get selectLabel => _localizedValues[localeCode]['select_label'] ?? '';
 
@@ -39032,7 +39037,16 @@ mixin LocalizationsProvider on LocaleCodeAware {
 
   String get apply => _localizedValues[localeCode]['apply'] ?? '';
 
-  String get applyPayment => _localizedValues[localeCode]['apply_payment'] ?? '';
+  String get applyPayment =>
+      _localizedValues[localeCode]['apply_payment'] ?? '';
+
+  String get surcharge => _localizedValues[localeCode]['surcharge'] ?? '';
+
+  String get hours => _localizedValues[localeCode]['hours'] ?? '';
+
+  String get statement => _localizedValues[localeCode]['statement'] ?? '';
+
+  String get taxes => _localizedValues[localeCode]['taxes'] ?? '';
 
   String lookup(String key) {
     final lookupKey = toSnakeCase(key);
