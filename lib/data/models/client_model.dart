@@ -269,7 +269,6 @@ abstract class ClientEntity extends Object
   @BuiltValueField(wireName: 'gateway_tokens')
   BuiltList<GatewayTokenEntity> get gatewayTokens;
 
-  @nullable // TODO remove this nullable
   BuiltList<DocumentEntity> get documents;
 
   //String get last_login;
@@ -496,8 +495,7 @@ abstract class ClientEntity extends Object
             .compareTo(clientB.customValue4.toLowerCase());
         break;
       case ClientFields.documents:
-        response =
-            clientA.documents.length.compareTo(clientA.documents.length);
+        response = clientA.documents.length.compareTo(clientA.documents.length);
         break;
       default:
         print('## ERROR: sort by client.$sortField not implemented');

@@ -222,6 +222,10 @@ class _$ClientEntitySerializer implements StructuredSerializer<ClientEntity> {
       serializers.serialize(object.gatewayTokens,
           specifiedType: const FullType(
               BuiltList, const [const FullType(GatewayTokenEntity)])),
+      'documents',
+      serializers.serialize(object.documents,
+          specifiedType: const FullType(
+              BuiltList, const [const FullType(DocumentEntity)])),
       'created_at',
       serializers.serialize(object.createdAt,
           specifiedType: const FullType(int)),
@@ -239,13 +243,6 @@ class _$ClientEntitySerializer implements StructuredSerializer<ClientEntity> {
         ..add('lastUpdatedActivities')
         ..add(serializers.serialize(object.lastUpdatedActivities,
             specifiedType: const FullType(int)));
-    }
-    if (object.documents != null) {
-      result
-        ..add('documents')
-        ..add(serializers.serialize(object.documents,
-            specifiedType: const FullType(
-                BuiltList, const [const FullType(DocumentEntity)])));
     }
     if (object.isChanged != null) {
       result
@@ -1121,6 +1118,9 @@ class _$ClientEntity extends ClientEntity {
     if (gatewayTokens == null) {
       throw new BuiltValueNullFieldError('ClientEntity', 'gatewayTokens');
     }
+    if (documents == null) {
+      throw new BuiltValueNullFieldError('ClientEntity', 'documents');
+    }
     if (createdAt == null) {
       throw new BuiltValueNullFieldError('ClientEntity', 'createdAt');
     }
@@ -1608,7 +1608,7 @@ class ClientEntityBuilder
               activities: activities.build(),
               ledger: ledger.build(),
               gatewayTokens: gatewayTokens.build(),
-              documents: _documents?.build(),
+              documents: documents.build(),
               isChanged: isChanged,
               createdAt: createdAt,
               updatedAt: updatedAt,
@@ -1632,7 +1632,7 @@ class ClientEntityBuilder
         _$failedField = 'gatewayTokens';
         gatewayTokens.build();
         _$failedField = 'documents';
-        _documents?.build();
+        documents.build();
       } catch (e) {
         throw new BuiltValueNestedFieldError(
             'ClientEntity', _$failedField, e.toString());
