@@ -38,27 +38,31 @@ import 'package:redux/redux.dart';
 
 PrefState prefReducer(
     PrefState state, dynamic action, int selectedCompanyIndex) {
-  return state.rebuild((b) => b
-    ..companyPrefs[selectedCompanyIndex] =
-        companyPrefReducer(state.companyPrefs[selectedCompanyIndex], action)
-    ..appLayout = layoutReducer(state.appLayout, action)
-    ..moduleLayout = moduleLayoutReducer(state.moduleLayout, action)
-    ..isPreviewVisible = isPreviewVisibleReducer(state.isPreviewVisible, action)
-    ..menuSidebarMode = manuSidebarReducer(state.menuSidebarMode, action)
-    ..historySidebarMode =
-        historySidebarReducer(state.historySidebarMode, action)
-    ..isMenuVisible = menuVisibleReducer(state.isMenuVisible, action)
-    ..isHistoryVisible = historyVisibleReducer(state.isHistoryVisible, action)
-    ..enableDarkMode = darkModeReducer(state.enableDarkMode, action)
-    ..showFilterSidebar =
-        showFilterSidebarReducer(state.showFilterSidebar, action)
-    ..longPressSelectionIsDefault =
-        longPressReducer(state.longPressSelectionIsDefault, action)
-    ..autoStartTasks = autoStartTasksReducer(state.autoStartTasks, action)
-    ..requireAuthentication =
-        requireAuthenticationReducer(state.requireAuthentication, action)
-    ..addDocumentsToInvoice =
-        addDocumentsToInvoiceReducer(state.addDocumentsToInvoice, action));
+  return state.rebuild(
+    (b) => b
+      ..companyPrefs[selectedCompanyIndex] =
+          companyPrefReducer(state.companyPrefs[selectedCompanyIndex], action)
+      ..appLayout = layoutReducer(state.appLayout, action)
+      ..rowsPerPage = rowsPerPageReducer(state.rowsPerPage, action)
+      ..moduleLayout = moduleLayoutReducer(state.moduleLayout, action)
+      ..isPreviewVisible =
+          isPreviewVisibleReducer(state.isPreviewVisible, action)
+      ..menuSidebarMode = manuSidebarReducer(state.menuSidebarMode, action)
+      ..historySidebarMode =
+          historySidebarReducer(state.historySidebarMode, action)
+      ..isMenuVisible = menuVisibleReducer(state.isMenuVisible, action)
+      ..isHistoryVisible = historyVisibleReducer(state.isHistoryVisible, action)
+      ..enableDarkMode = darkModeReducer(state.enableDarkMode, action)
+      ..showFilterSidebar =
+          showFilterSidebarReducer(state.showFilterSidebar, action)
+      ..longPressSelectionIsDefault =
+          longPressReducer(state.longPressSelectionIsDefault, action)
+      ..autoStartTasks = autoStartTasksReducer(state.autoStartTasks, action)
+      ..requireAuthentication =
+          requireAuthenticationReducer(state.requireAuthentication, action)
+      ..addDocumentsToInvoice =
+          addDocumentsToInvoiceReducer(state.addDocumentsToInvoice, action),
+  );
 }
 
 Reducer<bool> menuVisibleReducer = combineReducers([
@@ -116,6 +120,12 @@ Reducer<ModuleLayout> moduleLayoutReducer = combineReducers([
     } else {
       return ModuleLayout.list;
     }
+  }),
+]);
+
+Reducer<int> rowsPerPageReducer = combineReducers([
+  TypedReducer<int, UserPreferencesChanged>((numRows, action) {
+    return action.rowsPerPage ?? numRows;
   }),
 ]);
 

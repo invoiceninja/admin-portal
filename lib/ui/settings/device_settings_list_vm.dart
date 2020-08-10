@@ -48,6 +48,7 @@ class DeviceSettingsVM {
     @required this.authenticationSupported,
     @required this.onMenuModeChanged,
     @required this.onHistoryModeChanged,
+    @required this.onRowsPerPageChanged,
   });
 
   static DeviceSettingsVM fromStore(Store<AppState> store) {
@@ -97,10 +98,21 @@ class DeviceSettingsVM {
             UserPreferencesChanged(longPressSelectionIsDefault: value));
       },
       onMenuModeChanged: (context, value) async {
+        if (store.state.prefState.menuSidebarMode == value) {
+          return;
+        }
+
         store.dispatch(UserPreferencesChanged(menuMode: value));
       },
       onHistoryModeChanged: (context, value) async {
+        if (store.state.prefState.historySidebarMode == value) {
+          return;
+        }
+
         store.dispatch(UserPreferencesChanged(historyMode: value));
+      },
+      onRowsPerPageChanged: (context, value) {
+        store.dispatch(UserPreferencesChanged(rowsPerPage: value));
       },
       onAlwaysShowSidebarChanged: (context, value) {
         store.dispatch(UserPreferencesChanged(alwaysShowFilterSidebar: value));
@@ -162,5 +174,6 @@ class DeviceSettingsVM {
   final Function(BuildContext, bool) onLongPressSelectionIsDefault;
   final Function(BuildContext, bool) onRequireAuthenticationChanged;
   final Function(BuildContext, bool) onAlwaysShowSidebarChanged;
+  final Function(BuildContext, int) onRowsPerPageChanged;
   final Future<bool> authenticationSupported;
 }

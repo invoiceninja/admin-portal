@@ -150,6 +150,9 @@ class _$PrefStateSerializer implements StructuredSerializer<PrefState> {
       'addDocumentsToInvoice',
       serializers.serialize(object.addDocumentsToInvoice,
           specifiedType: const FullType(bool)),
+      'rowsPerPage',
+      serializers.serialize(object.rowsPerPage,
+          specifiedType: const FullType(int)),
       'companyPrefs',
       serializers.serialize(object.companyPrefs,
           specifiedType: const FullType(
@@ -221,6 +224,10 @@ class _$PrefStateSerializer implements StructuredSerializer<PrefState> {
         case 'addDocumentsToInvoice':
           result.addDocumentsToInvoice = serializers.deserialize(value,
               specifiedType: const FullType(bool)) as bool;
+          break;
+        case 'rowsPerPage':
+          result.rowsPerPage = serializers.deserialize(value,
+              specifiedType: const FullType(int)) as int;
           break;
         case 'companyPrefs':
           result.companyPrefs.replace(serializers.deserialize(value,
@@ -434,6 +441,8 @@ class _$PrefState extends PrefState {
   @override
   final bool addDocumentsToInvoice;
   @override
+  final int rowsPerPage;
+  @override
   final BuiltList<CompanyPrefState> companyPrefs;
 
   factory _$PrefState([void Function(PrefStateBuilder) updates]) =>
@@ -453,6 +462,7 @@ class _$PrefState extends PrefState {
       this.requireAuthentication,
       this.autoStartTasks,
       this.addDocumentsToInvoice,
+      this.rowsPerPage,
       this.companyPrefs})
       : super._() {
     if (appLayout == null) {
@@ -495,6 +505,9 @@ class _$PrefState extends PrefState {
     if (addDocumentsToInvoice == null) {
       throw new BuiltValueNullFieldError('PrefState', 'addDocumentsToInvoice');
     }
+    if (rowsPerPage == null) {
+      throw new BuiltValueNullFieldError('PrefState', 'rowsPerPage');
+    }
     if (companyPrefs == null) {
       throw new BuiltValueNullFieldError('PrefState', 'companyPrefs');
     }
@@ -524,6 +537,7 @@ class _$PrefState extends PrefState {
         requireAuthentication == other.requireAuthentication &&
         autoStartTasks == other.autoStartTasks &&
         addDocumentsToInvoice == other.addDocumentsToInvoice &&
+        rowsPerPage == other.rowsPerPage &&
         companyPrefs == other.companyPrefs;
   }
 
@@ -543,20 +557,27 @@ class _$PrefState extends PrefState {
                                             $jc(
                                                 $jc(
                                                     $jc(
-                                                        $jc(0,
-                                                            appLayout.hashCode),
-                                                        moduleLayout.hashCode),
-                                                    menuSidebarMode.hashCode),
-                                                historySidebarMode.hashCode),
-                                            isPreviewVisible.hashCode),
-                                        isMenuVisible.hashCode),
-                                    isHistoryVisible.hashCode),
-                                enableDarkMode.hashCode),
-                            showFilterSidebar.hashCode),
-                        longPressSelectionIsDefault.hashCode),
-                    requireAuthentication.hashCode),
-                autoStartTasks.hashCode),
-            addDocumentsToInvoice.hashCode),
+                                                        $jc(
+                                                            $jc(
+                                                                0,
+                                                                appLayout
+                                                                    .hashCode),
+                                                            moduleLayout
+                                                                .hashCode),
+                                                        menuSidebarMode
+                                                            .hashCode),
+                                                    historySidebarMode
+                                                        .hashCode),
+                                                isPreviewVisible.hashCode),
+                                            isMenuVisible.hashCode),
+                                        isHistoryVisible.hashCode),
+                                    enableDarkMode.hashCode),
+                                showFilterSidebar.hashCode),
+                            longPressSelectionIsDefault.hashCode),
+                        requireAuthentication.hashCode),
+                    autoStartTasks.hashCode),
+                addDocumentsToInvoice.hashCode),
+            rowsPerPage.hashCode),
         companyPrefs.hashCode));
   }
 
@@ -576,6 +597,7 @@ class _$PrefState extends PrefState {
           ..add('requireAuthentication', requireAuthentication)
           ..add('autoStartTasks', autoStartTasks)
           ..add('addDocumentsToInvoice', addDocumentsToInvoice)
+          ..add('rowsPerPage', rowsPerPage)
           ..add('companyPrefs', companyPrefs))
         .toString();
   }
@@ -648,6 +670,10 @@ class PrefStateBuilder implements Builder<PrefState, PrefStateBuilder> {
   set addDocumentsToInvoice(bool addDocumentsToInvoice) =>
       _$this._addDocumentsToInvoice = addDocumentsToInvoice;
 
+  int _rowsPerPage;
+  int get rowsPerPage => _$this._rowsPerPage;
+  set rowsPerPage(int rowsPerPage) => _$this._rowsPerPage = rowsPerPage;
+
   ListBuilder<CompanyPrefState> _companyPrefs;
   ListBuilder<CompanyPrefState> get companyPrefs =>
       _$this._companyPrefs ??= new ListBuilder<CompanyPrefState>();
@@ -671,6 +697,7 @@ class PrefStateBuilder implements Builder<PrefState, PrefStateBuilder> {
       _requireAuthentication = _$v.requireAuthentication;
       _autoStartTasks = _$v.autoStartTasks;
       _addDocumentsToInvoice = _$v.addDocumentsToInvoice;
+      _rowsPerPage = _$v.rowsPerPage;
       _companyPrefs = _$v.companyPrefs?.toBuilder();
       _$v = null;
     }
@@ -709,6 +736,7 @@ class PrefStateBuilder implements Builder<PrefState, PrefStateBuilder> {
               requireAuthentication: requireAuthentication,
               autoStartTasks: autoStartTasks,
               addDocumentsToInvoice: addDocumentsToInvoice,
+              rowsPerPage: rowsPerPage,
               companyPrefs: companyPrefs.build());
     } catch (_) {
       String _$failedField;

@@ -104,6 +104,25 @@ class _DeviceSettingsState extends State<DeviceSettings> {
                           viewModel.onHistoryModeChanged(context, value),
                     ),
                   ],
+                  AppDropdownButton<int>(
+                    labelText: localization.rowsPerPage,
+                    value: prefState.rowsPerPage,
+                    onChanged: (dynamic value) =>
+                        viewModel.onRowsPerPageChanged(context, value),
+                    items: [
+                      10,
+                      25,
+                      50,
+                      // 100, // TODO optimize datatables to support this
+                    ]
+                        .map(
+                          (value) => DropdownMenuItem(
+                            child: Text('$value'),
+                            value: value,
+                          ),
+                        )
+                        .toList(),
+                  ),
                 ],
               ),
               FormCard(

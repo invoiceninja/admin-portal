@@ -15,6 +15,7 @@ abstract class PrefState implements Built<PrefState, PrefStateBuilder> {
       isPreviewVisible: true,
       menuSidebarMode: AppSidebarMode.collapse,
       historySidebarMode: AppSidebarMode.float,
+      rowsPerPage: 10,
       isMenuVisible: true,
       isHistoryVisible: false,
       enableDarkMode: false,
@@ -62,6 +63,8 @@ abstract class PrefState implements Built<PrefState, PrefStateBuilder> {
   bool get autoStartTasks;
 
   bool get addDocumentsToInvoice;
+
+  int get rowsPerPage;
 
   BuiltList<CompanyPrefState> get companyPrefs;
 

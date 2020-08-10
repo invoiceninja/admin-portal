@@ -15,6 +15,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
   static final Map<String, Map<String, String>> _localizedValues = {
     'en': {
       // STARTER: lang key - do not remove comment
+      'rows_per_page': 'Rows Per Page',
       'hours': 'Hours',
       'statement': 'Statement',
       'taxes': 'Taxes',
@@ -39047,6 +39048,8 @@ mixin LocalizationsProvider on LocaleCodeAware {
   String get statement => _localizedValues[localeCode]['statement'] ?? '';
 
   String get taxes => _localizedValues[localeCode]['taxes'] ?? '';
+
+  String get rowsPerPage => _localizedValues[localeCode]['rows_per_page'] ?? '';
 
   String lookup(String key) {
     final lookupKey = toSnakeCase(key);
