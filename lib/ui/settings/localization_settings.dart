@@ -30,7 +30,7 @@ class LocalizationSettings extends StatefulWidget {
 class _LocalizationSettingsState extends State<LocalizationSettings>
     with SingleTickerProviderStateMixin {
   static final GlobalKey<FormState> _formKey =
-  GlobalKey<FormState>(debugLabel: '_localizationSettings');
+      GlobalKey<FormState>(debugLabel: '_localizationSettings');
 
   bool autoValidate = false;
 
@@ -86,6 +86,10 @@ class _LocalizationSettingsState extends State<LocalizationSettings>
     final settings = viewModel.settings;
     final company = viewModel.company;
     final translations = settings.translations ?? BuiltMap<String, String>();
+    final customLabels =
+        kCustomLabels.where((key) => !translations.keys.contains(key)).toList();
+    customLabels.sort(
+        (a, b) => localization.lookup(a).compareTo(localization.lookup(b)));
 
     return EditScaffold(
       title: localization.localization,
@@ -115,7 +119,7 @@ class _LocalizationSettingsState extends State<LocalizationSettings>
                     key: ValueKey('__currency_${settings.currencyId}'),
                     entityType: EntityType.currency,
                     entityList:
-                    memoizedCurrencyList(state.staticState.currencyMap),
+                        memoizedCurrencyList(state.staticState.currencyMap),
                     labelText: localization.currency,
                     entityId: settings.currencyId,
                     onSelected: (SelectableEntity currency) =>
@@ -125,10 +129,8 @@ class _LocalizationSettingsState extends State<LocalizationSettings>
                   BoolDropdownButton(
                     value: settings.showCurrencyCode,
                     label: localization.currencyFormat,
-                    onChanged: (value) =>
-                        viewModel.onSettingsChanged(
-                            settings.rebuild((
-                                b) => b..showCurrencyCode = value)),
+                    onChanged: (value) => viewModel.onSettingsChanged(
+                        settings.rebuild((b) => b..showCurrencyCode = value)),
                     enabledLabel: '${localization.code}: ' +
                         formatNumber(1000, context,
                             showCurrencyCode: true,
@@ -143,7 +145,7 @@ class _LocalizationSettingsState extends State<LocalizationSettings>
                     key: ValueKey('__language_${settings.languageId}'),
                     entityType: EntityType.language,
                     entityList:
-                    memoizedLanguageList(state.staticState.languageMap),
+                        memoizedLanguageList(state.staticState.languageMap),
                     labelText: localization.language,
                     entityId: settings.languageId,
                     onSelected: (SelectableEntity language) =>
@@ -155,7 +157,7 @@ class _LocalizationSettingsState extends State<LocalizationSettings>
                     key: ValueKey('__timezone_${settings.timezoneId}'),
                     entityType: EntityType.timezone,
                     entityList:
-                    memoizedTimezoneList(state.staticState.timezoneMap),
+                        memoizedTimezoneList(state.staticState.timezoneMap),
                     labelText: localization.timezone,
                     entityId: settings.timezoneId,
                     onSelected: (SelectableEntity timezone) =>
@@ -167,7 +169,7 @@ class _LocalizationSettingsState extends State<LocalizationSettings>
                     key: ValueKey('__date_format_${settings.dateFormatId}'),
                     entityType: EntityType.dateFormat,
                     entityList:
-                    memoizedDateFormatList(state.staticState.dateFormatMap),
+                        memoizedDateFormatList(state.staticState.dateFormatMap),
                     labelText: localization.dateFormat,
                     entityId: settings.dateFormatId,
                     onSelected: (SelectableEntity dateFormat) =>
@@ -179,10 +181,8 @@ class _LocalizationSettingsState extends State<LocalizationSettings>
                     label: localization.militaryTime,
                     helpLabel: localization.militaryTimeHelp,
                     value: settings.enableMilitaryTime,
-                    onChanged: (value) =>
-                        viewModel.onSettingsChanged(
-                            settings.rebuild((
-                                b) => b..enableMilitaryTime = value)),
+                    onChanged: (value) => viewModel.onSettingsChanged(
+                        settings.rebuild((b) => b..enableMilitaryTime = value)),
                   ),
                 ],
               ),
@@ -216,12 +216,12 @@ class _LocalizationSettingsState extends State<LocalizationSettings>
                                 .rebuild((b) => b..firstMonthOfYear = value)),
                         items: kMonthsOfTheYear
                             .map((id, month) =>
-                            MapEntry<String, DropdownMenuItem<String>>(
-                                id,
-                                DropdownMenuItem<String>(
-                                  child: Text(localization.lookup(month)),
-                                  value: id,
-                                )))
+                                MapEntry<String, DropdownMenuItem<String>>(
+                                    id,
+                                    DropdownMenuItem<String>(
+                                      child: Text(localization.lookup(month)),
+                                      value: id,
+                                    )))
                             .values
                             .toList()),
                   ],
@@ -235,13 +235,11 @@ class _LocalizationSettingsState extends State<LocalizationSettings>
                 children: [
                   DropdownButtonHideUnderline(
                     child: DropdownButton<String>(
-                      items: kCustomLabels
-                          .where((key) => !translations.keys.contains(key))
-                          .map((key) =>
-                          DropdownMenuItem(
-                            child: Text(localization.lookup(key)),
-                            value: key,
-                          ))
+                      items: customLabels
+                          .map((key) => DropdownMenuItem(
+                                child: Text(localization.lookup(key)),
+                                value: key,
+                              ))
                           .toList(),
                       hint: Text(localization.selectLabel),
                       onChanged: (value) {
@@ -259,9 +257,8 @@ class _LocalizationSettingsState extends State<LocalizationSettings>
                           child: TextFormField(
                             key: ValueKey('__${key}__'),
                             initialValue: translations[key] ?? '',
-                            onChanged: (value) =>
-                                viewModel.onSettingsChanged(
-                                    settings.rebuild((b) =>
+                            onChanged: (value) => viewModel.onSettingsChanged(
+                                settings.rebuild((b) =>
                                     b..translations[key] = value.trim())),
                           ),
                         ),
