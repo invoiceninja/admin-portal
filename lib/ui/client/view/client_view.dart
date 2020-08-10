@@ -68,15 +68,15 @@ class _ClientViewState extends State<ClientView>
             text: localization.details,
           ),
           Tab(
+            text: documents.isEmpty
+                ? localization.documents
+                : '${localization.documents} (${documents.length})',
+          ),
+          Tab(
             text: localization.ledger,
           ),
           Tab(
             text: localization.activity,
-          ),
-          Tab(
-            text: documents.isEmpty
-                ? localization.documents
-                : '${localization.documents} (${documents.length})',
           ),
         ],
       ),
@@ -100,6 +100,13 @@ class _ClientViewState extends State<ClientView>
                   ),
                   RefreshIndicator(
                     onRefresh: () => viewModel.onRefreshed(context),
+                    child: ClientViewDocuments(
+                      viewModel: viewModel,
+                      key: ValueKey(viewModel.client.id),
+                    ),
+                  ),
+                  RefreshIndicator(
+                    onRefresh: () => viewModel.onRefreshed(context),
                     child: ClientViewLedger(
                       viewModel: viewModel,
                       key: ValueKey(viewModel.client.id),
@@ -111,13 +118,6 @@ class _ClientViewState extends State<ClientView>
                       viewModel: viewModel,
                       key: ValueKey(viewModel.client.id),
                     ),
-                  ),
-                  RefreshIndicator(
-                    onRefresh: () => viewModel.onRefreshed(context),
-                    child: ClientViewDocuments(
-                        viewModel: viewModel,
-                        //key: ValueKey(viewModel.client.id),
-                        ),
                   ),
                 ],
               ),
