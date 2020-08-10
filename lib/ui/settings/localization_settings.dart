@@ -94,17 +94,19 @@ class _LocalizationSettingsState extends State<LocalizationSettings>
     return EditScaffold(
       title: localization.localization,
       onSavePressed: viewModel.onSavePressed,
-      appBarBottom: TabBar(
-        controller: _controller,
-        tabs: [
-          Tab(
-            text: localization.settings,
-          ),
-          Tab(
-            text: localization.customLabels,
-          ),
-        ],
-      ),
+      appBarBottom: state.uiState.settingsUIState.isFiltered
+          ? null
+          : TabBar(
+              controller: _controller,
+              tabs: [
+                Tab(
+                  text: localization.settings,
+                ),
+                Tab(
+                  text: localization.customLabels,
+                ),
+              ],
+            ),
       body: AppTabForm(
         formKey: _formKey,
         focusNode: _focusNode,
