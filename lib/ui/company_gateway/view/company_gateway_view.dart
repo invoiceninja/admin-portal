@@ -2,6 +2,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:invoiceninja_flutter/constants.dart';
 import 'package:invoiceninja_flutter/data/models/entities.dart';
+import 'package:invoiceninja_flutter/redux/company_gateway/company_gateway_selectors.dart';
 import 'package:invoiceninja_flutter/ui/app/FieldGrid.dart';
 import 'package:invoiceninja_flutter/ui/app/entities/entity_list_tile.dart';
 import 'package:invoiceninja_flutter/ui/app/entity_header.dart';
@@ -31,6 +32,8 @@ class _CompanyGatewayViewState extends State<CompanyGatewayView> {
     final viewModel = widget.viewModel;
     final companyGateway = viewModel.companyGateway;
     final localization = AppLocalization.of(context);
+    final processed = memoizedCalculateCompanyGatewayProcessed(
+        companyGateway.id, viewModel.state.paymentState.map);
 
     final Map<String, String> fields = {};
     for (var gatewayTypeId in kGatewayTypes.keys)
@@ -62,10 +65,9 @@ class _CompanyGatewayViewState extends State<CompanyGatewayView> {
       body: ListView(
         children: <Widget>[
           EntityHeader(
-            entity: companyGateway,
-            label: localization.processed,
-            value: '', // TODO calculate value
-          ),
+              entity: companyGateway,
+              label: localization.processed,
+              value: formatNumber(processed, context)),
           ListDivider(),
           EntitiesListTile(
             isFilter: widget.isFilter,

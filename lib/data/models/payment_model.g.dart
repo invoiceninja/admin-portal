@@ -161,6 +161,12 @@ class _$PaymentEntitySerializer implements StructuredSerializer<PaymentEntity> {
       'custom_value4',
       serializers.serialize(object.customValue4,
           specifiedType: const FullType(String)),
+      'exchange_rate',
+      serializers.serialize(object.exchangeRate,
+          specifiedType: const FullType(double)),
+      'exchange_currency_id',
+      serializers.serialize(object.exchangeCurrencyId,
+          specifiedType: const FullType(String)),
       'is_manual',
       serializers.serialize(object.isManual,
           specifiedType: const FullType(bool)),
@@ -169,6 +175,18 @@ class _$PaymentEntitySerializer implements StructuredSerializer<PaymentEntity> {
           specifiedType: const FullType(String)),
       'vendor_id',
       serializers.serialize(object.vendorId,
+          specifiedType: const FullType(String)),
+      'invitation_id',
+      serializers.serialize(object.invitationId,
+          specifiedType: const FullType(String)),
+      'client_contact_id',
+      serializers.serialize(object.clientContactId,
+          specifiedType: const FullType(String)),
+      'company_gateway_id',
+      serializers.serialize(object.companyGatewayId,
+          specifiedType: const FullType(String)),
+      'currency_id',
+      serializers.serialize(object.currencyId,
           specifiedType: const FullType(String)),
       'paymentables',
       serializers.serialize(object.paymentables,
@@ -194,18 +212,6 @@ class _$PaymentEntitySerializer implements StructuredSerializer<PaymentEntity> {
       'id',
       serializers.serialize(object.id, specifiedType: const FullType(String)),
     ];
-    if (object.exchangeRate != null) {
-      result
-        ..add('exchange_rate')
-        ..add(serializers.serialize(object.exchangeRate,
-            specifiedType: const FullType(double)));
-    }
-    if (object.exchangeCurrencyId != null) {
-      result
-        ..add('exchange_currency_id')
-        ..add(serializers.serialize(object.exchangeCurrencyId,
-            specifiedType: const FullType(String)));
-    }
     if (object.isForInvoice != null) {
       result
         ..add('isForInvoice')
@@ -337,6 +343,22 @@ class _$PaymentEntitySerializer implements StructuredSerializer<PaymentEntity> {
           break;
         case 'vendor_id':
           result.vendorId = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String;
+          break;
+        case 'invitation_id':
+          result.invitationId = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String;
+          break;
+        case 'client_contact_id':
+          result.clientContactId = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String;
+          break;
+        case 'company_gateway_id':
+          result.companyGatewayId = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String;
+          break;
+        case 'currency_id':
+          result.currencyId = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String;
           break;
         case 'isForInvoice':
@@ -726,6 +748,14 @@ class _$PaymentEntity extends PaymentEntity {
   @override
   final String vendorId;
   @override
+  final String invitationId;
+  @override
+  final String clientContactId;
+  @override
+  final String companyGatewayId;
+  @override
+  final String currencyId;
+  @override
   final bool isForInvoice;
   @override
   final bool isApplying;
@@ -777,6 +807,10 @@ class _$PaymentEntity extends PaymentEntity {
       this.isManual,
       this.projectId,
       this.vendorId,
+      this.invitationId,
+      this.clientContactId,
+      this.companyGatewayId,
+      this.currencyId,
       this.isForInvoice,
       this.isApplying,
       this.sendEmail,
@@ -835,6 +869,12 @@ class _$PaymentEntity extends PaymentEntity {
     if (customValue4 == null) {
       throw new BuiltValueNullFieldError('PaymentEntity', 'customValue4');
     }
+    if (exchangeRate == null) {
+      throw new BuiltValueNullFieldError('PaymentEntity', 'exchangeRate');
+    }
+    if (exchangeCurrencyId == null) {
+      throw new BuiltValueNullFieldError('PaymentEntity', 'exchangeCurrencyId');
+    }
     if (isManual == null) {
       throw new BuiltValueNullFieldError('PaymentEntity', 'isManual');
     }
@@ -843,6 +883,18 @@ class _$PaymentEntity extends PaymentEntity {
     }
     if (vendorId == null) {
       throw new BuiltValueNullFieldError('PaymentEntity', 'vendorId');
+    }
+    if (invitationId == null) {
+      throw new BuiltValueNullFieldError('PaymentEntity', 'invitationId');
+    }
+    if (clientContactId == null) {
+      throw new BuiltValueNullFieldError('PaymentEntity', 'clientContactId');
+    }
+    if (companyGatewayId == null) {
+      throw new BuiltValueNullFieldError('PaymentEntity', 'companyGatewayId');
+    }
+    if (currencyId == null) {
+      throw new BuiltValueNullFieldError('PaymentEntity', 'currencyId');
     }
     if (paymentables == null) {
       throw new BuiltValueNullFieldError('PaymentEntity', 'paymentables');
@@ -897,6 +949,10 @@ class _$PaymentEntity extends PaymentEntity {
         isManual == other.isManual &&
         projectId == other.projectId &&
         vendorId == other.vendorId &&
+        invitationId == other.invitationId &&
+        clientContactId == other.clientContactId &&
+        companyGatewayId == other.companyGatewayId &&
+        currencyId == other.currencyId &&
         isForInvoice == other.isForInvoice &&
         isApplying == other.isApplying &&
         sendEmail == other.sendEmail &&
@@ -934,12 +990,12 @@ class _$PaymentEntity extends PaymentEntity {
                                                                 $jc(
                                                                     $jc(
                                                                         $jc(
-                                                                            $jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc(0, amount.hashCode), applied.hashCode), refunded.hashCode), number.hashCode), clientId.hashCode), statusId.hashCode), transactionReference.hashCode), date.hashCode), typeId.hashCode), privateNotes.hashCode), customValue1.hashCode), customValue2.hashCode), customValue3.hashCode), customValue4.hashCode),
-                                                                                exchangeRate.hashCode),
-                                                                            exchangeCurrencyId.hashCode),
-                                                                        isManual.hashCode),
-                                                                    projectId.hashCode),
-                                                                vendorId.hashCode),
+                                                                            $jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc(0, amount.hashCode), applied.hashCode), refunded.hashCode), number.hashCode), clientId.hashCode), statusId.hashCode), transactionReference.hashCode), date.hashCode), typeId.hashCode), privateNotes.hashCode), customValue1.hashCode), customValue2.hashCode), customValue3.hashCode), customValue4.hashCode), exchangeRate.hashCode), exchangeCurrencyId.hashCode), isManual.hashCode), projectId.hashCode),
+                                                                                vendorId.hashCode),
+                                                                            invitationId.hashCode),
+                                                                        clientContactId.hashCode),
+                                                                    companyGatewayId.hashCode),
+                                                                currencyId.hashCode),
                                                             isForInvoice.hashCode),
                                                         isApplying.hashCode),
                                                     sendEmail.hashCode),
@@ -978,6 +1034,10 @@ class _$PaymentEntity extends PaymentEntity {
           ..add('isManual', isManual)
           ..add('projectId', projectId)
           ..add('vendorId', vendorId)
+          ..add('invitationId', invitationId)
+          ..add('clientContactId', clientContactId)
+          ..add('companyGatewayId', companyGatewayId)
+          ..add('currencyId', currencyId)
           ..add('isForInvoice', isForInvoice)
           ..add('isApplying', isApplying)
           ..add('sendEmail', sendEmail)
@@ -1078,6 +1138,24 @@ class PaymentEntityBuilder
   String get vendorId => _$this._vendorId;
   set vendorId(String vendorId) => _$this._vendorId = vendorId;
 
+  String _invitationId;
+  String get invitationId => _$this._invitationId;
+  set invitationId(String invitationId) => _$this._invitationId = invitationId;
+
+  String _clientContactId;
+  String get clientContactId => _$this._clientContactId;
+  set clientContactId(String clientContactId) =>
+      _$this._clientContactId = clientContactId;
+
+  String _companyGatewayId;
+  String get companyGatewayId => _$this._companyGatewayId;
+  set companyGatewayId(String companyGatewayId) =>
+      _$this._companyGatewayId = companyGatewayId;
+
+  String _currencyId;
+  String get currencyId => _$this._currencyId;
+  set currencyId(String currencyId) => _$this._currencyId = currencyId;
+
   bool _isForInvoice;
   bool get isForInvoice => _$this._isForInvoice;
   set isForInvoice(bool isForInvoice) => _$this._isForInvoice = isForInvoice;
@@ -1165,6 +1243,10 @@ class PaymentEntityBuilder
       _isManual = _$v.isManual;
       _projectId = _$v.projectId;
       _vendorId = _$v.vendorId;
+      _invitationId = _$v.invitationId;
+      _clientContactId = _$v.clientContactId;
+      _companyGatewayId = _$v.companyGatewayId;
+      _currencyId = _$v.currencyId;
       _isForInvoice = _$v.isForInvoice;
       _isApplying = _$v.isApplying;
       _sendEmail = _$v.sendEmail;
@@ -1222,6 +1304,10 @@ class PaymentEntityBuilder
               isManual: isManual,
               projectId: projectId,
               vendorId: vendorId,
+              invitationId: invitationId,
+              clientContactId: clientContactId,
+              companyGatewayId: companyGatewayId,
+              currencyId: currencyId,
               isForInvoice: isForInvoice,
               isApplying: isApplying,
               sendEmail: sendEmail,

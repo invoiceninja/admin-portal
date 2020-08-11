@@ -104,6 +104,12 @@ abstract class PaymentEntity extends Object
       projectId: '',
       number: '',
       sendEmail: state?.company?.settings?.clientManualPaymentNotification,
+      companyGatewayId: '',
+      clientContactId: '',
+      currencyId: '',
+      invitationId: '',
+      isForInvoice: false,
+      isApplying: false,
     );
   }
 
@@ -157,11 +163,9 @@ abstract class PaymentEntity extends Object
   @BuiltValueField(wireName: 'custom_value4')
   String get customValue4;
 
-  @nullable
   @BuiltValueField(wireName: 'exchange_rate')
   double get exchangeRate;
 
-  @nullable
   @BuiltValueField(wireName: 'exchange_currency_id')
   String get exchangeCurrencyId;
 
@@ -173,6 +177,18 @@ abstract class PaymentEntity extends Object
 
   @BuiltValueField(wireName: 'vendor_id')
   String get vendorId;
+
+  @BuiltValueField(wireName: 'invitation_id')
+  String get invitationId;
+
+  @BuiltValueField(wireName: 'client_contact_id')
+  String get clientContactId;
+
+  @BuiltValueField(wireName: 'company_gateway_id')
+  String get companyGatewayId;
+
+  @BuiltValueField(wireName: 'currency_id')
+  String get currencyId;
 
   @nullable
   bool get isForInvoice;
@@ -419,8 +435,12 @@ abstract class PaymentEntity extends Object
   FormatNumberType get listDisplayAmountType => FormatNumberType.money;
 
   double get completedAmount {
+    if (isDeleted) {
+      return 0;
+    }
+
     if ([kPaymentStatusCancelled, kPaymentStatusFailed].contains(statusId)) {
-      return 0.0;
+      return 0;
     }
 
     return amount - (refunded ?? 0);

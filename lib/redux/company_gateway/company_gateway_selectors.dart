@@ -1,4 +1,5 @@
 import 'package:invoiceninja_flutter/data/models/company_gateway_model.dart';
+import 'package:invoiceninja_flutter/data/models/payment_model.dart';
 import 'package:memoize/memoize.dart';
 import 'package:built_collection/built_collection.dart';
 import 'package:invoiceninja_flutter/redux/ui/list_ui_state.dart';
@@ -83,3 +84,23 @@ bool hasCompanyGatewayChanges(CompanyGatewayEntity companyGateway,
     companyGateway.isNew
         ? companyGateway.isChanged
         : companyGateway != companyGatewayMap[companyGateway.id];
+
+var memoizedCalculateCompanyGatewayProcessed = memo2(
+    (String companyGatewayId, BuiltMap<String, PaymentEntity> paymentMap) =>
+        calculateCompanyGatewayProcessed(
+            companyGatewayId: companyGatewayId, paymentMap: paymentMap));
+
+double calculateCompanyGatewayProcessed({
+  String companyGatewayId,
+  BuiltMap<String, PaymentEntity> paymentMap,
+}) {
+  double total = 0;
+
+  paymentMap.forEach((paymentId, payment) {
+    if (payment.companyGatewayId == companyGatewayId) {
+      total += payment.completedAmount * payment.exchangeRate;
+    }
+  });
+
+  return total;
+}
