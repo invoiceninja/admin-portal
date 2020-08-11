@@ -86,6 +86,9 @@ abstract class GatewayTokenEntity extends Object
   @BuiltValueField(wireName: 'gateway_customer_reference')
   String get customerReference;
 
+  @BuiltValueField(wireName: 'company_gateway_id')
+  String get companyGatewayId;
+
   @BuiltValueField(wireName: 'gateway_type_id')
   String get gatewayTypeId;
 

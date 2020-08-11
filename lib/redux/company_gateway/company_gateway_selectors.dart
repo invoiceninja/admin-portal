@@ -1,4 +1,6 @@
+import 'package:invoiceninja_flutter/data/models/client_model.dart';
 import 'package:invoiceninja_flutter/data/models/company_gateway_model.dart';
+import 'package:invoiceninja_flutter/data/models/entities.dart';
 import 'package:invoiceninja_flutter/data/models/payment_model.dart';
 import 'package:memoize/memoize.dart';
 import 'package:built_collection/built_collection.dart';
@@ -103,4 +105,31 @@ double calculateCompanyGatewayProcessed({
   });
 
   return total;
+}
+
+var memoizedClientStatsForCompanyGateway = memo3((String companyGatewayId,
+        BuiltMap<String, PaymentEntity> paymentMap,
+        BuiltMap<String, ClientEntity> clientMap) =>
+    clientStatsForCompanyGateway(companyGatewayId, paymentMap, clientMap));
+
+EntityStats clientStatsForCompanyGateway(
+  String companyGatewayId,
+  BuiltMap<String, PaymentEntity> paymentMap,
+  BuiltMap<String, ClientEntity> clientMap,
+) {
+  int countActive = 0;
+  int countArchived = 0;
+  paymentMap.forEach((invoiceId, invoice) {
+    /*
+    if (invoice.clientId == clientId) {
+      if (invoice.isActive) {
+        countActive++;
+      } else if (invoice.isArchived) {
+        countArchived++;
+      }
+    }    
+     */
+  });
+
+  return EntityStats(countActive: countActive, countArchived: countArchived);
 }
