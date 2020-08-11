@@ -129,11 +129,14 @@ class ExpenseViewVM {
                 });
           });
         },
-        onDeleteDocument: (BuildContext context, DocumentEntity document) {
+        onDeleteDocument:
+            (BuildContext context, DocumentEntity document, String password) {
           store.dispatch(DeleteDocumentRequest(
-              snackBarCompleter<Null>(
-                  context, AppLocalization.of(context).deletedDocument),
-              [document.id]));
+            completer: snackBarCompleter<Null>(
+                context, AppLocalization.of(context).deletedDocument),
+            documentIds: [document.id],
+            password: password,
+          ));
         });
   }
 
@@ -144,7 +147,7 @@ class ExpenseViewVM {
   final Function(BuildContext, EntityType, [bool]) onEntityPressed;
   final Function(BuildContext) onRefreshed;
   final Function(BuildContext, String) onUploadDocument;
-  final Function(BuildContext, DocumentEntity) onDeleteDocument;
+  final Function(BuildContext, DocumentEntity, String) onDeleteDocument;
   final bool isSaving;
   final bool isLoading;
   final bool isDirty;

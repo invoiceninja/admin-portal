@@ -173,12 +173,17 @@ class ClientViewVM {
               });
         });
       },
-      onDeleteDocument: (BuildContext context, DocumentEntity document) {
+      onDeleteDocument:
+          (BuildContext context, DocumentEntity document, String password) {
         final completer = snackBarCompleter<Null>(
             context, AppLocalization.of(context).deletedDocument);
         completer.future.then<Null>(
             (value) => store.dispatch(LoadClient(clientId: client.id)));
-        store.dispatch(DeleteDocumentRequest(completer, [document.id]));
+        store.dispatch(DeleteDocumentRequest(
+          completer: completer,
+          documentIds: [document.id],
+          password: password,
+        ));
       },
     );
   }
@@ -190,7 +195,7 @@ class ClientViewVM {
   final Function(BuildContext, EntityType, [bool]) onEntityPressed;
   final Function(BuildContext) onRefreshed;
   final Function(BuildContext, String) onUploadDocument;
-  final Function(BuildContext, DocumentEntity) onDeleteDocument;
+  final Function(BuildContext, DocumentEntity, String) onDeleteDocument;
   final bool isSaving;
   final bool isLoading;
   final bool isDirty;

@@ -67,7 +67,7 @@ class EntityViewVM {
   final Function(BuildContext) onPaymentsPressed;
   final Function(BuildContext) onRefreshed;
   final Function(BuildContext, String) onUploadDocument;
-  final Function(BuildContext, DocumentEntity) onDeleteDocument;
+  final Function(BuildContext, DocumentEntity, String) onDeleteDocument;
   final Function(BuildContext, DocumentEntity) onViewExpense;
 }
 
@@ -87,7 +87,7 @@ class InvoiceViewVM extends EntityViewVM {
     Function(BuildContext) onPaymentsPressed,
     Function(BuildContext) onRefreshed,
     Function(BuildContext, String) onUploadDocument,
-    Function(BuildContext, DocumentEntity) onDeleteDocument,
+    Function(BuildContext, DocumentEntity, String) onDeleteDocument,
     Function(BuildContext, DocumentEntity) onViewExpense,
   }) : super(
             state: state,
@@ -157,12 +157,17 @@ class InvoiceViewVM extends EntityViewVM {
               });
         });
       },
-      onDeleteDocument: (BuildContext context, DocumentEntity document) {
+      onDeleteDocument:
+          (BuildContext context, DocumentEntity document, String password) {
         final completer = snackBarCompleter<Null>(
             context, AppLocalization.of(context).deletedDocument);
         completer.future.then<Null>(
             (value) => store.dispatch(LoadInvoice(invoiceId: invoice.id)));
-        store.dispatch(DeleteDocumentRequest(completer, [document.id]));
+        store.dispatch(DeleteDocumentRequest(
+          completer: completer,
+          documentIds: [document.id],
+          password: password,
+        ));
       },
       onViewExpense: (BuildContext context, DocumentEntity document) {
         /*

@@ -30,7 +30,7 @@ class DocumentGrid extends StatelessWidget {
 
   final List<DocumentEntity> documents;
   final Function(String) onUploadDocument;
-  final Function(DocumentEntity) onDeleteDocument;
+  final Function(DocumentEntity, String) onDeleteDocument;
   final Function(DocumentEntity) onViewExpense;
 
   @override
@@ -128,7 +128,7 @@ class DocumentTile extends StatelessWidget {
   });
 
   final DocumentEntity document;
-  final Function(DocumentEntity) onDeleteDocument;
+  final Function(DocumentEntity, String) onDeleteDocument;
   final Function(DocumentEntity) onViewExpense;
   final bool isFromExpense;
 
@@ -164,8 +164,12 @@ class DocumentTile extends StatelessWidget {
                         confirmCallback(
                             context: context,
                             callback: () {
-                              onDeleteDocument(document);
-                              Navigator.pop(context);
+                              passwordCallback(
+                                  context: context,
+                                  callback: (password) {
+                                    onDeleteDocument(document, password);
+                                    Navigator.pop(context);
+                                  });
                             });
                       },
                     ),
