@@ -889,12 +889,14 @@ class _SortArrowState extends State<_SortArrow> with TickerProviderStateMixin {
     _opacityAnimation = CurvedAnimation(
       parent: _opacityController = AnimationController(
         duration: widget.duration,
+        vsync: this,
       ),
       curve: Curves.fastOutSlowIn,
     )..addListener(_rebuild);
     _opacityController.value = widget.visible ? 1.0 : 0.0;
     _orientationController = AnimationController(
       duration: widget.duration,
+      vsync: this,
     );
     _orientationAnimation = _orientationController.drive(_turnTween)
       ..addListener(_rebuild)
