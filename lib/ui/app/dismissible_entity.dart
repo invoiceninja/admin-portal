@@ -73,7 +73,7 @@ class DismissibleEntity extends StatelessWidget {
                 onTap: () =>
                     handleEntityAction(context, entity, EntityAction.restore),
               ),
-        entity.isDeleted ?? false
+        entity.isDeleted
             ? IconSlideAction(
                 caption: localization.restore,
                 color: Colors.blue,

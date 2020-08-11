@@ -88,10 +88,6 @@ ReportResult documentReport(
   }
 
   List<ReportElement> _getRow(BaseEntity entity, DocumentEntity document) {
-    if (document.isDeleted ?? false) {
-      return null;
-    }
-
     bool skip = false;
     final List<ReportElement> row = [];
 

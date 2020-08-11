@@ -260,8 +260,7 @@ abstract class BaseEntity implements SelectableEntity {
 
   bool get isActive => archivedAt == null || archivedAt == 0;
 
-  bool get isArchived =>
-      archivedAt != null && archivedAt > 0 && !(isDeleted ?? false);
+  bool get isArchived => archivedAt != null && archivedAt > 0 && !isDeleted;
 
   bool get isEditable => !isDeleted;
 
@@ -299,9 +298,7 @@ abstract class BaseEntity implements SelectableEntity {
           formatNumberType: formatNumberType);
 
   ReportIntValue getReportInt(
-          {int value,
-          String currencyId,
-          FormatNumberType formatNumberType}) =>
+          {int value, String currencyId, FormatNumberType formatNumberType}) =>
       ReportIntValue(
         entityId: id,
         entityType: entityType,

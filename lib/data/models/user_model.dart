@@ -222,8 +222,7 @@ abstract class UserEntity extends Object
       bool multiselect = false}) {
     final actions = <EntityAction>[];
 
-    // TODO remove ??
-    if (!(isDeleted ?? false)) {
+    if (!isDeleted) {
       if (includeEdit && userCompany.canEditEntity(this)) {
         actions.add(EntityAction.edit);
       }

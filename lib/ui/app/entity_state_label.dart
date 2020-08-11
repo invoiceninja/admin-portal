@@ -11,7 +11,7 @@ class EntityStateLabel extends StatelessWidget {
   Widget build(BuildContext context) {
     final localization = AppLocalization.of(context);
 
-    return entity.isDeleted ?? false
+    return entity.isDeleted
         ? Text(localization.deleted,
             style: TextStyle(color: Colors.red, fontSize: 14.0))
         : entity.isArchived

@@ -123,9 +123,7 @@ abstract class GatewayTokenEntity extends Object
   @override
   bool matchesFilter(String filter) {
     return matchesStrings(
-      haystacks: [
-        customerReference
-      ],
+      haystacks: [customerReference],
       needle: filter,
     );
   }
@@ -133,9 +131,7 @@ abstract class GatewayTokenEntity extends Object
   @override
   String matchesFilterValue(String filter) {
     return matchesStringsValue(
-      haystacks: [
-        customerReference
-      ],
+      haystacks: [customerReference],
       needle: filter,
     );
   }
@@ -148,8 +144,7 @@ abstract class GatewayTokenEntity extends Object
       bool multiselect = false}) {
     final actions = <EntityAction>[];
 
-    // TODO remove ??
-    if (!(isDeleted ?? false)) {
+    if (!isDeleted) {
       if (includeEdit && userCompany.canEditEntity(this)) {
         actions.add(EntityAction.edit);
       }
