@@ -318,7 +318,9 @@ class _PaymentEditState extends State<PaymentEdit> {
                 : localization.editPayment,
         onCancelPressed: (context) => viewModel.onCancelPressed(context),
         onSavePressed: onSavePressed,
-        body: body,
+        body: ListView(
+          children: [body],
+        ),
       );
     }
   }
