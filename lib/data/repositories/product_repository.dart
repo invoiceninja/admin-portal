@@ -19,7 +19,7 @@ class ProductRepository {
   Future<ProductEntity> loadItem(
       Credentials credentials, String entityId) async {
     final String url =
-        '${credentials.url}/products/$entityId?include=documents'; // TODO remove this include
+        '${credentials.url}/products/$entityId';
 
     final dynamic response = await webClient.get(url, credentials.token);
 
@@ -81,7 +81,7 @@ class ProductRepository {
 
     // TODO remove this include
     final dynamic response = await webClient.post(
-        '${credentials.url}/products/${entity.id}?include=documents', credentials.token,
+        '${credentials.url}/products/${entity.id}', credentials.token,
         data: fields, filePath: filePath, fileIndex: 'documents[]');
 
     final ProductItemResponse productResponse =
