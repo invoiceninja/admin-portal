@@ -102,7 +102,7 @@ class TokenListVM {
       onRefreshed: (context) => _handleRefresh(context),
       tableColumns:
           state.userCompany.settings.getTableColumns(EntityType.token) ??
-              TokenPresenter.getAllTableFields(state.userCompany),
+              TokenPresenter.getDefaultTableFields(state.userCompany),
       onSortColumn: (field) => store.dispatch(SortTokens(field)),
       onClearMultielsect: () => store.dispatch(ClearTokenMultiselect()),
     );

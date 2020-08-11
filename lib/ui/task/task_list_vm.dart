@@ -107,7 +107,7 @@ class TaskListVM {
       onRefreshed: (context) => _handleRefresh(context),
       tableColumns:
           state.userCompany.settings.getTableColumns(EntityType.task) ??
-              TaskPresenter.getAllTableFields(state.userCompany),
+              TaskPresenter.getDefaultTableFields(state.userCompany),
       onClearMultielsect: () => store.dispatch(ClearTaskMultiselect()),
     );
   }

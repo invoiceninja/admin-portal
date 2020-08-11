@@ -121,7 +121,7 @@ class CreditListVM extends EntityListVM {
           handleCreditAction(context, credits, action),
       tableColumns:
           state.userCompany.settings.getTableColumns(EntityType.credit) ??
-              CreditPresenter.getAllTableFields(state.userCompany),
+              CreditPresenter.getDefaultTableFields(state.userCompany),
       entityType: EntityType.credit,
       onSortColumn: (field) => store.dispatch(SortCredits(field)),
       onClearMultiselect: () => store.dispatch(ClearCreditMultiselect()),

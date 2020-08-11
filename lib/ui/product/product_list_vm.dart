@@ -89,7 +89,7 @@ class ProductListVM {
       onRefreshed: (context) => _handleRefresh(context),
       tableColumns:
           state.userCompany.settings.getTableColumns(EntityType.product) ??
-              ProductPresenter.getAllTableFields(state.userCompany),
+              ProductPresenter.getDefaultTableFields(state.userCompany),
       onSortColumn: (field) => store.dispatch(SortProducts(field)),
       onClearMultielsect: () => store.dispatch(ClearProductMultiselect()),
     );

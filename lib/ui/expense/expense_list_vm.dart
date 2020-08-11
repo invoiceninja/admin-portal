@@ -105,7 +105,7 @@ class ExpenseListVM {
       onRefreshed: (context) => _handleRefresh(context),
       tableColumns:
           state.userCompany.settings.getTableColumns(EntityType.expense) ??
-              ExpensePresenter.getAllTableFields(state.userCompany),
+              ExpensePresenter.getDefaultTableFields(state.userCompany),
       onSortColumn: (field) => store.dispatch(SortExpenses(field)),
       onClearMultielsect: () => store.dispatch(ClearExpenseMultiselect()),
     );

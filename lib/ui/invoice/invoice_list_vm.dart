@@ -144,7 +144,7 @@ class InvoiceListVM extends EntityListVM {
           handleInvoiceAction(context, invoices, action),
       tableColumns:
           state.userCompany.settings.getTableColumns(EntityType.invoice) ??
-              InvoicePresenter.getAllTableFields(state.userCompany),
+              InvoicePresenter.getDefaultTableFields(state.userCompany),
       entityType: EntityType.invoice,
       onSortColumn: (field) => store.dispatch(SortInvoices(field)),
       onClearMultiselect: () => store.dispatch(ClearInvoiceMultiselect()),

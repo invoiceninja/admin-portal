@@ -92,7 +92,7 @@ class VendorListVM {
       onRefreshed: (context) => _handleRefresh(context),
       tableColumns:
           state.userCompany.settings.getTableColumns(EntityType.vendor) ??
-              VendorPresenter.getAllTableFields(state.userCompany),
+              VendorPresenter.getDefaultTableFields(state.userCompany),
       onSortColumn: (field) => store.dispatch(SortVendors(field)),
       onClearMultielsect: () => store.dispatch(ClearVendorMultiselect()),
     );
