@@ -18,7 +18,7 @@ import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 class CompanyGatewayViewScreen extends StatelessWidget {
   const CompanyGatewayViewScreen({
     Key key,
-    this.isFilter,
+    this.isFilter = false,
   }) : super(key: key);
   final bool isFilter;
 
