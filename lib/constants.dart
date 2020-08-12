@@ -238,6 +238,7 @@ const kNotificationEvents = [
 ];
 
 const String kGatewayStripe = 'd14dd26a37cecc30fdd65700bfb55b23';
+const String kGatewayCustom = '54faab2ab6e3223dbe848b1686490baa';
 
 const String kClientPortalModeSubdomain = 'subdomain';
 const String kClientPortalModeDomain = 'domain';

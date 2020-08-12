@@ -140,6 +140,8 @@ abstract class CompanyGatewayEntity extends Object
     return gateway.name;
   }
 
+  bool get isCustom => gatewayId == kGatewayCustom;
+
   bool supportsCard(int cardType) => acceptedCreditCards & cardType > 0;
 
   CompanyGatewayEntity addCard(int cardType) =>

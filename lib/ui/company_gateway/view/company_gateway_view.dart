@@ -7,6 +7,7 @@ import 'package:invoiceninja_flutter/redux/company_gateway/company_gateway_selec
 import 'package:invoiceninja_flutter/ui/app/FieldGrid.dart';
 import 'package:invoiceninja_flutter/ui/app/entities/entity_list_tile.dart';
 import 'package:invoiceninja_flutter/ui/app/entity_header.dart';
+import 'package:invoiceninja_flutter/ui/app/icon_message.dart';
 import 'package:invoiceninja_flutter/ui/app/lists/list_divider.dart';
 import 'package:invoiceninja_flutter/ui/app/view_scaffold.dart';
 import 'package:invoiceninja_flutter/ui/company_gateway/view/company_gateway_view_vm.dart';
@@ -64,13 +65,13 @@ class _CompanyGatewayViewState extends State<CompanyGatewayView> {
       isFilter: widget.isFilter,
       entity: companyGateway,
       onBackPressed: () => viewModel.onBackPressed(),
-      body: ListView(
-        children: <Widget>[
-          EntityHeader(
-              entity: companyGateway,
-              label: localization.processed,
-              value: formatNumber(processed, context)),
-          ListDivider(),
+      body: ListView(children: <Widget>[
+        EntityHeader(
+            entity: companyGateway,
+            label: localization.processed,
+            value: formatNumber(processed, context)),
+        ListDivider(),
+        if (companyGateway.gateway.supportsTokenBilling) ...[
           EntitiesListTile(
             isFilter: widget.isFilter,
             entityType: EntityType.client,
@@ -83,23 +84,23 @@ class _CompanyGatewayViewState extends State<CompanyGatewayView> {
                     companyGateway.id, state.clientState.map)
                 .present(localization.active, localization.archived),
           ),
-          ListDivider(),
-          EntitiesListTile(
-            isFilter: widget.isFilter,
-            entityType: EntityType.payment,
-            title: localization.payments,
-            onTap: () => viewEntitiesByType(
-                context: context,
-                entityType: EntityType.payment,
-                filterEntity: companyGateway),
-            subtitle: memoizedPaymentStatsForCompanyGateway(
-                    companyGateway.id, state.paymentState.map)
-                .present(localization.active, localization.archived),
-          ),
-          ListDivider(),
-          FieldGrid(fields),
         ],
-      ),
+        ListDivider(),
+        EntitiesListTile(
+          isFilter: widget.isFilter,
+          entityType: EntityType.payment,
+          title: localization.payments,
+          onTap: () => viewEntitiesByType(
+              context: context,
+              entityType: EntityType.payment,
+              filterEntity: companyGateway),
+          subtitle: memoizedPaymentStatsForCompanyGateway(
+                  companyGateway.id, state.paymentState.map)
+              .present(localization.active, localization.archived),
+        ),
+        ListDivider(),
+        FieldGrid(fields),
+      ]),
     );
   }
 }
