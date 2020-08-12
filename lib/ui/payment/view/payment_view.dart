@@ -95,25 +95,6 @@ class _PaymentViewState extends State<PaymentView> {
                         isFilter: widget.isFilter,
                         entity: client,
                       ),
-                      if ((payment.companyGatewayId ?? '').isNotEmpty)
-                        EntityListTile(
-                          entity: state.companyGatewayState
-                              .get(payment.companyGatewayId),
-                          client: client,
-                          isFilter: widget.isFilter,
-                          onEntityActionSelected: (context, entity, action) {
-                            if (action == EntityAction.viewInStripe) {
-                              final companyGateway = state.companyGatewayState
-                                  .get(payment.companyGatewayId);
-                              launch(GatewayEntity.getPaymentUrl(
-                                  gatewayId: companyGateway.gatewayId,
-                                  transactionReference:
-                                      payment.transactionReference));
-                            } else {
-                              handleEntityAction(context, entity, action);
-                            }
-                          },
-                        ),
                       for (final paymentable in payment.invoicePaymentables)
                         EntityListTile(
                           isFilter: widget.isFilter,
@@ -135,6 +116,25 @@ class _PaymentViewState extends State<PaymentView> {
                                   convertTimestampToDateString(
                                       paymentable.createdAt),
                                   context),
+                        ),
+                      if ((payment.companyGatewayId ?? '').isNotEmpty)
+                        EntityListTile(
+                          entity: state.companyGatewayState
+                              .get(payment.companyGatewayId),
+                          client: client,
+                          isFilter: widget.isFilter,
+                          onEntityActionSelected: (context, entity, action) {
+                            if (action == EntityAction.viewInStripe) {
+                              final companyGateway = state.companyGatewayState
+                                  .get(payment.companyGatewayId);
+                              launch(GatewayEntity.getPaymentUrl(
+                                  gatewayId: companyGateway.gatewayId,
+                                  transactionReference:
+                                  payment.transactionReference));
+                            } else {
+                              handleEntityAction(context, entity, action);
+                            }
+                          },
                         ),
                       payment.privateNotes != null &&
                               payment.privateNotes.isNotEmpty
