@@ -63,6 +63,8 @@ IconData getEntityActionIcon(EntityAction entityAction) {
       return Icons.content_copy;
     case EntityAction.apply:
       return Icons.payment;
+    case EntityAction.viewInStripe:
+      return Icons.open_in_new;
     default:
       return null;
   }
