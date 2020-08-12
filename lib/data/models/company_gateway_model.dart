@@ -3,8 +3,10 @@ import 'dart:convert';
 import 'package:built_collection/built_collection.dart';
 import 'package:built_value/built_value.dart';
 import 'package:built_value/serializer.dart';
+import 'package:invoiceninja_flutter/constants.dart';
 import 'package:invoiceninja_flutter/data/models/company_model.dart';
 import 'package:invoiceninja_flutter/data/models/entities.dart';
+import 'package:invoiceninja_flutter/data/models/gateway_token_model.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/utils/formatting.dart';
@@ -202,6 +204,15 @@ abstract class CompanyGatewayEntity extends Object
       if (includeEdit && userCompany.canEditEntity(this)) {
         actions.add(EntityAction.edit);
       }
+
+      if (client != null &&
+          client.gatewayTokens
+              .where((token) => token.companyGatewayId == id)
+              .isNotEmpty) {
+        if (gatewayId == kGatewayStripe) {
+          actions.add(EntityAction.viewInStripe);
+        }
+      }
     }
 
     if (actions.isNotEmpty) {
@@ -209,6 +220,15 @@ abstract class CompanyGatewayEntity extends Object
     }
 
     return actions..addAll(super.getActions(userCompany: userCompany));
+  }
+
+  String getGatewayPortalUrl(GatewayTokenEntity gatewayToken) {
+    switch (gatewayId) {
+      case kGatewayStripe:
+        return 'https://dashboard.stripe.com/customers/${gatewayToken.customerReference}';
+      default:
+        return null;
+    }
   }
 
   @override

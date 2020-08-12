@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
+import 'package:invoiceninja_flutter/data/models/client_model.dart';
 import 'package:invoiceninja_flutter/data/models/entities.dart';
+import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/ui/app/actions_menu_button.dart';
@@ -15,12 +17,16 @@ class EntityListTile extends StatelessWidget {
   const EntityListTile({
     @required this.entity,
     @required this.isFilter,
+    this.onEntityActionSelected,
     this.subtitle,
+    this.client,
   });
 
   final String subtitle;
   final BaseEntity entity;
   final bool isFilter;
+  final ClientEntity client;
+  final Function(BuildContext, BaseEntity, EntityAction) onEntityActionSelected;
 
   @override
   Widget build(BuildContext context) {
@@ -36,19 +42,23 @@ class EntityListTile extends StatelessWidget {
 
     Widget leading;
     if (isDesktop(context) && isFilteredBy) {
-      final client = entity is BelongsToClient
-          ? state.clientState.map[(entity as BelongsToClient).clientId]
-          : null;
+      final entityClient = client ??
+          (entity is BelongsToClient
+              ? state.clientState.map[(entity as BelongsToClient).clientId]
+              : null);
       leading = ActionMenuButton(
         entityActions: entity.getActions(
-            userCompany: state.userCompany, includeEdit: true, client: client),
+            userCompany: state.userCompany,
+            includeEdit: true,
+            client: entityClient),
         isSaving: false,
         color: state.prefState.enableDarkMode
             ? Colors.white
             : Theme.of(context).accentColor,
         entity: entity,
-        onSelected: (context, action) =>
-            handleEntityAction(context, entity, action),
+        onSelected: (context, action) => onEntityActionSelected != null
+            ? onEntityActionSelected(context, entity, action)
+            : handleEntityAction(context, entity, action),
       );
     } else {
       leading = IgnorePointer(
