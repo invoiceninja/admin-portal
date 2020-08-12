@@ -488,7 +488,11 @@ abstract class GatewayEntity extends Object
 
   String get fields;
 
-  bool get supportsTokenBilling => [kGatewayStripe].contains(id);
+  bool get supportsTokenBilling => [
+        kGatewayStripe,
+        kGatewayAuthorizeNet,
+        kGatewayCheckoutCom,
+      ].contains(id);
 
   Map<String, dynamic> get parsedFields =>
       fields.isEmpty ? <String, dynamic>{} : jsonDecode(fields);

@@ -238,6 +238,9 @@ const kNotificationEvents = [
 ];
 
 const String kGatewayStripe = 'd14dd26a37cecc30fdd65700bfb55b23';
+const String kGatewayAuthorizeNet = '3b6621f970ab18887c4f6dca78d3f8bb';
+const String kGatewayCheckoutCom = '';
+const String kGatewayPayPal = '';
 const String kGatewayCustom = '54faab2ab6e3223dbe848b1686490baa';
 
 const String kClientPortalModeSubdomain = 'subdomain';
