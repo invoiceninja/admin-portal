@@ -107,28 +107,49 @@ double calculateCompanyGatewayProcessed({
   return total;
 }
 
-var memoizedClientStatsForCompanyGateway = memo3((String companyGatewayId,
-        BuiltMap<String, PaymentEntity> paymentMap,
-        BuiltMap<String, ClientEntity> clientMap) =>
-    clientStatsForCompanyGateway(companyGatewayId, paymentMap, clientMap));
+var memoizedClientStatsForCompanyGateway = memo2(
+    (String companyGatewayId, BuiltMap<String, ClientEntity> clientMap) =>
+        clientStatsForCompanyGateway(companyGatewayId, clientMap));
 
 EntityStats clientStatsForCompanyGateway(
   String companyGatewayId,
-  BuiltMap<String, PaymentEntity> paymentMap,
   BuiltMap<String, ClientEntity> clientMap,
 ) {
   int countActive = 0;
   int countArchived = 0;
-  paymentMap.forEach((invoiceId, invoice) {
-    /*
-    if (invoice.clientId == clientId) {
-      if (invoice.isActive) {
+  clientMap.forEach((clientId, client) {
+    if (client.gatewayTokens
+        .where((token) => token.companyGatewayId == companyGatewayId)
+        .isNotEmpty) {
+      if (client.isActive) {
         countActive++;
-      } else if (invoice.isArchived) {
+      } else if (client.isArchived) {
         countArchived++;
       }
-    }    
-     */
+    }
+  });
+
+  return EntityStats(countActive: countActive, countArchived: countArchived);
+}
+
+var memoizedPaymentStatsForCompanyGateway = memo2(
+    (String companyGatewayId, BuiltMap<String, PaymentEntity> paymentMap) =>
+        paymentStatsForCompanyGateway(companyGatewayId, paymentMap));
+
+EntityStats paymentStatsForCompanyGateway(
+  String companyGatewayId,
+  BuiltMap<String, PaymentEntity> paymentMap,
+) {
+  int countActive = 0;
+  int countArchived = 0;
+  paymentMap.forEach((paymentId, payment) {
+    if (payment.companyGatewayId == companyGatewayId) {
+      if (payment.isActive) {
+        countActive++;
+      } else if (payment.isArchived) {
+        countArchived++;
+      }
+    }
   });
 
   return EntityStats(countActive: countActive, countArchived: countArchived);

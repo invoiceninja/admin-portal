@@ -30,6 +30,7 @@ class _CompanyGatewayViewState extends State<CompanyGatewayView> {
   @override
   Widget build(BuildContext context) {
     final viewModel = widget.viewModel;
+    final state = viewModel.state;
     final companyGateway = viewModel.companyGateway;
     final localization = AppLocalization.of(context);
     final processed = memoizedCalculateCompanyGatewayProcessed(
@@ -74,8 +75,9 @@ class _CompanyGatewayViewState extends State<CompanyGatewayView> {
             entityType: EntityType.client,
             title: localization.clients,
             //onTap: () => viewModel.onClientsPressed(context),
-            //onLongPress: () => viewModel.onClientsPressed(context, true),
-            //subtitle: memoizedClientStatsForGroup(state.clientState.map, group.id).present(localization.active, localization.archived),
+            subtitle: memoizedClientStatsForCompanyGateway(
+                    companyGateway.id, state.clientState.map)
+                .present(localization.active, localization.archived),
           ),
           ListDivider(),
           EntitiesListTile(
@@ -83,8 +85,9 @@ class _CompanyGatewayViewState extends State<CompanyGatewayView> {
             entityType: EntityType.payment,
             title: localization.payments,
             //onTap: () => viewModel.onClientsPressed(context),
-            //onLongPress: () => viewModel.onClientsPressed(context, true),
-            //subtitle: memoizedClientStatsForGroup(state.clientState.map, group.id).present(localization.active, localization.archived),
+            subtitle: memoizedPaymentStatsForCompanyGateway(
+                    companyGateway.id, state.paymentState.map)
+                .present(localization.active, localization.archived),
           ),
           ListDivider(),
           FieldGrid(fields),

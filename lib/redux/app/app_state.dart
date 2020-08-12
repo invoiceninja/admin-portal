@@ -606,6 +606,7 @@ abstract class AppState implements Built<AppState, AppStateBuilder> {
       (prefState.isNotMobile &&
           prefState.showFilterSidebar &&
           prefState.showMenu &&
+          !uiState.isInSettings &&
           uiState.filterEntityType != null) ||
       prefState.isMenuCollapsed;
 
