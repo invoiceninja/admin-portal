@@ -59,6 +59,7 @@ class PaymentFields {
   static const String exchangeRate = 'exchange_rate';
   static const String exchangeCurrencyId = 'exchange_currency_id';
   static const String paymentStatus = 'payment_status';
+  static const String gateway = 'gateway';
   static const String customValue1 = 'custom1';
   static const String customValue2 = 'custom2';
   static const String customValue3 = 'custom3';

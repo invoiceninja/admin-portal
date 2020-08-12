@@ -30,6 +30,7 @@ class PaymentPresenter extends EntityPresenter {
       PaymentFields.customValue2,
       PaymentFields.customValue3,
       PaymentFields.customValue4,
+      PaymentFields.gateway,
     ];
   }
 
@@ -80,6 +81,10 @@ class PaymentPresenter extends EntityPresenter {
       case PaymentFields.exchangeRate:
         return Text(formatNumber(payment.exchangeRate, context,
             formatNumberType: FormatNumberType.percent));
+      case PaymentFields.gateway:
+        final companyGateway =
+            state.companyGatewayState.get(payment.companyGatewayId);
+        return Text(companyGateway.gateway.name);
     }
 
     return super.getField(field: field, context: context);

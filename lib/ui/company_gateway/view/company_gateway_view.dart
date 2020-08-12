@@ -1,13 +1,10 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:invoiceninja_flutter/constants.dart';
 import 'package:invoiceninja_flutter/data/models/entities.dart';
 import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:invoiceninja_flutter/redux/company_gateway/company_gateway_selectors.dart';
-import 'package:invoiceninja_flutter/ui/app/FieldGrid.dart';
 import 'package:invoiceninja_flutter/ui/app/entities/entity_list_tile.dart';
 import 'package:invoiceninja_flutter/ui/app/entity_header.dart';
-import 'package:invoiceninja_flutter/ui/app/icon_message.dart';
 import 'package:invoiceninja_flutter/ui/app/lists/list_divider.dart';
 import 'package:invoiceninja_flutter/ui/app/view_scaffold.dart';
 import 'package:invoiceninja_flutter/ui/company_gateway/view/company_gateway_view_vm.dart';
