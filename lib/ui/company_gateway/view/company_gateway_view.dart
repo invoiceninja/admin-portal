@@ -38,9 +38,11 @@ class _CompanyGatewayViewState extends State<CompanyGatewayView> {
     final processed = memoizedCalculateCompanyGatewayProcessed(
         companyGateway.id, viewModel.state.paymentState.map);
 
+    /*
     final Map<String, String> fields = {};
     for (var gatewayTypeId in kGatewayTypes.keys)
       if (companyGateway.feesAndLimitsMap.containsKey(gatewayTypeId)) {
+        final gatewayType = localization.lookup(kGatewayTypes[gatewayTypeId]);
         final settings =
             companyGateway.getSettingsForGatewayTypeId(gatewayTypeId);
         fields[localization.feeAmount] = settings.feeAmount == 0
@@ -60,6 +62,7 @@ class _CompanyGatewayViewState extends State<CompanyGatewayView> {
             ? null
             : formatNumber(settings.maxLimit, context);
       }
+     */
 
     return ViewScaffold(
       isFilter: widget.isFilter,
@@ -99,7 +102,7 @@ class _CompanyGatewayViewState extends State<CompanyGatewayView> {
               .present(localization.active, localization.archived),
         ),
         ListDivider(),
-        FieldGrid(fields),
+        //FieldGrid(fields),
       ]),
     );
   }
