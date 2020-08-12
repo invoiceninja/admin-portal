@@ -106,6 +106,11 @@ class EntityType extends EnumClass {
           EntityType.expense,
           EntityType.vendor,
         ];
+      case EntityType.companyGateway:
+        return [
+          EntityType.client,
+          EntityType.payment,
+        ];
       default:
         return [];
     }

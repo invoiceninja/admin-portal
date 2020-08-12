@@ -57,6 +57,10 @@ List<String> filteredClientsSelector(
     } else if (filterEntityType == EntityType.user &&
         client.assignedUserId != filterEntityId) {
       return false;
+    } else if (filterEntityType == EntityType.companyGateway &&
+        !client.gatewayTokens
+            .any((token) => token.companyGatewayId == filterEntityId)) {
+      return false;
     }
 
     if (!client.matchesStates(clientListState.stateFilters)) {

@@ -129,7 +129,7 @@ class PaymentListItem extends StatelessWidget {
                             Text(client.displayName, style: textStyle),
                             Text(
                               filterMatch ?? desktopSubtitle,
-                              maxLines: 3,
+                              maxLines: 2,
                               overflow: TextOverflow.ellipsis,
                               style: Theme.of(context)
                                   .textTheme
