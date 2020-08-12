@@ -87,8 +87,9 @@ IconData getEntityIcon(EntityType entityType) {
     case EntityType.invoice:
       return FontAwesomeIcons.fileInvoice;
     case EntityType.payment:
-    case EntityType.companyGateway:
       return FontAwesomeIcons.creditCard;
+    case EntityType.companyGateway:
+      return FontAwesomeIcons.moneyCheckAlt;
     case EntityType.quote:
       return FontAwesomeIcons.fileAlt;
     case EntityType.vendor:

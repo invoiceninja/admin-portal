@@ -2,6 +2,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:invoiceninja_flutter/constants.dart';
 import 'package:invoiceninja_flutter/data/models/entities.dart';
+import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:invoiceninja_flutter/redux/company_gateway/company_gateway_selectors.dart';
 import 'package:invoiceninja_flutter/ui/app/FieldGrid.dart';
 import 'package:invoiceninja_flutter/ui/app/entities/entity_list_tile.dart';
@@ -74,7 +75,10 @@ class _CompanyGatewayViewState extends State<CompanyGatewayView> {
             isFilter: widget.isFilter,
             entityType: EntityType.client,
             title: localization.clients,
-            //onTap: () => viewModel.onClientsPressed(context),
+            onTap: () => viewEntitiesByType(
+                context: context,
+                entityType: EntityType.client,
+                filterEntity: companyGateway),
             subtitle: memoizedClientStatsForCompanyGateway(
                     companyGateway.id, state.clientState.map)
                 .present(localization.active, localization.archived),
@@ -84,7 +88,10 @@ class _CompanyGatewayViewState extends State<CompanyGatewayView> {
             isFilter: widget.isFilter,
             entityType: EntityType.payment,
             title: localization.payments,
-            //onTap: () => viewModel.onClientsPressed(context),
+            onTap: () => viewEntitiesByType(
+                context: context,
+                entityType: EntityType.payment,
+                filterEntity: companyGateway),
             subtitle: memoizedPaymentStatsForCompanyGateway(
                     companyGateway.id, state.paymentState.map)
                 .present(localization.active, localization.archived),
