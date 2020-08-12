@@ -163,7 +163,7 @@ abstract class AppState implements Built<AppState, AppStateBuilder> {
       userCompany?.settings?.accentColor ?? kDefaultAccentColor);
 
   String get appVersion =>
-      '${account.currentVersion}-${kClientVersion.split('.').last}';
+      '${account?.currentVersion ?? '0.0.0'}-${kClientVersion.split('.').last}';
 
   List<HistoryRecord> get historyList =>
       prefState.companyPrefs[uiState.selectedCompanyIndex].historyList
