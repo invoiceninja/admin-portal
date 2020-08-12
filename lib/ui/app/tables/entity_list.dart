@@ -102,6 +102,7 @@ class _EntityListState extends State<EntityList> {
     final isInMultiselect = listUIState.isInMultiselect();
     final entityList = widget.entityList;
     final entityMap = state.getEntityMap(entityType);
+    final countSelected = (listUIState.selectedIds ?? <String>[]).length;
 
     if (!state.isLoaded && entityList.isEmpty) {
       return LoadingIndicator();
@@ -260,9 +261,10 @@ class _EntityListState extends State<EntityList> {
                       ),
                       SizedBox(width: 16),
                       Expanded(
-                        child: Text(localization.countRecordsSelected.replaceFirst(
-                            ':count',
-                            '${(listUIState.selectedIds ?? <String>[]).length}')),
+                        child: Text((countSelected == 1
+                                ? localization.countRecordSelected
+                                : localization.countRecordsSelected)
+                            .replaceFirst(':count', '$countSelected')),
                       ),
                       SaveCancelButtons(
                         color: state.prefState.enableDarkMode
