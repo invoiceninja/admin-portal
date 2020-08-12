@@ -171,10 +171,12 @@ class EntitiesListTile extends StatelessWidget {
               ),
             ),
             trailing: isFilter
-                ? IconButton(
-                    icon: Icon(Icons.add_circle_outline),
-                    onPressed: onLongPress,
-                  )
+                ? onLongPress == null
+                    ? SizedBox()
+                    : IconButton(
+                        icon: Icon(Icons.add_circle_outline),
+                        onPressed: onLongPress,
+                      )
                 : IgnorePointer(
                     child: IconButton(
                       icon: Icon(Icons.navigate_next),

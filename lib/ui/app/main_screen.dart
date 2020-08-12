@@ -579,6 +579,11 @@ class EntityScreens extends StatelessWidget {
                 ? GroupEditScreen()
                 : GroupViewScreen(isFilter: true);
             break;
+          case EntityType.companyGateway:
+            leftFilterChild = editingFIlterEntity
+                ? CompanyGatewayEditScreen()
+                : CompanyGatewayViewScreen(isFilter: true);
+            break;
         }
       }
     }
