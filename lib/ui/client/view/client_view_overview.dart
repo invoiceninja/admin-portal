@@ -116,8 +116,10 @@ class ClientOverview extends StatelessWidget {
             client: client,
             onEntityActionSelected: (context, entity, action) {
               if (action == EntityAction.viewInStripe) {
-                launch(
-                    tokenMap[gatewayToken].getGatewayPortalUrl(gatewayToken));
+                final companyGateway = tokenMap[gatewayToken];
+                launch(GatewayEntity.getClientUrl(
+                    gatewayId: companyGateway.gatewayId,
+                    customerReference: gatewayToken.customerReference));
               } else {
                 handleEntityAction(context, entity, action);
               }

@@ -4,6 +4,7 @@ import 'package:flutter_redux/flutter_redux.dart';
 import 'package:invoiceninja_flutter/constants.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/data/models/payment_model.dart';
+import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/ui/app/FieldGrid.dart';
 import 'package:invoiceninja_flutter/ui/app/buttons/bottom_buttons.dart';
@@ -15,6 +16,7 @@ import 'package:invoiceninja_flutter/ui/app/view_scaffold.dart';
 import 'package:invoiceninja_flutter/ui/payment/view/payment_view_vm.dart';
 import 'package:invoiceninja_flutter/utils/formatting.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class PaymentView extends StatefulWidget {
   const PaymentView({
@@ -93,6 +95,25 @@ class _PaymentViewState extends State<PaymentView> {
                         isFilter: widget.isFilter,
                         entity: client,
                       ),
+                      if ((payment.companyGatewayId ?? '').isNotEmpty)
+                        EntityListTile(
+                          entity: state.companyGatewayState
+                              .get(payment.companyGatewayId),
+                          client: client,
+                          isFilter: widget.isFilter,
+                          onEntityActionSelected: (context, entity, action) {
+                            if (action == EntityAction.viewInStripe) {
+                              final companyGateway = state.companyGatewayState
+                                  .get(payment.companyGatewayId);
+                              launch(GatewayEntity.getPaymentUrl(
+                                  gatewayId: companyGateway.gatewayId,
+                                  transactionReference:
+                                      payment.transactionReference));
+                            } else {
+                              handleEntityAction(context, entity, action);
+                            }
+                          },
+                        ),
                       for (final paymentable in payment.invoicePaymentables)
                         EntityListTile(
                           isFilter: widget.isFilter,

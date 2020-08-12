@@ -549,6 +549,24 @@ abstract class GatewayEntity extends Object
   @override
   double get listDisplayAmount => null;
 
+  static String getClientUrl({String gatewayId, String customerReference}) {
+    switch (gatewayId) {
+      case kGatewayStripe:
+        return 'https://dashboard.stripe.com/customers/$customerReference}';
+      default:
+        return null;
+    }
+  }
+
+  static String getPaymentUrl({String gatewayId, String transactionReference}) {
+    switch (gatewayId) {
+      case kGatewayStripe:
+        return 'https://dashboard.stripe.com/payments/$transactionReference}';
+      default:
+        return null;
+    }
+  }
+
   @override
   FormatNumberType get listDisplayAmountType => null;
 }

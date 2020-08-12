@@ -6,7 +6,6 @@ import 'package:built_value/serializer.dart';
 import 'package:invoiceninja_flutter/constants.dart';
 import 'package:invoiceninja_flutter/data/models/company_model.dart';
 import 'package:invoiceninja_flutter/data/models/entities.dart';
-import 'package:invoiceninja_flutter/data/models/gateway_token_model.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/utils/formatting.dart';
@@ -220,15 +219,6 @@ abstract class CompanyGatewayEntity extends Object
     }
 
     return actions..addAll(super.getActions(userCompany: userCompany));
-  }
-
-  String getGatewayPortalUrl(GatewayTokenEntity gatewayToken) {
-    switch (gatewayId) {
-      case kGatewayStripe:
-        return 'https://dashboard.stripe.com/customers/${gatewayToken.customerReference}';
-      default:
-        return null;
-    }
   }
 
   @override

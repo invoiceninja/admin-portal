@@ -100,6 +100,9 @@ List<String> filteredPaymentsSelector(
     } else if (filterEntityType == EntityType.user &&
         payment.assignedUserId != filterEntityId) {
       return false;
+    } else if (filterEntityType == EntityType.companyGateway &&
+        payment.companyGatewayId != filterEntityId) {
+      return false;
     }
 
     if (!payment.matchesFilter(paymentListState.filter) &&
