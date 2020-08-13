@@ -327,7 +327,10 @@ class _InvoiceEmailViewState extends State<InvoiceEmailView>
               ),
             ),
             Expanded(
-              child: _buildPreview(context),
+              child: ColoredBox(
+                child: _buildPreview(context),
+                color: Colors.white,
+              ),
             ),
           ],
         ),
