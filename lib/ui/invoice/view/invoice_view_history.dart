@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:invoiceninja_flutter/ui/app/loading_indicator.dart';
 import 'package:invoiceninja_flutter/ui/invoice/view/invoice_view_vm.dart';
 
 class InvoiceViewHistory extends StatefulWidget {
@@ -21,6 +22,12 @@ class _InvoiceViewHistoryState extends State<InvoiceViewHistory> {
 
   @override
   Widget build(BuildContext context) {
+    final invoice = widget.viewModel.invoice;
+
+    if (invoice.isStale) {
+      return LoadingIndicator();
+    }
+    
     return Placeholder();
   }
 }
