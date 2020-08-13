@@ -57,10 +57,10 @@ class InvoiceRepository {
 
     if (invoice.isNew) {
       response = await webClient.post(
-          credentials.url + '/invoices?', credentials.token,
+          credentials.url + '/invoices?include=history', credentials.token,
           data: json.encode(data));
     } else {
-      final url = '${credentials.url}/invoices/${invoice.id}';
+      final url = '${credentials.url}/invoices/${invoice.id}?include=history';
       response =
           await webClient.put(url, credentials.token, data: json.encode(data));
     }

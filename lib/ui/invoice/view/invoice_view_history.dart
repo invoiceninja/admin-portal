@@ -3,9 +3,11 @@ import 'package:invoiceninja_flutter/ui/app/lists/list_divider.dart';
 import 'package:invoiceninja_flutter/ui/app/loading_indicator.dart';
 import 'package:invoiceninja_flutter/ui/invoice/view/invoice_view_vm.dart';
 import 'package:invoiceninja_flutter/utils/formatting.dart';
+import 'package:invoiceninja_flutter/utils/pdf.dart';
 
 class InvoiceViewHistory extends StatefulWidget {
-  const InvoiceViewHistory({Key key, @required this.viewModel}) : super(key: key);
+  const InvoiceViewHistory({Key key, @required this.viewModel})
+      : super(key: key);
 
   final EntityViewVM viewModel;
 
@@ -26,7 +28,8 @@ class _InvoiceViewHistoryState extends State<InvoiceViewHistory> {
   Widget build(BuildContext context) {
     final invoice = widget.viewModel.invoice;
 
-    if (invoice.isStale) {
+    // TODO remove this null check, it shouldn't be needed
+    if (invoice.isStale || invoice.history == null) {
       return LoadingIndicator();
     }
 
@@ -37,12 +40,9 @@ class _InvoiceViewHistoryState extends State<InvoiceViewHistory> {
         final history = invoice.history[index];
         return ListTile(
           title: Text(''),
-          trailing: IconButton(
-            icon: Icon(Icons.chevron_right),
-            onPressed: () {
-              //
-            },
-          ),
+          trailing: Icon(Icons.chevron_right),
+          onTap: () =>
+              viewPdf(invoice, context, activityId: history.activityId),
           subtitle: Text(
             formatDate(
               convertTimestampToDateString(history.createdAt),
