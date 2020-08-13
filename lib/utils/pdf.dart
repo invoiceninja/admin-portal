@@ -97,6 +97,7 @@ class _PDFScaffoldState extends State<PDFScaffold> {
     final invoice = widget.invoice;
 
     return Scaffold(
+      backgroundColor: Colors.grey,
       appBar: AppBar(
         centerTitle: false,
         leading: IconButton(
@@ -124,7 +125,6 @@ class _PDFScaffoldState extends State<PDFScaffold> {
                       pdfData.writeAsBytes(_response.bodyBytes);
                       await FlutterShare.shareFile(
                           title: 'test.pdf',
-                          //text: 'Example share text',
                           filePath: filePath);
                     }
                   },
