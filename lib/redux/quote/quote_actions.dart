@@ -9,6 +9,7 @@ import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/ui/app/entities/entity_actions_dialog.dart';
 import 'package:invoiceninja_flutter/utils/completers.dart';
+import 'package:invoiceninja_flutter/utils/dialogs.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:invoiceninja_flutter/utils/pdf.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -237,6 +238,25 @@ class MarkSentQuoteFailure implements StopSaving {
   final Object error;
 }
 
+class BulkEmailQuotesRequest implements StartSaving {
+  BulkEmailQuotesRequest(this.completer, this.quoteIds);
+
+  final Completer completer;
+  final List<String> quoteIds;
+}
+
+class BulkEmailQuotesSuccess implements StopSaving, PersistData {
+  BulkEmailQuotesSuccess(this.quotes);
+
+  final List<InvoiceEntity> quotes;
+}
+
+class BulkEmailQuotesFailure implements StopSaving {
+  BulkEmailQuotesFailure(this.error);
+
+  final dynamic error;
+}
+
 class ArchiveQuotesRequest implements StartSaving {
   ArchiveQuotesRequest(this.completer, this.quoteIds);
 
@@ -397,6 +417,7 @@ class SaveQuoteDocumentFailure implements StopSaving {
 Future handleQuoteAction(
     BuildContext context, List<BaseEntity> quotes, EntityAction action) async {
   final store = StoreProvider.of<AppState>(context);
+  final state = store.state;
   final localization = AppLocalization.of(context);
   final quote = quotes.first as InvoiceEntity;
   final quoteIds = quotes.map((quote) => quote.id).toList();
@@ -431,11 +452,33 @@ Future handleQuoteAction(
           quoteIds));
       break;
     case EntityAction.emailQuote:
-      store.dispatch(ShowEmailQuote(
-          completer:
-              snackBarCompleter<Null>(context, localization.emailedQuote),
-          quote: quote,
-          context: context));
+      bool emailValid = true;
+      quoteIds.forEach((element) {
+        final client = state.clientState.get(quote.clientId);
+        if (!client.hasEmailAddress) {
+          emailValid = false;
+        }
+      });
+      if (!emailValid) {
+        showMessageDialog(
+            context: context, message: localization.clientEmailNotSet);
+        return;
+      }
+      if (quoteIds.length == 1) {
+        store.dispatch(ShowEmailQuote(
+            completer:
+            snackBarCompleter<Null>(context, localization.emailedQuote),
+            quote: quote,
+            context: context));
+      } else {
+        store.dispatch(BulkEmailQuotesRequest(
+            snackBarCompleter<Null>(
+                context,
+                quoteIds.length == 1
+                    ? localization.emailedQuote
+                    : localization.emailedQuotes),
+            quoteIds));
+      }
       break;
     case EntityAction.cloneToInvoice:
       createEntity(
