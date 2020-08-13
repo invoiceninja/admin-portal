@@ -36,7 +36,13 @@ class _InvoiceViewHistoryState extends State<InvoiceViewHistory> {
       itemBuilder: (BuildContext context, index) {
         final history = invoice.history[index];
         return ListTile(
-          title: Text('test'),
+          title: Text(''),
+          trailing: IconButton(
+            icon: Icon(Icons.chevron_right),
+            onPressed: () {
+              //
+            },
+          ),
           subtitle: Text(
             formatDate(
               convertTimestampToDateString(history.createdAt),

@@ -388,7 +388,7 @@ QuoteState _addQuote(QuoteState quoteState, AddQuoteSuccess action) {
 }
 
 QuoteState _updateQuote(QuoteState invoiceState, dynamic action) {
-  final InvoiceEntity quote = action.invoice;
+  final InvoiceEntity quote = action.quote;
   return invoiceState.rebuild((b) => b
     ..map[action.invoice.id] = quote
         .rebuild((b) => b..loadedAt = DateTime.now().millisecondsSinceEpoch));
