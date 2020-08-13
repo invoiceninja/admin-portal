@@ -603,11 +603,6 @@ void handleInvoiceAction(BuildContext context, List<BaseEntity> invoices,
       if (!store.state.invoiceListState.isInMultiselect()) {
         store.dispatch(StartInvoiceMultiselect());
       }
-
-      if (invoices.isEmpty) {
-        break;
-      }
-
       for (final invoice in invoices) {
         if (!store.state.invoiceListState.isSelected(invoice.id)) {
           store.dispatch(AddToInvoiceMultiselect(entity: invoice));

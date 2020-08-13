@@ -467,7 +467,7 @@ Future handleQuoteAction(
       if (quoteIds.length == 1) {
         store.dispatch(ShowEmailQuote(
             completer:
-            snackBarCompleter<Null>(context, localization.emailedQuote),
+                snackBarCompleter<Null>(context, localization.emailedQuote),
             quote: quote,
             context: context));
       } else {
@@ -514,11 +514,6 @@ Future handleQuoteAction(
       if (!store.state.quoteListState.isInMultiselect()) {
         store.dispatch(StartQuoteMultiselect());
       }
-
-      if (quotes.isEmpty) {
-        break;
-      }
-
       for (final quote in quotes) {
         if (!store.state.quoteListState.isSelected(quote.id)) {
           store.dispatch(AddToQuoteMultiselect(entity: quote));

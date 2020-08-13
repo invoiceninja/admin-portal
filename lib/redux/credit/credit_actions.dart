@@ -502,11 +502,6 @@ Future handleCreditAction(
       if (!store.state.creditListState.isInMultiselect()) {
         store.dispatch(StartCreditMultiselect());
       }
-
-      if (credits.isEmpty) {
-        break;
-      }
-
       for (final credit in credits) {
         if (!store.state.creditListState.isSelected(credit.id)) {
           store.dispatch(AddToCreditMultiselect(entity: credit));
