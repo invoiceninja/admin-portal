@@ -19,7 +19,8 @@ class InvoiceRepository {
   Future<InvoiceEntity> loadItem(
       Credentials credentials, String entityId) async {
     final dynamic response = await webClient.get(
-        '${credentials.url}/invoices/$entityId?include=history', credentials.token);
+        '${credentials.url}/invoices/$entityId?include=history',
+        credentials.token);
 
     final InvoiceItemResponse invoiceResponse = await compute<dynamic, dynamic>(
         computeDecode, <dynamic>[InvoiceItemResponse.serializer, response]);
@@ -42,7 +43,7 @@ class InvoiceRepository {
       Credentials credentials, List<String> ids, EntityAction action) async {
     final url = credentials.url + '/invoices/bulk';
     final dynamic response = await webClient.post(url, credentials.token,
-        data: json.encode({'ids': ids, 'action': '$action'}));
+        data: json.encode({'ids': ids, 'action': action.toApiParam()}));
 
     final InvoiceListResponse invoiceResponse =
         serializers.deserializeWith(InvoiceListResponse.serializer, response);

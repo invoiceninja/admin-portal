@@ -43,7 +43,7 @@ class CompanyGatewayRepository {
       Credentials credentials, List<String> ids, EntityAction action) async {
     final url = credentials.url + '/company_gateways/bulk?include=gateway';
     final dynamic response = await webClient.post(url, credentials.token,
-        data: json.encode({'ids': ids, 'action': '$action'}));
+        data: json.encode({'ids': ids, 'action': action.toApiParam()}));
 
     final CompanyGatewayListResponse companyGatewayResponse = serializers
         .deserializeWith(CompanyGatewayListResponse.serializer, response);

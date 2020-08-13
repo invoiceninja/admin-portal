@@ -86,6 +86,16 @@ class EntityAction extends EnumClass {
     return toSnakeCase(super.toString());
   }
 
+  String toApiParam() {
+    final value = toString();
+
+    if (value.startsWith('email')) {
+      return 'email';
+    }
+
+    return value;
+  }
+
   static BuiltSet<EntityAction> get values => _$values;
 
   static EntityAction valueOf(String name) => _$valueOf(name);

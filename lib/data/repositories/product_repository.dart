@@ -44,7 +44,7 @@ class ProductRepository {
       Credentials credentials, List<String> ids, EntityAction action) async {
     final url = credentials.url + '/products/bulk';
     final dynamic response = await webClient.post(url, credentials.token,
-        data: json.encode({'ids': ids, 'action': '$action'}));
+        data: json.encode({'ids': ids, 'action': action.toApiParam()}));
 
     final ProductListResponse productResponse =
         serializers.deserializeWith(ProductListResponse.serializer, response);

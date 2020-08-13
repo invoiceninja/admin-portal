@@ -43,7 +43,7 @@ class PaymentRepository {
       Credentials credentials, List<String> ids, EntityAction action) async {
     final url = credentials.url + '/payments/bulk?include=paymentables';
     final dynamic response = await webClient.post(url, credentials.token,
-        data: json.encode({'ids': ids, 'action': '$action'}));
+        data: json.encode({'ids': ids, 'action': action.toApiParam()}));
 
     final PaymentListResponse paymentResponse =
         serializers.deserializeWith(PaymentListResponse.serializer, response);

@@ -45,7 +45,7 @@ class ClientRepository {
     final url =
         credentials.url + '/clients/bulk?include=gateway_tokens,activities';
     final dynamic response = await webClient.post(url, credentials.token,
-        data: json.encode({'ids': ids, 'action': '$action'}));
+        data: json.encode({'ids': ids, 'action': action.toApiParam()}));
 
     final ClientListResponse clientResponse =
         serializers.deserializeWith(ClientListResponse.serializer, response);
@@ -87,7 +87,7 @@ class ClientRepository {
         data: fields, filePath: filePath, fileIndex: 'documents[]');
 
     final ClientItemResponse clientResponse =
-    serializers.deserializeWith(ClientItemResponse.serializer, response);
+        serializers.deserializeWith(ClientItemResponse.serializer, response);
 
     return clientResponse.data;
   }
