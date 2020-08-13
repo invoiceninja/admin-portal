@@ -331,7 +331,7 @@ Middleware<AppState> _bulkEmailInvoices(InvoiceRepository repository) {
 
     repository
         .bulkAction(store.state.credentials, action.invoiceIds,
-            EntityAction.emailInvoice)
+        EntityAction.emailInvoice)
         .then((List<InvoiceEntity> invoices) {
       store.dispatch(BulkEmailInvoicesSuccess(invoices));
       if (action.completer != null) {

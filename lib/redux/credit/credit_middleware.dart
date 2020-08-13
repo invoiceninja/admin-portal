@@ -27,6 +27,7 @@ List<Middleware<AppState>> createStoreCreditsMiddleware([
   final deleteCredit = _deleteCredit(repository);
   final restoreCredit = _restoreCredit(repository);
   final emailCredit = _emailCredit(repository);
+  final bulkEmailCredits = _bulkEmailCredits(repository);
   final markSentCredit = _markSentCredit(repository);
   final saveDocument = _saveDocument(repository);
 
@@ -42,6 +43,7 @@ List<Middleware<AppState>> createStoreCreditsMiddleware([
     TypedMiddleware<AppState, DeleteCreditsRequest>(deleteCredit),
     TypedMiddleware<AppState, RestoreCreditsRequest>(restoreCredit),
     TypedMiddleware<AppState, EmailCreditRequest>(emailCredit),
+    TypedMiddleware<AppState, BulkEmailCreditsRequest>(bulkEmailCredits),
     TypedMiddleware<AppState, MarkSentCreditRequest>(markSentCredit),
     TypedMiddleware<AppState, SaveCreditDocumentRequest>(saveDocument),
   ];
@@ -319,6 +321,30 @@ Middleware<AppState> _loadCredits(CreditRepository repository) {
     }).catchError((Object error) {
       print(error);
       store.dispatch(LoadCreditsFailure(error));
+      if (action.completer != null) {
+        action.completer.completeError(error);
+      }
+    });
+
+    next(action);
+  };
+}
+
+Middleware<AppState> _bulkEmailCredits(CreditRepository repository) {
+  return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
+    final action = dynamicAction as BulkEmailCreditsRequest;
+
+    repository
+        .bulkAction(store.state.credentials, action.creditIds,
+        EntityAction.emailCredit)
+        .then((List<InvoiceEntity> credits) {
+      store.dispatch(BulkEmailCreditsSuccess(credits));
+      if (action.completer != null) {
+        action.completer.complete(null);
+      }
+    }).catchError((Object error) {
+      print(error);
+      store.dispatch(BulkEmailCreditsFailure(error));
       if (action.completer != null) {
         action.completer.completeError(error);
       }
