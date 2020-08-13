@@ -428,8 +428,10 @@ InvoiceState _addInvoice(InvoiceState invoiceState, AddInvoiceSuccess action) {
 }
 
 InvoiceState _updateInvoice(InvoiceState invoiceState, dynamic action) {
-  return invoiceState
-      .rebuild((b) => b..map[action.invoice.id] = action.invoice);
+  final InvoiceEntity invoice = action.invoice;
+  return invoiceState.rebuild((b) => b
+    ..map[action.invoice.id] = invoice
+        .rebuild((b) => b..loadedAt = DateTime.now().millisecondsSinceEpoch));
 }
 
 InvoiceState _setLoadedInvoices(

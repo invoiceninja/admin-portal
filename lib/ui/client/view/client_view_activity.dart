@@ -16,7 +16,7 @@ class ClientViewActivity extends StatefulWidget {
 class _ClientViewActivityState extends State<ClientViewActivity> {
   @override
   void didChangeDependencies() {
-    if (widget.viewModel.client.areActivitiesStale) {
+    if (widget.viewModel.client.isStale) {
       widget.viewModel.onRefreshed(context);
     }
     super.didChangeDependencies();
@@ -27,7 +27,7 @@ class _ClientViewActivityState extends State<ClientViewActivity> {
     final client = widget.viewModel.client;
     final activities = client.activities;
 
-    if (!client.areActivitiesLoaded) {
+    if (!client.isLoaded) {
       return LoadingIndicator();
     }
 

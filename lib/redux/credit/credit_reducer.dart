@@ -377,8 +377,11 @@ CreditState _addCredit(CreditState creditState, AddCreditSuccess action) {
     ..list.add(action.credit.id));
 }
 
-CreditState _updateCredit(CreditState creditState, dynamic action) {
-  return creditState.rebuild((b) => b..map[action.credit.id] = action.credit);
+CreditState _updateCredit(CreditState invoiceState, dynamic action) {
+  final InvoiceEntity quote = action.invoice;
+  return invoiceState.rebuild((b) => b
+    ..map[action.invoice.id] = quote
+        .rebuild((b) => b..loadedAt = DateTime.now().millisecondsSinceEpoch));
 }
 
 CreditState _setLoadedCredits(

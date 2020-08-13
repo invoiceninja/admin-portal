@@ -58,7 +58,7 @@ class _InvoiceEmailViewState extends State<InvoiceEmailView>
     ];
 
     final client = widget.viewModel.client;
-    if (client.areActivitiesStale) {
+    if (client.isStale) {
       widget.viewModel.loadClient();
     }
 

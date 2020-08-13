@@ -23,7 +23,7 @@ class CreditEmailScreen extends StatelessWidget {
         final creditId = state.uiState.creditUIState.selectedId;
         final credit = state.creditState.map[creditId];
         final client = state.clientState.map[credit.clientId];
-        if (client.areActivitiesStale) {
+        if (client.isStale) {
           store.dispatch(LoadClient(clientId: client.id));
         }
       },

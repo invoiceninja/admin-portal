@@ -301,6 +301,12 @@ class _$InvoiceEntitySerializer implements StructuredSerializer<InvoiceEntity> {
             specifiedType: const FullType(
                 BuiltList, const [const FullType(InvoiceHistoryEntity)])));
     }
+    if (object.loadedAt != null) {
+      result
+        ..add('loadedAt')
+        ..add(serializers.serialize(object.loadedAt,
+            specifiedType: const FullType(int)));
+    }
     if (object.isChanged != null) {
       result
         ..add('isChanged')
@@ -537,6 +543,10 @@ class _$InvoiceEntitySerializer implements StructuredSerializer<InvoiceEntity> {
                   specifiedType: const FullType(
                       BuiltList, const [const FullType(InvoiceHistoryEntity)]))
               as BuiltList<Object>);
+          break;
+        case 'loadedAt':
+          result.loadedAt = serializers.deserialize(value,
+              specifiedType: const FullType(int)) as int;
           break;
         case 'isChanged':
           result.isChanged = serializers.deserialize(value,
@@ -1254,6 +1264,8 @@ class _$InvoiceEntity extends InvoiceEntity {
   @override
   final BuiltList<InvoiceHistoryEntity> history;
   @override
+  final int loadedAt;
+  @override
   final bool isChanged;
   @override
   final int createdAt;
@@ -1322,6 +1334,7 @@ class _$InvoiceEntity extends InvoiceEntity {
       this.invitations,
       this.documents,
       this.history,
+      this.loadedAt,
       this.isChanged,
       this.createdAt,
       this.updatedAt,
@@ -1517,6 +1530,7 @@ class _$InvoiceEntity extends InvoiceEntity {
         invitations == other.invitations &&
         documents == other.documents &&
         history == other.history &&
+        loadedAt == other.loadedAt &&
         isChanged == other.isChanged &&
         createdAt == other.createdAt &&
         updatedAt == other.updatedAt &&
@@ -1549,17 +1563,17 @@ class _$InvoiceEntity extends InvoiceEntity {
                                                                 $jc(
                                                                     $jc(
                                                                         $jc(
-                                                                            $jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc(0, amount.hashCode), balance.hashCode), clientId.hashCode), statusId.hashCode), number.hashCode), discount.hashCode), poNumber.hashCode), date.hashCode), dueDate.hashCode), publicNotes.hashCode), privateNotes.hashCode), terms.hashCode), footer.hashCode), designId.hashCode), usesInclusiveTaxes.hashCode), taxName1.hashCode), taxRate1.hashCode), taxName2.hashCode), taxRate2.hashCode), taxName3.hashCode), taxRate3.hashCode), isAmountDiscount.hashCode), partial.hashCode), taxAmount.hashCode), partialDueDate.hashCode), hasTasks.hashCode), autoBill.hashCode), customValue1.hashCode), customValue2.hashCode), customValue3.hashCode), customValue4.hashCode), customSurcharge1.hashCode), customSurcharge2.hashCode), customSurcharge3.hashCode), customSurcharge4.hashCode), customTaxes1.hashCode),
-                                                                                customTaxes2.hashCode),
-                                                                            customTaxes3.hashCode),
-                                                                        customTaxes4.hashCode),
-                                                                    hasExpenses.hashCode),
-                                                                invoiceId.hashCode),
-                                                            filename.hashCode),
-                                                        lineItems.hashCode),
-                                                    invitations.hashCode),
-                                                documents.hashCode),
-                                            history.hashCode),
+                                                                            $jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc(0, amount.hashCode), balance.hashCode), clientId.hashCode), statusId.hashCode), number.hashCode), discount.hashCode), poNumber.hashCode), date.hashCode), dueDate.hashCode), publicNotes.hashCode), privateNotes.hashCode), terms.hashCode), footer.hashCode), designId.hashCode), usesInclusiveTaxes.hashCode), taxName1.hashCode), taxRate1.hashCode), taxName2.hashCode), taxRate2.hashCode), taxName3.hashCode), taxRate3.hashCode), isAmountDiscount.hashCode), partial.hashCode), taxAmount.hashCode), partialDueDate.hashCode), hasTasks.hashCode), autoBill.hashCode), customValue1.hashCode), customValue2.hashCode), customValue3.hashCode), customValue4.hashCode), customSurcharge1.hashCode), customSurcharge2.hashCode), customSurcharge3.hashCode), customSurcharge4.hashCode), customTaxes1.hashCode), customTaxes2.hashCode),
+                                                                                customTaxes3.hashCode),
+                                                                            customTaxes4.hashCode),
+                                                                        hasExpenses.hashCode),
+                                                                    invoiceId.hashCode),
+                                                                filename.hashCode),
+                                                            lineItems.hashCode),
+                                                        invitations.hashCode),
+                                                    documents.hashCode),
+                                                history.hashCode),
+                                            loadedAt.hashCode),
                                         isChanged.hashCode),
                                     createdAt.hashCode),
                                 updatedAt.hashCode),
@@ -1620,6 +1634,7 @@ class _$InvoiceEntity extends InvoiceEntity {
           ..add('invitations', invitations)
           ..add('documents', documents)
           ..add('history', history)
+          ..add('loadedAt', loadedAt)
           ..add('isChanged', isChanged)
           ..add('createdAt', createdAt)
           ..add('updatedAt', updatedAt)
@@ -1836,6 +1851,10 @@ class InvoiceEntityBuilder
   set history(ListBuilder<InvoiceHistoryEntity> history) =>
       _$this._history = history;
 
+  int _loadedAt;
+  int get loadedAt => _$this._loadedAt;
+  set loadedAt(int loadedAt) => _$this._loadedAt = loadedAt;
+
   bool _isChanged;
   bool get isChanged => _$this._isChanged;
   set isChanged(bool isChanged) => _$this._isChanged = isChanged;
@@ -1924,6 +1943,7 @@ class InvoiceEntityBuilder
       _invitations = _$v.invitations?.toBuilder();
       _documents = _$v.documents?.toBuilder();
       _history = _$v.history?.toBuilder();
+      _loadedAt = _$v.loadedAt;
       _isChanged = _$v.isChanged;
       _createdAt = _$v.createdAt;
       _updatedAt = _$v.updatedAt;
@@ -2003,6 +2023,7 @@ class InvoiceEntityBuilder
               invitations: invitations.build(),
               documents: documents.build(),
               history: _history?.build(),
+              loadedAt: loadedAt,
               isChanged: isChanged,
               createdAt: createdAt,
               updatedAt: updatedAt,

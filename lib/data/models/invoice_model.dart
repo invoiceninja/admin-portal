@@ -149,6 +149,7 @@ abstract class InvoiceEntity extends Object
       createdUserId: '',
       assignedUserId: '',
       createdAt: 0,
+      loadedAt: 0,
     );
   }
 
@@ -351,6 +352,20 @@ abstract class InvoiceEntity extends Object
   double get netAmount => amount - taxAmount;
 
   double get netBalance => balance - (taxAmount * balance / amount);
+
+  @nullable
+  int get loadedAt;
+
+  bool get isLoaded => loadedAt != null && loadedAt > 0;
+
+  bool get isStale {
+    if (!isLoaded) {
+      return true;
+    }
+
+    return DateTime.now().millisecondsSinceEpoch - loadedAt >
+        kMillisecondsToRefreshActivities;
+  }
 
   @override
   bool get isEditable {

@@ -25,7 +25,7 @@ class ClientViewLedger extends StatefulWidget {
 class _ClientViewLedgerState extends State<ClientViewLedger> {
   @override
   void didChangeDependencies() {
-    if (widget.viewModel.client.areActivitiesStale) {
+    if (widget.viewModel.client.isStale) {
       widget.viewModel.onRefreshed(context);
     }
     super.didChangeDependencies();
@@ -37,7 +37,7 @@ class _ClientViewLedgerState extends State<ClientViewLedger> {
     final ledgers =
         client.ledger.where((ledger) => ledger.adjustment != 0).toList();
 
-    if (client.areActivitiesStale) {
+    if (client.isStale) {
       return LoadingIndicator();
     }
 

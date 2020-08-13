@@ -23,7 +23,7 @@ class QuoteEmailScreen extends StatelessWidget {
         final quoteId = state.uiState.quoteUIState.selectedId;
         final quote = state.quoteState.map[quoteId];
         final client = state.clientState.map[quote.clientId];
-        if (client.areActivitiesStale) {
+        if (client.isStale) {
           store.dispatch(LoadClient(clientId: client.id));
         }
       },

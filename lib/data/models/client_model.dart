@@ -130,7 +130,7 @@ abstract class ClientEntity extends Object
       activities: BuiltList<ActivityEntity>(),
       ledger: BuiltList<LedgerEntity>(),
       gatewayTokens: BuiltList<GatewayTokenEntity>(),
-      lastUpdatedActivities: 0,
+      loadedAt: 0,
       updatedAt: 0,
       archivedAt: 0,
       isDeleted: false,
@@ -156,17 +156,16 @@ abstract class ClientEntity extends Object
   String get groupId;
 
   @nullable
-  int get lastUpdatedActivities;
+  int get loadedAt;
 
-  bool get areActivitiesLoaded =>
-      lastUpdatedActivities != null && lastUpdatedActivities > 0;
+  bool get isLoaded => loadedAt != null && loadedAt > 0;
 
-  bool get areActivitiesStale {
-    if (!areActivitiesLoaded) {
+  bool get isStale {
+    if (!isLoaded) {
       return true;
     }
 
-    return DateTime.now().millisecondsSinceEpoch - lastUpdatedActivities >
+    return DateTime.now().millisecondsSinceEpoch - loadedAt >
         kMillisecondsToRefreshActivities;
   }
 
