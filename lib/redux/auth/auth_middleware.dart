@@ -308,19 +308,25 @@ Middleware<AppState> _deleteCompany(AuthRepository repository) {
 Middleware<AppState> _purgeData(AuthRepository repository) {
   return (Store<AppState> store, dynamic dynamicAction,
       NextDispatcher next) async {
-    final action = dynamicAction as DeleteCompanyRequest;
+    final action = dynamicAction as PurgeDataRequest;
     final state = store.state;
 
     repository
         .purgeData(
-            token: state.credentials.token,
+            credentials: state.credentials,
             password: action.password,
             companyId: state.company.id)
         .then((dynamic value) {
-      action.completer.complete(null);
-      store.dispatch(PurgeDataSuccess());
+      store.dispatch(RefreshData(
+          clearData: true,
+          completer: Completer<Null>()
+            ..future.then((value) {
+              action.completer.complete(null);
+              store.dispatch(PurgeDataSuccess());
+            })));
     }).catchError((Object error) {
       store.dispatch(PurgeDataFailure(error));
+      action.completer.completeError(error);
     });
 
     next(action);
