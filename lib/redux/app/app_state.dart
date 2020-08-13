@@ -524,10 +524,8 @@ abstract class AppState implements Built<AppState, AppStateBuilder> {
       // STARTER: has changes - do not remove comment
       case WebhookEditScreen.route:
         return hasWebhookChanges(webhookUIState.editing, webhookState.map);
-
       case TokenEditScreen.route:
         return hasTokenChanges(tokenUIState.editing, tokenState.map);
-
       case PaymentTermEditScreen.route:
         return hasPaymentTermChanges(
             paymentTermUIState.editing, paymentTermState.map);
