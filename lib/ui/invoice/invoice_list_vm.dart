@@ -57,7 +57,6 @@ class EntityListVM {
     @required this.invoiceMap,
     @required this.clientMap,
     @required this.isLoading,
-    @required this.isLoaded,
     @required this.filter,
     @required this.onRefreshed,
     @required this.tableColumns,
@@ -72,7 +71,6 @@ class EntityListVM {
   final BuiltMap<String, ClientEntity> clientMap;
   final String filter;
   final bool isLoading;
-  final bool isLoaded;
   final Function(BuildContext) onRefreshed;
   final List<String> tableColumns;
   final Function(String) onSortColumn;
@@ -81,19 +79,20 @@ class EntityListVM {
 
 class InvoiceListVM extends EntityListVM {
   InvoiceListVM({
-    AppState state,
-    List<String> invoiceList,
-    BuiltMap<String, InvoiceEntity> invoiceMap,
-    BuiltMap<String, ClientEntity> clientMap,
-    String filter,
-    bool isLoading,
-    bool isLoaded,
-    Function(BuildContext) onRefreshed,
-    Function(BuildContext, List<InvoiceEntity>, EntityAction) onEntityAction,
-    List<String> tableColumns,
-    EntityType entityType,
-    Function(String) onSortColumn,
-    Function onClearMultiselect,
+    @required AppState state,
+    @required List<String> invoiceList,
+    @required BuiltMap<String, InvoiceEntity> invoiceMap,
+    @required BuiltMap<String, ClientEntity> clientMap,
+    @required String filter,
+    @required bool isLoading,
+    @required Function(BuildContext) onRefreshed,
+    @required
+        Function(BuildContext, List<InvoiceEntity>, EntityAction)
+            onEntityAction,
+    @required List<String> tableColumns,
+    @required EntityType entityType,
+    @required Function(String) onSortColumn,
+    @required Function onClearMultiselect,
   }) : super(
           state: state,
           invoiceList: invoiceList,
@@ -101,7 +100,6 @@ class InvoiceListVM extends EntityListVM {
           clientMap: clientMap,
           filter: filter,
           isLoading: isLoading,
-          isLoaded: isLoaded,
           onRefreshed: onRefreshed,
           tableColumns: tableColumns,
           entityType: entityType,

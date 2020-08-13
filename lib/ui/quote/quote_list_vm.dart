@@ -52,19 +52,18 @@ class QuoteListBuilder extends StatelessWidget {
 
 class QuoteListVM extends EntityListVM {
   QuoteListVM({
-    AppState state,
-    List<String> invoiceList,
-    BuiltMap<String, InvoiceEntity> invoiceMap,
-    BuiltMap<String, ClientEntity> clientMap,
-    String filter,
-    bool isLoading,
-    bool isLoaded,
-    Function(BuildContext) onRefreshed,
-    Function(BuildContext, List<InvoiceEntity>, EntityAction) onEntityAction,
-    List<String> tableColumns,
-    EntityType entityType,
-    Function(String) onSortColumn,
-    Function onClearMultiselect,
+    @required AppState state,
+    @required List<String> invoiceList,
+    @required BuiltMap<String, InvoiceEntity> invoiceMap,
+    @required BuiltMap<String, ClientEntity> clientMap,
+    @required String filter,
+    @required bool isLoading,
+    @required Function(BuildContext) onRefreshed,
+    @required Function(BuildContext, List<InvoiceEntity>, EntityAction) onEntityAction,
+    @required List<String> tableColumns,
+    @required EntityType entityType,
+    @required Function(String) onSortColumn,
+    @required Function onClearMultiselect,
   }) : super(
           state: state,
           invoiceList: invoiceList,
@@ -72,7 +71,6 @@ class QuoteListVM extends EntityListVM {
           clientMap: clientMap,
           filter: filter,
           isLoading: isLoading,
-          isLoaded: isLoaded,
           onRefreshed: onRefreshed,
           tableColumns: tableColumns,
           entityType: entityType,
@@ -116,6 +114,7 @@ class QuoteListVM extends EntityListVM {
           state.userCompany.settings.getTableColumns(EntityType.quote) ??
               QuotePresenter.getDefaultTableFields(state.userCompany),
       onSortColumn: (field) => store.dispatch(SortQuotes(field)),
+      onClearMultiselect: () => store.dispatch(ClearQuoteMultiselect()),
       entityType: EntityType.quote,
     );
   }
