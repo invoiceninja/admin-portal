@@ -38,6 +38,7 @@ class _PaymentEditState extends State<PaymentEdit> {
       GlobalKey<FormState>(debugLabel: '_paymentEdit');
 
   final _amountController = TextEditingController();
+  final _numberController = TextEditingController();
   final _transactionReferenceController = TextEditingController();
   final _privateNotesController = TextEditingController();
 
@@ -59,6 +60,7 @@ class _PaymentEditState extends State<PaymentEdit> {
 
     _amountController.text = formatNumber(payment.amount, context,
         formatNumberType: FormatNumberType.input);
+    _numberController.text = payment.number;
     _transactionReferenceController.text = payment.transactionReference;
     _privateNotesController.text = payment.privateNotes;
     _controllers.forEach((controller) => controller.addListener(_onChanged));
@@ -80,6 +82,7 @@ class _PaymentEditState extends State<PaymentEdit> {
     _debouncer.run(() {
       final payment = widget.viewModel.payment.rebuild((b) => b
         ..amount = parseDouble(_amountController.text)
+        ..number = _numberController.text.trim()
         ..transactionReference = _transactionReferenceController.text.trim()
         ..privateNotes = _privateNotesController.text.trim());
       if (payment != widget.viewModel.payment) {
@@ -177,7 +180,14 @@ class _PaymentEditState extends State<PaymentEdit> {
                         : amountPlaceholder,
                     onSavePressed: viewModel.onSavePressed,
                   ),
-              ],
+              ] else
+                DecoratedFormField(
+                  controller: _numberController,
+                  label: localization.paymentNumber,
+                  onSavePressed: viewModel.onSavePressed,
+                  validator: (value) =>
+                      value.isEmpty ? localization.pleaseEnterAValue : null,
+                ),
               if (payment.isNew || payment.isApplying == true)
                 for (var index = 0; index < invoicePaymentables.length; index++)
                   PaymentableEditor(
