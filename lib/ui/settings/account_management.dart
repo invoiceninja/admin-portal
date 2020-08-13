@@ -193,29 +193,6 @@ class _AccountOverview extends StatelessWidget {
           padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 16),
           child: ListDivider(),
         ),
-        /*
-              Padding(
-                padding: const EdgeInsets.all(16),
-                child: ElevatedButton(
-                  label: localization.purgeData.toUpperCase(),
-                  color: Colors.red,
-                  iconData: Icons.delete,
-                  onPressed: () {
-                    confirmCallback(
-                        context: context,
-                        message: localization.purgeDataMessage,
-                        callback: () {
-                          passwordCallback(
-                              alwaysRequire: true,
-                              context: context,
-                              callback: (password) {
-                                viewModel.onPurgeData(context, password);
-                              });
-                        });
-                  },
-                ),
-              ),              
-               */
         Padding(
             padding: const EdgeInsets.all(16),
             child: Row(children: [
@@ -251,35 +228,62 @@ class _AccountOverview extends StatelessWidget {
         ),
         Padding(
           padding: const EdgeInsets.all(16),
-          child: AppButton(
-            label: companies.length == 1
-                ? localization.cancelAccount.toUpperCase()
-                : localization.deleteCompany.toUpperCase(),
-            color: Colors.red,
-            iconData: Icons.delete,
-            onPressed: () {
-              String message = companies.length == 1
-                  ? localization.cancelAccountMessage
-                  : localization.deleteCompanyMessage;
-
-              message = message.replaceFirst(
-                  ':company',
-                  company.displayName.isEmpty
-                      ? localization.untitledCompany
-                      : company.displayName);
-
-              confirmCallback(
-                  context: context,
-                  message: message,
-                  callback: () {
-                    passwordCallback(
-                        alwaysRequire: true,
+          child: Row(
+            children: [
+              Expanded(
+                child: AppButton(
+                  label: localization.purgeData.toUpperCase(),
+                  color: Colors.red,
+                  iconData: Icons.delete,
+                  onPressed: () {
+                    confirmCallback(
                         context: context,
-                        callback: (password) {
-                          viewModel.onCompanyDelete(context, password);
+                        message: localization.purgeDataMessage,
+                        callback: () {
+                          passwordCallback(
+                              alwaysRequire: true,
+                              context: context,
+                              callback: (password) {
+                                viewModel.onPurgeData(context, password);
+                              });
                         });
-                  });
-            },
+                  },
+                ),
+              ),
+              SizedBox(width: kGutterWidth),
+              Expanded(
+                child: AppButton(
+                  label: companies.length == 1
+                      ? localization.cancelAccount.toUpperCase()
+                      : localization.deleteCompany.toUpperCase(),
+                  color: Colors.red,
+                  iconData: Icons.delete,
+                  onPressed: () {
+                    String message = companies.length == 1
+                        ? localization.cancelAccountMessage
+                        : localization.deleteCompanyMessage;
+
+                    message = message.replaceFirst(
+                        ':company',
+                        company.displayName.isEmpty
+                            ? localization.untitledCompany
+                            : company.displayName);
+
+                    confirmCallback(
+                        context: context,
+                        message: message,
+                        callback: () {
+                          passwordCallback(
+                              alwaysRequire: true,
+                              context: context,
+                              callback: (password) {
+                                viewModel.onCompanyDelete(context, password);
+                              });
+                        });
+                  },
+                ),
+              ),
+            ],
           ),
         ),
       ],
