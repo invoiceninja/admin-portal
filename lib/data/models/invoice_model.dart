@@ -134,6 +134,7 @@ abstract class InvoiceEntity extends Object
       customSurcharge4: 0,
       filename: '',
       lineItems: BuiltList<InvoiceItemEntity>(),
+      history: BuiltList<InvoiceHistoryEntity>(),
       usesInclusiveTaxes: company?.settings?.enableInclusiveTaxes ?? false,
       documents: BuiltList<DocumentEntity>(),
       invitations: client == null
@@ -337,6 +338,9 @@ abstract class InvoiceEntity extends Object
   BuiltList<InvitationEntity> get invitations;
 
   BuiltList<DocumentEntity> get documents;
+
+  @nullable
+  BuiltList<InvoiceHistoryEntity> get history;
 
   bool get isApproved => statusId == kQuoteStatusApproved;
 
@@ -1067,4 +1071,36 @@ abstract class InvitationEntity extends Object
 
   static Serializer<InvitationEntity> get serializer =>
       _$invitationEntitySerializer;
+}
+
+abstract class InvoiceHistoryEntity
+    implements Built<InvoiceHistoryEntity, InvoiceHistoryEntityBuilder> {
+  factory InvoiceHistoryEntity({String contactId}) {
+    return _$InvoiceHistoryEntity._(
+      id: '',
+      activityId: '',
+      htmlBackup: '',
+      createdAt: 0,
+    );
+  }
+
+  InvoiceHistoryEntity._();
+
+  @override
+  @memoized
+  int get hashCode;
+
+  String get id;
+
+  @BuiltValueField(wireName: 'activity_id')
+  String get activityId;
+
+  @BuiltValueField(wireName: 'html_backup')
+  String get htmlBackup;
+
+  @BuiltValueField(wireName: 'created_at')
+  int get createdAt;
+
+  static Serializer<InvoiceHistoryEntity> get serializer =>
+      _$invoiceHistoryEntitySerializer;
 }

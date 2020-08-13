@@ -367,7 +367,6 @@ Middleware<AppState> _loadInvoice(InvoiceRepository repository) {
         .loadItem(store.state.credentials, action.invoiceId)
         .then((invoice) {
       store.dispatch(LoadInvoiceSuccess(invoice));
-      store.dispatch(LoadClient(clientId: invoice.clientId));
 
       if (action.completer != null) {
         action.completer.complete(null);
