@@ -5,7 +5,8 @@ import 'package:invoiceninja_flutter/ui/invoice/view/invoice_view_vm.dart';
 
 class InvoiceViewDocuments extends StatelessWidget {
   const InvoiceViewDocuments(
-      {@required this.invoice, @required this.viewModel});
+      {Key key, @required this.invoice, @required this.viewModel})
+      : super(key: key);
 
   final EntityViewVM viewModel;
   final InvoiceEntity invoice;

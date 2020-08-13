@@ -73,6 +73,7 @@ class _ProductViewState extends State<ProductView>
                     onRefresh: () => viewModel.onRefreshed(context),
                     child: ProductOverview(
                       viewModel: viewModel,
+                      key: ValueKey(viewModel.product.id),
                       //isFilter: widget.isFilter,
                     ),
                   ),
@@ -80,6 +81,7 @@ class _ProductViewState extends State<ProductView>
                     onRefresh: () => viewModel.onRefreshed(context),
                     child: ProductViewDocuments(
                       viewModel: viewModel,
+                      key: ValueKey(viewModel.product.id),
                       //client: viewModel.client,
                     ),
                   ),

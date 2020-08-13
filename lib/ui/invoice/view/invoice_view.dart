@@ -104,16 +104,21 @@ class _InvoiceViewState extends State<InvoiceView>
                         child: InvoiceOverview(
                           viewModel: viewModel,
                           isFilter: widget.isFilter,
+                          key: ValueKey(viewModel.invoice.id),
                         ),
                       ),
                       RefreshIndicator(
                         onRefresh: () => viewModel.onRefreshed(context),
                         child: InvoiceViewDocuments(
-                            viewModel: viewModel, invoice: viewModel.invoice),
+                            viewModel: viewModel,
+                            invoice: viewModel.invoice,
+                            key: ValueKey(viewModel.invoice.id)),
                       ),
                       RefreshIndicator(
                         onRefresh: () => viewModel.onRefreshed(context),
-                        child: InvoiceViewHistory(viewModel: viewModel),
+                        child: InvoiceViewHistory(
+                            viewModel: viewModel,
+                            key: ValueKey(viewModel.invoice.id)),
                       ),
                     ],
                   ),

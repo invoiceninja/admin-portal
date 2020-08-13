@@ -3,7 +3,7 @@ import 'package:invoiceninja_flutter/ui/app/document_grid.dart';
 import 'package:invoiceninja_flutter/ui/app/screen_imports.dart';
 
 class ProductViewDocuments extends StatelessWidget {
-  const ProductViewDocuments({@required this.viewModel});
+  const ProductViewDocuments({Key key, @required this.viewModel}) : super(key: key);
 
   final ProductViewVM viewModel;
 

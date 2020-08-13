@@ -9,8 +9,9 @@ import 'package:invoiceninja_flutter/utils/localization.dart';
 
 class ProductOverview extends StatefulWidget {
   const ProductOverview({
+    Key key,
     @required this.viewModel,
-  });
+  }) : super(key: key);
 
   final ProductViewVM viewModel;
 

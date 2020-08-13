@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:invoiceninja_flutter/ui/app/lists/list_divider.dart';
 import 'package:invoiceninja_flutter/ui/app/loading_indicator.dart';
 import 'package:invoiceninja_flutter/ui/invoice/view/invoice_view_vm.dart';
+import 'package:invoiceninja_flutter/utils/formatting.dart';
 
 class InvoiceViewHistory extends StatefulWidget {
-  const InvoiceViewHistory({@required this.viewModel});
+  const InvoiceViewHistory({Key key, @required this.viewModel}) : super(key: key);
 
   final EntityViewVM viewModel;
 
@@ -27,7 +29,25 @@ class _InvoiceViewHistoryState extends State<InvoiceViewHistory> {
     if (invoice.isStale) {
       return LoadingIndicator();
     }
-    
-    return Placeholder();
+
+    return ListView.separated(
+      shrinkWrap: true,
+      padding: const EdgeInsets.symmetric(vertical: 16),
+      itemBuilder: (BuildContext context, index) {
+        final history = invoice.history[index];
+        return ListTile(
+          title: Text('test'),
+          subtitle: Text(
+            formatDate(
+              convertTimestampToDateString(history.createdAt),
+              context,
+              showTime: true,
+            ),
+          ),
+        );
+      },
+      separatorBuilder: (context, index) => ListDivider(),
+      itemCount: invoice.history.length,
+    );
   }
 }
