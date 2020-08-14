@@ -233,7 +233,7 @@ class InvoiceNinjaAppState extends State<InvoiceNinjaApp> {
                     ),
                   ),
                 ),
-          title: 'Invoice Ninja',
+          title: kAppName,
           onGenerateRoute: isMobile(context) ? null : generateRoute,
           routes: isMobile(context)
               ? {

@@ -12,6 +12,7 @@ class Constants {
 const String kClientVersion = '5.0.15';
 const String kMinServerVersion = '5.0.4';
 
+const String kAppName = 'Invoice Ninja';
 const String kSiteUrl = 'https://invoiceninja.com';
 //const String kAppProductionUrl = 'https://invoicing.co';
 const String kAppProductionUrl =

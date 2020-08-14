@@ -5,6 +5,7 @@ import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/utils/formatting.dart';
 import 'package:redux/redux.dart';
 
+
 String getBrowserUrl() => formatApiUrl(window.location.href.split('#')[0]);
 
 Future<String> webFilePicker() {
