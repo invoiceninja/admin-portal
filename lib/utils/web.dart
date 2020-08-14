@@ -54,6 +54,7 @@ class WebUtils {
     });
   }
 
+  /*
   String loadToken() {
     final cookies = document.cookie;
     final List<String> listValues =
@@ -75,4 +76,5 @@ class WebUtils {
   static void saveToken(String token) {
     document.cookie = 'token=$token; max-age=2592000; path=/;';
   }
+   */
 }

@@ -14,8 +14,6 @@ import 'package:invoiceninja_flutter/redux/auth/auth_actions.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:invoiceninja_flutter/data/repositories/auth_repository.dart';
-import 'package:invoiceninja_flutter/utils/web_stub.dart'
-    if (dart.library.html) 'package:invoiceninja_flutter/utils/web.dart';
 
 List<Middleware<AppState>> createStoreAuthMiddleware([
   AuthRepository repository = const AuthRepository(),
@@ -199,15 +197,9 @@ Middleware<AppState> _createRefreshRequest(AuthRepository repository) {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     final url = formatApiUrl(
         prefs.getString(kSharedPrefUrl) ?? store.state.authState.url);
-
-    String token;
-    if (kIsWeb) {
-      token = WebUtils.loadToken();
-    } else {
-      prefs.getString(kSharedPrefToken);
-    }
-
-    token = TokenEntity.unobscureToken(token) ?? 'TOKEN';
+    final token =
+        TokenEntity.unobscureToken(prefs.getString(kSharedPrefToken)) ??
+            'TOKEN';
 
     final updatedAt = action.clearData
         ? 0
