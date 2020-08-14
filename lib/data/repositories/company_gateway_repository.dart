@@ -15,6 +15,7 @@ class CompanyGatewayRepository {
 
   final WebClient webClient;
 
+  // TODO remove includes in this file
   Future<CompanyGatewayEntity> loadItem(
       Credentials credentials, String entityId) async {
     final dynamic response = await webClient.get(
