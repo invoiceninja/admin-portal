@@ -653,7 +653,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
           'Require client to provide their billing address',
       'require_shipping_address_help':
           'Require client to provide their shipping address',
-      'update_address': 'Update address',
+      'update_address': 'Update Address',
       'update_address_help': 'Update client\'s address with provided details',
       'rate': 'Rate',
       'tax_rate': 'Tax Rate',
