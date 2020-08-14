@@ -38,6 +38,7 @@ import 'package:sentry/sentry.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:invoiceninja_flutter/utils/web_stub.dart'
     if (dart.library.html) 'package:invoiceninja_flutter/utils/web.dart';
+
 // STARTER: import - do not remove comment
 import 'package:invoiceninja_flutter/redux/webhook/webhook_middleware.dart';
 import 'package:invoiceninja_flutter/redux/token/token_middleware.dart';
@@ -119,8 +120,9 @@ void main({bool isTesting = false}) async {
 Future<AppState> _initialState(bool isTesting) async {
   final prefs = await SharedPreferences.getInstance();
   final prefString = prefs?.getString(kSharedPrefs);
+  final url = prefs.getString(kSharedPrefUrl) ?? getBrowserUrl();
 
-  var prefState = PrefState();
+  var prefState = PrefState(enableDarkMode: url == kAppDemoUrl);
 
   if (prefString != null) {
     try {
@@ -141,8 +143,6 @@ Future<AppState> _initialState(bool isTesting) async {
     }
   }
    */
-
-  final url = prefs.getString(kSharedPrefUrl) ?? getBrowserUrl();
 
   return AppState(
     prefState: prefState,
