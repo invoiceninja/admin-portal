@@ -48,6 +48,7 @@ import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:invoiceninja_flutter/utils/platforms.dart';
 import 'package:local_auth/local_auth.dart';
 import 'package:redux/redux.dart';
+
 // STARTER: import - do not remove comment
 import 'package:invoiceninja_flutter/ui/webhook/webhook_screen.dart';
 import 'package:invoiceninja_flutter/ui/webhook/edit/webhook_edit_vm.dart';
@@ -58,7 +59,7 @@ import 'package:invoiceninja_flutter/ui/token/edit/token_edit_vm.dart';
 import 'package:invoiceninja_flutter/ui/token/view/token_view_vm.dart';
 import 'package:invoiceninja_flutter/ui/token/token_screen_vm.dart';
 import 'package:invoiceninja_flutter/utils/web_stub.dart'
-if (dart.library.html) 'package:invoiceninja_flutter/utils/web.dart';
+    if (dart.library.html) 'package:invoiceninja_flutter/utils/web.dart';
 
 class InvoiceNinjaApp extends StatefulWidget {
   const InvoiceNinjaApp({Key key, this.store}) : super(key: key);
@@ -92,7 +93,7 @@ class InvoiceNinjaAppState extends State<InvoiceNinjaApp> {
   void initState() {
     super.initState();
 
-    webWarnChanges(widget.store);
+    WebUtils.warnChanges(widget.store);
   }
 
   /*

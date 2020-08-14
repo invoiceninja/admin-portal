@@ -1,18 +1,20 @@
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:redux/redux.dart';
 
-String getBrowserUrl() => null;
+class WebUtils {
+  static String get browserUrl => null;
 
-Future<String> webFilePicker() => null;
+  static Future<String> filePicker() => null;
 
-void webDownload(String filename, String data) {}
+  static void downloadFile(String filename, String data) {}
 
-void webReload() {}
+  static void reloadBrowser() {}
 
-void registerWebView(String html) {}
+  static void registerWebView(String html) {}
 
-void webWarnChanges(Store<AppState> store) {}
+  static void warnChanges(Store<AppState> store) {}
 
-String webLoadToken() => null;
+  static String loadToken() => null;
 
-void webSaveToken(String token) {}
+  static void saveToken(String token) {}
+}

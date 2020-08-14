@@ -600,7 +600,7 @@ class _TemplatePreviewState extends State<TemplatePreview>
     if (kIsWeb) {
       final html =
           'data:text/html;charset=utf-8,' + Uri.encodeComponent(widget.html);
-      registerWebView(html);
+      WebUtils.registerWebView(html);
       return AbsorbPointer(
         child: HtmlElementView(viewType: html),
       );

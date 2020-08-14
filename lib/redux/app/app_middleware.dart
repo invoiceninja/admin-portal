@@ -269,7 +269,7 @@ Middleware<AppState> _createLoadState(
         token = 'TOKEN';
       } else {
         if (kIsWeb) {
-          token = webLoadToken() ?? '';
+          token = WebUtils.loadToken() ?? '';
         } else {
           final SharedPreferences prefs = await SharedPreferences.getInstance();
           token = prefs.getString(kSharedPrefToken) ?? '';
@@ -448,7 +448,7 @@ Middleware<AppState> _createAccountLoaded() {
 
         if (i == 0) {
           if (kIsWeb) {
-            webSaveToken(userCompany.token.obscuredToken);
+            WebUtils.saveToken(userCompany.token.obscuredToken);
           } else {
             final SharedPreferences prefs =
                 await SharedPreferences.getInstance();
@@ -512,7 +512,7 @@ Middleware<AppState> _createDeleteState(
     companyRepositories.forEach((repo) => repo.delete());
 
     if (kIsWeb) {
-      webSaveToken('');
+      WebUtils.saveToken('');
     } else {
       final SharedPreferences prefs = await SharedPreferences.getInstance();
       prefs.setString(kSharedPrefToken, '');

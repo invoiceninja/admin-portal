@@ -202,7 +202,7 @@ Middleware<AppState> _createRefreshRequest(AuthRepository repository) {
 
     String token;
     if (kIsWeb) {
-      token = webLoadToken();
+      token = WebUtils.loadToken();
     } else {
       prefs.getString(kSharedPrefToken);
     }

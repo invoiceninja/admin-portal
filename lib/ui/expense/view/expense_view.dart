@@ -93,7 +93,7 @@ class _ExpenseViewState extends State<ExpenseView>
                 onPressed: () async {
                   String path;
                   if (kIsWeb) {
-                    path = await webFilePicker();
+                    path = await WebUtils.filePicker();
                   } else {
                     final image = await ImagePicker()
                         .getImage(source: ImageSource.camera);

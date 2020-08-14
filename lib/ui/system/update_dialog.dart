@@ -100,7 +100,7 @@ class _UpdateDialogState extends State<UpdateDialog> {
               updateResponse = response.body;
             });
             if (kIsWeb) {
-              webReload();
+              WebUtils.reloadBrowser();
             }
           }).catchError((dynamic error) {
             showErrorDialog(context: context, message: '$error');

@@ -76,7 +76,7 @@ class _PDFScaffoldState extends State<PDFScaffold> {
           response: response,
         ).then((value) => setState(() {
               _pdfString = value;
-              registerWebView(_pdfString);
+              WebUtils.registerWebView(_pdfString);
             }));
       } else {
         renderMobilePDF(

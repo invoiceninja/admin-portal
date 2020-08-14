@@ -408,7 +408,7 @@ class _DesignPreviewState extends State<DesignPreview> {
     super.didUpdateWidget(oldWidget);
 
     if (kIsWeb) {
-      registerWebView(widget.pdfString);
+      WebUtils.registerWebView(widget.pdfString);
     }
 
     if (_scrollController.hasClients && _scrollPosition > 0) {
