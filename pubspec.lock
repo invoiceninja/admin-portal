@@ -217,7 +217,7 @@ packages:
       name: device_info
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.4.2+4"
+    version: "0.4.2+6"
   extended_image:
     dependency: "direct overridden"
     description:
@@ -488,13 +488,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "3.1.4"
-  idb_shim:
-    dependency: "direct main"
-    description:
-      name: idb_shim
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "1.11.1+1"
   image_picker:
     dependency: "direct main"
     description:
@@ -768,13 +761,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "0.24.1"
-  sembast:
-    dependency: transitive
-    description:
-      name: sembast
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "2.4.7+6"
   sentry:
     dependency: "direct main"
     description:
@@ -830,7 +816,7 @@ packages:
       name: shelf
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.7.8"
+    version: "0.7.9"
   shelf_packages_handler:
     dependency: transitive
     description:

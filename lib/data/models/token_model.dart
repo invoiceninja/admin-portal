@@ -94,8 +94,6 @@ abstract class TokenEntity extends Object
   bool get isMasked => token.substring(10) == 'xxxxxxxxxxx';
 
   static String unobscureToken(String value) {
-    print('## unobscureToken: $value');
-
     if (value == null || value.isEmpty) {
       return null;
     }
