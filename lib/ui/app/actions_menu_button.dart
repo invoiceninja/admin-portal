@@ -12,6 +12,8 @@ class ActionMenuButton extends StatelessWidget {
     this.isSaving = false,
     this.entityActions,
     this.color,
+    this.iconData,
+    this.iconSize,
   });
 
   final BaseEntity entity;
@@ -19,6 +21,8 @@ class ActionMenuButton extends StatelessWidget {
   final Function(BuildContext, EntityAction) onSelected;
   final bool isSaving;
   final Color color;
+  final IconData iconData;
+  final double iconSize;
 
   @override
   Widget build(BuildContext context) {
@@ -64,7 +68,8 @@ class ActionMenuButton extends StatelessWidget {
 
     return PopupMenuButton<EntityAction>(
       icon: Icon(
-        Icons.more_vert,
+        iconData ?? Icons.more_vert,
+        size: iconSize,
         color: color,
       ),
       itemBuilder: (BuildContext context) => actions,

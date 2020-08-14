@@ -40,34 +40,28 @@ class EntityListTile extends StatelessWidget {
     final isFilteredBy = state.uiState.filterEntityId == entity.id &&
         state.uiState.filterEntityType == entity.entityType;
 
-    Widget leading;
-    if (isDesktop(context) && isFilteredBy) {
-      final entityClient = client ??
-          (entity is BelongsToClient
-              ? state.clientState.map[(entity as BelongsToClient).clientId]
-              : null);
-      leading = ActionMenuButton(
-        entityActions: entity.getActions(
-            userCompany: state.userCompany,
-            includeEdit: true,
-            client: entityClient),
-        isSaving: false,
-        color: state.prefState.enableDarkMode
-            ? Colors.white
-            : Theme.of(context).accentColor,
-        entity: entity,
-        onSelected: (context, action) => onEntityActionSelected != null
-            ? onEntityActionSelected(context, entity, action)
-            : handleEntityAction(context, entity, action),
-      );
-    } else {
-      leading = IgnorePointer(
-        child: IconButton(
-          icon: Icon(getEntityIcon(entity.entityType), size: 18.0),
-          onPressed: () => null,
-        ),
-      );
-    }
+    final entityClient = client ??
+        (entity is BelongsToClient
+            ? state.clientState.map[(entity as BelongsToClient).clientId]
+            : null);
+    final leading = ActionMenuButton(
+      iconData: (isDesktop(context) && isFilteredBy)
+          ? Icons.more_vert
+          : getEntityIcon(entity.entityType),
+      iconSize: (isDesktop(context) && isFilteredBy) ? null : 18,
+      entityActions: entity.getActions(
+          userCompany: state.userCompany,
+          includeEdit: true,
+          client: entityClient),
+      isSaving: false,
+      color: state.prefState.enableDarkMode
+          ? Colors.white
+          : Theme.of(context).accentColor,
+      entity: entity,
+      onSelected: (context, action) => onEntityActionSelected != null
+          ? onEntityActionSelected(context, entity, action)
+          : handleEntityAction(context, entity, action),
+    );
 
     Widget trailing;
     if (isNotMobile(context) && isFilter != null && !isFilter) {
