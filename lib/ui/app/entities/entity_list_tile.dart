@@ -67,9 +67,11 @@ class _EntityListTileState extends State<EntityListTile> {
           includeEdit: true,
           client: entityClient),
       isSaving: false,
-      color: state.prefState.enableDarkMode
-          ? Colors.white
-          : Theme.of(context).accentColor,
+      color: isFilteredBy
+          ? (state.prefState.enableDarkMode
+              ? Colors.white
+              : Theme.of(context).accentColor)
+          : null,
       entity: widget.entity,
       onSelected: (context, action) => widget.onEntityActionSelected != null
           ? widget.onEntityActionSelected(context, widget.entity, action)

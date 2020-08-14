@@ -61,6 +61,7 @@ String formatNumber(
   FormatNumberType formatNumberType = FormatNumberType.money,
   bool showCurrencyCode,
   bool zeroIsNull = false,
+  bool roundToPrecision = true,
 }) {
   if ((zeroIsNull || formatNumberType == FormatNumberType.input) &&
       value == 0) {
@@ -104,6 +105,10 @@ String formatNumber(
 
   if (currency == null) {
     return '';
+  }
+
+  if (formatNumberType == FormatNumberType.money) {
+    value = round(value, currency.precision);
   }
 
   String thousandSeparator = currency.thousandSeparator;
