@@ -14,7 +14,9 @@ class WebUtils {
 
   static void warnChanges(Store<AppState> store) {}
 
+  /*
   static String loadToken() => null;
 
   static void saveToken(String token) {}
+   */
 }
