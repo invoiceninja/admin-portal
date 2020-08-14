@@ -34,6 +34,8 @@ import 'package:invoiceninja_flutter/utils/platforms.dart';
 import 'package:redux/redux.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:invoiceninja_flutter/utils/web_stub.dart'
+    if (dart.library.html) 'package:invoiceninja_flutter/utils/web.dart';
 
 List<Middleware<AppState>> createStorePersistenceMiddleware([
   PersistenceRepository authRepository = const PersistenceRepository(
@@ -266,8 +268,13 @@ Middleware<AppState> _createLoadState(
           cleanApiUrl(store.state.authState.url) == kAppDemoUrl) {
         token = 'TOKEN';
       } else {
-        final SharedPreferences prefs = await SharedPreferences.getInstance();
-        token = prefs.getString(kSharedPrefToken) ?? '';
+        if (kIsWeb) {
+          token = webLoadToken() ?? '';
+        } else {
+          final SharedPreferences prefs = await SharedPreferences.getInstance();
+          token = prefs.getString(kSharedPrefToken) ?? '';
+        }
+
         if (token.isNotEmpty) {
           token = TokenEntity.unobscureToken(token);
         }
@@ -440,8 +447,13 @@ Middleware<AppState> _createAccountLoaded() {
         final UserCompanyEntity userCompany = response.userCompanies[i];
 
         if (i == 0) {
-          final SharedPreferences prefs = await SharedPreferences.getInstance();
-          prefs.setString(kSharedPrefToken, userCompany.token.obscuredToken);
+          if (kIsWeb) {
+            webSaveToken(userCompany.token.obscuredToken);
+          } else {
+            final SharedPreferences prefs =
+                await SharedPreferences.getInstance();
+            prefs.setString(kSharedPrefToken, userCompany.token.obscuredToken);
+          }
         }
 
         store.dispatch(
@@ -499,9 +511,12 @@ Middleware<AppState> _createDeleteState(
     staticRepository.delete();
     companyRepositories.forEach((repo) => repo.delete());
 
-    final SharedPreferences prefs = await SharedPreferences.getInstance();
-
-    prefs.setString(kSharedPrefToken, '');
+    if (kIsWeb) {
+      webSaveToken('');
+    } else {
+      final SharedPreferences prefs = await SharedPreferences.getInstance();
+      prefs.setString(kSharedPrefToken, '');
+    }
 
     next(action);
   };

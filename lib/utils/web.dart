@@ -5,7 +5,6 @@ import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/utils/formatting.dart';
 import 'package:redux/redux.dart';
 
-
 String getBrowserUrl() => formatApiUrl(window.location.href.split('#')[0]);
 
 Future<String> webFilePicker() {
@@ -51,4 +50,24 @@ void webWarnChanges(Store<AppState> store) {
           'Changes you made may not be saved.';
     }
   });
+}
+
+String webLoadToken() {
+  final cookies = document.cookie;
+  final List<String> listValues = cookies.isNotEmpty ? cookies.split(';') : [];
+
+  for (int i = 0; i < listValues.length; i++) {
+    final List<String> map = listValues[i].split('=');
+    final key = map[0].trim();
+    final val = map[1].trim();
+    if (key == 'token') {
+      return val;
+    }
+  }
+
+  return null;
+}
+
+void webSaveToken(String token) {
+  document.cookie = 'token=$token; max-age=2592000; path=/;';
 }

@@ -12,3 +12,7 @@ void webReload() {}
 void registerWebView(String html) {}
 
 void webWarnChanges(Store<AppState> store) {}
+
+String webLoadToken() => null;
+
+void webSaveToken(String token) {}
