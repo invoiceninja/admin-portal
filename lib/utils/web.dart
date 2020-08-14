@@ -57,11 +57,12 @@ String webLoadToken() {
   final List<String> listValues = cookies.isNotEmpty ? cookies.split(';') : [];
 
   for (int i = 0; i < listValues.length; i++) {
-    final List<String> map = listValues[i].split('=');
-    final key = map[0].trim();
-    final val = map[1].trim();
+    final cookie = listValues[i];
+    final index = cookie.indexOf('=');
+    final key = cookie.substring(0, index).trim();
+    final value = cookie.substring(index + 1).trim();
     if (key == 'token') {
-      return val;
+      return value;
     }
   }
 

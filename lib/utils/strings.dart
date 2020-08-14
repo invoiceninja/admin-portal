@@ -66,7 +66,7 @@ bool isValidDate(String input) {
 }
 
 void printWrapped(String text) {
-  print(text);
+  print(text.length > 1000 ? text.substring(0, 1000) : text);
 
   //final pattern = RegExp('.{1,800}'); // 800 is the size of each chunk
   //pattern.allMatches(text).forEach((match) => print(match.group(0)));
@@ -137,7 +137,7 @@ String matchesStringValue({String haystack, String needle}) {
     regExp += character + '.*?';
   });
 
-  if(RegExp(regExp).hasMatch(haystack.toLowerCase())) {
+  if (RegExp(regExp).hasMatch(haystack.toLowerCase())) {
     return haystack;
   } else {
     return null;
