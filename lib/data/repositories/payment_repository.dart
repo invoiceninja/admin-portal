@@ -16,6 +16,18 @@ class PaymentRepository {
 
   final WebClient webClient;
 
+  Future<PaymentEntity> loadItem(
+      Credentials credentials, String entityId) async {
+    final String url = '${credentials.url}/payments/$entityId';
+
+    final dynamic response = await webClient.get(url, credentials.token);
+
+    final PaymentItemResponse paymentResponse = await compute<dynamic, dynamic>(
+        computeDecode, <dynamic>[PaymentItemResponse.serializer, response]);
+
+    return paymentResponse.data;
+  }
+
   Future<BuiltList<PaymentEntity>> loadList(Credentials credentials) async {
     final url = credentials.url + '/payments?include=paymentables';
 
@@ -31,7 +43,7 @@ class PaymentRepository {
       Credentials credentials, List<String> ids, EntityAction action) async {
     final url = credentials.url + '/payments/bulk?include=paymentables';
     final dynamic response = await webClient.post(url, credentials.token,
-        data: json.encode({'ids': ids, 'action': '$action'}));
+        data: json.encode({'ids': ids, 'action': action.toApiParam()}));
 
     final PaymentListResponse paymentResponse =
         serializers.deserializeWith(PaymentListResponse.serializer, response);

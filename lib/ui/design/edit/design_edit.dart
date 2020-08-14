@@ -38,7 +38,7 @@ class _DesignEditState extends State<DesignEdit>
   static final GlobalKey<FormState> _formKey =
       GlobalKey<FormState>(debugLabel: '_designEdit');
 
-  final _debouncer = Debouncer(milliseconds: 2000);
+  final _debouncer = Debouncer(milliseconds: kMillisecondsToDebounceSave);
 
   final _nameController = TextEditingController();
   final _headerController = TextEditingController();
@@ -408,7 +408,7 @@ class _DesignPreviewState extends State<DesignPreview> {
     super.didUpdateWidget(oldWidget);
 
     if (kIsWeb) {
-      registerWebView(widget.pdfString);
+      WebUtils.registerWebView(widget.pdfString);
     }
 
     if (_scrollController.hasClients && _scrollPosition > 0) {

@@ -329,16 +329,27 @@ void handlePaymentAction(
     case EntityAction.edit:
       editEntity(context: context, entity: payment);
       break;
+    case EntityAction.apply:
+      viewEntity(context: context, entity: payment);
+      WidgetsBinding.instance.addPostFrameCallback((duration) {
+        editEntity(
+            context: context,
+            entity: payment.rebuild((b) => b..isApplying = true));
+      });
+      break;
     case EntityAction.refund:
-      if (payment.invoicePaymentables.length == 1) {
-        payment = payment.rebuild((b) =>
-            b..invoices.add(PaymentableEntity(invoiceId: payment.invoiceId)));
-      }
-      store.dispatch(ViewRefundPayment(
-        navigator: Navigator.of(context),
-        payment: payment.rebuild((b) =>
-            b..sendEmail = company.settings.clientManualPaymentNotification),
-      ));
+      viewEntity(context: context, entity: payment);
+      WidgetsBinding.instance.addPostFrameCallback((duration) {
+        if (payment.invoicePaymentables.length == 1) {
+          payment = payment.rebuild((b) =>
+              b..invoices.add(PaymentableEntity(invoiceId: payment.invoiceId)));
+        }
+        store.dispatch(ViewRefundPayment(
+          navigator: Navigator.of(context),
+          payment: payment.rebuild((b) =>
+              b..sendEmail = company.settings.clientManualPaymentNotification),
+        ));
+      });
       break;
     case EntityAction.emailPayment:
       store.dispatch(EmailPaymentRequest(

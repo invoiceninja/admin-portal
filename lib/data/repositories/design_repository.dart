@@ -40,7 +40,7 @@ class DesignRepository {
       Credentials credentials, List<String> ids, EntityAction action) async {
     final url = credentials.url + '/designs/bulk';
     final dynamic response = await webClient.post(url, credentials.token,
-        data: json.encode({'ids': ids, 'action': '$action'}));
+        data: json.encode({'ids': ids, 'action': action.toApiParam()}));
 
     final DesignListResponse designResponse =
         serializers.deserializeWith(DesignListResponse.serializer, response);

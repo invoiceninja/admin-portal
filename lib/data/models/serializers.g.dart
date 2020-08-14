@@ -78,12 +78,15 @@ Serializers _$serializers = (new Serializers().toBuilder()
       ..add(GroupListResponse.serializer)
       ..add(GroupState.serializer)
       ..add(GroupUIState.serializer)
+      ..add(HealthCheckPHPResponse.serializer)
+      ..add(HealthCheckResponse.serializer)
       ..add(HistoryRecord.serializer)
       ..add(IndustryEntity.serializer)
       ..add(IndustryItemResponse.serializer)
       ..add(IndustryListResponse.serializer)
       ..add(InvitationEntity.serializer)
       ..add(InvoiceEntity.serializer)
+      ..add(InvoiceHistoryEntity.serializer)
       ..add(InvoiceItemEntity.serializer)
       ..add(InvoiceItemResponse.serializer)
       ..add(InvoiceListResponse.serializer)
@@ -198,6 +201,9 @@ Serializers _$serializers = (new Serializers().toBuilder()
           const FullType(BuiltList, const [const FullType(GatewayTokenEntity)]),
           () => new ListBuilder<GatewayTokenEntity>())
       ..addBuilderFactory(
+          const FullType(BuiltList, const [const FullType(DocumentEntity)]),
+          () => new ListBuilder<DocumentEntity>())
+      ..addBuilderFactory(
           const FullType(BuiltList, const [const FullType(CountryEntity)]),
           () => new ListBuilder<CountryEntity>())
       ..addBuilderFactory(
@@ -248,6 +254,9 @@ Serializers _$serializers = (new Serializers().toBuilder()
       ..addBuilderFactory(
           const FullType(BuiltList, const [const FullType(DesignEntity)]),
           () => new ListBuilder<DesignEntity>())
+      ..addBuilderFactory(
+          const FullType(BuiltList, const [const FullType(DocumentEntity)]),
+          () => new ListBuilder<DocumentEntity>())
       ..addBuilderFactory(
           const FullType(BuiltList, const [const FullType(DocumentEntity)]),
           () => new ListBuilder<DocumentEntity>())
@@ -376,11 +385,11 @@ Serializers _$serializers = (new Serializers().toBuilder()
       ..addBuilderFactory(
           const FullType(BuiltList, const [const FullType(InvoiceEntity)]),
           () => new ListBuilder<InvoiceEntity>())
-      ..addBuilderFactory(
-          const FullType(BuiltList, const [const FullType(InvoiceEntity)]), () => new ListBuilder<InvoiceEntity>())
+      ..addBuilderFactory(const FullType(BuiltList, const [const FullType(InvoiceEntity)]), () => new ListBuilder<InvoiceEntity>())
       ..addBuilderFactory(const FullType(BuiltList, const [const FullType(InvoiceItemEntity)]), () => new ListBuilder<InvoiceItemEntity>())
       ..addBuilderFactory(const FullType(BuiltList, const [const FullType(InvitationEntity)]), () => new ListBuilder<InvitationEntity>())
       ..addBuilderFactory(const FullType(BuiltList, const [const FullType(DocumentEntity)]), () => new ListBuilder<DocumentEntity>())
+      ..addBuilderFactory(const FullType(BuiltList, const [const FullType(InvoiceHistoryEntity)]), () => new ListBuilder<InvoiceHistoryEntity>())
       ..addBuilderFactory(const FullType(BuiltList, const [const FullType(LanguageEntity)]), () => new ListBuilder<LanguageEntity>())
       ..addBuilderFactory(const FullType(BuiltList, const [const FullType(PaymentEntity)]), () => new ListBuilder<PaymentEntity>())
       ..addBuilderFactory(const FullType(BuiltList, const [const FullType(PaymentTermEntity)]), () => new ListBuilder<PaymentTermEntity>())

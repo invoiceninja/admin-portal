@@ -239,6 +239,25 @@ class MarkInvoicesSentFailure implements StopSaving {
   final dynamic error;
 }
 
+class BulkEmailInvoicesRequest implements StartSaving {
+  BulkEmailInvoicesRequest(this.completer, this.invoiceIds);
+
+  final Completer completer;
+  final List<String> invoiceIds;
+}
+
+class BulkEmailInvoicesSuccess implements StopSaving, PersistData {
+  BulkEmailInvoicesSuccess(this.invoices);
+
+  final List<InvoiceEntity> invoices;
+}
+
+class BulkEmailInvoicesFailure implements StopSaving {
+  BulkEmailInvoicesFailure(this.error);
+
+  final dynamic error;
+}
+
 class MarkInvoicesPaidRequest implements StartSaving {
   MarkInvoicesPaidRequest(this.completer, this.invoiceIds);
 
@@ -509,17 +528,33 @@ void handleInvoiceAction(BuildContext context, List<BaseEntity> invoices,
           invoiceIds));
       break;
     case EntityAction.emailInvoice:
-      final client = state.clientState.get(invoice.clientId);
-      if (!client.hasEmailAddress) {
+      bool emailValid = true;
+      invoiceIds.forEach((element) {
+        final client = state.clientState.get(invoice.clientId);
+        if (!client.hasEmailAddress) {
+          emailValid = false;
+        }
+      });
+      if (!emailValid) {
         showMessageDialog(
             context: context, message: localization.clientEmailNotSet);
         return;
       }
-      store.dispatch(ShowEmailInvoice(
-          completer:
-              snackBarCompleter<Null>(context, localization.emailedInvoice),
-          invoice: invoice,
-          context: context));
+      if (invoiceIds.length == 1) {
+        store.dispatch(ShowEmailInvoice(
+            completer:
+                snackBarCompleter<Null>(context, localization.emailedInvoice),
+            invoice: invoice,
+            context: context));
+      } else {
+        store.dispatch(BulkEmailInvoicesRequest(
+            snackBarCompleter<Null>(
+                context,
+                invoiceIds.length == 1
+                    ? localization.emailedInvoice
+                    : localization.emailedInvoices),
+            invoiceIds));
+      }
       break;
     case EntityAction.cloneToInvoice:
       createEntity(context: context, entity: invoice.clone);
@@ -568,11 +603,6 @@ void handleInvoiceAction(BuildContext context, List<BaseEntity> invoices,
       if (!store.state.invoiceListState.isInMultiselect()) {
         store.dispatch(StartInvoiceMultiselect());
       }
-
-      if (invoices.isEmpty) {
-        break;
-      }
-
       for (final invoice in invoices) {
         if (!store.state.invoiceListState.isSelected(invoice.id)) {
           store.dispatch(AddToInvoiceMultiselect(entity: invoice));

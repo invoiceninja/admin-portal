@@ -13,7 +13,11 @@ import 'package:version/version.dart';
 class WebClient {
   const WebClient();
 
-  Future<dynamic> get(String url, String token) async {
+  Future<dynamic> get(
+    String url,
+    String token, {
+    bool rawResponse = false,
+  }) async {
     if (Config.DEMO_MODE) {
       throw 'Server requests are not supported in the demo';
     }
@@ -33,6 +37,10 @@ class WebClient {
       url,
       headers: _getHeaders(url, token),
     );
+
+    if (rawResponse) {
+      return response;
+    }
 
     _checkResponse(response);
 

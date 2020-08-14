@@ -116,7 +116,7 @@ ReportResult clientReport(
 
       switch (column) {
         case ClientReportFields.name:
-          value = client.name;
+          value = client.displayName;
           break;
         case ClientReportFields.website:
           value = client.website;

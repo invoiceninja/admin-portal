@@ -44,8 +44,10 @@ Reducer<String> selectedIdReducer = combineReducers([
   TypedReducer<String, ClearEntityFilter>((selectedId, action) => ''),
   TypedReducer<String, ClearEntitySelection>((selectedId, action) =>
       action.entityType == EntityType.quote ? '' : selectedId),
-  TypedReducer<String, FilterByEntity>((selectedId, action) =>
-      action.entityType == EntityType.quote ? action.entityId : selectedId),
+  TypedReducer<String, FilterByEntity>((selectedId, action) => action
+          .clearSelection
+      ? ''
+      : action.entityType == EntityType.quote ? action.entityId : selectedId),
 ]);
 
 final editingReducer = combineReducers<InvoiceEntity>([
@@ -134,7 +136,6 @@ final quoteListReducer = combineReducers<ListUIState>([
   TypedReducer<ListUIState, SortQuotes>(_sortQuotes),
   TypedReducer<ListUIState, FilterQuotesByState>(_filterQuotesByState),
   TypedReducer<ListUIState, FilterQuotesByStatus>(_filterQuotesByStatus),
-  TypedReducer<ListUIState, FilterByEntity>(_filterQuotesByEntity),
   TypedReducer<ListUIState, FilterQuotes>(_filterQuotes),
   TypedReducer<ListUIState, FilterQuotesByCustom1>(_filterQuotesByCustom1),
   TypedReducer<ListUIState, FilterQuotesByCustom2>(_filterQuotesByCustom2),
@@ -145,10 +146,6 @@ final quoteListReducer = combineReducers<ListUIState>([
   TypedReducer<ListUIState, RemoveFromQuoteMultiselect>(
       _removeFromListMultiselect),
   TypedReducer<ListUIState, ClearQuoteMultiselect>(_clearListMultiselect),
-  TypedReducer<ListUIState, ClearEntityFilter>(
-      (state, action) => state.rebuild((b) => b
-        ..filterEntityId = null
-        ..filterEntityType = null)),
 ]);
 
 ListUIState _filterQuotesByCustom1(
@@ -208,20 +205,6 @@ ListUIState _filterQuotesByStatus(
   } else {
     return quoteListState.rebuild((b) => b..statusFilters.add(action.status));
   }
-}
-
-ListUIState _filterQuotesByEntity(
-    ListUIState quoteListState, FilterByEntity action) {
-  if (quoteListState.filterEntityId == action.entityId &&
-      quoteListState.filterEntityType == action.entityType) {
-    return quoteListState.rebuild((b) => b
-      ..filterEntityId = null
-      ..filterEntityType = null);
-  }
-
-  return quoteListState.rebuild((b) => b
-    ..filterEntityId = action.entityId
-    ..filterEntityType = action.entityType);
 }
 
 ListUIState _filterQuotes(ListUIState quoteListState, FilterQuotes action) {
@@ -404,8 +387,11 @@ QuoteState _addQuote(QuoteState quoteState, AddQuoteSuccess action) {
     ..list.add(action.quote.id));
 }
 
-QuoteState _updateQuote(QuoteState quoteState, dynamic action) {
-  return quoteState.rebuild((b) => b..map[action.quote.id] = action.quote);
+QuoteState _updateQuote(QuoteState invoiceState, dynamic action) {
+  final InvoiceEntity quote = action.quote;
+  return invoiceState.rebuild((b) => b
+    ..map[quote.id] = quote
+        .rebuild((b) => b..loadedAt = DateTime.now().millisecondsSinceEpoch));
 }
 
 QuoteState _setLoadedQuotes(QuoteState quoteState, LoadQuotesSuccess action) =>

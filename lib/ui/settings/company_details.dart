@@ -227,6 +227,9 @@ class _CompanyDetailsState extends State<CompanyDetails>
                     autovalidate: autoValidate,
                     textInputAction: TextInputAction.next,
                     onFieldSubmitted: (String value) => _focusNode.nextFocus(),
+                    autofillHints: [
+                      AutofillHints.organizationName,
+                    ],
                   ),
                   DecoratedFormField(
                     label: localization.idNumber,
@@ -351,7 +354,7 @@ class _CompanyDetailsState extends State<CompanyDetails>
                             onPressed: () async {
                               String path;
                               if (kIsWeb) {
-                                path = await webFilePicker();
+                                path = await WebUtils.filePicker();
                               } else {
                                 final image = await ImagePicker().getImage(
                                     source: kReleaseMode
@@ -391,30 +394,35 @@ class _CompanyDetailsState extends State<CompanyDetails>
                     controller: _address1Controller,
                     textInputAction: TextInputAction.next,
                     onFieldSubmitted: (String value) => _focusNode.nextFocus(),
+                    autofillHints: [AutofillHints.streetAddressLine1],
                   ),
                   DecoratedFormField(
                     label: localization.address2,
                     controller: _address2Controller,
                     textInputAction: TextInputAction.next,
                     onFieldSubmitted: (String value) => _focusNode.nextFocus(),
+                    autofillHints: [AutofillHints.streetAddressLine2],
                   ),
                   DecoratedFormField(
                     label: localization.city,
                     controller: _cityController,
                     textInputAction: TextInputAction.next,
                     onFieldSubmitted: (String value) => _focusNode.nextFocus(),
+                    autofillHints: [AutofillHints.addressCity],
                   ),
                   DecoratedFormField(
                     label: localization.state,
                     controller: _stateController,
                     textInputAction: TextInputAction.next,
                     onFieldSubmitted: (String value) => _focusNode.nextFocus(),
+                    autofillHints: [AutofillHints.addressState],
                   ),
                   DecoratedFormField(
                     label: localization.postalCode,
                     controller: _postalCodeController,
                     textInputAction: TextInputAction.next,
                     onFieldSubmitted: (String value) => _focusNode.nextFocus(),
+                    autofillHints: [AutofillHints.postalCode],
                   ),
                   EntityDropdown(
                     allowClearing: state.settingsUIState.isFiltered,

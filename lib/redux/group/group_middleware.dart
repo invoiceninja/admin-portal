@@ -58,8 +58,6 @@ Middleware<AppState> _viewGroup() {
       NextDispatcher next) async {
     final action = dynamicAction as ViewGroup;
 
-
-
     next(action);
 
     store.dispatch(UpdateCurrentRoute(GroupViewScreen.route));
@@ -73,8 +71,6 @@ Middleware<AppState> _viewGroup() {
 Middleware<AppState> _viewGroupList() {
   return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
     final action = dynamicAction as ViewGroupList;
-
-
 
     next(action);
 

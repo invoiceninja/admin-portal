@@ -24,8 +24,8 @@ class EntityStatusChip extends StatelessWidget {
     switch (entity.entityType) {
       case EntityType.payment:
         final payment = entity as PaymentEntity;
-        label = kPaymentStatuses[payment.statusId];
-        color = PaymentStatusColors.colors[payment.statusId];
+        label = kPaymentStatuses[payment.calculatedStatusId];
+        color = PaymentStatusColors.colors[payment.calculatedStatusId];
         break;
       case EntityType.invoice:
         final invoice = entity as InvoiceEntity;

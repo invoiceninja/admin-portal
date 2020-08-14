@@ -6,6 +6,7 @@ import 'package:invoiceninja_flutter/data/models/entities.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/utils/formatting.dart';
+import 'package:invoiceninja_flutter/utils/strings.dart';
 
 part 'payment_model.g.dart';
 
@@ -58,6 +59,7 @@ class PaymentFields {
   static const String exchangeRate = 'exchange_rate';
   static const String exchangeCurrencyId = 'exchange_currency_id';
   static const String paymentStatus = 'payment_status';
+  static const String gateway = 'gateway';
   static const String customValue1 = 'custom1';
   static const String customValue2 = 'custom2';
   static const String customValue3 = 'custom3';
@@ -103,6 +105,12 @@ abstract class PaymentEntity extends Object
       projectId: '',
       number: '',
       sendEmail: state?.company?.settings?.clientManualPaymentNotification,
+      companyGatewayId: '',
+      clientContactId: '',
+      currencyId: '',
+      invitationId: '',
+      isForInvoice: false,
+      isApplying: false,
     );
   }
 
@@ -156,11 +164,9 @@ abstract class PaymentEntity extends Object
   @BuiltValueField(wireName: 'custom_value4')
   String get customValue4;
 
-  @nullable
   @BuiltValueField(wireName: 'exchange_rate')
   double get exchangeRate;
 
-  @nullable
   @BuiltValueField(wireName: 'exchange_currency_id')
   String get exchangeCurrencyId;
 
@@ -173,8 +179,23 @@ abstract class PaymentEntity extends Object
   @BuiltValueField(wireName: 'vendor_id')
   String get vendorId;
 
+  @BuiltValueField(wireName: 'invitation_id')
+  String get invitationId;
+
+  @BuiltValueField(wireName: 'client_contact_id')
+  String get clientContactId;
+
+  @BuiltValueField(wireName: 'company_gateway_id')
+  String get companyGatewayId;
+
+  @BuiltValueField(wireName: 'currency_id')
+  String get currencyId;
+
   @nullable
   bool get isForInvoice;
+
+  @nullable
+  bool get isApplying;
 
   @nullable
   bool get sendEmail;
@@ -187,6 +208,14 @@ abstract class PaymentEntity extends Object
   BuiltList<PaymentableEntity> get invoices;
 
   BuiltList<PaymentableEntity> get credits;
+
+  String get calculatedStatusId {
+    if (applied < amount) {
+      return kPaymentStatusUnapplied;
+    }
+
+    return statusId;
+  }
 
   int compareTo(
       {PaymentEntity payment,
@@ -304,66 +333,32 @@ abstract class PaymentEntity extends Object
 
   @override
   bool matchesFilter(String filter) {
-    if (filter == null || filter.isEmpty) {
-      return true;
-    }
-
-    filter = filter.toLowerCase();
-
-    if (transactionReference.toLowerCase().contains(filter)) {
-      return true;
-    } else if (privateNotes.toLowerCase().contains(filter)) {
-      return true;
-    } else if (customValue1.isNotEmpty &&
-        customValue1.toLowerCase().contains(filter)) {
-      return true;
-    } else if (customValue2.isNotEmpty &&
-        customValue2.toLowerCase().contains(filter)) {
-      return true;
-    } else if (customValue3.isNotEmpty &&
-        customValue3.toLowerCase().contains(filter)) {
-      return true;
-    } else if (customValue4.isNotEmpty &&
-        customValue4.toLowerCase().contains(filter)) {
-      return true;
-    }
-    /*
-    } else if (customValue1.isNotEmpty &&
-        customValue2.toLowerCase().contains(filter)) {
-      return customValue2;
-    }
-    */
-
-    return false;
+    return matchesStrings(
+      haystacks: [
+        transactionReference,
+        privateNotes,
+        customValue1,
+        customValue2,
+        customValue3,
+        customValue4,
+      ],
+      needle: filter,
+    );
   }
 
   @override
   String matchesFilterValue(String filter) {
-    if (filter == null || filter.isEmpty) {
-      return null;
-    }
-
-    filter = filter.toLowerCase();
-
-    if (transactionReference.toLowerCase().contains(filter)) {
-      return transactionReference;
-    } else if (privateNotes.toLowerCase().contains(filter)) {
-      return privateNotes;
-    } else if (customValue1.isNotEmpty &&
-        customValue1.toLowerCase().contains(filter)) {
-      return customValue1;
-    } else if (customValue2.isNotEmpty &&
-        customValue2.toLowerCase().contains(filter)) {
-      return customValue2;
-    } else if (customValue3.isNotEmpty &&
-        customValue3.toLowerCase().contains(filter)) {
-      return customValue3;
-    } else if (customValue4.isNotEmpty &&
-        customValue4.toLowerCase().contains(filter)) {
-      return customValue4;
-    }
-
-    return null;
+    return matchesStringsValue(
+      haystacks: [
+        transactionReference,
+        privateNotes,
+        customValue1,
+        customValue2,
+        customValue3,
+        customValue4,
+      ],
+      needle: filter,
+    );
   }
 
   @override
@@ -375,11 +370,15 @@ abstract class PaymentEntity extends Object
     final actions = <EntityAction>[];
 
     if (!isDeleted) {
-      if (includeEdit && userCompany.canEditEntity(this)) {
-        actions.add(EntityAction.edit);
-      }
-
       if (userCompany.canEditEntity(this)) {
+        if (includeEdit) {
+          actions.add(EntityAction.edit);
+        }
+
+        if (applied < amount) {
+          actions.add(EntityAction.apply);
+        }
+
         if (completedAmount > 0) {
           actions.add(EntityAction.refund);
         }
@@ -437,8 +436,12 @@ abstract class PaymentEntity extends Object
   FormatNumberType get listDisplayAmountType => FormatNumberType.money;
 
   double get completedAmount {
+    if (isDeleted) {
+      return 0;
+    }
+
     if ([kPaymentStatusCancelled, kPaymentStatusFailed].contains(statusId)) {
-      return 0.0;
+      return 0;
     }
 
     return amount - (refunded ?? 0);

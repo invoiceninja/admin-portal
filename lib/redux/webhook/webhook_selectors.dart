@@ -32,19 +32,31 @@ List<String> dropdownWebhooksSelector(
   return list;
 }
 
-var memoizedFilteredWebhookList = memo3(
-    (BuiltMap<String, WebhookEntity> webhookMap, BuiltList<String> webhookList,
-            ListUIState webhookListState) =>
-        filteredWebhooksSelector(webhookMap, webhookList, webhookListState));
+var memoizedFilteredWebhookList = memo5((
+  String filterEntityId,
+  EntityType filterEntityType,
+  BuiltMap<String, WebhookEntity> webhookMap,
+  BuiltList<String> webhookList,
+  ListUIState webhookListState,
+) =>
+    filteredWebhooksSelector(
+      filterEntityId,
+      filterEntityType,
+      webhookMap,
+      webhookList,
+      webhookListState,
+    ));
 
 List<String> filteredWebhooksSelector(
-    BuiltMap<String, WebhookEntity> webhookMap,
-    BuiltList<String> webhookList,
-    ListUIState webhookListState) {
+  String filterEntityId,
+  EntityType filterEntityType,
+  BuiltMap<String, WebhookEntity> webhookMap,
+  BuiltList<String> webhookList,
+  ListUIState webhookListState,
+) {
   final list = webhookList.where((webhookId) {
     final webhook = webhookMap[webhookId];
-    if (webhookListState.filterEntityId != null &&
-        webhook.id != webhookListState.filterEntityId) {
+    if (filterEntityId != null && webhook.id != filterEntityId) {
       return false;
     } else {}
 

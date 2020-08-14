@@ -3,11 +3,13 @@ import 'dart:convert';
 import 'package:built_collection/built_collection.dart';
 import 'package:built_value/built_value.dart';
 import 'package:built_value/serializer.dart';
+import 'package:invoiceninja_flutter/constants.dart';
 import 'package:invoiceninja_flutter/data/models/company_model.dart';
 import 'package:invoiceninja_flutter/data/models/entities.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/utils/formatting.dart';
+import 'package:invoiceninja_flutter/utils/strings.dart';
 
 part 'company_gateway_model.g.dart';
 
@@ -138,6 +140,8 @@ abstract class CompanyGatewayEntity extends Object
     return gateway.name;
   }
 
+  bool get isCustom => gatewayId == kGatewayCustom;
+
   bool supportsCard(int cardType) => acceptedCreditCards & cardType > 0;
 
   CompanyGatewayEntity addCard(int cardType) =>
@@ -163,25 +167,30 @@ abstract class CompanyGatewayEntity extends Object
 
   @override
   bool matchesFilter(String filter) {
-    if (filter == null || filter.isEmpty) {
-      return true;
-    }
-    filter = filter.toLowerCase();
-
-    if (gateway.name.toLowerCase().contains(filter)) {
-      return true;
-    }
-
-    return false;
+    return matchesStrings(
+      haystacks: [
+        gateway.name,
+        customValue1,
+        customValue2,
+        customValue3,
+        customValue4,
+      ],
+      needle: filter,
+    );
   }
 
   @override
   String matchesFilterValue(String filter) {
-    if (filter == null || filter.isEmpty) {
-      return null;
-    }
-
-    return null;
+    return matchesStringsValue(
+      haystacks: [
+        gateway.name,
+        customValue1,
+        customValue2,
+        customValue3,
+        customValue4,
+      ],
+      needle: filter,
+    );
   }
 
   @override
@@ -192,10 +201,18 @@ abstract class CompanyGatewayEntity extends Object
       bool multiselect = false}) {
     final actions = <EntityAction>[];
 
-    // TODO remove ??
-    if (!(isDeleted ?? false)) {
+    if (!isDeleted) {
       if (includeEdit && userCompany.canEditEntity(this)) {
         actions.add(EntityAction.edit);
+      }
+
+      if (client != null &&
+          client.gatewayTokens
+              .where((token) => token.companyGatewayId == id)
+              .isNotEmpty) {
+        if (gatewayId == kGatewayStripe) {
+          actions.add(EntityAction.viewInStripe);
+        }
       }
     }
 

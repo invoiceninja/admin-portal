@@ -28,6 +28,7 @@ List<Middleware<AppState>> createStoreQuotesMiddleware([
   final deleteQuote = _deleteQuote(repository);
   final restoreQuote = _restoreQuote(repository);
   final emailQuote = _emailQuote(repository);
+  final bulkEmailQuotes = _bulkEmailQuotes(repository);
   final markSentQuote = _markSentQuote(repository);
   final saveDocument = _saveDocument(repository);
 
@@ -44,6 +45,7 @@ List<Middleware<AppState>> createStoreQuotesMiddleware([
     TypedMiddleware<AppState, DeleteQuotesRequest>(deleteQuote),
     TypedMiddleware<AppState, RestoreQuotesRequest>(restoreQuote),
     TypedMiddleware<AppState, EmailQuoteRequest>(emailQuote),
+    TypedMiddleware<AppState, BulkEmailQuotesRequest>(bulkEmailQuotes),
     TypedMiddleware<AppState, MarkSentQuotesRequest>(markSentQuote),
     TypedMiddleware<AppState, SaveQuoteDocumentRequest>(saveDocument),
   ];
@@ -53,8 +55,6 @@ Middleware<AppState> _viewQuote() {
   return (Store<AppState> store, dynamic dynamicAction,
       NextDispatcher next) async {
     final action = dynamicAction as ViewQuote;
-
-
 
     next(action);
 
@@ -69,8 +69,6 @@ Middleware<AppState> _viewQuote() {
 Middleware<AppState> _viewQuoteList() {
   return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
     final action = dynamicAction as ViewQuoteList;
-
-
 
     next(action);
 
@@ -90,8 +88,6 @@ Middleware<AppState> _viewQuoteList() {
 Middleware<AppState> _editQuote() {
   return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
     final action = dynamicAction as EditQuote;
-
-
 
     next(action);
 
@@ -315,6 +311,30 @@ Middleware<AppState> _loadQuote(QuoteRepository repository) {
     }).catchError((Object error) {
       print(error);
       store.dispatch(LoadQuoteFailure(error));
+      if (action.completer != null) {
+        action.completer.completeError(error);
+      }
+    });
+
+    next(action);
+  };
+}
+
+Middleware<AppState> _bulkEmailQuotes(QuoteRepository repository) {
+  return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
+    final action = dynamicAction as BulkEmailQuotesRequest;
+
+    repository
+        .bulkAction(
+            store.state.credentials, action.quoteIds, EntityAction.emailQuote)
+        .then((List<InvoiceEntity> quotes) {
+      store.dispatch(BulkEmailQuotesSuccess(quotes));
+      if (action.completer != null) {
+        action.completer.complete(null);
+      }
+    }).catchError((Object error) {
+      print(error);
+      store.dispatch(BulkEmailQuotesFailure(error));
       if (action.completer != null) {
         action.completer.completeError(error);
       }

@@ -12,6 +12,7 @@ class Constants {
 const String kClientVersion = '5.0.15';
 const String kMinServerVersion = '5.0.4';
 
+const String kAppName = 'Invoice Ninja';
 const String kSiteUrl = 'https://invoiceninja.com';
 //const String kAppProductionUrl = 'https://invoicing.co';
 const String kAppProductionUrl =
@@ -69,6 +70,7 @@ const double kMobileDialogPadding = 12;
 const double kDrawerWidth = 300;
 const double kTableColumnGap = 20;
 const double kTopBottomBarHeight = 50;
+const double kDialogWidth = 400;
 const double kDashboardPanelHeight = 509; // TODO remove this
 
 const double kTabletLayoutWidth = 1100;
@@ -108,7 +110,7 @@ const int kUpdatedAtBufferSeconds = 600;
 const int kMillisecondsToRefreshActivities = 1000 * 60 * 60 * 24; // 1 day
 const int kMillisecondsToRefreshStaticData = 1000 * 60 * 60 * 24; // 1 day
 const int kMillisecondsToReenterPassword = 1000 * 60 * 30; // 30 minutes
-const int kMillisecondsToDebounceStateSave = 1000 * 2; // 2 seconds
+const int kMillisecondsToDebounceSave = 1000 * 2; // 2 seconds
 
 const String kLanguageEnglish = '1';
 
@@ -237,6 +239,10 @@ const kNotificationEvents = [
 ];
 
 const String kGatewayStripe = 'd14dd26a37cecc30fdd65700bfb55b23';
+const String kGatewayAuthorizeNet = '3b6621f970ab18887c4f6dca78d3f8bb';
+const String kGatewayCheckoutCom = '';
+const String kGatewayPayPal = '';
+const String kGatewayCustom = '54faab2ab6e3223dbe848b1686490baa';
 
 const String kClientPortalModeSubdomain = 'subdomain';
 const String kClientPortalModeDomain = 'domain';
@@ -390,6 +396,7 @@ const String kPermissionCreateAll = 'create_all';
 const String kPermissionViewAll = 'view_all';
 const String kPermissionEditAll = 'edit_all';
 
+const String kPaymentStatusUnapplied = '-1';
 const String kPaymentStatusPending = '1';
 const String kPaymentStatusCancelled = '2';
 const String kPaymentStatusFailed = '3';
@@ -398,6 +405,7 @@ const String kPaymentStatusPartiallyRefunded = '5';
 const String kPaymentStatusRefunded = '6';
 
 const kPaymentStatuses = {
+  kPaymentStatusUnapplied: 'unapplied',
   kPaymentStatusPending: 'pending',
   kPaymentStatusCancelled: 'cancelled',
   kPaymentStatusFailed: 'failed',
@@ -502,6 +510,7 @@ class PaymentStatusColors {
     kPaymentStatusCompleted: kColorGreen,
     kPaymentStatusPartiallyRefunded: Colors.purple,
     kPaymentStatusRefunded: convertHexStringToColor('#8D3E3F'),
+    kPaymentStatusUnapplied: convertHexStringToColor('#444444'),
   };
 }
 
@@ -547,6 +556,47 @@ const List<String> kLanguages = [
   'th',
   'tr_TR',
   'bg',
+];
+
+List<String> kCustomLabels = [
+  'address1',
+  'address2',
+  'amount',
+  'balance',
+  'country',
+  'credit',
+  'credit_card',
+  'date',
+  'description',
+  'details',
+  'discount',
+  'due_date',
+  'email',
+  'from',
+  'hours',
+  'id_number',
+  'invoice',
+  'item',
+  'line_total',
+  'paid_to_date',
+  'payment_date',
+  'phone',
+  'po_number',
+  'quantity',
+  'quote',
+  'rate',
+  'statement',
+  'subtotal',
+  'surcharge',
+  'tax',
+  'taxes',
+  'terms',
+  'to',
+  'total',
+  'unit_cost',
+  'valid_until',
+  'vat_number',
+  'website',
 ];
 
 const kDaysOfTheWeek = {

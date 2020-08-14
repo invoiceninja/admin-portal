@@ -5,6 +5,7 @@ import 'package:invoiceninja_flutter/data/models/entities.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/utils/formatting.dart';
+import 'package:invoiceninja_flutter/utils/strings.dart';
 
 part 'product_model.g.dart';
 
@@ -55,6 +56,7 @@ class ProductFields {
   static const String customValue2 = 'custom2';
   static const String customValue3 = 'custom3';
   static const String customValue4 = 'custom4';
+  static const String documents = 'documents';
 }
 
 abstract class ProductEntity extends Object
@@ -87,6 +89,7 @@ abstract class ProductEntity extends Object
       createdUserId: '',
       projectId: '',
       vendorId: '',
+      documents: BuiltList<DocumentEntity>(),
     );
   }
 
@@ -156,6 +159,8 @@ abstract class ProductEntity extends Object
   @nullable
   @BuiltValueField(wireName: 'vendor_id')
   String get vendorId;
+
+  BuiltList<DocumentEntity> get documents;
 
   @override
   String get listDisplayName {
@@ -249,6 +254,10 @@ abstract class ProductEntity extends Object
             .toLowerCase()
             .compareTo(productB.customValue4.toLowerCase());
         break;
+      case ProductFields.documents:
+        response =
+            productA.documents.length.compareTo(productB.documents.length);
+        break;
       default:
         print('## ERROR: sort by product.$sortField is not implemented');
         break;
@@ -259,56 +268,31 @@ abstract class ProductEntity extends Object
 
   @override
   bool matchesFilter(String filter) {
-    if (filter == null || filter.isEmpty) {
-      return true;
-    }
-
-    filter = filter.toLowerCase();
-
-    if (productKey.toLowerCase().contains(filter)) {
-      return true;
-    } else if (notes.toLowerCase().contains(filter)) {
-      return true;
-    } else if (customValue1.isNotEmpty &&
-        customValue1.toLowerCase().contains(filter)) {
-      return true;
-    } else if (customValue2.isNotEmpty &&
-        customValue2.toLowerCase().contains(filter)) {
-      return true;
-    } else if (customValue3.isNotEmpty &&
-        customValue3.toLowerCase().contains(filter)) {
-      return true;
-    } else if (customValue4.isNotEmpty &&
-        customValue4.toLowerCase().contains(filter)) {
-      return true;
-    }
-
-    return false;
+    return matchesStrings(
+      haystacks: [
+        productKey,
+        notes,
+        customValue1,
+        customValue2,
+        customValue3,
+        customValue4,
+      ],
+      needle: filter,
+    );
   }
 
   @override
   String matchesFilterValue(String filter) {
-    if (filter == null || filter.isEmpty) {
-      return null;
-    }
-
-    filter = filter.toLowerCase();
-    if (notes.toLowerCase().contains(filter)) {
-      return notes;
-    } else if (customValue1.isNotEmpty &&
-        customValue1.toLowerCase().contains(filter)) {
-      return customValue1;
-    } else if (customValue2.isNotEmpty &&
-        customValue2.toLowerCase().contains(filter)) {
-      return customValue2;
-    } else if (customValue3.isNotEmpty &&
-        customValue3.toLowerCase().contains(filter)) {
-      return customValue1;
-    } else if (customValue3.isNotEmpty &&
-        customValue3.toLowerCase().contains(filter)) {
-      return customValue2;
-    }
-    return null;
+    return matchesStringsValue(
+      haystacks: [
+        notes,
+        customValue1,
+        customValue2,
+        customValue3,
+        customValue4,
+      ],
+      needle: filter,
+    );
   }
 
   @override

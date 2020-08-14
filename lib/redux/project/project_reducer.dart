@@ -78,24 +78,12 @@ final projectListReducer = combineReducers<ListUIState>([
   TypedReducer<ListUIState, FilterProjectsByCustom2>(_filterProjectsByCustom2),
   TypedReducer<ListUIState, FilterProjectsByCustom3>(_filterProjectsByCustom3),
   TypedReducer<ListUIState, FilterProjectsByCustom4>(_filterProjectsByCustom4),
-  TypedReducer<ListUIState, FilterByEntity>(_filterProjectsByClient),
   TypedReducer<ListUIState, StartProjectMultiselect>(_startListMultiselect),
   TypedReducer<ListUIState, AddToProjectMultiselect>(_addToListMultiselect),
   TypedReducer<ListUIState, RemoveFromProjectMultiselect>(
       _removeFromListMultiselect),
   TypedReducer<ListUIState, ClearProjectMultiselect>(_clearListMultiselect),
-  TypedReducer<ListUIState, ClearEntityFilter>(
-      (state, action) => state.rebuild((b) => b
-        ..filterEntityId = null
-        ..filterEntityType = null)),
 ]);
-
-ListUIState _filterProjectsByClient(
-    ListUIState projectListState, FilterByEntity action) {
-  return projectListState.rebuild((b) => b
-    ..filterEntityId = action.entityId
-    ..filterEntityType = action.entityType);
-}
 
 ListUIState _filterProjectsByCustom1(
     ListUIState projectListState, FilterProjectsByCustom1 action) {

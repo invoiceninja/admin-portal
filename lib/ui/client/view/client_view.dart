@@ -9,6 +9,7 @@ import 'package:invoiceninja_flutter/ui/app/buttons/bottom_buttons.dart';
 import 'package:invoiceninja_flutter/ui/app/view_scaffold.dart';
 import 'package:invoiceninja_flutter/ui/client/view/client_view_activity.dart';
 import 'package:invoiceninja_flutter/ui/client/view/client_view_details.dart';
+import 'package:invoiceninja_flutter/ui/client/view/client_view_documents.dart';
 import 'package:invoiceninja_flutter/ui/client/view/client_view_ledger.dart';
 import 'package:invoiceninja_flutter/ui/client/view/client_view_vm.dart';
 import 'package:invoiceninja_flutter/ui/client/view/client_view_overview.dart';
@@ -35,7 +36,7 @@ class _ClientViewState extends State<ClientView>
   @override
   void initState() {
     super.initState();
-    _controller = TabController(vsync: this, length: 4);
+    _controller = TabController(vsync: this, length: 5);
   }
 
   @override
@@ -50,6 +51,7 @@ class _ClientViewState extends State<ClientView>
     final store = StoreProvider.of<AppState>(context);
     final viewModel = widget.viewModel;
     final client = viewModel.client;
+    final documents = client.documents;
     final userCompany = viewModel.state.userCompany;
 
     return ViewScaffold(
@@ -64,6 +66,11 @@ class _ClientViewState extends State<ClientView>
           ),
           Tab(
             text: localization.details,
+          ),
+          Tab(
+            text: documents.isEmpty
+                ? localization.documents
+                : '${localization.documents} (${documents.length})',
           ),
           Tab(
             text: localization.ledger,
@@ -90,6 +97,13 @@ class _ClientViewState extends State<ClientView>
                   RefreshIndicator(
                     onRefresh: () => viewModel.onRefreshed(context),
                     child: ClientViewDetails(client: viewModel.client),
+                  ),
+                  RefreshIndicator(
+                    onRefresh: () => viewModel.onRefreshed(context),
+                    child: ClientViewDocuments(
+                      viewModel: viewModel,
+                      key: ValueKey(viewModel.client.id),
+                    ),
                   ),
                   RefreshIndicator(
                     onRefresh: () => viewModel.onRefreshed(context),

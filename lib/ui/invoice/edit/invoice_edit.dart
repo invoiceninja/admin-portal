@@ -107,16 +107,22 @@ class _InvoiceEditState extends State<InvoiceEdit>
       body: Form(
         key: _formKey,
         child: state.prefState.isDesktop
-            ? InvoiceEditDetailsScreen()
+            ? InvoiceEditDetailsScreen(
+          viewModel: widget.viewModel,
+        )
             : TabBarView(
                 key: ValueKey('__invoice_${viewModel.invoice.id}__'),
                 controller: _controller,
                 children: <Widget>[
-                  InvoiceEditDetailsScreen(),
+                  InvoiceEditDetailsScreen(
+                    viewModel: widget.viewModel,
+                  ),
                   InvoiceEditContactsScreen(
                     entityType: invoice.entityType,
                   ),
-                  InvoiceEditItemsScreen(),
+                  InvoiceEditItemsScreen(
+                    viewModel: widget.viewModel,
+                  ),
                   InvoiceEditNotesScreen(),
                 ],
               ),

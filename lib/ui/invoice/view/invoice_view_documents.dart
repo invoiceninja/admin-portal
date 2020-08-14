@@ -5,7 +5,8 @@ import 'package:invoiceninja_flutter/ui/invoice/view/invoice_view_vm.dart';
 
 class InvoiceViewDocuments extends StatelessWidget {
   const InvoiceViewDocuments(
-      {@required this.invoice, @required this.viewModel});
+      {Key key, @required this.invoice, @required this.viewModel})
+      : super(key: key);
 
   final EntityViewVM viewModel;
   final InvoiceEntity invoice;
@@ -15,8 +16,8 @@ class InvoiceViewDocuments extends StatelessWidget {
     return DocumentGrid(
       documents: invoice.documents.toList(),
       onUploadDocument: (path) => viewModel.onUploadDocument(context, path),
-      onDeleteDocument: (document) =>
-          viewModel.onDeleteDocument(context, document),
+      onDeleteDocument: (document, password) =>
+          viewModel.onDeleteDocument(context, document, password),
       onViewExpense: (document) => viewModel.onViewExpense(context, document),
     );
   }

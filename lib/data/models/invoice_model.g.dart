@@ -16,6 +16,8 @@ Serializer<InvoiceItemEntity> _$invoiceItemEntitySerializer =
     new _$InvoiceItemEntitySerializer();
 Serializer<InvitationEntity> _$invitationEntitySerializer =
     new _$InvitationEntitySerializer();
+Serializer<InvoiceHistoryEntity> _$invoiceHistoryEntitySerializer =
+    new _$InvoiceHistoryEntitySerializer();
 
 class _$InvoiceListResponseSerializer
     implements StructuredSerializer<InvoiceListResponse> {
@@ -292,6 +294,19 @@ class _$InvoiceEntitySerializer implements StructuredSerializer<InvoiceEntity> {
         ..add(serializers.serialize(object.filename,
             specifiedType: const FullType(String)));
     }
+    if (object.history != null) {
+      result
+        ..add('history')
+        ..add(serializers.serialize(object.history,
+            specifiedType: const FullType(
+                BuiltList, const [const FullType(InvoiceHistoryEntity)])));
+    }
+    if (object.loadedAt != null) {
+      result
+        ..add('loadedAt')
+        ..add(serializers.serialize(object.loadedAt,
+            specifiedType: const FullType(int)));
+    }
     if (object.isChanged != null) {
       result
         ..add('isChanged')
@@ -522,6 +537,16 @@ class _$InvoiceEntitySerializer implements StructuredSerializer<InvoiceEntity> {
                   specifiedType: const FullType(
                       BuiltList, const [const FullType(DocumentEntity)]))
               as BuiltList<Object>);
+          break;
+        case 'history':
+          result.history.replace(serializers.deserialize(value,
+                  specifiedType: const FullType(
+                      BuiltList, const [const FullType(InvoiceHistoryEntity)]))
+              as BuiltList<Object>);
+          break;
+        case 'loadedAt':
+          result.loadedAt = serializers.deserialize(value,
+              specifiedType: const FullType(int)) as int;
           break;
         case 'isChanged':
           result.isChanged = serializers.deserialize(value,
@@ -888,6 +913,72 @@ class _$InvitationEntitySerializer
   }
 }
 
+class _$InvoiceHistoryEntitySerializer
+    implements StructuredSerializer<InvoiceHistoryEntity> {
+  @override
+  final Iterable<Type> types = const [
+    InvoiceHistoryEntity,
+    _$InvoiceHistoryEntity
+  ];
+  @override
+  final String wireName = 'InvoiceHistoryEntity';
+
+  @override
+  Iterable<Object> serialize(
+      Serializers serializers, InvoiceHistoryEntity object,
+      {FullType specifiedType = FullType.unspecified}) {
+    final result = <Object>[
+      'id',
+      serializers.serialize(object.id, specifiedType: const FullType(String)),
+      'activity_id',
+      serializers.serialize(object.activityId,
+          specifiedType: const FullType(String)),
+      'html_backup',
+      serializers.serialize(object.htmlBackup,
+          specifiedType: const FullType(String)),
+      'created_at',
+      serializers.serialize(object.createdAt,
+          specifiedType: const FullType(int)),
+    ];
+
+    return result;
+  }
+
+  @override
+  InvoiceHistoryEntity deserialize(
+      Serializers serializers, Iterable<Object> serialized,
+      {FullType specifiedType = FullType.unspecified}) {
+    final result = new InvoiceHistoryEntityBuilder();
+
+    final iterator = serialized.iterator;
+    while (iterator.moveNext()) {
+      final key = iterator.current as String;
+      iterator.moveNext();
+      final dynamic value = iterator.current;
+      switch (key) {
+        case 'id':
+          result.id = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String;
+          break;
+        case 'activity_id':
+          result.activityId = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String;
+          break;
+        case 'html_backup':
+          result.htmlBackup = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String;
+          break;
+        case 'created_at':
+          result.createdAt = serializers.deserialize(value,
+              specifiedType: const FullType(int)) as int;
+          break;
+      }
+    }
+
+    return result.build();
+  }
+}
+
 class _$InvoiceListResponse extends InvoiceListResponse {
   @override
   final BuiltList<InvoiceEntity> data;
@@ -1171,6 +1262,10 @@ class _$InvoiceEntity extends InvoiceEntity {
   @override
   final BuiltList<DocumentEntity> documents;
   @override
+  final BuiltList<InvoiceHistoryEntity> history;
+  @override
+  final int loadedAt;
+  @override
   final bool isChanged;
   @override
   final int createdAt;
@@ -1238,6 +1333,8 @@ class _$InvoiceEntity extends InvoiceEntity {
       this.lineItems,
       this.invitations,
       this.documents,
+      this.history,
+      this.loadedAt,
       this.isChanged,
       this.createdAt,
       this.updatedAt,
@@ -1432,6 +1529,8 @@ class _$InvoiceEntity extends InvoiceEntity {
         lineItems == other.lineItems &&
         invitations == other.invitations &&
         documents == other.documents &&
+        history == other.history &&
+        loadedAt == other.loadedAt &&
         isChanged == other.isChanged &&
         createdAt == other.createdAt &&
         updatedAt == other.updatedAt &&
@@ -1464,17 +1563,17 @@ class _$InvoiceEntity extends InvoiceEntity {
                                                                 $jc(
                                                                     $jc(
                                                                         $jc(
-                                                                            $jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc(0, amount.hashCode), balance.hashCode), clientId.hashCode), statusId.hashCode), number.hashCode), discount.hashCode), poNumber.hashCode), date.hashCode), dueDate.hashCode), publicNotes.hashCode), privateNotes.hashCode), terms.hashCode), footer.hashCode), designId.hashCode), usesInclusiveTaxes.hashCode), taxName1.hashCode), taxRate1.hashCode), taxName2.hashCode), taxRate2.hashCode), taxName3.hashCode), taxRate3.hashCode), isAmountDiscount.hashCode), partial.hashCode), taxAmount.hashCode), partialDueDate.hashCode), hasTasks.hashCode), autoBill.hashCode), customValue1.hashCode), customValue2.hashCode), customValue3.hashCode), customValue4.hashCode), customSurcharge1.hashCode), customSurcharge2.hashCode), customSurcharge3.hashCode), customSurcharge4.hashCode),
-                                                                                customTaxes1.hashCode),
-                                                                            customTaxes2.hashCode),
-                                                                        customTaxes3.hashCode),
-                                                                    customTaxes4.hashCode),
-                                                                hasExpenses.hashCode),
-                                                            invoiceId.hashCode),
-                                                        filename.hashCode),
-                                                    lineItems.hashCode),
-                                                invitations.hashCode),
-                                            documents.hashCode),
+                                                                            $jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc(0, amount.hashCode), balance.hashCode), clientId.hashCode), statusId.hashCode), number.hashCode), discount.hashCode), poNumber.hashCode), date.hashCode), dueDate.hashCode), publicNotes.hashCode), privateNotes.hashCode), terms.hashCode), footer.hashCode), designId.hashCode), usesInclusiveTaxes.hashCode), taxName1.hashCode), taxRate1.hashCode), taxName2.hashCode), taxRate2.hashCode), taxName3.hashCode), taxRate3.hashCode), isAmountDiscount.hashCode), partial.hashCode), taxAmount.hashCode), partialDueDate.hashCode), hasTasks.hashCode), autoBill.hashCode), customValue1.hashCode), customValue2.hashCode), customValue3.hashCode), customValue4.hashCode), customSurcharge1.hashCode), customSurcharge2.hashCode), customSurcharge3.hashCode), customSurcharge4.hashCode), customTaxes1.hashCode), customTaxes2.hashCode),
+                                                                                customTaxes3.hashCode),
+                                                                            customTaxes4.hashCode),
+                                                                        hasExpenses.hashCode),
+                                                                    invoiceId.hashCode),
+                                                                filename.hashCode),
+                                                            lineItems.hashCode),
+                                                        invitations.hashCode),
+                                                    documents.hashCode),
+                                                history.hashCode),
+                                            loadedAt.hashCode),
                                         isChanged.hashCode),
                                     createdAt.hashCode),
                                 updatedAt.hashCode),
@@ -1534,6 +1633,8 @@ class _$InvoiceEntity extends InvoiceEntity {
           ..add('lineItems', lineItems)
           ..add('invitations', invitations)
           ..add('documents', documents)
+          ..add('history', history)
+          ..add('loadedAt', loadedAt)
           ..add('isChanged', isChanged)
           ..add('createdAt', createdAt)
           ..add('updatedAt', updatedAt)
@@ -1744,6 +1845,16 @@ class InvoiceEntityBuilder
   set documents(ListBuilder<DocumentEntity> documents) =>
       _$this._documents = documents;
 
+  ListBuilder<InvoiceHistoryEntity> _history;
+  ListBuilder<InvoiceHistoryEntity> get history =>
+      _$this._history ??= new ListBuilder<InvoiceHistoryEntity>();
+  set history(ListBuilder<InvoiceHistoryEntity> history) =>
+      _$this._history = history;
+
+  int _loadedAt;
+  int get loadedAt => _$this._loadedAt;
+  set loadedAt(int loadedAt) => _$this._loadedAt = loadedAt;
+
   bool _isChanged;
   bool get isChanged => _$this._isChanged;
   set isChanged(bool isChanged) => _$this._isChanged = isChanged;
@@ -1831,6 +1942,8 @@ class InvoiceEntityBuilder
       _lineItems = _$v.lineItems?.toBuilder();
       _invitations = _$v.invitations?.toBuilder();
       _documents = _$v.documents?.toBuilder();
+      _history = _$v.history?.toBuilder();
+      _loadedAt = _$v.loadedAt;
       _isChanged = _$v.isChanged;
       _createdAt = _$v.createdAt;
       _updatedAt = _$v.updatedAt;
@@ -1909,6 +2022,8 @@ class InvoiceEntityBuilder
               lineItems: lineItems.build(),
               invitations: invitations.build(),
               documents: documents.build(),
+              history: _history?.build(),
+              loadedAt: loadedAt,
               isChanged: isChanged,
               createdAt: createdAt,
               updatedAt: updatedAt,
@@ -1927,6 +2042,8 @@ class InvoiceEntityBuilder
         invitations.build();
         _$failedField = 'documents';
         documents.build();
+        _$failedField = 'history';
+        _history?.build();
       } catch (e) {
         throw new BuiltValueNestedFieldError(
             'InvoiceEntity', _$failedField, e.toString());
@@ -2582,6 +2699,134 @@ class InvitationEntityBuilder
             assignedUserId: assignedUserId,
             entityType: entityType,
             id: id);
+    replace(_$result);
+    return _$result;
+  }
+}
+
+class _$InvoiceHistoryEntity extends InvoiceHistoryEntity {
+  @override
+  final String id;
+  @override
+  final String activityId;
+  @override
+  final String htmlBackup;
+  @override
+  final int createdAt;
+
+  factory _$InvoiceHistoryEntity(
+          [void Function(InvoiceHistoryEntityBuilder) updates]) =>
+      (new InvoiceHistoryEntityBuilder()..update(updates)).build();
+
+  _$InvoiceHistoryEntity._(
+      {this.id, this.activityId, this.htmlBackup, this.createdAt})
+      : super._() {
+    if (id == null) {
+      throw new BuiltValueNullFieldError('InvoiceHistoryEntity', 'id');
+    }
+    if (activityId == null) {
+      throw new BuiltValueNullFieldError('InvoiceHistoryEntity', 'activityId');
+    }
+    if (htmlBackup == null) {
+      throw new BuiltValueNullFieldError('InvoiceHistoryEntity', 'htmlBackup');
+    }
+    if (createdAt == null) {
+      throw new BuiltValueNullFieldError('InvoiceHistoryEntity', 'createdAt');
+    }
+  }
+
+  @override
+  InvoiceHistoryEntity rebuild(
+          void Function(InvoiceHistoryEntityBuilder) updates) =>
+      (toBuilder()..update(updates)).build();
+
+  @override
+  InvoiceHistoryEntityBuilder toBuilder() =>
+      new InvoiceHistoryEntityBuilder()..replace(this);
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(other, this)) return true;
+    return other is InvoiceHistoryEntity &&
+        id == other.id &&
+        activityId == other.activityId &&
+        htmlBackup == other.htmlBackup &&
+        createdAt == other.createdAt;
+  }
+
+  int __hashCode;
+  @override
+  int get hashCode {
+    return __hashCode ??= $jf($jc(
+        $jc($jc($jc(0, id.hashCode), activityId.hashCode), htmlBackup.hashCode),
+        createdAt.hashCode));
+  }
+
+  @override
+  String toString() {
+    return (newBuiltValueToStringHelper('InvoiceHistoryEntity')
+          ..add('id', id)
+          ..add('activityId', activityId)
+          ..add('htmlBackup', htmlBackup)
+          ..add('createdAt', createdAt))
+        .toString();
+  }
+}
+
+class InvoiceHistoryEntityBuilder
+    implements Builder<InvoiceHistoryEntity, InvoiceHistoryEntityBuilder> {
+  _$InvoiceHistoryEntity _$v;
+
+  String _id;
+  String get id => _$this._id;
+  set id(String id) => _$this._id = id;
+
+  String _activityId;
+  String get activityId => _$this._activityId;
+  set activityId(String activityId) => _$this._activityId = activityId;
+
+  String _htmlBackup;
+  String get htmlBackup => _$this._htmlBackup;
+  set htmlBackup(String htmlBackup) => _$this._htmlBackup = htmlBackup;
+
+  int _createdAt;
+  int get createdAt => _$this._createdAt;
+  set createdAt(int createdAt) => _$this._createdAt = createdAt;
+
+  InvoiceHistoryEntityBuilder();
+
+  InvoiceHistoryEntityBuilder get _$this {
+    if (_$v != null) {
+      _id = _$v.id;
+      _activityId = _$v.activityId;
+      _htmlBackup = _$v.htmlBackup;
+      _createdAt = _$v.createdAt;
+      _$v = null;
+    }
+    return this;
+  }
+
+  @override
+  void replace(InvoiceHistoryEntity other) {
+    if (other == null) {
+      throw new ArgumentError.notNull('other');
+    }
+    _$v = other as _$InvoiceHistoryEntity;
+  }
+
+  @override
+  void update(void Function(InvoiceHistoryEntityBuilder) updates) {
+    if (updates != null) updates(this);
+  }
+
+  @override
+  _$InvoiceHistoryEntity build() {
+    final _$result = _$v ??
+        new _$InvoiceHistoryEntity._(
+            id: id,
+            activityId: activityId,
+            htmlBackup: htmlBackup,
+            createdAt: createdAt);
     replace(_$result);
     return _$result;
   }

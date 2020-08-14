@@ -405,3 +405,27 @@ class RemoveFromClientMultiselect {
 }
 
 class ClearClientMultiselect {}
+
+class SaveClientDocumentRequest implements StartSaving {
+  SaveClientDocumentRequest({
+    @required this.completer,
+    @required this.filePath,
+    @required this.client,
+  });
+
+  final Completer completer;
+  final String filePath;
+  final ClientEntity client;
+}
+
+class SaveClientDocumentSuccess implements StopSaving, PersistData, PersistUI {
+  SaveClientDocumentSuccess(this.document);
+
+  final DocumentEntity document;
+}
+
+class SaveClientDocumentFailure implements StopSaving {
+  SaveClientDocumentFailure(this.error);
+
+  final Object error;
+}

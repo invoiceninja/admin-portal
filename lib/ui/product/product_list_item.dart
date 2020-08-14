@@ -38,7 +38,7 @@ class ProductListItem extends StatelessWidget {
         ? product.matchesFilterValue(filter)
         : null;
     final subtitle = filterMatch ?? product.notes;
-      final store = StoreProvider.of<AppState>(context);
+    final store = StoreProvider.of<AppState>(context);
     final state = store.state;
     final uiState = store.state.uiState;
     final productUIState = uiState.productUIState;
@@ -103,7 +103,8 @@ class ProductListItem extends StatelessWidget {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: <Widget>[
                             Text(
-                              product.productKey,
+                              product.productKey +
+                                  (product.documents.isNotEmpty ? '  📎' : ''),
                               style: textStyle,
                               overflow: TextOverflow.ellipsis,
                             ),
@@ -117,7 +118,11 @@ class ProductListItem extends StatelessWidget {
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: <Widget>[
-                            Text(product.notes, style: textStyle),
+                            Text(
+                              product.notes,
+                              style: textStyle,
+                              maxLines: 6,
+                            ),
                             if (filterMatch != null)
                               Text(
                                 filterMatch,
@@ -164,7 +169,8 @@ class ProductListItem extends StatelessWidget {
                     children: <Widget>[
                       Expanded(
                         child: Text(
-                          product.productKey,
+                          product.productKey +
+                              (product.documents.isNotEmpty ? '  📎' : ''),
                           style: Theme.of(context).textTheme.headline6,
                         ),
                       ),

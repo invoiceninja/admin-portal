@@ -40,7 +40,7 @@ class GroupRepository {
       Credentials credentials, List<String> ids, EntityAction action) async {
     final url = credentials.url + '/group_settings/bulk';
     final dynamic response = await webClient.post(url, credentials.token,
-        data: json.encode({'ids': ids, 'action': '$action'}));
+        data: json.encode({'ids': ids, 'action': action.toApiParam()}));
 
     final GroupListResponse groupResponse =
         serializers.deserializeWith(GroupListResponse.serializer, response);

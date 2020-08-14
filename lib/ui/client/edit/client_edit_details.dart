@@ -120,6 +120,7 @@ class ClientEditDetailsState extends State<ClientEditDetails> {
               validator: (String val) => !viewModel.client.hasNameSet
                   ? AppLocalization.of(context).pleaseEnterAClientOrContactName
                   : null,
+              onSavePressed: viewModel.onSavePressed,
             ),
             DynamicSelector(
               entityType: EntityType.group,
@@ -136,40 +137,48 @@ class ClientEditDetailsState extends State<ClientEditDetails> {
             DecoratedFormField(
               label: localization.idNumber,
               controller: _idNumberController,
+              onSavePressed: viewModel.onSavePressed,
             ),
             DecoratedFormField(
               label: localization.vatNumber,
               controller: _vatNumberController,
+              onSavePressed: viewModel.onSavePressed,
             ),
             DecoratedFormField(
               label: localization.website,
               controller: _websiteController,
               keyboardType: TextInputType.url,
+              onSavePressed: viewModel.onSavePressed,
             ),
             DecoratedFormField(
               label: localization.phone,
               controller: _phoneController,
               keyboardType: TextInputType.phone,
+              onSavePressed: viewModel.onSavePressed,
             ),
             CustomField(
               controller: _custom1Controller,
               field: CustomFieldType.client1,
               value: client.customValue1,
+              onSavePressed: viewModel.onSavePressed,
             ),
             CustomField(
               controller: _custom2Controller,
               field: CustomFieldType.client2,
               value: client.customValue2,
+              onSavePressed: viewModel.onSavePressed,
             ),
             CustomField(
               controller: _custom3Controller,
               field: CustomFieldType.client3,
               value: client.customValue3,
+              onSavePressed: viewModel.onSavePressed,
             ),
             CustomField(
               controller: _custom4Controller,
               field: CustomFieldType.client4,
               value: client.customValue4,
+              onSavePressed: viewModel.onSavePressed,
             ),
           ],
         ),

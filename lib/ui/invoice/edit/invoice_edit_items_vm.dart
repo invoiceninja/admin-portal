@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:invoiceninja_flutter/ui/invoice/edit/invoice_edit_items.dart';
 import 'package:invoiceninja_flutter/ui/invoice/edit/invoice_edit_items_desktop.dart';
+import 'package:invoiceninja_flutter/ui/invoice/edit/invoice_edit_vm.dart';
 import 'package:redux/redux.dart';
 import 'package:invoiceninja_flutter/redux/invoice/invoice_actions.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
@@ -11,7 +12,10 @@ import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 class InvoiceEditItemsScreen extends StatelessWidget {
   const InvoiceEditItemsScreen({
     Key key,
+    @required this.viewModel,
   }) : super(key: key);
+
+  final EntityEditVM viewModel;
 
   @override
   Widget build(BuildContext context) {
@@ -23,10 +27,12 @@ class InvoiceEditItemsScreen extends StatelessWidget {
         if (viewModel.state.prefState.isDesktop) {
           return InvoiceEditItemsDesktop(
             viewModel: viewModel,
+            entityViewModel: this.viewModel,
           );
         } else {
           return InvoiceEditItems(
             viewModel: viewModel,
+            entityViewModel: this.viewModel,
           );
         }
       },

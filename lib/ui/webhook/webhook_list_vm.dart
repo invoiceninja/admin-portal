@@ -87,8 +87,12 @@ class WebhookListVM {
       state: state,
       userCompany: state.userCompany,
       listState: state.webhookListState,
-      webhookList: memoizedFilteredWebhookList(state.webhookState.map,
-          state.webhookState.list, state.webhookListState),
+      webhookList: memoizedFilteredWebhookList(
+          state.uiState.filterEntityId,
+          state.uiState.filterEntityType,
+          state.webhookState.map,
+          state.webhookState.list,
+          state.webhookListState),
       webhookMap: state.webhookState.map,
       isLoading: state.isLoading,
       filter: state.webhookUIState.listUIState.filter,
@@ -98,7 +102,7 @@ class WebhookListVM {
       onRefreshed: (context) => _handleRefresh(context),
       tableColumns:
           state.userCompany.settings.getTableColumns(EntityType.webhook) ??
-              WebhookPresenter.getAllTableFields(state.userCompany),
+              WebhookPresenter.getDefaultTableFields(state.userCompany),
       onSortColumn: (field) => store.dispatch(SortWebhooks(field)),
       onClearMultielsect: () => store.dispatch(ClearWebhookMultiselect()),
     );

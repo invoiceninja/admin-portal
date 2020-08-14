@@ -13,6 +13,7 @@ import 'package:invoiceninja_flutter/data/models/payment_term_model.dart';
 import 'package:invoiceninja_flutter/data/models/task_model.dart';
 import 'package:invoiceninja_flutter/utils/formatting.dart';
 import 'package:invoiceninja_flutter/.env.dart';
+import 'package:invoiceninja_flutter/utils/strings.dart';
 
 part 'company_model.g.dart';
 
@@ -165,8 +166,6 @@ abstract class CompanyEntity extends Object
   @BuiltValueField(wireName: 'is_large')
   bool get isLarge;
 
-  // TODO remove this nullable
-  @nullable
   @BuiltValueField(wireName: 'enable_shop_api')
   bool get enableShopApi;
 
@@ -261,10 +260,55 @@ abstract class CompanyEntity extends Object
   String get displayName => settings.name ?? '';
 
   @override
-  bool matchesFilter(String filter) => false;
+  bool matchesFilter(String filter) {
+    for (final user in users) {
+      if (user.matchesFilter(filter)) {
+        return true;
+      }
+    }
+    for (final project in projects) {
+      if (project.matchesFilter(filter)) {
+        return true;
+      }
+    }
+    for (final product in products) {
+      if (product.matchesFilter(filter)) {
+        return true;
+      }
+    }
+
+    return matchesStrings(
+      haystacks: [subdomain, displayName, companyKey],
+      needle: filter,
+    );
+  }
 
   @override
-  String matchesFilterValue(String filter) => null;
+  String matchesFilterValue(String filter) {
+    for (final user in users) {
+      final value = user.matchesFilterValue(filter);
+      if (value != null) {
+        return value;
+      }
+    }
+    for (final project in projects) {
+      final value = project.matchesFilterValue(filter);
+      if (value != null) {
+        return value;
+      }
+    }
+    for (final product in products) {
+      final value = product.matchesFilterValue(filter);
+      if (value != null) {
+        return value;
+      }
+    }
+
+    return matchesStringsValue(
+      haystacks: [subdomain, displayName, companyKey],
+      needle: filter,
+    );
+  }
 
   @override
   double get listDisplayAmount => null;
@@ -444,6 +488,12 @@ abstract class GatewayEntity extends Object
 
   String get fields;
 
+  bool get supportsTokenBilling => [
+        kGatewayStripe,
+        kGatewayAuthorizeNet,
+        kGatewayCheckoutCom,
+      ].contains(id);
+
   Map<String, dynamic> get parsedFields =>
       fields.isEmpty ? <String, dynamic>{} : jsonDecode(fields);
 
@@ -489,6 +539,24 @@ abstract class GatewayEntity extends Object
 
   @override
   double get listDisplayAmount => null;
+
+  static String getClientUrl({String gatewayId, String customerReference}) {
+    switch (gatewayId) {
+      case kGatewayStripe:
+        return 'https://dashboard.stripe.com/customers/$customerReference}';
+      default:
+        return null;
+    }
+  }
+
+  static String getPaymentUrl({String gatewayId, String transactionReference}) {
+    switch (gatewayId) {
+      case kGatewayStripe:
+        return 'https://dashboard.stripe.com/payments/$transactionReference}';
+      default:
+        return null;
+    }
+  }
 
   @override
   FormatNumberType get listDisplayAmountType => null;
@@ -923,9 +991,9 @@ abstract class SettingsEntity
       invoiceFields: clientSettings?.invoiceFields ??
           groupSettings?.invoiceFields ??
           companySettings?.invoiceFields,
-      emailFooter: clientSettings?.emailFooter ??
-          groupSettings?.emailFooter ??
-          companySettings?.emailFooter,
+      emailSignature: clientSettings?.emailSignature ??
+          groupSettings?.emailSignature ??
+          companySettings?.emailSignature,
       emailSubjectInvoice: clientSettings?.emailSubjectInvoice ??
           groupSettings?.emailSubjectInvoice ??
           companySettings?.emailSubjectInvoice,
@@ -1455,8 +1523,8 @@ abstract class SettingsEntity
   BuiltMap<String, BuiltList<String>> get pdfVariables;
 
   @nullable
-  @BuiltValueField(wireName: 'email_footer')
-  String get emailFooter;
+  @BuiltValueField(wireName: 'email_signature')
+  String get emailSignature;
 
   @nullable
   @BuiltValueField(wireName: 'email_subject_invoice')

@@ -58,6 +58,8 @@ import 'package:invoiceninja_flutter/ui/token/token_screen.dart';
 import 'package:invoiceninja_flutter/ui/token/edit/token_edit_vm.dart';
 import 'package:invoiceninja_flutter/ui/token/view/token_view_vm.dart';
 import 'package:invoiceninja_flutter/ui/token/token_screen_vm.dart';
+import 'package:invoiceninja_flutter/utils/web_stub.dart'
+    if (dart.library.html) 'package:invoiceninja_flutter/utils/web.dart';
 
 class InvoiceNinjaApp extends StatefulWidget {
   const InvoiceNinjaApp({Key key, this.store}) : super(key: key);
@@ -85,6 +87,13 @@ class InvoiceNinjaAppState extends State<InvoiceNinjaApp> {
     if (authenticated) {
       setState(() => _authenticated = true);
     }
+  }
+
+  @override
+  void initState() {
+    super.initState();
+
+    WebUtils.warnChanges(widget.store);
   }
 
   /*
@@ -147,9 +156,6 @@ class InvoiceNinjaAppState extends State<InvoiceNinjaApp> {
           TargetPlatform.android: ZoomPageTransitionsBuilder(),
         });
         Intl.defaultLocale = localeSelector(state);
-
-        print(
-            '## ACCENT COLOR: ${state.accentColor}, hasCOLOR: $hasAccentColor');
 
         return MaterialApp(
           supportedLocales: kLanguages
@@ -228,7 +234,7 @@ class InvoiceNinjaAppState extends State<InvoiceNinjaApp> {
                     ),
                   ),
                 ),
-          title: 'Invoice Ninja',
+          title: kAppName,
           onGenerateRoute: isMobile(context) ? null : generateRoute,
           routes: isMobile(context)
               ? {

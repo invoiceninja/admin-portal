@@ -47,8 +47,12 @@ class WebhookScreenVM {
 
     return WebhookScreenVM(
       webhookMap: state.webhookState.map,
-      webhookList: memoizedFilteredWebhookList(state.webhookState.map,
-          state.webhookState.list, state.webhookListState),
+      webhookList: memoizedFilteredWebhookList(
+          state.uiState.filterEntityId,
+          state.uiState.filterEntityType,
+          state.webhookState.map,
+          state.webhookState.list,
+          state.webhookListState),
       userCompany: state.userCompany,
       isInMultiselect: state.webhookListState.isInMultiselect(),
       onEntityAction: (BuildContext context, List<BaseEntity> webhooks,

@@ -24,16 +24,31 @@ List<String> dropdownTokensSelector(BuiltMap<String, TokenEntity> tokenMap,
   return list;
 }
 
-var memoizedFilteredTokenList = memo3((BuiltMap<String, TokenEntity> tokenMap,
-        BuiltList<String> tokenList, ListUIState tokenListState) =>
-    filteredTokensSelector(tokenMap, tokenList, tokenListState));
+var memoizedFilteredTokenList = memo5((
+  String filterEntityId,
+  EntityType filterEntityType,
+  BuiltMap<String, TokenEntity> tokenMap,
+  BuiltList<String> tokenList,
+  ListUIState tokenListState,
+) =>
+    filteredTokensSelector(
+      filterEntityId,
+      filterEntityType,
+      tokenMap,
+      tokenList,
+      tokenListState,
+    ));
 
-List<String> filteredTokensSelector(BuiltMap<String, TokenEntity> tokenMap,
-    BuiltList<String> tokenList, ListUIState tokenListState) {
+List<String> filteredTokensSelector(
+  String filterEntityId,
+  EntityType filterEntityType,
+  BuiltMap<String, TokenEntity> tokenMap,
+  BuiltList<String> tokenList,
+  ListUIState tokenListState,
+) {
   final list = tokenList.where((tokenId) {
     final token = tokenMap[tokenId];
-    if (tokenListState.filterEntityId != null &&
-        token.id != tokenListState.filterEntityId) {
+    if (filterEntityId != null && token.id != filterEntityId) {
       return false;
     } else {
       //

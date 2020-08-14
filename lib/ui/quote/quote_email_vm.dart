@@ -23,7 +23,7 @@ class QuoteEmailScreen extends StatelessWidget {
         final quoteId = state.uiState.quoteUIState.selectedId;
         final quote = state.quoteState.map[quoteId];
         final client = state.clientState.map[quote.clientId];
-        if (client.areActivitiesStale) {
+        if (client.isStale) {
           store.dispatch(LoadClient(clientId: client.id));
         }
       },
@@ -44,18 +44,22 @@ class QuoteEmailScreen extends StatelessWidget {
 
 class EmailQuoteVM extends EmailEntityVM {
   EmailQuoteVM({
+    AppState state,
     bool isLoading,
     bool isSaving,
     CompanyEntity company,
     InvoiceEntity invoice,
     ClientEntity client,
+    Function loadClient,
     Function(BuildContext, EmailTemplate, String, String) onSendPressed,
   }) : super(
+          state: state,
           isLoading: isLoading,
           isSaving: isSaving,
           company: company,
           invoice: invoice,
           client: client,
+          loadClient: loadClient,
           onSendPressed: onSendPressed,
         );
 
@@ -68,6 +72,9 @@ class EmailQuoteVM extends EmailEntityVM {
         company: state.company,
         invoice: quote,
         client: state.clientState.map[quote.clientId],
+        loadClient: () {
+          store.dispatch(LoadClient(clientId: quote.clientId));
+        },
         onSendPressed: (context, template, subject, body) =>
             store.dispatch(EmailQuoteRequest(
               completer: popCompleter(context, true),

@@ -46,8 +46,10 @@ Reducer<String> selectedIdReducer = combineReducers([
   TypedReducer<String, ClearEntityFilter>((selectedId, action) => ''),
   TypedReducer<String, ClearEntitySelection>((selectedId, action) =>
       action.entityType == EntityType.invoice ? '' : selectedId),
-  TypedReducer<String, FilterByEntity>((selectedId, action) =>
-      action.entityType == EntityType.invoice ? action.entityId : selectedId),
+  TypedReducer<String, FilterByEntity>((selectedId, action) => action
+          .clearSelection
+      ? ''
+      : action.entityType == EntityType.invoice ? action.entityId : selectedId),
 ]);
 
 final editingReducer = combineReducers<InvoiceEntity>([
@@ -145,7 +147,6 @@ final invoiceListReducer = combineReducers<ListUIState>([
   TypedReducer<ListUIState, SortInvoices>(_sortInvoices),
   TypedReducer<ListUIState, FilterInvoicesByState>(_filterInvoicesByState),
   TypedReducer<ListUIState, FilterInvoicesByStatus>(_filterInvoicesByStatus),
-  TypedReducer<ListUIState, FilterByEntity>(_filterInvoicesByEntity),
   TypedReducer<ListUIState, FilterInvoices>(_filterInvoices),
   TypedReducer<ListUIState, FilterInvoicesByCustom1>(_filterInvoicesByCustom1),
   TypedReducer<ListUIState, FilterInvoicesByCustom2>(_filterInvoicesByCustom2),
@@ -156,10 +157,6 @@ final invoiceListReducer = combineReducers<ListUIState>([
   TypedReducer<ListUIState, RemoveFromInvoiceMultiselect>(
       _removeFromListMultiselect),
   TypedReducer<ListUIState, ClearInvoiceMultiselect>(_clearListMultiselect),
-  TypedReducer<ListUIState, ClearEntityFilter>(
-      (state, action) => state.rebuild((b) => b
-        ..filterEntityId = null
-        ..filterEntityType = null)),
 ]);
 
 ListUIState _filterInvoicesByCustom1(
@@ -220,20 +217,6 @@ ListUIState _filterInvoicesByStatus(
   } else {
     return invoiceListState.rebuild((b) => b..statusFilters.add(action.status));
   }
-}
-
-ListUIState _filterInvoicesByEntity(
-    ListUIState invoiceListState, FilterByEntity action) {
-  if (invoiceListState.filterEntityId == action.entityId &&
-      invoiceListState.filterEntityType == action.entityType) {
-    return invoiceListState.rebuild((b) => b
-      ..filterEntityId = null
-      ..filterEntityType = null);
-  }
-
-  return invoiceListState.rebuild((b) => b
-    ..filterEntityId = action.entityId
-    ..filterEntityType = action.entityType);
 }
 
 ListUIState _filterInvoices(
@@ -445,8 +428,10 @@ InvoiceState _addInvoice(InvoiceState invoiceState, AddInvoiceSuccess action) {
 }
 
 InvoiceState _updateInvoice(InvoiceState invoiceState, dynamic action) {
-  return invoiceState
-      .rebuild((b) => b..map[action.invoice.id] = action.invoice);
+  final InvoiceEntity invoice = action.invoice;
+  return invoiceState.rebuild((b) => b
+    ..map[action.invoice.id] = invoice
+        .rebuild((b) => b..loadedAt = DateTime.now().millisecondsSinceEpoch));
 }
 
 InvoiceState _setLoadedInvoices(

@@ -47,8 +47,6 @@ Middleware<AppState> _editCompanyGateway() {
   return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
     final action = dynamicAction as EditCompanyGateway;
 
-
-
     next(action);
 
     store.dispatch(UpdateCurrentRoute(CompanyGatewayEditScreen.route));
@@ -63,8 +61,6 @@ Middleware<AppState> _viewCompanyGateway() {
   return (Store<AppState> store, dynamic dynamicAction,
       NextDispatcher next) async {
     final action = dynamicAction as ViewCompanyGateway;
-
-
 
     next(action);
 

@@ -40,7 +40,7 @@ class TaxRateRepository {
       Credentials credentials, List<String> ids, EntityAction action) async {
     final url = credentials.url + '/tax_rates/bulk';
     final dynamic response = await webClient.post(url, credentials.token,
-        data: json.encode({'ids': ids, 'action': '$action'}));
+        data: json.encode({'ids': ids, 'action': action.toApiParam()}));
 
     final TaxRateListResponse taxRateResponse =
         serializers.deserializeWith(TaxRateListResponse.serializer, response);

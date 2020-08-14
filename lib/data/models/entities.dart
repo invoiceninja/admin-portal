@@ -106,6 +106,11 @@ class EntityType extends EnumClass {
           EntityType.expense,
           EntityType.vendor,
         ];
+      case EntityType.companyGateway:
+        return [
+          EntityType.client,
+          EntityType.payment,
+        ];
       default:
         return [];
     }
@@ -254,14 +259,13 @@ abstract class BaseEntity implements SelectableEntity {
 
   String get entityKey => '__${entityType}__${id}__';
 
-  bool get isNew => id == null || (int.tryParse(id) ?? 0) < 0;
+  bool get isNew => (id ?? '').isEmpty || (int.tryParse(id) ?? 0) < 0;
 
   bool get isOld => !isNew;
 
   bool get isActive => archivedAt == null || archivedAt == 0;
 
-  bool get isArchived =>
-      archivedAt != null && archivedAt > 0 && !(isDeleted ?? false);
+  bool get isArchived => archivedAt != null && archivedAt > 0 && !isDeleted;
 
   bool get isEditable => !isDeleted;
 
@@ -274,6 +278,9 @@ abstract class BaseEntity implements SelectableEntity {
 
   ReportStringValue getReportString({String value}) =>
       ReportStringValue(entityId: id, entityType: entityType, value: value);
+
+  ReportEntityTypeValue getReportEntityType() => ReportEntityTypeValue(
+      entityId: id, entityType: entityType, value: entityType);
 
   ReportBoolValue getReportBool({bool value}) =>
       ReportBoolValue(entityId: id, entityType: entityType, value: value);
@@ -295,6 +302,14 @@ abstract class BaseEntity implements SelectableEntity {
           currencyId: currencyId,
           formatNumberType: formatNumberType);
 
+  ReportIntValue getReportInt(
+          {int value, String currencyId, FormatNumberType formatNumberType}) =>
+      ReportIntValue(
+        entityId: id,
+        entityType: entityType,
+        value: value,
+      );
+
   List<EntityAction> getActions(
       {UserCompanyEntity userCompany,
       ClientEntity client,
@@ -315,6 +330,10 @@ abstract class BaseEntity implements SelectableEntity {
     }
 
     return actions;
+  }
+
+  bool matchesEntityFilter(EntityType filterEntityType, String filterEntityId) {
+    return id == filterEntityId && entityType == filterEntityType;
   }
 
   bool matchesStatuses(BuiltList<EntityStatus> statuses) {

@@ -156,6 +156,10 @@ class _$ProductEntitySerializer implements StructuredSerializer<ProductEntity> {
       'custom_value2',
       serializers.serialize(object.customValue2,
           specifiedType: const FullType(String)),
+      'documents',
+      serializers.serialize(object.documents,
+          specifiedType: const FullType(
+              BuiltList, const [const FullType(DocumentEntity)])),
       'created_at',
       serializers.serialize(object.createdAt,
           specifiedType: const FullType(int)),
@@ -298,6 +302,12 @@ class _$ProductEntitySerializer implements StructuredSerializer<ProductEntity> {
         case 'vendor_id':
           result.vendorId = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String;
+          break;
+        case 'documents':
+          result.documents.replace(serializers.deserialize(value,
+                  specifiedType: const FullType(
+                      BuiltList, const [const FullType(DocumentEntity)]))
+              as BuiltList<Object>);
           break;
         case 'isChanged':
           result.isChanged = serializers.deserialize(value,
@@ -565,6 +575,8 @@ class _$ProductEntity extends ProductEntity {
   @override
   final String vendorId;
   @override
+  final BuiltList<DocumentEntity> documents;
+  @override
   final bool isChanged;
   @override
   final int createdAt;
@@ -602,6 +614,7 @@ class _$ProductEntity extends ProductEntity {
       this.customValue4,
       this.projectId,
       this.vendorId,
+      this.documents,
       this.isChanged,
       this.createdAt,
       this.updatedAt,
@@ -650,6 +663,9 @@ class _$ProductEntity extends ProductEntity {
     if (customValue2 == null) {
       throw new BuiltValueNullFieldError('ProductEntity', 'customValue2');
     }
+    if (documents == null) {
+      throw new BuiltValueNullFieldError('ProductEntity', 'documents');
+    }
     if (createdAt == null) {
       throw new BuiltValueNullFieldError('ProductEntity', 'createdAt');
     }
@@ -692,6 +708,7 @@ class _$ProductEntity extends ProductEntity {
         customValue4 == other.customValue4 &&
         projectId == other.projectId &&
         vendorId == other.vendorId &&
+        documents == other.documents &&
         isChanged == other.isChanged &&
         createdAt == other.createdAt &&
         updatedAt == other.updatedAt &&
@@ -723,18 +740,18 @@ class _$ProductEntity extends ProductEntity {
                                                                 $jc(
                                                                     $jc(
                                                                         $jc(
-                                                                            $jc($jc($jc($jc($jc($jc($jc(0, productKey.hashCode), notes.hashCode), cost.hashCode), price.hashCode), quantity.hashCode), taxName1.hashCode),
-                                                                                taxRate1.hashCode),
-                                                                            taxName2.hashCode),
-                                                                        taxRate2.hashCode),
-                                                                    taxName3.hashCode),
-                                                                taxRate3.hashCode),
-                                                            customValue1.hashCode),
-                                                        customValue2.hashCode),
-                                                    customValue3.hashCode),
-                                                customValue4.hashCode),
-                                            projectId.hashCode),
-                                        vendorId.hashCode),
+                                                                            $jc($jc($jc($jc($jc($jc($jc($jc(0, productKey.hashCode), notes.hashCode), cost.hashCode), price.hashCode), quantity.hashCode), taxName1.hashCode), taxRate1.hashCode),
+                                                                                taxName2.hashCode),
+                                                                            taxRate2.hashCode),
+                                                                        taxName3.hashCode),
+                                                                    taxRate3.hashCode),
+                                                                customValue1.hashCode),
+                                                            customValue2.hashCode),
+                                                        customValue3.hashCode),
+                                                    customValue4.hashCode),
+                                                projectId.hashCode),
+                                            vendorId.hashCode),
+                                        documents.hashCode),
                                     isChanged.hashCode),
                                 createdAt.hashCode),
                             updatedAt.hashCode),
@@ -765,6 +782,7 @@ class _$ProductEntity extends ProductEntity {
           ..add('customValue4', customValue4)
           ..add('projectId', projectId)
           ..add('vendorId', vendorId)
+          ..add('documents', documents)
           ..add('isChanged', isChanged)
           ..add('createdAt', createdAt)
           ..add('updatedAt', updatedAt)
@@ -849,6 +867,12 @@ class ProductEntityBuilder
   String get vendorId => _$this._vendorId;
   set vendorId(String vendorId) => _$this._vendorId = vendorId;
 
+  ListBuilder<DocumentEntity> _documents;
+  ListBuilder<DocumentEntity> get documents =>
+      _$this._documents ??= new ListBuilder<DocumentEntity>();
+  set documents(ListBuilder<DocumentEntity> documents) =>
+      _$this._documents = documents;
+
   bool _isChanged;
   bool get isChanged => _$this._isChanged;
   set isChanged(bool isChanged) => _$this._isChanged = isChanged;
@@ -904,6 +928,7 @@ class ProductEntityBuilder
       _customValue4 = _$v.customValue4;
       _projectId = _$v.projectId;
       _vendorId = _$v.vendorId;
+      _documents = _$v.documents?.toBuilder();
       _isChanged = _$v.isChanged;
       _createdAt = _$v.createdAt;
       _updatedAt = _$v.updatedAt;
@@ -932,33 +957,47 @@ class ProductEntityBuilder
 
   @override
   _$ProductEntity build() {
-    final _$result = _$v ??
-        new _$ProductEntity._(
-            productKey: productKey,
-            notes: notes,
-            cost: cost,
-            price: price,
-            quantity: quantity,
-            taxName1: taxName1,
-            taxRate1: taxRate1,
-            taxName2: taxName2,
-            taxRate2: taxRate2,
-            taxName3: taxName3,
-            taxRate3: taxRate3,
-            customValue1: customValue1,
-            customValue2: customValue2,
-            customValue3: customValue3,
-            customValue4: customValue4,
-            projectId: projectId,
-            vendorId: vendorId,
-            isChanged: isChanged,
-            createdAt: createdAt,
-            updatedAt: updatedAt,
-            archivedAt: archivedAt,
-            isDeleted: isDeleted,
-            createdUserId: createdUserId,
-            assignedUserId: assignedUserId,
-            id: id);
+    _$ProductEntity _$result;
+    try {
+      _$result = _$v ??
+          new _$ProductEntity._(
+              productKey: productKey,
+              notes: notes,
+              cost: cost,
+              price: price,
+              quantity: quantity,
+              taxName1: taxName1,
+              taxRate1: taxRate1,
+              taxName2: taxName2,
+              taxRate2: taxRate2,
+              taxName3: taxName3,
+              taxRate3: taxRate3,
+              customValue1: customValue1,
+              customValue2: customValue2,
+              customValue3: customValue3,
+              customValue4: customValue4,
+              projectId: projectId,
+              vendorId: vendorId,
+              documents: documents.build(),
+              isChanged: isChanged,
+              createdAt: createdAt,
+              updatedAt: updatedAt,
+              archivedAt: archivedAt,
+              isDeleted: isDeleted,
+              createdUserId: createdUserId,
+              assignedUserId: assignedUserId,
+              id: id);
+    } catch (_) {
+      String _$failedField;
+      try {
+        _$failedField = 'documents';
+        documents.build();
+      } catch (e) {
+        throw new BuiltValueNestedFieldError(
+            'ProductEntity', _$failedField, e.toString());
+      }
+      rethrow;
+    }
     replace(_$result);
     return _$result;
   }

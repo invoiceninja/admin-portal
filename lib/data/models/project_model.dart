@@ -5,6 +5,7 @@ import 'package:invoiceninja_flutter/data/models/entities.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/utils/formatting.dart';
+import 'package:invoiceninja_flutter/utils/strings.dart';
 
 part 'project_model.g.dart';
 
@@ -239,36 +240,29 @@ abstract class ProjectEntity extends Object
 
   @override
   bool matchesFilter(String filter) {
-    if (filter == null || filter.isEmpty) {
-      return true;
-    } else if (customValue1.toLowerCase().contains(filter)) {
-      return true;
-    } else if (customValue2.toLowerCase().contains(filter)) {
-      return true;
-    } else if (customValue3.toLowerCase().contains(filter)) {
-      return true;
-    } else if (customValue4.toLowerCase().contains(filter)) {
-      return true;
-    }
-
-    return name.toLowerCase().contains(filter);
+    return matchesStrings(
+      haystacks: [
+        name,
+        customValue1,
+        customValue2,
+        customValue3,
+        customValue4,
+      ],
+      needle: filter,
+    );
   }
 
   @override
   String matchesFilterValue(String filter) {
-    if (filter == null || filter.isEmpty) {
-      return null;
-    } else if (customValue1.toLowerCase().contains(filter)) {
-      return customValue1;
-    } else if (customValue2.toLowerCase().contains(filter)) {
-      return customValue2;
-    } else if (customValue3.toLowerCase().contains(filter)) {
-      return customValue3;
-    } else if (customValue4.toLowerCase().contains(filter)) {
-      return customValue4;
-    }
-
-    return null;
+    return matchesStringsValue(
+      haystacks: [
+        customValue1,
+        customValue2,
+        customValue3,
+        customValue4,
+      ],
+      needle: filter,
+    );
   }
 
   @override

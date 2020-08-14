@@ -1,5 +1,6 @@
 import 'package:built_collection/built_collection.dart';
 import 'package:invoiceninja_flutter/data/models/company_gateway_model.dart';
+import 'package:invoiceninja_flutter/data/models/entities.dart';
 import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:invoiceninja_flutter/redux/company/company_actions.dart';
 import 'package:invoiceninja_flutter/redux/company_gateway/company_gateway_actions.dart';
@@ -27,6 +28,12 @@ Reducer<String> selectedIdReducer = combineReducers([
   TypedReducer<String, ArchiveCompanyGatewaySuccess>(
       (selectedId, action) => ''),
   TypedReducer<String, ClearEntityFilter>((selectedId, action) => ''),
+  TypedReducer<String, FilterByEntity>((selectedId, action) =>
+      action.clearSelection
+          ? ''
+          : action.entityType == EntityType.companyGateway
+              ? action.entityId
+              : selectedId),
 ]);
 
 final editingReducer = combineReducers<CompanyGatewayEntity>([
@@ -72,8 +79,6 @@ final companyGatewayListReducer = combineReducers<ListUIState>([
       _filterCompanyGatewaysByCustom1),
   TypedReducer<ListUIState, FilterCompanyGatewaysByCustom2>(
       _filterCompanyGatewaysByCustom2),
-  TypedReducer<ListUIState, FilterByEntity>(
-      _filterCompanyGatewaysByCompanyGateway),
   TypedReducer<ListUIState, StartCompanyGatewayMultiselect>(
       _startListMultiselect),
   TypedReducer<ListUIState, AddToCompanyGatewayMultiselect>(
@@ -82,18 +87,7 @@ final companyGatewayListReducer = combineReducers<ListUIState>([
       _removeFromListMultiselect),
   TypedReducer<ListUIState, ClearCompanyGatewayMultiselect>(
       _clearListMultiselect),
-  TypedReducer<ListUIState, ClearEntityFilter>(
-      (state, action) => state.rebuild((b) => b
-        ..filterEntityId = null
-        ..filterEntityType = null)),
 ]);
-
-ListUIState _filterCompanyGatewaysByCompanyGateway(
-    ListUIState companyGatewayListState, FilterByEntity action) {
-  return companyGatewayListState.rebuild((b) => b
-    ..filterEntityId = action.entityId
-    ..filterEntityType = action.entityType);
-}
 
 ListUIState _filterCompanyGatewaysByCustom1(ListUIState companyGatewayListState,
     FilterCompanyGatewaysByCustom1 action) {

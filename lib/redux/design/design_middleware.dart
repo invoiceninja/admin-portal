@@ -42,8 +42,6 @@ Middleware<AppState> _editDesign() {
   return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
     final action = dynamicAction as EditDesign;
 
-
-
     next(action);
 
     store.dispatch(UpdateCurrentRoute(DesignEditScreen.route));
@@ -72,8 +70,6 @@ Middleware<AppState> _viewDesign() {
 Middleware<AppState> _viewDesignList() {
   return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
     final action = dynamicAction as ViewDesignList;
-
-
 
     next(action);
 

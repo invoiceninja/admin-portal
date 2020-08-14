@@ -23,16 +23,16 @@ class InvoiceEmailScreen extends StatelessWidget {
       onInit: (Store<AppState> store) {
         final state = store.state;
         final invoiceId = state.uiState.invoiceUIState.selectedId;
-        final invoice = state.invoiceState.map[invoiceId];
+        final invoice = state.invoiceState.get(invoiceId);
         final client = state.clientState.get(invoice.clientId);
-        if (client.areActivitiesStale) {
+        if (client.isStale) {
           store.dispatch(LoadClient(clientId: client.id));
         }
       },
       converter: (Store<AppState> store) {
         final state = store.state;
         final invoiceId = state.uiState.invoiceUIState.selectedId;
-        final invoice = state.invoiceState.map[invoiceId];
+        final invoice = state.invoiceState.get(invoiceId);
         return EmailInvoiceVM.fromStore(store, invoice);
       },
       builder: (context, vm) {
@@ -47,36 +47,44 @@ class InvoiceEmailScreen extends StatelessWidget {
 
 abstract class EmailEntityVM {
   EmailEntityVM({
+    @required this.state,
     @required this.isLoading,
     @required this.isSaving,
     @required this.company,
     @required this.invoice,
     @required this.client,
+    @required this.loadClient,
     @required this.onSendPressed,
   });
 
+  final AppState state;
   final bool isLoading;
   final bool isSaving;
   final CompanyEntity company;
   final InvoiceEntity invoice;
   final ClientEntity client;
+  final Function() loadClient;
   final Function(BuildContext, EmailTemplate, String, String) onSendPressed;
 }
 
 class EmailInvoiceVM extends EmailEntityVM {
   EmailInvoiceVM({
+    AppState state,
     bool isLoading,
     bool isSaving,
     CompanyEntity company,
     InvoiceEntity invoice,
     ClientEntity client,
+    Function loadClient,
     Function(BuildContext, EmailTemplate, String, String) onSendPressed,
   }) : super(
+          state: state,
           isLoading: isLoading,
           isSaving: isSaving,
           company: company,
           invoice: invoice,
           client: client,
+          loadClient: loadClient,
           onSendPressed: onSendPressed,
         );
 
@@ -91,6 +99,9 @@ class EmailInvoiceVM extends EmailEntityVM {
         invoice: invoice,
         client: state.clientState.map[invoice.clientId] ??
             ClientEntity(id: invoice.clientId),
+        loadClient: () {
+          store.dispatch(LoadClient(clientId: invoice.clientId));
+        },
         onSendPressed: (context, template, subject, body) {
           final completer = snackBarCompleter<Null>(
               context, AppLocalization.of(context).emailedInvoice,

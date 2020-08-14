@@ -163,7 +163,7 @@ abstract class AppState implements Built<AppState, AppStateBuilder> {
       userCompany?.settings?.accentColor ?? kDefaultAccentColor);
 
   String get appVersion =>
-      '${account.currentVersion}-${kClientVersion.split('.').last}';
+      '${account?.currentVersion ?? '0.0.0'}-${kClientVersion.split('.').last}';
 
   List<HistoryRecord> get historyList =>
       prefState.companyPrefs[uiState.selectedCompanyIndex].historyList
@@ -524,10 +524,8 @@ abstract class AppState implements Built<AppState, AppStateBuilder> {
       // STARTER: has changes - do not remove comment
       case WebhookEditScreen.route:
         return hasWebhookChanges(webhookUIState.editing, webhookState.map);
-
       case TokenEditScreen.route:
         return hasTokenChanges(tokenUIState.editing, tokenState.map);
-
       case PaymentTermEditScreen.route:
         return hasPaymentTermChanges(
             paymentTermUIState.editing, paymentTermState.map);
@@ -589,6 +587,8 @@ abstract class AppState implements Built<AppState, AppStateBuilder> {
 
   bool get isStaging => cleanApiUrl(authState.url) == kAppStagingUrl;
 
+  bool get isProduction => cleanApiUrl(authState.url) == kAppProductionUrl;
+
   bool get isWhiteLabeled => isSelfHosted || account.plan == kPlanWhiteLabel;
 
   /* TODO re-enable
@@ -604,6 +604,7 @@ abstract class AppState implements Built<AppState, AppStateBuilder> {
       (prefState.isNotMobile &&
           prefState.showFilterSidebar &&
           prefState.showMenu &&
+          !uiState.isInSettings &&
           uiState.filterEntityType != null) ||
       prefState.isMenuCollapsed;
 
@@ -629,7 +630,9 @@ abstract class AppState implements Built<AppState, AppStateBuilder> {
     //return 'Payment Terms: ${company.settings.defaultPaymentTerms}';
     //return 'Invitations: ${uiState.invoiceUIState.editing.invitations}';
     //return 'Selection: ${clientUIState.selectedId}';
-    return '\n\nURL: ${authState.url}\nRoute: ${uiState.currentRoute}\nPrev: ${uiState.previousRoute}\nis Large: ${(company?.isLarge ?? false) ? 'Yes' : 'No'}\nCompany: $companyUpdated${userCompanyState.isStale ? ' [S]' : ''}\nStatic: $staticUpdated${staticState.isStale ? ' [S]' : ''}\n';
+    //return '${clientState.map[clientUIState.selectedId].gatewayTokens}';
+    //return 'gatewayId: ${companyGatewayState.map[companyGatewayUIState.selectedId].gatewayId}';
+    return '\n\nURL: ${authState.url}\nRoute: ${uiState.currentRoute}\nPrev: ${uiState.previousRoute}\nIs Loaded: ${isLoaded ? 'Yes' : 'No'}\nis Large: ${(company?.isLarge ?? false) ? 'Yes' : 'No'}\nCompany: $companyUpdated${userCompanyState.isStale ? ' [S]' : ''}\nStatic: $staticUpdated${staticState.isStale ? ' [S]' : ''}\n';
   }
 }
 

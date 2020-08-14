@@ -6,6 +6,7 @@ import 'package:invoiceninja_flutter/data/models/entities.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/utils/formatting.dart';
+import 'package:invoiceninja_flutter/utils/strings.dart';
 
 part 'webhook_model.g.dart';
 
@@ -186,25 +187,22 @@ abstract class WebhookEntity extends Object
 
   @override
   bool matchesFilter(String filter) {
-    if (filter == null || filter.isEmpty) {
-      return true;
-    }
-    filter = filter.toLowerCase();
-
-    if (targetUrl.toLowerCase().contains(filter)) {
-      return true;
-    }
-
-    return false;
+    return matchesStrings(
+      haystacks: [
+        targetUrl,
+      ],
+      needle: filter,
+    );
   }
 
   @override
   String matchesFilterValue(String filter) {
-    if (filter == null || filter.isEmpty) {
-      return null;
-    }
-
-    return null;
+    return matchesStringsValue(
+      haystacks: [
+        targetUrl,
+      ],
+      needle: filter,
+    );
   }
 
   @override
@@ -215,8 +213,7 @@ abstract class WebhookEntity extends Object
       bool multiselect = false}) {
     final actions = <EntityAction>[];
 
-    // TODO remove ??
-    if (!(isDeleted ?? false)) {
+    if (!isDeleted) {
       if (includeEdit && userCompany.canEditEntity(this)) {
         actions.add(EntityAction.edit);
       }

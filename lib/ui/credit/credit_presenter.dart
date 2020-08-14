@@ -90,8 +90,8 @@ class CreditPresenter extends EntityPresenter {
       case CreditFields.documents:
         return Text('${credit.documents.length}');
       case CreditFields.taxAmount:
-        return Text(formatNumber(credit.taxAmount, context,
-            clientId: credit.clientId));
+        return Text(
+            formatNumber(credit.taxAmount, context, clientId: credit.clientId));
     }
 
     return super.getField(field: field, context: context);

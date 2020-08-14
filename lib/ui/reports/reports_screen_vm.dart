@@ -110,13 +110,14 @@ class ReportsScreenVM {
         reportResult = memoizedDocumentReport(
           state.userCompany,
           state.uiState.reportsUIState,
-          state.documentState.map,
+          state.clientState.map,
+          state.productState.map,
           state.invoiceState.map,
+          state.quoteState.map,
           state.expenseState.map,
           state.projectState.map,
           state.vendorState.map,
           state.userState.map,
-          state.staticState,
         );
         break;
       case kReportExpense:
@@ -308,7 +309,7 @@ class ReportsScreenVM {
           final reportState = state.uiState.reportsUIState;
           String csvData = '';
 
-          if (reportState.group.isEmpty || reportState.isGroupByFIltered) {
+          if (reportState.group.isEmpty || reportState.isGroupByFiltered) {
             reportResult.columns.forEach((column) {
               csvData += '${localization.lookup(column)},';
             });
@@ -358,7 +359,7 @@ class ReportsScreenVM {
               '${state.uiState.reportsUIState.report}_report_$date.csv';
 
           if (kIsWeb) {
-            webDownload(filename, csvData);
+            WebUtils.downloadFile(filename, csvData);
           } else {
             final directory = await getExternalStorageDirectory();
             final filePath = '${directory.path}/$filename';
@@ -445,7 +446,7 @@ GroupTotals calculateReportTotals({
       if (column == reportState.group) {
         totals['$group']['count'] += 1;
       }
-      if (cell is ReportNumberValue) {
+      if (cell is ReportNumberValue || cell is ReportAgeValue) {
         if (!totals['$group'].containsKey(column)) {
           totals['$group'][column] = 0;
         }

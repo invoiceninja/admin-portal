@@ -64,7 +64,8 @@ class VendorListVM {
     @required this.listState,
     @required this.onRefreshed,
     @required this.tableColumns,
-    @required this.onSortColumn, @required this.onClearMultielsect,
+    @required this.onSortColumn,
+    @required this.onClearMultielsect,
   });
 
   static VendorListVM fromStore(Store<AppState> store) {
@@ -91,7 +92,7 @@ class VendorListVM {
       onRefreshed: (context) => _handleRefresh(context),
       tableColumns:
           state.userCompany.settings.getTableColumns(EntityType.vendor) ??
-              VendorPresenter.getAllTableFields(state.userCompany),
+              VendorPresenter.getDefaultTableFields(state.userCompany),
       onSortColumn: (field) => store.dispatch(SortVendors(field)),
       onClearMultielsect: () => store.dispatch(ClearVendorMultiselect()),
     );
@@ -106,4 +107,5 @@ class VendorListVM {
   final Function(BuildContext) onRefreshed;
   final List<String> tableColumns;
   final Function(String) onSortColumn;
-final Function onClearMultielsect;}
+  final Function onClearMultielsect;
+}

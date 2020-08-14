@@ -55,7 +55,7 @@ class QuoteViewVM extends EntityViewVM {
     Function(BuildContext, PaymentEntity) onPaymentPressed,
     Function(BuildContext) onRefreshed,
     Function(BuildContext, String) onUploadDocument,
-    Function(BuildContext, DocumentEntity) onDeleteDocument,
+    Function(BuildContext, DocumentEntity, String) onDeleteDocument,
     Function(BuildContext, DocumentEntity) onViewExpense,
   }) : super(
           state: state,
@@ -122,11 +122,14 @@ class QuoteViewVM extends EntityViewVM {
               });
         });
       },
-      onDeleteDocument: (BuildContext context, DocumentEntity document) {
+      onDeleteDocument:
+          (BuildContext context, DocumentEntity document, String password) {
         store.dispatch(DeleteDocumentRequest(
-            snackBarCompleter<Null>(
-                context, AppLocalization.of(context).deletedDocument),
-            [document.id]));
+          completer: snackBarCompleter<Null>(
+              context, AppLocalization.of(context).deletedDocument),
+          documentIds: [document.id],
+          password: password,
+        ));
       },
     );
   }

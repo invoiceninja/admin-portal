@@ -62,7 +62,8 @@ class PaymentListVM {
     @required this.onRefreshed,
     @required this.listState,
     @required this.tableColumns,
-    @required this.onSortColumn, @required this.onClearMultielsect,
+    @required this.onSortColumn,
+    @required this.onClearMultielsect,
   });
 
   static PaymentListVM fromStore(Store<AppState> store) {
@@ -82,6 +83,8 @@ class PaymentListVM {
       state: state,
       user: state.user,
       paymentList: memoizedFilteredPaymentList(
+          state.uiState.filterEntityId,
+          state.uiState.filterEntityType,
           state.paymentState.map,
           state.paymentState.list,
           state.invoiceState.map,
@@ -96,7 +99,7 @@ class PaymentListVM {
       onRefreshed: (context) => _handleRefresh(context),
       tableColumns:
           state.userCompany.settings.getTableColumns(EntityType.payment) ??
-              PaymentPresenter.getAllTableFields(state.userCompany),
+              PaymentPresenter.getDefaultTableFields(state.userCompany),
       onSortColumn: (field) => store.dispatch(SortPayments(field)),
       onClearMultielsect: () => store.dispatch(ClearPaymentMultiselect()),
     );
@@ -113,4 +116,5 @@ class PaymentListVM {
   final Function(BuildContext) onRefreshed;
   final List<String> tableColumns;
   final Function(String) onSortColumn;
-final Function onClearMultielsect;}
+  final Function onClearMultielsect;
+}

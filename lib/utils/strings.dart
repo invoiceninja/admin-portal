@@ -66,7 +66,7 @@ bool isValidDate(String input) {
 }
 
 void printWrapped(String text) {
-  print(text);
+  print(text.length > 1000 ? text.substring(0, 1000) : text);
 
   //final pattern = RegExp('.{1,800}'); // 800 is the size of each chunk
   //pattern.allMatches(text).forEach((match) => print(match.group(0)));
@@ -103,4 +103,43 @@ bool matchesString({String haystack, String needle}) {
     regExp += character + '.*?';
   });
   return RegExp(regExp).hasMatch(haystack.toLowerCase());
+}
+
+String matchesStringsValue({
+  List<String> haystacks,
+  String needle,
+}) {
+  if (needle == null || needle.isEmpty) {
+    return null;
+  }
+
+  String match;
+  haystacks.forEach((haystack) {
+    final value = matchesStringValue(
+      haystack: haystack,
+      needle: needle,
+    );
+    if (value != null) {
+      match = value;
+    }
+  });
+  return match;
+}
+
+String matchesStringValue({String haystack, String needle}) {
+  if (needle == null || needle.isEmpty) {
+    return null;
+  }
+
+  String regExp = '';
+  needle.toLowerCase().runes.forEach((int rune) {
+    final character = String.fromCharCode(rune);
+    regExp += character + '.*?';
+  });
+
+  if (RegExp(regExp).hasMatch(haystack.toLowerCase())) {
+    return haystack;
+  } else {
+    return null;
+  }
 }

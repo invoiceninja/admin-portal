@@ -94,26 +94,31 @@ class ClientEditBillingAddressState extends State<ClientEditBillingAddress> {
           DecoratedFormField(
             controller: _address1Controller,
             label: localization.address1,
+            onSavePressed: viewModel.onSavePressed,
           ),
           DecoratedFormField(
             autocorrect: false,
             controller: _address2Controller,
             label: localization.address2,
+            onSavePressed: viewModel.onSavePressed,
           ),
           DecoratedFormField(
             autocorrect: false,
             controller: _cityController,
             label: localization.city,
+            onSavePressed: viewModel.onSavePressed,
           ),
           DecoratedFormField(
             autocorrect: false,
             controller: _stateController,
             label: localization.state,
+            onSavePressed: viewModel.onSavePressed,
           ),
           DecoratedFormField(
             autocorrect: false,
             controller: _postalCodeController,
             label: localization.postalCode,
+            onSavePressed: viewModel.onSavePressed,
           ),
           EntityDropdown(
             key: ValueKey('__billing_country_${client.countryId}__'),

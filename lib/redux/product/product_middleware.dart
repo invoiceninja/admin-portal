@@ -1,3 +1,4 @@
+import 'package:invoiceninja_flutter/.env.dart';
 import 'package:flutter/material.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
@@ -19,28 +20,30 @@ List<Middleware<AppState>> createStoreProductsMiddleware([
   final viewProduct = _viewProduct();
   final editProduct = _editProduct();
   final loadProducts = _loadProducts(repository);
+  final loadProduct = _loadProduct(repository);
   final saveProduct = _saveProduct(repository);
   final archiveProduct = _archiveProduct(repository);
   final deleteProduct = _deleteProduct(repository);
   final restoreProduct = _restoreProduct(repository);
+  final saveDocument = _saveDocument(repository);
 
   return [
     TypedMiddleware<AppState, ViewProductList>(viewProductList),
     TypedMiddleware<AppState, ViewProduct>(viewProduct),
     TypedMiddleware<AppState, EditProduct>(editProduct),
     TypedMiddleware<AppState, LoadProducts>(loadProducts),
+    TypedMiddleware<AppState, LoadProduct>(loadProduct),
     TypedMiddleware<AppState, SaveProductRequest>(saveProduct),
     TypedMiddleware<AppState, ArchiveProductsRequest>(archiveProduct),
     TypedMiddleware<AppState, DeleteProductsRequest>(deleteProduct),
     TypedMiddleware<AppState, RestoreProductsRequest>(restoreProduct),
+    TypedMiddleware<AppState, SaveProductDocumentRequest>(saveDocument),
   ];
 }
 
 Middleware<AppState> _editProduct() {
   return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
     final action = dynamicAction as EditProduct;
-
-
 
     next(action);
 
@@ -57,8 +60,6 @@ Middleware<AppState> _viewProduct() {
       NextDispatcher next) async {
     final action = dynamicAction as ViewProduct;
 
-
-
     next(action);
 
     store.dispatch(UpdateCurrentRoute(ProductViewScreen.route));
@@ -72,8 +73,6 @@ Middleware<AppState> _viewProduct() {
 Middleware<AppState> _viewProductList() {
   return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
     final action = dynamicAction as ViewProductList;
-
-
 
     next(action);
 
@@ -190,6 +189,37 @@ Middleware<AppState> _saveProduct(ProductRepository repository) {
   };
 }
 
+Middleware<AppState> _loadProduct(ProductRepository repository) {
+  return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
+    final action = dynamicAction as LoadProduct;
+    final AppState state = store.state;
+
+    if (state.isLoading || Config.DEMO_MODE) {
+      next(action);
+      return;
+    }
+
+    store.dispatch(LoadProductRequest());
+    repository
+        .loadItem(store.state.credentials, action.productId)
+        .then((product) {
+      store.dispatch(LoadProductSuccess(product));
+
+      if (action.completer != null) {
+        action.completer.complete(null);
+      }
+    }).catchError((Object error) {
+      print(error);
+      store.dispatch(LoadProductFailure(error));
+      if (action.completer != null) {
+        action.completer.completeError(error);
+      }
+    });
+
+    next(action);
+  };
+}
+
 Middleware<AppState> _loadProducts(ProductRepository repository) {
   return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
     final action = dynamicAction as LoadProducts;
@@ -214,6 +244,31 @@ Middleware<AppState> _loadProducts(ProductRepository repository) {
         action.completer.completeError(error);
       }
     });
+
+    next(action);
+  };
+}
+
+Middleware<AppState> _saveDocument(ProductRepository repository) {
+  return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
+    final action = dynamicAction as SaveProductDocumentRequest;
+    if (store.state.isEnterprisePlan) {
+      repository
+          .uploadDocument(
+              store.state.credentials, action.product, action.filePath)
+          .then((product) {
+        store.dispatch(SaveProductSuccess(product));
+        action.completer.complete(null);
+      }).catchError((Object error) {
+        print(error);
+        store.dispatch(SaveProductDocumentFailure(error));
+        action.completer.completeError(error);
+      });
+    } else {
+      const error = 'Uploading documents requires an enterprise plan';
+      store.dispatch(SaveProductDocumentFailure(error));
+      action.completer.completeError(error);
+    }
 
     next(action);
   };

@@ -91,6 +91,8 @@ class ExpenseListVM {
       user: state.user,
       listState: state.expenseListState,
       expenseList: memoizedFilteredExpenseList(
+          state.uiState.filterEntityId,
+          state.uiState.filterEntityType,
           state.expenseState.map,
           state.clientState.map,
           state.vendorState.map,
@@ -103,7 +105,7 @@ class ExpenseListVM {
       onRefreshed: (context) => _handleRefresh(context),
       tableColumns:
           state.userCompany.settings.getTableColumns(EntityType.expense) ??
-              ExpensePresenter.getAllTableFields(state.userCompany),
+              ExpensePresenter.getDefaultTableFields(state.userCompany),
       onSortColumn: (field) => store.dispatch(SortExpenses(field)),
       onClearMultielsect: () => store.dispatch(ClearExpenseMultiselect()),
     );

@@ -61,6 +61,10 @@ IconData getEntityActionIcon(EntityAction entityAction) {
       return Icons.undo;
     case EntityAction.copy:
       return Icons.content_copy;
+    case EntityAction.apply:
+      return Icons.payment;
+    case EntityAction.viewInStripe:
+      return Icons.open_in_new;
     default:
       return null;
   }
@@ -83,8 +87,9 @@ IconData getEntityIcon(EntityType entityType) {
     case EntityType.invoice:
       return FontAwesomeIcons.fileInvoice;
     case EntityType.payment:
-    case EntityType.companyGateway:
       return FontAwesomeIcons.creditCard;
+    case EntityType.companyGateway:
+      return FontAwesomeIcons.moneyCheckAlt;
     case EntityType.quote:
       return FontAwesomeIcons.fileAlt;
     case EntityType.vendor:

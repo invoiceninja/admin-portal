@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:invoiceninja_flutter/data/models/client_model.dart';
+import 'package:invoiceninja_flutter/data/models/company_gateway_model.dart';
 import 'package:invoiceninja_flutter/data/models/entities.dart';
+import 'package:invoiceninja_flutter/data/models/gateway_token_model.dart';
+import 'package:invoiceninja_flutter/data/models/models.dart';
+import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:invoiceninja_flutter/redux/credit/credit_selectors.dart';
 import 'package:invoiceninja_flutter/redux/expense/expense_selectors.dart';
 import 'package:invoiceninja_flutter/redux/invoice/invoice_selectors.dart';
@@ -16,6 +20,7 @@ import 'package:invoiceninja_flutter/ui/app/lists/list_divider.dart';
 import 'package:invoiceninja_flutter/ui/client/view/client_view_vm.dart';
 import 'package:invoiceninja_flutter/utils/formatting.dart';
 import 'package:invoiceninja_flutter/utils/extensions.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class ClientOverview extends StatelessWidget {
   const ClientOverview({
@@ -38,6 +43,15 @@ class ClientOverview extends StatelessWidget {
     final group = client.hasGroup ? state.groupState.map[client.groupId] : null;
     final user =
         client.hasUser ? state.userState.get(client.assignedUserId) : null;
+
+    final tokenMap = <GatewayTokenEntity, CompanyGatewayEntity>{};
+    client.gatewayTokens.forEach((gatewayToken) {
+      final companyGateway =
+          state.companyGatewayState.get(gatewayToken.companyGatewayId);
+      if (companyGateway.isOld && !companyGateway.isDeleted) {
+        tokenMap[gatewayToken] = companyGateway;
+      }
+    });
 
     if (client.hasLanguage &&
         client.languageId != company.settings.languageId) {
@@ -97,6 +111,22 @@ class ClientOverview extends StatelessWidget {
           EntityListTile(
             entity: group,
             isFilter: isFilter,
+          ),
+        for (var gatewayToken in tokenMap.keys)
+          EntityListTile(
+            entity: tokenMap[gatewayToken],
+            isFilter: isFilter,
+            client: client,
+            onEntityActionSelected: (context, entity, action) {
+              if (action == EntityAction.viewInStripe) {
+                final companyGateway = tokenMap[gatewayToken];
+                launch(GatewayEntity.getClientUrl(
+                    gatewayId: companyGateway.gatewayId,
+                    customerReference: gatewayToken.customerReference));
+              } else {
+                handleEntityAction(context, entity, action);
+              }
+            },
           ),
         if (client.hasUser)
           EntityListTile(

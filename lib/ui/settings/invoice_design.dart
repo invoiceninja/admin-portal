@@ -193,46 +193,47 @@ class _InvoiceDesignState extends State<InvoiceDesign>
                   ),
                 ],
               ),
-            FormCard(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: <Widget>[
-                LearnMore(
-                  url: 'https://fonts.google.com',
-                  child: EntityDropdown(
-                    key: ValueKey('__primary_font_${settings.primaryFont}__'),
+              FormCard(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: <Widget>[
+                  LearnMore(
+                    url: 'https://fonts.google.com',
+                    child: EntityDropdown(
+                      key: ValueKey('__primary_font_${settings.primaryFont}__'),
+                      entityType: EntityType.font,
+                      labelText: localization.primaryFont,
+                      entityId: settings.primaryFont,
+                      entityMap: memoizedFontMap(kGoogleFonts),
+                      onSelected: (font) => viewModel.onSettingsChanged(
+                          settings.rebuild((b) => b..primaryFont = font?.id)),
+                      allowClearing: state.settingsUIState.isFiltered,
+                    ),
+                  ),
+                  EntityDropdown(
+                    key: ValueKey(
+                        '__secondary_font_${settings.secondaryFont}__'),
                     entityType: EntityType.font,
-                    labelText: localization.primaryFont,
-                    entityId: settings.primaryFont,
+                    labelText: localization.secondaryFont,
+                    entityId: settings.secondaryFont,
                     entityMap: memoizedFontMap(kGoogleFonts),
                     onSelected: (font) => viewModel.onSettingsChanged(
-                        settings.rebuild((b) => b..primaryFont = font?.id)),
+                        settings.rebuild((b) => b..secondaryFont = font?.id)),
                     allowClearing: state.settingsUIState.isFiltered,
                   ),
-                ),
-                EntityDropdown(
-                  key: ValueKey('__secondary_font_${settings.secondaryFont}__'),
-                  entityType: EntityType.font,
-                  labelText: localization.secondaryFont,
-                  entityId: settings.secondaryFont,
-                  entityMap: memoizedFontMap(kGoogleFonts),
-                  onSelected: (font) => viewModel.onSettingsChanged(
-                      settings.rebuild((b) => b..secondaryFont = font?.id)),
-                  allowClearing: state.settingsUIState.isFiltered,
-                ),
-                FormColorPicker(
-                  labelText: localization.primaryColor,
-                  onSelected: (value) => viewModel.onSettingsChanged(
-                      settings.rebuild((b) => b..primaryColor = value)),
-                  initialValue: settings.primaryColor,
-                ),
-                FormColorPicker(
-                  labelText: localization.secondaryColor,
-                  onSelected: (value) => viewModel.onSettingsChanged(
-                      settings.rebuild((b) => b..secondaryColor = value)),
-                  initialValue: settings.secondaryColor,
-                ),
-              ],
-            ),            
+                  FormColorPicker(
+                    labelText: localization.primaryColor,
+                    onSelected: (value) => viewModel.onSettingsChanged(
+                        settings.rebuild((b) => b..primaryColor = value)),
+                    initialValue: settings.primaryColor,
+                  ),
+                  FormColorPicker(
+                    labelText: localization.secondaryColor,
+                    onSelected: (value) => viewModel.onSettingsChanged(
+                        settings.rebuild((b) => b..secondaryColor = value)),
+                    initialValue: settings.secondaryColor,
+                  ),
+                ],
+              ),
             ],
           ),
           ListView(

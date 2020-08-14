@@ -113,7 +113,7 @@ ReportResult invoiceReport(
           value = invoice.balance;
           break;
         case InvoiceReportFields.client:
-          value = client?.listDisplayName ?? '';
+          value = client?.displayName ?? '';
           break;
         case InvoiceReportFields.client_balance:
           value = client.balance;

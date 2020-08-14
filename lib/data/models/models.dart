@@ -49,6 +49,7 @@ class EntityAction extends EnumClass {
   static const EntityAction cloneToQuote = _$cloneToQuote;
   static const EntityAction convert = _$convert;
   static const EntityAction approve = _$approve;
+  static const EntityAction apply = _$apply;
   static const EntityAction download = _$download;
   static const EntityAction emailInvoice = _$emailInvoice;
   static const EntityAction emailQuote = _$emailQuote;
@@ -78,10 +79,21 @@ class EntityAction extends EnumClass {
   static const EntityAction reverse = _$reverse;
   static const EntityAction cancel = _$cancel;
   static const EntityAction copy = _$copy;
+  static const EntityAction viewInStripe = _$viewInStripe;
 
   @override
   String toString() {
     return toSnakeCase(super.toString());
+  }
+
+  String toApiParam() {
+    final value = toString();
+
+    if (value.startsWith('email')) {
+      return 'email';
+    }
+
+    return value;
   }
 
   static BuiltSet<EntityAction> get values => _$values;

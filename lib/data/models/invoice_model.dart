@@ -10,6 +10,7 @@ import 'package:invoiceninja_flutter/data/models/quote_model.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/redux/static/static_state.dart';
 import 'package:invoiceninja_flutter/utils/formatting.dart';
+import 'package:invoiceninja_flutter/utils/strings.dart';
 
 part 'invoice_model.g.dart';
 
@@ -133,6 +134,7 @@ abstract class InvoiceEntity extends Object
       customSurcharge4: 0,
       filename: '',
       lineItems: BuiltList<InvoiceItemEntity>(),
+      history: BuiltList<InvoiceHistoryEntity>(),
       usesInclusiveTaxes: company?.settings?.enableInclusiveTaxes ?? false,
       documents: BuiltList<DocumentEntity>(),
       invitations: client == null
@@ -147,6 +149,7 @@ abstract class InvoiceEntity extends Object
       createdUserId: '',
       assignedUserId: '',
       createdAt: 0,
+      loadedAt: 0,
     );
   }
 
@@ -337,6 +340,9 @@ abstract class InvoiceEntity extends Object
 
   BuiltList<DocumentEntity> get documents;
 
+  @nullable
+  BuiltList<InvoiceHistoryEntity> get history;
+
   bool get isApproved => statusId == kQuoteStatusApproved;
 
   bool get hasClient => '${clientId ?? ''}'.isNotEmpty;
@@ -346,6 +352,20 @@ abstract class InvoiceEntity extends Object
   double get netAmount => amount - taxAmount;
 
   double get netBalance => balance - (taxAmount * balance / amount);
+
+  @nullable
+  int get loadedAt;
+
+  bool get isLoaded => loadedAt != null && loadedAt > 0;
+
+  bool get isStale {
+    if (!isLoaded) {
+      return true;
+    }
+
+    return DateTime.now().millisecondsSinceEpoch - loadedAt >
+        kMillisecondsToRefreshActivities;
+  }
 
   @override
   bool get isEditable {
@@ -534,52 +554,35 @@ abstract class InvoiceEntity extends Object
 
   @override
   bool matchesFilter(String filter) {
-    if (filter == null || filter.isEmpty) {
-      return true;
-    }
-
-    filter = filter.toLowerCase();
-
-    if (number != null && number.toLowerCase().contains(filter)) {
-      return true;
-    } else if (customValue1.isNotEmpty &&
-        customValue1.toLowerCase().contains(filter)) {
-      return true;
-    } else if (customValue2.isNotEmpty &&
-        customValue2.toLowerCase().contains(filter)) {
-      return true;
-    } else if (customValue3.isNotEmpty &&
-        customValue3.toLowerCase().contains(filter)) {
-      return true;
-    } else if (customValue4.isNotEmpty &&
-        customValue4.toLowerCase().contains(filter)) {
-      return true;
-    }
-
-    return false;
+    return matchesStrings(
+      haystacks: [
+        number,
+        poNumber,
+        publicNotes,
+        privateNotes,
+        customValue1,
+        customValue2,
+        customValue3,
+        customValue4,
+      ],
+      needle: filter,
+    );
   }
 
   @override
   String matchesFilterValue(String filter) {
-    if (filter == null || filter.isEmpty) {
-      return null;
-    }
-
-    filter = filter.toLowerCase();
-    if (customValue1.isNotEmpty &&
-        customValue1.toLowerCase().contains(filter)) {
-      return customValue1;
-    } else if (customValue2.isNotEmpty &&
-        customValue2.toLowerCase().contains(filter)) {
-      return customValue2;
-    } else if (customValue3.isNotEmpty &&
-        customValue3.toLowerCase().contains(filter)) {
-      return customValue3;
-    } else if (customValue4.isNotEmpty &&
-        customValue4.toLowerCase().contains(filter)) {
-      return customValue4;
-    }
-    return null;
+    return matchesStringsValue(
+      haystacks: [
+        poNumber,
+        publicNotes,
+        privateNotes,
+        customValue1,
+        customValue2,
+        customValue3,
+        customValue4,
+      ],
+      needle: filter,
+    );
   }
 
   @override
@@ -602,14 +605,12 @@ abstract class InvoiceEntity extends Object
       }
 
       if (userCompany.canEditEntity(this)) {
-        if (!multiselect) {
-          if (entityType == EntityType.quote) {
-            actions.add(EntityAction.emailQuote);
-          } else if (entityType == EntityType.credit) {
-            actions.add(EntityAction.emailCredit);
-          } else {
-            actions.add(EntityAction.emailInvoice);
-          }
+        if (entityType == EntityType.quote) {
+          actions.add(EntityAction.emailQuote);
+        } else if (entityType == EntityType.credit) {
+          actions.add(EntityAction.emailCredit);
+        } else {
+          actions.add(EntityAction.emailInvoice);
         }
 
         if (!isQuote &&
@@ -1083,4 +1084,36 @@ abstract class InvitationEntity extends Object
 
   static Serializer<InvitationEntity> get serializer =>
       _$invitationEntitySerializer;
+}
+
+abstract class InvoiceHistoryEntity
+    implements Built<InvoiceHistoryEntity, InvoiceHistoryEntityBuilder> {
+  factory InvoiceHistoryEntity({String contactId}) {
+    return _$InvoiceHistoryEntity._(
+      id: '',
+      activityId: '',
+      htmlBackup: '',
+      createdAt: 0,
+    );
+  }
+
+  InvoiceHistoryEntity._();
+
+  @override
+  @memoized
+  int get hashCode;
+
+  String get id;
+
+  @BuiltValueField(wireName: 'activity_id')
+  String get activityId;
+
+  @BuiltValueField(wireName: 'html_backup')
+  String get htmlBackup;
+
+  @BuiltValueField(wireName: 'created_at')
+  int get createdAt;
+
+  static Serializer<InvoiceHistoryEntity> get serializer =>
+      _$invoiceHistoryEntitySerializer;
 }

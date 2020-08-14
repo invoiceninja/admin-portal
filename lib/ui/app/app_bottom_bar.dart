@@ -440,50 +440,48 @@ class _AppBottomBarState extends State<AppBottomBar> {
                         : null,
                   ),
                 if (!state.prefState.isMenuFloated) Spacer(),
-                if (!widget.entityType.isSetting) ...[
-                  if (!isList)
-                    IconButton(
-                      icon: Icon(Icons.view_week),
-                      tooltip: localization.columns,
-                      onPressed: () {
-                        multiselectDialog(
-                          context: context,
-                          onSelected: (selected) {
-                            final listUIState =
-                                store.state.getListState(widget.entityType);
-                            if (!selected.contains(listUIState.sortField)) {
-                              widget.onSelectedSortField(
-                                  selected.isEmpty ? '' : selected[0]);
-                            }
-                            final settings = state.userCompany.settings.rebuild(
-                                (b) => b
-                                  ..tableColumns['${widget.entityType}'] =
-                                      BuiltList<String>(selected));
-                            final user = state.user.rebuild((b) =>
-                                b..userCompany.settings.replace(settings));
-                            final completer = snackBarCompleter<Null>(context,
-                                AppLocalization.of(context).savedSettings);
-                            store.dispatch(
-                              SaveUserSettingsRequest(
-                                completer: completer,
-                                user: user,
-                              ),
-                            );
-                          },
-                          options: widget.tableColumns,
-                          defaultSelected: widget.defaultTableColumns,
-                          selected: state.userCompany.settings
-                              .tableColumns['${widget.entityType}']
-                              ?.toList(),
-                        );
-                      },
-                    ),
+                if (!widget.entityType.isSetting && !isList)
                   IconButton(
-                    icon: Icon(Icons.refresh),
-                    onPressed: () => store.dispatch(RefreshData()),
-                    tooltip: localization.refresh,
+                    icon: Icon(Icons.view_week),
+                    tooltip: localization.columns,
+                    onPressed: () {
+                      multiselectDialog(
+                        context: context,
+                        onSelected: (selected) {
+                          final listUIState =
+                              store.state.getListState(widget.entityType);
+                          if (!selected.contains(listUIState.sortField)) {
+                            widget.onSelectedSortField(
+                                selected.isEmpty ? '' : selected[0]);
+                          }
+                          final settings = state.userCompany.settings.rebuild(
+                              (b) => b
+                                ..tableColumns['${widget.entityType}'] =
+                                    BuiltList<String>(selected));
+                          final user = state.user.rebuild(
+                              (b) => b..userCompany.settings.replace(settings));
+                          final completer = snackBarCompleter<Null>(context,
+                              AppLocalization.of(context).savedSettings);
+                          store.dispatch(
+                            SaveUserSettingsRequest(
+                              completer: completer,
+                              user: user,
+                            ),
+                          );
+                        },
+                        options: widget.tableColumns,
+                        defaultSelected: widget.defaultTableColumns,
+                        selected: state.userCompany.settings
+                            .tableColumns['${widget.entityType}']
+                            ?.toList(),
+                      );
+                    },
                   ),
-                ],
+                IconButton(
+                  icon: Icon(Icons.refresh),
+                  onPressed: () => store.dispatch(RefreshData()),
+                  tooltip: localization.refresh,
+                ),
               ],
             ),
           ),

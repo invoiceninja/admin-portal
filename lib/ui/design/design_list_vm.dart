@@ -66,7 +66,8 @@ class DesignListVM {
     @required this.onRefreshed,
     @required this.onEntityAction,
     @required this.tableColumns,
-    @required this.onSortColumn, @required this.onClearMultielsect,
+    @required this.onSortColumn,
+    @required this.onClearMultielsect,
   });
 
   static DesignListVM fromStore(Store<AppState> store) {
@@ -112,4 +113,5 @@ class DesignListVM {
   final Function(BuildContext, List<BaseEntity>, EntityAction) onEntityAction;
   final List<String> tableColumns;
   final Function(String) onSortColumn;
-final Function onClearMultielsect;}
+  final Function onClearMultielsect;
+}

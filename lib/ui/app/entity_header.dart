@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:invoiceninja_flutter/constants.dart';
 import 'package:invoiceninja_flutter/data/models/entities.dart';
 import 'package:invoiceninja_flutter/ui/app/entities/entity_status_chip.dart';
+import 'package:invoiceninja_flutter/utils/localization.dart';
 
 class EntityHeader extends StatelessWidget {
   const EntityHeader({
@@ -23,6 +25,7 @@ class EntityHeader extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final localization = AppLocalization.of(context);
     final textColor = Theme.of(context).textTheme.bodyText1.color;
 
     Widget _value1() {
@@ -90,14 +93,47 @@ class EntityHeader extends StatelessWidget {
                 ],
               ],
             ),
-            if (statusLabel != null)
-              Padding(
-                padding: const EdgeInsets.only(top: 25, bottom: 5),
-                child: EntityStatusChip(
-                  entity: entity,
-                  width: 120,
-                ),
+            Padding(
+              padding: const EdgeInsets.only(top: 25, bottom: 5),
+              child: Row(
+                children: [
+                  if (statusLabel != null)
+                    Padding(
+                      padding: const EdgeInsets.only(right: kTableColumnGap),
+                      child: EntityStatusChip(
+                        entity: entity,
+                        width: 120,
+                      ),
+                    ),
+                  if (!entity.isActive)
+                    DecoratedBox(
+                      decoration: BoxDecoration(
+                        color: entity.isArchived ? Colors.orange : kColorRed,
+                        borderRadius: BorderRadius.all(Radius.circular(5)),
+                      ),
+                      child: ConstrainedBox(
+                        constraints: BoxConstraints(
+                          minWidth: 120,
+                          maxWidth: 120,
+                        ),
+                        child: Padding(
+                          padding: const EdgeInsets.symmetric(
+                              vertical: 8, horizontal: 8),
+                          child: Text(
+                            (entity.isArchived
+                                    ? localization.archived
+                                    : localization.deleted)
+                                .toUpperCase(),
+                            style: TextStyle(fontSize: 14, color: Colors.white),
+                            textAlign: TextAlign.center,
+                            overflow: TextOverflow.ellipsis,
+                          ),
+                        ),
+                      ),
+                    )
+                ],
               ),
+            ),
           ],
         ),
       ),

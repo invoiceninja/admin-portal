@@ -246,16 +246,6 @@ class FilterCompanyGatewaysByCustom4 implements PersistUI {
 
 void handleCompanyGatewayAction(BuildContext context,
     List<BaseEntity> companyGateways, EntityAction action) {
-  assert(
-      [
-            EntityAction.restore,
-            EntityAction.archive,
-            EntityAction.delete,
-            EntityAction.toggleMultiselect
-          ].contains(action) ||
-          companyGateways.length == 1,
-      'Cannot perform this action on more than one company gateway');
-
   if (companyGateways.isEmpty) {
     return;
   }

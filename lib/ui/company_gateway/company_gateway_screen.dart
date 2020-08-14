@@ -8,6 +8,7 @@ import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/redux/company_gateway/company_gateway_actions.dart';
+import 'package:invoiceninja_flutter/redux/settings/settings_actions.dart';
 import 'package:invoiceninja_flutter/ui/app/app_bottom_bar.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/save_cancel_buttons.dart';
 import 'package:invoiceninja_flutter/ui/app/list_scaffold.dart';
@@ -63,11 +64,25 @@ class CompanyGatewayScreen extends StatelessWidget {
             onCancelPressed: (context) =>
                 store.dispatch(ClearCompanyGatewayMultiselect()),
           )
-        else
+        else ...[
+          if (state.uiState.settingsUIState.isFiltered) ...[
+            FlatButton(
+              child: Text(localization.reset,
+                  style: TextStyle(color: store.state.headerTextColor)),
+              onPressed: () {
+                final settings = store.state.uiState.settingsUIState.settings
+                    .rebuild((b) => b..companyGatewayIds = '');
+                store.dispatch(UpdateSettings(settings: settings));
+              },
+            ),
+            SizedBox(width: 10),
+          ],
           SaveCancelButtons(
             isSaving: state.isSaving,
             onSavePressed: viewModel.onSavePressed,
-          ),
+            onCancelPressed: (_) => store.dispatch(ResetSettings()),
+          )
+        ],
       ],
       body: CompanyGatewayListBuilder(),
       bottomNavigationBar: AppBottomBar(

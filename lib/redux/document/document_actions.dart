@@ -158,18 +158,20 @@ class ArchiveDocumentFailure implements StopSaving {
 }
 
 class DeleteDocumentRequest implements StartSaving {
-  DeleteDocumentRequest(this.completer, this.documentIds);
+  DeleteDocumentRequest({this.completer, this.documentIds, this.password});
 
   final Completer completer;
   final List<String> documentIds;
+  final String password;
 }
 
 class DeleteDocumentSuccess implements StopSaving, PersistData {
   DeleteDocumentSuccess({this.documentId});
+
   final String documentId;
 
-  //DeleteDocumentSuccess(this.documents);
-  //final List<DocumentEntity> documents;
+//DeleteDocumentSuccess(this.documents);
+//final List<DocumentEntity> documents;
 }
 
 class DeleteDocumentFailure implements StopSaving {
@@ -271,11 +273,6 @@ void handleDocumentAction(
     case EntityAction.archive:
       store.dispatch(ArchiveDocumentRequest(
           snackBarCompleter<Null>(context, localization.archivedDocument),
-          documentIds));
-      break;
-    case EntityAction.delete:
-      store.dispatch(DeleteDocumentRequest(
-          snackBarCompleter<Null>(context, localization.deletedDocument),
           documentIds));
       break;
     case EntityAction.toggleMultiselect:

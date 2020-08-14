@@ -168,6 +168,7 @@ final productsReducer = combineReducers<ProductState>([
   TypedReducer<ProductState, SaveProductSuccess>(_updateProduct),
   TypedReducer<ProductState, AddProductSuccess>(_addProduct),
   TypedReducer<ProductState, LoadProductsSuccess>(_setLoadedProducts),
+  TypedReducer<ProductState, LoadProductSuccess>(_setLoadedProduct),
   TypedReducer<ProductState, LoadCompanySuccess>(_setLoadedCompany),
   TypedReducer<ProductState, ArchiveProductsRequest>(_archiveProductRequest),
   TypedReducer<ProductState, ArchiveProductsSuccess>(_archiveProductSuccess),
@@ -289,6 +290,12 @@ ProductState _addProduct(ProductState productState, AddProductSuccess action) {
 
 ProductState _updateProduct(
     ProductState productState, SaveProductSuccess action) {
+  return productState
+      .rebuild((b) => b..map[action.product.id] = action.product);
+}
+
+ProductState _setLoadedProduct(
+    ProductState productState, LoadProductSuccess action) {
   return productState
       .rebuild((b) => b..map[action.product.id] = action.product);
 }

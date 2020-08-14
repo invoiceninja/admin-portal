@@ -6,6 +6,9 @@ import 'package:archive/archive.dart';
 import 'package:flutter/foundation.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+//import 'package:idb_shim/idb.dart';
+//import 'package:idb_shim/idb_browser.dart';
+
 class FileStorage {
   const FileStorage(
     this.tag,
@@ -13,6 +16,7 @@ class FileStorage {
   );
 
   static const GZIP_TAG = '_gzip';
+  static const STORE_NAME = 'invoiceninja';
 
   final String tag;
   final Future<Directory> Function() getDirectory;
@@ -23,8 +27,36 @@ class FileStorage {
     return File('${dir.path}/invoiceninja__$tag.json');
   }
 
+  /*
+  Future<Database> _getIndexedDb() async {
+    final idbFactory = getIdbFactory();
+    idbFactory.open(kAppName, version: 1,
+        onUpgradeNeeded: (VersionChangeEvent event) {
+      final db = event.database;
+      db.createObjectStore(STORE_NAME, autoIncrement: true);
+    });
+
+    final db = await idbFactory.open(kAppName, version: 1,
+        onUpgradeNeeded: (VersionChangeEvent event) {
+      final db = event.database;
+      db.createObjectStore(STORE_NAME, autoIncrement: true);
+    });
+
+    return db;
+  }
+   */
+
   Future<dynamic> load() async {
     if (kIsWeb) {
+      /*
+      final db = await _getIndexedDb();
+      final txn = db.transaction(STORE_NAME, 'readonly');
+      final store = txn.objectStore(STORE_NAME);
+      final String value = await store.getObject(tag);
+      await txn.completed;
+      return value;
+      */
+
       final prefs = await SharedPreferences.getInstance();
       String value = prefs.getString(tag);
 
@@ -39,8 +71,6 @@ class FileStorage {
         final unzipped = GZipDecoder().decodeBytes(decoded);
         return utf8.decode(unzipped);
       }
-
-      return null;
     } else {
       final file = await _getLocalFile();
       final contents = await file.readAsString();
@@ -51,6 +81,14 @@ class FileStorage {
 
   Future<File> save(String data) async {
     if (kIsWeb) {
+      /*
+      final db = await _getIndexedDb();
+      final txn = db.transaction(STORE_NAME, 'readwrite');
+      final store = txn.objectStore(STORE_NAME);
+      await store.put(data, tag);
+      await txn.completed;
+      */
+
       final prefs = await SharedPreferences.getInstance();
       try {
         await prefs.setString(tag, data);
@@ -79,9 +117,18 @@ class FileStorage {
 
   Future<FileSystemEntity> delete() async {
     if (kIsWeb) {
+      /*
+      final db = await _getIndexedDb();
+      final txn = db.transaction(STORE_NAME, 'readonly');
+      final store = txn.objectStore(STORE_NAME);
+      await store.delete(tag);
+      await txn.completed;
+       */
+
       final prefs = await SharedPreferences.getInstance();
       prefs.remove(tag);
       prefs.remove(tag + GZIP_TAG);
+
       return null;
     } else {
       final file = await _getLocalFile();
@@ -92,6 +139,12 @@ class FileStorage {
 
   Future<bool> exists() async {
     if (kIsWeb) {
+      /*
+      final db = await _getIndexedDb();
+      final txn = db.transaction(STORE_NAME, 'readonly');
+      final store = txn.objectStore(STORE_NAME);
+      return await store.count(tag) > 0;
+       */
       final prefs = await SharedPreferences.getInstance();
       return prefs.containsKey(tag) || prefs.containsKey(tag + GZIP_TAG);
     } else {

@@ -6,6 +6,7 @@ import 'package:invoiceninja_flutter/data/models/entities.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/utils/formatting.dart';
+import 'package:invoiceninja_flutter/utils/strings.dart';
 
 part 'user_model.g.dart';
 
@@ -181,39 +182,36 @@ abstract class UserEntity extends Object
 
   @override
   bool matchesFilter(String filter) {
-    if (filter == null || filter.isEmpty) {
-      return true;
-    }
-    filter = filter.toLowerCase();
-
-    if (firstName.toLowerCase().contains(filter)) {
-      return true;
-    } else if (lastName.toLowerCase().contains(filter)) {
-      return true;
-    } else if (phone.toLowerCase().contains(filter)) {
-      return true;
-    } else if (email.toLowerCase().contains(filter)) {
-      return true;
-    }
-
-    return false;
+    return matchesStrings(
+      haystacks: [
+        firstName,
+        lastName,
+        email,
+        phone,
+        customValue1,
+        customValue2,
+        customValue3,
+        customValue4,
+      ],
+      needle: filter,
+    );
   }
 
   @override
   String matchesFilterValue(String filter) {
-    if (filter == null || filter.isEmpty) {
-      return null;
-    }
-
-    filter = filter.toLowerCase();
-
-    if (email.toLowerCase().contains(filter)) {
-      return email;
-    } else if (phone.toLowerCase().contains(filter)) {
-      return phone;
-    }
-
-    return null;
+    return matchesStringsValue(
+      haystacks: [
+        firstName,
+        lastName,
+        email,
+        phone,
+        customValue1,
+        customValue2,
+        customValue3,
+        customValue4,
+      ],
+      needle: filter,
+    );
   }
 
   @override
@@ -224,8 +222,7 @@ abstract class UserEntity extends Object
       bool multiselect = false}) {
     final actions = <EntityAction>[];
 
-    // TODO remove ??
-    if (!(isDeleted ?? false)) {
+    if (!isDeleted) {
       if (includeEdit && userCompany.canEditEntity(this)) {
         actions.add(EntityAction.edit);
       }

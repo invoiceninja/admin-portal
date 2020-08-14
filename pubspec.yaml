@@ -6,7 +6,7 @@ homepage: https://invoiceninja.com
 documentation: http://docs.invoiceninja.com
 
 environment:
-  sdk: ">=2.6.0 <3.0.0"
+  sdk: ">=2.9.0 <3.0.0"
 
 dependencies:
   flutter:
@@ -49,6 +49,7 @@ dependencies:
   rounded_loading_button: ^1.0.0
   #quick_actions: ^0.2.1
   version: ^1.0.0
+  #idb_shim: ^1.11.1+1
 
 dependency_overrides:
   # Error: No named parameter with the name 'animation'

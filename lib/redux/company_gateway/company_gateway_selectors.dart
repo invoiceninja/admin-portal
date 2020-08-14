@@ -1,4 +1,7 @@
+import 'package:invoiceninja_flutter/data/models/client_model.dart';
 import 'package:invoiceninja_flutter/data/models/company_gateway_model.dart';
+import 'package:invoiceninja_flutter/data/models/entities.dart';
+import 'package:invoiceninja_flutter/data/models/payment_model.dart';
 import 'package:memoize/memoize.dart';
 import 'package:built_collection/built_collection.dart';
 import 'package:invoiceninja_flutter/redux/ui/list_ui_state.dart';
@@ -83,3 +86,71 @@ bool hasCompanyGatewayChanges(CompanyGatewayEntity companyGateway,
     companyGateway.isNew
         ? companyGateway.isChanged
         : companyGateway != companyGatewayMap[companyGateway.id];
+
+var memoizedCalculateCompanyGatewayProcessed = memo2(
+    (String companyGatewayId, BuiltMap<String, PaymentEntity> paymentMap) =>
+        calculateCompanyGatewayProcessed(
+            companyGatewayId: companyGatewayId, paymentMap: paymentMap));
+
+double calculateCompanyGatewayProcessed({
+  String companyGatewayId,
+  BuiltMap<String, PaymentEntity> paymentMap,
+}) {
+  double total = 0;
+
+  paymentMap.forEach((paymentId, payment) {
+    if (payment.companyGatewayId == companyGatewayId) {
+      total += payment.completedAmount * payment.exchangeRate;
+    }
+  });
+
+  return total;
+}
+
+var memoizedClientStatsForCompanyGateway = memo2(
+    (String companyGatewayId, BuiltMap<String, ClientEntity> clientMap) =>
+        clientStatsForCompanyGateway(companyGatewayId, clientMap));
+
+EntityStats clientStatsForCompanyGateway(
+  String companyGatewayId,
+  BuiltMap<String, ClientEntity> clientMap,
+) {
+  int countActive = 0;
+  int countArchived = 0;
+  clientMap.forEach((clientId, client) {
+    if (client.gatewayTokens
+        .where((token) => token.companyGatewayId == companyGatewayId)
+        .isNotEmpty) {
+      if (client.isActive) {
+        countActive++;
+      } else if (client.isArchived) {
+        countArchived++;
+      }
+    }
+  });
+
+  return EntityStats(countActive: countActive, countArchived: countArchived);
+}
+
+var memoizedPaymentStatsForCompanyGateway = memo2(
+    (String companyGatewayId, BuiltMap<String, PaymentEntity> paymentMap) =>
+        paymentStatsForCompanyGateway(companyGatewayId, paymentMap));
+
+EntityStats paymentStatsForCompanyGateway(
+  String companyGatewayId,
+  BuiltMap<String, PaymentEntity> paymentMap,
+) {
+  int countActive = 0;
+  int countArchived = 0;
+  paymentMap.forEach((paymentId, payment) {
+    if (payment.companyGatewayId == companyGatewayId) {
+      if (payment.isActive) {
+        countActive++;
+      } else if (payment.isArchived) {
+        countArchived++;
+      }
+    }
+  });
+
+  return EntityStats(countActive: countActive, countArchived: countArchived);
+}

@@ -94,14 +94,15 @@ class _EntityListState extends State<EntityList> {
     final store = StoreProvider.of<AppState>(context);
     final localization = AppLocalization.of(context);
     final state = widget.state;
+    final uiState = state.uiState;
     final entityType = widget.entityType;
-    final listState = state.getListState(entityType);
     final listUIState = state.getUIState(entityType).listUIState;
     final isList = state.prefState.moduleLayout == ModuleLayout.list ||
         widget.presenter == null;
     final isInMultiselect = listUIState.isInMultiselect();
     final entityList = widget.entityList;
     final entityMap = state.getEntityMap(entityType);
+    final countSelected = (listUIState.selectedIds ?? <String>[]).length;
 
     if (!state.isLoaded && entityList.isEmpty) {
       return LoadingIndicator();
@@ -128,10 +129,10 @@ class _EntityListState extends State<EntityList> {
     final listOrTable = () {
       if (isList) {
         return Column(children: <Widget>[
-          if (listState.filterEntityId != null && isMobile(context))
+          if (uiState.filterEntityId != null && isMobile(context))
             ListFilterMessage(
-              filterEntityId: listState.filterEntityId,
-              filterEntityType: listState.filterEntityType,
+              filterEntityId: uiState.filterEntityId,
+              filterEntityType: uiState.filterEntityType,
               onPressed: (_) => viewEntityById(
                   context: context,
                   entityId: state.uiState.filterEntityId,
@@ -163,10 +164,10 @@ class _EntityListState extends State<EntityList> {
         return Column(
           mainAxisSize: MainAxisSize.max,
           children: [
-            if (listState.filterEntityId != null && isMobile(context))
+            if (uiState.filterEntityId != null && isMobile(context))
               ListFilterMessage(
-                filterEntityId: listState.filterEntityId,
-                filterEntityType: listState.filterEntityType,
+                filterEntityId: uiState.filterEntityId,
+                filterEntityType: uiState.filterEntityType,
                 onPressed: (_) {
                   viewEntityById(
                       context: context,
@@ -214,6 +215,7 @@ class _EntityListState extends State<EntityList> {
                     sortColumnIndex:
                         widget.tableColumns.indexOf(listUIState.sortField),
                     sortAscending: listUIState.sortAscending,
+                    rowsPerPage: state.prefState.rowsPerPage,
                   ),
                 ),
               ),
@@ -259,9 +261,10 @@ class _EntityListState extends State<EntityList> {
                       ),
                       SizedBox(width: 16),
                       Expanded(
-                        child: Text(localization.countRecordsSelected.replaceFirst(
-                            ':count',
-                            '${(listUIState.selectedIds ?? <String>[]).length}')),
+                        child: Text((countSelected == 1
+                                ? localization.countRecordSelected
+                                : localization.countRecordsSelected)
+                            .replaceFirst(':count', '$countSelected')),
                       ),
                       SaveCancelButtons(
                         color: state.prefState.enableDarkMode

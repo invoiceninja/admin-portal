@@ -1,12 +1,15 @@
 import 'dart:async';
 import 'dart:convert';
 import 'dart:io' as file;
+import 'package:flutter_redux/flutter_redux.dart';
 import 'package:flutter_share/flutter_share.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
 import 'package:http/http.dart';
 import 'package:invoiceninja_flutter/data/models/invoice_model.dart';
 import 'package:flutter/foundation.dart';
+import 'package:invoiceninja_flutter/data/web_client.dart';
+import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/ui/app/loading_indicator.dart';
 import 'package:invoiceninja_flutter/utils/dialogs.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
@@ -17,7 +20,8 @@ import 'package:native_pdf_renderer/native_pdf_renderer.dart';
 import 'package:invoiceninja_flutter/utils/web_stub.dart'
     if (dart.library.html) 'package:invoiceninja_flutter/utils/web.dart';
 
-Future<Null> viewPdf(InvoiceEntity invoice, BuildContext context) async {
+Future<Null> viewPdf(InvoiceEntity invoice, BuildContext context,
+    {String activityId}) async {
   /*
   final localization = AppLocalization.of(context);
   if (Platform.isIOS) {
@@ -37,14 +41,16 @@ Future<Null> viewPdf(InvoiceEntity invoice, BuildContext context) async {
       builder: (BuildContext context) {
         return PDFScaffold(
           invoice: invoice,
+          activityId: activityId,
         );
       });
 }
 
 class PDFScaffold extends StatefulWidget {
-  const PDFScaffold({this.invoice});
+  const PDFScaffold({@required this.invoice, this.activityId});
 
   final InvoiceEntity invoice;
+  final String activityId;
 
   @override
   _PDFScaffoldState createState() => _PDFScaffoldState();
@@ -56,10 +62,10 @@ class _PDFScaffoldState extends State<PDFScaffold> {
   http.Response _response;
 
   @override
-  void initState() {
-    super.initState();
+  void didChangeDependencies() {
+    super.didChangeDependencies();
 
-    _loadPDF(context, widget.invoice).then((response) {
+    _loadPDF(context, widget.invoice, widget.activityId).then((response) {
       setState(() {
         _response = response;
       });
@@ -70,7 +76,7 @@ class _PDFScaffoldState extends State<PDFScaffold> {
           response: response,
         ).then((value) => setState(() {
               _pdfString = value;
-              registerWebView(_pdfString);
+              WebUtils.registerWebView(_pdfString);
             }));
       } else {
         renderMobilePDF(
@@ -86,10 +92,12 @@ class _PDFScaffoldState extends State<PDFScaffold> {
 
   @override
   Widget build(BuildContext context) {
+    final store = StoreProvider.of<AppState>(context);
     final localization = AppLocalization.of(context);
     final invoice = widget.invoice;
 
     return Scaffold(
+      backgroundColor: Colors.grey,
       appBar: AppBar(
         centerTitle: false,
         leading: IconButton(
@@ -101,7 +109,7 @@ class _PDFScaffoldState extends State<PDFScaffold> {
           FlatButton(
             child: Text(
               localization.download,
-              //style: TextStyle(color: Colors.white),
+              style: TextStyle(color: store.state.headerTextColor),
             ),
             onPressed: _response == null
                 ? null
@@ -117,7 +125,6 @@ class _PDFScaffoldState extends State<PDFScaffold> {
                       pdfData.writeAsBytes(_response.bodyBytes);
                       await FlutterShare.shareFile(
                           title: 'test.pdf',
-                          //text: 'Example share text',
                           filePath: filePath);
                     }
                   },
@@ -172,10 +179,22 @@ class _PDFScaffoldState extends State<PDFScaffold> {
   }
 }
 
-Future<Response> _loadPDF(BuildContext context, InvoiceEntity invoice) async {
-  final invitation = invoice.invitations.first;
-  final url = invitation.downloadLink;
-  final http.Response response = await http.Client().get(url);
+Future<Response> _loadPDF(
+    BuildContext context, InvoiceEntity invoice, String activityId) async {
+  http.Response response;
+
+  if (activityId != null) {
+    final store = StoreProvider.of<AppState>(context);
+    final credential = store.state.credentials;
+    response = await WebClient().get(
+        '${credential.url}/activities/download_entity/$activityId',
+        credential.token,
+        rawResponse: true);
+  } else {
+    final invitation = invoice.invitations.first;
+    final url = invitation.downloadLink;
+    response = await http.Client().get(url);
+  }
 
   if (response.statusCode >= 400) {
     showErrorDialog(

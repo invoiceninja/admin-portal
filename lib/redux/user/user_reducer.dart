@@ -1,4 +1,5 @@
 import 'package:built_collection/built_collection.dart';
+import 'package:invoiceninja_flutter/redux/settings/settings_actions.dart';
 import 'package:redux/redux.dart';
 import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
@@ -26,8 +27,10 @@ Reducer<String> selectedIdReducer = combineReducers([
   TypedReducer<String, ClearEntityFilter>((selectedId, action) => ''),
   TypedReducer<String, ClearEntitySelection>((selectedId, action) =>
       action.entityType == EntityType.user ? '' : selectedId),
-  TypedReducer<String, FilterByEntity>((selectedId, action) =>
-      action.entityType == EntityType.user ? action.entityId : selectedId),
+  TypedReducer<String, FilterByEntity>((selectedId, action) => action
+          .clearSelection
+      ? ''
+      : action.entityType == EntityType.user ? action.entityId : selectedId),
 ]);
 
 final editingReducer = combineReducers<UserEntity>([
@@ -64,24 +67,12 @@ final userListReducer = combineReducers<ListUIState>([
   TypedReducer<ListUIState, FilterUsers>(_filterUsers),
   TypedReducer<ListUIState, FilterUsersByCustom1>(_filterUsersByCustom1),
   TypedReducer<ListUIState, FilterUsersByCustom2>(_filterUsersByCustom2),
-  TypedReducer<ListUIState, FilterByEntity>(_filterUsersByClient),
   TypedReducer<ListUIState, StartUserMultiselect>(_startListMultiselect),
   TypedReducer<ListUIState, AddToUserMultiselect>(_addToListMultiselect),
   TypedReducer<ListUIState, RemoveFromUserMultiselect>(
       _removeFromListMultiselect),
   TypedReducer<ListUIState, ClearUserMultiselect>(_clearListMultiselect),
-  TypedReducer<ListUIState, ClearEntityFilter>(
-      (state, action) => state.rebuild((b) => b
-        ..filterEntityId = null
-        ..filterEntityType = null)),
 ]);
-
-ListUIState _filterUsersByClient(
-    ListUIState userListState, FilterByEntity action) {
-  return userListState.rebuild((b) => b
-    ..filterEntityId = action.entityId
-    ..filterEntityType = action.entityType);
-}
 
 ListUIState _filterUsersByCustom1(
     ListUIState userListState, FilterUsersByCustom1 action) {
@@ -146,6 +137,7 @@ ListUIState _clearListMultiselect(
 
 final usersReducer = combineReducers<UserState>([
   TypedReducer<UserState, SaveUserSuccess>(_updateUser),
+  TypedReducer<UserState, SaveAuthUserSuccess>(_updateAuthUser),
   TypedReducer<UserState, AddUserSuccess>(_addUser),
   TypedReducer<UserState, LoadUsersSuccess>(_setLoadedUsers),
   TypedReducer<UserState, LoadUserSuccess>(_setLoadedUser),
@@ -260,6 +252,10 @@ UserState _addUser(UserState userState, AddUserSuccess action) {
 }
 
 UserState _updateUser(UserState userState, SaveUserSuccess action) {
+  return userState.rebuild((b) => b..map[action.user.id] = action.user);
+}
+
+UserState _updateAuthUser(UserState userState, SaveAuthUserSuccess action) {
   return userState.rebuild((b) => b..map[action.user.id] = action.user);
 }
 

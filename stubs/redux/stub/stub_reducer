@@ -26,7 +26,10 @@ Reducer<String> selectedIdReducer = combineReducers([
       TypedReducer<String, ArchiveStubsSuccess>((selectedId, action) => ''),
   TypedReducer<String, ClearEntityFilter>((selectedId, action) => ''),
   TypedReducer<String, FilterByEntity>((selectedId, action) =>
-        action.entityType == EntityType.stub ? action.entityId : selectedId),
+        action
+                  .clearSelection
+              ? ''
+              : action.entityType == EntityType.stub ? action.entityId : selectedId),
 
 ]);
 

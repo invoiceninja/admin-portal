@@ -67,7 +67,7 @@ class ReportsScreen extends StatelessWidget {
           kReportPayment,
           kReportTaxRate,
           //kReportCredit,
-          //kReportDocument,
+          kReportDocument,
           //kReportExpense,
           //kReportProduct,
           //kReportProfitAndLoss,
@@ -164,8 +164,9 @@ class ReportsScreen extends StatelessWidget {
         },
         items: reportResult.columns
             .where((column) =>
-        getReportColumnType(column, context) ==
-            ReportColumnType.number)
+            [ReportColumnType.number, ReportColumnType.age,].contains(
+                getReportColumnType(column, context))
+        )
             .map((column) =>
             DropdownMenuItem(
               child: Text(localization.lookup(column)),
@@ -442,25 +443,26 @@ class _ReportDataTableState extends State<ReportDataTable> {
               viewModel: widget.viewModel,
             ),
           ),
-        FormCard(
-          child: isMobile(context) ? SingleChildScrollView(
-            scrollDirection: Axis.horizontal,
-            child: TotalsDataTable(
-              viewModel: viewModel,
-              reportResult: reportResult,
-              reportSettings: reportSettings,
-            ),
-          ) : Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: <Widget>[
-              TotalsDataTable(
+        if (reportResult.showTotals)
+          FormCard(
+            child: isMobile(context) ? SingleChildScrollView(
+              scrollDirection: Axis.horizontal,
+              child: TotalsDataTable(
                 viewModel: viewModel,
                 reportResult: reportResult,
                 reportSettings: reportSettings,
               ),
-            ],
+            ) : Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: <Widget>[
+                TotalsDataTable(
+                  viewModel: viewModel,
+                  reportResult: reportResult,
+                  reportSettings: reportSettings,
+                ),
+              ],
+            ),
           ),
-        ),
         SingleChildScrollView(
           padding: const EdgeInsets.all(12),
           child: PaginatedDataTable(
@@ -575,7 +577,7 @@ class ReportDataTableSource extends DataTableSource {
   int get rowCount {
     final reportState = viewModel.reportState;
 
-    if (reportState.group.isEmpty || reportState.isGroupByFIltered) {
+    if (reportState.group.isEmpty || reportState.isGroupByFiltered) {
       return viewModel.reportResult.data.length + 1;
     } else {
       return viewModel.groupTotals.totals.length + 1;
@@ -602,18 +604,21 @@ class ReportResult {
     @required this.allColumns,
     @required this.defaultColumns,
     @required this.data,
+    this.showTotals = true,
   });
 
   final List<String> columns;
   final List<String> allColumns;
   final List<String> defaultColumns;
   final List<List<ReportElement>> data;
+  final bool showTotals;
 
   static bool matchField({
-    String column,
-    dynamic value,
-    UserCompanyEntity userCompany,
-    ReportsUIState reportsUIState,
+    @required String column,
+    @required dynamic value,
+    @required UserCompanyEntity userCompany,
+    @required ReportsUIState reportsUIState,
+    AppLocalization localization,
   }) {
     if (reportsUIState.filters.containsKey(column)) {
       final filter = reportsUIState.filters[column];
@@ -642,6 +647,8 @@ class ReportResult {
           if (filter != '$value') {
             return false;
           }
+        } else if (value.runtimeType == EntityType) {
+          return filter == localization.lookup('$value');
         } else if (isValidDate(value)) {
           if (!ReportResult.matchDateTime(
               filter: filter,
@@ -1008,7 +1015,7 @@ class ReportResult {
     final groupBy = reportState.group;
     final sorted = sortedColumns(reportState);
 
-    if (groupBy.isEmpty || reportState.isGroupByFIltered) {
+    if (groupBy.isEmpty || reportState.isGroupByFiltered) {
       final row = data[index - 1];
       final cells = <DataCell>[];
       for (var j = 0; j < row.length; j++) {
@@ -1048,9 +1055,11 @@ class ReportResult {
             value = group;
           }
           value = value + ' (' + values['count'].floor().toString() + ')';
-        } else if (columnType ==
-            ReportColumnType.number) {
+        } else if (columnType == ReportColumnType.number) {
           value = formatNumber(values[column], context);
+        } else if (columnType == ReportColumnType.age) {
+          value = formatNumber(
+              values[column], context, formatNumberType: FormatNumberType.int);
         }
         cells.add(DataCell(Text(value), onTap: () {
           if (group.isEmpty) {
@@ -1275,6 +1284,24 @@ class ReportStringValue extends ReportElement {
   }
 }
 
+class ReportEntityTypeValue extends ReportElement {
+  ReportEntityTypeValue({
+    dynamic value,
+    EntityType entityType,
+    String entityId,
+  }) : super(value: value, entityType: entityType, entityId: entityId);
+
+  @override
+  Widget renderWidget(BuildContext context, String column) {
+    return Text(renderText(context, column));
+  }
+
+  @override
+  String renderText(BuildContext context, String column) {
+    return AppLocalization.of(context).lookup('$value');
+  }
+}
+
 class ReportAgeValue extends ReportElement {
   ReportAgeValue({
     @required dynamic value,
@@ -1293,6 +1320,25 @@ class ReportAgeValue extends ReportElement {
   @override
   String renderText(BuildContext context, String column) {
     return '$value';
+  }
+}
+
+class ReportIntValue extends ReportElement {
+  ReportIntValue({
+    dynamic value,
+    EntityType entityType,
+    String entityId,
+  }) : super(value: value, entityType: entityType, entityId: entityId);
+
+  @override
+  Widget renderWidget(BuildContext context, String column) {
+    return Text(renderText(context, column));
+  }
+
+  @override
+  String renderText(BuildContext context, String column) {
+    return formatNumber((value as int).toDouble(), context,
+        formatNumberType: FormatNumberType.int);
   }
 }
 

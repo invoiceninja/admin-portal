@@ -95,22 +95,27 @@ class ClientEditShippingAddressState extends State<ClientEditShippingAddress> {
           DecoratedFormField(
             controller: _shippingAddress1Controller,
             label: localization.address1,
+            onSavePressed: viewModel.onSavePressed,
           ),
           DecoratedFormField(
             controller: _shippingAddress2Controller,
             label: localization.address2,
+            onSavePressed: viewModel.onSavePressed,
           ),
           DecoratedFormField(
             controller: _shippingCityController,
             label: localization.city,
+            onSavePressed: viewModel.onSavePressed,
           ),
           DecoratedFormField(
             controller: _shippingStateController,
             label: localization.state,
+            onSavePressed: viewModel.onSavePressed,
           ),
           DecoratedFormField(
             controller: _shippingPostalCodeController,
             label: localization.postalCode,
+            onSavePressed: viewModel.onSavePressed,
           ),
           EntityDropdown(
             key: ValueKey(client.shippingCountryId),

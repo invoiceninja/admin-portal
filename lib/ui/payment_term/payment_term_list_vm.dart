@@ -64,7 +64,8 @@ class PaymentTermListVM {
     @required this.listState,
     @required this.onRefreshed,
     @required this.onEntityAction,
-    @required this.onSortColumn, @required this.onClearMultielsect,
+    @required this.onSortColumn,
+    @required this.onClearMultielsect,
     this.tableColumns,
   });
 
@@ -112,4 +113,5 @@ class PaymentTermListVM {
   final Function(BuildContext, List<BaseEntity>, EntityAction) onEntityAction;
   final List<String> tableColumns;
   final Function(String) onSortColumn;
-final Function onClearMultielsect;}
+  final Function onClearMultielsect;
+}

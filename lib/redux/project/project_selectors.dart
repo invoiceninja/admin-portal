@@ -61,16 +61,19 @@ List<String> dropdownProjectsSelector(
   return list;
 }
 
-var memoizedFilteredProjectList = memo5(
-    (BuiltMap<String, ProjectEntity> projectMap,
-            BuiltList<String> projectList,
-            ListUIState projectListState,
-            BuiltMap<String, ClientEntity> clientMap,
-            BuiltMap<String, UserEntity> userMap) =>
-        filteredProjectsSelector(
-            projectMap, projectList, projectListState, clientMap, userMap));
+var memoizedFilteredProjectList = memo7((String filterEntityId,
+        EntityType filterEntityType,
+        BuiltMap<String, ProjectEntity> projectMap,
+        BuiltList<String> projectList,
+        ListUIState projectListState,
+        BuiltMap<String, ClientEntity> clientMap,
+        BuiltMap<String, UserEntity> userMap) =>
+    filteredProjectsSelector(filterEntityId, filterEntityType, projectMap,
+        projectList, projectListState, clientMap, userMap));
 
 List<String> filteredProjectsSelector(
+    String filterEntityId,
+    EntityType filterEntityType,
     BuiltMap<String, ProjectEntity> projectMap,
     BuiltList<String> projectList,
     ListUIState projectListState,
@@ -81,10 +84,9 @@ List<String> filteredProjectsSelector(
     final client =
         clientMap[project.clientId] ?? ClientEntity(id: project.clientId);
 
-    if (projectListState.filterEntityId != null) {
-      if (!projectListState.entityMatchesFilter(client)) {
-        return false;
-      }
+    if (filterEntityId != null &&
+        !client.matchesEntityFilter(filterEntityType, filterEntityId)) {
+      return false;
     } else if (!client.isActive) {
       return false;
     }

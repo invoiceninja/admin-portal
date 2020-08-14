@@ -38,7 +38,7 @@ class _EmailSettingsState extends State<EmailSettings> {
   final _replyToEmailController = TextEditingController();
   final _bccEmailController = TextEditingController();
   final _emailStyleCustomController = TextEditingController();
-  final _emailFooterController = TextEditingController();
+  final _emailSignatureController = TextEditingController();
 
   List<TextEditingController> _controllers = [];
 
@@ -65,7 +65,7 @@ class _EmailSettingsState extends State<EmailSettings> {
       _replyToEmailController,
       _bccEmailController,
       _emailStyleCustomController,
-      _emailFooterController,
+      _emailSignatureController,
     ];
 
     _controllers
@@ -75,7 +75,7 @@ class _EmailSettingsState extends State<EmailSettings> {
     _replyToEmailController.text = settings.replyToEmail;
     _bccEmailController.text = settings.bccEmail;
     _emailStyleCustomController.text = settings.emailStyleCustom;
-    _emailFooterController.text = settings.emailFooter;
+    _emailSignatureController.text = settings.emailSignature;
 
     _controllers
         .forEach((dynamic controller) => controller.addListener(_onChanged));
@@ -88,7 +88,7 @@ class _EmailSettingsState extends State<EmailSettings> {
       ..replyToEmail = _replyToEmailController.text.trim()
       ..bccEmail = _bccEmailController.text.trim()
       ..emailStyleCustom = _emailStyleCustomController.text.trim()
-      ..emailFooter = _emailFooterController.text.trim());
+      ..emailSignature = _emailSignatureController.text.trim());
     if (settings != widget.viewModel.settings) {
       widget.viewModel.onSettingsChanged(settings);
     }
@@ -202,7 +202,7 @@ class _EmailSettingsState extends State<EmailSettings> {
               ],
               DecoratedFormField(
                 label: localization.emailSignature,
-                controller: _emailFooterController,
+                controller: _emailSignatureController,
                 maxLines: 6,
                 keyboardType: TextInputType.multiline,
               ),

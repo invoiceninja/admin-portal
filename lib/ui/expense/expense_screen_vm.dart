@@ -45,6 +45,8 @@ class ExpenseScreenVM {
     return ExpenseScreenVM(
       expenseMap: state.expenseState.map,
       expenseList: memoizedFilteredExpenseList(
+          state.uiState.filterEntityId,
+          state.uiState.filterEntityType,
           state.expenseState.map,
           state.clientState.map,
           state.vendorState.map,

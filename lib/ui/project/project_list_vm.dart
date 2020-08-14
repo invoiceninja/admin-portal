@@ -66,8 +66,8 @@ class ProjectListVM {
     @required this.isLoading,
     @required this.onRefreshed,
     @required this.tableColumns,
-    @required this.onSortColumn, @required this.onClearMultielsect,
-
+    @required this.onSortColumn,
+    @required this.onClearMultielsect,
   });
 
   static ProjectListVM fromStore(Store<AppState> store) {
@@ -87,6 +87,8 @@ class ProjectListVM {
       state: state,
       listState: state.projectListState,
       projectList: memoizedFilteredProjectList(
+        state.uiState.filterEntityId,
+        state.uiState.filterEntityType,
         state.projectState.map,
         state.projectState.list,
         state.projectListState,
@@ -100,7 +102,7 @@ class ProjectListVM {
       onRefreshed: (context) => _handleRefresh(context),
       tableColumns:
           state.userCompany.settings.getTableColumns(EntityType.project) ??
-              ProjectPresenter.getAllTableFields(state.userCompany),
+              ProjectPresenter.getDefaultTableFields(state.userCompany),
       onSortColumn: (field) => store.dispatch(SortProjects(field)),
       onClearMultielsect: () => store.dispatch(ClearProjectMultiselect()),
     );
@@ -116,4 +118,5 @@ class ProjectListVM {
   final Function(BuildContext) onRefreshed;
   final List<String> tableColumns;
   final Function(String) onSortColumn;
-final Function onClearMultielsect;}
+  final Function onClearMultielsect;
+}

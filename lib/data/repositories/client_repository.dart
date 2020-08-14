@@ -45,7 +45,7 @@ class ClientRepository {
     final url =
         credentials.url + '/clients/bulk?include=gateway_tokens,activities';
     final dynamic response = await webClient.post(url, credentials.token,
-        data: json.encode({'ids': ids, 'action': '$action'}));
+        data: json.encode({'ids': ids, 'action': action.toApiParam()}));
 
     final ClientListResponse clientResponse =
         serializers.deserializeWith(ClientListResponse.serializer, response);
@@ -69,6 +69,22 @@ class ClientRepository {
       response =
           await webClient.put(url, credentials.token, data: json.encode(data));
     }
+
+    final ClientItemResponse clientResponse =
+        serializers.deserializeWith(ClientItemResponse.serializer, response);
+
+    return clientResponse.data;
+  }
+
+  Future<ClientEntity> uploadDocument(
+      Credentials credentials, BaseEntity entity, String filePath) async {
+    final fields = <String, String>{
+      '_method': 'put',
+    };
+
+    final dynamic response = await webClient.post(
+        '${credentials.url}/clients/${entity.id}', credentials.token,
+        data: fields, filePath: filePath, fileIndex: 'documents[]');
 
     final ClientItemResponse clientResponse =
         serializers.deserializeWith(ClientItemResponse.serializer, response);

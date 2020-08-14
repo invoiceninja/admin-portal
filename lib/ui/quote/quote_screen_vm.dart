@@ -45,6 +45,8 @@ class QuoteScreenVM {
     return QuoteScreenVM(
       quoteMap: state.quoteState.map,
       quoteList: memoizedFilteredQuoteList(
+          state.uiState.filterEntityId,
+          state.uiState.filterEntityType,
           state.quoteState.map,
           state.quoteState.list,
           state.clientState.map,

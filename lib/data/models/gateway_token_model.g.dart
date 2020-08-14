@@ -126,6 +126,9 @@ class _$GatewayTokenEntitySerializer
       'gateway_customer_reference',
       serializers.serialize(object.customerReference,
           specifiedType: const FullType(String)),
+      'company_gateway_id',
+      serializers.serialize(object.companyGatewayId,
+          specifiedType: const FullType(String)),
       'gateway_type_id',
       serializers.serialize(object.gatewayTypeId,
           specifiedType: const FullType(String)),
@@ -189,6 +192,10 @@ class _$GatewayTokenEntitySerializer
           break;
         case 'gateway_customer_reference':
           result.customerReference = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String;
+          break;
+        case 'company_gateway_id':
+          result.companyGatewayId = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String;
           break;
         case 'gateway_type_id':
@@ -438,6 +445,8 @@ class _$GatewayTokenEntity extends GatewayTokenEntity {
   @override
   final String customerReference;
   @override
+  final String companyGatewayId;
+  @override
   final String gatewayTypeId;
   @override
   final bool isDefault;
@@ -465,6 +474,7 @@ class _$GatewayTokenEntity extends GatewayTokenEntity {
   _$GatewayTokenEntity._(
       {this.token,
       this.customerReference,
+      this.companyGatewayId,
       this.gatewayTypeId,
       this.isDefault,
       this.isChanged,
@@ -482,6 +492,10 @@ class _$GatewayTokenEntity extends GatewayTokenEntity {
     if (customerReference == null) {
       throw new BuiltValueNullFieldError(
           'GatewayTokenEntity', 'customerReference');
+    }
+    if (companyGatewayId == null) {
+      throw new BuiltValueNullFieldError(
+          'GatewayTokenEntity', 'companyGatewayId');
     }
     if (gatewayTypeId == null) {
       throw new BuiltValueNullFieldError('GatewayTokenEntity', 'gatewayTypeId');
@@ -518,6 +532,7 @@ class _$GatewayTokenEntity extends GatewayTokenEntity {
     return other is GatewayTokenEntity &&
         token == other.token &&
         customerReference == other.customerReference &&
+        companyGatewayId == other.companyGatewayId &&
         gatewayTypeId == other.gatewayTypeId &&
         isDefault == other.isDefault &&
         isChanged == other.isChanged &&
@@ -543,8 +558,10 @@ class _$GatewayTokenEntity extends GatewayTokenEntity {
                                 $jc(
                                     $jc(
                                         $jc(
-                                            $jc($jc(0, token.hashCode),
-                                                customerReference.hashCode),
+                                            $jc(
+                                                $jc($jc(0, token.hashCode),
+                                                    customerReference.hashCode),
+                                                companyGatewayId.hashCode),
                                             gatewayTypeId.hashCode),
                                         isDefault.hashCode),
                                     isChanged.hashCode),
@@ -562,6 +579,7 @@ class _$GatewayTokenEntity extends GatewayTokenEntity {
     return (newBuiltValueToStringHelper('GatewayTokenEntity')
           ..add('token', token)
           ..add('customerReference', customerReference)
+          ..add('companyGatewayId', companyGatewayId)
           ..add('gatewayTypeId', gatewayTypeId)
           ..add('isDefault', isDefault)
           ..add('isChanged', isChanged)
@@ -588,6 +606,11 @@ class GatewayTokenEntityBuilder
   String get customerReference => _$this._customerReference;
   set customerReference(String customerReference) =>
       _$this._customerReference = customerReference;
+
+  String _companyGatewayId;
+  String get companyGatewayId => _$this._companyGatewayId;
+  set companyGatewayId(String companyGatewayId) =>
+      _$this._companyGatewayId = companyGatewayId;
 
   String _gatewayTypeId;
   String get gatewayTypeId => _$this._gatewayTypeId;
@@ -638,6 +661,7 @@ class GatewayTokenEntityBuilder
     if (_$v != null) {
       _token = _$v.token;
       _customerReference = _$v.customerReference;
+      _companyGatewayId = _$v.companyGatewayId;
       _gatewayTypeId = _$v.gatewayTypeId;
       _isDefault = _$v.isDefault;
       _isChanged = _$v.isChanged;
@@ -672,6 +696,7 @@ class GatewayTokenEntityBuilder
         new _$GatewayTokenEntity._(
             token: token,
             customerReference: customerReference,
+            companyGatewayId: companyGatewayId,
             gatewayTypeId: gatewayTypeId,
             isDefault: isDefault,
             isChanged: isChanged,

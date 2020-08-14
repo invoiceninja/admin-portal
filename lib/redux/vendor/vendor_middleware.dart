@@ -43,8 +43,6 @@ Middleware<AppState> _editVendor() {
   return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
     final action = dynamicAction as EditVendor;
 
-
-
     next(action);
 
     store.dispatch(UpdateCurrentRoute(VendorEditScreen.route));
@@ -60,8 +58,6 @@ Middleware<AppState> _viewVendor() {
       NextDispatcher next) async {
     final action = dynamicAction as ViewVendor;
 
-
-
     next(action);
 
     store.dispatch(UpdateCurrentRoute(VendorViewScreen.route));
@@ -75,8 +71,6 @@ Middleware<AppState> _viewVendor() {
 Middleware<AppState> _viewVendorList() {
   return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
     final action = dynamicAction as ViewVendorList;
-
-
 
     next(action);
 

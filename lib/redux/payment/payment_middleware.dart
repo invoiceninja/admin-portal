@@ -22,7 +22,7 @@ List<Middleware<AppState>> createStorePaymentsMiddleware([
   final editPayment = _editPayment();
   final viewRefundPayment = _viewRefundPayment();
   final loadPayments = _loadPayments(repository);
-  //final loadPayment = _loadPayment(repository);
+  final loadPayment = _loadPayment(repository);
   final savePayment = _savePayment(repository);
   final refundPayment = _refundPayment(repository);
   final archivePayment = _archivePayment(repository);
@@ -36,7 +36,7 @@ List<Middleware<AppState>> createStorePaymentsMiddleware([
     TypedMiddleware<AppState, EditPayment>(editPayment),
     TypedMiddleware<AppState, ViewRefundPayment>(viewRefundPayment),
     TypedMiddleware<AppState, LoadPayments>(loadPayments),
-    //TypedMiddleware<AppState, LoadPayment>(loadPayment),
+    TypedMiddleware<AppState, LoadPayment>(loadPayment),
     TypedMiddleware<AppState, SavePaymentRequest>(savePayment),
     TypedMiddleware<AppState, RefundPaymentRequest>(refundPayment),
     TypedMiddleware<AppState, ArchivePaymentsRequest>(archivePayment),
@@ -52,10 +52,20 @@ Middleware<AppState> _editPayment() {
 
     next(action);
 
-    store.dispatch(UpdateCurrentRoute(PaymentEditScreen.route));
+    if (isMobile(action.context) || action.payment.isApplying != true) {
+      store.dispatch(UpdateCurrentRoute(PaymentEditScreen.route));
 
-    if (isMobile(action.context)) {
-      action.navigator.pushNamed(PaymentEditScreen.route);
+      if (isMobile(action.context)) {
+        action.navigator.pushNamed(PaymentEditScreen.route);
+      }
+    } else {
+      showDialog<PaymentEditScreen>(
+          context: action.context,
+          useRootNavigator: true,
+          barrierDismissible: false,
+          builder: (BuildContext context) {
+            return PaymentEditScreen();
+          });
     }
   };
 }
@@ -257,9 +267,9 @@ Middleware<AppState> _emailPayment(PaymentRepository repository) {
   };
 }
 
-/*
 Middleware<AppState> _loadPayment(PaymentRepository repository) {
   return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
+    final action = dynamicAction as LoadPayment;
     final AppState state = store.state;
 
     if (state.isLoading) {
@@ -287,7 +297,6 @@ Middleware<AppState> _loadPayment(PaymentRepository repository) {
     next(action);
   };
 }
-*/
 
 Middleware<AppState> _loadPayments(PaymentRepository repository) {
   return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {

@@ -9,6 +9,7 @@ import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/ui/app/entities/entity_actions_dialog.dart';
 import 'package:invoiceninja_flutter/utils/completers.dart';
+import 'package:invoiceninja_flutter/utils/dialogs.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:invoiceninja_flutter/utils/pdf.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -237,6 +238,25 @@ class MarkSentCreditFailure implements StopSaving {
   final Object error;
 }
 
+class BulkEmailCreditsRequest implements StartSaving {
+  BulkEmailCreditsRequest(this.completer, this.creditIds);
+
+  final Completer completer;
+  final List<String> creditIds;
+}
+
+class BulkEmailCreditsSuccess implements StopSaving, PersistData {
+  BulkEmailCreditsSuccess(this.credits);
+
+  final List<InvoiceEntity> credits;
+}
+
+class BulkEmailCreditsFailure implements StopSaving {
+  BulkEmailCreditsFailure(this.error);
+
+  final dynamic error;
+}
+
 class ArchiveCreditsRequest implements StartSaving {
   ArchiveCreditsRequest(this.completer, this.creditIds);
 
@@ -377,16 +397,6 @@ class SaveCreditDocumentFailure implements StopSaving {
 
 Future handleCreditAction(
     BuildContext context, List<BaseEntity> credits, EntityAction action) async {
-  assert(
-      [
-            EntityAction.restore,
-            EntityAction.archive,
-            EntityAction.delete,
-            EntityAction.toggleMultiselect
-          ].contains(action) ||
-          credits.length == 1,
-      'Cannot perform this action on more than one credit');
-
   final store = StoreProvider.of<AppState>(context);
   final state = store.state;
   final localization = AppLocalization.of(context);
@@ -419,11 +429,33 @@ Future handleCreditAction(
           creditIds));
       break;
     case EntityAction.emailCredit:
-      store.dispatch(ShowEmailCredit(
-          completer:
-              snackBarCompleter<Null>(context, localization.emailedCredit),
-          credit: credit,
-          context: context));
+      bool emailValid = true;
+      creditIds.forEach((element) {
+        final client = state.clientState.get(credit.clientId);
+        if (!client.hasEmailAddress) {
+          emailValid = false;
+        }
+      });
+      if (!emailValid) {
+        showMessageDialog(
+            context: context, message: localization.clientEmailNotSet);
+        return;
+      }
+      if (creditIds.length == 1) {
+        store.dispatch(ShowEmailCredit(
+            completer:
+                snackBarCompleter<Null>(context, localization.emailedCredit),
+            credit: credit,
+            context: context));
+      } else {
+        store.dispatch(BulkEmailCreditsRequest(
+            snackBarCompleter<Null>(
+                context,
+                creditIds.length == 1
+                    ? localization.emailedCredit
+                    : localization.emailedCredits),
+            creditIds));
+      }
       break;
     case EntityAction.cloneToInvoice:
       createEntity(
@@ -470,11 +502,6 @@ Future handleCreditAction(
       if (!store.state.creditListState.isInMultiselect()) {
         store.dispatch(StartCreditMultiselect());
       }
-
-      if (credits.isEmpty) {
-        break;
-      }
-
       for (final credit in credits) {
         if (!store.state.creditListState.isSelected(credit.id)) {
           store.dispatch(AddToCreditMultiselect(entity: credit));

@@ -39,6 +39,7 @@ class ClientPresenter extends EntityPresenter {
       ClientFields.custom2,
       ClientFields.custom3,
       ClientFields.custom4,
+      ClientFields.documents,
     ];
   }
 
@@ -106,6 +107,8 @@ class ClientPresenter extends EntityPresenter {
         return Text(client.publicNotes);
       case ClientFields.privateNotes:
         return Text(client.privateNotes);
+      case ClientFields.documents:
+        return Text('${client.documents.length}');
     }
 
     return super.getField(field: field, context: context);

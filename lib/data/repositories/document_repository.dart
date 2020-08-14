@@ -40,7 +40,7 @@ class DocumentRepository {
       Credentials credentials, List<String> ids, EntityAction action) async {
     final url = credentials.url + '/documents/bulk';
     final dynamic response = await webClient.post(url, credentials.token,
-        data: json.encode({'ids': ids, 'action': '$action'}));
+        data: json.encode({'ids': ids, 'action': action.toApiParam()}));
 
     final DocumentListResponse documentResponse =
         serializers.deserializeWith(DocumentListResponse.serializer, response);
@@ -48,9 +48,11 @@ class DocumentRepository {
     return documentResponse.data.toList();
   }
 
-  Future<bool> delete(Credentials credentials, String documentId) async {
+  Future<bool> delete(
+      Credentials credentials, String documentId, String password) async {
     await webClient.delete(
-        '${credentials.url}/documents/$documentId', credentials.token);
+        '${credentials.url}/documents/$documentId', credentials.token,
+        password: password);
 
     return true;
   }

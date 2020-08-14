@@ -1,14 +1,19 @@
+import 'package:invoiceninja_flutter/constants.dart';
 import 'package:invoiceninja_flutter/data/models/entities.dart';
 import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:invoiceninja_flutter/ui/app/form_card.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/decorated_form_field.dart';
+import 'package:invoiceninja_flutter/ui/app/help_text.dart';
+import 'package:invoiceninja_flutter/ui/app/lists/activity_list_tile.dart';
 import 'package:invoiceninja_flutter/ui/invoice/invoice_email_vm.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:invoiceninja_flutter/ui/app/loading_indicator.dart';
 import 'package:invoiceninja_flutter/ui/app/edit_scaffold.dart';
 import 'package:invoiceninja_flutter/ui/settings/templates_and_reminders.dart';
+import 'package:invoiceninja_flutter/utils/completers.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
+import 'package:invoiceninja_flutter/utils/platforms.dart';
 import 'package:invoiceninja_flutter/utils/templates.dart';
 
 class InvoiceEmailView extends StatefulWidget {
@@ -32,6 +37,7 @@ class _InvoiceEmailViewState extends State<InvoiceEmailView>
 
   final _subjectController = TextEditingController();
   final _bodyController = TextEditingController();
+  final _debouncer = Debouncer(milliseconds: kMillisecondsToDebounceSave);
 
   TabController _controller;
   List<TextEditingController> _controllers = [];
@@ -44,12 +50,17 @@ class _InvoiceEmailViewState extends State<InvoiceEmailView>
   @override
   void initState() {
     super.initState();
-    _controller = TabController(vsync: this, length: 2);
+    _controller = TabController(vsync: this, length: 3);
     _controller.addListener(_loadTemplate);
     _controllers = [
       _subjectController,
       _bodyController,
     ];
+
+    final client = widget.viewModel.client;
+    if (client.isStale) {
+      widget.viewModel.loadClient();
+    }
 
     switch (widget.viewModel.invoice.entityType) {
       case EntityType.invoice:
@@ -82,8 +93,14 @@ class _InvoiceEmailViewState extends State<InvoiceEmailView>
     super.dispose();
   }
 
+  void _onChanged() {
+    _debouncer.run(() {
+      _loadTemplate();
+    });
+  }
+
   void _loadTemplate() {
-    if (_isLoading || _controller.index != kTabPreview) {
+    if (_isLoading || (isMobile(context) && _controller.index != kTabPreview)) {
       return;
     }
 
@@ -118,101 +135,118 @@ class _InvoiceEmailViewState extends State<InvoiceEmailView>
         });
   }
 
-  Widget _buildPreview(BuildContext context) {
+  Widget _buildTemplateDropdown(BuildContext context) {
     final localization = AppLocalization.of(context);
 
-    return Column(
-      mainAxisSize: MainAxisSize.max,
-      children: <Widget>[
-        Container(
-          color: Theme.of(context).backgroundColor,
-          child: Padding(
-            padding: const EdgeInsets.all(16.0),
-            child: Row(
-              children: <Widget>[
-                DropdownButtonHideUnderline(
-                  child: DropdownButton<EmailTemplate>(
-                    value: selectedTemplate,
-                    onChanged: (template) {
-                      setState(() {
-                        _subjectController.text = '';
-                        _bodyController.text = '';
-                        selectedTemplate = template;
-                        _loadTemplate();
-                      });
-                    },
-                    items: [
-                      DropdownMenuItem<EmailTemplate>(
-                        child: Text(localization.initialEmail),
-                        value: widget.viewModel.invoice.emailTemplate,
-                      ),
-                      DropdownMenuItem<EmailTemplate>(
-                        child: Text(localization.firstReminder),
-                        value: EmailTemplate.reminder1,
-                      ),
-                      DropdownMenuItem<EmailTemplate>(
-                        child: Text(localization.secondReminder),
-                        value: EmailTemplate.reminder2,
-                      ),
-                      DropdownMenuItem<EmailTemplate>(
-                        child: Text(localization.thirdReminder),
-                        value: EmailTemplate.reminder3,
-                      ),
-                      DropdownMenuItem<EmailTemplate>(
-                        child: Text(localization.firstCustom),
-                        value: EmailTemplate.custom1,
-                      ),
-                      DropdownMenuItem<EmailTemplate>(
-                        child: Text(localization.secondCustom),
-                        value: EmailTemplate.custom2,
-                      ),
-                      DropdownMenuItem<EmailTemplate>(
-                        child: Text(localization.thirdCustom),
-                        value: EmailTemplate.custom3,
-                      ),
-                    ],
-                  ),
-                ),
-                Expanded(
-                  child: Container(),
-                ),
-              ],
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 4),
+      child: DropdownButtonHideUnderline(
+        child: DropdownButton<EmailTemplate>(
+          value: selectedTemplate,
+          onChanged: (template) {
+            setState(() {
+              _subjectController.text = '';
+              _bodyController.text = '';
+              selectedTemplate = template;
+              _loadTemplate();
+            });
+          },
+          items: [
+            DropdownMenuItem<EmailTemplate>(
+              child: Text(localization.initialEmail),
+              value: widget.viewModel.invoice.emailTemplate,
             ),
-          ),
+            DropdownMenuItem<EmailTemplate>(
+              child: Text(localization.firstReminder),
+              value: EmailTemplate.reminder1,
+            ),
+            DropdownMenuItem<EmailTemplate>(
+              child: Text(localization.secondReminder),
+              value: EmailTemplate.reminder2,
+            ),
+            DropdownMenuItem<EmailTemplate>(
+              child: Text(localization.thirdReminder),
+              value: EmailTemplate.reminder3,
+            ),
+            DropdownMenuItem<EmailTemplate>(
+              child: Text(localization.firstCustom),
+              value: EmailTemplate.custom1,
+            ),
+            DropdownMenuItem<EmailTemplate>(
+              child: Text(localization.secondCustom),
+              value: EmailTemplate.custom2,
+            ),
+            DropdownMenuItem<EmailTemplate>(
+              child: Text(localization.thirdCustom),
+              value: EmailTemplate.custom3,
+            ),
+          ],
         ),
-        Expanded(
-          child: EmailPreview(
-            isLoading: _isLoading,
-            subject: _subjectPreview,
-            body: _bodyPreview,
-          ),
-        ),
-      ],
+      ),
+    );
+  }
+
+  Widget _buildPreview(BuildContext context) {
+    if (widget.viewModel.isLoading) {
+      return LoadingIndicator(
+        height: 300,
+      );
+    }
+
+    return EmailPreview(
+      isLoading: _isLoading,
+      subject: _subjectPreview,
+      body: _bodyPreview,
     );
   }
 
   Widget _buildEdit(BuildContext context) {
     final localization = AppLocalization.of(context);
+    final viewModel = widget.viewModel;
+    final invoice = viewModel.invoice;
+    final client = viewModel.client;
+    final contacts = invoice.invitations
+        .map((invitation) => client.contacts.firstWhere(
+            (contact) => contact.id == invitation.contactId,
+            orElse: () => null))
+        .toList();
 
     return SingleChildScrollView(
       child: FormCard(
         children: <Widget>[
           DecoratedFormField(
-            controller: _subjectController,
-            label: localization.subject,
+            enabled: false,
+            label: localization.to,
+            initialValue: contacts
+                .where((contact) => contact != null)
+                .map((contact) => contact.fullNameWithEmail)
+                .join(', '),
+            minLines: 1,
+            maxLines: 4,
           ),
-          DecoratedFormField(
-            controller: _bodyController,
-            label: localization.body,
-            maxLines: 12,
-            keyboardType: TextInputType.multiline,
-          ),
+          if (_isLoading &&
+              _subjectController.text.isEmpty &&
+              _bodyController.text.isEmpty)
+            LoadingIndicator(height: 300)
+          else ...[
+            DecoratedFormField(
+              controller: _subjectController,
+              label: localization.subject,
+              onChanged: (_) => _onChanged(),
+            ),
+            DecoratedFormField(
+              controller: _bodyController,
+              label: localization.body,
+              maxLines: 12,
+              keyboardType: TextInputType.multiline,
+              onChanged: (_) => _onChanged(),
+            ),
+          ]
         ],
       ),
     );
   }
 
-  /*
   Widget _buildHistory(BuildContext context) {
     final localization = AppLocalization.of(context);
     final invoice = widget.viewModel.invoice;
@@ -232,7 +266,6 @@ class _InvoiceEmailViewState extends State<InvoiceEmailView>
       },
     );
   }
-   */
 
   @override
   Widget build(BuildContext context) {
@@ -240,8 +273,73 @@ class _InvoiceEmailViewState extends State<InvoiceEmailView>
     final viewModel = widget.viewModel;
     final invoice = viewModel.invoice;
 
+    if (isDesktop(context)) {
+      return EditScaffold(
+        entity: invoice,
+        title: localization.sendEmail,
+        onCancelPressed: (context) =>
+            viewEntity(context: context, entity: invoice),
+        saveLabel: localization.send,
+        onSavePressed: (context) {
+          viewModel.onSendPressed(context, selectedTemplate,
+              _subjectController.text, _bodyController.text);
+        },
+        body: Row(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Expanded(
+              child: DefaultTabController(
+                length: 2,
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    TabBar(
+                      tabs: [
+                        Tab(
+                          child: Text(localization.customize),
+                        ),
+                        Tab(
+                          child: Text(localization.history),
+                        ),
+                      ],
+                    ),
+                    Expanded(
+                      child: TabBarView(
+                        children: [
+                          Column(
+                            mainAxisSize: MainAxisSize.min,
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              _buildTemplateDropdown(context),
+                              Expanded(
+                                child: SingleChildScrollView(
+                                  child: _buildEdit(context),
+                                ),
+                              ),
+                            ],
+                          ),
+                          _buildHistory(context),
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+            Expanded(
+              child: Container(
+                child: _buildPreview(context),
+                color: Colors.white,
+                height: double.infinity,
+              ),
+            ),
+          ],
+        ),
+      );
+    }
+
     return DefaultTabController(
-      length: 2,
+      length: 3,
       child: EditScaffold(
         entity: invoice,
         title: localization.sendEmail,
@@ -252,7 +350,7 @@ class _InvoiceEmailViewState extends State<InvoiceEmailView>
           tabs: [
             Tab(text: localization.preview),
             Tab(text: localization.customize),
-            //Tab(text: localization.history),
+            Tab(text: localization.history),
           ],
         ),
         saveLabel: localization.send,
@@ -260,16 +358,20 @@ class _InvoiceEmailViewState extends State<InvoiceEmailView>
           viewModel.onSendPressed(context, selectedTemplate,
               _subjectController.text, _bodyController.text);
         },
-        body: viewModel.isLoading
-            ? LoadingIndicator()
-            : TabBarView(
-                controller: _controller,
-                children: [
-                  _buildPreview(context),
-                  _buildEdit(context),
-                  //_buildHistory(context),
-                ],
-              ),
+        body: TabBarView(
+          controller: _controller,
+          children: [
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                _buildTemplateDropdown(context),
+                Expanded(child: _buildPreview(context)),
+              ],
+            ),
+            _buildEdit(context),
+            _buildHistory(context),
+          ],
+        ),
       ),
     );
   }

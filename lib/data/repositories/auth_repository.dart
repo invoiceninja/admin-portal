@@ -151,11 +151,14 @@ class AuthRepository {
   }
 
   Future<dynamic> purgeData({
-    @required String token,
+    @required Credentials credentials,
     @required String companyId,
     @required String password,
   }) async {
-    //return webClient.delete('/companies/$companyId', token, password: password);
+    return webClient.post(
+        '${credentials.url}/companies/purge_save_settings/$companyId',
+        credentials.token,
+        password: password);
   }
 
   Future<LoginResponse> sendRequest({

@@ -10,13 +10,16 @@ import 'package:invoiceninja_flutter/ui/credit/edit/credit_edit_vm.dart';
 import 'package:invoiceninja_flutter/ui/invoice/edit/invoice_edit_desktop.dart';
 import 'package:invoiceninja_flutter/ui/invoice/edit/invoice_edit_details.dart';
 import 'package:invoiceninja_flutter/ui/invoice/edit/invoice_edit_details_vm.dart';
+import 'package:invoiceninja_flutter/ui/invoice/edit/invoice_edit_vm.dart';
 import 'package:redux/redux.dart';
 import 'package:invoiceninja_flutter/redux/credit/credit_actions.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 
 class CreditEditDetailsScreen extends StatelessWidget {
-  const CreditEditDetailsScreen({Key key}) : super(key: key);
+  const CreditEditDetailsScreen({Key key, @required this.viewModel}) : super(key: key);
+
+  final EntityEditVM viewModel;
 
   @override
   Widget build(BuildContext context) {
@@ -28,6 +31,7 @@ class CreditEditDetailsScreen extends StatelessWidget {
         if (viewModel.state.prefState.isDesktop) {
           return InvoiceEditDesktop(
             viewModel: viewModel,
+            entityViewModel: this.viewModel,
             key: ValueKey('__credit_${viewModel.invoice.id}__'),
             entityType: EntityType.credit,
           );

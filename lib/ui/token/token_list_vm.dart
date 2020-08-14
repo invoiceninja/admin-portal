@@ -66,7 +66,8 @@ class TokenListVM {
     @required this.onRefreshed,
     @required this.onEntityAction,
     @required this.tableColumns,
-    @required this.onSortColumn, @required this.onClearMultielsect,
+    @required this.onSortColumn,
+    @required this.onClearMultielsect,
   });
 
   static TokenListVM fromStore(Store<AppState> store) {
@@ -87,7 +88,11 @@ class TokenListVM {
       userCompany: state.userCompany,
       listState: state.tokenListState,
       tokenList: memoizedFilteredTokenList(
-          state.tokenState.map, state.tokenState.list, state.tokenListState),
+          state.uiState.filterEntityId,
+          state.uiState.filterEntityType,
+          state.tokenState.map,
+          state.tokenState.list,
+          state.tokenListState),
       tokenMap: state.tokenState.map,
       isLoading: state.isLoading,
       filter: state.tokenUIState.listUIState.filter,
@@ -97,7 +102,7 @@ class TokenListVM {
       onRefreshed: (context) => _handleRefresh(context),
       tableColumns:
           state.userCompany.settings.getTableColumns(EntityType.token) ??
-              TokenPresenter.getAllTableFields(state.userCompany),
+              TokenPresenter.getDefaultTableFields(state.userCompany),
       onSortColumn: (field) => store.dispatch(SortTokens(field)),
       onClearMultielsect: () => store.dispatch(ClearTokenMultiselect()),
     );
@@ -114,4 +119,5 @@ class TokenListVM {
   final Function(BuildContext, List<BaseEntity>, EntityAction) onEntityAction;
   final List<String> tableColumns;
   final Function(String) onSortColumn;
-final Function onClearMultielsect;}
+  final Function onClearMultielsect;
+}

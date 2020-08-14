@@ -14,6 +14,8 @@ import 'package:invoiceninja_flutter/redux/auth/auth_actions.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:invoiceninja_flutter/data/repositories/auth_repository.dart';
+import 'package:invoiceninja_flutter/utils/web_stub.dart'
+    if (dart.library.html) 'package:invoiceninja_flutter/utils/web.dart';
 
 List<Middleware<AppState>> createStoreAuthMiddleware([
   AuthRepository repository = const AuthRepository(),
@@ -197,9 +199,16 @@ Middleware<AppState> _createRefreshRequest(AuthRepository repository) {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     final url = formatApiUrl(
         prefs.getString(kSharedPrefUrl) ?? store.state.authState.url);
-    final token =
-        TokenEntity.unobscureToken(prefs.getString(kSharedPrefToken)) ??
-            'TOKEN';
+
+    String token;
+    if (kIsWeb) {
+      token = WebUtils.loadToken();
+    } else {
+      prefs.getString(kSharedPrefToken);
+    }
+
+    token = TokenEntity.unobscureToken(token) ?? 'TOKEN';
+
     final updatedAt = action.clearData
         ? 0
         : ((store.state.userCompanyState.lastUpdated -
@@ -308,19 +317,25 @@ Middleware<AppState> _deleteCompany(AuthRepository repository) {
 Middleware<AppState> _purgeData(AuthRepository repository) {
   return (Store<AppState> store, dynamic dynamicAction,
       NextDispatcher next) async {
-    final action = dynamicAction as DeleteCompanyRequest;
+    final action = dynamicAction as PurgeDataRequest;
     final state = store.state;
 
     repository
         .purgeData(
-            token: state.credentials.token,
+            credentials: state.credentials,
             password: action.password,
             companyId: state.company.id)
         .then((dynamic value) {
-      action.completer.complete(null);
-      store.dispatch(PurgeDataSuccess());
+      store.dispatch(RefreshData(
+          clearData: true,
+          completer: Completer<Null>()
+            ..future.then((value) {
+              action.completer.complete(null);
+              store.dispatch(PurgeDataSuccess());
+            })));
     }).catchError((Object error) {
       store.dispatch(PurgeDataFailure(error));
+      action.completer.completeError(error);
     });
 
     next(action);

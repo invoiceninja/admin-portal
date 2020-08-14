@@ -90,6 +90,8 @@ class TaskListVM {
       user: state.user,
       listState: state.taskListState,
       taskList: memoizedFilteredTaskList(
+          state.uiState.filterEntityId,
+          state.uiState.filterEntityType,
           state.taskState.map,
           state.clientState.map,
           state.userState.map,
@@ -105,7 +107,7 @@ class TaskListVM {
       onRefreshed: (context) => _handleRefresh(context),
       tableColumns:
           state.userCompany.settings.getTableColumns(EntityType.task) ??
-              TaskPresenter.getAllTableFields(state.userCompany),
+              TaskPresenter.getDefaultTableFields(state.userCompany),
       onClearMultielsect: () => store.dispatch(ClearTaskMultiselect()),
     );
   }
@@ -121,4 +123,5 @@ class TaskListVM {
   final Function(BuildContext) onRefreshed;
   final List<String> tableColumns;
   final Function(String) onSortColumn;
-final Function onClearMultielsect;}
+  final Function onClearMultielsect;
+}

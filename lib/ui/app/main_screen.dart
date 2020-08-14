@@ -8,10 +8,10 @@ import 'package:invoiceninja_flutter/redux/dashboard/dashboard_actions.dart';
 import 'package:invoiceninja_flutter/redux/reports/reports_actions.dart';
 import 'package:invoiceninja_flutter/redux/settings/settings_actions.dart';
 import 'package:invoiceninja_flutter/redux/ui/pref_state.dart';
+import 'package:invoiceninja_flutter/ui/app/blank_screen.dart';
 import 'package:invoiceninja_flutter/ui/app/change_layout_banner.dart';
 import 'package:invoiceninja_flutter/ui/app/history_drawer_vm.dart';
 import 'package:invoiceninja_flutter/ui/app/menu_drawer_vm.dart';
-import 'package:invoiceninja_flutter/ui/app/help_text.dart';
 import 'package:invoiceninja_flutter/ui/app/screen_imports.dart';
 import 'package:invoiceninja_flutter/ui/credit/credit_email_vm.dart';
 import 'package:invoiceninja_flutter/ui/credit/credit_screen.dart';
@@ -36,7 +36,6 @@ import 'package:invoiceninja_flutter/ui/webhook/edit/webhook_edit_vm.dart';
 import 'package:invoiceninja_flutter/ui/webhook/view/webhook_view_vm.dart';
 import 'package:invoiceninja_flutter/ui/webhook/webhook_screen_vm.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
-import 'package:invoiceninja_flutter/utils/platforms.dart';
 import 'package:invoiceninja_flutter/ui/app/app_border.dart';
 import 'package:redux/redux.dart';
 
@@ -56,13 +55,18 @@ class MainScreen extends StatelessWidget {
       Widget screen = BlankScreen();
 
       bool isFullScreen = false;
+      bool isEdit = false;
+      bool isEmail = false;
+
       if (prefState.isDesktop) {
+        isEdit = subRoute == '/edit';
+        isEmail = subRoute == '/email';
         if ([
               InvoiceScreen.route,
               QuoteScreen.route,
               CreditScreen.route,
             ].contains(mainRoute) &&
-            subRoute == '/edit') {
+            (isEdit || isEmail)) {
           isFullScreen = true;
         }
       }
@@ -74,13 +78,13 @@ class MainScreen extends StatelessWidget {
       if (isFullScreen) {
         switch (mainRoute) {
           case InvoiceScreen.route:
-            screen = InvoiceEditScreen();
+            screen = isEmail ? InvoiceEmailScreen() : InvoiceEditScreen();
             break;
           case QuoteScreen.route:
-            screen = QuoteEditScreen();
+            screen = isEmail ? QuoteEmailScreen() : QuoteEditScreen();
             break;
           case CreditScreen.route:
-            screen = CreditEditScreen();
+            screen = isEmail ? CreditEmailScreen() : CreditEditScreen();
             break;
           default:
             switch (uiState.currentRoute) {
@@ -575,6 +579,11 @@ class EntityScreens extends StatelessWidget {
                 ? GroupEditScreen()
                 : GroupViewScreen(isFilter: true);
             break;
+          case EntityType.companyGateway:
+            leftFilterChild = editingFIlterEntity
+                ? CompanyGatewayEditScreen()
+                : CompanyGatewayViewScreen(isFilter: true);
+            break;
         }
       }
     }
@@ -625,26 +634,6 @@ class EntityScreens extends StatelessWidget {
             isLeft: true,
           ),
       ],
-    );
-  }
-}
-
-class BlankScreen extends StatelessWidget {
-  const BlankScreen([this.message]);
-
-  final String message;
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        centerTitle: false,
-        automaticallyImplyLeading: isMobile(context),
-      ),
-      body: Container(
-        color: Theme.of(context).cardColor,
-        child: HelpText(message ?? ''),
-      ),
     );
   }
 }
@@ -704,7 +693,8 @@ class _EntityFilter extends StatelessWidget {
                           left: state.prefState.showFilterSidebar ? 4 : 0),
                       child: Text(
                         '${localization.lookup('$filterEntityType')}  ›  ${filterEntity.listDisplayName}',
-                        style: TextStyle(fontSize: 17, color: state.headerTextColor),
+                        style: TextStyle(
+                            fontSize: 17, color: state.headerTextColor),
                         overflow: TextOverflow.ellipsis,
                         textAlign: TextAlign.start,
                         maxLines: 1,

@@ -8,16 +8,17 @@ import 'package:invoiceninja_flutter/data/models/entities.dart';
 part 'pref_state.g.dart';
 
 abstract class PrefState implements Built<PrefState, PrefStateBuilder> {
-  factory PrefState() {
+  factory PrefState({bool enableDarkMode}) {
     return _$PrefState._(
       appLayout: AppLayout.desktop,
       moduleLayout: ModuleLayout.list,
       isPreviewVisible: true,
       menuSidebarMode: AppSidebarMode.collapse,
       historySidebarMode: AppSidebarMode.float,
+      rowsPerPage: 10,
       isMenuVisible: true,
       isHistoryVisible: false,
-      enableDarkMode: false,
+      enableDarkMode: enableDarkMode ?? false,
       requireAuthentication: false,
       autoStartTasks: false,
       showFilterSidebar: false,
@@ -62,6 +63,8 @@ abstract class PrefState implements Built<PrefState, PrefStateBuilder> {
   bool get autoStartTasks;
 
   bool get addDocumentsToInvoice;
+
+  int get rowsPerPage;
 
   BuiltList<CompanyPrefState> get companyPrefs;
 

@@ -82,6 +82,7 @@ class ClientFields {
   static const String createdById = 'created_by_id';
   static const String cityStatePostal = 'city_state_postal';
   static const String postalCityState = 'postal_city_state';
+  static const String documents = 'documents';
 }
 
 abstract class ClientEntity extends Object
@@ -129,13 +130,14 @@ abstract class ClientEntity extends Object
       activities: BuiltList<ActivityEntity>(),
       ledger: BuiltList<LedgerEntity>(),
       gatewayTokens: BuiltList<GatewayTokenEntity>(),
-      lastUpdatedActivities: 0,
+      loadedAt: 0,
       updatedAt: 0,
       archivedAt: 0,
       isDeleted: false,
       createdUserId: '',
       assignedUserId: '',
       createdAt: 0,
+      documents: BuiltList<DocumentEntity>(),
     );
   }
 
@@ -154,17 +156,16 @@ abstract class ClientEntity extends Object
   String get groupId;
 
   @nullable
-  int get lastUpdatedActivities;
+  int get loadedAt;
 
-  bool get areActivitiesLoaded =>
-      lastUpdatedActivities != null && lastUpdatedActivities > 0;
+  bool get isLoaded => loadedAt != null && loadedAt > 0;
 
-  bool get areActivitiesStale {
-    if (!areActivitiesLoaded) {
+  bool get isStale {
+    if (!isLoaded) {
       return true;
     }
 
-    return DateTime.now().millisecondsSinceEpoch - lastUpdatedActivities >
+    return DateTime.now().millisecondsSinceEpoch - loadedAt >
         kMillisecondsToRefreshActivities;
   }
 
@@ -266,6 +267,8 @@ abstract class ClientEntity extends Object
 
   @BuiltValueField(wireName: 'gateway_tokens')
   BuiltList<GatewayTokenEntity> get gatewayTokens;
+
+  BuiltList<DocumentEntity> get documents;
 
   //String get last_login;
   //String get custom_messages;
@@ -490,6 +493,9 @@ abstract class ClientEntity extends Object
             .toLowerCase()
             .compareTo(clientB.customValue4.toLowerCase());
         break;
+      case ClientFields.documents:
+        response = clientA.documents.length.compareTo(clientA.documents.length);
+        break;
       default:
         print('## ERROR: sort by client.$sortField not implemented');
         break;
@@ -526,41 +532,28 @@ abstract class ClientEntity extends Object
 
   @override
   String matchesFilterValue(String filter) {
-    if (filter == null || filter.isEmpty) {
-      return null;
+    for (var i = 0; i < contacts.length; i++) {
+      final value = contacts[i].matchesFilterValue(filter);
+      if (value != null) {
+        return value;
+      }
     }
 
-    filter = filter.toLowerCase();
-    final contact = contacts.firstWhere(
-        (contact) => contact.matchesFilter(filter),
-        orElse: () => null);
-
-    if (vatNumber.toLowerCase().contains(filter)) {
-      return vatNumber;
-    } else if (idNumber.toLowerCase().contains(filter)) {
-      return idNumber;
-    } else if (phone.toLowerCase().contains(filter)) {
-      return phone;
-    } else if (address1.toLowerCase().contains(filter)) {
-      return address1;
-    } else if (city.toLowerCase().contains(filter)) {
-      return city;
-    } else if (postalCode.toLowerCase().contains(filter)) {
-      return postalCode;
-    } else if (contact != null) {
-      final match = contact.matchesFilterValue(filter);
-      return match == displayName ? null : match;
-    } else if (customValue1.toLowerCase().contains(filter)) {
-      return customValue1;
-    } else if (customValue2.toLowerCase().contains(filter)) {
-      return customValue2;
-    } else if (customValue3.toLowerCase().contains(filter)) {
-      return customValue3;
-    } else if (customValue4.toLowerCase().contains(filter)) {
-      return customValue4;
-    }
-
-    return null;
+    return matchesStringsValue(
+      haystacks: [
+        vatNumber,
+        idNumber,
+        phone,
+        address1,
+        city,
+        postalCode,
+        customValue1,
+        customValue2,
+        customValue3,
+        customValue4,
+      ],
+      needle: filter,
+    );
   }
 
   @override
@@ -759,6 +752,8 @@ abstract class ContactEntity extends Object
   String get fullName {
     return (firstName + ' ' + lastName).trim();
   }
+
+  String get fullNameWithEmail => '$fullName <$email>';
 
   @override
   EntityType get entityType {

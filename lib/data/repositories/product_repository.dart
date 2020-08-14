@@ -16,6 +16,19 @@ class ProductRepository {
 
   final WebClient webClient;
 
+  Future<ProductEntity> loadItem(
+      Credentials credentials, String entityId) async {
+    final String url =
+        '${credentials.url}/products/$entityId';
+
+    final dynamic response = await webClient.get(url, credentials.token);
+
+    final ProductItemResponse productResponse = await compute<dynamic, dynamic>(
+        computeDecode, <dynamic>[ProductItemResponse.serializer, response]);
+
+    return productResponse.data;
+  }
+  
   Future<BuiltList<ProductEntity>> loadList(Credentials credentials) async {
     final url = credentials.url + '/products?';
 
@@ -31,7 +44,7 @@ class ProductRepository {
       Credentials credentials, List<String> ids, EntityAction action) async {
     final url = credentials.url + '/products/bulk';
     final dynamic response = await webClient.post(url, credentials.token,
-        data: json.encode({'ids': ids, 'action': '$action'}));
+        data: json.encode({'ids': ids, 'action': action.toApiParam()}));
 
     final ProductListResponse productResponse =
         serializers.deserializeWith(ProductListResponse.serializer, response);
@@ -56,6 +69,23 @@ class ProductRepository {
 
     final ProductItemResponse productResponse =
         serializers.deserializeWith(ProductItemResponse.serializer, response);
+
+    return productResponse.data;
+  }
+
+  Future<ProductEntity> uploadDocument(
+      Credentials credentials, BaseEntity entity, String filePath) async {
+    final fields = <String, String>{
+      '_method': 'put',
+    };
+
+    // TODO remove this include
+    final dynamic response = await webClient.post(
+        '${credentials.url}/products/${entity.id}', credentials.token,
+        data: fields, filePath: filePath, fileIndex: 'documents[]');
+
+    final ProductItemResponse productResponse =
+    serializers.deserializeWith(ProductItemResponse.serializer, response);
 
     return productResponse.data;
   }

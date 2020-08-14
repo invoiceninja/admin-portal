@@ -106,24 +106,12 @@ final vendorListReducer = combineReducers<ListUIState>([
   TypedReducer<ListUIState, FilterVendorsByCustom2>(_filterVendorsByCustom2),
   TypedReducer<ListUIState, FilterVendorsByCustom3>(_filterVendorsByCustom3),
   TypedReducer<ListUIState, FilterVendorsByCustom4>(_filterVendorsByCustom4),
-  TypedReducer<ListUIState, FilterByEntity>(_filterVendorsByClient),
   TypedReducer<ListUIState, StartVendorMultiselect>(_startListMultiselect),
   TypedReducer<ListUIState, AddToVendorMultiselect>(_addToListMultiselect),
   TypedReducer<ListUIState, RemoveFromVendorMultiselect>(
       _removeFromListMultiselect),
   TypedReducer<ListUIState, ClearVendorMultiselect>(_clearListMultiselect),
-  TypedReducer<ListUIState, ClearEntityFilter>(
-      (state, action) => state.rebuild((b) => b
-        ..filterEntityId = null
-        ..filterEntityType = null)),
 ]);
-
-ListUIState _filterVendorsByClient(
-    ListUIState vendorListState, FilterByEntity action) {
-  return vendorListState.rebuild((b) => b
-    ..filterEntityId = action.entityId
-    ..filterEntityType = action.entityType);
-}
 
 ListUIState _filterVendorsByCustom1(
     ListUIState vendorListState, FilterVendorsByCustom1 action) {

@@ -40,7 +40,7 @@ class UserRepository {
       EntityAction action, String password) async {
     final url = credentials.url + '/users/bulk?include=company_user';
     final dynamic response = await webClient.post(url, credentials.token,
-        data: json.encode({'ids': ids, 'action': '$action'}));
+        data: json.encode({'ids': ids, 'action': action.toApiParam()}));
 
     final UserListResponse userResponse =
         serializers.deserializeWith(UserListResponse.serializer, response);

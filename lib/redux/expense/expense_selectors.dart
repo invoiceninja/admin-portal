@@ -59,17 +59,20 @@ List<String> dropdownExpensesSelector(
   return list;
 }
 
-var memoizedFilteredExpenseList = memo6(
-    (BuiltMap<String, ExpenseEntity> expenseMap,
-            BuiltMap<String, ClientEntity> clientMap,
-            BuiltMap<String, VendorEntity> vendorMap,
-            BuiltMap<String, UserEntity> userMap,
-            BuiltList<String> expenseList,
-            ListUIState expenseListState) =>
-        filteredExpensesSelector(expenseMap, clientMap, vendorMap, userMap,
-            expenseList, expenseListState));
+var memoizedFilteredExpenseList = memo8((String filterEntityId,
+        EntityType filterEntityType,
+        BuiltMap<String, ExpenseEntity> expenseMap,
+        BuiltMap<String, ClientEntity> clientMap,
+        BuiltMap<String, VendorEntity> vendorMap,
+        BuiltMap<String, UserEntity> userMap,
+        BuiltList<String> expenseList,
+        ListUIState expenseListState) =>
+    filteredExpensesSelector(filterEntityId, filterEntityType, expenseMap,
+        clientMap, vendorMap, userMap, expenseList, expenseListState));
 
 List<String> filteredExpensesSelector(
+    String filterEntityId,
+    EntityType filterEntityType,
     BuiltMap<String, ExpenseEntity> expenseMap,
     BuiltMap<String, ClientEntity> clientMap,
     BuiltMap<String, VendorEntity> vendorMap,
@@ -83,12 +86,12 @@ List<String> filteredExpensesSelector(
     final client =
         clientMap[expense.clientId] ?? ClientEntity(id: expense.clientId);
 
-    if (expenseListState.filterEntityType != null) {
-      if (expenseListState.filterEntityType == EntityType.client &&
-          expense.clientId != expenseListState.filterEntityId) {
+    if (filterEntityType != null) {
+      if (filterEntityType == EntityType.client &&
+          expense.clientId != filterEntityId) {
         return false;
-      } else if (expenseListState.filterEntityType == EntityType.vendor &&
-          expense.vendorId != expenseListState.filterEntityId) {
+      } else if (filterEntityType == EntityType.vendor &&
+          expense.vendorId != filterEntityId) {
         return false;
       }
     } else if (expense.vendorId != null && !vendor.isActive) {

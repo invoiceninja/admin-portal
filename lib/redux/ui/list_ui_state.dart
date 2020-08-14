@@ -33,16 +33,6 @@ abstract class ListUIState implements Built<ListUIState, ListUIStateBuilder> {
 
   int get filterClearedAt;
 
-  @nullable
-  String get filterEntityId;
-
-  @nullable
-  EntityType get filterEntityType;
-
-  bool entityMatchesFilter(BaseEntity entity) {
-    return filterEntityId == entity.id && filterEntityType == entity.entityType;
-  }
-
   String get sortField;
 
   bool get sortAscending;

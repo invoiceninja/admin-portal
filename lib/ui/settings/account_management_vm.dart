@@ -54,20 +54,21 @@ class AccountManagementVM {
         onCompanyChanged: (company) =>
             store.dispatch(UpdateCompany(company: company)),
         onCompanyDelete: (context, password) {
-          final completer = Completer<Null>()
+          final deleteCompleter = Completer<Null>()
             ..future.then((value) {
-              final completer = Completer<Null>()
+              final refreshCompleter = Completer<Null>()
                 ..future.then((value) {
                   if (store.state.companies.isNotEmpty) {
                     store.dispatch(SelectCompany(companyIndex: 0));
                     store.dispatch(
                         ViewDashboard(navigator: Navigator.of(context)));
                   } else {
+                    print('## No companies');
                     store.dispatch(UserLogout(context));
                   }
                 });
-              store
-                  .dispatch(RefreshData(clearData: true, completer: completer));
+              store.dispatch(
+                  RefreshData(clearData: true, completer: refreshCompleter));
             }).catchError((Object error) {
               showDialog<ErrorDialog>(
                   context: context,
@@ -75,8 +76,8 @@ class AccountManagementVM {
                     return ErrorDialog(error);
                   });
             });
-          store.dispatch(
-              DeleteCompanyRequest(completer: completer, password: password));
+          store.dispatch(DeleteCompanyRequest(
+              completer: deleteCompleter, password: password));
         },
         onSavePressed: (context) {
           final settingsUIState = state.uiState.settingsUIState;

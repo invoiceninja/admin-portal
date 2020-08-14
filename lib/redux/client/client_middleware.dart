@@ -25,6 +25,7 @@ List<Middleware<AppState>> createStoreClientsMiddleware([
   final archiveClient = _archiveClient(repository);
   final deleteClient = _deleteClient(repository);
   final restoreClient = _restoreClient(repository);
+  final saveDocument = _saveDocument(repository);
 
   return [
     TypedMiddleware<AppState, ViewClientList>(viewClientList),
@@ -36,6 +37,7 @@ List<Middleware<AppState>> createStoreClientsMiddleware([
     TypedMiddleware<AppState, ArchiveClientsRequest>(archiveClient),
     TypedMiddleware<AppState, DeleteClientsRequest>(deleteClient),
     TypedMiddleware<AppState, RestoreClientsRequest>(restoreClient),
+    TypedMiddleware<AppState, SaveClientDocumentRequest>(saveDocument),
   ];
 }
 
@@ -57,7 +59,6 @@ Middleware<AppState> _viewClient() {
   return (Store<AppState> store, dynamic dynamicAction,
       NextDispatcher next) async {
     final action = dynamicAction as ViewClient;
-
 
     next(action);
 
@@ -246,6 +247,31 @@ Middleware<AppState> _loadClients(ClientRepository repository) {
         action.completer.completeError(error);
       }
     });
+
+    next(action);
+  };
+}
+
+Middleware<AppState> _saveDocument(ClientRepository repository) {
+  return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
+    final action = dynamicAction as SaveClientDocumentRequest;
+    if (store.state.isEnterprisePlan) {
+      repository
+          .uploadDocument(
+          store.state.credentials, action.client, action.filePath)
+          .then((client) {
+        store.dispatch(SaveClientSuccess(client));
+        action.completer.complete(null);
+      }).catchError((Object error) {
+        print(error);
+        store.dispatch(SaveClientDocumentFailure(error));
+        action.completer.completeError(error);
+      });
+    } else {
+      const error = 'Uploading documents requires an enterprise plan';
+      store.dispatch(SaveClientDocumentFailure(error));
+      action.completer.completeError(error);
+    }
 
     next(action);
   };

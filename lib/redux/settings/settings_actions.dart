@@ -8,8 +8,7 @@ import 'package:invoiceninja_flutter/data/models/group_model.dart';
 import 'package:invoiceninja_flutter/data/models/user_model.dart';
 import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 
-class ViewSettings extends AbstractNavigatorAction
-    implements PersistUI {
+class ViewSettings extends AbstractNavigatorAction implements PersistUI {
   ViewSettings({
     @required NavigatorState navigator,
     this.company,

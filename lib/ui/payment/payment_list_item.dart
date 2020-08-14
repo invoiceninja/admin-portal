@@ -36,7 +36,8 @@ class PaymentListItem extends StatelessWidget {
     final client = state.clientState.get(payment.clientId);
     final localization = AppLocalization.of(context);
     final filterMatch = filter != null && filter.isNotEmpty
-        ? payment.matchesFilterValue(filter)
+        ? (payment.matchesFilterValue(filter) ??
+            client.matchesFilterValue(filter))
         : null;
     final mobileSubtitle = filterMatch ??
         (payment.number ?? '') + ' • ' + formatDate(payment.date, context);
@@ -128,7 +129,7 @@ class PaymentListItem extends StatelessWidget {
                             Text(client.displayName, style: textStyle),
                             Text(
                               filterMatch ?? desktopSubtitle,
-                              maxLines: 3,
+                              maxLines: 2,
                               overflow: TextOverflow.ellipsis,
                               style: Theme.of(context)
                                   .textTheme
@@ -204,10 +205,10 @@ class PaymentListItem extends StatelessWidget {
                         ),
                         Text(
                             localization
-                                .lookup('payment_status_${payment.statusId}'),
+                                .lookup('payment_status_${payment.calculatedStatusId}'),
                             style: TextStyle(
                               color:
-                                  PaymentStatusColors.colors[payment.statusId],
+                                  PaymentStatusColors.colors[payment.calculatedStatusId],
                             )),
                       ],
                     ),

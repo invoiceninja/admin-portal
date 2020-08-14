@@ -56,8 +56,10 @@ final selectedIdReducer = combineReducers<String>([
   TypedReducer<String, ClearEntityFilter>((selectedId, action) => ''),
   TypedReducer<String, ClearEntitySelection>((selectedId, action) =>
       action.entityType == EntityType.client ? '' : selectedId),
-  TypedReducer<String, FilterByEntity>((selectedId, action) =>
-      action.entityType == EntityType.client ? action.entityId : selectedId),
+  TypedReducer<String, FilterByEntity>((selectedId, action) => action
+          .clearSelection
+      ? ''
+      : action.entityType == EntityType.client ? action.entityId : selectedId),
 ]);
 
 final editingReducer = combineReducers<ClientEntity>([
@@ -110,7 +112,6 @@ final clientListReducer = combineReducers<ListUIState>([
   TypedReducer<ListUIState, SortClients>(_sortClients),
   TypedReducer<ListUIState, FilterClientsByState>(_filterClientsByState),
   TypedReducer<ListUIState, FilterClients>(_filterClients),
-  TypedReducer<ListUIState, FilterByEntity>(_filterClientsByEntity),
   TypedReducer<ListUIState, FilterClientsByCustom1>(_filterClientsByCustom1),
   TypedReducer<ListUIState, FilterClientsByCustom2>(_filterClientsByCustom2),
   TypedReducer<ListUIState, FilterClientsByCustom3>(_filterClientsByCustom3),
@@ -120,10 +121,6 @@ final clientListReducer = combineReducers<ListUIState>([
   TypedReducer<ListUIState, RemoveFromClientMultiselect>(
       _removeFromListMultiselect),
   TypedReducer<ListUIState, ClearClientMultiselect>(_clearListMultiselect),
-  TypedReducer<ListUIState, ClearEntityFilter>(
-      (state, action) => state.rebuild((b) => b
-        ..filterEntityId = null
-        ..filterEntityType = null)),
 ]);
 
 ListUIState _filterClientsByCustom1(
@@ -173,20 +170,6 @@ ListUIState _filterClientsByState(
   } else {
     return clientListState.rebuild((b) => b..stateFilters.add(action.state));
   }
-}
-
-ListUIState _filterClientsByEntity(
-    ListUIState clientListState, FilterByEntity action) {
-  if (clientListState.filterEntityId == action.entityId &&
-      clientListState.filterEntityType == action.entityType) {
-    return clientListState.rebuild((b) => b
-      ..filterEntityId = null
-      ..filterEntityType = null);
-  }
-
-  return clientListState.rebuild((b) => b
-    ..filterEntityId = action.entityId
-    ..filterEntityType = action.entityType);
 }
 
 ListUIState _filterClients(ListUIState clientListState, FilterClients action) {
@@ -351,14 +334,14 @@ ClientState _addClient(ClientState clientState, AddClientSuccess action) {
 ClientState _updateClient(ClientState clientState, SaveClientSuccess action) {
   return clientState.rebuild((b) => b
     ..map[action.client.id] = action.client.rebuild((b) =>
-        b..lastUpdatedActivities = DateTime.now().millisecondsSinceEpoch));
+        b..loadedAt = DateTime.now().millisecondsSinceEpoch));
 }
 
 ClientState _setLoadedClient(
     ClientState clientState, LoadClientSuccess action) {
   return clientState.rebuild((b) => b
     ..map[action.client.id] = action.client.rebuild((b) =>
-        b..lastUpdatedActivities = DateTime.now().millisecondsSinceEpoch));
+        b..loadedAt = DateTime.now().millisecondsSinceEpoch));
 }
 
 ClientState _setLoadedClients(

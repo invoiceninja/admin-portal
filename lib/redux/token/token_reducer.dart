@@ -26,8 +26,10 @@ Reducer<String> selectedIdReducer = combineReducers([
   TypedReducer<String, DeleteTokensSuccess>((selectedId, action) => ''),
   TypedReducer<String, ArchiveTokensSuccess>((selectedId, action) => ''),
   TypedReducer<String, ClearEntityFilter>((selectedId, action) => ''),
-  TypedReducer<String, FilterByEntity>((selectedId, action) =>
-      action.entityType == EntityType.token ? action.entityId : selectedId),
+  TypedReducer<String, FilterByEntity>((selectedId, action) => action
+          .clearSelection
+      ? ''
+      : action.entityType == EntityType.token ? action.entityId : selectedId),
 ]);
 
 final editingReducer = combineReducers<TokenEntity>([
@@ -69,10 +71,6 @@ final tokenListReducer = combineReducers<ListUIState>([
   TypedReducer<ListUIState, RemoveFromTokenMultiselect>(
       _removeFromListMultiselect),
   TypedReducer<ListUIState, ClearTokenMultiselect>(_clearListMultiselect),
-  TypedReducer<ListUIState, ClearEntityFilter>(
-      (state, action) => state.rebuild((b) => b
-        ..filterEntityId = null
-        ..filterEntityType = null)),
 ]);
 
 ListUIState _filterTokensByCustom1(

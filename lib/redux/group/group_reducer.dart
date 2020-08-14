@@ -28,8 +28,10 @@ Reducer<String> selectedIdReducer = combineReducers([
   TypedReducer<String, ClearEntityFilter>((selectedId, action) => ''),
   TypedReducer<String, ClearEntitySelection>((selectedId, action) =>
       action.entityType == EntityType.group ? '' : selectedId),
-  TypedReducer<String, FilterByEntity>((selectedId, action) =>
-      action.entityType == EntityType.group ? action.entityId : selectedId),
+  TypedReducer<String, FilterByEntity>((selectedId, action) => action
+          .clearSelection
+      ? ''
+      : action.entityType == EntityType.group ? action.entityId : selectedId),
 ]);
 
 final editingReducer = combineReducers<GroupEntity>([
@@ -66,24 +68,12 @@ final groupListReducer = combineReducers<ListUIState>([
   TypedReducer<ListUIState, FilterGroups>(_filterGroups),
   TypedReducer<ListUIState, FilterGroupsByCustom1>(_filterGroupsByCustom1),
   TypedReducer<ListUIState, FilterGroupsByCustom2>(_filterGroupsByCustom2),
-  TypedReducer<ListUIState, FilterByEntity>(_filterGroupsByClient),
   TypedReducer<ListUIState, StartGroupMultiselect>(_startListMultiselect),
   TypedReducer<ListUIState, AddToGroupMultiselect>(_addToListMultiselect),
   TypedReducer<ListUIState, RemoveFromGroupMultiselect>(
       _removeFromListMultiselect),
   TypedReducer<ListUIState, ClearGroupMultiselect>(_clearListMultiselect),
-  TypedReducer<ListUIState, ClearEntityFilter>(
-      (state, action) => state.rebuild((b) => b
-        ..filterEntityId = null
-        ..filterEntityType = null)),
 ]);
-
-ListUIState _filterGroupsByClient(
-    ListUIState groupListState, FilterByEntity action) {
-  return groupListState.rebuild((b) => b
-    ..filterEntityId = action.entityId
-    ..filterEntityType = action.entityType);
-}
 
 ListUIState _filterGroupsByCustom1(
     ListUIState groupListState, FilterGroupsByCustom1 action) {

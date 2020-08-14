@@ -26,8 +26,10 @@ Reducer<String> selectedIdReducer = combineReducers([
   TypedReducer<String, ClearEntityFilter>((selectedId, action) => ''),
   TypedReducer<String, ClearEntitySelection>((selectedId, action) =>
       action.entityType == EntityType.payment ? '' : selectedId),
-  TypedReducer<String, FilterByEntity>((selectedId, action) =>
-      action.entityType == EntityType.payment ? action.entityId : selectedId),
+  TypedReducer<String, FilterByEntity>((selectedId, action) => action
+          .clearSelection
+      ? ''
+      : action.entityType == EntityType.payment ? action.entityId : selectedId),
 ]);
 
 final editingReducer = combineReducers<PaymentEntity>([
@@ -67,31 +69,12 @@ final paymentListReducer = combineReducers<ListUIState>([
   TypedReducer<ListUIState, FilterPaymentsByCustom2>(_filterPaymentsByCustom2),
   TypedReducer<ListUIState, FilterPaymentsByCustom3>(_filterPaymentsByCustom3),
   TypedReducer<ListUIState, FilterPaymentsByCustom4>(_filterPaymentsByCustom4),
-  TypedReducer<ListUIState, FilterByEntity>(_filterPaymentsByEntity),
   TypedReducer<ListUIState, StartPaymentMultiselect>(_startListMultiselect),
   TypedReducer<ListUIState, AddToPaymentMultiselect>(_addToListMultiselect),
   TypedReducer<ListUIState, RemoveFromPaymentMultiselect>(
       _removeFromListMultiselect),
   TypedReducer<ListUIState, ClearPaymentMultiselect>(_clearListMultiselect),
-  TypedReducer<ListUIState, ClearEntityFilter>(
-      (state, action) => state.rebuild((b) => b
-        ..filterEntityId = null
-        ..filterEntityType = null)),
 ]);
-
-ListUIState _filterPaymentsByEntity(
-    ListUIState paymentListState, FilterByEntity action) {
-  if (paymentListState.filterEntityId == action.entityId &&
-      paymentListState.filterEntityType == action.entityType) {
-    return paymentListState.rebuild((b) => b
-      ..filterEntityId = null
-      ..filterEntityType = null);
-  }
-
-  return paymentListState.rebuild((b) => b
-    ..filterEntityId = action.entityId
-    ..filterEntityType = action.entityType);
-}
 
 ListUIState _filterPaymentsByCustom1(
     ListUIState paymentListState, FilterPaymentsByCustom1 action) {

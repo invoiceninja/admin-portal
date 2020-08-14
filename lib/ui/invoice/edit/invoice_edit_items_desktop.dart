@@ -7,17 +7,21 @@ import 'package:invoiceninja_flutter/data/models/invoice_model.dart';
 import 'package:invoiceninja_flutter/redux/product/product_selectors.dart';
 import 'package:invoiceninja_flutter/ui/app/form_card.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/custom_field.dart';
+import 'package:invoiceninja_flutter/ui/app/forms/decorated_form_field.dart';
 import 'package:invoiceninja_flutter/ui/app/invoice/tax_rate_dropdown.dart';
 import 'package:invoiceninja_flutter/ui/invoice/edit/invoice_edit_items_vm.dart';
+import 'package:invoiceninja_flutter/ui/invoice/edit/invoice_edit_vm.dart';
 import 'package:invoiceninja_flutter/utils/formatting.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 
 class InvoiceEditItemsDesktop extends StatefulWidget {
   const InvoiceEditItemsDesktop({
-    this.viewModel,
+    @required this.viewModel,
+    @required this.entityViewModel,
   });
 
   final EntityEditItemsVM viewModel;
+  final EntityEditVM entityViewModel;
 
   @override
   _InvoiceEditItemsDesktopState createState() =>
@@ -262,6 +266,7 @@ class _InvoiceEditItemsDesktopState extends State<InvoiceEditItemsDesktop> {
                             lineItems[index]
                                 .rebuild((b) => b..customValue1 = value),
                             index),
+                        onSavePressed: widget.entityViewModel.onSavePressed,
                       ),
                     ),
                   if (company.hasCustomField(CustomFieldType.product2))
@@ -275,6 +280,7 @@ class _InvoiceEditItemsDesktopState extends State<InvoiceEditItemsDesktop> {
                             lineItems[index]
                                 .rebuild((b) => b..customValue2 = value),
                             index),
+                        onSavePressed: widget.entityViewModel.onSavePressed,
                       ),
                     ),
                   if (company.hasCustomField(CustomFieldType.product3))
@@ -288,6 +294,7 @@ class _InvoiceEditItemsDesktopState extends State<InvoiceEditItemsDesktop> {
                             lineItems[index]
                                 .rebuild((b) => b..customValue3 = value),
                             index),
+                        onSavePressed: widget.entityViewModel.onSavePressed,
                       ),
                     ),
                   if (company.hasCustomField(CustomFieldType.product4))
@@ -301,6 +308,7 @@ class _InvoiceEditItemsDesktopState extends State<InvoiceEditItemsDesktop> {
                             lineItems[index]
                                 .rebuild((b) => b..customValue4 = value),
                             index),
+                        onSavePressed: widget.entityViewModel.onSavePressed,
                       ),
                     ),
                   if ((company.numberOfItemTaxRates ?? 0) >= 1)
@@ -347,7 +355,7 @@ class _InvoiceEditItemsDesktopState extends State<InvoiceEditItemsDesktop> {
                     ),
                   Padding(
                     padding: const EdgeInsets.only(right: kTableColumnGap),
-                    child: TextFormField(
+                    child: DecoratedFormField(
                       key: ValueKey('__line_item_${index}_cost__'),
                       textAlign: TextAlign.right,
                       initialValue: formatNumber(lineItems[index].cost, context,
@@ -359,11 +367,12 @@ class _InvoiceEditItemsDesktopState extends State<InvoiceEditItemsDesktop> {
                           index),
                       keyboardType: TextInputType.numberWithOptions(
                           decimal: true, signed: true),
+                      onSavePressed: widget.entityViewModel.onSavePressed,
                     ),
                   ),
                   Padding(
                     padding: const EdgeInsets.only(right: kTableColumnGap),
-                    child: TextFormField(
+                    child: DecoratedFormField(
                       key: ValueKey('__line_item_${index}_quantity__'),
                       textAlign: TextAlign.right,
                       initialValue: formatNumber(
@@ -376,6 +385,7 @@ class _InvoiceEditItemsDesktopState extends State<InvoiceEditItemsDesktop> {
                           index),
                       keyboardType: TextInputType.numberWithOptions(
                           decimal: true, signed: true),
+                      onSavePressed: widget.entityViewModel.onSavePressed,
                     ),
                   ),
                   Padding(

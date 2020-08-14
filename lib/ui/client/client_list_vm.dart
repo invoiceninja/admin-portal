@@ -94,6 +94,8 @@ class ClientListVM {
     return ClientListVM(
       state: state,
       clientList: memoizedFilteredClientList(
+          state.uiState.filterEntityId,
+          state.uiState.filterEntityType,
           state.clientState.map,
           state.clientState.list,
           state.groupState.map,
@@ -109,7 +111,7 @@ class ClientListVM {
           handleClientAction(context, client, action),
       tableColumns:
           state.userCompany.settings.getTableColumns(EntityType.client) ??
-              ClientPresenter.getAllTableFields(state.userCompany),
+              ClientPresenter.getDefaultTableFields(state.userCompany),
       onSortColumn: (field) => store.dispatch(SortClients(field)),
       onClearMultielsect: () => store.dispatch(ClearClientMultiselect()),
     );
