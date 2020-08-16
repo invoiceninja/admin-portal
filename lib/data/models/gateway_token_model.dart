@@ -1,6 +1,7 @@
 import 'package:built_collection/built_collection.dart';
 import 'package:built_value/built_value.dart';
 import 'package:built_value/serializer.dart';
+import 'package:invoiceninja_flutter/data/models/company_gateway_model.dart';
 import 'package:invoiceninja_flutter/data/models/company_model.dart';
 import 'package:invoiceninja_flutter/data/models/entities.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
@@ -89,6 +90,10 @@ abstract class GatewayTokenEntity extends Object
   @BuiltValueField(wireName: 'company_gateway_id')
   String get companyGatewayId;
 
+  @nullable
+  @BuiltValueField(wireName: 'company_gateway')
+  CompanyGatewayEntity get companyGateway;
+
   @BuiltValueField(wireName: 'gateway_type_id')
   String get gatewayTypeId;
 
@@ -150,14 +155,6 @@ abstract class GatewayTokenEntity extends Object
     if (!isDeleted) {
       if (includeEdit && userCompany.canEditEntity(this)) {
         actions.add(EntityAction.edit);
-      }
-
-      if (userCompany.canEditEntity(this)) {
-        actions.add(EntityAction.settings);
-      }
-
-      if (userCompany.canCreate(EntityType.client)) {
-        actions.add(EntityAction.newClient);
       }
     }
 
