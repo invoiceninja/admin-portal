@@ -129,7 +129,7 @@ class ExpenseEditVM {
         if (expense.isOld) {
           return;
         }
-        store.dispatch(UserPreferencesChanged(addDocumentsToInvoice: value));
+        store.dispatch(UpdateUserPreferences(addDocumentsToInvoice: value));
       },
     );
   }

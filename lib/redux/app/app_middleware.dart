@@ -279,7 +279,7 @@ Middleware<AppState> _createLoadState(
         completer.future.then((_) {
           final layout = calculateLayout(action.context);
           if (store.state.prefState.isNotMobile && layout == AppLayout.mobile) {
-            store.dispatch(UserPreferencesChanged(layout: layout));
+            store.dispatch(UpdateUserPreferences(appLayout: layout));
             AppBuilder.of(action.context).rebuild();
             WidgetsBinding.instance.addPostFrameCallback((duration) {
               store.dispatch(

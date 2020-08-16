@@ -88,7 +88,7 @@ class _ChangeLayoutBannerState extends State<ChangeLayoutBanner> {
                             widget.suggestedLayout == AppLayout.desktop
                                 ? AppLayout.mobile
                                 : AppLayout.desktop;
-                        store.dispatch(UserPreferencesChanged(layout: layout));
+                        store.dispatch(UpdateUserPreferences(appLayout: layout));
                         AppBuilder.of(context).rebuild();
                         WidgetsBinding.instance
                             .addPostFrameCallback((duration) {

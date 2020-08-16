@@ -103,7 +103,7 @@ class ListScaffold extends StatelessWidget {
                           state.prefState.isHistoryFloated) {
                         Scaffold.of(context).openEndDrawer();
                       } else {
-                        store.dispatch(UserPreferencesChanged(
+                        store.dispatch(UpdateUserPreferences(
                             sidebar: AppSidebar.history));
                       }
                     },

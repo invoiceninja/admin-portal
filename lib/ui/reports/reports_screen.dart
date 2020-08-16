@@ -242,7 +242,7 @@ class ReportsScreen extends StatelessWidget {
                           Scaffold.of(context).openEndDrawer();
                         } else {
                           store.dispatch(
-                              UserPreferencesChanged(
+                              UpdateUserPreferences(
                                   sidebar: AppSidebar.history));
                         }
                       },

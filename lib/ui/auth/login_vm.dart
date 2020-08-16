@@ -89,16 +89,20 @@ class LoginVM {
       ],
     );
 
-    void _handleLogin(BuildContext context) {
+    void _handleLogin({BuildContext context, bool isSignUp = false}) {
       final layout = calculateLayout(context);
 
-      store.dispatch(UserPreferencesChanged(layout: layout));
+      store.dispatch(UpdateUserPreferences(appLayout: layout));
       AppBuilder.of(context).rebuild();
 
       WidgetsBinding.instance.addPostFrameCallback((duration) {
         if (layout == AppLayout.mobile) {
           store.dispatch(ViewDashboard(navigator: Navigator.of(context)));
         } else {
+          if (isSignUp) {
+            store.dispatch(
+                UpdateUserPreferences(moduleLayout: ModuleLayout.table));
+          }
           store.dispatch(ViewMainScreen(navigator: Navigator.of(context)));
         }
       });
@@ -129,7 +133,7 @@ class LoginVM {
                   platform: getPlatform(context),
                   oneTimePassword: oneTimePassword,
                 ));
-                completer.future.then((_) => _handleLogin(context));
+                completer.future.then((_) => _handleLogin(context: context));
               });
             }
           } catch (error) {
@@ -150,7 +154,8 @@ class LoginVM {
                   accessToken: value.accessToken,
                   serverAuthCode: value.serverAuthCode,
                 ));
-                completer.future.then((_) => _handleLogin(context));
+                completer.future.then(
+                    (_) => _handleLogin(context: context, isSignUp: true));
               });
             }
           } catch (error) {
@@ -173,7 +178,8 @@ class LoginVM {
             email: email.trim(),
             password: password.trim(),
           ));
-          completer.future.then((_) => _handleLogin(context));
+          completer.future
+              .then((_) => _handleLogin(context: context, isSignUp: true));
         },
         onRecoverPressed: (
           BuildContext context,
@@ -223,7 +229,7 @@ class LoginVM {
             platform: getPlatform(context),
             oneTimePassword: oneTimePassword.trim(),
           ));
-          completer.future.then((_) => _handleLogin(context));
+          completer.future.then((_) => _handleLogin(context: context));
         });
   }
 }

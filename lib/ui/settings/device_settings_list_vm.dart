@@ -87,41 +87,41 @@ class DeviceSettingsVM {
           }),
       onRefreshTap: (BuildContext context) => _refreshData(context),
       onDarkModeChanged: (BuildContext context, bool value) async {
-        store.dispatch(UserPreferencesChanged(enableDarkMode: value));
+        store.dispatch(UpdateUserPreferences(enableDarkMode: value));
         AppBuilder.of(context).rebuild();
       },
       onAutoStartTasksChanged: (BuildContext context, bool value) async {
-        store.dispatch(UserPreferencesChanged(autoStartTasks: value));
+        store.dispatch(UpdateUserPreferences(autoStartTasks: value));
       },
       onLongPressSelectionIsDefault: (BuildContext context, bool value) async {
         store.dispatch(
-            UserPreferencesChanged(longPressSelectionIsDefault: value));
+            UpdateUserPreferences(longPressSelectionIsDefault: value));
       },
       onMenuModeChanged: (context, value) async {
         if (store.state.prefState.menuSidebarMode == value) {
           return;
         }
 
-        store.dispatch(UserPreferencesChanged(menuMode: value));
+        store.dispatch(UpdateUserPreferences(menuMode: value));
       },
       onHistoryModeChanged: (context, value) async {
         if (store.state.prefState.historySidebarMode == value) {
           return;
         }
 
-        store.dispatch(UserPreferencesChanged(historyMode: value));
+        store.dispatch(UpdateUserPreferences(historyMode: value));
       },
       onRowsPerPageChanged: (context, value) {
-        store.dispatch(UserPreferencesChanged(rowsPerPage: value));
+        store.dispatch(UpdateUserPreferences(rowsPerPage: value));
       },
       onAlwaysShowSidebarChanged: (context, value) {
-        store.dispatch(UserPreferencesChanged(alwaysShowFilterSidebar: value));
+        store.dispatch(UpdateUserPreferences(alwaysShowFilterSidebar: value));
       },
       onLayoutChanged: (BuildContext context, AppLayout value) async {
         if (store.state.prefState.appLayout == value) {
           return;
         }
-        store.dispatch(UserPreferencesChanged(layout: value));
+        store.dispatch(UpdateUserPreferences(appLayout: value));
         AppBuilder.of(context).rebuild();
         WidgetsBinding.instance.addPostFrameCallback((duration) {
           if (value == AppLayout.mobile) {
@@ -145,7 +145,7 @@ class DeviceSettingsVM {
           print(e);
         }
         if (authenticated) {
-          store.dispatch(UserPreferencesChanged(requireAuthentication: value));
+          store.dispatch(UpdateUserPreferences(requireAuthentication: value));
         } else {}
       },
       //authenticationSupported: LocalAuthentication().canCheckBiometrics,

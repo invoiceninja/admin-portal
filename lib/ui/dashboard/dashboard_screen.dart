@@ -152,7 +152,7 @@ class _DashboardScreenState extends State<DashboardScreen>
                     Scaffold.of(context).openEndDrawer();
                   } else {
                     store.dispatch(
-                        UserPreferencesChanged(sidebar: AppSidebar.history));
+                        UpdateUserPreferences(sidebar: AppSidebar.history));
                   }
                 },
               ),

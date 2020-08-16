@@ -683,7 +683,7 @@ class _EntityFilter extends StatelessWidget {
                           tooltip: localization.showSidebar,
                           icon: Icon(Icons.chrome_reader_mode),
                           onPressed: () => store.dispatch(
-                              UserPreferencesChanged(showFilterSidebar: true)),
+                              UpdateUserPreferences(showFilterSidebar: true)),
                         ),
                   automaticallyImplyLeading: false,
                   title: Align(

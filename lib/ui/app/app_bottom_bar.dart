@@ -375,7 +375,7 @@ class _AppBottomBarState extends State<AppBottomBar> {
                     tooltip: localization.preview,
                     icon: Icon(Icons.chrome_reader_mode),
                     onPressed: () {
-                      store.dispatch(UserPreferencesChanged(
+                      store.dispatch(UpdateUserPreferences(
                           isPreviewVisible: !state.prefState.isPreviewVisible));
                     },
                   ),

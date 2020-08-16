@@ -66,10 +66,10 @@ PrefState prefReducer(
 }
 
 Reducer<bool> menuVisibleReducer = combineReducers([
-  TypedReducer<bool, UserPreferencesChanged>((value, action) {
+  TypedReducer<bool, UpdateUserPreferences>((value, action) {
     return action.sidebar == AppSidebar.menu ? !value : value;
   }),
-  TypedReducer<bool, UserPreferencesChanged>((value, action) {
+  TypedReducer<bool, UpdateUserPreferences>((value, action) {
     switch (action.menuMode) {
       case AppSidebarMode.visible:
         return true;
@@ -83,10 +83,10 @@ Reducer<bool> menuVisibleReducer = combineReducers([
 ]);
 
 Reducer<bool> historyVisibleReducer = combineReducers([
-  TypedReducer<bool, UserPreferencesChanged>((value, action) {
+  TypedReducer<bool, UpdateUserPreferences>((value, action) {
     return action.sidebar == AppSidebar.history ? !value : value;
   }),
-  TypedReducer<bool, UserPreferencesChanged>((value, action) {
+  TypedReducer<bool, UpdateUserPreferences>((value, action) {
     return action.historyMode == AppSidebarMode.visible
         ? true
         : action.historyMode == AppSidebarMode.float ? false : value;
@@ -108,12 +108,15 @@ Reducer<int> filterClearedAtReducer = combineReducers([
 ]);
 
 Reducer<AppLayout> layoutReducer = combineReducers([
-  TypedReducer<AppLayout, UserPreferencesChanged>((layout, action) {
-    return action.layout ?? layout;
+  TypedReducer<AppLayout, UpdateUserPreferences>((layout, action) {
+    return action.appLayout ?? layout;
   }),
 ]);
 
 Reducer<ModuleLayout> moduleLayoutReducer = combineReducers([
+  TypedReducer<ModuleLayout, UpdateUserPreferences>((moduleLayout, action) {
+    return action.moduleLayout ?? moduleLayout;
+  }),
   TypedReducer<ModuleLayout, SwitchListTableLayout>((moduleLayout, action) {
     if (moduleLayout == ModuleLayout.list) {
       return ModuleLayout.table;
@@ -124,62 +127,62 @@ Reducer<ModuleLayout> moduleLayoutReducer = combineReducers([
 ]);
 
 Reducer<int> rowsPerPageReducer = combineReducers([
-  TypedReducer<int, UserPreferencesChanged>((numRows, action) {
+  TypedReducer<int, UpdateUserPreferences>((numRows, action) {
     return action.rowsPerPage ?? numRows;
   }),
 ]);
 
 Reducer<AppSidebarMode> manuSidebarReducer = combineReducers([
-  TypedReducer<AppSidebarMode, UserPreferencesChanged>((mode, action) {
+  TypedReducer<AppSidebarMode, UpdateUserPreferences>((mode, action) {
     return action.menuMode ?? mode;
   }),
 ]);
 
 Reducer<AppSidebarMode> historySidebarReducer = combineReducers([
-  TypedReducer<AppSidebarMode, UserPreferencesChanged>((mode, action) {
+  TypedReducer<AppSidebarMode, UpdateUserPreferences>((mode, action) {
     return action.historyMode ?? mode;
   }),
 ]);
 
 Reducer<bool> darkModeReducer = combineReducers([
-  TypedReducer<bool, UserPreferencesChanged>((enableDarkMode, action) {
+  TypedReducer<bool, UpdateUserPreferences>((enableDarkMode, action) {
     return action.enableDarkMode ?? enableDarkMode;
   }),
 ]);
 
 Reducer<bool> showFilterSidebarReducer = combineReducers([
-  TypedReducer<bool, UserPreferencesChanged>((value, action) {
+  TypedReducer<bool, UpdateUserPreferences>((value, action) {
     return action.showFilterSidebar ?? value;
   }),
 ]);
 
 Reducer<bool> longPressReducer = combineReducers([
-  TypedReducer<bool, UserPreferencesChanged>(
+  TypedReducer<bool, UpdateUserPreferences>(
       (longPressSelectionIsDefault, action) {
     return action.longPressSelectionIsDefault ?? longPressSelectionIsDefault;
   }),
 ]);
 
 Reducer<bool> autoStartTasksReducer = combineReducers([
-  TypedReducer<bool, UserPreferencesChanged>((autoStartTasks, action) {
+  TypedReducer<bool, UpdateUserPreferences>((autoStartTasks, action) {
     return action.autoStartTasks ?? autoStartTasks;
   }),
 ]);
 
 Reducer<bool> isPreviewVisibleReducer = combineReducers([
-  TypedReducer<bool, UserPreferencesChanged>((isPreviewVisible, action) {
+  TypedReducer<bool, UpdateUserPreferences>((isPreviewVisible, action) {
     return action.isPreviewVisible ?? isPreviewVisible;
   }),
 ]);
 
 Reducer<bool> addDocumentsToInvoiceReducer = combineReducers([
-  TypedReducer<bool, UserPreferencesChanged>((addDocumentsToInvoice, action) {
+  TypedReducer<bool, UpdateUserPreferences>((addDocumentsToInvoice, action) {
     return action.addDocumentsToInvoice ?? addDocumentsToInvoice;
   }),
 ]);
 
 Reducer<bool> requireAuthenticationReducer = combineReducers([
-  TypedReducer<bool, UserPreferencesChanged>((requireAuthentication, action) {
+  TypedReducer<bool, UpdateUserPreferences>((requireAuthentication, action) {
     return action.requireAuthentication ?? requireAuthentication;
   }),
 ]);
