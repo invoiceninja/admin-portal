@@ -73,7 +73,7 @@ class _PDFScaffoldState extends State<PDFScaffold> {
 
   @override
   void dispose() {
-    _pdfController?.dispose();
+    //_pdfController?.dispose();
 
     super.dispose();
   }

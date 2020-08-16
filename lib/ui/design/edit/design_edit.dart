@@ -377,6 +377,10 @@ class _DesignPreviewState extends State<DesignPreview> {
   void didUpdateWidget(oldWidget) {
     super.didUpdateWidget(oldWidget);
 
+    if (oldWidget.pdfBytes == widget.pdfBytes) {
+      return;
+    }
+
     if (kIsWeb) {
       WebUtils.registerWebView(_pdfString);
     } else {
