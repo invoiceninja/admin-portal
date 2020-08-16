@@ -97,12 +97,12 @@ class LoginVM {
 
       WidgetsBinding.instance.addPostFrameCallback((duration) {
         if (layout == AppLayout.mobile) {
-          store.dispatch(ViewDashboard(navigator: Navigator.of(context)));
-        } else {
           if (isSignUp) {
             store.dispatch(
-                UpdateUserPreferences(moduleLayout: ModuleLayout.table));
+                UpdateUserPreferences(moduleLayout: ModuleLayout.list));
           }
+          store.dispatch(ViewDashboard(navigator: Navigator.of(context)));
+        } else {
           store.dispatch(ViewMainScreen(navigator: Navigator.of(context)));
         }
       });
