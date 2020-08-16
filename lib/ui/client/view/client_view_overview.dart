@@ -14,6 +14,7 @@ import 'package:invoiceninja_flutter/redux/task/task_selectors.dart';
 import 'package:invoiceninja_flutter/ui/app/FieldGrid.dart';
 import 'package:invoiceninja_flutter/ui/app/entities/entity_list_tile.dart';
 import 'package:invoiceninja_flutter/ui/app/entity_header.dart';
+import 'package:invoiceninja_flutter/ui/app/gateways/token_meta.dart';
 import 'package:invoiceninja_flutter/ui/app/icon_message.dart';
 import 'package:invoiceninja_flutter/ui/app/lists/list_divider.dart';
 import 'package:invoiceninja_flutter/ui/client/view/client_view_vm.dart';
@@ -129,7 +130,14 @@ class ClientOverview extends StatelessWidget {
           ListTile(
             title: Text(
                 '${localization.token}  ›  ${gatewayMap[customerReference].gateway.name}'),
-            subtitle: Text(customerReference),
+            subtitle: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: tokenMap[customerReference]
+                  .map((token) => TokenMeta(
+                        meta: token.meta,
+                      ))
+                  .toList(),
+            ),
             onTap: linkMap.containsKey(customerReference)
                 ? () => launch(linkMap[customerReference])
                 : null,
