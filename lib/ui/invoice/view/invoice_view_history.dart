@@ -42,7 +42,7 @@ class _InvoiceViewHistoryState extends State<InvoiceViewHistory> {
           title: Text(''),
           trailing: Icon(Icons.chevron_right),
           onTap: () =>
-              viewPdf(invoice, context, activityId: history.activityId),
+              viewPdf(invoice, context, activityId: history.id),
           subtitle: Text(
             formatDate(
               convertTimestampToDateString(history.createdAt),

@@ -1112,9 +1112,10 @@ abstract class InvoiceHistoryEntity
   factory InvoiceHistoryEntity({String contactId}) {
     return _$InvoiceHistoryEntity._(
       id: '',
-      activityId: '',
       htmlBackup: '',
       createdAt: 0,
+      activityId: '',
+      activity: ActivityEntity(),
     );
   }
 
@@ -1125,6 +1126,8 @@ abstract class InvoiceHistoryEntity
   int get hashCode;
 
   String get id;
+
+  ActivityEntity get activity;
 
   @BuiltValueField(wireName: 'activity_id')
   String get activityId;

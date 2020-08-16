@@ -958,6 +958,9 @@ class _$InvoiceHistoryEntitySerializer
     final result = <Object>[
       'id',
       serializers.serialize(object.id, specifiedType: const FullType(String)),
+      'activity',
+      serializers.serialize(object.activity,
+          specifiedType: const FullType(ActivityEntity)),
       'activity_id',
       serializers.serialize(object.activityId,
           specifiedType: const FullType(String)),
@@ -987,6 +990,10 @@ class _$InvoiceHistoryEntitySerializer
         case 'id':
           result.id = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String;
+          break;
+        case 'activity':
+          result.activity.replace(serializers.deserialize(value,
+              specifiedType: const FullType(ActivityEntity)) as ActivityEntity);
           break;
         case 'activity_id':
           result.activityId = serializers.deserialize(value,
@@ -2796,6 +2803,8 @@ class _$InvoiceHistoryEntity extends InvoiceHistoryEntity {
   @override
   final String id;
   @override
+  final ActivityEntity activity;
+  @override
   final String activityId;
   @override
   final String htmlBackup;
@@ -2807,10 +2816,17 @@ class _$InvoiceHistoryEntity extends InvoiceHistoryEntity {
       (new InvoiceHistoryEntityBuilder()..update(updates)).build();
 
   _$InvoiceHistoryEntity._(
-      {this.id, this.activityId, this.htmlBackup, this.createdAt})
+      {this.id,
+      this.activity,
+      this.activityId,
+      this.htmlBackup,
+      this.createdAt})
       : super._() {
     if (id == null) {
       throw new BuiltValueNullFieldError('InvoiceHistoryEntity', 'id');
+    }
+    if (activity == null) {
+      throw new BuiltValueNullFieldError('InvoiceHistoryEntity', 'activity');
     }
     if (activityId == null) {
       throw new BuiltValueNullFieldError('InvoiceHistoryEntity', 'activityId');
@@ -2837,6 +2853,7 @@ class _$InvoiceHistoryEntity extends InvoiceHistoryEntity {
     if (identical(other, this)) return true;
     return other is InvoiceHistoryEntity &&
         id == other.id &&
+        activity == other.activity &&
         activityId == other.activityId &&
         htmlBackup == other.htmlBackup &&
         createdAt == other.createdAt;
@@ -2846,7 +2863,10 @@ class _$InvoiceHistoryEntity extends InvoiceHistoryEntity {
   @override
   int get hashCode {
     return __hashCode ??= $jf($jc(
-        $jc($jc($jc(0, id.hashCode), activityId.hashCode), htmlBackup.hashCode),
+        $jc(
+            $jc($jc($jc(0, id.hashCode), activity.hashCode),
+                activityId.hashCode),
+            htmlBackup.hashCode),
         createdAt.hashCode));
   }
 
@@ -2854,6 +2874,7 @@ class _$InvoiceHistoryEntity extends InvoiceHistoryEntity {
   String toString() {
     return (newBuiltValueToStringHelper('InvoiceHistoryEntity')
           ..add('id', id)
+          ..add('activity', activity)
           ..add('activityId', activityId)
           ..add('htmlBackup', htmlBackup)
           ..add('createdAt', createdAt))
@@ -2868,6 +2889,11 @@ class InvoiceHistoryEntityBuilder
   String _id;
   String get id => _$this._id;
   set id(String id) => _$this._id = id;
+
+  ActivityEntityBuilder _activity;
+  ActivityEntityBuilder get activity =>
+      _$this._activity ??= new ActivityEntityBuilder();
+  set activity(ActivityEntityBuilder activity) => _$this._activity = activity;
 
   String _activityId;
   String get activityId => _$this._activityId;
@@ -2886,6 +2912,7 @@ class InvoiceHistoryEntityBuilder
   InvoiceHistoryEntityBuilder get _$this {
     if (_$v != null) {
       _id = _$v.id;
+      _activity = _$v.activity?.toBuilder();
       _activityId = _$v.activityId;
       _htmlBackup = _$v.htmlBackup;
       _createdAt = _$v.createdAt;
@@ -2909,12 +2936,26 @@ class InvoiceHistoryEntityBuilder
 
   @override
   _$InvoiceHistoryEntity build() {
-    final _$result = _$v ??
-        new _$InvoiceHistoryEntity._(
-            id: id,
-            activityId: activityId,
-            htmlBackup: htmlBackup,
-            createdAt: createdAt);
+    _$InvoiceHistoryEntity _$result;
+    try {
+      _$result = _$v ??
+          new _$InvoiceHistoryEntity._(
+              id: id,
+              activity: activity.build(),
+              activityId: activityId,
+              htmlBackup: htmlBackup,
+              createdAt: createdAt);
+    } catch (_) {
+      String _$failedField;
+      try {
+        _$failedField = 'activity';
+        activity.build();
+      } catch (e) {
+        throw new BuiltValueNestedFieldError(
+            'InvoiceHistoryEntity', _$failedField, e.toString());
+      }
+      rethrow;
+    }
     replace(_$result);
     return _$result;
   }
