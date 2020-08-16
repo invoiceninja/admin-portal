@@ -1,3 +1,5 @@
+import 'package:flutter/foundation.dart';
+
 String toSnakeCase(String value) {
   if ((value ?? '').isEmpty) {
     return '';
@@ -66,10 +68,16 @@ bool isValidDate(String input) {
 }
 
 void printWrapped(String text) {
-  print(text.length > 1000 ? text.substring(0, 1000) : text);
+  if (kReleaseMode) {
+    return;
+  }
 
-  //final pattern = RegExp('.{1,800}'); // 800 is the size of each chunk
-  //pattern.allMatches(text).forEach((match) => print(match.group(0)));
+  if (text.length > 2000) {
+    text = text.substring(0, 2000);
+  }
+
+  final pattern = RegExp('.{1,800}'); // 800 is the size of each chunk
+  pattern.allMatches(text).forEach((match) => print(match.group(0)));
 }
 
 bool matchesStrings({
