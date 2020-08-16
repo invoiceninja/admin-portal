@@ -4,7 +4,6 @@ import 'package:flutter_redux/flutter_redux.dart';
 import 'package:invoiceninja_flutter/constants.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/data/models/payment_model.dart';
-import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/ui/app/FieldGrid.dart';
 import 'package:invoiceninja_flutter/ui/app/buttons/bottom_buttons.dart';
@@ -124,6 +123,7 @@ class _PaymentViewState extends State<PaymentView> {
                           client: client,
                           isFilter: widget.isFilter,
                           onEntityActionSelected: (context, entity, action) {
+                            /*
                             if (action == EntityAction.viewInStripe) {
                               final companyGateway = state.companyGatewayState
                                   .get(payment.companyGatewayId);
@@ -134,6 +134,7 @@ class _PaymentViewState extends State<PaymentView> {
                             } else {
                               handleEntityAction(context, entity, action);
                             }
+                             */
                           },
                         ),
                       payment.privateNotes != null &&

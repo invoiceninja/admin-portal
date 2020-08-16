@@ -90,10 +90,6 @@ abstract class GatewayTokenEntity extends Object
   @BuiltValueField(wireName: 'company_gateway_id')
   String get companyGatewayId;
 
-  @nullable
-  @BuiltValueField(wireName: 'company_gateway')
-  CompanyGatewayEntity get companyGateway;
-
   @BuiltValueField(wireName: 'gateway_type_id')
   String get gatewayTypeId;
 

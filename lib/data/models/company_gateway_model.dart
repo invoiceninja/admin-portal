@@ -205,15 +205,6 @@ abstract class CompanyGatewayEntity extends Object
       if (includeEdit && userCompany.canEditEntity(this)) {
         actions.add(EntityAction.edit);
       }
-
-      if (client != null &&
-          client.gatewayTokens
-              .where((token) => token.companyGatewayId == id)
-              .isNotEmpty) {
-        if (gatewayId == kGatewayStripe) {
-          actions.add(EntityAction.viewInStripe);
-        }
-      }
     }
 
     if (actions.isNotEmpty) {

@@ -147,12 +147,6 @@ class _$GatewayTokenEntitySerializer
       'id',
       serializers.serialize(object.id, specifiedType: const FullType(String)),
     ];
-    if (object.companyGateway != null) {
-      result
-        ..add('company_gateway')
-        ..add(serializers.serialize(object.companyGateway,
-            specifiedType: const FullType(CompanyGatewayEntity)));
-    }
     if (object.isChanged != null) {
       result
         ..add('isChanged')
@@ -203,11 +197,6 @@ class _$GatewayTokenEntitySerializer
         case 'company_gateway_id':
           result.companyGatewayId = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String;
-          break;
-        case 'company_gateway':
-          result.companyGateway.replace(serializers.deserialize(value,
-                  specifiedType: const FullType(CompanyGatewayEntity))
-              as CompanyGatewayEntity);
           break;
         case 'gateway_type_id':
           result.gatewayTypeId = serializers.deserialize(value,
@@ -458,8 +447,6 @@ class _$GatewayTokenEntity extends GatewayTokenEntity {
   @override
   final String companyGatewayId;
   @override
-  final CompanyGatewayEntity companyGateway;
-  @override
   final String gatewayTypeId;
   @override
   final bool isDefault;
@@ -488,7 +475,6 @@ class _$GatewayTokenEntity extends GatewayTokenEntity {
       {this.token,
       this.customerReference,
       this.companyGatewayId,
-      this.companyGateway,
       this.gatewayTypeId,
       this.isDefault,
       this.isChanged,
@@ -547,7 +533,6 @@ class _$GatewayTokenEntity extends GatewayTokenEntity {
         token == other.token &&
         customerReference == other.customerReference &&
         companyGatewayId == other.companyGatewayId &&
-        companyGateway == other.companyGateway &&
         gatewayTypeId == other.gatewayTypeId &&
         isDefault == other.isDefault &&
         isChanged == other.isChanged &&
@@ -574,13 +559,9 @@ class _$GatewayTokenEntity extends GatewayTokenEntity {
                                     $jc(
                                         $jc(
                                             $jc(
-                                                $jc(
-                                                    $jc(
-                                                        $jc(0, token.hashCode),
-                                                        customerReference
-                                                            .hashCode),
-                                                    companyGatewayId.hashCode),
-                                                companyGateway.hashCode),
+                                                $jc($jc(0, token.hashCode),
+                                                    customerReference.hashCode),
+                                                companyGatewayId.hashCode),
                                             gatewayTypeId.hashCode),
                                         isDefault.hashCode),
                                     isChanged.hashCode),
@@ -599,7 +580,6 @@ class _$GatewayTokenEntity extends GatewayTokenEntity {
           ..add('token', token)
           ..add('customerReference', customerReference)
           ..add('companyGatewayId', companyGatewayId)
-          ..add('companyGateway', companyGateway)
           ..add('gatewayTypeId', gatewayTypeId)
           ..add('isDefault', isDefault)
           ..add('isChanged', isChanged)
@@ -631,12 +611,6 @@ class GatewayTokenEntityBuilder
   String get companyGatewayId => _$this._companyGatewayId;
   set companyGatewayId(String companyGatewayId) =>
       _$this._companyGatewayId = companyGatewayId;
-
-  CompanyGatewayEntityBuilder _companyGateway;
-  CompanyGatewayEntityBuilder get companyGateway =>
-      _$this._companyGateway ??= new CompanyGatewayEntityBuilder();
-  set companyGateway(CompanyGatewayEntityBuilder companyGateway) =>
-      _$this._companyGateway = companyGateway;
 
   String _gatewayTypeId;
   String get gatewayTypeId => _$this._gatewayTypeId;
@@ -688,7 +662,6 @@ class GatewayTokenEntityBuilder
       _token = _$v.token;
       _customerReference = _$v.customerReference;
       _companyGatewayId = _$v.companyGatewayId;
-      _companyGateway = _$v.companyGateway?.toBuilder();
       _gatewayTypeId = _$v.gatewayTypeId;
       _isDefault = _$v.isDefault;
       _isChanged = _$v.isChanged;
@@ -719,35 +692,21 @@ class GatewayTokenEntityBuilder
 
   @override
   _$GatewayTokenEntity build() {
-    _$GatewayTokenEntity _$result;
-    try {
-      _$result = _$v ??
-          new _$GatewayTokenEntity._(
-              token: token,
-              customerReference: customerReference,
-              companyGatewayId: companyGatewayId,
-              companyGateway: _companyGateway?.build(),
-              gatewayTypeId: gatewayTypeId,
-              isDefault: isDefault,
-              isChanged: isChanged,
-              createdAt: createdAt,
-              updatedAt: updatedAt,
-              archivedAt: archivedAt,
-              isDeleted: isDeleted,
-              createdUserId: createdUserId,
-              assignedUserId: assignedUserId,
-              id: id);
-    } catch (_) {
-      String _$failedField;
-      try {
-        _$failedField = 'companyGateway';
-        _companyGateway?.build();
-      } catch (e) {
-        throw new BuiltValueNestedFieldError(
-            'GatewayTokenEntity', _$failedField, e.toString());
-      }
-      rethrow;
-    }
+    final _$result = _$v ??
+        new _$GatewayTokenEntity._(
+            token: token,
+            customerReference: customerReference,
+            companyGatewayId: companyGatewayId,
+            gatewayTypeId: gatewayTypeId,
+            isDefault: isDefault,
+            isChanged: isChanged,
+            createdAt: createdAt,
+            updatedAt: updatedAt,
+            archivedAt: archivedAt,
+            isDeleted: isDeleted,
+            createdUserId: createdUserId,
+            assignedUserId: assignedUserId,
+            id: id);
     replace(_$result);
     return _$result;
   }

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:invoiceninja_flutter/data/models/client_model.dart';
+import 'package:invoiceninja_flutter/data/models/company_gateway_model.dart';
 import 'package:invoiceninja_flutter/data/models/entities.dart';
 import 'package:invoiceninja_flutter/data/models/gateway_token_model.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
@@ -18,6 +19,7 @@ import 'package:invoiceninja_flutter/ui/app/lists/list_divider.dart';
 import 'package:invoiceninja_flutter/ui/client/view/client_view_vm.dart';
 import 'package:invoiceninja_flutter/utils/formatting.dart';
 import 'package:invoiceninja_flutter/utils/extensions.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class ClientOverview extends StatelessWidget {
   const ClientOverview({
@@ -43,16 +45,23 @@ class ClientOverview extends StatelessWidget {
 
     // Group gateway tokens by the customerReference
     final tokenMap = <String, List<GatewayTokenEntity>>{};
+    final gatewayMap = <String, CompanyGatewayEntity>{};
+    final linkMap = <String, String>{};
+
     client.gatewayTokens.forEach((gatewayToken) {
       final companyGateway =
           state.companyGatewayState.get(gatewayToken.companyGatewayId);
       if (companyGateway.isOld && !companyGateway.isDeleted) {
-        gatewayToken = gatewayToken
-            .rebuild((b) => b..companyGateway.replace(companyGateway));
-        if (tokenMap.containsKey(gatewayToken.customerReference)) {
-          tokenMap[gatewayToken.customerReference].add(gatewayToken);
+        final customerReference = gatewayToken.customerReference;
+        gatewayMap[customerReference] = companyGateway;
+        linkMap[customerReference] = GatewayEntity.getClientUrl(
+          gatewayId: companyGateway.gatewayId,
+          customerReference: customerReference,
+        );
+        if (tokenMap.containsKey(customerReference)) {
+          tokenMap[customerReference].add(gatewayToken);
         } else {
-          tokenMap[gatewayToken.customerReference] = [gatewayToken];
+          tokenMap[customerReference] = [gatewayToken];
         }
       }
     });
@@ -116,19 +125,28 @@ class ClientOverview extends StatelessWidget {
             entity: group,
             isFilter: isFilter,
           ),
-        for (var customerReference in tokenMap.keys)
+        for (var customerReference in tokenMap.keys) ...[
           ListTile(
             title: Text(
-                '${localization.token}  ›  ${tokenMap[customerReference].first.companyGateway.gateway.name}'),
+                '${localization.token}  ›  ${gatewayMap[customerReference].gateway.name}'),
             subtitle: Text(customerReference),
-            leading: Icon(Icons.payment),
-            trailing: IconButton(
-              icon: Icon(Icons.open_in_new),
-              onPressed: () {
-                //
-              },
+            leading: IgnorePointer(
+              child: IconButton(
+                icon: Icon(Icons.payment),
+                onPressed: () => null,
+              ),
             ),
+            trailing: linkMap.containsKey(customerReference)
+                ? IconButton(
+                    icon: Icon(Icons.open_in_new),
+                    onPressed: () {
+                      launch(linkMap[customerReference]);
+                    },
+                  )
+                : null,
           ),
+          ListDivider(),
+        ],
         if (client.hasUser)
           EntityListTile(
             entity: user,
