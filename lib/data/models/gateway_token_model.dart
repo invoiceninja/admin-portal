@@ -67,6 +67,11 @@ abstract class GatewayTokenEntity extends Object
       updatedAt: 0,
       archivedAt: 0,
       isDeleted: false,
+      companyGatewayId: '',
+      createdAt: 0,
+      assignedUserId: '',
+      createdUserId: '',
+      meta: GatewayTokenMetaEntity(),
     );
   }
 
@@ -94,6 +99,8 @@ abstract class GatewayTokenEntity extends Object
 
   @BuiltValueField(wireName: 'is_default')
   bool get isDefault;
+
+  GatewayTokenMetaEntity get meta;
 
   @override
   String get listDisplayName {
@@ -168,4 +175,37 @@ abstract class GatewayTokenEntity extends Object
 
   static Serializer<GatewayTokenEntity> get serializer =>
       _$gatewayTokenEntitySerializer;
+}
+
+abstract class GatewayTokenMetaEntity
+    implements Built<GatewayTokenMetaEntity, GatewayTokenMetaEntityBuilder> {
+  factory GatewayTokenMetaEntity() {
+    return _$GatewayTokenMetaEntity._();
+  }
+
+  GatewayTokenMetaEntity._();
+
+  @override
+  @memoized
+  int get hashCode;
+
+  @nullable
+  String get brand;
+
+  @nullable
+  String get last4;
+
+  @nullable
+  String get type;
+
+  @nullable
+  @BuiltValueField(wireName: 'exp_month')
+  int get expMonth;
+
+  @nullable
+  @BuiltValueField(wireName: 'exp_year')
+  int get expYear;
+
+  static Serializer<GatewayTokenMetaEntity> get serializer =>
+      _$gatewayTokenMetaEntitySerializer;
 }
