@@ -7,7 +7,7 @@ import 'package:invoiceninja_flutter/data/models/serializers.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/data/web_client.dart';
-import 'package:invoiceninja_flutter/utils/network.dart';
+import 'package:invoiceninja_flutter/utils/serialization.dart';
 
 class CreditRepository {
   const CreditRepository({
@@ -22,7 +22,8 @@ class CreditRepository {
         '${credentials.url}/credits/$entityId?', credentials.token);
 
     final InvoiceItemResponse creditResponse = await compute<dynamic, dynamic>(
-        computeDecode, <dynamic>[InvoiceItemResponse.serializer, response]);
+        SerializationUtils.computeDecode,
+        <dynamic>[InvoiceItemResponse.serializer, response]);
 
     return creditResponse.data;
   }
@@ -32,7 +33,8 @@ class CreditRepository {
     final dynamic response = await webClient.get(url, credentials.token);
 
     final InvoiceListResponse creditResponse = await compute<dynamic, dynamic>(
-        computeDecode, <dynamic>[InvoiceListResponse.serializer, response]);
+        SerializationUtils.computeDecode,
+        <dynamic>[InvoiceListResponse.serializer, response]);
 
     return creditResponse.data;
   }

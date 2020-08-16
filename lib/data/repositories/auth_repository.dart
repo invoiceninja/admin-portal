@@ -11,7 +11,7 @@ import 'package:invoiceninja_flutter/data/models/entities.dart';
 import 'package:invoiceninja_flutter/data/web_client.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/utils/formatting.dart';
-import 'package:invoiceninja_flutter/utils/network.dart';
+import 'package:invoiceninja_flutter/utils/serialization.dart';
 
 class AuthRepository {
   const AuthRepository({
@@ -189,8 +189,8 @@ class AuthRepository {
           secret: secret, data: json.encode(data));
     }
 
-    return await compute<dynamic, dynamic>(
-        computeDecode, <dynamic>[LoginResponse.serializer, response]);
+    return await compute<dynamic, dynamic>(SerializationUtils.computeDecode,
+        <dynamic>[LoginResponse.serializer, response]);
   }
 
   String get _tokenName => kIsWeb

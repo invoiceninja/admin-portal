@@ -7,7 +7,7 @@ import 'package:built_collection/built_collection.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/data/web_client.dart';
-import 'package:invoiceninja_flutter/utils/network.dart';
+import 'package:invoiceninja_flutter/utils/serialization.dart';
 
 class PaymentRepository {
   const PaymentRepository({
@@ -23,7 +23,8 @@ class PaymentRepository {
     final dynamic response = await webClient.get(url, credentials.token);
 
     final PaymentItemResponse paymentResponse = await compute<dynamic, dynamic>(
-        computeDecode, <dynamic>[PaymentItemResponse.serializer, response]);
+        SerializationUtils.computeDecode,
+        <dynamic>[PaymentItemResponse.serializer, response]);
 
     return paymentResponse.data;
   }
@@ -34,7 +35,8 @@ class PaymentRepository {
     final dynamic response = await webClient.get(url, credentials.token);
 
     final PaymentListResponse paymentResponse = await compute<dynamic, dynamic>(
-        computeDecode, <dynamic>[PaymentListResponse.serializer, response]);
+        SerializationUtils.computeDecode,
+        <dynamic>[PaymentListResponse.serializer, response]);
 
     return paymentResponse.data;
   }
@@ -64,8 +66,7 @@ class PaymentRepository {
       response =
           await webClient.post(url, credentials.token, data: json.encode(data));
     } else {
-      var url =
-          '${credentials.url}/payments/${payment.id}';
+      var url = '${credentials.url}/payments/${payment.id}';
       if (sendEmail) {
         url += '&email_receipt=true';
       }

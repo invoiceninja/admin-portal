@@ -702,8 +702,7 @@ class SidebarFooterCollapsed extends StatelessWidget {
               icon: Icon(Icons.chevron_right),
               tooltip: localization.showMenu,
               onPressed: () {
-                store
-                    .dispatch(UpdateUserPreferences(sidebar: AppSidebar.menu));
+                store.dispatch(UpdateUserPreferences(sidebar: AppSidebar.menu));
               },
             ),
     );

@@ -335,8 +335,8 @@ Middleware<AppState> _bulkEmailCredits(CreditRepository repository) {
     final action = dynamicAction as BulkEmailCreditsRequest;
 
     repository
-        .bulkAction(store.state.credentials, action.creditIds,
-        EntityAction.emailCredit)
+        .bulkAction(
+            store.state.credentials, action.creditIds, EntityAction.emailCredit)
         .then((List<InvoiceEntity> credits) {
       store.dispatch(BulkEmailCreditsSuccess(credits));
       if (action.completer != null) {

@@ -51,7 +51,6 @@ class UpdateProduct implements PersistUI {
   final ProductEntity product;
 }
 
-
 class LoadProductRequest implements StartLoading {}
 
 class LoadProduct {

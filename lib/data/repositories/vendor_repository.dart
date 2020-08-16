@@ -7,7 +7,7 @@ import 'package:invoiceninja_flutter/data/models/serializers.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/data/web_client.dart';
-import 'package:invoiceninja_flutter/utils/network.dart';
+import 'package:invoiceninja_flutter/utils/serialization.dart';
 
 class VendorRepository {
   const VendorRepository({
@@ -22,7 +22,8 @@ class VendorRepository {
         '${credentials.url}/vendors/$entityId', credentials.token);
 
     final VendorItemResponse vendorResponse = await compute<dynamic, dynamic>(
-        computeDecode, <dynamic>[VendorItemResponse.serializer, response]);
+        SerializationUtils.computeDecode,
+        <dynamic>[VendorItemResponse.serializer, response]);
 
     return vendorResponse.data;
   }
@@ -33,7 +34,8 @@ class VendorRepository {
     final dynamic response = await webClient.get(url, credentials.token);
 
     final VendorListResponse vendorResponse = await compute<dynamic, dynamic>(
-        computeDecode, <dynamic>[VendorListResponse.serializer, response]);
+        SerializationUtils.computeDecode,
+        <dynamic>[VendorListResponse.serializer, response]);
 
     return vendorResponse.data;
   }

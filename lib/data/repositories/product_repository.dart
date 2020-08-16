@@ -7,7 +7,7 @@ import 'package:built_collection/built_collection.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/data/web_client.dart';
-import 'package:invoiceninja_flutter/utils/network.dart';
+import 'package:invoiceninja_flutter/utils/serialization.dart';
 
 class ProductRepository {
   const ProductRepository({
@@ -23,7 +23,8 @@ class ProductRepository {
     final dynamic response = await webClient.get(url, credentials.token);
 
     final ProductItemResponse productResponse = await compute<dynamic, dynamic>(
-        computeDecode, <dynamic>[ProductItemResponse.serializer, response]);
+        SerializationUtils.computeDecode,
+        <dynamic>[ProductItemResponse.serializer, response]);
 
     return productResponse.data;
   }
@@ -34,7 +35,8 @@ class ProductRepository {
     final dynamic response = await webClient.get(url, credentials.token);
 
     final ProductListResponse productResponse = await compute<dynamic, dynamic>(
-        computeDecode, <dynamic>[ProductListResponse.serializer, response]);
+        SerializationUtils.computeDecode,
+        <dynamic>[ProductListResponse.serializer, response]);
 
     return productResponse.data;
   }

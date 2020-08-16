@@ -258,7 +258,7 @@ Middleware<AppState> _saveDocument(ClientRepository repository) {
     if (store.state.isEnterprisePlan) {
       repository
           .uploadDocument(
-          store.state.credentials, action.client, action.filePath)
+              store.state.credentials, action.client, action.filePath)
           .then((client) {
         store.dispatch(SaveClientSuccess(client));
         action.completer.complete(null);

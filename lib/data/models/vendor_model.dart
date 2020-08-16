@@ -256,7 +256,7 @@ abstract class VendorEntity extends Object
 
   @override
   bool matchesFilter(String filter) {
-    for(final contact in contacts) {
+    for (final contact in contacts) {
       if (contact.matchesFilter(filter)) {
         return true;
       }
@@ -282,7 +282,7 @@ abstract class VendorEntity extends Object
 
   @override
   String matchesFilterValue(String filter) {
-    for(final contact in contacts) {
+    for (final contact in contacts) {
       final value = contact.matchesFilterValue(filter);
       if (value != null) {
         return value;

@@ -352,7 +352,6 @@ abstract class InvoiceEntity extends Object
   @nullable
   String get filename;
 
-
   @override
   @BuiltValueField(wireName: 'line_items')
   BuiltList<InvoiceItemEntity> get lineItems;

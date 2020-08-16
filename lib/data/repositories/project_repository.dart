@@ -7,7 +7,7 @@ import 'package:invoiceninja_flutter/data/models/serializers.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/data/web_client.dart';
-import 'package:invoiceninja_flutter/utils/network.dart';
+import 'package:invoiceninja_flutter/utils/serialization.dart';
 
 class ProjectRepository {
   const ProjectRepository({
@@ -22,7 +22,8 @@ class ProjectRepository {
         '${credentials.url}/projects/$entityId', credentials.token);
 
     final ProjectItemResponse projectResponse = await compute<dynamic, dynamic>(
-        computeDecode, <dynamic>[ProjectItemResponse.serializer, response]);
+        SerializationUtils.computeDecode,
+        <dynamic>[ProjectItemResponse.serializer, response]);
 
     return projectResponse.data;
   }
@@ -33,7 +34,8 @@ class ProjectRepository {
     final dynamic response = await webClient.get(url, credentials.token);
 
     final ProjectListResponse projectResponse = await compute<dynamic, dynamic>(
-        computeDecode, <dynamic>[ProjectListResponse.serializer, response]);
+        SerializationUtils.computeDecode,
+        <dynamic>[ProjectListResponse.serializer, response]);
 
     return projectResponse.data;
   }

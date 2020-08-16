@@ -100,8 +100,8 @@ class _CreditEditState extends State<CreditEdit>
         key: _formKey,
         child: state.prefState.isDesktop
             ? CreditEditDetailsScreen(
-          viewModel: widget.viewModel,
-        )
+                viewModel: widget.viewModel,
+              )
             : TabBarView(
                 key: ValueKey('__credit_${viewModel.invoice.id}__'),
                 controller: _controller,

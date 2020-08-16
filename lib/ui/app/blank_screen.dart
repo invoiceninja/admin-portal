@@ -21,4 +21,3 @@ class BlankScreen extends StatelessWidget {
     );
   }
 }
-

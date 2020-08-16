@@ -9,7 +9,6 @@ class ResponsivePadding extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-
     /*
     final double sidePadding = isMobile(context)
         ? kMobileDialogPadding
@@ -47,6 +46,5 @@ class ResponsivePadding extends StatelessWidget {
         widthFactor: .5,
       );
     }
-
   }
 }
