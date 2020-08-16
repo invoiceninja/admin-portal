@@ -155,8 +155,10 @@ class _$PrefStateSerializer implements StructuredSerializer<PrefState> {
           specifiedType: const FullType(int)),
       'companyPrefs',
       serializers.serialize(object.companyPrefs,
-          specifiedType: const FullType(
-              BuiltList, const [const FullType(CompanyPrefState)])),
+          specifiedType: const FullType(BuiltMap, const [
+            const FullType(String),
+            const FullType(CompanyPrefState)
+          ])),
     ];
 
     return result;
@@ -231,9 +233,10 @@ class _$PrefStateSerializer implements StructuredSerializer<PrefState> {
           break;
         case 'companyPrefs':
           result.companyPrefs.replace(serializers.deserialize(value,
-                  specifiedType: const FullType(
-                      BuiltList, const [const FullType(CompanyPrefState)]))
-              as BuiltList<Object>);
+              specifiedType: const FullType(BuiltMap, const [
+                const FullType(String),
+                const FullType(CompanyPrefState)
+              ])));
           break;
       }
     }
@@ -443,7 +446,7 @@ class _$PrefState extends PrefState {
   @override
   final int rowsPerPage;
   @override
-  final BuiltList<CompanyPrefState> companyPrefs;
+  final BuiltMap<String, CompanyPrefState> companyPrefs;
 
   factory _$PrefState([void Function(PrefStateBuilder) updates]) =>
       (new PrefStateBuilder()..update(updates)).build();
@@ -674,10 +677,10 @@ class PrefStateBuilder implements Builder<PrefState, PrefStateBuilder> {
   int get rowsPerPage => _$this._rowsPerPage;
   set rowsPerPage(int rowsPerPage) => _$this._rowsPerPage = rowsPerPage;
 
-  ListBuilder<CompanyPrefState> _companyPrefs;
-  ListBuilder<CompanyPrefState> get companyPrefs =>
-      _$this._companyPrefs ??= new ListBuilder<CompanyPrefState>();
-  set companyPrefs(ListBuilder<CompanyPrefState> companyPrefs) =>
+  MapBuilder<String, CompanyPrefState> _companyPrefs;
+  MapBuilder<String, CompanyPrefState> get companyPrefs =>
+      _$this._companyPrefs ??= new MapBuilder<String, CompanyPrefState>();
+  set companyPrefs(MapBuilder<String, CompanyPrefState> companyPrefs) =>
       _$this._companyPrefs = companyPrefs;
 
   PrefStateBuilder();

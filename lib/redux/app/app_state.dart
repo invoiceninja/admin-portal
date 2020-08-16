@@ -166,8 +166,7 @@ abstract class AppState implements Built<AppState, AppStateBuilder> {
       '${account?.currentVersion ?? '0.0.0'}-${kClientVersion.split('.').last}';
 
   List<HistoryRecord> get historyList =>
-      prefState.companyPrefs[uiState.selectedCompanyIndex].historyList
-          .where((history) {
+      prefState.companyPrefs[company.id].historyList.where((history) {
         final entityMap = getEntityMap(history.entityType);
         if (entityMap != null) {
           final entity = entityMap[history.id] as BaseEntity;
@@ -179,7 +178,7 @@ abstract class AppState implements Built<AppState, AppStateBuilder> {
       }).toList();
 
   List<HistoryRecord> get unfilteredHistoryList =>
-      prefState.companyPrefs[uiState.selectedCompanyIndex].historyList.toList();
+      prefState.companyPrefs[company.id].historyList.toList();
 
   bool shouldSelectEntity({EntityType entityType, List<String> entityList}) {
     final entityUIState = getUIState(entityType);

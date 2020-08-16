@@ -37,11 +37,11 @@ import 'package:invoiceninja_flutter/redux/credit/credit_actions.dart';
 import 'package:redux/redux.dart';
 
 PrefState prefReducer(
-    PrefState state, dynamic action, int selectedCompanyIndex) {
+    PrefState state, dynamic action, String selectedCompanyId) {
   return state.rebuild(
     (b) => b
-      ..companyPrefs[selectedCompanyIndex] =
-          companyPrefReducer(state.companyPrefs[selectedCompanyIndex], action)
+      ..companyPrefs[selectedCompanyId] =
+          companyPrefReducer(state.companyPrefs[selectedCompanyId], action)
       ..appLayout = layoutReducer(state.appLayout, action)
       ..rowsPerPage = rowsPerPageReducer(state.rowsPerPage, action)
       ..moduleLayout = moduleLayoutReducer(state.moduleLayout, action)
@@ -299,6 +299,8 @@ Reducer<SettingsUIState> settingsUIReducer = combineReducers([
 ]);
 
 CompanyPrefState companyPrefReducer(CompanyPrefState state, dynamic action) {
+  state ??= CompanyPrefState();
+
   return state.rebuild(
       (b) => b..historyList.replace(historyReducer(state.historyList, action)));
 }
