@@ -99,7 +99,7 @@ class _PDFScaffoldState extends State<PDFScaffold> {
               if (!kIsWeb && _pageCount > 1) ...[
                 Spacer(),
                 IconButton(
-                  icon: Icon(Icons.chevron_left),
+                  icon: Icon(Icons.navigate_before),
                   onPressed: _pageNumber > 1
                       ? () => _pdfController.previousPage(
                             duration: Duration(
@@ -115,7 +115,7 @@ class _PDFScaffoldState extends State<PDFScaffold> {
                       .replaceFirst(':total', '$_pageCount')),
                 ),
                 IconButton(
-                  icon: Icon(Icons.chevron_right),
+                  icon: Icon(Icons.navigate_next),
                   onPressed: _pageNumber < _pageCount
                       ? () => _pdfController.nextPage(
                             duration: Duration(
