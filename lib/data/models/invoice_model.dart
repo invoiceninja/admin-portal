@@ -176,8 +176,10 @@ abstract class InvoiceEntity extends Object
     ..number = ''
     ..date = convertDateTimeToSqlDate()
     ..dueDate = ''
-    ..invitations.clear());
-
+    ..invitations.replace(invitations
+        .map((invitation) => InvitationEntity(contactId: invitation.contactId))
+        .toList()));
+  
   double get amount;
 
   double get balance;

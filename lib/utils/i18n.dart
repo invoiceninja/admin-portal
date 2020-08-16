@@ -1097,6 +1097,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'payment_status_4': 'Completed',
       'payment_status_5': 'Partially Refunded',
       'payment_status_6': 'Refunded',
+      'payment_status_-1': 'Unapplied',
       'net': 'Net',
       'client_portal': 'Client Portal',
       'show_tasks': 'Show tasks',
