@@ -42,7 +42,6 @@ final editingReducer = combineReducers<ExpenseEntity>([
   TypedReducer<ExpenseEntity, UpdateExpense>((expense, action) {
     return action.expense.rebuild((b) => b..isChanged = true);
   }),
-  TypedReducer<ExpenseEntity, SelectCompany>(_clearEditing),
   TypedReducer<ExpenseEntity, DiscardChanges>(_clearEditing),
 ]);
 

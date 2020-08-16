@@ -50,7 +50,6 @@ final editingReducer = combineReducers<GroupEntity>([
   TypedReducer<GroupEntity, UpdateGroup>((group, action) {
     return action.group.rebuild((b) => b..isChanged = true);
   }),
-  TypedReducer<GroupEntity, SelectCompany>(_clearEditing),
   TypedReducer<GroupEntity, DiscardChanges>(_clearEditing),
 ]);
 

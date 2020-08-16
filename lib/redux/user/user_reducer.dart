@@ -49,7 +49,6 @@ final editingReducer = combineReducers<UserEntity>([
   TypedReducer<UserEntity, UpdateUser>((user, action) {
     return action.user.rebuild((b) => b..isChanged = true);
   }),
-  TypedReducer<UserEntity, SelectCompany>(_clearEditing),
   TypedReducer<UserEntity, DiscardChanges>(_clearEditing),
 ]);
 

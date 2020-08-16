@@ -56,7 +56,6 @@ final editingReducer = combineReducers<CompanyGatewayEntity>([
       (companyGateway, action) {
     return action.companyGateway.rebuild((b) => b..isChanged = true);
   }),
-  TypedReducer<CompanyGatewayEntity, SelectCompany>(_clearEditing),
   TypedReducer<CompanyGatewayEntity, DiscardChanges>(_clearEditing),
 ]);
 

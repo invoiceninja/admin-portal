@@ -43,7 +43,6 @@ final editingReducer = combineReducers<TaxRateEntity>([
   TypedReducer<TaxRateEntity, UpdateTaxRate>((taxRate, action) {
     return action.taxRate.rebuild((b) => b..isChanged = true);
   }),
-  TypedReducer<TaxRateEntity, SelectCompany>(_clearEditing),
   TypedReducer<TaxRateEntity, DiscardChanges>(_clearEditing),
 ]);
 

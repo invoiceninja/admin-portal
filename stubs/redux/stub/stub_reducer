@@ -49,7 +49,6 @@ final editingReducer = combineReducers<StubEntity>([
   TypedReducer<StubEntity, UpdateStub>((stub, action) {
    return action.stub.rebuild((b) => b..isChanged = true);
  }),
-  TypedReducer<StubEntity, SelectCompany>(_clearEditing),
   TypedReducer<StubEntity, DiscardChanges>(_clearEditing),
 ]);
 

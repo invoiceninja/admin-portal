@@ -89,7 +89,6 @@ final editingReducer = combineReducers<InvoiceEntity>([
   TypedReducer<InvoiceEntity, AddQuoteItems>(_addQuoteItems),
   TypedReducer<InvoiceEntity, DeleteQuoteItem>(_removeQuoteItem),
   TypedReducer<InvoiceEntity, UpdateQuoteItem>(_updateQuoteItem),
-  TypedReducer<InvoiceEntity, SelectCompany>(_clearEditing),
   TypedReducer<InvoiceEntity, DiscardChanges>(_clearEditing),
   TypedReducer<InvoiceEntity, AddQuoteContact>((invoice, action) {
     return invoice.rebuild((b) => b

@@ -48,7 +48,6 @@ final editingReducer = combineReducers<TokenEntity>([
   TypedReducer<TokenEntity, UpdateToken>((token, action) {
     return action.token.rebuild((b) => b..isChanged = true);
   }),
-  TypedReducer<TokenEntity, SelectCompany>(_clearEditing),
   TypedReducer<TokenEntity, DiscardChanges>(_clearEditing),
 ]);
 

@@ -43,7 +43,6 @@ final editingReducer = combineReducers<DesignEntity>([
   TypedReducer<DesignEntity, UpdateDesign>((design, action) {
     return action.design.rebuild((b) => b..isChanged = true);
   }),
-  TypedReducer<DesignEntity, SelectCompany>(_clearEditing),
   TypedReducer<DesignEntity, DiscardChanges>(_clearEditing),
 ]);
 
