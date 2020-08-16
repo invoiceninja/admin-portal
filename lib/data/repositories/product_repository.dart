@@ -18,8 +18,7 @@ class ProductRepository {
 
   Future<ProductEntity> loadItem(
       Credentials credentials, String entityId) async {
-    final String url =
-        '${credentials.url}/products/$entityId';
+    final String url = '${credentials.url}/products/$entityId';
 
     final dynamic response = await webClient.get(url, credentials.token);
 
@@ -28,7 +27,7 @@ class ProductRepository {
 
     return productResponse.data;
   }
-  
+
   Future<BuiltList<ProductEntity>> loadList(Credentials credentials) async {
     final url = credentials.url + '/products?';
 
@@ -54,6 +53,7 @@ class ProductRepository {
 
   Future<ProductEntity> saveData(
       Credentials credentials, ProductEntity product) async {
+    product = product.rebuild((b) => b..documents.clear());
     final data = serializers.serializeWith(ProductEntity.serializer, product);
     dynamic response;
 
@@ -85,7 +85,7 @@ class ProductRepository {
         data: fields, filePath: filePath, fileIndex: 'documents[]');
 
     final ProductItemResponse productResponse =
-    serializers.deserializeWith(ProductItemResponse.serializer, response);
+        serializers.deserializeWith(ProductItemResponse.serializer, response);
 
     return productResponse.data;
   }

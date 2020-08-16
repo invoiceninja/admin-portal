@@ -53,6 +53,7 @@ class InvoiceRepository {
 
   Future<InvoiceEntity> saveData(
       Credentials credentials, InvoiceEntity invoice) async {
+    invoice = invoice.rebuild((b) => b..documents.clear());
     final data = serializers.serializeWith(InvoiceEntity.serializer, invoice);
     dynamic response;
 

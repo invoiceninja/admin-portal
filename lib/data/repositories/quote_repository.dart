@@ -52,6 +52,7 @@ class QuoteRepository {
 
   Future<InvoiceEntity> saveData(
       Credentials credentials, InvoiceEntity quote) async {
+    quote = quote.rebuild((b) => b..documents.clear());
     final data = serializers.serializeWith(InvoiceEntity.serializer, quote);
     dynamic response;
 

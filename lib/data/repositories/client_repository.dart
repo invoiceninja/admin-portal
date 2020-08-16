@@ -55,6 +55,8 @@ class ClientRepository {
 
   Future<ClientEntity> saveData(
       Credentials credentials, ClientEntity client) async {
+
+    client = client.rebuild((b) => b..documents.clear());
     final data = serializers.serializeWith(ClientEntity.serializer, client);
     dynamic response;
 
