@@ -15,6 +15,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
   static final Map<String, Map<String, String>> _localizedValues = {
     'en': {
       // STARTER: lang key - do not remove comment
+      'pdf_page_info': 'Page :current of :total',
       'emailed_invoices': 'Successfully emailed invoices',
       'emailed_quotes': 'Successfully emailed quotes',
       'emailed_credits': 'Successfully emailed credits',
@@ -4362,6 +4363,10 @@ mixin LocalizationsProvider on LocaleCodeAware {
 
   String get emailedCredits =>
       _localizedValues[localeCode]['emailed_credits'] ?? '';
+
+  String get pdfPageInfo =>
+      _localizedValues[localeCode]['pdf_page_info'] ?? '';
+
 
   String lookup(String key) {
     final lookupKey = toSnakeCase(key);

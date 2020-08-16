@@ -6,6 +6,7 @@ import 'package:flutter_share/flutter_share.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
 import 'package:http/http.dart';
+import 'package:invoiceninja_flutter/constants.dart';
 import 'package:invoiceninja_flutter/data/models/invoice_model.dart';
 import 'package:flutter/foundation.dart';
 import 'package:invoiceninja_flutter/data/web_client.dart';
@@ -13,7 +14,6 @@ import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/ui/app/loading_indicator.dart';
 import 'package:invoiceninja_flutter/utils/dialogs.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
-import 'package:invoiceninja_flutter/utils/platforms.dart';
 import 'package:native_pdf_view/native_pdf_view.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -46,6 +46,7 @@ class _PDFScaffoldState extends State<PDFScaffold> {
   String _pdfString;
   http.Response _response;
   PdfController _pdfController;
+  int _pageNumber = 1, _pageCount = 1;
 
   @override
   void didChangeDependencies() {
@@ -92,7 +93,41 @@ class _PDFScaffoldState extends State<PDFScaffold> {
             icon: Icon(Icons.arrow_back),
             onPressed: () => Navigator.of(context).pop(),
           ),
-          title: Text(localization.invoice + ' ' + (invoice.number ?? '')),
+          title: Row(
+            children: [
+              Text(localization.invoice + ' ' + (invoice.number ?? '')),
+              if (!kIsWeb && _pageCount > 1) ...[
+                Spacer(),
+                IconButton(
+                  icon: Icon(Icons.chevron_left),
+                  onPressed: _pageNumber > 1
+                      ? () => _pdfController.previousPage(
+                            duration: Duration(
+                                milliseconds: kDefaultAnimationDuration),
+                            curve: Curves.easeInOutCubic,
+                          )
+                      : null,
+                ),
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 8),
+                  child: Text(localization.pdfPageInfo
+                      .replaceFirst(':current', '$_pageNumber')
+                      .replaceFirst(':total', '$_pageCount')),
+                ),
+                IconButton(
+                  icon: Icon(Icons.chevron_right),
+                  onPressed: _pageNumber < _pageCount
+                      ? () => _pdfController.nextPage(
+                            duration: Duration(
+                                milliseconds: kDefaultAnimationDuration),
+                            curve: Curves.easeInOutCubic,
+                          )
+                      : null,
+                ),
+                Spacer(),
+              ]
+            ],
+          ),
           actions: <Widget>[
             FlatButton(
               child: Text(
@@ -122,10 +157,21 @@ class _PDFScaffoldState extends State<PDFScaffold> {
             ? LoadingIndicator()
             : kIsWeb
                 ? HtmlElementView(viewType: _pdfString)
-                : PdfView(
-                    controller: _pdfController,
-                    scrollDirection:
-                        isMobile(context) ? Axis.vertical : Axis.horizontal,
+                : Padding(
+                    padding: const EdgeInsets.all(8),
+                    child: PdfView(
+                      controller: _pdfController,
+                      onDocumentLoaded: (document) {
+                        setState(() {
+                          _pageCount = document.pagesCount;
+                        });
+                      },
+                      onPageChanged: (page) {
+                        setState(() {
+                          _pageNumber = page;
+                        });
+                      },
+                    ),
                   ));
   }
 }

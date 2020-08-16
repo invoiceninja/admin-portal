@@ -37,7 +37,8 @@ analyzer:
     # see https://github.com/dart-lang/sdk/issues/28463
     - 'lib/i18n/stock_messages_*.dart'
     - 'lib/src/http/**'
-
+    - '**/*.g.dart'
+    - '**/generated_plugin_registrant.dart'
 linter:
   rules:
     # - prefer_const_literals_to_create_immutables

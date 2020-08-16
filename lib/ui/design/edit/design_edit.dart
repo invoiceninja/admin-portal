@@ -416,8 +416,6 @@ class _DesignPreviewState extends State<DesignPreview> {
               padding: const EdgeInsets.all(8),
               child: PdfView(
                 controller: _pdfController,
-                scrollDirection:
-                    isMobile(context) ? Axis.vertical : Axis.horizontal,
               ),
             )
           else
