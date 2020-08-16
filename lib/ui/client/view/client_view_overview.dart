@@ -131,9 +131,7 @@ class ClientOverview extends StatelessWidget {
                 '${localization.token}  ›  ${gatewayMap[customerReference].gateway.name}'),
             subtitle: Text(customerReference),
             onTap: linkMap.containsKey(customerReference)
-                ? () {
-                    launch(linkMap[customerReference]);
-                  }
+                ? () => launch(linkMap[customerReference])
                 : null,
             leading: IgnorePointer(
               child: IconButton(
