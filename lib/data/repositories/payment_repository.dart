@@ -29,7 +29,7 @@ class PaymentRepository {
   }
 
   Future<BuiltList<PaymentEntity>> loadList(Credentials credentials) async {
-    final url = credentials.url + '/payments?include=paymentables';
+    final url = credentials.url + '/payments';
 
     final dynamic response = await webClient.get(url, credentials.token);
 
@@ -41,7 +41,7 @@ class PaymentRepository {
 
   Future<List<PaymentEntity>> bulkAction(
       Credentials credentials, List<String> ids, EntityAction action) async {
-    final url = credentials.url + '/payments/bulk?include=paymentables';
+    final url = credentials.url + '/payments/bulk';
     final dynamic response = await webClient.post(url, credentials.token,
         data: json.encode({'ids': ids, 'action': action.toApiParam()}));
 
@@ -57,7 +57,7 @@ class PaymentRepository {
     dynamic response;
 
     if (payment.isNew) {
-      var url = credentials.url + '/payments?include=paymentables';
+      var url = credentials.url + '/payments';
       if (sendEmail) {
         url += '&email_receipt=true';
       }
@@ -65,7 +65,7 @@ class PaymentRepository {
           await webClient.post(url, credentials.token, data: json.encode(data));
     } else {
       var url =
-          '${credentials.url}/payments/${payment.id}?include=paymentables';
+          '${credentials.url}/payments/${payment.id}';
       if (sendEmail) {
         url += '&email_receipt=true';
       }
@@ -88,7 +88,7 @@ class PaymentRepository {
     final data = serializers.serializeWith(PaymentEntity.serializer, payment);
     dynamic response;
 
-    var url = credentials.url + '/payments/refund?include=paymentables';
+    var url = credentials.url + '/payments/refund';
     if (sendEmail) {
       url += '&email_receipt=true';
     }
