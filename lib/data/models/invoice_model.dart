@@ -179,7 +179,7 @@ abstract class InvoiceEntity extends Object
     ..invitations.replace(invitations
         .map((invitation) => InvitationEntity(contactId: invitation.contactId))
         .toList()));
-  
+
   double get amount;
 
   double get balance;
