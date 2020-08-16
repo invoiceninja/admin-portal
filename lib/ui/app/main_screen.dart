@@ -524,6 +524,8 @@ class EntityScreens extends StatelessWidget {
     } else if (subRoute == 'email') {
       listFlex = 2;
       previewFlex = 3;
+    } else if (prefState.isMenuCollapsed) {
+      listFlex += 1;
     }
 
     Widget child;
