@@ -130,6 +130,11 @@ class ClientOverview extends StatelessWidget {
             title: Text(
                 '${localization.token}  ›  ${gatewayMap[customerReference].gateway.name}'),
             subtitle: Text(customerReference),
+            onTap: linkMap.containsKey(customerReference)
+                ? () {
+                    launch(linkMap[customerReference]);
+                  }
+                : null,
             leading: IgnorePointer(
               child: IconButton(
                 icon: Icon(Icons.payment),
@@ -137,11 +142,11 @@ class ClientOverview extends StatelessWidget {
               ),
             ),
             trailing: linkMap.containsKey(customerReference)
-                ? IconButton(
-                    icon: Icon(Icons.open_in_new),
-                    onPressed: () {
-                      launch(linkMap[customerReference]);
-                    },
+                ? IgnorePointer(
+                    child: IconButton(
+                      icon: Icon(Icons.open_in_new),
+                      onPressed: () => null,
+                    ),
                   )
                 : null,
           ),
