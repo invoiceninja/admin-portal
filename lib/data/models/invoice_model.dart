@@ -76,6 +76,10 @@ class InvoiceFields {
   static const String customValue3 = 'custom3';
   static const String customValue4 = 'custom4';
   static const String taxAmount = 'tax_amount';
+  static const String reminder1Sent = 'reminder1_sent';
+  static const String reminder2Sent = 'reminder2_sent';
+  static const String reminder3Sent = 'reminder3_sent';
+  static const String reminderLastSent = 'reminder_last_sent';
 }
 
 abstract class InvoiceEntity extends Object
@@ -150,6 +154,10 @@ abstract class InvoiceEntity extends Object
       assignedUserId: '',
       createdAt: 0,
       loadedAt: 0,
+      reminder1Sent: '',
+      reminder2Sent: '',
+      reminder3Sent: '',
+      reminderLastSent: '',
     );
   }
 
@@ -325,12 +333,25 @@ abstract class InvoiceEntity extends Object
   @BuiltValueField(wireName: 'has_expenses')
   bool get hasExpenses;
 
+  @BuiltValueField(wireName: 'reminder1_sent')
+  String get reminder1Sent;
+
+  @BuiltValueField(wireName: 'reminder2_sent')
+  String get reminder2Sent;
+
+  @BuiltValueField(wireName: 'reminder3_sent')
+  String get reminder3Sent;
+
+  @BuiltValueField(wireName: 'reminder_last_sent')
+  String get reminderLastSent;
+
   @nullable
   @BuiltValueField(wireName: 'invoice_id')
   String get invoiceId;
 
   @nullable
   String get filename;
+
 
   @override
   @BuiltValueField(wireName: 'line_items')
