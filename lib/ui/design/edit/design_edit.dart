@@ -83,8 +83,7 @@ class _DesignEditState extends State<DesignEdit>
     _headerController.text = design.getSection(kDesignHeader);
     _footerController.text = design.getSection(kDesignFooter);
     _bodyController.text = design.getSection(kDesignBody);
-    _productsController.text =
-        design.getSection(kDesignProducts);
+    _productsController.text = design.getSection(kDesignProducts);
     _tasksController.text = design.getSection(kDesignTasks);
     _includesController.text = design.getSection(kDesignIncludes);
 
@@ -395,7 +394,7 @@ class _DesignPreviewState extends State<DesignPreview> {
 
   @override
   void dispose() {
-    _pdfController.dispose();
+    _pdfController?.dispose();
 
     super.dispose();
   }
@@ -408,7 +407,9 @@ class _DesignPreviewState extends State<DesignPreview> {
       child: Stack(
         alignment: Alignment.center,
         children: <Widget>[
-          if (kIsWeb)
+          if (widget.pdfBytes == null)
+            SizedBox()
+          else if (kIsWeb)
             HtmlElementView(viewType: _pdfString)
           else if (_pdfController != null)
             Padding(
