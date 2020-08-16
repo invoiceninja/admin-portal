@@ -213,7 +213,9 @@ class _EntityListState extends State<EntityList> {
                     ],
                     source: dataTableSource,
                     sortColumnIndex:
-                        widget.tableColumns.indexOf(listUIState.sortField),
+                        widget.tableColumns.contains(listUIState.sortField)
+                            ? widget.tableColumns.indexOf(listUIState.sortField)
+                            : 0,
                     sortAscending: listUIState.sortAscending,
                     rowsPerPage: state.prefState.rowsPerPage,
                   ),
