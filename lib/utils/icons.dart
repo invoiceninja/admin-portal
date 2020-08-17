@@ -177,7 +177,7 @@ IconData getSettingIcon(String section) {
     case kSettingsEmailSettings:
       return Icons.mail;
     case kSettingsTemplatesAndReminders:
-      return MdiIcons.file;
+      return MdiIcons.reminder;
     case kSettingsCreditCardsAndBanks:
       return MdiIcons.link;
     case kSettingsDataVisualizations:
