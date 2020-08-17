@@ -1,5 +1,3 @@
-import 'package:flutter/foundation.dart';
-
 String toSnakeCase(String value) {
   if ((value ?? '').isEmpty) {
     return '';
@@ -68,10 +66,6 @@ bool isValidDate(String input) {
 }
 
 void printWrapped(String text) {
-  if (kReleaseMode) {
-    return;
-  }
-
   if (text.length > 2000) {
     text = text.substring(0, 2000);
   }
