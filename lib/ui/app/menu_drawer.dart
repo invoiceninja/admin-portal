@@ -774,7 +774,7 @@ void _showAbout(BuildContext context) async {
         padding: const EdgeInsets.only(top: 30),
         child: AppButton(
           label: localization.healthCheck.toUpperCase(),
-          iconData: FontAwesomeIcons.language,
+          iconData: FontAwesomeIcons.shieldAlt,
           onPressed: () {
             showDialog<HealthCheckDialog>(
                 context: context,
