@@ -122,7 +122,7 @@ Future<AppState> _initialState(bool isTesting) async {
   final prefString = prefs?.getString(kSharedPrefs);
   final url = prefs.getString(kSharedPrefUrl) ?? WebUtils.browserUrl;
 
-  var prefState = PrefState(enableDarkMode: url == kAppDemoUrl);
+  var prefState = PrefState(enableDarkMode: url.startsWith(kAppDemoUrl));
 
   if (prefString != null) {
     try {
