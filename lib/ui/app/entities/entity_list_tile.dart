@@ -120,9 +120,13 @@ class _EntityListTileState extends State<EntityListTile> {
                   inspectEntity(context: context, entity: widget.entity),
               onLongPress: () => inspectEntity(
                   context: context, entity: widget.entity, longPress: true),
-              title: Text(localization.lookup('${widget.entity.entityType}') +
-                  '  ›  ' +
-                  widget.entity.listDisplayName),
+              title: Text(
+                localization.lookup('${widget.entity.entityType}') +
+                    '  ›  ' +
+                    widget.entity.listDisplayName,
+                maxLines: 1,
+                overflow: TextOverflow.ellipsis,
+              ),
               subtitle:
                   (widget.subtitle ?? '').isEmpty && widget.entity.isActive
                       ? null
