@@ -73,6 +73,7 @@ Serializers _$serializers = (new Serializers().toBuilder()
       ..add(GatewayTokenEntity.serializer)
       ..add(GatewayTokenItemResponse.serializer)
       ..add(GatewayTokenListResponse.serializer)
+      ..add(GatewayTokenMetaEntity.serializer)
       ..add(GroupEntity.serializer)
       ..add(GroupItemResponse.serializer)
       ..add(GroupListResponse.serializer)
@@ -185,9 +186,6 @@ Serializers _$serializers = (new Serializers().toBuilder()
           const FullType(
               BuiltList, const [const FullType(CompanyGatewayEntity)]),
           () => new ListBuilder<CompanyGatewayEntity>())
-      ..addBuilderFactory(
-          const FullType(BuiltList, const [const FullType(CompanyPrefState)]),
-          () => new ListBuilder<CompanyPrefState>())
       ..addBuilderFactory(
           const FullType(BuiltList, const [const FullType(ContactEntity)]),
           () => new ListBuilder<ContactEntity>())
@@ -434,6 +432,7 @@ Serializers _$serializers = (new Serializers().toBuilder()
       ..addBuilderFactory(const FullType(BuiltList, const [const FullType(String)]), () => new ListBuilder<String>())
       ..addBuilderFactory(const FullType(BuiltMap, const [const FullType(String), const FullType(CompanyGatewayEntity)]), () => new MapBuilder<String, CompanyGatewayEntity>())
       ..addBuilderFactory(const FullType(BuiltList, const [const FullType(String)]), () => new ListBuilder<String>())
+      ..addBuilderFactory(const FullType(BuiltMap, const [const FullType(String), const FullType(CompanyPrefState)]), () => new MapBuilder<String, CompanyPrefState>())
       ..addBuilderFactory(const FullType(BuiltMap, const [const FullType(String), const FullType(CurrencyEntity)]), () => new MapBuilder<String, CurrencyEntity>())
       ..addBuilderFactory(const FullType(BuiltMap, const [const FullType(String), const FullType(SizeEntity)]), () => new MapBuilder<String, SizeEntity>())
       ..addBuilderFactory(const FullType(BuiltMap, const [const FullType(String), const FullType(GatewayEntity)]), () => new MapBuilder<String, GatewayEntity>())

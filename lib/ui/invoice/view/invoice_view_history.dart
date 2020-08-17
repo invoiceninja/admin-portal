@@ -26,7 +26,8 @@ class _InvoiceViewHistoryState extends State<InvoiceViewHistory> {
 
   @override
   Widget build(BuildContext context) {
-    final invoice = widget.viewModel.invoice;
+    final viewModel = widget.viewModel;
+    final invoice = viewModel.invoice;
 
     // TODO remove this null check, it shouldn't be needed
     if (invoice.isStale || invoice.history == null) {
@@ -38,18 +39,18 @@ class _InvoiceViewHistoryState extends State<InvoiceViewHistory> {
       padding: const EdgeInsets.symmetric(vertical: 16),
       itemBuilder: (BuildContext context, index) {
         final history = invoice.history[index];
+        final user = viewModel.state.userState.get(history.activity.userId);
         return ListTile(
-          title: Text(''),
-          trailing: Icon(Icons.chevron_right),
-          onTap: () =>
-              viewPdf(invoice, context, activityId: history.activityId),
-          subtitle: Text(
+          title: Text(
             formatDate(
               convertTimestampToDateString(history.createdAt),
               context,
               showTime: true,
             ),
           ),
+          subtitle: Text(user.fullName),
+          trailing: Icon(Icons.chevron_right),
+          onTap: () => viewPdf(invoice, context, activityId: history.id),
         );
       },
       separatorBuilder: (context, index) => ListDivider(),

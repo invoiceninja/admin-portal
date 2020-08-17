@@ -100,8 +100,8 @@ class _QuoteEditState extends State<QuoteEdit>
         key: _formKey,
         child: state.prefState.isDesktop
             ? QuoteEditDetailsScreen(
-          viewModel: widget.viewModel,
-        )
+                viewModel: widget.viewModel,
+              )
             : TabBarView(
                 key: ValueKey('__quote_${viewModel.invoice.id}__'),
                 controller: _controller,

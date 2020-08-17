@@ -15,6 +15,11 @@ mixin LocalizationsProvider on LocaleCodeAware {
   static final Map<String, Map<String, String>> _localizedValues = {
     'en': {
       // STARTER: lang key - do not remove comment
+      'reminder1_sent': 'Reminder 1 Sent',
+      'reminder2_sent': 'Reminder 2 Sent',
+      'reminder3_sent': 'Reminder 3 Sent',
+      'reminder_last_sent': 'Reminder Last Sent',
+      'pdf_page_info': 'Page :current of :total',
       'emailed_invoices': 'Successfully emailed invoices',
       'emailed_quotes': 'Successfully emailed quotes',
       'emailed_credits': 'Successfully emailed credits',
@@ -1092,6 +1097,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'payment_status_4': 'Completed',
       'payment_status_5': 'Partially Refunded',
       'payment_status_6': 'Refunded',
+      'payment_status_-1': 'Unapplied',
       'net': 'Net',
       'client_portal': 'Client Portal',
       'show_tasks': 'Show tasks',
@@ -1102,9 +1108,9 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'first_reminder': 'First Reminder',
       'second_reminder': 'Second Reminder',
       'third_reminder': 'Third Reminder',
-      'reminder1': 'First Reminder',
-      'reminder2': 'Second Reminder',
-      'reminder3': 'Third Reminder',
+      'reminder1': 'Reminder 1',
+      'reminder2': 'Reminder 2',
+      'reminder3': 'Reminder 3',
       'template': 'Template',
       'send': 'Send',
       'subject': 'Subject',
@@ -4362,6 +4368,20 @@ mixin LocalizationsProvider on LocaleCodeAware {
 
   String get emailedCredits =>
       _localizedValues[localeCode]['emailed_credits'] ?? '';
+
+  String get pdfPageInfo => _localizedValues[localeCode]['pdf_page_info'] ?? '';
+
+  String get reminder1Sent =>
+      _localizedValues[localeCode]['reminder1_sent'] ?? '';
+
+  String get reminder2Sent =>
+      _localizedValues[localeCode]['reminder2_sent'] ?? '';
+
+  String get reminder3Sent =>
+      _localizedValues[localeCode]['reminder3_sent'] ?? '';
+
+  String get reminderLastSent =>
+      _localizedValues[localeCode]['reminder_last_sent'] ?? '';
 
   String lookup(String key) {
     final lookupKey = toSnakeCase(key);

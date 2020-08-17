@@ -34,6 +34,10 @@ class InvoicePresenter extends EntityPresenter {
       InvoiceFields.customValue3,
       InvoiceFields.customValue4,
       InvoiceFields.taxAmount,
+      InvoiceFields.reminder1Sent,
+      InvoiceFields.reminder2Sent,
+      InvoiceFields.reminder3Sent,
+      InvoiceFields.reminderLastSent,
     ];
   }
 
@@ -58,6 +62,14 @@ class InvoicePresenter extends EntityPresenter {
             .listDisplayName);
       case InvoiceFields.date:
         return Text(formatDate(invoice.date, context));
+      case InvoiceFields.reminder1Sent:
+        return Text(formatDate(invoice.reminder1Sent, context));
+      case InvoiceFields.reminder2Sent:
+        return Text(formatDate(invoice.reminder2Sent, context));
+      case InvoiceFields.reminder3Sent:
+        return Text(formatDate(invoice.reminder3Sent, context));
+      case InvoiceFields.reminderLastSent:
+        return Text(formatDate(invoice.reminderLastSent, context));
       case InvoiceFields.amount:
         return Align(
           alignment: Alignment.centerRight,

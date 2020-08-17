@@ -35,12 +35,7 @@ final editingReducer = combineReducers<DocumentEntity>([
   TypedReducer<DocumentEntity, UpdateDocument>((document, action) {
     return action.document.rebuild((b) => b..isChanged = true);
   }),
-  TypedReducer<DocumentEntity, SelectCompany>(_clearEditing),
 ]);
-
-DocumentEntity _clearEditing(DocumentEntity document, dynamic action) {
-  return DocumentEntity();
-}
 
 DocumentEntity _updateEditing(DocumentEntity document, dynamic action) {
   return action.document;

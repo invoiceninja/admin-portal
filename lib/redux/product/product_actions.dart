@@ -51,7 +51,6 @@ class UpdateProduct implements PersistUI {
   final ProductEntity product;
 }
 
-
 class LoadProductRequest implements StartLoading {}
 
 class LoadProduct {
@@ -258,12 +257,20 @@ void handleProductAction(
   switch (action) {
     case EntityAction.newInvoice:
       createEntity(
-          context: context,
-          entity: InvoiceEntity(state: state).rebuild((b) => b
-            ..lineItems.addAll(productIds.map((productId) =>
-                convertProductToInvoiceItem(
-                    company: state.company,
-                    product: state.productState.map[productId])))));
+        context: context,
+        entity: InvoiceEntity(state: state).rebuild(
+          (b) => b
+            ..lineItems.addAll(
+              productIds.map(
+                (productId) => convertProductToInvoiceItem(
+                  company: state.company,
+                  product: state.productState.map[productId],
+                  currencyMap: state.staticState.currencyMap,
+                ),
+              ),
+            ),
+        ),
+      );
       break;
     case EntityAction.edit:
       editEntity(context: context, entity: product);

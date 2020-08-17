@@ -16,7 +16,8 @@ import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 
 class QuoteEditDetailsScreen extends StatelessWidget {
-  const QuoteEditDetailsScreen({Key key, @required this.viewModel}) : super(key: key);
+  const QuoteEditDetailsScreen({Key key, @required this.viewModel})
+      : super(key: key);
 
   final EntityEditVM viewModel;
 

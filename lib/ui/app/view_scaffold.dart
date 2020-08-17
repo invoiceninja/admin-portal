@@ -58,7 +58,7 @@ class ViewScaffold extends StatelessWidget {
         leading = IconButton(
           icon: Icon(Icons.clear),
           onPressed: () {
-            store.dispatch(UserPreferencesChanged(showFilterSidebar: false));
+            store.dispatch(UpdateUserPreferences(showFilterSidebar: false));
           },
         );
       } else if (isSettings) {

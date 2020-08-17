@@ -4,7 +4,6 @@ import 'package:flutter_redux/flutter_redux.dart';
 import 'package:invoiceninja_flutter/constants.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/data/models/payment_model.dart';
-import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/ui/app/FieldGrid.dart';
 import 'package:invoiceninja_flutter/ui/app/buttons/bottom_buttons.dart';
@@ -41,6 +40,13 @@ class _PaymentViewState extends State<PaymentView> {
     final client = state.clientState.map[payment.clientId] ??
         ClientEntity(id: payment.clientId);
     final localization = AppLocalization.of(context);
+
+    final companyGateway =
+        state.companyGatewayState.get(payment.companyGatewayId);
+    final companyGatewayLink = GatewayEntity.getPaymentUrl(
+      gatewayId: companyGateway.gatewayId,
+      transactionReference: payment.transactionReference,
+    );
 
     final fields = <String, String>{};
     /*
@@ -117,25 +123,30 @@ class _PaymentViewState extends State<PaymentView> {
                                       paymentable.createdAt),
                                   context),
                         ),
-                      if ((payment.companyGatewayId ?? '').isNotEmpty)
-                        EntityListTile(
-                          entity: state.companyGatewayState
-                              .get(payment.companyGatewayId),
-                          client: client,
-                          isFilter: widget.isFilter,
-                          onEntityActionSelected: (context, entity, action) {
-                            if (action == EntityAction.viewInStripe) {
-                              final companyGateway = state.companyGatewayState
-                                  .get(payment.companyGatewayId);
-                              launch(GatewayEntity.getPaymentUrl(
-                                  gatewayId: companyGateway.gatewayId,
-                                  transactionReference:
-                                  payment.transactionReference));
-                            } else {
-                              handleEntityAction(context, entity, action);
-                            }
-                          },
+                      if ((payment.companyGatewayId ?? '').isNotEmpty) ...[
+                        ListTile(
+                          title: Text(
+                              '${localization.gateway}  ›  ${companyGateway.gateway.name}'),
+                          onTap: companyGatewayLink != null
+                              ? () => launch(companyGatewayLink)
+                              : null,
+                          leading: IgnorePointer(
+                            child: IconButton(
+                              icon: Icon(Icons.payment),
+                              onPressed: () => null,
+                            ),
+                          ),
+                          trailing: companyGatewayLink != null
+                              ? IgnorePointer(
+                                  child: IconButton(
+                                    icon: Icon(Icons.open_in_new),
+                                    onPressed: () => null,
+                                  ),
+                                )
+                              : null,
                         ),
+                        ListDivider(),
+                      ],
                       payment.privateNotes != null &&
                               payment.privateNotes.isNotEmpty
                           ? Column(

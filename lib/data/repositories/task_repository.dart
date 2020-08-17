@@ -7,7 +7,7 @@ import 'package:invoiceninja_flutter/data/models/serializers.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/data/web_client.dart';
-import 'package:invoiceninja_flutter/utils/network.dart';
+import 'package:invoiceninja_flutter/utils/serialization.dart';
 
 class TaskRepository {
   const TaskRepository({
@@ -21,7 +21,8 @@ class TaskRepository {
         '${credentials.url}/tasks/$entityId', credentials.token);
 
     final TaskItemResponse taskResponse = await compute<dynamic, dynamic>(
-        computeDecode, <dynamic>[TaskItemResponse.serializer, response]);
+        SerializationUtils.computeDecode,
+        <dynamic>[TaskItemResponse.serializer, response]);
 
     return taskResponse.data;
   }
@@ -32,7 +33,8 @@ class TaskRepository {
     final dynamic response = await webClient.get(url, credentials.token);
 
     final TaskListResponse taskResponse = await compute<dynamic, dynamic>(
-        computeDecode, <dynamic>[TaskListResponse.serializer, response]);
+        SerializationUtils.computeDecode,
+        <dynamic>[TaskListResponse.serializer, response]);
 
     return taskResponse.data;
   }

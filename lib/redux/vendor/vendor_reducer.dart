@@ -73,7 +73,6 @@ final editingReducer = combineReducers<VendorEntity>([
   TypedReducer<VendorEntity, AddVendorContact>(_addContact),
   TypedReducer<VendorEntity, DeleteVendorContact>(_removeContact),
   TypedReducer<VendorEntity, UpdateVendorContact>(_updateContact),
-  TypedReducer<VendorEntity, SelectCompany>(_clearEditing),
   TypedReducer<VendorEntity, DiscardChanges>(_clearEditing),
 ]);
 

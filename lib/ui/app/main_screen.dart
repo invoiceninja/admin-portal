@@ -524,6 +524,8 @@ class EntityScreens extends StatelessWidget {
     } else if (subRoute == 'email') {
       listFlex = 2;
       previewFlex = 3;
+    } else if (prefState.isMenuCollapsed) {
+      listFlex += 1;
     }
 
     Widget child;
@@ -683,7 +685,7 @@ class _EntityFilter extends StatelessWidget {
                           tooltip: localization.showSidebar,
                           icon: Icon(Icons.chrome_reader_mode),
                           onPressed: () => store.dispatch(
-                              UserPreferencesChanged(showFilterSidebar: true)),
+                              UpdateUserPreferences(showFilterSidebar: true)),
                         ),
                   automaticallyImplyLeading: false,
                   title: Align(

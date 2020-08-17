@@ -4,7 +4,6 @@ import 'package:invoiceninja_flutter/data/models/company_gateway_model.dart';
 import 'package:invoiceninja_flutter/data/models/entities.dart';
 import 'package:invoiceninja_flutter/data/models/gateway_token_model.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
-import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:invoiceninja_flutter/redux/credit/credit_selectors.dart';
 import 'package:invoiceninja_flutter/redux/expense/expense_selectors.dart';
 import 'package:invoiceninja_flutter/redux/invoice/invoice_selectors.dart';
@@ -15,6 +14,7 @@ import 'package:invoiceninja_flutter/redux/task/task_selectors.dart';
 import 'package:invoiceninja_flutter/ui/app/FieldGrid.dart';
 import 'package:invoiceninja_flutter/ui/app/entities/entity_list_tile.dart';
 import 'package:invoiceninja_flutter/ui/app/entity_header.dart';
+import 'package:invoiceninja_flutter/ui/app/gateways/token_meta.dart';
 import 'package:invoiceninja_flutter/ui/app/icon_message.dart';
 import 'package:invoiceninja_flutter/ui/app/lists/list_divider.dart';
 import 'package:invoiceninja_flutter/ui/client/view/client_view_vm.dart';
@@ -44,12 +44,26 @@ class ClientOverview extends StatelessWidget {
     final user =
         client.hasUser ? state.userState.get(client.assignedUserId) : null;
 
-    final tokenMap = <GatewayTokenEntity, CompanyGatewayEntity>{};
+    // Group gateway tokens by the customerReference
+    final tokenMap = <String, List<GatewayTokenEntity>>{};
+    final gatewayMap = <String, CompanyGatewayEntity>{};
+    final linkMap = <String, String>{};
+
     client.gatewayTokens.forEach((gatewayToken) {
       final companyGateway =
           state.companyGatewayState.get(gatewayToken.companyGatewayId);
       if (companyGateway.isOld && !companyGateway.isDeleted) {
-        tokenMap[gatewayToken] = companyGateway;
+        final customerReference = gatewayToken.customerReference;
+        gatewayMap[customerReference] = companyGateway;
+        linkMap[customerReference] = GatewayEntity.getClientUrl(
+          gatewayId: companyGateway.gatewayId,
+          customerReference: customerReference,
+        );
+        if (tokenMap.containsKey(customerReference)) {
+          tokenMap[customerReference].add(gatewayToken);
+        } else {
+          tokenMap[customerReference] = [gatewayToken];
+        }
       }
     });
 
@@ -112,22 +126,38 @@ class ClientOverview extends StatelessWidget {
             entity: group,
             isFilter: isFilter,
           ),
-        for (var gatewayToken in tokenMap.keys)
-          EntityListTile(
-            entity: tokenMap[gatewayToken],
-            isFilter: isFilter,
-            client: client,
-            onEntityActionSelected: (context, entity, action) {
-              if (action == EntityAction.viewInStripe) {
-                final companyGateway = tokenMap[gatewayToken];
-                launch(GatewayEntity.getClientUrl(
-                    gatewayId: companyGateway.gatewayId,
-                    customerReference: gatewayToken.customerReference));
-              } else {
-                handleEntityAction(context, entity, action);
-              }
-            },
+        for (var customerReference in tokenMap.keys) ...[
+          ListTile(
+            title: Text(
+                '${localization.gateway}  ›  ${gatewayMap[customerReference].gateway.name}'),
+            subtitle: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: tokenMap[customerReference]
+                  .map((token) => TokenMeta(
+                        meta: token.meta,
+                      ))
+                  .toList(),
+            ),
+            onTap: linkMap.containsKey(customerReference)
+                ? () => launch(linkMap[customerReference])
+                : null,
+            leading: IgnorePointer(
+              child: IconButton(
+                icon: Icon(Icons.payment),
+                onPressed: () => null,
+              ),
+            ),
+            trailing: linkMap.containsKey(customerReference)
+                ? IgnorePointer(
+                    child: IconButton(
+                      icon: Icon(Icons.open_in_new),
+                      onPressed: () => null,
+                    ),
+                  )
+                : null,
           ),
+          ListDivider(),
+        ],
         if (client.hasUser)
           EntityListTile(
             entity: user,

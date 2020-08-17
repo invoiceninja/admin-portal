@@ -21,6 +21,26 @@ class PersistenceRepository {
 
   final FileStorage fileStorage;
 
+  /*
+  Future<File> saveCompanyState(UserCompanyState state) async {
+    final dynamic data = await compute<dynamic, dynamic>(
+        SerializationUtils.computeEncode,
+        <dynamic>[UserCompanyState.serializer, state]);
+
+    return await fileStorage.save(json.encode(data));
+  }
+
+  Future<UserCompanyState> loadCompanyState(int index) async {
+    final String data = await fileStorage.load();
+
+    final UserCompanyState companyState = await compute<dynamic, dynamic>(
+        SerializationUtils.computeDecode,
+        <dynamic>[UserCompanyState.serializer, json.decode(data)]);
+
+    return companyState;
+  }
+   */
+
   Future<File> saveCompanyState(UserCompanyState state) async {
     final data = serializers.serializeWith(UserCompanyState.serializer, state);
 

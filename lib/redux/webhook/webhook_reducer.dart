@@ -48,7 +48,6 @@ final editingReducer = combineReducers<WebhookEntity>([
   TypedReducer<WebhookEntity, UpdateWebhook>((webhook, action) {
     return action.webhook.rebuild((b) => b..isChanged = true);
   }),
-  TypedReducer<WebhookEntity, SelectCompany>(_clearEditing),
   TypedReducer<WebhookEntity, DiscardChanges>(_clearEditing),
 ]);
 

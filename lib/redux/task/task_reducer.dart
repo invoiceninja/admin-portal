@@ -54,7 +54,6 @@ final editingReducer = combineReducers<TaskEntity>([
   TypedReducer<TaskEntity, AddTaskTime>(_addTaskTime),
   TypedReducer<TaskEntity, DeleteTaskTime>(_removeTaskTime),
   TypedReducer<TaskEntity, UpdateTaskTime>(_updateTaskTime),
-  TypedReducer<TaskEntity, SelectCompany>(_clearEditing),
   TypedReducer<TaskEntity, DiscardChanges>(_clearEditing),
 ]);
 

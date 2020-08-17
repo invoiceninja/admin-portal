@@ -176,9 +176,7 @@ abstract class DesignEntity extends Object
   @override
   bool matchesFilter(String filter) {
     return matchesStrings(
-      haystacks: [
-        name
-      ],
+      haystacks: [name],
       needle: filter,
     );
   }
@@ -186,9 +184,7 @@ abstract class DesignEntity extends Object
   @override
   String matchesFilterValue(String filter) {
     return matchesStringsValue(
-      haystacks: [
-        name
-      ],
+      haystacks: [name],
       needle: filter,
     );
   }

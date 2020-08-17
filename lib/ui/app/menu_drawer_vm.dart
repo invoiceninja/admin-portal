@@ -68,6 +68,7 @@ class MenuDrawerVM {
             context: context,
             callback: () {
               store.dispatch(ClearEntityFilter());
+              store.dispatch(DiscardChanges());
               store.dispatch(SelectCompany(companyIndex: index));
               if (store.state.isStale) {
                 if (!store.state.isLoaded && store.state.company.isLarge) {

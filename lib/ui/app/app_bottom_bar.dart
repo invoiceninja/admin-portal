@@ -342,6 +342,36 @@ class _AppBottomBarState extends State<AppBottomBar> {
       final isList = prefState.moduleLayout == ModuleLayout.list ||
           widget.entityType.isSetting;
 
+      void _onColumnsPressed() {
+        multiselectDialog(
+          context: context,
+          onSelected: (selected) {
+            final listUIState = store.state.getListState(widget.entityType);
+            if (!selected.contains(listUIState.sortField)) {
+              widget.onSelectedSortField(selected.isEmpty ? '' : selected[0]);
+            }
+            final settings = state.userCompany.settings.rebuild((b) => b
+              ..tableColumns['${widget.entityType}'] =
+                  BuiltList<String>(selected));
+            final user = state.user
+                .rebuild((b) => b..userCompany.settings.replace(settings));
+            final completer = snackBarCompleter<Null>(
+                context, AppLocalization.of(context).savedSettings);
+            store.dispatch(
+              SaveUserSettingsRequest(
+                completer: completer,
+                user: user,
+              ),
+            );
+          },
+          options: widget.tableColumns,
+          defaultSelected: widget.defaultTableColumns,
+          selected: state
+              .userCompany.settings.tableColumns['${widget.entityType}']
+              ?.toList(),
+        );
+      }
+
       return BottomAppBar(
         shape: CircularNotchedRectangle(),
         child: SizedBox(
@@ -375,7 +405,7 @@ class _AppBottomBarState extends State<AppBottomBar> {
                     tooltip: localization.preview,
                     icon: Icon(Icons.chrome_reader_mode),
                     onPressed: () {
-                      store.dispatch(UserPreferencesChanged(
+                      store.dispatch(UpdateUserPreferences(
                           isPreviewVisible: !state.prefState.isPreviewVisible));
                     },
                   ),
@@ -441,46 +471,23 @@ class _AppBottomBarState extends State<AppBottomBar> {
                   ),
                 if (!state.prefState.isMenuFloated) Spacer(),
                 if (!widget.entityType.isSetting && !isList)
-                  IconButton(
-                    icon: Icon(Icons.view_week),
-                    tooltip: localization.columns,
-                    onPressed: () {
-                      multiselectDialog(
-                        context: context,
-                        onSelected: (selected) {
-                          final listUIState =
-                              store.state.getListState(widget.entityType);
-                          if (!selected.contains(listUIState.sortField)) {
-                            widget.onSelectedSortField(
-                                selected.isEmpty ? '' : selected[0]);
-                          }
-                          final settings = state.userCompany.settings.rebuild(
-                              (b) => b
-                                ..tableColumns['${widget.entityType}'] =
-                                    BuiltList<String>(selected));
-                          final user = state.user.rebuild(
-                              (b) => b..userCompany.settings.replace(settings));
-                          final completer = snackBarCompleter<Null>(context,
-                              AppLocalization.of(context).savedSettings);
-                          store.dispatch(
-                            SaveUserSettingsRequest(
-                              completer: completer,
-                              user: user,
-                            ),
-                          );
-                        },
-                        options: widget.tableColumns,
-                        defaultSelected: widget.defaultTableColumns,
-                        selected: state.userCompany.settings
-                            .tableColumns['${widget.entityType}']
-                            ?.toList(),
-                      );
-                    },
+                  if (state.prefState.isDesktop)
+                    FlatButton(
+                        onPressed: _onColumnsPressed,
+                        child: Text(localization.columns))
+                  else
+                    IconButton(
+                      icon: Icon(Icons.view_week),
+                      tooltip: localization.columns,
+                      onPressed: _onColumnsPressed,
+                    ),
+                AppBorder(
+                  isLeft: state.prefState.isDesktop,
+                  child: IconButton(
+                    icon: Icon(Icons.refresh),
+                    onPressed: () => store.dispatch(RefreshData()),
+                    tooltip: localization.refresh,
                   ),
-                IconButton(
-                  icon: Icon(Icons.refresh),
-                  onPressed: () => store.dispatch(RefreshData()),
-                  tooltip: localization.refresh,
                 ),
               ],
             ),

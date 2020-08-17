@@ -6,6 +6,7 @@ import 'package:flutter_share/flutter_share.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
 import 'package:http/http.dart';
+import 'package:invoiceninja_flutter/constants.dart';
 import 'package:invoiceninja_flutter/data/models/invoice_model.dart';
 import 'package:flutter/foundation.dart';
 import 'package:invoiceninja_flutter/data/web_client.dart';
@@ -16,26 +17,11 @@ import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:native_pdf_view/native_pdf_view.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:url_launcher/url_launcher.dart';
-import 'package:native_pdf_renderer/native_pdf_renderer.dart';
 import 'package:invoiceninja_flutter/utils/web_stub.dart'
     if (dart.library.html) 'package:invoiceninja_flutter/utils/web.dart';
 
 Future<Null> viewPdf(InvoiceEntity invoice, BuildContext context,
     {String activityId}) async {
-  /*
-  final localization = AppLocalization.of(context);
-  if (Platform.isIOS) {
-    if (await canLaunch(invoice.invitationBorderlessLink)) {
-      await launch(invoice.invitationBorderlessLink,
-          forceSafariVC: true, forceWebView: true);
-    } else {
-      throw localization.anErrorOccurred;
-    }
-
-    return;
-  }
-  */
-
   showDialog<Scaffold>(
       context: context,
       builder: (BuildContext context) {
@@ -58,8 +44,9 @@ class PDFScaffold extends StatefulWidget {
 
 class _PDFScaffoldState extends State<PDFScaffold> {
   String _pdfString;
-  List<PDFPageImage> _pdfImages;
   http.Response _response;
+  PdfController _pdfController;
+  int _pageNumber = 1, _pageCount = 1;
 
   @override
   void didChangeDependencies() {
@@ -69,25 +56,27 @@ class _PDFScaffoldState extends State<PDFScaffold> {
       setState(() {
         _response = response;
       });
+
       if (kIsWeb) {
-        renderWebPDF(
-          context: context,
-          invoice: widget.invoice,
-          response: response,
-        ).then((value) => setState(() {
-              _pdfString = value;
-              WebUtils.registerWebView(_pdfString);
-            }));
+        _pdfString =
+            'data:application/pdf;base64,' + base64Encode(response.bodyBytes);
+        WebUtils.registerWebView(_pdfString);
       } else {
-        renderMobilePDF(
-          context: context,
-          invoice: widget.invoice,
-          response: response,
-        ).then((value) => setState(() {
-              _pdfImages = value;
-            }));
+        final document = PdfDocument.openData(_response.bodyBytes);
+        if (_pdfController == null) {
+          _pdfController = PdfController(document: document);
+        } else {
+          _pdfController.loadDocument(document);
+        }
       }
     });
+  }
+
+  @override
+  void dispose() {
+    _pdfController?.dispose();
+
+    super.dispose();
   }
 
   @override
@@ -97,85 +86,93 @@ class _PDFScaffoldState extends State<PDFScaffold> {
     final invoice = widget.invoice;
 
     return Scaffold(
-      backgroundColor: Colors.grey,
-      appBar: AppBar(
-        centerTitle: false,
-        leading: IconButton(
-          icon: Icon(Icons.arrow_back),
-          onPressed: () => Navigator.of(context).pop(),
-        ),
-        title: Text(localization.invoice + ' ' + (invoice.number ?? '')),
-        actions: <Widget>[
-          FlatButton(
-            child: Text(
-              localization.download,
-              style: TextStyle(color: store.state.headerTextColor),
-            ),
-            onPressed: _response == null
-                ? null
-                : () async {
-                    if (kIsWeb) {
-                      launch(invoice.invitationDownloadLink,
-                          forceSafariVC: false, forceWebView: false);
-                    } else {
-                      final directory = await getExternalStorageDirectory();
-                      final filePath =
-                          '${directory.path}/${invoice.invoiceId}.pdf';
-                      final pdfData = file.File(filePath);
-                      pdfData.writeAsBytes(_response.bodyBytes);
-                      await FlutterShare.shareFile(
-                          title: 'test.pdf',
-                          filePath: filePath);
-                    }
-                  },
+        backgroundColor: Colors.grey,
+        appBar: AppBar(
+          centerTitle: false,
+          leading: IconButton(
+            icon: Icon(Icons.arrow_back),
+            onPressed: () => Navigator.of(context).pop(),
           ),
-        ],
-      ),
-      body: kIsWeb
-          ? _pdfString == null
-              ? LoadingIndicator()
-              : _pdfString == ''
-                  ? SizedBox()
-                  : HtmlElementView(viewType: _pdfString)
-          : _pdfImages == null
-              ? LoadingIndicator()
-              : _pdfImages.isEmpty
-                  ? SizedBox()
-                  : Container(
-                      color: Colors.grey,
-                      padding: const EdgeInsets.symmetric(vertical: 16),
-                      child: _pdfImages.length == 1
-                          ? Center(
-                              child: Container(
-                                color: Colors.white,
-                                child: Image(
-                                    image: MemoryImage(_pdfImages.first.bytes),
-                                    height: double.infinity),
-                              ),
-                            )
-                          : ListView(
-                              scrollDirection: Axis.horizontal,
-                              children: _pdfImages
-                                  .map((page) => Row(
-                                        children: <Widget>[
-                                          Container(
-                                            width: 20,
-                                            height: double.infinity,
-                                            color: Colors.grey,
-                                          ),
-                                          Container(
-                                            color: Colors.white,
-                                            child: ExtendedImage.memory(
-                                              page.bytes,
-                                              fit: BoxFit.fitHeight,
-                                            ),
-                                          ),
-                                        ],
-                                      ))
-                                  .toList(),
-                            ),
+          title: Row(
+            children: [
+              Text(localization.invoice + ' ' + (invoice.number ?? '')),
+              if (!kIsWeb && _pageCount > 1) ...[
+                Spacer(),
+                IconButton(
+                  icon: Icon(Icons.navigate_before),
+                  onPressed: _pageNumber > 1
+                      ? () => _pdfController.previousPage(
+                            duration: Duration(
+                                milliseconds: kDefaultAnimationDuration),
+                            curve: Curves.easeInOutCubic,
+                          )
+                      : null,
+                ),
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 8),
+                  child: Text(localization.pdfPageInfo
+                      .replaceFirst(':current', '$_pageNumber')
+                      .replaceFirst(':total', '$_pageCount')),
+                ),
+                IconButton(
+                  icon: Icon(Icons.navigate_next),
+                  onPressed: _pageNumber < _pageCount
+                      ? () => _pdfController.nextPage(
+                            duration: Duration(
+                                milliseconds: kDefaultAnimationDuration),
+                            curve: Curves.easeInOutCubic,
+                          )
+                      : null,
+                ),
+                Spacer(),
+              ]
+            ],
+          ),
+          actions: <Widget>[
+            FlatButton(
+              child: Text(
+                localization.download,
+                style: TextStyle(color: store.state.headerTextColor),
+              ),
+              onPressed: _response == null
+                  ? null
+                  : () async {
+                      if (kIsWeb) {
+                        launch(invoice.invitationDownloadLink,
+                            forceSafariVC: false, forceWebView: false);
+                      } else {
+                        final directory = await getExternalStorageDirectory();
+                        final filePath =
+                            '${directory.path}/${invoice.invoiceId}.pdf';
+                        final pdfData = file.File(filePath);
+                        pdfData.writeAsBytes(_response.bodyBytes);
+                        await FlutterShare.shareFile(
+                            title: 'test.pdf', filePath: filePath);
+                      }
+                    },
+            ),
+          ],
+        ),
+        body: _pdfString == null && _pdfController == null
+            ? LoadingIndicator()
+            : kIsWeb
+                ? HtmlElementView(viewType: _pdfString)
+                : Padding(
+                    padding: const EdgeInsets.all(8),
+                    child: PdfView(
+                      controller: _pdfController,
+                      onDocumentLoaded: (document) {
+                        setState(() {
+                          _pageCount = document.pagesCount;
+                        });
+                      },
+                      onPageChanged: (page) {
+                        setState(() {
+                          _pageNumber = page;
+                        });
+                      },
                     ),
-    );
+                  ));
   }
 }
 
@@ -204,38 +201,4 @@ Future<Response> _loadPDF(
   }
 
   return response;
-}
-
-Future<String> renderWebPDF({
-  @required BuildContext context,
-  @required http.Response response,
-  @required InvoiceEntity invoice,
-}) async {
-  if (response == null) {
-    return '';
-  }
-
-  return 'data:application/pdf;base64,' + base64Encode(response.bodyBytes);
-}
-
-Future<List<PDFPageImage>> renderMobilePDF({
-  @required BuildContext context,
-  @required http.Response response,
-  @required InvoiceEntity invoice,
-}) async {
-  final List<PDFPageImage> pages = [];
-
-  if (response == null) {
-    return pages;
-  }
-
-  final document = await PDFDocument.openData(response.bodyBytes);
-  for (var i = 1; i <= document.pagesCount; i++) {
-    final page = await document.getPage(i);
-    final pageImage = await page.render(width: page.width, height: page.height);
-    pages.add(pageImage);
-    page.close();
-  }
-
-  return pages;
 }

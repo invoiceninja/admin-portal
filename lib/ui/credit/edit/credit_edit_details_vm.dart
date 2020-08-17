@@ -17,7 +17,8 @@ import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 
 class CreditEditDetailsScreen extends StatelessWidget {
-  const CreditEditDetailsScreen({Key key, @required this.viewModel}) : super(key: key);
+  const CreditEditDetailsScreen({Key key, @required this.viewModel})
+      : super(key: key);
 
   final EntityEditVM viewModel;
 

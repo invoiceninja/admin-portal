@@ -66,8 +66,14 @@ class _InvoiceItemSelectorState extends State<InvoiceItemSelector>
 
     _selected.forEach((entity) {
       if (entity.entityType == EntityType.product) {
-        items.add(convertProductToInvoiceItem(
-            product: entity as ProductEntity, company: company));
+        items.add(
+          convertProductToInvoiceItem(
+            company: company,
+            product: entity as ProductEntity,
+            currencyMap: state.staticState.currencyMap,
+            client: state.clientState.get(widget.clientId),
+          ),
+        );
       } else if (entity.entityType == EntityType.task) {
         final task = entity as TaskEntity;
         items.add(convertTaskToInvoiceItem(task: task, context: context));

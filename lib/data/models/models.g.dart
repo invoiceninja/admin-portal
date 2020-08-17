@@ -48,7 +48,6 @@ const EntityAction _$toggleMultiselect =
 const EntityAction _$reverse = const EntityAction._('reverse');
 const EntityAction _$cancel = const EntityAction._('cancel');
 const EntityAction _$copy = const EntityAction._('copy');
-const EntityAction _$viewInStripe = const EntityAction._('viewInStripe');
 
 EntityAction _$valueOf(String name) {
   switch (name) {
@@ -134,8 +133,6 @@ EntityAction _$valueOf(String name) {
       return _$cancel;
     case 'copy':
       return _$copy;
-    case 'viewInStripe':
-      return _$viewInStripe;
     default:
       throw new ArgumentError(name);
   }
@@ -184,7 +181,6 @@ final BuiltSet<EntityAction> _$values =
   _$reverse,
   _$cancel,
   _$copy,
-  _$viewInStripe,
 ]);
 
 Serializer<EntityAction> _$entityActionSerializer =

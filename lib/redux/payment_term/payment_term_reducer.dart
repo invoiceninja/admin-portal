@@ -46,7 +46,6 @@ final editingReducer = combineReducers<PaymentTermEntity>([
   TypedReducer<PaymentTermEntity, UpdatePaymentTerm>((paymentTerm, action) {
     return action.paymentTerm.rebuild((b) => b..isChanged = true);
   }),
-  TypedReducer<PaymentTermEntity, SelectCompany>(_clearEditing),
   TypedReducer<PaymentTermEntity, DiscardChanges>(_clearEditing),
 ]);
 

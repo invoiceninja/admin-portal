@@ -7,7 +7,7 @@ import 'package:invoiceninja_flutter/data/models/serializers.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/data/web_client.dart';
-import 'package:invoiceninja_flutter/utils/network.dart';
+import 'package:invoiceninja_flutter/utils/serialization.dart';
 
 class QuoteRepository {
   const QuoteRepository({
@@ -22,7 +22,8 @@ class QuoteRepository {
         '${credentials.url}/quotes/$entityId?', credentials.token);
 
     final InvoiceItemResponse quoteResponse = await compute<dynamic, dynamic>(
-        computeDecode, <dynamic>[InvoiceItemResponse.serializer, response]);
+        SerializationUtils.computeDecode,
+        <dynamic>[InvoiceItemResponse.serializer, response]);
 
     return quoteResponse.data;
   }
@@ -32,8 +33,9 @@ class QuoteRepository {
 
     final dynamic response = await webClient.get(url, credentials.token);
 
-    final InvoiceListResponse quoteResponse =
-        serializers.deserializeWith(InvoiceListResponse.serializer, response);
+    final InvoiceListResponse quoteResponse = await compute<dynamic, dynamic>(
+        SerializationUtils.computeDecode,
+        <dynamic>[InvoiceListResponse.serializer, response]);
 
     return quoteResponse.data;
   }
@@ -52,6 +54,7 @@ class QuoteRepository {
 
   Future<InvoiceEntity> saveData(
       Credentials credentials, InvoiceEntity quote) async {
+    quote = quote.rebuild((b) => b..documents.clear());
     final data = serializers.serializeWith(InvoiceEntity.serializer, quote);
     dynamic response;
 

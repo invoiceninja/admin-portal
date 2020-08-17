@@ -2,16 +2,15 @@ import 'package:built_collection/built_collection.dart';
 import 'package:built_value/built_value.dart';
 import 'package:built_value/serializer.dart';
 import 'package:flutter/foundation.dart';
-import 'package:invoiceninja_flutter/constants.dart';
 import 'package:invoiceninja_flutter/data/models/entities.dart';
 
 part 'pref_state.g.dart';
 
 abstract class PrefState implements Built<PrefState, PrefStateBuilder> {
-  factory PrefState({bool enableDarkMode}) {
+  factory PrefState({bool enableDarkMode, ModuleLayout moduleLayout}) {
     return _$PrefState._(
       appLayout: AppLayout.desktop,
-      moduleLayout: ModuleLayout.list,
+      moduleLayout: ModuleLayout.table,
       isPreviewVisible: true,
       menuSidebarMode: AppSidebarMode.collapse,
       historySidebarMode: AppSidebarMode.float,
@@ -24,11 +23,7 @@ abstract class PrefState implements Built<PrefState, PrefStateBuilder> {
       showFilterSidebar: false,
       longPressSelectionIsDefault: false,
       addDocumentsToInvoice: false,
-      companyPrefs: BuiltList(
-        List<int>.generate(kMaxNumberOfCompanies, (i) => i + 1)
-            .map((index) => CompanyPrefState())
-            .toList(),
-      ),
+      companyPrefs: BuiltMap<String, CompanyPrefState>(),
     );
   }
 
@@ -66,7 +61,7 @@ abstract class PrefState implements Built<PrefState, PrefStateBuilder> {
 
   int get rowsPerPage;
 
-  BuiltList<CompanyPrefState> get companyPrefs;
+  BuiltMap<String, CompanyPrefState> get companyPrefs;
 
   bool get isDesktop => appLayout == AppLayout.desktop;
 

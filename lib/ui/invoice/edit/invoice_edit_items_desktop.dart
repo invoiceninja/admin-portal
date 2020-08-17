@@ -13,6 +13,7 @@ import 'package:invoiceninja_flutter/ui/invoice/edit/invoice_edit_items_vm.dart'
 import 'package:invoiceninja_flutter/ui/invoice/edit/invoice_edit_vm.dart';
 import 'package:invoiceninja_flutter/utils/formatting.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
+import 'package:invoiceninja_flutter/utils/money.dart';
 
 class InvoiceEditItemsDesktop extends StatefulWidget {
   const InvoiceEditItemsDesktop({
@@ -178,10 +179,29 @@ class _InvoiceEditItemsDesktopState extends State<InvoiceEditItemsDesktop> {
                             }
                             final item = lineItems[index];
                             final product = productState.map[productId];
+                            final client =
+                                state.clientState.get(invoice.clientId);
+
+                            double cost = product.price;
+                            if (company.convertProductExchangeRate &&
+                                invoice.clientId != null &&
+                                client.currencyId != company.currencyId) {
+                              cost = cost *
+                                  getExchangeRate(context,
+                                      fromCurrencyId: company.currencyId,
+                                      toCurrencyId: client.currencyId);
+                              cost = round(
+                                  cost,
+                                  state
+                                      .staticState
+                                      .currencyMap[client.currencyId]
+                                      .precision);
+                            }
+
                             final updatedItem = item.rebuild((b) => b
                               ..productKey = product.productKey
                               ..notes = product.notes
-                              ..cost = product.price
+                              ..cost = cost
                               ..quantity = item.quantity == 0 &&
                                       viewModel.state.company.defaultQuantity
                                   ? 1
@@ -207,10 +227,26 @@ class _InvoiceEditItemsDesktopState extends State<InvoiceEditItemsDesktop> {
                         }
                         final item = lineItems[index];
                         final product = productState.map[suggestion];
+                        final client = state.clientState.get(invoice.clientId);
+
+                        double cost = product.price;
+                        if (company.convertProductExchangeRate &&
+                            invoice.clientId != null &&
+                            client.currencyId != company.currencyId) {
+                          cost = cost *
+                              getExchangeRate(context,
+                                  fromCurrencyId: company.currencyId,
+                                  toCurrencyId: client.currencyId);
+                          cost = round(
+                              cost,
+                              state.staticState.currencyMap[client.currencyId]
+                                  .precision);
+                        }
+
                         final updatedItem = item.rebuild((b) => b
                           ..productKey = product.productKey
                           ..notes = product.notes
-                          ..cost = product.price
+                          ..cost = cost
                           ..quantity = item.quantity == 0 &&
                                   viewModel.state.company.defaultQuantity
                               ? 1

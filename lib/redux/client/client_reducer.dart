@@ -333,15 +333,15 @@ ClientState _addClient(ClientState clientState, AddClientSuccess action) {
 
 ClientState _updateClient(ClientState clientState, SaveClientSuccess action) {
   return clientState.rebuild((b) => b
-    ..map[action.client.id] = action.client.rebuild((b) =>
-        b..loadedAt = DateTime.now().millisecondsSinceEpoch));
+    ..map[action.client.id] = action.client
+        .rebuild((b) => b..loadedAt = DateTime.now().millisecondsSinceEpoch));
 }
 
 ClientState _setLoadedClient(
     ClientState clientState, LoadClientSuccess action) {
   return clientState.rebuild((b) => b
-    ..map[action.client.id] = action.client.rebuild((b) =>
-        b..loadedAt = DateTime.now().millisecondsSinceEpoch));
+    ..map[action.client.id] = action.client
+        .rebuild((b) => b..loadedAt = DateTime.now().millisecondsSinceEpoch));
 }
 
 ClientState _setLoadedClients(

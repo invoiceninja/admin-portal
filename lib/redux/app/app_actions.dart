@@ -93,9 +93,10 @@ class LoadStaticSuccess implements PersistStatic {
   final StaticDataEntity data;
 }
 
-class UserPreferencesChanged implements PersistPrefs {
-  UserPreferencesChanged({
-    this.layout,
+class UpdateUserPreferences implements PersistPrefs {
+  UpdateUserPreferences({
+    this.appLayout,
+    this.moduleLayout,
     this.sidebar,
     this.enableDarkMode,
     this.requireAuthentication,
@@ -111,7 +112,8 @@ class UserPreferencesChanged implements PersistPrefs {
     this.rowsPerPage,
   });
 
-  final AppLayout layout;
+  final AppLayout appLayout;
+  final ModuleLayout moduleLayout;
   final AppSidebar sidebar;
   final AppSidebarMode menuMode;
   final AppSidebarMode historyMode;
@@ -360,7 +362,7 @@ void viewEntityById({
 
         if (!state.prefState.isPreviewVisible &&
             state.prefState.moduleLayout == ModuleLayout.table) {
-          store.dispatch(UserPreferencesChanged(isPreviewVisible: true));
+          store.dispatch(UpdateUserPreferences(isPreviewVisible: true));
         }
 
         switch (entityType) {

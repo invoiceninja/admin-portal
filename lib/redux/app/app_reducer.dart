@@ -57,8 +57,8 @@ AppState appReducer(AppState state, dynamic action) {
     ..userCompanyStates[state.uiState.selectedCompanyIndex] = companyReducer(
         state.userCompanyStates[state.uiState.selectedCompanyIndex], action)
     ..uiState.replace(uiReducer(state.uiState, action))
-    ..prefState.replace(prefReducer(
-        state.prefState, action, state.uiState.selectedCompanyIndex)));
+    ..prefState
+        .replace(prefReducer(state.prefState, action, state.company.id)));
 }
 
 final lastErrorReducer = combineReducers<String>([

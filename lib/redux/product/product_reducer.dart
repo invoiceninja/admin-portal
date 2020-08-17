@@ -40,7 +40,6 @@ final editingReducer = combineReducers<ProductEntity>([
   TypedReducer<ProductEntity, DeleteProductsSuccess>((products, action) {
     return action.products[0];
   }),
-  TypedReducer<ProductEntity, SelectCompany>(_clearEditing),
   TypedReducer<ProductEntity, DiscardChanges>(_clearEditing),
 ]);
 

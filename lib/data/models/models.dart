@@ -79,7 +79,6 @@ class EntityAction extends EnumClass {
   static const EntityAction reverse = _$reverse;
   static const EntityAction cancel = _$cancel;
   static const EntityAction copy = _$copy;
-  static const EntityAction viewInStripe = _$viewInStripe;
 
   @override
   String toString() {

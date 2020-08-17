@@ -228,6 +228,18 @@ class _$InvoiceEntitySerializer implements StructuredSerializer<InvoiceEntity> {
       'has_expenses',
       serializers.serialize(object.hasExpenses,
           specifiedType: const FullType(bool)),
+      'reminder1_sent',
+      serializers.serialize(object.reminder1Sent,
+          specifiedType: const FullType(String)),
+      'reminder2_sent',
+      serializers.serialize(object.reminder2Sent,
+          specifiedType: const FullType(String)),
+      'reminder3_sent',
+      serializers.serialize(object.reminder3Sent,
+          specifiedType: const FullType(String)),
+      'reminder_last_sent',
+      serializers.serialize(object.reminderLastSent,
+          specifiedType: const FullType(String)),
       'line_items',
       serializers.serialize(object.lineItems,
           specifiedType: const FullType(
@@ -511,6 +523,22 @@ class _$InvoiceEntitySerializer implements StructuredSerializer<InvoiceEntity> {
         case 'has_expenses':
           result.hasExpenses = serializers.deserialize(value,
               specifiedType: const FullType(bool)) as bool;
+          break;
+        case 'reminder1_sent':
+          result.reminder1Sent = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String;
+          break;
+        case 'reminder2_sent':
+          result.reminder2Sent = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String;
+          break;
+        case 'reminder3_sent':
+          result.reminder3Sent = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String;
+          break;
+        case 'reminder_last_sent':
+          result.reminderLastSent = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String;
           break;
         case 'invoice_id':
           result.invoiceId = serializers.deserialize(value,
@@ -930,6 +958,9 @@ class _$InvoiceHistoryEntitySerializer
     final result = <Object>[
       'id',
       serializers.serialize(object.id, specifiedType: const FullType(String)),
+      'activity',
+      serializers.serialize(object.activity,
+          specifiedType: const FullType(ActivityEntity)),
       'activity_id',
       serializers.serialize(object.activityId,
           specifiedType: const FullType(String)),
@@ -959,6 +990,10 @@ class _$InvoiceHistoryEntitySerializer
         case 'id':
           result.id = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String;
+          break;
+        case 'activity':
+          result.activity.replace(serializers.deserialize(value,
+              specifiedType: const FullType(ActivityEntity)) as ActivityEntity);
           break;
         case 'activity_id':
           result.activityId = serializers.deserialize(value,
@@ -1252,6 +1287,14 @@ class _$InvoiceEntity extends InvoiceEntity {
   @override
   final bool hasExpenses;
   @override
+  final String reminder1Sent;
+  @override
+  final String reminder2Sent;
+  @override
+  final String reminder3Sent;
+  @override
+  final String reminderLastSent;
+  @override
   final String invoiceId;
   @override
   final String filename;
@@ -1328,6 +1371,10 @@ class _$InvoiceEntity extends InvoiceEntity {
       this.customTaxes3,
       this.customTaxes4,
       this.hasExpenses,
+      this.reminder1Sent,
+      this.reminder2Sent,
+      this.reminder3Sent,
+      this.reminderLastSent,
       this.invoiceId,
       this.filename,
       this.lineItems,
@@ -1450,6 +1497,18 @@ class _$InvoiceEntity extends InvoiceEntity {
     if (hasExpenses == null) {
       throw new BuiltValueNullFieldError('InvoiceEntity', 'hasExpenses');
     }
+    if (reminder1Sent == null) {
+      throw new BuiltValueNullFieldError('InvoiceEntity', 'reminder1Sent');
+    }
+    if (reminder2Sent == null) {
+      throw new BuiltValueNullFieldError('InvoiceEntity', 'reminder2Sent');
+    }
+    if (reminder3Sent == null) {
+      throw new BuiltValueNullFieldError('InvoiceEntity', 'reminder3Sent');
+    }
+    if (reminderLastSent == null) {
+      throw new BuiltValueNullFieldError('InvoiceEntity', 'reminderLastSent');
+    }
     if (lineItems == null) {
       throw new BuiltValueNullFieldError('InvoiceEntity', 'lineItems');
     }
@@ -1524,6 +1583,10 @@ class _$InvoiceEntity extends InvoiceEntity {
         customTaxes3 == other.customTaxes3 &&
         customTaxes4 == other.customTaxes4 &&
         hasExpenses == other.hasExpenses &&
+        reminder1Sent == other.reminder1Sent &&
+        reminder2Sent == other.reminder2Sent &&
+        reminder3Sent == other.reminder3Sent &&
+        reminderLastSent == other.reminderLastSent &&
         invoiceId == other.invoiceId &&
         filename == other.filename &&
         lineItems == other.lineItems &&
@@ -1563,10 +1626,10 @@ class _$InvoiceEntity extends InvoiceEntity {
                                                                 $jc(
                                                                     $jc(
                                                                         $jc(
-                                                                            $jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc(0, amount.hashCode), balance.hashCode), clientId.hashCode), statusId.hashCode), number.hashCode), discount.hashCode), poNumber.hashCode), date.hashCode), dueDate.hashCode), publicNotes.hashCode), privateNotes.hashCode), terms.hashCode), footer.hashCode), designId.hashCode), usesInclusiveTaxes.hashCode), taxName1.hashCode), taxRate1.hashCode), taxName2.hashCode), taxRate2.hashCode), taxName3.hashCode), taxRate3.hashCode), isAmountDiscount.hashCode), partial.hashCode), taxAmount.hashCode), partialDueDate.hashCode), hasTasks.hashCode), autoBill.hashCode), customValue1.hashCode), customValue2.hashCode), customValue3.hashCode), customValue4.hashCode), customSurcharge1.hashCode), customSurcharge2.hashCode), customSurcharge3.hashCode), customSurcharge4.hashCode), customTaxes1.hashCode), customTaxes2.hashCode),
-                                                                                customTaxes3.hashCode),
-                                                                            customTaxes4.hashCode),
-                                                                        hasExpenses.hashCode),
+                                                                            $jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc(0, amount.hashCode), balance.hashCode), clientId.hashCode), statusId.hashCode), number.hashCode), discount.hashCode), poNumber.hashCode), date.hashCode), dueDate.hashCode), publicNotes.hashCode), privateNotes.hashCode), terms.hashCode), footer.hashCode), designId.hashCode), usesInclusiveTaxes.hashCode), taxName1.hashCode), taxRate1.hashCode), taxName2.hashCode), taxRate2.hashCode), taxName3.hashCode), taxRate3.hashCode), isAmountDiscount.hashCode), partial.hashCode), taxAmount.hashCode), partialDueDate.hashCode), hasTasks.hashCode), autoBill.hashCode), customValue1.hashCode), customValue2.hashCode), customValue3.hashCode), customValue4.hashCode), customSurcharge1.hashCode), customSurcharge2.hashCode), customSurcharge3.hashCode), customSurcharge4.hashCode), customTaxes1.hashCode), customTaxes2.hashCode), customTaxes3.hashCode), customTaxes4.hashCode), hasExpenses.hashCode), reminder1Sent.hashCode),
+                                                                                reminder2Sent.hashCode),
+                                                                            reminder3Sent.hashCode),
+                                                                        reminderLastSent.hashCode),
                                                                     invoiceId.hashCode),
                                                                 filename.hashCode),
                                                             lineItems.hashCode),
@@ -1628,6 +1691,10 @@ class _$InvoiceEntity extends InvoiceEntity {
           ..add('customTaxes3', customTaxes3)
           ..add('customTaxes4', customTaxes4)
           ..add('hasExpenses', hasExpenses)
+          ..add('reminder1Sent', reminder1Sent)
+          ..add('reminder2Sent', reminder2Sent)
+          ..add('reminder3Sent', reminder3Sent)
+          ..add('reminderLastSent', reminderLastSent)
           ..add('invoiceId', invoiceId)
           ..add('filename', filename)
           ..add('lineItems', lineItems)
@@ -1819,6 +1886,26 @@ class InvoiceEntityBuilder
   bool get hasExpenses => _$this._hasExpenses;
   set hasExpenses(bool hasExpenses) => _$this._hasExpenses = hasExpenses;
 
+  String _reminder1Sent;
+  String get reminder1Sent => _$this._reminder1Sent;
+  set reminder1Sent(String reminder1Sent) =>
+      _$this._reminder1Sent = reminder1Sent;
+
+  String _reminder2Sent;
+  String get reminder2Sent => _$this._reminder2Sent;
+  set reminder2Sent(String reminder2Sent) =>
+      _$this._reminder2Sent = reminder2Sent;
+
+  String _reminder3Sent;
+  String get reminder3Sent => _$this._reminder3Sent;
+  set reminder3Sent(String reminder3Sent) =>
+      _$this._reminder3Sent = reminder3Sent;
+
+  String _reminderLastSent;
+  String get reminderLastSent => _$this._reminderLastSent;
+  set reminderLastSent(String reminderLastSent) =>
+      _$this._reminderLastSent = reminderLastSent;
+
   String _invoiceId;
   String get invoiceId => _$this._invoiceId;
   set invoiceId(String invoiceId) => _$this._invoiceId = invoiceId;
@@ -1937,6 +2024,10 @@ class InvoiceEntityBuilder
       _customTaxes3 = _$v.customTaxes3;
       _customTaxes4 = _$v.customTaxes4;
       _hasExpenses = _$v.hasExpenses;
+      _reminder1Sent = _$v.reminder1Sent;
+      _reminder2Sent = _$v.reminder2Sent;
+      _reminder3Sent = _$v.reminder3Sent;
+      _reminderLastSent = _$v.reminderLastSent;
       _invoiceId = _$v.invoiceId;
       _filename = _$v.filename;
       _lineItems = _$v.lineItems?.toBuilder();
@@ -2017,6 +2108,10 @@ class InvoiceEntityBuilder
               customTaxes3: customTaxes3,
               customTaxes4: customTaxes4,
               hasExpenses: hasExpenses,
+              reminder1Sent: reminder1Sent,
+              reminder2Sent: reminder2Sent,
+              reminder3Sent: reminder3Sent,
+              reminderLastSent: reminderLastSent,
               invoiceId: invoiceId,
               filename: filename,
               lineItems: lineItems.build(),
@@ -2708,6 +2803,8 @@ class _$InvoiceHistoryEntity extends InvoiceHistoryEntity {
   @override
   final String id;
   @override
+  final ActivityEntity activity;
+  @override
   final String activityId;
   @override
   final String htmlBackup;
@@ -2719,10 +2816,17 @@ class _$InvoiceHistoryEntity extends InvoiceHistoryEntity {
       (new InvoiceHistoryEntityBuilder()..update(updates)).build();
 
   _$InvoiceHistoryEntity._(
-      {this.id, this.activityId, this.htmlBackup, this.createdAt})
+      {this.id,
+      this.activity,
+      this.activityId,
+      this.htmlBackup,
+      this.createdAt})
       : super._() {
     if (id == null) {
       throw new BuiltValueNullFieldError('InvoiceHistoryEntity', 'id');
+    }
+    if (activity == null) {
+      throw new BuiltValueNullFieldError('InvoiceHistoryEntity', 'activity');
     }
     if (activityId == null) {
       throw new BuiltValueNullFieldError('InvoiceHistoryEntity', 'activityId');
@@ -2749,6 +2853,7 @@ class _$InvoiceHistoryEntity extends InvoiceHistoryEntity {
     if (identical(other, this)) return true;
     return other is InvoiceHistoryEntity &&
         id == other.id &&
+        activity == other.activity &&
         activityId == other.activityId &&
         htmlBackup == other.htmlBackup &&
         createdAt == other.createdAt;
@@ -2758,7 +2863,10 @@ class _$InvoiceHistoryEntity extends InvoiceHistoryEntity {
   @override
   int get hashCode {
     return __hashCode ??= $jf($jc(
-        $jc($jc($jc(0, id.hashCode), activityId.hashCode), htmlBackup.hashCode),
+        $jc(
+            $jc($jc($jc(0, id.hashCode), activity.hashCode),
+                activityId.hashCode),
+            htmlBackup.hashCode),
         createdAt.hashCode));
   }
 
@@ -2766,6 +2874,7 @@ class _$InvoiceHistoryEntity extends InvoiceHistoryEntity {
   String toString() {
     return (newBuiltValueToStringHelper('InvoiceHistoryEntity')
           ..add('id', id)
+          ..add('activity', activity)
           ..add('activityId', activityId)
           ..add('htmlBackup', htmlBackup)
           ..add('createdAt', createdAt))
@@ -2780,6 +2889,11 @@ class InvoiceHistoryEntityBuilder
   String _id;
   String get id => _$this._id;
   set id(String id) => _$this._id = id;
+
+  ActivityEntityBuilder _activity;
+  ActivityEntityBuilder get activity =>
+      _$this._activity ??= new ActivityEntityBuilder();
+  set activity(ActivityEntityBuilder activity) => _$this._activity = activity;
 
   String _activityId;
   String get activityId => _$this._activityId;
@@ -2798,6 +2912,7 @@ class InvoiceHistoryEntityBuilder
   InvoiceHistoryEntityBuilder get _$this {
     if (_$v != null) {
       _id = _$v.id;
+      _activity = _$v.activity?.toBuilder();
       _activityId = _$v.activityId;
       _htmlBackup = _$v.htmlBackup;
       _createdAt = _$v.createdAt;
@@ -2821,12 +2936,26 @@ class InvoiceHistoryEntityBuilder
 
   @override
   _$InvoiceHistoryEntity build() {
-    final _$result = _$v ??
-        new _$InvoiceHistoryEntity._(
-            id: id,
-            activityId: activityId,
-            htmlBackup: htmlBackup,
-            createdAt: createdAt);
+    _$InvoiceHistoryEntity _$result;
+    try {
+      _$result = _$v ??
+          new _$InvoiceHistoryEntity._(
+              id: id,
+              activity: activity.build(),
+              activityId: activityId,
+              htmlBackup: htmlBackup,
+              createdAt: createdAt);
+    } catch (_) {
+      String _$failedField;
+      try {
+        _$failedField = 'activity';
+        activity.build();
+      } catch (e) {
+        throw new BuiltValueNestedFieldError(
+            'InvoiceHistoryEntity', _$failedField, e.toString());
+      }
+      rethrow;
+    }
     replace(_$result);
     return _$result;
   }

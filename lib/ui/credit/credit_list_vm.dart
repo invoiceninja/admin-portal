@@ -66,7 +66,9 @@ class CreditListVM extends EntityListVM {
     @required String filter,
     @required bool isLoading,
     @required Function(BuildContext) onRefreshed,
-    @required Function(BuildContext, List<InvoiceEntity>, EntityAction) onEntityAction,
+    @required
+        Function(BuildContext, List<InvoiceEntity>, EntityAction)
+            onEntityAction,
     @required List<String> tableColumns,
     @required EntityType entityType,
     @required Function(String) onSortColumn,

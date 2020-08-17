@@ -44,6 +44,10 @@ enum InvoiceReportFields {
   tax_amount,
   net_amount,
   net_balance,
+  reminder1_sent,
+  reminder2_sent,
+  reminder3_sent,
+  reminder_last_sent,
 }
 
 var memoizedInvoiceReport = memo6((
@@ -144,6 +148,18 @@ ReportResult invoiceReport(
           break;
         case InvoiceReportFields.date:
           value = invoice.date;
+          break;
+        case InvoiceReportFields.reminder1_sent:
+          value = invoice.reminder1Sent;
+          break;
+        case InvoiceReportFields.reminder2_sent:
+          value = invoice.reminder2Sent;
+          break;
+        case InvoiceReportFields.reminder3_sent:
+          value = invoice.reminder3Sent;
+          break;
+        case InvoiceReportFields.reminder_last_sent:
+          value = invoice.reminderLastSent;
           break;
         case InvoiceReportFields.age:
           value = invoice.age;

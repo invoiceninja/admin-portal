@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:typed_data';
 import 'dart:ui';
 import 'package:built_collection/built_collection.dart';
 import 'package:flutter/foundation.dart';
@@ -50,8 +51,7 @@ class _DesignEditState extends State<DesignEdit>
 
   FocusScopeNode _focusNode;
   TabController _tabController;
-  PDFPageImage _pdfPageImage;
-  String _pdfString;
+  Uint8List _pdfBytes;
   bool _isLoading = false;
 
   List<TextEditingController> _controllers;
@@ -80,11 +80,10 @@ class _DesignEditState extends State<DesignEdit>
 
     final design = widget.viewModel.design;
     _nameController.text = design.name;
-    _headerController.text = design.getSection(kDesignHeader); //design.design;
-    _footerController.text = design.getSection(kDesignFooter); //design.design;
-    _bodyController.text = design.getSection(kDesignBody); //design.design;
-    _productsController.text =
-        design.getSection(kDesignProducts); //design.design;
+    _headerController.text = design.getSection(kDesignHeader);
+    _footerController.text = design.getSection(kDesignFooter);
+    _bodyController.text = design.getSection(kDesignBody);
+    _productsController.text = design.getSection(kDesignProducts);
     _tasksController.text = design.getSection(kDesignTasks);
     _includesController.text = design.getSection(kDesignIncludes);
 
@@ -156,28 +155,12 @@ class _DesignEditState extends State<DesignEdit>
             return;
           }
 
-          if (response == null) {
-            setState(() {
-              _isLoading = false;
-            });
-          } else if (kIsWeb) {
-            setState(() {
-              _isLoading = false;
-              _pdfString = 'data:application/pdf;base64,' +
-                  base64Encode(response.bodyBytes);
-            });
-          } else {
-            final document = await PDFDocument.openData(response.bodyBytes);
-            final page = await document.getPage(1);
-            final pageImage =
-                await page.render(width: page.width, height: page.height);
-            page.close();
-
-            setState(() {
-              _isLoading = false;
-              _pdfPageImage = pageImage;
-            });
-          }
+          setState(() {
+            _isLoading = false;
+            if (response != null) {
+              _pdfBytes = response.bodyBytes;
+            }
+          });
         });
   }
 
@@ -234,8 +217,7 @@ class _DesignEditState extends State<DesignEdit>
                       onLoadDesign: _loadDesign,
                     ),
                     DesignPreview(
-                      pdfPageImage: _pdfPageImage,
-                      pdfString: _pdfString,
+                      pdfBytes: _pdfBytes,
                       isLoading: _isLoading,
                     ),
                     DesignSection(textController: _headerController),
@@ -292,8 +274,7 @@ class _DesignEditState extends State<DesignEdit>
                     ),
                     Expanded(
                       child: DesignPreview(
-                        pdfPageImage: _pdfPageImage,
-                        pdfString: _pdfString,
+                        pdfBytes: _pdfBytes,
                         isLoading: _isLoading,
                       ),
                     ),
@@ -373,13 +354,12 @@ class DesignSettings extends StatelessWidget {
 
 class DesignPreview extends StatefulWidget {
   const DesignPreview({
-    @required this.pdfString,
-    @required this.pdfPageImage,
+    @required this.pdfBytes,
     @required this.isLoading,
   });
 
-  final String pdfString;
-  final PDFPageImage pdfPageImage;
+  final Uint8List pdfBytes;
+
   final bool isLoading;
 
   @override
@@ -387,41 +367,34 @@ class DesignPreview extends StatefulWidget {
 }
 
 class _DesignPreviewState extends State<DesignPreview> {
-  double _scrollPosition = 0;
-  final _scrollController = ScrollController(
-    //initialScrollOffset: 0,
-    keepScrollOffset: true,
-  );
+  PdfController _pdfController;
 
-  @override
-  void initState() {
-    super.initState();
-    _scrollController.addListener(onScrolled);
-  }
-
-  void onScrolled() {
-    _scrollPosition = _scrollController.offset;
-  }
+  String get _pdfString =>
+      'data:application/pdf;base64,' + base64Encode(widget.pdfBytes);
 
   @override
   void didUpdateWidget(oldWidget) {
     super.didUpdateWidget(oldWidget);
 
-    if (kIsWeb) {
-      WebUtils.registerWebView(widget.pdfString);
+    if (oldWidget.pdfBytes == widget.pdfBytes) {
+      return;
     }
 
-    if (_scrollController.hasClients && _scrollPosition > 0) {
-      WidgetsBinding.instance.addPostFrameCallback((duration) {
-        _scrollController.jumpTo(_scrollPosition);
-      });
+    if (kIsWeb) {
+      WebUtils.registerWebView(_pdfString);
+    } else {
+      final document = PdfDocument.openData(widget.pdfBytes);
+      if (_pdfController == null) {
+        _pdfController = PdfController(document: document);
+      } else {
+        _pdfController.loadDocument(document);
+      }
     }
   }
 
   @override
   void dispose() {
-    _scrollController.removeListener(onScrolled);
-    _scrollController.dispose();
+    _pdfController?.dispose();
 
     super.dispose();
   }
@@ -434,26 +407,19 @@ class _DesignPreviewState extends State<DesignPreview> {
       child: Stack(
         alignment: Alignment.center,
         children: <Widget>[
-          if (widget.pdfPageImage != null)
-            SingleChildScrollView(
-              controller: _scrollController,
-              padding: const EdgeInsets.all(6),
-              child: Card(
-                elevation: 6,
-                child: ExtendedImage.memory(
-                  widget.pdfPageImage.bytes,
-                  fit: BoxFit.fitHeight,
-                  alignment: Alignment.topCenter,
-                ),
+          if (widget.pdfBytes == null)
+            SizedBox()
+          else if (kIsWeb)
+            HtmlElementView(viewType: _pdfString)
+          else if (_pdfController != null)
+            Padding(
+              padding: const EdgeInsets.all(8),
+              child: PdfView(
+                controller: _pdfController,
               ),
             )
-          else if (widget.pdfString != null)
-            HtmlElementView(viewType: widget.pdfString)
           else
-            SizedBox(
-              width: double.infinity,
-              height: double.infinity,
-            ),
+            SizedBox(),
           if (widget.isLoading)
             Column(
               mainAxisSize: MainAxisSize.max,

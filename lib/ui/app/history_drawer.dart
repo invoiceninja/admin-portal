@@ -64,7 +64,7 @@ class HistoryDrawer extends StatelessWidget {
                   icon: Icon(Icons.close),
                   onPressed: () {
                     store.dispatch(
-                        UserPreferencesChanged(sidebar: AppSidebar.history));
+                        UpdateUserPreferences(sidebar: AppSidebar.history));
                   },
                 )
             ],

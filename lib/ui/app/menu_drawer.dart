@@ -615,7 +615,7 @@ class SidebarFooter extends StatelessWidget {
                     icon: Icon(Icons.chevron_left),
                     onPressed: () {
                       store.dispatch(
-                          UserPreferencesChanged(sidebar: AppSidebar.menu));
+                          UpdateUserPreferences(sidebar: AppSidebar.menu));
                     },
                   ),
                 ),
@@ -702,8 +702,7 @@ class SidebarFooterCollapsed extends StatelessWidget {
               icon: Icon(Icons.chevron_right),
               tooltip: localization.showMenu,
               onPressed: () {
-                store
-                    .dispatch(UserPreferencesChanged(sidebar: AppSidebar.menu));
+                store.dispatch(UpdateUserPreferences(sidebar: AppSidebar.menu));
               },
             ),
     );
