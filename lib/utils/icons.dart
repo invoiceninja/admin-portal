@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:invoiceninja_flutter/constants.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
+import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 
 IconData getEntityActionIcon(EntityAction entityAction) {
   switch (entityAction) {
@@ -71,67 +71,67 @@ IconData getEntityActionIcon(EntityAction entityAction) {
 IconData getEntityIcon(EntityType entityType) {
   switch (entityType) {
     case EntityType.dashboard:
-      return FontAwesomeIcons.tachometerAlt;
+      return MdiIcons.viewDashboard;
     case EntityType.reports:
-      return FontAwesomeIcons.chartLine;
+      return MdiIcons.chartLine;
     case EntityType.settings:
-      return FontAwesomeIcons.cog;
+      return MdiIcons.cog;
     case EntityType.product:
-      return FontAwesomeIcons.cube;
+      return MdiIcons.cube;
     case EntityType.project:
-      return FontAwesomeIcons.briefcase;
+      return MdiIcons.briefcase;
     case EntityType.client:
-      return FontAwesomeIcons.users;
+      return Icons.people;
     case EntityType.invoice:
-      return FontAwesomeIcons.fileInvoice;
+      return MdiIcons.fileAccount;
     case EntityType.payment:
-      return FontAwesomeIcons.creditCard;
+      return MdiIcons.creditCard;
     case EntityType.companyGateway:
-      return FontAwesomeIcons.moneyCheckAlt;
+      return MdiIcons.contactlessPaymentCircle;
     case EntityType.quote:
-      return FontAwesomeIcons.fileAlt;
+      return MdiIcons.fileAccountOutline;
     case EntityType.vendor:
-      return FontAwesomeIcons.building;
+      return Icons.business;
     case EntityType.expense:
-      return FontAwesomeIcons.fileImage;
+      return MdiIcons.fileImage;
     case EntityType.task:
-      return FontAwesomeIcons.clock;
+      return MdiIcons.clock;
     case EntityType.group:
-      return FontAwesomeIcons.layerGroup;
+      return MdiIcons.group;
     case EntityType.user:
-      return FontAwesomeIcons.user;
+      return Icons.person;
     case EntityType.credit:
-      return FontAwesomeIcons.solidFileAlt;
+      return MdiIcons.fileUndo;
     case EntityType.design:
-      return FontAwesomeIcons.stamp;
+      return MdiIcons.stamper;
     case EntityType.paymentTerm:
-      return FontAwesomeIcons.calendarCheck;
+      return MdiIcons.calendarCheck;
     case EntityType.token:
-      return FontAwesomeIcons.key;
+      return MdiIcons.key;
     case EntityType.webhook:
-      return FontAwesomeIcons.link;
+      return MdiIcons.link;
     default:
-      return FontAwesomeIcons.questionCircle;
+      return MdiIcons.crosshairsQuestion;
   }
 }
 
 IconData getFileTypeIcon(String type) {
   switch (type) {
     case 'pdf':
-      return FontAwesomeIcons.solidFilePdf;
+      return MdiIcons.filePdf;
     case 'psd':
-      return FontAwesomeIcons.adobe;
+      return MdiIcons.fileImage;
     case 'txt':
-      return FontAwesomeIcons.solidFileAlt;
+      return MdiIcons.file;
     case 'doc':
     case 'docx':
-      return FontAwesomeIcons.solidFileWord;
+      return MdiIcons.fileWord;
     case 'xls':
     case 'xlsx':
-      return FontAwesomeIcons.solidFileExcel;
+      return MdiIcons.fileExcel;
     case 'ppt':
     case 'pptt':
-      return FontAwesomeIcons.solidFilePowerpoint;
+      return MdiIcons.filePowerpoint;
     default:
       return null;
   }
@@ -140,52 +140,52 @@ IconData getFileTypeIcon(String type) {
 IconData getSettingIcon(String section) {
   switch (section) {
     case kSettingsCompanyDetails:
-      return FontAwesomeIcons.building;
+      return Icons.business;
     case kSettingsUserDetails:
-      return FontAwesomeIcons.userAlt;
+      return Icons.person;
     case kSettingsLocalization:
-      return FontAwesomeIcons.globe;
+      return Icons.language;
     case kSettingsOnlinePayments:
-      return FontAwesomeIcons.creditCard;
+      return MdiIcons.creditCard;
     case kSettingsTaxSettings:
     case kSettingsTaxRates:
-      return FontAwesomeIcons.percent;
+      return MdiIcons.percent;
     case kSettingsProducts:
-      return FontAwesomeIcons.cube;
+      return MdiIcons.cube;
     case kSettingsIntegrations:
-      return FontAwesomeIcons.link;
+      return MdiIcons.link;
     case kSettingsImportExport:
-      return FontAwesomeIcons.fileExport;
+      return MdiIcons.fileExport;
     case kSettingsDeviceSettings:
-      return FontAwesomeIcons.desktop;
+      return Icons.settings;
     case kSettingsGroupSettings:
-      return FontAwesomeIcons.layerGroup;
+      return MdiIcons.group;
     case kSettingsGeneratedNumbers:
-      return FontAwesomeIcons.idBadge;
+      return MdiIcons.formatListNumbered;
     case kSettingsCustomFields:
-      return FontAwesomeIcons.heading;
+      return MdiIcons.formatText;
     case kSettingsCustomDesigns:
-      return FontAwesomeIcons.stamp;
+      return MdiIcons.stamper;
     case kSettingsInvoiceDesign:
-      return FontAwesomeIcons.paintBrush;
+      return MdiIcons.brush;
     case kSettingsWorkflowSettings:
-      return FontAwesomeIcons.codeBranch;
+      return MdiIcons.sourceBranch;
     case kSettingsClientPortal:
-      return FontAwesomeIcons.cloud;
+      return MdiIcons.cloud;
     case kSettingsBuyNowButtons:
-      return FontAwesomeIcons.link;
+      return MdiIcons.link;
     case kSettingsEmailSettings:
-      return FontAwesomeIcons.solidEnvelope;
+      return Icons.mail;
     case kSettingsTemplatesAndReminders:
-      return FontAwesomeIcons.file;
+      return MdiIcons.reminder;
     case kSettingsCreditCardsAndBanks:
-      return FontAwesomeIcons.link;
+      return MdiIcons.link;
     case kSettingsDataVisualizations:
-      return FontAwesomeIcons.link;
+      return MdiIcons.link;
     case kSettingsUserManagement:
-      return FontAwesomeIcons.users;
+      return Icons.people;
     case kSettingsAccountManagement:
-      return FontAwesomeIcons.shieldAlt;
+      return MdiIcons.shieldAccount;
     default:
       return null;
   }

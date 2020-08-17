@@ -424,18 +424,14 @@ class _DrawerTileState extends State<DrawerTile> {
           : Colors.transparent,
       child: ListTile(
         dense: true,
-        leading: Padding(
-          padding: const EdgeInsets.only(left: 4),
-          child: Icon(
-            widget.icon,
-            size: 20,
-            color: textColor,
-          ),
+        leading: Icon(
+          widget.icon,
+          size: 22,
+          color: textColor,
         ),
         title: Text(
           widget.title,
           style: Theme.of(context).textTheme.bodyText1.copyWith(
-                fontWeight: FontWeight.w100,
                 fontSize: 16,
                 color: textColor,
               ),
