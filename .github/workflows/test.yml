@@ -28,6 +28,7 @@ jobs:
           channel: 'dev' # TODO change to beta/stable
           #flutter-version: '1.15.17'
       - run: flutter pub get
+      - run: rm ios/Podfile
       - run: |
           cp android/app/build.gradle.prod android/app/build.gradle
           cp lib/.env.dart.example lib/.env.dart
