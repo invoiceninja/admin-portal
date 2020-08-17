@@ -69,8 +69,3 @@ flutter:
     - assets/images/logo.png
     - assets/images/google-icon.png
     - assets/images/payment_types/
-
-  fonts:
-    - family: Roboto
-      fonts:
-        - asset: web/assets/fonts/Roboto-Regular.ttf
