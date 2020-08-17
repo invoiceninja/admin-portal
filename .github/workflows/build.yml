@@ -17,7 +17,7 @@ jobs:
       - uses: subosito/flutter-action@v1
         with:
           channel: 'dev' # TODO change to beta/stable
-          flutter-version: '1.19.0-5.0.pre'
+          #flutter-version: '1.19.0-5.0.pre'
       - run: flutter pub get
       - run: |
           cp lib/.env.dart.example lib/.env.dart
