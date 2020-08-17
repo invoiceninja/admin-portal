@@ -124,6 +124,9 @@ Future<AppState> _initialState(bool isTesting) async {
 
   print('## URL: $url');
   print('## Starts with: ${url.startsWith(kAppDemoUrl) ? 'YES' : 'NO'}');
+  var temp = 'test';
+  var temp2 = temp.substring(2);
+  print(temp2);
   var prefState = PrefState(enableDarkMode: url.startsWith(kAppDemoUrl));
   print('## DarkMode: ${prefState.enableDarkMode ? 'YES' : 'NO'}');
 
