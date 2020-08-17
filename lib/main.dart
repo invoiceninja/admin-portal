@@ -122,13 +122,7 @@ Future<AppState> _initialState(bool isTesting) async {
   final prefString = prefs?.getString(kSharedPrefs);
   final url = prefs.getString(kSharedPrefUrl) ?? WebUtils.browserUrl;
 
-  print('## URL: $url');
-  print('## Starts with: ${url.startsWith(kAppDemoUrl) ? 'YES' : 'NO'}');
-  var temp = 'test';
-  var temp2 = temp.substring(2);
-  print(temp2);
   var prefState = PrefState(enableDarkMode: url.startsWith(kAppDemoUrl));
-  print('## DarkMode: ${prefState.enableDarkMode ? 'YES' : 'NO'}');
 
   if (prefString != null) {
     try {
