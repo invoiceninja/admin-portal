@@ -6,7 +6,7 @@ homepage: https://invoiceninja.com
 documentation: http://docs.invoiceninja.com
 
 environment:
-  sdk: ">=2.8.0 <3.0.0"
+  sdk: ">=2.9.0 <3.0.0"
 
 dependencies:
   flutter:
@@ -69,8 +69,3 @@ flutter:
     - assets/images/logo.png
     - assets/images/google-icon.png
     - assets/images/payment_types/
-
-  fonts:
-    - family: Roboto
-      fonts:
-        - asset: web/assets/fonts/Roboto-Regular.ttf
