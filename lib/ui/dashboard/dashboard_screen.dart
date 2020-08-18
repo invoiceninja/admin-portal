@@ -76,7 +76,7 @@ class _DashboardScreenState extends State<DashboardScreen>
       WidgetsBinding.instance.addPostFrameCallback((duration) {
         showDialog<SettingsWizard>(
             context: context,
-            barrierDismissible: false,
+            //barrierDismissible: false,
             builder: (BuildContext context) {
               return SettingsWizard();
             });
