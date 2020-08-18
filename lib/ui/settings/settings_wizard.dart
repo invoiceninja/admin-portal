@@ -18,7 +18,7 @@ class _SettingsWizardState extends State<SettingsWizard> {
   static final GlobalKey<FormState> _formKey =
       GlobalKey<FormState>(debugLabel: '_settingsWizard');
   final FocusScopeNode _focusNode = FocusScopeNode();
-  bool autoValidate = false;
+  bool _autoValidate = false;
   final _nameController = TextEditingController();
   final _firstNameController = TextEditingController();
   final _lastNameController = TextEditingController();
@@ -42,20 +42,30 @@ class _SettingsWizardState extends State<SettingsWizard> {
   void dispose() {
     _focusNode.dispose();
     _controllers.forEach((dynamic controller) {
-      controller.removeListener(_onSettingsChanged);
       controller.dispose();
     });
     super.dispose();
   }
 
-  void _onSettingsChanged() {}
+  void _onSavePressed() {
+    final bool isValid = _formKey.currentState.validate();
+
+    setState(() {
+      _autoValidate = !isValid;
+    });
+
+    if (!isValid) {
+      return;
+    }
+
+    
+  }
 
   @override
   Widget build(BuildContext context) {
     final localization = AppLocalization.of(context);
     final store = StoreProvider.of<AppState>(context);
     final state = store.state;
-    final company = state.company;
 
     return AlertDialog(
       title: Text(localization.settings),
@@ -69,15 +79,24 @@ class _SettingsWizardState extends State<SettingsWizard> {
               DecoratedFormField(
                 autofocus: true,
                 label: localization.companyName,
+                autovalidate: _autoValidate,
                 controller: _nameController,
+                validator: (value) =>
+                    value.isEmpty ? localization.pleaseEnterAValue : null,
               ),
               DecoratedFormField(
                 label: localization.firstName,
+                autovalidate: _autoValidate,
                 controller: _firstNameController,
+                validator: (value) =>
+                    value.isEmpty ? localization.pleaseEnterAValue : null,
               ),
               DecoratedFormField(
                 label: localization.lastName,
+                autovalidate: _autoValidate,
                 controller: _lastNameController,
+                validator: (value) =>
+                    value.isEmpty ? localization.pleaseEnterAValue : null,
               ),
               EntityDropdown(
                 key: ValueKey('__currency_${_currencyId}__'),
@@ -88,6 +107,8 @@ class _SettingsWizardState extends State<SettingsWizard> {
                 entityId: _currencyId,
                 onSelected: (SelectableEntity currency) =>
                     setState(() => _currencyId = currency?.id),
+                validator: (dynamic value) =>
+                    value.isEmpty ? localization.pleaseEnterAValue : null,
               ),
               EntityDropdown(
                 key: ValueKey('__language_${_languageId}__'),
@@ -98,6 +119,8 @@ class _SettingsWizardState extends State<SettingsWizard> {
                 entityId: _languageId,
                 onSelected: (SelectableEntity language) =>
                     setState(() => _languageId = language?.id),
+                validator: (dynamic value) =>
+                    value.isEmpty ? localization.pleaseEnterAValue : null,
               ),
             ],
           ),
@@ -105,9 +128,7 @@ class _SettingsWizardState extends State<SettingsWizard> {
       ),
       actions: [
         FlatButton(
-            onPressed: () {
-              //
-            },
+            onPressed: _onSavePressed,
             child: Text(localization.save.toUpperCase()))
       ],
     );
