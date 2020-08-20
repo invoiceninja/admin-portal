@@ -120,7 +120,7 @@ void main({bool isTesting = false}) async {
 Future<AppState> _initialState(bool isTesting) async {
   final prefs = await SharedPreferences.getInstance();
   final prefString = prefs?.getString(kSharedPrefs);
-  final url = prefs.getString(kSharedPrefUrl) ?? WebUtils.browserUrl;
+  final url = prefs.getString(kSharedPrefUrl) ?? WebUtils.browserUrl ?? '';
 
   var prefState = PrefState(enableDarkMode: url.startsWith(kAppDemoUrl));
 
