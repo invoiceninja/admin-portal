@@ -62,7 +62,7 @@ class FilterListTile extends StatelessWidget {
     String subtitle;
 
     if (isSettings) {
-      subtitle = entity.listDisplayName;
+      subtitle = entity.listDisplayName ?? '';
       if (entityType == EntityType.client) {
         title = localization.clientSettings;
       } else if (entityType == EntityType.group) {

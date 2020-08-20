@@ -971,7 +971,12 @@ class _$InvoiceHistoryEntitySerializer
       serializers.serialize(object.createdAt,
           specifiedType: const FullType(int)),
     ];
-
+    if (object.amount != null) {
+      result
+        ..add('amount')
+        ..add(serializers.serialize(object.amount,
+            specifiedType: const FullType(double)));
+    }
     return result;
   }
 
@@ -1006,6 +1011,10 @@ class _$InvoiceHistoryEntitySerializer
         case 'created_at':
           result.createdAt = serializers.deserialize(value,
               specifiedType: const FullType(int)) as int;
+          break;
+        case 'amount':
+          result.amount = serializers.deserialize(value,
+              specifiedType: const FullType(double)) as double;
           break;
       }
     }
@@ -2810,6 +2819,8 @@ class _$InvoiceHistoryEntity extends InvoiceHistoryEntity {
   final String htmlBackup;
   @override
   final int createdAt;
+  @override
+  final double amount;
 
   factory _$InvoiceHistoryEntity(
           [void Function(InvoiceHistoryEntityBuilder) updates]) =>
@@ -2820,7 +2831,8 @@ class _$InvoiceHistoryEntity extends InvoiceHistoryEntity {
       this.activity,
       this.activityId,
       this.htmlBackup,
-      this.createdAt})
+      this.createdAt,
+      this.amount})
       : super._() {
     if (id == null) {
       throw new BuiltValueNullFieldError('InvoiceHistoryEntity', 'id');
@@ -2856,7 +2868,8 @@ class _$InvoiceHistoryEntity extends InvoiceHistoryEntity {
         activity == other.activity &&
         activityId == other.activityId &&
         htmlBackup == other.htmlBackup &&
-        createdAt == other.createdAt;
+        createdAt == other.createdAt &&
+        amount == other.amount;
   }
 
   int __hashCode;
@@ -2864,10 +2877,12 @@ class _$InvoiceHistoryEntity extends InvoiceHistoryEntity {
   int get hashCode {
     return __hashCode ??= $jf($jc(
         $jc(
-            $jc($jc($jc(0, id.hashCode), activity.hashCode),
-                activityId.hashCode),
-            htmlBackup.hashCode),
-        createdAt.hashCode));
+            $jc(
+                $jc($jc($jc(0, id.hashCode), activity.hashCode),
+                    activityId.hashCode),
+                htmlBackup.hashCode),
+            createdAt.hashCode),
+        amount.hashCode));
   }
 
   @override
@@ -2877,7 +2892,8 @@ class _$InvoiceHistoryEntity extends InvoiceHistoryEntity {
           ..add('activity', activity)
           ..add('activityId', activityId)
           ..add('htmlBackup', htmlBackup)
-          ..add('createdAt', createdAt))
+          ..add('createdAt', createdAt)
+          ..add('amount', amount))
         .toString();
   }
 }
@@ -2907,6 +2923,10 @@ class InvoiceHistoryEntityBuilder
   int get createdAt => _$this._createdAt;
   set createdAt(int createdAt) => _$this._createdAt = createdAt;
 
+  double _amount;
+  double get amount => _$this._amount;
+  set amount(double amount) => _$this._amount = amount;
+
   InvoiceHistoryEntityBuilder();
 
   InvoiceHistoryEntityBuilder get _$this {
@@ -2916,6 +2936,7 @@ class InvoiceHistoryEntityBuilder
       _activityId = _$v.activityId;
       _htmlBackup = _$v.htmlBackup;
       _createdAt = _$v.createdAt;
+      _amount = _$v.amount;
       _$v = null;
     }
     return this;
@@ -2944,7 +2965,8 @@ class InvoiceHistoryEntityBuilder
               activity: activity.build(),
               activityId: activityId,
               htmlBackup: htmlBackup,
-              createdAt: createdAt);
+              createdAt: createdAt,
+              amount: amount);
     } catch (_) {
       String _$failedField;
       try {

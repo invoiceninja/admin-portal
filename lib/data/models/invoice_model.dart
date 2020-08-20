@@ -1117,6 +1117,7 @@ abstract class InvoiceHistoryEntity
       createdAt: 0,
       activityId: '',
       activity: ActivityEntity(),
+      amount: 0,
     );
   }
 
@@ -1138,6 +1139,10 @@ abstract class InvoiceHistoryEntity
 
   @BuiltValueField(wireName: 'created_at')
   int get createdAt;
+
+  // TODO remove this nullable
+  @nullable
+  double get amount;
 
   static Serializer<InvoiceHistoryEntity> get serializer =>
       _$invoiceHistoryEntitySerializer;
