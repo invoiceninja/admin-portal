@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/ui/app/buttons/bottom_buttons.dart';
 import 'package:invoiceninja_flutter/ui/app/view_scaffold.dart';
+import 'package:invoiceninja_flutter/ui/invoice/view/invoice_view_contacts.dart';
 import 'package:invoiceninja_flutter/ui/invoice/view/invoice_view_documents.dart';
 import 'package:invoiceninja_flutter/ui/invoice/view/invoice_view_history.dart';
 import 'package:invoiceninja_flutter/ui/invoice/view/invoice_view_overview.dart';
@@ -30,7 +31,7 @@ class _InvoiceViewState extends State<InvoiceView>
   @override
   void initState() {
     super.initState();
-    _controller = TabController(vsync: this, length: 3);
+    _controller = TabController(vsync: this, length: 4);
   }
 
   @override
@@ -75,9 +76,13 @@ class _InvoiceViewState extends State<InvoiceView>
           : invoice.number,
       appBarBottom: TabBar(
         controller: _controller,
+        isScrollable: true,
         tabs: [
           Tab(
             text: localization.overview,
+          ),
+          Tab(
+            text: localization.contacts,
           ),
           Tab(
             text: documents.isEmpty
@@ -104,6 +109,13 @@ class _InvoiceViewState extends State<InvoiceView>
                         child: InvoiceOverview(
                           viewModel: viewModel,
                           isFilter: widget.isFilter,
+                          key: ValueKey(viewModel.invoice.id),
+                        ),
+                      ),
+                      RefreshIndicator(
+                        onRefresh: () => viewModel.onRefreshed(context),
+                        child: InvoiceViewContacts(
+                          viewModel: viewModel,
                           key: ValueKey(viewModel.invoice.id),
                         ),
                       ),
