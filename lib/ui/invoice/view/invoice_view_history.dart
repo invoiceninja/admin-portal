@@ -37,7 +37,7 @@ class _InvoiceViewHistoryState extends State<InvoiceViewHistory> {
 
     final historyList = invoice.history.toList();
     historyList.sort((a, b) => b.createdAt.compareTo(a.createdAt));
-    
+
     return ListView.separated(
       shrinkWrap: true,
       padding: const EdgeInsets.symmetric(vertical: 16),
