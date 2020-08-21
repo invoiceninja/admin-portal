@@ -137,9 +137,10 @@ class _PDFScaffoldState extends State<PDFScaffold> {
               onPressed: _response == null
                   ? null
                   : () async {
+                      final fileName = '${invoice.number}.pdf';
                       if (kIsWeb) {
-                        launch(invoice.invitationDownloadLink,
-                            forceSafariVC: false, forceWebView: false);
+                        WebUtils.downloadBinaryFile(
+                            fileName, _response.bodyBytes);
                       } else {
                         final directory = await getExternalStorageDirectory();
                         final filePath =
@@ -147,7 +148,7 @@ class _PDFScaffoldState extends State<PDFScaffold> {
                         final pdfData = file.File(filePath);
                         pdfData.writeAsBytes(_response.bodyBytes);
                         await FlutterShare.shareFile(
-                            title: 'test.pdf', filePath: filePath);
+                            title: fileName, filePath: filePath);
                       }
                     },
             ),

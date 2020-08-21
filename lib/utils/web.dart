@@ -1,5 +1,7 @@
 import 'dart:async';
+import 'dart:convert';
 import 'dart:html';
+import 'dart:typed_data';
 import 'dart:ui' as ui;
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/utils/formatting.dart';
@@ -27,9 +29,18 @@ class WebUtils {
     return completer.future;
   }
 
-  static void downloadFile(String filename, String data) {
+  static void downloadTextFile(String filename, String data) {
     final encodedFileContents = Uri.encodeComponent(data);
     AnchorElement(href: 'data:text/plain;charset=utf-8,$encodedFileContents')
+      ..setAttribute('download', filename)
+      ..click();
+  }
+
+  static void downloadBinaryFile(String filename, Uint8List data) {
+    final encodedFileContents = base64Encode(data);
+    AnchorElement(
+        href:
+            'data:application/octet-stream;charset=utf-16le;base64,$encodedFileContents')
       ..setAttribute('download', filename)
       ..click();
   }
@@ -54,7 +65,7 @@ class WebUtils {
     });
   }
 
-  /*
+/*
   String loadToken() {
     final cookies = document.cookie;
     final List<String> listValues =

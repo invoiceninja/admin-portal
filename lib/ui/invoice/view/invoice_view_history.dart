@@ -30,14 +30,14 @@ class _InvoiceViewHistoryState extends State<InvoiceViewHistory> {
     final viewModel = widget.viewModel;
     final invoice = viewModel.invoice;
 
-    final historyList = invoice.history.toList();
-    historyList.sort((a, b) => b.createdAt.compareTo(a.createdAt));
-
     // TODO remove this null check, it shouldn't be needed
     if (invoice.isStale || invoice.history == null) {
       return LoadingIndicator();
     }
 
+    final historyList = invoice.history.toList();
+    historyList.sort((a, b) => b.createdAt.compareTo(a.createdAt));
+    
     return ListView.separated(
       shrinkWrap: true,
       padding: const EdgeInsets.symmetric(vertical: 16),
