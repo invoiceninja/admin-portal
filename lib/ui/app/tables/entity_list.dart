@@ -98,7 +98,7 @@ class _EntityListState extends State<EntityList> {
     final entityType = widget.entityType;
     final listUIState = state.getUIState(entityType).listUIState;
     final isList = state.prefState.moduleLayout == ModuleLayout.list ||
-        widget.presenter == null;
+        entityType.isSetting;
     final isInMultiselect = listUIState.isInMultiselect();
     final entityList = widget.entityList;
     final entityMap = state.getEntityMap(entityType);
