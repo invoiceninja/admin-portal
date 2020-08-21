@@ -4,6 +4,7 @@ import 'package:invoiceninja_flutter/ui/app/loading_indicator.dart';
 import 'package:invoiceninja_flutter/ui/invoice/view/invoice_view_vm.dart';
 import 'package:invoiceninja_flutter/utils/formatting.dart';
 import 'package:invoiceninja_flutter/utils/pdf.dart';
+import 'package:timeago/timeago.dart' as timeago;
 
 class InvoiceViewHistory extends StatefulWidget {
   const InvoiceViewHistory({Key key, @required this.viewModel})
@@ -29,6 +30,9 @@ class _InvoiceViewHistoryState extends State<InvoiceViewHistory> {
     final viewModel = widget.viewModel;
     final invoice = viewModel.invoice;
 
+    final historyList = invoice.history.toList();
+    historyList.sort((a, b) => b.createdAt.compareTo(a.createdAt));
+
     // TODO remove this null check, it shouldn't be needed
     if (invoice.isStale || invoice.history == null) {
       return LoadingIndicator();
@@ -38,17 +42,20 @@ class _InvoiceViewHistoryState extends State<InvoiceViewHistory> {
       shrinkWrap: true,
       padding: const EdgeInsets.symmetric(vertical: 16),
       itemBuilder: (BuildContext context, index) {
-        final history = invoice.history[index];
+        final history = historyList[index];
         final user = viewModel.state.userState.get(history.activity.userId);
+
         return ListTile(
           title: Text(
-            formatDate(
-              convertTimestampToDateString(history.createdAt),
-              context,
-              showTime: true,
-            ),
+            user.fullName,
           ),
-          subtitle: Text(user.fullName),
+          subtitle: Text(formatDate(
+                convertTimestampToDateString(history.createdAt),
+                context,
+                showTime: true,
+              ) +
+              ' • ' +
+              timeago.format(convertTimestampToDate(history.createdAt))),
           trailing: Icon(Icons.chevron_right),
           onTap: () => viewPdf(invoice, context, activityId: history.id),
         );
