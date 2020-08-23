@@ -38,6 +38,7 @@ class LoginScreen extends StatelessWidget {
 
 class LoginVM {
   LoginVM({
+    @required this.state,
     @required this.isLoading,
     @required this.authState,
     @required this.onLoginPressed,
@@ -47,6 +48,7 @@ class LoginVM {
     @required this.onGoogleSignUpPressed,
   });
 
+  AppState state;
   bool isLoading;
   AuthState authState;
 
@@ -109,6 +111,7 @@ class LoginVM {
     }
 
     return LoginVM(
+        state: store.state,
         isLoading: store.state.isLoading,
         authState: store.state.authState,
         onGoogleLoginPressed: (

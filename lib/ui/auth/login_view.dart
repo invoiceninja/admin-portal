@@ -472,7 +472,7 @@ class _LoginState extends State<LoginView> {
                                     : AutofillHints.password
                               ],
                             ),
-                          if (_isSelfHosted)
+                          if (_isSelfHosted || viewModel.state.isDemo)
                             TextFormField(
                               controller: _urlController,
                               key: ValueKey(localization.url),

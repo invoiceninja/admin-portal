@@ -71,6 +71,7 @@ class _DashboardScreenState extends State<DashboardScreen>
         ScrollController(initialScrollOffset: index * kDashboardPanelHeight)
           ..addListener(onScrollListener);
 
+    /*
     //if ((state.company.settings.name ?? '').isEmpty && state.companies.length == 1) {
     if (kDebugMode) {
       WidgetsBinding.instance.addPostFrameCallback((duration) {
@@ -82,6 +83,7 @@ class _DashboardScreenState extends State<DashboardScreen>
             });
       });
     }
+     */
   }
 
   void onScrollListener() {

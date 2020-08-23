@@ -17,6 +17,7 @@ class InvoiceViewContacts extends StatelessWidget {
       children: invoice.invitations
           .map((invitation) => _InvitationListTile(
                 invitation: invitation,
+                viewModel: viewModel,
               ))
           .toList(),
     );
@@ -24,12 +25,24 @@ class InvoiceViewContacts extends StatelessWidget {
 }
 
 class _InvitationListTile extends StatelessWidget {
-  const _InvitationListTile({@required this.invitation});
+  const _InvitationListTile(
+      {@required this.invitation, @required this.viewModel});
 
   final InvitationEntity invitation;
+  final EntityViewVM viewModel;
 
   @override
   Widget build(BuildContext context) {
-    return Text('$invitation');
+    final state = viewModel.state;
+    final client = state.clientState.get(viewModel.invoice.clientId);
+    final contact = client.contacts.firstWhere(
+        (contact) => contact.id == invitation.contactId,
+        orElse: null);
+
+    return ListTile(
+      title: Text(
+          contact.fullName.isEmpty ? client.displayName : contact.fullName),
+      leading: Icon(Icons.contacts),
+    );
   }
 }
