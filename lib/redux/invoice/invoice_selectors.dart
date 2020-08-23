@@ -204,6 +204,8 @@ EntityStats invoiceStatsForUser(
   return EntityStats(countActive: countActive, countArchived: countArchived);
 }
 
+
+
 bool hasInvoiceChanges(
         InvoiceEntity invoice, BuiltMap<String, InvoiceEntity> invoiceMap) =>
     invoice.isNew ? invoice.isChanged : invoice != invoiceMap[invoice.id];

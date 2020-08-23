@@ -19,6 +19,7 @@ dependencies:
   in_app_purchase: ^0.3.1+1
   path_provider: ^1.6.1
   shared_preferences: ^0.5.6+2
+  #shared_preferences: '>=0.5.8 <2.0.0'
   font_awesome_flutter: ^8.7.0
   material_design_icons_flutter: ^4.0.5345
   built_value: ^7.0.9
@@ -51,6 +52,10 @@ dependencies:
   #quick_actions: ^0.2.1
   version: ^1.0.0
   #idb_shim: ^1.11.1+1
+
+#dependency_overrides:
+#  shared_preferences:
+#    path: ../plugins_shard_pref/packages/shared_preferences/shared_preferences
 
 dev_dependencies:
   flutter_driver:

@@ -257,6 +257,8 @@ class SettingsSearch extends StatelessWidget {
       'payment_type',
       'payment_terms',
       'task_rate',
+      'online_payment_email',
+      'manual_payment_email',
       'invoice_terms',
       'invoice_footer',
       'quote_terms',
@@ -269,6 +271,7 @@ class SettingsSearch extends StatelessWidget {
       'last_name',
       'email',
       'phone',
+      'accent_color',
     ],
     kSettingsLocalization: [
       'currency',
@@ -278,6 +281,7 @@ class SettingsSearch extends StatelessWidget {
       'military_time',
       'first_day_of_the_week',
       'first_month_of_the_year',
+      'custom_labels',
     ],
     kSettingsOnlinePayments: [
       'accepted_card_logos',
@@ -294,7 +298,14 @@ class SettingsSearch extends StatelessWidget {
       'update_products',
       'convert_products',
     ],
+    kSettingsAccountManagement: [
+      'api_tokens',
+      'api_webhooks',
+      'purge_data',
+      'delete_company',
+    ],
     kSettingsDeviceSettings: [
+      'rows_per_page',
       'dark_mode',
       'long_press_multiselect',
       'biometric_authentication',
@@ -338,11 +349,13 @@ class SettingsSearch extends StatelessWidget {
       'auto_email_invoice',
       'auto_archive_invoice',
       'auto_convert',
+      'lock_invoices',
     ],
     kSettingsClientPortal: [
       'portal_mode',
       'subdomain',
       'domain',
+      'client_registration',
       'enable_portal_password',
       'show_accept_invoice_terms',
       'show_accept_quote_terms',

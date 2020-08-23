@@ -16,7 +16,6 @@ import 'package:invoiceninja_flutter/utils/dialogs.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:native_pdf_view/native_pdf_view.dart';
 import 'package:path_provider/path_provider.dart';
-import 'package:url_launcher/url_launcher.dart';
 import 'package:invoiceninja_flutter/utils/web_stub.dart'
     if (dart.library.html) 'package:invoiceninja_flutter/utils/web.dart';
 
@@ -137,9 +136,10 @@ class _PDFScaffoldState extends State<PDFScaffold> {
               onPressed: _response == null
                   ? null
                   : () async {
+                      final fileName = '${invoice.number}.pdf';
                       if (kIsWeb) {
-                        launch(invoice.invitationDownloadLink,
-                            forceSafariVC: false, forceWebView: false);
+                        WebUtils.downloadBinaryFile(
+                            fileName, _response.bodyBytes);
                       } else {
                         final directory = await getExternalStorageDirectory();
                         final filePath =
@@ -147,7 +147,7 @@ class _PDFScaffoldState extends State<PDFScaffold> {
                         final pdfData = file.File(filePath);
                         pdfData.writeAsBytes(_response.bodyBytes);
                         await FlutterShare.shareFile(
-                            title: 'test.pdf', filePath: filePath);
+                            title: fileName, filePath: filePath);
                       }
                     },
             ),

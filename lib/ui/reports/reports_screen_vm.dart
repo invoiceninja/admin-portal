@@ -359,7 +359,7 @@ class ReportsScreenVM {
               '${state.uiState.reportsUIState.report}_report_$date.csv';
 
           if (kIsWeb) {
-            WebUtils.downloadFile(filename, csvData);
+            WebUtils.downloadTextFile(filename, csvData);
           } else {
             final directory = await getExternalStorageDirectory();
             final filePath = '${directory.path}/$filename';

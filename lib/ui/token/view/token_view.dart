@@ -69,9 +69,11 @@ class _TokenListTile extends StatelessWidget {
         child: Text(token.token),
       ),
       trailing: token.isMasked ? null : Icon(Icons.content_copy),
-      onTap: () {
-        handleTokenAction(context, [token], EntityAction.copy);
-      },
+      onTap: token.isMasked
+          ? null
+          : () {
+              handleTokenAction(context, [token], EntityAction.copy);
+            },
     );
   }
 }

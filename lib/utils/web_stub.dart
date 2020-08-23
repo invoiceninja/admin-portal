@@ -1,3 +1,5 @@
+import 'dart:typed_data';
+
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:redux/redux.dart';
 
@@ -6,7 +8,9 @@ class WebUtils {
 
   static Future<String> filePicker() => null;
 
-  static void downloadFile(String filename, String data) {}
+  static void downloadTextFile(String filename, String data) {}
+
+  static void downloadBinaryFile(String filename, Uint8List data) {}
 
   static void reloadBrowser() {}
 
@@ -14,7 +18,7 @@ class WebUtils {
 
   static void warnChanges(Store<AppState> store) {}
 
-  /*
+/*
   static String loadToken() => null;
 
   static void saveToken(String token) {}

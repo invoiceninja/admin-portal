@@ -473,8 +473,12 @@ class _AppBottomBarState extends State<AppBottomBar> {
                 if (!widget.entityType.isSetting && !isList)
                   if (state.prefState.isDesktop)
                     FlatButton(
-                        onPressed: _onColumnsPressed,
-                        child: Text(localization.columns))
+                      onPressed: _onColumnsPressed,
+                      child: Text(
+                        localization.columns,
+                        style: TextStyle(color: state.linkColor),
+                      ),
+                    )
                   else
                     IconButton(
                       icon: Icon(Icons.view_week),
