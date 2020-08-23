@@ -4,11 +4,11 @@ import 'package:invoiceninja_flutter/constants.dart';
 import 'package:invoiceninja_flutter/data/models/entities.dart';
 import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
+import 'package:invoiceninja_flutter/redux/company/company_actions.dart';
 import 'package:invoiceninja_flutter/redux/static/static_selectors.dart';
 import 'package:invoiceninja_flutter/ui/app/app_builder.dart';
 import 'package:invoiceninja_flutter/ui/app/entity_dropdown.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/app_form.dart';
-import 'package:invoiceninja_flutter/ui/app/forms/app_toggle_buttons.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/decorated_form_field.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:invoiceninja_flutter/utils/platforms.dart';
@@ -114,8 +114,12 @@ class _SettingsWizardState extends State<SettingsWizard> {
       entityList: memoizedLanguageList(state.staticState.languageMap),
       labelText: localization.language,
       entityId: _languageId,
-      onSelected: (SelectableEntity language) =>
-          setState(() => _languageId = language?.id),
+      onSelected: (SelectableEntity language) {
+        setState(() => _languageId = language?.id);
+        print('## SET LANUGAGE TO ${language?.id}');
+        store.dispatch(UpdateCompanyLanguage(languageId: language?.id));
+        AppBuilder.of(context).rebuild();
+      },
       validator: (dynamic value) =>
           value.isEmpty ? localization.pleaseEnterAValue : null,
     );

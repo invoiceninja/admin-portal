@@ -16,6 +16,7 @@ import 'package:invoiceninja_flutter/redux/task/task_reducer.dart';
 import 'package:invoiceninja_flutter/redux/project/project_reducer.dart';
 import 'package:invoiceninja_flutter/redux/payment/payment_reducer.dart';
 import 'package:invoiceninja_flutter/redux/quote/quote_reducer.dart';
+
 // STARTER: import - do not remove comment
 import 'package:invoiceninja_flutter/redux/webhook/webhook_reducer.dart';
 import 'package:invoiceninja_flutter/redux/token/token_reducer.dart';
@@ -100,6 +101,10 @@ Reducer<UserCompanyEntity> userCompanyEntityReducer = combineReducers([
       (userCompany, action) => userCompany.rebuild((b) => b
         ..user.userCompany.settings.replace(userCompany.settings)
         ..settings.replace(action.userCompany.settings))),
+  TypedReducer<UserCompanyEntity, UpdateCompanyLanguage>(
+    (userCompany, action) => userCompany
+        .rebuild((b) => b..company.settings.languageId = action.languageId),
+  ),
 ]);
 
 UserCompanyEntity loadCompanySuccessReducer(

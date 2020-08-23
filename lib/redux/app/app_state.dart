@@ -635,6 +635,7 @@ abstract class AppState implements Built<AppState, AppStateBuilder> {
     //return 'Selection: ${clientUIState.selectedId}';
     //return '${clientState.map[clientUIState.selectedId].gatewayTokens}';
     //return 'gatewayId: ${companyGatewayState.map[companyGatewayUIState.selectedId].gatewayId}';
+    //return 'Language Id: ${company.settings.languageId}';
     return '\n\nURL: ${authState.url}\nRoute: ${uiState.currentRoute}\nPrev: ${uiState.previousRoute}\nIs Loaded: ${isLoaded ? 'Yes' : 'No'}\nis Large: ${(company?.isLarge ?? false) ? 'Yes' : 'No'}\nCompany: $companyUpdated${userCompanyState.isStale ? ' [S]' : ''}\nStatic: $staticUpdated${staticState.isStale ? ' [S]' : ''}\n';
   }
 }

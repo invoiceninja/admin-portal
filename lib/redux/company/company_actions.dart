@@ -86,3 +86,9 @@ class PurgeDataFailure implements StopSaving {
 
   final Object error;
 }
+
+class UpdateCompanyLanguage {
+  UpdateCompanyLanguage({this.languageId});
+
+  final String languageId;
+}
