@@ -129,8 +129,33 @@ class _CompanyGatewayEditState extends State<CompanyGatewayEdit>
           ),
           ListView(
             children: <Widget>[
+              FormCard(children: <Widget>[
+                DecoratedFormField(
+                  label: localization.label,
+                  initialValue: companyGateway.label,
+                  onChanged: (String value) => viewModel.onChanged(
+                      companyGateway.rebuild((b) => b..label = value.trim())),
+                ),
+                if (state.staticState.gatewayMap[companyGateway.gatewayId]
+                    .supportsTokenBilling)
+                  AppDropdownButton<String>(
+                      labelText: localization.autoBill,
+                      value: companyGateway.autobill,
+                      onChanged: (dynamic value) => null,
+                      items: [
+                        CompanyGatewayEntity.AUTO_BILL_ALWAYS,
+                        CompanyGatewayEntity.AUTO_BILL_OPT_IN,
+                        CompanyGatewayEntity.AUTO_BILL_OPT_OUT,
+                        CompanyGatewayEntity.AUTO_BILL_DISABLED
+                      ]
+                          .map((value) => DropdownMenuItem(
+                                child: Text(value),
+                                value: value,
+                              ))
+                          .toList())
+              ]),
               FormCard(
-                children: <Widget>[
+                children: [
                   SwitchListTile(
                     activeColor: Theme.of(context).accentColor,
                     title: Text(localization.updateAddress),

@@ -177,6 +177,18 @@ class _$CompanyGatewayEntitySerializer
       'id',
       serializers.serialize(object.id, specifiedType: const FullType(String)),
     ];
+    if (object.autobill != null) {
+      result
+        ..add('autobill')
+        ..add(serializers.serialize(object.autobill,
+            specifiedType: const FullType(String)));
+    }
+    if (object.label != null) {
+      result
+        ..add('label')
+        ..add(serializers.serialize(object.label,
+            specifiedType: const FullType(String)));
+    }
     if (object.isChanged != null) {
       result
         ..add('isChanged')
@@ -265,6 +277,14 @@ class _$CompanyGatewayEntitySerializer
           break;
         case 'config':
           result.config = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String;
+          break;
+        case 'autobill':
+          result.autobill = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String;
+          break;
+        case 'label':
+          result.label = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String;
           break;
         case 'isChanged':
@@ -649,6 +669,10 @@ class _$CompanyGatewayEntity extends CompanyGatewayEntity {
   @override
   final String config;
   @override
+  final String autobill;
+  @override
+  final String label;
+  @override
   final bool isChanged;
   @override
   final int createdAt;
@@ -682,6 +706,8 @@ class _$CompanyGatewayEntity extends CompanyGatewayEntity {
       this.customValue3,
       this.customValue4,
       this.config,
+      this.autobill,
+      this.label,
       this.isChanged,
       this.createdAt,
       this.updatedAt,
@@ -775,6 +801,8 @@ class _$CompanyGatewayEntity extends CompanyGatewayEntity {
         customValue3 == other.customValue3 &&
         customValue4 == other.customValue4 &&
         config == other.config &&
+        autobill == other.autobill &&
+        label == other.label &&
         isChanged == other.isChanged &&
         createdAt == other.createdAt &&
         updatedAt == other.updatedAt &&
@@ -806,28 +834,18 @@ class _$CompanyGatewayEntity extends CompanyGatewayEntity {
                                                                 $jc(
                                                                     $jc(
                                                                         $jc(
-                                                                            $jc(
-                                                                                $jc(
-                                                                                    0,
-                                                                                    gateway
-                                                                                        .hashCode),
-                                                                                gatewayId
-                                                                                    .hashCode),
-                                                                            acceptedCreditCards
-                                                                                .hashCode),
-                                                                        showBillingAddress
-                                                                            .hashCode),
-                                                                    showShippingAddress
-                                                                        .hashCode),
-                                                                updateDetails
-                                                                    .hashCode),
-                                                            feesAndLimitsMap
-                                                                .hashCode),
-                                                        customValue1.hashCode),
-                                                    customValue2.hashCode),
-                                                customValue3.hashCode),
-                                            customValue4.hashCode),
-                                        config.hashCode),
+                                                                            $jc($jc($jc($jc(0, gateway.hashCode), gatewayId.hashCode), acceptedCreditCards.hashCode),
+                                                                                showBillingAddress.hashCode),
+                                                                            showShippingAddress.hashCode),
+                                                                        updateDetails.hashCode),
+                                                                    feesAndLimitsMap.hashCode),
+                                                                customValue1.hashCode),
+                                                            customValue2.hashCode),
+                                                        customValue3.hashCode),
+                                                    customValue4.hashCode),
+                                                config.hashCode),
+                                            autobill.hashCode),
+                                        label.hashCode),
                                     isChanged.hashCode),
                                 createdAt.hashCode),
                             updatedAt.hashCode),
@@ -853,6 +871,8 @@ class _$CompanyGatewayEntity extends CompanyGatewayEntity {
           ..add('customValue3', customValue3)
           ..add('customValue4', customValue4)
           ..add('config', config)
+          ..add('autobill', autobill)
+          ..add('label', label)
           ..add('isChanged', isChanged)
           ..add('createdAt', createdAt)
           ..add('updatedAt', updatedAt)
@@ -926,6 +946,14 @@ class CompanyGatewayEntityBuilder
   String get config => _$this._config;
   set config(String config) => _$this._config = config;
 
+  String _autobill;
+  String get autobill => _$this._autobill;
+  set autobill(String autobill) => _$this._autobill = autobill;
+
+  String _label;
+  String get label => _$this._label;
+  set label(String label) => _$this._label = label;
+
   bool _isChanged;
   bool get isChanged => _$this._isChanged;
   set isChanged(bool isChanged) => _$this._isChanged = isChanged;
@@ -976,6 +1004,8 @@ class CompanyGatewayEntityBuilder
       _customValue3 = _$v.customValue3;
       _customValue4 = _$v.customValue4;
       _config = _$v.config;
+      _autobill = _$v.autobill;
+      _label = _$v.label;
       _isChanged = _$v.isChanged;
       _createdAt = _$v.createdAt;
       _updatedAt = _$v.updatedAt;
@@ -1020,6 +1050,8 @@ class CompanyGatewayEntityBuilder
               customValue3: customValue3,
               customValue4: customValue4,
               config: config,
+              autobill: autobill,
+              label: label,
               isChanged: isChanged,
               createdAt: createdAt,
               updatedAt: updatedAt,

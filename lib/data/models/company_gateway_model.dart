@@ -86,6 +86,11 @@ abstract class CompanyGatewayEntity extends Object
 
   CompanyGatewayEntity._();
 
+  static const AUTO_BILL_ALWAYS = 'always';
+  static const AUTO_BILL_OPT_IN = 'optin';
+  static const AUTO_BILL_OPT_OUT = 'optout';
+  static const AUTO_BILL_DISABLED = 'disabled';
+
   @override
   @memoized
   int get hashCode;
@@ -128,6 +133,12 @@ abstract class CompanyGatewayEntity extends Object
   String get customValue4;
 
   String get config;
+
+  @nullable
+  String get autobill;
+
+  @nullable
+  String get label;
 
   Map<String, dynamic> get parsedConfig =>
       config.isEmpty ? <String, dynamic>{} : jsonDecode(config);
