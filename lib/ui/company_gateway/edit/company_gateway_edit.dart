@@ -141,7 +141,8 @@ class _CompanyGatewayEditState extends State<CompanyGatewayEdit>
                   AppDropdownButton<String>(
                       labelText: localization.autoBill,
                       value: companyGateway.autobill,
-                      onChanged: (dynamic value) => null,
+                      onChanged: (dynamic value) => viewModel.onChanged(
+                          companyGateway.rebuild((b) => b..autobill = value)),
                       items: [
                         CompanyGatewayEntity.AUTO_BILL_ALWAYS,
                         CompanyGatewayEntity.AUTO_BILL_OPT_IN,
@@ -149,7 +150,7 @@ class _CompanyGatewayEditState extends State<CompanyGatewayEdit>
                         CompanyGatewayEntity.AUTO_BILL_DISABLED
                       ]
                           .map((value) => DropdownMenuItem(
-                                child: Text(value),
+                                child: Text(localization.lookup(value)),
                                 value: value,
                               ))
                           .toList())
