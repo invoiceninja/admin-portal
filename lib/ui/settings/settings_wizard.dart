@@ -2,8 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:invoiceninja_flutter/constants.dart';
 import 'package:invoiceninja_flutter/data/models/entities.dart';
+import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/redux/static/static_selectors.dart';
+import 'package:invoiceninja_flutter/ui/app/app_builder.dart';
 import 'package:invoiceninja_flutter/ui/app/entity_dropdown.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/app_form.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/app_toggle_buttons.dart';
@@ -127,11 +129,12 @@ class _SettingsWizardState extends State<SettingsWizard> {
         constraints: BoxConstraints.expand(
             width: (constraints.maxWidth / 2) - 2, height: 40),
         isSelected: [
-          true,
-          false,
+          !state.prefState.enableDarkMode,
+          state.prefState.enableDarkMode,
         ],
         onPressed: (index) {
-          print('## onPressed: $index');
+          store.dispatch(UpdateUserPreferences(enableDarkMode: index == 1));
+          AppBuilder.of(context).rebuild();
         },
       );
     });
