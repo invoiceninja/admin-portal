@@ -49,13 +49,11 @@ class WebUtils {
 
   static void registerWebView(String html) {
     // ignore: undefined_prefixed_name
-    /*
     ui.platformViewRegistry.registerViewFactory(
         html,
         (int viewId) => IFrameElement()
           ..src = html
           ..style.border = 'none');
-     */
   }
 
   static void warnChanges(Store<AppState> store) {
