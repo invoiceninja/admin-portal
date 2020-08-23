@@ -629,7 +629,7 @@ abstract class AppState implements Built<AppState, AppStateBuilder> {
     //return 'Last Updated: ${userCompanyStates.map((state) => state.lastUpdated).join(',')}';
     //return 'Names: ${userCompanyStates.map((state) => state.company.id).join(',')}';
     //return 'Client Count: ${userCompanyState.clientState.list.length}, Last Updated: ${userCompanyState.lastUpdated}';
-    return 'Token: ${credentials.token} - ${userCompanyStates.map((state) => state?.token?.token ?? '').where((name) => name.isNotEmpty).join(',')}';
+    //return 'Token: ${credentials.token} - ${userCompanyStates.map((state) => state?.token?.token ?? '').where((name) => name.isNotEmpty).join(',')}';
     //return 'Payment Terms: ${company.settings.defaultPaymentTerms}';
     //return 'Invitations: ${uiState.invoiceUIState.editing.invitations}';
     //return 'Selection: ${clientUIState.selectedId}';

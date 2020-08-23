@@ -8,6 +8,7 @@ import 'package:invoiceninja_flutter/ui/app/entity_dropdown.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/app_form.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/decorated_form_field.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
+import 'package:invoiceninja_flutter/utils/platforms.dart';
 
 class SettingsWizard extends StatefulWidget {
   @override
@@ -57,8 +58,6 @@ class _SettingsWizardState extends State<SettingsWizard> {
     if (!isValid) {
       return;
     }
-
-    
   }
 
   @override
@@ -67,62 +66,98 @@ class _SettingsWizardState extends State<SettingsWizard> {
     final store = StoreProvider.of<AppState>(context);
     final state = store.state;
 
+    final companyName = DecoratedFormField(
+      autofocus: true,
+      label: localization.companyName,
+      autovalidate: _autoValidate,
+      controller: _nameController,
+      validator: (value) =>
+          value.isEmpty ? localization.pleaseEnterAValue : null,
+    );
+
+    final firstName = DecoratedFormField(
+      label: localization.firstName,
+      autovalidate: _autoValidate,
+      controller: _firstNameController,
+      validator: (value) =>
+          value.isEmpty ? localization.pleaseEnterAValue : null,
+    );
+
+    final lastName = DecoratedFormField(
+      label: localization.lastName,
+      autovalidate: _autoValidate,
+      controller: _lastNameController,
+      validator: (value) =>
+          value.isEmpty ? localization.pleaseEnterAValue : null,
+    );
+
+    final currency = EntityDropdown(
+      key: ValueKey('__currency_${_currencyId}__'),
+      allowClearing: true,
+      entityType: EntityType.currency,
+      entityList: memoizedCurrencyList(state.staticState.currencyMap),
+      labelText: localization.currency,
+      entityId: _currencyId,
+      onSelected: (SelectableEntity currency) =>
+          setState(() => _currencyId = currency?.id),
+      validator: (dynamic value) =>
+          value.isEmpty ? localization.pleaseEnterAValue : null,
+    );
+
+    final language = EntityDropdown(
+      key: ValueKey('__language_${_languageId}__'),
+      allowClearing: true,
+      entityType: EntityType.language,
+      entityList: memoizedLanguageList(state.staticState.languageMap),
+      labelText: localization.language,
+      entityId: _languageId,
+      onSelected: (SelectableEntity language) =>
+          setState(() => _languageId = language?.id),
+      validator: (dynamic value) =>
+          value.isEmpty ? localization.pleaseEnterAValue : null,
+    );
+
     return AlertDialog(
       title: Text(localization.settings),
       content: AppForm(
         focusNode: _focusNode,
         formKey: _formKey,
         child: SingleChildScrollView(
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              DecoratedFormField(
-                autofocus: true,
-                label: localization.companyName,
-                autovalidate: _autoValidate,
-                controller: _nameController,
-                validator: (value) =>
-                    value.isEmpty ? localization.pleaseEnterAValue : null,
-              ),
-              DecoratedFormField(
-                label: localization.firstName,
-                autovalidate: _autoValidate,
-                controller: _firstNameController,
-                validator: (value) =>
-                    value.isEmpty ? localization.pleaseEnterAValue : null,
-              ),
-              DecoratedFormField(
-                label: localization.lastName,
-                autovalidate: _autoValidate,
-                controller: _lastNameController,
-                validator: (value) =>
-                    value.isEmpty ? localization.pleaseEnterAValue : null,
-              ),
-              EntityDropdown(
-                key: ValueKey('__currency_${_currencyId}__'),
-                allowClearing: true,
-                entityType: EntityType.currency,
-                entityList: memoizedCurrencyList(state.staticState.currencyMap),
-                labelText: localization.currency,
-                entityId: _currencyId,
-                onSelected: (SelectableEntity currency) =>
-                    setState(() => _currencyId = currency?.id),
-                validator: (dynamic value) =>
-                    value.isEmpty ? localization.pleaseEnterAValue : null,
-              ),
-              EntityDropdown(
-                key: ValueKey('__language_${_languageId}__'),
-                allowClearing: true,
-                entityType: EntityType.language,
-                entityList: memoizedLanguageList(state.staticState.languageMap),
-                labelText: localization.language,
-                entityId: _languageId,
-                onSelected: (SelectableEntity language) =>
-                    setState(() => _languageId = language?.id),
-                validator: (dynamic value) =>
-                    value.isEmpty ? localization.pleaseEnterAValue : null,
-              ),
-            ],
+          child: Container(
+            width: isMobile(context) ? double.infinity : 400,
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: isMobile(context)
+                  ? [
+                      companyName,
+                      firstName,
+                      lastName,
+                      language,
+                      currency,
+                    ]
+                  : [
+                      Row(
+                        children: [
+                          Expanded(child: companyName),
+                          SizedBox(width: kTableColumnGap),
+                        ],
+                      ),
+                      Row(
+                        children: [
+                          Expanded(child: firstName),
+                          SizedBox(width: kTableColumnGap),
+                          Expanded(child: lastName),
+                        ],
+                      ),
+                      Row(
+                        children: [
+                          Expanded(child: language),
+                          SizedBox(width: kTableColumnGap),
+                          Expanded(child: currency),
+                        ],
+                      )
+                    ],
+            ),
           ),
         ),
       ),
