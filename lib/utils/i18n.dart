@@ -15,6 +15,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
   static final Map<String, Map<String, String>> _localizedValues = {
     'en': {
       // STARTER: lang key - do not remove comment
+      'welcome_to_invoice_ninja': 'Welcome to Invoice Ninja',
       'always': 'Always',
       'optin': 'Opt-In',
       'optout': 'Opt-Out',
@@ -4404,6 +4405,9 @@ mixin LocalizationsProvider on LocaleCodeAware {
   String get optIn => _localizedValues[localeCode]['optin'] ?? '';
 
   String get optOut => _localizedValues[localeCode]['optout'] ?? '';
+
+  String get welcomeToInvoiceNinja =>
+      _localizedValues[localeCode]['welcome_to_invoice_ninja'] ?? '';
 
   String lookup(String key) {
     final lookupKey = toSnakeCase(key);

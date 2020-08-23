@@ -6,6 +6,7 @@ import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/redux/static/static_selectors.dart';
 import 'package:invoiceninja_flutter/ui/app/entity_dropdown.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/app_form.dart';
+import 'package:invoiceninja_flutter/ui/app/forms/app_toggle_buttons.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/decorated_form_field.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:invoiceninja_flutter/utils/platforms.dart';
@@ -117,8 +118,26 @@ class _SettingsWizardState extends State<SettingsWizard> {
           value.isEmpty ? localization.pleaseEnterAValue : null,
     );
 
+    final darkMode = LayoutBuilder(builder: (context, constraints) {
+      return ToggleButtons(
+        children: [
+          Text(localization.light),
+          Text(localization.dark),
+        ],
+        constraints: BoxConstraints.expand(
+            width: (constraints.maxWidth / 2) - 2, height: 40),
+        isSelected: [
+          true,
+          false,
+        ],
+        onPressed: (index) {
+          print('## onPressed: $index');
+        },
+      );
+    });
+
     return AlertDialog(
-      title: Text(localization.settings),
+      title: Text(localization.welcomeToInvoiceNinja),
       content: AppForm(
         focusNode: _focusNode,
         formKey: _formKey,
@@ -134,12 +153,14 @@ class _SettingsWizardState extends State<SettingsWizard> {
                       lastName,
                       language,
                       currency,
+                      darkMode,
                     ]
                   : [
                       Row(
                         children: [
                           Expanded(child: companyName),
                           SizedBox(width: kTableColumnGap),
+                          Expanded(child: darkMode),
                         ],
                       ),
                       Row(
