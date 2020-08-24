@@ -275,7 +275,6 @@ abstract class ClientEntity extends Object
   @BuiltValueField(wireName: 'system_logs')
   BuiltList<SystemLogEntity> get systemLogs;
 
-
   //String get last_login;
   //String get custom_messages;
 
@@ -748,7 +747,19 @@ abstract class ContactEntity extends Object
     return (firstName + ' ' + lastName).trim();
   }
 
-  String get fullNameWithEmail => '$fullName <$email>';
+  String get fullNameWithEmail {
+    String name = fullName;
+
+    if (email.isNotEmpty) {
+      if (name.isEmpty) {
+        name += email;
+      } else {
+        name += ' <$email>';
+      }
+    }
+
+    return name;
+  }
 
   @override
   EntityType get entityType {
