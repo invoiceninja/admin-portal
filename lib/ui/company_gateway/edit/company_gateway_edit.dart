@@ -114,7 +114,8 @@ class _CompanyGatewayEditState extends State<CompanyGatewayEdit>
                                   .defaultGatewayTypeId ??
                               kGatewayTypeCreditCard] = FeesAndLimitsSettings()
                           ..gatewayId = gateway.id
-                          ..config = '{}'),
+                          ..config = '{}'
+                          ..label = gateway.listDisplayName),
                       ),
                       //onFieldSubmitted: (String value) => _node.nextFocus(),
                     ),
