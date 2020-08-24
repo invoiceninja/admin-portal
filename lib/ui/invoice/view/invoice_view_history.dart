@@ -47,7 +47,9 @@ class _InvoiceViewHistoryState extends State<InvoiceViewHistory> {
 
         return ListTile(
           title: Text(
-            user.fullName,
+            formatNumber(history.amount, context, clientId: invoice.clientId) +
+                ' • ' +
+                user.fullName,
           ),
           subtitle: Text(formatDate(
                 convertTimestampToDateString(history.createdAt),

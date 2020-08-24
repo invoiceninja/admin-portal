@@ -1151,8 +1151,6 @@ abstract class InvoiceHistoryEntity
   @BuiltValueField(wireName: 'created_at')
   int get createdAt;
 
-  // TODO remove this nullable
-  @nullable
   double get amount;
 
   static Serializer<InvoiceHistoryEntity> get serializer =>

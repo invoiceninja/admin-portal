@@ -977,13 +977,11 @@ class _$InvoiceHistoryEntitySerializer
       'created_at',
       serializers.serialize(object.createdAt,
           specifiedType: const FullType(int)),
+      'amount',
+      serializers.serialize(object.amount,
+          specifiedType: const FullType(double)),
     ];
-    if (object.amount != null) {
-      result
-        ..add('amount')
-        ..add(serializers.serialize(object.amount,
-            specifiedType: const FullType(double)));
-    }
+
     return result;
   }
 
@@ -2869,6 +2867,9 @@ class _$InvoiceHistoryEntity extends InvoiceHistoryEntity {
     }
     if (createdAt == null) {
       throw new BuiltValueNullFieldError('InvoiceHistoryEntity', 'createdAt');
+    }
+    if (amount == null) {
+      throw new BuiltValueNullFieldError('InvoiceHistoryEntity', 'amount');
     }
   }
 
