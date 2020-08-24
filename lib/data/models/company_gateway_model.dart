@@ -81,15 +81,17 @@ abstract class CompanyGatewayEntity extends Object
       createdUserId: '',
       assignedUserId: '',
       createdAt: 0,
+      label: '',
+      tokenBilling: TOKEN_BILLING_ALWAYS,
     );
   }
 
   CompanyGatewayEntity._();
 
-  static const AUTO_BILL_ALWAYS = 'always';
-  static const AUTO_BILL_OPT_IN = 'optin';
-  static const AUTO_BILL_OPT_OUT = 'optout';
-  static const AUTO_BILL_DISABLED = 'disabled';
+  static const TOKEN_BILLING_ALWAYS = 'always';
+  static const TOKEN_BILLING_OPT_IN = 'optin';
+  static const TOKEN_BILLING_OPT_OUT = 'optout';
+  static const TOKEN_BILLING_DISABLED = 'disabled';
 
   @override
   @memoized
@@ -134,10 +136,9 @@ abstract class CompanyGatewayEntity extends Object
 
   String get config;
 
-  @nullable
-  String get autobill;
+  @BuiltValueField(wireName: 'token_billing')
+  String get tokenBilling;
 
-  @nullable
   String get label;
 
   Map<String, dynamic> get parsedConfig =>

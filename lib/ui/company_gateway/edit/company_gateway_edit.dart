@@ -139,15 +139,16 @@ class _CompanyGatewayEditState extends State<CompanyGatewayEdit>
                 if (state.staticState.gatewayMap[companyGateway.gatewayId]
                     .supportsTokenBilling)
                   AppDropdownButton<String>(
-                      labelText: localization.autoBill,
-                      value: companyGateway.autobill,
+                      labelText: localization.tokenBilling,
+                      value: companyGateway.tokenBilling,
                       onChanged: (dynamic value) => viewModel.onChanged(
-                          companyGateway.rebuild((b) => b..autobill = value)),
+                          companyGateway
+                              .rebuild((b) => b..tokenBilling = value)),
                       items: [
-                        CompanyGatewayEntity.AUTO_BILL_ALWAYS,
-                        CompanyGatewayEntity.AUTO_BILL_OPT_IN,
-                        CompanyGatewayEntity.AUTO_BILL_OPT_OUT,
-                        CompanyGatewayEntity.AUTO_BILL_DISABLED
+                        CompanyGatewayEntity.TOKEN_BILLING_ALWAYS,
+                        CompanyGatewayEntity.TOKEN_BILLING_OPT_IN,
+                        CompanyGatewayEntity.TOKEN_BILLING_OPT_OUT,
+                        CompanyGatewayEntity.TOKEN_BILLING_DISABLED
                       ]
                           .map((value) => DropdownMenuItem(
                                 child: Text(localization.lookup(value)),

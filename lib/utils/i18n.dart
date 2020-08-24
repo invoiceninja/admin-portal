@@ -15,6 +15,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
   static final Map<String, Map<String, String>> _localizedValues = {
     'en': {
       // STARTER: lang key - do not remove comment
+      'token_billing': 'Token Billing',
       'welcome_to_invoice_ninja': 'Welcome to Invoice Ninja',
       'always': 'Always',
       'optin': 'Opt-In',
@@ -4408,6 +4409,8 @@ mixin LocalizationsProvider on LocaleCodeAware {
 
   String get welcomeToInvoiceNinja =>
       _localizedValues[localeCode]['welcome_to_invoice_ninja'] ?? '';
+
+  String get tokenBilling => _localizedValues[localeCode]['token_billing'] ?? '';
 
   String lookup(String key) {
     final lookupKey = toSnakeCase(key);

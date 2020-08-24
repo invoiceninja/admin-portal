@@ -165,6 +165,12 @@ class _$CompanyGatewayEntitySerializer
       'config',
       serializers.serialize(object.config,
           specifiedType: const FullType(String)),
+      'token_billing',
+      serializers.serialize(object.tokenBilling,
+          specifiedType: const FullType(String)),
+      'label',
+      serializers.serialize(object.label,
+          specifiedType: const FullType(String)),
       'created_at',
       serializers.serialize(object.createdAt,
           specifiedType: const FullType(int)),
@@ -177,18 +183,6 @@ class _$CompanyGatewayEntitySerializer
       'id',
       serializers.serialize(object.id, specifiedType: const FullType(String)),
     ];
-    if (object.autobill != null) {
-      result
-        ..add('autobill')
-        ..add(serializers.serialize(object.autobill,
-            specifiedType: const FullType(String)));
-    }
-    if (object.label != null) {
-      result
-        ..add('label')
-        ..add(serializers.serialize(object.label,
-            specifiedType: const FullType(String)));
-    }
     if (object.isChanged != null) {
       result
         ..add('isChanged')
@@ -279,8 +273,8 @@ class _$CompanyGatewayEntitySerializer
           result.config = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String;
           break;
-        case 'autobill':
-          result.autobill = serializers.deserialize(value,
+        case 'token_billing':
+          result.tokenBilling = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String;
           break;
         case 'label':
@@ -669,7 +663,7 @@ class _$CompanyGatewayEntity extends CompanyGatewayEntity {
   @override
   final String config;
   @override
-  final String autobill;
+  final String tokenBilling;
   @override
   final String label;
   @override
@@ -706,7 +700,7 @@ class _$CompanyGatewayEntity extends CompanyGatewayEntity {
       this.customValue3,
       this.customValue4,
       this.config,
-      this.autobill,
+      this.tokenBilling,
       this.label,
       this.isChanged,
       this.createdAt,
@@ -762,6 +756,13 @@ class _$CompanyGatewayEntity extends CompanyGatewayEntity {
     if (config == null) {
       throw new BuiltValueNullFieldError('CompanyGatewayEntity', 'config');
     }
+    if (tokenBilling == null) {
+      throw new BuiltValueNullFieldError(
+          'CompanyGatewayEntity', 'tokenBilling');
+    }
+    if (label == null) {
+      throw new BuiltValueNullFieldError('CompanyGatewayEntity', 'label');
+    }
     if (createdAt == null) {
       throw new BuiltValueNullFieldError('CompanyGatewayEntity', 'createdAt');
     }
@@ -801,7 +802,7 @@ class _$CompanyGatewayEntity extends CompanyGatewayEntity {
         customValue3 == other.customValue3 &&
         customValue4 == other.customValue4 &&
         config == other.config &&
-        autobill == other.autobill &&
+        tokenBilling == other.tokenBilling &&
         label == other.label &&
         isChanged == other.isChanged &&
         createdAt == other.createdAt &&
@@ -844,7 +845,7 @@ class _$CompanyGatewayEntity extends CompanyGatewayEntity {
                                                         customValue3.hashCode),
                                                     customValue4.hashCode),
                                                 config.hashCode),
-                                            autobill.hashCode),
+                                            tokenBilling.hashCode),
                                         label.hashCode),
                                     isChanged.hashCode),
                                 createdAt.hashCode),
@@ -871,7 +872,7 @@ class _$CompanyGatewayEntity extends CompanyGatewayEntity {
           ..add('customValue3', customValue3)
           ..add('customValue4', customValue4)
           ..add('config', config)
-          ..add('autobill', autobill)
+          ..add('tokenBilling', tokenBilling)
           ..add('label', label)
           ..add('isChanged', isChanged)
           ..add('createdAt', createdAt)
@@ -946,9 +947,9 @@ class CompanyGatewayEntityBuilder
   String get config => _$this._config;
   set config(String config) => _$this._config = config;
 
-  String _autobill;
-  String get autobill => _$this._autobill;
-  set autobill(String autobill) => _$this._autobill = autobill;
+  String _tokenBilling;
+  String get tokenBilling => _$this._tokenBilling;
+  set tokenBilling(String tokenBilling) => _$this._tokenBilling = tokenBilling;
 
   String _label;
   String get label => _$this._label;
@@ -1004,7 +1005,7 @@ class CompanyGatewayEntityBuilder
       _customValue3 = _$v.customValue3;
       _customValue4 = _$v.customValue4;
       _config = _$v.config;
-      _autobill = _$v.autobill;
+      _tokenBilling = _$v.tokenBilling;
       _label = _$v.label;
       _isChanged = _$v.isChanged;
       _createdAt = _$v.createdAt;
@@ -1050,7 +1051,7 @@ class CompanyGatewayEntityBuilder
               customValue3: customValue3,
               customValue4: customValue4,
               config: config,
-              autobill: autobill,
+              tokenBilling: tokenBilling,
               label: label,
               isChanged: isChanged,
               createdAt: createdAt,
