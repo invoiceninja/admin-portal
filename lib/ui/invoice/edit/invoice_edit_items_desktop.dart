@@ -181,11 +181,8 @@ class _InvoiceEditItemsDesktopState extends State<InvoiceEditItemsDesktop> {
                             final product = productState.map[productId];
                             final client =
                                 state.clientState.get(invoice.clientId);
-                            final currencyId = client.getCurrencyId(
-                                company: company,
-                                group: state.groupState.get(client.groupId));
                             final currency =
-                                state.staticState.currencyMap[currencyId];
+                                state.staticState.currencyMap[client.currencyId];
 
                             double cost = product.price;
                             if (company.convertProductExchangeRate &&
@@ -225,9 +222,6 @@ class _InvoiceEditItemsDesktopState extends State<InvoiceEditItemsDesktop> {
                         final item = lineItems[index];
                         final product = productState.map[suggestion];
                         final client = state.clientState.get(invoice.clientId);
-                        final currencyId = client.getCurrencyId(
-                            company: company,
-                            group: state.groupState.get(client.groupId));
 
                         double cost = product.price;
                         if (company.convertProductExchangeRate &&
@@ -235,7 +229,7 @@ class _InvoiceEditItemsDesktopState extends State<InvoiceEditItemsDesktop> {
                             client.currencyId != company.currencyId) {
                           cost = round(
                               cost * invoice.exchangeRate,
-                              state.staticState.currencyMap[currencyId]
+                              state.staticState.currencyMap[client?.currencyId]
                                   .precision);
                         }
 
