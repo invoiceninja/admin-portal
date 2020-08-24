@@ -39,6 +39,7 @@ enum QuoteReportFields {
   is_approved,
   tax_amount,
   net_amount,
+  exchange_rate,
 }
 
 var memoizedQuoteReport = memo7((
@@ -192,6 +193,8 @@ ReportResult quoteReport(
         case QuoteReportFields.net_amount:
           value = quote.netAmount;
           break;
+        case QuoteReportFields.exchange_rate:
+          value = quote.exchangeRate;
       }
 
       if (!ReportResult.matchField(
