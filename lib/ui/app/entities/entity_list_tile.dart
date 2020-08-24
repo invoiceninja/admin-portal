@@ -52,16 +52,15 @@ class _EntityListTileState extends State<EntityListTile> {
         (widget.entity is BelongsToClient
             ? state.clientState.map[(widget.entity as BelongsToClient).clientId]
             : null);
-    final showMoreIcon =
+    final isHovered =
         (!RendererBinding.instance.mouseTracker.mouseIsConnected &&
                 isFilteredBy) ||
             _isHovered;
 
     final leading = ActionMenuButton(
-      iconData: showMoreIcon
-          ? Icons.more_vert
-          : getEntityIcon(widget.entity.entityType),
-      iconSize: showMoreIcon ? null : 18,
+      iconData:
+          isHovered ? Icons.more_vert : getEntityIcon(widget.entity.entityType),
+      iconSize: isHovered ? null : 18,
       entityActions: widget.entity.getActions(
           userCompany: state.userCompany,
           includeEdit: true,
@@ -78,32 +77,20 @@ class _EntityListTileState extends State<EntityListTile> {
           : handleEntityAction(context, widget.entity, action),
     );
 
-    Widget trailing;
-    if (isNotMobile(context) && widget.isFilter != true) {
-      if (isFilteredBy) {
-        trailing = IconButton(
-          color: state.prefState.enableDarkMode
-              ? Colors.white
-              : Theme.of(context).accentColor,
-          icon: Icon(Icons.chevron_right),
-          onPressed: () => viewEntity(entity: widget.entity, context: context),
-        );
-      } else {
-        trailing = IgnorePointer(
-          child: IconButton(
-            icon: Icon(Icons.filter_list),
-            onPressed: () => null,
-          ),
-        );
-      }
-    } else {
-      trailing = IgnorePointer(
-        child: IconButton(
-          icon: Icon(Icons.navigate_next),
-          onPressed: () => null,
-        ),
-      );
-    }
+    final trailing = IgnorePointer(
+      ignoring: !isHovered,
+      child: IconButton(
+        icon: Icon(isHovered ? Icons.chevron_right : Icons.filter_list),
+        onPressed: isHovered
+            ? () => viewEntity(entity: widget.entity, context: context)
+            : () => null,
+        color: isFilteredBy
+            ? (state.prefState.enableDarkMode
+                ? Colors.white
+                : Theme.of(context).accentColor)
+            : null,
+      ),
+    );
 
     return MouseRegion(
       onEnter: (event) => setState(() => _isHovered = true),
