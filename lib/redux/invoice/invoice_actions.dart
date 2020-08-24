@@ -6,6 +6,7 @@ import 'package:flutter_redux/flutter_redux.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
+import 'package:invoiceninja_flutter/redux/client/client_actions.dart';
 import 'package:invoiceninja_flutter/ui/app/entities/entity_actions_dialog.dart';
 import 'package:invoiceninja_flutter/utils/completers.dart';
 import 'package:invoiceninja_flutter/utils/dialogs.dart';
@@ -537,7 +538,16 @@ void handleInvoiceAction(BuildContext context, List<BaseEntity> invoices,
       });
       if (!emailValid) {
         showMessageDialog(
-            context: context, message: localization.clientEmailNotSet);
+            context: context,
+            message: localization.clientEmailNotSet,
+            secondaryAction: FlatButton(
+                onPressed: () {
+                  Navigator.of(context).pop();
+                  editEntity(
+                      context: context,
+                      entity: state.clientState.get(invoice.clientId));
+                },
+                child: Text(localization.editClient.toUpperCase())));
         return;
       }
       if (invoiceIds.length == 1) {
