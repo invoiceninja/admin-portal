@@ -137,7 +137,8 @@ class _CompanyGatewayEditState extends State<CompanyGatewayEdit>
                       companyGateway.rebuild((b) => b..label = value.trim())),
                 ),
                 if (state.staticState.gatewayMap[companyGateway.gatewayId]
-                    .supportsTokenBilling)
+                        ?.supportsTokenBilling ==
+                    true)
                   AppDropdownButton<String>(
                       labelText: localization.tokenBilling,
                       value: companyGateway.tokenBilling,
