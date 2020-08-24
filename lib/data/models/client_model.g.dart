@@ -226,6 +226,10 @@ class _$ClientEntitySerializer implements StructuredSerializer<ClientEntity> {
       serializers.serialize(object.documents,
           specifiedType: const FullType(
               BuiltList, const [const FullType(DocumentEntity)])),
+      'system_logs',
+      serializers.serialize(object.systemLogs,
+          specifiedType: const FullType(
+              BuiltList, const [const FullType(SystemLogEntity)])),
       'created_at',
       serializers.serialize(object.createdAt,
           specifiedType: const FullType(int)),
@@ -442,6 +446,12 @@ class _$ClientEntitySerializer implements StructuredSerializer<ClientEntity> {
           result.documents.replace(serializers.deserialize(value,
                   specifiedType: const FullType(
                       BuiltList, const [const FullType(DocumentEntity)]))
+              as BuiltList<Object>);
+          break;
+        case 'system_logs':
+          result.systemLogs.replace(serializers.deserialize(value,
+                  specifiedType: const FullType(
+                      BuiltList, const [const FullType(SystemLogEntity)]))
               as BuiltList<Object>);
           break;
         case 'isChanged':
@@ -943,6 +953,8 @@ class _$ClientEntity extends ClientEntity {
   @override
   final BuiltList<DocumentEntity> documents;
   @override
+  final BuiltList<SystemLogEntity> systemLogs;
+  @override
   final bool isChanged;
   @override
   final int createdAt;
@@ -1001,6 +1013,7 @@ class _$ClientEntity extends ClientEntity {
       this.ledger,
       this.gatewayTokens,
       this.documents,
+      this.systemLogs,
       this.isChanged,
       this.createdAt,
       this.updatedAt,
@@ -1121,6 +1134,9 @@ class _$ClientEntity extends ClientEntity {
     if (documents == null) {
       throw new BuiltValueNullFieldError('ClientEntity', 'documents');
     }
+    if (systemLogs == null) {
+      throw new BuiltValueNullFieldError('ClientEntity', 'systemLogs');
+    }
     if (createdAt == null) {
       throw new BuiltValueNullFieldError('ClientEntity', 'createdAt');
     }
@@ -1184,6 +1200,7 @@ class _$ClientEntity extends ClientEntity {
         ledger == other.ledger &&
         gatewayTokens == other.gatewayTokens &&
         documents == other.documents &&
+        systemLogs == other.systemLogs &&
         isChanged == other.isChanged &&
         createdAt == other.createdAt &&
         updatedAt == other.updatedAt &&
@@ -1215,18 +1232,18 @@ class _$ClientEntity extends ClientEntity {
                                                                 $jc(
                                                                     $jc(
                                                                         $jc(
-                                                                            $jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc(0, groupId.hashCode), loadedAt.hashCode), name.hashCode), displayName.hashCode), balance.hashCode), creditBalance.hashCode), paidToDate.hashCode), address1.hashCode), address2.hashCode), city.hashCode), state.hashCode), postalCode.hashCode), countryId.hashCode), phone.hashCode), privateNotes.hashCode), publicNotes.hashCode), website.hashCode), industryId.hashCode), sizeId.hashCode), vatNumber.hashCode), idNumber.hashCode), shippingAddress1.hashCode), shippingAddress2.hashCode), shippingCity.hashCode), shippingState.hashCode), shippingPostalCode.hashCode), shippingCountryId.hashCode),
-                                                                                settings.hashCode),
-                                                                            lastLogin.hashCode),
-                                                                        customValue1.hashCode),
-                                                                    customValue2.hashCode),
-                                                                customValue3.hashCode),
-                                                            customValue4.hashCode),
-                                                        contacts.hashCode),
-                                                    activities.hashCode),
-                                                ledger.hashCode),
-                                            gatewayTokens.hashCode),
-                                        documents.hashCode),
+                                                                            $jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc(0, groupId.hashCode), loadedAt.hashCode), name.hashCode), displayName.hashCode), balance.hashCode), creditBalance.hashCode), paidToDate.hashCode), address1.hashCode), address2.hashCode), city.hashCode), state.hashCode), postalCode.hashCode), countryId.hashCode), phone.hashCode), privateNotes.hashCode), publicNotes.hashCode), website.hashCode), industryId.hashCode), sizeId.hashCode), vatNumber.hashCode), idNumber.hashCode), shippingAddress1.hashCode), shippingAddress2.hashCode), shippingCity.hashCode), shippingState.hashCode), shippingPostalCode.hashCode), shippingCountryId.hashCode), settings.hashCode),
+                                                                                lastLogin.hashCode),
+                                                                            customValue1.hashCode),
+                                                                        customValue2.hashCode),
+                                                                    customValue3.hashCode),
+                                                                customValue4.hashCode),
+                                                            contacts.hashCode),
+                                                        activities.hashCode),
+                                                    ledger.hashCode),
+                                                gatewayTokens.hashCode),
+                                            documents.hashCode),
+                                        systemLogs.hashCode),
                                     isChanged.hashCode),
                                 createdAt.hashCode),
                             updatedAt.hashCode),
@@ -1278,6 +1295,7 @@ class _$ClientEntity extends ClientEntity {
           ..add('ledger', ledger)
           ..add('gatewayTokens', gatewayTokens)
           ..add('documents', documents)
+          ..add('systemLogs', systemLogs)
           ..add('isChanged', isChanged)
           ..add('createdAt', createdAt)
           ..add('updatedAt', updatedAt)
@@ -1462,6 +1480,12 @@ class ClientEntityBuilder
   set documents(ListBuilder<DocumentEntity> documents) =>
       _$this._documents = documents;
 
+  ListBuilder<SystemLogEntity> _systemLogs;
+  ListBuilder<SystemLogEntity> get systemLogs =>
+      _$this._systemLogs ??= new ListBuilder<SystemLogEntity>();
+  set systemLogs(ListBuilder<SystemLogEntity> systemLogs) =>
+      _$this._systemLogs = systemLogs;
+
   bool _isChanged;
   bool get isChanged => _$this._isChanged;
   set isChanged(bool isChanged) => _$this._isChanged = isChanged;
@@ -1538,6 +1562,7 @@ class ClientEntityBuilder
       _ledger = _$v.ledger?.toBuilder();
       _gatewayTokens = _$v.gatewayTokens?.toBuilder();
       _documents = _$v.documents?.toBuilder();
+      _systemLogs = _$v.systemLogs?.toBuilder();
       _isChanged = _$v.isChanged;
       _createdAt = _$v.createdAt;
       _updatedAt = _$v.updatedAt;
@@ -1608,6 +1633,7 @@ class ClientEntityBuilder
               ledger: ledger.build(),
               gatewayTokens: gatewayTokens.build(),
               documents: documents.build(),
+              systemLogs: systemLogs.build(),
               isChanged: isChanged,
               createdAt: createdAt,
               updatedAt: updatedAt,
@@ -1632,6 +1658,8 @@ class ClientEntityBuilder
         gatewayTokens.build();
         _$failedField = 'documents';
         documents.build();
+        _$failedField = 'systemLogs';
+        systemLogs.build();
       } catch (e) {
         throw new BuiltValueNestedFieldError(
             'ClientEntity', _$failedField, e.toString());

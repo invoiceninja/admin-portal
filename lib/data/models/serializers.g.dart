@@ -138,6 +138,7 @@ Serializers _$serializers = (new Serializers().toBuilder()
       ..add(StaticDataEntity.serializer)
       ..add(StaticDataItemResponse.serializer)
       ..add(StaticState.serializer)
+      ..add(SystemLogEntity.serializer)
       ..add(TaskEntity.serializer)
       ..add(TaskItemResponse.serializer)
       ..add(TaskListResponse.serializer)
@@ -201,6 +202,9 @@ Serializers _$serializers = (new Serializers().toBuilder()
       ..addBuilderFactory(
           const FullType(BuiltList, const [const FullType(DocumentEntity)]),
           () => new ListBuilder<DocumentEntity>())
+      ..addBuilderFactory(
+          const FullType(BuiltList, const [const FullType(SystemLogEntity)]),
+          () => new ListBuilder<SystemLogEntity>())
       ..addBuilderFactory(
           const FullType(BuiltList, const [const FullType(CountryEntity)]),
           () => new ListBuilder<CountryEntity>())

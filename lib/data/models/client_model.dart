@@ -8,6 +8,7 @@ import 'package:invoiceninja_flutter/data/models/entities.dart';
 import 'package:invoiceninja_flutter/data/models/gateway_token_model.dart';
 import 'package:invoiceninja_flutter/data/models/group_model.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
+import 'package:invoiceninja_flutter/data/models/system_log_model.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/redux/static/static_state.dart';
 import 'package:invoiceninja_flutter/utils/formatting.dart';
@@ -130,6 +131,7 @@ abstract class ClientEntity extends Object
       activities: BuiltList<ActivityEntity>(),
       ledger: BuiltList<LedgerEntity>(),
       gatewayTokens: BuiltList<GatewayTokenEntity>(),
+      systemLogs: BuiltList<SystemLogEntity>(),
       loadedAt: 0,
       updatedAt: 0,
       archivedAt: 0,
@@ -269,6 +271,10 @@ abstract class ClientEntity extends Object
   BuiltList<GatewayTokenEntity> get gatewayTokens;
 
   BuiltList<DocumentEntity> get documents;
+
+  @BuiltValueField(wireName: 'system_logs')
+  BuiltList<SystemLogEntity> get systemLogs;
+
 
   //String get last_login;
   //String get custom_messages;
