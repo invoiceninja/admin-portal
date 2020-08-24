@@ -426,7 +426,7 @@ class _DrawerTileState extends State<DrawerTile> {
         dense: true,
         leading: Icon(
           widget.icon,
-          size: 22,
+          size: 24,
           color: textColor,
         ),
         title: Text(
