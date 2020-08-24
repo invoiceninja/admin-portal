@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:invoiceninja_flutter/constants.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/ui/invoice/view/invoice_view_vm.dart';
 import 'package:invoiceninja_flutter/utils/formatting.dart';
@@ -52,23 +53,31 @@ class _InvitationListTile extends StatelessWidget {
       subtitle: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
+          SizedBox(height: 8),
           Text(
               '${localization.sent}: ${invitation.sentDate.isNotEmpty ? formatDate(invitation.sentDate, context, showTime: true) : ''}'),
+          SizedBox(height: 4),
           Text(
               '${localization.viewed}: ${invitation.viewedDate.isNotEmpty ? formatDate(invitation.viewedDate, context, showTime: true) : ''}'),
+          SizedBox(height: 8),
           Row(
             children: [
               Expanded(
-                  child: FlatButton(
-                child: Text(localization.clientPortal.toUpperCase()),
+                  child: OutlineButton(
+                child: Text(localization.viewPortal.toUpperCase()),
+                shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(30)),
                 onPressed: () {
                   launch(invitation.silentLink,
                       forceWebView: false, forceSafariVC: false);
                 },
               )),
+              SizedBox(width: kTableColumnGap),
               Expanded(
-                  child: FlatButton(
+                  child: OutlineButton(
                 child: Text(localization.copyLink.toUpperCase()),
+                shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(30)),
                 onPressed: () {
                   Clipboard.setData(ClipboardData(text: invitation.link));
                   Scaffold.of(context).showSnackBar(SnackBar(
