@@ -265,7 +265,8 @@ class _ClientPortalState extends State<ClientPortal>
                     onChanged: (value) => viewModel.onCompanyChanged(
                         company.rebuild((b) => b..enableShopApi = value)),
                   ),
-                  if (state.company.enableShopApi ?? false) ...[
+                  if (!state.isDemo &&
+                      (state.company.enableShopApi ?? false)) ...[
                     SizedBox(height: 16),
                     ListDivider(),
                     Builder(builder: (BuildContext context) {
