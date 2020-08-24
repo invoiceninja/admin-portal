@@ -37,7 +37,7 @@ class _InvitationListTile extends StatelessWidget {
     final client = state.clientState.get(viewModel.invoice.clientId);
     final contact = client.contacts.firstWhere(
         (contact) => contact.id == invitation.contactId,
-        orElse: null);
+        orElse: () => ContactEntity());
 
     return ListTile(
       title: Text(
