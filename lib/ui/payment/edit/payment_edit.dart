@@ -171,7 +171,6 @@ class _PaymentEditState extends State<PaymentEdit> {
                 if (payment.isForInvoice != true)
                   DecoratedFormField(
                     controller: _amountController,
-                    textAlign: TextAlign.end,
                     autocorrect: false,
                     keyboardType:
                         TextInputType.numberWithOptions(decimal: true),
@@ -519,7 +518,6 @@ class _PaymentableEditorState extends State<PaymentableEditor> {
           Expanded(
             child: DecoratedFormField(
               controller: _amountController,
-              textAlign: TextAlign.end,
               label: payment.isForInvoice == true
                   ? localization.amount
                   : localization.applied,

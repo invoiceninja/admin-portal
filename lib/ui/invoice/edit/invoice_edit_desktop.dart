@@ -62,6 +62,7 @@ class InvoiceEditDesktopState extends State<InvoiceEditDesktop>
   final _privateNotesController = TextEditingController();
   final _termsController = TextEditingController();
   final _footerController = TextEditingController();
+  final _exchangeRateController = TextEditingController();
 
   List<TextEditingController> _controllers = [];
   final _debouncer = Debouncer();
@@ -93,6 +94,7 @@ class InvoiceEditDesktopState extends State<InvoiceEditDesktop>
       _privateNotesController,
       _termsController,
       _footerController,
+      _exchangeRateController,
     ];
 
     _controllers
@@ -121,6 +123,8 @@ class InvoiceEditDesktopState extends State<InvoiceEditDesktop>
     _privateNotesController.text = invoice.privateNotes;
     _termsController.text = invoice.terms;
     _footerController.text = invoice.footer;
+    _exchangeRateController.text = formatNumber(invoice.exchangeRate, context,
+        formatNumberType: FormatNumberType.input);
 
     _controllers
         .forEach((dynamic controller) => controller.addListener(_onChanged));
@@ -158,7 +162,8 @@ class InvoiceEditDesktopState extends State<InvoiceEditDesktop>
         ..publicNotes = _publicNotesController.text.trim()
         ..privateNotes = _privateNotesController.text.trim()
         ..terms = _termsController.text.trim()
-        ..footer = _footerController.text.trim());
+        ..footer = _footerController.text.trim()
+        ..exchangeRate = parseDouble(_exchangeRateController.text));
       if (invoice != widget.viewModel.invoice) {
         widget.viewModel.onChanged(invoice);
       }
@@ -378,7 +383,7 @@ class InvoiceEditDesktopState extends State<InvoiceEditDesktop>
                     ],
                   ),
                   SizedBox(
-                    height: 100,
+                    height: company.convertProductExchangeRate ? 140 : 100,
                     child: TabBarView(
                       controller: _tabController,
                       children: <Widget>[
@@ -406,27 +411,53 @@ class InvoiceEditDesktopState extends State<InvoiceEditDesktop>
                           keyboardType: TextInputType.multiline,
                           label: '',
                         ),
-                        Row(
+                        Column(
                           children: [
-                            Expanded(
-                              child: DesignPicker(
-                                initialValue: invoice.designId,
-                                onSelected: (value) => viewModel.onChanged(
-                                    invoice.rebuild(
-                                        (b) => b..designId = value.id)),
-                              ),
+                            Row(
+                              children: [
+                                Expanded(
+                                  child: DesignPicker(
+                                    initialValue: invoice.designId,
+                                    onSelected: (value) => viewModel.onChanged(
+                                        invoice.rebuild(
+                                            (b) => b..designId = value.id)),
+                                  ),
+                                ),
+                                SizedBox(
+                                  width: 38,
+                                ),
+                                Expanded(
+                                  child: UserPicker(
+                                    userId: invoice.assignedUserId,
+                                    onChanged: (userId) => viewModel.onChanged(
+                                        invoice.rebuild(
+                                            (b) => b..assignedUserId = userId)),
+                                  ),
+                                ),
+                              ],
                             ),
-                            SizedBox(
-                              width: 38,
-                            ),
-                            Expanded(
-                              child: UserPicker(
-                                userId: invoice.assignedUserId,
-                                onChanged: (userId) => viewModel.onChanged(
-                                    invoice.rebuild(
-                                        (b) => b..assignedUserId = userId)),
-                              ),
-                            ),
+                            if (company.convertProductExchangeRate)
+                              Row(
+                                children: [
+                                  Expanded(
+                                    child: DecoratedFormField(
+                                      label: localization.exchangeRate,
+                                      controller: _exchangeRateController,
+                                      keyboardType:
+                                          TextInputType.numberWithOptions(
+                                              decimal: true),
+                                      onSavePressed:
+                                          widget.entityViewModel.onSavePressed,
+                                    ),
+                                  ),
+                                  SizedBox(
+                                    width: 38,
+                                  ),
+                                  Expanded(
+                                    child: SizedBox(),
+                                  )
+                                ],
+                              )
                           ],
                         ),
                       ],
@@ -453,7 +484,6 @@ class InvoiceEditDesktopState extends State<InvoiceEditDesktop>
                           decoration: InputDecoration(
                             labelText: localization.subtotal,
                           ),
-                          textAlign: TextAlign.end,
                           key: ValueKey(
                               '__invoice_subtotal_${invoice.subtotal}_${invoice.clientId}__'),
                           initialValue: formatNumber(invoice.subtotal, context,
@@ -504,7 +534,6 @@ class InvoiceEditDesktopState extends State<InvoiceEditDesktop>
                         decoration: InputDecoration(
                           labelText: localization.total,
                         ),
-                        textAlign: TextAlign.end,
                         key: ValueKey(
                             '__invoice_total_${invoiceTotal}_${invoice.clientId}__'),
                         initialValue: formatNumber(invoiceTotal, context,
