@@ -228,6 +228,9 @@ class _InvoiceEditItemsDesktopState extends State<InvoiceEditItemsDesktop> {
                         final item = lineItems[index];
                         final product = productState.map[suggestion];
                         final client = state.clientState.get(invoice.clientId);
+                        final currencyId = client.getCurrencyId(
+                            company: company,
+                            group: state.groupState.get(client.groupId));
 
                         double cost = product.price;
                         if (company.convertProductExchangeRate &&
@@ -239,7 +242,7 @@ class _InvoiceEditItemsDesktopState extends State<InvoiceEditItemsDesktop> {
                                   toCurrencyId: client.currencyId);
                           cost = round(
                               cost,
-                              state.staticState.currencyMap[client.currencyId]
+                              state.staticState.currencyMap[currencyId]
                                   .precision);
                         }
 
@@ -428,7 +431,7 @@ class _InvoiceEditItemsDesktopState extends State<InvoiceEditItemsDesktop> {
                     padding: const EdgeInsets.only(right: kTableColumnGap),
                     child: TextFormField(
                       key: ValueKey(
-                          '__total_${index}_${lineItems[index].total}__'),
+                          '__total_${index}_${lineItems[index].total}_${invoice.clientId}__'),
                       readOnly: true,
                       enabled: false,
                       initialValue: formatNumber(

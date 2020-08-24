@@ -2,6 +2,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:invoiceninja_flutter/constants.dart';
+import 'package:invoiceninja_flutter/data/models/client_model.dart';
 import 'package:invoiceninja_flutter/data/models/entities.dart';
 import 'package:invoiceninja_flutter/ui/app/form_card.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/app_tab_bar.dart';
@@ -62,7 +63,6 @@ class InvoiceEditDesktopState extends State<InvoiceEditDesktop>
   final _privateNotesController = TextEditingController();
   final _termsController = TextEditingController();
   final _footerController = TextEditingController();
-  final _exchangeRateController = TextEditingController();
 
   List<TextEditingController> _controllers = [];
   final _debouncer = Debouncer();
@@ -94,7 +94,6 @@ class InvoiceEditDesktopState extends State<InvoiceEditDesktop>
       _privateNotesController,
       _termsController,
       _footerController,
-      _exchangeRateController,
     ];
 
     _controllers
@@ -123,8 +122,6 @@ class InvoiceEditDesktopState extends State<InvoiceEditDesktop>
     _privateNotesController.text = invoice.privateNotes;
     _termsController.text = invoice.terms;
     _footerController.text = invoice.footer;
-    _exchangeRateController.text = formatNumber(invoice.exchangeRate, context,
-        formatNumberType: FormatNumberType.input);
 
     _controllers
         .forEach((dynamic controller) => controller.addListener(_onChanged));
@@ -162,8 +159,7 @@ class InvoiceEditDesktopState extends State<InvoiceEditDesktop>
         ..publicNotes = _publicNotesController.text.trim()
         ..privateNotes = _privateNotesController.text.trim()
         ..terms = _termsController.text.trim()
-        ..footer = _footerController.text.trim()
-        ..exchangeRate = parseDouble(_exchangeRateController.text));
+        ..footer = _footerController.text.trim());
       if (invoice != widget.viewModel.invoice) {
         widget.viewModel.onChanged(invoice);
       }
@@ -201,8 +197,20 @@ class InvoiceEditDesktopState extends State<InvoiceEditDesktop>
                       autofocus: kIsWeb,
                       clientId: invoice.clientId,
                       clientState: viewModel.state.clientState,
-                      onSelected: (client) =>
-                          viewModel.onClientChanged(invoice, client),
+                      onSelected: (client) {
+                        viewModel.onClientChanged(invoice, client);
+                        /*
+                        final currencyId = (client as ClientEntity)?.currencyId;
+                        if (company.convertProductExchangeRate &&
+                            client != null) {
+                          _exchangeRateController.text = formatNumber(
+                              viewModel.state.staticState
+                                  .currencyMap[currencyId].exchangeRate,
+                              context,
+                              formatNumberType: FormatNumberType.input);
+                        }
+                         */
+                      },
                       onAddPressed: (completer) =>
                           viewModel.onAddClientPressed(context, completer),
                     )
@@ -441,8 +449,16 @@ class InvoiceEditDesktopState extends State<InvoiceEditDesktop>
                                 children: [
                                   Expanded(
                                     child: DecoratedFormField(
+                                      key: ValueKey('__rate_${invoice.clientId}__'),
                                       label: localization.exchangeRate,
-                                      controller: _exchangeRateController,
+                                      initialValue: formatNumber(
+                                          invoice.exchangeRate, context,
+                                          formatNumberType:
+                                              FormatNumberType.input),
+                                      onChanged: (value) => viewModel.onChanged(
+                                          invoice.rebuild((b) => b
+                                            ..exchangeRate =
+                                                parseDouble(value))),
                                       keyboardType:
                                           TextInputType.numberWithOptions(
                                               decimal: true),
@@ -534,6 +550,7 @@ class InvoiceEditDesktopState extends State<InvoiceEditDesktop>
                         decoration: InputDecoration(
                           labelText: localization.total,
                         ),
+                        textAlign: TextAlign.end,
                         key: ValueKey(
                             '__invoice_total_${invoiceTotal}_${invoice.clientId}__'),
                         initialValue: formatNumber(invoiceTotal, context,

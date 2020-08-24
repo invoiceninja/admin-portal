@@ -159,7 +159,7 @@ abstract class InvoiceEntity extends Object
       reminder2Sent: '',
       reminder3Sent: '',
       reminderLastSent: '',
-      exchangeRate: 0,
+      exchangeRate: 1,
     );
   }
 

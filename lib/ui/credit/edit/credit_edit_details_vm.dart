@@ -72,15 +72,21 @@ class CreditEditDetailsVM extends EntityEditDetailsVM {
   factory CreditEditDetailsVM.fromStore(Store<AppState> store) {
     final AppState state = store.state;
     final credit = state.creditUIState.editing;
+    final company = state.company;
 
     return CreditEditDetailsVM(
       state: state,
-      company: state.company,
+      company: company,
       invoice: credit,
       onChanged: (InvoiceEntity credit) => store.dispatch(UpdateCredit(credit)),
       clientMap: state.clientState.map,
       clientList: state.clientState.list,
       onClientChanged: (invoice, client) {
+        if (company.convertProductExchangeRate && client != null) {
+          store.dispatch(UpdateCredit(credit.rebuild((b) => b
+            ..exchangeRate = state
+                .staticState.currencyMap[client.currencyId].exchangeRate)));
+        }
         store.dispatch(UpdateCreditClient(client: client));
       },
       onAddClientPressed: (context, completer) {

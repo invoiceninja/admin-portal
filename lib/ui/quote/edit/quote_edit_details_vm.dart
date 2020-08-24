@@ -71,15 +71,21 @@ class QuoteEditDetailsVM extends EntityEditDetailsVM {
   factory QuoteEditDetailsVM.fromStore(Store<AppState> store) {
     final AppState state = store.state;
     final quote = state.quoteUIState.editing;
+    final company = state.company;
 
     return QuoteEditDetailsVM(
       state: state,
-      company: state.company,
+      company: company,
       invoice: quote,
       onChanged: (InvoiceEntity quote) => store.dispatch(UpdateQuote(quote)),
       clientMap: state.clientState.map,
       clientList: state.clientState.list,
-      onClientChanged: (invoice, client) {
+      onClientChanged: (quote, client) {
+        if (company.convertProductExchangeRate && client != null) {
+          store.dispatch(UpdateQuote(quote.rebuild((b) => b
+            ..exchangeRate = state
+                .staticState.currencyMap[client.currencyId].exchangeRate)));
+        }
         store.dispatch(UpdateQuoteClient(client: client));
       },
       onAddClientPressed: (context, completer) {

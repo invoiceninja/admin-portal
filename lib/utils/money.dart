@@ -15,6 +15,9 @@ double getExchangeRate(BuildContext context,
 
 double getExchangeRateWithMap(BuiltMap<String, CurrencyEntity> currencyMap,
     {String fromCurrencyId, String toCurrencyId}) {
+  if (fromCurrencyId == null || toCurrencyId == null) {
+    return 1;
+  }
   final fromCurrency = currencyMap[fromCurrencyId];
   final toCurrency = currencyMap[toCurrencyId];
   // TODO replace with data from server

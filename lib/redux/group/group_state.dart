@@ -22,6 +22,14 @@ abstract class GroupState implements Built<GroupState, GroupStateBuilder> {
   @memoized
   int get hashCode;
 
+  GroupEntity get(String groupId) {
+    if (map.containsKey(groupId)) {
+      return map[groupId];
+    } else {
+      return GroupEntity(id: groupId);
+    }
+  }
+
   BuiltMap<String, GroupEntity> get map;
   BuiltList<String> get list;
 

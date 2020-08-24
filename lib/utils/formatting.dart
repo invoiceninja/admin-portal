@@ -107,6 +107,8 @@ String formatNumber(
     return '';
   }
 
+  print('## Formatting... CLIENT: ${client?.name}, CURRENCY: ${currency.name}');
+
   if (formatNumberType == FormatNumberType.money) {
     value = round(value, currency.precision);
   }

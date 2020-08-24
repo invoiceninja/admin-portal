@@ -91,16 +91,23 @@ class InvoiceEditDetailsVM extends EntityEditDetailsVM {
   factory InvoiceEditDetailsVM.fromStore(Store<AppState> store) {
     final AppState state = store.state;
     final invoice = state.invoiceUIState.editing;
+    final company = state.company;
 
     return InvoiceEditDetailsVM(
       state: state,
-      company: state.company,
+      company: company,
       invoice: invoice,
       onChanged: (InvoiceEntity invoice) =>
           store.dispatch(UpdateInvoice(invoice)),
       clientMap: state.clientState.map,
       clientList: state.clientState.list,
       onClientChanged: (invoice, client) {
+        print('## onClientChanged: ${client?.id}');
+        if (company.convertProductExchangeRate && client != null) {
+          store.dispatch(UpdateInvoice(invoice.rebuild((b) => b
+            ..exchangeRate = state
+                .staticState.currencyMap[client.currencyId].exchangeRate)));
+        }
         store.dispatch(UpdateInvoiceClient(client: client));
       },
       onAddClientPressed: (context, completer) {
