@@ -437,7 +437,7 @@ class InvoiceEditDesktopState extends State<InvoiceEditDesktop>
                                   Expanded(
                                     child: DecoratedFormField(
                                       key: ValueKey(
-                                          '__rate_${invoice.clientId}__'),
+                                          '__exchange_rate_${invoice.clientId}__'),
                                       label: localization.exchangeRate,
                                       initialValue: formatNumber(
                                           invoice.exchangeRate, context,

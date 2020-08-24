@@ -129,7 +129,7 @@ class InvoiceEditDetailsState extends State<InvoiceEditDetails> {
                     clientId: invoice.clientId,
                     clientState: viewModel.state.clientState,
                     onSelected: (client) =>
-                        viewModel.onClientChanged(context,invoice, client),
+                        viewModel.onClientChanged(context, invoice, client),
                     onAddPressed: (completer) =>
                         viewModel.onAddClientPressed(context, completer),
                   )
@@ -261,6 +261,15 @@ class InvoiceEditDetailsState extends State<InvoiceEditDetails> {
               initialValue: invoice.designId,
               onSelected: (value) => viewModel
                   .onChanged(invoice.rebuild((b) => b..designId = value?.id)),
+            ),
+            DecoratedFormField(
+              key: ValueKey('__exchange_rate_${invoice.clientId}__'),
+              label: localization.exchangeRate,
+              initialValue: formatNumber(invoice.exchangeRate, context,
+                  formatNumberType: FormatNumberType.input),
+              onChanged: (value) => viewModel.onChanged(
+                  invoice.rebuild((b) => b..exchangeRate = parseDouble(value))),
+              keyboardType: TextInputType.numberWithOptions(decimal: true),
             ),
           ],
         ),
