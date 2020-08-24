@@ -62,7 +62,7 @@ class _InvitationListTile extends StatelessWidget {
                   child: FlatButton(
                 child: Text(localization.clientPortal.toUpperCase()),
                 onPressed: () {
-                  launch(invitation.link,
+                  launch(invitation.silentLink,
                       forceWebView: false, forceSafariVC: false);
                 },
               )),
