@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/ui/invoice/view/invoice_view_vm.dart';
 import 'package:invoiceninja_flutter/utils/formatting.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class InvoiceViewContacts extends StatelessWidget {
   const InvoiceViewContacts({Key key, @required this.viewModel})
@@ -60,14 +62,18 @@ class _InvitationListTile extends StatelessWidget {
                   child: FlatButton(
                 child: Text(localization.clientPortal.toUpperCase()),
                 onPressed: () {
-                  //
+                  launch(invitation.link,
+                      forceWebView: false, forceSafariVC: false);
                 },
               )),
               Expanded(
                   child: FlatButton(
                 child: Text(localization.copyLink.toUpperCase()),
                 onPressed: () {
-                  //
+                  Clipboard.setData(ClipboardData(text: invitation.link));
+                  Scaffold.of(context).showSnackBar(SnackBar(
+                      content: Text(localization.copiedToClipboard
+                          .replaceFirst(':value ', ''))));
                 },
               )),
             ],
