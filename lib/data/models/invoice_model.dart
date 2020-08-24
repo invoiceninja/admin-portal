@@ -93,6 +93,12 @@ abstract class InvoiceEntity extends Object
     EntityType entityType,
   }) {
     final company = state?.company;
+    double exchangeRate = 1;
+    if (company?.convertProductExchangeRate == true &&
+        (client?.currencyId ?? '').isNotEmpty) {
+      exchangeRate =
+          state.staticState.currencyMap[client.currencyId].exchangeRate;
+    }
     return _$InvoiceEntity._(
       id: id ?? BaseEntity.nextId,
       entityType: entityType ?? EntityType.invoice,
@@ -159,7 +165,7 @@ abstract class InvoiceEntity extends Object
       reminder2Sent: '',
       reminder3Sent: '',
       reminderLastSent: '',
-      exchangeRate: 1,
+      exchangeRate: exchangeRate,
     );
   }
 
