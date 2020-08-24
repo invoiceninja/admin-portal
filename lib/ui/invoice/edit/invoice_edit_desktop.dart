@@ -198,7 +198,7 @@ class InvoiceEditDesktopState extends State<InvoiceEditDesktop>
                       clientId: invoice.clientId,
                       clientState: viewModel.state.clientState,
                       onSelected: (client) {
-                        viewModel.onClientChanged(invoice, client);
+                        viewModel.onClientChanged(context, invoice, client);
                         /*
                         final currencyId = (client as ClientEntity)?.currencyId;
                         if (company.convertProductExchangeRate &&

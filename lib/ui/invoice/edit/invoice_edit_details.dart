@@ -129,7 +129,7 @@ class InvoiceEditDetailsState extends State<InvoiceEditDetails> {
                     clientId: invoice.clientId,
                     clientState: viewModel.state.clientState,
                     onSelected: (client) =>
-                        viewModel.onClientChanged(invoice, client),
+                        viewModel.onClientChanged(context,invoice, client),
                     onAddPressed: (completer) =>
                         viewModel.onAddClientPressed(context, completer),
                   )

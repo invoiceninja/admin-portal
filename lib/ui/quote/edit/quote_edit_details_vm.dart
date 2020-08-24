@@ -10,6 +10,7 @@ import 'package:invoiceninja_flutter/ui/app/screen_imports.dart';
 import 'package:invoiceninja_flutter/ui/invoice/edit/invoice_edit_desktop.dart';
 import 'package:invoiceninja_flutter/ui/invoice/edit/invoice_edit_details.dart';
 import 'package:invoiceninja_flutter/ui/invoice/edit/invoice_edit_details_vm.dart';
+import 'package:invoiceninja_flutter/utils/money.dart';
 import 'package:redux/redux.dart';
 import 'package:invoiceninja_flutter/redux/quote/quote_actions.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
@@ -52,7 +53,7 @@ class QuoteEditDetailsVM extends EntityEditDetailsVM {
     CompanyEntity company,
     InvoiceEntity invoice,
     Function(InvoiceEntity) onChanged,
-    Function(InvoiceEntity, ClientEntity) onClientChanged,
+    Function(BuildContext, InvoiceEntity, ClientEntity) onClientChanged,
     BuiltMap<String, ClientEntity> clientMap,
     BuiltList<String> clientList,
     Function(BuildContext context, Completer<SelectableEntity> completer)
@@ -80,11 +81,13 @@ class QuoteEditDetailsVM extends EntityEditDetailsVM {
       onChanged: (InvoiceEntity quote) => store.dispatch(UpdateQuote(quote)),
       clientMap: state.clientState.map,
       clientList: state.clientState.list,
-      onClientChanged: (quote, client) {
+      onClientChanged: (context, quote, client) {
         if (company.convertProductExchangeRate && client != null) {
+          final exchangeRate = getExchangeRate(context,
+              fromCurrencyId: company.currencyId,
+              toCurrencyId: client.currencyId);
           store.dispatch(UpdateQuote(quote.rebuild((b) => b
-            ..exchangeRate = state
-                .staticState.currencyMap[client.currencyId].exchangeRate)));
+            ..exchangeRate = exchangeRate)));
         }
         store.dispatch(UpdateQuoteClient(client: client));
       },
