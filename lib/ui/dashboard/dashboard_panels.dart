@@ -153,7 +153,6 @@ class DashboardPanels extends StatelessWidget {
         settings,
         state.invoiceState.map,
         state.clientState.map,
-        state.groupState.map,
         state.paymentState.map);
 
     List<ChartDataGroup> previousData;
@@ -164,7 +163,6 @@ class DashboardPanels extends StatelessWidget {
           settings.rebuild((b) => b..offset += 1),
           state.invoiceState.map,
           state.clientState.map,
-          state.groupState.map,
           state.paymentState.map);
     }
 
@@ -193,7 +191,6 @@ class DashboardPanels extends StatelessWidget {
       settings,
       state.quoteState.map,
       state.clientState.map,
-      state.groupState.map,
     );
 
     List<ChartDataGroup> previousData;
@@ -204,7 +201,6 @@ class DashboardPanels extends StatelessWidget {
         settings.rebuild((b) => b..offset += 1),
         state.quoteState.map,
         state.clientState.map,
-        state.groupState.map,
       );
     }
 
@@ -234,7 +230,6 @@ class DashboardPanels extends StatelessWidget {
       state.taskState.map,
       state.invoiceState.map,
       state.projectState.map,
-      state.groupState.map,
       state.clientState.map,
     );
 
@@ -247,7 +242,6 @@ class DashboardPanels extends StatelessWidget {
         state.taskState.map,
         state.invoiceState.map,
         state.projectState.map,
-        state.groupState.map,
         state.clientState.map,
       );
     }
@@ -481,12 +475,12 @@ class _InvoiceChart extends StatelessWidget {
     final state = viewModel.state;
     final isLoaded = state.isLoaded || state.invoiceState.list.isNotEmpty;
     final currentData = memoizedChartInvoices(
-        state.staticState.currencyMap,
-        state.company,
-        settings,
-        state.invoiceState.map,
-        state.clientState.map,
-        state.groupState.map);
+      state.staticState.currencyMap,
+      state.company,
+      settings,
+      state.invoiceState.map,
+      state.clientState.map,
+    );
 
     List<ChartDataGroup> previousData;
     if (settings.enableComparison) {
@@ -496,7 +490,6 @@ class _InvoiceChart extends StatelessWidget {
         settings.rebuild((b) => b..offset += 1),
         state.invoiceState.map,
         state.clientState.map,
-        state.groupState.map,
       );
     }
 

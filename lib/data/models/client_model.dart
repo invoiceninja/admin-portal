@@ -284,17 +284,6 @@ abstract class ClientEntity extends Object
     return displayName;
   }
 
-  String getCurrencyId(
-      {@required CompanyEntity company, @required GroupEntity group}) {
-    if (hasCurrency) {
-      return settings.currencyId;
-    } else if (group.hasCurrency) {
-      return group.currencyId;
-    } else {
-      return company.currencyId;
-    }
-  }
-
   bool getManualPaymentEmail(
       {@required CompanyEntity company, @required GroupEntity group}) {
     if (settings.clientManualPaymentNotification != null) {
