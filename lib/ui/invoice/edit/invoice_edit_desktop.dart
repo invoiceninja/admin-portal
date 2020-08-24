@@ -197,20 +197,8 @@ class InvoiceEditDesktopState extends State<InvoiceEditDesktop>
                       autofocus: kIsWeb,
                       clientId: invoice.clientId,
                       clientState: viewModel.state.clientState,
-                      onSelected: (client) {
-                        viewModel.onClientChanged(context, invoice, client);
-                        /*
-                        final currencyId = (client as ClientEntity)?.currencyId;
-                        if (company.convertProductExchangeRate &&
-                            client != null) {
-                          _exchangeRateController.text = formatNumber(
-                              viewModel.state.staticState
-                                  .currencyMap[currencyId].exchangeRate,
-                              context,
-                              formatNumberType: FormatNumberType.input);
-                        }
-                         */
-                      },
+                      onSelected: (client) =>
+                          viewModel.onClientChanged(context, invoice, client),
                       onAddPressed: (completer) =>
                           viewModel.onAddClientPressed(context, completer),
                     )
@@ -449,7 +437,8 @@ class InvoiceEditDesktopState extends State<InvoiceEditDesktop>
                                 children: [
                                   Expanded(
                                     child: DecoratedFormField(
-                                      key: ValueKey('__rate_${invoice.clientId}__'),
+                                      key: ValueKey(
+                                          '__rate_${invoice.clientId}__'),
                                       label: localization.exchangeRate,
                                       initialValue: formatNumber(
                                           invoice.exchangeRate, context,
