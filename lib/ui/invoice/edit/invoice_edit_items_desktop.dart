@@ -181,21 +181,18 @@ class _InvoiceEditItemsDesktopState extends State<InvoiceEditItemsDesktop> {
                             final product = productState.map[productId];
                             final client =
                                 state.clientState.get(invoice.clientId);
+                            final currencyId = client.getCurrencyId(
+                                company: company,
+                                group: state.groupState.get(client.groupId));
+                            final currency =
+                                state.staticState.currencyMap[currencyId];
 
                             double cost = product.price;
                             if (company.convertProductExchangeRate &&
                                 invoice.clientId != null &&
                                 client.currencyId != company.currencyId) {
-                              cost = cost *
-                                  getExchangeRate(context,
-                                      fromCurrencyId: company.currencyId,
-                                      toCurrencyId: client.currencyId);
-                              cost = round(
-                                  cost,
-                                  state
-                                      .staticState
-                                      .currencyMap[client.currencyId]
-                                      .precision);
+                              cost = round(cost * invoice.exchangeRate,
+                                  currency.precision);
                             }
 
                             final updatedItem = item.rebuild((b) => b
@@ -236,12 +233,8 @@ class _InvoiceEditItemsDesktopState extends State<InvoiceEditItemsDesktop> {
                         if (company.convertProductExchangeRate &&
                             invoice.clientId != null &&
                             client.currencyId != company.currencyId) {
-                          cost = cost *
-                              getExchangeRate(context,
-                                  fromCurrencyId: company.currencyId,
-                                  toCurrencyId: client.currencyId);
                           cost = round(
-                              cost,
+                              cost * invoice.exchangeRate,
                               state.staticState.currencyMap[currencyId]
                                   .precision);
                         }
