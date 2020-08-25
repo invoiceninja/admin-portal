@@ -11,6 +11,7 @@ import 'package:invoiceninja_flutter/data/models/invoice_model.dart';
 import 'package:flutter/foundation.dart';
 import 'package:invoiceninja_flutter/data/web_client.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
+import 'package:invoiceninja_flutter/ui/app/forms/app_dropdown_button.dart';
 import 'package:invoiceninja_flutter/ui/app/loading_indicator.dart';
 import 'package:invoiceninja_flutter/utils/dialogs.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
@@ -44,16 +45,31 @@ class PDFScaffold extends StatefulWidget {
 }
 
 class _PDFScaffoldState extends State<PDFScaffold> {
+  String _activityId;
   String _pdfString;
   http.Response _response;
   PdfController _pdfController;
   int _pageNumber = 1, _pageCount = 1;
 
   @override
+  void initState() {
+    super.initState();
+
+    _activityId = widget.activityId;
+  }
+
+  @override
   void didChangeDependencies() {
     super.didChangeDependencies();
+    loadPdf();
+  }
 
-    _loadPDF(context, widget.invoice, widget.activityId).then((response) {
+  void loadPdf() {
+    setState(() {
+      _pdfString = null;
+    });
+
+    _loadPDF(context, widget.invoice, _activityId).then((response) {
       setState(() {
         _response = response;
       });
@@ -63,11 +79,15 @@ class _PDFScaffoldState extends State<PDFScaffold> {
             'data:application/pdf;base64,' + base64Encode(response.bodyBytes);
         WebUtils.registerWebView(_pdfString);
       } else {
+        _pdfString = '';
         final document = PdfDocument.openData(_response.bodyBytes);
         if (_pdfController == null) {
           _pdfController = PdfController(document: document);
         } else {
-          _pdfController.loadDocument(document);
+          // loadDocument is causing an error 
+          //_pdfController.loadDocument(document);
+          _pdfController?.dispose();
+          _pdfController = PdfController(document: document);
         }
       }
     });
@@ -98,6 +118,26 @@ class _PDFScaffoldState extends State<PDFScaffold> {
                 title: Row(
                   children: [
                     Text(localization.invoice + ' ' + (invoice.number ?? '')),
+                    if (_activityId != null) ...[
+                      Spacer(),
+                      Flexible(
+                        child: AppDropdownButton<String>(
+                            value: widget.activityId,
+                            onChanged: (dynamic activityId) {
+                              setState(() {
+                                _activityId = activityId;
+                                loadPdf();
+                              });
+                            },
+                            items: invoice.history
+                                .map((history) => DropdownMenuItem(
+                                      child: Text(history.activityId),
+                                      value: history.activityId,
+                                    ))
+                                .toList()),
+                      ),
+                      Spacer(),
+                    ],
                     if (!kIsWeb && _pageCount > 1) ...[
                       Spacer(),
                       IconButton(
@@ -158,7 +198,7 @@ class _PDFScaffoldState extends State<PDFScaffold> {
                 ],
               )
             : null,
-        body: _pdfString == null && _pdfController == null
+        body: _pdfString == null
             ? LoadingIndicator()
             : kIsWeb
                 ? HtmlElementView(viewType: _pdfString)
