@@ -19,8 +19,7 @@ class CompanyGatewayRepository {
   Future<CompanyGatewayEntity> loadItem(
       Credentials credentials, String entityId) async {
     final dynamic response = await webClient.get(
-        '${credentials.url}/company_gateways/$entityId',
-        credentials.token);
+        '${credentials.url}/company_gateways/$entityId', credentials.token);
 
     final CompanyGatewayItemResponse companyGatewayResponse = serializers
         .deserializeWith(CompanyGatewayItemResponse.serializer, response);
@@ -60,12 +59,10 @@ class CompanyGatewayRepository {
 
     if (companyGateway.isNew) {
       response = await webClient.post(
-          credentials.url + '/company_gateways',
-          credentials.token,
+          credentials.url + '/company_gateways', credentials.token,
           data: json.encode(data));
     } else {
-      final url = credentials.url +
-          '/company_gateways/${companyGateway.id}';
+      final url = credentials.url + '/company_gateways/${companyGateway.id}';
       response =
           await webClient.put(url, credentials.token, data: json.encode(data));
     }

@@ -60,7 +60,8 @@ class EntityEditDetailsVM {
   final CompanyEntity company;
   final InvoiceEntity invoice;
   final Function(InvoiceEntity) onChanged;
-  final Function(BuildContext context, InvoiceEntity, ClientEntity) onClientChanged;
+  final Function(BuildContext context, InvoiceEntity, ClientEntity)
+      onClientChanged;
   final BuiltMap<String, ClientEntity> clientMap;
   final BuiltList<String> clientList;
   final Function(BuildContext context, Completer<SelectableEntity> completer)
@@ -107,8 +108,8 @@ class InvoiceEditDetailsVM extends EntityEditDetailsVM {
           final exchangeRate = getExchangeRate(context,
               fromCurrencyId: company.currencyId,
               toCurrencyId: client.currencyId);
-          store.dispatch(UpdateInvoice(invoice.rebuild((b) => b
-            ..exchangeRate = exchangeRate)));
+          store.dispatch(UpdateInvoice(
+              invoice.rebuild((b) => b..exchangeRate = exchangeRate)));
         }
         store.dispatch(UpdateInvoiceClient(client: client));
       },

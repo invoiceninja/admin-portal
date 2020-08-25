@@ -180,8 +180,8 @@ class _InvoiceEditItemsDesktopState extends State<InvoiceEditItemsDesktop> {
                             final product = productState.map[productId];
                             final client =
                                 state.clientState.get(invoice.clientId);
-                            final currency =
-                                state.staticState.currencyMap[client.currencyId];
+                            final currency = state
+                                .staticState.currencyMap[client.currencyId];
 
                             double cost = product.price;
                             if (company.convertProductExchangeRate &&

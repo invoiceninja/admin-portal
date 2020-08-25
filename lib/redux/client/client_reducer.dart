@@ -236,7 +236,6 @@ ClientState _deleteClientSuccess(
   });
 }
 
-
 ClientState _restoreClientSuccess(
     ClientState clientState, RestoreClientSuccess action) {
   return clientState.rebuild((b) {

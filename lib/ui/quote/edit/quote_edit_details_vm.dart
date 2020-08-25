@@ -86,8 +86,8 @@ class QuoteEditDetailsVM extends EntityEditDetailsVM {
           final exchangeRate = getExchangeRate(context,
               fromCurrencyId: company.currencyId,
               toCurrencyId: client.currencyId);
-          store.dispatch(UpdateQuote(quote.rebuild((b) => b
-            ..exchangeRate = exchangeRate)));
+          store.dispatch(UpdateQuote(
+              quote.rebuild((b) => b..exchangeRate = exchangeRate)));
         }
         store.dispatch(UpdateQuoteClient(client: client));
       },
