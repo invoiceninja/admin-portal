@@ -37,7 +37,7 @@ Completer<T> snackBarCompleter<T>(BuildContext context, String message,
   }
 
   completer.future.then((_) {
-    if (shouldPop) {
+    if (shouldPop && Navigator.of(context).canPop()) {
       Navigator.of(context).pop();
     }
     if (scaffold != null) {
@@ -47,7 +47,7 @@ Completer<T> snackBarCompleter<T>(BuildContext context, String message,
       )));
     }
   }).catchError((Object error) {
-    if (shouldPop) {
+    if (shouldPop && Navigator.of(context).canPop()) {
       Navigator.of(context).pop();
     }
     showDialog<ErrorDialog>(

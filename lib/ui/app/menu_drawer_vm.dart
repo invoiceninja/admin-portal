@@ -1,4 +1,5 @@
 import 'package:flutter/foundation.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:invoiceninja_flutter/constants.dart';
@@ -7,6 +8,8 @@ import 'package:invoiceninja_flutter/redux/client/client_actions.dart';
 import 'package:invoiceninja_flutter/redux/company/company_actions.dart';
 import 'package:invoiceninja_flutter/redux/settings/settings_actions.dart';
 import 'package:invoiceninja_flutter/ui/app/app_builder.dart';
+import 'package:invoiceninja_flutter/ui/app/dialogs/loading_dialog.dart';
+import 'package:invoiceninja_flutter/utils/completers.dart';
 import 'package:invoiceninja_flutter/utils/dialogs.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:redux/redux.dart';
@@ -97,8 +100,20 @@ class MenuDrawerVM {
         confirmCallback(
             context: context,
             message: AppLocalization.of(context).addCompany,
-            callback: () {
-              store.dispatch(AddCompany(context));
+            callback: () async {
+              final completer = snackBarCompleter<Null>(
+                  context, AppLocalization.of(context).addedCompany,
+                  shouldPop: true);
+
+              store
+                  .dispatch(AddCompany(context: context, completer: completer));
+
+              await showDialog<AlertDialog>(
+                  context: context,
+                  barrierDismissible: false,
+                  builder: (BuildContext context) => SimpleDialog(
+                        children: <Widget>[LoadingDialog()],
+                      ));
             });
       },
     );

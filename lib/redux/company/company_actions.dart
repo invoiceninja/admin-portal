@@ -48,9 +48,10 @@ class SaveCompanyFailure implements StopSaving {
 }
 
 class AddCompany implements StartSaving {
-  AddCompany(this.context);
+  AddCompany({this.context, this.completer});
 
   final BuildContext context;
+  final Completer completer;
 }
 
 class AddCompanySuccess implements StopSaving {}
