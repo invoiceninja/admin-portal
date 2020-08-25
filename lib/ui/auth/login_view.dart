@@ -315,8 +315,6 @@ class _LoginState extends State<LoginView> {
               decoration: BoxDecoration(
                   gradient: LinearGradient(
                 colors: [
-                  //Colors.grey.shade800,
-                  //Colors.black87,
                   Theme.of(context).buttonColor,
                   Theme.of(context).buttonColor.withOpacity(.7),
                 ],
