@@ -11,6 +11,7 @@ import 'package:invoiceninja_flutter/ui/client/view/client_view_activity.dart';
 import 'package:invoiceninja_flutter/ui/client/view/client_view_details.dart';
 import 'package:invoiceninja_flutter/ui/client/view/client_view_documents.dart';
 import 'package:invoiceninja_flutter/ui/client/view/client_view_ledger.dart';
+import 'package:invoiceninja_flutter/ui/client/view/client_view_system_logs.dart';
 import 'package:invoiceninja_flutter/ui/client/view/client_view_vm.dart';
 import 'package:invoiceninja_flutter/ui/client/view/client_view_overview.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
@@ -36,7 +37,7 @@ class _ClientViewState extends State<ClientView>
   @override
   void initState() {
     super.initState();
-    _controller = TabController(vsync: this, length: 5);
+    _controller = TabController(vsync: this, length: 6);
   }
 
   @override
@@ -78,6 +79,9 @@ class _ClientViewState extends State<ClientView>
           Tab(
             text: localization.activity,
           ),
+          Tab(
+            text: localization.systemLogs,
+          ),
         ],
       ),
       body: Builder(builder: (context) {
@@ -115,6 +119,13 @@ class _ClientViewState extends State<ClientView>
                   RefreshIndicator(
                     onRefresh: () => viewModel.onRefreshed(context),
                     child: ClientViewActivity(
+                      viewModel: viewModel,
+                      key: ValueKey(viewModel.client.id),
+                    ),
+                  ),
+                  RefreshIndicator(
+                    onRefresh: () => viewModel.onRefreshed(context),
+                    child: ClientViewSystemLogs(
                       viewModel: viewModel,
                       key: ValueKey(viewModel.client.id),
                     ),
