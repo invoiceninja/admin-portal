@@ -21,6 +21,9 @@ abstract class SystemLogEntity
 
   SystemLogEntity._();
 
+  static const CATEGORY_PAYMENT = 1;
+  static const CATEGORY_EMAIL = 2;
+
   @override
   @memoized
   int get hashCode;
@@ -52,9 +55,9 @@ abstract class SystemLogEntity
 
   String get category {
     switch (categoryId) {
-      case 1:
+      case CATEGORY_PAYMENT:
         return 'payment';
-      case 2:
+      case CATEGORY_EMAIL:
         return 'email';
     }
 
