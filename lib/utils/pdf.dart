@@ -14,6 +14,7 @@ import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/app_dropdown_button.dart';
 import 'package:invoiceninja_flutter/ui/app/loading_indicator.dart';
 import 'package:invoiceninja_flutter/utils/dialogs.dart';
+import 'package:invoiceninja_flutter/utils/formatting.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:native_pdf_view/native_pdf_view.dart';
 import 'package:path_provider/path_provider.dart';
@@ -84,7 +85,7 @@ class _PDFScaffoldState extends State<PDFScaffold> {
         if (_pdfController == null) {
           _pdfController = PdfController(document: document);
         } else {
-          // loadDocument is causing an error 
+          // loadDocument is causing an error
           //_pdfController.loadDocument(document);
           _pdfController?.dispose();
           _pdfController = PdfController(document: document);
@@ -131,7 +132,14 @@ class _PDFScaffoldState extends State<PDFScaffold> {
                             },
                             items: invoice.history
                                 .map((history) => DropdownMenuItem(
-                                      child: Text(history.activityId),
+                                      child: Text(formatNumber(
+                                              history.amount, context,
+                                              clientId: invoice.clientId) +
+                                          ' • ' +
+                                          formatDate(
+                                              convertTimestampToDateString(
+                                                  history.createdAt),
+                                              context, showTime: true)),
                                       value: history.activityId,
                                     ))
                                 .toList()),
