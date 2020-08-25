@@ -119,6 +119,7 @@ class InvoiceEditDetailsState extends State<InvoiceEditDetails> {
     final viewModel = widget.viewModel;
     final invoice = viewModel.invoice;
     final company = viewModel.company;
+    final client = viewModel.state.clientState.get(invoice.clientId);
 
     return ListView(
       children: <Widget>[
@@ -262,15 +263,16 @@ class InvoiceEditDetailsState extends State<InvoiceEditDetails> {
               onSelected: (value) => viewModel
                   .onChanged(invoice.rebuild((b) => b..designId = value?.id)),
             ),
-            DecoratedFormField(
-              key: ValueKey('__exchange_rate_${invoice.clientId}__'),
-              label: localization.exchangeRate,
-              initialValue: formatNumber(invoice.exchangeRate, context,
-                  formatNumberType: FormatNumberType.input),
-              onChanged: (value) => viewModel.onChanged(
-                  invoice.rebuild((b) => b..exchangeRate = parseDouble(value))),
-              keyboardType: TextInputType.numberWithOptions(decimal: true),
-            ),
+            if (client.isOld && client.currencyId != company.currencyId)
+              DecoratedFormField(
+                key: ValueKey('__exchange_rate_${invoice.clientId}__'),
+                label: localization.exchangeRate,
+                initialValue: formatNumber(invoice.exchangeRate, context,
+                    formatNumberType: FormatNumberType.input),
+                onChanged: (value) => viewModel.onChanged(invoice
+                    .rebuild((b) => b..exchangeRate = parseDouble(value))),
+                keyboardType: TextInputType.numberWithOptions(decimal: true),
+              ),
           ],
         ),
       ],

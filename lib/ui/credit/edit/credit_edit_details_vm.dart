@@ -83,7 +83,7 @@ class CreditEditDetailsVM extends EntityEditDetailsVM {
       clientMap: state.clientState.map,
       clientList: state.clientState.list,
       onClientChanged: (context, invoice, client) {
-        if (company.convertProductExchangeRate && client != null) {
+        if (client != null) {
           final exchangeRate = getExchangeRate(context,
               fromCurrencyId: company.currencyId,
               toCurrencyId: client.currencyId);

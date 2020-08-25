@@ -378,7 +378,10 @@ class InvoiceEditDesktopState extends State<InvoiceEditDesktop>
                     ],
                   ),
                   SizedBox(
-                    height: company.convertProductExchangeRate ? 140 : 100,
+                    height: (client.isOld &&
+                            client.currencyId != company.currencyId)
+                        ? 140
+                        : 100,
                     child: TabBarView(
                       controller: _tabController,
                       children: <Widget>[
@@ -431,7 +434,8 @@ class InvoiceEditDesktopState extends State<InvoiceEditDesktop>
                                 ),
                               ],
                             ),
-                            if (company.convertProductExchangeRate)
+                            if (client.isOld &&
+                                client.currencyId != company.currencyId)
                               Row(
                                 children: [
                                   Expanded(

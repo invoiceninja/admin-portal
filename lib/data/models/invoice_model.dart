@@ -94,8 +94,7 @@ abstract class InvoiceEntity extends Object
   }) {
     final company = state?.company;
     double exchangeRate = 1;
-    if (company?.convertProductExchangeRate == true &&
-        (client?.currencyId ?? '').isNotEmpty) {
+    if ((client?.currencyId ?? '').isNotEmpty) {
       exchangeRate =
           state.staticState.currencyMap[client.currencyId].exchangeRate;
     }
