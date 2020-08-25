@@ -10,14 +10,14 @@ class SaveCancelButtons extends StatelessWidget {
     this.onCancelPressed,
     this.saveLabel,
     this.cancelLabel,
-    this.color,
+    this.isHeader = true,
     this.isSaving = false,
   });
 
   final bool isSaving;
   final String saveLabel;
   final String cancelLabel;
-  final Color color;
+  final bool isHeader;
   final Function(BuildContext) onCancelPressed;
   final Function(BuildContext) onSavePressed;
 
@@ -33,7 +33,9 @@ class SaveCancelButtons extends StatelessWidget {
             return FlatButton(
               child: Text(
                 cancelLabel ?? localization.cancel,
-                style: TextStyle(color: color ?? store.state.headerTextColor),
+                style: isHeader
+                    ? TextStyle(color: store.state.headerTextColor)
+                    : null,
                 //style: TextStyle(color: Colors.white),
               ),
               onPressed: () => onCancelPressed(context),
@@ -45,7 +47,7 @@ class SaveCancelButtons extends StatelessWidget {
             tooltip: saveLabel ?? localization.save,
             isVisible: true,
             isSaving: isSaving,
-            color: color,
+            isHeader: isHeader,
             onPressed: () => onSavePressed(context),
           );
         }),
