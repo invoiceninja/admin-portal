@@ -4464,8 +4464,12 @@ mixin LocalizationsProvider on LocaleCodeAware {
   String lookup(String key) {
     final lookupKey = toSnakeCase(key);
 
+    if (lookupKey.startsWith('_')) {
+      return key;
+    }
+
     if (!_localizedValues[localeCode].containsKey(lookupKey)) {
-      print('ERROR: localization key not found - $lookupKey');
+      print('ERROR: localization key not found - $key');
     }
 
     return _localizedValues[localeCode][lookupKey] ??
