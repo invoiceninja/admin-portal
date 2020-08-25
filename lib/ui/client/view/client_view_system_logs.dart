@@ -19,7 +19,7 @@ class ClientViewSystemLogs extends StatefulWidget {
 }
 
 class _ClientViewSystemLogsState extends State<ClientViewSystemLogs> {
-  Map<String, bool> _isExpanded = {};
+  final Map<String, bool> _isExpanded = {};
 
   @override
   void didChangeDependencies() {
