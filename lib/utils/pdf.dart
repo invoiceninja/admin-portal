@@ -16,6 +16,7 @@ import 'package:invoiceninja_flutter/ui/app/loading_indicator.dart';
 import 'package:invoiceninja_flutter/utils/dialogs.dart';
 import 'package:invoiceninja_flutter/utils/formatting.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
+import 'package:invoiceninja_flutter/utils/platforms.dart';
 import 'package:native_pdf_view/native_pdf_view.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:invoiceninja_flutter/utils/web_stub.dart'
@@ -46,6 +47,7 @@ class PDFScaffold extends StatefulWidget {
 }
 
 class _PDFScaffoldState extends State<PDFScaffold> {
+  bool _isLoading = true;
   String _activityId;
   String _pdfString;
   http.Response _response;
@@ -67,12 +69,13 @@ class _PDFScaffoldState extends State<PDFScaffold> {
 
   void loadPdf() {
     setState(() {
-      _pdfString = null;
+      _isLoading = true;
     });
 
     _loadPDF(context, widget.invoice, _activityId).then((response) {
       setState(() {
         _response = response;
+        _isLoading = false;
       });
 
       if (kIsWeb) {
@@ -80,7 +83,6 @@ class _PDFScaffoldState extends State<PDFScaffold> {
             'data:application/pdf;base64,' + base64Encode(response.bodyBytes);
         WebUtils.registerWebView(_pdfString);
       } else {
-        _pdfString = '';
         final document = PdfDocument.openData(_response.bodyBytes);
         if (_pdfController == null) {
           _pdfController = PdfController(document: document);
@@ -91,6 +93,8 @@ class _PDFScaffoldState extends State<PDFScaffold> {
           _pdfController = PdfController(document: document);
         }
       }
+    }).catchError((Object error) {
+      _isLoading = false;
     });
   }
 
@@ -119,30 +123,34 @@ class _PDFScaffoldState extends State<PDFScaffold> {
                 title: Row(
                   children: [
                     Text(localization.invoice + ' ' + (invoice.number ?? '')),
-                    if (_activityId != null) ...[
+                    if (_activityId != null && isDesktop(context)) ...[
                       Spacer(),
                       Flexible(
-                        child: AppDropdownButton<String>(
-                            value: widget.activityId,
-                            onChanged: (dynamic activityId) {
-                              setState(() {
-                                _activityId = activityId;
-                                loadPdf();
-                              });
-                            },
-                            items: invoice.history
-                                .map((history) => DropdownMenuItem(
-                                      child: Text(formatNumber(
-                                              history.amount, context,
-                                              clientId: invoice.clientId) +
-                                          ' • ' +
-                                          formatDate(
-                                              convertTimestampToDateString(
-                                                  history.createdAt),
-                                              context, showTime: true)),
-                                      value: history.activityId,
-                                    ))
-                                .toList()),
+                        child: IgnorePointer(
+                          ignoring: _isLoading,
+                          child: AppDropdownButton<String>(
+                              value: widget.activityId,
+                              onChanged: (dynamic activityId) {
+                                setState(() {
+                                  _activityId = activityId;
+                                  loadPdf();
+                                });
+                              },
+                              items: invoice.history
+                                  .map((history) => DropdownMenuItem(
+                                        child: Text(formatNumber(
+                                                history.amount, context,
+                                                clientId: invoice.clientId) +
+                                            ' • ' +
+                                            formatDate(
+                                                convertTimestampToDateString(
+                                                    history.createdAt),
+                                                context,
+                                                showTime: true)),
+                                        value: history.activityId,
+                                      ))
+                                  .toList()),
+                        ),
                       ),
                       Spacer(),
                     ],
@@ -206,7 +214,7 @@ class _PDFScaffoldState extends State<PDFScaffold> {
                 ],
               )
             : null,
-        body: _pdfString == null
+        body: _isLoading
             ? LoadingIndicator()
             : kIsWeb
                 ? HtmlElementView(viewType: _pdfString)
