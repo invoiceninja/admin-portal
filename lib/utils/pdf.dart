@@ -32,10 +32,12 @@ Future<Null> viewPdf(InvoiceEntity invoice, BuildContext context,
 }
 
 class PDFScaffold extends StatefulWidget {
-  const PDFScaffold({@required this.invoice, this.activityId});
+  const PDFScaffold(
+      {@required this.invoice, this.activityId, this.showAppBar = true});
 
   final InvoiceEntity invoice;
   final String activityId;
+  final bool showAppBar;
 
   @override
   _PDFScaffoldState createState() => _PDFScaffoldState();
@@ -86,73 +88,76 @@ class _PDFScaffoldState extends State<PDFScaffold> {
 
     return Scaffold(
         backgroundColor: Colors.grey,
-        appBar: AppBar(
-          centerTitle: false,
-          leading: IconButton(
-            icon: Icon(Icons.arrow_back),
-            onPressed: () => Navigator.of(context).pop(),
-          ),
-          title: Row(
-            children: [
-              Text(localization.invoice + ' ' + (invoice.number ?? '')),
-              if (!kIsWeb && _pageCount > 1) ...[
-                Spacer(),
-                IconButton(
-                  icon: Icon(Icons.navigate_before),
-                  onPressed: _pageNumber > 1
-                      ? () => _pdfController.previousPage(
-                            duration: Duration(
-                                milliseconds: kDefaultAnimationDuration),
-                            curve: Curves.easeInOutCubic,
-                          )
-                      : null,
+        appBar: widget.showAppBar
+            ? AppBar(
+                centerTitle: false,
+                leading: IconButton(
+                  icon: Icon(Icons.arrow_back),
+                  onPressed: () => Navigator.of(context).pop(),
                 ),
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 8),
-                  child: Text(localization.pdfPageInfo
-                      .replaceFirst(':current', '$_pageNumber')
-                      .replaceFirst(':total', '$_pageCount')),
+                title: Row(
+                  children: [
+                    Text(localization.invoice + ' ' + (invoice.number ?? '')),
+                    if (!kIsWeb && _pageCount > 1) ...[
+                      Spacer(),
+                      IconButton(
+                        icon: Icon(Icons.navigate_before),
+                        onPressed: _pageNumber > 1
+                            ? () => _pdfController.previousPage(
+                                  duration: Duration(
+                                      milliseconds: kDefaultAnimationDuration),
+                                  curve: Curves.easeInOutCubic,
+                                )
+                            : null,
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 8),
+                        child: Text(localization.pdfPageInfo
+                            .replaceFirst(':current', '$_pageNumber')
+                            .replaceFirst(':total', '$_pageCount')),
+                      ),
+                      IconButton(
+                        icon: Icon(Icons.navigate_next),
+                        onPressed: _pageNumber < _pageCount
+                            ? () => _pdfController.nextPage(
+                                  duration: Duration(
+                                      milliseconds: kDefaultAnimationDuration),
+                                  curve: Curves.easeInOutCubic,
+                                )
+                            : null,
+                      ),
+                      Spacer(),
+                    ]
+                  ],
                 ),
-                IconButton(
-                  icon: Icon(Icons.navigate_next),
-                  onPressed: _pageNumber < _pageCount
-                      ? () => _pdfController.nextPage(
-                            duration: Duration(
-                                milliseconds: kDefaultAnimationDuration),
-                            curve: Curves.easeInOutCubic,
-                          )
-                      : null,
-                ),
-                Spacer(),
-              ]
-            ],
-          ),
-          actions: <Widget>[
-            FlatButton(
-              child: Text(
-                localization.download,
-                style: TextStyle(color: store.state.headerTextColor),
-              ),
-              onPressed: _response == null
-                  ? null
-                  : () async {
-                      final fileName = '${invoice.number}.pdf';
-                      if (kIsWeb) {
-                        WebUtils.downloadBinaryFile(
-                            fileName, _response.bodyBytes);
-                      } else {
-                        final directory = await getExternalStorageDirectory();
-                        final filePath =
-                            '${directory.path}/${invoice.invoiceId}.pdf';
-                        final pdfData = file.File(filePath);
-                        pdfData.writeAsBytes(_response.bodyBytes);
-                        await FlutterShare.shareFile(
-                            title: fileName, filePath: filePath);
-                      }
-                    },
-            ),
-          ],
-        ),
+                actions: <Widget>[
+                  FlatButton(
+                    child: Text(
+                      localization.download,
+                      style: TextStyle(color: store.state.headerTextColor),
+                    ),
+                    onPressed: _response == null
+                        ? null
+                        : () async {
+                            final fileName = '${invoice.number}.pdf';
+                            if (kIsWeb) {
+                              WebUtils.downloadBinaryFile(
+                                  fileName, _response.bodyBytes);
+                            } else {
+                              final directory =
+                                  await getExternalStorageDirectory();
+                              final filePath =
+                                  '${directory.path}/${invoice.invoiceId}.pdf';
+                              final pdfData = file.File(filePath);
+                              pdfData.writeAsBytes(_response.bodyBytes);
+                              await FlutterShare.shareFile(
+                                  title: fileName, filePath: filePath);
+                            }
+                          },
+                  ),
+                ],
+              )
+            : null,
         body: _pdfString == null && _pdfController == null
             ? LoadingIndicator()
             : kIsWeb
