@@ -1,13 +1,15 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+
 import 'package:invoiceninja_flutter/data/models/company_model.dart';
+import 'package:invoiceninja_flutter/data/models/entities.dart';
 import 'package:invoiceninja_flutter/ui/app/form_card.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/app_dropdown_button.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/app_form.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/bool_dropdown_button.dart';
 import 'package:invoiceninja_flutter/ui/app/edit_scaffold.dart';
 import 'package:invoiceninja_flutter/ui/settings/workflow_vm.dart';
+import 'package:invoiceninja_flutter/utils/icons.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 
 class WorkflowSettings extends StatefulWidget {
@@ -80,8 +82,7 @@ class _WorkflowSettingsState extends State<WorkflowSettings>
                     value: settings.autoEmailInvoice,
                     onChanged: (value) => viewModel.onSettingsChanged(
                         settings.rebuild((b) => b..autoEmailInvoice = value)),
-                    iconData:
-                        kIsWeb ? Icons.email : FontAwesomeIcons.solidEnvelope,
+                    iconData: Icons.email,
                   ),
                   BoolDropdownButton(
                     label: localization.autoArchiveInvoice,
@@ -89,7 +90,7 @@ class _WorkflowSettingsState extends State<WorkflowSettings>
                     value: settings.autoArchiveInvoice,
                     onChanged: (value) => viewModel.onSettingsChanged(
                         settings.rebuild((b) => b..autoArchiveInvoice = value)),
-                    iconData: kIsWeb ? Icons.archive : FontAwesomeIcons.archive,
+                    iconData: Icons.archive,
                   ),
                 ]),
                 FormCard(
@@ -126,8 +127,7 @@ class _WorkflowSettingsState extends State<WorkflowSettings>
                       value: settings.autoConvertQuote,
                       onChanged: (value) => viewModel.onSettingsChanged(
                           settings.rebuild((b) => b..autoConvertQuote = value)),
-                      iconData:
-                          kIsWeb ? Icons.book : FontAwesomeIcons.fileInvoice,
+                      iconData: getEntityIcon(EntityType.quote),
                     ),
                     BoolDropdownButton(
                       label: localization.autoArchiveQuote,
@@ -135,8 +135,7 @@ class _WorkflowSettingsState extends State<WorkflowSettings>
                       value: settings.autoArchiveQuote,
                       onChanged: (value) => viewModel.onSettingsChanged(
                           settings.rebuild((b) => b..autoArchiveQuote = value)),
-                      iconData:
-                          kIsWeb ? Icons.archive : FontAwesomeIcons.archive,
+                      iconData: Icons.archive,
                     ),
                   ],
                 ),

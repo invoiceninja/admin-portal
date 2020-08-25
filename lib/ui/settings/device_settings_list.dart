@@ -1,7 +1,7 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:invoiceninja_flutter/.env.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+
 import 'package:invoiceninja_flutter/data/models/entities.dart';
 import 'package:invoiceninja_flutter/redux/ui/pref_state.dart';
 import 'package:invoiceninja_flutter/ui/app/form_card.dart';
@@ -9,6 +9,7 @@ import 'package:invoiceninja_flutter/ui/app/forms/app_dropdown_button.dart';
 import 'package:invoiceninja_flutter/ui/settings/device_settings_list_vm.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:invoiceninja_flutter/utils/platforms.dart';
+import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 
 class DeviceSettings extends StatefulWidget {
   const DeviceSettings({
@@ -134,7 +135,7 @@ class _DeviceSettingsState extends State<DeviceSettings> {
                         viewModel.onDarkModeChanged(context, value),
                     secondary: Icon(kIsWeb
                         ? Icons.lightbulb_outline
-                        : FontAwesomeIcons.moon),
+                        : MdiIcons.themeLightDark),
                     activeColor: Theme.of(context).accentColor,
                   ),
                   SwitchListTile(
@@ -142,9 +143,8 @@ class _DeviceSettingsState extends State<DeviceSettings> {
                     value: prefState.longPressSelectionIsDefault,
                     onChanged: (value) =>
                         viewModel.onLongPressSelectionIsDefault(context, value),
-                    secondary: Icon(kIsWeb
-                        ? Icons.check_box
-                        : FontAwesomeIcons.solidCheckSquare),
+                    secondary: Icon(
+                        kIsWeb ? Icons.check_box : MdiIcons.checkBoxOutline),
                     activeColor: Theme.of(context).accentColor,
                   ),
                   /*
@@ -168,8 +168,8 @@ class _DeviceSettingsState extends State<DeviceSettings> {
                           onChanged: (value) => viewModel
                               .onRequireAuthenticationChanged(context, value),
                           secondary: Icon(prefState.requireAuthentication
-                              ? FontAwesomeIcons.lock
-                              : FontAwesomeIcons.unlockAlt),
+                              ? MdiIcons.lock
+                              : MdiIcons.lockOpen),
                           activeColor: Theme.of(context).accentColor,
                         );
                       } else {
@@ -194,8 +194,8 @@ class _DeviceSettingsState extends State<DeviceSettings> {
                           value: prefState.autoStartTasks,
                           onChanged: (value) =>
                               viewModel.onAutoStartTasksChanged(context, value),
-                          secondary: Icon(
-                              kIsWeb ? Icons.timer : FontAwesomeIcons.clock),
+                          secondary:
+                              Icon(kIsWeb ? Icons.timer : MdiIcons.clock),
                           activeColor: Theme.of(context).accentColor,
                         )
                       : SizedBox(),
@@ -206,8 +206,7 @@ class _DeviceSettingsState extends State<DeviceSettings> {
                   children: <Widget>[
                     Builder(builder: (BuildContext context) {
                       return ListTile(
-                        leading: Icon(
-                            kIsWeb ? Icons.refresh : FontAwesomeIcons.syncAlt),
+                        leading: Icon(Icons.refresh),
                         title: Text(AppLocalization.of(context).refreshData),
                         onTap: () {
                           viewModel.onRefreshTap(context);
@@ -217,7 +216,7 @@ class _DeviceSettingsState extends State<DeviceSettings> {
                     ListTile(
                       leading: Icon(kIsWeb
                           ? Icons.power_settings_new
-                          : FontAwesomeIcons.powerOff),
+                          : MdiIcons.powerOff),
                       title: Text(AppLocalization.of(context).logout),
                       onTap: () {
                         viewModel.onLogoutTap(context);

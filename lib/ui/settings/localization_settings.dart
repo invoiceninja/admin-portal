@@ -1,7 +1,7 @@
 import 'package:built_collection/built_collection.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+
 import 'package:invoiceninja_flutter/constants.dart';
 import 'package:invoiceninja_flutter/data/models/entities.dart';
 import 'package:invoiceninja_flutter/redux/static/static_selectors.dart';
@@ -14,6 +14,7 @@ import 'package:invoiceninja_flutter/ui/settings/localization_vm.dart';
 import 'package:invoiceninja_flutter/ui/app/edit_scaffold.dart';
 import 'package:invoiceninja_flutter/utils/formatting.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
+import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 
 class LocalizationSettings extends StatefulWidget {
   const LocalizationSettings({
@@ -179,7 +180,7 @@ class _LocalizationSettingsState extends State<LocalizationSettings>
                             .rebuild((b) => b..dateFormatId = dateFormat?.id)),
                   ),
                   BoolDropdownButton(
-                    iconData: kIsWeb ? Icons.timer : FontAwesomeIcons.clock,
+                    iconData: MdiIcons.clock,
                     label: localization.militaryTime,
                     helpLabel: localization.militaryTimeHelp,
                     value: settings.enableMilitaryTime,
