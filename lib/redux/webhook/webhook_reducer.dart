@@ -144,61 +144,15 @@ final webhooksReducer = combineReducers<WebhookState>([
   TypedReducer<WebhookState, LoadWebhooksSuccess>(_setLoadedWebhooks),
   TypedReducer<WebhookState, LoadWebhookSuccess>(_setLoadedWebhook),
   TypedReducer<WebhookState, LoadCompanySuccess>(_setLoadedCompany),
-  TypedReducer<WebhookState, ArchiveWebhooksRequest>(_archiveWebhookRequest),
   TypedReducer<WebhookState, ArchiveWebhooksSuccess>(_archiveWebhookSuccess),
-  TypedReducer<WebhookState, ArchiveWebhooksFailure>(_archiveWebhookFailure),
-  TypedReducer<WebhookState, DeleteWebhooksRequest>(_deleteWebhookRequest),
   TypedReducer<WebhookState, DeleteWebhooksSuccess>(_deleteWebhookSuccess),
-  TypedReducer<WebhookState, DeleteWebhooksFailure>(_deleteWebhookFailure),
-  TypedReducer<WebhookState, RestoreWebhooksRequest>(_restoreWebhookRequest),
   TypedReducer<WebhookState, RestoreWebhooksSuccess>(_restoreWebhookSuccess),
-  TypedReducer<WebhookState, RestoreWebhooksFailure>(_restoreWebhookFailure),
 ]);
-
-WebhookState _archiveWebhookRequest(
-    WebhookState webhookState, ArchiveWebhooksRequest action) {
-  final webhooks = action.webhookIds.map((id) => webhookState.map[id]).toList();
-
-  for (int i = 0; i < webhooks.length; i++) {
-    webhooks[i] = webhooks[i]
-        .rebuild((b) => b..archivedAt = DateTime.now().millisecondsSinceEpoch);
-  }
-  return webhookState.rebuild((b) {
-    for (final webhook in webhooks) {
-      b.map[webhook.id] = webhook;
-    }
-  });
-}
 
 WebhookState _archiveWebhookSuccess(
     WebhookState webhookState, ArchiveWebhooksSuccess action) {
   return webhookState.rebuild((b) {
     for (final webhook in action.webhooks) {
-      b.map[webhook.id] = webhook;
-    }
-  });
-}
-
-WebhookState _archiveWebhookFailure(
-    WebhookState webhookState, ArchiveWebhooksFailure action) {
-  return webhookState.rebuild((b) {
-    for (final webhook in action.webhooks) {
-      b.map[webhook.id] = webhook;
-    }
-  });
-}
-
-WebhookState _deleteWebhookRequest(
-    WebhookState webhookState, DeleteWebhooksRequest action) {
-  final webhooks = action.webhookIds.map((id) => webhookState.map[id]).toList();
-
-  for (int i = 0; i < webhooks.length; i++) {
-    webhooks[i] = webhooks[i].rebuild((b) => b
-      ..archivedAt = DateTime.now().millisecondsSinceEpoch
-      ..isDeleted = true);
-  }
-  return webhookState.rebuild((b) {
-    for (final webhook in webhooks) {
       b.map[webhook.id] = webhook;
     }
   });
@@ -213,42 +167,8 @@ WebhookState _deleteWebhookSuccess(
   });
 }
 
-WebhookState _deleteWebhookFailure(
-    WebhookState webhookState, DeleteWebhooksFailure action) {
-  return webhookState.rebuild((b) {
-    for (final webhook in action.webhooks) {
-      b.map[webhook.id] = webhook;
-    }
-  });
-}
-
-WebhookState _restoreWebhookRequest(
-    WebhookState webhookState, RestoreWebhooksRequest action) {
-  final webhooks = action.webhookIds.map((id) => webhookState.map[id]).toList();
-
-  for (int i = 0; i < webhooks.length; i++) {
-    webhooks[i] = webhooks[i].rebuild((b) => b
-      ..archivedAt = 0
-      ..isDeleted = false);
-  }
-  return webhookState.rebuild((b) {
-    for (final webhook in webhooks) {
-      b.map[webhook.id] = webhook;
-    }
-  });
-}
-
 WebhookState _restoreWebhookSuccess(
     WebhookState webhookState, RestoreWebhooksSuccess action) {
-  return webhookState.rebuild((b) {
-    for (final webhook in action.webhooks) {
-      b.map[webhook.id] = webhook;
-    }
-  });
-}
-
-WebhookState _restoreWebhookFailure(
-    WebhookState webhookState, RestoreWebhooksFailure action) {
   return webhookState.rebuild((b) {
     for (final webhook in action.webhooks) {
       b.map[webhook.id] = webhook;

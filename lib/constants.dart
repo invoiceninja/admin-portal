@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:invoiceninja_flutter/data/models/entities.dart';
 import 'package:flutter/foundation.dart';
 import 'package:invoiceninja_flutter/utils/colors.dart';
 
@@ -361,14 +360,6 @@ const String kSettingsTokenEdit = 'token_edit';
 const String kSettingsWebhooks = 'webhook';
 const String kSettingsWebhookView = 'webhook_view';
 const String kSettingsWebhookEdit = 'webhook_edit';
-
-const kEntitySettings = [
-  EntityType.group,
-  EntityType.companyGateway,
-  EntityType.taxRate,
-  EntityType.design,
-  EntityType.user,
-];
 
 const String kReportClient = 'client';
 const String kReportCredit = 'credit';

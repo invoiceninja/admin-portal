@@ -143,61 +143,15 @@ final groupsReducer = combineReducers<GroupState>([
   TypedReducer<GroupState, LoadGroupsSuccess>(_setLoadedGroups),
   TypedReducer<GroupState, LoadGroupSuccess>(_setLoadedGroup),
   TypedReducer<GroupState, LoadCompanySuccess>(_setLoadedCompany),
-  TypedReducer<GroupState, ArchiveGroupRequest>(_archiveGroupRequest),
   TypedReducer<GroupState, ArchiveGroupSuccess>(_archiveGroupSuccess),
-  TypedReducer<GroupState, ArchiveGroupFailure>(_archiveGroupFailure),
-  TypedReducer<GroupState, DeleteGroupRequest>(_deleteGroupRequest),
   TypedReducer<GroupState, DeleteGroupSuccess>(_deleteGroupSuccess),
-  TypedReducer<GroupState, DeleteGroupFailure>(_deleteGroupFailure),
-  TypedReducer<GroupState, RestoreGroupRequest>(_restoreGroupRequest),
   TypedReducer<GroupState, RestoreGroupSuccess>(_restoreGroupSuccess),
-  TypedReducer<GroupState, RestoreGroupFailure>(_restoreGroupFailure),
 ]);
-
-GroupState _archiveGroupRequest(
-    GroupState groupState, ArchiveGroupRequest action) {
-  final groups = action.groupIds.map((id) => groupState.map[id]).toList();
-
-  for (int i = 0; i < groups.length; i++) {
-    groups[i] = groups[i]
-        .rebuild((b) => b..archivedAt = DateTime.now().millisecondsSinceEpoch);
-  }
-  return groupState.rebuild((b) {
-    for (final group in groups) {
-      b.map[group.id] = group;
-    }
-  });
-}
 
 GroupState _archiveGroupSuccess(
     GroupState groupState, ArchiveGroupSuccess action) {
   return groupState.rebuild((b) {
     for (final group in action.groups) {
-      b.map[group.id] = group;
-    }
-  });
-}
-
-GroupState _archiveGroupFailure(
-    GroupState groupState, ArchiveGroupFailure action) {
-  return groupState.rebuild((b) {
-    for (final group in action.groups) {
-      b.map[group.id] = group;
-    }
-  });
-}
-
-GroupState _deleteGroupRequest(
-    GroupState groupState, DeleteGroupRequest action) {
-  final groups = action.groupIds.map((id) => groupState.map[id]).toList();
-
-  for (int i = 0; i < groups.length; i++) {
-    groups[i] = groups[i].rebuild((b) => b
-      ..archivedAt = DateTime.now().millisecondsSinceEpoch
-      ..isDeleted = true);
-  }
-  return groupState.rebuild((b) {
-    for (final group in groups) {
       b.map[group.id] = group;
     }
   });
@@ -212,42 +166,8 @@ GroupState _deleteGroupSuccess(
   });
 }
 
-GroupState _deleteGroupFailure(
-    GroupState groupState, DeleteGroupFailure action) {
-  return groupState.rebuild((b) {
-    for (final group in action.groups) {
-      b.map[group.id] = group;
-    }
-  });
-}
-
-GroupState _restoreGroupRequest(
-    GroupState groupState, RestoreGroupRequest action) {
-  final groups = action.groupIds.map((id) => groupState.map[id]).toList();
-
-  for (int i = 0; i < groups.length; i++) {
-    groups[i] = groups[i].rebuild((b) => b
-      ..archivedAt = 0
-      ..isDeleted = false);
-  }
-  return groupState.rebuild((b) {
-    for (final group in groups) {
-      b.map[group.id] = group;
-    }
-  });
-}
-
 GroupState _restoreGroupSuccess(
     GroupState groupState, RestoreGroupSuccess action) {
-  return groupState.rebuild((b) {
-    for (final group in action.groups) {
-      b.map[group.id] = group;
-    }
-  });
-}
-
-GroupState _restoreGroupFailure(
-    GroupState groupState, RestoreGroupFailure action) {
   return groupState.rebuild((b) {
     for (final group in action.groups) {
       b.map[group.id] = group;

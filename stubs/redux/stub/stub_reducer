@@ -149,61 +149,15 @@ final stubsReducer = combineReducers<StubState>([
   TypedReducer<StubState, LoadStubsSuccess>(_setLoadedStubs),
   TypedReducer<StubState, LoadStubSuccess>(_setLoadedStub),
   TypedReducer<StubState, LoadCompanySuccess>(_setLoadedCompany),
-  TypedReducer<StubState, ArchiveStubsRequest>(_archiveStubRequest),
   TypedReducer<StubState, ArchiveStubsSuccess>(_archiveStubSuccess),
-  TypedReducer<StubState, ArchiveStubsFailure>(_archiveStubFailure),
-  TypedReducer<StubState, DeleteStubsRequest>(_deleteStubRequest),
   TypedReducer<StubState, DeleteStubsSuccess>(_deleteStubSuccess),
-  TypedReducer<StubState, DeleteStubsFailure>(_deleteStubFailure),
-  TypedReducer<StubState, RestoreStubsRequest>(_restoreStubRequest),
   TypedReducer<StubState, RestoreStubsSuccess>(_restoreStubSuccess),
-  TypedReducer<StubState, RestoreStubsFailure>(_restoreStubFailure),
 ]);
-
-StubState _archiveStubRequest(
-    StubState stubState, ArchiveStubsRequest action) {
-  final stubs = action.stubIds.map((id) => stubState.map[id]).toList();
-
-  for (int i = 0; i < stubs.length; i++) {
-    stubs[i] = stubs[i]
-        .rebuild((b) => b..archivedAt = DateTime.now().millisecondsSinceEpoch);
-  }
-  return stubState.rebuild((b) {
-    for (final stub in stubs) {
-      b.map[stub.id] = stub;
-    }
-  });
-}
 
 StubState _archiveStubSuccess(
     StubState stubState, ArchiveStubsSuccess action) {
   return stubState.rebuild((b) {
     for (final stub in action.stubs) {
-      b.map[stub.id] = stub;
-    }
-  });
-}
-
-StubState _archiveStubFailure(
-    StubState stubState, ArchiveStubsFailure action) {
-  return stubState.rebuild((b) {
-    for (final stub in action.stubs) {
-      b.map[stub.id] = stub;
-    }
-  });
-}
-
-StubState _deleteStubRequest(
-    StubState stubState, DeleteStubsRequest action) {
-  final stubs = action.stubIds.map((id) => stubState.map[id]).toList();
-
-  for (int i = 0; i < stubs.length; i++) {
-    stubs[i] = stubs[i].rebuild((b) => b
-      ..archivedAt = DateTime.now().millisecondsSinceEpoch
-      ..isDeleted = true);
-  }
-  return stubState.rebuild((b) {
-    for (final stub in stubs) {
       b.map[stub.id] = stub;
     }
   });
@@ -218,42 +172,8 @@ StubState _deleteStubSuccess(
   });
 }
 
-StubState _deleteStubFailure(
-    StubState stubState, DeleteStubsFailure action) {
-  return stubState.rebuild((b) {
-    for (final stub in action.stubs) {
-      b.map[stub.id] = stub;
-    }
-  });
-}
-
-StubState _restoreStubRequest(
-    StubState stubState, RestoreStubsRequest action) {
-  final stubs = action.stubIds.map((id) => stubState.map[id]).toList();
-
-  for (int i = 0; i < stubs.length; i++) {
-    stubs[i] = stubs[i].rebuild((b) => b
-      ..archivedAt = 0
-      ..isDeleted = false);
-  }
-  return stubState.rebuild((b) {
-    for (final stub in stubs) {
-      b.map[stub.id] = stub;
-    }
-  });
-}
-
 StubState _restoreStubSuccess(
     StubState stubState, RestoreStubsSuccess action) {
-  return stubState.rebuild((b) {
-    for (final stub in action.stubs) {
-      b.map[stub.id] = stub;
-    }
-  });
-}
-
-StubState _restoreStubFailure(
-    StubState stubState, RestoreStubsFailure action) {
   return stubState.rebuild((b) {
     for (final stub in action.stubs) {
       b.map[stub.id] = stub;

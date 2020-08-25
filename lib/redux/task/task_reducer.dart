@@ -167,57 +167,14 @@ final tasksReducer = combineReducers<TaskState>([
   TypedReducer<TaskState, LoadTasksSuccess>(_setLoadedTasks),
   TypedReducer<TaskState, LoadCompanySuccess>(_setLoadedCompany),
   TypedReducer<TaskState, LoadTaskSuccess>(_setLoadedTask),
-  TypedReducer<TaskState, ArchiveTaskRequest>(_archiveTaskRequest),
   TypedReducer<TaskState, ArchiveTaskSuccess>(_archiveTaskSuccess),
-  TypedReducer<TaskState, ArchiveTaskFailure>(_archiveTaskFailure),
-  TypedReducer<TaskState, DeleteTaskRequest>(_deleteTaskRequest),
   TypedReducer<TaskState, DeleteTaskSuccess>(_deleteTaskSuccess),
-  TypedReducer<TaskState, DeleteTaskFailure>(_deleteTaskFailure),
-  TypedReducer<TaskState, RestoreTaskRequest>(_restoreTaskRequest),
   TypedReducer<TaskState, RestoreTaskSuccess>(_restoreTaskSuccess),
-  TypedReducer<TaskState, RestoreTaskFailure>(_restoreTaskFailure),
 ]);
-
-TaskState _archiveTaskRequest(TaskState taskState, ArchiveTaskRequest action) {
-  final tasks = action.taskIds.map((id) => taskState.map[id]).toList();
-
-  for (int i = 0; i < tasks.length; i++) {
-    tasks[i] = tasks[i]
-        .rebuild((b) => b..archivedAt = DateTime.now().millisecondsSinceEpoch);
-  }
-  return taskState.rebuild((b) {
-    for (final task in tasks) {
-      b.map[task.id] = task;
-    }
-  });
-}
 
 TaskState _archiveTaskSuccess(TaskState taskState, ArchiveTaskSuccess action) {
   return taskState.rebuild((b) {
     for (final task in action.tasks) {
-      b.map[task.id] = task;
-    }
-  });
-}
-
-TaskState _archiveTaskFailure(TaskState taskState, ArchiveTaskFailure action) {
-  return taskState.rebuild((b) {
-    for (final task in action.tasks) {
-      b.map[task.id] = task;
-    }
-  });
-}
-
-TaskState _deleteTaskRequest(TaskState taskState, DeleteTaskRequest action) {
-  final tasks = action.taskIds.map((id) => taskState.map[id]).toList();
-
-  for (int i = 0; i < tasks.length; i++) {
-    tasks[i] = tasks[i].rebuild((b) => b
-      ..archivedAt = DateTime.now().millisecondsSinceEpoch
-      ..isDeleted = true);
-  }
-  return taskState.rebuild((b) {
-    for (final task in tasks) {
       b.map[task.id] = task;
     }
   });
@@ -231,38 +188,7 @@ TaskState _deleteTaskSuccess(TaskState taskState, DeleteTaskSuccess action) {
   });
 }
 
-TaskState _deleteTaskFailure(TaskState taskState, DeleteTaskFailure action) {
-  return taskState.rebuild((b) {
-    for (final task in action.tasks) {
-      b.map[task.id] = task;
-    }
-  });
-}
-
-TaskState _restoreTaskRequest(TaskState taskState, RestoreTaskRequest action) {
-  final tasks = action.taskIds.map((id) => taskState.map[id]).toList();
-
-  for (int i = 0; i < tasks.length; i++) {
-    tasks[i] = tasks[i].rebuild((b) => b
-      ..archivedAt = 0
-      ..isDeleted = false);
-  }
-  return taskState.rebuild((b) {
-    for (final task in tasks) {
-      b.map[task.id] = task;
-    }
-  });
-}
-
 TaskState _restoreTaskSuccess(TaskState taskState, RestoreTaskSuccess action) {
-  return taskState.rebuild((b) {
-    for (final task in action.tasks) {
-      b.map[task.id] = task;
-    }
-  });
-}
-
-TaskState _restoreTaskFailure(TaskState taskState, RestoreTaskFailure action) {
   return taskState.rebuild((b) {
     for (final task in action.tasks) {
       b.map[task.id] = task;

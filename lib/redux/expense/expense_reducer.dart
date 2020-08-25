@@ -171,61 +171,15 @@ final expensesReducer = combineReducers<ExpenseState>([
   TypedReducer<ExpenseState, LoadExpensesSuccess>(_setLoadedExpenses),
   TypedReducer<ExpenseState, LoadCompanySuccess>(_setLoadedCompany),
   TypedReducer<ExpenseState, LoadExpenseSuccess>(_setLoadedExpense),
-  TypedReducer<ExpenseState, ArchiveExpenseRequest>(_archiveExpenseRequest),
   TypedReducer<ExpenseState, ArchiveExpenseSuccess>(_archiveExpenseSuccess),
-  TypedReducer<ExpenseState, ArchiveExpenseFailure>(_archiveExpenseFailure),
-  TypedReducer<ExpenseState, DeleteExpenseRequest>(_deleteExpenseRequest),
   TypedReducer<ExpenseState, DeleteExpenseSuccess>(_deleteExpenseSuccess),
-  TypedReducer<ExpenseState, DeleteExpenseFailure>(_deleteExpenseFailure),
-  TypedReducer<ExpenseState, RestoreExpenseRequest>(_restoreExpenseRequest),
   TypedReducer<ExpenseState, RestoreExpenseSuccess>(_restoreExpenseSuccess),
-  TypedReducer<ExpenseState, RestoreExpenseFailure>(_restoreExpenseFailure),
 ]);
-
-ExpenseState _archiveExpenseRequest(
-    ExpenseState expenseState, ArchiveExpenseRequest action) {
-  final expenses = action.expenseIds.map((id) => expenseState.map[id]).toList();
-
-  for (int i = 0; i < expenses.length; i++) {
-    expenses[i] = expenses[i]
-        .rebuild((b) => b..archivedAt = DateTime.now().millisecondsSinceEpoch);
-  }
-  return expenseState.rebuild((b) {
-    for (final expense in expenses) {
-      b.map[expense.id] = expense;
-    }
-  });
-}
 
 ExpenseState _archiveExpenseSuccess(
     ExpenseState expenseState, ArchiveExpenseSuccess action) {
   return expenseState.rebuild((b) {
     for (final expense in action.expenses) {
-      b.map[expense.id] = expense;
-    }
-  });
-}
-
-ExpenseState _archiveExpenseFailure(
-    ExpenseState expenseState, ArchiveExpenseFailure action) {
-  return expenseState.rebuild((b) {
-    for (final expense in action.expenses) {
-      b.map[expense.id] = expense;
-    }
-  });
-}
-
-ExpenseState _deleteExpenseRequest(
-    ExpenseState expenseState, DeleteExpenseRequest action) {
-  final expenses = action.expenseIds.map((id) => expenseState.map[id]).toList();
-
-  for (int i = 0; i < expenses.length; i++) {
-    expenses[i] = expenses[i].rebuild((b) => b
-      ..archivedAt = DateTime.now().millisecondsSinceEpoch
-      ..isDeleted = true);
-  }
-  return expenseState.rebuild((b) {
-    for (final expense in expenses) {
       b.map[expense.id] = expense;
     }
   });
@@ -240,42 +194,8 @@ ExpenseState _deleteExpenseSuccess(
   });
 }
 
-ExpenseState _deleteExpenseFailure(
-    ExpenseState expenseState, DeleteExpenseFailure action) {
-  return expenseState.rebuild((b) {
-    for (final expense in action.expenses) {
-      b.map[expense.id] = expense;
-    }
-  });
-}
-
-ExpenseState _restoreExpenseRequest(
-    ExpenseState expenseState, RestoreExpenseRequest action) {
-  final expenses = action.expenseIds.map((id) => expenseState.map[id]).toList();
-
-  for (int i = 0; i < expenses.length; i++) {
-    expenses[i] = expenses[i].rebuild((b) => b
-      ..archivedAt = 0
-      ..isDeleted = false);
-  }
-  return expenseState.rebuild((b) {
-    for (final expense in expenses) {
-      b.map[expense.id] = expense;
-    }
-  });
-}
-
 ExpenseState _restoreExpenseSuccess(
     ExpenseState expenseState, RestoreExpenseSuccess action) {
-  return expenseState.rebuild((b) {
-    for (final expense in action.expenses) {
-      b.map[expense.id] = expense;
-    }
-  });
-}
-
-ExpenseState _restoreExpenseFailure(
-    ExpenseState expenseState, RestoreExpenseFailure action) {
   return expenseState.rebuild((b) {
     for (final expense in action.expenses) {
       b.map[expense.id] = expense;

@@ -139,61 +139,15 @@ final taxRatesReducer = combineReducers<TaxRateState>([
   TypedReducer<TaxRateState, LoadTaxRatesSuccess>(_setLoadedTaxRates),
   TypedReducer<TaxRateState, LoadTaxRateSuccess>(_setLoadedTaxRate),
   TypedReducer<TaxRateState, LoadCompanySuccess>(_setLoadedCompany),
-  TypedReducer<TaxRateState, ArchiveTaxRateRequest>(_archiveTaxRateRequest),
   TypedReducer<TaxRateState, ArchiveTaxRatesSuccess>(_archiveTaxRateSuccess),
-  TypedReducer<TaxRateState, ArchiveTaxRateFailure>(_archiveTaxRateFailure),
-  TypedReducer<TaxRateState, DeleteTaxRateRequest>(_deleteTaxRateRequest),
   TypedReducer<TaxRateState, DeleteTaxRatesSuccess>(_deleteTaxRateSuccess),
-  TypedReducer<TaxRateState, DeleteTaxRateFailure>(_deleteTaxRateFailure),
-  TypedReducer<TaxRateState, RestoreTaxRateRequest>(_restoreTaxRateRequest),
   TypedReducer<TaxRateState, RestoreTaxRatesSuccess>(_restoreTaxRateSuccess),
-  TypedReducer<TaxRateState, RestoreTaxRateFailure>(_restoreTaxRateFailure),
 ]);
-
-TaxRateState _archiveTaxRateRequest(
-    TaxRateState taxRateState, ArchiveTaxRateRequest action) {
-  final taxRates = action.taxRateIds.map((id) => taxRateState.map[id]).toList();
-
-  for (int i = 0; i < taxRates.length; i++) {
-    taxRates[i] = taxRates[i]
-        .rebuild((b) => b..archivedAt = DateTime.now().millisecondsSinceEpoch);
-  }
-  return taxRateState.rebuild((b) {
-    for (final taxRate in taxRates) {
-      b.map[taxRate.id] = taxRate;
-    }
-  });
-}
 
 TaxRateState _archiveTaxRateSuccess(
     TaxRateState taxRateState, ArchiveTaxRatesSuccess action) {
   return taxRateState.rebuild((b) {
     for (final taxRate in action.taxRates) {
-      b.map[taxRate.id] = taxRate;
-    }
-  });
-}
-
-TaxRateState _archiveTaxRateFailure(
-    TaxRateState taxRateState, ArchiveTaxRateFailure action) {
-  return taxRateState.rebuild((b) {
-    for (final taxRate in action.taxRates) {
-      b.map[taxRate.id] = taxRate;
-    }
-  });
-}
-
-TaxRateState _deleteTaxRateRequest(
-    TaxRateState taxRateState, DeleteTaxRateRequest action) {
-  final taxRates = action.taxRateIds.map((id) => taxRateState.map[id]).toList();
-
-  for (int i = 0; i < taxRates.length; i++) {
-    taxRates[i] = taxRates[i].rebuild((b) => b
-      ..archivedAt = DateTime.now().millisecondsSinceEpoch
-      ..isDeleted = true);
-  }
-  return taxRateState.rebuild((b) {
-    for (final taxRate in taxRates) {
       b.map[taxRate.id] = taxRate;
     }
   });
@@ -208,42 +162,8 @@ TaxRateState _deleteTaxRateSuccess(
   });
 }
 
-TaxRateState _deleteTaxRateFailure(
-    TaxRateState taxRateState, DeleteTaxRateFailure action) {
-  return taxRateState.rebuild((b) {
-    for (final taxRate in action.taxRates) {
-      b.map[taxRate.id] = taxRate;
-    }
-  });
-}
-
-TaxRateState _restoreTaxRateRequest(
-    TaxRateState taxRateState, RestoreTaxRateRequest action) {
-  final taxRates = action.taxRateIds.map((id) => taxRateState.map[id]).toList();
-
-  for (int i = 0; i < taxRates.length; i++) {
-    taxRates[i] = taxRates[i].rebuild((b) => b
-      ..archivedAt = 0
-      ..isDeleted = false);
-  }
-  return taxRateState.rebuild((b) {
-    for (final taxRate in taxRates) {
-      b.map[taxRate.id] = taxRate;
-    }
-  });
-}
-
 TaxRateState _restoreTaxRateSuccess(
     TaxRateState taxRateState, RestoreTaxRatesSuccess action) {
-  return taxRateState.rebuild((b) {
-    for (final taxRate in action.taxRates) {
-      b.map[taxRate.id] = taxRate;
-    }
-  });
-}
-
-TaxRateState _restoreTaxRateFailure(
-    TaxRateState taxRateState, RestoreTaxRateFailure action) {
   return taxRateState.rebuild((b) {
     for (final taxRate in action.taxRates) {
       b.map[taxRate.id] = taxRate;

@@ -301,7 +301,8 @@ class _EntityListState extends State<EntityList> {
                 alignment: Alignment.topCenter,
                 children: <Widget>[
                   if (state.isLoading ||
-                      (kEntitySettings.contains(entityType) && state.isSaving))
+                      ((entityType.isSetting || isMobile(context)) &&
+                          state.isSaving))
                     LinearProgressIndicator(),
                   listOrTable(),
                 ],

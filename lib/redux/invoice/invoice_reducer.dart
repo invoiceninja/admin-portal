@@ -265,15 +265,9 @@ final invoicesReducer = combineReducers<InvoiceState>([
   TypedReducer<InvoiceState, ReverseInvoicesSuccess>(_reverseInvoicesSuccess),
   TypedReducer<InvoiceState, CancelInvoicesSuccess>(_cancelInvoicesSuccess),
   TypedReducer<InvoiceState, EmailInvoiceSuccess>(_emailInvoiceSuccess),
-  TypedReducer<InvoiceState, ArchiveInvoicesRequest>(_archiveInvoiceRequest),
   TypedReducer<InvoiceState, ArchiveInvoicesSuccess>(_archiveInvoiceSuccess),
-  TypedReducer<InvoiceState, ArchiveInvoicesFailure>(_archiveInvoiceFailure),
-  TypedReducer<InvoiceState, DeleteInvoicesRequest>(_deleteInvoiceRequest),
   TypedReducer<InvoiceState, DeleteInvoicesSuccess>(_deleteInvoiceSuccess),
-  TypedReducer<InvoiceState, DeleteInvoicesFailure>(_deleteInvoiceFailure),
-  TypedReducer<InvoiceState, RestoreInvoicesRequest>(_restoreInvoiceRequest),
   TypedReducer<InvoiceState, RestoreInvoicesSuccess>(_restoreInvoiceSuccess),
-  TypedReducer<InvoiceState, RestoreInvoicesFailure>(_restoreInvoiceFailure),
 ]);
 
 InvoiceState _markInvoicesSentSuccess(
@@ -312,51 +306,10 @@ InvoiceState _cancelInvoicesSuccess(
   });
 }
 
-InvoiceState _archiveInvoiceRequest(
-    InvoiceState invoiceState, ArchiveInvoicesRequest action) {
-  final invoices = action.invoiceIds.map((id) => invoiceState.map[id]).toList();
-
-  for (int i = 0; i < invoices.length; i++) {
-    invoices[i] = invoices[i]
-        .rebuild((b) => b..archivedAt = DateTime.now().millisecondsSinceEpoch);
-  }
-
-  return invoiceState.rebuild((b) {
-    for (final invoice in invoices) {
-      b.map[invoice.id] = invoice;
-    }
-  });
-}
-
 InvoiceState _archiveInvoiceSuccess(
     InvoiceState invoiceState, ArchiveInvoicesSuccess action) {
   return invoiceState.rebuild((b) {
     for (final invoice in action.invoices) {
-      b.map[invoice.id] = invoice;
-    }
-  });
-}
-
-InvoiceState _archiveInvoiceFailure(
-    InvoiceState invoiceState, ArchiveInvoicesFailure action) {
-  return invoiceState.rebuild((b) {
-    for (final invoice in action.invoices) {
-      b.map[invoice.id] = invoice;
-    }
-  });
-}
-
-InvoiceState _deleteInvoiceRequest(
-    InvoiceState invoiceState, DeleteInvoicesRequest action) {
-  final invoices = action.invoiceIds.map((id) => invoiceState.map[id]).toList();
-
-  for (int i = 0; i < invoices.length; i++) {
-    invoices[i] = invoices[i].rebuild((b) => b
-      ..archivedAt = DateTime.now().millisecondsSinceEpoch
-      ..isDeleted = true);
-  }
-  return invoiceState.rebuild((b) {
-    for (final invoice in invoices) {
       b.map[invoice.id] = invoice;
     }
   });
@@ -371,31 +324,6 @@ InvoiceState _deleteInvoiceSuccess(
   });
 }
 
-InvoiceState _deleteInvoiceFailure(
-    InvoiceState invoiceState, DeleteInvoicesFailure action) {
-  return invoiceState.rebuild((b) {
-    for (final invoice in action.invoices) {
-      b.map[invoice.id] = invoice;
-    }
-  });
-}
-
-InvoiceState _restoreInvoiceRequest(
-    InvoiceState invoiceState, RestoreInvoicesRequest action) {
-  final invoices = action.invoiceIds.map((id) => invoiceState.map[id]).toList();
-
-  for (int i = 0; i < invoices.length; i++) {
-    invoices[i] = invoices[i].rebuild((b) => b
-      ..archivedAt = 0
-      ..isDeleted = false);
-  }
-  return invoiceState.rebuild((b) {
-    for (final invoice in invoices) {
-      b.map[invoice.id] = invoice;
-    }
-  });
-}
-
 InvoiceState _emailInvoiceSuccess(
     InvoiceState invoiceState, EmailInvoiceSuccess action) {
   return invoiceState
@@ -404,15 +332,6 @@ InvoiceState _emailInvoiceSuccess(
 
 InvoiceState _restoreInvoiceSuccess(
     InvoiceState invoiceState, RestoreInvoicesSuccess action) {
-  return invoiceState.rebuild((b) {
-    for (final invoice in action.invoices) {
-      b.map[invoice.id] = invoice;
-    }
-  });
-}
-
-InvoiceState _restoreInvoiceFailure(
-    InvoiceState invoiceState, RestoreInvoicesFailure action) {
   return invoiceState.rebuild((b) {
     for (final invoice in action.invoices) {
       b.map[invoice.id] = invoice;
