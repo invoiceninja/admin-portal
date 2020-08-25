@@ -64,6 +64,7 @@ class AccountManagementVM {
 
           final deleteCompleter = Completer<Null>()
             ..future.then((value) {
+              store.dispatch(SelectCompany(companyIndex: 0));
               final refreshCompleter = Completer<Null>()
                 ..future.then((value) {
                   if (store.state.companies.isNotEmpty) {
