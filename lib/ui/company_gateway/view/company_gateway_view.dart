@@ -31,6 +31,7 @@ class _CompanyGatewayViewState extends State<CompanyGatewayView> {
     final viewModel = widget.viewModel;
     final state = viewModel.state;
     final companyGateway = viewModel.companyGateway;
+    final gateway = state.staticState.gatewayMap[companyGateway.gatewayId];
     final localization = AppLocalization.of(context);
     final processed = memoizedCalculateCompanyGatewayProcessed(
         companyGateway.id, viewModel.state.paymentState.map);
@@ -71,7 +72,7 @@ class _CompanyGatewayViewState extends State<CompanyGatewayView> {
             label: localization.processed,
             value: formatNumber(processed, context)),
         ListDivider(),
-        if (companyGateway.gateway.supportsTokenBilling) ...[
+        if (gateway.supportsTokenBilling) ...[
           EntitiesListTile(
             isFilter: widget.isFilter,
             entityType: EntityType.client,

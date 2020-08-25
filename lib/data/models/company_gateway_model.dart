@@ -64,7 +64,6 @@ abstract class CompanyGatewayEntity extends Object
       id: id ?? BaseEntity.nextId,
       isChanged: false,
       isDeleted: false,
-      gateway: GatewayEntity(),
       gatewayId: '',
       acceptedCreditCards: 0,
       showBillingAddress: true,
@@ -101,8 +100,6 @@ abstract class CompanyGatewayEntity extends Object
   EntityType get entityType {
     return EntityType.companyGateway;
   }
-
-  GatewayEntity get gateway;
 
   @BuiltValueField(wireName: 'gateway_key')
   String get gatewayId;
@@ -148,9 +145,7 @@ abstract class CompanyGatewayEntity extends Object
       feesAndLimitsMap[gatewayTypeId] ?? FeesAndLimitsSettings();
 
   @override
-  String get listDisplayName {
-    return gateway.name;
-  }
+  String get listDisplayName => label;
 
   bool get isCustom => gatewayId == kGatewayCustom;
 
@@ -181,7 +176,7 @@ abstract class CompanyGatewayEntity extends Object
   bool matchesFilter(String filter) {
     return matchesStrings(
       haystacks: [
-        gateway.name,
+        label,
         customValue1,
         customValue2,
         customValue3,
@@ -195,7 +190,6 @@ abstract class CompanyGatewayEntity extends Object
   String matchesFilterValue(String filter) {
     return matchesStringsValue(
       haystacks: [
-        gateway.name,
         customValue1,
         customValue2,
         customValue3,

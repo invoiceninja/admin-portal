@@ -126,9 +126,6 @@ class _$CompanyGatewayEntitySerializer
       Serializers serializers, CompanyGatewayEntity object,
       {FullType specifiedType = FullType.unspecified}) {
     final result = <Object>[
-      'gateway',
-      serializers.serialize(object.gateway,
-          specifiedType: const FullType(GatewayEntity)),
       'gateway_key',
       serializers.serialize(object.gatewayId,
           specifiedType: const FullType(String)),
@@ -222,10 +219,6 @@ class _$CompanyGatewayEntitySerializer
       iterator.moveNext();
       final dynamic value = iterator.current;
       switch (key) {
-        case 'gateway':
-          result.gateway.replace(serializers.deserialize(value,
-              specifiedType: const FullType(GatewayEntity)) as GatewayEntity);
-          break;
         case 'gateway_key':
           result.gatewayId = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String;
@@ -639,8 +632,6 @@ class CompanyGatewayItemResponseBuilder
 
 class _$CompanyGatewayEntity extends CompanyGatewayEntity {
   @override
-  final GatewayEntity gateway;
-  @override
   final String gatewayId;
   @override
   final int acceptedCreditCards;
@@ -688,8 +679,7 @@ class _$CompanyGatewayEntity extends CompanyGatewayEntity {
       (new CompanyGatewayEntityBuilder()..update(updates)).build();
 
   _$CompanyGatewayEntity._(
-      {this.gateway,
-      this.gatewayId,
+      {this.gatewayId,
       this.acceptedCreditCards,
       this.showBillingAddress,
       this.showShippingAddress,
@@ -711,9 +701,6 @@ class _$CompanyGatewayEntity extends CompanyGatewayEntity {
       this.assignedUserId,
       this.id})
       : super._() {
-    if (gateway == null) {
-      throw new BuiltValueNullFieldError('CompanyGatewayEntity', 'gateway');
-    }
     if (gatewayId == null) {
       throw new BuiltValueNullFieldError('CompanyGatewayEntity', 'gatewayId');
     }
@@ -790,7 +777,6 @@ class _$CompanyGatewayEntity extends CompanyGatewayEntity {
   bool operator ==(Object other) {
     if (identical(other, this)) return true;
     return other is CompanyGatewayEntity &&
-        gateway == other.gateway &&
         gatewayId == other.gatewayId &&
         acceptedCreditCards == other.acceptedCreditCards &&
         showBillingAddress == other.showBillingAddress &&
@@ -835,7 +821,7 @@ class _$CompanyGatewayEntity extends CompanyGatewayEntity {
                                                                 $jc(
                                                                     $jc(
                                                                         $jc(
-                                                                            $jc($jc($jc($jc(0, gateway.hashCode), gatewayId.hashCode), acceptedCreditCards.hashCode),
+                                                                            $jc($jc($jc(0, gatewayId.hashCode), acceptedCreditCards.hashCode),
                                                                                 showBillingAddress.hashCode),
                                                                             showShippingAddress.hashCode),
                                                                         updateDetails.hashCode),
@@ -860,7 +846,6 @@ class _$CompanyGatewayEntity extends CompanyGatewayEntity {
   @override
   String toString() {
     return (newBuiltValueToStringHelper('CompanyGatewayEntity')
-          ..add('gateway', gateway)
           ..add('gatewayId', gatewayId)
           ..add('acceptedCreditCards', acceptedCreditCards)
           ..add('showBillingAddress', showBillingAddress)
@@ -889,11 +874,6 @@ class _$CompanyGatewayEntity extends CompanyGatewayEntity {
 class CompanyGatewayEntityBuilder
     implements Builder<CompanyGatewayEntity, CompanyGatewayEntityBuilder> {
   _$CompanyGatewayEntity _$v;
-
-  GatewayEntityBuilder _gateway;
-  GatewayEntityBuilder get gateway =>
-      _$this._gateway ??= new GatewayEntityBuilder();
-  set gateway(GatewayEntityBuilder gateway) => _$this._gateway = gateway;
 
   String _gatewayId;
   String get gatewayId => _$this._gatewayId;
@@ -993,7 +973,6 @@ class CompanyGatewayEntityBuilder
 
   CompanyGatewayEntityBuilder get _$this {
     if (_$v != null) {
-      _gateway = _$v.gateway?.toBuilder();
       _gatewayId = _$v.gatewayId;
       _acceptedCreditCards = _$v.acceptedCreditCards;
       _showBillingAddress = _$v.showBillingAddress;
@@ -1039,7 +1018,6 @@ class CompanyGatewayEntityBuilder
     try {
       _$result = _$v ??
           new _$CompanyGatewayEntity._(
-              gateway: gateway.build(),
               gatewayId: gatewayId,
               acceptedCreditCards: acceptedCreditCards,
               showBillingAddress: showBillingAddress,
@@ -1064,9 +1042,6 @@ class CompanyGatewayEntityBuilder
     } catch (_) {
       String _$failedField;
       try {
-        _$failedField = 'gateway';
-        gateway.build();
-
         _$failedField = 'feesAndLimitsMap';
         feesAndLimitsMap.build();
       } catch (e) {

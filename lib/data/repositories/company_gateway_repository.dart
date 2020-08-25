@@ -19,7 +19,7 @@ class CompanyGatewayRepository {
   Future<CompanyGatewayEntity> loadItem(
       Credentials credentials, String entityId) async {
     final dynamic response = await webClient.get(
-        '${credentials.url}/company_gateways/$entityId?include=gateway',
+        '${credentials.url}/company_gateways/$entityId',
         credentials.token);
 
     final CompanyGatewayItemResponse companyGatewayResponse = serializers
@@ -30,7 +30,7 @@ class CompanyGatewayRepository {
 
   Future<BuiltList<CompanyGatewayEntity>> loadList(
       Credentials credentials) async {
-    final url = credentials.url + '/company_gateways?include=gateway';
+    final url = credentials.url + '/company_gateways';
 
     final dynamic response = await webClient.get(url, credentials.token);
 
@@ -42,7 +42,7 @@ class CompanyGatewayRepository {
 
   Future<List<CompanyGatewayEntity>> bulkAction(
       Credentials credentials, List<String> ids, EntityAction action) async {
-    final url = credentials.url + '/company_gateways/bulk?include=gateway';
+    final url = credentials.url + '/company_gateways/bulk';
     final dynamic response = await webClient.post(url, credentials.token,
         data: json.encode({'ids': ids, 'action': action.toApiParam()}));
 
@@ -60,12 +60,12 @@ class CompanyGatewayRepository {
 
     if (companyGateway.isNew) {
       response = await webClient.post(
-          credentials.url + '/company_gateways?include=gateway',
+          credentials.url + '/company_gateways',
           credentials.token,
           data: json.encode(data));
     } else {
       final url = credentials.url +
-          '/company_gateways/${companyGateway.id}?include=gateway';
+          '/company_gateways/${companyGateway.id}';
       response =
           await webClient.put(url, credentials.token, data: json.encode(data));
     }

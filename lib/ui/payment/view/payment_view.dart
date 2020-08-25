@@ -126,7 +126,7 @@ class _PaymentViewState extends State<PaymentView> {
                       if ((payment.companyGatewayId ?? '').isNotEmpty) ...[
                         ListTile(
                           title: Text(
-                              '${localization.gateway}  ›  ${companyGateway.gateway.name}'),
+                              '${localization.gateway}  ›  ${companyGateway.label}'),
                           onTap: companyGatewayLink != null
                               ? () => launch(companyGatewayLink)
                               : null,

@@ -51,8 +51,10 @@ class _CompanyGatewayEditState extends State<CompanyGatewayEdit>
   @override
   void didChangeDependencies() {
     final companyGateway = widget.viewModel.companyGateway;
-    _gatewayTypeId =
-        companyGateway.gateway.defaultGatewayTypeId ?? kGatewayTypeCreditCard;
+    final gateway =
+        widget.viewModel.state.staticState.gatewayMap[companyGateway.gatewayId];
+
+    _gatewayTypeId = gateway.defaultGatewayTypeId ?? kGatewayTypeCreditCard;
     super.didChangeDependencies();
   }
 
@@ -72,7 +74,7 @@ class _CompanyGatewayEditState extends State<CompanyGatewayEdit>
     return EditScaffold(
       title: viewModel.companyGateway.isNew
           ? localization.newCompanyGateway
-          : companyGateway.gateway.name,
+          : companyGateway.label,
       onSavePressed: viewModel.onSavePressed,
       onCancelPressed: viewModel.onCancelPressed,
       appBarBottom: TabBar(
