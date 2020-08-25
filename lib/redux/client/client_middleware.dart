@@ -195,9 +195,8 @@ Middleware<AppState> _saveClient(ClientRepository repository) {
 Middleware<AppState> _loadClient(ClientRepository repository) {
   return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
     final action = dynamicAction as LoadClient;
-    final AppState state = store.state;
 
-    if (state.isLoading || Config.DEMO_MODE) {
+    if (Config.DEMO_MODE) {
       next(action);
       return;
     }
@@ -225,13 +224,7 @@ Middleware<AppState> _loadClient(ClientRepository repository) {
 
 Middleware<AppState> _loadClients(ClientRepository repository) {
   return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
-    final AppState state = store.state;
     final action = dynamicAction as LoadClients;
-
-    if (state.isLoading) {
-      next(action);
-      return;
-    }
 
     store.dispatch(LoadClientsRequest());
     repository.loadList(store.state.credentials).then((data) {

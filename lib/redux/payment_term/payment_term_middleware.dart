@@ -193,11 +193,6 @@ Middleware<AppState> _loadPaymentTerm(PaymentTermRepository repository) {
     final action = dynamicAction as LoadPaymentTerm;
     final AppState state = store.state;
 
-    if (state.isLoading) {
-      next(action);
-      return;
-    }
-
     store.dispatch(LoadPaymentTermRequest());
     repository
         .loadItem(state.credentials, action.paymentTermId)
@@ -223,11 +218,6 @@ Middleware<AppState> _loadPaymentTerms(PaymentTermRepository repository) {
   return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
     final action = dynamicAction as LoadPaymentTerms;
     final AppState state = store.state;
-
-    if (state.isLoading) {
-      next(action);
-      return;
-    }
 
     store.dispatch(LoadPaymentTermsRequest());
     repository.loadList(state.credentials).then((data) {

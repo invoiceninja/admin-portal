@@ -211,12 +211,7 @@ Middleware<AppState> _loadStub(StubRepository repository) {
   final action = dynamicAction as LoadStub;
     final AppState state = store.state;
 
-    if (state.isLoading) {
-      next(action);
-      return;
-    }
-
-    store.dispatch(LoadStubRequest());
+store.dispatch(LoadStubRequest());
     repository
         .loadItem(state.credentials, action.stubId)
         .then((stub) {
@@ -247,12 +242,7 @@ Middleware<AppState> _loadStubs(StubRepository repository) {
       return;
     }
 
-    if (state.isLoading) {
-      next(action);
-      return;
-    }
-
-    final int updatedAt = (state.stubState.lastUpdated / 1000).round();
+final int updatedAt = (state.stubState.lastUpdated / 1000).round();
 
     store.dispatch(LoadStubsRequest());
     repository

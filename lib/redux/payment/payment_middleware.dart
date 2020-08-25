@@ -268,12 +268,6 @@ Middleware<AppState> _emailPayment(PaymentRepository repository) {
 Middleware<AppState> _loadPayment(PaymentRepository repository) {
   return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
     final action = dynamicAction as LoadPayment;
-    final AppState state = store.state;
-
-    if (state.isLoading) {
-      next(action);
-      return;
-    }
 
     store.dispatch(LoadPaymentRequest());
     repository
@@ -299,12 +293,6 @@ Middleware<AppState> _loadPayment(PaymentRepository repository) {
 Middleware<AppState> _loadPayments(PaymentRepository repository) {
   return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
     final action = dynamicAction as LoadPayments;
-    final AppState state = store.state;
-
-    if (state.isLoading) {
-      next(action);
-      return;
-    }
 
     store.dispatch(LoadPaymentsRequest());
     repository.loadList(store.state.credentials).then((data) {

@@ -182,12 +182,6 @@ Middleware<AppState> _restoreDocument(DocumentRepository repository) {
 Middleware<AppState> _loadDocument(DocumentRepository repository) {
   return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
     final action = dynamicAction as LoadDocument;
-    final AppState state = store.state;
-
-    if (state.isLoading) {
-      next(action);
-      return;
-    }
 
     store.dispatch(LoadDocumentRequest());
     repository
@@ -213,12 +207,6 @@ Middleware<AppState> _loadDocument(DocumentRepository repository) {
 Middleware<AppState> _loadDocuments(DocumentRepository repository) {
   return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
     final action = dynamicAction as LoadDocuments;
-    final AppState state = store.state;
-
-    if (state.isLoading) {
-      next(action);
-      return;
-    }
 
     store.dispatch(LoadDocumentsRequest());
     repository.loadList(store.state.credentials).then((data) {

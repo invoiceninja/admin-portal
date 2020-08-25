@@ -192,11 +192,6 @@ Middleware<AppState> _loadGroup(GroupRepository repository) {
     final action = dynamicAction as LoadGroup;
     final AppState state = store.state;
 
-    if (state.isLoading) {
-      next(action);
-      return;
-    }
-
     store.dispatch(LoadGroupRequest());
     repository.loadItem(state.credentials, action.groupId).then((group) {
       store.dispatch(LoadGroupSuccess(group));
@@ -220,11 +215,6 @@ Middleware<AppState> _loadGroups(GroupRepository repository) {
   return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
     final action = dynamicAction as LoadGroups;
     final AppState state = store.state;
-
-    if (state.isLoading) {
-      next(action);
-      return;
-    }
 
     store.dispatch(LoadGroupsRequest());
     repository.loadList(state.credentials).then((data) {

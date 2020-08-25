@@ -192,11 +192,6 @@ Middleware<AppState> _loadTask(TaskRepository repository) {
     final action = dynamicAction as LoadTask;
     final AppState state = store.state;
 
-    if (state.isLoading) {
-      next(action);
-      return;
-    }
-
     store.dispatch(LoadTaskRequest());
     repository.loadItem(state.credentials, action.taskId).then((task) {
       store.dispatch(LoadTaskSuccess(task));
@@ -219,12 +214,6 @@ Middleware<AppState> _loadTask(TaskRepository repository) {
 Middleware<AppState> _loadTasks(TaskRepository repository) {
   return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
     final action = dynamicAction as LoadTasks;
-    final AppState state = store.state;
-
-    if (state.isLoading) {
-      next(action);
-      return;
-    }
 
     store.dispatch(LoadTasksRequest());
     repository.loadList(store.state.credentials).then((data) {

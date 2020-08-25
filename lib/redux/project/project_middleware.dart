@@ -199,12 +199,6 @@ Middleware<AppState> _saveProject(ProjectRepository repository) {
 Middleware<AppState> _loadProject(ProjectRepository repository) {
   return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
     final action = dynamicAction as LoadProject;
-    final AppState state = store.state;
-
-    if (state.isLoading) {
-      next(action);
-      return;
-    }
 
     store.dispatch(LoadProjectRequest());
     repository
@@ -231,12 +225,6 @@ Middleware<AppState> _loadProject(ProjectRepository repository) {
 Middleware<AppState> _loadProjects(ProjectRepository repository) {
   return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
     final action = dynamicAction as LoadProjects;
-    final AppState state = store.state;
-
-    if (state.isLoading) {
-      next(action);
-      return;
-    }
 
     store.dispatch(LoadProjectsRequest());
     repository.loadList(store.state.credentials).then((data) {

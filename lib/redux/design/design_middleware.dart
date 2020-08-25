@@ -189,11 +189,6 @@ Middleware<AppState> _loadDesign(DesignRepository repository) {
     final action = dynamicAction as LoadDesign;
     final AppState state = store.state;
 
-    if (state.isLoading) {
-      next(action);
-      return;
-    }
-
     store.dispatch(LoadDesignRequest());
     repository.loadItem(state.credentials, action.designId).then((design) {
       store.dispatch(LoadDesignSuccess(design));
@@ -217,11 +212,6 @@ Middleware<AppState> _loadDesigns(DesignRepository repository) {
   return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
     final action = dynamicAction as LoadDesigns;
     final AppState state = store.state;
-
-    if (state.isLoading) {
-      next(action);
-      return;
-    }
 
     store.dispatch(LoadDesignsRequest());
     repository.loadList(state.credentials).then((data) {
