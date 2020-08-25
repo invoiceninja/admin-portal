@@ -61,7 +61,6 @@ Middleware<AppState> _editPayment() {
     } else {
       showDialog<PaymentEditScreen>(
           context: action.context,
-          useRootNavigator: true,
           barrierDismissible: false,
           builder: (BuildContext context) {
             return PaymentEditScreen();
@@ -82,7 +81,6 @@ Middleware<AppState> _viewRefundPayment() {
     } else {
       showDialog<PaymentRefundScreen>(
           context: action.context,
-          useRootNavigator: true,
           barrierDismissible: false,
           builder: (BuildContext context) {
             return PaymentRefundScreen();
