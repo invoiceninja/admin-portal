@@ -395,8 +395,9 @@ class _DrawerTileState extends State<DrawerTile> {
             if (isMobile(context)) {
               navigator.pop();
             }
-            store.dispatch(
-                ViewDashboard(navigator: Navigator.of(context), filter: ''));
+            store.dispatch(ViewDashboard(
+                navigator: Navigator.of(context),
+                filter: uiState.filter == '' ? null : ''));
           },
         );
       } else if (userCompany.canCreate(widget.entityType)) {
