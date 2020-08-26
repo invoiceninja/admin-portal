@@ -86,7 +86,6 @@ abstract class CompanyEntity extends Object
       expenseCategories: BuiltList<ExpenseCategoryEntity>(),
       expenseCategoryMap: BuiltMap<String, ExpenseCategoryEntity>(),
       users: BuiltList<UserEntity>(),
-      userMap: BuiltMap<String, UserEntity>(),
       customFields: BuiltMap<String, String>(),
       activities: BuiltList<ActivityEntity>(),
       clients: BuiltList<ClientEntity>(),
@@ -239,8 +238,6 @@ abstract class CompanyEntity extends Object
 
   @BuiltValueField(wireName: 'payment_terms')
   BuiltList<PaymentTermEntity> get paymentTerms;
-
-  BuiltMap<String, UserEntity> get userMap;
 
   @BuiltValueField(wireName: 'custom_fields')
   BuiltMap<String, String> get customFields;

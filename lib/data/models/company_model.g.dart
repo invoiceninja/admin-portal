@@ -199,10 +199,6 @@ class _$CompanyEntitySerializer implements StructuredSerializer<CompanyEntity> {
       serializers.serialize(object.paymentTerms,
           specifiedType: const FullType(
               BuiltList, const [const FullType(PaymentTermEntity)])),
-      'userMap',
-      serializers.serialize(object.userMap,
-          specifiedType: const FullType(BuiltMap,
-              const [const FullType(String), const FullType(UserEntity)])),
       'custom_fields',
       serializers.serialize(object.customFields,
           specifiedType: const FullType(BuiltMap,
@@ -524,11 +520,6 @@ class _$CompanyEntitySerializer implements StructuredSerializer<CompanyEntity> {
                   specifiedType: const FullType(
                       BuiltList, const [const FullType(PaymentTermEntity)]))
               as BuiltList<Object>);
-          break;
-        case 'userMap':
-          result.userMap.replace(serializers.deserialize(value,
-              specifiedType: const FullType(BuiltMap,
-                  const [const FullType(String), const FullType(UserEntity)])));
           break;
         case 'custom_fields':
           result.customFields.replace(serializers.deserialize(value,
@@ -2745,8 +2736,6 @@ class _$CompanyEntity extends CompanyEntity {
   @override
   final BuiltList<PaymentTermEntity> paymentTerms;
   @override
-  final BuiltMap<String, UserEntity> userMap;
-  @override
   final BuiltMap<String, String> customFields;
   @override
   final String slackWebhookUrl;
@@ -2827,7 +2816,6 @@ class _$CompanyEntity extends CompanyEntity {
       this.tokens,
       this.webhooks,
       this.paymentTerms,
-      this.userMap,
       this.customFields,
       this.slackWebhookUrl,
       this.googleAnalyticsKey,
@@ -2992,9 +2980,6 @@ class _$CompanyEntity extends CompanyEntity {
     if (paymentTerms == null) {
       throw new BuiltValueNullFieldError('CompanyEntity', 'paymentTerms');
     }
-    if (userMap == null) {
-      throw new BuiltValueNullFieldError('CompanyEntity', 'userMap');
-    }
     if (customFields == null) {
       throw new BuiltValueNullFieldError('CompanyEntity', 'customFields');
     }
@@ -3080,7 +3065,6 @@ class _$CompanyEntity extends CompanyEntity {
         tokens == other.tokens &&
         webhooks == other.webhooks &&
         paymentTerms == other.paymentTerms &&
-        userMap == other.userMap &&
         customFields == other.customFields &&
         slackWebhookUrl == other.slackWebhookUrl &&
         googleAnalyticsKey == other.googleAnalyticsKey &&
@@ -3118,12 +3102,12 @@ class _$CompanyEntity extends CompanyEntity {
                                                                 $jc(
                                                                     $jc(
                                                                         $jc(
-                                                                            $jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc(0, enableCustomSurchargeTaxes1.hashCode), enableCustomSurchargeTaxes2.hashCode), enableCustomSurchargeTaxes3.hashCode), enableCustomSurchargeTaxes4.hashCode), sizeId.hashCode), industryId.hashCode), subdomain.hashCode), portalMode.hashCode), portalDomain.hashCode), updateProducts.hashCode), convertProductExchangeRate.hashCode), fillProducts.hashCode), enableProductCost.hashCode), enableProductQuantity.hashCode), defaultQuantity.hashCode), showProductDetails.hashCode), clientCanRegister.hashCode), isLarge.hashCode), enableShopApi.hashCode), plan.hashCode), companyKey.hashCode), firstDayOfWeek.hashCode), firstMonthOfYear.hashCode), numberOfInvoiceTaxRates.hashCode), numberOfItemTaxRates.hashCode), groups.hashCode), activities.hashCode), taxRates.hashCode), taskStatuses.hashCode), taskStatusMap.hashCode), companyGateways.hashCode), expenseCategories.hashCode), expenseCategoryMap.hashCode), users.hashCode), clients.hashCode), products.hashCode), invoices.hashCode), payments.hashCode), quotes.hashCode), credits.hashCode), tasks.hashCode), projects.hashCode), expenses.hashCode), vendors.hashCode),
-                                                                                designs.hashCode),
-                                                                            tokens.hashCode),
-                                                                        webhooks.hashCode),
-                                                                    paymentTerms.hashCode),
-                                                                userMap.hashCode),
+                                                                            $jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc(0, enableCustomSurchargeTaxes1.hashCode), enableCustomSurchargeTaxes2.hashCode), enableCustomSurchargeTaxes3.hashCode), enableCustomSurchargeTaxes4.hashCode), sizeId.hashCode), industryId.hashCode), subdomain.hashCode), portalMode.hashCode), portalDomain.hashCode), updateProducts.hashCode), convertProductExchangeRate.hashCode), fillProducts.hashCode), enableProductCost.hashCode), enableProductQuantity.hashCode), defaultQuantity.hashCode), showProductDetails.hashCode), clientCanRegister.hashCode), isLarge.hashCode), enableShopApi.hashCode), plan.hashCode), companyKey.hashCode), firstDayOfWeek.hashCode), firstMonthOfYear.hashCode), numberOfInvoiceTaxRates.hashCode), numberOfItemTaxRates.hashCode), groups.hashCode), activities.hashCode), taxRates.hashCode), taskStatuses.hashCode), taskStatusMap.hashCode), companyGateways.hashCode), expenseCategories.hashCode), expenseCategoryMap.hashCode), users.hashCode), clients.hashCode), products.hashCode), invoices.hashCode), payments.hashCode), quotes.hashCode), credits.hashCode), tasks.hashCode), projects.hashCode), expenses.hashCode),
+                                                                                vendors.hashCode),
+                                                                            designs.hashCode),
+                                                                        tokens.hashCode),
+                                                                    webhooks.hashCode),
+                                                                paymentTerms.hashCode),
                                                             customFields.hashCode),
                                                         slackWebhookUrl.hashCode),
                                                     googleAnalyticsKey.hashCode),
@@ -3191,7 +3175,6 @@ class _$CompanyEntity extends CompanyEntity {
           ..add('tokens', tokens)
           ..add('webhooks', webhooks)
           ..add('paymentTerms', paymentTerms)
-          ..add('userMap', userMap)
           ..add('customFields', customFields)
           ..add('slackWebhookUrl', slackWebhookUrl)
           ..add('googleAnalyticsKey', googleAnalyticsKey)
@@ -3461,12 +3444,6 @@ class CompanyEntityBuilder
   set paymentTerms(ListBuilder<PaymentTermEntity> paymentTerms) =>
       _$this._paymentTerms = paymentTerms;
 
-  MapBuilder<String, UserEntity> _userMap;
-  MapBuilder<String, UserEntity> get userMap =>
-      _$this._userMap ??= new MapBuilder<String, UserEntity>();
-  set userMap(MapBuilder<String, UserEntity> userMap) =>
-      _$this._userMap = userMap;
-
   MapBuilder<String, String> _customFields;
   MapBuilder<String, String> get customFields =>
       _$this._customFields ??= new MapBuilder<String, String>();
@@ -3583,7 +3560,6 @@ class CompanyEntityBuilder
       _tokens = _$v.tokens?.toBuilder();
       _webhooks = _$v.webhooks?.toBuilder();
       _paymentTerms = _$v.paymentTerms?.toBuilder();
-      _userMap = _$v.userMap?.toBuilder();
       _customFields = _$v.customFields?.toBuilder();
       _slackWebhookUrl = _$v.slackWebhookUrl;
       _googleAnalyticsKey = _$v.googleAnalyticsKey;
@@ -3670,7 +3646,6 @@ class CompanyEntityBuilder
               tokens: tokens.build(),
               webhooks: webhooks.build(),
               paymentTerms: paymentTerms.build(),
-              userMap: userMap.build(),
               customFields: customFields.build(),
               slackWebhookUrl: slackWebhookUrl,
               googleAnalyticsKey: googleAnalyticsKey,
@@ -3734,8 +3709,6 @@ class CompanyEntityBuilder
         webhooks.build();
         _$failedField = 'paymentTerms';
         paymentTerms.build();
-        _$failedField = 'userMap';
-        userMap.build();
         _$failedField = 'customFields';
         customFields.build();
 
