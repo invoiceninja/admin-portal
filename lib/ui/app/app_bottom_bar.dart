@@ -476,7 +476,10 @@ class _AppBottomBarState extends State<AppBottomBar> {
                       onPressed: _onColumnsPressed,
                       child: Text(
                         localization.columns,
-                        style: TextStyle(color: state.linkColor),
+                        style: TextStyle(
+                            color: state.prefState.enableDarkMode
+                                ? Colors.white
+                                : Colors.black),
                       ),
                     )
                   else
