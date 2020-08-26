@@ -164,8 +164,8 @@ class _DashboardChartState extends State<DashboardChart> {
                       children: <Widget>[
                         Text(localization.lookup(dataGroup.name),
                             style: theme.textTheme.headline5.copyWith(
-                                color: isSelected ? Colors.white : null,
-                                fontWeight: FontWeight.w400)),
+                              color: isSelected ? Colors.white : null,
+                            )),
                         SizedBox(height: 4.0),
                         Text(
                             formatNumber(dataGroup.total, context,
@@ -183,7 +183,6 @@ class _DashboardChartState extends State<DashboardChart> {
                                       : (isIncrease
                                           ? Colors.green
                                           : Colors.red),
-                                  fontWeight: FontWeight.bold,
                                 ),
                               )
                             : SizedBox(),

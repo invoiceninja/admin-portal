@@ -548,10 +548,10 @@ class EmailPreview extends StatelessWidget {
                 padding: const EdgeInsets.all(14),
                 child: Text(
                   subject,
-                  style: Theme.of(context).textTheme.bodyText1.copyWith(
-                        color: Colors.black,
-                        fontWeight: FontWeight.w700,
-                      ),
+                  style: Theme.of(context)
+                      .textTheme
+                      .bodyText1
+                      .copyWith(color: Colors.black),
                 ),
               ),
               Expanded(

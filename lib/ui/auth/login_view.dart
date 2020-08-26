@@ -575,7 +575,6 @@ class _LoginState extends State<LoginView> {
                             _loginError,
                             style: TextStyle(
                               color: Colors.red,
-                              fontWeight: FontWeight.bold,
                             ),
                           ),
                         ),
