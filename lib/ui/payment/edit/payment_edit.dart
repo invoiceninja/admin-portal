@@ -469,6 +469,10 @@ class _PaymentableEditorState extends State<PaymentableEditor> {
         ((payment.clientId ?? '').isEmpty ||
             (creditList.isEmpty && (paymentable.creditId ?? '').isEmpty))) {
       return SizedBox();
+    } else if (widget.entityType == EntityType.invoice &&
+        paymentList.isEmpty &&
+        (paymentable.invoiceId ?? '').isEmpty) {
+      return SizedBox();
     }
 
     return Row(
