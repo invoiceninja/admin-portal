@@ -187,8 +187,9 @@ class ExpenseEditSettingsState extends State<ExpenseEditSettings> {
                             memoizedPaymentTypeList(staticState.paymentTypeMap),
                         labelText: localization.paymentType,
                         entityId: expense.paymentTypeId,
+                        allowClearing: true,
                         onSelected: (paymentType) => viewModel.onChanged(expense
-                            .rebuild((b) => b..paymentTypeId = paymentType.id)),
+                            .rebuild((b) => b..paymentTypeId = paymentType?.id ?? '')),
                       ),
                       DatePicker(
                         labelText: localization.date,

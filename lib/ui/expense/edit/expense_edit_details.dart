@@ -148,9 +148,10 @@ class ExpenseEditDetailsState extends State<ExpenseEditDetails> {
               entityId: expense.categoryId,
               entityList: memoizedDropdownExpenseCategoriesList(
                   company.expenseCategoryMap, company.expenseCategories),
+              allowClearing: true,
               onSelected: (category) {
                 viewModel.onChanged(
-                    expense.rebuild((b) => b..categoryId = category.id));
+                    expense.rebuild((b) => b..categoryId = category?.id ?? ''));
               },
             ),
             DecoratedFormField(
@@ -166,9 +167,10 @@ class ExpenseEditDetailsState extends State<ExpenseEditDetails> {
               entityList: memoizedCurrencyList(staticState.currencyMap),
               labelText: localization.currency,
               entityId: expense.expenseCurrencyId,
+              allowClearing: true,
               onSelected: (SelectableEntity currency) => viewModel.onChanged(
                   viewModel.expense
-                      .rebuild((b) => b..expenseCurrencyId = currency.id)),
+                      .rebuild((b) => b..expenseCurrencyId = currency?.id ?? '')),
             ),
             DatePicker(
               labelText: localization.date,
