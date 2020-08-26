@@ -664,8 +664,6 @@ class _EntityFilter extends StatelessWidget {
             ? state.accentColor
             : Theme.of(context).cardColor;
 
-    print('enableDarkMode: ${state.prefState.enableDarkMode} + hasAccentColor: ${state.hasAccentColor}');
-
     return Material(
       color: backgroundColor,
       child: AnimatedContainer(
