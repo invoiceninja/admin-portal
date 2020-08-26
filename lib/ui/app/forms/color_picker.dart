@@ -128,7 +128,7 @@ class _FormColorPickerState extends State<FormColorPicker> {
         Row(
           mainAxisAlignment: MainAxisAlignment.end,
           children: <Widget>[
-            GestureDetector(
+            InkWell(
               onTap: _showPicker,
               child: Container(
                 decoration: BoxDecoration(

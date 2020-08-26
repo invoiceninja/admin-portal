@@ -166,13 +166,13 @@ class _DashboardChartState extends State<DashboardChart> {
                             style: theme.textTheme.headline6.copyWith(
                               color: isSelected ? Colors.white : null,
                             )),
-                        SizedBox(height: 8.0),
+                        SizedBox(height: 4),
                         Text(
                             formatNumber(dataGroup.total, context,
                                 currencyId: widget.currencyId),
                             style: theme.textTheme.headline5.copyWith(
                                 color: isSelected ? Colors.white : null)),
-                        SizedBox(height: 4.0),
+                        SizedBox(height: 4),
                         changeString.isNotEmpty
                             ? Text(
                                 changeString,

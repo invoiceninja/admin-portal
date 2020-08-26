@@ -314,17 +314,25 @@ class _CustomFormFieldState extends State<CustomFormField> {
               ),
             ),
             if (widget.showTaxes) ...[
-              Checkbox(
-                activeColor: Theme.of(context).accentColor,
-                value: widget.taxesEnabled ?? false,
-                onChanged: widget.onTaxesChanged,
-              ),
-              GestureDetector(
-                child: Text(localization.chargeTaxes),
+              SizedBox(width: 16),
+              InkWell(
+                child: Row(
+                  children: [
+                    IgnorePointer(
+                      child: Checkbox(
+                        activeColor: Theme.of(context).accentColor,
+                        value: widget.taxesEnabled ?? false,
+                        onChanged: (value) => null,
+                      ),
+                    ),
+                    Text(localization.chargeTaxes),
+                    SizedBox(width: 16),
+                  ],
+                ),
                 onTap: () => widget.onTaxesChanged(!widget.taxesEnabled),
-              ),
+              )
             ] else ...[
-              SizedBox(width: 20),
+              SizedBox(width: 16),
               Flexible(
                 child: AppDropdownButton(
                   showUseDefault: true,
