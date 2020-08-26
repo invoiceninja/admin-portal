@@ -48,7 +48,7 @@ class _TaxRateEditState extends State<TaxRateEdit> {
     final taxRate = widget.viewModel.taxRate;
     _nameController.text = taxRate.name;
     _rateController.text = formatNumber(taxRate.rate, context,
-        formatNumberType: FormatNumberType.input);
+        formatNumberType: FormatNumberType.inputMoney);
 
     _controllers.forEach((controller) => controller.addListener(_onChanged));
 

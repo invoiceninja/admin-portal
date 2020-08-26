@@ -130,7 +130,7 @@ class _CompanyDetailsState extends State<CompanyDetails>
     _stateController.text = settings.state;
     _postalCodeController.text = settings.postalCode;
     _taskRateController.text = formatNumber(settings.defaultTaskRate, context,
-        formatNumberType: FormatNumberType.input);
+        formatNumberType: FormatNumberType.inputMoney);
     _custom1Controller.text = settings.customValue1;
     _custom2Controller.text = settings.customValue2;
     _custom3Controller.text = settings.customValue3;

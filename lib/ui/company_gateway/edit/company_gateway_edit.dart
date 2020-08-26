@@ -509,11 +509,11 @@ class _LimitEditorState extends State<LimitEditor> {
     _minController.text = settings.minLimit == -1
         ? ''
         : formatNumber((settings.minLimit ?? 0).toDouble(), context,
-            formatNumberType: FormatNumberType.input);
+            formatNumberType: FormatNumberType.inputMoney);
     _maxController.text = settings.maxLimit == -1
         ? ''
         : formatNumber((settings.maxLimit ?? 0).toDouble(), context,
-            formatNumberType: FormatNumberType.input);
+            formatNumberType: FormatNumberType.inputMoney);
 
     _minController.addListener(_onTextChange);
     _maxController.addListener(_onTextChange);
@@ -667,11 +667,11 @@ class _FeesEditorState extends State<FeesEditor> {
         .forEach((dynamic controller) => controller.removeListener(_onChanged));
 
     _amountController.text = formatNumber(settings.feeAmount, context,
-        formatNumberType: FormatNumberType.input);
+        formatNumberType: FormatNumberType.inputMoney);
     _percentController.text = formatNumber(settings.feePercent, context,
-        formatNumberType: FormatNumberType.input);
+        formatNumberType: FormatNumberType.inputMoney);
     _capController.text = formatNumber(settings.feeCap, context,
-        formatNumberType: FormatNumberType.input);
+        formatNumberType: FormatNumberType.inputMoney);
 
     _controllers
         .forEach((dynamic controller) => controller.addListener(_onChanged));

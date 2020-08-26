@@ -48,7 +48,7 @@ class ExpenseEditSettingsState extends State<ExpenseEditSettings> {
     final expense = widget.viewModel.expense;
     _transactionReferenceController.text = expense.transactionReference;
     _exchangeRateController.text = formatNumber(expense.exchangeRate, context,
-        formatNumberType: FormatNumberType.input);
+        formatNumberType: FormatNumberType.inputAmount);
 
     _controllers
         .forEach((dynamic controller) => controller.addListener(_onChanged));
@@ -96,7 +96,7 @@ class ExpenseEditSettingsState extends State<ExpenseEditSettings> {
       ..exchangeRate = exchangeRate));
     WidgetsBinding.instance.addPostFrameCallback((duration) {
       _exchangeRateController.text = formatNumber(exchangeRate, context,
-          formatNumberType: FormatNumberType.input);
+          formatNumberType: FormatNumberType.inputAmount);
     });
   }
 

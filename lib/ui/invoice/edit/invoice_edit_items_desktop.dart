@@ -384,7 +384,7 @@ class _InvoiceEditItemsDesktopState extends State<InvoiceEditItemsDesktop> {
                       key: ValueKey('__line_item_${index}_cost__'),
                       textAlign: TextAlign.right,
                       initialValue: formatNumber(lineItems[index].cost, context,
-                          formatNumberType: FormatNumberType.input,
+                          formatNumberType: FormatNumberType.inputMoney,
                           clientId: invoice.clientId),
                       onChanged: (value) => viewModel.onChangedInvoiceItem(
                           lineItems[index]
@@ -402,7 +402,7 @@ class _InvoiceEditItemsDesktopState extends State<InvoiceEditItemsDesktop> {
                       textAlign: TextAlign.right,
                       initialValue: formatNumber(
                           lineItems[index].quantity, context,
-                          formatNumberType: FormatNumberType.input,
+                          formatNumberType: FormatNumberType.inputAmount,
                           clientId: invoice.clientId),
                       onChanged: (value) => viewModel.onChangedInvoiceItem(
                           lineItems[index]

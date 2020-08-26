@@ -44,7 +44,7 @@ class ClientEditSettingsState extends State<ClientEditSettings> {
     final client = widget.viewModel.client;
     _taskRateController.text = formatNumber(
         client.settings.defaultTaskRate, context,
-        formatNumberType: FormatNumberType.input);
+        formatNumberType: FormatNumberType.inputMoney);
     _paymentTermsController.text = client.settings.defaultPaymentTerms != null
         ? '$client.settings.defaultPaymentTerms'
         : null;

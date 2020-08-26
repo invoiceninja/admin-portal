@@ -65,19 +65,19 @@ class InvoiceEditDetailsState extends State<InvoiceEditDetails> {
     _invoiceNumberController.text = invoice.number;
     _poNumberController.text = invoice.poNumber;
     _discountController.text = formatNumber(invoice.discount, context,
-        formatNumberType: FormatNumberType.input);
+        formatNumberType: FormatNumberType.inputMoney);
     _partialController.text = formatNumber(invoice.partial, context,
-        formatNumberType: FormatNumberType.input);
+        formatNumberType: FormatNumberType.inputMoney);
     _custom1Controller.text = invoice.customValue1;
     _custom2Controller.text = invoice.customValue2;
     _surcharge1Controller.text = formatNumber(invoice.customSurcharge1, context,
-        formatNumberType: FormatNumberType.input);
+        formatNumberType: FormatNumberType.inputMoney);
     _surcharge2Controller.text = formatNumber(invoice.customSurcharge2, context,
-        formatNumberType: FormatNumberType.input);
+        formatNumberType: FormatNumberType.inputMoney);
     _surcharge3Controller.text = formatNumber(invoice.customSurcharge3, context,
-        formatNumberType: FormatNumberType.input);
+        formatNumberType: FormatNumberType.inputMoney);
     _surcharge4Controller.text = formatNumber(invoice.customSurcharge4, context,
-        formatNumberType: FormatNumberType.input);
+        formatNumberType: FormatNumberType.inputMoney);
     _controllers
         .forEach((dynamic controller) => controller.addListener(_onChanged));
 
@@ -268,7 +268,7 @@ class InvoiceEditDetailsState extends State<InvoiceEditDetails> {
                 key: ValueKey('__exchange_rate_${invoice.clientId}__'),
                 label: localization.exchangeRate,
                 initialValue: formatNumber(invoice.exchangeRate, context,
-                    formatNumberType: FormatNumberType.input),
+                    formatNumberType: FormatNumberType.inputAmount),
                 onChanged: (value) => viewModel.onChanged(invoice
                     .rebuild((b) => b..exchangeRate = parseDouble(value))),
                 keyboardType: TextInputType.numberWithOptions(decimal: true),

@@ -61,9 +61,9 @@ class _ProjectEditState extends State<ProjectEdit> {
     _nameController.text = project.name;
     _dueDateController.text = project.dueDate;
     _hoursController.text = formatNumber(project.budgetedHours, context,
-        formatNumberType: FormatNumberType.input);
+        formatNumberType: FormatNumberType.inputAmount);
     _taskRateController.text = formatNumber(project.taskRate, context,
-        formatNumberType: FormatNumberType.input);
+        formatNumberType: FormatNumberType.inputMoney);
     _privateNotesController.text = project.privateNotes;
     _custom1Controller.text = project.customValue1;
     _custom2Controller.text = project.customValue2;

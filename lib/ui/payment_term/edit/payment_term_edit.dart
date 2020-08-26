@@ -40,7 +40,7 @@ class _PaymentTermEditState extends State<PaymentTermEdit> {
     final paymentTerm = widget.viewModel.paymentTerm;
     _numDaysController.text = formatNumber(
         paymentTerm.numDays.toDouble(), context,
-        formatNumberType: FormatNumberType.input);
+        formatNumberType: FormatNumberType.inputAmount);
 
     _controllers.forEach((controller) => controller.addListener(_onChanged));
 

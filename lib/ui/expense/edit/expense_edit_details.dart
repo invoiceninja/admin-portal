@@ -50,7 +50,7 @@ class ExpenseEditDetailsState extends State<ExpenseEditDetails> {
 
     final expense = widget.viewModel.expense;
     _amountController.text = formatNumber(expense.amount, context,
-        formatNumberType: FormatNumberType.input);
+        formatNumberType: FormatNumberType.inputMoney);
     _custom1Controller.text = expense.customValue1;
     _custom2Controller.text = expense.customValue2;
 

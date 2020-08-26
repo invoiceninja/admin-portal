@@ -427,9 +427,9 @@ class _ReminderSettingsState extends State<ReminderSettings> {
 
     _daysController.text = '${widget.numDays ?? ''}';
     _feeAmountController.text = formatNumber(widget.feeAmount, context,
-        formatNumberType: FormatNumberType.input);
+        formatNumberType: FormatNumberType.inputMoney);
     _feePercentController.text = formatNumber(widget.feePercent, context,
-        formatNumberType: FormatNumberType.input);
+        formatNumberType: FormatNumberType.inputMoney);
 
     _controllers.forEach(
         (dynamic controller) => controller.addListener(_onTextChanged));
