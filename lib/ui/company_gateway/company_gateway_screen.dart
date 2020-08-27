@@ -64,7 +64,7 @@ class CompanyGatewayScreen extends StatelessWidget {
             onCancelPressed: (context) =>
                 store.dispatch(ClearCompanyGatewayMultiselect()),
           )
-        else ...[
+        else if (state.companyGatewayState.list.isNotEmpty) ...[
           if (state.uiState.settingsUIState.isFiltered) ...[
             FlatButton(
               child: Text(localization.reset,
