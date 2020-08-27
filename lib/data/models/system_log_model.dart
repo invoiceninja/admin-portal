@@ -64,6 +64,8 @@ abstract class SystemLogEntity
     return '';
   }
 
+  bool get isVisible => eventId >= 20;
+
   String get event {
     switch (eventId) {
       case 10:

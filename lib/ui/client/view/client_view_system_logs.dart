@@ -39,6 +39,7 @@ class _ClientViewSystemLogsState extends State<ClientViewSystemLogs> {
     }
 
     return ListView(
+      shrinkWrap: true,
       children: [
         ExpansionPanelList(
           expansionCallback: (int index, bool isExpanded) {
@@ -47,7 +48,9 @@ class _ClientViewSystemLogsState extends State<ClientViewSystemLogs> {
               _isExpanded[systemLog.id] = !isExpanded;
             });
           },
-          children: client.systemLogs.map((systemLog) {
+          children: client.systemLogs
+              .where((systemLog) => systemLog.isVisible)
+              .map((systemLog) {
             return ExpansionPanel(
               headerBuilder: (BuildContext context, bool isExpanded) {
                 return ListTile(
