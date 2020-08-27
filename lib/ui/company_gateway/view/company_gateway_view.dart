@@ -1,8 +1,10 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:invoiceninja_flutter/constants.dart';
 import 'package:invoiceninja_flutter/data/models/entities.dart';
 import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:invoiceninja_flutter/redux/company_gateway/company_gateway_selectors.dart';
+import 'package:invoiceninja_flutter/ui/app/FieldGrid.dart';
 import 'package:invoiceninja_flutter/ui/app/entities/entity_list_tile.dart';
 import 'package:invoiceninja_flutter/ui/app/entity_header.dart';
 import 'package:invoiceninja_flutter/ui/app/lists/list_divider.dart';
@@ -36,31 +38,37 @@ class _CompanyGatewayViewState extends State<CompanyGatewayView> {
     final processed = memoizedCalculateCompanyGatewayProcessed(
         companyGateway.id, viewModel.state.paymentState.map);
 
-    /*
-    final Map<String, String> fields = {};
-    for (var gatewayTypeId in kGatewayTypes.keys)
+    final allFields = <String, Map<String, String>>{};
+    for (var gatewayTypeId in kGatewayTypes.keys) {
+      final Map<String, String> fields = {};
       if (companyGateway.feesAndLimitsMap.containsKey(gatewayTypeId)) {
-        final gatewayType = localization.lookup(kGatewayTypes[gatewayTypeId]);
         final settings =
             companyGateway.getSettingsForGatewayTypeId(gatewayTypeId);
-        fields[localization.feeAmount] = settings.feeAmount == 0
-            ? null
-            : formatNumber(settings.feeAmount, context);
-        fields[localization.feePercent] = settings.feePercent == 0
-            ? null
-            : formatNumber(settings.feePercent, context,
-                formatNumberType: FormatNumberType.percent);
-        fields[localization.feeCap] = settings.feeCap == 0
-            ? null
-            : formatNumber(settings.feeCap, context);
-        fields[localization.minLimit] = settings.minLimit == -1
-            ? null
-            : formatNumber(settings.minLimit, context);
-        fields[localization.maxLimit] = settings.maxLimit == -1
-            ? null
-            : formatNumber(settings.maxLimit, context);
+        if (settings.feeAmount != 0) {
+          fields[localization.feeAmount] =
+              formatNumber(settings.feeAmount, context);
+        }
+        if (settings.feePercent != 0) {
+          fields[localization.feePercent] = formatNumber(
+              settings.feePercent, context,
+              formatNumberType: FormatNumberType.percent);
+        }
+        if (settings.feeCap != 0) {
+          fields[localization.feeCap] = formatNumber(settings.feeCap, context);
+        }
+        if (settings.minLimit != -1) {
+          fields[localization.minLimit] =
+              formatNumber(settings.minLimit, context);
+        }
+        if (settings.maxLimit != -1) {
+          fields[localization.maxLimit] =
+              formatNumber(settings.maxLimit, context);
+        }
+        if (fields.isNotEmpty) {
+          allFields[gatewayTypeId] = fields;
+        }
       }
-     */
+    }
 
     return ViewScaffold(
       isFilter: widget.isFilter,
@@ -100,7 +108,16 @@ class _CompanyGatewayViewState extends State<CompanyGatewayView> {
               .present(localization.active, localization.archived),
         ),
         ListDivider(),
-        //FieldGrid(fields),
+        for (var entry in allFields.entries) ...[
+          Padding(
+            padding: const EdgeInsets.only(top: 20, left: 20),
+            child: Text(
+              localization.lookup(kGatewayTypes[entry.key]),
+              style: Theme.of(context).textTheme.headline6,
+            ),
+          ),
+          FieldGrid(entry.value),
+        ]
       ]),
     );
   }
