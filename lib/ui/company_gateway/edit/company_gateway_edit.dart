@@ -54,7 +54,7 @@ class _CompanyGatewayEditState extends State<CompanyGatewayEdit>
     final gateway =
         widget.viewModel.state.staticState.gatewayMap[companyGateway.gatewayId];
 
-    _gatewayTypeId = gateway.defaultGatewayTypeId ?? kGatewayTypeCreditCard;
+    _gatewayTypeId = gateway?.defaultGatewayTypeId ?? kGatewayTypeCreditCard;
     super.didChangeDependencies();
   }
 
@@ -70,6 +70,7 @@ class _CompanyGatewayEditState extends State<CompanyGatewayEdit>
     final state = viewModel.state;
     final localization = AppLocalization.of(context);
     final companyGateway = viewModel.companyGateway;
+    final gateway = state.staticState.gatewayMap[companyGateway.gatewayId];
 
     return EditScaffold(
       title: viewModel.companyGateway.isNew
@@ -170,62 +171,65 @@ class _CompanyGatewayEditState extends State<CompanyGatewayEdit>
                     onChanged: (value) => viewModel.onChanged(companyGateway
                         .rebuild((b) => b..updateDetails = value)),
                   ),
-                  SwitchListTile(
-                    activeColor: Theme.of(context).accentColor,
-                    title: Text(localization.billingAddress),
-                    subtitle: Text(localization.requireBillingAddressHelp),
-                    value: companyGateway.showBillingAddress,
-                    onChanged: (value) => viewModel.onChanged(companyGateway
-                        .rebuild((b) => b..showBillingAddress = value)),
-                  ),
-                  SwitchListTile(
-                    activeColor: Theme.of(context).accentColor,
-                    title: Text(localization.shippingAddress),
-                    subtitle: Text(localization.requireShippingAddressHelp),
-                    value: companyGateway.showShippingAddress,
-                    onChanged: (value) => viewModel.onChanged(companyGateway
-                        .rebuild((b) => b..showShippingAddress = value)),
-                  ),
+                  if (gateway?.isOffsite != true) ...[
+                    SwitchListTile(
+                      activeColor: Theme.of(context).accentColor,
+                      title: Text(localization.billingAddress),
+                      subtitle: Text(localization.requireBillingAddressHelp),
+                      value: companyGateway.showBillingAddress,
+                      onChanged: (value) => viewModel.onChanged(companyGateway
+                          .rebuild((b) => b..showBillingAddress = value)),
+                    ),
+                    SwitchListTile(
+                      activeColor: Theme.of(context).accentColor,
+                      title: Text(localization.shippingAddress),
+                      subtitle: Text(localization.requireShippingAddressHelp),
+                      value: companyGateway.showShippingAddress,
+                      onChanged: (value) => viewModel.onChanged(companyGateway
+                          .rebuild((b) => b..showShippingAddress = value)),
+                    ),
+                  ],
                 ],
               ),
-              FormCard(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: <Widget>[
-                  Padding(
-                    padding:
-                        const EdgeInsets.only(left: 16, top: 16, bottom: 16),
-                    child: Text(
-                      localization.acceptedCardLogos,
-                      style: Theme.of(context).textTheme.headline5,
+              if (gateway?.isOffsite != true)
+                FormCard(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: <Widget>[
+                    Padding(
+                      padding:
+                          const EdgeInsets.only(left: 16, top: 16, bottom: 16),
+                      child: Text(
+                        localization.acceptedCardLogos,
+                        style: Theme.of(context).textTheme.headline5,
+                      ),
                     ),
-                  ),
-                  CardListTile(
-                    viewModel: viewModel,
-                    cardType: kCardTypeVisa,
-                    paymentType: kPaymentTypeVisa,
-                  ),
-                  CardListTile(
-                    viewModel: viewModel,
-                    cardType: kCardTypeMasterCard,
-                    paymentType: kPaymentTypeMasterCard,
-                  ),
-                  CardListTile(
-                    viewModel: viewModel,
-                    cardType: kCardTypeAmEx,
-                    paymentType: kPaymentTypeAmEx,
-                  ),
-                  CardListTile(
-                    viewModel: viewModel,
-                    cardType: kCardTypeDiscover,
-                    paymentType: kPaymentTypeDiscover,
-                  ),
-                  CardListTile(
-                    viewModel: viewModel,
-                    cardType: kCardTypeDiners,
-                    paymentType: kPaymentTypeDiners,
-                  ),
-                ],
-              )
+                    CardListTile(
+                      viewModel: viewModel,
+                      cardType: kCardTypeVisa,
+                      paymentType: kPaymentTypeVisa,
+                    ),
+                    CardListTile(
+                      viewModel: viewModel,
+                      cardType: kCardTypeMasterCard,
+                      paymentType: kPaymentTypeMasterCard,
+                    ),
+                    CardListTile(
+                      viewModel: viewModel,
+                      cardType: kCardTypeAmEx,
+                      paymentType: kPaymentTypeAmEx,
+                    ),
+                    CardListTile(
+                      viewModel: viewModel,
+                      cardType: kCardTypeDiscover,
+                      paymentType: kPaymentTypeDiscover,
+                    ),
+                    CardListTile(
+                      viewModel: viewModel,
+                      cardType: kCardTypeDiners,
+                      paymentType: kPaymentTypeDiners,
+                    ),
+                  ],
+                )
             ],
           ),
           ListView(

@@ -597,6 +597,9 @@ class _$GatewayEntitySerializer implements StructuredSerializer<GatewayEntity> {
     final result = <Object>[
       'name',
       serializers.serialize(object.name, specifiedType: const FullType(String)),
+      'is_offsite',
+      serializers.serialize(object.isOffsite,
+          specifiedType: const FullType(bool)),
       'sort_order',
       serializers.serialize(object.sortOrder,
           specifiedType: const FullType(int)),
@@ -638,6 +641,10 @@ class _$GatewayEntitySerializer implements StructuredSerializer<GatewayEntity> {
         case 'name':
           result.name = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String;
+          break;
+        case 'is_offsite':
+          result.isOffsite = serializers.deserialize(value,
+              specifiedType: const FullType(bool)) as bool;
           break;
         case 'sort_order':
           result.sortOrder = serializers.deserialize(value,
@@ -3731,6 +3738,8 @@ class _$GatewayEntity extends GatewayEntity {
   @override
   final String name;
   @override
+  final bool isOffsite;
+  @override
   final int sortOrder;
   @override
   final String defaultGatewayTypeId;
@@ -3743,12 +3752,16 @@ class _$GatewayEntity extends GatewayEntity {
   _$GatewayEntity._(
       {this.id,
       this.name,
+      this.isOffsite,
       this.sortOrder,
       this.defaultGatewayTypeId,
       this.fields})
       : super._() {
     if (name == null) {
       throw new BuiltValueNullFieldError('GatewayEntity', 'name');
+    }
+    if (isOffsite == null) {
+      throw new BuiltValueNullFieldError('GatewayEntity', 'isOffsite');
     }
     if (sortOrder == null) {
       throw new BuiltValueNullFieldError('GatewayEntity', 'sortOrder');
@@ -3771,6 +3784,7 @@ class _$GatewayEntity extends GatewayEntity {
     return other is GatewayEntity &&
         id == other.id &&
         name == other.name &&
+        isOffsite == other.isOffsite &&
         sortOrder == other.sortOrder &&
         defaultGatewayTypeId == other.defaultGatewayTypeId &&
         fields == other.fields;
@@ -3780,7 +3794,11 @@ class _$GatewayEntity extends GatewayEntity {
   @override
   int get hashCode {
     return __hashCode ??= $jf($jc(
-        $jc($jc($jc($jc(0, id.hashCode), name.hashCode), sortOrder.hashCode),
+        $jc(
+            $jc(
+                $jc($jc($jc(0, id.hashCode), name.hashCode),
+                    isOffsite.hashCode),
+                sortOrder.hashCode),
             defaultGatewayTypeId.hashCode),
         fields.hashCode));
   }
@@ -3790,6 +3808,7 @@ class _$GatewayEntity extends GatewayEntity {
     return (newBuiltValueToStringHelper('GatewayEntity')
           ..add('id', id)
           ..add('name', name)
+          ..add('isOffsite', isOffsite)
           ..add('sortOrder', sortOrder)
           ..add('defaultGatewayTypeId', defaultGatewayTypeId)
           ..add('fields', fields))
@@ -3808,6 +3827,10 @@ class GatewayEntityBuilder
   String _name;
   String get name => _$this._name;
   set name(String name) => _$this._name = name;
+
+  bool _isOffsite;
+  bool get isOffsite => _$this._isOffsite;
+  set isOffsite(bool isOffsite) => _$this._isOffsite = isOffsite;
 
   int _sortOrder;
   int get sortOrder => _$this._sortOrder;
@@ -3828,6 +3851,7 @@ class GatewayEntityBuilder
     if (_$v != null) {
       _id = _$v.id;
       _name = _$v.name;
+      _isOffsite = _$v.isOffsite;
       _sortOrder = _$v.sortOrder;
       _defaultGatewayTypeId = _$v.defaultGatewayTypeId;
       _fields = _$v.fields;
@@ -3855,6 +3879,7 @@ class GatewayEntityBuilder
         new _$GatewayEntity._(
             id: id,
             name: name,
+            isOffsite: isOffsite,
             sortOrder: sortOrder,
             defaultGatewayTypeId: defaultGatewayTypeId,
             fields: fields);
