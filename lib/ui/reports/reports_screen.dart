@@ -263,6 +263,7 @@ class ReportsScreen extends StatelessWidget {
                 ...chartChildren,
               ],
             ) : Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
                 Flexible(
                   child: FormCard(

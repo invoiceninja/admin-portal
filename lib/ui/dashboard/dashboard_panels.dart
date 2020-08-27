@@ -7,9 +7,9 @@ import 'package:invoiceninja_flutter/constants.dart';
 import 'package:invoiceninja_flutter/data/models/entities.dart';
 import 'package:invoiceninja_flutter/redux/company/company_selectors.dart';
 import 'package:invoiceninja_flutter/redux/dashboard/dashboard_selectors.dart';
-import 'package:invoiceninja_flutter/ui/app/forms/date_range_picker.dart';
 import 'package:invoiceninja_flutter/ui/app/loading_indicator.dart';
 import 'package:invoiceninja_flutter/ui/dashboard/dashboard_chart.dart';
+import 'package:invoiceninja_flutter/ui/dashboard/dashboard_date_range_picker.dart';
 import 'package:invoiceninja_flutter/ui/dashboard/dashboard_screen_vm.dart';
 import 'package:invoiceninja_flutter/utils/formatting.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
@@ -25,10 +25,10 @@ class DashboardPanels extends StatelessWidget {
   final ScrollController scrollController;
 
   void _showDateOptions(BuildContext context) {
-    showDialog<DateRangePicker>(
+    showDialog<DashboardDateRangePicker>(
         context: context,
         builder: (BuildContext context) {
-          return DateRangePicker(
+          return DashboardDateRangePicker(
               state: viewModel.dashboardUIState,
               onSettingsChanged: viewModel.onSettingsChanged);
         });
