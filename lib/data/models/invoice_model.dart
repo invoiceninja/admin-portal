@@ -1054,6 +1054,7 @@ abstract class InvitationEntity extends Object
       link: '',
       sentDate: '',
       viewedDate: '',
+      openedDate: '',
       updatedAt: 0,
       archivedAt: 0,
       isDeleted: false,
@@ -1078,6 +1079,9 @@ abstract class InvitationEntity extends Object
 
   @BuiltValueField(wireName: 'viewed_date')
   String get viewedDate;
+
+  @BuiltValueField(wireName: 'opened_date')
+  String get openedDate;
 
   String get downloadLink => '$link/download';
 

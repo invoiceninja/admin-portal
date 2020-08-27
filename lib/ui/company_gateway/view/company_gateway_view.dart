@@ -72,7 +72,7 @@ class _CompanyGatewayViewState extends State<CompanyGatewayView> {
             label: localization.processed,
             value: formatNumber(processed, context)),
         ListDivider(),
-        if (gateway.supportsTokenBilling) ...[
+        if (gateway?.supportsTokenBilling == true) ...[
           EntitiesListTile(
             isFilter: widget.isFilter,
             entityType: EntityType.client,

@@ -54,12 +54,31 @@ class _InvitationListTile extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           SizedBox(height: 8),
-          Text(
-              '${localization.sent}: ${invitation.sentDate.isNotEmpty ? formatDate(invitation.sentDate, context, showTime: true) : ''}'),
+          if (invitation.sentDate.isNotEmpty)
+            Padding(
+              padding: const EdgeInsets.only(bottom: 4),
+              child: Text(
+                '${localization.sent}: ' +
+                    formatDate(invitation.sentDate, context, showTime: true),
+              ),
+            ),
+          if (invitation.openedDate.isNotEmpty)
+            Padding(
+              padding: const EdgeInsets.only(bottom: 4),
+              child: Text(
+                '${localization.opened}: ' +
+                    formatDate(invitation.openedDate, context, showTime: true),
+              ),
+            ),
+          if (invitation.viewedDate.isNotEmpty)
+            Padding(
+              padding: const EdgeInsets.only(bottom: 4),
+              child: Text(
+                '${localization.viewed}: ' +
+                    formatDate(invitation.viewedDate, context, showTime: true),
+              ),
+            ),
           SizedBox(height: 4),
-          Text(
-              '${localization.viewed}: ${invitation.viewedDate.isNotEmpty ? formatDate(invitation.viewedDate, context, showTime: true) : ''}'),
-          SizedBox(height: 8),
           Row(
             children: [
               Expanded(

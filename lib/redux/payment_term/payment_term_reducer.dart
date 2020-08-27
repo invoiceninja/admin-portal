@@ -151,72 +151,18 @@ final paymentTermsReducer = combineReducers<PaymentTermState>([
       _setLoadedPaymentTerms),
   TypedReducer<PaymentTermState, LoadPaymentTermSuccess>(_setLoadedPaymentTerm),
   TypedReducer<PaymentTermState, LoadCompanySuccess>(_setLoadedCompany),
-  TypedReducer<PaymentTermState, ArchivePaymentTermsRequest>(
-      _archivePaymentTermRequest),
   TypedReducer<PaymentTermState, ArchivePaymentTermsSuccess>(
       _archivePaymentTermSuccess),
-  TypedReducer<PaymentTermState, ArchivePaymentTermsFailure>(
-      _archivePaymentTermFailure),
-  TypedReducer<PaymentTermState, DeletePaymentTermsRequest>(
-      _deletePaymentTermRequest),
   TypedReducer<PaymentTermState, DeletePaymentTermsSuccess>(
       _deletePaymentTermSuccess),
-  TypedReducer<PaymentTermState, DeletePaymentTermsFailure>(
-      _deletePaymentTermFailure),
-  TypedReducer<PaymentTermState, RestorePaymentTermsRequest>(
-      _restorePaymentTermRequest),
   TypedReducer<PaymentTermState, RestorePaymentTermsSuccess>(
       _restorePaymentTermSuccess),
-  TypedReducer<PaymentTermState, RestorePaymentTermsFailure>(
-      _restorePaymentTermFailure),
 ]);
-
-PaymentTermState _archivePaymentTermRequest(
-    PaymentTermState paymentTermState, ArchivePaymentTermsRequest action) {
-  final paymentTerms =
-      action.paymentTermIds.map((id) => paymentTermState.map[id]).toList();
-
-  for (int i = 0; i < paymentTerms.length; i++) {
-    paymentTerms[i] = paymentTerms[i]
-        .rebuild((b) => b..archivedAt = DateTime.now().millisecondsSinceEpoch);
-  }
-  return paymentTermState.rebuild((b) {
-    for (final paymentTerm in paymentTerms) {
-      b.map[paymentTerm.id] = paymentTerm;
-    }
-  });
-}
 
 PaymentTermState _archivePaymentTermSuccess(
     PaymentTermState paymentTermState, ArchivePaymentTermsSuccess action) {
   return paymentTermState.rebuild((b) {
     for (final paymentTerm in action.paymentTerms) {
-      b.map[paymentTerm.id] = paymentTerm;
-    }
-  });
-}
-
-PaymentTermState _archivePaymentTermFailure(
-    PaymentTermState paymentTermState, ArchivePaymentTermsFailure action) {
-  return paymentTermState.rebuild((b) {
-    for (final paymentTerm in action.paymentTerms) {
-      b.map[paymentTerm.id] = paymentTerm;
-    }
-  });
-}
-
-PaymentTermState _deletePaymentTermRequest(
-    PaymentTermState paymentTermState, DeletePaymentTermsRequest action) {
-  final paymentTerms =
-      action.paymentTermIds.map((id) => paymentTermState.map[id]).toList();
-
-  for (int i = 0; i < paymentTerms.length; i++) {
-    paymentTerms[i] = paymentTerms[i].rebuild((b) => b
-      ..archivedAt = DateTime.now().millisecondsSinceEpoch
-      ..isDeleted = true);
-  }
-  return paymentTermState.rebuild((b) {
-    for (final paymentTerm in paymentTerms) {
       b.map[paymentTerm.id] = paymentTerm;
     }
   });
@@ -231,43 +177,8 @@ PaymentTermState _deletePaymentTermSuccess(
   });
 }
 
-PaymentTermState _deletePaymentTermFailure(
-    PaymentTermState paymentTermState, DeletePaymentTermsFailure action) {
-  return paymentTermState.rebuild((b) {
-    for (final paymentTerm in action.paymentTerms) {
-      b.map[paymentTerm.id] = paymentTerm;
-    }
-  });
-}
-
-PaymentTermState _restorePaymentTermRequest(
-    PaymentTermState paymentTermState, RestorePaymentTermsRequest action) {
-  final paymentTerms =
-      action.paymentTermIds.map((id) => paymentTermState.map[id]).toList();
-
-  for (int i = 0; i < paymentTerms.length; i++) {
-    paymentTerms[i] = paymentTerms[i].rebuild((b) => b
-      ..archivedAt = 0
-      ..isDeleted = false);
-  }
-  return paymentTermState.rebuild((b) {
-    for (final paymentTerm in paymentTerms) {
-      b.map[paymentTerm.id] = paymentTerm;
-    }
-  });
-}
-
 PaymentTermState _restorePaymentTermSuccess(
     PaymentTermState paymentTermState, RestorePaymentTermsSuccess action) {
-  return paymentTermState.rebuild((b) {
-    for (final paymentTerm in action.paymentTerms) {
-      b.map[paymentTerm.id] = paymentTerm;
-    }
-  });
-}
-
-PaymentTermState _restorePaymentTermFailure(
-    PaymentTermState paymentTermState, RestorePaymentTermsFailure action) {
   return paymentTermState.rebuild((b) {
     for (final paymentTerm in action.paymentTerms) {
       b.map[paymentTerm.id] = paymentTerm;
