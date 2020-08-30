@@ -275,6 +275,8 @@ Middleware<AppState> _createCompany(AuthRepository repository) {
             store.dispatch(SelectCompany(companyIndex: state.companies.length));
             store.dispatch(ViewDashboard(
                 navigator: Navigator.of(action.context), force: true));
+
+            action.completer.complete();
           }),
       ));
     });

@@ -248,15 +248,9 @@ final creditsReducer = combineReducers<CreditState>([
   TypedReducer<CreditState, LoadCompanySuccess>(_setLoadedCompany),
   TypedReducer<CreditState, LoadCreditSuccess>(_updateCredit),
   TypedReducer<CreditState, MarkSentCreditSuccess>(_markSentCreditSuccess),
-  TypedReducer<CreditState, ArchiveCreditsRequest>(_archiveCreditRequest),
   TypedReducer<CreditState, ArchiveCreditsSuccess>(_archiveCreditSuccess),
-  TypedReducer<CreditState, ArchiveCreditsFailure>(_archiveCreditFailure),
-  TypedReducer<CreditState, DeleteCreditsRequest>(_deleteCreditRequest),
   TypedReducer<CreditState, DeleteCreditsSuccess>(_deleteCreditSuccess),
-  TypedReducer<CreditState, DeleteCreditsFailure>(_deleteCreditFailure),
-  TypedReducer<CreditState, RestoreCreditsRequest>(_restoreCreditRequest),
   TypedReducer<CreditState, RestoreCreditsSuccess>(_restoreCreditSuccess),
-  TypedReducer<CreditState, RestoreCreditsFailure>(_restoreCreditFailure),
 ]);
 
 CreditState _markSentCreditSuccess(
@@ -269,50 +263,10 @@ CreditState _markSentCreditSuccess(
   return creditState.rebuild((b) => b..map.addAll(creditMap));
 }
 
-CreditState _archiveCreditRequest(
-    CreditState creditState, ArchiveCreditsRequest action) {
-  final credits = action.creditIds.map((id) => creditState.map[id]).toList();
-
-  for (int i = 0; i < credits.length; i++) {
-    credits[i] = credits[i]
-        .rebuild((b) => b..archivedAt = DateTime.now().millisecondsSinceEpoch);
-  }
-  return creditState.rebuild((b) {
-    for (final credit in credits) {
-      b.map[credit.id] = credit;
-    }
-  });
-}
-
 CreditState _archiveCreditSuccess(
     CreditState creditState, ArchiveCreditsSuccess action) {
   return creditState.rebuild((b) {
     for (final credit in action.credits) {
-      b.map[credit.id] = credit;
-    }
-  });
-}
-
-CreditState _archiveCreditFailure(
-    CreditState creditState, ArchiveCreditsFailure action) {
-  return creditState.rebuild((b) {
-    for (final credit in action.credits) {
-      b.map[credit.id] = credit;
-    }
-  });
-}
-
-CreditState _deleteCreditRequest(
-    CreditState creditState, DeleteCreditsRequest action) {
-  final credits = action.creditIds.map((id) => creditState.map[id]).toList();
-
-  for (int i = 0; i < credits.length; i++) {
-    credits[i] = credits[i].rebuild((b) => b
-      ..archivedAt = DateTime.now().millisecondsSinceEpoch
-      ..isDeleted = true);
-  }
-  return creditState.rebuild((b) {
-    for (final credit in credits) {
       b.map[credit.id] = credit;
     }
   });
@@ -327,42 +281,8 @@ CreditState _deleteCreditSuccess(
   });
 }
 
-CreditState _deleteCreditFailure(
-    CreditState creditState, DeleteCreditsFailure action) {
-  return creditState.rebuild((b) {
-    for (final credit in action.credits) {
-      b.map[credit.id] = credit;
-    }
-  });
-}
-
-CreditState _restoreCreditRequest(
-    CreditState creditState, RestoreCreditsRequest action) {
-  final credits = action.creditIds.map((id) => creditState.map[id]).toList();
-
-  for (int i = 0; i < credits.length; i++) {
-    credits[i] = credits[i].rebuild((b) => b
-      ..archivedAt = 0
-      ..isDeleted = false);
-  }
-  return creditState.rebuild((b) {
-    for (final credit in credits) {
-      b.map[credit.id] = credit;
-    }
-  });
-}
-
 CreditState _restoreCreditSuccess(
     CreditState creditState, RestoreCreditsSuccess action) {
-  return creditState.rebuild((b) {
-    for (final credit in action.credits) {
-      b.map[credit.id] = credit;
-    }
-  });
-}
-
-CreditState _restoreCreditFailure(
-    CreditState creditState, RestoreCreditsFailure action) {
   return creditState.rebuild((b) {
     for (final credit in action.credits) {
       b.map[credit.id] = credit;

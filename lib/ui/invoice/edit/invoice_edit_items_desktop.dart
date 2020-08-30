@@ -13,7 +13,6 @@ import 'package:invoiceninja_flutter/ui/invoice/edit/invoice_edit_items_vm.dart'
 import 'package:invoiceninja_flutter/ui/invoice/edit/invoice_edit_vm.dart';
 import 'package:invoiceninja_flutter/utils/formatting.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
-import 'package:invoiceninja_flutter/utils/money.dart';
 
 class InvoiceEditItemsDesktop extends StatefulWidget {
   const InvoiceEditItemsDesktop({
@@ -181,21 +180,15 @@ class _InvoiceEditItemsDesktopState extends State<InvoiceEditItemsDesktop> {
                             final product = productState.map[productId];
                             final client =
                                 state.clientState.get(invoice.clientId);
+                            final currency = state
+                                .staticState.currencyMap[client.currencyId];
 
                             double cost = product.price;
                             if (company.convertProductExchangeRate &&
                                 invoice.clientId != null &&
                                 client.currencyId != company.currencyId) {
-                              cost = cost *
-                                  getExchangeRate(context,
-                                      fromCurrencyId: company.currencyId,
-                                      toCurrencyId: client.currencyId);
-                              cost = round(
-                                  cost,
-                                  state
-                                      .staticState
-                                      .currencyMap[client.currencyId]
-                                      .precision);
+                              cost = round(cost * invoice.exchangeRate,
+                                  currency.precision);
                             }
 
                             final updatedItem = item.rebuild((b) => b
@@ -233,13 +226,9 @@ class _InvoiceEditItemsDesktopState extends State<InvoiceEditItemsDesktop> {
                         if (company.convertProductExchangeRate &&
                             invoice.clientId != null &&
                             client.currencyId != company.currencyId) {
-                          cost = cost *
-                              getExchangeRate(context,
-                                  fromCurrencyId: company.currencyId,
-                                  toCurrencyId: client.currencyId);
                           cost = round(
-                              cost,
-                              state.staticState.currencyMap[client.currencyId]
+                              cost * invoice.exchangeRate,
+                              state.staticState.currencyMap[client?.currencyId]
                                   .precision);
                         }
 
@@ -395,7 +384,7 @@ class _InvoiceEditItemsDesktopState extends State<InvoiceEditItemsDesktop> {
                       key: ValueKey('__line_item_${index}_cost__'),
                       textAlign: TextAlign.right,
                       initialValue: formatNumber(lineItems[index].cost, context,
-                          formatNumberType: FormatNumberType.input,
+                          formatNumberType: FormatNumberType.inputMoney,
                           clientId: invoice.clientId),
                       onChanged: (value) => viewModel.onChangedInvoiceItem(
                           lineItems[index]
@@ -413,7 +402,7 @@ class _InvoiceEditItemsDesktopState extends State<InvoiceEditItemsDesktop> {
                       textAlign: TextAlign.right,
                       initialValue: formatNumber(
                           lineItems[index].quantity, context,
-                          formatNumberType: FormatNumberType.input,
+                          formatNumberType: FormatNumberType.inputAmount,
                           clientId: invoice.clientId),
                       onChanged: (value) => viewModel.onChangedInvoiceItem(
                           lineItems[index]
@@ -428,7 +417,7 @@ class _InvoiceEditItemsDesktopState extends State<InvoiceEditItemsDesktop> {
                     padding: const EdgeInsets.only(right: kTableColumnGap),
                     child: TextFormField(
                       key: ValueKey(
-                          '__total_${index}_${lineItems[index].total}__'),
+                          '__total_${index}_${lineItems[index].total}_${invoice.clientId}__'),
                       readOnly: true,
                       enabled: false,
                       initialValue: formatNumber(

@@ -49,7 +49,8 @@ enum FormatNumberType {
   percent, // 1,000.00%
   int, // 1,000
   double, // 1,000.00
-  input, // 1000.00
+  inputMoney, // 1000.00
+  inputAmount, // 1000
   duration,
 }
 
@@ -63,7 +64,9 @@ String formatNumber(
   bool zeroIsNull = false,
   bool roundToPrecision = true,
 }) {
-  if ((zeroIsNull || formatNumberType == FormatNumberType.input) &&
+  if ((zeroIsNull ||
+          formatNumberType == FormatNumberType.inputMoney ||
+          formatNumberType == FormatNumberType.inputAmount) &&
       value == 0) {
     return null;
   } else if (value == null) {
@@ -143,8 +146,18 @@ String formatNumber(
     return NumberFormat('#,##0', 'custom').format(value);
   } else if (formatNumberType == FormatNumberType.double) {
     return NumberFormat('#,##0.#####', 'custom').format(value);
-  } else if (formatNumberType == FormatNumberType.input) {
+  } else if (formatNumberType == FormatNumberType.inputAmount) {
     return NumberFormat('#.#####', 'custom').format(value);
+  } else if (formatNumberType == FormatNumberType.inputMoney) {
+    if (currency.precision == 0) {
+      return NumberFormat('#.#####', 'custom').format(value);
+    } else if (currency.precision == 1) {
+      return NumberFormat('#.0####', 'custom').format(value);
+    } else if (currency.precision == 2) {
+      return NumberFormat('#.00###', 'custom').format(value);
+    } else if (currency.precision == 3) {
+      return NumberFormat('#.000##', 'custom').format(value);
+    }
   } else {
     if (formatNumberType == FormatNumberType.percent) {
       formatter = NumberFormat('#,##0.#####', 'custom');

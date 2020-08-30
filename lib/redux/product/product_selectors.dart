@@ -1,6 +1,5 @@
 import 'package:flutter/widgets.dart';
 import 'package:invoiceninja_flutter/utils/formatting.dart';
-import 'package:invoiceninja_flutter/utils/money.dart';
 import 'package:memoize/memoize.dart';
 import 'package:built_collection/built_collection.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
@@ -9,20 +8,16 @@ import 'package:invoiceninja_flutter/redux/ui/list_ui_state.dart';
 InvoiceItemEntity convertProductToInvoiceItem({
   @required ProductEntity product,
   @required CompanyEntity company,
+  @required InvoiceEntity invoice,
   @required BuiltMap<String, CurrencyEntity> currencyMap,
   ClientEntity client,
 }) {
   if (company.fillProducts) {
     double cost = product.price;
 
-    if (company.convertProductExchangeRate &&
-        client != null &&
-        client.currencyId != company.currencyId) {
-      cost = cost *
-          getExchangeRateWithMap(currencyMap,
-              fromCurrencyId: company.currencyId,
-              toCurrencyId: client.currencyId);
-      cost = round(cost, currencyMap[client.currencyId].precision);
+    if (company.convertProductExchangeRate) {
+      cost = round(cost * invoice.exchangeRate,
+          currencyMap[client.currencyId].precision);
     }
 
     return InvoiceItemEntity().rebuild((b) => b

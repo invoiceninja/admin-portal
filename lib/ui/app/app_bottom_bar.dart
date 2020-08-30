@@ -217,29 +217,31 @@ class _AppBottomBarState extends State<AppBottomBar> {
                   mainAxisSize: MainAxisSize.min,
                   children: widget.sortFields.map((sortField) {
                     final field = sortField;
-                    return GestureDetector(
+                    return InkWell(
                       onTap: () => widget.onSelectedSortField(sortField),
-                      child: RadioListTile<String>(
-                        dense: true,
-                        title:
-                            Text(AppLocalization.of(context).lookup(sortField)),
-                        subtitle: sortField == listUIState.sortField
-                            ? Text(listUIState.sortAscending
-                                ? AppLocalization.of(context).ascending
-                                : AppLocalization.of(context).descending)
-                            : null,
-                        groupValue: listUIState.sortField,
-                        activeColor: Theme.of(context).accentColor,
-                        onChanged: (String value) {
-                          if (value == null && listUIState.sortField == field) {
-                            // Is re-selecting
-                            widget.onSelectedSortField(field);
-                          } else {
-                            widget.onSelectedSortField(value);
-                          }
-                        },
-                        value: field,
-                        toggleable: true,
+                      child: IgnorePointer(
+                        child: RadioListTile<String>(
+                          dense: true,
+                          title:
+                              Text(AppLocalization.of(context).lookup(sortField)),
+                          subtitle: sortField == listUIState.sortField
+                              ? Text(listUIState.sortAscending
+                                  ? AppLocalization.of(context).ascending
+                                  : AppLocalization.of(context).descending)
+                              : null,
+                          groupValue: listUIState.sortField,
+                          activeColor: Theme.of(context).accentColor,
+                          onChanged: (String value) {
+                            if (value == null && listUIState.sortField == field) {
+                              // Is re-selecting
+                              widget.onSelectedSortField(field);
+                            } else {
+                              widget.onSelectedSortField(value);
+                            }
+                          },
+                          value: field,
+                          toggleable: true,
+                        ),
                       ),
                     );
                   }).toList()),
@@ -476,7 +478,10 @@ class _AppBottomBarState extends State<AppBottomBar> {
                       onPressed: _onColumnsPressed,
                       child: Text(
                         localization.columns,
-                        style: TextStyle(color: state.linkColor),
+                        style: TextStyle(
+                            color: state.prefState.enableDarkMode
+                                ? Colors.white
+                                : Colors.black),
                       ),
                     )
                   else

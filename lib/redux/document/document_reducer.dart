@@ -130,32 +130,10 @@ final documentsReducer = combineReducers<DocumentState>([
   //TypedReducer<DocumentState, AddDocumentSuccess>(_addDocument),
   TypedReducer<DocumentState, LoadDocumentsSuccess>(_setLoadedDocuments),
   TypedReducer<DocumentState, LoadDocumentSuccess>(_setLoadedDocument),
-  TypedReducer<DocumentState, ArchiveDocumentRequest>(_archiveDocumentRequest),
   TypedReducer<DocumentState, ArchiveDocumentSuccess>(_archiveDocumentSuccess),
-  TypedReducer<DocumentState, ArchiveDocumentFailure>(_archiveDocumentFailure),
-  //TypedReducer<DocumentState, DeleteDocumentRequest>(_deleteDocumentRequest),
   TypedReducer<DocumentState, DeleteDocumentSuccess>(_deleteDocumentSuccess),
-  //TypedReducer<DocumentState, DeleteDocumentFailure>(_deleteDocumentFailure),
-  TypedReducer<DocumentState, RestoreDocumentRequest>(_restoreDocumentRequest),
   TypedReducer<DocumentState, RestoreDocumentSuccess>(_restoreDocumentSuccess),
-  TypedReducer<DocumentState, RestoreDocumentFailure>(_restoreDocumentFailure),
 ]);
-
-DocumentState _archiveDocumentRequest(
-    DocumentState documentState, ArchiveDocumentRequest action) {
-  final documents =
-      action.documentIds.map((id) => documentState.map[id]).toList();
-
-  for (int i = 0; i < documents.length; i++) {
-    documents[i] = documents[i]
-        .rebuild((b) => b..archivedAt = DateTime.now().millisecondsSinceEpoch);
-  }
-  return documentState.rebuild((b) {
-    for (final document in documents) {
-      b.map[document.id] = document;
-    }
-  });
-}
 
 DocumentState _archiveDocumentSuccess(
     DocumentState documentState, ArchiveDocumentSuccess action) {
@@ -166,65 +144,9 @@ DocumentState _archiveDocumentSuccess(
   });
 }
 
-DocumentState _archiveDocumentFailure(
-    DocumentState documentState, ArchiveDocumentFailure action) {
-  return documentState.rebuild((b) {
-    for (final document in action.documents) {
-      b.map[document.id] = document;
-    }
-  });
-}
-
-/*
-DocumentState _deleteDocumentRequest(
-    DocumentState documentState, DeleteDocumentRequest action) {
-  final documents =
-      action.documentIds.map((id) => documentState.map[id]).toList();
-
-  for (int i = 0; i < documents.length; i++) {
-    documents[i] = documents[i].rebuild((b) => b
-      ..archivedAt = DateTime.now().millisecondsSinceEpoch
-      ..isDeleted = true);
-  }
-  return documentState.rebuild((b) {
-    for (final document in documents) {
-      b.map[document.id] = document;
-    }
-  });
-}
-*/
-
 DocumentState _deleteDocumentSuccess(
     DocumentState documentState, DeleteDocumentSuccess action) {
   return documentState.rebuild((b) => b..map.remove(action.documentId));
-}
-
-/*
-DocumentState _deleteDocumentFailure(
-    DocumentState documentState, DeleteDocumentFailure action) {
-  return documentState.rebuild((b) {
-    for (final document in action.documents) {
-      b.map[document.id] = document;
-    }
-  });
-}
- */
-
-DocumentState _restoreDocumentRequest(
-    DocumentState documentState, RestoreDocumentRequest action) {
-  final documents =
-      action.documentIds.map((id) => documentState.map[id]).toList();
-
-  for (int i = 0; i < documents.length; i++) {
-    documents[i] = documents[i].rebuild((b) => b
-      ..archivedAt = 0
-      ..isDeleted = false);
-  }
-  return documentState.rebuild((b) {
-    for (final document in documents) {
-      b.map[document.id] = document;
-    }
-  });
 }
 
 DocumentState _restoreDocumentSuccess(
@@ -235,24 +157,6 @@ DocumentState _restoreDocumentSuccess(
     }
   });
 }
-
-DocumentState _restoreDocumentFailure(
-    DocumentState documentState, RestoreDocumentFailure action) {
-  return documentState.rebuild((b) {
-    for (final document in action.documents) {
-      b.map[document.id] = document;
-    }
-  });
-}
-
-/*
-DocumentState _addDocument(
-    DocumentState documentState, AddDocumentSuccess action) {
-  return documentState.rebuild((b) => b
-    ..map[action.document.id] = action.document
-    ..list.add(action.document.id));
-}
- */
 
 DocumentState _updateDocument(
     DocumentState documentState, SaveDocumentSuccess action) {

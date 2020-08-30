@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+
 import 'package:invoiceninja_flutter/utils/localization.dart';
+import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 
 class LockScreen extends StatelessWidget {
   const LockScreen({@required this.onAuthenticatePressed});
@@ -21,7 +22,7 @@ class LockScreen extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
               Icon(
-                FontAwesomeIcons.lock,
+                MdiIcons.lock,
                 size: 24.0,
                 color: Colors.grey[400],
               ),

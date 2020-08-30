@@ -8,18 +8,18 @@ import 'package:invoiceninja_flutter/ui/app/responsive_padding.dart';
 import 'package:invoiceninja_flutter/utils/formatting.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 
-class DateRangePicker extends StatefulWidget {
-  const DateRangePicker({Key key, this.state, this.onSettingsChanged})
+class DashboardDateRangePicker extends StatefulWidget {
+  const DashboardDateRangePicker({Key key, this.state, this.onSettingsChanged})
       : super(key: key);
 
   final DashboardUIState state;
   final Function(DashboardSettings) onSettingsChanged;
 
   @override
-  _DateRangePickerState createState() => _DateRangePickerState();
+  _DashboardDateRangePickerState createState() => _DashboardDateRangePickerState();
 }
 
-class _DateRangePickerState extends State<DateRangePicker> {
+class _DashboardDateRangePickerState extends State<DashboardDateRangePicker> {
   DashboardSettings _settings;
 
   @override

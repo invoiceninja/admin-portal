@@ -1,7 +1,7 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+
 import 'package:invoiceninja_flutter/constants.dart';
 import 'package:invoiceninja_flutter/data/models/client_model.dart';
 import 'package:invoiceninja_flutter/data/models/company_model.dart';
@@ -26,6 +26,7 @@ import 'package:invoiceninja_flutter/ui/settings/invoice_design_vm.dart';
 import 'package:invoiceninja_flutter/ui/app/edit_scaffold.dart';
 import 'package:invoiceninja_flutter/utils/fonts.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
+import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 
 class InvoiceDesign extends StatefulWidget {
   const InvoiceDesign({
@@ -244,7 +245,7 @@ class _InvoiceDesignState extends State<InvoiceDesign>
                   BoolDropdownButton(
                     label: localization.allPagesHeader,
                     value: settings.allPagesHeader,
-                    iconData: FontAwesomeIcons.fileInvoice,
+                    iconData: MdiIcons.pageLayoutHeader,
                     onChanged: (value) => viewModel.onSettingsChanged(
                         settings.rebuild((b) => b..allPagesHeader = value)),
                     enabledLabel: localization.allPages,
@@ -253,7 +254,7 @@ class _InvoiceDesignState extends State<InvoiceDesign>
                   BoolDropdownButton(
                     label: localization.allPagesFooter,
                     value: settings.allPagesFooter,
-                    iconData: FontAwesomeIcons.fileInvoice,
+                    iconData: MdiIcons.pageLayoutFooter,
                     onChanged: (value) => viewModel.onSettingsChanged(
                         settings.rebuild((b) => b..allPagesFooter = value)),
                     enabledLabel: localization.allPages,
@@ -268,7 +269,7 @@ class _InvoiceDesignState extends State<InvoiceDesign>
                     label: localization.hidePaidToDate,
                     helpLabel: localization.hidePaidToDateHelp,
                     value: settings.hidePaidToDate,
-                    iconData: FontAwesomeIcons.fileInvoiceDollar,
+                    iconData: MdiIcons.fileInvoiceDollar,
                     onChanged: (value) => viewModel.onSettingsChanged(
                         settings.rebuild((b) => b..hidePaidToDate = value)),
                   ),
@@ -276,7 +277,7 @@ class _InvoiceDesignState extends State<InvoiceDesign>
                     label: localization.invoiceEmbedDocuments,
                     helpLabel: localization.invoiceEmbedDocumentsHelp,
                     value: settings.embedDocuments,
-                    iconData: FontAwesomeIcons.image,
+                    iconData: MdiIcons.image,
                     onChanged: (value) => viewModel.onSettingsChanged(
                         settings.rebuild((b) => b..embedDocuments = value)),
                   ),

@@ -61,7 +61,6 @@ Middleware<AppState> _editPayment() {
     } else {
       showDialog<PaymentEditScreen>(
           context: action.context,
-          useRootNavigator: true,
           barrierDismissible: false,
           builder: (BuildContext context) {
             return PaymentEditScreen();
@@ -82,7 +81,6 @@ Middleware<AppState> _viewRefundPayment() {
     } else {
       showDialog<PaymentRefundScreen>(
           context: action.context,
-          useRootNavigator: true,
           barrierDismissible: false,
           builder: (BuildContext context) {
             return PaymentRefundScreen();
@@ -270,12 +268,6 @@ Middleware<AppState> _emailPayment(PaymentRepository repository) {
 Middleware<AppState> _loadPayment(PaymentRepository repository) {
   return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
     final action = dynamicAction as LoadPayment;
-    final AppState state = store.state;
-
-    if (state.isLoading) {
-      next(action);
-      return;
-    }
 
     store.dispatch(LoadPaymentRequest());
     repository
@@ -301,12 +293,6 @@ Middleware<AppState> _loadPayment(PaymentRepository repository) {
 Middleware<AppState> _loadPayments(PaymentRepository repository) {
   return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
     final action = dynamicAction as LoadPayments;
-    final AppState state = store.state;
-
-    if (state.isLoading) {
-      next(action);
-      return;
-    }
 
     store.dispatch(LoadPaymentsRequest());
     repository.loadList(store.state.credentials).then((data) {

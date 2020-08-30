@@ -192,11 +192,6 @@ Middleware<AppState> _loadWebhook(WebhookRepository repository) {
     final action = dynamicAction as LoadWebhook;
     final AppState state = store.state;
 
-    if (state.isLoading) {
-      next(action);
-      return;
-    }
-
     store.dispatch(LoadWebhookRequest());
     repository.loadItem(state.credentials, action.webhookId).then((webhook) {
       store.dispatch(LoadWebhookSuccess(webhook));
@@ -220,11 +215,6 @@ Middleware<AppState> _loadWebhooks(WebhookRepository repository) {
   return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
     final action = dynamicAction as LoadWebhooks;
     final AppState state = store.state;
-
-    if (state.isLoading) {
-      next(action);
-      return;
-    }
 
     store.dispatch(LoadWebhooksRequest());
     repository.loadList(state.credentials).then((data) {

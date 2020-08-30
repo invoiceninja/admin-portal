@@ -294,12 +294,6 @@ Middleware<AppState> _saveQuote(QuoteRepository repository) {
 Middleware<AppState> _loadQuote(QuoteRepository repository) {
   return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
     final action = dynamicAction as LoadQuote;
-    final AppState state = store.state;
-
-    if (state.isLoading) {
-      next(action);
-      return;
-    }
 
     store.dispatch(LoadQuoteRequest());
     repository.loadItem(store.state.credentials, action.quoteId).then((quote) {
@@ -347,12 +341,6 @@ Middleware<AppState> _bulkEmailQuotes(QuoteRepository repository) {
 Middleware<AppState> _loadQuotes(QuoteRepository repository) {
   return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
     final action = dynamicAction as LoadQuotes;
-    final AppState state = store.state;
-
-    if (state.isLoading) {
-      next(action);
-      return;
-    }
 
     store.dispatch(LoadQuotesRequest());
     repository.loadList(store.state.credentials).then((data) {

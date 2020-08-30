@@ -2,7 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+
 import 'package:invoiceninja_flutter/data/models/entities.dart';
 import 'package:invoiceninja_flutter/data/models/project_model.dart';
 import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
@@ -99,7 +99,7 @@ class _ProjectViewState extends State<ProjectView> {
                 color: Theme.of(context).canvasColor,
                 child: ListTile(
                   title: EntityStateTitle(entity: client),
-                  leading: Icon(FontAwesomeIcons.users, size: 18.0),
+                  //leading: Icon(MdiIcons.users, size: 18.0),
                   trailing: Icon(Icons.navigate_next),
                   onTap: () => inspectEntity(context: context, entity: client),
                   onLongPress: () => inspectEntity(

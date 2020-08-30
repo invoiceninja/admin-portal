@@ -15,6 +15,26 @@ mixin LocalizationsProvider on LocaleCodeAware {
   static final Map<String, Map<String, String>> _localizedValues = {
     'en': {
       // STARTER: lang key - do not remove comment
+      'opened': 'opened',
+      'payment_reconciliation_failure': 'Reconciliation Failure',
+      'payment_reconciliation_success': 'Reconciliation Success',
+      'gateway_success': 'Gateway Success',
+      'gateway_failure': 'Gateway Failure',
+      'gateway_error': 'Gateway Error',
+      'email_send': 'Email Send',
+      'email_retry_queue': 'Email Retry Queue',
+      'failure': 'Failure',
+      'quota_exceeded': 'Quota Exceeded',
+      'upstream_failure': 'Upstream Failure',
+      'system_logs': 'System Logs',
+      'view_portal': 'View Portal',
+      'copy_link': 'Copy Link',
+      'token_billing': 'Token Billing',
+      'welcome_to_invoice_ninja': 'Welcome to Invoice Ninja',
+      'always': 'Always',
+      'optin': 'Opt-In',
+      'optout': 'Opt-Out',
+      'label': 'Label',
       'client_number': 'Client Number',
       'auto_convert': 'Auto Convert',
       'company_name': 'Company Name',
@@ -1301,6 +1321,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'payment_amount': 'Payment Amount',
       'age': 'Age',
     },
+    // OTHER_LANGUAGES
   };
 
   String get createdProject =>
@@ -4393,11 +4414,65 @@ mixin LocalizationsProvider on LocaleCodeAware {
 
   String get autoConvert => _localizedValues[localeCode]['auto_convert'] ?? '';
 
+  String get label => _localizedValues[localeCode]['label'] ?? '';
+
+  String get always => _localizedValues[localeCode]['always'] ?? '';
+
+  String get optIn => _localizedValues[localeCode]['optin'] ?? '';
+
+  String get optOut => _localizedValues[localeCode]['optout'] ?? '';
+
+  String get welcomeToInvoiceNinja =>
+      _localizedValues[localeCode]['welcome_to_invoice_ninja'] ?? '';
+
+  String get tokenBilling =>
+      _localizedValues[localeCode]['token_billing'] ?? '';
+
+  String get copyLink => _localizedValues[localeCode]['copy_link'] ?? '';
+
+  String get viewPortal => _localizedValues[localeCode]['view_portal'] ?? '';
+
+  String get systemLogs => _localizedValues[localeCode]['system_logs'] ?? '';
+
+  String get paymentReconciliationSuccess =>
+      _localizedValues[localeCode]['payment_reconciliation_success'] ?? '';
+
+  String get paymentReconciliationFailure =>
+      _localizedValues[localeCode]['payment_reconciliation_failure'] ?? '';
+
+  String get gatewaySuccess =>
+      _localizedValues[localeCode]['gateway_success'] ?? '';
+
+  String get gatewayFailure =>
+      _localizedValues[localeCode]['gateway_failure'] ?? '';
+
+  String get gatewayError =>
+      _localizedValues[localeCode]['gateway_error'] ?? '';
+
+  String get emailSend => _localizedValues[localeCode]['email_send'] ?? '';
+
+  String get emailRetryQueue =>
+      _localizedValues[localeCode]['email_retry_queue'] ?? '';
+
+  String get failure => _localizedValues[localeCode]['failure'] ?? '';
+
+  String get quotaExceeded =>
+      _localizedValues[localeCode]['quota_exceeded'] ?? '';
+
+  String get upstreamFailure =>
+      _localizedValues[localeCode]['upstream_failure'] ?? '';
+
+  String get opened => _localizedValues[localeCode]['opened'] ?? '';
+
   String lookup(String key) {
     final lookupKey = toSnakeCase(key);
 
+    if (lookupKey.startsWith('_')) {
+      return key;
+    }
+
     if (!_localizedValues[localeCode].containsKey(lookupKey)) {
-      print('ERROR: localization key not found - $lookupKey');
+      print('ERROR: localization key not found - $key');
     }
 
     return _localizedValues[localeCode][lookupKey] ??

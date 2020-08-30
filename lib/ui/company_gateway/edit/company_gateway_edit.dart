@@ -51,8 +51,10 @@ class _CompanyGatewayEditState extends State<CompanyGatewayEdit>
   @override
   void didChangeDependencies() {
     final companyGateway = widget.viewModel.companyGateway;
-    _gatewayTypeId =
-        companyGateway.gateway.defaultGatewayTypeId ?? kGatewayTypeCreditCard;
+    final gateway =
+        widget.viewModel.state.staticState.gatewayMap[companyGateway.gatewayId];
+
+    _gatewayTypeId = gateway?.defaultGatewayTypeId ?? kGatewayTypeCreditCard;
     super.didChangeDependencies();
   }
 
@@ -68,11 +70,12 @@ class _CompanyGatewayEditState extends State<CompanyGatewayEdit>
     final state = viewModel.state;
     final localization = AppLocalization.of(context);
     final companyGateway = viewModel.companyGateway;
+    final gateway = state.staticState.gatewayMap[companyGateway.gatewayId];
 
     return EditScaffold(
       title: viewModel.companyGateway.isNew
           ? localization.newCompanyGateway
-          : companyGateway.gateway.name,
+          : companyGateway.label,
       onSavePressed: viewModel.onSavePressed,
       onCancelPressed: viewModel.onCancelPressed,
       appBarBottom: TabBar(
@@ -114,7 +117,8 @@ class _CompanyGatewayEditState extends State<CompanyGatewayEdit>
                                   .defaultGatewayTypeId ??
                               kGatewayTypeCreditCard] = FeesAndLimitsSettings()
                           ..gatewayId = gateway.id
-                          ..config = '{}'),
+                          ..config = '{}'
+                          ..label = gateway.listDisplayName),
                       ),
                       //onFieldSubmitted: (String value) => _node.nextFocus(),
                     ),
@@ -129,8 +133,36 @@ class _CompanyGatewayEditState extends State<CompanyGatewayEdit>
           ),
           ListView(
             children: <Widget>[
+              FormCard(children: <Widget>[
+                DecoratedFormField(
+                  label: localization.label,
+                  initialValue: companyGateway.label,
+                  onChanged: (String value) => viewModel.onChanged(
+                      companyGateway.rebuild((b) => b..label = value.trim())),
+                ),
+                if (state.staticState.gatewayMap[companyGateway.gatewayId]
+                        ?.supportsTokenBilling ==
+                    true)
+                  AppDropdownButton<String>(
+                      labelText: localization.tokenBilling,
+                      value: companyGateway.tokenBilling,
+                      onChanged: (dynamic value) => viewModel.onChanged(
+                          companyGateway
+                              .rebuild((b) => b..tokenBilling = value)),
+                      items: [
+                        CompanyGatewayEntity.TOKEN_BILLING_ALWAYS,
+                        CompanyGatewayEntity.TOKEN_BILLING_OPT_IN,
+                        CompanyGatewayEntity.TOKEN_BILLING_OPT_OUT,
+                        CompanyGatewayEntity.TOKEN_BILLING_DISABLED
+                      ]
+                          .map((value) => DropdownMenuItem(
+                                child: Text(localization.lookup(value)),
+                                value: value,
+                              ))
+                          .toList())
+              ]),
               FormCard(
-                children: <Widget>[
+                children: [
                   SwitchListTile(
                     activeColor: Theme.of(context).accentColor,
                     title: Text(localization.updateAddress),
@@ -139,62 +171,65 @@ class _CompanyGatewayEditState extends State<CompanyGatewayEdit>
                     onChanged: (value) => viewModel.onChanged(companyGateway
                         .rebuild((b) => b..updateDetails = value)),
                   ),
-                  SwitchListTile(
-                    activeColor: Theme.of(context).accentColor,
-                    title: Text(localization.billingAddress),
-                    subtitle: Text(localization.requireBillingAddressHelp),
-                    value: companyGateway.showBillingAddress,
-                    onChanged: (value) => viewModel.onChanged(companyGateway
-                        .rebuild((b) => b..showBillingAddress = value)),
-                  ),
-                  SwitchListTile(
-                    activeColor: Theme.of(context).accentColor,
-                    title: Text(localization.shippingAddress),
-                    subtitle: Text(localization.requireShippingAddressHelp),
-                    value: companyGateway.showShippingAddress,
-                    onChanged: (value) => viewModel.onChanged(companyGateway
-                        .rebuild((b) => b..showShippingAddress = value)),
-                  ),
+                  if (gateway?.isOffsite != true) ...[
+                    SwitchListTile(
+                      activeColor: Theme.of(context).accentColor,
+                      title: Text(localization.billingAddress),
+                      subtitle: Text(localization.requireBillingAddressHelp),
+                      value: companyGateway.showBillingAddress,
+                      onChanged: (value) => viewModel.onChanged(companyGateway
+                          .rebuild((b) => b..showBillingAddress = value)),
+                    ),
+                    SwitchListTile(
+                      activeColor: Theme.of(context).accentColor,
+                      title: Text(localization.shippingAddress),
+                      subtitle: Text(localization.requireShippingAddressHelp),
+                      value: companyGateway.showShippingAddress,
+                      onChanged: (value) => viewModel.onChanged(companyGateway
+                          .rebuild((b) => b..showShippingAddress = value)),
+                    ),
+                  ],
                 ],
               ),
-              FormCard(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: <Widget>[
-                  Padding(
-                    padding:
-                        const EdgeInsets.only(left: 16, top: 16, bottom: 16),
-                    child: Text(
-                      localization.acceptedCardLogos,
-                      style: Theme.of(context).textTheme.headline5,
+              if (gateway?.isOffsite != true)
+                FormCard(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: <Widget>[
+                    Padding(
+                      padding:
+                          const EdgeInsets.only(left: 16, top: 16, bottom: 16),
+                      child: Text(
+                        localization.acceptedCardLogos,
+                        style: Theme.of(context).textTheme.headline5,
+                      ),
                     ),
-                  ),
-                  CardListTile(
-                    viewModel: viewModel,
-                    cardType: kCardTypeVisa,
-                    paymentType: kPaymentTypeVisa,
-                  ),
-                  CardListTile(
-                    viewModel: viewModel,
-                    cardType: kCardTypeMasterCard,
-                    paymentType: kPaymentTypeMasterCard,
-                  ),
-                  CardListTile(
-                    viewModel: viewModel,
-                    cardType: kCardTypeAmEx,
-                    paymentType: kPaymentTypeAmEx,
-                  ),
-                  CardListTile(
-                    viewModel: viewModel,
-                    cardType: kCardTypeDiscover,
-                    paymentType: kPaymentTypeDiscover,
-                  ),
-                  CardListTile(
-                    viewModel: viewModel,
-                    cardType: kCardTypeDiners,
-                    paymentType: kPaymentTypeDiners,
-                  ),
-                ],
-              )
+                    CardListTile(
+                      viewModel: viewModel,
+                      cardType: kCardTypeVisa,
+                      paymentType: kPaymentTypeVisa,
+                    ),
+                    CardListTile(
+                      viewModel: viewModel,
+                      cardType: kCardTypeMasterCard,
+                      paymentType: kPaymentTypeMasterCard,
+                    ),
+                    CardListTile(
+                      viewModel: viewModel,
+                      cardType: kCardTypeAmEx,
+                      paymentType: kPaymentTypeAmEx,
+                    ),
+                    CardListTile(
+                      viewModel: viewModel,
+                      cardType: kCardTypeDiscover,
+                      paymentType: kPaymentTypeDiscover,
+                    ),
+                    CardListTile(
+                      viewModel: viewModel,
+                      cardType: kCardTypeDiners,
+                      paymentType: kPaymentTypeDiners,
+                    ),
+                  ],
+                )
             ],
           ),
           ListView(
@@ -478,11 +513,11 @@ class _LimitEditorState extends State<LimitEditor> {
     _minController.text = settings.minLimit == -1
         ? ''
         : formatNumber((settings.minLimit ?? 0).toDouble(), context,
-            formatNumberType: FormatNumberType.input);
+            formatNumberType: FormatNumberType.inputMoney);
     _maxController.text = settings.maxLimit == -1
         ? ''
         : formatNumber((settings.maxLimit ?? 0).toDouble(), context,
-            formatNumberType: FormatNumberType.input);
+            formatNumberType: FormatNumberType.inputMoney);
 
     _minController.addListener(_onTextChange);
     _maxController.addListener(_onTextChange);
@@ -636,11 +671,11 @@ class _FeesEditorState extends State<FeesEditor> {
         .forEach((dynamic controller) => controller.removeListener(_onChanged));
 
     _amountController.text = formatNumber(settings.feeAmount, context,
-        formatNumberType: FormatNumberType.input);
+        formatNumberType: FormatNumberType.inputMoney);
     _percentController.text = formatNumber(settings.feePercent, context,
-        formatNumberType: FormatNumberType.input);
+        formatNumberType: FormatNumberType.inputMoney);
     _capController.text = formatNumber(settings.feeCap, context,
-        formatNumberType: FormatNumberType.input);
+        formatNumberType: FormatNumberType.inputMoney);
 
     _controllers
         .forEach((dynamic controller) => controller.addListener(_onChanged));

@@ -38,6 +38,7 @@ class InvoicePresenter extends EntityPresenter {
       InvoiceFields.reminder2Sent,
       InvoiceFields.reminder3Sent,
       InvoiceFields.reminderLastSent,
+      InvoiceFields.exchangeRate,
     ];
   }
 
@@ -110,6 +111,9 @@ class InvoicePresenter extends EntityPresenter {
       case InvoiceFields.taxAmount:
         return Text(formatNumber(invoice.taxAmount, context,
             clientId: invoice.clientId));
+      case InvoiceFields.exchangeRate:
+        return Text(formatNumber(invoice.exchangeRate, context,
+            formatNumberType: FormatNumberType.double));
     }
 
     return super.getField(field: field, context: context);

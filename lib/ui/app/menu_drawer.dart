@@ -3,7 +3,6 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:invoiceninja_flutter/data/web_client.dart';
 import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:invoiceninja_flutter/redux/ui/pref_state.dart';
@@ -15,6 +14,7 @@ import 'package:invoiceninja_flutter/ui/app/forms/app_dropdown_button.dart';
 import 'package:invoiceninja_flutter/ui/app/resources/cached_image.dart';
 import 'package:invoiceninja_flutter/ui/system/update_dialog.dart';
 import 'package:invoiceninja_flutter/utils/dialogs.dart';
+import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 import 'package:redux/redux.dart';
 import 'package:invoiceninja_flutter/.env.dart';
 import 'package:flutter_redux/flutter_redux.dart';
@@ -395,8 +395,9 @@ class _DrawerTileState extends State<DrawerTile> {
             if (isMobile(context)) {
               navigator.pop();
             }
-            store.dispatch(
-                ViewDashboard(navigator: Navigator.of(context), filter: ''));
+            store.dispatch(ViewDashboard(
+                navigator: Navigator.of(context),
+                filter: uiState.filter == '' ? null : ''));
           },
         );
       } else if (userCompany.canCreate(widget.entityType)) {
@@ -426,7 +427,7 @@ class _DrawerTileState extends State<DrawerTile> {
         dense: true,
         leading: Icon(
           widget.icon,
-          size: 22,
+          size: 24,
           color: textColor,
         ),
         title: Text(
@@ -774,7 +775,7 @@ void _showAbout(BuildContext context) async {
         padding: const EdgeInsets.only(top: 30),
         child: AppButton(
           label: localization.healthCheck.toUpperCase(),
-          iconData: FontAwesomeIcons.shieldAlt,
+          iconData: MdiIcons.shield,
           onPressed: () {
             showDialog<HealthCheckDialog>(
                 context: context,

@@ -193,12 +193,6 @@ Middleware<AppState> _saveExpense(ExpenseRepository repository) {
 Middleware<AppState> _loadExpense(ExpenseRepository repository) {
   return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
     final action = dynamicAction as LoadExpense;
-    final AppState state = store.state;
-
-    if (state.isLoading) {
-      next(action);
-      return;
-    }
 
     store.dispatch(LoadExpenseRequest());
     repository
@@ -224,12 +218,6 @@ Middleware<AppState> _loadExpense(ExpenseRepository repository) {
 Middleware<AppState> _loadExpenses(ExpenseRepository repository) {
   return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
     final action = dynamicAction as LoadExpenses;
-    final AppState state = store.state;
-
-    if (state.isLoading) {
-      next(action);
-      return;
-    }
 
     store.dispatch(LoadExpensesRequest());
     repository.loadList(store.state.credentials).then((data) {

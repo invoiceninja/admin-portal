@@ -23,7 +23,6 @@ class FieldGrid extends StatelessWidget {
                 localization.lookup(field),
                 overflow: TextOverflow.ellipsis,
                 style: TextStyle(
-                  fontWeight: FontWeight.w300,
                   color: textColor.withOpacity(.65),
                 ),
               ),

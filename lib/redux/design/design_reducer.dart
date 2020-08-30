@@ -137,61 +137,15 @@ final designsReducer = combineReducers<DesignState>([
   TypedReducer<DesignState, LoadDesignsSuccess>(_setLoadedDesigns),
   TypedReducer<DesignState, LoadDesignSuccess>(_setLoadedDesign),
   TypedReducer<DesignState, LoadCompanySuccess>(_setLoadedCompany),
-  TypedReducer<DesignState, ArchiveDesignsRequest>(_archiveDesignRequest),
   TypedReducer<DesignState, ArchiveDesignsSuccess>(_archiveDesignSuccess),
-  TypedReducer<DesignState, ArchiveDesignsFailure>(_archiveDesignFailure),
-  TypedReducer<DesignState, DeleteDesignsRequest>(_deleteDesignRequest),
   TypedReducer<DesignState, DeleteDesignsSuccess>(_deleteDesignSuccess),
-  TypedReducer<DesignState, DeleteDesignsFailure>(_deleteDesignFailure),
-  TypedReducer<DesignState, RestoreDesignsRequest>(_restoreDesignRequest),
   TypedReducer<DesignState, RestoreDesignsSuccess>(_restoreDesignSuccess),
-  TypedReducer<DesignState, RestoreDesignsFailure>(_restoreDesignFailure),
 ]);
-
-DesignState _archiveDesignRequest(
-    DesignState designState, ArchiveDesignsRequest action) {
-  final designs = action.designIds.map((id) => designState.map[id]).toList();
-
-  for (int i = 0; i < designs.length; i++) {
-    designs[i] = designs[i]
-        .rebuild((b) => b..archivedAt = DateTime.now().millisecondsSinceEpoch);
-  }
-  return designState.rebuild((b) {
-    for (final design in designs) {
-      b.map[design.id] = design;
-    }
-  });
-}
 
 DesignState _archiveDesignSuccess(
     DesignState designState, ArchiveDesignsSuccess action) {
   return designState.rebuild((b) {
     for (final design in action.designs) {
-      b.map[design.id] = design;
-    }
-  });
-}
-
-DesignState _archiveDesignFailure(
-    DesignState designState, ArchiveDesignsFailure action) {
-  return designState.rebuild((b) {
-    for (final design in action.designs) {
-      b.map[design.id] = design;
-    }
-  });
-}
-
-DesignState _deleteDesignRequest(
-    DesignState designState, DeleteDesignsRequest action) {
-  final designs = action.designIds.map((id) => designState.map[id]).toList();
-
-  for (int i = 0; i < designs.length; i++) {
-    designs[i] = designs[i].rebuild((b) => b
-      ..archivedAt = DateTime.now().millisecondsSinceEpoch
-      ..isDeleted = true);
-  }
-  return designState.rebuild((b) {
-    for (final design in designs) {
       b.map[design.id] = design;
     }
   });
@@ -206,42 +160,8 @@ DesignState _deleteDesignSuccess(
   });
 }
 
-DesignState _deleteDesignFailure(
-    DesignState designState, DeleteDesignsFailure action) {
-  return designState.rebuild((b) {
-    for (final design in action.designs) {
-      b.map[design.id] = design;
-    }
-  });
-}
-
-DesignState _restoreDesignRequest(
-    DesignState designState, RestoreDesignsRequest action) {
-  final designs = action.designIds.map((id) => designState.map[id]).toList();
-
-  for (int i = 0; i < designs.length; i++) {
-    designs[i] = designs[i].rebuild((b) => b
-      ..archivedAt = 0
-      ..isDeleted = false);
-  }
-  return designState.rebuild((b) {
-    for (final design in designs) {
-      b.map[design.id] = design;
-    }
-  });
-}
-
 DesignState _restoreDesignSuccess(
     DesignState designState, RestoreDesignsSuccess action) {
-  return designState.rebuild((b) {
-    for (final design in action.designs) {
-      b.map[design.id] = design;
-    }
-  });
-}
-
-DesignState _restoreDesignFailure(
-    DesignState designState, RestoreDesignsFailure action) {
   return designState.rebuild((b) {
     for (final design in action.designs) {
       b.map[design.id] = design;

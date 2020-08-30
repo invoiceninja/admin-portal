@@ -207,7 +207,7 @@ class _EntityDropdownState extends State<EntityDropdown> {
             },
             textFieldConfiguration: TextFieldConfiguration(
               controller: _textController,
-              autofocus: widget.autofocus ?? false,
+              //autofocus: widget.autofocus ?? false,
               decoration: InputDecoration(
                 labelText: widget.labelText,
               ),

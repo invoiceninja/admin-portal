@@ -272,12 +272,6 @@ Middleware<AppState> _saveCredit(CreditRepository repository) {
 Middleware<AppState> _loadCredit(CreditRepository repository) {
   return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
     final action = dynamicAction as LoadCredit;
-    final AppState state = store.state;
-
-    if (state.isLoading) {
-      next(action);
-      return;
-    }
 
     store.dispatch(LoadCreditRequest());
     repository
@@ -304,12 +298,6 @@ Middleware<AppState> _loadCredit(CreditRepository repository) {
 Middleware<AppState> _loadCredits(CreditRepository repository) {
   return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
     final action = dynamicAction as LoadCredits;
-    final AppState state = store.state;
-
-    if (state.isLoading) {
-      next(action);
-      return;
-    }
 
     store.dispatch(LoadCreditsRequest());
     repository.loadList(store.state.credentials).then((data) {

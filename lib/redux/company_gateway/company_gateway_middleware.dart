@@ -207,11 +207,6 @@ Middleware<AppState> _loadCompanyGateway(CompanyGatewayRepository repository) {
     final action = dynamicAction as LoadCompanyGateway;
     final AppState state = store.state;
 
-    if (state.isLoading) {
-      next(action);
-      return;
-    }
-
     store.dispatch(LoadCompanyGatewayRequest());
     repository
         .loadItem(state.credentials, action.companyGatewayId)
@@ -237,11 +232,6 @@ Middleware<AppState> _loadCompanyGateways(CompanyGatewayRepository repository) {
   return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
     final action = dynamicAction as LoadCompanyGateways;
     final AppState state = store.state;
-
-    if (state.isLoading) {
-      next(action);
-      return;
-    }
 
     store.dispatch(LoadCompanyGatewaysRequest());
     repository.loadList(state.credentials).then((data) {

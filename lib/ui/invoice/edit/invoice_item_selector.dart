@@ -70,6 +70,7 @@ class _InvoiceItemSelectorState extends State<InvoiceItemSelector>
           convertProductToInvoiceItem(
             company: company,
             product: entity as ProductEntity,
+            invoice: state.invoiceUIState.editing,
             currencyMap: state.staticState.currencyMap,
             client: state.clientState.get(widget.clientId),
           ),

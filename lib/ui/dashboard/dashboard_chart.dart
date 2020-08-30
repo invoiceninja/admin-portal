@@ -148,7 +148,7 @@ class _DashboardChartState extends State<DashboardChart> {
                     ? (settings.enableComparison ? ' ' : '')
                     : '$changeAmount ($changePercent)';
 
-                return GestureDetector(
+                return InkWell(
                   onTap: () {
                     setState(() {
                       _selectedIndex = index;
@@ -163,27 +163,26 @@ class _DashboardChartState extends State<DashboardChart> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: <Widget>[
                         Text(localization.lookup(dataGroup.name),
-                            style: theme.textTheme.headline5.copyWith(
-                                color: isSelected ? Colors.white : null,
-                                fontWeight: FontWeight.w400)),
-                        SizedBox(height: 4.0),
+                            style: theme.textTheme.headline6.copyWith(
+                              color: isSelected ? Colors.white : null,
+                            )),
+                        SizedBox(height: 4),
                         Text(
                             formatNumber(dataGroup.total, context,
                                 currencyId: widget.currencyId),
                             style: theme.textTheme.headline5.copyWith(
                                 color: isSelected ? Colors.white : null)),
-                        SizedBox(height: 2.0),
+                        SizedBox(height: 4),
                         changeString.isNotEmpty
                             ? Text(
                                 changeString,
                                 style: TextStyle(
-                                  fontSize: 16.0,
+                                  fontSize: 16,
                                   color: isSelected
                                       ? Colors.white
                                       : (isIncrease
                                           ? Colors.green
                                           : Colors.red),
-                                  fontWeight: FontWeight.bold,
                                 ),
                               )
                             : SizedBox(),

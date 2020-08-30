@@ -709,22 +709,22 @@ class _EntityFilter extends StatelessWidget {
                   ),
                   actions: [
                     PopupMenuButton<EntityType>(
-                      child: Row(
-                        children: [
-                          Text(
-                            routeEntityType == filterEntityType
-                                ? localization.overview
-                                : '${localization.lookup(routeEntityType.plural)}',
-                            style: TextStyle(
-                                fontSize: 17,
-                                color: state.prefState.enableDarkMode ||
-                                        state.hasAccentColor
-                                    ? Colors.white
-                                    : Theme.of(context).accentColor),
-                          ),
-                          SizedBox(width: 4),
-                          Icon(Icons.arrow_drop_down),
-                        ],
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 8),
+                        child: Row(
+                          children: [
+                            Text(
+                              routeEntityType == filterEntityType
+                                  ? localization.overview
+                                  : '${localization.lookup(routeEntityType.plural)}',
+                              style: TextStyle(
+                                  fontSize: 17,
+                                  color: state.headerTextColor),
+                            ),
+                            SizedBox(width: 4),
+                            Icon(Icons.arrow_drop_down),
+                          ],
+                        ),
                       ),
                       initialValue: routeEntityType,
                       onSelected: (EntityType value) {

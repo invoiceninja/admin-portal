@@ -11,6 +11,7 @@ import 'package:invoiceninja_flutter/ui/invoice/edit/invoice_edit_desktop.dart';
 import 'package:invoiceninja_flutter/ui/invoice/edit/invoice_edit_details.dart';
 import 'package:invoiceninja_flutter/ui/invoice/edit/invoice_edit_details_vm.dart';
 import 'package:invoiceninja_flutter/ui/invoice/edit/invoice_edit_vm.dart';
+import 'package:invoiceninja_flutter/utils/money.dart';
 import 'package:redux/redux.dart';
 import 'package:invoiceninja_flutter/redux/credit/credit_actions.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
@@ -53,7 +54,7 @@ class CreditEditDetailsVM extends EntityEditDetailsVM {
     CompanyEntity company,
     InvoiceEntity invoice,
     Function(InvoiceEntity) onChanged,
-    Function(InvoiceEntity, ClientEntity) onClientChanged,
+    Function(BuildContext, InvoiceEntity, ClientEntity) onClientChanged,
     BuiltMap<String, ClientEntity> clientMap,
     BuiltList<String> clientList,
     Function(BuildContext context, Completer<SelectableEntity> completer)
@@ -72,15 +73,23 @@ class CreditEditDetailsVM extends EntityEditDetailsVM {
   factory CreditEditDetailsVM.fromStore(Store<AppState> store) {
     final AppState state = store.state;
     final credit = state.creditUIState.editing;
+    final company = state.company;
 
     return CreditEditDetailsVM(
       state: state,
-      company: state.company,
+      company: company,
       invoice: credit,
       onChanged: (InvoiceEntity credit) => store.dispatch(UpdateCredit(credit)),
       clientMap: state.clientState.map,
       clientList: state.clientState.list,
-      onClientChanged: (invoice, client) {
+      onClientChanged: (context, invoice, client) {
+        if (client != null) {
+          final exchangeRate = getExchangeRate(context,
+              fromCurrencyId: company.currencyId,
+              toCurrencyId: client.currencyId);
+          store.dispatch(UpdateCredit(
+              credit.rebuild((b) => b..exchangeRate = exchangeRate)));
+        }
         store.dispatch(UpdateCreditClient(client: client));
       },
       onAddClientPressed: (context, completer) {

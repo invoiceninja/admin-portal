@@ -67,4 +67,5 @@ class QuoteFields {
   static const String isDeleted = 'is_deleted';
   static const String documents = 'documents';
   static const String taxAmount = 'tax_amount';
+  static const String exchangeRate = 'exchange_rate';
 }

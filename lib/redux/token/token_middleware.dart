@@ -192,11 +192,6 @@ Middleware<AppState> _loadToken(TokenRepository repository) {
     final action = dynamicAction as LoadToken;
     final AppState state = store.state;
 
-    if (state.isLoading) {
-      next(action);
-      return;
-    }
-
     store.dispatch(LoadTokenRequest());
     repository.loadItem(state.credentials, action.tokenId).then((token) {
       store.dispatch(LoadTokenSuccess(token));
@@ -220,11 +215,6 @@ Middleware<AppState> _loadTokens(TokenRepository repository) {
   return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
     final action = dynamicAction as LoadTokens;
     final AppState state = store.state;
-
-    if (state.isLoading) {
-      next(action);
-      return;
-    }
 
     store.dispatch(LoadTokensRequest());
     repository.loadList(state.credentials).then((data) {

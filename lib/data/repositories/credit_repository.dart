@@ -19,7 +19,8 @@ class CreditRepository {
   Future<InvoiceEntity> loadItem(
       Credentials credentials, String entityId) async {
     final dynamic response = await webClient.get(
-        '${credentials.url}/credits/$entityId?include=history', credentials.token);
+        '${credentials.url}/credits/$entityId?include=history',
+        credentials.token);
 
     final InvoiceItemResponse creditResponse = await compute<dynamic, dynamic>(
         SerializationUtils.computeDecode,

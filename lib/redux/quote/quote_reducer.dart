@@ -247,15 +247,9 @@ final quotesReducer = combineReducers<QuoteState>([
   TypedReducer<QuoteState, LoadQuoteSuccess>(_updateQuote),
   TypedReducer<QuoteState, LoadCompanySuccess>(_setLoadedCompany),
   TypedReducer<QuoteState, MarkSentQuoteSuccess>(_markSentQuoteSuccess),
-  TypedReducer<QuoteState, ArchiveQuotesRequest>(_archiveQuoteRequest),
   TypedReducer<QuoteState, ArchiveQuotesSuccess>(_archiveQuoteSuccess),
-  TypedReducer<QuoteState, ArchiveQuotesFailure>(_archiveQuoteFailure),
-  TypedReducer<QuoteState, DeleteQuotesRequest>(_deleteQuoteRequest),
   TypedReducer<QuoteState, DeleteQuotesSuccess>(_deleteQuoteSuccess),
-  TypedReducer<QuoteState, DeleteQuotesFailure>(_deleteQuoteFailure),
-  TypedReducer<QuoteState, RestoreQuotesRequest>(_restoreQuoteRequest),
   TypedReducer<QuoteState, RestoreQuotesSuccess>(_restoreQuoteSuccess),
-  TypedReducer<QuoteState, RestoreQuotesFailure>(_restoreQuoteFailure),
   TypedReducer<QuoteState, ConvertQuoteSuccess>(_convertQuoteSuccess),
 ]);
 
@@ -269,50 +263,10 @@ QuoteState _markSentQuoteSuccess(
   return quoteState.rebuild((b) => b..map.addAll(quoteMap));
 }
 
-QuoteState _archiveQuoteRequest(
-    QuoteState quoteState, ArchiveQuotesRequest action) {
-  final quotes = action.quoteIds.map((id) => quoteState.map[id]).toList();
-
-  for (int i = 0; i < quotes.length; i++) {
-    quotes[i] = quotes[i]
-        .rebuild((b) => b..archivedAt = DateTime.now().millisecondsSinceEpoch);
-  }
-  return quoteState.rebuild((b) {
-    for (final quote in quotes) {
-      b.map[quote.id] = quote;
-    }
-  });
-}
-
 QuoteState _archiveQuoteSuccess(
     QuoteState quoteState, ArchiveQuotesSuccess action) {
   return quoteState.rebuild((b) {
     for (final quote in action.quotes) {
-      b.map[quote.id] = quote;
-    }
-  });
-}
-
-QuoteState _archiveQuoteFailure(
-    QuoteState quoteState, ArchiveQuotesFailure action) {
-  return quoteState.rebuild((b) {
-    for (final quote in action.quotes) {
-      b.map[quote.id] = quote;
-    }
-  });
-}
-
-QuoteState _deleteQuoteRequest(
-    QuoteState quoteState, DeleteQuotesRequest action) {
-  final quotes = action.quoteIds.map((id) => quoteState.map[id]).toList();
-
-  for (int i = 0; i < quotes.length; i++) {
-    quotes[i] = quotes[i].rebuild((b) => b
-      ..archivedAt = DateTime.now().millisecondsSinceEpoch
-      ..isDeleted = true);
-  }
-  return quoteState.rebuild((b) {
-    for (final quote in quotes) {
       b.map[quote.id] = quote;
     }
   });
@@ -327,42 +281,8 @@ QuoteState _deleteQuoteSuccess(
   });
 }
 
-QuoteState _deleteQuoteFailure(
-    QuoteState quoteState, DeleteQuotesFailure action) {
-  return quoteState.rebuild((b) {
-    for (final quote in action.quotes) {
-      b.map[quote.id] = quote;
-    }
-  });
-}
-
-QuoteState _restoreQuoteRequest(
-    QuoteState quoteState, RestoreQuotesRequest action) {
-  final quotes = action.quoteIds.map((id) => quoteState.map[id]).toList();
-
-  for (int i = 0; i < quotes.length; i++) {
-    quotes[i] = quotes[i].rebuild((b) => b
-      ..archivedAt = 0
-      ..isDeleted = false);
-  }
-  return quoteState.rebuild((b) {
-    for (final quote in quotes) {
-      b.map[quote.id] = quote;
-    }
-  });
-}
-
 QuoteState _restoreQuoteSuccess(
     QuoteState quoteState, RestoreQuotesSuccess action) {
-  return quoteState.rebuild((b) {
-    for (final quote in action.quotes) {
-      b.map[quote.id] = quote;
-    }
-  });
-}
-
-QuoteState _restoreQuoteFailure(
-    QuoteState quoteState, RestoreQuotesFailure action) {
   return quoteState.rebuild((b) {
     for (final quote in action.quotes) {
       b.map[quote.id] = quote;

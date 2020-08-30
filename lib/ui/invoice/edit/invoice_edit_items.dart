@@ -130,11 +130,11 @@ class ItemEditDetailsState extends State<ItemEditDetails> {
     _productKeyController.text = invoiceItem.productKey;
     _notesController.text = invoiceItem.notes;
     _costController.text = formatNumber(invoiceItem.cost, context,
-        formatNumberType: FormatNumberType.input);
+        formatNumberType: FormatNumberType.inputMoney);
     _qtyController.text = formatNumber(invoiceItem.quantity, context,
-        formatNumberType: FormatNumberType.input);
+        formatNumberType: FormatNumberType.inputAmount);
     _discountController.text = formatNumber(invoiceItem.discount, context,
-        formatNumberType: FormatNumberType.input);
+        formatNumberType: FormatNumberType.inputMoney);
     _custom1Controller.text = invoiceItem.customValue1;
     _custom2Controller.text = invoiceItem.customValue2;
     _custom3Controller.text = invoiceItem.customValue3;

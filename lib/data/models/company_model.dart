@@ -86,7 +86,6 @@ abstract class CompanyEntity extends Object
       expenseCategories: BuiltList<ExpenseCategoryEntity>(),
       expenseCategoryMap: BuiltMap<String, ExpenseCategoryEntity>(),
       users: BuiltList<UserEntity>(),
-      userMap: BuiltMap<String, UserEntity>(),
       customFields: BuiltMap<String, String>(),
       activities: BuiltList<ActivityEntity>(),
       clients: BuiltList<ClientEntity>(),
@@ -239,8 +238,6 @@ abstract class CompanyEntity extends Object
 
   @BuiltValueField(wireName: 'payment_terms')
   BuiltList<PaymentTermEntity> get paymentTerms;
-
-  BuiltMap<String, UserEntity> get userMap;
 
   @BuiltValueField(wireName: 'custom_fields')
   BuiltMap<String, String> get customFields;
@@ -458,6 +455,7 @@ abstract class GatewayEntity extends Object
       sortOrder: 0,
       fields: '',
       defaultGatewayTypeId: kGatewayTypeCreditCard,
+      isOffsite: false,
     );
   }
 
@@ -475,6 +473,9 @@ abstract class GatewayEntity extends Object
   String get id;
 
   String get name;
+
+  @BuiltValueField(wireName: 'is_offsite')
+  bool get isOffsite;
 
   @BuiltValueField(wireName: 'sort_order')
   int get sortOrder;

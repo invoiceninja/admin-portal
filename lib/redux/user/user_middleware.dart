@@ -229,11 +229,6 @@ Middleware<AppState> _loadUser(UserRepository repository) {
     final action = dynamicAction as LoadUser;
     final AppState state = store.state;
 
-    if (state.isLoading) {
-      next(action);
-      return;
-    }
-
     store.dispatch(LoadUserRequest());
     repository.loadItem(state.credentials, action.userId).then((user) {
       store.dispatch(LoadUserSuccess(user));
@@ -257,11 +252,6 @@ Middleware<AppState> _loadUsers(UserRepository repository) {
   return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
     final action = dynamicAction as LoadUsers;
     final AppState state = store.state;
-
-    if (state.isLoading) {
-      next(action);
-      return;
-    }
 
     store.dispatch(LoadUsersRequest());
     repository.loadList(state.credentials).then((data) {

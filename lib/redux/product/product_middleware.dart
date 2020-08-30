@@ -192,9 +192,8 @@ Middleware<AppState> _saveProduct(ProductRepository repository) {
 Middleware<AppState> _loadProduct(ProductRepository repository) {
   return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
     final action = dynamicAction as LoadProduct;
-    final AppState state = store.state;
 
-    if (state.isLoading || Config.DEMO_MODE) {
+    if (Config.DEMO_MODE) {
       next(action);
       return;
     }
@@ -223,12 +222,6 @@ Middleware<AppState> _loadProduct(ProductRepository repository) {
 Middleware<AppState> _loadProducts(ProductRepository repository) {
   return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
     final action = dynamicAction as LoadProducts;
-    final AppState state = store.state;
-
-    if (state.isLoading) {
-      next(action);
-      return;
-    }
 
     store.dispatch(LoadProductsRequest());
     repository.loadList(store.state.credentials).then((data) {

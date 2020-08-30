@@ -169,61 +169,15 @@ final productsReducer = combineReducers<ProductState>([
   TypedReducer<ProductState, LoadProductsSuccess>(_setLoadedProducts),
   TypedReducer<ProductState, LoadProductSuccess>(_setLoadedProduct),
   TypedReducer<ProductState, LoadCompanySuccess>(_setLoadedCompany),
-  TypedReducer<ProductState, ArchiveProductsRequest>(_archiveProductRequest),
   TypedReducer<ProductState, ArchiveProductsSuccess>(_archiveProductSuccess),
-  TypedReducer<ProductState, ArchiveProductsFailure>(_archiveProductFailure),
-  TypedReducer<ProductState, DeleteProductsRequest>(_deleteProductRequest),
   TypedReducer<ProductState, DeleteProductsSuccess>(_deleteProductSuccess),
-  TypedReducer<ProductState, DeleteProductsFailure>(_deleteProductFailure),
-  TypedReducer<ProductState, RestoreProductsRequest>(_restoreProductRequest),
   TypedReducer<ProductState, RestoreProductsSuccess>(_restoreProductSuccess),
-  TypedReducer<ProductState, RestoreProductsFailure>(_restoreProductFailure),
 ]);
-
-ProductState _archiveProductRequest(
-    ProductState productState, ArchiveProductsRequest action) {
-  final products = action.productIds.map((id) => productState.map[id]).toList();
-
-  for (int i = 0; i < products.length; i++) {
-    products[i] = products[i]
-        .rebuild((b) => b..archivedAt = DateTime.now().millisecondsSinceEpoch);
-  }
-  return productState.rebuild((b) {
-    for (final product in products) {
-      b.map[product.id] = product;
-    }
-  });
-}
 
 ProductState _archiveProductSuccess(
     ProductState productState, ArchiveProductsSuccess action) {
   return productState.rebuild((b) {
     for (final product in action.products) {
-      b.map[product.id] = product;
-    }
-  });
-}
-
-ProductState _archiveProductFailure(
-    ProductState productState, ArchiveProductsFailure action) {
-  return productState.rebuild((b) {
-    for (final product in action.products) {
-      b.map[product.id] = product;
-    }
-  });
-}
-
-ProductState _deleteProductRequest(
-    ProductState productState, DeleteProductsRequest action) {
-  final products = action.productIds.map((id) => productState.map[id]).toList();
-
-  for (int i = 0; i < products.length; i++) {
-    products[i] = products[i].rebuild((b) => b
-      ..archivedAt = DateTime.now().millisecondsSinceEpoch
-      ..isDeleted = true);
-  }
-  return productState.rebuild((b) {
-    for (final product in products) {
       b.map[product.id] = product;
     }
   });
@@ -238,42 +192,8 @@ ProductState _deleteProductSuccess(
   });
 }
 
-ProductState _deleteProductFailure(
-    ProductState productState, DeleteProductsFailure action) {
-  return productState.rebuild((b) {
-    for (final product in action.products) {
-      b.map[product.id] = product;
-    }
-  });
-}
-
-ProductState _restoreProductRequest(
-    ProductState productState, RestoreProductsRequest action) {
-  final products = action.productIds.map((id) => productState.map[id]).toList();
-
-  for (int i = 0; i < products.length; i++) {
-    products[i] = products[i].rebuild((b) => b
-      ..archivedAt = 0
-      ..isDeleted = false);
-  }
-  return productState.rebuild((b) {
-    for (final product in products) {
-      b.map[product.id] = product;
-    }
-  });
-}
-
 ProductState _restoreProductSuccess(
     ProductState productState, RestoreProductsSuccess action) {
-  return productState.rebuild((b) {
-    for (final product in action.products) {
-      b.map[product.id] = product;
-    }
-  });
-}
-
-ProductState _restoreProductFailure(
-    ProductState productState, RestoreProductsFailure action) {
   return productState.rebuild((b) {
     for (final product in action.products) {
       b.map[product.id] = product;

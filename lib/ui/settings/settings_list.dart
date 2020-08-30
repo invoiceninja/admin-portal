@@ -1,6 +1,5 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:invoiceninja_flutter/constants.dart';
 import 'package:invoiceninja_flutter/data/models/entities.dart';
 import 'package:invoiceninja_flutter/ui/app/lists/list_filter.dart';
@@ -9,6 +8,7 @@ import 'package:invoiceninja_flutter/ui/settings/settings_list_vm.dart';
 import 'package:invoiceninja_flutter/utils/icons.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:invoiceninja_flutter/utils/platforms.dart';
+import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 
 class SettingsList extends StatelessWidget {
   const SettingsList({
@@ -208,11 +208,7 @@ class SettingsListTile extends StatelessWidget {
 
     IconData icon;
     if (section == kSettingsDeviceSettings) {
-      icon = kIsWeb
-          ? Icons.desktop_mac
-          : isMobile(context)
-              ? FontAwesomeIcons.mobileAlt
-              : FontAwesomeIcons.desktop;
+      icon = isMobile(context) ? Icons.phone_android : MdiIcons.desktopClassic;
     } else {
       icon = getSettingIcon(section);
     }
@@ -225,7 +221,7 @@ class SettingsListTile extends StatelessWidget {
         child: ListTile(
           leading: Padding(
             padding: const EdgeInsets.only(left: 6, top: 2),
-            child: Icon(icon ?? icon, size: 20),
+            child: Icon(icon ?? icon, size: 22),
           ),
           title: Text(localization.lookup(section)),
           onTap: () => viewModel.loadSection(context, section),
@@ -397,7 +393,7 @@ class SettingsSearch extends StatelessWidget {
                 title: Text(localization.lookup(field)),
                 leading: Padding(
                   padding: const EdgeInsets.only(left: 6, top: 10),
-                  child: Icon(getSettingIcon(section), size: 20),
+                  child: Icon(getSettingIcon(section), size: 22),
                 ),
                 subtitle: Text(localization.lookup(section)),
                 onTap: () => viewModel.loadSection(context, section),

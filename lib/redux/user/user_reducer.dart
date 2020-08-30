@@ -141,57 +141,14 @@ final usersReducer = combineReducers<UserState>([
   TypedReducer<UserState, LoadUsersSuccess>(_setLoadedUsers),
   TypedReducer<UserState, LoadUserSuccess>(_setLoadedUser),
   TypedReducer<UserState, LoadCompanySuccess>(_setLoadedCompany),
-  TypedReducer<UserState, ArchiveUserRequest>(_archiveUserRequest),
   TypedReducer<UserState, ArchiveUserSuccess>(_archiveUserSuccess),
-  TypedReducer<UserState, ArchiveUserFailure>(_archiveUserFailure),
-  TypedReducer<UserState, DeleteUserRequest>(_deleteUserRequest),
   TypedReducer<UserState, DeleteUserSuccess>(_deleteUserSuccess),
-  TypedReducer<UserState, DeleteUserFailure>(_deleteUserFailure),
-  TypedReducer<UserState, RestoreUserRequest>(_restoreUserRequest),
   TypedReducer<UserState, RestoreUserSuccess>(_restoreUserSuccess),
-  TypedReducer<UserState, RestoreUserFailure>(_restoreUserFailure),
 ]);
-
-UserState _archiveUserRequest(UserState userState, ArchiveUserRequest action) {
-  final users = action.userIds.map((id) => userState.map[id]).toList();
-
-  for (int i = 0; i < users.length; i++) {
-    users[i] = users[i]
-        .rebuild((b) => b..archivedAt = DateTime.now().millisecondsSinceEpoch);
-  }
-  return userState.rebuild((b) {
-    for (final user in users) {
-      b.map[user.id] = user;
-    }
-  });
-}
 
 UserState _archiveUserSuccess(UserState userState, ArchiveUserSuccess action) {
   return userState.rebuild((b) {
     for (final user in action.users) {
-      b.map[user.id] = user;
-    }
-  });
-}
-
-UserState _archiveUserFailure(UserState userState, ArchiveUserFailure action) {
-  return userState.rebuild((b) {
-    for (final user in action.users) {
-      b.map[user.id] = user;
-    }
-  });
-}
-
-UserState _deleteUserRequest(UserState userState, DeleteUserRequest action) {
-  final users = action.userIds.map((id) => userState.map[id]).toList();
-
-  for (int i = 0; i < users.length; i++) {
-    users[i] = users[i].rebuild((b) => b
-      ..archivedAt = DateTime.now().millisecondsSinceEpoch
-      ..isDeleted = true);
-  }
-  return userState.rebuild((b) {
-    for (final user in users) {
       b.map[user.id] = user;
     }
   });
@@ -205,38 +162,7 @@ UserState _deleteUserSuccess(UserState userState, DeleteUserSuccess action) {
   });
 }
 
-UserState _deleteUserFailure(UserState userState, DeleteUserFailure action) {
-  return userState.rebuild((b) {
-    for (final user in action.users) {
-      b.map[user.id] = user;
-    }
-  });
-}
-
-UserState _restoreUserRequest(UserState userState, RestoreUserRequest action) {
-  final users = action.userIds.map((id) => userState.map[id]).toList();
-
-  for (int i = 0; i < users.length; i++) {
-    users[i] = users[i].rebuild((b) => b
-      ..archivedAt = 0
-      ..isDeleted = false);
-  }
-  return userState.rebuild((b) {
-    for (final user in users) {
-      b.map[user.id] = user;
-    }
-  });
-}
-
 UserState _restoreUserSuccess(UserState userState, RestoreUserSuccess action) {
-  return userState.rebuild((b) {
-    for (final user in action.users) {
-      b.map[user.id] = user;
-    }
-  });
-}
-
-UserState _restoreUserFailure(UserState userState, RestoreUserFailure action) {
   return userState.rebuild((b) {
     for (final user in action.users) {
       b.map[user.id] = user;

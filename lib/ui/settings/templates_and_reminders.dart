@@ -1,6 +1,6 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+
 import 'package:invoiceninja_flutter/constants.dart';
 import 'package:invoiceninja_flutter/data/models/company_model.dart';
 import 'package:invoiceninja_flutter/data/models/entities.dart';
@@ -330,7 +330,7 @@ class _TemplatesAndRemindersState extends State<TemplatesAndReminders>
                       value: settings.enableReminder4,
                       onChanged: (value) => viewModel.onSettingsChanged(
                           settings.rebuild((b) => b..enableReminder4 = value)),
-                      iconData: FontAwesomeIcons.solidEnvelope,
+                      iconData: Icons.email,
                     ),
                     AppDropdownButton(
                         showUseDefault: true,
@@ -427,9 +427,9 @@ class _ReminderSettingsState extends State<ReminderSettings> {
 
     _daysController.text = '${widget.numDays ?? ''}';
     _feeAmountController.text = formatNumber(widget.feeAmount, context,
-        formatNumberType: FormatNumberType.input);
+        formatNumberType: FormatNumberType.inputMoney);
     _feePercentController.text = formatNumber(widget.feePercent, context,
-        formatNumberType: FormatNumberType.input);
+        formatNumberType: FormatNumberType.inputMoney);
 
     _controllers.forEach(
         (dynamic controller) => controller.addListener(_onTextChanged));
@@ -498,7 +498,7 @@ class _ReminderSettingsState extends State<ReminderSettings> {
                   _enabled = value;
                   _onChanged();
                 },
-                iconData: FontAwesomeIcons.solidEnvelope,
+                iconData: Icons.email,
               ),
             ),
             DecoratedFormField(
@@ -548,10 +548,10 @@ class EmailPreview extends StatelessWidget {
                 padding: const EdgeInsets.all(14),
                 child: Text(
                   subject,
-                  style: Theme.of(context).textTheme.bodyText1.copyWith(
-                        color: Colors.black,
-                        fontWeight: FontWeight.w700,
-                      ),
+                  style: Theme.of(context)
+                      .textTheme
+                      .bodyText1
+                      .copyWith(color: Colors.black),
                 ),
               ),
               Expanded(

@@ -381,12 +381,6 @@ Middleware<AppState> _saveInvoice(InvoiceRepository repository) {
 Middleware<AppState> _loadInvoice(InvoiceRepository repository) {
   return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
     final action = dynamicAction as LoadInvoice;
-    final AppState state = store.state;
-
-    if (state.isLoading) {
-      next(action);
-      return;
-    }
 
     store.dispatch(LoadInvoiceRequest());
     repository
@@ -412,12 +406,6 @@ Middleware<AppState> _loadInvoice(InvoiceRepository repository) {
 Middleware<AppState> _loadInvoices(InvoiceRepository repository) {
   return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
     final action = dynamicAction as LoadInvoices;
-    final AppState state = store.state;
-
-    if (state.isLoading) {
-      next(action);
-      return;
-    }
 
     store.dispatch(LoadInvoicesRequest());
     repository.loadList(store.state.credentials).then((data) {

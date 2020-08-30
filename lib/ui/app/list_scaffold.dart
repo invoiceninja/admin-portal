@@ -53,7 +53,7 @@ class ListScaffold extends StatelessWidget {
             );
     } else if (isMobile(context) || state.prefState.isMenuFloated) {
       leading = Builder(
-        builder: (context) => GestureDetector(
+        builder: (context) => InkWell(
           onLongPress: onHamburgerLongPress,
           child: IconButton(
             tooltip: localization.menuSidebar,

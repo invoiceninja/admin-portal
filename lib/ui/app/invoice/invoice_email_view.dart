@@ -13,6 +13,7 @@ import 'package:invoiceninja_flutter/ui/app/edit_scaffold.dart';
 import 'package:invoiceninja_flutter/ui/settings/templates_and_reminders.dart';
 import 'package:invoiceninja_flutter/utils/completers.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
+import 'package:invoiceninja_flutter/utils/pdf.dart';
 import 'package:invoiceninja_flutter/utils/platforms.dart';
 import 'package:invoiceninja_flutter/utils/templates.dart';
 
@@ -50,7 +51,7 @@ class _InvoiceEmailViewState extends State<InvoiceEmailView>
   @override
   void initState() {
     super.initState();
-    _controller = TabController(vsync: this, length: 3);
+    _controller = TabController(vsync: this, length: 4);
     _controller.addListener(_loadTemplate);
     _controllers = [
       _subjectController,
@@ -289,7 +290,7 @@ class _InvoiceEmailViewState extends State<InvoiceEmailView>
           children: [
             Expanded(
               child: DefaultTabController(
-                length: 2,
+                length: 3,
                 child: Column(
                   mainAxisSize: MainAxisSize.min,
                   children: [
@@ -300,6 +301,9 @@ class _InvoiceEmailViewState extends State<InvoiceEmailView>
                         ),
                         Tab(
                           child: Text(localization.history),
+                        ),
+                        Tab(
+                          child: Text(localization.pdf),
                         ),
                       ],
                     ),
@@ -319,6 +323,10 @@ class _InvoiceEmailViewState extends State<InvoiceEmailView>
                             ],
                           ),
                           _buildHistory(context),
+                          PDFScaffold(
+                            invoice: invoice,
+                            showAppBar: false,
+                          ),
                         ],
                       ),
                     ),
@@ -347,10 +355,12 @@ class _InvoiceEmailViewState extends State<InvoiceEmailView>
             viewEntity(context: context, entity: invoice),
         appBarBottom: TabBar(
           controller: _controller,
+          isScrollable: true,
           tabs: [
             Tab(text: localization.preview),
             Tab(text: localization.customize),
             Tab(text: localization.history),
+            Tab(text: localization.pdf),
           ],
         ),
         saveLabel: localization.send,
@@ -370,6 +380,10 @@ class _InvoiceEmailViewState extends State<InvoiceEmailView>
             ),
             _buildEdit(context),
             _buildHistory(context),
+            PDFScaffold(
+              invoice: invoice,
+              showAppBar: false,
+            ),
           ],
         ),
       ),

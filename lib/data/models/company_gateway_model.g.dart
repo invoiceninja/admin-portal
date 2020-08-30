@@ -126,9 +126,6 @@ class _$CompanyGatewayEntitySerializer
       Serializers serializers, CompanyGatewayEntity object,
       {FullType specifiedType = FullType.unspecified}) {
     final result = <Object>[
-      'gateway',
-      serializers.serialize(object.gateway,
-          specifiedType: const FullType(GatewayEntity)),
       'gateway_key',
       serializers.serialize(object.gatewayId,
           specifiedType: const FullType(String)),
@@ -164,6 +161,12 @@ class _$CompanyGatewayEntitySerializer
           specifiedType: const FullType(String)),
       'config',
       serializers.serialize(object.config,
+          specifiedType: const FullType(String)),
+      'token_billing',
+      serializers.serialize(object.tokenBilling,
+          specifiedType: const FullType(String)),
+      'label',
+      serializers.serialize(object.label,
           specifiedType: const FullType(String)),
       'created_at',
       serializers.serialize(object.createdAt,
@@ -216,10 +219,6 @@ class _$CompanyGatewayEntitySerializer
       iterator.moveNext();
       final dynamic value = iterator.current;
       switch (key) {
-        case 'gateway':
-          result.gateway.replace(serializers.deserialize(value,
-              specifiedType: const FullType(GatewayEntity)) as GatewayEntity);
-          break;
         case 'gateway_key':
           result.gatewayId = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String;
@@ -265,6 +264,14 @@ class _$CompanyGatewayEntitySerializer
           break;
         case 'config':
           result.config = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String;
+          break;
+        case 'token_billing':
+          result.tokenBilling = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String;
+          break;
+        case 'label':
+          result.label = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String;
           break;
         case 'isChanged':
@@ -625,8 +632,6 @@ class CompanyGatewayItemResponseBuilder
 
 class _$CompanyGatewayEntity extends CompanyGatewayEntity {
   @override
-  final GatewayEntity gateway;
-  @override
   final String gatewayId;
   @override
   final int acceptedCreditCards;
@@ -649,6 +654,10 @@ class _$CompanyGatewayEntity extends CompanyGatewayEntity {
   @override
   final String config;
   @override
+  final String tokenBilling;
+  @override
+  final String label;
+  @override
   final bool isChanged;
   @override
   final int createdAt;
@@ -670,8 +679,7 @@ class _$CompanyGatewayEntity extends CompanyGatewayEntity {
       (new CompanyGatewayEntityBuilder()..update(updates)).build();
 
   _$CompanyGatewayEntity._(
-      {this.gateway,
-      this.gatewayId,
+      {this.gatewayId,
       this.acceptedCreditCards,
       this.showBillingAddress,
       this.showShippingAddress,
@@ -682,6 +690,8 @@ class _$CompanyGatewayEntity extends CompanyGatewayEntity {
       this.customValue3,
       this.customValue4,
       this.config,
+      this.tokenBilling,
+      this.label,
       this.isChanged,
       this.createdAt,
       this.updatedAt,
@@ -691,9 +701,6 @@ class _$CompanyGatewayEntity extends CompanyGatewayEntity {
       this.assignedUserId,
       this.id})
       : super._() {
-    if (gateway == null) {
-      throw new BuiltValueNullFieldError('CompanyGatewayEntity', 'gateway');
-    }
     if (gatewayId == null) {
       throw new BuiltValueNullFieldError('CompanyGatewayEntity', 'gatewayId');
     }
@@ -736,6 +743,13 @@ class _$CompanyGatewayEntity extends CompanyGatewayEntity {
     if (config == null) {
       throw new BuiltValueNullFieldError('CompanyGatewayEntity', 'config');
     }
+    if (tokenBilling == null) {
+      throw new BuiltValueNullFieldError(
+          'CompanyGatewayEntity', 'tokenBilling');
+    }
+    if (label == null) {
+      throw new BuiltValueNullFieldError('CompanyGatewayEntity', 'label');
+    }
     if (createdAt == null) {
       throw new BuiltValueNullFieldError('CompanyGatewayEntity', 'createdAt');
     }
@@ -763,7 +777,6 @@ class _$CompanyGatewayEntity extends CompanyGatewayEntity {
   bool operator ==(Object other) {
     if (identical(other, this)) return true;
     return other is CompanyGatewayEntity &&
-        gateway == other.gateway &&
         gatewayId == other.gatewayId &&
         acceptedCreditCards == other.acceptedCreditCards &&
         showBillingAddress == other.showBillingAddress &&
@@ -775,6 +788,8 @@ class _$CompanyGatewayEntity extends CompanyGatewayEntity {
         customValue3 == other.customValue3 &&
         customValue4 == other.customValue4 &&
         config == other.config &&
+        tokenBilling == other.tokenBilling &&
+        label == other.label &&
         isChanged == other.isChanged &&
         createdAt == other.createdAt &&
         updatedAt == other.updatedAt &&
@@ -806,28 +821,18 @@ class _$CompanyGatewayEntity extends CompanyGatewayEntity {
                                                                 $jc(
                                                                     $jc(
                                                                         $jc(
-                                                                            $jc(
-                                                                                $jc(
-                                                                                    0,
-                                                                                    gateway
-                                                                                        .hashCode),
-                                                                                gatewayId
-                                                                                    .hashCode),
-                                                                            acceptedCreditCards
-                                                                                .hashCode),
-                                                                        showBillingAddress
-                                                                            .hashCode),
-                                                                    showShippingAddress
-                                                                        .hashCode),
-                                                                updateDetails
-                                                                    .hashCode),
-                                                            feesAndLimitsMap
-                                                                .hashCode),
-                                                        customValue1.hashCode),
-                                                    customValue2.hashCode),
-                                                customValue3.hashCode),
-                                            customValue4.hashCode),
-                                        config.hashCode),
+                                                                            $jc($jc($jc(0, gatewayId.hashCode), acceptedCreditCards.hashCode),
+                                                                                showBillingAddress.hashCode),
+                                                                            showShippingAddress.hashCode),
+                                                                        updateDetails.hashCode),
+                                                                    feesAndLimitsMap.hashCode),
+                                                                customValue1.hashCode),
+                                                            customValue2.hashCode),
+                                                        customValue3.hashCode),
+                                                    customValue4.hashCode),
+                                                config.hashCode),
+                                            tokenBilling.hashCode),
+                                        label.hashCode),
                                     isChanged.hashCode),
                                 createdAt.hashCode),
                             updatedAt.hashCode),
@@ -841,7 +846,6 @@ class _$CompanyGatewayEntity extends CompanyGatewayEntity {
   @override
   String toString() {
     return (newBuiltValueToStringHelper('CompanyGatewayEntity')
-          ..add('gateway', gateway)
           ..add('gatewayId', gatewayId)
           ..add('acceptedCreditCards', acceptedCreditCards)
           ..add('showBillingAddress', showBillingAddress)
@@ -853,6 +857,8 @@ class _$CompanyGatewayEntity extends CompanyGatewayEntity {
           ..add('customValue3', customValue3)
           ..add('customValue4', customValue4)
           ..add('config', config)
+          ..add('tokenBilling', tokenBilling)
+          ..add('label', label)
           ..add('isChanged', isChanged)
           ..add('createdAt', createdAt)
           ..add('updatedAt', updatedAt)
@@ -868,11 +874,6 @@ class _$CompanyGatewayEntity extends CompanyGatewayEntity {
 class CompanyGatewayEntityBuilder
     implements Builder<CompanyGatewayEntity, CompanyGatewayEntityBuilder> {
   _$CompanyGatewayEntity _$v;
-
-  GatewayEntityBuilder _gateway;
-  GatewayEntityBuilder get gateway =>
-      _$this._gateway ??= new GatewayEntityBuilder();
-  set gateway(GatewayEntityBuilder gateway) => _$this._gateway = gateway;
 
   String _gatewayId;
   String get gatewayId => _$this._gatewayId;
@@ -926,6 +927,14 @@ class CompanyGatewayEntityBuilder
   String get config => _$this._config;
   set config(String config) => _$this._config = config;
 
+  String _tokenBilling;
+  String get tokenBilling => _$this._tokenBilling;
+  set tokenBilling(String tokenBilling) => _$this._tokenBilling = tokenBilling;
+
+  String _label;
+  String get label => _$this._label;
+  set label(String label) => _$this._label = label;
+
   bool _isChanged;
   bool get isChanged => _$this._isChanged;
   set isChanged(bool isChanged) => _$this._isChanged = isChanged;
@@ -964,7 +973,6 @@ class CompanyGatewayEntityBuilder
 
   CompanyGatewayEntityBuilder get _$this {
     if (_$v != null) {
-      _gateway = _$v.gateway?.toBuilder();
       _gatewayId = _$v.gatewayId;
       _acceptedCreditCards = _$v.acceptedCreditCards;
       _showBillingAddress = _$v.showBillingAddress;
@@ -976,6 +984,8 @@ class CompanyGatewayEntityBuilder
       _customValue3 = _$v.customValue3;
       _customValue4 = _$v.customValue4;
       _config = _$v.config;
+      _tokenBilling = _$v.tokenBilling;
+      _label = _$v.label;
       _isChanged = _$v.isChanged;
       _createdAt = _$v.createdAt;
       _updatedAt = _$v.updatedAt;
@@ -1008,7 +1018,6 @@ class CompanyGatewayEntityBuilder
     try {
       _$result = _$v ??
           new _$CompanyGatewayEntity._(
-              gateway: gateway.build(),
               gatewayId: gatewayId,
               acceptedCreditCards: acceptedCreditCards,
               showBillingAddress: showBillingAddress,
@@ -1020,6 +1029,8 @@ class CompanyGatewayEntityBuilder
               customValue3: customValue3,
               customValue4: customValue4,
               config: config,
+              tokenBilling: tokenBilling,
+              label: label,
               isChanged: isChanged,
               createdAt: createdAt,
               updatedAt: updatedAt,
@@ -1031,9 +1042,6 @@ class CompanyGatewayEntityBuilder
     } catch (_) {
       String _$failedField;
       try {
-        _$failedField = 'gateway';
-        gateway.build();
-
         _$failedField = 'feesAndLimitsMap';
         feesAndLimitsMap.build();
       } catch (e) {

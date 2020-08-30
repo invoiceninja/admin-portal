@@ -1,6 +1,6 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+
 import 'package:invoiceninja_flutter/ui/app/buttons/elevated_button.dart';
 import 'package:invoiceninja_flutter/ui/app/form_card.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/app_dropdown_button.dart';
@@ -10,6 +10,7 @@ import 'package:invoiceninja_flutter/ui/app/invoice/tax_rate_dropdown.dart';
 import 'package:invoiceninja_flutter/ui/app/edit_scaffold.dart';
 import 'package:invoiceninja_flutter/ui/settings/tax_settings_vm.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
+import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 
 class TaxSettings extends StatefulWidget {
   const TaxSettings({
@@ -71,7 +72,7 @@ class _TaxSettingsState extends State<TaxSettings> {
               ),
               SizedBox(height: 16),
               BoolDropdownButton(
-                iconData: FontAwesomeIcons.percent,
+                iconData: MdiIcons.percent,
                 label: localization.inclusiveTaxes,
                 value: settings.enableInclusiveTaxes,
                 onChanged: (value) => viewModel.onSettingsChanged(

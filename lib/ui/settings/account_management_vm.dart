@@ -10,6 +10,7 @@ import 'package:invoiceninja_flutter/redux/auth/auth_actions.dart';
 import 'package:invoiceninja_flutter/redux/company/company_actions.dart';
 import 'package:invoiceninja_flutter/redux/dashboard/dashboard_actions.dart';
 import 'package:invoiceninja_flutter/ui/app/dialogs/error_dialog.dart';
+import 'package:invoiceninja_flutter/ui/app/dialogs/loading_dialog.dart';
 import 'package:invoiceninja_flutter/ui/settings/account_management.dart';
 import 'package:invoiceninja_flutter/utils/completers.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
@@ -54,14 +55,26 @@ class AccountManagementVM {
         onCompanyChanged: (company) =>
             store.dispatch(UpdateCompany(company: company)),
         onCompanyDelete: (context, password) {
+          showDialog<AlertDialog>(
+              context: context,
+              barrierDismissible: false,
+              builder: (BuildContext context) => SimpleDialog(
+                    children: <Widget>[LoadingDialog()],
+                  ));
+
           final deleteCompleter = Completer<Null>()
             ..future.then((value) {
+              store.dispatch(SelectCompany(companyIndex: 0));
               final refreshCompleter = Completer<Null>()
                 ..future.then((value) {
                   if (store.state.companies.isNotEmpty) {
                     store.dispatch(SelectCompany(companyIndex: 0));
                     store.dispatch(
                         ViewDashboard(navigator: Navigator.of(context)));
+
+                    if (Navigator.of(context).canPop()) {
+                      Navigator.of(context).pop();
+                    }
                   } else {
                     print('## No companies');
                     store.dispatch(UserLogout(context));

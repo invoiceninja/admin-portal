@@ -1,6 +1,6 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+
 import 'package:invoiceninja_flutter/ui/app/form_card.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/app_form.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/decorated_form_field.dart';
@@ -9,6 +9,7 @@ import 'package:invoiceninja_flutter/ui/tax_rate/edit/tax_rate_edit_vm.dart';
 import 'package:invoiceninja_flutter/utils/completers.dart';
 import 'package:invoiceninja_flutter/utils/formatting.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
+import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 
 class TaxRateEdit extends StatefulWidget {
   const TaxRateEdit({
@@ -47,7 +48,7 @@ class _TaxRateEditState extends State<TaxRateEdit> {
     final taxRate = widget.viewModel.taxRate;
     _nameController.text = taxRate.name;
     _rateController.text = formatNumber(taxRate.rate, context,
-        formatNumberType: FormatNumberType.input);
+        formatNumberType: FormatNumberType.inputMoney);
 
     _controllers.forEach((controller) => controller.addListener(_onChanged));
 
@@ -105,7 +106,7 @@ class _TaxRateEditState extends State<TaxRateEdit> {
                 controller: _rateController,
                 keyboardType: TextInputType.numberWithOptions(decimal: true),
                 suffixIcon: Icon(
-                  FontAwesomeIcons.percent,
+                  MdiIcons.percent,
                   size: 16,
                 ),
               ),

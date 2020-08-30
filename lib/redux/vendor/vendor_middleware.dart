@@ -196,12 +196,6 @@ Middleware<AppState> _saveVendor(VendorRepository repository) {
 Middleware<AppState> _loadVendor(VendorRepository repository) {
   return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
     final action = dynamicAction as LoadVendor;
-    final AppState state = store.state;
-
-    if (state.isLoading) {
-      next(action);
-      return;
-    }
 
     store.dispatch(LoadVendorRequest());
     repository
@@ -228,12 +222,6 @@ Middleware<AppState> _loadVendor(VendorRepository repository) {
 Middleware<AppState> _loadVendors(VendorRepository repository) {
   return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
     final action = dynamicAction as LoadVendors;
-    final AppState state = store.state;
-
-    if (state.isLoading) {
-      next(action);
-      return;
-    }
 
     store.dispatch(LoadVendorsRequest());
     repository.loadList(store.state.credentials).then((data) {

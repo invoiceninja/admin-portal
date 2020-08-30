@@ -1,7 +1,8 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:invoiceninja_flutter/data/models/entities.dart';
+
 import 'package:invoiceninja_flutter/ui/app/form_card.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/app_form.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/bool_dropdown_button.dart';
@@ -10,7 +11,9 @@ import 'package:invoiceninja_flutter/ui/app/lists/list_divider.dart';
 import 'package:invoiceninja_flutter/ui/settings/client_portal_vm.dart';
 import 'package:invoiceninja_flutter/ui/app/edit_scaffold.dart';
 import 'package:invoiceninja_flutter/utils/completers.dart';
+import 'package:invoiceninja_flutter/utils/icons.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
+import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 
 class ClientPortal extends StatefulWidget {
   const ClientPortal({
@@ -224,14 +227,14 @@ class _ClientPortalState extends State<ClientPortal>
                   BoolDropdownButton(
                     label: localization.clientPortal,
                     value: settings.enablePortal,
-                    iconData: FontAwesomeIcons.cloud,
+                    iconData: MdiIcons.cloud,
                     onChanged: (value) => viewModel.onSettingsChanged(
                         settings.rebuild((b) => b..enablePortal = value)),
                   ),
                   BoolDropdownButton(
                     label: localization.dashboard,
                     value: settings.enablePortalDashboard,
-                    iconData: FontAwesomeIcons.tachometerAlt,
+                    iconData: getEntityIcon(EntityType.dashboard),
                     onChanged: (value) => viewModel.onSettingsChanged(settings
                         .rebuild((b) => b..enablePortalDashboard = value)),
                   ),
@@ -253,7 +256,7 @@ class _ClientPortalState extends State<ClientPortal>
                     label: localization.clientRegistration,
                     helpLabel: localization.clientRegistrationHelp,
                     value: company.clientCanRegister,
-                    iconData: FontAwesomeIcons.userPlus,
+                    iconData: MdiIcons.login,
                     onChanged: (value) => viewModel.onCompanyChanged(
                         company.rebuild((b) => b..clientCanRegister = value)),
                   ),
@@ -261,11 +264,12 @@ class _ClientPortalState extends State<ClientPortal>
                     label: localization.storefront,
                     helpLabel: localization.storefrontHelp,
                     value: company.enableShopApi,
-                    iconData: FontAwesomeIcons.shoppingCart,
+                    iconData: MdiIcons.shopping,
                     onChanged: (value) => viewModel.onCompanyChanged(
                         company.rebuild((b) => b..enableShopApi = value)),
                   ),
-                  if (state.company.enableShopApi ?? false) ...[
+                  if (!state.isDemo &&
+                      (state.company.enableShopApi ?? false)) ...[
                     SizedBox(height: 16),
                     ListDivider(),
                     Builder(builder: (BuildContext context) {
@@ -313,7 +317,7 @@ class _ClientPortalState extends State<ClientPortal>
                     label: localization.enablePortalPassword,
                     helpLabel: localization.enablePortalPasswordHelp,
                     value: settings.enablePortalPassword,
-                    iconData: FontAwesomeIcons.shieldAlt,
+                    iconData: MdiIcons.shield,
                     onChanged: (value) => viewModel.onSettingsChanged(settings
                         .rebuild((b) => b..enablePortalPassword = value)),
                   ),
@@ -325,7 +329,7 @@ class _ClientPortalState extends State<ClientPortal>
                     label: localization.showAcceptInvoiceTerms,
                     helpLabel: localization.showAcceptInvoiceTermsHelp,
                     value: settings.showAcceptInvoiceTerms,
-                    iconData: FontAwesomeIcons.checkSquare,
+                    iconData: MdiIcons.checkBoxOutline,
                     onChanged: (value) => viewModel.onSettingsChanged(settings
                         .rebuild((b) => b..showAcceptInvoiceTerms = value)),
                   ),
@@ -333,7 +337,7 @@ class _ClientPortalState extends State<ClientPortal>
                     label: localization.showAcceptQuoteTerms,
                     helpLabel: localization.showAcceptQuoteTermsHelp,
                     value: settings.showAcceptQuoteTerms,
-                    iconData: FontAwesomeIcons.checkSquare,
+                    iconData: MdiIcons.checkBoxOutline,
                     onChanged: (value) => viewModel.onSettingsChanged(settings
                         .rebuild((b) => b..showAcceptQuoteTerms = value)),
                   ),
@@ -345,7 +349,7 @@ class _ClientPortalState extends State<ClientPortal>
                     label: localization.requireInvoiceSignature,
                     helpLabel: localization.requireInvoiceSignatureHelp,
                     value: settings.requireInvoiceSignature,
-                    iconData: FontAwesomeIcons.fileSignature,
+                    iconData: MdiIcons.signature,
                     onChanged: (value) => viewModel.onSettingsChanged(settings
                         .rebuild((b) => b..requireInvoiceSignature = value)),
                   ),
@@ -353,7 +357,7 @@ class _ClientPortalState extends State<ClientPortal>
                     label: localization.requireQuoteSignature,
                     helpLabel: localization.requireInvoiceSignatureHelp,
                     value: settings.requireQuoteSignature,
-                    iconData: FontAwesomeIcons.fileSignature,
+                    iconData: MdiIcons.signature,
                     onChanged: (value) => viewModel.onSettingsChanged(settings
                         .rebuild((b) => b..requireQuoteSignature = value)),
                   ),
@@ -362,7 +366,7 @@ class _ClientPortalState extends State<ClientPortal>
                     label: localization.signatureOnPdf,
                     helpLabel: localization.signatureOnPdfHelp,
                     value: settings.signatureOnPdf,
-                    iconData: FontAwesomeIcons.fileContract,
+                    iconData: MdiIcons.fileContract,
                     onChanged: (value) => viewModel.onSettingsChanged(
                         settings.rebuild((b) => b..signatureOnPdf = value)),
                   ),

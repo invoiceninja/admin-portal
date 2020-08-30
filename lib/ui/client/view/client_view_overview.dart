@@ -129,7 +129,7 @@ class ClientOverview extends StatelessWidget {
         for (var customerReference in tokenMap.keys) ...[
           ListTile(
             title: Text(
-                '${localization.gateway}  ›  ${gatewayMap[customerReference].gateway.name}'),
+                '${localization.gateway}  ›  ${gatewayMap[customerReference].label}'),
             subtitle: Column(
               mainAxisSize: MainAxisSize.min,
               children: tokenMap[customerReference]

@@ -168,78 +168,19 @@ final companyGatewaysReducer = combineReducers<CompanyGatewayState>([
   TypedReducer<CompanyGatewayState, LoadCompanyGatewaySuccess>(
       _setLoadedCompanyGateway),
   TypedReducer<CompanyGatewayState, LoadCompanySuccess>(_setLoadedCompany),
-  TypedReducer<CompanyGatewayState, ArchiveCompanyGatewayRequest>(
-      _archiveCompanyGatewayRequest),
   TypedReducer<CompanyGatewayState, ArchiveCompanyGatewaySuccess>(
       _archiveCompanyGatewaySuccess),
-  TypedReducer<CompanyGatewayState, ArchiveCompanyGatewayFailure>(
-      _archiveCompanyGatewayFailure),
-  TypedReducer<CompanyGatewayState, DeleteCompanyGatewayRequest>(
-      _deleteCompanyGatewayRequest),
   TypedReducer<CompanyGatewayState, DeleteCompanyGatewaySuccess>(
       _deleteCompanyGatewaySuccess),
-  TypedReducer<CompanyGatewayState, DeleteCompanyGatewayFailure>(
-      _deleteCompanyGatewayFailure),
-  TypedReducer<CompanyGatewayState, RestoreCompanyGatewayRequest>(
-      _restoreCompanyGatewayRequest),
   TypedReducer<CompanyGatewayState, RestoreCompanyGatewaySuccess>(
       _restoreCompanyGatewaySuccess),
-  TypedReducer<CompanyGatewayState, RestoreCompanyGatewayFailure>(
-      _restoreCompanyGatewayFailure),
 ]);
-
-CompanyGatewayState _archiveCompanyGatewayRequest(
-    CompanyGatewayState companyGatewayState,
-    ArchiveCompanyGatewayRequest action) {
-  final companyGateways = action.companyGatewayIds
-      .map((id) => companyGatewayState.map[id])
-      .toList();
-
-  for (int i = 0; i < companyGateways.length; i++) {
-    companyGateways[i] = companyGateways[i]
-        .rebuild((b) => b..archivedAt = DateTime.now().millisecondsSinceEpoch);
-  }
-  return companyGatewayState.rebuild((b) {
-    for (final companyGateway in companyGateways) {
-      b.map[companyGateway.id] = companyGateway;
-    }
-  });
-}
 
 CompanyGatewayState _archiveCompanyGatewaySuccess(
     CompanyGatewayState companyGatewayState,
     ArchiveCompanyGatewaySuccess action) {
   return companyGatewayState.rebuild((b) {
     for (final companyGateway in action.companyGateways) {
-      b.map[companyGateway.id] = companyGateway;
-    }
-  });
-}
-
-CompanyGatewayState _archiveCompanyGatewayFailure(
-    CompanyGatewayState companyGatewayState,
-    ArchiveCompanyGatewayFailure action) {
-  return companyGatewayState.rebuild((b) {
-    for (final companyGateway in action.companyGateways) {
-      b.map[companyGateway.id] = companyGateway;
-    }
-  });
-}
-
-CompanyGatewayState _deleteCompanyGatewayRequest(
-    CompanyGatewayState companyGatewayState,
-    DeleteCompanyGatewayRequest action) {
-  final companyGateways = action.companyGatewayIds
-      .map((id) => companyGatewayState.map[id])
-      .toList();
-
-  for (int i = 0; i < companyGateways.length; i++) {
-    companyGateways[i] = companyGateways[i].rebuild((b) => b
-      ..archivedAt = DateTime.now().millisecondsSinceEpoch
-      ..isDeleted = true);
-  }
-  return companyGatewayState.rebuild((b) {
-    for (final companyGateway in companyGateways) {
       b.map[companyGateway.id] = companyGateway;
     }
   });
@@ -255,48 +196,9 @@ CompanyGatewayState _deleteCompanyGatewaySuccess(
   });
 }
 
-CompanyGatewayState _deleteCompanyGatewayFailure(
-    CompanyGatewayState companyGatewayState,
-    DeleteCompanyGatewayFailure action) {
-  return companyGatewayState.rebuild((b) {
-    for (final companyGateway in action.companyGateways) {
-      b.map[companyGateway.id] = companyGateway;
-    }
-  });
-}
-
-CompanyGatewayState _restoreCompanyGatewayRequest(
-    CompanyGatewayState companyGatewayState,
-    RestoreCompanyGatewayRequest action) {
-  final companyGateways = action.companyGatewayIds
-      .map((id) => companyGatewayState.map[id])
-      .toList();
-
-  for (int i = 0; i < companyGateways.length; i++) {
-    companyGateways[i] = companyGateways[i].rebuild((b) => b
-      ..archivedAt = 0
-      ..isDeleted = false);
-  }
-  return companyGatewayState.rebuild((b) {
-    for (final companyGateway in companyGateways) {
-      b.map[companyGateway.id] = companyGateway;
-    }
-  });
-}
-
 CompanyGatewayState _restoreCompanyGatewaySuccess(
     CompanyGatewayState companyGatewayState,
     RestoreCompanyGatewaySuccess action) {
-  return companyGatewayState.rebuild((b) {
-    for (final companyGateway in action.companyGateways) {
-      b.map[companyGateway.id] = companyGateway;
-    }
-  });
-}
-
-CompanyGatewayState _restoreCompanyGatewayFailure(
-    CompanyGatewayState companyGatewayState,
-    RestoreCompanyGatewayFailure action) {
   return companyGatewayState.rebuild((b) {
     for (final companyGateway in action.companyGateways) {
       b.map[companyGateway.id] = companyGateway;

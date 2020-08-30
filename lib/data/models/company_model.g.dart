@@ -199,10 +199,6 @@ class _$CompanyEntitySerializer implements StructuredSerializer<CompanyEntity> {
       serializers.serialize(object.paymentTerms,
           specifiedType: const FullType(
               BuiltList, const [const FullType(PaymentTermEntity)])),
-      'userMap',
-      serializers.serialize(object.userMap,
-          specifiedType: const FullType(BuiltMap,
-              const [const FullType(String), const FullType(UserEntity)])),
       'custom_fields',
       serializers.serialize(object.customFields,
           specifiedType: const FullType(BuiltMap,
@@ -525,11 +521,6 @@ class _$CompanyEntitySerializer implements StructuredSerializer<CompanyEntity> {
                       BuiltList, const [const FullType(PaymentTermEntity)]))
               as BuiltList<Object>);
           break;
-        case 'userMap':
-          result.userMap.replace(serializers.deserialize(value,
-              specifiedType: const FullType(BuiltMap,
-                  const [const FullType(String), const FullType(UserEntity)])));
-          break;
         case 'custom_fields':
           result.customFields.replace(serializers.deserialize(value,
               specifiedType: const FullType(BuiltMap,
@@ -606,6 +597,9 @@ class _$GatewayEntitySerializer implements StructuredSerializer<GatewayEntity> {
     final result = <Object>[
       'name',
       serializers.serialize(object.name, specifiedType: const FullType(String)),
+      'is_offsite',
+      serializers.serialize(object.isOffsite,
+          specifiedType: const FullType(bool)),
       'sort_order',
       serializers.serialize(object.sortOrder,
           specifiedType: const FullType(int)),
@@ -647,6 +641,10 @@ class _$GatewayEntitySerializer implements StructuredSerializer<GatewayEntity> {
         case 'name':
           result.name = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String;
+          break;
+        case 'is_offsite':
+          result.isOffsite = serializers.deserialize(value,
+              specifiedType: const FullType(bool)) as bool;
           break;
         case 'sort_order':
           result.sortOrder = serializers.deserialize(value,
@@ -2745,8 +2743,6 @@ class _$CompanyEntity extends CompanyEntity {
   @override
   final BuiltList<PaymentTermEntity> paymentTerms;
   @override
-  final BuiltMap<String, UserEntity> userMap;
-  @override
   final BuiltMap<String, String> customFields;
   @override
   final String slackWebhookUrl;
@@ -2827,7 +2823,6 @@ class _$CompanyEntity extends CompanyEntity {
       this.tokens,
       this.webhooks,
       this.paymentTerms,
-      this.userMap,
       this.customFields,
       this.slackWebhookUrl,
       this.googleAnalyticsKey,
@@ -2992,9 +2987,6 @@ class _$CompanyEntity extends CompanyEntity {
     if (paymentTerms == null) {
       throw new BuiltValueNullFieldError('CompanyEntity', 'paymentTerms');
     }
-    if (userMap == null) {
-      throw new BuiltValueNullFieldError('CompanyEntity', 'userMap');
-    }
     if (customFields == null) {
       throw new BuiltValueNullFieldError('CompanyEntity', 'customFields');
     }
@@ -3080,7 +3072,6 @@ class _$CompanyEntity extends CompanyEntity {
         tokens == other.tokens &&
         webhooks == other.webhooks &&
         paymentTerms == other.paymentTerms &&
-        userMap == other.userMap &&
         customFields == other.customFields &&
         slackWebhookUrl == other.slackWebhookUrl &&
         googleAnalyticsKey == other.googleAnalyticsKey &&
@@ -3118,12 +3109,12 @@ class _$CompanyEntity extends CompanyEntity {
                                                                 $jc(
                                                                     $jc(
                                                                         $jc(
-                                                                            $jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc(0, enableCustomSurchargeTaxes1.hashCode), enableCustomSurchargeTaxes2.hashCode), enableCustomSurchargeTaxes3.hashCode), enableCustomSurchargeTaxes4.hashCode), sizeId.hashCode), industryId.hashCode), subdomain.hashCode), portalMode.hashCode), portalDomain.hashCode), updateProducts.hashCode), convertProductExchangeRate.hashCode), fillProducts.hashCode), enableProductCost.hashCode), enableProductQuantity.hashCode), defaultQuantity.hashCode), showProductDetails.hashCode), clientCanRegister.hashCode), isLarge.hashCode), enableShopApi.hashCode), plan.hashCode), companyKey.hashCode), firstDayOfWeek.hashCode), firstMonthOfYear.hashCode), numberOfInvoiceTaxRates.hashCode), numberOfItemTaxRates.hashCode), groups.hashCode), activities.hashCode), taxRates.hashCode), taskStatuses.hashCode), taskStatusMap.hashCode), companyGateways.hashCode), expenseCategories.hashCode), expenseCategoryMap.hashCode), users.hashCode), clients.hashCode), products.hashCode), invoices.hashCode), payments.hashCode), quotes.hashCode), credits.hashCode), tasks.hashCode), projects.hashCode), expenses.hashCode), vendors.hashCode),
-                                                                                designs.hashCode),
-                                                                            tokens.hashCode),
-                                                                        webhooks.hashCode),
-                                                                    paymentTerms.hashCode),
-                                                                userMap.hashCode),
+                                                                            $jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc(0, enableCustomSurchargeTaxes1.hashCode), enableCustomSurchargeTaxes2.hashCode), enableCustomSurchargeTaxes3.hashCode), enableCustomSurchargeTaxes4.hashCode), sizeId.hashCode), industryId.hashCode), subdomain.hashCode), portalMode.hashCode), portalDomain.hashCode), updateProducts.hashCode), convertProductExchangeRate.hashCode), fillProducts.hashCode), enableProductCost.hashCode), enableProductQuantity.hashCode), defaultQuantity.hashCode), showProductDetails.hashCode), clientCanRegister.hashCode), isLarge.hashCode), enableShopApi.hashCode), plan.hashCode), companyKey.hashCode), firstDayOfWeek.hashCode), firstMonthOfYear.hashCode), numberOfInvoiceTaxRates.hashCode), numberOfItemTaxRates.hashCode), groups.hashCode), activities.hashCode), taxRates.hashCode), taskStatuses.hashCode), taskStatusMap.hashCode), companyGateways.hashCode), expenseCategories.hashCode), expenseCategoryMap.hashCode), users.hashCode), clients.hashCode), products.hashCode), invoices.hashCode), payments.hashCode), quotes.hashCode), credits.hashCode), tasks.hashCode), projects.hashCode), expenses.hashCode),
+                                                                                vendors.hashCode),
+                                                                            designs.hashCode),
+                                                                        tokens.hashCode),
+                                                                    webhooks.hashCode),
+                                                                paymentTerms.hashCode),
                                                             customFields.hashCode),
                                                         slackWebhookUrl.hashCode),
                                                     googleAnalyticsKey.hashCode),
@@ -3191,7 +3182,6 @@ class _$CompanyEntity extends CompanyEntity {
           ..add('tokens', tokens)
           ..add('webhooks', webhooks)
           ..add('paymentTerms', paymentTerms)
-          ..add('userMap', userMap)
           ..add('customFields', customFields)
           ..add('slackWebhookUrl', slackWebhookUrl)
           ..add('googleAnalyticsKey', googleAnalyticsKey)
@@ -3461,12 +3451,6 @@ class CompanyEntityBuilder
   set paymentTerms(ListBuilder<PaymentTermEntity> paymentTerms) =>
       _$this._paymentTerms = paymentTerms;
 
-  MapBuilder<String, UserEntity> _userMap;
-  MapBuilder<String, UserEntity> get userMap =>
-      _$this._userMap ??= new MapBuilder<String, UserEntity>();
-  set userMap(MapBuilder<String, UserEntity> userMap) =>
-      _$this._userMap = userMap;
-
   MapBuilder<String, String> _customFields;
   MapBuilder<String, String> get customFields =>
       _$this._customFields ??= new MapBuilder<String, String>();
@@ -3583,7 +3567,6 @@ class CompanyEntityBuilder
       _tokens = _$v.tokens?.toBuilder();
       _webhooks = _$v.webhooks?.toBuilder();
       _paymentTerms = _$v.paymentTerms?.toBuilder();
-      _userMap = _$v.userMap?.toBuilder();
       _customFields = _$v.customFields?.toBuilder();
       _slackWebhookUrl = _$v.slackWebhookUrl;
       _googleAnalyticsKey = _$v.googleAnalyticsKey;
@@ -3670,7 +3653,6 @@ class CompanyEntityBuilder
               tokens: tokens.build(),
               webhooks: webhooks.build(),
               paymentTerms: paymentTerms.build(),
-              userMap: userMap.build(),
               customFields: customFields.build(),
               slackWebhookUrl: slackWebhookUrl,
               googleAnalyticsKey: googleAnalyticsKey,
@@ -3734,8 +3716,6 @@ class CompanyEntityBuilder
         webhooks.build();
         _$failedField = 'paymentTerms';
         paymentTerms.build();
-        _$failedField = 'userMap';
-        userMap.build();
         _$failedField = 'customFields';
         customFields.build();
 
@@ -3758,6 +3738,8 @@ class _$GatewayEntity extends GatewayEntity {
   @override
   final String name;
   @override
+  final bool isOffsite;
+  @override
   final int sortOrder;
   @override
   final String defaultGatewayTypeId;
@@ -3770,12 +3752,16 @@ class _$GatewayEntity extends GatewayEntity {
   _$GatewayEntity._(
       {this.id,
       this.name,
+      this.isOffsite,
       this.sortOrder,
       this.defaultGatewayTypeId,
       this.fields})
       : super._() {
     if (name == null) {
       throw new BuiltValueNullFieldError('GatewayEntity', 'name');
+    }
+    if (isOffsite == null) {
+      throw new BuiltValueNullFieldError('GatewayEntity', 'isOffsite');
     }
     if (sortOrder == null) {
       throw new BuiltValueNullFieldError('GatewayEntity', 'sortOrder');
@@ -3798,6 +3784,7 @@ class _$GatewayEntity extends GatewayEntity {
     return other is GatewayEntity &&
         id == other.id &&
         name == other.name &&
+        isOffsite == other.isOffsite &&
         sortOrder == other.sortOrder &&
         defaultGatewayTypeId == other.defaultGatewayTypeId &&
         fields == other.fields;
@@ -3807,7 +3794,11 @@ class _$GatewayEntity extends GatewayEntity {
   @override
   int get hashCode {
     return __hashCode ??= $jf($jc(
-        $jc($jc($jc($jc(0, id.hashCode), name.hashCode), sortOrder.hashCode),
+        $jc(
+            $jc(
+                $jc($jc($jc(0, id.hashCode), name.hashCode),
+                    isOffsite.hashCode),
+                sortOrder.hashCode),
             defaultGatewayTypeId.hashCode),
         fields.hashCode));
   }
@@ -3817,6 +3808,7 @@ class _$GatewayEntity extends GatewayEntity {
     return (newBuiltValueToStringHelper('GatewayEntity')
           ..add('id', id)
           ..add('name', name)
+          ..add('isOffsite', isOffsite)
           ..add('sortOrder', sortOrder)
           ..add('defaultGatewayTypeId', defaultGatewayTypeId)
           ..add('fields', fields))
@@ -3835,6 +3827,10 @@ class GatewayEntityBuilder
   String _name;
   String get name => _$this._name;
   set name(String name) => _$this._name = name;
+
+  bool _isOffsite;
+  bool get isOffsite => _$this._isOffsite;
+  set isOffsite(bool isOffsite) => _$this._isOffsite = isOffsite;
 
   int _sortOrder;
   int get sortOrder => _$this._sortOrder;
@@ -3855,6 +3851,7 @@ class GatewayEntityBuilder
     if (_$v != null) {
       _id = _$v.id;
       _name = _$v.name;
+      _isOffsite = _$v.isOffsite;
       _sortOrder = _$v.sortOrder;
       _defaultGatewayTypeId = _$v.defaultGatewayTypeId;
       _fields = _$v.fields;
@@ -3882,6 +3879,7 @@ class GatewayEntityBuilder
         new _$GatewayEntity._(
             id: id,
             name: name,
+            isOffsite: isOffsite,
             sortOrder: sortOrder,
             defaultGatewayTypeId: defaultGatewayTypeId,
             fields: fields);

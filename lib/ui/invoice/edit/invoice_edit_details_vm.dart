@@ -9,6 +9,7 @@ import 'package:invoiceninja_flutter/redux/ui/ui_actions.dart';
 import 'package:invoiceninja_flutter/ui/app/screen_imports.dart';
 import 'package:invoiceninja_flutter/ui/invoice/edit/invoice_edit_desktop.dart';
 import 'package:invoiceninja_flutter/ui/invoice/edit/invoice_edit_details.dart';
+import 'package:invoiceninja_flutter/utils/money.dart';
 import 'package:redux/redux.dart';
 import 'package:invoiceninja_flutter/redux/invoice/invoice_actions.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
@@ -59,7 +60,8 @@ class EntityEditDetailsVM {
   final CompanyEntity company;
   final InvoiceEntity invoice;
   final Function(InvoiceEntity) onChanged;
-  final Function(InvoiceEntity, ClientEntity) onClientChanged;
+  final Function(BuildContext context, InvoiceEntity, ClientEntity)
+      onClientChanged;
   final BuiltMap<String, ClientEntity> clientMap;
   final BuiltList<String> clientList;
   final Function(BuildContext context, Completer<SelectableEntity> completer)
@@ -72,7 +74,7 @@ class InvoiceEditDetailsVM extends EntityEditDetailsVM {
     CompanyEntity company,
     InvoiceEntity invoice,
     Function(InvoiceEntity) onChanged,
-    Function(InvoiceEntity, ClientEntity) onClientChanged,
+    Function(BuildContext, InvoiceEntity, ClientEntity) onClientChanged,
     BuiltMap<String, ClientEntity> clientMap,
     BuiltList<String> clientList,
     Function(BuildContext context, Completer<SelectableEntity> completer)
@@ -91,16 +93,24 @@ class InvoiceEditDetailsVM extends EntityEditDetailsVM {
   factory InvoiceEditDetailsVM.fromStore(Store<AppState> store) {
     final AppState state = store.state;
     final invoice = state.invoiceUIState.editing;
+    final company = state.company;
 
     return InvoiceEditDetailsVM(
       state: state,
-      company: state.company,
+      company: company,
       invoice: invoice,
       onChanged: (InvoiceEntity invoice) =>
           store.dispatch(UpdateInvoice(invoice)),
       clientMap: state.clientState.map,
       clientList: state.clientState.list,
-      onClientChanged: (invoice, client) {
+      onClientChanged: (context, invoice, client) {
+        if (client != null) {
+          final exchangeRate = getExchangeRate(context,
+              fromCurrencyId: company.currencyId,
+              toCurrencyId: client.currencyId);
+          store.dispatch(UpdateInvoice(
+              invoice.rebuild((b) => b..exchangeRate = exchangeRate)));
+        }
         store.dispatch(UpdateInvoiceClient(client: client));
       },
       onAddClientPressed: (context, completer) {

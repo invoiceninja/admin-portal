@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:invoiceninja_flutter/data/models/entities.dart';
 import 'package:flutter/foundation.dart';
 import 'package:invoiceninja_flutter/utils/colors.dart';
 
@@ -362,14 +361,6 @@ const String kSettingsWebhooks = 'webhook';
 const String kSettingsWebhookView = 'webhook_view';
 const String kSettingsWebhookEdit = 'webhook_edit';
 
-const kEntitySettings = [
-  EntityType.group,
-  EntityType.companyGateway,
-  EntityType.taxRate,
-  EntityType.design,
-  EntityType.user,
-];
-
 const String kReportClient = 'client';
 const String kReportCredit = 'credit';
 const String kReportDocument = 'document';
@@ -469,21 +460,21 @@ const Map<int, String> kModules = {
 
 class InvoiceStatusColors {
   static var colors = {
-    kInvoiceStatusDraft: convertHexStringToColor('#444444'),
+    kInvoiceStatusDraft: Colors.black,
     kInvoiceStatusSent: convertHexStringToColor('#505F73'),
     //kInvoiceStatusViewed: Colors.orange,
     //kInvoiceStatusApproved: Colors.green,
     kInvoiceStatusPartial: Colors.deepPurple,
     kInvoiceStatusPaid: kColorGreen,
     kInvoiceStatusPastDue: kColorRed,
-    kInvoiceStatusCancelled: Colors.black,
-    kInvoiceStatusReversed: Colors.black,
+    kInvoiceStatusCancelled: convertHexStringToColor('#444444'),
+    kInvoiceStatusReversed: convertHexStringToColor('#444444'),
   };
 }
 
 class CreditStatusColors {
   static var colors = {
-    kCreditStatusDraft: convertHexStringToColor('#444444'),
+    kCreditStatusDraft: Colors.black,
     kCreditStatusSent: convertHexStringToColor('#505F73'),
     //kInvoiceStatusViewed: Colors.orange,
     //kInvoiceStatusApproved: Colors.green,
@@ -494,7 +485,7 @@ class CreditStatusColors {
 
 class QuoteStatusColors {
   static var colors = {
-    kQuoteStatusDraft: convertHexStringToColor('#444444'),
+    kQuoteStatusDraft: Colors.black,
     kQuoteStatusSent: convertHexStringToColor('#505F73'),
     kQuoteStatusApproved: Colors.deepPurple,
     kQuoteStatusConverted: kColorGreen,

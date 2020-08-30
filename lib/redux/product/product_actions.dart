@@ -256,14 +256,16 @@ void handleProductAction(
 
   switch (action) {
     case EntityAction.newInvoice:
+      final invoice = InvoiceEntity(state: state);
       createEntity(
         context: context,
-        entity: InvoiceEntity(state: state).rebuild(
+        entity: invoice.rebuild(
           (b) => b
             ..lineItems.addAll(
               productIds.map(
                 (productId) => convertProductToInvoiceItem(
                   company: state.company,
+                  invoice: invoice,
                   product: state.productState.map[productId],
                   currencyMap: state.staticState.currencyMap,
                 ),

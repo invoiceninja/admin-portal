@@ -269,9 +269,6 @@ class _EntityListState extends State<EntityList> {
                             .replaceFirst(':count', '$countSelected')),
                       ),
                       SaveCancelButtons(
-                        color: state.prefState.enableDarkMode
-                            ? Colors.white
-                            : Colors.black,
                         saveLabel: localization.done,
                         onSavePressed: (context) async {
                           final entities = listUIState.selectedIds
@@ -304,7 +301,8 @@ class _EntityListState extends State<EntityList> {
                 alignment: Alignment.topCenter,
                 children: <Widget>[
                   if (state.isLoading ||
-                      (kEntitySettings.contains(entityType) && state.isSaving))
+                      ((entityType.isSetting || isMobile(context)) &&
+                          state.isSaving))
                     LinearProgressIndicator(),
                   listOrTable(),
                 ],

@@ -88,8 +88,9 @@ class VendorEditNotesState extends State<VendorEditNotes> {
               entityList: memoizedCurrencyList(staticState.currencyMap),
               labelText: localization.currency,
               entityId: vendor.currencyId,
+              allowClearing: true,
               onSelected: (SelectableEntity currency) => viewModel.onChanged(
-                  vendor.rebuild((b) => b..currencyId = currency.id)),
+                  vendor.rebuild((b) => b..currencyId = currency?.id ?? '')),
             ),
             DecoratedFormField(
               maxLines: 4,

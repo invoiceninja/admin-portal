@@ -142,61 +142,15 @@ final tokensReducer = combineReducers<TokenState>([
   TypedReducer<TokenState, LoadTokensSuccess>(_setLoadedTokens),
   TypedReducer<TokenState, LoadTokenSuccess>(_setLoadedToken),
   TypedReducer<TokenState, LoadCompanySuccess>(_setLoadedCompany),
-  TypedReducer<TokenState, ArchiveTokensRequest>(_archiveTokenRequest),
   TypedReducer<TokenState, ArchiveTokensSuccess>(_archiveTokenSuccess),
-  TypedReducer<TokenState, ArchiveTokensFailure>(_archiveTokenFailure),
-  TypedReducer<TokenState, DeleteTokensRequest>(_deleteTokenRequest),
   TypedReducer<TokenState, DeleteTokensSuccess>(_deleteTokenSuccess),
-  TypedReducer<TokenState, DeleteTokensFailure>(_deleteTokenFailure),
-  TypedReducer<TokenState, RestoreTokensRequest>(_restoreTokenRequest),
   TypedReducer<TokenState, RestoreTokensSuccess>(_restoreTokenSuccess),
-  TypedReducer<TokenState, RestoreTokensFailure>(_restoreTokenFailure),
 ]);
-
-TokenState _archiveTokenRequest(
-    TokenState tokenState, ArchiveTokensRequest action) {
-  final tokens = action.tokenIds.map((id) => tokenState.map[id]).toList();
-
-  for (int i = 0; i < tokens.length; i++) {
-    tokens[i] = tokens[i]
-        .rebuild((b) => b..archivedAt = DateTime.now().millisecondsSinceEpoch);
-  }
-  return tokenState.rebuild((b) {
-    for (final token in tokens) {
-      b.map[token.id] = token;
-    }
-  });
-}
 
 TokenState _archiveTokenSuccess(
     TokenState tokenState, ArchiveTokensSuccess action) {
   return tokenState.rebuild((b) {
     for (final token in action.tokens) {
-      b.map[token.id] = token;
-    }
-  });
-}
-
-TokenState _archiveTokenFailure(
-    TokenState tokenState, ArchiveTokensFailure action) {
-  return tokenState.rebuild((b) {
-    for (final token in action.tokens) {
-      b.map[token.id] = token;
-    }
-  });
-}
-
-TokenState _deleteTokenRequest(
-    TokenState tokenState, DeleteTokensRequest action) {
-  final tokens = action.tokenIds.map((id) => tokenState.map[id]).toList();
-
-  for (int i = 0; i < tokens.length; i++) {
-    tokens[i] = tokens[i].rebuild((b) => b
-      ..archivedAt = DateTime.now().millisecondsSinceEpoch
-      ..isDeleted = true);
-  }
-  return tokenState.rebuild((b) {
-    for (final token in tokens) {
       b.map[token.id] = token;
     }
   });
@@ -211,42 +165,8 @@ TokenState _deleteTokenSuccess(
   });
 }
 
-TokenState _deleteTokenFailure(
-    TokenState tokenState, DeleteTokensFailure action) {
-  return tokenState.rebuild((b) {
-    for (final token in action.tokens) {
-      b.map[token.id] = token;
-    }
-  });
-}
-
-TokenState _restoreTokenRequest(
-    TokenState tokenState, RestoreTokensRequest action) {
-  final tokens = action.tokenIds.map((id) => tokenState.map[id]).toList();
-
-  for (int i = 0; i < tokens.length; i++) {
-    tokens[i] = tokens[i].rebuild((b) => b
-      ..archivedAt = 0
-      ..isDeleted = false);
-  }
-  return tokenState.rebuild((b) {
-    for (final token in tokens) {
-      b.map[token.id] = token;
-    }
-  });
-}
-
 TokenState _restoreTokenSuccess(
     TokenState tokenState, RestoreTokensSuccess action) {
-  return tokenState.rebuild((b) {
-    for (final token in action.tokens) {
-      b.map[token.id] = token;
-    }
-  });
-}
-
-TokenState _restoreTokenFailure(
-    TokenState tokenState, RestoreTokensFailure action) {
   return tokenState.rebuild((b) {
     for (final token in action.tokens) {
       b.map[token.id] = token;

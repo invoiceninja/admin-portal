@@ -461,7 +461,16 @@ Future handleQuoteAction(
       });
       if (!emailValid) {
         showMessageDialog(
-            context: context, message: localization.clientEmailNotSet);
+            context: context,
+            message: localization.clientEmailNotSet,
+            secondaryAction: FlatButton(
+                onPressed: () {
+                  Navigator.of(context).pop();
+                  editEntity(
+                      context: context,
+                      entity: state.clientState.get(quote.clientId));
+                },
+                child: Text(localization.editClient.toUpperCase())));
         return;
       }
       if (quoteIds.length == 1) {

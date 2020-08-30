@@ -50,7 +50,7 @@ class _PaymentRefundState extends State<PaymentRefund> {
     final payment = widget.viewModel.payment;
 
     _amountController.text = formatNumber(payment.amount, context,
-        formatNumberType: FormatNumberType.input);
+        formatNumberType: FormatNumberType.inputMoney);
     _controllers.forEach((controller) => controller.addListener(_onChanged));
 
     super.didChangeDependencies();
@@ -242,7 +242,7 @@ class _PaymentableEditorState extends State<PaymentableEditor> {
 
     _invoiceId = widget.paymentable.invoiceId;
     _amountController.text = formatNumber(widget.paymentable.amount, context,
-        formatNumberType: FormatNumberType.input);
+        formatNumberType: FormatNumberType.inputMoney);
 
     _controllers.forEach((controller) => controller.addListener(_onChanged));
 

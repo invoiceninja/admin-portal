@@ -176,61 +176,15 @@ final projectsReducer = combineReducers<ProjectState>([
   TypedReducer<ProjectState, LoadProjectsSuccess>(_setLoadedProjects),
   TypedReducer<ProjectState, LoadCompanySuccess>(_setLoadedCompany),
   TypedReducer<ProjectState, LoadProjectSuccess>(_setLoadedProject),
-  TypedReducer<ProjectState, ArchiveProjectRequest>(_archiveProjectRequest),
   TypedReducer<ProjectState, ArchiveProjectSuccess>(_archiveProjectSuccess),
-  TypedReducer<ProjectState, ArchiveProjectFailure>(_archiveProjectFailure),
-  TypedReducer<ProjectState, DeleteProjectRequest>(_deleteProjectRequest),
   TypedReducer<ProjectState, DeleteProjectSuccess>(_deleteProjectSuccess),
-  TypedReducer<ProjectState, DeleteProjectFailure>(_deleteProjectFailure),
-  TypedReducer<ProjectState, RestoreProjectRequest>(_restoreProjectRequest),
   TypedReducer<ProjectState, RestoreProjectSuccess>(_restoreProjectSuccess),
-  TypedReducer<ProjectState, RestoreProjectFailure>(_restoreProjectFailure),
 ]);
-
-ProjectState _archiveProjectRequest(
-    ProjectState projectState, ArchiveProjectRequest action) {
-  final projects = action.projectIds.map((id) => projectState.map[id]).toList();
-
-  for (int i = 0; i < projects.length; i++) {
-    projects[i] = projects[i]
-        .rebuild((b) => b..archivedAt = DateTime.now().millisecondsSinceEpoch);
-  }
-  return projectState.rebuild((b) {
-    for (final project in projects) {
-      b.map[project.id] = project;
-    }
-  });
-}
 
 ProjectState _archiveProjectSuccess(
     ProjectState projectState, ArchiveProjectSuccess action) {
   return projectState.rebuild((b) {
     for (final project in action.projects) {
-      b.map[project.id] = project;
-    }
-  });
-}
-
-ProjectState _archiveProjectFailure(
-    ProjectState projectState, ArchiveProjectFailure action) {
-  return projectState.rebuild((b) {
-    for (final project in action.projects) {
-      b.map[project.id] = project;
-    }
-  });
-}
-
-ProjectState _deleteProjectRequest(
-    ProjectState projectState, DeleteProjectRequest action) {
-  final projects = action.projectIds.map((id) => projectState.map[id]).toList();
-
-  for (int i = 0; i < projects.length; i++) {
-    projects[i] = projects[i].rebuild((b) => b
-      ..archivedAt = DateTime.now().millisecondsSinceEpoch
-      ..isDeleted = true);
-  }
-  return projectState.rebuild((b) {
-    for (final project in projects) {
       b.map[project.id] = project;
     }
   });
@@ -245,42 +199,8 @@ ProjectState _deleteProjectSuccess(
   });
 }
 
-ProjectState _deleteProjectFailure(
-    ProjectState projectState, DeleteProjectFailure action) {
-  return projectState.rebuild((b) {
-    for (final project in action.projects) {
-      b.map[project.id] = project;
-    }
-  });
-}
-
-ProjectState _restoreProjectRequest(
-    ProjectState projectState, RestoreProjectRequest action) {
-  final projects = action.projectIds.map((id) => projectState.map[id]).toList();
-
-  for (int i = 0; i < projects.length; i++) {
-    projects[i] = projects[i].rebuild((b) => b
-      ..archivedAt = 0
-      ..isDeleted = false);
-  }
-  return projectState.rebuild((b) {
-    for (final project in projects) {
-      b.map[project.id] = project;
-    }
-  });
-}
-
 ProjectState _restoreProjectSuccess(
     ProjectState projectState, RestoreProjectSuccess action) {
-  return projectState.rebuild((b) {
-    for (final project in action.projects) {
-      b.map[project.id] = project;
-    }
-  });
-}
-
-ProjectState _restoreProjectFailure(
-    ProjectState projectState, RestoreProjectFailure action) {
   return projectState.rebuild((b) {
     for (final project in action.projects) {
       b.map[project.id] = project;

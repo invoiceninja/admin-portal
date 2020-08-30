@@ -240,6 +240,9 @@ class _$InvoiceEntitySerializer implements StructuredSerializer<InvoiceEntity> {
       'reminder_last_sent',
       serializers.serialize(object.reminderLastSent,
           specifiedType: const FullType(String)),
+      'exchange_rate',
+      serializers.serialize(object.exchangeRate,
+          specifiedType: const FullType(double)),
       'line_items',
       serializers.serialize(object.lineItems,
           specifiedType: const FullType(
@@ -540,6 +543,10 @@ class _$InvoiceEntitySerializer implements StructuredSerializer<InvoiceEntity> {
           result.reminderLastSent = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String;
           break;
+        case 'exchange_rate':
+          result.exchangeRate = serializers.deserialize(value,
+              specifiedType: const FullType(double)) as double;
+          break;
         case 'invoice_id':
           result.invoiceId = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String;
@@ -821,6 +828,9 @@ class _$InvitationEntitySerializer
       'viewed_date',
       serializers.serialize(object.viewedDate,
           specifiedType: const FullType(String)),
+      'opened_date',
+      serializers.serialize(object.openedDate,
+          specifiedType: const FullType(String)),
       'created_at',
       serializers.serialize(object.createdAt,
           specifiedType: const FullType(int)),
@@ -898,6 +908,10 @@ class _$InvitationEntitySerializer
           result.viewedDate = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String;
           break;
+        case 'opened_date':
+          result.openedDate = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String;
+          break;
         case 'isChanged':
           result.isChanged = serializers.deserialize(value,
               specifiedType: const FullType(bool)) as bool;
@@ -970,13 +984,11 @@ class _$InvoiceHistoryEntitySerializer
       'created_at',
       serializers.serialize(object.createdAt,
           specifiedType: const FullType(int)),
+      'amount',
+      serializers.serialize(object.amount,
+          specifiedType: const FullType(double)),
     ];
-    if (object.amount != null) {
-      result
-        ..add('amount')
-        ..add(serializers.serialize(object.amount,
-            specifiedType: const FullType(double)));
-    }
+
     return result;
   }
 
@@ -1304,6 +1316,8 @@ class _$InvoiceEntity extends InvoiceEntity {
   @override
   final String reminderLastSent;
   @override
+  final double exchangeRate;
+  @override
   final String invoiceId;
   @override
   final String filename;
@@ -1384,6 +1398,7 @@ class _$InvoiceEntity extends InvoiceEntity {
       this.reminder2Sent,
       this.reminder3Sent,
       this.reminderLastSent,
+      this.exchangeRate,
       this.invoiceId,
       this.filename,
       this.lineItems,
@@ -1518,6 +1533,9 @@ class _$InvoiceEntity extends InvoiceEntity {
     if (reminderLastSent == null) {
       throw new BuiltValueNullFieldError('InvoiceEntity', 'reminderLastSent');
     }
+    if (exchangeRate == null) {
+      throw new BuiltValueNullFieldError('InvoiceEntity', 'exchangeRate');
+    }
     if (lineItems == null) {
       throw new BuiltValueNullFieldError('InvoiceEntity', 'lineItems');
     }
@@ -1596,6 +1614,7 @@ class _$InvoiceEntity extends InvoiceEntity {
         reminder2Sent == other.reminder2Sent &&
         reminder3Sent == other.reminder3Sent &&
         reminderLastSent == other.reminderLastSent &&
+        exchangeRate == other.exchangeRate &&
         invoiceId == other.invoiceId &&
         filename == other.filename &&
         lineItems == other.lineItems &&
@@ -1635,10 +1654,10 @@ class _$InvoiceEntity extends InvoiceEntity {
                                                                 $jc(
                                                                     $jc(
                                                                         $jc(
-                                                                            $jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc(0, amount.hashCode), balance.hashCode), clientId.hashCode), statusId.hashCode), number.hashCode), discount.hashCode), poNumber.hashCode), date.hashCode), dueDate.hashCode), publicNotes.hashCode), privateNotes.hashCode), terms.hashCode), footer.hashCode), designId.hashCode), usesInclusiveTaxes.hashCode), taxName1.hashCode), taxRate1.hashCode), taxName2.hashCode), taxRate2.hashCode), taxName3.hashCode), taxRate3.hashCode), isAmountDiscount.hashCode), partial.hashCode), taxAmount.hashCode), partialDueDate.hashCode), hasTasks.hashCode), autoBill.hashCode), customValue1.hashCode), customValue2.hashCode), customValue3.hashCode), customValue4.hashCode), customSurcharge1.hashCode), customSurcharge2.hashCode), customSurcharge3.hashCode), customSurcharge4.hashCode), customTaxes1.hashCode), customTaxes2.hashCode), customTaxes3.hashCode), customTaxes4.hashCode), hasExpenses.hashCode), reminder1Sent.hashCode),
-                                                                                reminder2Sent.hashCode),
-                                                                            reminder3Sent.hashCode),
-                                                                        reminderLastSent.hashCode),
+                                                                            $jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc(0, amount.hashCode), balance.hashCode), clientId.hashCode), statusId.hashCode), number.hashCode), discount.hashCode), poNumber.hashCode), date.hashCode), dueDate.hashCode), publicNotes.hashCode), privateNotes.hashCode), terms.hashCode), footer.hashCode), designId.hashCode), usesInclusiveTaxes.hashCode), taxName1.hashCode), taxRate1.hashCode), taxName2.hashCode), taxRate2.hashCode), taxName3.hashCode), taxRate3.hashCode), isAmountDiscount.hashCode), partial.hashCode), taxAmount.hashCode), partialDueDate.hashCode), hasTasks.hashCode), autoBill.hashCode), customValue1.hashCode), customValue2.hashCode), customValue3.hashCode), customValue4.hashCode), customSurcharge1.hashCode), customSurcharge2.hashCode), customSurcharge3.hashCode), customSurcharge4.hashCode), customTaxes1.hashCode), customTaxes2.hashCode), customTaxes3.hashCode), customTaxes4.hashCode), hasExpenses.hashCode), reminder1Sent.hashCode), reminder2Sent.hashCode),
+                                                                                reminder3Sent.hashCode),
+                                                                            reminderLastSent.hashCode),
+                                                                        exchangeRate.hashCode),
                                                                     invoiceId.hashCode),
                                                                 filename.hashCode),
                                                             lineItems.hashCode),
@@ -1704,6 +1723,7 @@ class _$InvoiceEntity extends InvoiceEntity {
           ..add('reminder2Sent', reminder2Sent)
           ..add('reminder3Sent', reminder3Sent)
           ..add('reminderLastSent', reminderLastSent)
+          ..add('exchangeRate', exchangeRate)
           ..add('invoiceId', invoiceId)
           ..add('filename', filename)
           ..add('lineItems', lineItems)
@@ -1915,6 +1935,10 @@ class InvoiceEntityBuilder
   set reminderLastSent(String reminderLastSent) =>
       _$this._reminderLastSent = reminderLastSent;
 
+  double _exchangeRate;
+  double get exchangeRate => _$this._exchangeRate;
+  set exchangeRate(double exchangeRate) => _$this._exchangeRate = exchangeRate;
+
   String _invoiceId;
   String get invoiceId => _$this._invoiceId;
   set invoiceId(String invoiceId) => _$this._invoiceId = invoiceId;
@@ -2037,6 +2061,7 @@ class InvoiceEntityBuilder
       _reminder2Sent = _$v.reminder2Sent;
       _reminder3Sent = _$v.reminder3Sent;
       _reminderLastSent = _$v.reminderLastSent;
+      _exchangeRate = _$v.exchangeRate;
       _invoiceId = _$v.invoiceId;
       _filename = _$v.filename;
       _lineItems = _$v.lineItems?.toBuilder();
@@ -2121,6 +2146,7 @@ class InvoiceEntityBuilder
               reminder2Sent: reminder2Sent,
               reminder3Sent: reminder3Sent,
               reminderLastSent: reminderLastSent,
+              exchangeRate: exchangeRate,
               invoiceId: invoiceId,
               filename: filename,
               lineItems: lineItems.build(),
@@ -2540,6 +2566,8 @@ class _$InvitationEntity extends InvitationEntity {
   @override
   final String viewedDate;
   @override
+  final String openedDate;
+  @override
   final bool isChanged;
   @override
   final int createdAt;
@@ -2568,6 +2596,7 @@ class _$InvitationEntity extends InvitationEntity {
       this.contactId,
       this.sentDate,
       this.viewedDate,
+      this.openedDate,
       this.isChanged,
       this.createdAt,
       this.updatedAt,
@@ -2592,6 +2621,9 @@ class _$InvitationEntity extends InvitationEntity {
     }
     if (viewedDate == null) {
       throw new BuiltValueNullFieldError('InvitationEntity', 'viewedDate');
+    }
+    if (openedDate == null) {
+      throw new BuiltValueNullFieldError('InvitationEntity', 'openedDate');
     }
     if (createdAt == null) {
       throw new BuiltValueNullFieldError('InvitationEntity', 'createdAt');
@@ -2624,6 +2656,7 @@ class _$InvitationEntity extends InvitationEntity {
         contactId == other.contactId &&
         sentDate == other.sentDate &&
         viewedDate == other.viewedDate &&
+        openedDate == other.openedDate &&
         isChanged == other.isChanged &&
         createdAt == other.createdAt &&
         updatedAt == other.updatedAt &&
@@ -2650,11 +2683,15 @@ class _$InvitationEntity extends InvitationEntity {
                                         $jc(
                                             $jc(
                                                 $jc(
-                                                    $jc($jc(0, key.hashCode),
-                                                        link.hashCode),
-                                                    contactId.hashCode),
-                                                sentDate.hashCode),
-                                            viewedDate.hashCode),
+                                                    $jc(
+                                                        $jc(
+                                                            $jc(0,
+                                                                key.hashCode),
+                                                            link.hashCode),
+                                                        contactId.hashCode),
+                                                    sentDate.hashCode),
+                                                viewedDate.hashCode),
+                                            openedDate.hashCode),
                                         isChanged.hashCode),
                                     createdAt.hashCode),
                                 updatedAt.hashCode),
@@ -2674,6 +2711,7 @@ class _$InvitationEntity extends InvitationEntity {
           ..add('contactId', contactId)
           ..add('sentDate', sentDate)
           ..add('viewedDate', viewedDate)
+          ..add('openedDate', openedDate)
           ..add('isChanged', isChanged)
           ..add('createdAt', createdAt)
           ..add('updatedAt', updatedAt)
@@ -2710,6 +2748,10 @@ class InvitationEntityBuilder
   String _viewedDate;
   String get viewedDate => _$this._viewedDate;
   set viewedDate(String viewedDate) => _$this._viewedDate = viewedDate;
+
+  String _openedDate;
+  String get openedDate => _$this._openedDate;
+  set openedDate(String openedDate) => _$this._openedDate = openedDate;
 
   bool _isChanged;
   bool get isChanged => _$this._isChanged;
@@ -2758,6 +2800,7 @@ class InvitationEntityBuilder
       _contactId = _$v.contactId;
       _sentDate = _$v.sentDate;
       _viewedDate = _$v.viewedDate;
+      _openedDate = _$v.openedDate;
       _isChanged = _$v.isChanged;
       _createdAt = _$v.createdAt;
       _updatedAt = _$v.updatedAt;
@@ -2794,6 +2837,7 @@ class InvitationEntityBuilder
             contactId: contactId,
             sentDate: sentDate,
             viewedDate: viewedDate,
+            openedDate: openedDate,
             isChanged: isChanged,
             createdAt: createdAt,
             updatedAt: updatedAt,
@@ -2848,6 +2892,9 @@ class _$InvoiceHistoryEntity extends InvoiceHistoryEntity {
     }
     if (createdAt == null) {
       throw new BuiltValueNullFieldError('InvoiceHistoryEntity', 'createdAt');
+    }
+    if (amount == null) {
+      throw new BuiltValueNullFieldError('InvoiceHistoryEntity', 'amount');
     }
   }
 

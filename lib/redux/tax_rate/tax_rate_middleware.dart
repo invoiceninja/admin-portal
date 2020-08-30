@@ -194,11 +194,6 @@ Middleware<AppState> _loadTaxRate(TaxRateRepository repository) {
     final action = dynamicAction as LoadTaxRate;
     final AppState state = store.state;
 
-    if (state.isLoading) {
-      next(action);
-      return;
-    }
-
     store.dispatch(LoadTaxRateRequest());
     repository.loadItem(state.credentials, action.taxRateId).then((taxRate) {
       store.dispatch(LoadTaxRateSuccess(taxRate));
@@ -222,11 +217,6 @@ Middleware<AppState> _loadTaxRates(TaxRateRepository repository) {
   return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
     final action = dynamicAction as LoadTaxRates;
     final AppState state = store.state;
-
-    if (state.isLoading) {
-      next(action);
-      return;
-    }
 
     store.dispatch(LoadTaxRatesRequest());
     repository.loadList(state.credentials).then((data) {

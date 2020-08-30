@@ -80,6 +80,7 @@ class InvoiceFields {
   static const String reminder2Sent = 'reminder2_sent';
   static const String reminder3Sent = 'reminder3_sent';
   static const String reminderLastSent = 'reminder_last_sent';
+  static const String exchangeRate = 'exchange_rate';
 }
 
 abstract class InvoiceEntity extends Object
@@ -92,6 +93,11 @@ abstract class InvoiceEntity extends Object
     EntityType entityType,
   }) {
     final company = state?.company;
+    double exchangeRate = 1;
+    if ((client?.currencyId ?? '').isNotEmpty) {
+      exchangeRate =
+          state.staticState.currencyMap[client.currencyId].exchangeRate;
+    }
     return _$InvoiceEntity._(
       id: id ?? BaseEntity.nextId,
       entityType: entityType ?? EntityType.invoice,
@@ -158,6 +164,7 @@ abstract class InvoiceEntity extends Object
       reminder2Sent: '',
       reminder3Sent: '',
       reminderLastSent: '',
+      exchangeRate: exchangeRate,
     );
   }
 
@@ -346,6 +353,9 @@ abstract class InvoiceEntity extends Object
 
   @BuiltValueField(wireName: 'reminder_last_sent')
   String get reminderLastSent;
+
+  @BuiltValueField(wireName: 'exchange_rate')
+  double get exchangeRate;
 
   @nullable
   @BuiltValueField(wireName: 'invoice_id')
@@ -1044,6 +1054,7 @@ abstract class InvitationEntity extends Object
       link: '',
       sentDate: '',
       viewedDate: '',
+      openedDate: '',
       updatedAt: 0,
       archivedAt: 0,
       isDeleted: false,
@@ -1068,6 +1079,9 @@ abstract class InvitationEntity extends Object
 
   @BuiltValueField(wireName: 'viewed_date')
   String get viewedDate;
+
+  @BuiltValueField(wireName: 'opened_date')
+  String get openedDate;
 
   String get downloadLink => '$link/download';
 
@@ -1140,8 +1154,6 @@ abstract class InvoiceHistoryEntity
   @BuiltValueField(wireName: 'created_at')
   int get createdAt;
 
-  // TODO remove this nullable
-  @nullable
   double get amount;
 
   static Serializer<InvoiceHistoryEntity> get serializer =>

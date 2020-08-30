@@ -8,6 +8,7 @@ import 'package:invoiceninja_flutter/data/models/entities.dart';
 import 'package:invoiceninja_flutter/data/models/gateway_token_model.dart';
 import 'package:invoiceninja_flutter/data/models/group_model.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
+import 'package:invoiceninja_flutter/data/models/system_log_model.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/redux/static/static_state.dart';
 import 'package:invoiceninja_flutter/utils/formatting.dart';
@@ -130,6 +131,7 @@ abstract class ClientEntity extends Object
       activities: BuiltList<ActivityEntity>(),
       ledger: BuiltList<LedgerEntity>(),
       gatewayTokens: BuiltList<GatewayTokenEntity>(),
+      systemLogs: BuiltList<SystemLogEntity>(),
       loadedAt: 0,
       updatedAt: 0,
       archivedAt: 0,
@@ -270,23 +272,15 @@ abstract class ClientEntity extends Object
 
   BuiltList<DocumentEntity> get documents;
 
+  @BuiltValueField(wireName: 'system_logs')
+  BuiltList<SystemLogEntity> get systemLogs;
+
   //String get last_login;
   //String get custom_messages;
 
   @override
   String get listDisplayName {
     return displayName;
-  }
-
-  String getCurrencyId(
-      {@required CompanyEntity company, @required GroupEntity group}) {
-    if (hasCurrency) {
-      return settings.currencyId;
-    } else if (group.hasCurrency) {
-      return group.currencyId;
-    } else {
-      return company.currencyId;
-    }
   }
 
   bool getManualPaymentEmail(
@@ -753,7 +747,19 @@ abstract class ContactEntity extends Object
     return (firstName + ' ' + lastName).trim();
   }
 
-  String get fullNameWithEmail => '$fullName <$email>';
+  String get fullNameWithEmail {
+    String name = fullName;
+
+    if (email.isNotEmpty) {
+      if (name.isEmpty) {
+        name += email;
+      } else {
+        name += ' <$email>';
+      }
+    }
+
+    return name;
+  }
 
   @override
   EntityType get entityType {

@@ -1,6 +1,6 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+
 import 'package:invoiceninja_flutter/constants.dart';
 import 'package:invoiceninja_flutter/data/models/company_model.dart';
 import 'package:invoiceninja_flutter/data/models/entities.dart';
@@ -15,6 +15,7 @@ import 'package:invoiceninja_flutter/ui/app/forms/dynamic_selector.dart';
 import 'package:invoiceninja_flutter/ui/settings/email_settings_vm.dart';
 import 'package:invoiceninja_flutter/ui/app/edit_scaffold.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
+import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 
 class EmailSettings extends StatefulWidget {
   const EmailSettings({
@@ -114,7 +115,7 @@ class _EmailSettingsState extends State<EmailSettings> {
                 label: localization.sendFromGmail,
                 value: settings.emailSendingMethod ==
                     SettingsEntity.EMAIL_SENDING_METHOD_GMAIL,
-                iconData: FontAwesomeIcons.solidEnvelope,
+                iconData: MdiIcons.gmail,
                 onChanged: (value) => viewModel.onSettingsChanged(
                     settings.rebuild((b) => b
                       ..emailSendingMethod = (value == true
@@ -157,7 +158,7 @@ class _EmailSettingsState extends State<EmailSettings> {
                 label: localization.enableMarkup,
                 helpLabel: localization.enableMarkupHelp,
                 value: settings.enableEmailMarkup,
-                iconData: kIsWeb ? Icons.email : FontAwesomeIcons.solidEnvelope,
+                iconData: kIsWeb ? Icons.email : MdiIcons.solidEnvelope,
                 onChanged: (value) => viewModel.onSettingsChanged(
                     settings.rebuild((b) => b..enableEmailMarkup = value)),
               ),
@@ -213,21 +214,21 @@ class _EmailSettingsState extends State<EmailSettings> {
               BoolDropdownButton(
                 label: localization.attachPdf,
                 value: settings.pdfEmailAttachment,
-                iconData: FontAwesomeIcons.fileInvoice,
+                iconData: MdiIcons.filePdf,
                 onChanged: (value) => viewModel.onSettingsChanged(
                     settings.rebuild((b) => b..pdfEmailAttachment = value)),
               ),
               BoolDropdownButton(
                 label: localization.attachDocuments,
                 value: settings.documentEmailAttachment,
-                iconData: FontAwesomeIcons.fileImage,
+                iconData: MdiIcons.fileImage,
                 onChanged: (value) => viewModel.onSettingsChanged(settings
                     .rebuild((b) => b..documentEmailAttachment = value)),
               ),
               BoolDropdownButton(
                 label: localization.attachUbl,
                 value: settings.ublEmailAttachment,
-                iconData: FontAwesomeIcons.fileArchive,
+                iconData: MdiIcons.xml,
                 onChanged: (value) => viewModel.onSettingsChanged(
                     settings.rebuild((b) => b..ublEmailAttachment = value)),
               ),

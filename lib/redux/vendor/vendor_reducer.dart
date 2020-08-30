@@ -202,61 +202,15 @@ final vendorsReducer = combineReducers<VendorState>([
   TypedReducer<VendorState, LoadVendorsSuccess>(_setLoadedVendors),
   TypedReducer<VendorState, LoadVendorSuccess>(_setLoadedVendor),
   TypedReducer<VendorState, LoadCompanySuccess>(_setLoadedCompany),
-  TypedReducer<VendorState, ArchiveVendorRequest>(_archiveVendorRequest),
   TypedReducer<VendorState, ArchiveVendorSuccess>(_archiveVendorSuccess),
-  TypedReducer<VendorState, ArchiveVendorFailure>(_archiveVendorFailure),
-  TypedReducer<VendorState, DeleteVendorRequest>(_deleteVendorRequest),
   TypedReducer<VendorState, DeleteVendorSuccess>(_deleteVendorSuccess),
-  TypedReducer<VendorState, DeleteVendorFailure>(_deleteVendorFailure),
-  TypedReducer<VendorState, RestoreVendorRequest>(_restoreVendorRequest),
   TypedReducer<VendorState, RestoreVendorSuccess>(_restoreVendorSuccess),
-  TypedReducer<VendorState, RestoreVendorFailure>(_restoreVendorFailure),
 ]);
-
-VendorState _archiveVendorRequest(
-    VendorState vendorState, ArchiveVendorRequest action) {
-  final vendors = action.vendorIds.map((id) => vendorState.map[id]).toList();
-
-  for (int i = 0; i < vendors.length; i++) {
-    vendors[i] = vendors[i]
-        .rebuild((b) => b..archivedAt = DateTime.now().millisecondsSinceEpoch);
-  }
-  return vendorState.rebuild((b) {
-    for (final vendor in vendors) {
-      b.map[vendor.id] = vendor;
-    }
-  });
-}
 
 VendorState _archiveVendorSuccess(
     VendorState vendorState, ArchiveVendorSuccess action) {
   return vendorState.rebuild((b) {
     for (final vendor in action.vendors) {
-      b.map[vendor.id] = vendor;
-    }
-  });
-}
-
-VendorState _archiveVendorFailure(
-    VendorState vendorState, ArchiveVendorFailure action) {
-  return vendorState.rebuild((b) {
-    for (final vendor in action.vendors) {
-      b.map[vendor.id] = vendor;
-    }
-  });
-}
-
-VendorState _deleteVendorRequest(
-    VendorState vendorState, DeleteVendorRequest action) {
-  final vendors = action.vendorIds.map((id) => vendorState.map[id]).toList();
-
-  for (int i = 0; i < vendors.length; i++) {
-    vendors[i] = vendors[i].rebuild((b) => b
-      ..archivedAt = DateTime.now().millisecondsSinceEpoch
-      ..isDeleted = true);
-  }
-  return vendorState.rebuild((b) {
-    for (final vendor in vendors) {
       b.map[vendor.id] = vendor;
     }
   });
@@ -271,42 +225,8 @@ VendorState _deleteVendorSuccess(
   });
 }
 
-VendorState _deleteVendorFailure(
-    VendorState vendorState, DeleteVendorFailure action) {
-  return vendorState.rebuild((b) {
-    for (final vendor in action.vendors) {
-      b.map[vendor.id] = vendor;
-    }
-  });
-}
-
-VendorState _restoreVendorRequest(
-    VendorState vendorState, RestoreVendorRequest action) {
-  final vendors = action.vendorIds.map((id) => vendorState.map[id]).toList();
-
-  for (int i = 0; i < vendors.length; i++) {
-    vendors[i] = vendors[i].rebuild((b) => b
-      ..archivedAt = 0
-      ..isDeleted = false);
-  }
-  return vendorState.rebuild((b) {
-    for (final vendor in vendors) {
-      b.map[vendor.id] = vendor;
-    }
-  });
-}
-
 VendorState _restoreVendorSuccess(
     VendorState vendorState, RestoreVendorSuccess action) {
-  return vendorState.rebuild((b) {
-    for (final vendor in action.vendors) {
-      b.map[vendor.id] = vendor;
-    }
-  });
-}
-
-VendorState _restoreVendorFailure(
-    VendorState vendorState, RestoreVendorFailure action) {
   return vendorState.rebuild((b) {
     for (final vendor in action.vendors) {
       b.map[vendor.id] = vendor;

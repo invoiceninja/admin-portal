@@ -48,6 +48,7 @@ enum InvoiceReportFields {
   reminder2_sent,
   reminder3_sent,
   reminder_last_sent,
+  exchange_rate,
 }
 
 var memoizedInvoiceReport = memo6((
@@ -221,6 +222,8 @@ ReportResult invoiceReport(
         case InvoiceReportFields.net_balance:
           value = invoice.netBalance;
           break;
+        case InvoiceReportFields.exchange_rate:
+          value = invoice.exchangeRate;
       }
 
       if (!ReportResult.matchField(

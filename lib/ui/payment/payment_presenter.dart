@@ -84,7 +84,7 @@ class PaymentPresenter extends EntityPresenter {
       case PaymentFields.gateway:
         final companyGateway =
             state.companyGatewayState.get(payment.companyGatewayId);
-        return Text(companyGateway.gateway.name);
+        return Text(companyGateway.label);
     }
 
     return super.getField(field: field, context: context);
