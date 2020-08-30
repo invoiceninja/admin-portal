@@ -1321,6 +1321,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'payment_amount': 'Payment Amount',
       'age': 'Age',
     },
+    // OTHER_LANGUAGES
   };
 
   String get createdProject =>
