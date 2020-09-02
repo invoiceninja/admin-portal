@@ -488,12 +488,6 @@ abstract class InvoiceEntity extends Object
       case InvoiceFields.statusId:
         response = invoiceA.statusId.compareTo(invoiceB.statusId);
         break;
-      case InvoiceFields.status:
-        response = (staticState.invoiceStatusMap[invoiceA.statusId]?.name ?? '')
-            .toLowerCase()
-            .compareTo(
-                staticState.invoiceStatusMap[invoiceB.statusId]?.name ?? '');
-        break;
       case EntityFields.state:
         final stateA =
             EntityState.valueOf(invoiceA.entityState) ?? EntityState.active;

@@ -188,8 +188,9 @@ class ExpenseEditSettingsState extends State<ExpenseEditSettings> {
                         labelText: localization.paymentType,
                         entityId: expense.paymentTypeId,
                         allowClearing: true,
-                        onSelected: (paymentType) => viewModel.onChanged(expense
-                            .rebuild((b) => b..paymentTypeId = paymentType?.id ?? '')),
+                        onSelected: (paymentType) => viewModel.onChanged(
+                            expense.rebuild((b) =>
+                                b..paymentTypeId = paymentType?.id ?? '')),
                       ),
                       DatePicker(
                         labelText: localization.date,

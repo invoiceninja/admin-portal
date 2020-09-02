@@ -718,8 +718,7 @@ class _EntityFilter extends StatelessWidget {
                                   ? localization.overview
                                   : '${localization.lookup(routeEntityType.plural)}',
                               style: TextStyle(
-                                  fontSize: 17,
-                                  color: state.headerTextColor),
+                                  fontSize: 17, color: state.headerTextColor),
                             ),
                             SizedBox(width: 4),
                             Icon(Icons.arrow_drop_down),

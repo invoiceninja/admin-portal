@@ -391,35 +391,40 @@ class _CompanyDetailsState extends State<CompanyDetails>
                       label: localization.address1,
                       controller: _address1Controller,
                       textInputAction: TextInputAction.next,
-                      onFieldSubmitted: (String value) => _focusNode.nextFocus(),
+                      onFieldSubmitted: (String value) =>
+                          _focusNode.nextFocus(),
                       autofillHints: [AutofillHints.streetAddressLine1],
                     ),
                     DecoratedFormField(
                       label: localization.address2,
                       controller: _address2Controller,
                       textInputAction: TextInputAction.next,
-                      onFieldSubmitted: (String value) => _focusNode.nextFocus(),
+                      onFieldSubmitted: (String value) =>
+                          _focusNode.nextFocus(),
                       autofillHints: [AutofillHints.streetAddressLine2],
                     ),
                     DecoratedFormField(
                       label: localization.city,
                       controller: _cityController,
                       textInputAction: TextInputAction.next,
-                      onFieldSubmitted: (String value) => _focusNode.nextFocus(),
+                      onFieldSubmitted: (String value) =>
+                          _focusNode.nextFocus(),
                       autofillHints: [AutofillHints.addressCity],
                     ),
                     DecoratedFormField(
                       label: localization.state,
                       controller: _stateController,
                       textInputAction: TextInputAction.next,
-                      onFieldSubmitted: (String value) => _focusNode.nextFocus(),
+                      onFieldSubmitted: (String value) =>
+                          _focusNode.nextFocus(),
                       autofillHints: [AutofillHints.addressState],
                     ),
                     DecoratedFormField(
                       label: localization.postalCode,
                       controller: _postalCodeController,
                       textInputAction: TextInputAction.next,
-                      onFieldSubmitted: (String value) => _focusNode.nextFocus(),
+                      onFieldSubmitted: (String value) =>
+                          _focusNode.nextFocus(),
                       autofillHints: [AutofillHints.postalCode],
                     ),
                     EntityDropdown(

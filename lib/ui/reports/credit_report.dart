@@ -128,7 +128,7 @@ ReportResult creditReport(
           value = client.shippingAddress2;
           break;
         case CreditReportFields.status:
-          value = staticState.invoiceStatusMap[credit.statusId]?.name ?? '';
+          value = kCreditStatuses[credit.statusId] ?? '';
           break;
         case CreditReportFields.number:
           value = credit.number;

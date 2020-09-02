@@ -169,8 +169,8 @@ class ExpenseEditDetailsState extends State<ExpenseEditDetails> {
               entityId: expense.expenseCurrencyId,
               allowClearing: true,
               onSelected: (SelectableEntity currency) => viewModel.onChanged(
-                  viewModel.expense
-                      .rebuild((b) => b..expenseCurrencyId = currency?.id ?? '')),
+                  viewModel.expense.rebuild(
+                      (b) => b..expenseCurrencyId = currency?.id ?? '')),
             ),
             DatePicker(
               labelText: localization.date,

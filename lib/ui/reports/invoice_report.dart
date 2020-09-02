@@ -136,7 +136,7 @@ ReportResult invoiceReport(
           value = client.shippingAddress2;
           break;
         case InvoiceReportFields.status:
-          value = staticState.invoiceStatusMap[invoice.statusId]?.name ?? '';
+          value = kInvoiceStatuses[invoice.statusId] ?? '';
           break;
         case InvoiceReportFields.number:
           value = invoice.number;

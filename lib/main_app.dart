@@ -230,12 +230,8 @@ class InvoiceNinjaAppState extends State<InvoiceNinjaApp> {
                       color: hasAccentColor ? Colors.white : accentColor,
                     ),
                     textTheme: TextTheme(
-                      headline6: Theme.of(context)
-                          .textTheme
-                          .headline6
-                          .copyWith(
-                            color:
-                                hasAccentColor ? Colors.white : Colors.black,
+                      headline6: Theme.of(context).textTheme.headline6.copyWith(
+                            color: hasAccentColor ? Colors.white : Colors.black,
                           ),
                     ),
                   ),
@@ -246,8 +242,7 @@ class InvoiceNinjaAppState extends State<InvoiceNinjaApp> {
               ? {
                   LoginScreen.route: (context) => LoginScreen(),
                   MainScreen.route: (context) => MainScreen(),
-                  DashboardScreenBuilder.route: (context) =>
-                      ChangeLayoutBanner(
+                  DashboardScreenBuilder.route: (context) => ChangeLayoutBanner(
                         suggestedLayout: AppLayout.mobile,
                         appLayout: state.prefState.appLayout,
                         child: DashboardScreenBuilder(),
@@ -280,8 +275,7 @@ class InvoiceNinjaAppState extends State<InvoiceNinjaApp> {
                   PaymentScreen.route: (context) => PaymentScreenBuilder(),
                   PaymentViewScreen.route: (context) => PaymentViewScreen(),
                   PaymentEditScreen.route: (context) => PaymentEditScreen(),
-                  PaymentRefundScreen.route: (context) =>
-                      PaymentRefundScreen(),
+                  PaymentRefundScreen.route: (context) => PaymentRefundScreen(),
                   QuoteScreen.route: (context) => QuoteScreenBuilder(),
                   QuoteViewScreen.route: (context) => QuoteViewScreen(),
                   QuoteEditScreen.route: (context) => QuoteEditScreen(),
@@ -308,8 +302,7 @@ class InvoiceNinjaAppState extends State<InvoiceNinjaApp> {
                   UserScreen.route: (context) => UserScreenBuilder(),
                   UserViewScreen.route: (context) => UserViewScreen(),
                   UserEditScreen.route: (context) => UserEditScreen(),
-                  GroupSettingsScreen.route: (context) =>
-                      GroupScreenBuilder(),
+                  GroupSettingsScreen.route: (context) => GroupScreenBuilder(),
                   GroupViewScreen.route: (context) => GroupViewScreen(),
                   GroupEditScreen.route: (context) => GroupEditScreen(),
                   SettingsScreen.route: (context) => SettingsScreenBuilder(),
@@ -343,13 +336,10 @@ class InvoiceNinjaAppState extends State<InvoiceNinjaApp> {
                       GeneratedNumbersScreen(),
                   WorkflowSettingsScreen.route: (context) =>
                       WorkflowSettingsScreen(),
-                  InvoiceDesignScreen.route: (context) =>
-                      InvoiceDesignScreen(),
+                  InvoiceDesignScreen.route: (context) => InvoiceDesignScreen(),
                   ClientPortalScreen.route: (context) => ClientPortalScreen(),
-                  BuyNowButtonsScreen.route: (context) =>
-                      BuyNowButtonsScreen(),
-                  EmailSettingsScreen.route: (context) =>
-                      EmailSettingsScreen(),
+                  BuyNowButtonsScreen.route: (context) => BuyNowButtonsScreen(),
+                  EmailSettingsScreen.route: (context) => EmailSettingsScreen(),
                   TemplatesAndRemindersScreen.route: (context) =>
                       TemplatesAndRemindersScreen(),
                   CreditCardsAndBanksScreen.route: (context) =>

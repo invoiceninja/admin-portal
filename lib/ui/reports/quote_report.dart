@@ -128,7 +128,7 @@ ReportResult quoteReport(
           value = client.shippingAddress2;
           break;
         case QuoteReportFields.status:
-          value = staticState.invoiceStatusMap[quote.statusId].name;
+          value = kQuoteStatuses[quote.statusId] ?? '';
           break;
         case QuoteReportFields.discount:
           value = quote.discount;
