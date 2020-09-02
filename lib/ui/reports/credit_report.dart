@@ -18,6 +18,7 @@ enum CreditReportFields {
   client_address2,
   client_shipping_address1,
   client_shipping_address2,
+  client_country,
   status,
   number,
   discount,
@@ -198,6 +199,9 @@ ReportResult creditReport(
           break;
         case CreditReportFields.net_remaining:
           value = credit.netBalance;
+          break;
+        case CreditReportFields.client_country:
+          value = staticState.countryMap[client.countryId]?.name ?? '';
           break;
       }
 

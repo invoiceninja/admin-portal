@@ -17,6 +17,7 @@ enum QuoteReportFields {
   client_address2,
   client_shipping_address1,
   client_shipping_address2,
+  client_country,
   status,
   discount,
   po_number,
@@ -195,6 +196,10 @@ ReportResult quoteReport(
           break;
         case QuoteReportFields.exchange_rate:
           value = quote.exchangeRate;
+          break;
+        case QuoteReportFields.client_country:
+          value = staticState.countryMap[client.countryId]?.name ?? '';
+          break;
       }
 
       if (!ReportResult.matchField(
