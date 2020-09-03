@@ -224,6 +224,7 @@ class InvoiceNinjaAppState extends State<InvoiceNinjaApp> {
                     color: hasAccentColor ? null : accentColor,
                   ),
                   appBarTheme: AppBarTheme(
+                    brightness: Brightness.light,
                     color: hasAccentColor ? accentColor : Colors.white,
                     iconTheme: IconThemeData(
                       color: hasAccentColor ? Colors.white : accentColor,

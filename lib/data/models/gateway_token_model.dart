@@ -200,11 +200,11 @@ abstract class GatewayTokenMetaEntity
 
   @nullable
   @BuiltValueField(wireName: 'exp_month')
-  int get expMonth;
+  String get expMonth;
 
   @nullable
   @BuiltValueField(wireName: 'exp_year')
-  int get expYear;
+  String get expYear;
 
   static Serializer<GatewayTokenMetaEntity> get serializer =>
       _$gatewayTokenMetaEntitySerializer;

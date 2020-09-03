@@ -147,8 +147,8 @@ class _ProjectEditState extends State<ProjectEdit> {
                           autoValidate: _autoValidate,
                           allowClearing: true,
                           onSelected: (client) {
-                            viewModel.onChanged(project
-                                .rebuild((b) => b..clientId = client?.id ?? ''));
+                            viewModel.onChanged(project.rebuild(
+                                (b) => b..clientId = client?.id ?? ''));
                           },
                           onAddPressed: (completer) {
                             viewModel.onAddClientPressed(context, completer);

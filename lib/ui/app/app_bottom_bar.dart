@@ -222,8 +222,8 @@ class _AppBottomBarState extends State<AppBottomBar> {
                       child: IgnorePointer(
                         child: RadioListTile<String>(
                           dense: true,
-                          title:
-                              Text(AppLocalization.of(context).lookup(sortField)),
+                          title: Text(
+                              AppLocalization.of(context).lookup(sortField)),
                           subtitle: sortField == listUIState.sortField
                               ? Text(listUIState.sortAscending
                                   ? AppLocalization.of(context).ascending
@@ -232,7 +232,8 @@ class _AppBottomBarState extends State<AppBottomBar> {
                           groupValue: listUIState.sortField,
                           activeColor: Theme.of(context).accentColor,
                           onChanged: (String value) {
-                            if (value == null && listUIState.sortField == field) {
+                            if (value == null &&
+                                listUIState.sortField == field) {
                               // Is re-selecting
                               widget.onSelectedSortField(field);
                             } else {

@@ -19,6 +19,7 @@ enum InvoiceReportFields {
   client_address2,
   client_shipping_address1,
   client_shipping_address2,
+  client_country,
   status,
   number,
   discount,
@@ -136,7 +137,7 @@ ReportResult invoiceReport(
           value = client.shippingAddress2;
           break;
         case InvoiceReportFields.status:
-          value = staticState.invoiceStatusMap[invoice.statusId]?.name ?? '';
+          value = kInvoiceStatuses[invoice.statusId] ?? '';
           break;
         case InvoiceReportFields.number:
           value = invoice.number;
@@ -224,6 +225,10 @@ ReportResult invoiceReport(
           break;
         case InvoiceReportFields.exchange_rate:
           value = invoice.exchangeRate;
+          break;
+        case InvoiceReportFields.client_country:
+          value = staticState.countryMap[client.countryId]?.name ?? '';
+          break;
       }
 
       if (!ReportResult.matchField(

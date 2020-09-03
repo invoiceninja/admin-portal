@@ -292,13 +292,13 @@ class _$GatewayTokenMetaEntitySerializer
       result
         ..add('exp_month')
         ..add(serializers.serialize(object.expMonth,
-            specifiedType: const FullType(int)));
+            specifiedType: const FullType(String)));
     }
     if (object.expYear != null) {
       result
         ..add('exp_year')
         ..add(serializers.serialize(object.expYear,
-            specifiedType: const FullType(int)));
+            specifiedType: const FullType(String)));
     }
     return result;
   }
@@ -329,11 +329,11 @@ class _$GatewayTokenMetaEntitySerializer
           break;
         case 'exp_month':
           result.expMonth = serializers.deserialize(value,
-              specifiedType: const FullType(int)) as int;
+              specifiedType: const FullType(String)) as String;
           break;
         case 'exp_year':
           result.expYear = serializers.deserialize(value,
-              specifiedType: const FullType(int)) as int;
+              specifiedType: const FullType(String)) as String;
           break;
       }
     }
@@ -849,9 +849,9 @@ class _$GatewayTokenMetaEntity extends GatewayTokenMetaEntity {
   @override
   final String type;
   @override
-  final int expMonth;
+  final String expMonth;
   @override
-  final int expYear;
+  final String expYear;
 
   factory _$GatewayTokenMetaEntity(
           [void Function(GatewayTokenMetaEntityBuilder) updates]) =>
@@ -918,13 +918,13 @@ class GatewayTokenMetaEntityBuilder
   String get type => _$this._type;
   set type(String type) => _$this._type = type;
 
-  int _expMonth;
-  int get expMonth => _$this._expMonth;
-  set expMonth(int expMonth) => _$this._expMonth = expMonth;
+  String _expMonth;
+  String get expMonth => _$this._expMonth;
+  set expMonth(String expMonth) => _$this._expMonth = expMonth;
 
-  int _expYear;
-  int get expYear => _$this._expYear;
-  set expYear(int expYear) => _$this._expYear = expYear;
+  String _expYear;
+  String get expYear => _$this._expYear;
+  set expYear(String expYear) => _$this._expYear = expYear;
 
   GatewayTokenMetaEntityBuilder();
 

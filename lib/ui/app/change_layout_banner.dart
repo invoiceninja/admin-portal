@@ -50,6 +50,8 @@ class _ChangeLayoutBannerState extends State<ChangeLayoutBanner> {
     }
 
     return SafeArea(
+      top: message != null,
+      bottom: message != null,
       child: Column(
         children: [
           AnimatedContainer(

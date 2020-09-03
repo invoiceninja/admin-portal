@@ -73,7 +73,10 @@ class CompanyGatewayListItem extends StatelessWidget {
             children: <Widget>[
               Expanded(
                 child: Text(
-                  companyGateway.label,
+                  companyGateway.label +
+                      (companyGateway.isTestMode
+                          ? ' [${AppLocalization.of(context).testMode}]'
+                          : ''),
                   style: Theme.of(context).textTheme.headline6,
                 ),
               ),

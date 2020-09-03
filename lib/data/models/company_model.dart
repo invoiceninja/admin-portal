@@ -854,9 +854,6 @@ abstract class SettingsEntity
           clientSettings?.customMessageUnapprovedQuote ??
               groupSettings?.customMessageUnapprovedQuote ??
               companySettings?.customMessageUnapprovedQuote,
-      lockSentInvoices: clientSettings?.lockSentInvoices ??
-          groupSettings?.lockSentInvoices ??
-          companySettings?.lockSentInvoices,
       autoArchiveInvoice: clientSettings?.autoArchiveInvoice ??
           groupSettings?.autoArchiveInvoice ??
           companySettings?.autoArchiveInvoice,
@@ -1200,6 +1197,9 @@ abstract class SettingsEntity
       gmailSendingUserId: clientSettings?.gmailSendingUserId ??
           groupSettings?.gmailSendingUserId ??
           companySettings?.gmailSendingUserId,
+      autoBill: clientSettings?.autoBill ??
+          groupSettings?.autoBill ??
+          companySettings?.autoBill,
     );
   }
 
@@ -1215,6 +1215,11 @@ abstract class SettingsEntity
   static const LOCK_INVOICES_OFF = 'off';
   static const LOCK_INVOICES_SENT = 'when_sent';
   static const LOCK_INVOICES_PAID = 'when_paid';
+
+  static const AUTO_BILL_OFF = 'off';
+  static const AUTO_BILL_OPT_IN = 'optin';
+  static const AUTO_BILL_OPT_OUT = 'optout';
+  static const AUTO_BILL_ALWAYS = 'always';
 
   @nullable
   @BuiltValueField(wireName: 'timezone_id')
@@ -1327,10 +1332,6 @@ abstract class SettingsEntity
   @nullable
   @BuiltValueField(wireName: 'custom_message_unapproved_quote')
   String get customMessageUnapprovedQuote;
-
-  @nullable
-  @BuiltValueField(wireName: 'lock_sent_invoices')
-  bool get lockSentInvoices;
 
   @nullable
   @BuiltValueField(wireName: 'auto_archive_invoice')
@@ -1835,6 +1836,18 @@ abstract class SettingsEntity
   @nullable
   @BuiltValueField(wireName: 'lock_invoices')
   String get lockInvoices;
+
+  @nullable
+  @BuiltValueField(wireName: 'auto_bill')
+  String get autoBill;
+
+  @nullable
+  @BuiltValueField(wireName: 'client_portal_allow_under_payment')
+  bool get clientPortalAllowUnderPayment;
+
+  @nullable
+  @BuiltValueField(wireName: 'client_portal_allow_over_payment')
+  bool get clientPortalAllowOverPayment;
 
   // TODO remove this field
   @nullable

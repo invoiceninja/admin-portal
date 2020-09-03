@@ -25,11 +25,10 @@ analyzer:
   strong-mode:
     implicit-dynamic: false
   errors:
-    # treat missing required parameters as a warning (not a hint)
+    # https://github.com/flutter/flutter/issues/41563#issuecomment-686481533
+    undefined_prefixed_name: ignore
     missing_required_param: warning
-    # treat missing returns as a warning (not a hint)
     missing_return: warning
-    # allow having TODOs in the code
     todo: ignore
   exclude:
     - 'bin/cache/**'

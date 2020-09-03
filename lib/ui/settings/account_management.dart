@@ -8,6 +8,7 @@ import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/redux/settings/settings_actions.dart';
 import 'package:invoiceninja_flutter/ui/app/app_header.dart';
 import 'package:invoiceninja_flutter/ui/app/buttons/elevated_button.dart';
+import 'package:invoiceninja_flutter/ui/app/dialogs/loading_dialog.dart';
 import 'package:invoiceninja_flutter/ui/app/form_card.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/app_form.dart';
 import 'package:invoiceninja_flutter/ui/app/edit_scaffold.dart';
@@ -171,14 +172,28 @@ class _AccountOverview extends StatelessWidget {
                           final credentials = state.credentials;
                           final url =
                               '${credentials.url}/claim_license?license_key=$value';
+
+                          showDialog<AlertDialog>(
+                              context: context,
+                              barrierDismissible: false,
+                              builder: (BuildContext context) => SimpleDialog(
+                                    children: <Widget>[LoadingDialog()],
+                                  ));
+
                           WebClient()
                               .post(
                             url,
                             credentials.token,
                           )
                               .then((dynamic response) {
+                            if (Navigator.of(context).canPop()) {
+                              Navigator.of(context).pop();
+                            }
                             viewModel.onAppliedLicense();
                           }).catchError((dynamic error) {
+                            if (Navigator.of(context).canPop()) {
+                              Navigator.of(context).pop();
+                            }
                             showErrorDialog(
                                 context: context, message: '$error');
                           });

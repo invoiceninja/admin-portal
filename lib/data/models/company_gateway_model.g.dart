@@ -165,6 +165,9 @@ class _$CompanyGatewayEntitySerializer
       'token_billing',
       serializers.serialize(object.tokenBilling,
           specifiedType: const FullType(String)),
+      'test_mode',
+      serializers.serialize(object.isTestMode,
+          specifiedType: const FullType(bool)),
       'label',
       serializers.serialize(object.label,
           specifiedType: const FullType(String)),
@@ -269,6 +272,10 @@ class _$CompanyGatewayEntitySerializer
         case 'token_billing':
           result.tokenBilling = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String;
+          break;
+        case 'test_mode':
+          result.isTestMode = serializers.deserialize(value,
+              specifiedType: const FullType(bool)) as bool;
           break;
         case 'label':
           result.label = serializers.deserialize(value,
@@ -656,6 +663,8 @@ class _$CompanyGatewayEntity extends CompanyGatewayEntity {
   @override
   final String tokenBilling;
   @override
+  final bool isTestMode;
+  @override
   final String label;
   @override
   final bool isChanged;
@@ -691,6 +700,7 @@ class _$CompanyGatewayEntity extends CompanyGatewayEntity {
       this.customValue4,
       this.config,
       this.tokenBilling,
+      this.isTestMode,
       this.label,
       this.isChanged,
       this.createdAt,
@@ -747,6 +757,9 @@ class _$CompanyGatewayEntity extends CompanyGatewayEntity {
       throw new BuiltValueNullFieldError(
           'CompanyGatewayEntity', 'tokenBilling');
     }
+    if (isTestMode == null) {
+      throw new BuiltValueNullFieldError('CompanyGatewayEntity', 'isTestMode');
+    }
     if (label == null) {
       throw new BuiltValueNullFieldError('CompanyGatewayEntity', 'label');
     }
@@ -789,6 +802,7 @@ class _$CompanyGatewayEntity extends CompanyGatewayEntity {
         customValue4 == other.customValue4 &&
         config == other.config &&
         tokenBilling == other.tokenBilling &&
+        isTestMode == other.isTestMode &&
         label == other.label &&
         isChanged == other.isChanged &&
         createdAt == other.createdAt &&
@@ -821,17 +835,17 @@ class _$CompanyGatewayEntity extends CompanyGatewayEntity {
                                                                 $jc(
                                                                     $jc(
                                                                         $jc(
-                                                                            $jc($jc($jc(0, gatewayId.hashCode), acceptedCreditCards.hashCode),
-                                                                                showBillingAddress.hashCode),
-                                                                            showShippingAddress.hashCode),
-                                                                        updateDetails.hashCode),
-                                                                    feesAndLimitsMap.hashCode),
-                                                                customValue1.hashCode),
-                                                            customValue2.hashCode),
-                                                        customValue3.hashCode),
-                                                    customValue4.hashCode),
-                                                config.hashCode),
-                                            tokenBilling.hashCode),
+                                                                            $jc($jc($jc($jc(0, gatewayId.hashCode), acceptedCreditCards.hashCode), showBillingAddress.hashCode),
+                                                                                showShippingAddress.hashCode),
+                                                                            updateDetails.hashCode),
+                                                                        feesAndLimitsMap.hashCode),
+                                                                    customValue1.hashCode),
+                                                                customValue2.hashCode),
+                                                            customValue3.hashCode),
+                                                        customValue4.hashCode),
+                                                    config.hashCode),
+                                                tokenBilling.hashCode),
+                                            isTestMode.hashCode),
                                         label.hashCode),
                                     isChanged.hashCode),
                                 createdAt.hashCode),
@@ -858,6 +872,7 @@ class _$CompanyGatewayEntity extends CompanyGatewayEntity {
           ..add('customValue4', customValue4)
           ..add('config', config)
           ..add('tokenBilling', tokenBilling)
+          ..add('isTestMode', isTestMode)
           ..add('label', label)
           ..add('isChanged', isChanged)
           ..add('createdAt', createdAt)
@@ -931,6 +946,10 @@ class CompanyGatewayEntityBuilder
   String get tokenBilling => _$this._tokenBilling;
   set tokenBilling(String tokenBilling) => _$this._tokenBilling = tokenBilling;
 
+  bool _isTestMode;
+  bool get isTestMode => _$this._isTestMode;
+  set isTestMode(bool isTestMode) => _$this._isTestMode = isTestMode;
+
   String _label;
   String get label => _$this._label;
   set label(String label) => _$this._label = label;
@@ -985,6 +1004,7 @@ class CompanyGatewayEntityBuilder
       _customValue4 = _$v.customValue4;
       _config = _$v.config;
       _tokenBilling = _$v.tokenBilling;
+      _isTestMode = _$v.isTestMode;
       _label = _$v.label;
       _isChanged = _$v.isChanged;
       _createdAt = _$v.createdAt;
@@ -1030,6 +1050,7 @@ class CompanyGatewayEntityBuilder
               customValue4: customValue4,
               config: config,
               tokenBilling: tokenBilling,
+              isTestMode: isTestMode,
               label: label,
               isChanged: isChanged,
               createdAt: createdAt,

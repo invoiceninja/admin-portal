@@ -58,12 +58,6 @@ class _$StaticStateSerializer implements StructuredSerializer<StaticState> {
       serializers.serialize(object.countryMap,
           specifiedType: const FullType(BuiltMap,
               const [const FullType(String), const FullType(CountryEntity)])),
-      'invoiceStatusMap',
-      serializers.serialize(object.invoiceStatusMap,
-          specifiedType: const FullType(BuiltMap, const [
-            const FullType(String),
-            const FullType(InvoiceStatusEntity)
-          ])),
     ];
     if (object.updatedAt != null) {
       result
@@ -150,13 +144,6 @@ class _$StaticStateSerializer implements StructuredSerializer<StaticState> {
                 const FullType(CountryEntity)
               ])));
           break;
-        case 'invoiceStatusMap':
-          result.invoiceStatusMap.replace(serializers.deserialize(value,
-              specifiedType: const FullType(BuiltMap, const [
-                const FullType(String),
-                const FullType(InvoiceStatusEntity)
-              ])));
-          break;
       }
     }
 
@@ -185,8 +172,6 @@ class _$StaticState extends StaticState {
   final BuiltMap<String, PaymentTypeEntity> paymentTypeMap;
   @override
   final BuiltMap<String, CountryEntity> countryMap;
-  @override
-  final BuiltMap<String, InvoiceStatusEntity> invoiceStatusMap;
 
   factory _$StaticState([void Function(StaticStateBuilder) updates]) =>
       (new StaticStateBuilder()..update(updates)).build();
@@ -201,8 +186,7 @@ class _$StaticState extends StaticState {
       this.dateFormatMap,
       this.languageMap,
       this.paymentTypeMap,
-      this.countryMap,
-      this.invoiceStatusMap})
+      this.countryMap})
       : super._() {
     if (currencyMap == null) {
       throw new BuiltValueNullFieldError('StaticState', 'currencyMap');
@@ -231,9 +215,6 @@ class _$StaticState extends StaticState {
     if (countryMap == null) {
       throw new BuiltValueNullFieldError('StaticState', 'countryMap');
     }
-    if (invoiceStatusMap == null) {
-      throw new BuiltValueNullFieldError('StaticState', 'invoiceStatusMap');
-    }
   }
 
   @override
@@ -256,8 +237,7 @@ class _$StaticState extends StaticState {
         dateFormatMap == other.dateFormatMap &&
         languageMap == other.languageMap &&
         paymentTypeMap == other.paymentTypeMap &&
-        countryMap == other.countryMap &&
-        invoiceStatusMap == other.invoiceStatusMap;
+        countryMap == other.countryMap;
   }
 
   int __hashCode;
@@ -271,18 +251,16 @@ class _$StaticState extends StaticState {
                         $jc(
                             $jc(
                                 $jc(
-                                    $jc(
-                                        $jc($jc(0, updatedAt.hashCode),
-                                            currencyMap.hashCode),
-                                        sizeMap.hashCode),
-                                    gatewayMap.hashCode),
-                                industryMap.hashCode),
-                            timezoneMap.hashCode),
-                        dateFormatMap.hashCode),
-                    languageMap.hashCode),
-                paymentTypeMap.hashCode),
-            countryMap.hashCode),
-        invoiceStatusMap.hashCode));
+                                    $jc($jc(0, updatedAt.hashCode),
+                                        currencyMap.hashCode),
+                                    sizeMap.hashCode),
+                                gatewayMap.hashCode),
+                            industryMap.hashCode),
+                        timezoneMap.hashCode),
+                    dateFormatMap.hashCode),
+                languageMap.hashCode),
+            paymentTypeMap.hashCode),
+        countryMap.hashCode));
   }
 
   @override
@@ -297,8 +275,7 @@ class _$StaticState extends StaticState {
           ..add('dateFormatMap', dateFormatMap)
           ..add('languageMap', languageMap)
           ..add('paymentTypeMap', paymentTypeMap)
-          ..add('countryMap', countryMap)
-          ..add('invoiceStatusMap', invoiceStatusMap))
+          ..add('countryMap', countryMap))
         .toString();
   }
 }
@@ -364,14 +341,6 @@ class StaticStateBuilder implements Builder<StaticState, StaticStateBuilder> {
   set countryMap(MapBuilder<String, CountryEntity> countryMap) =>
       _$this._countryMap = countryMap;
 
-  MapBuilder<String, InvoiceStatusEntity> _invoiceStatusMap;
-  MapBuilder<String, InvoiceStatusEntity> get invoiceStatusMap =>
-      _$this._invoiceStatusMap ??=
-          new MapBuilder<String, InvoiceStatusEntity>();
-  set invoiceStatusMap(
-          MapBuilder<String, InvoiceStatusEntity> invoiceStatusMap) =>
-      _$this._invoiceStatusMap = invoiceStatusMap;
-
   StaticStateBuilder();
 
   StaticStateBuilder get _$this {
@@ -386,7 +355,6 @@ class StaticStateBuilder implements Builder<StaticState, StaticStateBuilder> {
       _languageMap = _$v.languageMap?.toBuilder();
       _paymentTypeMap = _$v.paymentTypeMap?.toBuilder();
       _countryMap = _$v.countryMap?.toBuilder();
-      _invoiceStatusMap = _$v.invoiceStatusMap?.toBuilder();
       _$v = null;
     }
     return this;
@@ -420,8 +388,7 @@ class StaticStateBuilder implements Builder<StaticState, StaticStateBuilder> {
               dateFormatMap: dateFormatMap.build(),
               languageMap: languageMap.build(),
               paymentTypeMap: paymentTypeMap.build(),
-              countryMap: countryMap.build(),
-              invoiceStatusMap: invoiceStatusMap.build());
+              countryMap: countryMap.build());
     } catch (_) {
       String _$failedField;
       try {
@@ -443,8 +410,6 @@ class StaticStateBuilder implements Builder<StaticState, StaticStateBuilder> {
         paymentTypeMap.build();
         _$failedField = 'countryMap';
         countryMap.build();
-        _$failedField = 'invoiceStatusMap';
-        invoiceStatusMap.build();
       } catch (e) {
         throw new BuiltValueNestedFieldError(
             'StaticState', _$failedField, e.toString());

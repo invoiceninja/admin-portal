@@ -16,7 +16,8 @@ class DashboardDateRangePicker extends StatefulWidget {
   final Function(DashboardSettings) onSettingsChanged;
 
   @override
-  _DashboardDateRangePickerState createState() => _DashboardDateRangePickerState();
+  _DashboardDateRangePickerState createState() =>
+      _DashboardDateRangePickerState();
 }
 
 class _DashboardDateRangePickerState extends State<DashboardDateRangePicker> {
