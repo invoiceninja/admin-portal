@@ -82,6 +82,7 @@ abstract class CompanyGatewayEntity extends Object
       createdAt: 0,
       label: '',
       tokenBilling: TOKEN_BILLING_ALWAYS,
+      isTestMode: false,
     );
   }
 
@@ -135,6 +136,9 @@ abstract class CompanyGatewayEntity extends Object
 
   @BuiltValueField(wireName: 'token_billing')
   String get tokenBilling;
+
+  @BuiltValueField(wireName: 'test_mode')
+  bool get isTestMode;
 
   String get label;
 
