@@ -854,9 +854,6 @@ abstract class SettingsEntity
           clientSettings?.customMessageUnapprovedQuote ??
               groupSettings?.customMessageUnapprovedQuote ??
               companySettings?.customMessageUnapprovedQuote,
-      lockSentInvoices: clientSettings?.lockSentInvoices ??
-          groupSettings?.lockSentInvoices ??
-          companySettings?.lockSentInvoices,
       autoArchiveInvoice: clientSettings?.autoArchiveInvoice ??
           groupSettings?.autoArchiveInvoice ??
           companySettings?.autoArchiveInvoice,
@@ -1335,10 +1332,6 @@ abstract class SettingsEntity
   @nullable
   @BuiltValueField(wireName: 'custom_message_unapproved_quote')
   String get customMessageUnapprovedQuote;
-
-  @nullable
-  @BuiltValueField(wireName: 'lock_sent_invoices')
-  bool get lockSentInvoices;
 
   @nullable
   @BuiltValueField(wireName: 'auto_archive_invoice')
@@ -1847,6 +1840,14 @@ abstract class SettingsEntity
   @nullable
   @BuiltValueField(wireName: 'auto_bill')
   String get autoBill;
+
+  @nullable
+  @BuiltValueField(wireName: 'client_portal_allow_under_payment')
+  bool get clientPortalAllowUnderPayment;
+
+  @nullable
+  @BuiltValueField(wireName: 'client_portal_allow_over_payment')
+  bool get clientPortalAllowOverPayment;
 
   // TODO remove this field
   @nullable
