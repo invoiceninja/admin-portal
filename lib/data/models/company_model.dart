@@ -1200,6 +1200,9 @@ abstract class SettingsEntity
       gmailSendingUserId: clientSettings?.gmailSendingUserId ??
           groupSettings?.gmailSendingUserId ??
           companySettings?.gmailSendingUserId,
+      autoBill: clientSettings?.autoBill ??
+          groupSettings?.autoBill ??
+          companySettings?.autoBill,
     );
   }
 
@@ -1215,6 +1218,11 @@ abstract class SettingsEntity
   static const LOCK_INVOICES_OFF = 'off';
   static const LOCK_INVOICES_SENT = 'when_sent';
   static const LOCK_INVOICES_PAID = 'when_paid';
+
+  static const AUTO_BILL_OFF = 'off';
+  static const AUTO_BILL_OPT_IN = 'optin';
+  static const AUTO_BILL_OPT_OUT = 'optout';
+  static const AUTO_BILL_ALWAYS = 'always';
 
   @nullable
   @BuiltValueField(wireName: 'timezone_id')
@@ -1835,6 +1843,10 @@ abstract class SettingsEntity
   @nullable
   @BuiltValueField(wireName: 'lock_invoices')
   String get lockInvoices;
+
+  @nullable
+  @BuiltValueField(wireName: 'auto_bill')
+  String get autoBill;
 
   // TODO remove this field
   @nullable
