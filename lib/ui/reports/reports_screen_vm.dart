@@ -461,14 +461,15 @@ GroupTotals calculateReportTotals({
         if (!totals['$group'].containsKey(column)) {
           totals['$group'][column] = 0;
         }
-        double cellValue = cell.value;
         if (cell is ReportNumberValue &&
             cell.currencyId != company.currencyId) {
+          double cellValue = cell.value;
           cellValue *= getExchangeRateWithMap(currencyMap,
               fromCurrencyId: cell.currencyId,
               toCurrencyId: company.currencyId);
+        } else {
+          totals['$group'][column] += cell.value;
         }
-        totals['$group'][column] += cellValue;
       }
     }
   }

@@ -581,7 +581,8 @@ class ReportDataTableSource extends DataTableSource {
     if (reportState.group.isEmpty || reportState.isGroupByFiltered) {
       return viewModel.reportResult.data.length + 1;
     } else {
-      return viewModel.groupTotals.totals.length + 1;
+      return viewModel.groupTotals.totals == null ? 1 : viewModel.groupTotals
+          .totals.length + 1;
     }
   }
 
