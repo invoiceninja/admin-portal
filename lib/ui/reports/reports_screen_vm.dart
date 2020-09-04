@@ -467,6 +467,7 @@ GroupTotals calculateReportTotals({
           cellValue *= getExchangeRateWithMap(currencyMap,
               fromCurrencyId: cell.currencyId,
               toCurrencyId: company.currencyId);
+          totals['$group'][column] += cellValue;
         } else {
           totals['$group'][column] += cell.value;
         }
