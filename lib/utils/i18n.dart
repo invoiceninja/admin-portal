@@ -15,6 +15,11 @@ mixin LocalizationsProvider on LocaleCodeAware {
   static final Map<String, Map<String, String>> _localizedValues = {
     'en': {
       // STARTER: lang key - do not remove comment
+      'allow_over_payment': 'Allow Over Payment',
+      'allow_over_payment_help': 'Support paying extra to accept tips',
+      'allow_under_payment': 'Allow Under Payment',
+      'allow_under_payment_help':
+          'Support paying at minimum the partial/deposit amount',
       'test_mode': 'Test Mode',
       'opened': 'opened',
       'payment_reconciliation_failure': 'Reconciliation Failure',
@@ -4466,6 +4471,18 @@ mixin LocalizationsProvider on LocaleCodeAware {
   String get opened => _localizedValues[localeCode]['opened'] ?? '';
 
   String get testMode => _localizedValues[localeCode]['test_mode'] ?? '';
+
+  String get allowOverPayment =>
+      _localizedValues[localeCode]['allow_over_payment'] ?? '';
+
+  String get allowOverPaymentHelp =>
+      _localizedValues[localeCode]['allow_over_payment_help'] ?? '';
+
+  String get allowUnderPayment =>
+      _localizedValues[localeCode]['allow_under_payment'] ?? '';
+
+  String get allowUnderPaymentHelp =>
+      _localizedValues[localeCode]['allow_under_payment_help'] ?? '';
 
   String lookup(String key) {
     final lookupKey = toSnakeCase(key);

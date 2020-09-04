@@ -106,7 +106,7 @@ class _DashboardChartState extends State<DashboardChart> {
     );
 
     return Container(
-      child: FormCard(
+      child: _FormCard(
         children: <Widget>[
           Padding(
             padding: EdgeInsets.all(16),
@@ -233,8 +233,8 @@ class _DashboardChartState extends State<DashboardChart> {
   }
 }
 
-class FormCard extends StatelessWidget {
-  const FormCard({
+class _FormCard extends StatelessWidget {
+  const _FormCard({
     Key key,
     @required this.children,
   }) : super(key: key);

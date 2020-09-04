@@ -36,6 +36,7 @@ class CompanyGatewayListItem extends StatelessWidget {
     final store = StoreProvider.of<AppState>(context);
     final state = store.state;
 
+    final localization = AppLocalization.of(context);
     final filterMatch = filter != null && filter.isNotEmpty
         ? companyGateway.matchesFilterValue(filter)
         : null;
@@ -53,53 +54,68 @@ class CompanyGatewayListItem extends StatelessWidget {
         trailing: onRemovePressed == null
             ? null
             : FlatButton(
-                child: Text(AppLocalization.of(context).remove),
-                onPressed: onRemovePressed,
-              ),
+          child: Text(AppLocalization
+              .of(context)
+              .remove),
+          onPressed: onRemovePressed,
+        ),
         leading: showCheckbox
             ? IgnorePointer(
-                ignoring: listUIState.isInMultiselect(),
-                child: Checkbox(
-                  value: isChecked,
-                  materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
-                  onChanged: (value) => onCheckboxChanged(value),
-                  activeColor: Theme.of(context).accentColor,
-                ),
-              )
+          ignoring: listUIState.isInMultiselect(),
+          child: Checkbox(
+            value: isChecked,
+            materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
+            onChanged: (value) => onCheckboxChanged(value),
+            activeColor: Theme
+                .of(context)
+                .accentColor,
+          ),
+        )
             : Icon(Icons.drag_handle),
         title: Container(
-          width: MediaQuery.of(context).size.width,
+          width: MediaQuery
+              .of(context)
+              .size
+              .width,
           child: Row(
-            children: <Widget>[
-              Expanded(
-                child: Text(
-                  companyGateway.label +
-                      (companyGateway.isTestMode
-                          ? ' [${AppLocalization.of(context).testMode}]'
-                          : ''),
-                  style: Theme.of(context).textTheme.headline6,
-                ),
-              ),
-              Text(formatNumber(companyGateway.listDisplayAmount, context),
-                  style: Theme.of(context).textTheme.headline6),
-            ],
-          ),
-        ),
-        subtitle: Column(
-          mainAxisSize: MainAxisSize.min,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: <Widget>[
-            subtitle != null && subtitle.isNotEmpty
-                ? Text(
-                    subtitle,
-                    maxLines: 3,
-                    overflow: TextOverflow.ellipsis,
-                  )
-                : Container(),
-            EntityStateLabel(companyGateway),
-          ],
+              children: <Widget>[
+          Expanded(
+          child: Text(
+              companyGateway.label,
+          style: Theme
+              .of(context)
+              .textTheme
+              .headline6,
         ),
       ),
+      Text(formatNumber(companyGateway.listDisplayAmount, context),
+          style: Theme
+              .of(context)
+              .textTheme
+              .headline6),
+      ],
+    ),
+    ),
+    subtitle: Column(
+    mainAxisSize: MainAxisSize.min,
+    crossAxisAlignment: CrossAxisAlignment.start,
+    children: <Widget>[
+    if (companyGateway.isTestMode)
+    Text(localization.testMode),
+    subtitle != null && subtitle.isNotEmpty
+    ? Text(
+    subtitle,
+    maxLines: 3,
+    overflow: TextOverflow.ellipsis,
+    )
+        : Container(),
+    EntityStateLabel(companyGateway),
+    ]
+    ,
+    )
+    ,
+    )
+    ,
     );
   }
 }

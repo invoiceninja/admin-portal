@@ -64,25 +64,23 @@ class CompanyGatewayScreen extends StatelessWidget {
             onCancelPressed: (context) =>
                 store.dispatch(ClearCompanyGatewayMultiselect()),
           )
-        else if (state.companyGatewayState.list.isNotEmpty) ...[
-          if (state.uiState.settingsUIState.isFiltered) ...[
-            FlatButton(
-              child: Text(localization.reset,
-                  style: TextStyle(color: store.state.headerTextColor)),
-              onPressed: () {
-                final settings = store.state.uiState.settingsUIState.settings
-                    .rebuild((b) => b..companyGatewayIds = '');
-                store.dispatch(UpdateSettings(settings: settings));
-              },
-            ),
-            SizedBox(width: 10),
-          ],
-          SaveCancelButtons(
-            isSaving: state.isSaving,
-            onSavePressed: viewModel.onSavePressed,
-            onCancelPressed: (_) => store.dispatch(ResetSettings()),
-          )
+        else if (state.uiState.settingsUIState.isFiltered) ...[
+          FlatButton(
+            child: Text(localization.reset,
+                style: TextStyle(color: store.state.headerTextColor)),
+            onPressed: () {
+              final settings = store.state.uiState.settingsUIState.settings
+                  .rebuild((b) => b..companyGatewayIds = '');
+              store.dispatch(UpdateSettings(settings: settings));
+            },
+          ),
+          SizedBox(width: 10),
         ],
+        SaveCancelButtons(
+          isSaving: state.isSaving,
+          onSavePressed: viewModel.onSavePressed,
+          onCancelPressed: (_) => store.dispatch(ResetSettings()),
+        )
       ],
       body: CompanyGatewayListBuilder(),
       bottomNavigationBar: AppBottomBar(
