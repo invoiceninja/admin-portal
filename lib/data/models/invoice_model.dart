@@ -183,6 +183,10 @@ abstract class InvoiceEntity extends Object
     ..number = ''
     ..date = convertDateTimeToSqlDate()
     ..dueDate = ''
+    ..lineItems.replace(lineItems
+        .where(
+            (lineItem) => lineItem.typeId != InvoiceItemEntity.TYPE_UNPAID_FEE)
+        .toList())
     ..invitations.replace(invitations
         .map((invitation) => InvitationEntity(contactId: invitation.contactId))
         .toList()));
@@ -933,6 +937,11 @@ abstract class InvoiceItemEntity
   }
 
   InvoiceItemEntity._();
+
+  static const TYPE_STANDARD = '1';
+  static const TYPE_TASK = '2';
+  static const TYPE_UNPAID_FEE = '3';
+  static const TYPE_PAID_FEE = '3';
 
   @override
   @memoized
