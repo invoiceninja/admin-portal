@@ -1038,20 +1038,20 @@ class ReportResult {
       final group = groupTotals.rows[index - 1];
       final values = viewModel.groupTotals.totals[group];
       final cells = <DataCell>[];
+      final localization = AppLocalization.of(context);
+
       for (var column in sortedColumns(reportState)) {
         String value = '';
         final columnType = getReportColumnType(column, context);
         if (column == groupBy) {
           if (group.isEmpty) {
-            value = AppLocalization
-                .of(context)
-                .blank;
+            value = localization.blank;
           } else if (columnType ==
               ReportColumnType.dateTime ||
               columnType == ReportColumnType.date) {
             value = formatDate(group, context);
           } else if (columnType == ReportColumnType.age) {
-            value = AppLocalization.of(context).lookup(group);
+            value = localization.lookup(group);
           } else {
             value = group;
           }
@@ -1085,13 +1085,9 @@ class ReportResult {
               }
             } else if (getReportColumnType(column, context) ==
                 ReportColumnType.bool) {
-              filter = filter == AppLocalization
-                  .of(context)
-                  .yes
+              filter = filter == localization.yes
                   ? 'true'
-                  : filter == AppLocalization
-                  .of(context)
-                  .no ? 'false' : '';
+                  : filter == localization.no ? 'false' : '';
             }
             store.dispatch(
               UpdateReportSettings(

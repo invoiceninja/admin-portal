@@ -8,6 +8,7 @@ import 'package:flutter/widgets.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:invoiceninja_flutter/constants.dart';
 import 'package:invoiceninja_flutter/data/models/company_model.dart';
+import 'package:invoiceninja_flutter/data/models/static/currency_model.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/redux/reports/reports_actions.dart';
 import 'package:invoiceninja_flutter/redux/reports/reports_state.dart';
@@ -26,6 +27,7 @@ import 'package:invoiceninja_flutter/ui/reports/tax_rate_report.dart';
 import 'package:invoiceninja_flutter/utils/completers.dart';
 import 'package:invoiceninja_flutter/utils/formatting.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
+import 'package:invoiceninja_flutter/utils/money.dart';
 import 'package:invoiceninja_flutter/utils/strings.dart';
 import 'package:memoize/memoize.dart';
 import 'package:path_provider/path_provider.dart';
@@ -225,6 +227,8 @@ class ReportsScreenVM {
       reportResult,
       state.uiState.reportsUIState,
       reportSettings,
+      state.staticState.currencyMap,
+      state.company,
     );
 
     return ReportsScreenVM(
@@ -381,20 +385,27 @@ class GroupTotals {
   final List<String> rows;
 }
 
-var memoizeedGroupTotals = memo3((
+var memoizeedGroupTotals = memo5((
   ReportResult reportResult,
   ReportsUIState reportUIState,
   ReportSettingsEntity reportSettings,
+  BuiltMap<String, CurrencyEntity> currencyMap,
+  CompanyEntity company,
 ) =>
     calculateReportTotals(
-        reportResult: reportResult,
-        reportState: reportUIState,
-        reportSettings: reportSettings));
+      reportResult: reportResult,
+      reportState: reportUIState,
+      reportSettings: reportSettings,
+      currencyMap: currencyMap,
+      company: company,
+    ));
 
 GroupTotals calculateReportTotals({
   ReportResult reportResult,
   ReportsUIState reportState,
   ReportSettingsEntity reportSettings,
+  BuiltMap<String, CurrencyEntity> currencyMap,
+  CompanyEntity company,
 }) {
   final Map<String, Map<String, double>> totals = {};
   final data = reportResult.data;
@@ -450,7 +461,14 @@ GroupTotals calculateReportTotals({
         if (!totals['$group'].containsKey(column)) {
           totals['$group'][column] = 0;
         }
-        totals['$group'][column] += cell.value;
+        double cellValue = cell.value;
+        if (cell is ReportNumberValue &&
+            cell.currencyId != company.currencyId) {
+          cellValue *= getExchangeRateWithMap(currencyMap,
+              fromCurrencyId: cell.currencyId,
+              toCurrencyId: company.currencyId);
+        }
+        totals['$group'][column] += cellValue;
       }
     }
   }
