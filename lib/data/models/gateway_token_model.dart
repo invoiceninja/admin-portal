@@ -196,7 +196,7 @@ abstract class GatewayTokenMetaEntity
   String get last4;
 
   @nullable
-  String get type;
+  int get type;
 
   @nullable
   @BuiltValueField(wireName: 'exp_month')

@@ -286,7 +286,7 @@ class _$GatewayTokenMetaEntitySerializer
       result
         ..add('type')
         ..add(serializers.serialize(object.type,
-            specifiedType: const FullType(String)));
+            specifiedType: const FullType(int)));
     }
     if (object.expMonth != null) {
       result
@@ -325,7 +325,7 @@ class _$GatewayTokenMetaEntitySerializer
           break;
         case 'type':
           result.type = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String;
+              specifiedType: const FullType(int)) as int;
           break;
         case 'exp_month':
           result.expMonth = serializers.deserialize(value,
@@ -847,7 +847,7 @@ class _$GatewayTokenMetaEntity extends GatewayTokenMetaEntity {
   @override
   final String last4;
   @override
-  final String type;
+  final int type;
   @override
   final String expMonth;
   @override
@@ -914,9 +914,9 @@ class GatewayTokenMetaEntityBuilder
   String get last4 => _$this._last4;
   set last4(String last4) => _$this._last4 = last4;
 
-  String _type;
-  String get type => _$this._type;
-  set type(String type) => _$this._type = type;
+  int _type;
+  int get type => _$this._type;
+  set type(int type) => _$this._type = type;
 
   String _expMonth;
   String get expMonth => _$this._expMonth;
