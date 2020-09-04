@@ -2,6 +2,8 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
+import 'package:invoiceninja_flutter/ui/app/form_card.dart';
+import 'package:invoiceninja_flutter/ui/app/forms/bool_dropdown_button.dart';
 import 'package:invoiceninja_flutter/ui/app/help_text.dart';
 import 'package:invoiceninja_flutter/ui/app/loading_indicator.dart';
 import 'package:invoiceninja_flutter/ui/company_gateway/company_gateway_list_item.dart';
@@ -22,12 +24,27 @@ class CompanyGatewayList extends StatelessWidget {
     final state = store.state;
     final listUIState = state.uiState.companyGatewayUIState.listUIState;
     final isInMultiselect = listUIState.isInMultiselect();
+    final localization = AppLocalization.of(context);
+    final settings = viewModel.settings;
 
     return Column(
       children: <Widget>[
-        SizedBox(
-          height: 32,
-        ),
+        FormCard(children: [
+          BoolDropdownButton(
+            label: localization.allowOverPayment,
+            value: settings.clientPortalAllowOverPayment,
+            helpLabel: localization.allowOverPaymentHelp,
+            onChanged: (value) => viewModel.onSettingsChanged(settings
+                .rebuild((b) => b..clientPortalAllowOverPayment = value)),
+          ),
+          BoolDropdownButton(
+            label: localization.allowUnderPayment,
+            value: settings.clientPortalAllowUnderPayment,
+            helpLabel: localization.allowUnderPaymentHelp,
+            onChanged: (value) => viewModel.onSettingsChanged(settings
+                .rebuild((b) => b..clientPortalAllowUnderPayment = value)),
+          ),
+        ]),
         Flexible(
           fit: FlexFit.tight,
           child: !viewModel.state.isLoaded &&
@@ -58,7 +75,7 @@ class CompanyGatewayList extends StatelessWidget {
                             return CompanyGatewayListItem(
                                 key: ValueKey(
                                     '__company_gateway_$companyGatewayId'),
-                                user: viewModel.userCompany.user,
+                                user: state.userCompany.user,
                                 filter: viewModel.filter,
                                 companyGateway: companyGateway,
                                 onRemovePressed:

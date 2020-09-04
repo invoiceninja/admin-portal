@@ -81,18 +81,6 @@ const double kTableColumnWidthMax = 120;
 const int kTableListWidthCutoff = 500;
 const int kDefaultAnimationDuration = 500;
 
-const int kCardTypeVisa = 1;
-const int kCardTypeMasterCard = 2;
-const int kCardTypeAmEx = 4;
-const int kCardTypeDiners = 8;
-const int kCardTypeDiscover = 16;
-
-const String kPaymentTypeVisa = '6';
-const String kPaymentTypeMasterCard = '7';
-const String kPaymentTypeAmEx = '8';
-const String kPaymentTypeDiners = '9';
-const String kPaymentTypeDiscover = '10';
-
 const String kPlanFree = '';
 const String kPlanPro = 'pro';
 const String kPlanEnterprise = 'enterprise';
@@ -118,30 +106,6 @@ const String kCurrencyUSDollar = '1';
 const String kCurrencyEuro = '3';
 
 const String kCountryUnitedStates = '840';
-
-/*
-const EVENT_CREATE_CLIENT = 1;
-const EVENT_CREATE_INVOICE = 2;
-const EVENT_CREATE_QUOTE = 3;
-const EVENT_CREATE_PAYMENT = 4;
-const EVENT_CREATE_VENDOR = 5;
-const EVENT_UPDATE_QUOTE = 6;
-const EVENT_DELETE_QUOTE = 7;
-const EVENT_UPDATE_INVOICE = 8;
-const EVENT_DELETE_INVOICE = 9;
-const EVENT_UPDATE_CLIENT = 10;
-const EVENT_DELETE_CLIENT = 11;
-const EVENT_DELETE_PAYMENT = 12;
-const EVENT_UPDATE_VENDOR = 13;
-const EVENT_DELETE_VENDOR = 14;
-const EVENT_CREATE_EXPENSE = 15;
-const EVENT_UPDATE_EXPENSE = 16;
-const EVENT_DELETE_EXPENSE = 17;
-const EVENT_CREATE_TASK = 18;
-const EVENT_UPDATE_TASK = 19;
-const EVENT_DELETE_TASK = 20;
-const EVENT_APPROVE_QUOTE = 21;
-*/
 
 const String kInvoiceStatusPastDue = '-1';
 const String kInvoiceStatusDraft = '1';

@@ -36,16 +36,16 @@ class CompanyGatewayListBuilder extends StatelessWidget {
 class CompanyGatewayListVM {
   CompanyGatewayListVM({
     @required this.state,
-    @required this.userCompany,
     @required this.companyGatewayList,
     @required this.companyGatewayMap,
     @required this.filter,
-    @required this.isLoading,
     @required this.onCompanyGatewayTap,
     @required this.listState,
     @required this.onRefreshed,
     @required this.onSortChanged,
     @required this.onRemovePressed,
+    @required this.onSettingsChanged,
+    @required this.settings,
   });
 
   static CompanyGatewayListVM fromStore(Store<AppState> store) {
@@ -77,11 +77,10 @@ class CompanyGatewayListVM {
 
     return CompanyGatewayListVM(
       state: state,
-      userCompany: state.userCompany,
       listState: state.companyGatewayListState,
       companyGatewayList: gatewayIds,
+      settings: state.uiState.settingsUIState.settings,
       companyGatewayMap: state.companyGatewayState.map,
-      isLoading: state.isLoading,
       filter: state.companyGatewayUIState.listUIState.filter,
       onCompanyGatewayTap: (context, companyGateway) {
         if (store.state.companyGatewayListState.isInMultiselect()) {
@@ -108,18 +107,20 @@ class CompanyGatewayListVM {
             .rebuild((b) => b..companyGatewayIds = gatewayIds.join(','));
         store.dispatch(UpdateSettings(settings: settings));
       },
+      onSettingsChanged: (settings) =>
+          store.dispatch(UpdateSettings(settings: settings)),
     );
   }
 
   final AppState state;
-  final UserCompanyEntity userCompany;
   final List<String> companyGatewayList;
   final BuiltMap<String, CompanyGatewayEntity> companyGatewayMap;
   final ListUIState listState;
   final String filter;
-  final bool isLoading;
   final Function(BuildContext, CompanyGatewayEntity) onCompanyGatewayTap;
   final Function(BuildContext) onRefreshed;
   final Function(int, int) onSortChanged;
   final Function(String) onRemovePressed;
+  final SettingsEntity settings;
+  final Function(SettingsEntity) onSettingsChanged;
 }
