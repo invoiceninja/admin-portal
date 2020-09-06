@@ -1017,7 +1017,6 @@ class ReportResult {
     final reportState = state.uiState.reportsUIState;
     final groupBy = reportState.group;
     final sorted = sortedColumns(reportState);
-
     if (groupBy.isEmpty || reportState.isGroupByFiltered) {
       final row = data[index - 1];
       final cells = <DataCell>[];
@@ -1034,6 +1033,7 @@ class ReportResult {
           }),
         );
       }
+
       return DataRow(cells: cells);
     } else {
       final groupTotals = viewModel.groupTotals;
@@ -1237,6 +1237,7 @@ class ReportResult {
 
       rows.add(DataRow(cells: cells));
     });
+
 
     return rows;
   }

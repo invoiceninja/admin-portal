@@ -96,11 +96,11 @@ ReportResult lineItemReport(
             value = lineItem.quantity;
             break;
           case LineItemReportFields.cost:
-            value = productId == null ? 0 : productMap[productId].cost;
+            value = productId == null ? 0.0 : productMap[productId].cost;
             break;
           case LineItemReportFields.profit:
             value = productId == null
-                ? 0
+                ? 0.0
                 : lineItem.total - productMap[productId].cost;
             break;
           case LineItemReportFields.custom1:
@@ -151,8 +151,6 @@ ReportResult lineItemReport(
         }
       }
 
-      print('## COLURMSN: $columns');
-      print('## $row, SKIP $skip');
       if (!skip) {
         data.add(row);
       }
