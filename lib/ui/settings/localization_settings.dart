@@ -144,6 +144,7 @@ class _LocalizationSettingsState extends State<LocalizationSettings>
                             currencyId: settings.currencyId),
                   ),
                   EntityDropdown(
+                    showUseDefault: state.settingsUIState.isFiltered,
                     allowClearing: state.settingsUIState.isFiltered,
                     key: ValueKey('__language_${settings.languageId}'),
                     entityType: EntityType.language,
@@ -156,6 +157,7 @@ class _LocalizationSettingsState extends State<LocalizationSettings>
                             .rebuild((b) => b..languageId = language?.id)),
                   ),
                   EntityDropdown(
+                    showUseDefault: state.settingsUIState.isFiltered,
                     allowClearing: state.settingsUIState.isFiltered,
                     key: ValueKey('__timezone_${settings.timezoneId}'),
                     entityType: EntityType.timezone,
@@ -168,6 +170,7 @@ class _LocalizationSettingsState extends State<LocalizationSettings>
                             .rebuild((b) => b..timezoneId = timezone?.id)),
                   ),
                   EntityDropdown(
+                    showUseDefault: state.settingsUIState.isFiltered,
                     allowClearing: state.settingsUIState.isFiltered,
                     key: ValueKey('__date_format_${settings.dateFormatId}'),
                     entityType: EntityType.dateFormat,
