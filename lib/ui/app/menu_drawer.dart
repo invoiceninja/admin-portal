@@ -69,7 +69,7 @@ class MenuDrawer extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.start,
         children: <Widget>[
           _companyLogo(company),
-          SizedBox(width: 28),
+          SizedBox(width: 28, height: kTopBottomBarHeight),
           Expanded(
             child: Text(
               company.displayName.isEmpty
@@ -97,10 +97,17 @@ class MenuDrawer extends StatelessWidget {
 
     final _collapsedCompanySelector = PopupMenuButton<String>(
       tooltip: localization.selectCompany,
-      child: SizedBox(
-        height: kTopBottomBarHeight,
-        width: double.infinity,
-        child: _companyLogo(viewModel.selectedCompany),
+      child: Row(
+        children: [
+          SizedBox(
+            height: 48,
+            width: 32,
+            child: _companyLogo(viewModel.selectedCompany),
+          ),
+          SizedBox(
+            width: 4,
+          )
+        ],
       ),
       color: Theme.of(context).cardColor,
       itemBuilder: (BuildContext context) => [
@@ -142,9 +149,8 @@ class MenuDrawer extends StatelessWidget {
             items: [
               ...state.companies
                   .map((CompanyEntity company) => DropdownMenuItem<String>(
-                        value: (state.companies.indexOf(company)).toString(),
-                        child: _companyListItem(company),
-                      ))
+                      value: (state.companies.indexOf(company)).toString(),
+                      child: _companyListItem(company)))
                   .toList(),
               if (viewModel.state.userCompany.isAdmin)
                 DropdownMenuItem<String>(
