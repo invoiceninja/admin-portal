@@ -28,19 +28,26 @@ import 'package:invoiceninja_flutter/redux/settings/settings_actions.dart';
 import 'package:invoiceninja_flutter/redux/task/task_actions.dart';
 import 'package:invoiceninja_flutter/redux/tax_rate/tax_rate_actions.dart';
 import 'package:invoiceninja_flutter/redux/ui/pref_state.dart';
+import 'package:invoiceninja_flutter/redux/ui/ui_actions.dart';
 import 'package:invoiceninja_flutter/redux/user/user_actions.dart';
 import 'package:invoiceninja_flutter/redux/vendor/vendor_actions.dart';
 import 'package:invoiceninja_flutter/ui/app/dialogs/alert_dialog.dart';
 import 'package:invoiceninja_flutter/ui/app/entities/entity_actions_dialog.dart';
+import 'package:invoiceninja_flutter/ui/app/screen_imports.dart';
+import 'package:invoiceninja_flutter/ui/company_gateway/company_gateway_screen.dart';
+import 'package:invoiceninja_flutter/ui/design/design_screen.dart';
+import 'package:invoiceninja_flutter/ui/payment_term/payment_term_screen.dart';
+import 'package:invoiceninja_flutter/ui/tax_rate/tax_rate_screen.dart';
+import 'package:invoiceninja_flutter/ui/token/token_screen.dart';
+import 'package:invoiceninja_flutter/ui/user/user_screen.dart';
+import 'package:invoiceninja_flutter/ui/webhook/webhook_screen.dart';
 import 'package:invoiceninja_flutter/utils/completers.dart';
 import 'package:invoiceninja_flutter/utils/dialogs.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 
 // STARTER: import - do not remove comment
 import 'package:invoiceninja_flutter/redux/webhook/webhook_actions.dart';
-
 import 'package:invoiceninja_flutter/redux/token/token_actions.dart';
-
 import 'package:invoiceninja_flutter/redux/payment_term/payment_term_actions.dart';
 import 'package:invoiceninja_flutter/utils/platforms.dart';
 import 'package:redux/redux.dart';
@@ -1133,10 +1140,40 @@ void handleEntitiesActions(
     return;
   }
 
-  if ([EntityAction.archive, EntityAction.delete].contains(action) &&
-      autoPop &&
-      isMobile(context)) {
-    Navigator.of(context).pop();
+  if ([EntityAction.archive, EntityAction.delete].contains(action) && autoPop) {
+    if (isMobile(context)) {
+      Navigator.of(context).pop();
+    } else if (entities.first.entityType.isSetting) {
+      final store = StoreProvider.of<AppState>(context);
+      switch (entities.first.entityType) {
+        case EntityType.paymentTerm:
+          store.dispatch(UpdateCurrentRoute(PaymentTermScreen.route));
+          break;
+        case EntityType.taxRate:
+          store.dispatch(UpdateCurrentRoute(TaxRateSettingsScreen.route));
+          break;
+        case EntityType.companyGateway:
+          store.dispatch(UpdateCurrentRoute(CompanyGatewayScreen.route));
+          break;
+        case EntityType.user:
+          store.dispatch(UpdateCurrentRoute(UserScreen.route));
+          break;
+        case EntityType.group:
+          store.dispatch(UpdateCurrentRoute(GroupSettingsScreen.route));
+          break;
+        case EntityType.design:
+          store.dispatch(UpdateCurrentRoute(DesignScreen.route));
+          break;
+        case EntityType.token:
+          store.dispatch(UpdateCurrentRoute(TokenScreen.route));
+          break;
+        case EntityType.webhook:
+          store.dispatch(UpdateCurrentRoute(WebhookScreen.route));
+          break;
+        default:
+          print('ERROR: entty type not supported ${entities.first.entityType}');
+      }
+    }
   }
 
   switch (entities.first.entityType) {
