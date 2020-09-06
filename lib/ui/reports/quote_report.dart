@@ -10,7 +10,6 @@ import 'package:memoize/memoize.dart';
 
 enum QuoteReportFields {
   amount,
-  balance,
   client,
   client_balance,
   client_address1,
@@ -19,10 +18,12 @@ enum QuoteReportFields {
   client_shipping_address2,
   client_country,
   status,
+  number,
   discount,
   po_number,
+  date,
   partial_due_date,
-  due_date,
+  valid_until,
   partial,
   auto_bill,
   custom_value1,
@@ -74,10 +75,11 @@ ReportResult quoteReport(
           : ReportSettingsEntity();
 
   final defaultColumns = [
-    QuoteReportFields.amount,
-    QuoteReportFields.balance,
-    QuoteReportFields.due_date,
+    QuoteReportFields.number,
     QuoteReportFields.client,
+    QuoteReportFields.amount,
+    QuoteReportFields.date,
+    QuoteReportFields.valid_until,
   ];
 
   if (quoteReportSettings.columns.isNotEmpty) {
@@ -107,8 +109,8 @@ ReportResult quoteReport(
         case QuoteReportFields.amount:
           value = quote.amount;
           break;
-        case QuoteReportFields.balance:
-          value = quote.balance;
+        case QuoteReportFields.number:
+          value = quote.number;
           break;
         case QuoteReportFields.client:
           value = client.displayName;
@@ -140,7 +142,10 @@ ReportResult quoteReport(
         case QuoteReportFields.partial_due_date:
           value = quote.partialDueDate;
           break;
-        case QuoteReportFields.due_date:
+        case QuoteReportFields.date:
+          value = quote.date;
+          break;
+        case QuoteReportFields.valid_until:
           value = quote.dueDate;
           break;
         case QuoteReportFields.partial:
