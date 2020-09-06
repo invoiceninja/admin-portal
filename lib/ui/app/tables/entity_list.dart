@@ -139,21 +139,35 @@ class _EntityListState extends State<EntityList> {
                   entityType: state.uiState.filterEntityType),
               onClearPressed: () => store.dispatch(ClearEntityFilter()),
             ),
+          /*
           SizedBox(
             height: 32,
           ),
+           */
           Flexible(
               child: entityList.isEmpty
                   ? HelpText(AppLocalization.of(context).noRecordsFound)
                   : Material(
                       color: Theme.of(context).cardColor,
                       child: ListView.separated(
-                        padding: const EdgeInsets.symmetric(vertical: 32),
-                        shrinkWrap: true,
-                        separatorBuilder: (context, index) => ListDivider(),
-                        itemCount: entityList.length,
-                        itemBuilder: widget.itemBuilder,
-                      ),
+                          shrinkWrap: true,
+                          separatorBuilder: (context, index) => ListDivider(),
+                          itemCount: entityList.length,
+                          itemBuilder: (BuildContext context, index) {
+                            Widget item = widget.itemBuilder(context, index);
+                            if (index == 0) {
+                              item = Container(
+                                padding: const EdgeInsets.only(top: 32),
+                                color: Theme.of(context).backgroundColor,
+                                child: Container(
+                                  padding: const EdgeInsets.only(top: 16),
+                                  color: Theme.of(context).cardColor,
+                                  child: item,
+                                ),
+                              );
+                            }
+                            return item;
+                          }),
                     )),
         ]);
       } else {
@@ -300,11 +314,11 @@ class _EntityListState extends State<EntityList> {
               child: Stack(
                 alignment: Alignment.topCenter,
                 children: <Widget>[
+                  listOrTable(),
                   if (state.isLoading ||
                       ((entityType.isSetting || isMobile(context)) &&
                           state.isSaving))
                     LinearProgressIndicator(),
-                  listOrTable(),
                 ],
               ),
             ),
