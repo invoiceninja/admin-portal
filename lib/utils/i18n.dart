@@ -15,11 +15,12 @@ mixin LocalizationsProvider on LocaleCodeAware {
   static final Map<String, Map<String, String>> _localizedValues = {
     'en': {
       // STARTER: lang key - do not remove comment
+      'line_item': 'Line Item',
       'allow_over_payment': 'Allow Over Payment',
       'allow_over_payment_help': 'Support paying extra to accept tips',
       'allow_under_payment': 'Allow Under Payment',
       'allow_under_payment_help':
-          'Support paying at minimum the partial/deposit amount',
+      'Support paying at minimum the partial/deposit amount',
       'test_mode': 'Test Mode',
       'opened': 'opened',
       'payment_reconciliation_failure': 'Reconciliation Failure',
@@ -157,7 +158,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'restored_token': 'Successfully restored token',
       'client_registration': 'Client Registration',
       'client_registration_help':
-          'Enable clients to self register in the portal',
+      'Enable clients to self register in the portal',
       'customize_and_preview': 'Customize & Preview',
       'email_invoice': 'Email Invoice',
       'email_quote': 'Email Quote',
@@ -249,7 +250,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'purge_data': 'Purge Data',
       'purge_successful': 'Successfully purged company data',
       'purge_data_message':
-          'Warning: This will permanently erase your data, there is no undo.',
+      'Warning: This will permanently erase your data, there is no undo.',
       'invoice_balance': 'Invoice Balance',
       'age_group_0': '0 - 30 Days',
       'age_group_30': '30 - 60 Days',
@@ -284,10 +285,10 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'apply_license': 'Apply License',
       'cancel_account': 'Delete Account',
       'cancel_account_message':
-          'Warning: This will permanently delete your account [:company], there is no undo',
+      'Warning: This will permanently delete your account [:company], there is no undo',
       'delete_company': 'Delete Company',
       'delete_company_message':
-          'Warning: This will permanently delete your company [:company], there is no undo',
+      'Warning: This will permanently delete your company [:company], there is no undo',
       'enable_modules': 'Enable Modules',
       'converted_quote': 'Successfully converted quote',
       'credit_design': 'Credit Design',
@@ -439,12 +440,12 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'applied': 'Applied',
       'include_recent_errors': 'Include recent errors from the logs',
       'your_message_has_been_received':
-          'We have received your message and will try to respond promptly.',
+      'We have received your message and will try to respond promptly.',
       'message': 'Message',
       'from': 'From',
       'show_product_details': 'Show Product Details',
       'show_product_details_help':
-          'Include the description and cost in the product dropdown',
+      'Include the description and cost in the product dropdown',
       'pdf_min_requirements': 'The PDF renderer requires :version',
       'adjust_fee_percent': 'Adjust Fee Percent',
       'adjust_fee_percent_help': 'Ensure client fee matches the gateway fee',
@@ -461,7 +462,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'domain_url': 'Domain URL',
       'password_is_too_short': 'Password must be at least 8 character long',
       'password_is_too_easy':
-          'Password must contain an upper case character and a number',
+      'Password must contain an upper case character and a number',
       'client_portal_tasks': 'Client Portal Tasks',
       'client_portal_dashboard': 'Client Portal Dashboard',
       'please_enter_a_value': 'Please enter a value',
@@ -488,16 +489,16 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'third_custom': 'Third Custom',
       'show_cost': 'Show Cost',
       'show_cost_help':
-          'Display a product cost field to track the markup/profit',
+      'Display a product cost field to track the markup/profit',
       'show_product_quantity': 'Show Product Quantity',
       'show_product_quantity_help':
-          'Display a product quantity field, otherwise default to one',
+      'Display a product quantity field, otherwise default to one',
       'show_invoice_quantity': 'Show Invoice Quantity',
       'show_invoice_quantity_help':
-          'Display a line item quantity field, otherwise default to one',
+      'Display a line item quantity field, otherwise default to one',
       'default_quantity': 'Default Quantity',
       'default_quantity_help':
-          'Automatically set the line item quantity to one',
+      'Automatically set the line item quantity to one',
       'one_tax_rate': 'One Tax Rate',
       'two_tax_rates': 'Two Tax Rates',
       'three_tax_rates': 'Three Tax Rates',
@@ -542,7 +543,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'filtered_by_user': 'Filtered by User',
       'administrator': 'Administrator',
       'administrator_help':
-          'Allow user to manage users, change settings and modify all records',
+      'Allow user to manage users, change settings and modify all records',
       'user_management': 'User Management',
       'users': 'Users',
       'new_user': 'New User',
@@ -557,7 +558,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'invoice_options': 'Invoice Options',
       'hide_paid_to_date': 'Hide Paid to Date',
       'hide_paid_to_date_help':
-          'Only display the "Paid to Date" area on your invoices once a payment has been received.',
+      'Only display the "Paid to Date" area on your invoices once a payment has been received.',
       'invoice_embed_documents': 'Embed Documents',
       'invoice_embed_documents_help': 'Include attached images in the invoice.',
       'all_pages_header': 'Show Header on',
@@ -580,16 +581,16 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'quote_footer': 'Quote Footer',
       'auto_email_invoice': 'Auto Email',
       'auto_email_invoice_help':
-          'Automatically email recurring invoices when they are created.',
+      'Automatically email recurring invoices when they are created.',
       'auto_archive_invoice': 'Auto Archive',
       'auto_archive_invoice_help':
-          'Automatically archive invoices when they are paid.',
+      'Automatically archive invoices when they are paid.',
       'auto_archive_quote': 'Auto Archive',
       'auto_archive_quote_help':
-          'Automatically archive quotes when they are converted.',
+      'Automatically archive quotes when they are converted.',
       'auto_convert_quote': 'Auto Convert',
       'auto_convert_quote_help':
-          'Automatically convert a quote to an invoice when approved by a client.',
+      'Automatically convert a quote to an invoice when approved by a client.',
       'workflow_settings': 'Workflow Settings',
       'freq_daily': 'Daily',
       'freq_weekly': 'Weekly',
@@ -635,27 +636,27 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'custom_javascript': 'Custom JavaScript',
       'signature_on_pdf': 'Show on PDF',
       'signature_on_pdf_help':
-          'Show the client signature on the invoice/quote PDF.',
+      'Show the client signature on the invoice/quote PDF.',
       'show_accept_invoice_terms': 'Invoice Terms Checkbox',
       'show_accept_invoice_terms_help':
-          'Require client to confirm that they accept the invoice terms.',
+      'Require client to confirm that they accept the invoice terms.',
       'show_accept_quote_terms': 'Quote Terms Checkbox',
       'show_accept_quote_terms_help':
-          'Require client to confirm that they accept the quote terms.',
+      'Require client to confirm that they accept the quote terms.',
       'require_invoice_signature': 'Invoice Signature',
       'require_invoice_signature_help':
-          'Require client to provide their signature.',
+      'Require client to provide their signature.',
       'require_quote_signature': 'Quote Signature',
       'enable_portal_password': 'Password Protect Invoices',
       'enable_portal_password_help':
-          'Allows you to set a password for each contact. If a password is set, the contact will be required to enter a password before viewing invoices.',
+      'Allows you to set a password for each contact. If a password is set, the contact will be required to enter a password before viewing invoices.',
       'authorization': 'Authorization',
       'subdomain': 'Subdomain',
       'domain': 'Domain',
       'portal_mode': 'Portal Mode',
       'email_signature': 'Email Signature',
       'enable_email_markup_help':
-          'Make it easier for your clients to pay you by adding schema.org markup to your emails.',
+      'Make it easier for your clients to pay you by adding schema.org markup to your emails.',
       'plain': 'Plain',
       'light': 'Light',
       'dark': 'Dark',
@@ -684,9 +685,9 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'accepted_card_logos': 'Accepted Card Logos',
       'credentials': 'Credentials',
       'require_billing_address_help':
-          'Require client to provide their billing address',
+      'Require client to provide their billing address',
       'require_shipping_address_help':
-          'Require client to provide their shipping address',
+      'Require client to provide their shipping address',
       'update_address': 'Update Address',
       'update_address_help': 'Update client\'s address with provided details',
       'rate': 'Rate',
@@ -700,13 +701,13 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'restored_tax_rate': 'Successfully restored tax rate',
       'fill_products': 'Fill Products',
       'fill_products_help':
-          'Selecting a product will automatically fill in the description and cost',
+      'Selecting a product will automatically fill in the description and cost',
       'update_products': 'Update Products',
       'update_products_help':
-          'Updating an invoice will automatically update the product library',
+      'Updating an invoice will automatically update the product library',
       'convert_products': 'Convert Products',
       'convert_products_help':
-          'Automatically convert product prices to the client\'s currency',
+      'Automatically convert product prices to the client\'s currency',
       'fees': 'Fees',
       'limits': 'Limits',
       'provider': 'Provider',
@@ -806,7 +807,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'please_enter_a_first_name': 'Please enter a first name',
       'please_enter_a_last_name': 'Please enter a last name',
       'please_agree_to_terms_and_privacy':
-          'Please agree to the terms of service and privacy policy to create an account.',
+      'Please agree to the terms of service and privacy policy to create an account.',
       'i_agree_to_the': 'I agree to the',
       'terms_of_service_link': 'terms of service',
       'privacy_policy_link': 'privacy policy',
@@ -905,7 +906,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'average': 'Average',
       'unapproved': 'Unapproved',
       'authenticate_to_change_setting':
-          'Please authenticate to change this setting',
+      'Please authenticate to change this setting',
       'locked': 'Locked',
       'authenticate': 'Authenticate',
       'please_authenticate': 'Please authenticate',
@@ -1106,7 +1107,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'marked_invoices_as_paid': 'Successfully marked invoices as paid',
       'done': 'Done',
       'please_enter_a_client_or_contact_name':
-          'Please enter a client or contact name',
+      'Please enter a client or contact name',
       'dark_mode': 'Dark Mode',
       'restart_app_to_apply_change': 'Restart the app to apply the change',
       'refresh_data': 'Refresh Data',
@@ -1896,7 +1897,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
 
   String get pleaseEnterAClientOrContactName =>
       _localizedValues[localeCode]['please_enter_a_client_or_contact_name'] ??
-      '';
+          '';
 
   String get darkMode => _localizedValues[localeCode]['dark_mode'] ?? '';
 
@@ -4483,6 +4484,10 @@ mixin LocalizationsProvider on LocaleCodeAware {
 
   String get allowUnderPaymentHelp =>
       _localizedValues[localeCode]['allow_under_payment_help'] ?? '';
+
+  String get lineItem =>
+      _localizedValues[localeCode]['line_item'] ?? '';
+
 
   String lookup(String key) {
     final lookupKey = toSnakeCase(key);

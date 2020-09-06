@@ -178,7 +178,7 @@ ReportResult taskReport(
       if (value.runtimeType == bool) {
         row.add(task.getReportBool(value: value));
       } else if (value.runtimeType == double || value.runtimeType == int) {
-        row.add(task.getReportNumber(
+        row.add(task.getReportDouble(
             value: value, currencyId: client.settings.currencyId));
       } else {
         row.add(task.getReportString(value: value));

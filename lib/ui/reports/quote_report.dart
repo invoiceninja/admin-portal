@@ -214,7 +214,7 @@ ReportResult quoteReport(
       if (value.runtimeType == bool) {
         row.add(quote.getReportBool(value: value));
       } else if (value.runtimeType == double || value.runtimeType == int) {
-        row.add(quote.getReportNumber(
+        row.add(quote.getReportDouble(
             value: value, currencyId: client.settings.currencyId));
       } else {
         row.add(quote.getReportString(value: value));

@@ -145,7 +145,7 @@ ReportResult productReport(
       if (value.runtimeType == bool) {
         row.add(product.getReportBool(value: value));
       } else if (value.runtimeType == double || value.runtimeType == int) {
-        row.add(product.getReportNumber(
+        row.add(product.getReportDouble(
             value: value, currencyId: userCompany.company.currencyId));
       } else {
         row.add(product.getReportString(value: value));

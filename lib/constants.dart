@@ -344,10 +344,11 @@ const String kReportExpense = 'expense';
 const String kReportInvoice = 'invoice';
 const String kReportPayment = 'payment';
 const String kReportProduct = 'product';
-const String kReportProfitAndLoss = 'profitAndLoss';
+const String kReportProfitAndLoss = 'profit_and_loss';
 const String kReportTask = 'task';
 const String kReportTaxRate = 'taxRate';
 const String kReportQuote = 'quote';
+const String kReportLineItem = 'line_item';
 
 const String kPdfFieldsClientDetails = 'client_details';
 const String kPdfFieldsCompanyDetails = 'company_details';

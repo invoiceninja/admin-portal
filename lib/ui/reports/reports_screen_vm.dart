@@ -17,6 +17,7 @@ import 'package:invoiceninja_flutter/ui/reports/client_report.dart';
 import 'package:invoiceninja_flutter/ui/reports/document_report.dart';
 import 'package:invoiceninja_flutter/ui/reports/expense_report.dart';
 import 'package:invoiceninja_flutter/ui/reports/invoice_report.dart';
+import 'package:invoiceninja_flutter/ui/reports/line_item_report.dart';
 import 'package:invoiceninja_flutter/ui/reports/payment_report.dart';
 import 'package:invoiceninja_flutter/ui/reports/product_report.dart';
 import 'package:invoiceninja_flutter/ui/reports/profit_loss_report.dart';
@@ -209,6 +210,16 @@ class ReportsScreenVM {
           state.expenseState.map,
           state.vendorState.map,
           state.userState.map,
+          state.staticState,
+        );
+        break;
+      case kReportLineItem:
+        reportResult = memoizedLineItemReport(
+          state.userCompany,
+          state.uiState.reportsUIState,
+          state.productState.map,
+          state.invoiceState.map,
+          state.clientState.map,
           state.staticState,
         );
         break;
