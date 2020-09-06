@@ -23,6 +23,9 @@ enum LineItemReportFields {
   custom2,
   custom3,
   custom4,
+  invoiceNumber,
+  invoiceDate,
+  client,
 }
 
 var memoizedLineItemReport = memo6((
@@ -54,6 +57,8 @@ ReportResult lineItemReport(
           : ReportSettingsEntity();
 
   final defaultColumns = [
+    LineItemReportFields.invoiceNumber,
+    LineItemReportFields.invoiceDate,
     LineItemReportFields.productKey,
     LineItemReportFields.quantity,
     LineItemReportFields.price,
@@ -126,6 +131,15 @@ ReportResult lineItemReport(
             break;
           case LineItemReportFields.discount:
             value = lineItem.discount;
+            break;
+          case LineItemReportFields.invoiceNumber:
+            value = invoice.number;
+            break;
+          case LineItemReportFields.invoiceDate:
+            value = invoice.date;
+            break;
+          case LineItemReportFields.client:
+            value = client.displayName;
             break;
         }
 
