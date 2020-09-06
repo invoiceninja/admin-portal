@@ -1003,6 +1003,29 @@ abstract class InvoiceItemEntity
   @nullable
   int get createdAt;
 
+  /*
+  double taxAmount(bool useInclusiveTaxes, int precision) {
+    double calculateTaxAmount(double rate) {
+      double taxAmount;
+      if (rate == 0) {
+        return 0;
+      }
+      if (useInclusiveTaxes) {
+        taxAmount = total - (total / (1 + (rate / 100)));
+      } else {
+        taxAmount = total * rate / 100;
+      }
+      return round(taxAmount, precision);
+    }
+
+    return calculateTaxAmount(taxRate1) + calculateTaxAmount(taxRate2) +
+        calculateTaxAmount(taxRate3);
+  }
+
+  double netTotal(bool useInclusiveTaxes, int precision) =>
+      total - taxAmount(useInclusiveTaxes, precision);
+  */
+
   double get total => round(quantity * cost, 2);
 
   bool get isTask => taskId != null && taskId.isNotEmpty;

@@ -173,9 +173,7 @@ Middleware<AppState> _saveToken(TokenRepository repository) {
       } else {
         store.dispatch(SaveTokenSuccess(token));
       }
-      if (action.password != null) {
-        store.dispatch(UserVerifiedPassword());
-      }
+      store.dispatch(UserVerifiedPassword());
       action.completer.complete(token);
     }).catchError((Object error) {
       print(error);

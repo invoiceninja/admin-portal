@@ -147,7 +147,7 @@ ReportResult paymentReport(
       if (value.runtimeType == bool) {
         row.add(payment.getReportBool(value: value));
       } else if (value.runtimeType == double || value.runtimeType == int) {
-        row.add(payment.getReportNumber(
+        row.add(payment.getReportDouble(
             value: value, currencyId: client.settings.currencyId));
       } else {
         row.add(payment.getReportString(value: value));

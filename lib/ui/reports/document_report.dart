@@ -142,7 +142,7 @@ ReportResult documentReport(
       } else if (value.runtimeType == int) {
         row.add(entity.getReportInt(value: value));
       } else if (value.runtimeType == double) {
-        row.add(entity.getReportNumber(value: value));
+        row.add(entity.getReportDouble(value: value));
       } else if (value.runtimeType == EntityType) {
         row.add(entity.getReportEntityType());
       } else {

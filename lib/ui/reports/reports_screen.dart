@@ -63,16 +63,22 @@ class ReportsScreen extends StatelessWidget {
             viewModel.onSettingsChanged(report: value),
         items: [
           kReportClient,
-          kReportInvoice,
-          kReportPayment,
-          kReportTaxRate,
-          //kReportCredit,
+          if (state.company.isModuleEnabled(EntityType.invoice)) ...[
+            kReportInvoice,
+            kReportLineItem,
+            kReportPayment,
+          ],
+          if (state.company.isModuleEnabled(EntityType.quote))
+            kReportQuote,
+          if (state.company.isModuleEnabled(EntityType.credit))
+            kReportCredit,
+          if (state.company.hasTaxes)
+            kReportTaxRate,
           kReportDocument,
           //kReportExpense,
           //kReportProduct,
           //kReportProfitAndLoss,
           //kReportTask,
-          //kReportQuote,
         ]
             .map((report) =>
             DropdownMenuItem(
@@ -581,7 +587,8 @@ class ReportDataTableSource extends DataTableSource {
     if (reportState.group.isEmpty || reportState.isGroupByFiltered) {
       return viewModel.reportResult.data.length + 1;
     } else {
-      return viewModel.groupTotals.totals.length + 1;
+      return viewModel.groupTotals.totals == null ? 1 : viewModel.groupTotals
+          .totals.length + 1;
     }
   }
 
@@ -1015,7 +1022,6 @@ class ReportResult {
     final reportState = state.uiState.reportsUIState;
     final groupBy = reportState.group;
     final sorted = sortedColumns(reportState);
-
     if (groupBy.isEmpty || reportState.isGroupByFiltered) {
       final row = data[index - 1];
       final cells = <DataCell>[];
@@ -1032,26 +1038,27 @@ class ReportResult {
           }),
         );
       }
+
       return DataRow(cells: cells);
     } else {
       final groupTotals = viewModel.groupTotals;
       final group = groupTotals.rows[index - 1];
       final values = viewModel.groupTotals.totals[group];
       final cells = <DataCell>[];
+      final localization = AppLocalization.of(context);
+
       for (var column in sortedColumns(reportState)) {
         String value = '';
         final columnType = getReportColumnType(column, context);
         if (column == groupBy) {
           if (group.isEmpty) {
-            value = AppLocalization
-                .of(context)
-                .blank;
+            value = localization.blank;
           } else if (columnType ==
               ReportColumnType.dateTime ||
               columnType == ReportColumnType.date) {
             value = formatDate(group, context);
           } else if (columnType == ReportColumnType.age) {
-            value = AppLocalization.of(context).lookup(group);
+            value = localization.lookup(group);
           } else {
             value = group;
           }
@@ -1085,13 +1092,9 @@ class ReportResult {
               }
             } else if (getReportColumnType(column, context) ==
                 ReportColumnType.bool) {
-              filter = filter == AppLocalization
-                  .of(context)
-                  .yes
+              filter = filter == localization.yes
                   ? 'true'
-                  : filter == AppLocalization
-                  .of(context)
-                  .no ? 'false' : '';
+                  : filter == localization.no ? 'false' : '';
             }
             store.dispatch(
               UpdateReportSettings(
@@ -1231,7 +1234,10 @@ class ReportResult {
             value = formatNumber(amount / values['count'], context,
                 formatNumberType: FormatNumberType.double);
           } else {
-            value = formatNumber(amount, context, currencyId: currencyId);
+            value = formatNumber(amount, context, currencyId: currencyId,
+                formatNumberType: field == 'quantity'
+                    ? FormatNumberType.double
+                    : FormatNumberType.money);
           }
           cells.add(DataCell(Text(value)));
         }
@@ -1239,6 +1245,7 @@ class ReportResult {
 
       rows.add(DataRow(cells: cells));
     });
+
 
     return rows;
   }

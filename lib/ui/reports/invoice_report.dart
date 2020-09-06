@@ -246,7 +246,7 @@ ReportResult invoiceReport(
         row.add(
             invoice.getReportAge(value: value, currencyId: client.currencyId));
       } else if (value.runtimeType == double || value.runtimeType == int) {
-        row.add(invoice.getReportNumber(
+        row.add(invoice.getReportDouble(
             value: value, currencyId: client.currencyId));
       } else {
         row.add(invoice.getReportString(value: value));

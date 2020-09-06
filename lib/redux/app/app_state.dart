@@ -625,6 +625,12 @@ abstract class AppState implements Built<AppState, AppStateBuilder> {
             : timeago.format(
                 convertTimestampToDate((staticState.updatedAt / 1000).round()));
 
+    final passwordUpdated = authState.lastEnteredPasswordAt == null ||
+            authState.lastEnteredPasswordAt == 0
+        ? 'Blank'
+        : timeago.format(convertTimestampToDate(
+            (authState.lastEnteredPasswordAt / 1000).round()));
+
     //return 'latestVersion: ${account.latestVersion}';
     //return 'Last Updated: ${userCompanyStates.map((state) => state.lastUpdated).join(',')}';
     //return 'Names: ${userCompanyStates.map((state) => state.company.id).join(',')}';
@@ -638,7 +644,15 @@ abstract class AppState implements Built<AppState, AppStateBuilder> {
     //return 'Language Id: ${company.settings.languageId}';
     //return 'Rates: ${staticState.currencyMap.keys.map((key) => 'Rate: ${staticState.currencyMap[key].exchangeRate}').join(',')}';
     //return 'LOG: ${clientState.map[clientUIState.selectedId]?.systemLogs ?? ''}';
-    return '\n\nURL: ${authState.url}\nRoute: ${uiState.currentRoute}\nPrev: ${uiState.previousRoute}\nIs Loaded: ${isLoaded ? 'Yes' : 'No'}\nis Large: ${(company?.isLarge ?? false) ? 'Yes' : 'No'}\nCompany: $companyUpdated${userCompanyState.isStale ? ' [S]' : ''}\nStatic: $staticUpdated${staticState.isStale ? ' [S]' : ''}\n';
+    return '\n\nURL: ${authState.url}'
+        '\nRoute: ${uiState.currentRoute}'
+        '\nPrev: ${uiState.previousRoute}'
+        '\nIs Loaded: ${isLoaded ? 'Yes' : 'No'}'
+        '\nis Large: ${(company?.isLarge ?? false) ? 'Yes' : 'No'}'
+        '\nCompany: $companyUpdated${userCompanyState.isStale ? ' [S]' : ''}'
+        '\nStatic: $staticUpdated${staticState.isStale ? ' [S]' : ''}'
+        '\nPassword $passwordUpdated${authState.hasRecentlyEnteredPassword ? '' : ' [S]'}'
+        '\n';
   }
 }
 

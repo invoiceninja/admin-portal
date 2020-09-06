@@ -217,7 +217,7 @@ ReportResult creditReport(
       if (value.runtimeType == bool) {
         row.add(credit.getReportBool(value: value));
       } else if (value.runtimeType == double || value.runtimeType == int) {
-        row.add(credit.getReportNumber(
+        row.add(credit.getReportDouble(
             value: value, currencyId: client.settings.currencyId));
       } else {
         row.add(credit.getReportString(value: value));

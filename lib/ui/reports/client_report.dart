@@ -267,7 +267,7 @@ ReportResult clientReport(
       if (value.runtimeType == bool) {
         row.add(client.getReportBool(value: value));
       } else if (value.runtimeType == double || value.runtimeType == int) {
-        row.add(client.getReportNumber(
+        row.add(client.getReportDouble(
             value: value, currencyId: client.settings.currencyId));
       } else {
         row.add(client.getReportString(value: '$value'));

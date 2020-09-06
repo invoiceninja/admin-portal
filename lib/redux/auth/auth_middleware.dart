@@ -193,17 +193,23 @@ Middleware<AppState> _createRefreshRequest(AuthRepository repository) {
   return (Store<AppState> store, dynamic dynamicAction,
       NextDispatcher next) async {
     final action = dynamicAction as RefreshData;
+    final state = store.state;
+
+    if (state.isSaving || state.isLoading) {
+      next(action);
+      return;
+    }
 
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     final url = formatApiUrl(
-        prefs.getString(kSharedPrefUrl) ?? store.state.authState.url);
+        prefs.getString(kSharedPrefUrl) ?? state.authState.url);
     final token =
         TokenEntity.unobscureToken(prefs.getString(kSharedPrefToken)) ??
             'TOKEN';
 
     final updatedAt = action.clearData
         ? 0
-        : ((store.state.userCompanyState.lastUpdated -
+        : ((state.userCompanyState.lastUpdated -
                     kMillisecondsToRefreshData) /
                 1000)
             .round();
@@ -215,7 +221,7 @@ Middleware<AppState> _createRefreshRequest(AuthRepository repository) {
       url: url,
       token: token,
       updatedAt: updatedAt - kUpdatedAtBufferSeconds,
-      includeStatic: action.includeStatic || store.state.staticState.isStale,
+      includeStatic: action.includeStatic || state.staticState.isStale,
     )
         .then((data) {
       if (action.clearData) {

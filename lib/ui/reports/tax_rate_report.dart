@@ -134,7 +134,7 @@ ReportResult taxRateReport(
         if (value.runtimeType == bool) {
           row.add(invoice.getReportBool(value: value));
         } else if (value.runtimeType == double || value.runtimeType == int) {
-          row.add(invoice.getReportNumber(
+          row.add(invoice.getReportDouble(
               value: value, currencyId: client.settings.currencyId));
         } else {
           row.add(invoice.getReportString(value: value));

@@ -15,6 +15,8 @@ mixin LocalizationsProvider on LocaleCodeAware {
   static final Map<String, Map<String, String>> _localizedValues = {
     'en': {
       // STARTER: lang key - do not remove comment
+      'profit': 'Profit',
+      'line_item': 'Line Item',
       'allow_over_payment': 'Allow Over Payment',
       'allow_over_payment_help': 'Support paying extra to accept tips',
       'allow_under_payment': 'Allow Under Payment',
@@ -4483,6 +4485,10 @@ mixin LocalizationsProvider on LocaleCodeAware {
 
   String get allowUnderPaymentHelp =>
       _localizedValues[localeCode]['allow_under_payment_help'] ?? '';
+
+  String get lineItem => _localizedValues[localeCode]['line_item'] ?? '';
+
+  String get profit => _localizedValues[localeCode]['profit'] ?? '';
 
   String lookup(String key) {
     final lookupKey = toSnakeCase(key);
