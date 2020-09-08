@@ -1221,6 +1221,9 @@ abstract class SettingsEntity
   static const AUTO_BILL_OPT_OUT = 'optout';
   static const AUTO_BILL_ALWAYS = 'always';
 
+  static const AUTO_BILL_ON_SEND_DATE = 'on_send_date';
+  static const AUTO_BILL_ON_DUE_DATE = 'on_due_date';
+
   @nullable
   @BuiltValueField(wireName: 'timezone_id')
   String get timezoneId;
@@ -1848,6 +1851,14 @@ abstract class SettingsEntity
   @nullable
   @BuiltValueField(wireName: 'client_portal_allow_over_payment')
   bool get clientPortalAllowOverPayment;
+
+  @nullable
+  @BuiltValueField(wireName: 'auto_bill_date')
+  String get autoBillDate;
+
+  @nullable
+  @BuiltValueField(wireName: 'client_portal_under_payment_minimum')
+  double get clientPortalUnderPaymentMinimum;
 
   // TODO remove this field
   @nullable

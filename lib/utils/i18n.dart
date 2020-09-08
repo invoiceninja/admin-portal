@@ -15,6 +15,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
   static final Map<String, Map<String, String>> _localizedValues = {
     'en': {
       // STARTER: lang key - do not remove comment
+      'minimum_amount': 'Minimum Amount',
       'profit': 'Profit',
       'line_item': 'Line Item',
       'allow_over_payment': 'Allow Over Payment',
@@ -4489,6 +4490,9 @@ mixin LocalizationsProvider on LocaleCodeAware {
   String get lineItem => _localizedValues[localeCode]['line_item'] ?? '';
 
   String get profit => _localizedValues[localeCode]['profit'] ?? '';
+
+  String get minimumAmount =>
+      _localizedValues[localeCode]['minimum_amount'] ?? '';
 
   String lookup(String key) {
     final lookupKey = toSnakeCase(key);

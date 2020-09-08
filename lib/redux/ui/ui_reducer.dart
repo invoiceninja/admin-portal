@@ -228,18 +228,21 @@ Reducer<SettingsUIState> settingsUIReducer = combineReducers([
     return state.rebuild((b) => b
       ..company.replace(action.company)
       ..origCompany.replace(action.company)
+      ..updatedAt = DateTime.now().millisecondsSinceEpoch
       ..isChanged = false);
   }),
   TypedReducer<SettingsUIState, SaveGroupSuccess>((state, action) {
     return state.rebuild((b) => b
       ..group.replace(action.group)
       ..origGroup.replace(action.group)
+      ..updatedAt = DateTime.now().millisecondsSinceEpoch
       ..isChanged = false);
   }),
   TypedReducer<SettingsUIState, SaveClientSuccess>((state, action) {
     return state.rebuild((b) => b
       ..client.replace(action.client)
       ..origClient.replace(action.client)
+      ..updatedAt = DateTime.now().millisecondsSinceEpoch
       ..isChanged = false);
   }),
   TypedReducer<SettingsUIState, SaveAuthUserSuccess>((state, action) {
