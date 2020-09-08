@@ -440,14 +440,16 @@ Future handleCreditAction(
         showMessageDialog(
             context: context,
             message: localization.clientEmailNotSet,
-            secondaryAction: FlatButton(
-                onPressed: () {
-                  Navigator.of(context).pop();
-                  editEntity(
-                      context: context,
-                      entity: state.clientState.get(credit.clientId));
-                },
-                child: Text(localization.editClient.toUpperCase())));
+            secondaryActions: [
+              FlatButton(
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                    editEntity(
+                        context: context,
+                        entity: state.clientState.get(credit.clientId));
+                  },
+                  child: Text(localization.editClient.toUpperCase()))
+            ]);
         return;
       }
       if (creditIds.length == 1) {

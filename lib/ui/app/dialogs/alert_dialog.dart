@@ -7,12 +7,12 @@ class MessageDialog extends StatelessWidget {
     this.onDismiss,
     this.onDiscard,
     this.dismissLabel,
-    this.secondaryAction,
+    this.secondaryActions,
   });
 
   final String message;
   final String dismissLabel;
-  final FlatButton secondaryAction;
+  final List<FlatButton> secondaryActions;
   final Function onDismiss;
   final Function onDiscard;
 
@@ -50,10 +50,14 @@ class MessageDialog extends StatelessWidget {
                                 onDiscard();
                               }),
                         ),
-                      if (secondaryAction != null)
-                        Padding(
-                          padding: const EdgeInsets.only(right: 10),
-                          child: secondaryAction,
+                      if (secondaryActions != null)
+                        Row(
+                          children: secondaryActions
+                              .map((action) => Padding(
+                                    padding: const EdgeInsets.only(right: 10),
+                                    child: action,
+                                  ))
+                              .toList(),
                         ),
                       FlatButton(
                         onPressed: () {
