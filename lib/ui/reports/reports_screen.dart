@@ -726,7 +726,7 @@ class ReportResult {
     if (dateRange == DateRange.custom) {
       if (customStartDate.isNotEmpty && customEndDate.isNotEmpty) {
         if (!(startDate.compareTo(value) <= 0 &&
-            endDate.compareTo(value) > 0)) {
+            endDate.compareTo(value) >= 0)) {
           return false;
         }
       } else if (customStartDate.isNotEmpty) {
@@ -734,12 +734,12 @@ class ReportResult {
           return false;
         }
       } else if (customEndDate.isNotEmpty) {
-        if (!(endDate.compareTo(value) > 0)) {
+        if (!(endDate.compareTo(value) >= 0)) {
           return false;
         }
       }
     } else {
-      if (!(startDate.compareTo(value) <= 0 && endDate.compareTo(value) > 0)) {
+      if (!(startDate.compareTo(value) <= 0 && endDate.compareTo(value) >= 0)) {
         return false;
       }
     }
