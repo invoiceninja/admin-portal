@@ -100,7 +100,7 @@ class __OnlinePaymentFormState extends State<_OnlinePaymentForm> {
   static final GlobalKey<FormState> _formKey =
       GlobalKey<FormState>(debugLabel: '_companyGatewayList');
   final FocusScopeNode _focusNode = FocusScopeNode();
-  bool _autoValidate = false;
+  //bool _autoValidate = false;
 
   final _minimumAmountController = TextEditingController();
 
