@@ -85,7 +85,7 @@ class _InvitationListTile extends StatelessWidget {
                   child: OutlineButton(
                 child: Text(localization.viewPortal.toUpperCase()),
                 shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(30)),
+                    borderRadius: BorderRadius.circular(5)),
                 onPressed: () {
                   launch(invitation.silentLink,
                       forceWebView: false, forceSafariVC: false);
@@ -96,7 +96,7 @@ class _InvitationListTile extends StatelessWidget {
                   child: OutlineButton(
                 child: Text(localization.copyLink.toUpperCase()),
                 shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(30)),
+                    borderRadius: BorderRadius.circular(5)),
                 onPressed: () {
                   Clipboard.setData(ClipboardData(text: invitation.link));
                   Scaffold.of(context).showSnackBar(SnackBar(

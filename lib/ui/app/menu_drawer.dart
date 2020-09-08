@@ -501,7 +501,7 @@ class SidebarFooter extends StatelessWidget {
             Expanded(child: SizedBox())
           ] else ...[
             if (!Config.DEMO_MODE && !state.isDemo)
-              if (true || !account.isCronEnabled)
+              if (!account.isCronEnabled)
                 IconButton(
                   icon: Icon(
                     Icons.warning,
