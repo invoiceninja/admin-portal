@@ -29,22 +29,23 @@ class CompanyGatewayList extends StatelessWidget {
     final listUIState = state.uiState.companyGatewayUIState.listUIState;
     final isInMultiselect = listUIState.isInMultiselect();
 
-    return Column(
+    return ListView(
+      shrinkWrap: true,
       children: <Widget>[
         _OnlinePaymentForm(
           viewModel: viewModel,
           key: ValueKey('__settings_${state.settingsUIState.updatedAt}__'),
         ),
-        Flexible(
-          fit: FlexFit.tight,
-          child: !viewModel.state.isLoaded &&
-                  viewModel.companyGatewayList.isEmpty
-              ? LoadingIndicator()
-              : RefreshIndicator(
-                  onRefresh: () => viewModel.onRefreshed(context),
-                  child: viewModel.companyGatewayList.isEmpty
-                      ? HelpText(AppLocalization.of(context).noRecordsFound)
-                      : ReorderableListView(
+        !viewModel.state.isLoaded && viewModel.companyGatewayList.isEmpty
+            ? LoadingIndicator()
+            : RefreshIndicator(
+                onRefresh: () => viewModel.onRefreshed(context),
+                child: viewModel.companyGatewayList.isEmpty
+                    ? HelpText(AppLocalization.of(context).noRecordsFound)
+                    : SizedBox(
+                        height:
+                            (viewModel.companyGatewayList.length * 80.0) + 100,
+                        child: ReorderableListView(
                           onReorder: (oldIndex, newIndex) {
                             // https://stackoverflow.com/a/54164333/497368
                             // These two lines are workarounds for ReorderableListView problems
@@ -77,11 +78,8 @@ class CompanyGatewayList extends StatelessWidget {
                                     listUIState.isSelected(companyGateway.id));
                           }).toList(),
                         ),
-                ),
-        ),
-        Expanded(
-          child: SizedBox(),
-        ),
+                      ),
+              ),
       ],
     );
   }
@@ -171,8 +169,8 @@ class __OnlinePaymentFormState extends State<_OnlinePaymentForm> {
                     : value == false
                         ? SettingsEntity.AUTO_BILL_ON_SEND_DATE
                         : null)),
-          enabledLabel: localization.sendDate,
-          disabledLabel: localization.dueDate,
+          enabledLabel: localization.dueDate,
+          disabledLabel: localization.sendDate,
         ),
         BoolDropdownButton(
           label: localization.allowOverPayment,
