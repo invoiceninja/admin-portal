@@ -1,6 +1,7 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
+import 'package:invoiceninja_flutter/data/models/company_model.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/ui/app/form_card.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/app_form.dart';
@@ -157,6 +158,23 @@ class __OnlinePaymentFormState extends State<_OnlinePaymentForm> {
       focusNode: _focusNode,
       child: FormCard(children: [
         BoolDropdownButton(
+          label: localization.autoBillOn,
+          value: settings.autoBillDate == SettingsEntity.AUTO_BILL_ON_DUE_DATE
+              ? true
+              : settings.autoBillDate == SettingsEntity.AUTO_BILL_ON_SEND_DATE
+                  ? false
+                  : null,
+          onChanged: (value) => widget.viewModel.onSettingsChanged(
+              settings.rebuild((b) => b
+                ..autoBillDate = value == true
+                    ? SettingsEntity.AUTO_BILL_ON_DUE_DATE
+                    : value == false
+                        ? SettingsEntity.AUTO_BILL_ON_SEND_DATE
+                        : null)),
+          enabledLabel: localization.sendDate,
+          disabledLabel: localization.dueDate,
+        ),
+        BoolDropdownButton(
           label: localization.allowOverPayment,
           value: settings.clientPortalAllowOverPayment,
           helpLabel: localization.allowOverPaymentHelp,
@@ -170,10 +188,14 @@ class __OnlinePaymentFormState extends State<_OnlinePaymentForm> {
           onChanged: (value) => viewModel.onSettingsChanged(settings
               .rebuild((b) => b..clientPortalAllowUnderPayment = value)),
         ),
-        DecoratedFormField(
-          label: localization.minimumAmount,
-          controller: _minimumAmountController,
-        ),
+        if (settings.clientPortalAllowUnderPayment == true)
+          Padding(
+            padding: const EdgeInsets.only(top: 16),
+            child: DecoratedFormField(
+              label: localization.minimumUnderPaymentAmount,
+              controller: _minimumAmountController,
+            ),
+          ),
       ]),
     );
   }
