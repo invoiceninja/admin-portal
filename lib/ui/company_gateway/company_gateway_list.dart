@@ -4,6 +4,7 @@ import 'package:flutter_redux/flutter_redux.dart';
 import 'package:invoiceninja_flutter/data/models/company_model.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/ui/app/form_card.dart';
+import 'package:invoiceninja_flutter/ui/app/forms/app_dropdown_button.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/app_form.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/bool_dropdown_button.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/decorated_form_field.dart';
@@ -155,23 +156,23 @@ class __OnlinePaymentFormState extends State<_OnlinePaymentForm> {
       formKey: _formKey,
       focusNode: _focusNode,
       child: FormCard(children: [
-        BoolDropdownButton(
-          label: localization.autoBillOn,
-          value: settings.autoBillDate == SettingsEntity.AUTO_BILL_ON_DUE_DATE
-              ? true
-              : settings.autoBillDate == SettingsEntity.AUTO_BILL_ON_SEND_DATE
-                  ? false
-                  : null,
-          onChanged: (value) => widget.viewModel.onSettingsChanged(
-              settings.rebuild((b) => b
-                ..autoBillDate = value == true
-                    ? SettingsEntity.AUTO_BILL_ON_DUE_DATE
-                    : value == false
-                        ? SettingsEntity.AUTO_BILL_ON_SEND_DATE
-                        : null)),
-          enabledLabel: localization.dueDate,
-          disabledLabel: localization.sendDate,
+        AppDropdownButton<String>(
+          labelText: localization.autoBillOn,
+          value: settings.autoBillDate,
+          onChanged: (dynamic value) => viewModel.onSettingsChanged(
+              settings.rebuild((b) => b..autoBillDate = value)),
+          items: [
+            DropdownMenuItem(
+              child: Text(localization.sendDate),
+              value: SettingsEntity.AUTO_BILL_ON_SEND_DATE,
+            ),
+            DropdownMenuItem(
+              child: Text(localization.dueDate),
+              value: SettingsEntity.AUTO_BILL_ON_DUE_DATE,
+            ),
+          ],
         ),
+        SizedBox(height: 16),
         BoolDropdownButton(
           label: localization.allowOverPayment,
           value: settings.clientPortalAllowOverPayment,
