@@ -15,6 +15,7 @@ import 'package:invoiceninja_flutter/redux/project/project_state.dart';
 import 'package:invoiceninja_flutter/redux/quote/quote_state.dart';
 import 'package:invoiceninja_flutter/redux/task/task_state.dart';
 import 'package:invoiceninja_flutter/redux/vendor/vendor_state.dart';
+
 // STARTER: import - do not remove comment
 import 'package:invoiceninja_flutter/redux/recurring_invoice/recurring_invoice_state.dart';
 
@@ -27,6 +28,7 @@ import 'package:invoiceninja_flutter/redux/user/user_state.dart';
 import 'package:invoiceninja_flutter/redux/tax_rate/tax_rate_state.dart';
 import 'package:invoiceninja_flutter/redux/company_gateway/company_gateway_state.dart';
 import 'package:invoiceninja_flutter/redux/group/group_state.dart';
+import 'package:invoiceninja_flutter/utils/strings.dart';
 
 part 'ui_state.g.dart';
 
@@ -144,8 +146,10 @@ abstract class UIState implements Built<UIState, UIStateBuilder> {
     return currentRoute.contains(route);
   }
 
-  EntityType get entityTypeRoute =>
-      EntityType.valueOf(mainRoute.replaceFirst('/', ''));
+  EntityType get entityTypeRoute {
+    final entityType = mainRoute.replaceFirst('/', '');
+    return EntityType.valueOf(toCamelCase(entityType));
+  }
 
   String get mainRoute {
     final parts =
