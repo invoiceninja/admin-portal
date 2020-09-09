@@ -508,16 +508,24 @@ class SidebarFooter extends StatelessWidget {
                     color: Colors.red,
                   ),
                   onPressed: () => showMessageDialog(
-                    context: context,
-                    message: localization.cronsNotEnabled,
-                    secondaryAction: FlatButton(
-                      child: Text(localization.learnMore.toUpperCase()),
-                      onPressed: () {
-                        launch(kCronsHelpUrl,
-                            forceSafariVC: false, forceWebView: false);
-                      },
-                    ),
-                  ),
+                      context: context,
+                      message: localization.cronsNotEnabled,
+                      secondaryActions: [
+                        FlatButton(
+                          child: Text(localization.learnMore.toUpperCase()),
+                          onPressed: () {
+                            launch(kCronsHelpUrl,
+                                forceSafariVC: false, forceWebView: false);
+                          },
+                        ),
+                        FlatButton(
+                          child: Text(localization.refreshData.toUpperCase()),
+                          onPressed: () {
+                            store.dispatch(RefreshData());
+                            Navigator.of(context).pop();
+                          },
+                        ),
+                      ]),
                 )
               else if (state.credentials.token.isEmpty)
                 IconButton(

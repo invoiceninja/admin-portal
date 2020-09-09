@@ -22,14 +22,14 @@ void showErrorDialog({
 void showMessageDialog({
   @required BuildContext context,
   @required String message,
-  FlatButton secondaryAction,
+  List<FlatButton> secondaryActions,
 }) {
   showDialog<MessageDialog>(
       context: context,
       builder: (BuildContext context) {
         return MessageDialog(
           message,
-          secondaryAction: secondaryAction,
+          secondaryActions: secondaryActions,
         );
       });
 }

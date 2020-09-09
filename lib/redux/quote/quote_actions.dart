@@ -463,14 +463,16 @@ Future handleQuoteAction(
         showMessageDialog(
             context: context,
             message: localization.clientEmailNotSet,
-            secondaryAction: FlatButton(
-                onPressed: () {
-                  Navigator.of(context).pop();
-                  editEntity(
-                      context: context,
-                      entity: state.clientState.get(quote.clientId));
-                },
-                child: Text(localization.editClient.toUpperCase())));
+            secondaryActions: [
+              FlatButton(
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                    editEntity(
+                        context: context,
+                        entity: state.clientState.get(quote.clientId));
+                  },
+                  child: Text(localization.editClient.toUpperCase()))
+            ]);
         return;
       }
       if (quoteIds.length == 1) {

@@ -15,6 +15,9 @@ mixin LocalizationsProvider on LocaleCodeAware {
   static final Map<String, Map<String, String>> _localizedValues = {
     'en': {
       // STARTER: lang key - do not remove comment
+      'send_date': 'Send Date',
+      'auto_bill_on': 'Auto Bill On',
+      'minimum_under_payment_amount': 'Minimum Under Payment Amount',
       'profit': 'Profit',
       'line_item': 'Line Item',
       'allow_over_payment': 'Allow Over Payment',
@@ -172,7 +175,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'owned_by_user': 'Owned by user',
       'credit_remaining': 'Credit Remaining',
       'contact_name': 'Contact Name',
-      'use_default': 'Use default',
+      'use_default': 'Use Default',
       'reminder_endless': 'Endless Reminders',
       'number_of_days': 'Number of days',
       'configure_payment_terms': 'Configure Payment Terms',
@@ -4489,6 +4492,13 @@ mixin LocalizationsProvider on LocaleCodeAware {
   String get lineItem => _localizedValues[localeCode]['line_item'] ?? '';
 
   String get profit => _localizedValues[localeCode]['profit'] ?? '';
+
+  String get sendDate => _localizedValues[localeCode]['send_date'] ?? '';
+
+  String get minimumUnderPaymentAmount =>
+      _localizedValues[localeCode]['minimum_under_payment_amount'] ?? '';
+
+  String get autoBillOn => _localizedValues[localeCode]['auto_bill_on'] ?? '';
 
   String lookup(String key) {
     final lookupKey = toSnakeCase(key);

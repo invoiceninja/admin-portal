@@ -539,14 +539,16 @@ void handleInvoiceAction(BuildContext context, List<BaseEntity> invoices,
         showMessageDialog(
             context: context,
             message: localization.clientEmailNotSet,
-            secondaryAction: FlatButton(
-                onPressed: () {
-                  Navigator.of(context).pop();
-                  editEntity(
-                      context: context,
-                      entity: state.clientState.get(invoice.clientId));
-                },
-                child: Text(localization.editClient.toUpperCase())));
+            secondaryActions: [
+              FlatButton(
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                    editEntity(
+                        context: context,
+                        entity: state.clientState.get(invoice.clientId));
+                  },
+                  child: Text(localization.editClient.toUpperCase()))
+            ]);
         return;
       }
       if (invoiceIds.length == 1) {
