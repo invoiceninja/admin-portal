@@ -84,6 +84,8 @@ IconData getEntityIcon(EntityType entityType) {
       return Icons.people;
     case EntityType.invoice:
       return MdiIcons.fileAccount;
+    case EntityType.recurringInvoice:
+      return MdiIcons.fileRestore;
     case EntityType.payment:
       return MdiIcons.creditCard;
     case EntityType.companyGateway:
