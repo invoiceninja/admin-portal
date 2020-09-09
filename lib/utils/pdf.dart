@@ -129,7 +129,7 @@ class _PDFScaffoldState extends State<PDFScaffold> {
                         child: IgnorePointer(
                           ignoring: _isLoading,
                           child: AppDropdownButton<String>(
-                              value: widget.activityId,
+                              value: _activityId,
                               onChanged: (dynamic activityId) {
                                 setState(() {
                                   _activityId = activityId;
