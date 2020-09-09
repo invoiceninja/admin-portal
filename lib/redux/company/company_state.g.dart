@@ -55,6 +55,9 @@ class _$UserCompanyStateSerializer
       'quoteState',
       serializers.serialize(object.quoteState,
           specifiedType: const FullType(QuoteState)),
+      'recurringInvoiceState',
+      serializers.serialize(object.recurringInvoiceState,
+          specifiedType: const FullType(RecurringInvoiceState)),
       'webhookState',
       serializers.serialize(object.webhookState,
           specifiedType: const FullType(WebhookState)),
@@ -152,6 +155,11 @@ class _$UserCompanyStateSerializer
         case 'quoteState':
           result.quoteState.replace(serializers.deserialize(value,
               specifiedType: const FullType(QuoteState)) as QuoteState);
+          break;
+        case 'recurringInvoiceState':
+          result.recurringInvoiceState.replace(serializers.deserialize(value,
+                  specifiedType: const FullType(RecurringInvoiceState))
+              as RecurringInvoiceState);
           break;
         case 'webhookState':
           result.webhookState.replace(serializers.deserialize(value,
@@ -359,6 +367,8 @@ class _$UserCompanyState extends UserCompanyState {
   @override
   final QuoteState quoteState;
   @override
+  final RecurringInvoiceState recurringInvoiceState;
+  @override
   final WebhookState webhookState;
   @override
   final TokenState tokenState;
@@ -394,6 +404,7 @@ class _$UserCompanyState extends UserCompanyState {
       this.projectState,
       this.paymentState,
       this.quoteState,
+      this.recurringInvoiceState,
       this.webhookState,
       this.tokenState,
       this.paymentTermState,
@@ -436,6 +447,10 @@ class _$UserCompanyState extends UserCompanyState {
     }
     if (quoteState == null) {
       throw new BuiltValueNullFieldError('UserCompanyState', 'quoteState');
+    }
+    if (recurringInvoiceState == null) {
+      throw new BuiltValueNullFieldError(
+          'UserCompanyState', 'recurringInvoiceState');
     }
     if (webhookState == null) {
       throw new BuiltValueNullFieldError('UserCompanyState', 'webhookState');
@@ -492,6 +507,7 @@ class _$UserCompanyState extends UserCompanyState {
         projectState == other.projectState &&
         paymentState == other.paymentState &&
         quoteState == other.quoteState &&
+        recurringInvoiceState == other.recurringInvoiceState &&
         webhookState == other.webhookState &&
         tokenState == other.tokenState &&
         paymentTermState == other.paymentTermState &&
@@ -524,17 +540,17 @@ class _$UserCompanyState extends UserCompanyState {
                                                                 $jc(
                                                                     $jc(
                                                                         $jc(
-                                                                            $jc($jc($jc(0, lastUpdated.hashCode), userCompany.hashCode),
-                                                                                documentState.hashCode),
-                                                                            productState.hashCode),
-                                                                        clientState.hashCode),
-                                                                    invoiceState.hashCode),
-                                                                expenseState.hashCode),
-                                                            vendorState.hashCode),
-                                                        taskState.hashCode),
-                                                    projectState.hashCode),
-                                                paymentState.hashCode),
-                                            quoteState.hashCode),
+                                                                            $jc($jc($jc($jc(0, lastUpdated.hashCode), userCompany.hashCode), documentState.hashCode),
+                                                                                productState.hashCode),
+                                                                            clientState.hashCode),
+                                                                        invoiceState.hashCode),
+                                                                    expenseState.hashCode),
+                                                                vendorState.hashCode),
+                                                            taskState.hashCode),
+                                                        projectState.hashCode),
+                                                    paymentState.hashCode),
+                                                quoteState.hashCode),
+                                            recurringInvoiceState.hashCode),
                                         webhookState.hashCode),
                                     tokenState.hashCode),
                                 paymentTermState.hashCode),
@@ -561,6 +577,7 @@ class _$UserCompanyState extends UserCompanyState {
           ..add('projectState', projectState)
           ..add('paymentState', paymentState)
           ..add('quoteState', quoteState)
+          ..add('recurringInvoiceState', recurringInvoiceState)
           ..add('webhookState', webhookState)
           ..add('tokenState', tokenState)
           ..add('paymentTermState', paymentTermState)
@@ -647,6 +664,13 @@ class UserCompanyStateBuilder
   set quoteState(QuoteStateBuilder quoteState) =>
       _$this._quoteState = quoteState;
 
+  RecurringInvoiceStateBuilder _recurringInvoiceState;
+  RecurringInvoiceStateBuilder get recurringInvoiceState =>
+      _$this._recurringInvoiceState ??= new RecurringInvoiceStateBuilder();
+  set recurringInvoiceState(
+          RecurringInvoiceStateBuilder recurringInvoiceState) =>
+      _$this._recurringInvoiceState = recurringInvoiceState;
+
   WebhookStateBuilder _webhookState;
   WebhookStateBuilder get webhookState =>
       _$this._webhookState ??= new WebhookStateBuilder();
@@ -716,6 +740,7 @@ class UserCompanyStateBuilder
       _projectState = _$v.projectState?.toBuilder();
       _paymentState = _$v.paymentState?.toBuilder();
       _quoteState = _$v.quoteState?.toBuilder();
+      _recurringInvoiceState = _$v.recurringInvoiceState?.toBuilder();
       _webhookState = _$v.webhookState?.toBuilder();
       _tokenState = _$v.tokenState?.toBuilder();
       _paymentTermState = _$v.paymentTermState?.toBuilder();
@@ -761,6 +786,7 @@ class UserCompanyStateBuilder
               projectState: projectState.build(),
               paymentState: paymentState.build(),
               quoteState: quoteState.build(),
+              recurringInvoiceState: recurringInvoiceState.build(),
               webhookState: webhookState.build(),
               tokenState: tokenState.build(),
               paymentTermState: paymentTermState.build(),
@@ -795,6 +821,8 @@ class UserCompanyStateBuilder
         paymentState.build();
         _$failedField = 'quoteState';
         quoteState.build();
+        _$failedField = 'recurringInvoiceState';
+        recurringInvoiceState.build();
         _$failedField = 'webhookState';
         webhookState.build();
         _$failedField = 'tokenState';

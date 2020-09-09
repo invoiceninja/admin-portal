@@ -15,6 +15,17 @@ mixin LocalizationsProvider on LocaleCodeAware {
   static final Map<String, Map<String, String>> _localizedValues = {
     'en': {
       // STARTER: lang key - do not remove comment
+      'recurring_invoice': 'Recurring Invoice',
+      'recurring_invoices': 'Recurring Invoices',
+      'new_recurring_invoice': 'New Recurring Invoice',
+      'edit_recurring_invoice': 'Edit Recurring Invoice',
+      'created_recurring_invoice': 'Successfully created recurring invoice',
+      'updated_recurring_invoice': 'Successfully updated recurring invoice',
+      'archived_recurring_invoice': 'Successfully archived recurring invoice',
+      'deleted_recurring_invoice': 'Successfully deleted recurring invoice',
+      'removed_recurring_invoice': 'Successfully removed recurring invoice',
+      'restored_recurring_invoice': 'Successfully restored recurring invoice',
+      'search_recurring_invoice': 'Search Recurring Invoice',
       'send_date': 'Send Date',
       'auto_bill_on': 'Auto Bill On',
       'minimum_under_payment_amount': 'Minimum Under Payment Amount',
@@ -312,7 +323,6 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'restored_design': 'Successfully restored design',
       'proposals': 'Proposals',
       'tickets': 'Tickets',
-      'recurring_invoices': 'Recurring Invoices',
       'recurring_quotes': 'Recurring Quotes',
       'recurring_tasks': 'Recurring Tasks',
       'recurring_expenses': 'Recurring Expenses',
@@ -953,7 +963,6 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'edit_expense': 'Edit Expense',
       'edit_vendor': 'Edit Vendor',
       'edit_project': 'Edit Project',
-      'edit_recurring_invoice': 'Edit Recurring Invoice',
       'edit_recurring_expense': 'Edit Recurring Expense',
       'edit_recurring_quote': 'Edit Recurring Quote',
       'billing_address': 'Billing Address',
@@ -3628,6 +3637,33 @@ mixin LocalizationsProvider on LocaleCodeAware {
   String get appUpdated => _localizedValues[localeCode]['app_updated'] ?? '';
 
 // STARTER: lang field - do not remove comment
+  String get recurringInvoice =>
+      _localizedValues[localeCode]['recurring_invoice'];
+
+  String get recurringInvoices =>
+      _localizedValues[localeCode]['recurring_invoices'];
+
+  String get newRecurringInvoice =>
+      _localizedValues[localeCode]['new_recurring_invoice'];
+
+  String get createdRecurringInvoice =>
+      _localizedValues[localeCode]['created_recurring_invoice'];
+
+  String get updatedRecurringInvoice =>
+      _localizedValues[localeCode]['updated_recurring_invoice'];
+
+  String get archivedRecurringInvoice =>
+      _localizedValues[localeCode]['archived_recurring_invoice'];
+
+  String get deletedRecurringInvoice =>
+      _localizedValues[localeCode]['deleted_recurring_invoice'];
+
+  String get restoredRecurringInvoice =>
+      _localizedValues[localeCode]['restored_recurring_invoice'];
+
+  String get searchRecurringInvoice =>
+      _localizedValues[localeCode]['search_recurring_invoice'];
+
   String get webhook => _localizedValues[localeCode]['webhook'] ?? '';
 
   String get webhooks => _localizedValues[localeCode]['webhooks'] ?? '';
@@ -3743,9 +3779,6 @@ mixin LocalizationsProvider on LocaleCodeAware {
   String get proposals => _localizedValues[localeCode]['proposals'] ?? '';
 
   String get tickets => _localizedValues[localeCode]['tickets'] ?? '';
-
-  String get recurringInvoices =>
-      _localizedValues[localeCode]['recurring_invoices'] ?? '';
 
   String get recurringQuotes =>
       _localizedValues[localeCode]['recurring_quotes'] ?? '';

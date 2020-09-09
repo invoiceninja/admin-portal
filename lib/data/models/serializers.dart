@@ -38,7 +38,9 @@ import 'package:invoiceninja_flutter/redux/task/task_state.dart';
 import 'package:invoiceninja_flutter/redux/project/project_state.dart';
 import 'package:invoiceninja_flutter/redux/payment/payment_state.dart';
 import 'package:invoiceninja_flutter/redux/quote/quote_state.dart';
+
 // STARTER: import - do not remove comment
+import 'package:invoiceninja_flutter/redux/recurring_invoice/recurring_invoice_state.dart';
 import 'package:invoiceninja_flutter/data/models/webhook_model.dart';
 import 'package:invoiceninja_flutter/redux/webhook/webhook_state.dart';
 import 'package:invoiceninja_flutter/data/models/token_model.dart';

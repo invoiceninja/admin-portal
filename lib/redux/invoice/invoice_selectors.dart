@@ -151,12 +151,13 @@ List<String> filteredInvoicesSelector(
 
   list.sort((invoiceAId, invoiceBId) {
     return invoiceMap[invoiceAId].compareTo(
-        invoice: invoiceMap[invoiceBId],
-        sortField: invoiceListState.sortField,
-        sortAscending: invoiceListState.sortAscending,
-        clientMap: clientMap,
-        staticState: staticState,
-        userMap: userMap);
+      invoice: invoiceMap[invoiceBId],
+      sortField: invoiceListState.sortField,
+      sortAscending: invoiceListState.sortAscending,
+      clientMap: clientMap,
+      staticState: staticState,
+      userMap: userMap,
+    );
   });
 
   return list;

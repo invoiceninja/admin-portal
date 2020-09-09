@@ -21,8 +21,7 @@ class AppButton extends StatelessWidget {
     final button = RaisedButton(
       padding: EdgeInsets.symmetric(vertical: 10, horizontal: 10),
       color: color ?? Theme.of(context).buttonColor,
-      shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(5)),
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5)),
       child: iconData != null
           ? IconText(
               icon: iconData,

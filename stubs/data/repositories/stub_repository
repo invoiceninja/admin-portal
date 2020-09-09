@@ -26,14 +26,8 @@ class StubRepository {
     return stubResponse.data;
   }
 
-  Future<BuiltList<StubEntity>> loadList(
-      Credentials credentials, int updatedAt) async {
-    String url = credentials.url + '/stubs?';
-
-    if (updatedAt > 0) {
-      url += '&updated_at=${updatedAt - kUpdatedAtBufferSeconds}';
-    }
-
+  Future<BuiltList<StubEntity>> loadList(Credentials credentials) async {
+    final String url = credentials.url + '/stubs?';
     final dynamic response = await webClient.get(url, credentials.token);
 
     final StubListResponse stubResponse =

@@ -91,6 +91,7 @@ abstract class CompanyEntity extends Object
       clients: BuiltList<ClientEntity>(),
       products: BuiltList<ProductEntity>(),
       invoices: BuiltList<InvoiceEntity>(),
+      recurringInvoices: BuiltList<InvoiceEntity>(),
       payments: BuiltList<PaymentEntity>(),
       quotes: BuiltList<InvoiceEntity>(),
       credits: BuiltList<InvoiceEntity>(),
@@ -214,6 +215,9 @@ abstract class CompanyEntity extends Object
   BuiltList<ProductEntity> get products;
 
   BuiltList<InvoiceEntity> get invoices;
+
+  @BuiltValueField(wireName: 'recurring_invoices')
+  BuiltList<InvoiceEntity> get recurringInvoices;
 
   BuiltList<PaymentEntity> get payments;
 
@@ -407,7 +411,6 @@ abstract class CompanyEntity extends Object
   bool isModuleEnabled(EntityType entityType) {
     // TODO remove this
     if ([
-      EntityType.recurringInvoice,
       EntityType.project,
       EntityType.task,
       EntityType.expense,

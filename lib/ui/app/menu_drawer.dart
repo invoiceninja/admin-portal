@@ -237,6 +237,13 @@ class MenuDrawer extends StatelessWidget {
                           ),
                           DrawerTile(
                             company: company,
+                            entityType: EntityType.recurringInvoice,
+                            icon: getEntityIcon(EntityType.recurringInvoice),
+                            title: localization.recurringInvoices,
+                            iconTooltip: localization.newRecurringInvoice,
+                          ),
+                          DrawerTile(
+                            company: company,
                             entityType: EntityType.payment,
                             icon: getEntityIcon(EntityType.payment),
                             title: localization.payments,

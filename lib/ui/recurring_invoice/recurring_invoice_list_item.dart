@@ -1,6 +1,6 @@
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
-import 'package:invoiceninja_flutter/data/models/stub_model.dart';
+import 'package:invoiceninja_flutter/data/models/invoice_model.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/ui/app/entity_state_label.dart';
 import 'package:invoiceninja_flutter/utils/formatting.dart';
@@ -9,10 +9,10 @@ import 'package:flutter/material.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/ui/app/dismissible_entity.dart';
 
-class StubListItem extends StatelessWidget {
-  const StubListItem({
+class RecurringInvoiceListItem extends StatelessWidget {
+  const RecurringInvoiceListItem({
     @required this.user,
-    @required this.stub,
+    @required this.recurringInvoice,
     @required this.filter,
     this.onTap,
     this.onLongPress,
@@ -23,7 +23,7 @@ class StubListItem extends StatelessWidget {
   final UserEntity user;
   final GestureTapCallback onTap;
   final GestureTapCallback onLongPress;
-  final StubEntity stub;
+  final InvoiceEntity recurringInvoice;
   final String filter;
   final Function(bool) onCheckboxChanged;
   final bool isChecked;
@@ -33,29 +33,31 @@ class StubListItem extends StatelessWidget {
     final store = StoreProvider.of<AppState>(context);
     final state = store.state;
     final uiState = state.uiState;
-    final stubUIState = uiState.stubUIState;
-    final listUIState = stubUIState.listUIState;
+    final recurringInvoiceUIState = uiState.recurringInvoiceUIState;
+    final listUIState = recurringInvoiceUIState.listUIState;
     final isInMultiselect = listUIState.isInMultiselect();
     final showCheckbox = onCheckboxChanged != null || isInMultiselect;
 
     final filterMatch = filter != null && filter.isNotEmpty
-        ? stub.matchesFilterValue(filter)
+        ? recurringInvoice.matchesFilterValue(filter)
         : null;
     final subtitle = filterMatch;
 
     return DismissibleEntity(
       userCompany: state.userCompany,
-      entity: stub,
-      isSelected: stub.id ==
-          (uiState.isEditing ? stubUIState.editing.id : stubUIState.selectedId),
+      entity: recurringInvoice,
+      isSelected: recurringInvoice.id ==
+          (uiState.isEditing
+              ? recurringInvoiceUIState.editing.id
+              : recurringInvoiceUIState.selectedId),
       child: ListTile(
         onTap: () => onTap != null
             ? onTap()
-            : selectEntity(entity: stub, context: context),
+            : selectEntity(entity: recurringInvoice, context: context),
         onLongPress: () => onLongPress != null
             ? onLongPress()
             : selectEntity(
-                entity: stub, context: context, longPress: true),
+                entity: recurringInvoice, context: context, longPress: true),
         leading: showCheckbox
             ? IgnorePointer(
                 ignoring: listUIState.isInMultiselect(),
@@ -73,11 +75,11 @@ class StubListItem extends StatelessWidget {
             children: <Widget>[
               Expanded(
                 child: Text(
-                  stub.name,
+                  recurringInvoice.number,
                   style: Theme.of(context).textTheme.headline6,
                 ),
               ),
-              Text(formatNumber(stub.listDisplayAmount, context),
+              Text(formatNumber(recurringInvoice.listDisplayAmount, context),
                   style: Theme.of(context).textTheme.headline6),
             ],
           ),
@@ -92,7 +94,7 @@ class StubListItem extends StatelessWidget {
                     overflow: TextOverflow.ellipsis,
                   )
                 : Container(),
-            EntityStateLabel(stub),
+            EntityStateLabel(recurringInvoice),
           ],
         ),
       ),
