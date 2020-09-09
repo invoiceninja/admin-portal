@@ -236,17 +236,8 @@ abstract class InvoiceEntity extends Object
   bool get usesInclusiveTaxes;
 
   /*
-  @BuiltValueField(wireName: 'frequency_id')
-  int get frequencyId;
-
-  @BuiltValueField(wireName: 'start_date')
-  String get startDate;
-
   @BuiltValueField(wireName: 'end_date')
   String get endDate;
-
-  @BuiltValueField(wireName: 'last_sent_date')
-  String get lastSentDate;
 
   @BuiltValueField(wireName: 'recurring_invoice_id')
   String get recurringInvoiceId;
@@ -346,20 +337,42 @@ abstract class InvoiceEntity extends Object
   @BuiltValueField(wireName: 'has_expenses')
   bool get hasExpenses;
 
+  @BuiltValueField(wireName: 'exchange_rate')
+  double get exchangeRate;
+
+  @nullable
   @BuiltValueField(wireName: 'reminder1_sent')
   String get reminder1Sent;
 
+  @nullable
   @BuiltValueField(wireName: 'reminder2_sent')
   String get reminder2Sent;
 
+  @nullable
   @BuiltValueField(wireName: 'reminder3_sent')
   String get reminder3Sent;
 
+  @nullable
   @BuiltValueField(wireName: 'reminder_last_sent')
   String get reminderLastSent;
 
-  @BuiltValueField(wireName: 'exchange_rate')
-  double get exchangeRate;
+  @nullable
+  @BuiltValueField(wireName: 'frequency_id')
+  String get frequencyId;
+
+  @BuiltValueField(wireName: 'last_sent_date')
+  String get lastSentDate;
+
+  @BuiltValueField(wireName: 'next_send_date')
+  String get nextSendDate;
+
+  @nullable
+  @BuiltValueField(wireName: 'start_date')
+  String get startDate;
+
+  @nullable
+  @BuiltValueField(wireName: 'remaining_cycles')
+  int get remainingCycles;
 
   @nullable
   @BuiltValueField(wireName: 'invoice_id')
