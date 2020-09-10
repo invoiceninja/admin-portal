@@ -129,6 +129,9 @@ class _$ClientEntitySerializer implements StructuredSerializer<ClientEntity> {
       'paid_to_date',
       serializers.serialize(object.paidToDate,
           specifiedType: const FullType(double)),
+      'client_hash',
+      serializers.serialize(object.clientHash,
+          specifiedType: const FullType(String)),
       'address1',
       serializers.serialize(object.address1,
           specifiedType: const FullType(String)),
@@ -313,6 +316,10 @@ class _$ClientEntitySerializer implements StructuredSerializer<ClientEntity> {
         case 'paid_to_date':
           result.paidToDate = serializers.deserialize(value,
               specifiedType: const FullType(double)) as double;
+          break;
+        case 'client_hash':
+          result.clientHash = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String;
           break;
         case 'address1':
           result.address1 = serializers.deserialize(value,
@@ -891,6 +898,8 @@ class _$ClientEntity extends ClientEntity {
   @override
   final double paidToDate;
   @override
+  final String clientHash;
+  @override
   final String address1;
   @override
   final String address2;
@@ -982,6 +991,7 @@ class _$ClientEntity extends ClientEntity {
       this.balance,
       this.creditBalance,
       this.paidToDate,
+      this.clientHash,
       this.address1,
       this.address2,
       this.city,
@@ -1040,6 +1050,9 @@ class _$ClientEntity extends ClientEntity {
     }
     if (paidToDate == null) {
       throw new BuiltValueNullFieldError('ClientEntity', 'paidToDate');
+    }
+    if (clientHash == null) {
+      throw new BuiltValueNullFieldError('ClientEntity', 'clientHash');
     }
     if (address1 == null) {
       throw new BuiltValueNullFieldError('ClientEntity', 'address1');
@@ -1169,6 +1182,7 @@ class _$ClientEntity extends ClientEntity {
         balance == other.balance &&
         creditBalance == other.creditBalance &&
         paidToDate == other.paidToDate &&
+        clientHash == other.clientHash &&
         address1 == other.address1 &&
         address2 == other.address2 &&
         city == other.city &&
@@ -1232,7 +1246,7 @@ class _$ClientEntity extends ClientEntity {
                                                                 $jc(
                                                                     $jc(
                                                                         $jc(
-                                                                            $jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc(0, groupId.hashCode), loadedAt.hashCode), name.hashCode), displayName.hashCode), balance.hashCode), creditBalance.hashCode), paidToDate.hashCode), address1.hashCode), address2.hashCode), city.hashCode), state.hashCode), postalCode.hashCode), countryId.hashCode), phone.hashCode), privateNotes.hashCode), publicNotes.hashCode), website.hashCode), industryId.hashCode), sizeId.hashCode), vatNumber.hashCode), idNumber.hashCode), shippingAddress1.hashCode), shippingAddress2.hashCode), shippingCity.hashCode), shippingState.hashCode), shippingPostalCode.hashCode), shippingCountryId.hashCode), settings.hashCode),
+                                                                            $jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc(0, groupId.hashCode), loadedAt.hashCode), name.hashCode), displayName.hashCode), balance.hashCode), creditBalance.hashCode), paidToDate.hashCode), clientHash.hashCode), address1.hashCode), address2.hashCode), city.hashCode), state.hashCode), postalCode.hashCode), countryId.hashCode), phone.hashCode), privateNotes.hashCode), publicNotes.hashCode), website.hashCode), industryId.hashCode), sizeId.hashCode), vatNumber.hashCode), idNumber.hashCode), shippingAddress1.hashCode), shippingAddress2.hashCode), shippingCity.hashCode), shippingState.hashCode), shippingPostalCode.hashCode), shippingCountryId.hashCode), settings.hashCode),
                                                                                 lastLogin.hashCode),
                                                                             customValue1.hashCode),
                                                                         customValue2.hashCode),
@@ -1264,6 +1278,7 @@ class _$ClientEntity extends ClientEntity {
           ..add('balance', balance)
           ..add('creditBalance', creditBalance)
           ..add('paidToDate', paidToDate)
+          ..add('clientHash', clientHash)
           ..add('address1', address1)
           ..add('address2', address2)
           ..add('city', city)
@@ -1340,6 +1355,10 @@ class ClientEntityBuilder
   double _paidToDate;
   double get paidToDate => _$this._paidToDate;
   set paidToDate(double paidToDate) => _$this._paidToDate = paidToDate;
+
+  String _clientHash;
+  String get clientHash => _$this._clientHash;
+  set clientHash(String clientHash) => _$this._clientHash = clientHash;
 
   String _address1;
   String get address1 => _$this._address1;
@@ -1531,6 +1550,7 @@ class ClientEntityBuilder
       _balance = _$v.balance;
       _creditBalance = _$v.creditBalance;
       _paidToDate = _$v.paidToDate;
+      _clientHash = _$v.clientHash;
       _address1 = _$v.address1;
       _address2 = _$v.address2;
       _city = _$v.city;
@@ -1602,6 +1622,7 @@ class ClientEntityBuilder
               balance: balance,
               creditBalance: creditBalance,
               paidToDate: paidToDate,
+              clientHash: clientHash,
               address1: address1,
               address2: address2,
               city: city,

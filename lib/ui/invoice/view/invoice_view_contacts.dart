@@ -87,8 +87,10 @@ class _InvitationListTile extends StatelessWidget {
                 shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(5)),
                 onPressed: () {
-                  launch(invitation.silentLink,
-                      forceWebView: false, forceSafariVC: false);
+                  launch(
+                      '${invitation.silentLink}&client_hash=${client.clientHash}',
+                      forceWebView: false,
+                      forceSafariVC: false);
                 },
               )),
               SizedBox(width: kTableColumnGap),
