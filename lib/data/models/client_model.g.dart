@@ -129,9 +129,6 @@ class _$ClientEntitySerializer implements StructuredSerializer<ClientEntity> {
       'paid_to_date',
       serializers.serialize(object.paidToDate,
           specifiedType: const FullType(double)),
-      'client_hash',
-      serializers.serialize(object.clientHash,
-          specifiedType: const FullType(String)),
       'address1',
       serializers.serialize(object.address1,
           specifiedType: const FullType(String)),
@@ -250,6 +247,12 @@ class _$ClientEntitySerializer implements StructuredSerializer<ClientEntity> {
         ..add('loadedAt')
         ..add(serializers.serialize(object.loadedAt,
             specifiedType: const FullType(int)));
+    }
+    if (object.clientHash != null) {
+      result
+        ..add('client_hash')
+        ..add(serializers.serialize(object.clientHash,
+            specifiedType: const FullType(String)));
     }
     if (object.isChanged != null) {
       result
@@ -1050,9 +1053,6 @@ class _$ClientEntity extends ClientEntity {
     }
     if (paidToDate == null) {
       throw new BuiltValueNullFieldError('ClientEntity', 'paidToDate');
-    }
-    if (clientHash == null) {
-      throw new BuiltValueNullFieldError('ClientEntity', 'clientHash');
     }
     if (address1 == null) {
       throw new BuiltValueNullFieldError('ClientEntity', 'address1');
