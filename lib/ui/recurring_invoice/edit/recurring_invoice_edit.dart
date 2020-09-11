@@ -1,11 +1,9 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:invoiceninja_flutter/constants.dart';
 import 'package:invoiceninja_flutter/ui/app/edit_scaffold.dart';
 import 'package:invoiceninja_flutter/ui/app/form_card.dart';
 import 'package:invoiceninja_flutter/ui/invoice/edit/invoice_edit_vm.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
-import 'package:invoiceninja_flutter/utils/completers.dart';
 
 class RecurringInvoiceEdit extends StatefulWidget {
   const RecurringInvoiceEdit({
@@ -24,14 +22,11 @@ class _RecurringInvoiceEditState extends State<RecurringInvoiceEdit>
   static final GlobalKey<FormState> _formKey =
       GlobalKey<FormState>(debugLabel: '_recurringInvoiceEdit');
   TabController _controller;
-  final _debouncer = Debouncer();
 
   static const kDetailsScreen = 0;
   static const kItemScreen = 1;
 
   // STARTER: controllers - do not remove comment
-
-  List<TextEditingController> _controllers = [];
 
   @override
   void initState() {

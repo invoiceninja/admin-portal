@@ -59,6 +59,10 @@ Middleware<AppState> _viewSettings() {
 
           next(action);
 
+          if (store.state.isStale) {
+            store.dispatch(RefreshData());
+          }
+
           store.dispatch(UpdateCurrentRoute(route));
 
           if (isMobile(action.context)) {
