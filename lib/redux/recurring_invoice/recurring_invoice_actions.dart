@@ -47,6 +47,12 @@ class EditRecurringInvoice extends AbstractNavigatorAction
   final bool force;
 }
 
+class EditRecurringInvoiceItem implements PersistUI {
+  EditRecurringInvoiceItem([this.itemIndex]);
+
+  final int itemIndex;
+}
+
 class UpdateRecurringInvoice implements PersistUI {
   UpdateRecurringInvoice(this.recurringInvoice);
 
@@ -139,6 +145,31 @@ class AddRecurringInvoiceSuccess implements StopSaving, PersistData, PersistUI {
   AddRecurringInvoiceSuccess(this.recurringInvoice);
 
   final InvoiceEntity recurringInvoice;
+}
+
+class AddQuoteItem implements PersistUI {
+  AddQuoteItem({this.quoteItem});
+
+  final InvoiceItemEntity quoteItem;
+}
+
+class AddRecurringInvoiceItems implements PersistUI {
+  AddRecurringInvoiceItems(this.items);
+
+  final List<InvoiceItemEntity> items;
+}
+
+class UpdateRecurringInvoiceItem implements PersistUI {
+  UpdateRecurringInvoiceItem({this.index, this.item});
+
+  final int index;
+  final InvoiceItemEntity item;
+}
+
+class DeleteRecurringInvoiceItem implements PersistUI {
+  DeleteRecurringInvoiceItem(this.index);
+
+  final int index;
 }
 
 class SaveRecurringInvoiceFailure implements StopSaving {

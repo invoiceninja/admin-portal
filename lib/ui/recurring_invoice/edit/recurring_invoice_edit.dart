@@ -1,8 +1,9 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:invoiceninja_flutter/constants.dart';
 import 'package:invoiceninja_flutter/ui/app/edit_scaffold.dart';
 import 'package:invoiceninja_flutter/ui/app/form_card.dart';
-import 'package:invoiceninja_flutter/ui/recurring_invoice/edit/recurring_invoice_edit_vm.dart';
+import 'package:invoiceninja_flutter/ui/invoice/edit/invoice_edit_vm.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:invoiceninja_flutter/utils/completers.dart';
 
@@ -12,64 +13,58 @@ class RecurringInvoiceEdit extends StatefulWidget {
     @required this.viewModel,
   }) : super(key: key);
 
-  final RecurringInvoiceEditVM viewModel;
+  final EntityEditVM viewModel;
 
   @override
   _RecurringInvoiceEditState createState() => _RecurringInvoiceEditState();
 }
 
-class _RecurringInvoiceEditState extends State<RecurringInvoiceEdit> {
+class _RecurringInvoiceEditState extends State<RecurringInvoiceEdit>
+    with SingleTickerProviderStateMixin {
   static final GlobalKey<FormState> _formKey =
       GlobalKey<FormState>(debugLabel: '_recurringInvoiceEdit');
+  TabController _controller;
   final _debouncer = Debouncer();
+
+  static const kDetailsScreen = 0;
+  static const kItemScreen = 1;
 
   // STARTER: controllers - do not remove comment
 
   List<TextEditingController> _controllers = [];
 
   @override
-  void didChangeDependencies() {
-    _controllers = [
-      // STARTER: array - do not remove comment
-    ];
+  void initState() {
+    super.initState();
 
-    _controllers.forEach((controller) => controller.removeListener(_onChanged));
+    final viewModel = widget.viewModel;
 
-    //final recurringInvoice = widget.viewModel.recurringInvoice;
-    // STARTER: read value - do not remove comment
+    final index =
+        viewModel.invoiceItemIndex != null ? kItemScreen : kDetailsScreen;
+    _controller = TabController(vsync: this, length: 3, initialIndex: index);
+  }
 
-    _controllers.forEach((controller) => controller.addListener(_onChanged));
+  @override
+  void didUpdateWidget(oldWidget) {
+    super.didUpdateWidget(oldWidget);
 
-    super.didChangeDependencies();
+    if (widget.viewModel.invoiceItemIndex != null) {
+      _controller.animateTo(kItemScreen);
+    }
   }
 
   @override
   void dispose() {
-    _controllers.forEach((controller) {
-      controller.removeListener(_onChanged);
-      controller.dispose();
-    });
-
+    _controller.dispose();
     super.dispose();
-  }
-
-  void _onChanged() {
-    _debouncer.run(() {
-      final recurringInvoice =
-          widget.viewModel.recurringInvoice.rebuild((b) => b
-              // STARTER: set value - do not remove comment
-              );
-      if (recurringInvoice != widget.viewModel.recurringInvoice) {
-        widget.viewModel.onChanged(recurringInvoice);
-      }
-    });
   }
 
   @override
   Widget build(BuildContext context) {
     final viewModel = widget.viewModel;
     final localization = AppLocalization.of(context);
-    final recurringInvoice = viewModel.recurringInvoice;
+    final recurringInvoice = viewModel.invoice;
+    final state = viewModel.state;
 
     return EditScaffold(
       title: recurringInvoice.isNew
@@ -91,6 +86,23 @@ class _RecurringInvoiceEditState extends State<RecurringInvoiceEdit> {
 
         viewModel.onSavePressed(context);
       },
+      appBarBottom: state.prefState.isDesktop
+          ? null
+          : TabBar(
+              controller: _controller,
+              //isScrollable: true,
+              tabs: [
+                Tab(
+                  text: localization.details,
+                ),
+                Tab(
+                  text: localization.items,
+                ),
+                Tab(
+                  text: localization.notes,
+                ),
+              ],
+            ),
       body: Form(
           key: _formKey,
           child: Builder(builder: (BuildContext context) {

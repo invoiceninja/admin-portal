@@ -3,19 +3,20 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
+import 'package:invoiceninja_flutter/redux/recurring_invoice/recurring_invoice_actions.dart';
 import 'package:invoiceninja_flutter/redux/ui/ui_actions.dart';
+import 'package:invoiceninja_flutter/ui/app/dialogs/error_dialog.dart';
+import 'package:invoiceninja_flutter/ui/invoice/edit/invoice_edit_vm.dart';
+import 'package:invoiceninja_flutter/ui/recurring_invoice/edit/recurring_invoice_edit.dart';
+import 'package:invoiceninja_flutter/ui/recurring_invoice/view/recurring_invoice_view_vm.dart';
 import 'package:invoiceninja_flutter/utils/platforms.dart';
 import 'package:redux/redux.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
-import 'package:invoiceninja_flutter/ui/app/dialogs/error_dialog.dart';
-import 'package:invoiceninja_flutter/ui/recurring_invoice/view/recurring_invoice_view_vm.dart';
-import 'package:invoiceninja_flutter/redux/recurring_invoice/recurring_invoice_actions.dart';
-import 'package:invoiceninja_flutter/data/models/invoice_model.dart';
-import 'package:invoiceninja_flutter/ui/recurring_invoice/edit/recurring_invoice_edit.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 
 class RecurringInvoiceEditScreen extends StatelessWidget {
   const RecurringInvoiceEditScreen({Key key}) : super(key: key);
+
   static const String route = '/recurring_invoice/edit';
 
   @override
@@ -27,48 +28,48 @@ class RecurringInvoiceEditScreen extends StatelessWidget {
       builder: (context, viewModel) {
         return RecurringInvoiceEdit(
           viewModel: viewModel,
-          key: ValueKey(viewModel.recurringInvoice.id),
         );
       },
     );
   }
 }
 
-class RecurringInvoiceEditVM {
+class RecurringInvoiceEditVM extends EntityEditVM {
   RecurringInvoiceEditVM({
-    @required this.state,
-    @required this.recurringInvoice,
-    @required this.company,
-    @required this.onChanged,
-    @required this.isSaving,
-    @required this.origRecurringInvoice,
-    @required this.onSavePressed,
-    @required this.onCancelPressed,
-    @required this.isLoading,
-  });
+    AppState state,
+    CompanyEntity company,
+    InvoiceEntity invoice,
+    int invoiceItemIndex,
+    InvoiceEntity origInvoice,
+    Function(BuildContext) onSavePressed,
+    Function(List<InvoiceItemEntity>, String) onItemsAdded,
+    bool isSaving,
+    Function(BuildContext) onCancelPressed,
+  }) : super(
+          state: state,
+          company: company,
+          invoice: invoice,
+          invoiceItemIndex: invoiceItemIndex,
+          origInvoice: origInvoice,
+          onSavePressed: onSavePressed,
+          onItemsAdded: onItemsAdded,
+          isSaving: isSaving,
+          onCancelPressed: onCancelPressed,
+        );
 
   factory RecurringInvoiceEditVM.fromStore(Store<AppState> store) {
-    final state = store.state;
+    final AppState state = store.state;
     final recurringInvoice = state.recurringInvoiceUIState.editing;
 
     return RecurringInvoiceEditVM(
       state: state,
-      isLoading: state.isLoading,
-      isSaving: state.isSaving,
-      origRecurringInvoice:
-          state.recurringInvoiceState.map[recurringInvoice.id],
-      recurringInvoice: recurringInvoice,
       company: state.company,
-      onChanged: (InvoiceEntity recurringInvoice) {
-        store.dispatch(UpdateRecurringInvoice(recurringInvoice));
-      },
-      onCancelPressed: (BuildContext context) {
-        createEntity(
-            context: context, entity: InvoiceEntity(), force: true);
-      },
+      isSaving: state.isSaving,
+      invoice: recurringInvoice,
+      invoiceItemIndex: state.recurringInvoiceUIState.editingItemIndex,
+      origInvoice: store.state.recurringInvoiceState.map[recurringInvoice.id],
       onSavePressed: (BuildContext context) {
-        final Completer<InvoiceEntity> completer =
-            new Completer<InvoiceEntity>();
+        final Completer<InvoiceEntity> completer = Completer<InvoiceEntity>();
         store.dispatch(SaveRecurringInvoiceRequest(
             completer: completer, recurringInvoice: recurringInvoice));
         return completer.future.then((savedRecurringInvoice) {
@@ -93,16 +94,16 @@ class RecurringInvoiceEditVM {
               });
         });
       },
+      onItemsAdded: (items, clientId) {
+        if (items.length == 1) {
+          store.dispatch(EditRecurringInvoiceItem(recurringInvoice.lineItems.length));
+        }
+        store.dispatch(AddRecurringInvoiceItems(items));
+      },
+      onCancelPressed: (BuildContext context) {
+        createEntity(context: context, entity: InvoiceEntity(), force: true);
+        store.dispatch(UpdateCurrentRoute(state.uiState.previousRoute));
+      },
     );
   }
-
-  final InvoiceEntity recurringInvoice;
-  final CompanyEntity company;
-  final Function(InvoiceEntity) onChanged;
-  final Function(BuildContext) onSavePressed;
-  final Function(BuildContext) onCancelPressed;
-  final bool isLoading;
-  final bool isSaving;
-  final InvoiceEntity origRecurringInvoice;
-  final AppState state;
 }

@@ -252,6 +252,8 @@ class _$RecurringInvoiceUIState extends RecurringInvoiceUIState {
   @override
   final InvoiceEntity editing;
   @override
+  final int editingItemIndex;
+  @override
   final ListUIState listUIState;
   @override
   final String selectedId;
@@ -266,6 +268,7 @@ class _$RecurringInvoiceUIState extends RecurringInvoiceUIState {
 
   _$RecurringInvoiceUIState._(
       {this.editing,
+      this.editingItemIndex,
       this.listUIState,
       this.selectedId,
       this.saveCompleter,
@@ -291,6 +294,7 @@ class _$RecurringInvoiceUIState extends RecurringInvoiceUIState {
     if (identical(other, this)) return true;
     return other is RecurringInvoiceUIState &&
         editing == other.editing &&
+        editingItemIndex == other.editingItemIndex &&
         listUIState == other.listUIState &&
         selectedId == other.selectedId &&
         saveCompleter == other.saveCompleter &&
@@ -302,7 +306,9 @@ class _$RecurringInvoiceUIState extends RecurringInvoiceUIState {
   int get hashCode {
     return __hashCode ??= $jf($jc(
         $jc(
-            $jc($jc($jc(0, editing.hashCode), listUIState.hashCode),
+            $jc(
+                $jc($jc($jc(0, editing.hashCode), editingItemIndex.hashCode),
+                    listUIState.hashCode),
                 selectedId.hashCode),
             saveCompleter.hashCode),
         cancelCompleter.hashCode));
@@ -312,6 +318,7 @@ class _$RecurringInvoiceUIState extends RecurringInvoiceUIState {
   String toString() {
     return (newBuiltValueToStringHelper('RecurringInvoiceUIState')
           ..add('editing', editing)
+          ..add('editingItemIndex', editingItemIndex)
           ..add('listUIState', listUIState)
           ..add('selectedId', selectedId)
           ..add('saveCompleter', saveCompleter)
@@ -329,6 +336,11 @@ class RecurringInvoiceUIStateBuilder
   InvoiceEntityBuilder get editing =>
       _$this._editing ??= new InvoiceEntityBuilder();
   set editing(InvoiceEntityBuilder editing) => _$this._editing = editing;
+
+  int _editingItemIndex;
+  int get editingItemIndex => _$this._editingItemIndex;
+  set editingItemIndex(int editingItemIndex) =>
+      _$this._editingItemIndex = editingItemIndex;
 
   ListUIStateBuilder _listUIState;
   ListUIStateBuilder get listUIState =>
@@ -355,6 +367,7 @@ class RecurringInvoiceUIStateBuilder
   RecurringInvoiceUIStateBuilder get _$this {
     if (_$v != null) {
       _editing = _$v.editing?.toBuilder();
+      _editingItemIndex = _$v.editingItemIndex;
       _listUIState = _$v.listUIState?.toBuilder();
       _selectedId = _$v.selectedId;
       _saveCompleter = _$v.saveCompleter;
@@ -384,6 +397,7 @@ class RecurringInvoiceUIStateBuilder
       _$result = _$v ??
           new _$RecurringInvoiceUIState._(
               editing: _editing?.build(),
+              editingItemIndex: editingItemIndex,
               listUIState: listUIState.build(),
               selectedId: selectedId,
               saveCompleter: saveCompleter,
@@ -393,6 +407,7 @@ class RecurringInvoiceUIStateBuilder
       try {
         _$failedField = 'editing';
         _editing?.build();
+
         _$failedField = 'listUIState';
         listUIState.build();
       } catch (e) {

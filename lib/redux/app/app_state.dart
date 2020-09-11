@@ -408,8 +408,10 @@ abstract class AppState implements Built<AppState, AppStateBuilder> {
   // STARTER: state getters - do not remove comment
   RecurringInvoiceState get recurringInvoiceState =>
       userCompanyState.recurringInvoiceState;
+
   ListUIState get recurringInvoiceListState =>
       uiState.recurringInvoiceUIState.listUIState;
+
   RecurringInvoiceUIState get recurringInvoiceUIState =>
       uiState.recurringInvoiceUIState;
 
@@ -548,7 +550,6 @@ abstract class AppState implements Built<AppState, AppStateBuilder> {
       case RecurringInvoiceEditScreen.route:
         return hasRecurringInvoiceChanges(
             recurringInvoiceUIState.editing, recurringInvoiceState.map);
-
       case WebhookEditScreen.route:
         return hasWebhookChanges(webhookUIState.editing, webhookState.map);
       case TokenEditScreen.route:

@@ -190,7 +190,7 @@ abstract class ClientEntity extends Object
   @BuiltValueField(wireName: 'paid_to_date')
   double get paidToDate;
 
-  // TODO remove this nullable 
+  // TODO remove this nullable
   @nullable
   @BuiltValueField(wireName: 'client_hash')
   String get clientHash;
