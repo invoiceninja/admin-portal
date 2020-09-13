@@ -168,7 +168,7 @@ abstract class InvoiceEntity extends Object
       exchangeRate: exchangeRate,
       lastSentDate: '',
       nextSendDate: '',
-      frequencyId: '',
+      frequencyId: kFrequencyMonthly,
       remainingCycles: 0,
     );
   }
