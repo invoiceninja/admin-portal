@@ -1,10 +1,14 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:invoiceninja_flutter/constants.dart';
+import 'package:invoiceninja_flutter/ui/app/app_border.dart';
 import 'package:invoiceninja_flutter/ui/app/edit_scaffold.dart';
 import 'package:invoiceninja_flutter/ui/invoice/edit/invoice_edit_vm.dart';
+import 'package:invoiceninja_flutter/ui/invoice/edit/invoice_item_selector.dart';
 import 'package:invoiceninja_flutter/ui/recurring_invoice/edit/recurring_invoice_edit_details_vm.dart';
 import 'package:invoiceninja_flutter/ui/recurring_invoice/edit/recurring_invoice_edit_items_vm.dart';
 import 'package:invoiceninja_flutter/ui/recurring_invoice/edit/recurring_invoice_edit_notes_vm.dart';
+import 'package:invoiceninja_flutter/utils/formatting.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 
 class RecurringInvoiceEdit extends StatefulWidget {
@@ -62,6 +66,7 @@ class _RecurringInvoiceEditState extends State<RecurringInvoiceEdit>
     final localization = AppLocalization.of(context);
     final recurringInvoice = viewModel.invoice;
     final state = viewModel.state;
+    final invoice = viewModel.invoice;
 
     return EditScaffold(
       title: recurringInvoice.isNew
@@ -119,6 +124,57 @@ class _RecurringInvoiceEditState extends State<RecurringInvoiceEdit>
                   RecurringInvoiceEditNotesScreen(),
                 ],
               ),
+      ),
+      bottomNavigationBar: BottomAppBar(
+        color: Theme.of(context).cardColor,
+        shape: CircularNotchedRectangle(),
+        child: SizedBox(
+          height: kTopBottomBarHeight,
+          child: AppBorder(
+            isTop: true,
+            child: Padding(
+              padding: const EdgeInsets.only(left: 16),
+              child: Align(
+                alignment: Alignment.centerLeft,
+                child: Text(
+                  '${localization.total}: ${formatNumber(widget.viewModel.invoice.calculateTotal, context, clientId: viewModel.invoice.clientId)}',
+                  style: TextStyle(
+                    //color: Theme.of(context).selectedRowColor,
+                    color: state.prefState.enableDarkMode
+                        ? Colors.white
+                        : Colors.black,
+                    fontSize: 20.0,
+                  ),
+                ),
+              ),
+            ),
+          ),
+        ),
+      ),
+      floatingActionButton: FloatingActionButton(
+        heroTag: 'quote_edit_fab',
+        backgroundColor: Theme.of(context).primaryColorDark,
+        onPressed: () {
+          showDialog<InvoiceItemSelector>(
+              context: context,
+              builder: (BuildContext context) {
+                return InvoiceItemSelector(
+                  excluded: invoice.lineItems
+                      .where((item) => item.isTask || item.isExpense)
+                      .map((item) => item.isTask
+                          ? viewModel.state.taskState.map[item.taskId]
+                          : viewModel.state.expenseState.map[item.expenseId])
+                      .toList(),
+                  clientId: invoice.clientId,
+                  onItemsSelected: (items, [clientId]) {
+                    viewModel.onItemsAdded(items, clientId);
+                    _controller.animateTo(kItemScreen);
+                  },
+                );
+              });
+        },
+        child: const Icon(Icons.add, color: Colors.white),
+        tooltip: localization.addItem,
       ),
     );
   }
