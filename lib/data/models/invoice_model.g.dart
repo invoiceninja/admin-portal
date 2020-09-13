@@ -321,12 +321,6 @@ class _$InvoiceEntitySerializer implements StructuredSerializer<InvoiceEntity> {
         ..add(serializers.serialize(object.frequencyId,
             specifiedType: const FullType(String)));
     }
-    if (object.startDate != null) {
-      result
-        ..add('start_date')
-        ..add(serializers.serialize(object.startDate,
-            specifiedType: const FullType(String)));
-    }
     if (object.remainingCycles != null) {
       result
         ..add('remaining_cycles')
@@ -593,10 +587,6 @@ class _$InvoiceEntitySerializer implements StructuredSerializer<InvoiceEntity> {
           break;
         case 'next_send_date':
           result.nextSendDate = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String;
-          break;
-        case 'start_date':
-          result.startDate = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String;
           break;
         case 'remaining_cycles':
@@ -1380,8 +1370,6 @@ class _$InvoiceEntity extends InvoiceEntity {
   @override
   final String nextSendDate;
   @override
-  final String startDate;
-  @override
   final int remainingCycles;
   @override
   final String invoiceId;
@@ -1468,7 +1456,6 @@ class _$InvoiceEntity extends InvoiceEntity {
       this.frequencyId,
       this.lastSentDate,
       this.nextSendDate,
-      this.startDate,
       this.remainingCycles,
       this.invoiceId,
       this.filename,
@@ -1683,7 +1670,6 @@ class _$InvoiceEntity extends InvoiceEntity {
         frequencyId == other.frequencyId &&
         lastSentDate == other.lastSentDate &&
         nextSendDate == other.nextSendDate &&
-        startDate == other.startDate &&
         remainingCycles == other.remainingCycles &&
         invoiceId == other.invoiceId &&
         filename == other.filename &&
@@ -1724,9 +1710,9 @@ class _$InvoiceEntity extends InvoiceEntity {
                                                                 $jc(
                                                                     $jc(
                                                                         $jc(
-                                                                            $jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc(0, amount.hashCode), balance.hashCode), clientId.hashCode), statusId.hashCode), number.hashCode), discount.hashCode), poNumber.hashCode), date.hashCode), dueDate.hashCode), publicNotes.hashCode), privateNotes.hashCode), terms.hashCode), footer.hashCode), designId.hashCode), usesInclusiveTaxes.hashCode), taxName1.hashCode), taxRate1.hashCode), taxName2.hashCode), taxRate2.hashCode), taxName3.hashCode), taxRate3.hashCode), isAmountDiscount.hashCode), partial.hashCode), taxAmount.hashCode), partialDueDate.hashCode), hasTasks.hashCode), autoBill.hashCode), customValue1.hashCode), customValue2.hashCode), customValue3.hashCode), customValue4.hashCode), customSurcharge1.hashCode), customSurcharge2.hashCode), customSurcharge3.hashCode), customSurcharge4.hashCode), customTaxes1.hashCode), customTaxes2.hashCode), customTaxes3.hashCode), customTaxes4.hashCode), hasExpenses.hashCode), exchangeRate.hashCode), reminder1Sent.hashCode), reminder2Sent.hashCode), reminder3Sent.hashCode), reminderLastSent.hashCode), frequencyId.hashCode), lastSentDate.hashCode),
-                                                                                nextSendDate.hashCode),
-                                                                            startDate.hashCode),
+                                                                            $jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc(0, amount.hashCode), balance.hashCode), clientId.hashCode), statusId.hashCode), number.hashCode), discount.hashCode), poNumber.hashCode), date.hashCode), dueDate.hashCode), publicNotes.hashCode), privateNotes.hashCode), terms.hashCode), footer.hashCode), designId.hashCode), usesInclusiveTaxes.hashCode), taxName1.hashCode), taxRate1.hashCode), taxName2.hashCode), taxRate2.hashCode), taxName3.hashCode), taxRate3.hashCode), isAmountDiscount.hashCode), partial.hashCode), taxAmount.hashCode), partialDueDate.hashCode), hasTasks.hashCode), autoBill.hashCode), customValue1.hashCode), customValue2.hashCode), customValue3.hashCode), customValue4.hashCode), customSurcharge1.hashCode), customSurcharge2.hashCode), customSurcharge3.hashCode), customSurcharge4.hashCode), customTaxes1.hashCode), customTaxes2.hashCode), customTaxes3.hashCode), customTaxes4.hashCode), hasExpenses.hashCode), exchangeRate.hashCode), reminder1Sent.hashCode), reminder2Sent.hashCode), reminder3Sent.hashCode), reminderLastSent.hashCode), frequencyId.hashCode),
+                                                                                lastSentDate.hashCode),
+                                                                            nextSendDate.hashCode),
                                                                         remainingCycles.hashCode),
                                                                     invoiceId.hashCode),
                                                                 filename.hashCode),
@@ -1797,7 +1783,6 @@ class _$InvoiceEntity extends InvoiceEntity {
           ..add('frequencyId', frequencyId)
           ..add('lastSentDate', lastSentDate)
           ..add('nextSendDate', nextSendDate)
-          ..add('startDate', startDate)
           ..add('remainingCycles', remainingCycles)
           ..add('invoiceId', invoiceId)
           ..add('filename', filename)
@@ -2026,10 +2011,6 @@ class InvoiceEntityBuilder
   String get nextSendDate => _$this._nextSendDate;
   set nextSendDate(String nextSendDate) => _$this._nextSendDate = nextSendDate;
 
-  String _startDate;
-  String get startDate => _$this._startDate;
-  set startDate(String startDate) => _$this._startDate = startDate;
-
   int _remainingCycles;
   int get remainingCycles => _$this._remainingCycles;
   set remainingCycles(int remainingCycles) =>
@@ -2161,7 +2142,6 @@ class InvoiceEntityBuilder
       _frequencyId = _$v.frequencyId;
       _lastSentDate = _$v.lastSentDate;
       _nextSendDate = _$v.nextSendDate;
-      _startDate = _$v.startDate;
       _remainingCycles = _$v.remainingCycles;
       _invoiceId = _$v.invoiceId;
       _filename = _$v.filename;
@@ -2251,7 +2231,6 @@ class InvoiceEntityBuilder
               frequencyId: frequencyId,
               lastSentDate: lastSentDate,
               nextSendDate: nextSendDate,
-              startDate: startDate,
               remainingCycles: remainingCycles,
               invoiceId: invoiceId,
               filename: filename,

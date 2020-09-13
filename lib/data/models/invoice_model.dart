@@ -68,7 +68,6 @@ class InvoiceFields {
   static const String privateNotes = 'private_notes';
   static const String isRecurring = 'is_recurring';
   static const String frequencyId = 'frequency_id';
-  static const String startDate = 'start_date';
   static const String endDate = 'end_date';
   static const String documents = 'documents';
   static const String customValue1 = 'custom1';
@@ -169,7 +168,6 @@ abstract class InvoiceEntity extends Object
       nextSendDate: '',
       frequencyId: '',
       remainingCycles: 0,
-      startDate: '',
     );
   }
 
@@ -370,10 +368,6 @@ abstract class InvoiceEntity extends Object
 
   @BuiltValueField(wireName: 'next_send_date')
   String get nextSendDate;
-
-  @nullable
-  @BuiltValueField(wireName: 'start_date')
-  String get startDate;
 
   @nullable
   @BuiltValueField(wireName: 'remaining_cycles')

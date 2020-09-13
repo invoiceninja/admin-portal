@@ -1,8 +1,10 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:invoiceninja_flutter/ui/app/edit_scaffold.dart';
-import 'package:invoiceninja_flutter/ui/app/form_card.dart';
 import 'package:invoiceninja_flutter/ui/invoice/edit/invoice_edit_vm.dart';
+import 'package:invoiceninja_flutter/ui/quote/edit/quote_edit_details_vm.dart';
+import 'package:invoiceninja_flutter/ui/quote/edit/quote_edit_items_vm.dart';
+import 'package:invoiceninja_flutter/ui/quote/edit/quote_edit_notes_vm.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 
 class RecurringInvoiceEdit extends StatefulWidget {
@@ -99,18 +101,25 @@ class _RecurringInvoiceEditState extends State<RecurringInvoiceEdit>
               ],
             ),
       body: Form(
-          key: _formKey,
-          child: Builder(builder: (BuildContext context) {
-            return ListView(
-              children: <Widget>[
-                FormCard(
-                  children: <Widget>[
-                    // STARTER: widgets - do not remove comment
-                  ],
-                ),
-              ],
-            );
-          })),
+        key: _formKey,
+        child: state.prefState.isDesktop
+            ? QuoteEditDetailsScreen(
+          viewModel: widget.viewModel,
+        )
+            : TabBarView(
+          key: ValueKey('__quote_${viewModel.invoice.id}__'),
+          controller: _controller,
+          children: <Widget>[
+            QuoteEditDetailsScreen(
+              viewModel: widget.viewModel,
+            ),
+            QuoteEditItemsScreen(
+              viewModel: widget.viewModel,
+            ),
+            QuoteEditNotesScreen(),
+          ],
+        ),
+      ),
     );
   }
 }

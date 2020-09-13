@@ -59,6 +59,13 @@ class UpdateRecurringInvoice implements PersistUI {
   final InvoiceEntity recurringInvoice;
 }
 
+class UpdateRecurringInvoiceClient implements PersistUI {
+  UpdateRecurringInvoiceClient({this.client});
+
+  final ClientEntity client;
+}
+
+
 class LoadRecurringInvoice {
   LoadRecurringInvoice({this.completer, this.recurringInvoiceId});
 
@@ -151,6 +158,12 @@ class AddQuoteItem implements PersistUI {
   AddQuoteItem({this.quoteItem});
 
   final InvoiceItemEntity quoteItem;
+}
+
+class AddRecurringInvoiceItem implements PersistUI {
+  AddRecurringInvoiceItem({this.invoiceItem});
+
+  final InvoiceItemEntity invoiceItem;
 }
 
 class AddRecurringInvoiceItems implements PersistUI {
