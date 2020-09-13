@@ -69,6 +69,7 @@ class MainScreen extends StatelessWidget {
               InvoiceScreen.route,
               QuoteScreen.route,
               CreditScreen.route,
+              RecurringInvoiceScreen.route,
             ].contains(mainRoute) &&
             (isEdit || isEmail)) {
           isFullScreen = true;
@@ -90,10 +91,16 @@ class MainScreen extends StatelessWidget {
           case CreditScreen.route:
             screen = isEmail ? CreditEmailScreen() : CreditEditScreen();
             break;
+          case RecurringInvoiceScreen.route:
+            screen = RecurringInvoiceEditScreen();
+            break;
           default:
             switch (uiState.currentRoute) {
               case DesignEditScreen.route:
                 screen = DesignEditScreen();
+                break;
+              default:
+                print('## ERROR: screen not defined in main_screen');
                 break;
             }
         }
