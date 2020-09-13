@@ -38,13 +38,23 @@ class EditRecurringInvoice extends AbstractNavigatorAction
       @required NavigatorState navigator,
       this.completer,
       this.cancelCompleter,
+      this.itemIndex,
       this.force = false})
       : super(navigator: navigator);
 
   final InvoiceEntity recurringInvoice;
+  final int itemIndex;
   final Completer completer;
   final Completer cancelCompleter;
   final bool force;
+}
+
+class ShowEmailRecurringInvoice {
+  ShowEmailRecurringInvoice({this.invoice, this.context, this.completer});
+
+  final InvoiceEntity invoice;
+  final BuildContext context;
+  final Completer completer;
 }
 
 class EditRecurringInvoiceItem implements PersistUI {
@@ -64,7 +74,6 @@ class UpdateRecurringInvoiceClient implements PersistUI {
 
   final ClientEntity client;
 }
-
 
 class LoadRecurringInvoice {
   LoadRecurringInvoice({this.completer, this.recurringInvoiceId});
@@ -133,6 +142,20 @@ class LoadRecurringInvoicesSuccess implements StopLoading {
     return 'LoadRecurringInvoicesSuccess{recurringInvoices: $recurringInvoices}';
   }
 }
+
+class AddRecurringInvoiceContact implements PersistUI {
+  AddRecurringInvoiceContact({this.contact, this.invitation});
+
+  final ContactEntity contact;
+  final InvitationEntity invitation;
+}
+
+class RemoveRecurringInvoiceContact implements PersistUI {
+  RemoveRecurringInvoiceContact({this.invitation});
+
+  final InvitationEntity invitation;
+}
+
 
 class SaveRecurringInvoiceRequest implements StartSaving {
   SaveRecurringInvoiceRequest({this.completer, this.recurringInvoice});
@@ -264,6 +287,12 @@ class FilterRecurringInvoicesByState implements PersistUI {
   FilterRecurringInvoicesByState(this.state);
 
   final EntityState state;
+}
+
+class FilterRecurringInvoiceDropdown {
+  FilterRecurringInvoiceDropdown(this.filter);
+
+  final String filter;
 }
 
 class FilterRecurringInvoicesByCustom1 implements PersistUI {
