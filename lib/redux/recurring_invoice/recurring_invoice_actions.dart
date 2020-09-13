@@ -214,6 +214,29 @@ class SaveRecurringInvoiceFailure implements StopSaving {
   final Object error;
 }
 
+class EmailRecurringInvoiceRequest implements StartSaving {
+  EmailRecurringInvoiceRequest(
+      {this.completer, this.invoiceId, this.template, this.subject, this.body});
+
+  final Completer completer;
+  final String invoiceId;
+  final EmailTemplate template;
+  final String subject;
+  final String body;
+}
+
+class EmailRecurringInvoiceSuccess implements StopSaving, PersistData {
+  EmailRecurringInvoiceSuccess({@required this.invoice});
+
+  final InvoiceEntity invoice;
+}
+
+class EmailRecurringInvoiceFailure implements StopSaving {
+  EmailRecurringInvoiceFailure(this.error);
+
+  final dynamic error;
+}
+
 class ArchiveRecurringInvoicesRequest implements StartSaving {
   ArchiveRecurringInvoicesRequest(this.completer, this.recurringInvoiceIds);
 
@@ -287,6 +310,12 @@ class FilterRecurringInvoicesByState implements PersistUI {
   FilterRecurringInvoicesByState(this.state);
 
   final EntityState state;
+}
+
+class FilterRecurringInvoicesByStatus implements PersistUI {
+  FilterRecurringInvoicesByStatus(this.status);
+
+  final EntityStatus status;
 }
 
 class FilterRecurringInvoiceDropdown {
