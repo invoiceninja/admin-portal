@@ -231,49 +231,65 @@ class InvoiceEditDesktopState extends State<InvoiceEditDesktop>
                     bottom: kMobileDialogPadding,
                     left: kMobileDialogPadding / 2),
                 children: <Widget>[
-                  DatePicker(
-                    validator: (String val) => val.trim().isEmpty
-                        ? AppLocalization.of(context).pleaseSelectADate
-                        : null,
-                    labelText: widget.entityType == EntityType.credit
-                        ? localization.creditDate
-                        : widget.entityType == EntityType.quote
-                            ? localization.quoteDate
-                            : localization.invoiceDate,
-                    selectedDate: invoice.date,
-                    onSelected: (date) {
-                      viewModel
-                          .onChanged(invoice.rebuild((b) => b..date = date));
-                    },
-                  ),
-                  if (widget.entityType != EntityType.credit)
+                  if (widget.entityType == EntityType.recurringInvoice) ...[
+                    AppDropdownButton<String>(
+                        labelText: localization.frequency,
+                        value: invoice.frequencyId,
+                        onChanged: (dynamic value) {
+                          viewModel.onChanged(
+                              invoice.rebuild((b) => b..frequencyId = value));
+                        },
+                        items: kFrequencies.entries
+                            .map((entry) => DropdownMenuItem(
+                                  value: entry.key,
+                                  child: Text(localization.lookup(entry.value)),
+                                ))
+                            .toList())
+                  ] else ...[
                     DatePicker(
-                      allowClearing: true,
-                      labelText: widget.entityType == EntityType.quote
-                          ? localization.validUntil
-                          : localization.dueDate,
-                      selectedDate: invoice.dueDate,
+                      validator: (String val) => val.trim().isEmpty
+                          ? AppLocalization.of(context).pleaseSelectADate
+                          : null,
+                      labelText: widget.entityType == EntityType.credit
+                          ? localization.creditDate
+                          : widget.entityType == EntityType.quote
+                              ? localization.quoteDate
+                              : localization.invoiceDate,
+                      selectedDate: invoice.date,
                       onSelected: (date) {
-                        viewModel.onChanged(
-                            invoice.rebuild((b) => b..dueDate = date));
+                        viewModel
+                            .onChanged(invoice.rebuild((b) => b..date = date));
                       },
                     ),
-                  DecoratedFormField(
-                    label: localization.partialDeposit,
-                    controller: _partialController,
-                    keyboardType:
-                        TextInputType.numberWithOptions(decimal: true),
-                    onSavePressed: widget.entityViewModel.onSavePressed,
-                  ),
-                  if (invoice.partial != null && invoice.partial > 0)
-                    DatePicker(
-                      labelText: localization.partialDueDate,
-                      selectedDate: invoice.partialDueDate,
-                      onSelected: (date) {
-                        viewModel.onChanged(
-                            invoice.rebuild((b) => b..partialDueDate = date));
-                      },
+                    if (widget.entityType != EntityType.credit)
+                      DatePicker(
+                        allowClearing: true,
+                        labelText: widget.entityType == EntityType.quote
+                            ? localization.validUntil
+                            : localization.dueDate,
+                        selectedDate: invoice.dueDate,
+                        onSelected: (date) {
+                          viewModel.onChanged(
+                              invoice.rebuild((b) => b..dueDate = date));
+                        },
+                      ),
+                    DecoratedFormField(
+                      label: localization.partialDeposit,
+                      controller: _partialController,
+                      keyboardType:
+                          TextInputType.numberWithOptions(decimal: true),
+                      onSavePressed: widget.entityViewModel.onSavePressed,
                     ),
+                    if (invoice.partial != null && invoice.partial > 0)
+                      DatePicker(
+                        labelText: localization.partialDueDate,
+                        selectedDate: invoice.partialDueDate,
+                        onSelected: (date) {
+                          viewModel.onChanged(
+                              invoice.rebuild((b) => b..partialDueDate = date));
+                        },
+                      ),
+                  ],
                   CustomField(
                     controller: _custom1Controller,
                     field: CustomFieldType.invoice1,
