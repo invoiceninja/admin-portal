@@ -72,7 +72,7 @@ class RecurringInvoiceEditDetailsVM extends EntityEditDetailsVM {
 
   factory RecurringInvoiceEditDetailsVM.fromStore(Store<AppState> store) {
     final AppState state = store.state;
-    final invoice = state.invoiceUIState.editing;
+    final invoice = state.recurringInvoiceUIState.editing;
     final company = state.company;
 
     return RecurringInvoiceEditDetailsVM(

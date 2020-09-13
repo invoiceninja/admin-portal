@@ -669,6 +669,7 @@ abstract class AppState implements Built<AppState, AppStateBuilder> {
     //return 'Language Id: ${company.settings.languageId}';
     //return 'Rates: ${staticState.currencyMap.keys.map((key) => 'Rate: ${staticState.currencyMap[key].exchangeRate}').join(',')}';
     //return 'LOG: ${clientState.map[clientUIState.selectedId]?.systemLogs ?? ''}';
+    //return 'FREQ: ${recurringInvoiceUIState.editing.frequencyId}';
     return '\n\nURL: ${authState.url}'
         '\nRoute: ${uiState.currentRoute}'
         '\nPrev: ${uiState.previousRoute}'
