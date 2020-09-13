@@ -2,8 +2,10 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:invoiceninja_flutter/constants.dart';
+import 'package:invoiceninja_flutter/data/models/company_gateway_model.dart';
 import 'package:invoiceninja_flutter/data/models/entities.dart';
 import 'package:invoiceninja_flutter/ui/app/form_card.dart';
+import 'package:invoiceninja_flutter/ui/app/forms/app_dropdown_button.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/app_tab_bar.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/client_picker.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/custom_field.dart';
@@ -318,6 +320,23 @@ class InvoiceEditDesktopState extends State<InvoiceEditDesktop>
                     onTypeChanged: (value) => viewModel.onChanged(
                         invoice.rebuild((b) => b..isAmountDiscount = value)),
                   ),
+                  if (widget.entityType == EntityType.recurringInvoice)
+                    AppDropdownButton<String>(
+                        labelText: localization.tokenBilling,
+                        value: invoice.autoBill,
+                        onChanged: (dynamic value) => viewModel.onChanged(
+                            invoice.rebuild((b) => b..autoBill = value)),
+                        items: [
+                          CompanyGatewayEntity.TOKEN_BILLING_ALWAYS,
+                          CompanyGatewayEntity.TOKEN_BILLING_OPT_IN,
+                          CompanyGatewayEntity.TOKEN_BILLING_OPT_OUT,
+                          CompanyGatewayEntity.TOKEN_BILLING_DISABLED
+                        ]
+                            .map((value) => DropdownMenuItem(
+                                  child: Text(localization.lookup(value)),
+                                  value: value,
+                                ))
+                            .toList()),
                   CustomField(
                     controller: _custom2Controller,
                     field: CustomFieldType.invoice2,

@@ -265,7 +265,7 @@ class _$InvoiceEntitySerializer implements StructuredSerializer<InvoiceEntity> {
       result
         ..add('auto_bill')
         ..add(serializers.serialize(object.autoBill,
-            specifiedType: const FullType(bool)));
+            specifiedType: const FullType(String)));
     }
     if (object.customTaxes1 != null) {
       result
@@ -503,7 +503,7 @@ class _$InvoiceEntitySerializer implements StructuredSerializer<InvoiceEntity> {
           break;
         case 'auto_bill':
           result.autoBill = serializers.deserialize(value,
-              specifiedType: const FullType(bool)) as bool;
+              specifiedType: const FullType(String)) as String;
           break;
         case 'custom_value1':
           result.customValue1 = serializers.deserialize(value,
@@ -1326,7 +1326,7 @@ class _$InvoiceEntity extends InvoiceEntity {
   @override
   final bool hasTasks;
   @override
-  final bool autoBill;
+  final String autoBill;
   @override
   final String customValue1;
   @override
@@ -1915,9 +1915,9 @@ class InvoiceEntityBuilder
   bool get hasTasks => _$this._hasTasks;
   set hasTasks(bool hasTasks) => _$this._hasTasks = hasTasks;
 
-  bool _autoBill;
-  bool get autoBill => _$this._autoBill;
-  set autoBill(bool autoBill) => _$this._autoBill = autoBill;
+  String _autoBill;
+  String get autoBill => _$this._autoBill;
+  set autoBill(String autoBill) => _$this._autoBill = autoBill;
 
   String _customValue1;
   String get customValue1 => _$this._customValue1;
