@@ -177,12 +177,6 @@ class AddRecurringInvoiceSuccess implements StopSaving, PersistData, PersistUI {
   final InvoiceEntity recurringInvoice;
 }
 
-class AddQuoteItem implements PersistUI {
-  AddQuoteItem({this.quoteItem});
-
-  final InvoiceItemEntity quoteItem;
-}
-
 class AddRecurringInvoiceItem implements PersistUI {
   AddRecurringInvoiceItem({this.invoiceItem});
 

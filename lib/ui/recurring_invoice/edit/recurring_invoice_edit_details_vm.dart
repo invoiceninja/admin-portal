@@ -35,12 +35,12 @@ class RecurringInvoiceEditDetailsScreen extends StatelessWidget {
             viewModel: viewModel,
             entityViewModel: this.viewModel,
             key: ValueKey('__quote_${viewModel.invoice.id}__'),
-            entityType: EntityType.quote,
+            entityType: EntityType.recurringInvoice,
           );
         } else {
           return InvoiceEditDetails(
             viewModel: viewModel,
-            entityType: EntityType.quote,
+            entityType: EntityType.recurringInvoice,
           );
         }
       },

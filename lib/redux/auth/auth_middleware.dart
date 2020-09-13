@@ -231,7 +231,6 @@ Middleware<AppState> _createRefreshRequest(AuthRepository repository) {
         loginResponse: data,
       ));
     }).catchError((Object error) {
-      print('Refresh data error: $error');
       if (action.completer != null) {
         action.completer.completeError(error);
       }
