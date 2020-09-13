@@ -34,7 +34,7 @@ class RecurringInvoiceEditDetailsScreen extends StatelessWidget {
           return InvoiceEditDesktop(
             viewModel: viewModel,
             entityViewModel: this.viewModel,
-            key: ValueKey('__quote_${viewModel.invoice.id}__'),
+            key: ValueKey('__invoice_${viewModel.invoice.id}__'),
             entityType: EntityType.recurringInvoice,
           );
         } else {
@@ -72,23 +72,23 @@ class RecurringInvoiceEditDetailsVM extends EntityEditDetailsVM {
 
   factory RecurringInvoiceEditDetailsVM.fromStore(Store<AppState> store) {
     final AppState state = store.state;
-    final quote = state.quoteUIState.editing;
+    final invoice = state.invoiceUIState.editing;
     final company = state.company;
 
     return RecurringInvoiceEditDetailsVM(
       state: state,
       company: company,
-      invoice: quote,
-      onChanged: (InvoiceEntity quote) => store.dispatch(UpdateRecurringInvoice(quote)),
+      invoice: invoice,
+      onChanged: (InvoiceEntity invoice) => store.dispatch(UpdateRecurringInvoice(invoice)),
       clientMap: state.clientState.map,
       clientList: state.clientState.list,
-      onClientChanged: (context, quote, client) {
+      onClientChanged: (context, invoice, client) {
         if (client != null) {
           final exchangeRate = getExchangeRate(context,
               fromCurrencyId: company.currencyId,
               toCurrencyId: client.currencyId);
           store.dispatch(UpdateRecurringInvoice(
-              quote.rebuild((b) => b..exchangeRate = exchangeRate)));
+              invoice.rebuild((b) => b..exchangeRate = exchangeRate)));
         }
         store.dispatch(UpdateRecurringInvoiceClient(client: client));
       },

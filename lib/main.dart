@@ -41,7 +41,6 @@ import 'package:invoiceninja_flutter/utils/web_stub.dart'
 
 // STARTER: import - do not remove comment
 import 'package:invoiceninja_flutter/redux/recurring_invoice/recurring_invoice_middleware.dart';
-
 import 'package:invoiceninja_flutter/redux/webhook/webhook_middleware.dart';
 import 'package:invoiceninja_flutter/redux/token/token_middleware.dart';
 import 'package:invoiceninja_flutter/redux/payment_term/payment_term_middleware.dart';
