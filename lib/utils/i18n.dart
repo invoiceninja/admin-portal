@@ -15,6 +15,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
   static final Map<String, Map<String, String>> _localizedValues = {
     'en': {
       // STARTER: lang key - do not remove comment
+      'endless': 'Endless',
       'next_send_date': 'Next Send Date',
       'remaining_cycles': 'Remaining Cycles',
       'recurring_invoice': 'Recurring Invoice',
@@ -4541,6 +4542,8 @@ mixin LocalizationsProvider on LocaleCodeAware {
 
   String get remainingCycles =>
       _localizedValues[localeCode]['remaining_cycles'] ?? '';
+
+  String get endless => _localizedValues[localeCode]['endless'] ?? '';
 
   String lookup(String key) {
     final lookupKey = toSnakeCase(key);

@@ -250,6 +250,26 @@ class InvoiceEditDesktopState extends State<InvoiceEditDesktop>
                         onSelected: (date) => viewModel.onChanged(
                             invoice.rebuild((b) => b..nextSendDate = date)),
                         selectedDate: invoice.nextSendDate),
+                    AppDropdownButton<int>(
+                      showUseDefault: true,
+                      labelText: localization.remainingCycles,
+                      value: invoice.remainingCycles,
+                      blankValue: null,
+                      onChanged: (dynamic value) => viewModel.onChanged(
+                          invoice.rebuild((b) => b..remainingCycles = value)),
+                      items: [
+                        DropdownMenuItem(
+                          child: Text(localization.endless),
+                          value: -1,
+                        ),
+                        ...List<int>.generate(37, (i) => i)
+                            .map((value) => DropdownMenuItem(
+                                  child: Text('$value'),
+                                  value: value,
+                                ))
+                            .toList()
+                      ],
+                    ),
                   ] else ...[
                     DatePicker(
                       validator: (String val) => val.trim().isEmpty
