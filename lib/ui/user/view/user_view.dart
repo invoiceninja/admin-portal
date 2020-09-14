@@ -4,6 +4,7 @@ import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/redux/credit/credit_selectors.dart';
 import 'package:invoiceninja_flutter/redux/invoice/invoice_selectors.dart';
 import 'package:invoiceninja_flutter/redux/quote/quote_selectors.dart';
+import 'package:invoiceninja_flutter/redux/recurring_invoice/recurring_invoice_selectors.dart';
 import 'package:invoiceninja_flutter/ui/app/entities/entity_list_tile.dart';
 import 'package:invoiceninja_flutter/ui/app/entity_header.dart';
 import 'package:invoiceninja_flutter/ui/app/lists/list_divider.dart';
@@ -44,47 +45,60 @@ class UserView extends StatelessWidget {
             secondValue: user.phone,
           ),
           ListDivider(),
-          EntitiesListTile(
-            isFilter: isFilter,
-            title: localization.invoices,
-            entityType: EntityType.invoice,
-            onTap: () => viewModel.onEntityPressed(context, EntityType.invoice),
-            onLongPress: () =>
-                viewModel.onEntityPressed(context, EntityType.invoice, true),
-            subtitle:
-                memoizedInvoiceStatsForUser(user.id, state.invoiceState.map)
-                    .present(localization.active, localization.archived),
-          ),
-          userCompany.canViewOrCreate(EntityType.quote)
-              ? EntitiesListTile(
-                  isFilter: isFilter,
-                  entityType: EntityType.quote,
-                  title: localization.quotes,
-                  onTap: () =>
-                      viewModel.onEntityPressed(context, EntityType.quote),
-                  onLongPress: () => viewModel.onEntityPressed(
-                      context, EntityType.quote, true),
-                  subtitle: memoizedQuoteStatsForUser(
-                    user.id,
-                    state.quoteState.map,
-                  ).present(localization.active, localization.archived),
-                )
-              : Container(),
-          userCompany.canViewOrCreate(EntityType.credit)
-              ? EntitiesListTile(
-                  isFilter: isFilter,
-                  entityType: EntityType.credit,
-                  title: localization.credits,
-                  onTap: () =>
-                      viewModel.onEntityPressed(context, EntityType.credit),
-                  onLongPress: () => viewModel.onEntityPressed(
-                      context, EntityType.credit, true),
-                  subtitle: memoizedCreditStatsForUser(
-                    user.id,
-                    state.creditState.map,
-                  ).present(localization.active, localization.archived),
-                )
-              : Container(),
+          if (userCompany.canViewOrCreate(EntityType.invoice))
+            EntitiesListTile(
+              isFilter: isFilter,
+              title: localization.invoices,
+              entityType: EntityType.invoice,
+              onTap: () =>
+                  viewModel.onEntityPressed(context, EntityType.invoice),
+              onLongPress: () =>
+                  viewModel.onEntityPressed(context, EntityType.invoice, true),
+              subtitle:
+                  memoizedInvoiceStatsForUser(user.id, state.invoiceState.map)
+                      .present(localization.active, localization.archived),
+            ),
+          if (userCompany.canViewOrCreate(EntityType.recurringInvoice))
+            EntitiesListTile(
+              isFilter: isFilter,
+              title: localization.recurringInvoices,
+              entityType: EntityType.recurringInvoice,
+              onTap: () => viewModel.onEntityPressed(
+                  context, EntityType.recurringInvoice),
+              onLongPress: () => viewModel.onEntityPressed(
+                  context, EntityType.recurringInvoice, true),
+              subtitle: memoizedRecurringInvoiceStatsForUser(
+                      user.id, state.recurringInvoiceState.map)
+                  .present(localization.active, localization.archived),
+            ),
+          if (userCompany.canViewOrCreate(EntityType.quote))
+            EntitiesListTile(
+              isFilter: isFilter,
+              entityType: EntityType.quote,
+              title: localization.quotes,
+              onTap: () => viewModel.onEntityPressed(context, EntityType.quote),
+              onLongPress: () =>
+                  viewModel.onEntityPressed(context, EntityType.quote, true),
+              subtitle: memoizedQuoteStatsForUser(
+                user.id,
+                state.quoteState.map,
+              ).present(localization.active, localization.archived),
+            ),
+          if (userCompany.canViewOrCreate(EntityType.credit))
+            EntitiesListTile(
+              isFilter: isFilter,
+              entityType: EntityType.credit,
+              title: localization.credits,
+              onTap: () =>
+                  viewModel.onEntityPressed(context, EntityType.credit),
+              onLongPress: () =>
+                  viewModel.onEntityPressed(context, EntityType.credit, true),
+              subtitle: memoizedCreditStatsForUser(
+                user.id,
+                state.creditState.map,
+              ).present(localization.active, localization.archived),
+            ),
+
           /*
         userCompany.canViewOrCreate(EntityType.project)
             ? EntityListTile(

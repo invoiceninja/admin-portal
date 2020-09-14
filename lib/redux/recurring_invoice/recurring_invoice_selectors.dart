@@ -32,31 +32,55 @@ List<String> filteredRecurringInvoicesSelector(
   BuiltMap<String, InvoiceEntity> recurringInvoiceMap,
   BuiltMap<String, ClientEntity> clientMap,
   BuiltList<String> recurringInvoiceList,
-  ListUIState recurringInvoiceListState,
+  ListUIState invoiceListState,
   StaticState staticState,
   BuiltMap<String, UserEntity> userMap,
 ) {
   final list = recurringInvoiceList.where((recurringInvoiceId) {
-    final recurringInvoice = recurringInvoiceMap[recurringInvoiceId];
-    if (filterEntityId != null && recurringInvoice.id != filterEntityId) {
-      return false;
-    } else {}
+    final invoice = recurringInvoiceMap[recurringInvoiceId];
+    final client =
+        clientMap[invoice.clientId] ?? ClientEntity(id: invoice.clientId);
 
-    if (!recurringInvoice
-        .matchesStates(recurringInvoiceListState.stateFilters)) {
+    if (!client.isActive &&
+        !client.matchesEntityFilter(filterEntityType, filterEntityId)) {
       return false;
     }
-    if (recurringInvoiceListState.custom1Filters.isNotEmpty &&
-        !recurringInvoiceListState.custom1Filters
-            .contains(recurringInvoice.customValue1)) {
+
+    if (filterEntityType == EntityType.client && client.id != filterEntityId) {
+      return false;
+    } else if (filterEntityType == EntityType.user &&
+        invoice.assignedUserId != filterEntityId) {
       return false;
     }
-    if (recurringInvoiceListState.custom2Filters.isNotEmpty &&
-        !recurringInvoiceListState.custom2Filters
-            .contains(recurringInvoice.customValue2)) {
+
+    if (!invoice.matchesStates(invoiceListState.stateFilters)) {
       return false;
     }
-    return recurringInvoice.matchesFilter(recurringInvoiceListState.filter);
+    if (!invoice.matchesStatuses(invoiceListState.statusFilters)) {
+      return false;
+    }
+    if (!invoice.matchesFilter(invoiceListState.filter) &&
+        !client.matchesFilter(invoiceListState.filter)) {
+      return false;
+    }
+    if (invoiceListState.custom1Filters.isNotEmpty &&
+        !invoiceListState.custom1Filters.contains(invoice.customValue1)) {
+      return false;
+    }
+    if (invoiceListState.custom2Filters.isNotEmpty &&
+        !invoiceListState.custom2Filters.contains(invoice.customValue2)) {
+      return false;
+    }
+    if (invoiceListState.custom3Filters.isNotEmpty &&
+        !invoiceListState.custom3Filters.contains(invoice.customValue3)) {
+      return false;
+    }
+    if (invoiceListState.custom4Filters.isNotEmpty &&
+        !invoiceListState.custom4Filters.contains(invoice.customValue4)) {
+      return false;
+    }
+    return true;
+
   }).toList();
 
   list.sort((recurringInvoiceAId, recurringInvoiceBId) {
@@ -65,8 +89,8 @@ List<String> filteredRecurringInvoicesSelector(
 
     return recurringInvoiceA.compareTo(
       invoice: recurringInvoiceB,
-      sortField: recurringInvoiceListState.sortField,
-      sortAscending: recurringInvoiceListState.sortAscending,
+      sortField: invoiceListState.sortField,
+      sortAscending: invoiceListState.sortAscending,
       clientMap: clientMap,
       staticState: staticState,
       userMap: userMap,
@@ -76,8 +100,52 @@ List<String> filteredRecurringInvoicesSelector(
   return list;
 }
 
+var memoizedRecurringInvoiceStatsForClient = memo2(
+        (String clientId, BuiltMap<String, InvoiceEntity> invoiceMap) =>
+        recurringInvoiceStatsForClient(clientId, invoiceMap));
+
+EntityStats recurringInvoiceStatsForClient(
+    String clientId, BuiltMap<String, InvoiceEntity> invoiceMap) {
+  int countActive = 0;
+  int countArchived = 0;
+  invoiceMap.forEach((invoiceId, invoice) {
+    if (invoice.clientId == clientId) {
+      if (invoice.isActive) {
+        countActive++;
+      } else if (invoice.isArchived) {
+        countArchived++;
+      }
+    }
+  });
+
+  return EntityStats(countActive: countActive, countArchived: countArchived);
+}
+
+var memoizedRecurringInvoiceStatsForUser = memo2(
+        (String userId, BuiltMap<String, InvoiceEntity> invoiceMap) =>
+        recurringInvoiceStatsForUser(userId, invoiceMap));
+
+EntityStats recurringInvoiceStatsForUser(
+    String userId, BuiltMap<String, InvoiceEntity> invoiceMap) {
+  int countActive = 0;
+  int countArchived = 0;
+  invoiceMap.forEach((invoiceId, invoice) {
+    if (invoice.assignedUserId == userId) {
+      if (invoice.isActive) {
+        countActive++;
+      } else if (invoice.isDeleted) {
+        countArchived++;
+      }
+    }
+  });
+
+  return EntityStats(countActive: countActive, countArchived: countArchived);
+}
+
+
 bool hasRecurringInvoiceChanges(InvoiceEntity recurringInvoice,
         BuiltMap<String, InvoiceEntity> recurringInvoiceMap) =>
     recurringInvoice.isNew
         ? recurringInvoice.isChanged
         : recurringInvoice != recurringInvoiceMap[recurringInvoice.id];
+

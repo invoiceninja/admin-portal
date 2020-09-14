@@ -146,6 +146,14 @@ List<String> filteredInvoicesSelector(
         !invoiceListState.custom2Filters.contains(invoice.customValue2)) {
       return false;
     }
+    if (invoiceListState.custom3Filters.isNotEmpty &&
+        !invoiceListState.custom3Filters.contains(invoice.customValue3)) {
+      return false;
+    }
+    if (invoiceListState.custom4Filters.isNotEmpty &&
+        !invoiceListState.custom4Filters.contains(invoice.customValue4)) {
+      return false;
+    }
     return true;
   }).toList();
 
