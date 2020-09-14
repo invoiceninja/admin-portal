@@ -289,6 +289,14 @@ void handleUserAction(
               .rebuild((b) => b.assignedUserId = user.id),
           filterEntity: user);
       break;
+    case EntityAction.newRecurringInvoice:
+      createEntity(
+          context: context,
+          entity: InvoiceEntity(
+                  state: state, entityType: EntityType.recurringInvoice)
+              .rebuild((b) => b.assignedUserId = user.id),
+          filterEntity: user);
+      break;
     case EntityAction.newQuote:
       createEntity(
         context: context,

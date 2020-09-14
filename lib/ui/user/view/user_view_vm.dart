@@ -80,77 +80,12 @@ class UserViewVM {
           handleEntitiesActions(context, [user], action, autoPop: true),
       onEntityPressed: (BuildContext context, EntityType entityType,
           [longPress = false]) {
-        switch (entityType) {
-          case EntityType.invoice:
-            if (longPress && user.isActive) {
-              handleUserAction(context, [user], EntityAction.newInvoice);
-            } else {
-              viewEntitiesByType(
-                  context: context,
-                  entityType: EntityType.invoice,
-                  filterEntity: user);
-            }
-            break;
-          case EntityType.quote:
-            if (longPress && user.isActive) {
-              handleUserAction(context, [user], EntityAction.newQuote);
-            } else {
-              viewEntitiesByType(
-                  context: context,
-                  entityType: EntityType.quote,
-                  filterEntity: user);
-            }
-            break;
-          case EntityType.credit:
-            if (longPress && user.isActive) {
-              handleUserAction(context, [user], EntityAction.newCredit);
-            } else {
-              viewEntitiesByType(
-                  context: context,
-                  entityType: EntityType.credit,
-                  filterEntity: user);
-            }
-            break;
-          case EntityType.payment:
-            if (longPress && user.isActive) {
-              handleUserAction(context, [user], EntityAction.newPayment);
-            } else {
-              viewEntitiesByType(
-                  context: context,
-                  entityType: EntityType.payment,
-                  filterEntity: user);
-            }
-            break;
-          case EntityType.project:
-            if (longPress && user.isActive) {
-              handleUserAction(context, [user], EntityAction.newProject);
-            } else {
-              viewEntitiesByType(
-                  context: context,
-                  entityType: EntityType.project,
-                  filterEntity: user);
-            }
-            break;
-          case EntityType.task:
-            if (longPress && user.isActive) {
-              handleUserAction(context, [user], EntityAction.newTask);
-            } else {
-              viewEntitiesByType(
-                  context: context,
-                  entityType: EntityType.task,
-                  filterEntity: user);
-            }
-            break;
-          case EntityType.expense:
-            if (longPress && user.isActive) {
-              handleUserAction(context, [user], EntityAction.newExpense);
-            } else {
-              viewEntitiesByType(
-                  context: context,
-                  entityType: EntityType.expense,
-                  filterEntity: user);
-            }
-            break;
+        if (longPress && user.isActive) {
+          handleEntityAction(
+              context, user, EntityAction.newEntityType(entityType));
+        } else {
+          viewEntitiesByType(
+              context: context, entityType: entityType, filterEntity: user);
         }
       },
     );
