@@ -76,6 +76,10 @@ class InvoiceEditContactsVM extends EntityEditContactsVM {
       entity = state.quoteUIState.editing;
     } else if (entityType == EntityType.credit) {
       entity = state.creditUIState.editing;
+    } else if (entityType == EntityType.recurringInvoice) {
+      entity = state.recurringInvoiceUIState.editing;
+    } else {
+      print('ERROR: entityType $entityType not handled in invoice_edit_contacts_vm');
     }
 
     return InvoiceEditContactsVM(

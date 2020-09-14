@@ -1,6 +1,7 @@
 import 'package:built_collection/built_collection.dart';
 import 'package:built_value/built_value.dart';
 import 'package:built_value/serializer.dart';
+import 'package:invoiceninja_flutter/data/models/entities.dart';
 import 'package:invoiceninja_flutter/utils/strings.dart';
 export 'package:invoiceninja_flutter/data/models/client_model.dart';
 export 'package:invoiceninja_flutter/data/models/company_model.dart';
@@ -59,6 +60,7 @@ class EntityAction extends EnumClass {
   static const EntityAction markPaid = _$markPaid;
   static const EntityAction newClient = _$newClient;
   static const EntityAction newInvoice = _$newInvoice;
+  static const EntityAction newRecurringInvoice = _$newRecurringInvoice;
   static const EntityAction newQuote = _$newQuote;
   static const EntityAction newCredit = _$newCredit;
   static const EntityAction newExpense = _$newExpense;
@@ -93,6 +95,33 @@ class EntityAction extends EnumClass {
     }
 
     return value;
+  }
+
+  static EntityAction newEntityType(EntityType entityType) {
+    switch (entityType) {
+      case EntityType.client:
+        return EntityAction.newCredit;
+      case EntityType.invoice:
+        return EntityAction.newInvoice;
+      case EntityType.recurringInvoice:
+        return EntityAction.newRecurringInvoice;
+      case EntityType.quote:
+        return EntityAction.newQuote;
+      case EntityType.credit:
+        return EntityAction.newCredit;
+      case EntityType.payment:
+        return EntityAction.newPayment;
+      case EntityType.expense:
+        return EntityAction.newExpense;
+      case EntityType.project:
+        return EntityAction.newProject;
+      case EntityType.task:
+        return EntityAction.newTask;
+      default:
+        print(
+            'ERROR: entityType $entityType not defined in EntityAction.newEntityType');
+        return null;
+    }
   }
 
   static BuiltSet<EntityAction> get values => _$values;

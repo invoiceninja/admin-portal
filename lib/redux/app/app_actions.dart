@@ -1267,23 +1267,18 @@ void handleEntitiesActions(
     case EntityType.recurringInvoice:
       handleRecurringInvoiceAction(context, entities, action);
       break;
-
     case EntityType.webhook:
       handleWebhookAction(context, entities, action);
       break;
-
     case EntityType.token:
       handleTokenAction(context, entities, action);
       break;
-
     case EntityType.paymentTerm:
       handlePaymentTermAction(context, entities, action);
       break;
-
     case EntityType.design:
       handleDesignAction(context, entities, action);
       break;
-
     case EntityType.credit:
       handleCreditAction(context, entities, action);
       break;
