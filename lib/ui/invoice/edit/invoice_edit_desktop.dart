@@ -244,7 +244,12 @@ class InvoiceEditDesktopState extends State<InvoiceEditDesktop>
                                   value: entry.key,
                                   child: Text(localization.lookup(entry.value)),
                                 ))
-                            .toList())
+                            .toList()),
+                    DatePicker(
+                        labelText: localization.nextSendDate,
+                        onSelected: (date) => viewModel.onChanged(
+                            invoice.rebuild((b) => b..nextSendDate = date)),
+                        selectedDate: invoice.nextSendDate),
                   ] else ...[
                     DatePicker(
                       validator: (String val) => val.trim().isEmpty
@@ -338,7 +343,7 @@ class InvoiceEditDesktopState extends State<InvoiceEditDesktop>
                   ),
                   if (widget.entityType == EntityType.recurringInvoice)
                     AppDropdownButton<String>(
-                        labelText: localization.tokenBilling,
+                        labelText: localization.autoBill,
                         value: invoice.autoBill,
                         onChanged: (dynamic value) => viewModel.onChanged(
                             invoice.rebuild((b) => b..autoBill = value)),
