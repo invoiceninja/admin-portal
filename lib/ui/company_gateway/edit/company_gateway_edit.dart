@@ -151,8 +151,8 @@ class _CompanyGatewayEditState extends State<CompanyGatewayEdit>
                               .rebuild((b) => b..tokenBilling = value)),
                       items: [
                         CompanyGatewayEntity.TOKEN_BILLING_ALWAYS,
-                        CompanyGatewayEntity.TOKEN_BILLING_OPT_IN,
                         CompanyGatewayEntity.TOKEN_BILLING_OPT_OUT,
+                        CompanyGatewayEntity.TOKEN_BILLING_OPT_IN,
                         CompanyGatewayEntity.TOKEN_BILLING_DISABLED
                       ]
                           .map((value) => DropdownMenuItem(
