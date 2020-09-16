@@ -376,6 +376,10 @@ abstract class InvoiceEntity extends Object
   int get remainingCycles;
 
   @nullable
+  @BuiltValueField(wireName: 'due_date_days')
+  String get dueDateDays;
+
+  @nullable
   @BuiltValueField(wireName: 'invoice_id')
   String get invoiceId;
 
