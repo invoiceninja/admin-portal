@@ -18,8 +18,8 @@ dependencies:
   http: ^0.12.0+4
   in_app_purchase: ^0.3.1+1
   path_provider: ^1.6.1
-  shared_preferences: ^0.5.6+2
-  #shared_preferences: '>=0.5.8 <2.0.0'
+  #shared_preferences: ^0.5.6+2
+  shared_preferences: '>=0.5.8 <2.0.0'
   material_design_icons_flutter: ^4.0.5345
   built_value: ^7.0.9
   built_collection: ^4.3.2
@@ -52,13 +52,13 @@ dependencies:
   version: ^1.0.0
   #idb_shim: ^1.11.1+1
 
-#dependency_overrides:
-#  shared_preferences:
-#    path: ../plugins_shard_pref/packages/shared_preferences/shared_preferences
+dependency_overrides:
+  shared_preferences:
+    path: ../plugins_shard_pref/packages/shared_preferences/shared_preferences
 
 dev_dependencies:
-  flutter_driver:
-    sdk: flutter
+  #flutter_driver:
+  #  sdk: flutter
   test: ^1.6.3
   #flutter_test:
   #  sdk: flutter
