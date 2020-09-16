@@ -1,4 +1,5 @@
 import 'package:built_collection/built_collection.dart';
+import 'package:invoiceninja_flutter/data/models/entities.dart';
 import 'package:invoiceninja_flutter/redux/settings/settings_actions.dart';
 import 'package:redux/redux.dart';
 import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
@@ -24,6 +25,7 @@ Reducer<String> selectedIdReducer = combineReducers([
       (selectedId, action) => action.clearSelection ? '' : selectedId),
   TypedReducer<String, DeleteUserSuccess>((selectedId, action) => ''),
   TypedReducer<String, ArchiveUserSuccess>((selectedId, action) => ''),
+  TypedReducer<String, RemoveUserSuccess>((selectedId, action) => ''),
   TypedReducer<String, ClearEntityFilter>((selectedId, action) => ''),
   TypedReducer<String, ClearEntitySelection>((selectedId, action) =>
       action.entityType == EntityType.user ? '' : selectedId),
@@ -144,6 +146,7 @@ final usersReducer = combineReducers<UserState>([
   TypedReducer<UserState, ArchiveUserSuccess>(_archiveUserSuccess),
   TypedReducer<UserState, DeleteUserSuccess>(_deleteUserSuccess),
   TypedReducer<UserState, RestoreUserSuccess>(_restoreUserSuccess),
+  TypedReducer<UserState, RemoveUserSuccess>(_removeUserSuccess),
 ]);
 
 UserState _archiveUserSuccess(UserState userState, ArchiveUserSuccess action) {
@@ -168,6 +171,11 @@ UserState _restoreUserSuccess(UserState userState, RestoreUserSuccess action) {
       b.map[user.id] = user;
     }
   });
+}
+
+UserState _removeUserSuccess(UserState userState, RemoveUserSuccess action) {
+  return userState
+      .rebuild((b) => b..map.remove(action.userId)..list.remove(action.userId));
 }
 
 UserState _addUser(UserState userState, AddUserSuccess action) {

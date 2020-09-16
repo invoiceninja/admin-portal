@@ -225,9 +225,9 @@ class RemoveUserRequest implements StartSaving {
 }
 
 class RemoveUserSuccess implements StopSaving, PersistData {
-  RemoveUserSuccess(this.users);
+  RemoveUserSuccess(this.userId);
 
-  final List<UserEntity> users;
+  final String userId;
 }
 
 class RemoveUserFailure implements StopSaving {

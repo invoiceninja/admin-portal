@@ -48,6 +48,7 @@ import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:invoiceninja_flutter/utils/platforms.dart';
 import 'package:local_auth/local_auth.dart';
 import 'package:redux/redux.dart';
+
 // STARTER: import - do not remove comment
 import 'package:invoiceninja_flutter/ui/recurring_invoice/recurring_invoice_screen.dart';
 import 'package:invoiceninja_flutter/ui/recurring_invoice/edit/recurring_invoice_edit_vm.dart';
