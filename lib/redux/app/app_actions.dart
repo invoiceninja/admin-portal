@@ -47,7 +47,6 @@ import 'package:invoiceninja_flutter/utils/localization.dart';
 
 // STARTER: import - do not remove comment
 import 'package:invoiceninja_flutter/redux/recurring_invoice/recurring_invoice_actions.dart';
-
 import 'package:invoiceninja_flutter/redux/webhook/webhook_actions.dart';
 import 'package:invoiceninja_flutter/redux/token/token_actions.dart';
 import 'package:invoiceninja_flutter/redux/payment_term/payment_term_actions.dart';
@@ -654,7 +653,8 @@ void createEntityByType(
             store.dispatch(EditRecurringInvoice(
               navigator: navigator,
               force: force,
-              recurringInvoice: InvoiceEntity(state: state),
+              recurringInvoice: InvoiceEntity(
+                  state: state, entityType: EntityType.recurringInvoice),
             ));
             break;
 
@@ -781,9 +781,6 @@ void createEntity({
               completer: completer,
             ));
             break;
-          //case EntityType.recurringInvoice:
-          //store.dispatch(ViewRecurringInvoice(recurringInvoiceId: entityId, navigator: navigator));
-          //break;
           case EntityType.quote:
             store.dispatch(EditQuote(
               navigator: navigator,
@@ -825,12 +822,6 @@ void createEntity({
               completer: completer,
             ));
             break;
-          //case EntityType.expenseCategory:
-          //store.dispatch(ViewExpenseCategory(taxRateId: entityId, navigator: navigator));
-          //break;
-          //case EntityType.credit:
-          //store.dispatch(ViewCredit(creditId: entityId, navigator: navigator));
-          //break;
           case EntityType.payment:
             store.dispatch(EditPayment(
               navigator: navigator,
@@ -996,9 +987,6 @@ void editEntity(
               invoiceItemIndex: subIndex,
             ));
             break;
-          //case EntityType.recurringInvoice:
-          //store.dispatch(EditRecurringInvoice(recurringInvoice: entity, navigator: navigator));
-          //break;
           case EntityType.quote:
             store.dispatch(EditQuote(
               quote: entity,
