@@ -75,7 +75,9 @@ class _TimePickerState extends State<TimePicker> {
       child: IgnorePointer(
         child: TextFormField(
           validator: widget.validator,
-          autovalidate: widget.autoValidate,
+          autovalidateMode: widget.autoValidate
+              ? AutovalidateMode.always
+              : AutovalidateMode.onUserInteraction,
           controller: _textController,
           decoration: InputDecoration(
             labelText: widget.labelText,

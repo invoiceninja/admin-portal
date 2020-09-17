@@ -260,7 +260,9 @@ class _EntityDropdownState extends State<EntityDropdown> {
               focusNode: _focusNode,
               readOnly: true,
               validator: widget.validator,
-              autovalidate: widget.autoValidate,
+              autovalidateMode: widget.autoValidate
+                  ? AutovalidateMode.always
+                  : AutovalidateMode.onUserInteraction,
               controller: _textController,
               decoration: InputDecoration(
                 labelText: widget.labelText,
