@@ -246,6 +246,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "0.1.1"
+  fake_async:
+    dependency: transitive
+    description:
+      name: fake_async
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "1.1.0-nullsafety"
   faker:
     dependency: "direct dev"
     description:
@@ -253,20 +260,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.2.1"
-  ffi:
-    dependency: transitive
-    description:
-      name: ffi
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "0.1.3"
   file:
     dependency: transitive
     description:
       name: file
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "5.2.1"
+    version: "6.0.0-nullsafety.1"
   firebase:
     dependency: transitive
     description:
@@ -349,6 +349,11 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "0.3.4"
+  flutter_driver:
+    dependency: "direct dev"
+    description: flutter
+    source: sdk
+    version: "0.0.0"
   flutter_json_widget:
     dependency: "direct main"
     description:
@@ -396,6 +401,11 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "0.5.7"
+  flutter_test:
+    dependency: transitive
+    description: flutter
+    source: sdk
+    version: "0.0.0"
   flutter_typeahead:
     dependency: "direct main"
     description:
@@ -406,6 +416,11 @@ packages:
     source: git
     version: "1.8.3"
   flutter_web_plugins:
+    dependency: transitive
+    description: flutter
+    source: sdk
+    version: "0.0.0"
+  fuchsia_remote_debug_protocol:
     dependency: transitive
     description: flutter
     source: sdk
@@ -536,6 +551,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "3.0.1"
+  json_rpc_2:
+    dependency: transitive
+    description:
+      name: json_rpc_2
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "2.2.1"
   local_auth:
     dependency: "direct main"
     description:
@@ -696,7 +718,7 @@ packages:
       name: platform
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "2.2.1"
+    version: "3.0.0-nullsafety.1"
   platform_detect:
     dependency: transitive
     description:
@@ -724,7 +746,7 @@ packages:
       name: process
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "3.0.13"
+    version: "4.0.0-nullsafety.1"
   pub_semver:
     dependency: transitive
     description:
@@ -791,10 +813,17 @@ packages:
   shared_preferences:
     dependency: "direct main"
     description:
-      path: "../plugins_shard_pref/packages/shared_preferences/shared_preferences"
-      relative: true
-    source: path
-    version: "0.5.7"
+      name: shared_preferences
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.5.10"
+  shared_preferences_linux:
+    dependency: transitive
+    description:
+      name: shared_preferences_linux
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.0.2+2"
   shared_preferences_macos:
     dependency: transitive
     description:
@@ -816,13 +845,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "0.1.2+7"
-  shared_preferences_windows:
-    dependency: transitive
-    description:
-      path: "../plugins_shard_pref/packages/shared_preferences/shared_preferences_windows"
-      relative: true
-    source: path
-    version: "0.0.1"
   shelf:
     dependency: transitive
     description:
@@ -926,6 +948,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.1.0-nullsafety"
+  sync_http:
+    dependency: transitive
+    description:
+      name: sync_http
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.2.0"
   synchronized:
     dependency: transitive
     description:
@@ -1059,6 +1088,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "5.0.0+1"
+  vm_service_client:
+    dependency: transitive
+    description:
+      name: vm_service_client
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.2.6+2"
   watcher:
     dependency: transitive
     description:
@@ -1073,6 +1109,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.1.0"
+  webdriver:
+    dependency: transitive
+    description:
+      name: webdriver
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "2.1.2"
   webkit_inspection_protocol:
     dependency: transitive
     description:
@@ -1109,5 +1152,5 @@ packages:
     source: hosted
     version: "2.2.1"
 sdks:
-  dart: ">=2.10.0-0.0.dev <2.10.0"
+  dart: ">=2.10.0-4.0.dev <2.10.0"
   flutter: ">=1.20.0 <2.0.0"
