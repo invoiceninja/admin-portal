@@ -270,6 +270,29 @@ class InvoiceEditDesktopState extends State<InvoiceEditDesktop>
                             .toList()
                       ],
                     ),
+                    AppDropdownButton<String>(
+                      labelText: localization.dueDate,
+                      value: invoice.dueDateDays ?? '',
+                      onChanged: (dynamic value) => viewModel.onChanged(
+                          invoice.rebuild((b) => b..dueDateDays = value)),
+                      items: [
+                        DropdownMenuItem(
+                          child: Text(localization.usePaymentTerms),
+                          value: 'terms',
+                        ),
+                        ...List<int>.generate(31, (i) => i + 1)
+                            .map((value) => DropdownMenuItem(
+                                  child: Text(value == 1
+                                      ? localization.firstDayOfTheMonth
+                                      : value == 31
+                                          ? localization.lastDayOfTheMonth
+                                          : localization.dayCount.replaceFirst(
+                                              ':count', '$value')),
+                                  value: '$value',
+                                ))
+                            .toList()
+                      ],
+                    ),
                   ] else ...[
                     DatePicker(
                       validator: (String val) => val.trim().isEmpty

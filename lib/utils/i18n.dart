@@ -15,6 +15,10 @@ mixin LocalizationsProvider on LocaleCodeAware {
   static final Map<String, Map<String, String>> _localizedValues = {
     'en': {
       // STARTER: lang key - do not remove comment
+      'day_count': 'Day :count',
+      'first_day_of_the_month': 'First Day of the Month',
+      'last_day_of_the_month': 'Last Day of the Month',
+      'use_payment_terms': 'Use Payment Terms',
       'endless': 'Endless',
       'next_send_date': 'Next Send Date',
       'remaining_cycles': 'Remaining Cycles',
@@ -4544,6 +4548,17 @@ mixin LocalizationsProvider on LocaleCodeAware {
       _localizedValues[localeCode]['remaining_cycles'] ?? '';
 
   String get endless => _localizedValues[localeCode]['endless'] ?? '';
+
+  String get usePaymentTerms =>
+      _localizedValues[localeCode]['use_payment_terms'] ?? '';
+
+  String get firstDayOfTheMonth =>
+      _localizedValues[localeCode]['first_day_of_the_month'] ?? '';
+
+  String get lastDayOfTheMonth =>
+      _localizedValues[localeCode]['last_day_of_the_month'] ?? '';
+
+  String get dayCount => _localizedValues[localeCode]['day_count'] ?? '';
 
   String lookup(String key) {
     final lookupKey = toSnakeCase(key);

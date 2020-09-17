@@ -169,7 +169,8 @@ abstract class InvoiceEntity extends Object
       lastSentDate: '',
       nextSendDate: '',
       frequencyId: kFrequencyMonthly,
-      remainingCycles: 0,
+      remainingCycles: -1,
+      dueDateDays: '',
     );
   }
 
