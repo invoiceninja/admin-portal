@@ -70,8 +70,6 @@ class InvoiceEditContactsVM extends EntityEditContactsVM {
       Store<AppState> store, EntityType entityType) {
     final AppState state = store.state;
 
-    print('## ENTITY TYPE: $entityType');
-
     BaseEntity entity;
     if (entityType == EntityType.invoice) {
       entity = state.invoiceUIState.editing;

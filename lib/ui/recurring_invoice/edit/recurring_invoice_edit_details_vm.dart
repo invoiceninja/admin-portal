@@ -34,7 +34,7 @@ class RecurringInvoiceEditDetailsScreen extends StatelessWidget {
           return InvoiceEditDesktop(
             viewModel: viewModel,
             entityViewModel: this.viewModel,
-            key: ValueKey('__invoice_${viewModel.invoice.id}__'),
+            key: ValueKey('__recurring_invoice_${viewModel.invoice.id}__'),
           );
         } else {
           return InvoiceEditDetails(

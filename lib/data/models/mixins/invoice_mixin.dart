@@ -150,7 +150,6 @@ abstract class CalculateInvoiceTotal {
       final double itemDiscount = round(item.discount, 2);
       final double taxRate1 = round(item.taxRate1, 3);
       final double taxRate2 = round(item.taxRate2, 3);
-
       double lineTotal = qty * cost;
 
       if (itemDiscount != 0) {
