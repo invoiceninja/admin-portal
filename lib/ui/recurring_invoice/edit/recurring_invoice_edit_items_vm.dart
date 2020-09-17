@@ -68,15 +68,15 @@ class RecurringInvoiceEditItemsVM extends EntityEditItemsVM {
     return RecurringInvoiceEditItemsVM(
         state: store.state,
         company: store.state.company,
-        invoice: store.state.quoteUIState.editing,
+        invoice: store.state.recurringInvoiceUIState.editing,
         invoiceItemIndex: store.state.quoteUIState.editingItemIndex,
         onRemoveInvoiceItemPressed: (index) =>
             store.dispatch(DeleteRecurringInvoiceItem(index)),
         onDoneInvoiceItemPressed: () =>
             store.dispatch(EditRecurringInvoiceItem()),
         onChangedInvoiceItem: (item, index) {
-          final quote = store.state.quoteUIState.editing;
-          if (index == quote.lineItems.length) {
+          final invoice = store.state.recurringInvoiceUIState.editing;
+          if (index == invoice.lineItems.length) {
             store.dispatch(AddRecurringInvoiceItem(invoiceItem: item));
           } else {
             store

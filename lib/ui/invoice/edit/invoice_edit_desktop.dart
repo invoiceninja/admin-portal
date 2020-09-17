@@ -22,6 +22,7 @@ import 'package:invoiceninja_flutter/ui/invoice/edit/invoice_edit_details_vm.dar
 import 'package:invoiceninja_flutter/ui/invoice/edit/invoice_edit_items_vm.dart';
 import 'package:invoiceninja_flutter/ui/invoice/edit/invoice_edit_vm.dart';
 import 'package:invoiceninja_flutter/ui/quote/edit/quote_edit_items_vm.dart';
+import 'package:invoiceninja_flutter/ui/recurring_invoice/edit/recurring_invoice_edit_items_vm.dart';
 import 'package:invoiceninja_flutter/utils/completers.dart';
 import 'package:invoiceninja_flutter/utils/formatting.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
@@ -417,17 +418,22 @@ class InvoiceEditDesktopState extends State<InvoiceEditDesktop>
             ),
           ],
         ),
-        entityType == EntityType.credit
-            ? CreditEditItemsScreen(
-                viewModel: widget.entityViewModel,
-              )
-            : entityType == EntityType.quote
-                ? QuoteEditItemsScreen(
-                    viewModel: widget.entityViewModel,
-                  )
-                : InvoiceEditItemsScreen(
-                    viewModel: widget.entityViewModel,
-                  ),
+        if (entityType == EntityType.credit)
+          CreditEditItemsScreen(
+            viewModel: widget.entityViewModel,
+          )
+        else if (entityType == EntityType.quote)
+          QuoteEditItemsScreen(
+            viewModel: widget.entityViewModel,
+          )
+        else if (entityType == EntityType.invoice)
+          InvoiceEditItemsScreen(
+            viewModel: widget.entityViewModel,
+          )
+        else if (entityType == EntityType.recurringInvoice)
+          RecurringInvoiceEditItemsScreen(
+            viewModel: widget.entityViewModel,
+          ),
         Row(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
