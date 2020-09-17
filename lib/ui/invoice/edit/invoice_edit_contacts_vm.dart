@@ -51,12 +51,12 @@ class EntityEditContactsVM {
 
 class InvoiceEditContactsVM extends EntityEditContactsVM {
   InvoiceEditContactsVM({
-    AppState state,
-    CompanyEntity company,
-    InvoiceEntity invoice,
-    ClientEntity client,
-    Function(ContactEntity) onAddContact,
-    Function(InvitationEntity) onRemoveContact,
+    @required AppState state,
+    @required CompanyEntity company,
+    @required InvoiceEntity invoice,
+    @required ClientEntity client,
+    @required Function(ContactEntity) onAddContact,
+    @required Function(InvitationEntity) onRemoveContact,
   }) : super(
           state: state,
           company: company,

@@ -31,12 +31,10 @@ class InvoiceEditDesktop extends StatefulWidget {
     Key key,
     @required this.viewModel,
     @required this.entityViewModel,
-    this.entityType = EntityType.invoice,
   }) : super(key: key);
 
   final EntityEditDetailsVM viewModel;
   final EntityEditVM entityViewModel;
-  final EntityType entityType;
 
   @override
   InvoiceEditDesktopState createState() => InvoiceEditDesktopState();
@@ -176,6 +174,7 @@ class InvoiceEditDesktopState extends State<InvoiceEditDesktop>
     final client = viewModel.state.clientState.get(invoice.clientId);
     final invoiceTotal =
         invoice.partial != 0 ? invoice.partial : invoice.calculateTotal;
+    final entityType = invoice.entityType;
 
     return ListView(
       key: ValueKey('__invoice_${invoice.id}__'),
@@ -231,7 +230,7 @@ class InvoiceEditDesktopState extends State<InvoiceEditDesktop>
                     bottom: kMobileDialogPadding,
                     left: kMobileDialogPadding / 2),
                 children: <Widget>[
-                  if (widget.entityType == EntityType.recurringInvoice) ...[
+                  if (entityType == EntityType.recurringInvoice) ...[
                     AppDropdownButton<String>(
                         labelText: localization.frequency,
                         value: invoice.frequencyId,
@@ -300,9 +299,9 @@ class InvoiceEditDesktopState extends State<InvoiceEditDesktop>
                       validator: (String val) => val.trim().isEmpty
                           ? AppLocalization.of(context).pleaseSelectADate
                           : null,
-                      labelText: widget.entityType == EntityType.credit
+                      labelText: entityType == EntityType.credit
                           ? localization.creditDate
-                          : widget.entityType == EntityType.quote
+                          : entityType == EntityType.quote
                               ? localization.quoteDate
                               : localization.invoiceDate,
                       selectedDate: invoice.date,
@@ -311,10 +310,10 @@ class InvoiceEditDesktopState extends State<InvoiceEditDesktop>
                             .onChanged(invoice.rebuild((b) => b..date = date));
                       },
                     ),
-                    if (widget.entityType != EntityType.credit)
+                    if (entityType != EntityType.credit)
                       DatePicker(
                         allowClearing: true,
-                        labelText: widget.entityType == EntityType.quote
+                        labelText: entityType == EntityType.quote
                             ? localization.validUntil
                             : localization.dueDate,
                         selectedDate: invoice.dueDate,
@@ -363,9 +362,9 @@ class InvoiceEditDesktopState extends State<InvoiceEditDesktop>
                 children: <Widget>[
                   DecoratedFormField(
                     controller: _invoiceNumberController,
-                    label: widget.entityType == EntityType.credit
+                    label: entityType == EntityType.credit
                         ? localization.creditNumber
-                        : widget.entityType == EntityType.quote
+                        : entityType == EntityType.quote
                             ? localization.quoteNumber
                             : localization.invoiceNumber,
                     validator: (String val) => val.trim().isEmpty &&
@@ -386,7 +385,7 @@ class InvoiceEditDesktopState extends State<InvoiceEditDesktop>
                     onTypeChanged: (value) => viewModel.onChanged(
                         invoice.rebuild((b) => b..isAmountDiscount = value)),
                   ),
-                  if (widget.entityType == EntityType.recurringInvoice)
+                  if (entityType == EntityType.recurringInvoice)
                     AppDropdownButton<String>(
                         labelText: localization.autoBill,
                         value: invoice.autoBill,
@@ -418,11 +417,11 @@ class InvoiceEditDesktopState extends State<InvoiceEditDesktop>
             ),
           ],
         ),
-        widget.entityType == EntityType.credit
+        entityType == EntityType.credit
             ? CreditEditItemsScreen(
                 viewModel: widget.entityViewModel,
               )
-            : widget.entityType == EntityType.quote
+            : entityType == EntityType.quote
                 ? QuoteEditItemsScreen(
                     viewModel: widget.entityViewModel,
                   )
@@ -448,15 +447,15 @@ class InvoiceEditDesktopState extends State<InvoiceEditDesktop>
                       Tab(text: localization.publicNotes),
                       Tab(text: localization.privateNotes),
                       Tab(
-                          text: widget.entityType == EntityType.credit
+                          text: entityType == EntityType.credit
                               ? localization.creditTerms
-                              : widget.entityType == EntityType.quote
+                              : entityType == EntityType.quote
                                   ? localization.quoteTerms
                                   : localization.invoiceTerms),
                       Tab(
-                          text: widget.entityType == EntityType.credit
+                          text: entityType == EntityType.credit
                               ? localization.creditFooter
-                              : widget.entityType == EntityType.quote
+                              : entityType == EntityType.quote
                                   ? localization.quoteFooter
                                   : localization.invoiceFooter),
                       Tab(text: localization.settings),

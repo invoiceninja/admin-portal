@@ -34,7 +34,6 @@ class QuoteEditDetailsScreen extends StatelessWidget {
             viewModel: viewModel,
             entityViewModel: this.viewModel,
             key: ValueKey('__quote_${viewModel.invoice.id}__'),
-            entityType: EntityType.quote,
           );
         } else {
           return InvoiceEditDetails(
