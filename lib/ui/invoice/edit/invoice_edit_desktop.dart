@@ -245,11 +245,6 @@ class InvoiceEditDesktopState extends State<InvoiceEditDesktop>
                                   child: Text(localization.lookup(entry.value)),
                                 ))
                             .toList()),
-                    DatePicker(
-                        labelText: localization.nextSendDate,
-                        onSelected: (date) => viewModel.onChanged(
-                            invoice.rebuild((b) => b..nextSendDate = date)),
-                        selectedDate: invoice.nextSendDate),
                     AppDropdownButton<int>(
                       showUseDefault: true,
                       labelText: localization.remainingCycles,
@@ -270,6 +265,13 @@ class InvoiceEditDesktopState extends State<InvoiceEditDesktop>
                             .toList()
                       ],
                     ),
+                    DatePicker(
+                        labelText: (invoice.lastSentDate ?? '').isNotEmpty
+                            ? localization.nextSendDate
+                            : localization.startDate,
+                        onSelected: (date) => viewModel.onChanged(
+                            invoice.rebuild((b) => b..nextSendDate = date)),
+                        selectedDate: invoice.nextSendDate),
                     AppDropdownButton<String>(
                       labelText: localization.dueDate,
                       value: invoice.dueDateDays ?? '',
