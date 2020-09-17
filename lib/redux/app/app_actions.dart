@@ -301,7 +301,6 @@ void viewEntitiesByType({
           case EntityType.recurringInvoice:
             store.dispatch(ViewRecurringInvoiceList(navigator: navigator));
             break;
-
           case EntityType.webhook:
             store.dispatch(ViewWebhookList(navigator: navigator));
             break;
