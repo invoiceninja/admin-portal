@@ -228,21 +228,15 @@ class _$InvoiceEntitySerializer implements StructuredSerializer<InvoiceEntity> {
       'has_expenses',
       serializers.serialize(object.hasExpenses,
           specifiedType: const FullType(bool)),
-      'reminder1_sent',
-      serializers.serialize(object.reminder1Sent,
-          specifiedType: const FullType(String)),
-      'reminder2_sent',
-      serializers.serialize(object.reminder2Sent,
-          specifiedType: const FullType(String)),
-      'reminder3_sent',
-      serializers.serialize(object.reminder3Sent,
-          specifiedType: const FullType(String)),
-      'reminder_last_sent',
-      serializers.serialize(object.reminderLastSent,
-          specifiedType: const FullType(String)),
       'exchange_rate',
       serializers.serialize(object.exchangeRate,
           specifiedType: const FullType(double)),
+      'last_sent_date',
+      serializers.serialize(object.lastSentDate,
+          specifiedType: const FullType(String)),
+      'next_send_date',
+      serializers.serialize(object.nextSendDate,
+          specifiedType: const FullType(String)),
       'line_items',
       serializers.serialize(object.lineItems,
           specifiedType: const FullType(
@@ -271,7 +265,7 @@ class _$InvoiceEntitySerializer implements StructuredSerializer<InvoiceEntity> {
       result
         ..add('auto_bill')
         ..add(serializers.serialize(object.autoBill,
-            specifiedType: const FullType(bool)));
+            specifiedType: const FullType(String)));
     }
     if (object.customTaxes1 != null) {
       result
@@ -296,6 +290,48 @@ class _$InvoiceEntitySerializer implements StructuredSerializer<InvoiceEntity> {
         ..add('custom_taxes4')
         ..add(serializers.serialize(object.customTaxes4,
             specifiedType: const FullType(bool)));
+    }
+    if (object.reminder1Sent != null) {
+      result
+        ..add('reminder1_sent')
+        ..add(serializers.serialize(object.reminder1Sent,
+            specifiedType: const FullType(String)));
+    }
+    if (object.reminder2Sent != null) {
+      result
+        ..add('reminder2_sent')
+        ..add(serializers.serialize(object.reminder2Sent,
+            specifiedType: const FullType(String)));
+    }
+    if (object.reminder3Sent != null) {
+      result
+        ..add('reminder3_sent')
+        ..add(serializers.serialize(object.reminder3Sent,
+            specifiedType: const FullType(String)));
+    }
+    if (object.reminderLastSent != null) {
+      result
+        ..add('reminder_last_sent')
+        ..add(serializers.serialize(object.reminderLastSent,
+            specifiedType: const FullType(String)));
+    }
+    if (object.frequencyId != null) {
+      result
+        ..add('frequency_id')
+        ..add(serializers.serialize(object.frequencyId,
+            specifiedType: const FullType(String)));
+    }
+    if (object.remainingCycles != null) {
+      result
+        ..add('remaining_cycles')
+        ..add(serializers.serialize(object.remainingCycles,
+            specifiedType: const FullType(int)));
+    }
+    if (object.dueDateDays != null) {
+      result
+        ..add('due_date_days')
+        ..add(serializers.serialize(object.dueDateDays,
+            specifiedType: const FullType(String)));
     }
     if (object.invoiceId != null) {
       result
@@ -473,7 +509,7 @@ class _$InvoiceEntitySerializer implements StructuredSerializer<InvoiceEntity> {
           break;
         case 'auto_bill':
           result.autoBill = serializers.deserialize(value,
-              specifiedType: const FullType(bool)) as bool;
+              specifiedType: const FullType(String)) as String;
           break;
         case 'custom_value1':
           result.customValue1 = serializers.deserialize(value,
@@ -527,6 +563,10 @@ class _$InvoiceEntitySerializer implements StructuredSerializer<InvoiceEntity> {
           result.hasExpenses = serializers.deserialize(value,
               specifiedType: const FullType(bool)) as bool;
           break;
+        case 'exchange_rate':
+          result.exchangeRate = serializers.deserialize(value,
+              specifiedType: const FullType(double)) as double;
+          break;
         case 'reminder1_sent':
           result.reminder1Sent = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String;
@@ -543,9 +583,25 @@ class _$InvoiceEntitySerializer implements StructuredSerializer<InvoiceEntity> {
           result.reminderLastSent = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String;
           break;
-        case 'exchange_rate':
-          result.exchangeRate = serializers.deserialize(value,
-              specifiedType: const FullType(double)) as double;
+        case 'frequency_id':
+          result.frequencyId = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String;
+          break;
+        case 'last_sent_date':
+          result.lastSentDate = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String;
+          break;
+        case 'next_send_date':
+          result.nextSendDate = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String;
+          break;
+        case 'remaining_cycles':
+          result.remainingCycles = serializers.deserialize(value,
+              specifiedType: const FullType(int)) as int;
+          break;
+        case 'due_date_days':
+          result.dueDateDays = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String;
           break;
         case 'invoice_id':
           result.invoiceId = serializers.deserialize(value,
@@ -1280,7 +1336,7 @@ class _$InvoiceEntity extends InvoiceEntity {
   @override
   final bool hasTasks;
   @override
-  final bool autoBill;
+  final String autoBill;
   @override
   final String customValue1;
   @override
@@ -1308,6 +1364,8 @@ class _$InvoiceEntity extends InvoiceEntity {
   @override
   final bool hasExpenses;
   @override
+  final double exchangeRate;
+  @override
   final String reminder1Sent;
   @override
   final String reminder2Sent;
@@ -1316,7 +1374,15 @@ class _$InvoiceEntity extends InvoiceEntity {
   @override
   final String reminderLastSent;
   @override
-  final double exchangeRate;
+  final String frequencyId;
+  @override
+  final String lastSentDate;
+  @override
+  final String nextSendDate;
+  @override
+  final int remainingCycles;
+  @override
+  final String dueDateDays;
   @override
   final String invoiceId;
   @override
@@ -1394,11 +1460,16 @@ class _$InvoiceEntity extends InvoiceEntity {
       this.customTaxes3,
       this.customTaxes4,
       this.hasExpenses,
+      this.exchangeRate,
       this.reminder1Sent,
       this.reminder2Sent,
       this.reminder3Sent,
       this.reminderLastSent,
-      this.exchangeRate,
+      this.frequencyId,
+      this.lastSentDate,
+      this.nextSendDate,
+      this.remainingCycles,
+      this.dueDateDays,
       this.invoiceId,
       this.filename,
       this.lineItems,
@@ -1521,20 +1592,14 @@ class _$InvoiceEntity extends InvoiceEntity {
     if (hasExpenses == null) {
       throw new BuiltValueNullFieldError('InvoiceEntity', 'hasExpenses');
     }
-    if (reminder1Sent == null) {
-      throw new BuiltValueNullFieldError('InvoiceEntity', 'reminder1Sent');
-    }
-    if (reminder2Sent == null) {
-      throw new BuiltValueNullFieldError('InvoiceEntity', 'reminder2Sent');
-    }
-    if (reminder3Sent == null) {
-      throw new BuiltValueNullFieldError('InvoiceEntity', 'reminder3Sent');
-    }
-    if (reminderLastSent == null) {
-      throw new BuiltValueNullFieldError('InvoiceEntity', 'reminderLastSent');
-    }
     if (exchangeRate == null) {
       throw new BuiltValueNullFieldError('InvoiceEntity', 'exchangeRate');
+    }
+    if (lastSentDate == null) {
+      throw new BuiltValueNullFieldError('InvoiceEntity', 'lastSentDate');
+    }
+    if (nextSendDate == null) {
+      throw new BuiltValueNullFieldError('InvoiceEntity', 'nextSendDate');
     }
     if (lineItems == null) {
       throw new BuiltValueNullFieldError('InvoiceEntity', 'lineItems');
@@ -1610,11 +1675,16 @@ class _$InvoiceEntity extends InvoiceEntity {
         customTaxes3 == other.customTaxes3 &&
         customTaxes4 == other.customTaxes4 &&
         hasExpenses == other.hasExpenses &&
+        exchangeRate == other.exchangeRate &&
         reminder1Sent == other.reminder1Sent &&
         reminder2Sent == other.reminder2Sent &&
         reminder3Sent == other.reminder3Sent &&
         reminderLastSent == other.reminderLastSent &&
-        exchangeRate == other.exchangeRate &&
+        frequencyId == other.frequencyId &&
+        lastSentDate == other.lastSentDate &&
+        nextSendDate == other.nextSendDate &&
+        remainingCycles == other.remainingCycles &&
+        dueDateDays == other.dueDateDays &&
         invoiceId == other.invoiceId &&
         filename == other.filename &&
         lineItems == other.lineItems &&
@@ -1654,10 +1724,10 @@ class _$InvoiceEntity extends InvoiceEntity {
                                                                 $jc(
                                                                     $jc(
                                                                         $jc(
-                                                                            $jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc(0, amount.hashCode), balance.hashCode), clientId.hashCode), statusId.hashCode), number.hashCode), discount.hashCode), poNumber.hashCode), date.hashCode), dueDate.hashCode), publicNotes.hashCode), privateNotes.hashCode), terms.hashCode), footer.hashCode), designId.hashCode), usesInclusiveTaxes.hashCode), taxName1.hashCode), taxRate1.hashCode), taxName2.hashCode), taxRate2.hashCode), taxName3.hashCode), taxRate3.hashCode), isAmountDiscount.hashCode), partial.hashCode), taxAmount.hashCode), partialDueDate.hashCode), hasTasks.hashCode), autoBill.hashCode), customValue1.hashCode), customValue2.hashCode), customValue3.hashCode), customValue4.hashCode), customSurcharge1.hashCode), customSurcharge2.hashCode), customSurcharge3.hashCode), customSurcharge4.hashCode), customTaxes1.hashCode), customTaxes2.hashCode), customTaxes3.hashCode), customTaxes4.hashCode), hasExpenses.hashCode), reminder1Sent.hashCode), reminder2Sent.hashCode),
-                                                                                reminder3Sent.hashCode),
-                                                                            reminderLastSent.hashCode),
-                                                                        exchangeRate.hashCode),
+                                                                            $jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc(0, amount.hashCode), balance.hashCode), clientId.hashCode), statusId.hashCode), number.hashCode), discount.hashCode), poNumber.hashCode), date.hashCode), dueDate.hashCode), publicNotes.hashCode), privateNotes.hashCode), terms.hashCode), footer.hashCode), designId.hashCode), usesInclusiveTaxes.hashCode), taxName1.hashCode), taxRate1.hashCode), taxName2.hashCode), taxRate2.hashCode), taxName3.hashCode), taxRate3.hashCode), isAmountDiscount.hashCode), partial.hashCode), taxAmount.hashCode), partialDueDate.hashCode), hasTasks.hashCode), autoBill.hashCode), customValue1.hashCode), customValue2.hashCode), customValue3.hashCode), customValue4.hashCode), customSurcharge1.hashCode), customSurcharge2.hashCode), customSurcharge3.hashCode), customSurcharge4.hashCode), customTaxes1.hashCode), customTaxes2.hashCode), customTaxes3.hashCode), customTaxes4.hashCode), hasExpenses.hashCode), exchangeRate.hashCode), reminder1Sent.hashCode), reminder2Sent.hashCode), reminder3Sent.hashCode), reminderLastSent.hashCode), frequencyId.hashCode), lastSentDate.hashCode),
+                                                                                nextSendDate.hashCode),
+                                                                            remainingCycles.hashCode),
+                                                                        dueDateDays.hashCode),
                                                                     invoiceId.hashCode),
                                                                 filename.hashCode),
                                                             lineItems.hashCode),
@@ -1719,11 +1789,16 @@ class _$InvoiceEntity extends InvoiceEntity {
           ..add('customTaxes3', customTaxes3)
           ..add('customTaxes4', customTaxes4)
           ..add('hasExpenses', hasExpenses)
+          ..add('exchangeRate', exchangeRate)
           ..add('reminder1Sent', reminder1Sent)
           ..add('reminder2Sent', reminder2Sent)
           ..add('reminder3Sent', reminder3Sent)
           ..add('reminderLastSent', reminderLastSent)
-          ..add('exchangeRate', exchangeRate)
+          ..add('frequencyId', frequencyId)
+          ..add('lastSentDate', lastSentDate)
+          ..add('nextSendDate', nextSendDate)
+          ..add('remainingCycles', remainingCycles)
+          ..add('dueDateDays', dueDateDays)
           ..add('invoiceId', invoiceId)
           ..add('filename', filename)
           ..add('lineItems', lineItems)
@@ -1855,9 +1930,9 @@ class InvoiceEntityBuilder
   bool get hasTasks => _$this._hasTasks;
   set hasTasks(bool hasTasks) => _$this._hasTasks = hasTasks;
 
-  bool _autoBill;
-  bool get autoBill => _$this._autoBill;
-  set autoBill(bool autoBill) => _$this._autoBill = autoBill;
+  String _autoBill;
+  String get autoBill => _$this._autoBill;
+  set autoBill(String autoBill) => _$this._autoBill = autoBill;
 
   String _customValue1;
   String get customValue1 => _$this._customValue1;
@@ -1915,6 +1990,10 @@ class InvoiceEntityBuilder
   bool get hasExpenses => _$this._hasExpenses;
   set hasExpenses(bool hasExpenses) => _$this._hasExpenses = hasExpenses;
 
+  double _exchangeRate;
+  double get exchangeRate => _$this._exchangeRate;
+  set exchangeRate(double exchangeRate) => _$this._exchangeRate = exchangeRate;
+
   String _reminder1Sent;
   String get reminder1Sent => _$this._reminder1Sent;
   set reminder1Sent(String reminder1Sent) =>
@@ -1935,9 +2014,26 @@ class InvoiceEntityBuilder
   set reminderLastSent(String reminderLastSent) =>
       _$this._reminderLastSent = reminderLastSent;
 
-  double _exchangeRate;
-  double get exchangeRate => _$this._exchangeRate;
-  set exchangeRate(double exchangeRate) => _$this._exchangeRate = exchangeRate;
+  String _frequencyId;
+  String get frequencyId => _$this._frequencyId;
+  set frequencyId(String frequencyId) => _$this._frequencyId = frequencyId;
+
+  String _lastSentDate;
+  String get lastSentDate => _$this._lastSentDate;
+  set lastSentDate(String lastSentDate) => _$this._lastSentDate = lastSentDate;
+
+  String _nextSendDate;
+  String get nextSendDate => _$this._nextSendDate;
+  set nextSendDate(String nextSendDate) => _$this._nextSendDate = nextSendDate;
+
+  int _remainingCycles;
+  int get remainingCycles => _$this._remainingCycles;
+  set remainingCycles(int remainingCycles) =>
+      _$this._remainingCycles = remainingCycles;
+
+  String _dueDateDays;
+  String get dueDateDays => _$this._dueDateDays;
+  set dueDateDays(String dueDateDays) => _$this._dueDateDays = dueDateDays;
 
   String _invoiceId;
   String get invoiceId => _$this._invoiceId;
@@ -2057,11 +2153,16 @@ class InvoiceEntityBuilder
       _customTaxes3 = _$v.customTaxes3;
       _customTaxes4 = _$v.customTaxes4;
       _hasExpenses = _$v.hasExpenses;
+      _exchangeRate = _$v.exchangeRate;
       _reminder1Sent = _$v.reminder1Sent;
       _reminder2Sent = _$v.reminder2Sent;
       _reminder3Sent = _$v.reminder3Sent;
       _reminderLastSent = _$v.reminderLastSent;
-      _exchangeRate = _$v.exchangeRate;
+      _frequencyId = _$v.frequencyId;
+      _lastSentDate = _$v.lastSentDate;
+      _nextSendDate = _$v.nextSendDate;
+      _remainingCycles = _$v.remainingCycles;
+      _dueDateDays = _$v.dueDateDays;
       _invoiceId = _$v.invoiceId;
       _filename = _$v.filename;
       _lineItems = _$v.lineItems?.toBuilder();
@@ -2142,11 +2243,16 @@ class InvoiceEntityBuilder
               customTaxes3: customTaxes3,
               customTaxes4: customTaxes4,
               hasExpenses: hasExpenses,
+              exchangeRate: exchangeRate,
               reminder1Sent: reminder1Sent,
               reminder2Sent: reminder2Sent,
               reminder3Sent: reminder3Sent,
               reminderLastSent: reminderLastSent,
-              exchangeRate: exchangeRate,
+              frequencyId: frequencyId,
+              lastSentDate: lastSentDate,
+              nextSendDate: nextSendDate,
+              remainingCycles: remainingCycles,
+              dueDateDays: dueDateDays,
               invoiceId: invoiceId,
               filename: filename,
               lineItems: lineItems.build(),

@@ -67,7 +67,9 @@ class DecoratedFormField extends StatelessWidget {
       maxLines: expands ? null : maxLines ?? 1,
       minLines: expands ? null : minLines,
       expands: expands,
-      autovalidate: autovalidate,
+      autovalidateMode: autovalidate
+          ? AutovalidateMode.always
+          : AutovalidateMode.onUserInteraction,
       autocorrect: autocorrect,
       obscureText: obscureText,
       initialValue: initialValue,

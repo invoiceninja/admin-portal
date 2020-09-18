@@ -423,7 +423,7 @@ else
     sed -i -e "s/$comment/$comment${lineBreak}$code/g" ./lib/redux/app/app_actions.dart
 
     comment="STARTER: edit - do not remove comment"
-    code="case EntityType.${module_camel}: store.dispatch(Edit${Module}(${module_camel}: map[entityId], navigator: navigator, completer: completer ?? snackBarCompleter<${Module}Entity>(context, entity.isNew ? localization.created${Module} : localization.updated${Module}),));break;${lineBreak}"
+    code="case EntityType.${module_camel}: store.dispatch(Edit${Module}(${module_camel}: entity, navigator: navigator, completer: completer ?? snackBarCompleter<${Module}Entity>(context, entity.isNew ? localization.created${Module} : localization.updated${Module}),));break;${lineBreak}"
     sed -i -e "s/$comment/$comment${lineBreak}$code/g" ./lib/redux/app/app_actions.dart
 
     comment="STARTER: actions - do not remove comment"
@@ -431,7 +431,7 @@ else
     sed -i -e "s/$comment/$comment${lineBreak}$code/g" ./lib/redux/app/app_actions.dart
 
     comment="STARTER: lang key - do not remove comment"
-    code="'${module_snake}': '${Module}', '${module_snake}s': '${Module}s', 'new_${module_snake}': 'New ${Module}', 'edit_${module_snake}': 'Edit ${Module}', 'created_${module_snake}': 'Successfully created ${module_snake}', 'updated_${module_snake}': 'Successfully updated ${module_snake}', 'archived_${module_snake}': 'Successfully archived ${module_snake}', 'deleted_${module_snake}': 'Successfully deleted ${module_snake}', 'removed_${module_snake}': 'Successfully removed ${module_snake}', 'restored_${module_snake}': 'Successfully restored ${module_snake}',${lineBreak}, 'search_${module_snake}': 'Search ${Module}'"
+    code="'${module_snake}': '${Module}', '${module_snake}s': '${Module}s', 'new_${module_snake}': 'New ${Module}', 'edit_${module_snake}': 'Edit ${Module}', 'created_${module_snake}': 'Successfully created ${module_snake}', 'updated_${module_snake}': 'Successfully updated ${module_snake}', 'archived_${module_snake}': 'Successfully archived ${module_snake}', 'deleted_${module_snake}': 'Successfully deleted ${module_snake}', 'removed_${module_snake}': 'Successfully removed ${module_snake}', 'restored_${module_snake}': 'Successfully restored ${module_snake}', 'search_${module_snake}': 'Search ${Module}',${lineBreak}"
     sed -i -e "s/$comment/$comment${lineBreak}$code/g" ./lib/utils/i18n.dart
 
     comment="STARTER: lang field - do not remove comment"

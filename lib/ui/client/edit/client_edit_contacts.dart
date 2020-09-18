@@ -210,6 +210,7 @@ class ContactEditDetailsState extends State<ContactEditDetails> {
     _lastNameController.text = contact.lastName;
     _emailController.text = contact.email;
     _phoneController.text = contact.phone;
+    _passwordController.text = contact.password;
     _custom1Controller.text = contact.customValue1;
     _custom2Controller.text = contact.customValue2;
     _custom3Controller.text = contact.customValue3;

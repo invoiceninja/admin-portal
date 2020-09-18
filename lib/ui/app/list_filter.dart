@@ -4,6 +4,7 @@ import 'package:invoiceninja_flutter/utils/colors.dart';
 import 'package:invoiceninja_flutter/constants.dart';
 import 'package:invoiceninja_flutter/utils/formatting.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
+import 'package:invoiceninja_flutter/utils/strings.dart';
 import 'package:redux/redux.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
@@ -51,8 +52,8 @@ class _ListFilterState extends State<ListFilter> {
 
     final isSingle = count == 1 ||
         [EntityType.dashboard, EntityType.settings].contains(widget.entityType);
-    final key =
-        isSingle ? widget.entityType.toString() : widget.entityType.plural;
+    final key = toSnakeCase(
+        isSingle ? widget.entityType.toString() : widget.entityType.plural);
     final placeholder = localization.lookup(
         widget.entityType == EntityType.dashboard
             ? 'search_company'

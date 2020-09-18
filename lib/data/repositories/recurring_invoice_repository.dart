@@ -1,0 +1,74 @@
+import 'dart:async';
+import 'dart:convert';
+import 'dart:core';
+import 'package:built_collection/built_collection.dart';
+import 'package:invoiceninja_flutter/data/models/serializers.dart';
+import 'package:invoiceninja_flutter/redux/app/app_state.dart';
+import 'package:invoiceninja_flutter/data/models/models.dart';
+import 'package:invoiceninja_flutter/data/web_client.dart';
+
+class RecurringInvoiceRepository {
+  const RecurringInvoiceRepository({
+    this.webClient = const WebClient(),
+  });
+
+  final WebClient webClient;
+
+  Future<InvoiceEntity> loadItem(
+      Credentials credentials, String entityId) async {
+    final dynamic response = await webClient.get(
+        '${credentials.url}/recurring_invoices/$entityId', credentials.token);
+
+    final InvoiceItemResponse recurringInvoiceResponse = serializers
+        .deserializeWith(InvoiceItemResponse.serializer, response);
+
+    return recurringInvoiceResponse.data;
+  }
+
+  Future<BuiltList<InvoiceEntity>> loadList(
+      Credentials credentials) async {
+    final String url = credentials.url + '/recurring_invoices?';
+
+    final dynamic response = await webClient.get(url, credentials.token);
+
+    final InvoiceListResponse recurringInvoiceResponse = serializers
+        .deserializeWith(InvoiceListResponse.serializer, response);
+
+    return recurringInvoiceResponse.data;
+  }
+
+  Future<List<InvoiceEntity>> bulkAction(
+      Credentials credentials, List<String> ids, EntityAction action) async {
+    final url = credentials.url + '/recurring_invoices/bulk';
+    final dynamic response = await webClient.post(url, credentials.token,
+        data: json.encode({'ids': ids, 'action': action.toApiParam()}));
+
+    final InvoiceListResponse recurringInvoiceResponse = serializers
+        .deserializeWith(InvoiceListResponse.serializer, response);
+
+    return recurringInvoiceResponse.data.toList();
+  }
+
+  Future<InvoiceEntity> saveData(
+      Credentials credentials, InvoiceEntity recurringInvoice) async {
+    final data = serializers.serializeWith(
+        InvoiceEntity.serializer, recurringInvoice);
+    dynamic response;
+
+    if (recurringInvoice.isNew) {
+      response = await webClient.post(
+          credentials.url + '/recurring_invoices', credentials.token,
+          data: json.encode(data));
+    } else {
+      final url =
+          '${credentials.url}/recurring_invoices/${recurringInvoice.id}';
+      response =
+          await webClient.put(url, credentials.token, data: json.encode(data));
+    }
+
+    final InvoiceItemResponse recurringInvoiceResponse = serializers
+        .deserializeWith(InvoiceItemResponse.serializer, response);
+
+    return recurringInvoiceResponse.data;
+  }
+}

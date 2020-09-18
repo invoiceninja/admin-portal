@@ -87,6 +87,7 @@ class _AccountManagementState extends State<AccountManagement>
                   // TODO change to kModules.keys
                   children: [
                 kModuleInvoices,
+                kModuleRecurringInvoices,
                 kModuleQuotes,
                 kModuleCredits,
               ].map((module) {

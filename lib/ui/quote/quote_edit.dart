@@ -124,13 +124,18 @@ class _QuoteEditState extends State<QuoteEdit>
           child: AppBorder(
             isTop: true,
             child: Padding(
-              padding: const EdgeInsets.all(16),
-              child: Text(
-                '${localization.total}: ${formatNumber(invoice.calculateTotal, context, clientId: viewModel.invoice.clientId)}',
-                style: TextStyle(
-                  //color: Theme.of(context).selectedRowColor,
-                  color: Colors.white,
-                  fontSize: 20.0,
+              padding: const EdgeInsets.only(left: 16),
+              child: Align(
+                alignment: Alignment.centerLeft,
+                child: Text(
+                  '${localization.total}: ${formatNumber(invoice.calculateTotal, context, clientId: viewModel.invoice.clientId)}',
+                  style: TextStyle(
+                    //color: Theme.of(context).selectedRowColor,
+                    color: state.prefState.enableDarkMode
+                        ? Colors.white
+                        : Colors.black,
+                    fontSize: 20.0,
+                  ),
                 ),
               ),
             ),

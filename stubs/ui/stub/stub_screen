@@ -36,7 +36,6 @@ class StubScreen extends StatelessWidget {
       entityType: EntityType.stub,
       onHamburgerLongPress: () => store.dispatch(StartStubMultiselect()),
       appBarTitle: ListFilter(
-        placeholder: localization.searchStubs,
         entityIds: viewModel.stubList,
         filter: state.stubListState.filter,
         onFilterChanged: (value) {

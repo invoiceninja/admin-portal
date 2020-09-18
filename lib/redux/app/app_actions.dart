@@ -46,6 +46,7 @@ import 'package:invoiceninja_flutter/utils/dialogs.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 
 // STARTER: import - do not remove comment
+import 'package:invoiceninja_flutter/redux/recurring_invoice/recurring_invoice_actions.dart';
 import 'package:invoiceninja_flutter/redux/webhook/webhook_actions.dart';
 import 'package:invoiceninja_flutter/redux/token/token_actions.dart';
 import 'package:invoiceninja_flutter/redux/payment_term/payment_term_actions.dart';
@@ -297,6 +298,9 @@ void viewEntitiesByType({
             action = ViewGroupList(navigator: navigator);
             break;
           // STARTER: view list - do not remove comment
+          case EntityType.recurringInvoice:
+            store.dispatch(ViewRecurringInvoiceList(navigator: navigator));
+            break;
           case EntityType.webhook:
             store.dispatch(ViewWebhookList(navigator: navigator));
             break;
@@ -471,6 +475,14 @@ void viewEntityById({
             ));
             break;
           // STARTER: view - do not remove comment
+          case EntityType.recurringInvoice:
+            store.dispatch(ViewRecurringInvoice(
+              recurringInvoiceId: entityId,
+              navigator: navigator,
+              force: force,
+            ));
+            break;
+
           case EntityType.webhook:
             store.dispatch(ViewWebhook(
               webhookId: entityId,
@@ -636,6 +648,15 @@ void createEntityByType(
             ));
             break;
           // STARTER: create type - do not remove comment
+          case EntityType.recurringInvoice:
+            store.dispatch(EditRecurringInvoice(
+              navigator: navigator,
+              force: force,
+              recurringInvoice: InvoiceEntity(
+                  state: state, entityType: EntityType.recurringInvoice),
+            ));
+            break;
+
           case EntityType.webhook:
             store.dispatch(EditWebhook(
               navigator: navigator,
@@ -759,9 +780,6 @@ void createEntity({
               completer: completer,
             ));
             break;
-          //case EntityType.recurringInvoice:
-          //store.dispatch(ViewRecurringInvoice(recurringInvoiceId: entityId, navigator: navigator));
-          //break;
           case EntityType.quote:
             store.dispatch(EditQuote(
               navigator: navigator,
@@ -803,12 +821,6 @@ void createEntity({
               completer: completer,
             ));
             break;
-          //case EntityType.expenseCategory:
-          //store.dispatch(ViewExpenseCategory(taxRateId: entityId, navigator: navigator));
-          //break;
-          //case EntityType.credit:
-          //store.dispatch(ViewCredit(creditId: entityId, navigator: navigator));
-          //break;
           case EntityType.payment:
             store.dispatch(EditPayment(
               navigator: navigator,
@@ -826,6 +838,15 @@ void createEntity({
             ));
             break;
           // STARTER: create - do not remove comment
+          case EntityType.recurringInvoice:
+            store.dispatch(EditRecurringInvoice(
+              navigator: navigator,
+              recurringInvoice: entity,
+              force: force,
+              completer: completer,
+            ));
+            break;
+
           case EntityType.webhook:
             store.dispatch(EditWebhook(
               navigator: navigator,
@@ -965,9 +986,6 @@ void editEntity(
               invoiceItemIndex: subIndex,
             ));
             break;
-          //case EntityType.recurringInvoice:
-          //store.dispatch(EditRecurringInvoice(recurringInvoice: entity, navigator: navigator));
-          //break;
           case EntityType.quote:
             store.dispatch(EditQuote(
               quote: entity,
@@ -1059,6 +1077,19 @@ void editEntity(
             ));
             break;
           // STARTER: edit - do not remove comment
+          case EntityType.recurringInvoice:
+            store.dispatch(EditRecurringInvoice(
+              recurringInvoice: entity,
+              navigator: navigator,
+              completer: completer ??
+                  snackBarCompleter<InvoiceEntity>(
+                      context,
+                      entity.isNew
+                          ? localization.createdRecurringInvoice
+                          : localization.updatedRecurringInvoice),
+            ));
+            break;
+
           case EntityType.webhook:
             store.dispatch(EditWebhook(
               webhook: entity,
@@ -1220,22 +1251,21 @@ void handleEntitiesActions(
       handleDocumentAction(context, entities, action);
       break;
     // STARTER: actions - do not remove comment
+    case EntityType.recurringInvoice:
+      handleRecurringInvoiceAction(context, entities, action);
+      break;
     case EntityType.webhook:
       handleWebhookAction(context, entities, action);
       break;
-
     case EntityType.token:
       handleTokenAction(context, entities, action);
       break;
-
     case EntityType.paymentTerm:
       handlePaymentTermAction(context, entities, action);
       break;
-
     case EntityType.design:
       handleDesignAction(context, entities, action);
       break;
-
     case EntityType.credit:
       handleCreditAction(context, entities, action);
       break;

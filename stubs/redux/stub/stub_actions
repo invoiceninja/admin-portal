@@ -7,6 +7,7 @@ import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/utils/completers.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
+import 'package:invoiceninja_flutter/ui/app/entities/entity_actions_dialog.dart';
 
 class ViewStubList extends AbstractNavigatorAction implements PersistUI, StopLoading {
   ViewStubList({
@@ -245,6 +246,25 @@ class FilterStubsByCustom4 implements PersistUI {
   final String value;
 }
 
+class StartStubMultiselect {
+  StartStubMultiselect();
+}
+
+class AddToStubMultiselect {
+  AddToStubMultiselect({@required this.entity});
+
+  final BaseEntity entity;
+}
+
+class RemoveFromStubMultiselect {
+  RemoveFromStubMultiselect({@required this.entity});
+
+  final BaseEntity entity;
+}
+
+class ClearStubMultiselect {
+  ClearStubMultiselect();
+}
 
 void handleStubAction(
     BuildContext context, List<BaseEntity> stubs, EntityAction action) {
@@ -254,6 +274,7 @@ void handleStubAction(
   }
 
   final store = StoreProvider.of<AppState>(context);
+  final state = store.state;
   final localization = AppLocalization.of(context);
   final stub = stubs.first as StubEntity;
   final stubIds = stubs.map((stub) => stub.id).toList();
@@ -297,28 +318,7 @@ void handleStubAction(
         showEntityActionsDialog(
           entities: [stub],
           context: context,
-          client: state.clientState.get(stub.clientId),
         );
         break;
   }
-}
-
-class StartStubMultiselect {
-  StartStubMultiselect();
-}
-
-class AddToStubMultiselect {
-  AddToStubMultiselect({@required this.entity});
-
-  final BaseEntity entity;
-}
-
-class RemoveFromStubMultiselect {
-  RemoveFromStubMultiselect({@required this.entity});
-
-  final BaseEntity entity;
-}
-
-class ClearStubMultiselect {
-  ClearStubMultiselect();
 }

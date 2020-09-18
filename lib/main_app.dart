@@ -50,6 +50,10 @@ import 'package:local_auth/local_auth.dart';
 import 'package:redux/redux.dart';
 
 // STARTER: import - do not remove comment
+import 'package:invoiceninja_flutter/ui/recurring_invoice/recurring_invoice_screen.dart';
+import 'package:invoiceninja_flutter/ui/recurring_invoice/edit/recurring_invoice_edit_vm.dart';
+import 'package:invoiceninja_flutter/ui/recurring_invoice/view/recurring_invoice_view_vm.dart';
+import 'package:invoiceninja_flutter/ui/recurring_invoice/recurring_invoice_screen_vm.dart';
 import 'package:invoiceninja_flutter/ui/webhook/webhook_screen.dart';
 import 'package:invoiceninja_flutter/ui/webhook/edit/webhook_edit_vm.dart';
 import 'package:invoiceninja_flutter/ui/webhook/view/webhook_view_vm.dart';
@@ -281,6 +285,13 @@ class InvoiceNinjaAppState extends State<InvoiceNinjaApp> {
                   QuoteEditScreen.route: (context) => QuoteEditScreen(),
                   QuoteEmailScreen.route: (context) => QuoteEmailScreen(),
                   // STARTER: routes - do not remove comment
+                  RecurringInvoiceScreen.route: (context) =>
+                      RecurringInvoiceScreenBuilder(),
+                  RecurringInvoiceViewScreen.route: (context) =>
+                      RecurringInvoiceViewScreen(),
+                  RecurringInvoiceEditScreen.route: (context) =>
+                      RecurringInvoiceEditScreen(),
+
                   WebhookScreen.route: (context) => WebhookScreenBuilder(),
                   WebhookViewScreen.route: (context) => WebhookViewScreen(),
                   WebhookEditScreen.route: (context) => WebhookEditScreen(),

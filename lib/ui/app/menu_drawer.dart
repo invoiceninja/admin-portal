@@ -14,6 +14,7 @@ import 'package:invoiceninja_flutter/ui/app/forms/app_dropdown_button.dart';
 import 'package:invoiceninja_flutter/ui/app/resources/cached_image.dart';
 import 'package:invoiceninja_flutter/ui/system/update_dialog.dart';
 import 'package:invoiceninja_flutter/utils/dialogs.dart';
+import 'package:invoiceninja_flutter/utils/strings.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 import 'package:redux/redux.dart';
 import 'package:invoiceninja_flutter/.env.dart';
@@ -237,6 +238,13 @@ class MenuDrawer extends StatelessWidget {
                           ),
                           DrawerTile(
                             company: company,
+                            entityType: EntityType.recurringInvoice,
+                            icon: getEntityIcon(EntityType.recurringInvoice),
+                            title: localization.recurringInvoices,
+                            iconTooltip: localization.newRecurringInvoice,
+                          ),
+                          DrawerTile(
+                            company: company,
                             entityType: EntityType.payment,
                             icon: getEntityIcon(EntityType.payment),
                             title: localization.payments,
@@ -379,9 +387,10 @@ class _DrawerTileState extends State<DrawerTile> {
                 ? kReports
                 : widget.entityType.name;
 
-    final isSelected = uiState.currentRoute.startsWith('/$route') &&
-        (state.uiState.filterEntityType == null ||
-            !state.prefState.showFilterSidebar);
+    final isSelected =
+        uiState.currentRoute.startsWith('/${toSnakeCase(route)}') &&
+            (state.uiState.filterEntityType == null ||
+                !state.prefState.showFilterSidebar);
 
     final textColor = Theme.of(context)
         .textTheme

@@ -80,77 +80,12 @@ class ClientViewVM {
       company: state.company,
       onEntityPressed: (BuildContext context, EntityType entityType,
           [longPress = false]) {
-        switch (entityType) {
-          case EntityType.invoice:
-            if (longPress && client.isActive) {
-              handleClientAction(context, [client], EntityAction.newInvoice);
-            } else {
-              viewEntitiesByType(
-                  context: context,
-                  entityType: EntityType.invoice,
-                  filterEntity: client);
-            }
-            break;
-          case EntityType.quote:
-            if (longPress && client.isActive) {
-              handleClientAction(context, [client], EntityAction.newQuote);
-            } else {
-              viewEntitiesByType(
-                  context: context,
-                  entityType: EntityType.quote,
-                  filterEntity: client);
-            }
-            break;
-          case EntityType.credit:
-            if (longPress && client.isActive) {
-              handleClientAction(context, [client], EntityAction.newCredit);
-            } else {
-              viewEntitiesByType(
-                  context: context,
-                  entityType: EntityType.credit,
-                  filterEntity: client);
-            }
-            break;
-          case EntityType.payment:
-            if (longPress && client.isActive) {
-              handleClientAction(context, [client], EntityAction.newPayment);
-            } else {
-              viewEntitiesByType(
-                  context: context,
-                  entityType: EntityType.payment,
-                  filterEntity: client);
-            }
-            break;
-          case EntityType.project:
-            if (longPress && client.isActive) {
-              handleClientAction(context, [client], EntityAction.newProject);
-            } else {
-              viewEntitiesByType(
-                  context: context,
-                  entityType: EntityType.project,
-                  filterEntity: client);
-            }
-            break;
-          case EntityType.task:
-            if (longPress && client.isActive) {
-              handleClientAction(context, [client], EntityAction.newTask);
-            } else {
-              viewEntitiesByType(
-                  context: context,
-                  entityType: EntityType.task,
-                  filterEntity: client);
-            }
-            break;
-          case EntityType.expense:
-            if (longPress && client.isActive) {
-              handleClientAction(context, [client], EntityAction.newExpense);
-            } else {
-              viewEntitiesByType(
-                  context: context,
-                  entityType: EntityType.expense,
-                  filterEntity: client);
-            }
-            break;
+        if (longPress && client.isActive) {
+          handleEntityAction(
+              context, client, EntityAction.newEntityType(entityType));
+        } else {
+          viewEntitiesByType(
+              context: context, entityType: entityType, filterEntity: client);
         }
       },
       onRefreshed: (context) => _handleRefresh(context),

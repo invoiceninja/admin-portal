@@ -8,7 +8,6 @@ import 'package:invoiceninja_flutter/ui/app/forms/app_dropdown_button.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/app_form.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/bool_dropdown_button.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/decorated_form_field.dart';
-import 'package:invoiceninja_flutter/ui/app/help_text.dart';
 import 'package:invoiceninja_flutter/ui/app/loading_indicator.dart';
 import 'package:invoiceninja_flutter/ui/company_gateway/company_gateway_list_item.dart';
 import 'package:invoiceninja_flutter/ui/company_gateway/company_gateway_list_vm.dart';
@@ -41,45 +40,40 @@ class CompanyGatewayList extends StatelessWidget {
             ? LoadingIndicator()
             : RefreshIndicator(
                 onRefresh: () => viewModel.onRefreshed(context),
-                child: viewModel.companyGatewayList.isEmpty
-                    ? HelpText(AppLocalization.of(context).noRecordsFound)
-                    : SizedBox(
-                        height:
-                            (viewModel.companyGatewayList.length * 80.0) + 100,
-                        child: ReorderableListView(
-                          onReorder: (oldIndex, newIndex) {
-                            // https://stackoverflow.com/a/54164333/497368
-                            // These two lines are workarounds for ReorderableListView problems
-                            if (newIndex >
-                                viewModel.companyGatewayList.length) {
-                              newIndex = viewModel.companyGatewayList.length;
-                            }
-                            if (oldIndex < newIndex) {
-                              newIndex--;
-                            }
+                child: SizedBox(
+                  height: (viewModel.companyGatewayList.length * 80.0) + 100,
+                  child: ReorderableListView(
+                    onReorder: (oldIndex, newIndex) {
+                      // https://stackoverflow.com/a/54164333/497368
+                      // These two lines are workarounds for ReorderableListView problems
+                      if (newIndex > viewModel.companyGatewayList.length) {
+                        newIndex = viewModel.companyGatewayList.length;
+                      }
+                      if (oldIndex < newIndex) {
+                        newIndex--;
+                      }
 
-                            viewModel.onSortChanged(oldIndex, newIndex);
-                          },
-                          children: viewModel.companyGatewayList
-                              .map((companyGatewayId) {
-                            final companyGateway =
-                                viewModel.companyGatewayMap[companyGatewayId];
-                            return CompanyGatewayListItem(
-                                key: ValueKey(
-                                    '__company_gateway_$companyGatewayId'),
-                                user: state.userCompany.user,
-                                filter: viewModel.filter,
-                                companyGateway: companyGateway,
-                                onRemovePressed:
-                                    viewModel.state.settingsUIState.isFiltered
-                                        ? () => viewModel
-                                            .onRemovePressed(companyGatewayId)
-                                        : null,
-                                isChecked: isInMultiselect &&
-                                    listUIState.isSelected(companyGateway.id));
-                          }).toList(),
-                        ),
-                      ),
+                      viewModel.onSortChanged(oldIndex, newIndex);
+                    },
+                    children:
+                        viewModel.companyGatewayList.map((companyGatewayId) {
+                      final companyGateway =
+                          viewModel.companyGatewayMap[companyGatewayId];
+                      return CompanyGatewayListItem(
+                          key: ValueKey('__company_gateway_$companyGatewayId'),
+                          user: state.userCompany.user,
+                          filter: viewModel.filter,
+                          companyGateway: companyGateway,
+                          onRemovePressed: viewModel
+                                  .state.settingsUIState.isFiltered
+                              ? () =>
+                                  viewModel.onRemovePressed(companyGatewayId)
+                              : null,
+                          isChecked: isInMultiselect &&
+                              listUIState.isSelected(companyGateway.id));
+                    }).toList(),
+                  ),
+                ),
               ),
       ],
     );
@@ -100,6 +94,7 @@ class __OnlinePaymentFormState extends State<_OnlinePaymentForm> {
   static final GlobalKey<FormState> _formKey =
       GlobalKey<FormState>(debugLabel: '_companyGatewayList');
   final FocusScopeNode _focusNode = FocusScopeNode();
+
   //bool _autoValidate = false;
 
   final _minimumAmountController = TextEditingController();

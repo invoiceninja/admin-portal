@@ -91,6 +91,7 @@ abstract class CompanyEntity extends Object
       clients: BuiltList<ClientEntity>(),
       products: BuiltList<ProductEntity>(),
       invoices: BuiltList<InvoiceEntity>(),
+      recurringInvoices: BuiltList<InvoiceEntity>(),
       payments: BuiltList<PaymentEntity>(),
       quotes: BuiltList<InvoiceEntity>(),
       credits: BuiltList<InvoiceEntity>(),
@@ -214,6 +215,9 @@ abstract class CompanyEntity extends Object
   BuiltList<ProductEntity> get products;
 
   BuiltList<InvoiceEntity> get invoices;
+
+  @BuiltValueField(wireName: 'recurring_invoices')
+  BuiltList<InvoiceEntity> get recurringInvoices;
 
   BuiltList<PaymentEntity> get payments;
 
@@ -628,6 +632,7 @@ abstract class UserCompanyEntity
     // TODO remove this once task/expenses are supported
     if (!Config.DEMO_MODE &&
         [
+          EntityType.recurringInvoice,
           EntityType.vendor,
           EntityType.expense,
           EntityType.task,

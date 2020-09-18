@@ -7,6 +7,22 @@ String toSnakeCase(String value) {
       RegExp(r'[A-Z]'), (Match match) => '_' + match[0].toLowerCase());
 }
 
+String toCamelCase(String subject) {
+  final _splittedString = subject.split('_');
+
+  if (_splittedString.isEmpty) {
+    return '';
+  }
+
+  final _firstWord = _splittedString[0].toLowerCase();
+  final _restWords = _splittedString
+      .sublist(1)
+      .map((String word) => toTitleCase(word))
+      .toList();
+
+  return _firstWord + _restWords.join('');
+}
+
 String toSpaceCase(String value) {
   if ((value ?? '').isEmpty) {
     return '';

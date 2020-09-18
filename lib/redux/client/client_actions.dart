@@ -304,6 +304,15 @@ void handleClientAction(
           entity: InvoiceEntity(state: state, client: client),
           filterEntity: client);
       break;
+    case EntityAction.newRecurringInvoice:
+      createEntity(
+          context: context,
+          entity: InvoiceEntity(
+              state: state,
+              client: client,
+              entityType: EntityType.recurringInvoice),
+          filterEntity: client);
+      break;
     case EntityAction.newQuote:
       createEntity(
         context: context,

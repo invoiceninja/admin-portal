@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:invoiceninja_flutter/redux/credit/credit_actions.dart';
 import 'package:invoiceninja_flutter/redux/quote/quote_actions.dart';
+import 'package:invoiceninja_flutter/redux/recurring_invoice/recurring_invoice_actions.dart';
 import 'package:invoiceninja_flutter/ui/invoice/edit/invoice_edit_contacts.dart';
 import 'package:redux/redux.dart';
 import 'package:invoiceninja_flutter/redux/invoice/invoice_actions.dart';
@@ -50,12 +51,12 @@ class EntityEditContactsVM {
 
 class InvoiceEditContactsVM extends EntityEditContactsVM {
   InvoiceEditContactsVM({
-    AppState state,
-    CompanyEntity company,
-    InvoiceEntity invoice,
-    ClientEntity client,
-    Function(ContactEntity) onAddContact,
-    Function(InvitationEntity) onRemoveContact,
+    @required AppState state,
+    @required CompanyEntity company,
+    @required InvoiceEntity invoice,
+    @required ClientEntity client,
+    @required Function(ContactEntity) onAddContact,
+    @required Function(InvitationEntity) onRemoveContact,
   }) : super(
           state: state,
           company: company,
@@ -76,6 +77,11 @@ class InvoiceEditContactsVM extends EntityEditContactsVM {
       entity = state.quoteUIState.editing;
     } else if (entityType == EntityType.credit) {
       entity = state.creditUIState.editing;
+    } else if (entityType == EntityType.recurringInvoice) {
+      entity = state.recurringInvoiceUIState.editing;
+    } else {
+      print(
+          'ERROR: entityType $entityType not handled in invoice_edit_contacts_vm');
     }
 
     return InvoiceEditContactsVM(
@@ -98,9 +104,15 @@ class InvoiceEditContactsVM extends EntityEditContactsVM {
         } else if (entity.entityType == EntityType.credit) {
           store.dispatch(
               AddCreditContact(contact: contact, invitation: invitation));
-        } else {
+        } else if (entity.entityType == EntityType.recurringInvoice) {
+          store.dispatch(AddRecurringInvoiceContact(
+              contact: contact, invitation: invitation));
+        } else if (entity.entityType == EntityType.invoice) {
           store.dispatch(
               AddInvoiceContact(contact: contact, invitation: invitation));
+        } else {
+          print(
+              'ERROR: entityType $entityType not handled in invoice_edit_contacts_vm');
         }
       },
       onRemoveContact: (InvitationEntity invitation) {
@@ -108,8 +120,13 @@ class InvoiceEditContactsVM extends EntityEditContactsVM {
           store.dispatch(RemoveQuoteContact(invitation: invitation));
         } else if (entity.entityType == EntityType.credit) {
           store.dispatch(RemoveCreditContact(invitation: invitation));
-        } else {
+        } else if (entity.entityType == EntityType.recurringInvoice) {
+          store.dispatch(RemoveRecurringInvoiceContact(invitation: invitation));
+        } else if (entity.entityType == EntityType.invoice) {
           store.dispatch(RemoveInvoiceContact(invitation: invitation));
+        } else {
+          print(
+              'ERROR: entityType $entityType not handled in invoice_edit_contacts_vm');
         }
       },
     );

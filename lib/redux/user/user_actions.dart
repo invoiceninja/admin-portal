@@ -225,9 +225,9 @@ class RemoveUserRequest implements StartSaving {
 }
 
 class RemoveUserSuccess implements StopSaving, PersistData {
-  RemoveUserSuccess(this.users);
+  RemoveUserSuccess(this.userId);
 
-  final List<UserEntity> users;
+  final String userId;
 }
 
 class RemoveUserFailure implements StopSaving {
@@ -286,6 +286,14 @@ void handleUserAction(
       createEntity(
           context: context,
           entity: InvoiceEntity(state: state)
+              .rebuild((b) => b.assignedUserId = user.id),
+          filterEntity: user);
+      break;
+    case EntityAction.newRecurringInvoice:
+      createEntity(
+          context: context,
+          entity: InvoiceEntity(
+                  state: state, entityType: EntityType.recurringInvoice)
               .rebuild((b) => b.assignedUserId = user.id),
           filterEntity: user);
       break;

@@ -428,7 +428,9 @@ class _LoginState extends State<LoginView> {
                                         ? TextInputAction.done
                                         : TextInputAction.next,
                                 autocorrect: false,
-                                autovalidate: _autoValidate,
+                                autovalidateMode: _autoValidate
+                                    ? AutovalidateMode.always
+                                    : AutovalidateMode.onUserInteraction,
                                 decoration: InputDecoration(
                                   labelText: localization.password,
                                   suffixIcon: IconButton(
@@ -477,7 +479,9 @@ class _LoginState extends State<LoginView> {
                                 controller: _urlController,
                                 key: ValueKey(localization.url),
                                 autocorrect: false,
-                                autovalidate: _autoValidate,
+                                autovalidateMode: _autoValidate
+                                    ? AutovalidateMode.always
+                                    : AutovalidateMode.onUserInteraction,
                                 textInputAction: _isFormComplete
                                     ? TextInputAction.done
                                     : TextInputAction.next,

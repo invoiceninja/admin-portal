@@ -12,7 +12,6 @@ import 'package:invoiceninja_flutter/ui/app/dismissible_entity.dart';
 class StubListItem extends StatelessWidget {
   const StubListItem({
     @required this.user,
-    @required this.onEntityAction,
     @required this.stub,
     @required this.filter,
     this.onTap,
@@ -22,7 +21,6 @@ class StubListItem extends StatelessWidget {
   });
 
   final UserEntity user;
-  final Function(EntityAction) onEntityAction;
   final GestureTapCallback onTap;
   final GestureTapCallback onLongPress;
   final StubEntity stub;
@@ -50,7 +48,6 @@ class StubListItem extends StatelessWidget {
       entity: stub,
       isSelected: stub.id ==
           (uiState.isEditing ? stubUIState.editing.id : stubUIState.selectedId),
-      onEntityAction: onEntityAction,
       child: ListTile(
         onTap: () => onTap != null
             ? onTap()

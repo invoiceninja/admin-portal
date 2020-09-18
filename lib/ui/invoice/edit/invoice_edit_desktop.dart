@@ -2,8 +2,10 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:invoiceninja_flutter/constants.dart';
+import 'package:invoiceninja_flutter/data/models/company_gateway_model.dart';
 import 'package:invoiceninja_flutter/data/models/entities.dart';
 import 'package:invoiceninja_flutter/ui/app/form_card.dart';
+import 'package:invoiceninja_flutter/ui/app/forms/app_dropdown_button.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/app_tab_bar.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/client_picker.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/custom_field.dart';
@@ -20,6 +22,7 @@ import 'package:invoiceninja_flutter/ui/invoice/edit/invoice_edit_details_vm.dar
 import 'package:invoiceninja_flutter/ui/invoice/edit/invoice_edit_items_vm.dart';
 import 'package:invoiceninja_flutter/ui/invoice/edit/invoice_edit_vm.dart';
 import 'package:invoiceninja_flutter/ui/quote/edit/quote_edit_items_vm.dart';
+import 'package:invoiceninja_flutter/ui/recurring_invoice/edit/recurring_invoice_edit_items_vm.dart';
 import 'package:invoiceninja_flutter/utils/completers.dart';
 import 'package:invoiceninja_flutter/utils/formatting.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
@@ -29,12 +32,10 @@ class InvoiceEditDesktop extends StatefulWidget {
     Key key,
     @required this.viewModel,
     @required this.entityViewModel,
-    this.entityType = EntityType.invoice,
   }) : super(key: key);
 
   final EntityEditDetailsVM viewModel;
   final EntityEditVM entityViewModel;
-  final EntityType entityType;
 
   @override
   InvoiceEditDesktopState createState() => InvoiceEditDesktopState();
@@ -174,6 +175,7 @@ class InvoiceEditDesktopState extends State<InvoiceEditDesktop>
     final client = viewModel.state.clientState.get(invoice.clientId);
     final invoiceTotal =
         invoice.partial != 0 ? invoice.partial : invoice.calculateTotal;
+    final entityType = invoice.entityType;
 
     return ListView(
       key: ValueKey('__invoice_${invoice.id}__'),
@@ -229,49 +231,115 @@ class InvoiceEditDesktopState extends State<InvoiceEditDesktop>
                     bottom: kMobileDialogPadding,
                     left: kMobileDialogPadding / 2),
                 children: <Widget>[
-                  DatePicker(
-                    validator: (String val) => val.trim().isEmpty
-                        ? AppLocalization.of(context).pleaseSelectADate
-                        : null,
-                    labelText: widget.entityType == EntityType.credit
-                        ? localization.creditDate
-                        : widget.entityType == EntityType.quote
-                            ? localization.quoteDate
-                            : localization.invoiceDate,
-                    selectedDate: invoice.date,
-                    onSelected: (date) {
-                      viewModel
-                          .onChanged(invoice.rebuild((b) => b..date = date));
-                    },
-                  ),
-                  if (widget.entityType != EntityType.credit)
+                  if (entityType == EntityType.recurringInvoice) ...[
+                    AppDropdownButton<String>(
+                        labelText: localization.frequency,
+                        value: invoice.frequencyId,
+                        onChanged: (dynamic value) {
+                          viewModel.onChanged(
+                              invoice.rebuild((b) => b..frequencyId = value));
+                        },
+                        items: kFrequencies.entries
+                            .map((entry) => DropdownMenuItem(
+                                  value: entry.key,
+                                  child: Text(localization.lookup(entry.value)),
+                                ))
+                            .toList()),
+                    AppDropdownButton<int>(
+                      showUseDefault: true,
+                      labelText: localization.remainingCycles,
+                      value: invoice.remainingCycles,
+                      blankValue: null,
+                      onChanged: (dynamic value) => viewModel.onChanged(
+                          invoice.rebuild((b) => b..remainingCycles = value)),
+                      items: [
+                        DropdownMenuItem(
+                          child: Text(localization.endless),
+                          value: -1,
+                        ),
+                        ...List<int>.generate(37, (i) => i)
+                            .map((value) => DropdownMenuItem(
+                                  child: Text('$value'),
+                                  value: value,
+                                ))
+                            .toList()
+                      ],
+                    ),
                     DatePicker(
-                      allowClearing: true,
-                      labelText: widget.entityType == EntityType.quote
-                          ? localization.validUntil
-                          : localization.dueDate,
-                      selectedDate: invoice.dueDate,
+                        labelText: (invoice.lastSentDate ?? '').isNotEmpty
+                            ? localization.nextSendDate
+                            : localization.startDate,
+                        onSelected: (date) => viewModel.onChanged(
+                            invoice.rebuild((b) => b..nextSendDate = date)),
+                        selectedDate: invoice.nextSendDate),
+                    AppDropdownButton<String>(
+                      labelText: localization.dueDate,
+                      value: invoice.dueDateDays ?? '',
+                      onChanged: (dynamic value) => viewModel.onChanged(
+                          invoice.rebuild((b) => b..dueDateDays = value)),
+                      items: [
+                        DropdownMenuItem(
+                          child: Text(localization.usePaymentTerms),
+                          value: 'terms',
+                        ),
+                        ...List<int>.generate(31, (i) => i + 1)
+                            .map((value) => DropdownMenuItem(
+                                  child: Text(value == 1
+                                      ? localization.firstDayOfTheMonth
+                                      : value == 31
+                                          ? localization.lastDayOfTheMonth
+                                          : localization.dayCount.replaceFirst(
+                                              ':count', '$value')),
+                                  value: '$value',
+                                ))
+                            .toList()
+                      ],
+                    ),
+                  ] else ...[
+                    DatePicker(
+                      validator: (String val) => val.trim().isEmpty
+                          ? AppLocalization.of(context).pleaseSelectADate
+                          : null,
+                      labelText: entityType == EntityType.credit
+                          ? localization.creditDate
+                          : entityType == EntityType.quote
+                              ? localization.quoteDate
+                              : localization.invoiceDate,
+                      selectedDate: invoice.date,
                       onSelected: (date) {
-                        viewModel.onChanged(
-                            invoice.rebuild((b) => b..dueDate = date));
+                        viewModel
+                            .onChanged(invoice.rebuild((b) => b..date = date));
                       },
                     ),
-                  DecoratedFormField(
-                    label: localization.partialDeposit,
-                    controller: _partialController,
-                    keyboardType:
-                        TextInputType.numberWithOptions(decimal: true),
-                    onSavePressed: widget.entityViewModel.onSavePressed,
-                  ),
-                  if (invoice.partial != null && invoice.partial > 0)
-                    DatePicker(
-                      labelText: localization.partialDueDate,
-                      selectedDate: invoice.partialDueDate,
-                      onSelected: (date) {
-                        viewModel.onChanged(
-                            invoice.rebuild((b) => b..partialDueDate = date));
-                      },
+                    if (entityType != EntityType.credit)
+                      DatePicker(
+                        allowClearing: true,
+                        labelText: entityType == EntityType.quote
+                            ? localization.validUntil
+                            : localization.dueDate,
+                        selectedDate: invoice.dueDate,
+                        onSelected: (date) {
+                          viewModel.onChanged(
+                              invoice.rebuild((b) => b..dueDate = date));
+                        },
+                      ),
+                    DecoratedFormField(
+                      label: localization.partialDeposit,
+                      controller: _partialController,
+                      keyboardType:
+                          TextInputType.numberWithOptions(decimal: true),
+                      onSavePressed: widget.entityViewModel.onSavePressed,
                     ),
+                    if (invoice.partial != null && invoice.partial > 0)
+                      DatePicker(
+                        labelText: localization.partialDueDate,
+                        selectedDate: invoice.partialDueDate,
+                        onSelected: (date) {
+                          viewModel.onChanged(
+                              invoice.rebuild((b) => b..partialDueDate = date));
+                        },
+                      ),
+                  ],
                   CustomField(
                     controller: _custom1Controller,
                     field: CustomFieldType.invoice1,
@@ -295,9 +363,9 @@ class InvoiceEditDesktopState extends State<InvoiceEditDesktop>
                 children: <Widget>[
                   DecoratedFormField(
                     controller: _invoiceNumberController,
-                    label: widget.entityType == EntityType.credit
+                    label: entityType == EntityType.credit
                         ? localization.creditNumber
-                        : widget.entityType == EntityType.quote
+                        : entityType == EntityType.quote
                             ? localization.quoteNumber
                             : localization.invoiceNumber,
                     validator: (String val) => val.trim().isEmpty &&
@@ -318,6 +386,23 @@ class InvoiceEditDesktopState extends State<InvoiceEditDesktop>
                     onTypeChanged: (value) => viewModel.onChanged(
                         invoice.rebuild((b) => b..isAmountDiscount = value)),
                   ),
+                  if (entityType == EntityType.recurringInvoice)
+                    AppDropdownButton<String>(
+                        labelText: localization.autoBill,
+                        value: invoice.autoBill,
+                        onChanged: (dynamic value) => viewModel.onChanged(
+                            invoice.rebuild((b) => b..autoBill = value)),
+                        items: [
+                          CompanyGatewayEntity.TOKEN_BILLING_ALWAYS,
+                          CompanyGatewayEntity.TOKEN_BILLING_OPT_OUT,
+                          CompanyGatewayEntity.TOKEN_BILLING_OPT_IN,
+                          CompanyGatewayEntity.TOKEN_BILLING_DISABLED
+                        ]
+                            .map((value) => DropdownMenuItem(
+                                  child: Text(localization.lookup(value)),
+                                  value: value,
+                                ))
+                            .toList()),
                   CustomField(
                     controller: _custom2Controller,
                     field: CustomFieldType.invoice2,
@@ -333,17 +418,22 @@ class InvoiceEditDesktopState extends State<InvoiceEditDesktop>
             ),
           ],
         ),
-        widget.entityType == EntityType.credit
-            ? CreditEditItemsScreen(
-                viewModel: widget.entityViewModel,
-              )
-            : widget.entityType == EntityType.quote
-                ? QuoteEditItemsScreen(
-                    viewModel: widget.entityViewModel,
-                  )
-                : InvoiceEditItemsScreen(
-                    viewModel: widget.entityViewModel,
-                  ),
+        if (entityType == EntityType.credit)
+          CreditEditItemsScreen(
+            viewModel: widget.entityViewModel,
+          )
+        else if (entityType == EntityType.quote)
+          QuoteEditItemsScreen(
+            viewModel: widget.entityViewModel,
+          )
+        else if (entityType == EntityType.invoice)
+          InvoiceEditItemsScreen(
+            viewModel: widget.entityViewModel,
+          )
+        else if (entityType == EntityType.recurringInvoice)
+          RecurringInvoiceEditItemsScreen(
+            viewModel: widget.entityViewModel,
+          ),
         Row(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
@@ -363,15 +453,15 @@ class InvoiceEditDesktopState extends State<InvoiceEditDesktop>
                       Tab(text: localization.publicNotes),
                       Tab(text: localization.privateNotes),
                       Tab(
-                          text: widget.entityType == EntityType.credit
+                          text: entityType == EntityType.credit
                               ? localization.creditTerms
-                              : widget.entityType == EntityType.quote
+                              : entityType == EntityType.quote
                                   ? localization.quoteTerms
                                   : localization.invoiceTerms),
                       Tab(
-                          text: widget.entityType == EntityType.credit
+                          text: entityType == EntityType.credit
                               ? localization.creditFooter
-                              : widget.entityType == EntityType.quote
+                              : entityType == EntityType.quote
                                   ? localization.quoteFooter
                                   : localization.invoiceFooter),
                       Tab(text: localization.settings),

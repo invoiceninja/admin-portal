@@ -44,11 +44,6 @@ Middleware<AppState> _editStub() {
 
     final action = dynamicAction as EditStub;
 
-    if (!action.force && hasChanges(
-        store: store, context: action.context, callback: () => store.dispatch(action))) {
-      return;
-    }
-
     next(action);
 
     store.dispatch(UpdateCurrentRoute(StubEditScreen.route));
@@ -64,12 +59,6 @@ Middleware<AppState> _viewStub() {
 
       final action = dynamicAction as ViewStub;
 
-    if (!action.force && hasChanges(
-        store: store, context: action.context, callback: () => store.dispatch(action))) {
-      return;
-    }
-
-
     next(action);
 
     store.dispatch(UpdateCurrentRoute(StubViewScreen.route));
@@ -84,17 +73,10 @@ Middleware<AppState> _viewStubList() {
   return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
     final action = dynamicAction as ViewStubList;
 
-    if (!action.force && hasChanges(
-        store: store, context: action.context, callback: () => store.dispatch(action))) {
-      return;
-    }
-
     next(action);
 
     if (store.state.staticState.isStale) {
       store.dispatch(RefreshData());
-    } else if (store.state.stubState.isStale) {
-      store.dispatch(LoadStubs());
     }
 
     store.dispatch(UpdateCurrentRoute(StubScreen.route));
@@ -237,16 +219,10 @@ Middleware<AppState> _loadStubs(StubRepository repository) {
   final action = dynamicAction as LoadStubs;
     final AppState state = store.state;
 
-    if (!state.stubState.isStale && !action.force) {
-      next(action);
-      return;
-    }
-
-final int updatedAt = (state.stubState.lastUpdated / 1000).round();
 
     store.dispatch(LoadStubsRequest());
     repository
-        .loadList(state.credentials, updatedAt)
+        .loadList(state.credentials)
         .then((data) {
       store.dispatch(LoadStubsSuccess(data));
 

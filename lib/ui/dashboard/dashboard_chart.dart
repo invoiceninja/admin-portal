@@ -117,7 +117,8 @@ class _DashboardChartState extends State<DashboardChart> {
           ),
           Divider(height: 1.0),
           LimitedBox(
-            maxHeight: settings.enableComparison ? 116 : 96,
+            //maxHeight: settings.enableComparison ? 116 : 96,
+            maxHeight: settings.enableComparison ? 120 : 100,
             child: ListView(
               shrinkWrap: true,
               scrollDirection: Axis.horizontal,

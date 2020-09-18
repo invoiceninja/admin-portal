@@ -15,7 +15,10 @@ import 'package:invoiceninja_flutter/redux/project/project_state.dart';
 import 'package:invoiceninja_flutter/redux/quote/quote_state.dart';
 import 'package:invoiceninja_flutter/redux/task/task_state.dart';
 import 'package:invoiceninja_flutter/redux/vendor/vendor_state.dart';
+
 // STARTER: import - do not remove comment
+import 'package:invoiceninja_flutter/redux/recurring_invoice/recurring_invoice_state.dart';
+
 import 'package:invoiceninja_flutter/redux/webhook/webhook_state.dart';
 import 'package:invoiceninja_flutter/redux/token/token_state.dart';
 import 'package:invoiceninja_flutter/redux/payment_term/payment_term_state.dart';
@@ -25,6 +28,7 @@ import 'package:invoiceninja_flutter/redux/user/user_state.dart';
 import 'package:invoiceninja_flutter/redux/tax_rate/tax_rate_state.dart';
 import 'package:invoiceninja_flutter/redux/company_gateway/company_gateway_state.dart';
 import 'package:invoiceninja_flutter/redux/group/group_state.dart';
+import 'package:invoiceninja_flutter/utils/strings.dart';
 
 part 'ui_state.g.dart';
 
@@ -40,6 +44,8 @@ abstract class UIState implements Built<UIState, UIStateBuilder> {
       clientUIState: ClientUIState(),
       invoiceUIState: InvoiceUIState(),
       // STARTER: constructor - do not remove comment
+      recurringInvoiceUIState: RecurringInvoiceUIState(),
+
       webhookUIState: WebhookUIState(),
       tokenUIState: TokenUIState(),
       paymentTermUIState: PaymentTermUIState(),
@@ -93,6 +99,8 @@ abstract class UIState implements Built<UIState, UIStateBuilder> {
   InvoiceUIState get invoiceUIState;
 
   // STARTER: properties - do not remove comment
+  RecurringInvoiceUIState get recurringInvoiceUIState;
+
   WebhookUIState get webhookUIState;
 
   TokenUIState get tokenUIState;
@@ -138,8 +146,10 @@ abstract class UIState implements Built<UIState, UIStateBuilder> {
     return currentRoute.contains(route);
   }
 
-  EntityType get entityTypeRoute =>
-      EntityType.valueOf(mainRoute.replaceFirst('/', ''));
+  EntityType get entityTypeRoute {
+    final entityType = mainRoute.replaceFirst('/', '');
+    return EntityType.valueOf(toCamelCase(entityType));
+  }
 
   String get mainRoute {
     final parts =

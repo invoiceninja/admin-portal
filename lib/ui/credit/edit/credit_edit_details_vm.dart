@@ -35,7 +35,6 @@ class CreditEditDetailsScreen extends StatelessWidget {
             viewModel: viewModel,
             entityViewModel: this.viewModel,
             key: ValueKey('__credit_${viewModel.invoice.id}__'),
-            entityType: EntityType.credit,
           );
         } else {
           return InvoiceEditDetails(

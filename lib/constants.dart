@@ -592,6 +592,8 @@ const kMonthsOfTheYear = {
   '12': 'december',
 };
 
+const kFrequencyMonthly = '5';
+
 const kFrequencies = {
   '1': 'freq_daily',
   '2': 'freq_weekly',

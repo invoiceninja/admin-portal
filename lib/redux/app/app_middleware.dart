@@ -218,8 +218,11 @@ Middleware<AppState> _createLoadState(
       store.dispatch(LoadStateSuccess(appState));
 
       if (appState.isStale) {
-        print('## Load state: is stale - refreshing...');
-        store.dispatch(RefreshData());
+        store.dispatch(RefreshData(
+            completer: Completer<Null>()
+              ..future.catchError(() {
+                store.dispatch(UserLogout(action.context));
+              })));
       }
 
       if (uiState.currentRoute != LoginScreen.route &&

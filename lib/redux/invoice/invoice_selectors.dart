@@ -146,17 +146,26 @@ List<String> filteredInvoicesSelector(
         !invoiceListState.custom2Filters.contains(invoice.customValue2)) {
       return false;
     }
+    if (invoiceListState.custom3Filters.isNotEmpty &&
+        !invoiceListState.custom3Filters.contains(invoice.customValue3)) {
+      return false;
+    }
+    if (invoiceListState.custom4Filters.isNotEmpty &&
+        !invoiceListState.custom4Filters.contains(invoice.customValue4)) {
+      return false;
+    }
     return true;
   }).toList();
 
   list.sort((invoiceAId, invoiceBId) {
     return invoiceMap[invoiceAId].compareTo(
-        invoice: invoiceMap[invoiceBId],
-        sortField: invoiceListState.sortField,
-        sortAscending: invoiceListState.sortAscending,
-        clientMap: clientMap,
-        staticState: staticState,
-        userMap: userMap);
+      invoice: invoiceMap[invoiceBId],
+      sortField: invoiceListState.sortField,
+      sortAscending: invoiceListState.sortAscending,
+      clientMap: clientMap,
+      staticState: staticState,
+      userMap: userMap,
+    );
   });
 
   return list;

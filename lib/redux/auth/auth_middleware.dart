@@ -201,16 +201,15 @@ Middleware<AppState> _createRefreshRequest(AuthRepository repository) {
     }
 
     final SharedPreferences prefs = await SharedPreferences.getInstance();
-    final url = formatApiUrl(
-        prefs.getString(kSharedPrefUrl) ?? state.authState.url);
+    final url =
+        formatApiUrl(prefs.getString(kSharedPrefUrl) ?? state.authState.url);
     final token =
         TokenEntity.unobscureToken(prefs.getString(kSharedPrefToken)) ??
             'TOKEN';
 
     final updatedAt = action.clearData
         ? 0
-        : ((state.userCompanyState.lastUpdated -
-                    kMillisecondsToRefreshData) /
+        : ((state.userCompanyState.lastUpdated - kMillisecondsToRefreshData) /
                 1000)
             .round();
 
@@ -232,7 +231,6 @@ Middleware<AppState> _createRefreshRequest(AuthRepository repository) {
         loginResponse: data,
       ));
     }).catchError((Object error) {
-      print('Refresh data error: $error');
       if (action.completer != null) {
         action.completer.completeError(error);
       }

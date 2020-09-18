@@ -176,8 +176,8 @@ Middleware<AppState> _removeUser(UserRepository repository) {
 
     repository
         .detachFromCompany(store.state.credentials, action.userId)
-        .then((List<UserEntity> users) {
-      store.dispatch(RemoveUserSuccess(users));
+        .then((_) {
+      store.dispatch(RemoveUserSuccess(action.userId));
       if (action.completer != null) {
         action.completer.complete(null);
       }
