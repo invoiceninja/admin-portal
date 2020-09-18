@@ -156,7 +156,6 @@ class RemoveRecurringInvoiceContact implements PersistUI {
   final InvitationEntity invitation;
 }
 
-
 class SaveRecurringInvoiceRequest implements StartSaving {
   SaveRecurringInvoiceRequest({this.completer, this.recurringInvoice});
 
@@ -354,7 +353,8 @@ class SaveRecurringInvoiceDocumentRequest implements StartSaving {
   final InvoiceEntity invoice;
 }
 
-class SaveRecurringInvoiceDocumentSuccess implements StopSaving, PersistData, PersistUI {
+class SaveRecurringInvoiceDocumentSuccess
+    implements StopSaving, PersistData, PersistUI {
   SaveRecurringInvoiceDocumentSuccess(this.document);
 
   final DocumentEntity document;
@@ -381,6 +381,24 @@ void handleRecurringInvoiceAction(BuildContext context,
   switch (action) {
     case EntityAction.edit:
       editEntity(context: context, entity: recurringInvoice);
+      break;
+    case EntityAction.cloneToInvoice:
+      createEntity(
+          context: context,
+          entity: recurringInvoice.clone
+              .rebuild((b) => b..entityType = EntityType.invoice));
+      break;
+    case EntityAction.cloneToQuote:
+      createEntity(
+          context: context,
+          entity: recurringInvoice.clone
+              .rebuild((b) => b..entityType = EntityType.quote));
+      break;
+    case EntityAction.cloneToCredit:
+      createEntity(
+          context: context,
+          entity: recurringInvoice.clone
+              .rebuild((b) => b..entityType = EntityType.credit));
       break;
     case EntityAction.restore:
       store.dispatch(RestoreRecurringInvoicesRequest(
