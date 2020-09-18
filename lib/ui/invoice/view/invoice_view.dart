@@ -60,6 +60,9 @@ class _InvoiceViewState extends State<InvoiceView>
       } else {
         secondAction = EntityAction.convert;
       }
+    } else if (invoice.isRecurringInvoice) {
+      secondAction =
+          invoice.isSent ? EntityAction.archive : EntityAction.markActive;
     } else {
       if (invoice.isPaid) {
         secondAction = EntityAction.cloneToInvoice;
