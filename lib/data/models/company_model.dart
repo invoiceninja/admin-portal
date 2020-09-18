@@ -411,7 +411,6 @@ abstract class CompanyEntity extends Object
   bool isModuleEnabled(EntityType entityType) {
     // TODO remove this
     if ([
-      EntityType.recurringInvoice,
       EntityType.project,
       EntityType.task,
       EntityType.expense,
@@ -632,7 +631,6 @@ abstract class UserCompanyEntity
     // TODO remove this once task/expenses are supported
     if (!Config.DEMO_MODE &&
         [
-          EntityType.recurringInvoice,
           EntityType.vendor,
           EntityType.expense,
           EntityType.task,
