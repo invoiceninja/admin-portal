@@ -15,6 +15,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
   static final Map<String, Map<String, String>> _localizedValues = {
     'en': {
       // STARTER: lang key - do not remove comment
+      'mark_active': 'Mark Active',
       'day_count': 'Day :count',
       'first_day_of_the_month': 'First Day of the Month',
       'last_day_of_the_month': 'Last Day of the Month',
@@ -4559,6 +4560,8 @@ mixin LocalizationsProvider on LocaleCodeAware {
       _localizedValues[localeCode]['last_day_of_the_month'] ?? '';
 
   String get dayCount => _localizedValues[localeCode]['day_count'] ?? '';
+
+  String get markActive => _localizedValues[localeCode]['mark_active'] ?? '';
 
   String lookup(String key) {
     final lookupKey = toSnakeCase(key);

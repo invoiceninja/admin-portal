@@ -658,22 +658,21 @@ abstract class InvoiceEntity extends Object
           actions.add(EntityAction.emailQuote);
         } else if (entityType == EntityType.credit) {
           actions.add(EntityAction.emailCredit);
-        } else {
+        } else if (entityType == EntityType.invoice) {
           actions.add(EntityAction.emailInvoice);
         }
 
-        if (!isQuote &&
-            userCompany.canCreate(EntityType.payment) &&
-            isUnpaid &&
-            !isCancelledOrReversed) {
+        if (isPayable && userCompany.canCreate(EntityType.payment)) {
           actions.add(EntityAction.newPayment);
         }
 
         if (!isSent) {
-          actions.add(EntityAction.markSent);
+          actions.add(isRecurringInvoice
+              ? EntityAction.markActive
+              : EntityAction.markSent);
         }
 
-        if (!isQuote && !isPaid && !isCancelledOrReversed) {
+        if (isPayable) {
           actions.add(EntityAction.markPaid);
         }
 
@@ -703,7 +702,7 @@ abstract class InvoiceEntity extends Object
     }
 
     if (userCompany.canEditEntity(this)) {
-      if (!isQuote && !isCredit && isSent) {
+      if (!isQuote && !isCredit && !isRecurringInvoice && isSent) {
         if (!isCancelledOrReversed && !isPaid) {
           actions.add(EntityAction.cancel);
         }
@@ -759,15 +758,22 @@ abstract class InvoiceEntity extends Object
 
   bool get isCredit => entityType == EntityType.credit;
 
+  bool get isRecurringInvoice => entityType == EntityType.recurringInvoice;
+
   EmailTemplate get emailTemplate => isQuote
       ? EmailTemplate.quote
-      : isCredit ? EmailTemplate.credit : EmailTemplate.invoice;
+      : isCredit
+          ? EmailTemplate.credit
+          : EmailTemplate.invoice;
 
   double get requestedAmount => partial > 0 ? partial : amount;
 
   bool get isSent => statusId != kInvoiceStatusDraft;
 
   bool get isUnpaid => statusId != kInvoiceStatusPaid;
+
+  bool get isPayable =>
+      !isPaid && !isQuote && !isRecurringInvoice && !isCancelledOrReversed;
 
   bool get isPaid => statusId == kInvoiceStatusPaid;
 
