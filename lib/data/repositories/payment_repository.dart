@@ -54,24 +54,21 @@ class PaymentRepository {
   }
 
   Future<PaymentEntity> saveData(Credentials credentials, PaymentEntity payment,
-      {EntityAction action, bool sendEmail = false}) async {
+      {bool sendEmail = false}) async {
     final data = serializers.serializeWith(PaymentEntity.serializer, payment);
     dynamic response;
 
     if (payment.isNew) {
-      var url = credentials.url + '/payments';
+      var url = credentials.url + '/payments?';
       if (sendEmail) {
         url += '&email_receipt=true';
       }
       response =
           await webClient.post(url, credentials.token, data: json.encode(data));
     } else {
-      var url = '${credentials.url}/payments/${payment.id}';
+      var url = '${credentials.url}/payments/${payment.id}?';
       if (sendEmail) {
         url += '&email_receipt=true';
-      }
-      if (action != null) {
-        url += '&action=' + action.toString();
       }
       response =
           await webClient.put(url, credentials.token, data: json.encode(data));
@@ -89,7 +86,7 @@ class PaymentRepository {
     final data = serializers.serializeWith(PaymentEntity.serializer, payment);
     dynamic response;
 
-    var url = credentials.url + '/payments/refund';
+    var url = credentials.url + '/payments/refund?';
     if (sendEmail) {
       url += '&email_receipt=true';
     }
