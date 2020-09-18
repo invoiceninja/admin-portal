@@ -342,6 +342,30 @@ class FilterRecurringInvoicesByCustom4 implements PersistUI {
   final String value;
 }
 
+class SaveRecurringInvoiceDocumentRequest implements StartSaving {
+  SaveRecurringInvoiceDocumentRequest({
+    @required this.completer,
+    @required this.filePath,
+    @required this.invoice,
+  });
+
+  final Completer completer;
+  final String filePath;
+  final InvoiceEntity invoice;
+}
+
+class SaveRecurringInvoiceDocumentSuccess implements StopSaving, PersistData, PersistUI {
+  SaveRecurringInvoiceDocumentSuccess(this.document);
+
+  final DocumentEntity document;
+}
+
+class SaveRecurringInvoiceDocumentFailure implements StopSaving {
+  SaveRecurringInvoiceDocumentFailure(this.error);
+
+  final Object error;
+}
+
 void handleRecurringInvoiceAction(BuildContext context,
     List<BaseEntity> recurringInvoices, EntityAction action) {
   if (recurringInvoices.isEmpty) {

@@ -2,6 +2,11 @@ import 'dart:async';
 import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:invoiceninja_flutter/redux/document/document_actions.dart';
+import 'package:invoiceninja_flutter/ui/app/dialogs/error_dialog.dart';
+import 'package:invoiceninja_flutter/ui/app/snackbar_row.dart';
+import 'package:invoiceninja_flutter/ui/invoice/view/invoice_view.dart';
+import 'package:invoiceninja_flutter/ui/invoice/view/invoice_view_vm.dart';
 import 'package:invoiceninja_flutter/utils/completers.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:redux/redux.dart';
@@ -9,7 +14,6 @@ import 'package:flutter_redux/flutter_redux.dart';
 import 'package:invoiceninja_flutter/redux/recurring_invoice/recurring_invoice_actions.dart';
 import 'package:invoiceninja_flutter/data/models/invoice_model.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
-import 'package:invoiceninja_flutter/ui/recurring_invoice/view/recurring_invoice_view.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 
 class RecurringInvoiceViewScreen extends StatelessWidget {
@@ -27,7 +31,7 @@ class RecurringInvoiceViewScreen extends StatelessWidget {
         return RecurringInvoiceViewVM.fromStore(store);
       },
       builder: (context, vm) {
-        return RecurringInvoiceView(
+        return InvoiceView(
           viewModel: vm,
           isFilter: isFilter,
         );
@@ -36,29 +40,51 @@ class RecurringInvoiceViewScreen extends StatelessWidget {
   }
 }
 
-class RecurringInvoiceViewVM {
+class RecurringInvoiceViewVM extends EntityViewVM {
   RecurringInvoiceViewVM({
-    @required this.state,
-    @required this.recurringInvoice,
-    @required this.company,
-    @required this.onEntityAction,
-    @required this.onRefreshed,
-    @required this.isSaving,
-    @required this.isLoading,
-    @required this.isDirty,
-  });
+    AppState state,
+    CompanyEntity company,
+    InvoiceEntity invoice,
+    ClientEntity client,
+    bool isSaving,
+    bool isDirty,
+    Function(BuildContext, EntityAction) onEntityAction,
+    Function(BuildContext, [int]) onEditPressed,
+    Function(BuildContext) onPaymentsPressed,
+    Function(BuildContext, PaymentEntity) onPaymentPressed,
+    Function(BuildContext) onRefreshed,
+    Function(BuildContext, String) onUploadDocument,
+    Function(BuildContext, DocumentEntity, String) onDeleteDocument,
+    Function(BuildContext, DocumentEntity) onViewExpense,
+  }) : super(
+          state: state,
+          company: company,
+          invoice: invoice,
+          client: client,
+          isSaving: isSaving,
+          isDirty: isDirty,
+          onActionSelected: onEntityAction,
+          onEditPressed: onEditPressed,
+          onPaymentsPressed: onPaymentsPressed,
+          onRefreshed: onRefreshed,
+          onUploadDocument: onUploadDocument,
+          onDeleteDocument: onDeleteDocument,
+          onViewExpense: onViewExpense,
+        );
 
   factory RecurringInvoiceViewVM.fromStore(Store<AppState> store) {
     final state = store.state;
-    final recurringInvoice = state.recurringInvoiceState
+    final invoice = state.recurringInvoiceState
             .map[state.recurringInvoiceUIState.selectedId] ??
         InvoiceEntity(id: state.recurringInvoiceUIState.selectedId);
+    final client = store.state.clientState.map[invoice.clientId] ??
+        ClientEntity(id: invoice.clientId);
 
     Future<Null> _handleRefresh(BuildContext context) {
       final completer = snackBarCompleter<Null>(
           context, AppLocalization.of(context).refreshComplete);
       store.dispatch(LoadRecurringInvoice(
-          completer: completer, recurringInvoiceId: recurringInvoice.id));
+          completer: completer, recurringInvoiceId: invoice.id));
       return completer.future;
     }
 
@@ -66,22 +92,46 @@ class RecurringInvoiceViewVM {
       state: state,
       company: state.company,
       isSaving: state.isSaving,
-      isLoading: state.isLoading,
-      isDirty: recurringInvoice.isNew,
-      recurringInvoice: recurringInvoice,
+      isDirty: invoice.isNew,
+      invoice: invoice,
+      client: client,
+      onEditPressed: (BuildContext context, [int index]) {
+        editEntity(
+            context: context,
+            entity: invoice,
+            subIndex: index,
+            completer: snackBarCompleter<ClientEntity>(
+                context, AppLocalization.of(context).updatedRecurringInvoice));
+      },
       onRefreshed: (context) => _handleRefresh(context),
       onEntityAction: (BuildContext context, EntityAction action) =>
-          handleEntitiesActions(context, [recurringInvoice], action,
-              autoPop: true),
+          handleEntitiesActions(context, [invoice], action, autoPop: true),
+      onUploadDocument: (BuildContext context, String filePath) {
+        final Completer<DocumentEntity> completer = Completer<DocumentEntity>();
+        store.dispatch(SaveRecurringInvoiceDocumentRequest(
+            filePath: filePath, invoice: invoice, completer: completer));
+        completer.future.then((client) {
+          Scaffold.of(context).showSnackBar(SnackBar(
+              content: SnackBarRow(
+            message: AppLocalization.of(context).uploadedDocument,
+          )));
+        }).catchError((Object error) {
+          showDialog<ErrorDialog>(
+              context: context,
+              builder: (BuildContext context) {
+                return ErrorDialog(error);
+              });
+        });
+      },
+      onDeleteDocument:
+          (BuildContext context, DocumentEntity document, String password) {
+        store.dispatch(DeleteDocumentRequest(
+          completer: snackBarCompleter<Null>(
+              context, AppLocalization.of(context).deletedDocument),
+          documentIds: [document.id],
+          password: password,
+        ));
+      },
     );
   }
-
-  final AppState state;
-  final InvoiceEntity recurringInvoice;
-  final CompanyEntity company;
-  final Function(BuildContext, EntityAction) onEntityAction;
-  final Function(BuildContext) onRefreshed;
-  final bool isSaving;
-  final bool isLoading;
-  final bool isDirty;
 }
