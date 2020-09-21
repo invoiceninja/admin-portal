@@ -121,7 +121,7 @@ class InvoiceOverview extends StatelessWidget {
         RecurringInvoiceFields.remainingCycles: invoice.remainingCycles == -1
             ? localization.endless
             : '${invoice.remainingCycles}',
-        RecurringInvoiceFields.dueDate: invoice.dueDateDays == 'terms'
+        InvoiceFields.dueDate: invoice.dueDateDays == 'terms'
             ? localization.paymentTerm
             : invoice.dueDateDays == '1'
                 ? localization.firstDayOfTheMonth

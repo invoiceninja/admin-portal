@@ -15,6 +15,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
   static final Map<String, Map<String, String>> _localizedValues = {
     'en': {
       // STARTER: lang key - do not remove comment
+      'due_date_days': 'Due Date',
       'paused': 'Paused',
       'mark_active': 'Mark Active',
       'day_count': 'Day :count',
@@ -4565,6 +4566,8 @@ mixin LocalizationsProvider on LocaleCodeAware {
   String get markActive => _localizedValues[localeCode]['mark_active'] ?? '';
 
   String get paused => _localizedValues[localeCode]['paused'] ?? '';
+
+  String get dueDateDays => _localizedValues[localeCode]['due_date_days'] ?? '';
 
   String lookup(String key) {
     final lookupKey = toSnakeCase(key);
