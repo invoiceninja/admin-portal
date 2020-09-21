@@ -1,5 +1,6 @@
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:invoiceninja_flutter/constants.dart';
+import 'package:invoiceninja_flutter/data/models/company_gateway_model.dart';
 import 'package:invoiceninja_flutter/data/models/entities.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/data/models/quote_model.dart';
@@ -121,6 +122,16 @@ class InvoiceOverview extends StatelessWidget {
         RecurringInvoiceFields.remainingCycles: invoice.remainingCycles == -1
             ? localization.endless
             : '${invoice.remainingCycles}',
+        RecurringInvoiceFields.autoBill: localization.lookup(invoice.autoBill) +
+            ([
+              CompanyGatewayEntity.TOKEN_BILLING_OPT_IN,
+              CompanyGatewayEntity.TOKEN_BILLING_OPT_OUT
+            ].contains(invoice.autoBill)
+                ? (' - ' +
+                    (invoice.autoBillEnabled
+                        ? localization.yes
+                        : localization.no))
+                : ''),
         InvoiceFields.dueDate: invoice.dueDateDays == 'terms'
             ? localization.paymentTerm
             : invoice.dueDateDays == '1'

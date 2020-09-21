@@ -129,6 +129,7 @@ abstract class InvoiceEntity extends Object
       partialDueDate: '',
       hasTasks: false,
       autoBill: CompanyGatewayEntity.TOKEN_BILLING_ALWAYS,
+      autoBillEnabled: false,
       customValue1: '',
       customValue2: '',
       customValue3: '',
@@ -288,9 +289,11 @@ abstract class InvoiceEntity extends Object
   @BuiltValueField(wireName: 'has_tasks')
   bool get hasTasks;
 
-  @nullable
   @BuiltValueField(wireName: 'auto_bill')
   String get autoBill;
+
+  @BuiltValueField(wireName: 'auto_bill_enabled')
+  bool get autoBillEnabled;
 
   @BuiltValueField(wireName: 'custom_value1')
   String get customValue1;

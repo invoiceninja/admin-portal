@@ -201,6 +201,12 @@ class _$InvoiceEntitySerializer implements StructuredSerializer<InvoiceEntity> {
       'has_tasks',
       serializers.serialize(object.hasTasks,
           specifiedType: const FullType(bool)),
+      'auto_bill',
+      serializers.serialize(object.autoBill,
+          specifiedType: const FullType(String)),
+      'auto_bill_enabled',
+      serializers.serialize(object.autoBillEnabled,
+          specifiedType: const FullType(bool)),
       'custom_value1',
       serializers.serialize(object.customValue1,
           specifiedType: const FullType(String)),
@@ -261,12 +267,6 @@ class _$InvoiceEntitySerializer implements StructuredSerializer<InvoiceEntity> {
       'id',
       serializers.serialize(object.id, specifiedType: const FullType(String)),
     ];
-    if (object.autoBill != null) {
-      result
-        ..add('auto_bill')
-        ..add(serializers.serialize(object.autoBill,
-            specifiedType: const FullType(String)));
-    }
     if (object.customTaxes1 != null) {
       result
         ..add('custom_taxes1')
@@ -510,6 +510,10 @@ class _$InvoiceEntitySerializer implements StructuredSerializer<InvoiceEntity> {
         case 'auto_bill':
           result.autoBill = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String;
+          break;
+        case 'auto_bill_enabled':
+          result.autoBillEnabled = serializers.deserialize(value,
+              specifiedType: const FullType(bool)) as bool;
           break;
         case 'custom_value1':
           result.customValue1 = serializers.deserialize(value,
@@ -1338,6 +1342,8 @@ class _$InvoiceEntity extends InvoiceEntity {
   @override
   final String autoBill;
   @override
+  final bool autoBillEnabled;
+  @override
   final String customValue1;
   @override
   final String customValue2;
@@ -1447,6 +1453,7 @@ class _$InvoiceEntity extends InvoiceEntity {
       this.partialDueDate,
       this.hasTasks,
       this.autoBill,
+      this.autoBillEnabled,
       this.customValue1,
       this.customValue2,
       this.customValue3,
@@ -1565,6 +1572,12 @@ class _$InvoiceEntity extends InvoiceEntity {
     if (hasTasks == null) {
       throw new BuiltValueNullFieldError('InvoiceEntity', 'hasTasks');
     }
+    if (autoBill == null) {
+      throw new BuiltValueNullFieldError('InvoiceEntity', 'autoBill');
+    }
+    if (autoBillEnabled == null) {
+      throw new BuiltValueNullFieldError('InvoiceEntity', 'autoBillEnabled');
+    }
     if (customValue1 == null) {
       throw new BuiltValueNullFieldError('InvoiceEntity', 'customValue1');
     }
@@ -1662,6 +1675,7 @@ class _$InvoiceEntity extends InvoiceEntity {
         partialDueDate == other.partialDueDate &&
         hasTasks == other.hasTasks &&
         autoBill == other.autoBill &&
+        autoBillEnabled == other.autoBillEnabled &&
         customValue1 == other.customValue1 &&
         customValue2 == other.customValue2 &&
         customValue3 == other.customValue3 &&
@@ -1724,7 +1738,7 @@ class _$InvoiceEntity extends InvoiceEntity {
                                                                 $jc(
                                                                     $jc(
                                                                         $jc(
-                                                                            $jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc(0, amount.hashCode), balance.hashCode), clientId.hashCode), statusId.hashCode), number.hashCode), discount.hashCode), poNumber.hashCode), date.hashCode), dueDate.hashCode), publicNotes.hashCode), privateNotes.hashCode), terms.hashCode), footer.hashCode), designId.hashCode), usesInclusiveTaxes.hashCode), taxName1.hashCode), taxRate1.hashCode), taxName2.hashCode), taxRate2.hashCode), taxName3.hashCode), taxRate3.hashCode), isAmountDiscount.hashCode), partial.hashCode), taxAmount.hashCode), partialDueDate.hashCode), hasTasks.hashCode), autoBill.hashCode), customValue1.hashCode), customValue2.hashCode), customValue3.hashCode), customValue4.hashCode), customSurcharge1.hashCode), customSurcharge2.hashCode), customSurcharge3.hashCode), customSurcharge4.hashCode), customTaxes1.hashCode), customTaxes2.hashCode), customTaxes3.hashCode), customTaxes4.hashCode), hasExpenses.hashCode), exchangeRate.hashCode), reminder1Sent.hashCode), reminder2Sent.hashCode), reminder3Sent.hashCode), reminderLastSent.hashCode), frequencyId.hashCode), lastSentDate.hashCode),
+                                                                            $jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc(0, amount.hashCode), balance.hashCode), clientId.hashCode), statusId.hashCode), number.hashCode), discount.hashCode), poNumber.hashCode), date.hashCode), dueDate.hashCode), publicNotes.hashCode), privateNotes.hashCode), terms.hashCode), footer.hashCode), designId.hashCode), usesInclusiveTaxes.hashCode), taxName1.hashCode), taxRate1.hashCode), taxName2.hashCode), taxRate2.hashCode), taxName3.hashCode), taxRate3.hashCode), isAmountDiscount.hashCode), partial.hashCode), taxAmount.hashCode), partialDueDate.hashCode), hasTasks.hashCode), autoBill.hashCode), autoBillEnabled.hashCode), customValue1.hashCode), customValue2.hashCode), customValue3.hashCode), customValue4.hashCode), customSurcharge1.hashCode), customSurcharge2.hashCode), customSurcharge3.hashCode), customSurcharge4.hashCode), customTaxes1.hashCode), customTaxes2.hashCode), customTaxes3.hashCode), customTaxes4.hashCode), hasExpenses.hashCode), exchangeRate.hashCode), reminder1Sent.hashCode), reminder2Sent.hashCode), reminder3Sent.hashCode), reminderLastSent.hashCode), frequencyId.hashCode), lastSentDate.hashCode),
                                                                                 nextSendDate.hashCode),
                                                                             remainingCycles.hashCode),
                                                                         dueDateDays.hashCode),
@@ -1776,6 +1790,7 @@ class _$InvoiceEntity extends InvoiceEntity {
           ..add('partialDueDate', partialDueDate)
           ..add('hasTasks', hasTasks)
           ..add('autoBill', autoBill)
+          ..add('autoBillEnabled', autoBillEnabled)
           ..add('customValue1', customValue1)
           ..add('customValue2', customValue2)
           ..add('customValue3', customValue3)
@@ -1933,6 +1948,11 @@ class InvoiceEntityBuilder
   String _autoBill;
   String get autoBill => _$this._autoBill;
   set autoBill(String autoBill) => _$this._autoBill = autoBill;
+
+  bool _autoBillEnabled;
+  bool get autoBillEnabled => _$this._autoBillEnabled;
+  set autoBillEnabled(bool autoBillEnabled) =>
+      _$this._autoBillEnabled = autoBillEnabled;
 
   String _customValue1;
   String get customValue1 => _$this._customValue1;
@@ -2140,6 +2160,7 @@ class InvoiceEntityBuilder
       _partialDueDate = _$v.partialDueDate;
       _hasTasks = _$v.hasTasks;
       _autoBill = _$v.autoBill;
+      _autoBillEnabled = _$v.autoBillEnabled;
       _customValue1 = _$v.customValue1;
       _customValue2 = _$v.customValue2;
       _customValue3 = _$v.customValue3;
@@ -2230,6 +2251,7 @@ class InvoiceEntityBuilder
               partialDueDate: partialDueDate,
               hasTasks: hasTasks,
               autoBill: autoBill,
+              autoBillEnabled: autoBillEnabled,
               customValue1: customValue1,
               customValue2: customValue2,
               customValue3: customValue3,
