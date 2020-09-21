@@ -26,9 +26,9 @@ class RecurringInvoiceFields {
   static const String reminder3Sent = 'reminder3_sent';
   static const String reminderLastSent = 'reminder_last_sent';
   static const String exchangeRate = 'exchange_rate';
-
   static const String remainingCycles = 'remaining_cycles';
   static const String frequency = 'frequency';
   static const String nextSendDate = 'next_send_date';
   static const String autoBill = 'auto_bill';
+  static const String autoBillEnabled = 'auto_bill_enabled';
 }
