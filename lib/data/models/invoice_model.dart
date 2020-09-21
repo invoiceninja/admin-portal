@@ -679,6 +679,18 @@ abstract class InvoiceEntity extends Object
         if (isQuote && !isApproved && (invoiceId ?? '').isEmpty) {
           actions.add(EntityAction.convert);
         }
+
+        if (isRecurringInvoice) {
+          if ([kRecurringInvoiceStatusDraft, kRecurringInvoiceStatusPaused]
+              .contains(statusId)) {
+            actions.add(EntityAction.start);
+          } else if ([
+            kRecurringInvoiceStatusPending,
+            kRecurringInvoiceStatusActive
+          ].contains(statusId)) {
+            actions.add(EntityAction.stop);
+          }
+        }
       }
 
       if (invitations.isNotEmpty && !multiselect) {
@@ -785,7 +797,8 @@ abstract class InvoiceEntity extends Object
 
   bool get isUpcoming => isActive && !isPaid && !isPastDue && isSent;
 
-  String get calculateRemainingCycles => remainingCycles == -1 ? 'endless' : remainingCycles;
+  String get calculateRemainingCycles =>
+      remainingCycles == -1 ? 'endless' : remainingCycles;
 
   String get calculatedStatusId {
     if (isPastDue && !isCancelledOrReversed) {
