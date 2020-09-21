@@ -161,7 +161,7 @@ class MainScreen extends StatelessWidget {
             break;
           case RecurringInvoiceScreen.route:
             screen = EntityScreens(
-              entityType: EntityType.invoice,
+              entityType: EntityType.recurringInvoice,
               listWidget: RecurringInvoiceScreenBuilder(),
               viewWidget: RecurringInvoiceViewScreen(),
               editWidget: RecurringInvoiceEditScreen(),

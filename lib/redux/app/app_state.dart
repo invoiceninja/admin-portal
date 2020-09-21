@@ -342,16 +342,12 @@ abstract class AppState implements Built<AppState, AppStateBuilder> {
       // STARTER: states switch - do not remove comment
       case EntityType.recurringInvoice:
         return recurringInvoiceUIState;
-
       case EntityType.webhook:
         return webhookUIState;
-
       case EntityType.token:
         return tokenUIState;
-
       case EntityType.paymentTerm:
         return paymentTermUIState;
-
       case EntityType.design:
         return designUIState;
       case EntityType.credit:
