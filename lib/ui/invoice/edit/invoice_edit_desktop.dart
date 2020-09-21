@@ -215,7 +215,7 @@ class InvoiceEditDesktopState extends State<InvoiceEditDesktop>
                     ),
                   SizedBox(height: 8),
                   ConstrainedBox(
-                    constraints: BoxConstraints(maxHeight: 200),
+                    constraints: BoxConstraints(maxHeight: 186),
                     child: InvoiceEditContactsScreen(
                       entityType: invoice.entityType,
                     ),
