@@ -3,6 +3,7 @@ import 'package:invoiceninja_flutter/constants.dart';
 import 'package:invoiceninja_flutter/data/models/entities.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/data/models/quote_model.dart';
+import 'package:invoiceninja_flutter/data/models/recurring_invoice_model.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/redux/payment/payment_selectors.dart';
 import 'package:invoiceninja_flutter/ui/app/FieldGrid.dart';
@@ -53,6 +54,9 @@ class InvoiceOverview extends StatelessWidget {
     } else if (invoice.entityType == EntityType.credit) {
       statuses = kCreditStatuses;
       colors = CreditStatusColors.colors;
+    } else if (invoice.entityType == EntityType.recurringInvoice) {
+      statuses = kRecurringInvoiceStatuses;
+      colors = RecurringInvoiceStatusColors.colors;
     } else {
       statuses = kInvoiceStatuses;
       colors = InvoiceStatusColors.colors;
@@ -75,7 +79,9 @@ class InvoiceOverview extends StatelessWidget {
             formatNumber(invoice.amount, context, clientId: invoice.clientId),
         secondLabel: invoice.isCredit
             ? localization.creditRemaining
-            : invoice.isQuote ? null : localization.balanceDue,
+            : (invoice.isQuote || invoice.isRecurringInvoice)
+                ? null
+                : localization.balanceDue,
         secondValue: [EntityType.invoice, EntityType.credit]
                 .contains(invoice.entityType)
             ? formatNumber(invoice.balance, context, clientId: invoice.clientId)
@@ -94,7 +100,7 @@ class InvoiceOverview extends StatelessWidget {
         QuoteFields.date: formatDate(invoice.date, context)
       else if (invoice.isCredit)
         CreditFields.date: formatDate(invoice.date, context)
-      else
+      else if (invoice.isInvoice)
         InvoiceFields.date: formatDate(invoice.date, context),
       dueDateField: formatDate(invoice.dueDate, context),
       InvoiceFields.partial: formatNumber(invoice.partial, context,
@@ -107,6 +113,23 @@ class InvoiceOverview extends StatelessWidget {
           formatNumberType: invoice.isAmountDiscount
               ? FormatNumberType.money
               : FormatNumberType.percent),
+      if (invoice.isRecurringInvoice) ...{
+        RecurringInvoiceFields.frequency:
+            localization.lookup(kFrequencies[invoice.frequencyId]),
+        RecurringInvoiceFields.nextSendDate:
+            formatDate(invoice.nextSendDate, context),
+        RecurringInvoiceFields.remainingCycles: invoice.remainingCycles == -1
+            ? localization.endless
+            : '${invoice.remainingCycles}',
+        RecurringInvoiceFields.dueDate: invoice.dueDateDays == 'terms'
+            ? localization.paymentTerm
+            : invoice.dueDateDays == '1'
+                ? localization.firstDayOfTheMonth
+                : invoice.dueDateDays == '31'
+                    ? localization.lastDayOfTheMonth
+                    : localization.dayCount
+                        .replaceFirst(':count', '${invoice.dueDateDays}'),
+      }
     };
 
     if (invoice.customValue1.isNotEmpty) {
