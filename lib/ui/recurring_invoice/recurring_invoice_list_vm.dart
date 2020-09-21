@@ -36,19 +36,13 @@ class RecurringInvoiceListBuilder extends StatelessWidget {
             onSortColumn: viewModel.onSortColumn,
             onClearMultiselect: viewModel.onClearMultielsect,
             itemBuilder: (BuildContext context, index) {
-              final state = viewModel.state;
               final recurringInvoiceId = viewModel.recurringInvoiceList[index];
               final recurringInvoice =
                   viewModel.recurringInvoiceMap[recurringInvoiceId];
-              final listState = state.getListState(EntityType.recurringInvoice);
-              final isInMultiselect = listState.isInMultiselect();
 
               return RecurringInvoiceListItem(
-                user: viewModel.state.user,
                 filter: viewModel.filter,
-                recurringInvoice: recurringInvoice,
-                isChecked: isInMultiselect &&
-                    listState.isSelected(recurringInvoice.id),
+                invoice: recurringInvoice,
               );
             });
       },
