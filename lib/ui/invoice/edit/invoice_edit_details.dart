@@ -1,3 +1,6 @@
+import 'package:invoiceninja_flutter/constants.dart';
+import 'package:invoiceninja_flutter/data/models/company_gateway_model.dart';
+import 'package:invoiceninja_flutter/ui/app/forms/app_dropdown_button.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/client_picker.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/custom_field.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/decorated_form_field.dart';
@@ -150,45 +153,111 @@ class InvoiceEditDetailsState extends State<InvoiceEditDetails> {
               onChanged: (userId) => viewModel.onChanged(
                   invoice.rebuild((b) => b..assignedUserId = userId)),
             ),
-            DatePicker(
-              validator: (String val) => val.trim().isEmpty
-                  ? AppLocalization.of(context).pleaseSelectADate
-                  : null,
-              labelText: widget.entityType == EntityType.credit
-                  ? localization.creditDate
-                  : widget.entityType == EntityType.quote
-                      ? localization.quoteDate
-                      : localization.invoiceDate,
-              selectedDate: invoice.date,
-              onSelected: (date) {
-                viewModel.onChanged(invoice.rebuild((b) => b..date = date));
-              },
-            ),
-            if (widget.entityType != EntityType.credit)
+            if (invoice.isRecurringInvoice) ...[
+              AppDropdownButton<String>(
+                  labelText: localization.frequency,
+                  value: invoice.frequencyId,
+                  onChanged: (dynamic value) {
+                    viewModel.onChanged(
+                        invoice.rebuild((b) => b..frequencyId = value));
+                  },
+                  items: kFrequencies.entries
+                      .map((entry) => DropdownMenuItem(
+                            value: entry.key,
+                            child: Text(localization.lookup(entry.value)),
+                          ))
+                      .toList()),
+              AppDropdownButton<int>(
+                showUseDefault: true,
+                labelText: localization.remainingCycles,
+                value: invoice.remainingCycles,
+                blankValue: null,
+                onChanged: (dynamic value) => viewModel.onChanged(
+                    invoice.rebuild((b) => b..remainingCycles = value)),
+                items: [
+                  DropdownMenuItem(
+                    child: Text(localization.endless),
+                    value: -1,
+                  ),
+                  ...List<int>.generate(37, (i) => i)
+                      .map((value) => DropdownMenuItem(
+                            child: Text('$value'),
+                            value: value,
+                          ))
+                      .toList()
+                ],
+              ),
               DatePicker(
-                labelText: widget.entityType == EntityType.quote
-                    ? localization.validUntil
-                    : localization.dueDate,
-                selectedDate: invoice.dueDate,
+                  labelText: (invoice.lastSentDate ?? '').isNotEmpty
+                      ? localization.nextSendDate
+                      : localization.startDate,
+                  onSelected: (date) => viewModel.onChanged(
+                      invoice.rebuild((b) => b..nextSendDate = date)),
+                  selectedDate: invoice.nextSendDate),
+              AppDropdownButton<String>(
+                labelText: localization.dueDate,
+                value: invoice.dueDateDays ?? '',
+                onChanged: (dynamic value) => viewModel
+                    .onChanged(invoice.rebuild((b) => b..dueDateDays = value)),
+                items: [
+                  DropdownMenuItem(
+                    child: Text(localization.usePaymentTerms),
+                    value: 'terms',
+                  ),
+                  ...List<int>.generate(31, (i) => i + 1)
+                      .map((value) => DropdownMenuItem(
+                            child: Text(value == 1
+                                ? localization.firstDayOfTheMonth
+                                : value == 31
+                                    ? localization.lastDayOfTheMonth
+                                    : localization.dayCount
+                                        .replaceFirst(':count', '$value')),
+                            value: '$value',
+                          ))
+                      .toList()
+                ],
+              ),
+            ] else ...[
+              DatePicker(
+                validator: (String val) => val.trim().isEmpty
+                    ? AppLocalization.of(context).pleaseSelectADate
+                    : null,
+                labelText: widget.entityType == EntityType.credit
+                    ? localization.creditDate
+                    : widget.entityType == EntityType.quote
+                        ? localization.quoteDate
+                        : localization.invoiceDate,
+                selectedDate: invoice.date,
                 onSelected: (date) {
-                  viewModel
-                      .onChanged(invoice.rebuild((b) => b..dueDate = date));
+                  viewModel.onChanged(invoice.rebuild((b) => b..date = date));
                 },
               ),
-            DecoratedFormField(
-              label: localization.partialDeposit,
-              controller: _partialController,
-              keyboardType: TextInputType.numberWithOptions(decimal: true),
-            ),
-            if (invoice.partial != null && invoice.partial > 0)
-              DatePicker(
-                labelText: localization.partialDueDate,
-                selectedDate: invoice.partialDueDate,
-                onSelected: (date) {
-                  viewModel.onChanged(
-                      invoice.rebuild((b) => b..partialDueDate = date));
-                },
+              if (widget.entityType != EntityType.credit)
+                DatePicker(
+                  labelText: widget.entityType == EntityType.quote
+                      ? localization.validUntil
+                      : localization.dueDate,
+                  selectedDate: invoice.dueDate,
+                  onSelected: (date) {
+                    viewModel
+                        .onChanged(invoice.rebuild((b) => b..dueDate = date));
+                  },
+                ),
+              DecoratedFormField(
+                label: localization.partialDeposit,
+                controller: _partialController,
+                keyboardType: TextInputType.numberWithOptions(decimal: true),
               ),
+              if (invoice.partial != null && invoice.partial > 0)
+                DatePicker(
+                  labelText: localization.partialDueDate,
+                  selectedDate: invoice.partialDueDate,
+                  onSelected: (date) {
+                    viewModel.onChanged(
+                        invoice.rebuild((b) => b..partialDueDate = date));
+                  },
+                ),
+            ],
             DecoratedFormField(
               label: localization.poNumber,
               controller: _poNumberController,
@@ -200,6 +269,23 @@ class InvoiceEditDetailsState extends State<InvoiceEditDetails> {
               onTypeChanged: (value) => viewModel.onChanged(
                   invoice.rebuild((b) => b..isAmountDiscount = value)),
             ),
+            if (invoice.isRecurringInvoice)
+              AppDropdownButton<String>(
+                  labelText: localization.autoBill,
+                  value: invoice.autoBill,
+                  onChanged: (dynamic value) => viewModel
+                      .onChanged(invoice.rebuild((b) => b..autoBill = value)),
+                  items: [
+                    CompanyGatewayEntity.TOKEN_BILLING_ALWAYS,
+                    CompanyGatewayEntity.TOKEN_BILLING_OPT_OUT,
+                    CompanyGatewayEntity.TOKEN_BILLING_OPT_IN,
+                    CompanyGatewayEntity.TOKEN_BILLING_DISABLED
+                  ]
+                      .map((value) => DropdownMenuItem(
+                            child: Text(localization.lookup(value)),
+                            value: value,
+                          ))
+                      .toList()),
             CustomField(
               controller: _custom1Controller,
               field: CustomFieldType.invoice1,
