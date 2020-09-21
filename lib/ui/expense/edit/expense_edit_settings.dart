@@ -11,7 +11,6 @@ import 'package:invoiceninja_flutter/utils/formatting.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:invoiceninja_flutter/ui/app/form_card.dart';
 import 'package:invoiceninja_flutter/redux/static/static_selectors.dart';
-import 'package:invoiceninja_flutter/utils/money.dart';
 
 class ExpenseEditSettings extends StatefulWidget {
   const ExpenseEditSettings({
@@ -83,8 +82,10 @@ class ExpenseEditSettingsState extends State<ExpenseEditSettings> {
   }
 
   void _setCurrency(CurrencyEntity currency) {
+    /*
     final viewModel = widget.viewModel;
     final expense = viewModel.expense;
+
     final exchangeRate = currency == null
         ? 0.0
         : getExchangeRate(context,
@@ -98,6 +99,7 @@ class ExpenseEditSettingsState extends State<ExpenseEditSettings> {
       _exchangeRateController.text = formatNumber(exchangeRate, context,
           formatNumberType: FormatNumberType.inputAmount);
     });
+     */
   }
 
   @override

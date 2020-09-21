@@ -78,12 +78,14 @@ class RecurringInvoiceEditDetailsVM extends EntityEditDetailsVM {
       state: state,
       company: company,
       invoice: invoice,
-      onChanged: (InvoiceEntity invoice) => store.dispatch(UpdateRecurringInvoice(invoice)),
+      onChanged: (InvoiceEntity invoice) =>
+          store.dispatch(UpdateRecurringInvoice(invoice)),
       clientMap: state.clientState.map,
       clientList: state.clientState.list,
       onClientChanged: (context, invoice, client) {
         if (client != null) {
-          final exchangeRate = getExchangeRate(context,
+          final exchangeRate = getExchangeRate(
+              state.staticState.currencyMap,
               fromCurrencyId: company.currencyId,
               toCurrencyId: client.currencyId);
           store.dispatch(UpdateRecurringInvoice(
@@ -99,7 +101,8 @@ class RecurringInvoiceEditDetailsVM extends EntityEditDetailsVM {
             completer: completer,
             cancelCompleter: Completer<Null>()
               ..future.then((_) {
-                store.dispatch(UpdateCurrentRoute(RecurringInvoiceEditScreen.route));
+                store.dispatch(
+                    UpdateCurrentRoute(RecurringInvoiceEditScreen.route));
               }));
         completer.future.then((SelectableEntity client) {
           store.dispatch(UpdateCurrentRoute(RecurringInvoiceEditScreen.route));

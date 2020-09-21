@@ -105,7 +105,7 @@ class InvoiceEditDetailsVM extends EntityEditDetailsVM {
       clientList: state.clientState.list,
       onClientChanged: (context, invoice, client) {
         if (client != null) {
-          final exchangeRate = getExchangeRate(context,
+          final exchangeRate = getExchangeRate(state.staticState.currencyMap,
               fromCurrencyId: company.currencyId,
               toCurrencyId: client.currencyId);
           store.dispatch(UpdateInvoice(

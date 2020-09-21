@@ -82,7 +82,8 @@ class QuoteEditDetailsVM extends EntityEditDetailsVM {
       clientList: state.clientState.list,
       onClientChanged: (context, quote, client) {
         if (client != null) {
-          final exchangeRate = getExchangeRate(context,
+          final exchangeRate = getExchangeRate(
+              state.staticState.currencyMap,
               fromCurrencyId: company.currencyId,
               toCurrencyId: client.currencyId);
           store.dispatch(UpdateQuote(
