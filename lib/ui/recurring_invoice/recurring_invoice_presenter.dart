@@ -106,6 +106,14 @@ class RecurringInvoicePresenter extends EntityPresenter {
       case RecurringInvoiceFields.exchangeRate:
         return Text(formatNumber(invoice.exchangeRate, context,
             formatNumberType: FormatNumberType.double));
+      case RecurringInvoiceFields.remainingCycles:
+        return Text(invoice.remainingCycles == -1
+            ? localization.endless
+            : '${invoice.remainingCycles}');
+      case RecurringInvoiceFields.nextSendDate:
+      case RecurringInvoiceFields.frequency:
+      case RecurringInvoiceFields.dueDateDays:
+      case RecurringInvoiceFields.autoBill:
     }
 
     return super.getField(field: field, context: context);
