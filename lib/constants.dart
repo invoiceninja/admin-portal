@@ -137,6 +137,20 @@ const kInvoiceStatuses = {
   kInvoiceStatusReversed: 'reversed',
 };
 
+const String kRecurringInvoiceStatusDraft = '1';
+const String kRecurringInvoiceStatusActive = '2';
+const String kRecurringInvoiceStatusPaused = '3';
+const String kRecurringInvoiceStatusCompleted = '4';
+const String kRecurringInvoiceStatusPending = '-1';
+
+const kRecurringInvoiceStatuses = {
+  kRecurringInvoiceStatusDraft: 'draft',
+  kRecurringInvoiceStatusActive: 'active',
+  kRecurringInvoiceStatusPaused: 'paused',
+  kRecurringInvoiceStatusCompleted: 'completed',
+  kRecurringInvoiceStatusPending: 'pending',
+};
+
 const String kQuoteStatusExpired = '-1';
 const String kQuoteStatusDraft = '1';
 const String kQuoteStatusSent = '2';
@@ -446,6 +460,16 @@ class InvoiceStatusColors {
     kInvoiceStatusPastDue: kColorRed,
     kInvoiceStatusCancelled: convertHexStringToColor('#444444'),
     kInvoiceStatusReversed: convertHexStringToColor('#444444'),
+  };
+}
+
+class RecurringInvoiceStatusColors {
+  static var colors = {
+    kRecurringInvoiceStatusDraft: Colors.black,
+    kRecurringInvoiceStatusActive: kColorGreen,
+    kRecurringInvoiceStatusPaused: convertHexStringToColor('#444444'),
+    kRecurringInvoiceStatusCompleted: kColorGreen,
+    kRecurringInvoiceStatusPending: convertHexStringToColor('#444444'),
   };
 }
 
