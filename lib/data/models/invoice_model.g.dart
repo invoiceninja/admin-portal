@@ -201,12 +201,6 @@ class _$InvoiceEntitySerializer implements StructuredSerializer<InvoiceEntity> {
       'has_tasks',
       serializers.serialize(object.hasTasks,
           specifiedType: const FullType(bool)),
-      'auto_bill',
-      serializers.serialize(object.autoBill,
-          specifiedType: const FullType(String)),
-      'auto_bill_enabled',
-      serializers.serialize(object.autoBillEnabled,
-          specifiedType: const FullType(bool)),
       'custom_value1',
       serializers.serialize(object.customValue1,
           specifiedType: const FullType(String)),
@@ -267,6 +261,18 @@ class _$InvoiceEntitySerializer implements StructuredSerializer<InvoiceEntity> {
       'id',
       serializers.serialize(object.id, specifiedType: const FullType(String)),
     ];
+    if (object.autoBill != null) {
+      result
+        ..add('auto_bill')
+        ..add(serializers.serialize(object.autoBill,
+            specifiedType: const FullType(String)));
+    }
+    if (object.autoBillEnabled != null) {
+      result
+        ..add('auto_bill_enabled')
+        ..add(serializers.serialize(object.autoBillEnabled,
+            specifiedType: const FullType(bool)));
+    }
     if (object.customTaxes1 != null) {
       result
         ..add('custom_taxes1')
@@ -1571,12 +1577,6 @@ class _$InvoiceEntity extends InvoiceEntity {
     }
     if (hasTasks == null) {
       throw new BuiltValueNullFieldError('InvoiceEntity', 'hasTasks');
-    }
-    if (autoBill == null) {
-      throw new BuiltValueNullFieldError('InvoiceEntity', 'autoBill');
-    }
-    if (autoBillEnabled == null) {
-      throw new BuiltValueNullFieldError('InvoiceEntity', 'autoBillEnabled');
     }
     if (customValue1 == null) {
       throw new BuiltValueNullFieldError('InvoiceEntity', 'customValue1');

@@ -289,9 +289,11 @@ abstract class InvoiceEntity extends Object
   @BuiltValueField(wireName: 'has_tasks')
   bool get hasTasks;
 
+  @nullable
   @BuiltValueField(wireName: 'auto_bill')
   String get autoBill;
 
+  @nullable
   @BuiltValueField(wireName: 'auto_bill_enabled')
   bool get autoBillEnabled;
 
