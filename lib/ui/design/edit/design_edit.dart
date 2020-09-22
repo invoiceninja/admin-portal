@@ -291,28 +291,21 @@ class DesignSection extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Center(
-      child: SingleChildScrollView(
-        padding: const EdgeInsets.all(14),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            Card(
-              child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 10),
-                child: TextField(
-                  controller: textController,
-                  keyboardType: TextInputType.multiline,
-                  maxLines: 9999,
-                  autofocus: true,
-                  style: TextStyle(
-                    fontFeatures: [FontFeature.tabularFigures()],
-                    //fontSize: 30,
-                  ),
-                ),
-              ),
-            )
-          ],
+    return SingleChildScrollView(
+      padding: const EdgeInsets.all(14),
+      child: Card(
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 10),
+          child: TextField(
+            controller: textController,
+            keyboardType: TextInputType.multiline,
+            maxLines: null,
+            //autofocus: true,
+            style: TextStyle(
+              fontFeatures: [FontFeature.tabularFigures()],
+              //fontSize: 30,
+            ),
+          ),
         ),
       ),
     );
