@@ -200,6 +200,9 @@ abstract class PaymentEntity extends Object
   @nullable
   bool get sendEmail;
 
+  @nullable
+  bool get gatewayRefund;
+
   String get transactionReferenceOrNumber =>
       transactionReference.isNotEmpty ? transactionReference : number;
 
@@ -431,6 +434,8 @@ abstract class PaymentEntity extends Object
   bool isBetween(String startDate, String endDate) {
     return startDate.compareTo(date) <= 0 && endDate.compareTo(date) >= 0;
   }
+
+  bool get isOnline => (companyGatewayId ?? '').isNotEmpty;
 
   @override
   FormatNumberType get listDisplayAmountType => FormatNumberType.money;

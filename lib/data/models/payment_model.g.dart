@@ -230,6 +230,12 @@ class _$PaymentEntitySerializer implements StructuredSerializer<PaymentEntity> {
         ..add(serializers.serialize(object.sendEmail,
             specifiedType: const FullType(bool)));
     }
+    if (object.gatewayRefund != null) {
+      result
+        ..add('gatewayRefund')
+        ..add(serializers.serialize(object.gatewayRefund,
+            specifiedType: const FullType(bool)));
+    }
     if (object.isChanged != null) {
       result
         ..add('isChanged')
@@ -371,6 +377,10 @@ class _$PaymentEntitySerializer implements StructuredSerializer<PaymentEntity> {
           break;
         case 'sendEmail':
           result.sendEmail = serializers.deserialize(value,
+              specifiedType: const FullType(bool)) as bool;
+          break;
+        case 'gatewayRefund':
+          result.gatewayRefund = serializers.deserialize(value,
               specifiedType: const FullType(bool)) as bool;
           break;
         case 'paymentables':
@@ -762,6 +772,8 @@ class _$PaymentEntity extends PaymentEntity {
   @override
   final bool sendEmail;
   @override
+  final bool gatewayRefund;
+  @override
   final BuiltList<PaymentableEntity> paymentables;
   @override
   final BuiltList<PaymentableEntity> invoices;
@@ -814,6 +826,7 @@ class _$PaymentEntity extends PaymentEntity {
       this.isForInvoice,
       this.isApplying,
       this.sendEmail,
+      this.gatewayRefund,
       this.paymentables,
       this.invoices,
       this.credits,
@@ -956,6 +969,7 @@ class _$PaymentEntity extends PaymentEntity {
         isForInvoice == other.isForInvoice &&
         isApplying == other.isApplying &&
         sendEmail == other.sendEmail &&
+        gatewayRefund == other.gatewayRefund &&
         paymentables == other.paymentables &&
         invoices == other.invoices &&
         credits == other.credits &&
@@ -990,15 +1004,15 @@ class _$PaymentEntity extends PaymentEntity {
                                                                 $jc(
                                                                     $jc(
                                                                         $jc(
-                                                                            $jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc(0, amount.hashCode), applied.hashCode), refunded.hashCode), number.hashCode), clientId.hashCode), statusId.hashCode), transactionReference.hashCode), date.hashCode), typeId.hashCode), privateNotes.hashCode), customValue1.hashCode), customValue2.hashCode), customValue3.hashCode), customValue4.hashCode), exchangeRate.hashCode), exchangeCurrencyId.hashCode), isManual.hashCode), projectId.hashCode),
-                                                                                vendorId.hashCode),
-                                                                            invitationId.hashCode),
-                                                                        clientContactId.hashCode),
-                                                                    companyGatewayId.hashCode),
-                                                                currencyId.hashCode),
-                                                            isForInvoice.hashCode),
-                                                        isApplying.hashCode),
-                                                    sendEmail.hashCode),
+                                                                            $jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc(0, amount.hashCode), applied.hashCode), refunded.hashCode), number.hashCode), clientId.hashCode), statusId.hashCode), transactionReference.hashCode), date.hashCode), typeId.hashCode), privateNotes.hashCode), customValue1.hashCode), customValue2.hashCode), customValue3.hashCode), customValue4.hashCode), exchangeRate.hashCode), exchangeCurrencyId.hashCode), isManual.hashCode), projectId.hashCode), vendorId.hashCode),
+                                                                                invitationId.hashCode),
+                                                                            clientContactId.hashCode),
+                                                                        companyGatewayId.hashCode),
+                                                                    currencyId.hashCode),
+                                                                isForInvoice.hashCode),
+                                                            isApplying.hashCode),
+                                                        sendEmail.hashCode),
+                                                    gatewayRefund.hashCode),
                                                 paymentables.hashCode),
                                             invoices.hashCode),
                                         credits.hashCode),
@@ -1041,6 +1055,7 @@ class _$PaymentEntity extends PaymentEntity {
           ..add('isForInvoice', isForInvoice)
           ..add('isApplying', isApplying)
           ..add('sendEmail', sendEmail)
+          ..add('gatewayRefund', gatewayRefund)
           ..add('paymentables', paymentables)
           ..add('invoices', invoices)
           ..add('credits', credits)
@@ -1168,6 +1183,11 @@ class PaymentEntityBuilder
   bool get sendEmail => _$this._sendEmail;
   set sendEmail(bool sendEmail) => _$this._sendEmail = sendEmail;
 
+  bool _gatewayRefund;
+  bool get gatewayRefund => _$this._gatewayRefund;
+  set gatewayRefund(bool gatewayRefund) =>
+      _$this._gatewayRefund = gatewayRefund;
+
   ListBuilder<PaymentableEntity> _paymentables;
   ListBuilder<PaymentableEntity> get paymentables =>
       _$this._paymentables ??= new ListBuilder<PaymentableEntity>();
@@ -1250,6 +1270,7 @@ class PaymentEntityBuilder
       _isForInvoice = _$v.isForInvoice;
       _isApplying = _$v.isApplying;
       _sendEmail = _$v.sendEmail;
+      _gatewayRefund = _$v.gatewayRefund;
       _paymentables = _$v.paymentables?.toBuilder();
       _invoices = _$v.invoices?.toBuilder();
       _credits = _$v.credits?.toBuilder();
@@ -1311,6 +1332,7 @@ class PaymentEntityBuilder
               isForInvoice: isForInvoice,
               isApplying: isApplying,
               sendEmail: sendEmail,
+              gatewayRefund: gatewayRefund,
               paymentables: paymentables.build(),
               invoices: invoices.build(),
               credits: credits.build(),

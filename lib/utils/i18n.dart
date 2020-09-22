@@ -15,6 +15,8 @@ mixin LocalizationsProvider on LocaleCodeAware {
   static final Map<String, Map<String, String>> _localizedValues = {
     'en': {
       // STARTER: lang key - do not remove comment
+      'gateway_refund': 'Gateway Refund',
+      'gateway_refund_help': 'Process the refund with the payment gateway',
       'due_date_days': 'Due Date',
       'paused': 'Paused',
       'mark_active': 'Mark Active',
@@ -4568,6 +4570,12 @@ mixin LocalizationsProvider on LocaleCodeAware {
   String get paused => _localizedValues[localeCode]['paused'] ?? '';
 
   String get dueDateDays => _localizedValues[localeCode]['due_date_days'] ?? '';
+
+  String get gatewayRefund =>
+      _localizedValues[localeCode]['gateway_refund'] ?? '';
+
+  String get gatewayRefundHelp =>
+      _localizedValues[localeCode]['gateway_refund_help'] ?? '';
 
   String lookup(String key) {
     final lookupKey = toSnakeCase(key);

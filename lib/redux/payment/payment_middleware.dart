@@ -230,8 +230,7 @@ Middleware<AppState> _refundPayment(PaymentRepository repository) {
     final action = dynamicAction as RefundPaymentRequest;
 
     repository
-        .refundPayment(store.state.credentials, action.payment,
-            sendEmail: action.payment.sendEmail)
+        .refundPayment(store.state.credentials, action.payment)
         .then((PaymentEntity payment) {
       store.dispatch(SavePaymentSuccess(payment));
       store.dispatch(RefundPaymentSuccess(payment));

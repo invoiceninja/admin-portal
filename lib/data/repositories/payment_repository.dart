@@ -81,14 +81,17 @@ class PaymentRepository {
   }
 
   Future<PaymentEntity> refundPayment(
-      Credentials credentials, PaymentEntity payment,
-      {bool sendEmail = false}) async {
+    Credentials credentials,
+    PaymentEntity payment) async {
     final data = serializers.serializeWith(PaymentEntity.serializer, payment);
     dynamic response;
 
     var url = credentials.url + '/payments/refund?';
-    if (sendEmail) {
+    if (payment.sendEmail == true) {
       url += '&email_receipt=true';
+    }
+    if (payment.gatewayRefund == true) {
+      url += '&gateway_refund=true';
     }
     response =
         await webClient.post(url, credentials.token, data: json.encode(data));
