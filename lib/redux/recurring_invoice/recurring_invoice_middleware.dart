@@ -25,6 +25,8 @@ List<Middleware<AppState>> createStoreRecurringInvoicesMiddleware([
   final archiveRecurringInvoice = _archiveRecurringInvoice(repository);
   final deleteRecurringInvoice = _deleteRecurringInvoice(repository);
   final restoreRecurringInvoice = _restoreRecurringInvoice(repository);
+  final startRecurringInvoice = _startRecurringInvoice(repository);
+  final stopRecurringInvoice = _stopRecurringInvoice(repository);
 
   return [
     TypedMiddleware<AppState, ViewRecurringInvoiceList>(
@@ -41,6 +43,10 @@ List<Middleware<AppState>> createStoreRecurringInvoicesMiddleware([
         deleteRecurringInvoice),
     TypedMiddleware<AppState, RestoreRecurringInvoicesRequest>(
         restoreRecurringInvoice),
+    TypedMiddleware<AppState, StartRecurringInvoicesRequest>(
+        startRecurringInvoice),
+    TypedMiddleware<AppState, StopRecurringInvoicesRequest>(
+        stopRecurringInvoice),
   ];
 }
 
@@ -89,6 +95,54 @@ Middleware<AppState> _viewRecurringInvoiceList() {
       Navigator.of(action.context).pushNamedAndRemoveUntil(
           RecurringInvoiceScreen.route, (Route<dynamic> route) => false);
     }
+  };
+}
+
+Middleware<AppState> _startRecurringInvoice(
+    RecurringInvoiceRepository repository) {
+  return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
+    final action = dynamicAction as StartRecurringInvoicesRequest;
+    repository
+        .bulkAction(
+            store.state.credentials, action.invoiceIds, EntityAction.start)
+        .then((List<InvoiceEntity> invoices) {
+      store.dispatch(StartRecurringInvoicesSuccess(invoices));
+      if (action.completer != null) {
+        action.completer.complete(null);
+      }
+    }).catchError((Object error) {
+      print(error);
+      store.dispatch(StartRecurringInvoicesFailure(error));
+      if (action.completer != null) {
+        action.completer.completeError(error);
+      }
+    });
+
+    next(action);
+  };
+}
+
+Middleware<AppState> _stopRecurringInvoice(
+    RecurringInvoiceRepository repository) {
+  return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
+    final action = dynamicAction as StopRecurringInvoicesRequest;
+    repository
+        .bulkAction(
+            store.state.credentials, action.invoiceIds, EntityAction.start)
+        .then((List<InvoiceEntity> invoices) {
+      store.dispatch(StopRecurringInvoicesSuccess(invoices));
+      if (action.completer != null) {
+        action.completer.complete(null);
+      }
+    }).catchError((Object error) {
+      print(error);
+      store.dispatch(StopRecurringInvoicesFailure(error));
+      if (action.completer != null) {
+        action.completer.completeError(error);
+      }
+    });
+
+    next(action);
   };
 }
 
