@@ -368,6 +368,46 @@ class SaveRecurringInvoiceDocumentFailure implements StopSaving {
   final Object error;
 }
 
+class StartRecurringInvoiceRequest implements StartSaving {
+  StartRecurringInvoiceRequest({this.completer, this.invoice});
+
+  final Completer completer;
+  final InvoiceEntity invoice;
+}
+
+class StartRecurringInvoiceSuccess
+    implements StopSaving, PersistData, PersistUI {
+  StartRecurringInvoiceSuccess(this.invoice);
+
+  final InvoiceEntity invoice;
+}
+
+class StartRecurringInvoiceFailure implements StopSaving {
+  StartRecurringInvoiceFailure(this.error);
+
+  final Object error;
+}
+
+class StopRecurringInvoiceRequest implements StartSaving {
+  StopRecurringInvoiceRequest({this.completer, this.invoice});
+
+  final Completer completer;
+  final InvoiceEntity invoice;
+}
+
+class StopRecurringInvoiceSuccess
+    implements StopSaving, PersistData, PersistUI {
+  StopRecurringInvoiceSuccess(this.invoice);
+
+  final InvoiceEntity invoice;
+}
+
+class StopRecurringInvoiceFailure implements StopSaving {
+  StopRecurringInvoiceFailure(this.error);
+
+  final Object error;
+}
+
 void handleRecurringInvoiceAction(BuildContext context,
     List<BaseEntity> recurringInvoices, EntityAction action) async {
   if (recurringInvoices.isEmpty) {
@@ -410,6 +450,23 @@ void handleRecurringInvoiceAction(BuildContext context,
           context: context,
           entity: recurringInvoice.clone
               .rebuild((b) => b..entityType = EntityType.credit));
+      break;
+    case EntityAction.start:
+      store.dispatch(StartRecurringInvoiceRequest(
+        completer: snackBarCompleter<Null>(
+            context,
+            (recurringInvoice.lastSentDate ?? '').isEmpty
+                ? localization.startedRecurringInvoice
+                : localization.resumedRecurringInvoice),
+        invoice: recurringInvoice,
+      ));
+      break;
+    case EntityAction.stop:
+      store.dispatch(StopRecurringInvoiceRequest(
+        completer: snackBarCompleter<Null>(
+            context, localization.stoppedRecurringInvoice),
+        invoice: recurringInvoice,
+      ));
       break;
     case EntityAction.restore:
       store.dispatch(RestoreRecurringInvoicesRequest(

@@ -15,6 +15,9 @@ mixin LocalizationsProvider on LocaleCodeAware {
   static final Map<String, Map<String, String>> _localizedValues = {
     'en': {
       // STARTER: lang key - do not remove comment
+      'stopped_recurring_invoice': 'Successfully stopped recurring invoice',
+      'started_recurring_invoice': 'Successfully started recurring invoice',
+      'resumed_recurring_invoice': 'Successfully resumed recurring invoice',
       'gateway_refund': 'Gateway Refund',
       'gateway_refund_help': 'Process the refund with the payment gateway',
       'due_date_days': 'Due Date',
@@ -3673,6 +3676,15 @@ mixin LocalizationsProvider on LocaleCodeAware {
 
   String get restoredRecurringInvoice =>
       _localizedValues[localeCode]['restored_recurring_invoice'];
+
+  String get stoppedRecurringInvoice =>
+      _localizedValues[localeCode]['stopped_recurring_invoice'];
+
+  String get startedRecurringInvoice =>
+      _localizedValues[localeCode]['started_recurring_invoice'];
+
+  String get resumedRecurringInvoice =>
+      _localizedValues[localeCode]['resumed_recurring_invoice'];
 
   String get searchRecurringInvoice =>
       _localizedValues[localeCode]['search_recurring_invoice'];
