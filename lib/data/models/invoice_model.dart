@@ -677,7 +677,7 @@ abstract class InvoiceEntity extends Object
               : EntityAction.markSent);
         }
 
-        if (isPayable) {
+        if (isPayable && isInvoice) {
           actions.add(EntityAction.markPaid);
         }
 
