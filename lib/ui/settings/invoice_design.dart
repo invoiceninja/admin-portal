@@ -537,6 +537,22 @@ class _InvoiceDesignState extends State<InvoiceDesign>
               prefix: 'product',
             ),
           ),
+          /*
+          FormCard(
+            child: MultiSelectList(
+              options: [],
+              defaultSelected: [],
+              selected: settings.getFieldsForSection(kPdfFieldsTaskColumns),
+              onSelected: (values) {
+                    viewModel.onSettingsChanged(settings.setFieldsForSection(
+                    kPdfFieldsTaskColumns, values));
+              },
+              addTitle: localization.addField,
+              liveChanges: true,
+              prefix: 'task',
+            ),
+          ),          
+           */
           FormCard(
             child: MultiSelectList(
               options: [
@@ -574,22 +590,6 @@ class _InvoiceDesignState extends State<InvoiceDesign>
               prefix: 'total',
             ),
           ),
-          /*
-          FormCard(
-            child: MultiSelectList(
-              options: [],
-              defaultSelected: [],
-              selected: settings.getFieldsForSection(kPdfFieldsTaskColumns),
-              onSelected: (values) {
-                    viewModel.onSettingsChanged(settings.setFieldsForSection(
-                    kPdfFieldsTaskColumns, values));
-              },
-              addTitle: localization.addField,
-              liveChanges: true,
-              prefix: 'task',
-            ),
-          ),          
-           */
         ],
       ),
     );
