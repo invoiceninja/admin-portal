@@ -52,7 +52,7 @@ class _InvoiceDesignState extends State<InvoiceDesign>
   void initState() {
     super.initState();
     _focusNode = FocusScopeNode();
-    _controller = TabController(vsync: this, length: 7);
+    _controller = TabController(vsync: this, length: 8);
   }
 
   @override
@@ -79,33 +79,18 @@ class _InvoiceDesignState extends State<InvoiceDesign>
         controller: _controller,
         isScrollable: true,
         tabs: [
-          Tab(
-            text: localization.generalSettings,
-          ),
-          Tab(
-            text: localization.invoiceOptions,
-          ),
-          Tab(
-            text: localization.clientDetails,
-          ),
-          Tab(
-            text: localization.companyDetails,
-          ),
-          Tab(
-            text: localization.companyAddress,
-          ),
-          Tab(
-            text: localization.invoiceDetails,
-          ),
+          Tab(text: localization.generalSettings),
+          Tab(text: localization.invoiceOptions),
+          Tab(text: localization.clientDetails),
+          Tab(text: localization.companyDetails),
+          Tab(text: localization.companyAddress),
+          Tab(text: localization.invoiceDetails),
           /*
-          Tab(
-            text: localization.quoteDetails,
-          ),
-          Tab(
-            text: localization.creditDetails,
-          ),
+          Tab(text: localization.quoteDetails),
+          Tab( text: localization.creditDetails),
            */
           Tab(text: localization.productColumns),
+          Tab(text: localization.totalFields),
           /*
           Tab(text: localization.taskColumns),
            */
@@ -550,6 +535,43 @@ class _InvoiceDesignState extends State<InvoiceDesign>
               addTitle: localization.addField,
               liveChanges: true,
               prefix: 'product',
+            ),
+          ),
+          FormCard(
+            child: MultiSelectList(
+              options: [
+                InvoiceTotalFields.subtotal,
+                InvoiceTotalFields.discount,
+                InvoiceTotalFields.lineTaxes,
+                InvoiceTotalFields.totalTaxes,
+                InvoiceTotalFields.customSurcharge1,
+                InvoiceTotalFields.customSurcharge2,
+                InvoiceTotalFields.customSurcharge3,
+                InvoiceTotalFields.customSurcharge4,
+                InvoiceTotalFields.paidToDate,
+                InvoiceTotalFields.total,
+                InvoiceTotalFields.clientBalance,
+              ].map((field) => '\$$field').toList(),
+              defaultSelected: [
+                InvoiceTotalFields.subtotal,
+                InvoiceTotalFields.discount,
+                InvoiceTotalFields.lineTaxes,
+                InvoiceTotalFields.totalTaxes,
+                InvoiceTotalFields.customSurcharge1,
+                InvoiceTotalFields.customSurcharge2,
+                InvoiceTotalFields.customSurcharge3,
+                InvoiceTotalFields.customSurcharge4,
+                InvoiceTotalFields.paidToDate,
+                InvoiceTotalFields.total,
+              ].map((field) => '\$$field').toList(),
+              selected: settings.getFieldsForSection(kPdfFieldsTotalFields),
+              onSelected: (values) {
+                viewModel.onSettingsChanged(settings.setFieldsForSection(
+                    kPdfFieldsTotalFields, values));
+              },
+              addTitle: localization.addField,
+              liveChanges: true,
+              prefix: 'total',
             ),
           ),
           /*

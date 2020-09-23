@@ -76,12 +76,30 @@ class InvoiceFields {
   static const String customValue2 = 'custom2';
   static const String customValue3 = 'custom3';
   static const String customValue4 = 'custom4';
+  static const String customSurcharge1 = 'custom_surcharge1';
+  static const String customSurcharge2 = 'custom_surcharge2';
+  static const String customSurcharge3 = 'custom_surcharge3';
+  static const String customSurcharge4 = 'custom_surcharge4';
   static const String taxAmount = 'tax_amount';
   static const String reminder1Sent = 'reminder1_sent';
   static const String reminder2Sent = 'reminder2_sent';
   static const String reminder3Sent = 'reminder3_sent';
   static const String reminderLastSent = 'reminder_last_sent';
   static const String exchangeRate = 'exchange_rate';
+}
+
+class InvoiceTotalFields {
+  static const String totalTaxes = 'total_taxes';
+  static const String lineTaxes = 'line_taxes';
+  static const String subtotal = 'subtotal';
+  static const String total = 'total';
+  static const String discount = 'discount';
+  static const String customSurcharge1 = 'custom_surcharge1';
+  static const String customSurcharge2 = 'custom_surcharge2';
+  static const String customSurcharge3 = 'custom_surcharge3';
+  static const String customSurcharge4 = 'custom_surcharge4';
+  static const String paidToDate = 'paid_to_date';
+  static const String clientBalance = 'client.balance';
 }
 
 abstract class InvoiceEntity extends Object

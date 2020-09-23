@@ -372,6 +372,7 @@ const String kPdfFieldsQuoteDetails = 'quote_details';
 const String kPdfFieldsCreditDetails = 'credit_details';
 const String kPdfFieldsProductColumns = 'product_columns';
 const String kPdfFieldsTaskColumns = 'task_columns';
+const String kPdfFieldsTotalFields = 'total_columns';
 
 const String kPdfFields = '';
 const String kPermissionCreateAll = 'create_all';
