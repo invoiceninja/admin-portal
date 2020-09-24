@@ -15,6 +15,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
   static final Map<String, Map<String, String>> _localizedValues = {
     'en': {
       // STARTER: lang key - do not remove comment
+      'auto_bill_enabled': 'Auto Bill Enabled',
       'total_taxes': 'Total Taxes',
       'line_taxes': 'Line Taxes',
       'total_fields': 'Total Fields',
@@ -4597,6 +4598,9 @@ mixin LocalizationsProvider on LocaleCodeAware {
   String get totalTaxes => _localizedValues[localeCode]['total_taxes'] ?? '';
 
   String get lineTaxes => _localizedValues[localeCode]['line_taxes'] ?? '';
+
+  String get autoBillEnabled =>
+      _localizedValues[localeCode]['auto_bill_enabled'] ?? '';
 
   String lookup(String key) {
     final lookupKey = toSnakeCase(key);
