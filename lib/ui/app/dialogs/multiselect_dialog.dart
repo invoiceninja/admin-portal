@@ -42,6 +42,7 @@ class MultiSelectList extends StatefulWidget {
     @required this.addTitle,
     @required this.onSelected,
     this.liveChanges = false,
+    this.allowDuplicates = const <String>[],
     this.prefix,
   });
 
@@ -52,6 +53,7 @@ class MultiSelectList extends StatefulWidget {
   final Function(List<String>) onSelected;
   final bool liveChanges;
   final String prefix;
+  final List<String> allowDuplicates;
 
   @override
   MultiSelectListState createState() => MultiSelectListState();
@@ -88,7 +90,9 @@ class MultiSelectListState extends State<MultiSelectList> {
 
     final Map<String, String> options = {};
     widget.options
-        .where((option) => !selected.contains(option))
+        .where((option) =>
+            !selected.contains(option) ||
+            widget.allowDuplicates.contains(option))
         .forEach((option) {
       final columnTitle = state.company.getCustomFieldLabel(option);
       options[option] =
@@ -118,7 +122,8 @@ class MultiSelectListState extends State<MultiSelectList> {
                 return;
               }
 
-              if (selected.contains(value)) {
+              if (selected.contains(value) &&
+                  !widget.allowDuplicates.contains(value)) {
                 return;
               }
 
@@ -134,10 +139,11 @@ class MultiSelectListState extends State<MultiSelectList> {
           SizedBox(height: 20),
           Expanded(
             child: ReorderableListView(
-              children: selected.map((option) {
+              children: selected.asMap().entries.map((entry) {
+                final option = entry.value;
                 final columnTitle = state.company.getCustomFieldLabel(option);
                 return Padding(
-                  key: ValueKey(option),
+                  key: ValueKey('__${entry.key}_${entry.value}__'),
                   padding:
                       const EdgeInsets.symmetric(vertical: 3, horizontal: 10),
                   child: Row(
