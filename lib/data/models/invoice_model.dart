@@ -146,7 +146,8 @@ abstract class InvoiceEntity extends Object
       partial: 0.0,
       partialDueDate: '',
       hasTasks: false,
-      autoBill: CompanyGatewayEntity.TOKEN_BILLING_ALWAYS,
+      autoBill: company?.settings?.autoBill ??
+          CompanyGatewayEntity.TOKEN_BILLING_ALWAYS,
       autoBillEnabled: false,
       customValue1: '',
       customValue2: '',
