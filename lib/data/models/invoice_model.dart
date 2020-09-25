@@ -187,10 +187,10 @@ abstract class InvoiceEntity extends Object
       reminderLastSent: '',
       exchangeRate: exchangeRate,
       lastSentDate: '',
-      nextSendDate: '',
+      nextSendDate: convertDateTimeToSqlDate(),
       frequencyId: kFrequencyMonthly,
       remainingCycles: -1,
-      dueDateDays: '',
+      dueDateDays: 'terms',
     );
   }
 
