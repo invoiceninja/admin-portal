@@ -15,6 +15,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
   static final Map<String, Map<String, String>> _localizedValues = {
     'en': {
       // STARTER: lang key - do not remove comment
+      'store_card': 'Store Card',
       'auto_bill_enabled': 'Auto Bill Enabled',
       'total_taxes': 'Total Taxes',
       'line_taxes': 'Line Taxes',
@@ -73,9 +74,9 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'copy_link': 'Copy Link',
       'token_billing': 'Token Billing',
       'welcome_to_invoice_ninja': 'Welcome to Invoice Ninja',
-      'always': 'Always',
-      'optin': 'Opt-In',
-      'optout': 'Opt-Out',
+      'always': 'Enabled',
+      'optin': 'Option disabled by default',
+      'optout': 'Option enabled by default',
       'label': 'Label',
       'client_number': 'Client Number',
       'auto_convert': 'Auto Convert',
@@ -4598,6 +4599,8 @@ mixin LocalizationsProvider on LocaleCodeAware {
   String get totalTaxes => _localizedValues[localeCode]['total_taxes'] ?? '';
 
   String get lineTaxes => _localizedValues[localeCode]['line_taxes'] ?? '';
+
+  String get storeCard => _localizedValues[localeCode]['store_card'] ?? '';
 
   String get autoBillEnabled =>
       _localizedValues[localeCode]['auto_bill_enabled'] ?? '';
