@@ -49,10 +49,8 @@ class _HealthCheckDialogState extends State<HealthCheckDialog> {
     });
   }
 
-  String _parseVersion(String version) {
-    RegExp regExp = new RegExp(r'(\d+\.\d+.\d+)');
-    return regExp.stringMatch(version);
-  }
+  String _parseVersion(String version) =>
+      RegExp(r'(\d+\.\d+.\d+)').stringMatch(version);
 
   @override
   Widget build(BuildContext context) {
