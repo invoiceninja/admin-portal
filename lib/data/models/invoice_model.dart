@@ -164,6 +164,7 @@ abstract class InvoiceEntity extends Object
       customSurcharge3: 0,
       customSurcharge4: 0,
       filename: '',
+      recurringDates: BuiltList<InvoiceScheduleEntity>(),
       lineItems: BuiltList<InvoiceItemEntity>(),
       history: BuiltList<InvoiceHistoryEntity>(),
       usesInclusiveTaxes: company?.settings?.enableInclusiveTaxes ?? false,
@@ -410,6 +411,10 @@ abstract class InvoiceEntity extends Object
 
   @nullable
   String get filename;
+
+  @nullable
+  @BuiltValueField(wireName: 'recurring_dates')
+  BuiltList<InvoiceScheduleEntity> get recurringDates;
 
   @override
   @BuiltValueField(wireName: 'line_items')
@@ -795,6 +800,8 @@ abstract class InvoiceEntity extends Object
   bool get isCredit => entityType == EntityType.credit;
 
   bool get isRecurringInvoice => entityType == EntityType.recurringInvoice;
+
+  bool get isRecurring => [EntityType.recurringInvoice].contains(entityType);
 
   EmailTemplate get emailTemplate => isQuote
       ? EmailTemplate.quote
@@ -1210,6 +1217,31 @@ abstract class InvitationEntity extends Object
 
   static Serializer<InvitationEntity> get serializer =>
       _$invitationEntitySerializer;
+}
+
+abstract class InvoiceScheduleEntity
+    implements Built<InvoiceScheduleEntity, InvoiceScheduleEntityBuilder> {
+  factory InvoiceScheduleEntity() {
+    return _$InvoiceScheduleEntity._(
+      sendDate: '',
+      dueDate: '',
+    );
+  }
+
+  InvoiceScheduleEntity._();
+
+  @override
+  @memoized
+  int get hashCode;
+
+  @BuiltValueField(wireName: 'send_date')
+  String get sendDate;
+
+  @BuiltValueField(wireName: 'due_date')
+  String get dueDate;
+
+  static Serializer<InvoiceScheduleEntity> get serializer =>
+      _$invoiceScheduleEntitySerializer;
 }
 
 abstract class InvoiceHistoryEntity

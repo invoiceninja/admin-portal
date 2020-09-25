@@ -16,6 +16,8 @@ Serializer<InvoiceItemEntity> _$invoiceItemEntitySerializer =
     new _$InvoiceItemEntitySerializer();
 Serializer<InvitationEntity> _$invitationEntitySerializer =
     new _$InvitationEntitySerializer();
+Serializer<InvoiceScheduleEntity> _$invoiceScheduleEntitySerializer =
+    new _$InvoiceScheduleEntitySerializer();
 Serializer<InvoiceHistoryEntity> _$invoiceHistoryEntitySerializer =
     new _$InvoiceHistoryEntitySerializer();
 
@@ -351,6 +353,13 @@ class _$InvoiceEntitySerializer implements StructuredSerializer<InvoiceEntity> {
         ..add(serializers.serialize(object.filename,
             specifiedType: const FullType(String)));
     }
+    if (object.recurringDates != null) {
+      result
+        ..add('recurring_dates')
+        ..add(serializers.serialize(object.recurringDates,
+            specifiedType: const FullType(
+                BuiltList, const [const FullType(InvoiceScheduleEntity)])));
+    }
     if (object.history != null) {
       result
         ..add('history')
@@ -620,6 +629,12 @@ class _$InvoiceEntitySerializer implements StructuredSerializer<InvoiceEntity> {
         case 'filename':
           result.filename = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String;
+          break;
+        case 'recurring_dates':
+          result.recurringDates.replace(serializers.deserialize(value,
+                  specifiedType: const FullType(
+                      BuiltList, const [const FullType(InvoiceScheduleEntity)]))
+              as BuiltList<Object>);
           break;
         case 'line_items':
           result.lineItems.replace(serializers.deserialize(value,
@@ -1021,6 +1036,59 @@ class _$InvitationEntitySerializer
   }
 }
 
+class _$InvoiceScheduleEntitySerializer
+    implements StructuredSerializer<InvoiceScheduleEntity> {
+  @override
+  final Iterable<Type> types = const [
+    InvoiceScheduleEntity,
+    _$InvoiceScheduleEntity
+  ];
+  @override
+  final String wireName = 'InvoiceScheduleEntity';
+
+  @override
+  Iterable<Object> serialize(
+      Serializers serializers, InvoiceScheduleEntity object,
+      {FullType specifiedType = FullType.unspecified}) {
+    final result = <Object>[
+      'send_date',
+      serializers.serialize(object.sendDate,
+          specifiedType: const FullType(String)),
+      'due_date',
+      serializers.serialize(object.dueDate,
+          specifiedType: const FullType(String)),
+    ];
+
+    return result;
+  }
+
+  @override
+  InvoiceScheduleEntity deserialize(
+      Serializers serializers, Iterable<Object> serialized,
+      {FullType specifiedType = FullType.unspecified}) {
+    final result = new InvoiceScheduleEntityBuilder();
+
+    final iterator = serialized.iterator;
+    while (iterator.moveNext()) {
+      final key = iterator.current as String;
+      iterator.moveNext();
+      final dynamic value = iterator.current;
+      switch (key) {
+        case 'send_date':
+          result.sendDate = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String;
+          break;
+        case 'due_date':
+          result.dueDate = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String;
+          break;
+      }
+    }
+
+    return result.build();
+  }
+}
+
 class _$InvoiceHistoryEntitySerializer
     implements StructuredSerializer<InvoiceHistoryEntity> {
   @override
@@ -1400,6 +1468,8 @@ class _$InvoiceEntity extends InvoiceEntity {
   @override
   final String filename;
   @override
+  final BuiltList<InvoiceScheduleEntity> recurringDates;
+  @override
   final BuiltList<InvoiceItemEntity> lineItems;
   @override
   final BuiltList<InvitationEntity> invitations;
@@ -1485,6 +1555,7 @@ class _$InvoiceEntity extends InvoiceEntity {
       this.dueDateDays,
       this.invoiceId,
       this.filename,
+      this.recurringDates,
       this.lineItems,
       this.invitations,
       this.documents,
@@ -1701,6 +1772,7 @@ class _$InvoiceEntity extends InvoiceEntity {
         dueDateDays == other.dueDateDays &&
         invoiceId == other.invoiceId &&
         filename == other.filename &&
+        recurringDates == other.recurringDates &&
         lineItems == other.lineItems &&
         invitations == other.invitations &&
         documents == other.documents &&
@@ -1738,12 +1810,12 @@ class _$InvoiceEntity extends InvoiceEntity {
                                                                 $jc(
                                                                     $jc(
                                                                         $jc(
-                                                                            $jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc(0, amount.hashCode), balance.hashCode), clientId.hashCode), statusId.hashCode), number.hashCode), discount.hashCode), poNumber.hashCode), date.hashCode), dueDate.hashCode), publicNotes.hashCode), privateNotes.hashCode), terms.hashCode), footer.hashCode), designId.hashCode), usesInclusiveTaxes.hashCode), taxName1.hashCode), taxRate1.hashCode), taxName2.hashCode), taxRate2.hashCode), taxName3.hashCode), taxRate3.hashCode), isAmountDiscount.hashCode), partial.hashCode), taxAmount.hashCode), partialDueDate.hashCode), hasTasks.hashCode), autoBill.hashCode), autoBillEnabled.hashCode), customValue1.hashCode), customValue2.hashCode), customValue3.hashCode), customValue4.hashCode), customSurcharge1.hashCode), customSurcharge2.hashCode), customSurcharge3.hashCode), customSurcharge4.hashCode), customTaxes1.hashCode), customTaxes2.hashCode), customTaxes3.hashCode), customTaxes4.hashCode), hasExpenses.hashCode), exchangeRate.hashCode), reminder1Sent.hashCode), reminder2Sent.hashCode), reminder3Sent.hashCode), reminderLastSent.hashCode), frequencyId.hashCode), lastSentDate.hashCode),
-                                                                                nextSendDate.hashCode),
-                                                                            remainingCycles.hashCode),
-                                                                        dueDateDays.hashCode),
-                                                                    invoiceId.hashCode),
-                                                                filename.hashCode),
+                                                                            $jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc(0, amount.hashCode), balance.hashCode), clientId.hashCode), statusId.hashCode), number.hashCode), discount.hashCode), poNumber.hashCode), date.hashCode), dueDate.hashCode), publicNotes.hashCode), privateNotes.hashCode), terms.hashCode), footer.hashCode), designId.hashCode), usesInclusiveTaxes.hashCode), taxName1.hashCode), taxRate1.hashCode), taxName2.hashCode), taxRate2.hashCode), taxName3.hashCode), taxRate3.hashCode), isAmountDiscount.hashCode), partial.hashCode), taxAmount.hashCode), partialDueDate.hashCode), hasTasks.hashCode), autoBill.hashCode), autoBillEnabled.hashCode), customValue1.hashCode), customValue2.hashCode), customValue3.hashCode), customValue4.hashCode), customSurcharge1.hashCode), customSurcharge2.hashCode), customSurcharge3.hashCode), customSurcharge4.hashCode), customTaxes1.hashCode), customTaxes2.hashCode), customTaxes3.hashCode), customTaxes4.hashCode), hasExpenses.hashCode), exchangeRate.hashCode), reminder1Sent.hashCode), reminder2Sent.hashCode), reminder3Sent.hashCode), reminderLastSent.hashCode), frequencyId.hashCode), lastSentDate.hashCode), nextSendDate.hashCode),
+                                                                                remainingCycles.hashCode),
+                                                                            dueDateDays.hashCode),
+                                                                        invoiceId.hashCode),
+                                                                    filename.hashCode),
+                                                                recurringDates.hashCode),
                                                             lineItems.hashCode),
                                                         invitations.hashCode),
                                                     documents.hashCode),
@@ -1816,6 +1888,7 @@ class _$InvoiceEntity extends InvoiceEntity {
           ..add('dueDateDays', dueDateDays)
           ..add('invoiceId', invoiceId)
           ..add('filename', filename)
+          ..add('recurringDates', recurringDates)
           ..add('lineItems', lineItems)
           ..add('invitations', invitations)
           ..add('documents', documents)
@@ -2063,6 +2136,12 @@ class InvoiceEntityBuilder
   String get filename => _$this._filename;
   set filename(String filename) => _$this._filename = filename;
 
+  ListBuilder<InvoiceScheduleEntity> _recurringDates;
+  ListBuilder<InvoiceScheduleEntity> get recurringDates =>
+      _$this._recurringDates ??= new ListBuilder<InvoiceScheduleEntity>();
+  set recurringDates(ListBuilder<InvoiceScheduleEntity> recurringDates) =>
+      _$this._recurringDates = recurringDates;
+
   ListBuilder<InvoiceItemEntity> _lineItems;
   ListBuilder<InvoiceItemEntity> get lineItems =>
       _$this._lineItems ??= new ListBuilder<InvoiceItemEntity>();
@@ -2186,6 +2265,7 @@ class InvoiceEntityBuilder
       _dueDateDays = _$v.dueDateDays;
       _invoiceId = _$v.invoiceId;
       _filename = _$v.filename;
+      _recurringDates = _$v.recurringDates?.toBuilder();
       _lineItems = _$v.lineItems?.toBuilder();
       _invitations = _$v.invitations?.toBuilder();
       _documents = _$v.documents?.toBuilder();
@@ -2277,6 +2357,7 @@ class InvoiceEntityBuilder
               dueDateDays: dueDateDays,
               invoiceId: invoiceId,
               filename: filename,
+              recurringDates: _recurringDates?.build(),
               lineItems: lineItems.build(),
               invitations: invitations.build(),
               documents: documents.build(),
@@ -2294,6 +2375,8 @@ class InvoiceEntityBuilder
     } catch (_) {
       String _$failedField;
       try {
+        _$failedField = 'recurringDates';
+        _recurringDates?.build();
         _$failedField = 'lineItems';
         lineItems.build();
         _$failedField = 'invitations';
@@ -2975,6 +3058,102 @@ class InvitationEntityBuilder
             assignedUserId: assignedUserId,
             entityType: entityType,
             id: id);
+    replace(_$result);
+    return _$result;
+  }
+}
+
+class _$InvoiceScheduleEntity extends InvoiceScheduleEntity {
+  @override
+  final String sendDate;
+  @override
+  final String dueDate;
+
+  factory _$InvoiceScheduleEntity(
+          [void Function(InvoiceScheduleEntityBuilder) updates]) =>
+      (new InvoiceScheduleEntityBuilder()..update(updates)).build();
+
+  _$InvoiceScheduleEntity._({this.sendDate, this.dueDate}) : super._() {
+    if (sendDate == null) {
+      throw new BuiltValueNullFieldError('InvoiceScheduleEntity', 'sendDate');
+    }
+    if (dueDate == null) {
+      throw new BuiltValueNullFieldError('InvoiceScheduleEntity', 'dueDate');
+    }
+  }
+
+  @override
+  InvoiceScheduleEntity rebuild(
+          void Function(InvoiceScheduleEntityBuilder) updates) =>
+      (toBuilder()..update(updates)).build();
+
+  @override
+  InvoiceScheduleEntityBuilder toBuilder() =>
+      new InvoiceScheduleEntityBuilder()..replace(this);
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(other, this)) return true;
+    return other is InvoiceScheduleEntity &&
+        sendDate == other.sendDate &&
+        dueDate == other.dueDate;
+  }
+
+  int __hashCode;
+  @override
+  int get hashCode {
+    return __hashCode ??= $jf($jc($jc(0, sendDate.hashCode), dueDate.hashCode));
+  }
+
+  @override
+  String toString() {
+    return (newBuiltValueToStringHelper('InvoiceScheduleEntity')
+          ..add('sendDate', sendDate)
+          ..add('dueDate', dueDate))
+        .toString();
+  }
+}
+
+class InvoiceScheduleEntityBuilder
+    implements Builder<InvoiceScheduleEntity, InvoiceScheduleEntityBuilder> {
+  _$InvoiceScheduleEntity _$v;
+
+  String _sendDate;
+  String get sendDate => _$this._sendDate;
+  set sendDate(String sendDate) => _$this._sendDate = sendDate;
+
+  String _dueDate;
+  String get dueDate => _$this._dueDate;
+  set dueDate(String dueDate) => _$this._dueDate = dueDate;
+
+  InvoiceScheduleEntityBuilder();
+
+  InvoiceScheduleEntityBuilder get _$this {
+    if (_$v != null) {
+      _sendDate = _$v.sendDate;
+      _dueDate = _$v.dueDate;
+      _$v = null;
+    }
+    return this;
+  }
+
+  @override
+  void replace(InvoiceScheduleEntity other) {
+    if (other == null) {
+      throw new ArgumentError.notNull('other');
+    }
+    _$v = other as _$InvoiceScheduleEntity;
+  }
+
+  @override
+  void update(void Function(InvoiceScheduleEntityBuilder) updates) {
+    if (updates != null) updates(this);
+  }
+
+  @override
+  _$InvoiceScheduleEntity build() {
+    final _$result = _$v ??
+        new _$InvoiceScheduleEntity._(sendDate: sendDate, dueDate: dueDate);
     replace(_$result);
     return _$result;
   }

@@ -7,6 +7,7 @@ import 'package:invoiceninja_flutter/ui/invoice/view/invoice_view_contacts.dart'
 import 'package:invoiceninja_flutter/ui/invoice/view/invoice_view_documents.dart';
 import 'package:invoiceninja_flutter/ui/invoice/view/invoice_view_history.dart';
 import 'package:invoiceninja_flutter/ui/invoice/view/invoice_view_overview.dart';
+import 'package:invoiceninja_flutter/ui/invoice/view/invoice_view_schedule.dart';
 import 'package:invoiceninja_flutter/ui/invoice/view/invoice_view_vm.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 
@@ -31,7 +32,10 @@ class _InvoiceViewState extends State<InvoiceView>
   @override
   void initState() {
     super.initState();
-    _controller = TabController(vsync: this, length: 4);
+
+    final invoice = widget.viewModel.invoice;
+    _controller =
+        TabController(vsync: this, length: invoice.isRecurring ? 5 : 4);
   }
 
   @override
@@ -84,6 +88,10 @@ class _InvoiceViewState extends State<InvoiceView>
           Tab(
             text: localization.overview,
           ),
+          if (invoice.isRecurring)
+            Tab(
+              text: localization.schedule,
+            ),
           Tab(
             text: localization.contacts,
           ),
@@ -115,6 +123,14 @@ class _InvoiceViewState extends State<InvoiceView>
                           key: ValueKey(viewModel.invoice.id),
                         ),
                       ),
+                      if (invoice.isRecurring)
+                        RefreshIndicator(
+                          onRefresh: () => viewModel.onRefreshed(context),
+                          child: InvoiceViewSchedule(
+                            viewModel: viewModel,
+                            key: ValueKey(viewModel.invoice.id),
+                          ),
+                        ),
                       RefreshIndicator(
                         onRefresh: () => viewModel.onRefreshed(context),
                         child: InvoiceViewContacts(
