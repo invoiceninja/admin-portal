@@ -57,6 +57,9 @@ abstract class HealthCheckPHPResponse
   @BuiltValueField(wireName: 'current_php_version')
   String get currentPHPVersion;
 
+  @BuiltValueField(wireName: 'current_php_cli_version')
+  String get currentPHPCLIVersion;
+
   @BuiltValueField(wireName: 'is_okay')
   bool get isOkay;
 
