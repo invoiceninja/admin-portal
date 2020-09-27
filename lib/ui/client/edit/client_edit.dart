@@ -51,9 +51,18 @@ class _ClientEditState extends State<ClientEdit>
       title: client.isNew ? localization.newClient : localization.editClient,
       onCancelPressed: (context) => viewModel.onCancelPressed(context),
       onSavePressed: (context) {
-        if (!_formKey.currentState.validate()) {
+        final bool isValid = _formKey.currentState.validate();
+
+        /*
+        setState(() {
+          autoValidate = !isValid ?? false;
+        });
+         */
+
+        if (!isValid) {
           return;
         }
+
         viewModel.onSavePressed(context);
       },
       appBarBottom: TabBar(

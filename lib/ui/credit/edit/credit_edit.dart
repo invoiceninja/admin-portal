@@ -73,11 +73,19 @@ class _CreditEditState extends State<CreditEdit>
       title: invoice.isNew ? localization.newCredit : localization.editCredit,
       onCancelPressed: (context) => viewModel.onCancelPressed(context),
       onSavePressed: (context) {
-        if (!_formKey.currentState.validate()) {
+        final bool isValid = _formKey.currentState.validate();
+
+        /*
+        setState(() {
+          autoValidate = !isValid ?? false;
+        });
+         */
+
+        if (!isValid) {
           return;
         }
 
-        widget.viewModel.onSavePressed(context);
+        viewModel.onSavePressed(context);
       },
       appBarBottom: state.prefState.isDesktop
           ? null

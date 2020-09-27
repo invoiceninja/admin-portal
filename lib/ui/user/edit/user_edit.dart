@@ -138,9 +138,16 @@ class _UserEditState extends State<UserEdit>
       ),
       onCancelPressed: (context) => viewModel.onCancelPressed(context),
       onSavePressed: (context) {
-        if (!_formKey.currentState.validate()) {
+        final bool isValid = _formKey.currentState.validate();
+
+        setState(() {
+          autoValidate = !isValid ?? false;
+        });
+
+        if (!isValid) {
           return;
         }
+
         viewModel.onSavePressed(context);
       },
       body: AppTabForm(

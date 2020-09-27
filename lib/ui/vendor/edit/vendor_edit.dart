@@ -49,9 +49,18 @@ class _VendorEditState extends State<VendorEdit>
       title: vendor.isNew ? localization.newVendor : localization.editVendor,
       onCancelPressed: (context) => viewModel.onCancelPressed(context),
       onSavePressed: (context) {
-        if (!_formKey.currentState.validate()) {
+        final bool isValid = _formKey.currentState.validate();
+
+        /*
+        setState(() {
+          autoValidate = !isValid ?? false;
+        });
+         */
+
+        if (!isValid) {
           return;
         }
+
         viewModel.onSavePressed(context);
       },
       appBarBottom: TabBar(

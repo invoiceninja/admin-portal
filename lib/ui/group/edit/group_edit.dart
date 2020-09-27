@@ -79,9 +79,16 @@ class _GroupEditState extends State<GroupEdit> {
       onCancelPressed: (context) => viewModel.onCancelPressed(context),
       title: group.isNew ? localization.newGroup : localization.editGroup,
       onSavePressed: (context) {
-        if (!_formKey.currentState.validate()) {
+        final bool isValid = _formKey.currentState.validate();
+
+        setState(() {
+          autoValidate = !isValid ?? false;
+        });
+
+        if (!isValid) {
           return;
         }
+
         viewModel.onSavePressed(context);
       },
       body: Form(
