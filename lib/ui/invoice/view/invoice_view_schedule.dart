@@ -13,7 +13,7 @@ class InvoiceViewSchedule extends StatelessWidget {
   Widget build(BuildContext context) {
     final invoice = viewModel.invoice;
     final localization = AppLocalization.of(context);
-    print('## recurring dates: ${invoice.recurringDates}');
+
     return ListView(
       shrinkWrap: true,
       padding: const EdgeInsets.all(16),

@@ -12,8 +12,6 @@ import 'package:invoiceninja_flutter/redux/static/static_state.dart';
 import 'package:invoiceninja_flutter/utils/formatting.dart';
 import 'package:invoiceninja_flutter/utils/strings.dart';
 
-import 'company_gateway_model.dart';
-
 part 'invoice_model.g.dart';
 
 abstract class InvoiceListResponse
@@ -146,8 +144,6 @@ abstract class InvoiceEntity extends Object
       partial: 0.0,
       partialDueDate: '',
       hasTasks: false,
-      autoBill: company?.settings?.autoBill ??
-          CompanyGatewayEntity.TOKEN_BILLING_ALWAYS,
       autoBillEnabled: false,
       customValue1: '',
       customValue2: '',
