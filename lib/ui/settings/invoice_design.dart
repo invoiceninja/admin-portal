@@ -566,7 +566,7 @@ class _InvoiceDesignState extends State<InvoiceDesign>
                 InvoiceTotalFields.customSurcharge4,
                 InvoiceTotalFields.paidToDate,
                 InvoiceTotalFields.total,
-                InvoiceTotalFields.clientBalance,
+                InvoiceTotalFields.outstanding,
               ].map((field) => '\$$field').toList(),
               defaultSelected: [
                 InvoiceTotalFields.subtotal,

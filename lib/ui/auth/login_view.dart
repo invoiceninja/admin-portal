@@ -420,7 +420,7 @@ class _LoginState extends State<LoginView> {
                                 onSavePressed: (_) => _submitLoginForm(),
                               ),
                             if (_emailLogin && !_recoverPassword)
-                              TextFormField(
+                              DecoratedFormField(
                                 controller: _passwordController,
                                 key: ValueKey(localization.password),
                                 textInputAction:
@@ -428,9 +428,7 @@ class _LoginState extends State<LoginView> {
                                         ? TextInputAction.done
                                         : TextInputAction.next,
                                 autocorrect: false,
-                                autovalidateMode: _autoValidate
-                                    ? AutovalidateMode.always
-                                    : AutovalidateMode.onUserInteraction,
+                                autovalidate: _autoValidate,
                                 decoration: InputDecoration(
                                   labelText: localization.password,
                                   suffixIcon: IconButton(
