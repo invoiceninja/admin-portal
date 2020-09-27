@@ -188,8 +188,8 @@ class _DesignEditState extends State<DesignEdit>
                 tabs: [
                   Tab(text: localization.settings),
                   Tab(text: localization.preview),
-                  Tab(text: localization.header),
                   Tab(text: localization.body),
+                  Tab(text: localization.header),
                   Tab(text: localization.footer),
                   Tab(text: localization.products),
                   //Tab(text: localization.tasks),
@@ -226,8 +226,8 @@ class _DesignEditState extends State<DesignEdit>
                       pdfBytes: _pdfBytes,
                       isLoading: _isLoading,
                     ),
-                    DesignSection(textController: _headerController),
                     DesignSection(textController: _bodyController),
+                    DesignSection(textController: _headerController),
                     DesignSection(textController: _footerController),
                     DesignSection(textController: _productsController),
                     //DesignSection(textController: _tasksController),
@@ -246,8 +246,8 @@ class _DesignEditState extends State<DesignEdit>
                             isScrollable: true,
                             tabs: <Widget>[
                               Tab(text: localization.settings),
-                              Tab(text: localization.header),
                               Tab(text: localization.body),
+                              Tab(text: localization.header),
                               Tab(text: localization.footer),
                               Tab(text: localization.products),
                               //Tab(text: localization.tasks),
@@ -262,9 +262,9 @@ class _DesignEditState extends State<DesignEdit>
                                   nameController: _nameController,
                                   onLoadDesign: _loadDesign,
                                 ),
+                                DesignSection(textController: _bodyController),
                                 DesignSection(
                                     textController: _headerController),
-                                DesignSection(textController: _bodyController),
                                 DesignSection(
                                     textController: _footerController),
                                 DesignSection(
