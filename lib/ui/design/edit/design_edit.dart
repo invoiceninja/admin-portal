@@ -107,9 +107,15 @@ class _DesignEditState extends State<DesignEdit>
   }
 
   void _onChanged() {
+    final design = widget.viewModel.design
+        .rebuild((b) => b..name = _nameController.text.trim());
+
+    if (design != widget.viewModel.design) {
+      widget.viewModel.onChanged(design);
+    }
+
     _debouncer.run(() {
       final design = widget.viewModel.design.rebuild((b) => b
-        ..name = _nameController.text.trim()
         ..design.replace(BuiltMap<String, String>({
           kDesignHeader: _headerController.text.trim(),
           kDesignBody: _bodyController.text.trim(),
