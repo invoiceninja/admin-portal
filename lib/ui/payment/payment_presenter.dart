@@ -9,11 +9,11 @@ import 'package:invoiceninja_flutter/utils/localization.dart';
 class PaymentPresenter extends EntityPresenter {
   static List<String> getDefaultTableFields(UserCompanyEntity userCompany) {
     return [
-      PaymentFields.paymentNumber,
+      PaymentFields.number,
       PaymentFields.client,
       PaymentFields.amount,
       PaymentFields.invoiceNumber,
-      PaymentFields.paymentDate,
+      PaymentFields.date,
       PaymentFields.transactionReference,
       PaymentFields.paymentStatus,
     ];
@@ -41,7 +41,7 @@ class PaymentPresenter extends EntityPresenter {
     final payment = entity as PaymentEntity;
 
     switch (field) {
-      case PaymentFields.paymentNumber:
+      case PaymentFields.number:
         return Text(payment.number);
       case PaymentFields.invoiceNumber:
         final numbers = payment.paymentables
@@ -55,7 +55,7 @@ class PaymentPresenter extends EntityPresenter {
             state.clientState.map[payment.clientId]?.listDisplayName ?? '');
       case PaymentFields.transactionReference:
         return Text(payment.transactionReference);
-      case PaymentFields.paymentDate:
+      case PaymentFields.date:
         return Text(formatDate(payment.date, context));
       case PaymentFields.amount:
         return Align(

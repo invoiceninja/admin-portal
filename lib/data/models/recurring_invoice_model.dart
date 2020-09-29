@@ -1,13 +1,13 @@
 class RecurringInvoiceFields {
-  static const String amount = 'invoice_amount';
+  static const String amount = 'amount';
   static const String clientId = 'client_id';
   static const String client = 'client';
   static const String statusId = 'status_id';
   static const String status = 'status';
-  static const String invoiceNumber = 'invoice_number';
+  static const String invoiceNumber = 'number';
   static const String discount = 'discount';
   static const String poNumber = 'po_number';
-  static const String date = 'invoice_date';
+  static const String date = 'date';
   static const String dueDateDays = 'due_date_days';
   static const String terms = 'terms';
   static const String footer = 'footer';
