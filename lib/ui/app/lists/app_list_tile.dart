@@ -30,9 +30,12 @@ class AppListTile extends StatelessWidget {
         leading: Icon(icon),
         title: Text(title),
         subtitle: buttons != null
-            ? Row(
-                children: buttons,
-              )
+            ? Padding(
+              padding: const EdgeInsets.only(top: 8),
+              child: Row(
+                  children: buttons,
+                ),
+            )
             : (subtitle == null ? Container() : Text(subtitle)),
         dense: dense,
         onTap: onTap,
