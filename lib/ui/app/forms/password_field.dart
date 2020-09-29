@@ -7,7 +7,7 @@ class PasswordFormField extends StatefulWidget {
     this.controller,
     this.textInputAction,
     this.autoValidate,
-    this.newPassword,
+    this.newPassword = true,
   });
 
   final TextEditingController controller;
@@ -55,7 +55,9 @@ class _PasswordFormFieldState extends State<PasswordFormField> {
       ),
       validator: (value) {
         if (value.isEmpty || value.trim().isEmpty) {
-          return localization.pleaseEnterYourPassword;
+          return widget.newPassword
+              ? null
+              : localization.pleaseEnterYourPassword;
         }
 
         if (value.length < 8) {
