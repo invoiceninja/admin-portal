@@ -39,6 +39,7 @@ class _UserEditState extends State<UserEdit>
   final _lastNameController = TextEditingController();
   final _phoneController = TextEditingController();
   final _emailController = TextEditingController();
+  final _passwordController = TextEditingController();
 
   List<TextEditingController> _controllers = [];
 
@@ -55,6 +56,7 @@ class _UserEditState extends State<UserEdit>
       _lastNameController,
       _emailController,
       _phoneController,
+      _passwordController,
     ];
 
     _controllers.forEach((controller) => controller.removeListener(_onChanged));
@@ -64,6 +66,7 @@ class _UserEditState extends State<UserEdit>
     _lastNameController.text = user.lastName;
     _emailController.text = user.email;
     _phoneController.text = user.phone;
+    _passwordController.text = user.password;
 
     _controllers.forEach((controller) => controller.addListener(_onChanged));
 
@@ -87,7 +90,8 @@ class _UserEditState extends State<UserEdit>
         ..firstName = _firstNameController.text.trim()
         ..lastName = _lastNameController.text.trim()
         ..email = _emailController.text.trim()
-        ..phone = _phoneController.text.trim());
+        ..phone = _phoneController.text.trim()
+        ..password = _passwordController.text.trim());
       if (user != widget.viewModel.user) {
         widget.viewModel.onUserChanged(user);
       }

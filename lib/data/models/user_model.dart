@@ -120,18 +120,17 @@ abstract class UserEntity extends Object
   String get phone;
 
   @nullable
+  String get password;
+
   @BuiltValueField(wireName: 'custom_value1')
   String get customValue1;
 
-  @nullable
   @BuiltValueField(wireName: 'custom_value2')
   String get customValue2;
 
-  @nullable
   @BuiltValueField(wireName: 'custom_value3')
   String get customValue3;
 
-  @nullable
   @BuiltValueField(wireName: 'custom_value4')
   String get customValue4;
 

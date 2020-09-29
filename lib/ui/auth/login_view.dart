@@ -10,6 +10,7 @@ import 'package:invoiceninja_flutter/ui/app/buttons/elevated_button.dart';
 import 'package:invoiceninja_flutter/ui/app/dialogs/alert_dialog.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/app_toggle_buttons.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/decorated_form_field.dart';
+import 'package:invoiceninja_flutter/ui/app/forms/password_field.dart';
 import 'package:invoiceninja_flutter/ui/app/link_text.dart';
 import 'package:invoiceninja_flutter/ui/auth/login_vm.dart';
 import 'package:invoiceninja_flutter/utils/colors.dart';
@@ -65,7 +66,6 @@ class _LoginState extends State<LoginView> {
   bool _autoValidate = false;
   bool _termsChecked = false;
   bool _privacyChecked = false;
-  bool _isPasswordObscured = true;
   bool _isFormComplete = false;
 
   @override
@@ -133,12 +133,6 @@ class _LoginState extends State<LoginView> {
     _secretController.dispose();
 
     super.dispose();
-  }
-
-  bool _validatePassword(String value) {
-    const pattern = r'^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9]).{8,}$';
-    final regExp = new RegExp(pattern);
-    return regExp.hasMatch(value);
   }
 
   void _onChanged() {
@@ -421,65 +415,18 @@ class _LoginState extends State<LoginView> {
                                 onSavePressed: (_) => _submitLoginForm(),
                               ),
                             if (_emailLogin && !_recoverPassword)
-                              DecoratedFormField(
+                              PasswordFormField(
                                 controller: _passwordController,
-                                key: ValueKey(localization.password),
                                 textInputAction:
                                     _isFormComplete && !_createAccount
                                         ? TextInputAction.done
                                         : TextInputAction.next,
-                                autocorrect: false,
-                                autovalidate: _autoValidate,
-                                decoration: InputDecoration(
-                                  labelText: localization.password,
-                                  suffixIcon: IconButton(
-                                    tooltip: _isPasswordObscured
-                                        ? localization.showPassword
-                                        : localization.hidePassword,
-                                    icon: Icon(
-                                      _isPasswordObscured
-                                          ? Icons.visibility
-                                          : Icons.visibility_off,
-                                    ),
-                                    onPressed: () {
-                                      setState(() {
-                                        _isPasswordObscured =
-                                            !_isPasswordObscured;
-                                      });
-                                    },
-                                  ),
-                                ),
-                                validator: (value) {
-                                  if (value.isEmpty || value.trim().isEmpty) {
-                                    return localization.pleaseEnterYourPassword;
-                                  }
-
-                                  if (_createAccount) {
-                                    if (value.length < 8) {
-                                      return localization.passwordIsTooShort;
-                                    }
-
-                                    if (!_validatePassword(value)) {
-                                      return localization.passwordIsTooEasy;
-                                    }
-                                  }
-
-                                  return null;
-                                },
-                                obscureText: _isPasswordObscured,
-                                keyboardType: TextInputType.visiblePassword,
-                                onFieldSubmitted: (String value) =>
-                                    FocusScope.of(context).nextFocus(),
-                                autofillHints: [
-                                  _createAccount
-                                      ? AutofillHints.newPassword
-                                      : AutofillHints.password
-                                ],
+                                autoValidate: _autoValidate,
+                                newPassword: _createAccount,
                               ),
                             if (_isSelfHosted || viewModel.state.isDemo)
                               TextFormField(
                                 controller: _urlController,
-                                key: ValueKey(localization.url),
                                 autocorrect: false,
                                 autovalidateMode: _autoValidate
                                     ? AutovalidateMode.always
@@ -500,7 +447,6 @@ class _LoginState extends State<LoginView> {
                             if (_isSelfHosted)
                               TextFormField(
                                 controller: _secretController,
-                                key: ValueKey(localization.secret),
                                 textInputAction: TextInputAction.done,
                                 autocorrect: false,
                                 decoration: InputDecoration(
