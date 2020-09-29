@@ -231,7 +231,7 @@ packages:
       name: extended_image
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "1.1.1"
+    version: "1.1.2"
   extended_image_library:
     dependency: transitive
     description:
@@ -375,6 +375,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "2.0.0"
+  flutter_launcher_icons:
+    dependency: "direct main"
+    description:
+      name: flutter_launcher_icons
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.8.0"
   flutter_localizations:
     dependency: "direct main"
     description: flutter
@@ -508,7 +515,7 @@ packages:
       name: image
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "2.1.17"
+    version: "2.1.18"
   image_picker:
     dependency: "direct main"
     description:
@@ -529,7 +536,7 @@ packages:
       name: in_app_purchase
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.3.4+9"
+    version: "0.3.4+10"
   intl:
     dependency: "direct main"
     description:

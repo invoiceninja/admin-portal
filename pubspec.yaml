@@ -8,6 +8,11 @@ documentation: http://docs.invoiceninja.com
 environment:
   sdk: ">=2.9.0 <3.0.0"
 
+flutter_icons:
+  android: "launcher_icon"
+  ios: false
+  image_path: "assets/images/logo.png"
+
 dependencies:
   flutter:
     sdk: flutter
@@ -50,6 +55,7 @@ dependencies:
   #quick_actions: ^0.2.1
   version: ^1.0.0
   #idb_shim: ^1.11.1+1
+  flutter_launcher_icons: ^0.8.0
 
 dev_dependencies:
   flutter_driver:
