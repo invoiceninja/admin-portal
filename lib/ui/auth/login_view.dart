@@ -580,7 +580,7 @@ class _LoginState extends State<LoginView> {
                           child: Row(
                             children: [
                               Expanded(
-                                child: SelectableText(
+                                child: Text(
                                   _loginError,
                                   style: TextStyle(
                                     color: Colors.red,
