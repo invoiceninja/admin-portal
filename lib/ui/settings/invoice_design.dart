@@ -5,9 +5,11 @@ import 'package:flutter_redux/flutter_redux.dart';
 import 'package:invoiceninja_flutter/constants.dart';
 import 'package:invoiceninja_flutter/data/models/client_model.dart';
 import 'package:invoiceninja_flutter/data/models/company_model.dart';
+import 'package:invoiceninja_flutter/data/models/credit_model.dart';
 import 'package:invoiceninja_flutter/data/models/design_model.dart';
 import 'package:invoiceninja_flutter/data/models/entities.dart';
 import 'package:invoiceninja_flutter/data/models/invoice_model.dart';
+import 'package:invoiceninja_flutter/data/models/quote_model.dart';
 import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/redux/settings/settings_actions.dart';
@@ -52,7 +54,7 @@ class _InvoiceDesignState extends State<InvoiceDesign>
   void initState() {
     super.initState();
     _focusNode = FocusScopeNode();
-    _controller = TabController(vsync: this, length: 8);
+    _controller = TabController(vsync: this, length: 10);
   }
 
   @override
@@ -85,10 +87,8 @@ class _InvoiceDesignState extends State<InvoiceDesign>
           Tab(text: localization.companyDetails),
           Tab(text: localization.companyAddress),
           Tab(text: localization.invoiceDetails),
-          /*
           Tab(text: localization.quoteDetails),
-          Tab( text: localization.creditDetails),
-           */
+          Tab(text: localization.creditDetails),
           Tab(text: localization.productColumns),
           Tab(text: localization.totalFields),
           /*
@@ -423,7 +423,8 @@ class _InvoiceDesignState extends State<InvoiceDesign>
                 InvoiceFields.date,
                 InvoiceFields.dueDate,
                 InvoiceFields.balance,
-              ],
+                InvoiceFields.total,
+              ].map((field) => '\$invoice.$field').toList(),
               selected: settings.getFieldsForSection(kPdfFieldsInvoiceDetails),
               onSelected: (values) {
                 viewModel.onSettingsChanged(settings.setFieldsForSection(
@@ -434,12 +435,11 @@ class _InvoiceDesignState extends State<InvoiceDesign>
               prefix: 'invoice',
             ),
           ),
-          /*
           FormCard(
             child: MultiSelectList(
               options: [
                 ...[
-                  QuoteFields.number,
+                  QuoteFields.quoteNumber,
                   QuoteFields.poNumber,
                   QuoteFields.date,
                   QuoteFields.validUntil,
@@ -454,17 +454,16 @@ class _InvoiceDesignState extends State<InvoiceDesign>
                 ].map((field) => '\$client.$field')
               ],
               defaultSelected: [
-                QuoteFields.number,
+                QuoteFields.quoteNumber,
                 QuoteFields.poNumber,
                 QuoteFields.date,
                 QuoteFields.validUntil,
                 QuoteFields.amount,
-              ],
+              ].map((field) => '\$quote.$field').toList(),
               selected: settings.getFieldsForSection(kPdfFieldsQuoteDetails),
               onSelected: (values) {
                 viewModel.onSettingsChanged(settings.setFieldsForSection(
                     kPdfFieldsQuoteDetails, values));
-
               },
               addTitle: localization.addField,
               liveChanges: true,
@@ -475,7 +474,7 @@ class _InvoiceDesignState extends State<InvoiceDesign>
             child: MultiSelectList(
               options: [
                 ...[
-                  CreditFields.number,
+                  CreditFields.creditNumber,
                   CreditFields.poNumber,
                   CreditFields.date,
                   CreditFields.amount,
@@ -490,14 +489,14 @@ class _InvoiceDesignState extends State<InvoiceDesign>
                 ].map((field) => '\$client.$field')
               ],
               defaultSelected: [
-                CreditFields.number,
+                CreditFields.creditNumber,
                 CreditFields.poNumber,
                 CreditFields.date,
                 CreditFields.balance,
-              ],
+              ].map((field) => '\$credit.$field').toList(),
               selected: settings.getFieldsForSection(kPdfFieldsCreditDetails),
               onSelected: (values) {
-                   viewModel.onSettingsChanged(settings.setFieldsForSection(
+                viewModel.onSettingsChanged(settings.setFieldsForSection(
                     kPdfFieldsCreditDetails, values));
               },
               addTitle: localization.addField,
@@ -505,7 +504,6 @@ class _InvoiceDesignState extends State<InvoiceDesign>
               prefix: 'credit',
             ),
           ),
-           */
           FormCard(
             child: MultiSelectList(
               options: [
