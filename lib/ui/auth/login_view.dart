@@ -2,6 +2,7 @@ import 'dart:async';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/services.dart';
 
 import 'package:invoiceninja_flutter/constants.dart';
 import 'package:invoiceninja_flutter/redux/ui/pref_state.dart';
@@ -432,6 +433,9 @@ class _LoginState extends State<LoginView> {
                                 decoration: InputDecoration(
                                   labelText: localization.password,
                                   suffixIcon: IconButton(
+                                    tooltip: _isPasswordObscured
+                                        ? localization.showPassword
+                                        : localization.hidePassword,
                                     icon: Icon(
                                       _isPasswordObscured
                                           ? Icons.visibility
@@ -573,13 +577,24 @@ class _LoginState extends State<LoginView> {
                           !_loginError.contains(OTP_ERROR))
                         Container(
                           padding: EdgeInsets.only(top: 20),
-                          child: Center(
-                            child: Text(
-                              _loginError,
-                              style: TextStyle(
-                                color: Colors.red,
+                          child: Row(
+                            children: [
+                              Expanded(
+                                child: SelectableText(
+                                  _loginError,
+                                  style: TextStyle(
+                                    color: Colors.red,
+                                  ),
+                                ),
                               ),
-                            ),
+                              IconButton(
+                                  icon: Icon(Icons.content_copy),
+                                  tooltip: localization.copyError,
+                                  onPressed: () {
+                                    Clipboard.setData(
+                                        ClipboardData(text: _loginError));
+                                  }),
+                            ],
                           ),
                         ),
                       Padding(

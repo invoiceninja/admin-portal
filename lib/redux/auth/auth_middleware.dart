@@ -1,5 +1,4 @@
 import 'dart:async';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:invoiceninja_flutter/constants.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
@@ -84,10 +83,11 @@ Middleware<AppState> _createLoginRequest(AuthRepository repository) {
     }).catchError((Object error) {
       print('Login error: $error');
       var message = error.toString();
-      if (message.startsWith('Deserializing') && !kIsWeb) {
-        message = message.substring(message.lastIndexOf('Deserializing'));
-        message =
-            'An error occurred, please check that you\'re using the latest version of the app. $message';
+      const errorPattern = 'failed due to: Deserializing';
+      if (message.contains(errorPattern)) {
+        message = 'Error: ' +
+            message.substring(
+                message.lastIndexOf(errorPattern) + errorPattern.length);
       } else if (message.toLowerCase().contains('no host specified')) {
         message = 'An error occurred, please check the URL is correct';
       } else if (message.contains('404')) {

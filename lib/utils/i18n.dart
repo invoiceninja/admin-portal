@@ -15,6 +15,9 @@ mixin LocalizationsProvider on LocaleCodeAware {
   static final Map<String, Map<String, String>> _localizedValues = {
     'en': {
       // STARTER: lang key - do not remove comment
+      'show_password': 'Show Password',
+      'hide_password': 'Hide Password',
+      'copy_error': 'Copy Error',
       'store_card': 'Store Card',
       'auto_bill_enabled': 'Auto Bill Enabled',
       'total_taxes': 'Total Taxes',
@@ -4604,6 +4607,14 @@ mixin LocalizationsProvider on LocaleCodeAware {
 
   String get autoBillEnabled =>
       _localizedValues[localeCode]['auto_bill_enabled'] ?? '';
+
+  String get copyError => _localizedValues[localeCode]['copy_error'] ?? '';
+
+  String get showPassword =>
+      _localizedValues[localeCode]['show_password'] ?? '';
+
+  String get hidePassword =>
+      _localizedValues[localeCode]['hide_password'] ?? '';
 
   String lookup(String key) {
     final lookupKey = toSnakeCase(key);
