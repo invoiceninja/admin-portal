@@ -10,7 +10,7 @@ import 'package:invoiceninja_flutter/utils/localization.dart';
 class InvoicePresenter extends EntityPresenter {
   static List<String> getDefaultTableFields(UserCompanyEntity userCompany) {
     return [
-      InvoiceFields.invoiceNumber,
+      InvoiceFields.number,
       InvoiceFields.client,
       InvoiceFields.amount,
       InvoiceFields.balance,
@@ -53,7 +53,7 @@ class InvoicePresenter extends EntityPresenter {
         return Text(
           localization.lookup(kInvoiceStatuses[invoice.calculatedStatusId]),
         );
-      case InvoiceFields.invoiceNumber:
+      case InvoiceFields.number:
         return Text((invoice.number ?? '').isEmpty
             ? localization.pending
             : invoice.number);

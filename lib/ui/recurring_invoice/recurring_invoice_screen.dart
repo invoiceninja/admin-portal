@@ -53,7 +53,7 @@ class RecurringInvoiceScreen extends StatelessWidget {
           store.dispatch(SortRecurringInvoices(value));
         },
         sortFields: [
-          InvoiceFields.invoiceNumber,
+          InvoiceFields.number,
         ],
         onSelectedState: (EntityState state, value) {
           store.dispatch(FilterRecurringInvoicesByState(state));

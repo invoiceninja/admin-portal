@@ -53,7 +53,7 @@ class InvoiceScreen extends StatelessWidget {
           store.dispatch(SortInvoices(value));
         },
         sortFields: [
-          InvoiceFields.invoiceNumber,
+          InvoiceFields.number,
           InvoiceFields.date,
           InvoiceFields.dueDate,
           EntityFields.updatedAt,

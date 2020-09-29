@@ -50,16 +50,16 @@ abstract class InvoiceItemResponse
 
 class InvoiceFields {
   static const String total = 'total';
-  static const String amount = 'invoice_amount';
+  static const String amount = 'amount';
   static const String balance = 'balance_due';
   static const String clientId = 'client_id';
   static const String client = 'client';
   static const String statusId = 'status_id';
   static const String status = 'status';
-  static const String invoiceNumber = 'invoice_number';
+  static const String number = 'number';
   static const String discount = 'discount';
   static const String poNumber = 'po_number';
-  static const String date = 'invoice_date';
+  static const String date = 'date';
   static const String dueDate = 'due_date';
   static const String terms = 'terms';
   static const String footer = 'footer';
@@ -495,16 +495,12 @@ abstract class InvoiceEntity extends Object
     final InvoiceEntity invoiceB = sortAscending ? invoice : this;
 
     switch (sortField) {
-      case InvoiceFields.invoiceNumber:
-      case QuoteFields.quoteNumber:
-      case CreditFields.creditNumber:
+      case InvoiceFields.number:
         response = (invoiceA.number ?? '')
             .toLowerCase()
             .compareTo((invoiceB.number ?? '').toLowerCase());
         break;
       case InvoiceFields.amount:
-      case QuoteFields.amount:
-      case CreditFields.amount:
         response = invoiceA.amount.compareTo(invoiceB.amount);
         break;
       case EntityFields.createdAt:
@@ -517,8 +513,6 @@ abstract class InvoiceEntity extends Object
         response = invoiceA.archivedAt.compareTo(invoiceB.archivedAt);
         break;
       case InvoiceFields.date:
-      case QuoteFields.date:
-      case CreditFields.date:
         response = invoiceA.date.compareTo(invoiceB.date);
         break;
       case InvoiceFields.balance:

@@ -57,7 +57,7 @@ abstract class InvoiceUIState extends Object
   factory InvoiceUIState() {
     return _$InvoiceUIState._(
       listUIState:
-          ListUIState(InvoiceFields.invoiceNumber, sortAscending: false),
+          ListUIState(InvoiceFields.number, sortAscending: false),
       editing: InvoiceEntity(),
       selectedId: '',
     );

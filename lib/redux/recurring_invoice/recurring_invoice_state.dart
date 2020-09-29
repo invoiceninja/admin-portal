@@ -50,7 +50,7 @@ abstract class RecurringInvoiceUIState extends Object
     implements Built<RecurringInvoiceUIState, RecurringInvoiceUIStateBuilder> {
   factory RecurringInvoiceUIState() {
     return _$RecurringInvoiceUIState._(
-      listUIState: ListUIState(InvoiceFields.invoiceNumber),
+      listUIState: ListUIState(InvoiceFields.number),
       editing: InvoiceEntity(),
       selectedId: '',
     );

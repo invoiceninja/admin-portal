@@ -11,7 +11,7 @@ import 'package:invoiceninja_flutter/constants.dart';
 class CreditPresenter extends EntityPresenter {
   static List<String> getDefaultTableFields(UserCompanyEntity userCompany) {
     return [
-      CreditFields.creditNumber,
+      CreditFields.number,
       CreditFields.client,
       CreditFields.amount,
       CreditFields.status,
@@ -47,7 +47,7 @@ class CreditPresenter extends EntityPresenter {
     switch (field) {
       case CreditFields.status:
         return Text(localization.lookup(kQuoteStatuses[credit.statusId]));
-      case CreditFields.creditNumber:
+      case CreditFields.number:
         return Text((credit.number ?? '').isEmpty
             ? localization.pending
             : credit.number);

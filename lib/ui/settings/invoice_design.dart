@@ -402,7 +402,7 @@ class _InvoiceDesignState extends State<InvoiceDesign>
             child: MultiSelectList(
               options: [
                 ...[
-                  InvoiceFields.invoiceNumber,
+                  InvoiceFields.number,
                   InvoiceFields.poNumber,
                   InvoiceFields.date,
                   InvoiceFields.dueDate,
@@ -418,7 +418,7 @@ class _InvoiceDesignState extends State<InvoiceDesign>
                 ].map((field) => '\$client.$field')
               ],
               defaultSelected: [
-                InvoiceFields.invoiceNumber,
+                InvoiceFields.number,
                 InvoiceFields.poNumber,
                 InvoiceFields.date,
                 InvoiceFields.dueDate,
@@ -439,7 +439,7 @@ class _InvoiceDesignState extends State<InvoiceDesign>
             child: MultiSelectList(
               options: [
                 ...[
-                  QuoteFields.quoteNumber,
+                  QuoteFields.number,
                   QuoteFields.poNumber,
                   QuoteFields.date,
                   QuoteFields.validUntil,
@@ -454,7 +454,7 @@ class _InvoiceDesignState extends State<InvoiceDesign>
                 ].map((field) => '\$client.$field')
               ],
               defaultSelected: [
-                QuoteFields.quoteNumber,
+                QuoteFields.number,
                 QuoteFields.poNumber,
                 QuoteFields.date,
                 QuoteFields.validUntil,
@@ -474,7 +474,7 @@ class _InvoiceDesignState extends State<InvoiceDesign>
             child: MultiSelectList(
               options: [
                 ...[
-                  CreditFields.creditNumber,
+                  CreditFields.number,
                   CreditFields.poNumber,
                   CreditFields.date,
                   CreditFields.amount,
@@ -489,7 +489,7 @@ class _InvoiceDesignState extends State<InvoiceDesign>
                 ].map((field) => '\$client.$field')
               ],
               defaultSelected: [
-                CreditFields.creditNumber,
+                CreditFields.number,
                 CreditFields.poNumber,
                 CreditFields.date,
                 CreditFields.balance,
