@@ -564,6 +564,12 @@ class _$ContactEntitySerializer implements StructuredSerializer<ContactEntity> {
       'id',
       serializers.serialize(object.id, specifiedType: const FullType(String)),
     ];
+    if (object.link != null) {
+      result
+        ..add('link')
+        ..add(serializers.serialize(object.link,
+            specifiedType: const FullType(String)));
+    }
     if (object.isChanged != null) {
       result
         ..add('isChanged')
@@ -654,6 +660,10 @@ class _$ContactEntitySerializer implements StructuredSerializer<ContactEntity> {
         case 'last_login':
           result.lastLogin = serializers.deserialize(value,
               specifiedType: const FullType(int)) as int;
+          break;
+        case 'link':
+          result.link = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String;
           break;
         case 'isChanged':
           result.isChanged = serializers.deserialize(value,
@@ -1720,6 +1730,8 @@ class _$ContactEntity extends ContactEntity {
   @override
   final int lastLogin;
   @override
+  final String link;
+  @override
   final bool isChanged;
   @override
   final int createdAt;
@@ -1753,6 +1765,7 @@ class _$ContactEntity extends ContactEntity {
       this.customValue3,
       this.customValue4,
       this.lastLogin,
+      this.link,
       this.isChanged,
       this.createdAt,
       this.updatedAt,
@@ -1839,6 +1852,7 @@ class _$ContactEntity extends ContactEntity {
         customValue3 == other.customValue3 &&
         customValue4 == other.customValue4 &&
         lastLogin == other.lastLogin &&
+        link == other.link &&
         isChanged == other.isChanged &&
         createdAt == other.createdAt &&
         updatedAt == other.updatedAt &&
@@ -1870,18 +1884,18 @@ class _$ContactEntity extends ContactEntity {
                                                                 $jc(
                                                                     $jc(
                                                                         $jc(
-                                                                            $jc($jc($jc(0, firstName.hashCode), lastName.hashCode),
-                                                                                email.hashCode),
-                                                                            password.hashCode),
-                                                                        phone.hashCode),
-                                                                    contactKey.hashCode),
-                                                                isPrimary.hashCode),
-                                                            sendEmail.hashCode),
-                                                        customValue1.hashCode),
-                                                    customValue2.hashCode),
-                                                customValue3.hashCode),
-                                            customValue4.hashCode),
-                                        lastLogin.hashCode),
+                                                                            $jc($jc($jc($jc(0, firstName.hashCode), lastName.hashCode), email.hashCode),
+                                                                                password.hashCode),
+                                                                            phone.hashCode),
+                                                                        contactKey.hashCode),
+                                                                    isPrimary.hashCode),
+                                                                sendEmail.hashCode),
+                                                            customValue1.hashCode),
+                                                        customValue2.hashCode),
+                                                    customValue3.hashCode),
+                                                customValue4.hashCode),
+                                            lastLogin.hashCode),
+                                        link.hashCode),
                                     isChanged.hashCode),
                                 createdAt.hashCode),
                             updatedAt.hashCode),
@@ -1908,6 +1922,7 @@ class _$ContactEntity extends ContactEntity {
           ..add('customValue3', customValue3)
           ..add('customValue4', customValue4)
           ..add('lastLogin', lastLogin)
+          ..add('link', link)
           ..add('isChanged', isChanged)
           ..add('createdAt', createdAt)
           ..add('updatedAt', updatedAt)
@@ -1976,6 +1991,10 @@ class ContactEntityBuilder
   int get lastLogin => _$this._lastLogin;
   set lastLogin(int lastLogin) => _$this._lastLogin = lastLogin;
 
+  String _link;
+  String get link => _$this._link;
+  set link(String link) => _$this._link = link;
+
   bool _isChanged;
   bool get isChanged => _$this._isChanged;
   set isChanged(bool isChanged) => _$this._isChanged = isChanged;
@@ -2027,6 +2046,7 @@ class ContactEntityBuilder
       _customValue3 = _$v.customValue3;
       _customValue4 = _$v.customValue4;
       _lastLogin = _$v.lastLogin;
+      _link = _$v.link;
       _isChanged = _$v.isChanged;
       _createdAt = _$v.createdAt;
       _updatedAt = _$v.updatedAt;
@@ -2070,6 +2090,7 @@ class ContactEntityBuilder
             customValue3: customValue3,
             customValue4: customValue4,
             lastLogin: lastLogin,
+            link: link,
             isChanged: isChanged,
             createdAt: createdAt,
             updatedAt: updatedAt,

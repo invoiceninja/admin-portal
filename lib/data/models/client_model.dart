@@ -704,6 +704,7 @@ abstract class ContactEntity extends Object
       createdAt: 0,
       assignedUserId: '',
       createdUserId: '',
+      link: '',
     );
   }
 
@@ -748,6 +749,9 @@ abstract class ContactEntity extends Object
 
   @BuiltValueField(wireName: 'last_login')
   int get lastLogin;
+
+  @nullable // TODO remove nullable
+  String get link;
 
   String get fullName {
     return (firstName + ' ' + lastName).trim();
