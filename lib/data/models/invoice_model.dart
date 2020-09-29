@@ -965,6 +965,7 @@ class ProductItemFields {
   static const String productKey = 'product_key';
   static const String notes = 'notes';
   static const String cost = 'cost';
+  static const String tax = 'tax';
   static const String quantity = 'quantity';
   static const String lineTotal = 'line_total';
   static const String discount = 'discount';
