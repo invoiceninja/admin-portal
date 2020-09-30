@@ -361,7 +361,9 @@ class _TemplatesAndRemindersState extends State<TemplatesAndReminders>
                             .toList()),
                   ],
                 ),
-              VariablesHelp(),
+              VariablesHelp(
+                showEmailVariables: true,
+              ),
             ],
           ),
           EmailPreview(

@@ -46,11 +46,11 @@ class _VariablesHelpState extends State<VariablesHelp>
           controller: _controller,
           isScrollable: true,
           tabs: [
-            if (widget.showEmailVariables) Tab(child: Text(localization.email)),
             Tab(child: Text(localization.invoice)),
             Tab(child: Text(localization.client)),
             Tab(child: Text(localization.contact)),
             Tab(child: Text(localization.user)),
+            if (widget.showEmailVariables) Tab(child: Text(localization.email)),
           ],
         ),
         SizedBox(
@@ -58,7 +58,6 @@ class _VariablesHelpState extends State<VariablesHelp>
           child: TabBarView(
             controller: _controller,
             children: [
-              if (widget.showEmailVariables) SizedBox(),
               _VariableGrid(
                 fields: [
                   InvoiceFields.amount,
@@ -69,6 +68,9 @@ class _VariablesHelpState extends State<VariablesHelp>
                   InvoiceFields.poNumber,
                   InvoiceFields.publicNotes,
                   InvoiceFields.exchangeRate,
+                  InvoiceFields.number,
+                  InvoiceFields.terms,
+                  InvoiceFields.footer,
                   if (company.hasCustomField(CustomFieldType.invoice1))
                     InvoiceFields.customValue1,
                   if (company.hasCustomField(CustomFieldType.invoice2))
@@ -149,6 +151,7 @@ class _VariablesHelpState extends State<VariablesHelp>
                     UserFields.custom4,
                 ].map((field) => 'user.$field').toList(),
               ),
+              if (widget.showEmailVariables) SizedBox(),
             ],
           ),
         ),
