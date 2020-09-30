@@ -477,7 +477,7 @@ class _InvoiceDesignState extends State<InvoiceDesign>
                   CreditFields.number,
                   CreditFields.poNumber,
                   CreditFields.date,
-                  CreditFields.amount,
+                  CreditFields.total,
                   CreditFields.balance,
                   CreditFields.customValue1,
                   CreditFields.customValue2,
@@ -493,7 +493,7 @@ class _InvoiceDesignState extends State<InvoiceDesign>
                 CreditFields.poNumber,
                 CreditFields.date,
                 CreditFields.balance,
-                CreditFields.amount,
+                CreditFields.total,
               ].map((field) => '\$credit.$field').toList(),
               selected: settings.getFieldsForSection(kPdfFieldsCreditDetails),
               onSelected: (values) {

@@ -40,6 +40,7 @@ abstract class CreditItemResponse
 }
 
 class CreditFields {
+  static const String total = 'total';
   static const String amount = 'amount';
   static const String balance = 'balance';
   static const String clientId = 'client_id';
