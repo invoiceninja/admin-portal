@@ -68,6 +68,10 @@ class UserFields {
   static const String email = 'email';
   static const String phone = 'phone';
   static const String updatedAt = 'updated_at';
+  static const String custom1 = 'custom1';
+  static const String custom2 = 'custom2';
+  static const String custom3 = 'custom3';
+  static const String custom4 = 'custom4';
 }
 
 abstract class UserEntity extends Object

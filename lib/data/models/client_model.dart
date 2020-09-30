@@ -84,6 +84,14 @@ class ClientFields {
   static const String cityStatePostal = 'city_state_postal';
   static const String postalCityState = 'postal_city_state';
   static const String documents = 'documents';
+  static const String postalCode = 'postal_code';
+  static const String city = 'city';
+  static const String shippingAddress1 = 'shipping_address1';
+  static const String shippingAddress2 = 'shipping_address2';
+  static const String shippingCity = 'shipping_city';
+  static const String shippingState = 'shipping_state';
+  static const String shippingPostalCode = 'shipping_postal_code';
+  static const String shippingCountry = 'shipping_country';
 }
 
 abstract class ClientEntity extends Object

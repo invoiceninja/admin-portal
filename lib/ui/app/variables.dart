@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_redux/flutter_redux.dart';
 import 'package:invoiceninja_flutter/data/models/client_model.dart';
 import 'package:invoiceninja_flutter/data/models/invoice_model.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
+import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/ui/app/form_card.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 
@@ -29,6 +31,9 @@ class _VariablesHelpState extends State<VariablesHelp>
   @override
   Widget build(BuildContext context) {
     final localization = AppLocalization.of(context);
+    final store = StoreProvider.of<AppState>(context);
+    final state = store.state;
+    final company = state.company;
 
     return FormCard(
       children: [
@@ -44,20 +49,37 @@ class _VariablesHelpState extends State<VariablesHelp>
           ],
         ),
         SizedBox(
-          height: 200,
+          height: 400,
           child: TabBarView(
             controller: _controller,
             children: [
               SizedBox(),
               _VariableGrid(
                 fields: [
-                  InvoiceFields.total,
+                  InvoiceFields.amount,
                   InvoiceFields.discount,
                   InvoiceFields.balance,
                   InvoiceFields.date,
                   InvoiceFields.dueDate,
                   InvoiceFields.poNumber,
                   InvoiceFields.publicNotes,
+                  InvoiceFields.exchangeRate,
+                  if (company.hasCustomField(CustomFieldType.invoice1))
+                    InvoiceFields.customValue1,
+                  if (company.hasCustomField(CustomFieldType.invoice2))
+                    InvoiceFields.customValue2,
+                  if (company.hasCustomField(CustomFieldType.invoice3))
+                    InvoiceFields.customValue3,
+                  if (company.hasCustomField(CustomFieldType.invoice4))
+                    InvoiceFields.customValue4,
+                  if (company.hasCustomField(CustomFieldType.surcharge1))
+                    InvoiceFields.customSurcharge1,
+                  if (company.hasCustomField(CustomFieldType.surcharge2))
+                    InvoiceFields.customSurcharge2,
+                  if (company.hasCustomField(CustomFieldType.surcharge3))
+                    InvoiceFields.customSurcharge3,
+                  if (company.hasCustomField(CustomFieldType.surcharge4))
+                    InvoiceFields.customSurcharge4,
                 ],
               ),
               _VariableGrid(
@@ -65,19 +87,62 @@ class _VariablesHelpState extends State<VariablesHelp>
                   ClientFields.name,
                   ClientFields.publicNotes,
                   ClientFields.vatNumber,
+                  ClientFields.address1,
+                  ClientFields.address2,
+                  ClientFields.city,
                   ClientFields.state,
+                  ClientFields.postalCode,
+                  ClientFields.country,
+                  ClientFields.shippingAddress1,
+                  ClientFields.shippingAddress2,
+                  ClientFields.shippingCity,
+                  ClientFields.shippingState,
+                  ClientFields.shippingPostalCode,
+                  ClientFields.shippingCountry,
+                  ClientFields.phone,
+                  ClientFields.creditBalance,
+                  ClientFields.idNumber,
+                  if (company.hasCustomField(CustomFieldType.client1))
+                    ClientFields.custom1,
+                  if (company.hasCustomField(CustomFieldType.client2))
+                    ClientFields.custom2,
+                  if (company.hasCustomField(CustomFieldType.client3))
+                    ClientFields.custom3,
+                  if (company.hasCustomField(CustomFieldType.client4))
+                    ClientFields.custom4,
                 ].map((field) => 'client.$field').toList(),
               ),
               _VariableGrid(
                 fields: [
                   ContactFields.firstName,
-                ],
+                  ContactFields.lastName,
+                  ContactFields.email,
+                  ContactFields.phone,
+                  if (company.hasCustomField(CustomFieldType.contact1))
+                    ContactFields.custom1,
+                  if (company.hasCustomField(CustomFieldType.contact2))
+                    ContactFields.custom2,
+                  if (company.hasCustomField(CustomFieldType.contact3))
+                    ContactFields.custom3,
+                  if (company.hasCustomField(CustomFieldType.contact4))
+                    ContactFields.custom4,
+                ].map((field) => 'contact.$field').toList(),
               ),
               _VariableGrid(
                 fields: [
                   UserFields.firstName,
                   UserFields.lastName,
-                ],
+                  UserFields.phone,
+                  UserFields.email,
+                  if (company.hasCustomField(CustomFieldType.user1))
+                    UserFields.custom1,
+                  if (company.hasCustomField(CustomFieldType.user2))
+                    UserFields.custom2,
+                  if (company.hasCustomField(CustomFieldType.user3))
+                    UserFields.custom3,
+                  if (company.hasCustomField(CustomFieldType.user4))
+                    UserFields.custom4,
+                ].map((field) => 'user.$field').toList(),
               ),
             ],
           ),
@@ -99,7 +164,6 @@ class _VariableGrid extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.only(top: 16),
       child: GridView.count(
-          physics: NeverScrollableScrollPhysics(),
           padding: EdgeInsets.all(6),
           shrinkWrap: true,
           primary: true,

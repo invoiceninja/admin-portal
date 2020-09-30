@@ -466,11 +466,11 @@ class CustomFieldType {
   static const String surcharge3 = 'surcharge3';
   static const String surcharge4 = 'surcharge4';
 
-  static const String group = 'group';
-  static const String group1 = 'group1';
-  static const String group2 = 'group2';
-  static const String group3 = 'group3';
-  static const String group4 = 'group4';
+  static const String user = 'user';
+  static const String user1 = 'user1';
+  static const String user2 = 'user2';
+  static const String user3 = 'user3';
+  static const String user4 = 'user4';
 }
 
 abstract class ActivityEntity
