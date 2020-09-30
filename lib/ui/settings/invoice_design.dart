@@ -182,7 +182,7 @@ class _InvoiceDesignState extends State<InvoiceDesign>
               FormCard(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
-                  LearnMore(
+                  LearnMoreUrl(
                     url: 'https://fonts.google.com',
                     child: EntityDropdown(
                       key: ValueKey('__primary_font_${settings.primaryFont}__'),

@@ -10,6 +10,7 @@ import 'package:invoiceninja_flutter/ui/app/forms/app_form.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/bool_dropdown_button.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/decorated_form_field.dart';
 import 'package:invoiceninja_flutter/ui/app/edit_scaffold.dart';
+import 'package:invoiceninja_flutter/ui/app/variables.dart';
 import 'package:invoiceninja_flutter/ui/settings/templates_and_reminders_vm.dart';
 import 'package:invoiceninja_flutter/utils/completers.dart';
 import 'package:invoiceninja_flutter/utils/formatting.dart';
@@ -195,7 +196,6 @@ class _TemplatesAndRemindersState extends State<TemplatesAndReminders>
             _isLoading = false;
             _subjectPreview = subject.trim();
             _bodyPreview = wrapper.replaceFirst('\$body', body).trim();
-
           });
         });
   }
@@ -361,6 +361,7 @@ class _TemplatesAndRemindersState extends State<TemplatesAndReminders>
                             .toList()),
                   ],
                 ),
+              VariablesHelp(),
             ],
           ),
           EmailPreview(

@@ -15,6 +15,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
   static final Map<String, Map<String, String>> _localizedValues = {
     'en': {
       // STARTER: lang key - do not remove comment
+      'variables': 'Variables',
       'show_password': 'Show Password',
       'hide_password': 'Hide Password',
       'copy_error': 'Copy Error',
@@ -4615,6 +4616,10 @@ mixin LocalizationsProvider on LocaleCodeAware {
 
   String get hidePassword =>
       _localizedValues[localeCode]['hide_password'] ?? '';
+
+  String get variables =>
+      _localizedValues[localeCode]['variables'] ?? '';
+
 
   String lookup(String key) {
     final lookupKey = toSnakeCase(key);
