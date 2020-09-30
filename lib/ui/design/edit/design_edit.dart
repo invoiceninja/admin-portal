@@ -12,6 +12,7 @@ import 'package:invoiceninja_flutter/ui/app/forms/app_form.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/app_tab_bar.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/decorated_form_field.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/design_picker.dart';
+import 'package:invoiceninja_flutter/ui/app/variables.dart';
 import 'package:invoiceninja_flutter/ui/design/edit/design_edit_vm.dart';
 import 'package:invoiceninja_flutter/utils/designs.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
@@ -331,8 +332,8 @@ class DesignSettings extends StatelessWidget {
   Widget build(BuildContext context) {
     final localization = AppLocalization.of(context);
 
-    return Column(
-      mainAxisSize: MainAxisSize.min,
+    return ListView(
+      shrinkWrap: true,
       children: <Widget>[
         FormCard(
           children: <Widget>[
@@ -346,6 +347,7 @@ class DesignSettings extends StatelessWidget {
             ),
           ],
         ),
+        VariablesHelp(),
       ],
     );
   }

@@ -8,6 +8,10 @@ import 'package:invoiceninja_flutter/ui/app/form_card.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 
 class VariablesHelp extends StatefulWidget {
+  const VariablesHelp({this.showEmailVariables = false});
+
+  final bool showEmailVariables;
+
   @override
   _VariablesHelpState createState() => _VariablesHelpState();
 }
@@ -19,7 +23,8 @@ class _VariablesHelpState extends State<VariablesHelp>
   @override
   void initState() {
     super.initState();
-    _controller = TabController(vsync: this, length: 5);
+    _controller =
+        TabController(vsync: this, length: widget.showEmailVariables ? 5 : 4);
   }
 
   @override
@@ -41,7 +46,7 @@ class _VariablesHelpState extends State<VariablesHelp>
           controller: _controller,
           isScrollable: true,
           tabs: [
-            Tab(child: Text(localization.email)),
+            if (widget.showEmailVariables) Tab(child: Text(localization.email)),
             Tab(child: Text(localization.invoice)),
             Tab(child: Text(localization.client)),
             Tab(child: Text(localization.contact)),
@@ -53,7 +58,7 @@ class _VariablesHelpState extends State<VariablesHelp>
           child: TabBarView(
             controller: _controller,
             children: [
-              SizedBox(),
+              if (widget.showEmailVariables) SizedBox(),
               _VariableGrid(
                 fields: [
                   InvoiceFields.amount,
