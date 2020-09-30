@@ -289,6 +289,7 @@ Middleware<AppState> _createLoadState(
                   ViewDashboard(navigator: Navigator.of(action.context)));
             });
           } else {
+            print('## View main screen');
             store.dispatch(
                 ViewMainScreen(navigator: Navigator.of(action.context)));
           }
@@ -474,6 +475,7 @@ Middleware<AppState> _createAccountLoaded() {
     }
 
     if (action.completer != null) {
+      print('## Completing...');
       action.completer.complete(null);
     }
   };
@@ -514,8 +516,6 @@ Middleware<AppState> _createViewMainScreen() {
   return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
     final action = dynamicAction as ViewMainScreen;
 
-    next(action);
-
     if (store.state.uiState.currentRoute == LoginScreen.route) {
       store.dispatch(UpdateCurrentRoute(DashboardScreenBuilder.route));
     }
@@ -527,5 +527,7 @@ Middleware<AppState> _createViewMainScreen() {
     WidgetsBinding.instance.addPostFrameCallback((duration) {
       action.navigator.pushNamed(MainScreen.route);
     });
+
+    next(action);
   };
 }
