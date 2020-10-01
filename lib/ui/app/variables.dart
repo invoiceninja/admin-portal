@@ -24,7 +24,7 @@ class _VariablesHelpState extends State<VariablesHelp>
   void initState() {
     super.initState();
     _controller =
-        TabController(vsync: this, length: widget.showEmailVariables ? 5 : 4);
+        TabController(vsync: this, length: widget.showEmailVariables ? 6 : 5);
   }
 
   @override
@@ -49,6 +49,7 @@ class _VariablesHelpState extends State<VariablesHelp>
             Tab(child: Text(localization.invoice)),
             Tab(child: Text(localization.client)),
             Tab(child: Text(localization.contact)),
+            Tab(child: Text(localization.company)),
             Tab(child: Text(localization.user)),
             if (widget.showEmailVariables) Tab(child: Text(localization.email)),
           ],
@@ -134,6 +135,28 @@ class _VariablesHelpState extends State<VariablesHelp>
                   if (company.hasCustomField(CustomFieldType.contact4))
                     ContactFields.custom4,
                 ].map((field) => 'contact.$field').toList(),
+              ),
+              _VariableGrid(
+                fields: [
+                  CompanyFields.name,
+                  CompanyFields.country,
+                  CompanyFields.address1,
+                  CompanyFields.address2,
+                  CompanyFields.idNumber,
+                  CompanyFields.email,
+                  CompanyFields.phone,
+                  CompanyFields.state,
+                  CompanyFields.vatNumber,
+                  CompanyFields.website,
+                  if (company.hasCustomField(CustomFieldType.company1))
+                    CompanyFields.custom1,
+                  if (company.hasCustomField(CustomFieldType.company2))
+                    CompanyFields.custom2,
+                  if (company.hasCustomField(CustomFieldType.company3))
+                    CompanyFields.custom3,
+                  if (company.hasCustomField(CustomFieldType.company4))
+                    CompanyFields.custom4,
+                ].map((field) => 'company.$field').toList(),
               ),
               _VariableGrid(
                 fields: [

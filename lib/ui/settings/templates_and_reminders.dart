@@ -362,7 +362,7 @@ class _TemplatesAndRemindersState extends State<TemplatesAndReminders>
                   ],
                 ),
               VariablesHelp(
-                showEmailVariables: true,
+                //showEmailVariables: true,
               ),
             ],
           ),
