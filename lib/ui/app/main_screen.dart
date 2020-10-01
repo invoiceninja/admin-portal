@@ -679,7 +679,10 @@ class _EntityFilter extends StatelessWidget {
     final entityMap = state.getEntityMap(filterEntityType);
     final filterEntity =
         entityMap != null ? entityMap[uiState.filterEntityId] : null;
-    final relatedTypes = filterEntityType?.relatedTypes ?? [];
+    final relatedTypes = filterEntityType?.relatedTypes
+            ?.where((element) => state.company.isModuleEnabled(element))
+            ?.toList() ??
+        [];
 
     final backgroundColor =
         !state.prefState.enableDarkMode && state.hasAccentColor

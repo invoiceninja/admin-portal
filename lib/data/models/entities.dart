@@ -80,9 +80,9 @@ class EntityType extends EnumClass {
           EntityType.payment,
           EntityType.quote,
           EntityType.credit,
-          EntityType.task,
-          EntityType.project,
-          EntityType.expense,
+          //EntityType.task,
+          //EntityType.project,
+          //EntityType.expense,
           EntityType.recurringInvoice,
         ];
       case EntityType.invoice:
@@ -102,9 +102,9 @@ class EntityType extends EnumClass {
           EntityType.invoice,
           EntityType.quote,
           EntityType.credit,
-          EntityType.task,
-          EntityType.project,
-          EntityType.expense,
+          //EntityType.task,
+          //EntityType.project,
+          //EntityType.expense,
           EntityType.vendor,
         ];
       case EntityType.companyGateway:
