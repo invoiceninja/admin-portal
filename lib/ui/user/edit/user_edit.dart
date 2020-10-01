@@ -7,6 +7,7 @@ import 'package:invoiceninja_flutter/data/models/entities.dart';
 import 'package:invoiceninja_flutter/ui/app/edit_scaffold.dart';
 import 'package:invoiceninja_flutter/ui/app/form_card.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/app_form.dart';
+import 'package:invoiceninja_flutter/ui/app/forms/custom_field.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/decorated_form_field.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/notification_settings.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/password_field.dart';
@@ -41,6 +42,10 @@ class _UserEditState extends State<UserEdit>
   final _phoneController = TextEditingController();
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
+  final _custom1Controller = TextEditingController();
+  final _custom2Controller = TextEditingController();
+  final _custom3Controller = TextEditingController();
+  final _custom4Controller = TextEditingController();
 
   List<TextEditingController> _controllers = [];
 
@@ -58,6 +63,10 @@ class _UserEditState extends State<UserEdit>
       _emailController,
       _phoneController,
       _passwordController,
+      _custom1Controller,
+      _custom2Controller,
+      _custom3Controller,
+      _custom4Controller,
     ];
 
     _controllers.forEach((controller) => controller.removeListener(_onChanged));
@@ -68,6 +77,10 @@ class _UserEditState extends State<UserEdit>
     _emailController.text = user.email;
     _phoneController.text = user.phone;
     _passwordController.text = user.password;
+    _custom1Controller.text = user.customValue1;
+    _custom2Controller.text = user.customValue2;
+    _custom3Controller.text = user.customValue3;
+    _custom4Controller.text = user.customValue4;
 
     _controllers.forEach((controller) => controller.addListener(_onChanged));
 
@@ -92,7 +105,11 @@ class _UserEditState extends State<UserEdit>
         ..lastName = _lastNameController.text.trim()
         ..email = _emailController.text.trim()
         ..phone = _phoneController.text.trim()
-        ..password = _passwordController.text.trim());
+        ..password = _passwordController.text.trim()
+        ..customValue1 = _custom1Controller.text.trim()
+        ..customValue2 = _custom2Controller.text.trim()
+        ..customValue3 = _custom3Controller.text.trim()
+        ..customValue4 = _custom4Controller.text.trim());
       if (user != widget.viewModel.user) {
         widget.viewModel.onUserChanged(user);
       }
@@ -195,6 +212,30 @@ class _UserEditState extends State<UserEdit>
                   PasswordFormField(
                     controller: _passwordController,
                     autoValidate: autoValidate,
+                  ),
+                  CustomField(
+                    controller: _custom1Controller,
+                    field: CustomFieldType.user1,
+                    value: user.customValue1,
+                    onSavePressed: viewModel.onSavePressed,
+                  ),
+                  CustomField(
+                    controller: _custom2Controller,
+                    field: CustomFieldType.user2,
+                    value: user.customValue2,
+                    onSavePressed: viewModel.onSavePressed,
+                  ),
+                  CustomField(
+                    controller: _custom3Controller,
+                    field: CustomFieldType.user3,
+                    value: user.customValue3,
+                    onSavePressed: viewModel.onSavePressed,
+                  ),
+                  CustomField(
+                    controller: _custom4Controller,
+                    field: CustomFieldType.user4,
+                    value: user.customValue4,
+                    onSavePressed: viewModel.onSavePressed,
                   ),
                 ],
               ),
