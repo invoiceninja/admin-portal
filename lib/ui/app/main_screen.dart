@@ -735,6 +735,7 @@ class _EntityFilter extends StatelessWidget {
                       child: Align(
                         alignment: Alignment.centerRight,
                         child: OverflowView.flexible(
+                          spacing: 4,
                           children: <Widget>[
                             for (int i = 0; i < relatedTypes.length; i++)
                               FlatButton(
