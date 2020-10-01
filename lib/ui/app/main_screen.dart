@@ -41,6 +41,7 @@ import 'package:invoiceninja_flutter/ui/webhook/view/webhook_view_vm.dart';
 import 'package:invoiceninja_flutter/ui/webhook/webhook_screen_vm.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:invoiceninja_flutter/ui/app/app_border.dart';
+import 'package:overflow_view/overflow_view.dart';
 import 'package:redux/redux.dart';
 
 class MainScreen extends StatelessWidget {
@@ -678,6 +679,7 @@ class _EntityFilter extends StatelessWidget {
     final entityMap = state.getEntityMap(filterEntityType);
     final filterEntity =
         entityMap != null ? entityMap[uiState.filterEntityId] : null;
+    final relatedTypes = filterEntityType?.relatedTypes ?? [];
 
     final backgroundColor =
         !state.prefState.enableDarkMode && state.hasAccentColor
@@ -698,86 +700,103 @@ class _EntityFilter extends StatelessWidget {
               ? Container(
                   color: backgroundColor,
                 )
-              : AppBar(
-                  leading: state.prefState.showFilterSidebar
-                      ? null
-                      : IconButton(
-                          tooltip: localization.showSidebar,
-                          icon: Icon(Icons.chrome_reader_mode),
-                          onPressed: () => store.dispatch(
-                              UpdateUserPreferences(showFilterSidebar: true)),
-                        ),
-                  automaticallyImplyLeading: false,
-                  title: Align(
-                    alignment: Alignment.centerLeft,
-                    child: FlatButton(
-                      padding: EdgeInsets.only(
-                          left: state.prefState.showFilterSidebar ? 4 : 0),
-                      child: Text(
-                        '${localization.lookup('$filterEntityType')}  ›  ${filterEntity.listDisplayName}',
-                        style: TextStyle(
-                            fontSize: 17, color: state.headerTextColor),
-                        overflow: TextOverflow.ellipsis,
-                        textAlign: TextAlign.start,
-                        maxLines: 1,
+              : Row(
+                  children: [
+                    SizedBox(width: 4),
+                    if (!state.prefState.showFilterSidebar)
+                      IconButton(
+                        tooltip: localization.showSidebar,
+                        icon: Icon(Icons.chrome_reader_mode),
+                        onPressed: () => store.dispatch(
+                            UpdateUserPreferences(showFilterSidebar: true)),
                       ),
-                      onPressed: () => viewEntity(
-                        entity: filterEntity,
-                        context: context,
+                    ConstrainedBox(
+                      constraints: BoxConstraints(maxWidth: 180),
+                      child: FlatButton(
+                        visualDensity: VisualDensity.compact,
+                        child: Text(
+                          '${localization.lookup('$filterEntityType')}  ›  ${filterEntity.listDisplayName}',
+                          style: TextStyle(
+                              fontSize: 17, color: state.headerTextColor),
+                          overflow: TextOverflow.ellipsis,
+                          maxLines: 1,
+                        ),
+                        onPressed: () => viewEntity(
+                          entity: filterEntity,
+                          context: context,
+                        ),
                       ),
                     ),
-                  ),
-                  actions: [
-                    PopupMenuButton<EntityType>(
-                      child: Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 8),
-                        child: Row(
-                          children: [
-                            Text(
-                              routeEntityType == filterEntityType
-                                  ? localization.overview
-                                  : '${localization.lookup(routeEntityType.plural)}',
-                              style: TextStyle(
-                                  fontSize: 17, color: state.headerTextColor),
-                            ),
-                            SizedBox(width: 4),
-                            Icon(Icons.arrow_drop_down),
+                    Expanded(
+                      child: Align(
+                        alignment: Alignment.centerRight,
+                        child: OverflowView.flexible(
+                          children: <Widget>[
+                            for (int i = 0; i < relatedTypes.length; i++)
+                              FlatButton(
+                                minWidth: 0,
+                                visualDensity: VisualDensity.compact,
+                                child: Text(localization
+                                    .lookup('${relatedTypes[i].plural}')),
+                                onPressed: () {
+                                  viewEntitiesByType(
+                                    context: context,
+                                    entityType: relatedTypes[i],
+                                    filterEntity: filterEntity,
+                                  );
+                                },
+                              )
                           ],
+                          builder: (context, remaining) {
+                            return PopupMenuButton<EntityType>(
+                              child: Padding(
+                                padding:
+                                    const EdgeInsets.symmetric(horizontal: 8),
+                                child: Row(
+                                  children: [
+                                    Text(localization.more),
+                                    SizedBox(width: 4),
+                                    Icon(Icons.arrow_drop_down),
+                                  ],
+                                ),
+                              ),
+                              initialValue: routeEntityType,
+                              onSelected: (EntityType value) {
+                                if (value == filterEntityType) {
+                                  viewEntity(
+                                    entity: filterEntity,
+                                    context: context,
+                                  );
+                                } else {
+                                  viewEntitiesByType(
+                                    context: context,
+                                    entityType: value,
+                                    filterEntity: filterEntity,
+                                  );
+                                }
+                              },
+                              itemBuilder: (BuildContext context) =>
+                                  filterEntityType.relatedTypes
+                                      .sublist(relatedTypes.length - remaining)
+                                      .where((element) => state.company
+                                          .isModuleEnabled(element))
+                                      .map((type) => PopupMenuItem<EntityType>(
+                                            value: type,
+                                            child: ConstrainedBox(
+                                              constraints: BoxConstraints(
+                                                minWidth: 75,
+                                              ),
+                                              child: Text(type ==
+                                                      filterEntityType
+                                                  ? localization.overview
+                                                  : '${localization.lookup(type.plural)}'),
+                                            ),
+                                          ))
+                                      .toList(),
+                            );
+                          },
                         ),
                       ),
-                      initialValue: routeEntityType,
-                      onSelected: (EntityType value) {
-                        if (value == filterEntityType) {
-                          viewEntity(
-                            entity: filterEntity,
-                            context: context,
-                          );
-                        } else {
-                          viewEntitiesByType(
-                            context: context,
-                            entityType: value,
-                            filterEntity: filterEntity,
-                          );
-                        }
-                      },
-                      itemBuilder: (BuildContext context) => [
-                        filterEntityType,
-                        ...filterEntityType.relatedTypes
-                      ]
-                          .where((element) =>
-                              state.company.isModuleEnabled(element))
-                          .map((type) => PopupMenuItem<EntityType>(
-                                value: type,
-                                child: ConstrainedBox(
-                                  constraints: BoxConstraints(
-                                    minWidth: 75,
-                                  ),
-                                  child: Text(type == filterEntityType
-                                      ? localization.overview
-                                      : '${localization.lookup(type.plural)}'),
-                                ),
-                              ))
-                          .toList(),
                     ),
                     SizedBox(width: 4),
                     IconButton(
@@ -786,7 +805,7 @@ class _EntityFilter extends StatelessWidget {
                         entityId: uiState.filterEntityId,
                         entityType: uiState.filterEntityType,
                       )),
-                    )
+                    ),
                   ],
                 ),
         ),

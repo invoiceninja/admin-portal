@@ -83,6 +83,7 @@ class EntityType extends EnumClass {
           EntityType.task,
           EntityType.project,
           EntityType.expense,
+          EntityType.recurringInvoice,
         ];
       case EntityType.invoice:
         return [
