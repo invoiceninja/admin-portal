@@ -55,12 +55,13 @@ class _VariablesHelpState extends State<VariablesHelp>
           ],
         ),
         SizedBox(
-          height: 400,
+          height: 500,
           child: TabBarView(
             controller: _controller,
             children: [
               _VariableGrid(
                 fields: [
+                  'view_link', // TODO change to email variables
                   InvoiceFields.amount,
                   InvoiceFields.discount,
                   InvoiceFields.balance,
@@ -195,6 +196,7 @@ class _VariableGrid extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.only(top: 16),
       child: GridView.count(
+          physics: NeverScrollableScrollPhysics(),
           padding: EdgeInsets.all(6),
           shrinkWrap: true,
           primary: true,
