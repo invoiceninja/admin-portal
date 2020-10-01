@@ -39,7 +39,6 @@ import 'package:invoiceninja_flutter/ui/token/view/token_view_vm.dart';
 import 'package:invoiceninja_flutter/ui/webhook/edit/webhook_edit_vm.dart';
 import 'package:invoiceninja_flutter/ui/webhook/view/webhook_view_vm.dart';
 import 'package:invoiceninja_flutter/ui/webhook/webhook_screen_vm.dart';
-import 'package:invoiceninja_flutter/utils/colors.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:invoiceninja_flutter/ui/app/app_border.dart';
 import 'package:overflow_view/overflow_view.dart';
