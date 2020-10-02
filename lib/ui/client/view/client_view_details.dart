@@ -50,41 +50,39 @@ class _ClientViewDetailsState extends State<ClientViewDetails> {
       final contacts = client.contacts;
 
       contacts.forEach((contact) {
-        if ((contact.email ?? '').isNotEmpty) {
-          listTiles.add(AppListTile(
-            buttons: [
-              Expanded(
-                  child: OutlineButton(
-                child: Text(localization.viewPortal.toUpperCase()),
-                shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(5)),
-                onPressed: () {
-                  launch('${contact.link}&client_hash=${client.clientHash}',
-                      forceWebView: false, forceSafariVC: false);
-                },
-              )),
-              SizedBox(width: kTableColumnGap),
-              Expanded(
-                  child: OutlineButton(
-                child: Text(localization.copyLink.toUpperCase()),
-                shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(5)),
-                onPressed: () {
-                  Clipboard.setData(ClipboardData(text: contact.link));
-                  Scaffold.of(context).showSnackBar(SnackBar(
-                      content: Text(localization.copiedToClipboard
-                          .replaceFirst(':value ', ''))));
-                },
-              )),
-            ],
-            icon: Icons.email,
-            title: contact.fullName + '\n' + contact.email,
-            copyValue: contact.email,
-            onTap: () => setState(() {
-              _launched = _launchURL(context, 'mailto:' + contact.email);
-            }),
-          ));
-        }
+        listTiles.add(AppListTile(
+          buttons: [
+            Expanded(
+                child: OutlineButton(
+              child: Text(localization.viewPortal.toUpperCase()),
+              shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(5)),
+              onPressed: () {
+                launch('${contact.link}&client_hash=${client.clientHash}',
+                    forceWebView: false, forceSafariVC: false);
+              },
+            )),
+            SizedBox(width: kTableColumnGap),
+            Expanded(
+                child: OutlineButton(
+              child: Text(localization.copyLink.toUpperCase()),
+              shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(5)),
+              onPressed: () {
+                Clipboard.setData(ClipboardData(text: contact.link));
+                Scaffold.of(context).showSnackBar(SnackBar(
+                    content: Text(localization.copiedToClipboard
+                        .replaceFirst(':value ', ''))));
+              },
+            )),
+          ],
+          icon: Icons.email,
+          title: contact.fullName + '\n' + contact.email,
+          copyValue: contact.email,
+          onTap: () => setState(() {
+            _launched = _launchURL(context, 'mailto:' + contact.email);
+          }),
+        ));
 
         if ((contact.phone ?? '').isNotEmpty) {
           listTiles.add(AppListTile(

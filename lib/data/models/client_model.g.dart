@@ -552,6 +552,8 @@ class _$ContactEntitySerializer implements StructuredSerializer<ContactEntity> {
       'last_login',
       serializers.serialize(object.lastLogin,
           specifiedType: const FullType(int)),
+      'link',
+      serializers.serialize(object.link, specifiedType: const FullType(String)),
       'created_at',
       serializers.serialize(object.createdAt,
           specifiedType: const FullType(int)),
@@ -564,12 +566,6 @@ class _$ContactEntitySerializer implements StructuredSerializer<ContactEntity> {
       'id',
       serializers.serialize(object.id, specifiedType: const FullType(String)),
     ];
-    if (object.link != null) {
-      result
-        ..add('link')
-        ..add(serializers.serialize(object.link,
-            specifiedType: const FullType(String)));
-    }
     if (object.isChanged != null) {
       result
         ..add('isChanged')
@@ -1813,6 +1809,9 @@ class _$ContactEntity extends ContactEntity {
     }
     if (lastLogin == null) {
       throw new BuiltValueNullFieldError('ContactEntity', 'lastLogin');
+    }
+    if (link == null) {
+      throw new BuiltValueNullFieldError('ContactEntity', 'link');
     }
     if (createdAt == null) {
       throw new BuiltValueNullFieldError('ContactEntity', 'createdAt');

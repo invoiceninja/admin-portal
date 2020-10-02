@@ -2,6 +2,7 @@ import 'package:invoiceninja_flutter/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:invoiceninja_flutter/data/models/entities.dart';
+import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/redux/dashboard/dashboard_actions.dart';
@@ -749,6 +750,13 @@ class _EntityFilter extends StatelessWidget {
                                       entityType: relatedTypes[i],
                                       filterEntity: filterEntity,
                                     );
+                                  },
+                                  onLongPress: () {
+                                    handleEntityAction(
+                                        context,
+                                        filterEntity,
+                                        EntityAction.newEntityType(
+                                            relatedTypes[i]));
                                   },
                                 ),
                                 decoration: BoxDecoration(
