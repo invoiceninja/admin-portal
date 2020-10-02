@@ -737,21 +737,30 @@ class _EntityFilter extends StatelessWidget {
                           spacing: 4,
                           children: <Widget>[
                             for (int i = 0; i < relatedTypes.length; i++)
-                              FlatButton(
-                                color: relatedTypes[i] == routeEntityType
-                                    ? state.accentColor
-                                    : null,
-                                minWidth: 0,
-                                visualDensity: VisualDensity.compact,
-                                child: Text(localization
-                                    .lookup('${relatedTypes[i].plural}')),
-                                onPressed: () {
-                                  viewEntitiesByType(
-                                    context: context,
-                                    entityType: relatedTypes[i],
-                                    filterEntity: filterEntity,
-                                  );
-                                },
+                              DecoratedBox(
+                                child: FlatButton(
+                                  minWidth: 0,
+                                  visualDensity: VisualDensity.compact,
+                                  child: Text(localization
+                                      .lookup('${relatedTypes[i].plural}')),
+                                  onPressed: () {
+                                    viewEntitiesByType(
+                                      context: context,
+                                      entityType: relatedTypes[i],
+                                      filterEntity: filterEntity,
+                                    );
+                                  },
+                                ),
+                                decoration: BoxDecoration(
+                                  border: relatedTypes[i] == routeEntityType
+                                      ? Border(
+                                          bottom: BorderSide(
+                                            color: state.accentColor,
+                                            width: 2,
+                                          ),
+                                        )
+                                      : null,
+                                ),
                               )
                           ],
                           builder: (context, remaining) {
