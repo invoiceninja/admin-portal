@@ -105,7 +105,8 @@ class EntityType extends EnumClass {
           //EntityType.task,
           //EntityType.project,
           //EntityType.expense,
-          EntityType.vendor,
+          //EntityType.vendor,
+          EntityType.recurringInvoice,
         ];
       case EntityType.companyGateway:
         return [

@@ -1,5 +1,5 @@
 import 'package:invoiceninja_flutter/constants.dart';
-import 'package:invoiceninja_flutter/data/models/company_gateway_model.dart';
+import 'package:invoiceninja_flutter/data/models/company_model.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/app_dropdown_button.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/client_picker.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/custom_field.dart';
@@ -276,10 +276,10 @@ class InvoiceEditDetailsState extends State<InvoiceEditDetails> {
                   onChanged: (dynamic value) => viewModel
                       .onChanged(invoice.rebuild((b) => b..autoBill = value)),
                   items: [
-                    CompanyGatewayEntity.TOKEN_BILLING_ALWAYS,
-                    CompanyGatewayEntity.TOKEN_BILLING_OPT_OUT,
-                    CompanyGatewayEntity.TOKEN_BILLING_OPT_IN,
-                    CompanyGatewayEntity.TOKEN_BILLING_DISABLED
+                    SettingsEntity.AUTO_BILL_ALWAYS,
+                    SettingsEntity.AUTO_BILL_OPT_OUT,
+                    SettingsEntity.AUTO_BILL_OPT_IN,
+                    SettingsEntity.AUTO_BILL_OFF,
                   ]
                       .map((value) => DropdownMenuItem(
                             child: Text(localization.lookup(value)),

@@ -715,7 +715,7 @@ class _EntityFilter extends StatelessWidget {
                             UpdateUserPreferences(showFilterSidebar: true)),
                       ),
                     ConstrainedBox(
-                      constraints: BoxConstraints(maxWidth: 180),
+                      constraints: BoxConstraints(maxWidth: 220),
                       child: FlatButton(
                         visualDensity: VisualDensity.compact,
                         child: Text(
