@@ -246,6 +246,7 @@ class _LoginState extends State<LoginView> {
         _loginError = '';
         if (_recoverPassword) {
           _recoverPassword = false;
+          _buttonController.reset();
           showDialog<MessageDialog>(
               context: context,
               builder: (BuildContext context) {
@@ -567,13 +568,15 @@ class _LoginState extends State<LoginView> {
                                 ),
                               SizedBox(width: 10),
                               Text(
-                                _createAccount
-                                    ? (_emailLogin
-                                        ? localization.emailSignUp
-                                        : localization.googleSignUp)
-                                    : (_emailLogin
-                                        ? localization.emailSignIn
-                                        : localization.googleSignIn),
+                                _recoverPassword
+                                    ? localization.recoverPassword
+                                    : _createAccount
+                                        ? (_emailLogin
+                                            ? localization.emailSignUp
+                                            : localization.googleSignUp)
+                                        : (_emailLogin
+                                            ? localization.emailSignIn
+                                            : localization.googleSignIn),
                                 style: TextStyle(
                                     fontSize: 18, color: Colors.white),
                               )
