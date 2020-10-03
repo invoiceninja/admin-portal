@@ -77,9 +77,16 @@ class _ClientViewDetailsState extends State<ClientViewDetails> {
             )),
           ],
           icon: Icons.email,
-          title: contact.fullName + '\n' + contact.email,
+          title: (contact.fullName.isEmpty
+                  ? localization.blankContact
+                  : contact.fullName) +
+              ('\n' + contact.email).trim(),
           copyValue: contact.email,
           onTap: () => setState(() {
+            if ((contact.email ?? '').isEmpty) {
+              return;
+            }
+
             _launched = _launchURL(context, 'mailto:' + contact.email);
           }),
         ));
@@ -87,7 +94,11 @@ class _ClientViewDetailsState extends State<ClientViewDetails> {
         if ((contact.phone ?? '').isNotEmpty) {
           listTiles.add(AppListTile(
             icon: Icons.phone,
-            title: contact.fullName + '\n' + contact.phone,
+            title: (contact.fullName.isEmpty
+                    ? localization.blankContact
+                    : contact.fullName) +
+                '\n' +
+                contact.phone,
             copyValue: contact.phone,
             subtitle: localization.phone,
             onTap: () => setState(() {

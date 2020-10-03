@@ -31,15 +31,19 @@ class AppListTile extends StatelessWidget {
         title: Text(title),
         subtitle: buttons != null
             ? Padding(
-              padding: const EdgeInsets.only(top: 8),
-              child: Row(
+                padding: const EdgeInsets.only(top: 8),
+                child: Row(
                   children: buttons,
                 ),
-            )
+              )
             : (subtitle == null ? Container() : Text(subtitle)),
         dense: dense,
         onTap: onTap,
         onLongPress: () {
+          if ((copyValue ?? title ?? '').isEmpty) {
+            return;
+          }
+
           Clipboard.setData(ClipboardData(text: copyValue ?? title));
           Scaffold.of(context).showSnackBar(SnackBar(
               content: Text(AppLocalization.of(context)
