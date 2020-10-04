@@ -88,7 +88,9 @@ Middleware<AppState> _createLoginRequest(AuthRepository repository) {
         action.completer.completeError(message);
       }
       store.dispatch(UserLoginFailure(message));
-      throw error;
+      if ('$error'.startsWith('Error ::')) {
+        throw error;
+      }
     });
 
     next(action);
@@ -116,7 +118,9 @@ Middleware<AppState> _createSignUpRequest(AuthRepository repository) {
         action.completer.completeError(message);
       }
       store.dispatch(UserLoginFailure(message));
-      throw error;
+      if ('$error'.startsWith('Error ::')) {
+        throw error;
+      }
     });
 
     next(action);
@@ -150,7 +154,9 @@ Middleware<AppState> _createOAuthLoginRequest(AuthRepository repository) {
         action.completer.completeError(message);
       }
       store.dispatch(UserLoginFailure(message));
-      throw error;
+      if ('$error'.startsWith('Error ::')) {
+        throw error;
+      }
     });
 
     next(action);
@@ -179,7 +185,9 @@ Middleware<AppState> _createOAuthSignUpRequest(AuthRepository repository) {
         action.completer.completeError(message);
       }
       store.dispatch(UserLoginFailure(message));
-      throw error;
+      if ('$error'.startsWith('Error ::')) {
+        throw error;
+      }
     });
 
     next(action);
@@ -233,7 +241,9 @@ Middleware<AppState> _createRefreshRequest(AuthRepository repository) {
         action.completer.completeError(message);
       }
       store.dispatch(RefreshDataFailure(message));
-      throw error;
+      if ('$error'.startsWith('Error ::')) {
+        throw error;
+      }
     });
 
     next(action);
@@ -344,7 +354,7 @@ String _parseError(String error) {
   if (error.contains(errorPattern)) {
     final lastIndex = error.lastIndexOf(errorPattern);
     final secondToLastIndex = secondToLastIndexOf(error, errorPattern);
-    error = 'Error: ' +
+    error = 'Error :: ' +
         error
             .substring(
                 (secondToLastIndex >= 0 ? secondToLastIndex : lastIndex) +
