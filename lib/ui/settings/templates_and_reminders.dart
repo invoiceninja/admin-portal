@@ -10,6 +10,7 @@ import 'package:invoiceninja_flutter/ui/app/forms/app_form.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/bool_dropdown_button.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/decorated_form_field.dart';
 import 'package:invoiceninja_flutter/ui/app/edit_scaffold.dart';
+import 'package:invoiceninja_flutter/ui/app/variables.dart';
 import 'package:invoiceninja_flutter/ui/settings/templates_and_reminders_vm.dart';
 import 'package:invoiceninja_flutter/utils/completers.dart';
 import 'package:invoiceninja_flutter/utils/formatting.dart';
@@ -61,6 +62,21 @@ class _TemplatesAndRemindersState extends State<TemplatesAndReminders>
     _focusNode = FocusScopeNode();
     _controller = TabController(vsync: this, length: 2);
     _controller.addListener(_handleTabSelection);
+
+    _controllers = [
+      _subjectController,
+      _bodyController,
+    ];
+
+    _subjectController.addListener(_onChanged);
+    _bodyController.addListener(_onChanged);
+  }
+
+  @override
+  void didChangeDependencies() {
+    _loadTemplate(EmailTemplate.invoice);
+
+    super.didChangeDependencies();
   }
 
   @override
@@ -75,35 +91,24 @@ class _TemplatesAndRemindersState extends State<TemplatesAndReminders>
     super.dispose();
   }
 
-  @override
-  void didChangeDependencies() {
-    _controllers = [
-      _subjectController,
-      _bodyController,
-    ];
-
-    _controllers
-        .forEach((dynamic controller) => controller.removeListener(_onChanged));
-
-    _loadTemplate(EmailTemplate.invoice);
-
-    _controllers
-        .forEach((dynamic controller) => controller.addListener(_onChanged));
-
-    super.didChangeDependencies();
-  }
-
   void _loadTemplate(EmailTemplate emailTemplate) {
     final settings = widget.viewModel.settings;
 
+    _bodyController.removeListener(_onChanged);
+    _subjectController.removeListener(_onChanged);
+
     _bodyController.text = settings.getEmailBody(emailTemplate);
     _subjectController.text = settings.getEmailSubject(emailTemplate);
+
+    _bodyController.addListener(_onChanged);
+    _subjectController.addListener(_onChanged);
   }
 
   void _onChanged() {
     _debouncer.run(() {
       final String body = _bodyController.text.trim();
       final String subject = _subjectController.text.trim();
+
       SettingsEntity settings = widget.viewModel.settings;
 
       if (_template == EmailTemplate.invoice) {
@@ -220,6 +225,8 @@ class _TemplatesAndRemindersState extends State<TemplatesAndReminders>
         ],
       ),
       body: AppTabForm(
+        tabBarKey: ValueKey(
+            '__${state.settingsUIState.updatedAt}_${_subjectPreview}_${_bodyPreview}_'),
         tabController: _controller,
         formKey: _formKey,
         focusNode: _focusNode,
@@ -354,6 +361,9 @@ class _TemplatesAndRemindersState extends State<TemplatesAndReminders>
                             .toList()),
                   ],
                 ),
+              VariablesHelp(
+                //showEmailVariables: true,
+              ),
             ],
           ),
           EmailPreview(
@@ -536,10 +546,6 @@ class EmailPreview extends StatelessWidget {
       child: Stack(
         alignment: Alignment.topCenter,
         children: <Widget>[
-          if (isLoading)
-            SizedBox(
-              child: LinearProgressIndicator(),
-            ),
           Column(
             mainAxisSize: MainAxisSize.max,
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -555,14 +561,36 @@ class EmailPreview extends StatelessWidget {
                 ),
               ),
               Expanded(
-                child: TemplatePreview(
-                  html: body,
-                ),
+                child: kIsWeb
+                    ? WebTemplatePreview(html: body)
+                    : TemplatePreview(
+                        html: body,
+                      ),
               ),
             ],
-          )
+          ),
+          if (isLoading)
+            SizedBox(
+              child: LinearProgressIndicator(),
+            ),
         ],
       ),
+    );
+  }
+}
+
+class WebTemplatePreview extends StatelessWidget {
+  const WebTemplatePreview({this.html});
+
+  final String html;
+
+  @override
+  Widget build(BuildContext context) {
+    final encodedHtml =
+        'data:text/html;charset=utf-8,' + Uri.encodeComponent(html);
+    WebUtils.registerWebView(encodedHtml);
+    return AbsorbPointer(
+      child: HtmlElementView(viewType: encodedHtml),
     );
   }
 }
@@ -587,7 +615,7 @@ class _TemplatePreviewState extends State<TemplatePreview>
   void didUpdateWidget(oldWidget) {
     super.didUpdateWidget(oldWidget);
 
-    if (!kIsWeb && widget.html != oldWidget.html) {
+    if (widget.html != oldWidget.html) {
       _webViewController.loadUrl(
           Uri.dataFromString(widget.html, mimeType: 'text/html').toString());
     }
@@ -597,23 +625,14 @@ class _TemplatePreviewState extends State<TemplatePreview>
   Widget build(BuildContext context) {
     super.build(context);
 
-    if (kIsWeb) {
-      final html =
-          'data:text/html;charset=utf-8,' + Uri.encodeComponent(widget.html);
-      WebUtils.registerWebView(html);
-      return AbsorbPointer(
-        child: HtmlElementView(viewType: html),
-      );
-    } else {
-      return WebView(
-        //debuggingEnabled: true,
-        initialUrl:
-            Uri.dataFromString(widget.html, mimeType: 'text/html').toString(),
-        onWebViewCreated: (WebViewController webViewController) {
-          _webViewController = webViewController;
-        },
-        javascriptMode: JavascriptMode.disabled,
-      );
-    }
+    return WebView(
+      //debuggingEnabled: true,
+      initialUrl:
+          Uri.dataFromString(widget.html, mimeType: 'text/html').toString(),
+      onWebViewCreated: (WebViewController webViewController) {
+        _webViewController = webViewController;
+      },
+      javascriptMode: JavascriptMode.disabled,
+    );
   }
 }

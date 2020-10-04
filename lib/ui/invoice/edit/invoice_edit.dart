@@ -78,11 +78,19 @@ class _InvoiceEditState extends State<InvoiceEdit>
       title: invoice.isNew ? localization.newInvoice : localization.editInvoice,
       onCancelPressed: (context) => viewModel.onCancelPressed(context),
       onSavePressed: (context) {
-        if (!_formKey.currentState.validate()) {
+        final bool isValid = _formKey.currentState.validate();
+
+        /*
+        setState(() {
+          autoValidate = !isValid ?? false;
+        });
+         */
+
+        if (!isValid) {
           return;
         }
 
-        widget.viewModel.onSavePressed(context);
+        viewModel.onSavePressed(context);
       },
       appBarBottom: state.prefState.isDesktop
           ? null

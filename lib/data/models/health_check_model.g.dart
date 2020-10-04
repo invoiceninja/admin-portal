@@ -114,6 +114,9 @@ class _$HealthCheckPHPResponseSerializer
       'current_php_version',
       serializers.serialize(object.currentPHPVersion,
           specifiedType: const FullType(String)),
+      'current_php_cli_version',
+      serializers.serialize(object.currentPHPCLIVersion,
+          specifiedType: const FullType(String)),
       'is_okay',
       serializers.serialize(object.isOkay, specifiedType: const FullType(bool)),
     ];
@@ -139,6 +142,10 @@ class _$HealthCheckPHPResponseSerializer
           break;
         case 'current_php_version':
           result.currentPHPVersion = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String;
+          break;
+        case 'current_php_cli_version':
+          result.currentPHPCLIVersion = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String;
           break;
         case 'is_okay':
@@ -337,6 +344,8 @@ class _$HealthCheckPHPResponse extends HealthCheckPHPResponse {
   @override
   final String currentPHPVersion;
   @override
+  final String currentPHPCLIVersion;
+  @override
   final bool isOkay;
 
   factory _$HealthCheckPHPResponse(
@@ -344,7 +353,10 @@ class _$HealthCheckPHPResponse extends HealthCheckPHPResponse {
       (new HealthCheckPHPResponseBuilder()..update(updates)).build();
 
   _$HealthCheckPHPResponse._(
-      {this.minimumPHPVersion, this.currentPHPVersion, this.isOkay})
+      {this.minimumPHPVersion,
+      this.currentPHPVersion,
+      this.currentPHPCLIVersion,
+      this.isOkay})
       : super._() {
     if (minimumPHPVersion == null) {
       throw new BuiltValueNullFieldError(
@@ -353,6 +365,10 @@ class _$HealthCheckPHPResponse extends HealthCheckPHPResponse {
     if (currentPHPVersion == null) {
       throw new BuiltValueNullFieldError(
           'HealthCheckPHPResponse', 'currentPHPVersion');
+    }
+    if (currentPHPCLIVersion == null) {
+      throw new BuiltValueNullFieldError(
+          'HealthCheckPHPResponse', 'currentPHPCLIVersion');
     }
     if (isOkay == null) {
       throw new BuiltValueNullFieldError('HealthCheckPHPResponse', 'isOkay');
@@ -374,6 +390,7 @@ class _$HealthCheckPHPResponse extends HealthCheckPHPResponse {
     return other is HealthCheckPHPResponse &&
         minimumPHPVersion == other.minimumPHPVersion &&
         currentPHPVersion == other.currentPHPVersion &&
+        currentPHPCLIVersion == other.currentPHPCLIVersion &&
         isOkay == other.isOkay;
   }
 
@@ -381,7 +398,8 @@ class _$HealthCheckPHPResponse extends HealthCheckPHPResponse {
   @override
   int get hashCode {
     return __hashCode ??= $jf($jc(
-        $jc($jc(0, minimumPHPVersion.hashCode), currentPHPVersion.hashCode),
+        $jc($jc($jc(0, minimumPHPVersion.hashCode), currentPHPVersion.hashCode),
+            currentPHPCLIVersion.hashCode),
         isOkay.hashCode));
   }
 
@@ -390,6 +408,7 @@ class _$HealthCheckPHPResponse extends HealthCheckPHPResponse {
     return (newBuiltValueToStringHelper('HealthCheckPHPResponse')
           ..add('minimumPHPVersion', minimumPHPVersion)
           ..add('currentPHPVersion', currentPHPVersion)
+          ..add('currentPHPCLIVersion', currentPHPCLIVersion)
           ..add('isOkay', isOkay))
         .toString();
   }
@@ -409,6 +428,11 @@ class HealthCheckPHPResponseBuilder
   set currentPHPVersion(String currentPHPVersion) =>
       _$this._currentPHPVersion = currentPHPVersion;
 
+  String _currentPHPCLIVersion;
+  String get currentPHPCLIVersion => _$this._currentPHPCLIVersion;
+  set currentPHPCLIVersion(String currentPHPCLIVersion) =>
+      _$this._currentPHPCLIVersion = currentPHPCLIVersion;
+
   bool _isOkay;
   bool get isOkay => _$this._isOkay;
   set isOkay(bool isOkay) => _$this._isOkay = isOkay;
@@ -419,6 +443,7 @@ class HealthCheckPHPResponseBuilder
     if (_$v != null) {
       _minimumPHPVersion = _$v.minimumPHPVersion;
       _currentPHPVersion = _$v.currentPHPVersion;
+      _currentPHPCLIVersion = _$v.currentPHPCLIVersion;
       _isOkay = _$v.isOkay;
       _$v = null;
     }
@@ -444,6 +469,7 @@ class HealthCheckPHPResponseBuilder
         new _$HealthCheckPHPResponse._(
             minimumPHPVersion: minimumPHPVersion,
             currentPHPVersion: currentPHPVersion,
+            currentPHPCLIVersion: currentPHPCLIVersion,
             isOkay: isOkay);
     replace(_$result);
     return _$result;

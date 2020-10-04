@@ -1,8 +1,10 @@
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:invoiceninja_flutter/constants.dart';
+import 'package:invoiceninja_flutter/data/models/company_gateway_model.dart';
 import 'package:invoiceninja_flutter/data/models/entities.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/data/models/quote_model.dart';
+import 'package:invoiceninja_flutter/data/models/recurring_invoice_model.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/redux/payment/payment_selectors.dart';
 import 'package:invoiceninja_flutter/ui/app/FieldGrid.dart';
@@ -53,6 +55,9 @@ class InvoiceOverview extends StatelessWidget {
     } else if (invoice.entityType == EntityType.credit) {
       statuses = kCreditStatuses;
       colors = CreditStatusColors.colors;
+    } else if (invoice.entityType == EntityType.recurringInvoice) {
+      statuses = kRecurringInvoiceStatuses;
+      colors = RecurringInvoiceStatusColors.colors;
     } else {
       statuses = kInvoiceStatuses;
       colors = InvoiceStatusColors.colors;
@@ -75,7 +80,9 @@ class InvoiceOverview extends StatelessWidget {
             formatNumber(invoice.amount, context, clientId: invoice.clientId),
         secondLabel: invoice.isCredit
             ? localization.creditRemaining
-            : invoice.isQuote ? null : localization.balanceDue,
+            : (invoice.isQuote || invoice.isRecurringInvoice)
+                ? null
+                : localization.balanceDue,
         secondValue: [EntityType.invoice, EntityType.credit]
                 .contains(invoice.entityType)
             ? formatNumber(invoice.balance, context, clientId: invoice.clientId)
@@ -94,7 +101,7 @@ class InvoiceOverview extends StatelessWidget {
         QuoteFields.date: formatDate(invoice.date, context)
       else if (invoice.isCredit)
         CreditFields.date: formatDate(invoice.date, context)
-      else
+      else if (invoice.isInvoice)
         InvoiceFields.date: formatDate(invoice.date, context),
       dueDateField: formatDate(invoice.dueDate, context),
       InvoiceFields.partial: formatNumber(invoice.partial, context,
@@ -107,6 +114,33 @@ class InvoiceOverview extends StatelessWidget {
           formatNumberType: invoice.isAmountDiscount
               ? FormatNumberType.money
               : FormatNumberType.percent),
+      if (invoice.isRecurringInvoice) ...{
+        RecurringInvoiceFields.frequency:
+            localization.lookup(kFrequencies[invoice.frequencyId]),
+        RecurringInvoiceFields.nextSendDate:
+            formatDate(invoice.nextSendDate, context),
+        RecurringInvoiceFields.remainingCycles: invoice.remainingCycles == -1
+            ? localization.endless
+            : '${invoice.remainingCycles}',
+        RecurringInvoiceFields.autoBill: localization.lookup(invoice.autoBill) +
+            ([
+              CompanyGatewayEntity.TOKEN_BILLING_OPT_IN,
+              CompanyGatewayEntity.TOKEN_BILLING_OPT_OUT
+            ].contains(invoice.autoBill)
+                ? (' - ' +
+                    (invoice.autoBillEnabled
+                        ? localization.yes
+                        : localization.no))
+                : ''),
+        InvoiceFields.dueDate: invoice.dueDateDays == 'terms'
+            ? localization.paymentTerm
+            : invoice.dueDateDays == '1'
+                ? localization.firstDayOfTheMonth
+                : invoice.dueDateDays == '31'
+                    ? localization.lastDayOfTheMonth
+                    : localization.dayCount
+                        .replaceFirst(':count', '${invoice.dueDateDays}'),
+      }
     };
 
     if (invoice.customValue1.isNotEmpty) {
@@ -122,6 +156,20 @@ class InvoiceOverview extends StatelessWidget {
           context: context,
           field: CustomFieldType.invoice2,
           value: invoice.customValue2);
+    }
+    if (invoice.customValue3.isNotEmpty) {
+      final label3 = company.getCustomFieldLabel(CustomFieldType.invoice3);
+      fields[label3] = formatCustomValue(
+          context: context,
+          field: CustomFieldType.invoice3,
+          value: invoice.customValue3);
+    }
+    if (invoice.customValue4.isNotEmpty) {
+      final label4 = company.getCustomFieldLabel(CustomFieldType.invoice4);
+      fields[label4] = formatCustomValue(
+          context: context,
+          field: CustomFieldType.invoice4,
+          value: invoice.customValue4);
     }
 
     widgets.add(

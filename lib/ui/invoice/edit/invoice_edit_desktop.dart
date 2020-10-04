@@ -2,7 +2,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:invoiceninja_flutter/constants.dart';
-import 'package:invoiceninja_flutter/data/models/company_gateway_model.dart';
+import 'package:invoiceninja_flutter/data/models/company_model.dart';
 import 'package:invoiceninja_flutter/data/models/entities.dart';
 import 'package:invoiceninja_flutter/ui/app/form_card.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/app_dropdown_button.dart';
@@ -215,7 +215,7 @@ class InvoiceEditDesktopState extends State<InvoiceEditDesktop>
                     ),
                   SizedBox(height: 8),
                   ConstrainedBox(
-                    constraints: BoxConstraints(maxHeight: 200),
+                    constraints: BoxConstraints(maxHeight: 186),
                     child: InvoiceEditContactsScreen(
                       entityType: invoice.entityType,
                     ),
@@ -245,6 +245,15 @@ class InvoiceEditDesktopState extends State<InvoiceEditDesktop>
                                   child: Text(localization.lookup(entry.value)),
                                 ))
                             .toList()),
+                    DatePicker(
+                      labelText: (invoice.lastSentDate ?? '').isNotEmpty
+                          ? localization.nextSendDate
+                          : localization.startDate,
+                      onSelected: (date) => viewModel.onChanged(
+                          invoice.rebuild((b) => b..nextSendDate = date)),
+                      selectedDate: invoice.nextSendDate,
+                      firstDate: DateTime.now(),
+                    ),
                     AppDropdownButton<int>(
                       showUseDefault: true,
                       labelText: localization.remainingCycles,
@@ -265,13 +274,6 @@ class InvoiceEditDesktopState extends State<InvoiceEditDesktop>
                             .toList()
                       ],
                     ),
-                    DatePicker(
-                        labelText: (invoice.lastSentDate ?? '').isNotEmpty
-                            ? localization.nextSendDate
-                            : localization.startDate,
-                        onSelected: (date) => viewModel.onChanged(
-                            invoice.rebuild((b) => b..nextSendDate = date)),
-                        selectedDate: invoice.nextSendDate),
                     AppDropdownButton<String>(
                       labelText: localization.dueDate,
                       value: invoice.dueDateDays ?? '',
@@ -393,10 +395,10 @@ class InvoiceEditDesktopState extends State<InvoiceEditDesktop>
                         onChanged: (dynamic value) => viewModel.onChanged(
                             invoice.rebuild((b) => b..autoBill = value)),
                         items: [
-                          CompanyGatewayEntity.TOKEN_BILLING_ALWAYS,
-                          CompanyGatewayEntity.TOKEN_BILLING_OPT_OUT,
-                          CompanyGatewayEntity.TOKEN_BILLING_OPT_IN,
-                          CompanyGatewayEntity.TOKEN_BILLING_DISABLED
+                          SettingsEntity.AUTO_BILL_ALWAYS,
+                          SettingsEntity.AUTO_BILL_OPT_OUT,
+                          SettingsEntity.AUTO_BILL_OPT_IN,
+                          SettingsEntity.AUTO_BILL_OFF,
                         ]
                             .map((value) => DropdownMenuItem(
                                   child: Text(localization.lookup(value)),

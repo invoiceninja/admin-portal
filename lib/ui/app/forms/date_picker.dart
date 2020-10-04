@@ -9,6 +9,7 @@ class DatePicker extends StatefulWidget {
     this.validator,
     this.autoValidate = false,
     this.allowClearing = false,
+    this.firstDate,
   });
 
   final String labelText;
@@ -17,6 +18,7 @@ class DatePicker extends StatefulWidget {
   final Function validator;
   final bool autoValidate;
   final bool allowClearing;
+  final DateTime firstDate;
 
   @override
   _DatePickerState createState() => new _DatePickerState();
@@ -40,14 +42,26 @@ class _DatePickerState extends State<DatePicker> {
   }
 
   void _showDatePicker() async {
+    DateTime firstDate = DateTime.now();
+    final DateTime initialDate =
+        widget.selectedDate != null && widget.selectedDate.isNotEmpty
+            ? DateTime.tryParse(widget.selectedDate)
+            : DateTime.now();
+
+    if (widget.firstDate != null) {
+      if (initialDate.isBefore(firstDate)) {
+        firstDate = initialDate;
+      }
+    } else {
+      firstDate = DateTime(2015, 8);
+    }
+
     final DateTime selectedDate = await showDatePicker(
-        context: context,
-        initialDate:
-            widget.selectedDate != null && widget.selectedDate.isNotEmpty
-                ? DateTime.tryParse(widget.selectedDate)
-                : DateTime.now(),
-        firstDate: new DateTime(2015, 8),
-        lastDate: new DateTime(2101));
+      context: context,
+      initialDate: initialDate,
+      firstDate: firstDate,
+      lastDate: DateTime(2101),
+    );
 
     if (selectedDate != null) {
       final date = convertDateTimeToSqlDate(selectedDate);

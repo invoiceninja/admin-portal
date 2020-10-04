@@ -1,12 +1,17 @@
 name: invoiceninja_flutter
 description: Client for Invoice Ninja
-version: 5.0.16+16
+version: 5.0.17+17
 author: Hillel Coren
 homepage: https://invoiceninja.com
 documentation: http://docs.invoiceninja.com
 
 environment:
   sdk: ">=2.9.0 <3.0.0"
+
+flutter_icons:
+  android: "launcher_icon"
+  ios: false
+  image_path: "assets/images/logo.png"
 
 dependencies:
   flutter:
@@ -18,8 +23,7 @@ dependencies:
   http: ^0.12.0+4
   in_app_purchase: ^0.3.1+1
   path_provider: ^1.6.1
-  shared_preferences: ^0.5.6+2
-  #shared_preferences: '>=0.5.8 <2.0.0'
+  shared_preferences: ^0.5.12
   material_design_icons_flutter: ^4.0.5345
   built_value: ^7.0.9
   built_collection: ^4.3.2
@@ -51,10 +55,8 @@ dependencies:
   #quick_actions: ^0.2.1
   version: ^1.0.0
   #idb_shim: ^1.11.1+1
-
-#dependency_overrides:
-#  shared_preferences:
-#    path: ../plugins_shard_pref/packages/shared_preferences/shared_preferences
+  flutter_launcher_icons: ^0.8.0
+  overflow_view: ^0.2.1
 
 dev_dependencies:
   flutter_driver:

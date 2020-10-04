@@ -161,3 +161,9 @@ String matchesStringValue({String haystack, String needle}) {
     return null;
   }
 }
+
+int secondToLastIndexOf(String string, String pattern) {
+  string = string.substring(0, string.lastIndexOf(pattern));
+
+  return string.lastIndexOf(pattern);
+}

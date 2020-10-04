@@ -6,7 +6,7 @@ part 'account_model.g.dart';
 
 abstract class AccountEntity
     implements Built<AccountEntity, AccountEntityBuilder> {
-  factory AccountEntity({String id, AppState state}) {
+  factory AccountEntity(bool reportErrors, {String id, AppState state}) {
     return _$AccountEntity._(
       id: '',
       defaultUrl: '',
@@ -14,7 +14,7 @@ abstract class AccountEntity
       planExpires: '',
       latestVersion: '',
       currentVersion: '',
-      reportErrors: false,
+      reportErrors: reportErrors,
     );
   }
 

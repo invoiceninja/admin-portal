@@ -31,10 +31,10 @@ part 'company_state.g.dart';
 
 abstract class UserCompanyState
     implements Built<UserCompanyState, UserCompanyStateBuilder> {
-  factory UserCompanyState() {
+  factory UserCompanyState(bool reportErrors) {
     return _$UserCompanyState._(
       lastUpdated: 0,
-      userCompany: UserCompanyEntity(),
+      userCompany: UserCompanyEntity(reportErrors),
       documentState: DocumentState(),
       productState: ProductState(),
       clientState: ClientState(),

@@ -23,6 +23,7 @@ const EntityAction _$emailInvoice = const EntityAction._('emailInvoice');
 const EntityAction _$emailQuote = const EntityAction._('emailQuote');
 const EntityAction _$emailCredit = const EntityAction._('emailCredit');
 const EntityAction _$emailPayment = const EntityAction._('emailPayment');
+const EntityAction _$markActive = const EntityAction._('markActive');
 const EntityAction _$markSent = const EntityAction._('markSent');
 const EntityAction _$markPaid = const EntityAction._('markPaid');
 const EntityAction _$newClient = const EntityAction._('newClient');
@@ -87,6 +88,8 @@ EntityAction _$valueOf(String name) {
       return _$emailCredit;
     case 'emailPayment':
       return _$emailPayment;
+    case 'markActive':
+      return _$markActive;
     case 'markSent':
       return _$markSent;
     case 'markPaid':
@@ -161,6 +164,7 @@ final BuiltSet<EntityAction> _$values =
   _$emailQuote,
   _$emailCredit,
   _$emailPayment,
+  _$markActive,
   _$markSent,
   _$markPaid,
   _$newClient,

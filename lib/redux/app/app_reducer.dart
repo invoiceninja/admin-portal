@@ -33,11 +33,14 @@ import 'package:invoiceninja_flutter/redux/credit/credit_actions.dart';
 // We create the State reducer by combining many smaller reducers into one!
 AppState appReducer(AppState state, dynamic action) {
   if (action is UserLogout) {
-    return AppState(prefState: state.prefState).rebuild((b) => b
-      ..authState.replace(state.authState.rebuild((b) => b
-        ..isAuthenticated = false
-        ..lastEnteredPasswordAt = 0))
-      ..isTesting = state.isTesting);
+    return AppState(
+            prefState: state.prefState,
+            reportErrors: state.account.reportErrors)
+        .rebuild((b) => b
+          ..authState.replace(state.authState.rebuild((b) => b
+            ..isAuthenticated = false
+            ..lastEnteredPasswordAt = 0))
+          ..isTesting = state.isTesting);
   } else if (action is LoadStateSuccess) {
     return action.state.rebuild((b) => b
       ..isLoading = false
@@ -46,7 +49,7 @@ AppState appReducer(AppState state, dynamic action) {
     return state.rebuild((b) => b
       ..userCompanyStates.replace(BuiltList<UserCompanyState>(
           List<int>.generate(kMaxNumberOfCompanies, (i) => i + 1)
-              .map((index) => UserCompanyState())
+              .map((index) => UserCompanyState(state.account.reportErrors))
               .toList())));
   }
 

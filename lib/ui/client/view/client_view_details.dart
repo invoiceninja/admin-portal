@@ -1,6 +1,8 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:invoiceninja_flutter/constants.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/ui/app/lists/app_list_tile.dart';
 import 'package:invoiceninja_flutter/utils/formatting.dart';
@@ -48,22 +50,55 @@ class _ClientViewDetailsState extends State<ClientViewDetails> {
       final contacts = client.contacts;
 
       contacts.forEach((contact) {
-        if ((contact.email ?? '').isNotEmpty) {
-          listTiles.add(AppListTile(
-            icon: Icons.email,
-            title: contact.fullName + '\n' + contact.email,
-            copyValue: contact.email,
-            subtitle: localization.email,
-            onTap: () => setState(() {
-              _launched = _launchURL(context, 'mailto:' + contact.email);
-            }),
-          ));
-        }
+        listTiles.add(AppListTile(
+          buttons: [
+            Expanded(
+                child: OutlineButton(
+              child: Text(localization.viewPortal.toUpperCase()),
+              shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(5)),
+              onPressed: () {
+                launch('${contact.silentLink}&client_hash=${client.clientHash}',
+                    forceWebView: false, forceSafariVC: false);
+              },
+            )),
+            SizedBox(width: kTableColumnGap),
+            Expanded(
+                child: OutlineButton(
+              child: Text(localization.copyLink.toUpperCase()),
+              shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(5)),
+              onPressed: () {
+                Clipboard.setData(ClipboardData(text: contact.link));
+                Scaffold.of(context).showSnackBar(SnackBar(
+                    content: Text(localization.copiedToClipboard
+                        .replaceFirst(':value ', ''))));
+              },
+            )),
+          ],
+          icon: Icons.email,
+          title: (contact.fullName.isEmpty
+                  ? localization.blankContact
+                  : contact.fullName) +
+              ('\n' + contact.email).trim(),
+          copyValue: contact.email,
+          onTap: () => setState(() {
+            if ((contact.email ?? '').isEmpty) {
+              return;
+            }
+
+            _launched = _launchURL(context, 'mailto:' + contact.email);
+          }),
+        ));
 
         if ((contact.phone ?? '').isNotEmpty) {
           listTiles.add(AppListTile(
             icon: Icons.phone,
-            title: contact.fullName + '\n' + contact.phone,
+            title: (contact.fullName.isEmpty
+                    ? localization.blankContact
+                    : contact.fullName) +
+                '\n' +
+                contact.phone,
             copyValue: contact.phone,
             subtitle: localization.phone,
             onTap: () => setState(() {

@@ -562,7 +562,7 @@ void createEntityByType(
               force: force,
               user: UserEntity(
                 state: state,
-                userCompany: UserCompanyEntity(),
+                userCompany: UserCompanyEntity(false),
               ),
             ));
             break;

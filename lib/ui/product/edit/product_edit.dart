@@ -38,6 +38,8 @@ class _ProductEditState extends State<ProductEdit> {
   final _costController = TextEditingController();
   final _custom1Controller = TextEditingController();
   final _custom2Controller = TextEditingController();
+  final _custom3Controller = TextEditingController();
+  final _custom4Controller = TextEditingController();
 
   List<TextEditingController> _controllers = [];
   final _debouncer = Debouncer();
@@ -52,6 +54,8 @@ class _ProductEditState extends State<ProductEdit> {
       _costController,
       _custom1Controller,
       _custom2Controller,
+      _custom3Controller,
+      _custom4Controller,
     ];
 
     _controllers
@@ -68,6 +72,8 @@ class _ProductEditState extends State<ProductEdit> {
         formatNumberType: FormatNumberType.inputMoney);
     _custom1Controller.text = product.customValue1;
     _custom2Controller.text = product.customValue2;
+    _custom3Controller.text = product.customValue3;
+    _custom4Controller.text = product.customValue4;
 
     _controllers
         .forEach((dynamic controller) => controller.addListener(_onChanged));
@@ -95,7 +101,10 @@ class _ProductEditState extends State<ProductEdit> {
         ..quantity = parseDouble(_quantityController.text)
         ..cost = parseDouble(_costController.text)
         ..customValue1 = _custom1Controller.text.trim()
-        ..customValue2 = _custom2Controller.text.trim());
+        ..customValue2 = _custom2Controller.text.trim()
+        ..customValue3 = _custom3Controller.text.trim()
+        ..customValue4 = _custom4Controller.text.trim()
+      );
       if (product != widget.viewModel.product) {
         widget.viewModel.onChanged(product);
       }
@@ -162,6 +171,18 @@ class _ProductEditState extends State<ProductEdit> {
                   controller: _custom2Controller,
                   field: CustomFieldType.product2,
                   value: product.customValue2,
+                  onSavePressed: viewModel.onSavePressed,
+                ),
+                CustomField(
+                  controller: _custom3Controller,
+                  field: CustomFieldType.product3,
+                  value: product.customValue3,
+                  onSavePressed: viewModel.onSavePressed,
+                ),
+                CustomField(
+                  controller: _custom4Controller,
+                  field: CustomFieldType.product4,
+                  value: product.customValue4,
                   onSavePressed: viewModel.onSavePressed,
                 ),
                 DecoratedFormField(

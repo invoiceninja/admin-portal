@@ -138,6 +138,15 @@ class _PaymentRefundState extends State<PaymentRefund> {
                 onChanged: (value) => viewModel
                     .onChanged(payment.rebuild((b) => b..sendEmail = value)),
               ),
+              if (payment.isOnline)
+                SwitchListTile(
+                  activeColor: Theme.of(context).accentColor,
+                  title: Text(localization.gatewayRefund),
+                  value: payment.gatewayRefund ?? false,
+                  subtitle: Text(localization.gatewayRefundHelp),
+                  onChanged: (value) => viewModel.onChanged(
+                      payment.rebuild((b) => b..gatewayRefund = value)),
+                ),
             ],
           ),
         ],

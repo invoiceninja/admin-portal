@@ -2,6 +2,7 @@ import 'dart:async';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/services.dart';
 
 import 'package:invoiceninja_flutter/constants.dart';
 import 'package:invoiceninja_flutter/redux/ui/pref_state.dart';
@@ -9,6 +10,7 @@ import 'package:invoiceninja_flutter/ui/app/buttons/elevated_button.dart';
 import 'package:invoiceninja_flutter/ui/app/dialogs/alert_dialog.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/app_toggle_buttons.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/decorated_form_field.dart';
+import 'package:invoiceninja_flutter/ui/app/forms/password_field.dart';
 import 'package:invoiceninja_flutter/ui/app/link_text.dart';
 import 'package:invoiceninja_flutter/ui/auth/login_vm.dart';
 import 'package:invoiceninja_flutter/utils/colors.dart';
@@ -64,7 +66,6 @@ class _LoginState extends State<LoginView> {
   bool _autoValidate = false;
   bool _termsChecked = false;
   bool _privacyChecked = false;
-  bool _isPasswordObscured = true;
   bool _isFormComplete = false;
 
   @override
@@ -132,12 +133,6 @@ class _LoginState extends State<LoginView> {
     _secretController.dispose();
 
     super.dispose();
-  }
-
-  bool _validatePassword(String value) {
-    const pattern = r'^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9]).{8,}$';
-    final regExp = new RegExp(pattern);
-    return regExp.hasMatch(value);
   }
 
   void _onChanged() {
@@ -251,6 +246,7 @@ class _LoginState extends State<LoginView> {
         _loginError = '';
         if (_recoverPassword) {
           _recoverPassword = false;
+          _buttonController.reset();
           showDialog<MessageDialog>(
               context: context,
               builder: (BuildContext context) {
@@ -420,64 +416,18 @@ class _LoginState extends State<LoginView> {
                                 onSavePressed: (_) => _submitLoginForm(),
                               ),
                             if (_emailLogin && !_recoverPassword)
-                              TextFormField(
+                              PasswordFormField(
                                 controller: _passwordController,
-                                key: ValueKey(localization.password),
                                 textInputAction:
                                     _isFormComplete && !_createAccount
                                         ? TextInputAction.done
                                         : TextInputAction.next,
-                                autocorrect: false,
-                                autovalidateMode: _autoValidate
-                                    ? AutovalidateMode.always
-                                    : AutovalidateMode.onUserInteraction,
-                                decoration: InputDecoration(
-                                  labelText: localization.password,
-                                  suffixIcon: IconButton(
-                                    icon: Icon(
-                                      _isPasswordObscured
-                                          ? Icons.visibility
-                                          : Icons.visibility_off,
-                                    ),
-                                    onPressed: () {
-                                      setState(() {
-                                        _isPasswordObscured =
-                                            !_isPasswordObscured;
-                                      });
-                                    },
-                                  ),
-                                ),
-                                validator: (value) {
-                                  if (value.isEmpty || value.trim().isEmpty) {
-                                    return localization.pleaseEnterYourPassword;
-                                  }
-
-                                  if (_createAccount) {
-                                    if (value.length < 8) {
-                                      return localization.passwordIsTooShort;
-                                    }
-
-                                    if (!_validatePassword(value)) {
-                                      return localization.passwordIsTooEasy;
-                                    }
-                                  }
-
-                                  return null;
-                                },
-                                obscureText: _isPasswordObscured,
-                                keyboardType: TextInputType.visiblePassword,
-                                onFieldSubmitted: (String value) =>
-                                    FocusScope.of(context).nextFocus(),
-                                autofillHints: [
-                                  _createAccount
-                                      ? AutofillHints.newPassword
-                                      : AutofillHints.password
-                                ],
+                                autoValidate: _autoValidate,
+                                newPassword: _createAccount,
                               ),
                             if (_isSelfHosted || viewModel.state.isDemo)
                               TextFormField(
                                 controller: _urlController,
-                                key: ValueKey(localization.url),
                                 autocorrect: false,
                                 autovalidateMode: _autoValidate
                                     ? AutovalidateMode.always
@@ -498,7 +448,6 @@ class _LoginState extends State<LoginView> {
                             if (_isSelfHosted)
                               TextFormField(
                                 controller: _secretController,
-                                key: ValueKey(localization.secret),
                                 textInputAction: TextInputAction.done,
                                 autocorrect: false,
                                 decoration: InputDecoration(
@@ -575,13 +524,24 @@ class _LoginState extends State<LoginView> {
                           !_loginError.contains(OTP_ERROR))
                         Container(
                           padding: EdgeInsets.only(top: 20),
-                          child: Center(
-                            child: Text(
-                              _loginError,
-                              style: TextStyle(
-                                color: Colors.red,
+                          child: Row(
+                            children: [
+                              Expanded(
+                                child: Text(
+                                  _loginError,
+                                  style: TextStyle(
+                                    color: Colors.red,
+                                  ),
+                                ),
                               ),
-                            ),
+                              IconButton(
+                                  icon: Icon(Icons.content_copy),
+                                  tooltip: localization.copyError,
+                                  onPressed: () {
+                                    Clipboard.setData(
+                                        ClipboardData(text: _loginError));
+                                  }),
+                            ],
                           ),
                         ),
                       Padding(
@@ -608,13 +568,15 @@ class _LoginState extends State<LoginView> {
                                 ),
                               SizedBox(width: 10),
                               Text(
-                                _createAccount
-                                    ? (_emailLogin
-                                        ? localization.emailSignUp
-                                        : localization.googleSignUp)
-                                    : (_emailLogin
-                                        ? localization.emailSignIn
-                                        : localization.googleSignIn),
+                                _recoverPassword
+                                    ? localization.recoverPassword
+                                    : _createAccount
+                                        ? (_emailLogin
+                                            ? localization.emailSignUp
+                                            : localization.googleSignUp)
+                                        : (_emailLogin
+                                            ? localization.emailSignIn
+                                            : localization.googleSignIn),
                                 style: TextStyle(
                                     fontSize: 18, color: Colors.white),
                               )

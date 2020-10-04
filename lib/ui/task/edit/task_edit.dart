@@ -74,11 +74,19 @@ class _TaskEditState extends State<TaskEdit>
       title: task.isNew ? localization.newTask : localization.editTask,
       onCancelPressed: (context) => viewModel.onCancelPressed(context),
       onSavePressed: (context) {
-        if (!_formKey.currentState.validate()) {
+        final bool isValid = _formKey.currentState.validate();
+
+        /*
+        setState(() {
+          autoValidate = !isValid ?? false;
+        });
+         */
+
+        if (!isValid) {
           return;
         }
 
-        widget.viewModel.onSavePressed(context);
+        viewModel.onSavePressed(context);
       },
       appBarBottom: TabBar(
         controller: _controller,

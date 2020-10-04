@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
@@ -32,6 +33,11 @@ class ErrorDialog extends StatelessWidget {
                       store.dispatch(UserLogout(context));
                     });
               }),
+        FlatButton(
+            child: Text(localization.copy.toUpperCase()),
+            onPressed: () {
+              Clipboard.setData(ClipboardData(text: '$error'));
+            }),
         FlatButton(
             child: Text(localization.dismiss.toUpperCase()),
             onPressed: () {

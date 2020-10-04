@@ -475,7 +475,7 @@ GroupTotals calculateReportTotals({
         if (cell is ReportNumberValue &&
             cell.currencyId != company.currencyId) {
           double cellValue = cell.value;
-          cellValue *= getExchangeRateWithMap(currencyMap,
+          cellValue *= getExchangeRate(currencyMap,
               fromCurrencyId: cell.currencyId,
               toCurrencyId: company.currencyId);
           totals['$group'][column] += cellValue;

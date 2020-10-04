@@ -77,6 +77,7 @@ part 'app_state.g.dart';
 abstract class AppState implements Built<AppState, AppStateBuilder> {
   factory AppState({
     @required PrefState prefState,
+    @required bool reportErrors,
     String currentRoute,
     String url,
   }) {
@@ -89,7 +90,7 @@ abstract class AppState implements Built<AppState, AppStateBuilder> {
       staticState: StaticState(),
       userCompanyStates: BuiltList(
           List<int>.generate(kMaxNumberOfCompanies, (i) => i + 1)
-              .map((index) => UserCompanyState())
+              .map((index) => UserCompanyState(reportErrors))
               .toList()),
       uiState: UIState(currentRoute: currentRoute),
       prefState: prefState ?? PrefState(),
@@ -342,16 +343,12 @@ abstract class AppState implements Built<AppState, AppStateBuilder> {
       // STARTER: states switch - do not remove comment
       case EntityType.recurringInvoice:
         return recurringInvoiceUIState;
-
       case EntityType.webhook:
         return webhookUIState;
-
       case EntityType.token:
         return tokenUIState;
-
       case EntityType.paymentTerm:
         return paymentTermUIState;
-
       case EntityType.design:
         return designUIState;
       case EntityType.credit:

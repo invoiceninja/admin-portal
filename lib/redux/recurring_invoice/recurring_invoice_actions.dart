@@ -8,6 +8,8 @@ import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/ui/app/entities/entity_actions_dialog.dart';
 import 'package:invoiceninja_flutter/utils/completers.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
+import 'package:invoiceninja_flutter/utils/pdf.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class ViewRecurringInvoiceList extends AbstractNavigatorAction
     implements PersistUI, StopLoading {
@@ -155,7 +157,6 @@ class RemoveRecurringInvoiceContact implements PersistUI {
 
   final InvitationEntity invitation;
 }
-
 
 class SaveRecurringInvoiceRequest implements StartSaving {
   SaveRecurringInvoiceRequest({this.completer, this.recurringInvoice});
@@ -354,7 +355,8 @@ class SaveRecurringInvoiceDocumentRequest implements StartSaving {
   final InvoiceEntity invoice;
 }
 
-class SaveRecurringInvoiceDocumentSuccess implements StopSaving, PersistData, PersistUI {
+class SaveRecurringInvoiceDocumentSuccess
+    implements StopSaving, PersistData, PersistUI {
   SaveRecurringInvoiceDocumentSuccess(this.document);
 
   final DocumentEntity document;
@@ -366,8 +368,48 @@ class SaveRecurringInvoiceDocumentFailure implements StopSaving {
   final Object error;
 }
 
+class StartRecurringInvoicesRequest implements StartSaving {
+  StartRecurringInvoicesRequest({this.completer, this.invoiceIds});
+
+  final Completer completer;
+  final List<String> invoiceIds;
+}
+
+class StartRecurringInvoicesSuccess
+    implements StopSaving, PersistData, PersistUI {
+  StartRecurringInvoicesSuccess(this.invoices);
+
+  final List<InvoiceEntity> invoices;
+}
+
+class StartRecurringInvoicesFailure implements StopSaving {
+  StartRecurringInvoicesFailure(this.error);
+
+  final Object error;
+}
+
+class StopRecurringInvoicesRequest implements StartSaving {
+  StopRecurringInvoicesRequest({this.completer, this.invoiceIds});
+
+  final Completer completer;
+  final List<String> invoiceIds;
+}
+
+class StopRecurringInvoicesSuccess
+    implements StopSaving, PersistData, PersistUI {
+  StopRecurringInvoicesSuccess(this.invoices);
+
+  final List<InvoiceEntity> invoices;
+}
+
+class StopRecurringInvoicesFailure implements StopSaving {
+  StopRecurringInvoicesFailure(this.error);
+
+  final Object error;
+}
+
 void handleRecurringInvoiceAction(BuildContext context,
-    List<BaseEntity> recurringInvoices, EntityAction action) {
+    List<BaseEntity> recurringInvoices, EntityAction action) async {
   if (recurringInvoices.isEmpty) {
     return;
   }
@@ -381,6 +423,50 @@ void handleRecurringInvoiceAction(BuildContext context,
   switch (action) {
     case EntityAction.edit:
       editEntity(context: context, entity: recurringInvoice);
+      break;
+    case EntityAction.viewPdf:
+      viewPdf(recurringInvoice, context);
+      break;
+    case EntityAction.clientPortal:
+      if (await canLaunch(recurringInvoice.invitationSilentLink)) {
+        await launch(recurringInvoice.invitationSilentLink,
+            forceSafariVC: false, forceWebView: false);
+      }
+      break;
+    case EntityAction.cloneToInvoice:
+      createEntity(
+          context: context,
+          entity: recurringInvoice.clone
+              .rebuild((b) => b..entityType = EntityType.invoice));
+      break;
+    case EntityAction.cloneToQuote:
+      createEntity(
+          context: context,
+          entity: recurringInvoice.clone
+              .rebuild((b) => b..entityType = EntityType.quote));
+      break;
+    case EntityAction.cloneToCredit:
+      createEntity(
+          context: context,
+          entity: recurringInvoice.clone
+              .rebuild((b) => b..entityType = EntityType.credit));
+      break;
+    case EntityAction.start:
+      store.dispatch(StartRecurringInvoicesRequest(
+        completer: snackBarCompleter<Null>(
+            context,
+            (recurringInvoice.lastSentDate ?? '').isEmpty
+                ? localization.startedRecurringInvoice
+                : localization.resumedRecurringInvoice),
+        invoiceIds: recurringInvoiceIds,
+      ));
+      break;
+    case EntityAction.stop:
+      store.dispatch(StopRecurringInvoicesRequest(
+        completer: snackBarCompleter<Null>(
+            context, localization.stoppedRecurringInvoice),
+        invoiceIds: recurringInvoiceIds,
+      ));
       break;
     case EntityAction.restore:
       store.dispatch(RestoreRecurringInvoicesRequest(

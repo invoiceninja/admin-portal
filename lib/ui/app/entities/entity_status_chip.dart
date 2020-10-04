@@ -33,6 +33,12 @@ class EntityStatusChip extends StatelessWidget {
         label = kInvoiceStatuses[statusId];
         color = InvoiceStatusColors.colors[statusId];
         break;
+      case EntityType.recurringInvoice:
+        final invoice = entity as InvoiceEntity;
+        final statusId = invoice.calculatedStatusId;
+        label = kRecurringInvoiceStatuses[statusId];
+        color = RecurringInvoiceStatusColors.colors[statusId];
+        break;
       case EntityType.quote:
         final quote = entity as InvoiceEntity;
         final statusId = quote.calculatedStatusId;
@@ -45,6 +51,8 @@ class EntityStatusChip extends StatelessWidget {
         color = CreditStatusColors.colors[credit.statusId];
         break;
       default:
+        print(
+            'ERROR: unhandled entityType ${entity.entityType} in entity_status_chip.dart');
         return SizedBox();
         break;
     }

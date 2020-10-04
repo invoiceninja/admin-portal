@@ -50,7 +50,7 @@ class DesignListItem extends StatelessWidget {
       child: ListTile(
         onTap: () => onTap != null
             ? onTap()
-            : selectEntity(entity: design, context: context),
+            : editEntity(entity: design, context: context),
         onLongPress: () => onLongPress != null
             ? onLongPress()
             : selectEntity(entity: design, context: context, longPress: true),

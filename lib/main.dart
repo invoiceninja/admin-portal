@@ -146,9 +146,18 @@ Future<AppState> _initialState(bool isTesting) async {
   }
    */
 
+  bool reportErrors = false;
+  if (kIsWeb) {
+    reportErrors = WebUtils.getHtmlValue('report-errors') == '1';
+    if (reportErrors) {
+      print('Error reporting is enabled');
+    }
+  }
+
   return AppState(
     prefState: prefState,
     currentRoute: currentRoute,
     url: Config.DEMO_MODE ? '' : url,
+    reportErrors: reportErrors,
   );
 }

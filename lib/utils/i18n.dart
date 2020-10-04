@@ -15,6 +15,24 @@ mixin LocalizationsProvider on LocaleCodeAware {
   static final Map<String, Map<String, String>> _localizedValues = {
     'en': {
       // STARTER: lang key - do not remove comment
+      'user_field': 'User Field',
+      'variables': 'Variables',
+      'show_password': 'Show Password',
+      'hide_password': 'Hide Password',
+      'copy_error': 'Copy Error',
+      'store_card': 'Store Card',
+      'auto_bill_enabled': 'Auto Bill Enabled',
+      'total_taxes': 'Total Taxes',
+      'line_taxes': 'Line Taxes',
+      'total_fields': 'Total Fields',
+      'stopped_recurring_invoice': 'Successfully stopped recurring invoice',
+      'started_recurring_invoice': 'Successfully started recurring invoice',
+      'resumed_recurring_invoice': 'Successfully resumed recurring invoice',
+      'gateway_refund': 'Gateway Refund',
+      'gateway_refund_help': 'Process the refund with the payment gateway',
+      'due_date_days': 'Due Date',
+      'paused': 'Paused',
+      'mark_active': 'Mark Active',
       'day_count': 'Day :count',
       'first_day_of_the_month': 'First Day of the Month',
       'last_day_of_the_month': 'Last Day of the Month',
@@ -61,9 +79,9 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'copy_link': 'Copy Link',
       'token_billing': 'Token Billing',
       'welcome_to_invoice_ninja': 'Welcome to Invoice Ninja',
-      'always': 'Always',
-      'optin': 'Opt-In',
-      'optout': 'Opt-Out',
+      'always': 'Enabled',
+      'optin': 'Option disabled by default',
+      'optout': 'Option enabled by default',
       'label': 'Label',
       'client_number': 'Client Number',
       'auto_convert': 'Auto Convert',
@@ -3669,6 +3687,15 @@ mixin LocalizationsProvider on LocaleCodeAware {
   String get restoredRecurringInvoice =>
       _localizedValues[localeCode]['restored_recurring_invoice'];
 
+  String get stoppedRecurringInvoice =>
+      _localizedValues[localeCode]['stopped_recurring_invoice'];
+
+  String get startedRecurringInvoice =>
+      _localizedValues[localeCode]['started_recurring_invoice'];
+
+  String get resumedRecurringInvoice =>
+      _localizedValues[localeCode]['resumed_recurring_invoice'];
+
   String get searchRecurringInvoice =>
       _localizedValues[localeCode]['search_recurring_invoice'];
 
@@ -4559,6 +4586,41 @@ mixin LocalizationsProvider on LocaleCodeAware {
       _localizedValues[localeCode]['last_day_of_the_month'] ?? '';
 
   String get dayCount => _localizedValues[localeCode]['day_count'] ?? '';
+
+  String get markActive => _localizedValues[localeCode]['mark_active'] ?? '';
+
+  String get paused => _localizedValues[localeCode]['paused'] ?? '';
+
+  String get dueDateDays => _localizedValues[localeCode]['due_date_days'] ?? '';
+
+  String get gatewayRefund =>
+      _localizedValues[localeCode]['gateway_refund'] ?? '';
+
+  String get gatewayRefundHelp =>
+      _localizedValues[localeCode]['gateway_refund_help'] ?? '';
+
+  String get totalFields => _localizedValues[localeCode]['total_fields'] ?? '';
+
+  String get totalTaxes => _localizedValues[localeCode]['total_taxes'] ?? '';
+
+  String get lineTaxes => _localizedValues[localeCode]['line_taxes'] ?? '';
+
+  String get storeCard => _localizedValues[localeCode]['store_card'] ?? '';
+
+  String get autoBillEnabled =>
+      _localizedValues[localeCode]['auto_bill_enabled'] ?? '';
+
+  String get copyError => _localizedValues[localeCode]['copy_error'] ?? '';
+
+  String get showPassword =>
+      _localizedValues[localeCode]['show_password'] ?? '';
+
+  String get hidePassword =>
+      _localizedValues[localeCode]['hide_password'] ?? '';
+
+  String get variables => _localizedValues[localeCode]['variables'] ?? '';
+
+  String get userField => _localizedValues[localeCode]['user_field'] ?? '';
 
   String lookup(String key) {
     final lookupKey = toSnakeCase(key);

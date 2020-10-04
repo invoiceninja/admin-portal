@@ -12,6 +12,7 @@ import 'package:invoiceninja_flutter/ui/app/forms/app_form.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/app_tab_bar.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/decorated_form_field.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/design_picker.dart';
+import 'package:invoiceninja_flutter/ui/app/variables.dart';
 import 'package:invoiceninja_flutter/ui/design/edit/design_edit_vm.dart';
 import 'package:invoiceninja_flutter/utils/designs.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
@@ -107,9 +108,15 @@ class _DesignEditState extends State<DesignEdit>
   }
 
   void _onChanged() {
+    final design = widget.viewModel.design
+        .rebuild((b) => b..name = _nameController.text.trim());
+
+    if (design != widget.viewModel.design) {
+      widget.viewModel.onChanged(design);
+    }
+
     _debouncer.run(() {
       final design = widget.viewModel.design.rebuild((b) => b
-        ..name = _nameController.text.trim()
         ..design.replace(BuiltMap<String, String>({
           kDesignHeader: _headerController.text.trim(),
           kDesignBody: _bodyController.text.trim(),
@@ -182,8 +189,8 @@ class _DesignEditState extends State<DesignEdit>
                 tabs: [
                   Tab(text: localization.settings),
                   Tab(text: localization.preview),
-                  Tab(text: localization.header),
                   Tab(text: localization.body),
+                  Tab(text: localization.header),
                   Tab(text: localization.footer),
                   Tab(text: localization.products),
                   //Tab(text: localization.tasks),
@@ -220,8 +227,8 @@ class _DesignEditState extends State<DesignEdit>
                       pdfBytes: _pdfBytes,
                       isLoading: _isLoading,
                     ),
-                    DesignSection(textController: _headerController),
                     DesignSection(textController: _bodyController),
+                    DesignSection(textController: _headerController),
                     DesignSection(textController: _footerController),
                     DesignSection(textController: _productsController),
                     //DesignSection(textController: _tasksController),
@@ -240,8 +247,8 @@ class _DesignEditState extends State<DesignEdit>
                             isScrollable: true,
                             tabs: <Widget>[
                               Tab(text: localization.settings),
-                              Tab(text: localization.header),
                               Tab(text: localization.body),
+                              Tab(text: localization.header),
                               Tab(text: localization.footer),
                               Tab(text: localization.products),
                               //Tab(text: localization.tasks),
@@ -256,9 +263,9 @@ class _DesignEditState extends State<DesignEdit>
                                   nameController: _nameController,
                                   onLoadDesign: _loadDesign,
                                 ),
+                                DesignSection(textController: _bodyController),
                                 DesignSection(
                                     textController: _headerController),
-                                DesignSection(textController: _bodyController),
                                 DesignSection(
                                     textController: _footerController),
                                 DesignSection(
@@ -291,28 +298,21 @@ class DesignSection extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Center(
-      child: SingleChildScrollView(
-        padding: const EdgeInsets.all(14),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            Card(
-              child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 10),
-                child: TextField(
-                  controller: textController,
-                  keyboardType: TextInputType.multiline,
-                  maxLines: 9999,
-                  autofocus: true,
-                  style: TextStyle(
-                    fontFeatures: [FontFeature.tabularFigures()],
-                    //fontSize: 30,
-                  ),
-                ),
-              ),
-            )
-          ],
+    return SingleChildScrollView(
+      padding: const EdgeInsets.all(14),
+      child: Card(
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 10),
+          child: TextField(
+            controller: textController,
+            keyboardType: TextInputType.multiline,
+            maxLines: null,
+            //autofocus: true,
+            style: TextStyle(
+              fontFeatures: [FontFeature.tabularFigures()],
+              //fontSize: 30,
+            ),
+          ),
         ),
       ),
     );
@@ -332,8 +332,8 @@ class DesignSettings extends StatelessWidget {
   Widget build(BuildContext context) {
     final localization = AppLocalization.of(context);
 
-    return Column(
-      mainAxisSize: MainAxisSize.min,
+    return ListView(
+      shrinkWrap: true,
       children: <Widget>[
         FormCard(
           children: <Widget>[
@@ -347,6 +347,7 @@ class DesignSettings extends StatelessWidget {
             ),
           ],
         ),
+        VariablesHelp(),
       ],
     );
   }

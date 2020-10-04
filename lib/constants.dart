@@ -8,7 +8,7 @@ class Constants {
 }
 
 // TODO remove version once #46609 is fixed
-const String kClientVersion = '5.0.16';
+const String kClientVersion = '5.0.17';
 const String kMinServerVersion = '5.0.4';
 
 const String kAppName = 'Invoice Ninja';
@@ -75,7 +75,7 @@ const double kDashboardPanelHeight = 509; // TODO remove this
 const double kTabletLayoutWidth = 1100;
 const double kTabletDialogPadding = 250;
 
-const double kTableColumnWidthMin = 50;
+const double kTableColumnWidthMin = 40;
 const double kTableColumnWidthMax = 120;
 
 const int kTableListWidthCutoff = 500;
@@ -135,6 +135,20 @@ const kInvoiceStatuses = {
   kInvoiceStatusPaid: 'paid',
   kInvoiceStatusCancelled: 'cancelled',
   kInvoiceStatusReversed: 'reversed',
+};
+
+const String kRecurringInvoiceStatusDraft = '1';
+const String kRecurringInvoiceStatusActive = '2';
+const String kRecurringInvoiceStatusPaused = '3';
+const String kRecurringInvoiceStatusCompleted = '4';
+const String kRecurringInvoiceStatusPending = '-1';
+
+const kRecurringInvoiceStatuses = {
+  kRecurringInvoiceStatusDraft: 'draft',
+  kRecurringInvoiceStatusActive: 'active',
+  kRecurringInvoiceStatusPaused: 'paused',
+  kRecurringInvoiceStatusCompleted: 'completed',
+  kRecurringInvoiceStatusPending: 'pending',
 };
 
 const String kQuoteStatusExpired = '-1';
@@ -215,8 +229,8 @@ const kNotificationEvents = [
 
 const String kGatewayStripe = 'd14dd26a37cecc30fdd65700bfb55b23';
 const String kGatewayAuthorizeNet = '3b6621f970ab18887c4f6dca78d3f8bb';
-const String kGatewayCheckoutCom = '';
-const String kGatewayPayPal = '';
+const String kGatewayCheckoutCom = '3758e7f7c6f4cecf0f4f348b9a00f456';
+const String kGatewayPayPalExpress = '38f2c48af60c7dd69e04248cbb24c36e';
 const String kGatewayCustom = '54faab2ab6e3223dbe848b1686490baa';
 
 const String kClientPortalModeSubdomain = 'subdomain';
@@ -358,6 +372,7 @@ const String kPdfFieldsQuoteDetails = 'quote_details';
 const String kPdfFieldsCreditDetails = 'credit_details';
 const String kPdfFieldsProductColumns = 'product_columns';
 const String kPdfFieldsTaskColumns = 'task_columns';
+const String kPdfFieldsTotalFields = 'total_columns';
 
 const String kPdfFields = '';
 const String kPermissionCreateAll = 'create_all';
@@ -446,6 +461,16 @@ class InvoiceStatusColors {
     kInvoiceStatusPastDue: kColorRed,
     kInvoiceStatusCancelled: convertHexStringToColor('#444444'),
     kInvoiceStatusReversed: convertHexStringToColor('#444444'),
+  };
+}
+
+class RecurringInvoiceStatusColors {
+  static var colors = {
+    kRecurringInvoiceStatusDraft: Colors.black,
+    kRecurringInvoiceStatusActive: kColorGreen,
+    kRecurringInvoiceStatusPaused: convertHexStringToColor('#444444'),
+    kRecurringInvoiceStatusCompleted: kColorGreen,
+    kRecurringInvoiceStatusPending: convertHexStringToColor('#444444'),
   };
 }
 

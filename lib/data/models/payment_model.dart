@@ -45,11 +45,11 @@ abstract class PaymentItemResponse
 }
 
 class PaymentFields {
-  static const String paymentNumber = 'payment_number';
+  static const String number = 'number';
   static const String amount = 'amount';
   static const String refunded = 'refunded';
   static const String transactionReference = 'transaction_reference';
-  static const String paymentDate = 'payment_date';
+  static const String date = 'date';
   static const String paymentTypeId = 'payment_type_id';
   static const String client = 'client';
   static const String clientId = 'client_id';
@@ -200,6 +200,9 @@ abstract class PaymentEntity extends Object
   @nullable
   bool get sendEmail;
 
+  @nullable
+  bool get gatewayRefund;
+
   String get transactionReferenceOrNumber =>
       transactionReference.isNotEmpty ? transactionReference : number;
 
@@ -238,7 +241,7 @@ abstract class PaymentEntity extends Object
       case PaymentFields.refunded:
         response = paymentA.refunded.compareTo(paymentB.refunded);
         break;
-      case PaymentFields.paymentNumber:
+      case PaymentFields.number:
         response = paymentA.number
             .toLowerCase()
             .compareTo(paymentB.number.toLowerCase());
@@ -247,7 +250,7 @@ abstract class PaymentEntity extends Object
         response = paymentA.transactionReference
             .compareTo(paymentB.transactionReference);
         break;
-      case PaymentFields.paymentDate:
+      case PaymentFields.date:
         response = paymentA.date.compareTo(paymentB.date);
         break;
       case PaymentFields.privateNotes:
@@ -431,6 +434,8 @@ abstract class PaymentEntity extends Object
   bool isBetween(String startDate, String endDate) {
     return startDate.compareTo(date) <= 0 && endDate.compareTo(date) >= 0;
   }
+
+  bool get isOnline => (companyGatewayId ?? '').isNotEmpty;
 
   @override
   FormatNumberType get listDisplayAmountType => FormatNumberType.money;

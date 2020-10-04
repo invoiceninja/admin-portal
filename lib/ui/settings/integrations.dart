@@ -84,7 +84,7 @@ class _IntegrationSettingsState extends State<IntegrationSettings> {
         children: <Widget>[
           FormCard(
             children: <Widget>[
-              LearnMore(
+              LearnMoreUrl(
                 url: 'https://my.slack.com/services/new/incoming-webhook/',
                 child: DecoratedFormField(
                   label: 'Slack',
@@ -93,7 +93,7 @@ class _IntegrationSettingsState extends State<IntegrationSettings> {
                   controller: _slackWebhookController,
                 ),
               ),
-              LearnMore(
+              LearnMoreUrl(
                 url: 'https://support.google.com/analytics/answer/1037249',
                 child: DecoratedFormField(
                   label: 'Google Analytics',

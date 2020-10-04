@@ -12,8 +12,6 @@ import 'package:invoiceninja_flutter/redux/static/static_state.dart';
 import 'package:invoiceninja_flutter/utils/formatting.dart';
 import 'package:invoiceninja_flutter/utils/strings.dart';
 
-import 'company_gateway_model.dart';
-
 part 'invoice_model.g.dart';
 
 abstract class InvoiceListResponse
@@ -51,16 +49,17 @@ abstract class InvoiceItemResponse
 }
 
 class InvoiceFields {
-  static const String amount = 'invoice_amount';
+  static const String total = 'total';
+  static const String amount = 'amount';
   static const String balance = 'balance_due';
   static const String clientId = 'client_id';
   static const String client = 'client';
   static const String statusId = 'status_id';
   static const String status = 'status';
-  static const String invoiceNumber = 'invoice_number';
+  static const String number = 'number';
   static const String discount = 'discount';
   static const String poNumber = 'po_number';
-  static const String date = 'invoice_date';
+  static const String date = 'date';
   static const String dueDate = 'due_date';
   static const String terms = 'terms';
   static const String footer = 'footer';
@@ -76,12 +75,30 @@ class InvoiceFields {
   static const String customValue2 = 'custom2';
   static const String customValue3 = 'custom3';
   static const String customValue4 = 'custom4';
+  static const String customSurcharge1 = 'custom_surcharge1';
+  static const String customSurcharge2 = 'custom_surcharge2';
+  static const String customSurcharge3 = 'custom_surcharge3';
+  static const String customSurcharge4 = 'custom_surcharge4';
   static const String taxAmount = 'tax_amount';
   static const String reminder1Sent = 'reminder1_sent';
   static const String reminder2Sent = 'reminder2_sent';
   static const String reminder3Sent = 'reminder3_sent';
   static const String reminderLastSent = 'reminder_last_sent';
   static const String exchangeRate = 'exchange_rate';
+}
+
+class InvoiceTotalFields {
+  static const String totalTaxes = 'total_taxes';
+  static const String lineTaxes = 'line_taxes';
+  static const String subtotal = 'subtotal';
+  static const String total = 'total';
+  static const String discount = 'discount';
+  static const String customSurcharge1 = 'custom_surcharge1';
+  static const String customSurcharge2 = 'custom_surcharge2';
+  static const String customSurcharge3 = 'custom_surcharge3';
+  static const String customSurcharge4 = 'custom_surcharge4';
+  static const String paidToDate = 'paid_to_date';
+  static const String outstanding = 'outstanding';
 }
 
 abstract class InvoiceEntity extends Object
@@ -128,7 +145,7 @@ abstract class InvoiceEntity extends Object
       partial: 0.0,
       partialDueDate: '',
       hasTasks: false,
-      autoBill: CompanyGatewayEntity.TOKEN_BILLING_ALWAYS,
+      autoBillEnabled: false,
       customValue1: '',
       customValue2: '',
       customValue3: '',
@@ -144,6 +161,7 @@ abstract class InvoiceEntity extends Object
       customSurcharge3: 0,
       customSurcharge4: 0,
       filename: '',
+      recurringDates: BuiltList<InvoiceScheduleEntity>(),
       lineItems: BuiltList<InvoiceItemEntity>(),
       history: BuiltList<InvoiceHistoryEntity>(),
       usesInclusiveTaxes: company?.settings?.enableInclusiveTaxes ?? false,
@@ -167,10 +185,10 @@ abstract class InvoiceEntity extends Object
       reminderLastSent: '',
       exchangeRate: exchangeRate,
       lastSentDate: '',
-      nextSendDate: '',
+      nextSendDate: convertDateTimeToSqlDate(),
       frequencyId: kFrequencyMonthly,
       remainingCycles: -1,
-      dueDateDays: '',
+      dueDateDays: 'terms',
     );
   }
 
@@ -292,6 +310,10 @@ abstract class InvoiceEntity extends Object
   @BuiltValueField(wireName: 'auto_bill')
   String get autoBill;
 
+  @nullable
+  @BuiltValueField(wireName: 'auto_bill_enabled')
+  bool get autoBillEnabled;
+
   @BuiltValueField(wireName: 'custom_value1')
   String get customValue1;
 
@@ -387,6 +409,10 @@ abstract class InvoiceEntity extends Object
   @nullable
   String get filename;
 
+  @nullable
+  @BuiltValueField(wireName: 'recurring_dates')
+  BuiltList<InvoiceScheduleEntity> get recurringDates;
+
   @override
   @BuiltValueField(wireName: 'line_items')
   BuiltList<InvoiceItemEntity> get lineItems;
@@ -469,16 +495,12 @@ abstract class InvoiceEntity extends Object
     final InvoiceEntity invoiceB = sortAscending ? invoice : this;
 
     switch (sortField) {
-      case InvoiceFields.invoiceNumber:
-      case QuoteFields.quoteNumber:
-      case CreditFields.creditNumber:
+      case InvoiceFields.number:
         response = (invoiceA.number ?? '')
             .toLowerCase()
             .compareTo((invoiceB.number ?? '').toLowerCase());
         break;
       case InvoiceFields.amount:
-      case QuoteFields.amount:
-      case CreditFields.amount:
         response = invoiceA.amount.compareTo(invoiceB.amount);
         break;
       case EntityFields.createdAt:
@@ -491,8 +513,6 @@ abstract class InvoiceEntity extends Object
         response = invoiceA.archivedAt.compareTo(invoiceB.archivedAt);
         break;
       case InvoiceFields.date:
-      case QuoteFields.date:
-      case CreditFields.date:
         response = invoiceA.date.compareTo(invoiceB.date);
         break;
       case InvoiceFields.balance:
@@ -658,27 +678,38 @@ abstract class InvoiceEntity extends Object
           actions.add(EntityAction.emailQuote);
         } else if (entityType == EntityType.credit) {
           actions.add(EntityAction.emailCredit);
-        } else {
+        } else if (entityType == EntityType.invoice) {
           actions.add(EntityAction.emailInvoice);
         }
 
-        if (!isQuote &&
-            userCompany.canCreate(EntityType.payment) &&
-            isUnpaid &&
-            !isCancelledOrReversed) {
+        if (isPayable && userCompany.canCreate(EntityType.payment)) {
           actions.add(EntityAction.newPayment);
         }
 
         if (!isSent) {
-          actions.add(EntityAction.markSent);
+          actions.add(isRecurringInvoice
+              ? EntityAction.markActive
+              : EntityAction.markSent);
         }
 
-        if (!isQuote && !isPaid && !isCancelledOrReversed) {
+        if (isPayable && isInvoice) {
           actions.add(EntityAction.markPaid);
         }
 
         if (isQuote && !isApproved && (invoiceId ?? '').isEmpty) {
           actions.add(EntityAction.convert);
+        }
+
+        if (isRecurringInvoice) {
+          if ([kRecurringInvoiceStatusDraft, kRecurringInvoiceStatusPaused]
+              .contains(statusId)) {
+            actions.add(EntityAction.start);
+          } else if ([
+            kRecurringInvoiceStatusPending,
+            kRecurringInvoiceStatusActive
+          ].contains(statusId)) {
+            actions.add(EntityAction.stop);
+          }
         }
       }
 
@@ -703,7 +734,7 @@ abstract class InvoiceEntity extends Object
     }
 
     if (userCompany.canEditEntity(this)) {
-      if (!isQuote && !isCredit && isSent) {
+      if (!isQuote && !isCredit && !isRecurringInvoice && isSent) {
         if (!isCancelledOrReversed && !isPaid) {
           actions.add(EntityAction.cancel);
         }
@@ -759,15 +790,24 @@ abstract class InvoiceEntity extends Object
 
   bool get isCredit => entityType == EntityType.credit;
 
+  bool get isRecurringInvoice => entityType == EntityType.recurringInvoice;
+
+  bool get isRecurring => [EntityType.recurringInvoice].contains(entityType);
+
   EmailTemplate get emailTemplate => isQuote
       ? EmailTemplate.quote
-      : isCredit ? EmailTemplate.credit : EmailTemplate.invoice;
+      : isCredit
+          ? EmailTemplate.credit
+          : EmailTemplate.invoice;
 
   double get requestedAmount => partial > 0 ? partial : amount;
 
   bool get isSent => statusId != kInvoiceStatusDraft;
 
   bool get isUnpaid => statusId != kInvoiceStatusPaid;
+
+  bool get isPayable =>
+      !isPaid && !isQuote && !isRecurringInvoice && !isCancelledOrReversed;
 
   bool get isPaid => statusId == kInvoiceStatusPaid;
 
@@ -778,6 +818,9 @@ abstract class InvoiceEntity extends Object
   bool get isCancelledOrReversed => isCancelled || isReversed;
 
   bool get isUpcoming => isActive && !isPaid && !isPastDue && isSent;
+
+  String get calculateRemainingCycles =>
+      remainingCycles == -1 ? 'endless' : remainingCycles;
 
   String get calculatedStatusId {
     if (isPastDue && !isCancelledOrReversed) {
@@ -922,6 +965,7 @@ class ProductItemFields {
   static const String productKey = 'product_key';
   static const String notes = 'notes';
   static const String cost = 'cost';
+  static const String tax = 'tax';
   static const String quantity = 'quantity';
   static const String lineTotal = 'line_total';
   static const String discount = 'discount';
@@ -1165,6 +1209,31 @@ abstract class InvitationEntity extends Object
 
   static Serializer<InvitationEntity> get serializer =>
       _$invitationEntitySerializer;
+}
+
+abstract class InvoiceScheduleEntity
+    implements Built<InvoiceScheduleEntity, InvoiceScheduleEntityBuilder> {
+  factory InvoiceScheduleEntity() {
+    return _$InvoiceScheduleEntity._(
+      sendDate: '',
+      dueDate: '',
+    );
+  }
+
+  InvoiceScheduleEntity._();
+
+  @override
+  @memoized
+  int get hashCode;
+
+  @BuiltValueField(wireName: 'send_date')
+  String get sendDate;
+
+  @BuiltValueField(wireName: 'due_date')
+  String get dueDate;
+
+  static Serializer<InvoiceScheduleEntity> get serializer =>
+      _$invoiceScheduleEntitySerializer;
 }
 
 abstract class InvoiceHistoryEntity

@@ -144,7 +144,7 @@ class _CompanyGatewayEditState extends State<CompanyGatewayEdit>
                         ?.supportsTokenBilling ==
                     true)
                   AppDropdownButton<String>(
-                      labelText: localization.tokenBilling,
+                      labelText: localization.storeCard,
                       value: companyGateway.tokenBilling,
                       onChanged: (dynamic value) => viewModel.onChanged(
                           companyGateway

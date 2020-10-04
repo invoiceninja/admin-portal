@@ -7,6 +7,7 @@ import 'package:invoiceninja_flutter/ui/app/forms/color_picker.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/decorated_form_field.dart';
 import 'package:invoiceninja_flutter/ui/app/edit_scaffold.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/notification_settings.dart';
+import 'package:invoiceninja_flutter/ui/app/forms/password_field.dart';
 import 'package:invoiceninja_flutter/ui/settings/user_details_vm.dart';
 import 'package:invoiceninja_flutter/utils/completers.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
@@ -35,6 +36,7 @@ class _UserDetailsState extends State<UserDetails>
   final _lastNameController = TextEditingController();
   final _phoneController = TextEditingController();
   final _emailController = TextEditingController();
+  final _passwordController = TextEditingController();
 
   List<TextEditingController> _controllers = [];
   final _debouncer = Debouncer();
@@ -63,6 +65,7 @@ class _UserDetailsState extends State<UserDetails>
       _lastNameController,
       _emailController,
       _phoneController,
+      _passwordController,
     ];
 
     _controllers
@@ -73,6 +76,7 @@ class _UserDetailsState extends State<UserDetails>
     _lastNameController.text = user.lastName;
     _emailController.text = user.email;
     _phoneController.text = user.phone;
+    _passwordController.text = user.password;
 
     _controllers
         .forEach((dynamic controller) => controller.addListener(_onChanged));
@@ -86,7 +90,8 @@ class _UserDetailsState extends State<UserDetails>
         ..firstName = _firstNameController.text.trim()
         ..lastName = _lastNameController.text.trim()
         ..email = _emailController.text.trim()
-        ..firstName = _firstNameController.text.trim());
+        ..firstName = _firstNameController.text.trim()
+        ..password = _passwordController.text.trim());
       if (user != widget.viewModel.user) {
         widget.viewModel.onChanged(user);
       }
@@ -101,7 +106,19 @@ class _UserDetailsState extends State<UserDetails>
 
     return EditScaffold(
       title: localization.userDetails,
-      onSavePressed: viewModel.onSavePressed,
+      onSavePressed: (context) {
+        final bool isValid = _formKey.currentState.validate();
+
+        setState(() {
+          autoValidate = !isValid ?? false;
+        });
+
+        if (!isValid) {
+          return;
+        }
+
+        viewModel.onSavePressed(context);
+      },
       appBarBottom: TabBar(
         controller: _controller,
         tabs: [
@@ -148,6 +165,10 @@ class _UserDetailsState extends State<UserDetails>
                 DecoratedFormField(
                   label: localization.phone,
                   controller: _phoneController,
+                ),
+                PasswordFormField(
+                  controller: _passwordController,
+                  autoValidate: autoValidate,
                 ),
               ]),
               FormCard(

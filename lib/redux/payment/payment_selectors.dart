@@ -45,7 +45,7 @@ List<String> dropdownPaymentsSelector(
     return paymentA.compareTo(
         payment: paymentB,
         sortAscending: true,
-        sortField: PaymentFields.paymentDate,
+        sortField: PaymentFields.date,
         invoiceMap: invoiceMap,
         clientMap: clientMap,
         userMap: userMap);

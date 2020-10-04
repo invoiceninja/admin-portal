@@ -11,7 +11,7 @@ import 'package:invoiceninja_flutter/constants.dart';
 class QuotePresenter extends EntityPresenter {
   static List<String> getDefaultTableFields(UserCompanyEntity userCompany) {
     return [
-      QuoteFields.quoteNumber,
+      QuoteFields.number,
       QuoteFields.client,
       QuoteFields.amount,
       QuoteFields.status,
@@ -51,7 +51,7 @@ class QuotePresenter extends EntityPresenter {
               ? localization.expired
               : localization.lookup(kQuoteStatuses[quote.statusId]),
         );
-      case QuoteFields.quoteNumber:
+      case QuoteFields.number:
         return Text(
             (quote.number ?? '').isEmpty ? localization.pending : quote.number);
       case QuoteFields.client:

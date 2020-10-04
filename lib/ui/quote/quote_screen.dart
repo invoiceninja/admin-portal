@@ -66,7 +66,7 @@ class QuoteScreen extends StatelessWidget {
         onSelectedCustom4: (value) =>
             store.dispatch(FilterQuotesByCustom4(value)),
         sortFields: [
-          QuoteFields.quoteNumber,
+          QuoteFields.number,
           QuoteFields.date,
           QuoteFields.validUntil,
           QuoteFields.updatedAt,

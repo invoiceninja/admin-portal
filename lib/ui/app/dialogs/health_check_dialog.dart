@@ -49,9 +49,17 @@ class _HealthCheckDialogState extends State<HealthCheckDialog> {
     });
   }
 
+  String _parseVersion(String version) =>
+      RegExp(r'(\d+\.\d+.\d+)').stringMatch(version);
+
   @override
   Widget build(BuildContext context) {
     final localization = AppLocalization.of(context);
+
+    final webPhpVersion =
+        _parseVersion(_response?.phpVersion?.currentPHPVersion ?? '');
+    final cliPhpVersion =
+        _parseVersion(_response?.phpVersion?.currentPHPCLIVersion ?? '');
 
     return AlertDialog(
       content: _response == null
@@ -76,9 +84,9 @@ class _HealthCheckDialogState extends State<HealthCheckDialog> {
                 _HealthListTile(
                   title: 'PHP Version',
                   isValid: _response.phpVersion.isOkay,
-                  subtitle: 'v' +
-                      (_response.phpVersion.currentPHPVersion ?? '')
-                          .split('+')[0],
+                  subtitle: webPhpVersion == cliPhpVersion
+                      ? 'v$webPhpVersion'
+                      : 'Web: v$webPhpVersion\nCLI: v$cliPhpVersion}',
                 ),
                 _HealthListTile(
                   title: 'Node Version',

@@ -73,11 +73,19 @@ class _QuoteEditState extends State<QuoteEdit>
       title: invoice.isNew ? localization.newQuote : localization.editQuote,
       onCancelPressed: (context) => viewModel.onCancelPressed(context),
       onSavePressed: (context) {
-        if (!_formKey.currentState.validate()) {
+        final bool isValid = _formKey.currentState.validate();
+
+        /*
+        setState(() {
+          autoValidate = !isValid ?? false;
+        });
+         */
+
+        if (!isValid) {
           return;
         }
 
-        widget.viewModel.onSavePressed(context);
+        viewModel.onSavePressed(context);
       },
       appBarBottom: state.prefState.isDesktop
           ? null

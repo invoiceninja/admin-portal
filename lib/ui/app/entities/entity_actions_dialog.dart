@@ -16,6 +16,7 @@ import 'package:invoiceninja_flutter/redux/payment_term/payment_term_actions.dar
 import 'package:invoiceninja_flutter/redux/product/product_actions.dart';
 import 'package:invoiceninja_flutter/redux/project/project_actions.dart';
 import 'package:invoiceninja_flutter/redux/quote/quote_actions.dart';
+import 'package:invoiceninja_flutter/redux/recurring_invoice/recurring_invoice_actions.dart';
 import 'package:invoiceninja_flutter/redux/task/task_actions.dart';
 import 'package:invoiceninja_flutter/redux/tax_rate/tax_rate_actions.dart';
 import 'package:invoiceninja_flutter/redux/token/token_actions.dart';
@@ -109,6 +110,9 @@ class EntityActionListTile extends StatelessWidget {
             break;
           case EntityType.invoice:
             handleInvoiceAction(mainContext, entities, action);
+            break;
+          case EntityType.recurringInvoice:
+            handleRecurringInvoiceAction(mainContext, entities, action);
             break;
           case EntityType.payment:
             handlePaymentAction(mainContext, entities, action);

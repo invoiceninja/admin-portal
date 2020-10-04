@@ -49,7 +49,7 @@ List<String> dropdownInvoiceSelector(
         invoice: invoiceB,
         clientMap: clientMap,
         sortAscending: false,
-        sortField: InvoiceFields.invoiceNumber,
+        sortField: InvoiceFields.number,
         staticState: staticState,
         userMap: userMap);
   });

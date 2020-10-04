@@ -25,6 +25,7 @@ class DecoratedFormField extends StatelessWidget {
     this.autofocus = false,
     this.autofillHints,
     this.textAlign = TextAlign.start,
+    this.decoration,
   }) : super(key: key);
 
   final TextEditingController controller;
@@ -48,6 +49,7 @@ class DecoratedFormField extends StatelessWidget {
   final Iterable<String> autofillHints;
   final Function(BuildContext) onSavePressed;
   final TextAlign textAlign;
+  final InputDecoration decoration;
 
   @override
   Widget build(BuildContext context) {
@@ -55,21 +57,22 @@ class DecoratedFormField extends StatelessWidget {
       key: key ?? ValueKey(label),
       controller: controller,
       autofocus: autofocus,
-      decoration: label == null
-          ? null
-          : InputDecoration(
-              labelText: label,
-              hintText: hint,
-              suffixIcon: suffixIcon,
-            ),
+      decoration: decoration ??
+          (label == null
+              ? null
+              : InputDecoration(
+                  labelText: label,
+                  hintText: hint,
+                  suffixIcon: suffixIcon,
+                )),
       validator: validator,
       keyboardType: keyboardType ?? TextInputType.text,
       maxLines: expands ? null : maxLines ?? 1,
       minLines: expands ? null : minLines,
       expands: expands,
       autovalidateMode: autovalidate
-          ? AutovalidateMode.always
-          : AutovalidateMode.onUserInteraction,
+          ? AutovalidateMode.onUserInteraction
+          : AutovalidateMode.disabled,
       autocorrect: autocorrect,
       obscureText: obscureText,
       initialValue: initialValue,

@@ -109,10 +109,10 @@ List<ChartDataGroup> _chartInvoices({
       // Handle "All"
       if (settings.currencyId == kCurrencyAll &&
           client.currencyId != company.currencyId) {
-        amount *= getExchangeRateWithMap(currencyMap,
+        amount *= getExchangeRate(currencyMap,
             fromCurrencyId: client.currencyId,
             toCurrencyId: company.currencyId);
-        balance *= getExchangeRateWithMap(currencyMap,
+        balance *= getExchangeRate(currencyMap,
             fromCurrencyId: client.currencyId,
             toCurrencyId: company.currencyId);
       }
@@ -249,7 +249,7 @@ List<ChartDataGroup> chartQuotes({
       // Handle "All"
       if (settings.currencyId == kCurrencyAll &&
           client.currencyId != company.currencyId) {
-        amount *= getExchangeRateWithMap(currencyMap,
+        amount *= getExchangeRate(currencyMap,
             fromCurrencyId: client.currencyId,
             toCurrencyId: company.currencyId);
       }
@@ -397,10 +397,10 @@ List<ChartDataGroup> chartPayments(
       // Handle "All"
       if (settings.currencyId == kCurrencyAll &&
           client.currencyId != company.currencyId) {
-        completedAmount *= getExchangeRateWithMap(currencyMap,
+        completedAmount *= getExchangeRate(currencyMap,
             fromCurrencyId: client.currencyId,
             toCurrencyId: company.currencyId);
-        refunded *= getExchangeRateWithMap(currencyMap,
+        refunded *= getExchangeRate(currencyMap,
             fromCurrencyId: client.currencyId,
             toCurrencyId: company.currencyId);
       }
@@ -550,7 +550,7 @@ List<ChartDataGroup> chartTasks(
           // Handle "All"
           if (settings.currencyId == kCurrencyAll &&
               client.currencyId != company.currencyId) {
-            amount *= getExchangeRateWithMap(currencyMap,
+            amount *= getExchangeRate(currencyMap,
                 fromCurrencyId: client.currencyId,
                 toCurrencyId: company.currencyId);
           }
@@ -675,7 +675,7 @@ List<ChartDataGroup> chartExpenses(
       // Handle "All"
       if (settings.currencyId == kCurrencyAll &&
           currencyId != company.currencyId) {
-        amount *= getExchangeRateWithMap(currencyMap,
+        amount *= getExchangeRate(currencyMap,
             fromCurrencyId: currencyId, toCurrencyId: company.currencyId);
       }
 

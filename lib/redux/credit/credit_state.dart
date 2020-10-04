@@ -55,7 +55,7 @@ abstract class CreditUIState extends Object
     implements Built<CreditUIState, CreditUIStateBuilder> {
   factory CreditUIState() {
     return _$CreditUIState._(
-      listUIState: ListUIState(CreditFields.creditNumber),
+      listUIState: ListUIState(CreditFields.number),
       editing: InvoiceEntity(),
       selectedId: '',
     );

@@ -460,6 +460,7 @@ abstract class GatewayEntity extends Object
       fields: '',
       defaultGatewayTypeId: kGatewayTypeCreditCard,
       isOffsite: false,
+      //isVisible: false,
     );
   }
 
@@ -480,6 +481,9 @@ abstract class GatewayEntity extends Object
 
   @BuiltValueField(wireName: 'is_offsite')
   bool get isOffsite;
+
+  //@BuiltValueField(wireName: 'visible')
+  //bool get isVisible;
 
   @BuiltValueField(wireName: 'sort_order')
   int get sortOrder;
@@ -569,7 +573,7 @@ abstract class GatewayEntity extends Object
 
 abstract class UserCompanyEntity
     implements Built<UserCompanyEntity, UserCompanyEntityBuilder> {
-  factory UserCompanyEntity() {
+  factory UserCompanyEntity(bool reportErrors) {
     return _$UserCompanyEntity._(
       isAdmin: false,
       isOwner: false,
@@ -577,7 +581,7 @@ abstract class UserCompanyEntity
       company: CompanyEntity(),
       user: UserEntity(),
       token: TokenEntity(),
-      account: AccountEntity(),
+      account: AccountEntity(reportErrors),
       notifications: BuiltMap<String, BuiltList<String>>().rebuild((b) => b
         ..[kNotificationChannelEmail] =
             BuiltList<String>(<String>[kNotificationsAll])),
@@ -629,15 +633,7 @@ abstract class UserCompanyEntity
       return true;
     }
 
-    // TODO remove this once task/expenses are supported
-    if (!Config.DEMO_MODE &&
-        [
-          EntityType.recurringInvoice,
-          EntityType.vendor,
-          EntityType.expense,
-          EntityType.task,
-          EntityType.project,
-        ].contains(entityType)) {
+    if (!company.isModuleEnabled(entityType)) {
       return false;
     }
 

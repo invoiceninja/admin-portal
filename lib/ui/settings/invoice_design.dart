@@ -5,9 +5,11 @@ import 'package:flutter_redux/flutter_redux.dart';
 import 'package:invoiceninja_flutter/constants.dart';
 import 'package:invoiceninja_flutter/data/models/client_model.dart';
 import 'package:invoiceninja_flutter/data/models/company_model.dart';
+import 'package:invoiceninja_flutter/data/models/credit_model.dart';
 import 'package:invoiceninja_flutter/data/models/design_model.dart';
 import 'package:invoiceninja_flutter/data/models/entities.dart';
 import 'package:invoiceninja_flutter/data/models/invoice_model.dart';
+import 'package:invoiceninja_flutter/data/models/quote_model.dart';
 import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/redux/settings/settings_actions.dart';
@@ -52,7 +54,7 @@ class _InvoiceDesignState extends State<InvoiceDesign>
   void initState() {
     super.initState();
     _focusNode = FocusScopeNode();
-    _controller = TabController(vsync: this, length: 7);
+    _controller = TabController(vsync: this, length: 10);
   }
 
   @override
@@ -79,33 +81,16 @@ class _InvoiceDesignState extends State<InvoiceDesign>
         controller: _controller,
         isScrollable: true,
         tabs: [
-          Tab(
-            text: localization.generalSettings,
-          ),
-          Tab(
-            text: localization.invoiceOptions,
-          ),
-          Tab(
-            text: localization.clientDetails,
-          ),
-          Tab(
-            text: localization.companyDetails,
-          ),
-          Tab(
-            text: localization.companyAddress,
-          ),
-          Tab(
-            text: localization.invoiceDetails,
-          ),
-          /*
-          Tab(
-            text: localization.quoteDetails,
-          ),
-          Tab(
-            text: localization.creditDetails,
-          ),
-           */
+          Tab(text: localization.generalSettings),
+          Tab(text: localization.invoiceOptions),
+          Tab(text: localization.clientDetails),
+          Tab(text: localization.companyDetails),
+          Tab(text: localization.companyAddress),
+          Tab(text: localization.invoiceDetails),
+          Tab(text: localization.quoteDetails),
+          Tab(text: localization.creditDetails),
           Tab(text: localization.productColumns),
+          Tab(text: localization.totalFields),
           /*
           Tab(text: localization.taskColumns),
            */
@@ -197,7 +182,7 @@ class _InvoiceDesignState extends State<InvoiceDesign>
               FormCard(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
-                  LearnMore(
+                  LearnMoreUrl(
                     url: 'https://fonts.google.com',
                     child: EntityDropdown(
                       key: ValueKey('__primary_font_${settings.primaryFont}__'),
@@ -417,7 +402,7 @@ class _InvoiceDesignState extends State<InvoiceDesign>
             child: MultiSelectList(
               options: [
                 ...[
-                  InvoiceFields.invoiceNumber,
+                  InvoiceFields.number,
                   InvoiceFields.poNumber,
                   InvoiceFields.date,
                   InvoiceFields.dueDate,
@@ -433,12 +418,13 @@ class _InvoiceDesignState extends State<InvoiceDesign>
                 ].map((field) => '\$client.$field')
               ],
               defaultSelected: [
-                InvoiceFields.invoiceNumber,
+                InvoiceFields.number,
                 InvoiceFields.poNumber,
                 InvoiceFields.date,
                 InvoiceFields.dueDate,
                 InvoiceFields.balance,
-              ],
+                InvoiceFields.total,
+              ].map((field) => '\$invoice.$field').toList(),
               selected: settings.getFieldsForSection(kPdfFieldsInvoiceDetails),
               onSelected: (values) {
                 viewModel.onSettingsChanged(settings.setFieldsForSection(
@@ -449,7 +435,6 @@ class _InvoiceDesignState extends State<InvoiceDesign>
               prefix: 'invoice',
             ),
           ),
-          /*
           FormCard(
             child: MultiSelectList(
               options: [
@@ -458,7 +443,7 @@ class _InvoiceDesignState extends State<InvoiceDesign>
                   QuoteFields.poNumber,
                   QuoteFields.date,
                   QuoteFields.validUntil,
-                  QuoteFields.amount,
+                  QuoteFields.total,
                   QuoteFields.customValue1,
                   QuoteFields.customValue2,
                   QuoteFields.customValue3,
@@ -473,13 +458,12 @@ class _InvoiceDesignState extends State<InvoiceDesign>
                 QuoteFields.poNumber,
                 QuoteFields.date,
                 QuoteFields.validUntil,
-                QuoteFields.amount,
-              ],
+                QuoteFields.total,
+              ].map((field) => '\$quote.$field').toList(),
               selected: settings.getFieldsForSection(kPdfFieldsQuoteDetails),
               onSelected: (values) {
                 viewModel.onSettingsChanged(settings.setFieldsForSection(
                     kPdfFieldsQuoteDetails, values));
-
               },
               addTitle: localization.addField,
               liveChanges: true,
@@ -493,7 +477,7 @@ class _InvoiceDesignState extends State<InvoiceDesign>
                   CreditFields.number,
                   CreditFields.poNumber,
                   CreditFields.date,
-                  CreditFields.amount,
+                  CreditFields.total,
                   CreditFields.balance,
                   CreditFields.customValue1,
                   CreditFields.customValue2,
@@ -509,10 +493,11 @@ class _InvoiceDesignState extends State<InvoiceDesign>
                 CreditFields.poNumber,
                 CreditFields.date,
                 CreditFields.balance,
-              ],
+                CreditFields.total,
+              ].map((field) => '\$credit.$field').toList(),
               selected: settings.getFieldsForSection(kPdfFieldsCreditDetails),
               onSelected: (values) {
-                   viewModel.onSettingsChanged(settings.setFieldsForSection(
+                viewModel.onSettingsChanged(settings.setFieldsForSection(
                     kPdfFieldsCreditDetails, values));
               },
               addTitle: localization.addField,
@@ -520,7 +505,6 @@ class _InvoiceDesignState extends State<InvoiceDesign>
               prefix: 'credit',
             ),
           ),
-           */
           FormCard(
             child: MultiSelectList(
               options: [
@@ -528,6 +512,7 @@ class _InvoiceDesignState extends State<InvoiceDesign>
                 ProductItemFields.notes,
                 ProductItemFields.quantity,
                 ProductItemFields.cost,
+                ProductItemFields.tax,
                 ProductItemFields.discount,
                 ProductItemFields.lineTotal,
                 ProductItemFields.custom1,
@@ -538,8 +523,10 @@ class _InvoiceDesignState extends State<InvoiceDesign>
               defaultSelected: [
                 ProductItemFields.productKey,
                 ProductItemFields.notes,
-                ProductItemFields.quantity,
                 ProductItemFields.cost,
+                ProductItemFields.quantity,
+                ProductItemFields.discount,
+                ProductItemFields.tax,
                 ProductItemFields.lineTotal,
               ].map((field) => '\$product.$field').toList(),
               selected: settings.getFieldsForSection(kPdfFieldsProductColumns),
@@ -568,6 +555,47 @@ class _InvoiceDesignState extends State<InvoiceDesign>
             ),
           ),          
            */
+          FormCard(
+            child: MultiSelectList(
+              options: [
+                InvoiceTotalFields.subtotal,
+                InvoiceTotalFields.discount,
+                InvoiceTotalFields.lineTaxes,
+                InvoiceTotalFields.totalTaxes,
+                InvoiceTotalFields.customSurcharge1,
+                InvoiceTotalFields.customSurcharge2,
+                InvoiceTotalFields.customSurcharge3,
+                InvoiceTotalFields.customSurcharge4,
+                InvoiceTotalFields.paidToDate,
+                InvoiceTotalFields.total,
+                InvoiceTotalFields.outstanding,
+              ].map((field) => '\$$field').toList(),
+              defaultSelected: [
+                InvoiceTotalFields.subtotal,
+                InvoiceTotalFields.discount,
+                InvoiceTotalFields.totalTaxes,
+                InvoiceTotalFields.lineTaxes,
+                InvoiceTotalFields.customSurcharge1,
+                InvoiceTotalFields.customSurcharge2,
+                InvoiceTotalFields.customSurcharge3,
+                InvoiceTotalFields.customSurcharge4,
+                InvoiceTotalFields.total,
+                InvoiceTotalFields.paidToDate,
+                InvoiceTotalFields.outstanding,
+              ].map((field) => '\$$field').toList(),
+              selected: settings.getFieldsForSection(kPdfFieldsTotalFields),
+              onSelected: (values) {
+                viewModel.onSettingsChanged(settings.setFieldsForSection(
+                    kPdfFieldsTotalFields, values));
+              },
+              addTitle: localization.addField,
+              liveChanges: true,
+              prefix: 'total',
+              allowDuplicates: [
+                '\$' + InvoiceTotalFields.subtotal,
+              ],
+            ),
+          ),
         ],
       ),
     );

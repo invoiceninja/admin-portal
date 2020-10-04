@@ -1,5 +1,4 @@
 import 'dart:async';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:invoiceninja_flutter/constants.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
@@ -9,6 +8,7 @@ import 'package:invoiceninja_flutter/redux/dashboard/dashboard_actions.dart';
 import 'package:invoiceninja_flutter/redux/ui/ui_actions.dart';
 import 'package:invoiceninja_flutter/ui/auth/login_vm.dart';
 import 'package:invoiceninja_flutter/utils/formatting.dart';
+import 'package:invoiceninja_flutter/utils/strings.dart';
 import 'package:redux/redux.dart';
 import 'package:invoiceninja_flutter/redux/auth/auth_actions.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
@@ -83,21 +83,14 @@ Middleware<AppState> _createLoginRequest(AuthRepository repository) {
           LoadAccountSuccess(completer: action.completer, loginResponse: data));
     }).catchError((Object error) {
       print('Login error: $error');
-      var message = error.toString();
-      if (message.startsWith('Deserializing') && !kIsWeb) {
-        message = message.substring(message.lastIndexOf('Deserializing'));
-        message =
-            'An error occurred, please check that you\'re using the latest version of the app. $message';
-      } else if (message.toLowerCase().contains('no host specified')) {
-        message = 'An error occurred, please check the URL is correct';
-      } else if (message.contains('404')) {
-        message += ', you may need to add /public to the URL';
-      }
-      print('Login error: $message');
+      final message = _parseError('$error');
       if (action.completer != null) {
         action.completer.completeError(message);
       }
       store.dispatch(UserLoginFailure(message));
+      if ('$error'.startsWith('Error ::')) {
+        throw error;
+      }
     });
 
     next(action);
@@ -120,10 +113,14 @@ Middleware<AppState> _createSignUpRequest(AuthRepository repository) {
           LoadAccountSuccess(completer: action.completer, loginResponse: data));
     }).catchError((Object error) {
       print('Signup error: $error');
+      final message = _parseError('$error');
       if (action.completer != null) {
-        action.completer.completeError(error);
+        action.completer.completeError(message);
       }
-      store.dispatch(UserLoginFailure(error));
+      store.dispatch(UserLoginFailure(message));
+      if ('$error'.startsWith('Error ::')) {
+        throw error;
+      }
     });
 
     next(action);
@@ -152,10 +149,14 @@ Middleware<AppState> _createOAuthLoginRequest(AuthRepository repository) {
           LoadAccountSuccess(completer: action.completer, loginResponse: data));
     }).catchError((Object error) {
       print('Oauth login error: $error');
+      final message = _parseError('$error');
       if (action.completer != null) {
-        action.completer.completeError(error);
+        action.completer.completeError(message);
       }
-      store.dispatch(UserLoginFailure(error));
+      store.dispatch(UserLoginFailure(message));
+      if ('$error'.startsWith('Error ::')) {
+        throw error;
+      }
     });
 
     next(action);
@@ -179,10 +180,14 @@ Middleware<AppState> _createOAuthSignUpRequest(AuthRepository repository) {
           LoadAccountSuccess(completer: action.completer, loginResponse: data));
     }).catchError((Object error) {
       print('OAuth signup error: $error');
+      final message = _parseError('$error');
       if (action.completer != null) {
-        action.completer.completeError(error);
+        action.completer.completeError(message);
       }
-      store.dispatch(UserLoginFailure(error));
+      store.dispatch(UserLoginFailure(message));
+      if ('$error'.startsWith('Error ::')) {
+        throw error;
+      }
     });
 
     next(action);
@@ -231,10 +236,14 @@ Middleware<AppState> _createRefreshRequest(AuthRepository repository) {
         loginResponse: data,
       ));
     }).catchError((Object error) {
+      final message = _parseError('$error');
       if (action.completer != null) {
-        action.completer.completeError(error);
+        action.completer.completeError(message);
       }
-      store.dispatch(RefreshDataFailure(error));
+      store.dispatch(RefreshDataFailure(message));
+      if ('$error'.startsWith('Error ::')) {
+        throw error;
+      }
     });
 
     next(action);
@@ -338,4 +347,24 @@ Middleware<AppState> _purgeData(AuthRepository repository) {
 
     next(action);
   };
+}
+
+String _parseError(String error) {
+  const errorPattern = 'failed due to: Deserializing';
+  if (error.contains(errorPattern)) {
+    final lastIndex = error.lastIndexOf(errorPattern);
+    final secondToLastIndex = secondToLastIndexOf(error, errorPattern);
+    error = 'Error :: ' +
+        error
+            .substring(
+                (secondToLastIndex >= 0 ? secondToLastIndex : lastIndex) +
+                    errorPattern.length)
+            .trim();
+  } else if (error.toLowerCase().contains('no host specified')) {
+    error = 'An error occurred, please check the URL is correct';
+  } else if (error.contains('404')) {
+    error += ', you may need to add /public to the URL';
+  }
+
+  return error;
 }

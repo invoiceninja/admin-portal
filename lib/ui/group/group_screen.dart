@@ -28,7 +28,6 @@ class GroupSettingsScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final store = StoreProvider.of<AppState>(context);
     final state = store.state;
-    final company = state.company;
     final localization = AppLocalization.of(context);
 
     return ListScaffold(
@@ -46,10 +45,6 @@ class GroupSettingsScreen extends StatelessWidget {
       bottomNavigationBar: AppBottomBar(
         entityType: EntityType.group,
         onSelectedSortField: (value) => store.dispatch(SortGroups(value)),
-        customValues1: company.getCustomFieldValues(CustomFieldType.group1,
-            excludeBlank: true),
-        customValues2: company.getCustomFieldValues(CustomFieldType.group2,
-            excludeBlank: true),
         onSelectedCustom1: (value) =>
             store.dispatch(FilterGroupsByCustom1(value)),
         onSelectedCustom2: (value) =>

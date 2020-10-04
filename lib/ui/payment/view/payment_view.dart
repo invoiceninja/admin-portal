@@ -54,7 +54,7 @@ class _PaymentViewState extends State<PaymentView> {
         localization.lookup('payment_status_${payment.statusId}');
      */
     if (payment.date.isNotEmpty) {
-      fields[PaymentFields.paymentDate] = formatDate(payment.date, context);
+      fields[PaymentFields.date] = formatDate(payment.date, context);
     }
     if ((payment.typeId ?? '').isNotEmpty) {
       final paymentType = state.staticState.paymentTypeMap[payment.typeId];

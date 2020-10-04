@@ -68,6 +68,10 @@ class UserFields {
   static const String email = 'email';
   static const String phone = 'phone';
   static const String updatedAt = 'updated_at';
+  static const String custom1 = 'custom1';
+  static const String custom2 = 'custom2';
+  static const String custom3 = 'custom3';
+  static const String custom4 = 'custom4';
 }
 
 abstract class UserEntity extends Object
@@ -120,18 +124,17 @@ abstract class UserEntity extends Object
   String get phone;
 
   @nullable
+  String get password;
+
   @BuiltValueField(wireName: 'custom_value1')
   String get customValue1;
 
-  @nullable
   @BuiltValueField(wireName: 'custom_value2')
   String get customValue2;
 
-  @nullable
   @BuiltValueField(wireName: 'custom_value3')
   String get customValue3;
 
-  @nullable
   @BuiltValueField(wireName: 'custom_value4')
   String get customValue4;
 

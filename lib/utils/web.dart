@@ -11,6 +11,9 @@ class WebUtils {
   static String get browserUrl =>
       formatApiUrl(window.location.href.split('#')[0]);
 
+  static String getHtmlValue(String field) =>
+      window.document.documentElement.dataset[field];
+
   static Future<String> filePicker() {
     final completer = new Completer<String>();
     final InputElement input = document.createElement('input');

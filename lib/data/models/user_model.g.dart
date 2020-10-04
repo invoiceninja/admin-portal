@@ -170,6 +170,18 @@ class _$UserEntitySerializer implements StructuredSerializer<UserEntity> {
       'phone',
       serializers.serialize(object.phone,
           specifiedType: const FullType(String)),
+      'custom_value1',
+      serializers.serialize(object.customValue1,
+          specifiedType: const FullType(String)),
+      'custom_value2',
+      serializers.serialize(object.customValue2,
+          specifiedType: const FullType(String)),
+      'custom_value3',
+      serializers.serialize(object.customValue3,
+          specifiedType: const FullType(String)),
+      'custom_value4',
+      serializers.serialize(object.customValue4,
+          specifiedType: const FullType(String)),
       'created_at',
       serializers.serialize(object.createdAt,
           specifiedType: const FullType(int)),
@@ -182,28 +194,10 @@ class _$UserEntitySerializer implements StructuredSerializer<UserEntity> {
       'id',
       serializers.serialize(object.id, specifiedType: const FullType(String)),
     ];
-    if (object.customValue1 != null) {
+    if (object.password != null) {
       result
-        ..add('custom_value1')
-        ..add(serializers.serialize(object.customValue1,
-            specifiedType: const FullType(String)));
-    }
-    if (object.customValue2 != null) {
-      result
-        ..add('custom_value2')
-        ..add(serializers.serialize(object.customValue2,
-            specifiedType: const FullType(String)));
-    }
-    if (object.customValue3 != null) {
-      result
-        ..add('custom_value3')
-        ..add(serializers.serialize(object.customValue3,
-            specifiedType: const FullType(String)));
-    }
-    if (object.customValue4 != null) {
-      result
-        ..add('custom_value4')
-        ..add(serializers.serialize(object.customValue4,
+        ..add('password')
+        ..add(serializers.serialize(object.password,
             specifiedType: const FullType(String)));
     }
     if (object.userCompany != null) {
@@ -270,6 +264,10 @@ class _$UserEntitySerializer implements StructuredSerializer<UserEntity> {
           break;
         case 'phone':
           result.phone = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String;
+          break;
+        case 'password':
+          result.password = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String;
           break;
         case 'custom_value1':
@@ -630,6 +628,8 @@ class _$UserEntity extends UserEntity {
   @override
   final String phone;
   @override
+  final String password;
+  @override
   final String customValue1;
   @override
   final String customValue2;
@@ -666,6 +666,7 @@ class _$UserEntity extends UserEntity {
       this.lastName,
       this.email,
       this.phone,
+      this.password,
       this.customValue1,
       this.customValue2,
       this.customValue3,
@@ -692,6 +693,18 @@ class _$UserEntity extends UserEntity {
     }
     if (phone == null) {
       throw new BuiltValueNullFieldError('UserEntity', 'phone');
+    }
+    if (customValue1 == null) {
+      throw new BuiltValueNullFieldError('UserEntity', 'customValue1');
+    }
+    if (customValue2 == null) {
+      throw new BuiltValueNullFieldError('UserEntity', 'customValue2');
+    }
+    if (customValue3 == null) {
+      throw new BuiltValueNullFieldError('UserEntity', 'customValue3');
+    }
+    if (customValue4 == null) {
+      throw new BuiltValueNullFieldError('UserEntity', 'customValue4');
     }
     if (createdAt == null) {
       throw new BuiltValueNullFieldError('UserEntity', 'createdAt');
@@ -722,6 +735,7 @@ class _$UserEntity extends UserEntity {
         lastName == other.lastName &&
         email == other.email &&
         phone == other.phone &&
+        password == other.password &&
         customValue1 == other.customValue1 &&
         customValue2 == other.customValue2 &&
         customValue3 == other.customValue3 &&
@@ -759,14 +773,18 @@ class _$UserEntity extends UserEntity {
                                                                 $jc(
                                                                     $jc(
                                                                         $jc(
-                                                                            0,
-                                                                            firstName
+                                                                            $jc(
+                                                                                0,
+                                                                                firstName
+                                                                                    .hashCode),
+                                                                            lastName
                                                                                 .hashCode),
-                                                                        lastName
+                                                                        email
                                                                             .hashCode),
-                                                                    email
+                                                                    phone
                                                                         .hashCode),
-                                                                phone.hashCode),
+                                                                password
+                                                                    .hashCode),
                                                             customValue1
                                                                 .hashCode),
                                                         customValue2.hashCode),
@@ -791,6 +809,7 @@ class _$UserEntity extends UserEntity {
           ..add('lastName', lastName)
           ..add('email', email)
           ..add('phone', phone)
+          ..add('password', password)
           ..add('customValue1', customValue1)
           ..add('customValue2', customValue2)
           ..add('customValue3', customValue3)
@@ -827,6 +846,10 @@ class UserEntityBuilder implements Builder<UserEntity, UserEntityBuilder> {
   String _phone;
   String get phone => _$this._phone;
   set phone(String phone) => _$this._phone = phone;
+
+  String _password;
+  String get password => _$this._password;
+  set password(String password) => _$this._password = password;
 
   String _customValue1;
   String get customValue1 => _$this._customValue1;
@@ -897,6 +920,7 @@ class UserEntityBuilder implements Builder<UserEntity, UserEntityBuilder> {
       _lastName = _$v.lastName;
       _email = _$v.email;
       _phone = _$v.phone;
+      _password = _$v.password;
       _customValue1 = _$v.customValue1;
       _customValue2 = _$v.customValue2;
       _customValue3 = _$v.customValue3;
@@ -939,6 +963,7 @@ class UserEntityBuilder implements Builder<UserEntity, UserEntityBuilder> {
               lastName: lastName,
               email: email,
               phone: phone,
+              password: password,
               customValue1: customValue1,
               customValue2: customValue2,
               customValue3: customValue3,

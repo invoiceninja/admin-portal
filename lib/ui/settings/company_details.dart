@@ -1,6 +1,7 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:invoiceninja_flutter/data/models/company_gateway_model.dart';
 import 'package:invoiceninja_flutter/data/models/entities.dart';
 import 'package:invoiceninja_flutter/redux/payment_term/payment_term_selectors.dart';
 import 'package:invoiceninja_flutter/redux/static/static_selectors.dart';
@@ -451,6 +452,22 @@ class _CompanyDetailsState extends State<CompanyDetails>
               FormCard(
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: <Widget>[
+                  AppDropdownButton<String>(
+                      labelText: localization.autoBill,
+                      value: settings.autoBill,
+                      onChanged: (dynamic value) => viewModel.onSettingsChanged(
+                          settings.rebuild((b) => b..autoBill = value)),
+                      items: [
+                        CompanyGatewayEntity.TOKEN_BILLING_ALWAYS,
+                        CompanyGatewayEntity.TOKEN_BILLING_OPT_OUT,
+                        CompanyGatewayEntity.TOKEN_BILLING_OPT_IN,
+                        CompanyGatewayEntity.TOKEN_BILLING_DISABLED
+                      ]
+                          .map((value) => DropdownMenuItem(
+                                child: Text(localization.lookup(value)),
+                                value: value,
+                              ))
+                          .toList()),
                   EntityDropdown(
                     key: ValueKey(
                         '__payment_type_${settings.defaultPaymentTypeId}__'),

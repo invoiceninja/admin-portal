@@ -75,9 +75,18 @@ class _DocumentEditState extends State<DocumentEdit> {
       title:
           document.isNew ? localization.newDocument : localization.editDocument,
       onSavePressed: (context) {
-        if (!_formKey.currentState.validate()) {
+        final bool isValid = _formKey.currentState.validate();
+
+        /*
+        setState(() {
+          autoValidate = !isValid ?? false;
+        });
+         */
+
+        if (!isValid) {
           return;
         }
+
         viewModel.onSavePressed(context);
       },
       body: Form(
