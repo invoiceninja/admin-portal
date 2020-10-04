@@ -60,6 +60,10 @@ class _PasswordFormFieldState extends State<PasswordFormField> {
               : localization.pleaseEnterYourPassword;
         }
 
+        if (!widget.newPassword) {
+          return null;
+        }
+
         if (value.length < 8) {
           return localization.passwordIsTooShort;
         }

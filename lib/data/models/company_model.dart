@@ -409,9 +409,9 @@ abstract class CompanyEntity extends Object
       );
 
   bool isModuleEnabled(EntityType entityType) {
-    /*
     // TODO remove this
     if ([
+      EntityType.recurringInvoice,
       EntityType.project,
       EntityType.task,
       EntityType.expense,
@@ -419,7 +419,6 @@ abstract class CompanyEntity extends Object
     ].contains(entityType)) {
       return false;
     }
-     */
 
     if ((entityType == EntityType.invoice ||
             entityType == EntityType.payment) &&
@@ -634,18 +633,9 @@ abstract class UserCompanyEntity
       return true;
     }
 
-    /*
-    // TODO remove this once task/expenses are supported
-    if (!Config.DEMO_MODE &&
-        [
-          EntityType.vendor,
-          EntityType.expense,
-          EntityType.task,
-          EntityType.project,
-        ].contains(entityType)) {
+    if (!company.isModuleEnabled(entityType)) {
       return false;
     }
-     */
 
     if (isAdmin ?? false) {
       return true;
