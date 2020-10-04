@@ -409,6 +409,7 @@ abstract class CompanyEntity extends Object
       );
 
   bool isModuleEnabled(EntityType entityType) {
+    /*
     // TODO remove this
     if ([
       EntityType.project,
@@ -418,6 +419,7 @@ abstract class CompanyEntity extends Object
     ].contains(entityType)) {
       return false;
     }
+     */
 
     if ((entityType == EntityType.invoice ||
             entityType == EntityType.payment) &&
@@ -572,7 +574,7 @@ abstract class GatewayEntity extends Object
 
 abstract class UserCompanyEntity
     implements Built<UserCompanyEntity, UserCompanyEntityBuilder> {
-  factory UserCompanyEntity() {
+  factory UserCompanyEntity(bool reportErrors) {
     return _$UserCompanyEntity._(
       isAdmin: false,
       isOwner: false,
@@ -580,7 +582,7 @@ abstract class UserCompanyEntity
       company: CompanyEntity(),
       user: UserEntity(),
       token: TokenEntity(),
-      account: AccountEntity(),
+      account: AccountEntity(reportErrors),
       notifications: BuiltMap<String, BuiltList<String>>().rebuild((b) => b
         ..[kNotificationChannelEmail] =
             BuiltList<String>(<String>[kNotificationsAll])),
@@ -632,6 +634,7 @@ abstract class UserCompanyEntity
       return true;
     }
 
+    /*
     // TODO remove this once task/expenses are supported
     if (!Config.DEMO_MODE &&
         [
@@ -642,6 +645,7 @@ abstract class UserCompanyEntity
         ].contains(entityType)) {
       return false;
     }
+     */
 
     if (isAdmin ?? false) {
       return true;

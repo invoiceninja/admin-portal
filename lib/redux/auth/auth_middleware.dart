@@ -88,6 +88,7 @@ Middleware<AppState> _createLoginRequest(AuthRepository repository) {
         action.completer.completeError(message);
       }
       store.dispatch(UserLoginFailure(message));
+      throw error;
     });
 
     next(action);
@@ -115,6 +116,7 @@ Middleware<AppState> _createSignUpRequest(AuthRepository repository) {
         action.completer.completeError(message);
       }
       store.dispatch(UserLoginFailure(message));
+      throw error;
     });
 
     next(action);
@@ -148,6 +150,7 @@ Middleware<AppState> _createOAuthLoginRequest(AuthRepository repository) {
         action.completer.completeError(message);
       }
       store.dispatch(UserLoginFailure(message));
+      throw error;
     });
 
     next(action);
@@ -176,6 +179,7 @@ Middleware<AppState> _createOAuthSignUpRequest(AuthRepository repository) {
         action.completer.completeError(message);
       }
       store.dispatch(UserLoginFailure(message));
+      throw error;
     });
 
     next(action);
@@ -229,6 +233,7 @@ Middleware<AppState> _createRefreshRequest(AuthRepository repository) {
         action.completer.completeError(message);
       }
       store.dispatch(RefreshDataFailure(message));
+      throw error;
     });
 
     next(action);

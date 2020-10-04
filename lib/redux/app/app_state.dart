@@ -77,6 +77,7 @@ part 'app_state.g.dart';
 abstract class AppState implements Built<AppState, AppStateBuilder> {
   factory AppState({
     @required PrefState prefState,
+    @required bool reportErrors,
     String currentRoute,
     String url,
   }) {
@@ -89,7 +90,7 @@ abstract class AppState implements Built<AppState, AppStateBuilder> {
       staticState: StaticState(),
       userCompanyStates: BuiltList(
           List<int>.generate(kMaxNumberOfCompanies, (i) => i + 1)
-              .map((index) => UserCompanyState())
+              .map((index) => UserCompanyState(reportErrors))
               .toList()),
       uiState: UIState(currentRoute: currentRoute),
       prefState: prefState ?? PrefState(),

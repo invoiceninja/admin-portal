@@ -207,7 +207,9 @@ Middleware<AppState> _createLoadState(
         companyStates.add(await companyRepositories[i].loadCompanyState(i));
       }
 
-      final AppState appState = AppState(prefState: store.state.prefState)
+      final AppState appState = AppState(
+              prefState: store.state.prefState,
+              reportErrors: store.state.account.reportErrors)
           .rebuild((b) => b
             ..authState.replace(authState)
             ..uiState.replace(uiState)

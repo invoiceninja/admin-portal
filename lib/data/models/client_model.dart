@@ -760,6 +760,8 @@ abstract class ContactEntity extends Object
 
   String get link;
 
+  String get silentLink => '$link?silent=true';
+
   String get fullName {
     return (firstName + ' ' + lastName).trim();
   }

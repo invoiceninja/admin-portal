@@ -58,7 +58,7 @@ class _ClientViewDetailsState extends State<ClientViewDetails> {
               shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(5)),
               onPressed: () {
-                launch('${contact.link}&client_hash=${client.clientHash}',
+                launch('${contact.silentLink}&client_hash=${client.clientHash}',
                     forceWebView: false, forceSafariVC: false);
               },
             )),
