@@ -5,6 +5,7 @@ import 'package:invoiceninja_flutter/data/models/entities.dart';
 import 'package:invoiceninja_flutter/ui/app/form_card.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/app_dropdown_button.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/app_form.dart';
+import 'package:invoiceninja_flutter/ui/app/forms/bool_dropdown_button.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/decorated_form_field.dart';
 import 'package:invoiceninja_flutter/ui/settings/generated_numbers_vm.dart';
 import 'package:invoiceninja_flutter/ui/app/edit_scaffold.dart';
@@ -126,11 +127,11 @@ class _GeneratedNumbersState extends State<GeneratedNumbers>
           ),
           if (company.isModuleEnabled(EntityType.quote))
             Tab(
-              text: localization.quote,
+              text: localization.quotes,
             ),
           if (company.isModuleEnabled(EntityType.credit))
             Tab(
-              text: localization.credit,
+              text: localization.credits,
             ),
         ],
       ),
@@ -175,20 +176,21 @@ class _GeneratedNumbersState extends State<GeneratedNumbers>
                       ),
                     ],
                   ),
-                  // TODO Re-enable with quotes/recurring
+                  if (company.isModuleEnabled(EntityType.recurringInvoice))
+                    DecoratedFormField(
+                      label: localization.recurringPrefix,
+                      controller: _recurringPrefixController,
+                    ),
+                  if (company.isModuleEnabled(EntityType.quote))
+                    BoolDropdownButton(
+                      iconData: Icons.content_copy,
+                      label: localization.sharedInvoiceQuoteCounter,
+                      value: settings.sharedInvoiceQuoteCounter,
+                      onChanged: (value) => viewModel.onSettingsChanged(
+                          settings.rebuild(
+                              (b) => b..sharedInvoiceQuoteCounter = value)),
+                    ),
                   /*
-                  BoolDropdownButton(
-                    iconData: Icons.content_copy,
-                    label: localization.sharedInvoiceQuoteCounter,
-                    value: settings.sharedInvoiceQuoteCounter,
-                    onChanged: (value) => viewModel.onSettingsChanged(settings
-                        .rebuild((b) => b..sharedInvoiceQuoteCounter = value)),
-                  ),
-                  SizedBox(height: 16),
-                  DecoratedFormField(
-                    label: localization.recurringPrefix,
-                    controller: _recurringPrefixController,
-                  ),
                   AppDropdownButton(
                     labelText: localization.resetCounter,
                     value: settings.resetCounterFrequencyId,

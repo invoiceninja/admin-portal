@@ -1243,6 +1243,18 @@ class _$SettingsEntitySerializer
         ..add(serializers.serialize(object.invoiceNumberCounter,
             specifiedType: const FullType(int)));
     }
+    if (object.recurringInvoiceNumberPattern != null) {
+      result
+        ..add('recurring_invoice_number_pattern')
+        ..add(serializers.serialize(object.recurringInvoiceNumberPattern,
+            specifiedType: const FullType(String)));
+    }
+    if (object.recurringInvoiceNumberCounter != null) {
+      result
+        ..add('recurring_invoice_number_counter')
+        ..add(serializers.serialize(object.recurringInvoiceNumberCounter,
+            specifiedType: const FullType(int)));
+    }
     if (object.quoteNumberPattern != null) {
       result
         ..add('quote_number_pattern')
@@ -2159,6 +2171,14 @@ class _$SettingsEntitySerializer
           break;
         case 'invoice_number_counter':
           result.invoiceNumberCounter = serializers.deserialize(value,
+              specifiedType: const FullType(int)) as int;
+          break;
+        case 'recurring_invoice_number_pattern':
+          result.recurringInvoiceNumberPattern = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String;
+          break;
+        case 'recurring_invoice_number_counter':
+          result.recurringInvoiceNumberCounter = serializers.deserialize(value,
               specifiedType: const FullType(int)) as int;
           break;
         case 'quote_number_pattern':
@@ -4558,6 +4578,10 @@ class _$SettingsEntity extends SettingsEntity {
   @override
   final int invoiceNumberCounter;
   @override
+  final String recurringInvoiceNumberPattern;
+  @override
+  final int recurringInvoiceNumberCounter;
+  @override
   final String quoteNumberPattern;
   @override
   final int quoteNumberCounter;
@@ -4846,6 +4870,8 @@ class _$SettingsEntity extends SettingsEntity {
       this.paymentNumberCounter,
       this.invoiceNumberPattern,
       this.invoiceNumberCounter,
+      this.recurringInvoiceNumberPattern,
+      this.recurringInvoiceNumberCounter,
       this.quoteNumberPattern,
       this.quoteNumberCounter,
       this.clientNumberPattern,
@@ -5025,6 +5051,8 @@ class _$SettingsEntity extends SettingsEntity {
         paymentNumberCounter == other.paymentNumberCounter &&
         invoiceNumberPattern == other.invoiceNumberPattern &&
         invoiceNumberCounter == other.invoiceNumberCounter &&
+        recurringInvoiceNumberPattern == other.recurringInvoiceNumberPattern &&
+        recurringInvoiceNumberCounter == other.recurringInvoiceNumberCounter &&
         quoteNumberPattern == other.quoteNumberPattern &&
         quoteNumberCounter == other.quoteNumberCounter &&
         clientNumberPattern == other.clientNumberPattern &&
@@ -5170,7 +5198,7 @@ class _$SettingsEntity extends SettingsEntity {
                                                                 $jc(
                                                                     $jc(
                                                                         $jc(
-                                                                            $jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc(0, timezoneId.hashCode), dateFormatId.hashCode), enableMilitaryTime.hashCode), languageId.hashCode), showCurrencyCode.hashCode), currencyId.hashCode), customValue1.hashCode), customValue2.hashCode), customValue3.hashCode), customValue4.hashCode), defaultPaymentTerms.hashCode), companyGatewayIds.hashCode), defaultTaskRate.hashCode), sendReminders.hashCode), enablePortal.hashCode), enablePortalDashboard.hashCode), enablePortalTasks.hashCode), emailStyle.hashCode), replyToEmail.hashCode), bccEmail.hashCode), pdfEmailAttachment.hashCode), ublEmailAttachment.hashCode), documentEmailAttachment.hashCode), emailStyleCustom.hashCode), customMessageDashboard.hashCode), customMessageUnpaidInvoice.hashCode), customMessagePaidInvoice.hashCode), customMessageUnapprovedQuote.hashCode), autoArchiveInvoice.hashCode), autoArchiveQuote.hashCode), autoEmailInvoice.hashCode), autoConvertQuote.hashCode), enableInclusiveTaxes.hashCode), translations.hashCode), taskNumberPattern.hashCode), taskNumberCounter.hashCode), expenseNumberPattern.hashCode), expenseNumberCounter.hashCode), vendorNumberPattern.hashCode), vendorNumberCounter.hashCode), ticketNumberPattern.hashCode), ticketNumberCounter.hashCode), paymentNumberPattern.hashCode), paymentNumberCounter.hashCode), invoiceNumberPattern.hashCode), invoiceNumberCounter.hashCode), quoteNumberPattern.hashCode), quoteNumberCounter.hashCode), clientNumberPattern.hashCode), clientNumberCounter.hashCode), creditNumberPattern.hashCode), creditNumberCounter.hashCode), recurringNumberPrefix.hashCode), resetCounterFrequencyId.hashCode), resetCounterDate.hashCode), counterPadding.hashCode), sharedInvoiceQuoteCounter.hashCode), defaultInvoiceTerms.hashCode), defaultQuoteTerms.hashCode), defaultQuoteFooter.hashCode), defaultCreditTerms.hashCode), defaultCreditFooter.hashCode), defaultInvoiceDesignId.hashCode), defaultQuoteDesignId.hashCode), defaultCreditDesignId.hashCode), defaultInvoiceFooter.hashCode), invoiceLabels.hashCode), defaultTaxName1.hashCode), defaultTaxRate1.hashCode), defaultTaxName2.hashCode), defaultTaxRate2.hashCode), defaultTaxName3.hashCode), defaultTaxRate3.hashCode), defaultPaymentTypeId.hashCode), invoiceFields.hashCode), pdfVariables.hashCode), emailSignature.hashCode), emailSubjectInvoice.hashCode), emailSubjectQuote.hashCode), emailSubjectPayment.hashCode), emailSubjectPaymentPartial.hashCode), emailBodyInvoice.hashCode), emailBodyQuote.hashCode), emailBodyPayment.hashCode), emailBodyPaymentPartial.hashCode), emailSubjectReminder1.hashCode), emailSubjectReminder2.hashCode), emailSubjectReminder3.hashCode), emailBodyReminder1.hashCode), emailBodyReminder2.hashCode), emailBodyReminder3.hashCode), emailSubjectCustom1.hashCode), emailBodyCustom1.hashCode), emailSubjectCustom2.hashCode), emailBodyCustom2.hashCode), emailSubjectCustom3.hashCode), emailBodyCustom3.hashCode), enablePortalPassword.hashCode), signatureOnPdf.hashCode), enableEmailMarkup.hashCode), showAcceptInvoiceTerms.hashCode), showAcceptQuoteTerms.hashCode), requireInvoiceSignature.hashCode), requireQuoteSignature.hashCode), name.hashCode), companyLogo.hashCode), website.hashCode), address1.hashCode), address2.hashCode), city.hashCode), state.hashCode), postalCode.hashCode), phone.hashCode), email.hashCode), countryId.hashCode), vatNumber.hashCode), idNumber.hashCode), pageSize.hashCode), fontSize.hashCode), primaryColor.hashCode), secondaryColor.hashCode), primaryFont.hashCode), secondaryFont.hashCode), hidePaidToDate.hashCode), embedDocuments.hashCode), allPagesHeader.hashCode), allPagesFooter.hashCode), enableReminder1.hashCode), enableReminder2.hashCode), enableReminder3.hashCode), enableReminder4.hashCode), numDaysReminder1.hashCode), numDaysReminder2.hashCode), numDaysReminder3.hashCode), scheduleReminder1.hashCode), scheduleReminder2.hashCode), scheduleReminder3.hashCode), endlessReminderFrequencyId.hashCode), lateFeeAmount1.hashCode), lateFeeAmount2.hashCode), lateFeeAmount3.hashCode), lateFeeAmountEndless.hashCode), lateFeePercent1.hashCode), lateFeePercent2.hashCode), lateFeePercent3.hashCode), lateFeePercentEndless.hashCode),
+                                                                            $jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc(0, timezoneId.hashCode), dateFormatId.hashCode), enableMilitaryTime.hashCode), languageId.hashCode), showCurrencyCode.hashCode), currencyId.hashCode), customValue1.hashCode), customValue2.hashCode), customValue3.hashCode), customValue4.hashCode), defaultPaymentTerms.hashCode), companyGatewayIds.hashCode), defaultTaskRate.hashCode), sendReminders.hashCode), enablePortal.hashCode), enablePortalDashboard.hashCode), enablePortalTasks.hashCode), emailStyle.hashCode), replyToEmail.hashCode), bccEmail.hashCode), pdfEmailAttachment.hashCode), ublEmailAttachment.hashCode), documentEmailAttachment.hashCode), emailStyleCustom.hashCode), customMessageDashboard.hashCode), customMessageUnpaidInvoice.hashCode), customMessagePaidInvoice.hashCode), customMessageUnapprovedQuote.hashCode), autoArchiveInvoice.hashCode), autoArchiveQuote.hashCode), autoEmailInvoice.hashCode), autoConvertQuote.hashCode), enableInclusiveTaxes.hashCode), translations.hashCode), taskNumberPattern.hashCode), taskNumberCounter.hashCode), expenseNumberPattern.hashCode), expenseNumberCounter.hashCode), vendorNumberPattern.hashCode), vendorNumberCounter.hashCode), ticketNumberPattern.hashCode), ticketNumberCounter.hashCode), paymentNumberPattern.hashCode), paymentNumberCounter.hashCode), invoiceNumberPattern.hashCode), invoiceNumberCounter.hashCode), recurringInvoiceNumberPattern.hashCode), recurringInvoiceNumberCounter.hashCode), quoteNumberPattern.hashCode), quoteNumberCounter.hashCode), clientNumberPattern.hashCode), clientNumberCounter.hashCode), creditNumberPattern.hashCode), creditNumberCounter.hashCode), recurringNumberPrefix.hashCode), resetCounterFrequencyId.hashCode), resetCounterDate.hashCode), counterPadding.hashCode), sharedInvoiceQuoteCounter.hashCode), defaultInvoiceTerms.hashCode), defaultQuoteTerms.hashCode), defaultQuoteFooter.hashCode), defaultCreditTerms.hashCode), defaultCreditFooter.hashCode), defaultInvoiceDesignId.hashCode), defaultQuoteDesignId.hashCode), defaultCreditDesignId.hashCode), defaultInvoiceFooter.hashCode), invoiceLabels.hashCode), defaultTaxName1.hashCode), defaultTaxRate1.hashCode), defaultTaxName2.hashCode), defaultTaxRate2.hashCode), defaultTaxName3.hashCode), defaultTaxRate3.hashCode), defaultPaymentTypeId.hashCode), invoiceFields.hashCode), pdfVariables.hashCode), emailSignature.hashCode), emailSubjectInvoice.hashCode), emailSubjectQuote.hashCode), emailSubjectPayment.hashCode), emailSubjectPaymentPartial.hashCode), emailBodyInvoice.hashCode), emailBodyQuote.hashCode), emailBodyPayment.hashCode), emailBodyPaymentPartial.hashCode), emailSubjectReminder1.hashCode), emailSubjectReminder2.hashCode), emailSubjectReminder3.hashCode), emailBodyReminder1.hashCode), emailBodyReminder2.hashCode), emailBodyReminder3.hashCode), emailSubjectCustom1.hashCode), emailBodyCustom1.hashCode), emailSubjectCustom2.hashCode), emailBodyCustom2.hashCode), emailSubjectCustom3.hashCode), emailBodyCustom3.hashCode), enablePortalPassword.hashCode), signatureOnPdf.hashCode), enableEmailMarkup.hashCode), showAcceptInvoiceTerms.hashCode), showAcceptQuoteTerms.hashCode), requireInvoiceSignature.hashCode), requireQuoteSignature.hashCode), name.hashCode), companyLogo.hashCode), website.hashCode), address1.hashCode), address2.hashCode), city.hashCode), state.hashCode), postalCode.hashCode), phone.hashCode), email.hashCode), countryId.hashCode), vatNumber.hashCode), idNumber.hashCode), pageSize.hashCode), fontSize.hashCode), primaryColor.hashCode), secondaryColor.hashCode), primaryFont.hashCode), secondaryFont.hashCode), hidePaidToDate.hashCode), embedDocuments.hashCode), allPagesHeader.hashCode), allPagesFooter.hashCode), enableReminder1.hashCode), enableReminder2.hashCode), enableReminder3.hashCode), enableReminder4.hashCode), numDaysReminder1.hashCode), numDaysReminder2.hashCode), numDaysReminder3.hashCode), scheduleReminder1.hashCode), scheduleReminder2.hashCode), scheduleReminder3.hashCode), endlessReminderFrequencyId.hashCode), lateFeeAmount1.hashCode), lateFeeAmount2.hashCode), lateFeeAmount3.hashCode), lateFeeAmountEndless.hashCode), lateFeePercent1.hashCode), lateFeePercent2.hashCode), lateFeePercent3.hashCode), lateFeePercentEndless.hashCode),
                                                                                 emailSubjectReminder4.hashCode),
                                                                             emailBodyReminder4.hashCode),
                                                                         clientOnlinePaymentNotification.hashCode),
@@ -5241,6 +5269,8 @@ class _$SettingsEntity extends SettingsEntity {
           ..add('paymentNumberCounter', paymentNumberCounter)
           ..add('invoiceNumberPattern', invoiceNumberPattern)
           ..add('invoiceNumberCounter', invoiceNumberCounter)
+          ..add('recurringInvoiceNumberPattern', recurringInvoiceNumberPattern)
+          ..add('recurringInvoiceNumberCounter', recurringInvoiceNumberCounter)
           ..add('quoteNumberPattern', quoteNumberPattern)
           ..add('quoteNumberCounter', quoteNumberCounter)
           ..add('clientNumberPattern', clientNumberPattern)
@@ -5590,6 +5620,18 @@ class SettingsEntityBuilder
   int get invoiceNumberCounter => _$this._invoiceNumberCounter;
   set invoiceNumberCounter(int invoiceNumberCounter) =>
       _$this._invoiceNumberCounter = invoiceNumberCounter;
+
+  String _recurringInvoiceNumberPattern;
+  String get recurringInvoiceNumberPattern =>
+      _$this._recurringInvoiceNumberPattern;
+  set recurringInvoiceNumberPattern(String recurringInvoiceNumberPattern) =>
+      _$this._recurringInvoiceNumberPattern = recurringInvoiceNumberPattern;
+
+  int _recurringInvoiceNumberCounter;
+  int get recurringInvoiceNumberCounter =>
+      _$this._recurringInvoiceNumberCounter;
+  set recurringInvoiceNumberCounter(int recurringInvoiceNumberCounter) =>
+      _$this._recurringInvoiceNumberCounter = recurringInvoiceNumberCounter;
 
   String _quoteNumberPattern;
   String get quoteNumberPattern => _$this._quoteNumberPattern;
@@ -6222,6 +6264,8 @@ class SettingsEntityBuilder
       _paymentNumberCounter = _$v.paymentNumberCounter;
       _invoiceNumberPattern = _$v.invoiceNumberPattern;
       _invoiceNumberCounter = _$v.invoiceNumberCounter;
+      _recurringInvoiceNumberPattern = _$v.recurringInvoiceNumberPattern;
+      _recurringInvoiceNumberCounter = _$v.recurringInvoiceNumberCounter;
       _quoteNumberPattern = _$v.quoteNumberPattern;
       _quoteNumberCounter = _$v.quoteNumberCounter;
       _clientNumberPattern = _$v.clientNumberPattern;
@@ -6411,6 +6455,8 @@ class SettingsEntityBuilder
               paymentNumberCounter: paymentNumberCounter,
               invoiceNumberPattern: invoiceNumberPattern,
               invoiceNumberCounter: invoiceNumberCounter,
+              recurringInvoiceNumberPattern: recurringInvoiceNumberPattern,
+              recurringInvoiceNumberCounter: recurringInvoiceNumberCounter,
               quoteNumberPattern: quoteNumberPattern,
               quoteNumberCounter: quoteNumberCounter,
               clientNumberPattern: clientNumberPattern,

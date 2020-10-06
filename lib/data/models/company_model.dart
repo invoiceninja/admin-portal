@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:built_collection/built_collection.dart';
 import 'package:built_value/built_value.dart';
 import 'package:built_value/serializer.dart';
+import 'package:flutter/foundation.dart';
 import 'package:invoiceninja_flutter/constants.dart';
 import 'package:invoiceninja_flutter/data/models/account_model.dart';
 import 'package:invoiceninja_flutter/data/models/company_gateway_model.dart';
@@ -410,13 +411,14 @@ abstract class CompanyEntity extends Object
 
   bool isModuleEnabled(EntityType entityType) {
     // TODO remove this
-    if ([
-      EntityType.recurringInvoice,
-      EntityType.project,
-      EntityType.task,
-      EntityType.expense,
-      EntityType.vendor,
-    ].contains(entityType)) {
+    if (kReleaseMode &&
+        [
+          EntityType.recurringInvoice,
+          EntityType.project,
+          EntityType.task,
+          EntityType.expense,
+          EntityType.vendor,
+        ].contains(entityType)) {
       return false;
     }
 
@@ -909,6 +911,14 @@ abstract class SettingsEntity
       invoiceNumberCounter: clientSettings?.invoiceNumberCounter ??
           groupSettings?.invoiceNumberCounter ??
           companySettings?.invoiceNumberCounter,
+      recurringInvoiceNumberPattern:
+          clientSettings?.recurringInvoiceNumberPattern ??
+              groupSettings?.recurringInvoiceNumberPattern ??
+              companySettings?.recurringInvoiceNumberPattern,
+      recurringInvoiceNumberCounter:
+          clientSettings?.recurringInvoiceNumberCounter ??
+              groupSettings?.recurringInvoiceNumberCounter ??
+              companySettings?.recurringInvoiceNumberCounter,
       quoteNumberPattern: clientSettings?.quoteNumberPattern ??
           groupSettings?.quoteNumberPattern ??
           companySettings?.quoteNumberPattern,
@@ -1407,6 +1417,14 @@ abstract class SettingsEntity
   @nullable
   @BuiltValueField(wireName: 'invoice_number_counter')
   int get invoiceNumberCounter;
+
+  @nullable
+  @BuiltValueField(wireName: 'recurring_invoice_number_pattern')
+  String get recurringInvoiceNumberPattern;
+
+  @nullable
+  @BuiltValueField(wireName: 'recurring_invoice_number_counter')
+  int get recurringInvoiceNumberCounter;
 
   @nullable
   @BuiltValueField(wireName: 'quote_number_pattern')
