@@ -4,6 +4,7 @@ import 'package:invoiceninja_flutter/constants.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/data/models/recurring_invoice_model.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
+import 'package:invoiceninja_flutter/ui/app/entities/entity_status_chip.dart';
 import 'package:invoiceninja_flutter/ui/app/presenters/entity_presenter.dart';
 import 'package:invoiceninja_flutter/utils/formatting.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
@@ -50,10 +51,7 @@ class RecurringInvoicePresenter extends EntityPresenter {
 
     switch (field) {
       case RecurringInvoiceFields.status:
-        return Text(
-          localization
-              .lookup(kRecurringInvoiceStatuses[invoice.calculatedStatusId]),
-        );
+        return EntityStatusChip(entity: invoice);
       case RecurringInvoiceFields.invoiceNumber:
         return Text((invoice.number ?? '').isEmpty
             ? localization.pending
