@@ -47,7 +47,11 @@ class _GeneratedNumbersState extends State<GeneratedNumbers>
     final company = widget.viewModel.state.company;
     int tabs = 4;
 
-    [EntityType.quote, EntityType.credit].forEach((entityType) {
+    [
+      EntityType.quote,
+      EntityType.credit,
+      EntityType.recurringInvoice,
+    ].forEach((entityType) {
       if (company.isModuleEnabled(entityType)) {
         tabs++;
       }
@@ -122,6 +126,10 @@ class _GeneratedNumbersState extends State<GeneratedNumbers>
           Tab(
             text: localization.invoices,
           ),
+          if (company.isModuleEnabled(EntityType.recurringInvoice))
+            Tab(
+              text: localization.recurringInvoices,
+            ),
           Tab(
             text: localization.payments,
           ),
@@ -248,6 +256,17 @@ class _GeneratedNumbersState extends State<GeneratedNumbers>
                     ..invoiceNumberPattern = pattern)),
             ),
           ]),
+          if (company.isModuleEnabled(EntityType.recurringInvoice))
+            ListView(children: <Widget>[
+              EntityNumberSettings(
+                counterValue: settings.recurringInvoiceNumberCounter,
+                patternValue: settings.recurringInvoiceNumberPattern,
+                onChanged: (counter, pattern) =>
+                    viewModel.onSettingsChanged(settings.rebuild((b) => b
+                      ..recurringInvoiceNumberCounter = counter
+                      ..recurringInvoiceNumberPattern = pattern)),
+              ),
+            ]),
           ListView(children: <Widget>[
             EntityNumberSettings(
               counterValue: settings.paymentNumberCounter,
