@@ -686,10 +686,8 @@ abstract class InvoiceEntity extends Object
           actions.add(EntityAction.newPayment);
         }
 
-        if (!isSent) {
-          actions.add(isRecurringInvoice
-              ? EntityAction.markActive
-              : EntityAction.markSent);
+        if (!isSent && !isRecurring) {
+          actions.add(EntityAction.markSent);
         }
 
         if (isPayable && isInvoice) {
@@ -801,6 +799,8 @@ abstract class InvoiceEntity extends Object
           : EmailTemplate.invoice;
 
   double get requestedAmount => partial > 0 ? partial : amount;
+
+  bool get isRunning => isRecurring && statusId == kRecurringInvoiceStatusActive;
 
   bool get isSent => statusId != kInvoiceStatusDraft;
 
