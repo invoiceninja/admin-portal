@@ -128,7 +128,8 @@ class _ListFilterState extends State<ListFilter> {
                     ),
                     onPressed: () {
                       _filterController.text = '';
-                      _focusNode.unfocus();
+                      _focusNode.unfocus(
+                          disposition: UnfocusDisposition.previouslyFocusedChild);
                       widget.onFilterChanged(null);
                     },
                   )
