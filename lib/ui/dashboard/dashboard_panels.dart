@@ -13,6 +13,7 @@ import 'package:invoiceninja_flutter/ui/dashboard/dashboard_date_range_picker.da
 import 'package:invoiceninja_flutter/ui/dashboard/dashboard_screen_vm.dart';
 import 'package:invoiceninja_flutter/utils/formatting.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
+import 'package:invoiceninja_flutter/utils/platforms.dart';
 
 class DashboardPanels extends StatelessWidget {
   const DashboardPanels({
@@ -134,6 +135,11 @@ class DashboardPanels extends StatelessWidget {
                   ),
                 ),
               ),
+            if (isDesktop(context) && !state.dashboardUIState.showSidebar)
+              IconButton(
+                  tooltip: localization.showSidebar,
+                  icon: Icon(Icons.view_sidebar),
+                  onPressed: () => viewModel.onShowSidebar())
           ],
         ),
       ),
@@ -346,8 +352,7 @@ class DashboardPanels extends StatelessWidget {
           child: Column(
             children: [
               _header(context),
-              if (state.isLoading)
-                LinearProgressIndicator()
+              if (state.isLoading) LinearProgressIndicator()
             ],
           ),
           constraints: BoxConstraints.loose(

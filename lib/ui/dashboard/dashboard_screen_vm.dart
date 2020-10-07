@@ -57,6 +57,7 @@ class DashboardVM {
     @required this.onOffsetChanged,
     @required this.onCurrencyChanged,
     @required this.onTaxesChanged,
+    @required this.onShowSidebar,
   });
 
   static DashboardVM fromStore(Store<AppState> store) {
@@ -103,6 +104,8 @@ class DashboardVM {
           store.dispatch(UpdateDashboardSettings(currencyId: currencyId)),
       filter: filter,
       filteredList: memoizedFilteredSelector(filter, state.userCompanyState),
+      onShowSidebar: () =>
+          store.dispatch(UpdateDashboardSidebar(showSidebar: true)),
     );
   }
 
@@ -120,6 +123,7 @@ class DashboardVM {
   final Function(int) onOffsetChanged;
   final Function(String) onCurrencyChanged;
   final Function(bool) onTaxesChanged;
+  final Function onShowSidebar;
 
 /*
   @override
