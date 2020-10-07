@@ -29,22 +29,34 @@ class SidebarScaffold extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         automaticallyImplyLeading: false,
-        title: TabBar(
-          isScrollable: true,
-          controller: tabController,
-          tabs: [
-            if (company.isModuleEnabled(EntityType.invoice))
-              Tab(
-                text: localization.invoices,
+        title: Row(
+          children: [
+            Expanded(
+              child: TabBar(
+                isScrollable: true,
+                controller: tabController,
+                tabs: [
+                  if (company.isModuleEnabled(EntityType.invoice))
+                    Tab(
+                      text: localization.invoices,
+                    ),
+                  if (company.isModuleEnabled(EntityType.payment))
+                    Tab(
+                      text: localization.payments,
+                    ),
+                  if (company.isModuleEnabled(EntityType.quote))
+                    Tab(
+                      text: localization.quotes,
+                    ),
+                ],
               ),
-            if (company.isModuleEnabled(EntityType.payment))
-              Tab(
-                text: localization.payments,
+            ),
+            IconButton(
+              icon: Icon(Icons.clear),
+              onPressed: () => store.dispatch(
+                UpdateDashboardSidebar(showSidebar: false),
               ),
-            if (company.isModuleEnabled(EntityType.quote))
-              Tab(
-                text: localization.quotes,
-              ),
+            ),
           ],
         ),
       ),

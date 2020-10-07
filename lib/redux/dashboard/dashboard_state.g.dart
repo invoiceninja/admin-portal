@@ -34,6 +34,9 @@ class _$DashboardUIStateSerializer
             const FullType(EntityType),
             const FullType(BuiltList, const [const FullType(String)])
           ])),
+      'showSidebar',
+      serializers.serialize(object.showSidebar,
+          specifiedType: const FullType(bool)),
     ];
 
     return result;
@@ -66,6 +69,10 @@ class _$DashboardUIStateSerializer
                 const FullType(EntityType),
                 const FullType(BuiltList, const [const FullType(String)])
               ])));
+          break;
+        case 'showSidebar':
+          result.showSidebar = serializers.deserialize(value,
+              specifiedType: const FullType(bool)) as bool;
           break;
       }
     }
@@ -190,13 +197,18 @@ class _$DashboardUIState extends DashboardUIState {
   final EntityType selectedEntityType;
   @override
   final BuiltMap<EntityType, BuiltList<String>> selectedEntities;
+  @override
+  final bool showSidebar;
 
   factory _$DashboardUIState(
           [void Function(DashboardUIStateBuilder) updates]) =>
       (new DashboardUIStateBuilder()..update(updates)).build();
 
   _$DashboardUIState._(
-      {this.settings, this.selectedEntityType, this.selectedEntities})
+      {this.settings,
+      this.selectedEntityType,
+      this.selectedEntities,
+      this.showSidebar})
       : super._() {
     if (settings == null) {
       throw new BuiltValueNullFieldError('DashboardUIState', 'settings');
@@ -208,6 +220,9 @@ class _$DashboardUIState extends DashboardUIState {
     if (selectedEntities == null) {
       throw new BuiltValueNullFieldError(
           'DashboardUIState', 'selectedEntities');
+    }
+    if (showSidebar == null) {
+      throw new BuiltValueNullFieldError('DashboardUIState', 'showSidebar');
     }
   }
 
@@ -225,15 +240,17 @@ class _$DashboardUIState extends DashboardUIState {
     return other is DashboardUIState &&
         settings == other.settings &&
         selectedEntityType == other.selectedEntityType &&
-        selectedEntities == other.selectedEntities;
+        selectedEntities == other.selectedEntities &&
+        showSidebar == other.showSidebar;
   }
 
   int __hashCode;
   @override
   int get hashCode {
     return __hashCode ??= $jf($jc(
-        $jc($jc(0, settings.hashCode), selectedEntityType.hashCode),
-        selectedEntities.hashCode));
+        $jc($jc($jc(0, settings.hashCode), selectedEntityType.hashCode),
+            selectedEntities.hashCode),
+        showSidebar.hashCode));
   }
 
   @override
@@ -241,7 +258,8 @@ class _$DashboardUIState extends DashboardUIState {
     return (newBuiltValueToStringHelper('DashboardUIState')
           ..add('settings', settings)
           ..add('selectedEntityType', selectedEntityType)
-          ..add('selectedEntities', selectedEntities))
+          ..add('selectedEntities', selectedEntities)
+          ..add('showSidebar', showSidebar))
         .toString();
   }
 }
@@ -269,6 +287,10 @@ class DashboardUIStateBuilder
           MapBuilder<EntityType, BuiltList<String>> selectedEntities) =>
       _$this._selectedEntities = selectedEntities;
 
+  bool _showSidebar;
+  bool get showSidebar => _$this._showSidebar;
+  set showSidebar(bool showSidebar) => _$this._showSidebar = showSidebar;
+
   DashboardUIStateBuilder();
 
   DashboardUIStateBuilder get _$this {
@@ -276,6 +298,7 @@ class DashboardUIStateBuilder
       _settings = _$v.settings?.toBuilder();
       _selectedEntityType = _$v.selectedEntityType;
       _selectedEntities = _$v.selectedEntities?.toBuilder();
+      _showSidebar = _$v.showSidebar;
       _$v = null;
     }
     return this;
@@ -302,7 +325,8 @@ class DashboardUIStateBuilder
           new _$DashboardUIState._(
               settings: settings.build(),
               selectedEntityType: selectedEntityType,
-              selectedEntities: selectedEntities.build());
+              selectedEntities: selectedEntities.build(),
+              showSidebar: showSidebar);
     } catch (_) {
       String _$failedField;
       try {

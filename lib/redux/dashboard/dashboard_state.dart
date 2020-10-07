@@ -16,6 +16,7 @@ abstract class DashboardUIState
       settings: DashboardUISettings(),
       selectedEntities: BuiltMap<EntityType, BuiltList<String>>(),
       selectedEntityType: EntityType.invoice,
+      showSidebar: true,
     );
   }
 
@@ -30,6 +31,8 @@ abstract class DashboardUIState
   EntityType get selectedEntityType;
 
   BuiltMap<EntityType, BuiltList<String>> get selectedEntities;
+
+  bool get showSidebar;
 
   static Serializer<DashboardUIState> get serializer =>
       _$dashboardUIStateSerializer;

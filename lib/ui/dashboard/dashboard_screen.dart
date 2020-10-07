@@ -216,15 +216,16 @@ class _DashboardScreenState extends State<DashboardScreen>
                   child: mainScaffold,
                   flex: 3,
                 ),
-                Flexible(
-                  child: AppBorder(
-                    isLeft: true,
-                    child: SidebarScaffold(
-                      tabController: _sideTabController,
+                if (state.dashboardUIState.showSidebar)
+                  Flexible(
+                    child: AppBorder(
+                      isLeft: true,
+                      child: SidebarScaffold(
+                        tabController: _sideTabController,
+                      ),
                     ),
+                    flex: 2,
                   ),
-                  flex: 2,
-                ),
               ],
             )
           : mainScaffold,
