@@ -47,10 +47,6 @@ class AppShortcutsState extends State<AppShortcuts> {
           _ShortcutIntent.back(),
   };
 
-  void rebuild() {
-    setState(() {});
-  }
-
   @override
   Widget build(BuildContext context) {
     final _actions = <Type, Action<Intent>>{
