@@ -155,7 +155,7 @@ class InvoiceNinjaAppState extends State<InvoiceNinjaApp> {
         final state = store.state;
         final hasAccentColor = state.hasAccentColor;
         final accentColor = state.accentColor;
-        final fontFamily = kIsWeb ? 'Roboto' : null;
+        const fontFamily = kIsWeb ? 'Roboto' : null;
         final pageTransitionsTheme = PageTransitionsTheme(builders: {
           TargetPlatform.android: ZoomPageTransitionsBuilder(),
         });

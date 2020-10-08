@@ -14,6 +14,7 @@ import 'package:invoiceninja_flutter/ui/dashboard/dashboard_screen_vm.dart';
 import 'package:invoiceninja_flutter/utils/formatting.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:invoiceninja_flutter/utils/platforms.dart';
+import 'package:invoiceninja_flutter/data/models/dashboard_model.dart';
 
 class DashboardPanels extends StatelessWidget {
   const DashboardPanels({
@@ -72,7 +73,7 @@ class DashboardPanels extends StatelessWidget {
               visualDensity: VisualDensity.compact,
             ),
             SizedBox(width: 16),
-            InkWell(
+            PopupMenuButton<DateRange>(
               child: Padding(
                 padding: const EdgeInsets.only(left: 4, top: 6, bottom: 6),
                 child: Row(
@@ -93,7 +94,24 @@ class DashboardPanels extends StatelessWidget {
                   ],
                 ),
               ),
-              onTap: () => _showDateOptions(context),
+              itemBuilder: (context) => DateRange.values
+                  .map((dateRange) => PopupMenuItem(
+                        child: Text(localization.lookup(dateRange.toString())),
+                        value: dateRange,
+                      ))
+                  .toList(),
+              onSelected: (dateRange) {
+                final settings =
+                    DashboardSettings.fromState(state.dashboardUIState);
+                settings.dateRange = dateRange;
+                viewModel.onSettingsChanged(settings);
+
+                if (dateRange == DateRange.custom) {
+                  WidgetsBinding.instance.addPostFrameCallback((duration) {
+                    _showDateOptions(context);
+                  });
+                }
+              },
             ),
             Spacer(),
             if (company.hasTaxes)
