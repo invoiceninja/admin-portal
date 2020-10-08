@@ -93,7 +93,7 @@ class _DashboardScreenState extends State<DashboardScreen>
     final offset = _scrollController.position.pixels;
     final offsetIndex = ((offset + 120) / kDashboardPanelHeight).floor();
 
-    if (_sideTabController.index != offsetIndex) {
+    if (_sideTabController.index != offsetIndex && offsetIndex < _tabs.length) {
       _sideTabController.removeListener(onTabListener);
       _sideTabController.index = offsetIndex;
       _sideTabController.addListener(onTabListener);
