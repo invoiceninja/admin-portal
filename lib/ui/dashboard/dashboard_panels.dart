@@ -96,7 +96,9 @@ class DashboardPanels extends StatelessWidget {
               ),
               itemBuilder: (context) => DateRange.values
                   .map((dateRange) => PopupMenuItem(
-                        child: Text(localization.lookup(dateRange.toString())),
+                        child: Text(dateRange == DateRange.custom
+                            ? '${localization.more}...'
+                            : localization.lookup(dateRange.toString())),
                         value: dateRange,
                       ))
                   .toList(),
