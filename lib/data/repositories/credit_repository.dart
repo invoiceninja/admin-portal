@@ -74,20 +74,28 @@ class CreditRepository {
     return creditResponse.data;
   }
 
-  Future<Null> emailCredit(Credentials credentials, InvoiceEntity credit,
-      EmailTemplate template, String subject, String body) async {
+  Future<InvoiceEntity> emailCredit(
+      Credentials credentials,
+      InvoiceEntity credit,
+      EmailTemplate template,
+      String subject,
+      String body) async {
     final data = {
-      //'reminder': template == EmailTemplate.initial ? '' : template.toString(),
-      'template': {
-        'body': body,
-        'subject': subject,
-      }
+      'entity': '${credit.entityType}',
+      'entity_id': credit.id,
+      'template': 'email_template_$template',
+      'body': body,
+      'subject': subject,
     };
 
-    await webClient.post(
-        credentials.url + '/email_invoice?invoice_id=${credit.id}',
-        credentials.token,
+    final dynamic response = await webClient.post(
+        credentials.url + '/emails', credentials.token,
         data: json.encode(data));
+
+    final InvoiceItemResponse invoiceResponse =
+        serializers.deserializeWith(InvoiceItemResponse.serializer, response);
+
+    return invoiceResponse.data;
   }
 
   Future<InvoiceEntity> uploadDocument(
