@@ -92,7 +92,9 @@ class _TaskViewState extends State<TaskView> {
                 entity: project,
                 statusColor: task.isInvoiced
                     ? Colors.green
-                    : task.isRunning ? Colors.blue : null,
+                    : task.isRunning
+                        ? Colors.blue
+                        : null,
                 label: localization.duration,
                 value: formatDuration(task.calculateDuration),
                 secondLabel: localization.amount,

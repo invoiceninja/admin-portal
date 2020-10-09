@@ -28,8 +28,8 @@ Reducer<String> selectedIdReducer = combineReducers([
   TypedReducer<String, ArchiveCompanyGatewaySuccess>(
       (selectedId, action) => ''),
   TypedReducer<String, ClearEntityFilter>((selectedId, action) => ''),
-  TypedReducer<String, FilterByEntity>((selectedId, action) =>
-      action.clearSelection
+  TypedReducer<String, FilterByEntity>(
+      (selectedId, action) => action.clearSelection
           ? ''
           : action.entityType == EntityType.companyGateway
               ? action.entityId

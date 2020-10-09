@@ -96,7 +96,8 @@ class RecurringInvoiceEditVM extends EntityEditVM {
       },
       onItemsAdded: (items, clientId) {
         if (items.length == 1) {
-          store.dispatch(EditRecurringInvoiceItem(recurringInvoice.lineItems.length));
+          store.dispatch(
+              EditRecurringInvoiceItem(recurringInvoice.lineItems.length));
         }
         store.dispatch(AddRecurringInvoiceItems(items));
       },

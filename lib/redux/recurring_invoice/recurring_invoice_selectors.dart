@@ -80,7 +80,6 @@ List<String> filteredRecurringInvoicesSelector(
       return false;
     }
     return true;
-
   }).toList();
 
   list.sort((recurringInvoiceAId, recurringInvoiceBId) {
@@ -101,7 +100,7 @@ List<String> filteredRecurringInvoicesSelector(
 }
 
 var memoizedRecurringInvoiceStatsForClient = memo2(
-        (String clientId, BuiltMap<String, InvoiceEntity> invoiceMap) =>
+    (String clientId, BuiltMap<String, InvoiceEntity> invoiceMap) =>
         recurringInvoiceStatsForClient(clientId, invoiceMap));
 
 EntityStats recurringInvoiceStatsForClient(
@@ -122,7 +121,7 @@ EntityStats recurringInvoiceStatsForClient(
 }
 
 var memoizedRecurringInvoiceStatsForUser = memo2(
-        (String userId, BuiltMap<String, InvoiceEntity> invoiceMap) =>
+    (String userId, BuiltMap<String, InvoiceEntity> invoiceMap) =>
         recurringInvoiceStatsForUser(userId, invoiceMap));
 
 EntityStats recurringInvoiceStatsForUser(
@@ -142,10 +141,8 @@ EntityStats recurringInvoiceStatsForUser(
   return EntityStats(countActive: countActive, countArchived: countArchived);
 }
 
-
 bool hasRecurringInvoiceChanges(InvoiceEntity recurringInvoice,
         BuiltMap<String, InvoiceEntity> recurringInvoiceMap) =>
     recurringInvoice.isNew
         ? recurringInvoice.isChanged
         : recurringInvoice != recurringInvoiceMap[recurringInvoice.id];
-

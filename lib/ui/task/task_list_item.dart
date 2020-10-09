@@ -134,7 +134,9 @@ class TaskListItem extends StatelessWidget {
                     style: TextStyle(
                       color: task.isInvoiced
                           ? Colors.green
-                          : task.isRunning ? Colors.blue : Colors.grey,
+                          : task.isRunning
+                              ? Colors.blue
+                              : Colors.grey,
                     )),
               ],
             ),

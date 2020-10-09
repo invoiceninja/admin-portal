@@ -9,13 +9,13 @@ import 'package:invoiceninja_flutter/utils/formatting.dart';
 class PaymentPresenter extends EntityPresenter {
   static List<String> getDefaultTableFields(UserCompanyEntity userCompany) {
     return [
+      PaymentFields.status,
       PaymentFields.number,
       PaymentFields.client,
       PaymentFields.amount,
       PaymentFields.invoiceNumber,
       PaymentFields.date,
       PaymentFields.transactionReference,
-      PaymentFields.paymentStatus,
     ];
   }
 
@@ -62,7 +62,7 @@ class PaymentPresenter extends EntityPresenter {
             alignment: Alignment.centerRight,
             child: Text(formatNumber(payment.amount, context,
                 clientId: payment.clientId)));
-      case PaymentFields.paymentStatus:
+      case PaymentFields.status:
         return EntityStatusChip(entity: payment);
       case PaymentFields.customValue1:
         return Text(payment.customValue1);

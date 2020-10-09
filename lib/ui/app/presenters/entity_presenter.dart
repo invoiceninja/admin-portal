@@ -46,7 +46,9 @@ class EntityPresenter {
       case EntityFields.state:
         return Text(entity.isActive
             ? localization.active
-            : entity.isArchived ? localization.archived : localization.deleted);
+            : entity.isArchived
+                ? localization.archived
+                : localization.deleted);
       case EntityFields.createdBy:
         return Text(
             state.userState.map[entity.createdUserId]?.listDisplayName ?? '');

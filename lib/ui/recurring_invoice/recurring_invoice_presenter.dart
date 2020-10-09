@@ -12,10 +12,10 @@ import 'package:invoiceninja_flutter/utils/localization.dart';
 class RecurringInvoicePresenter extends EntityPresenter {
   static List<String> getDefaultTableFields(UserCompanyEntity userCompany) {
     return [
+      RecurringInvoiceFields.status,
       RecurringInvoiceFields.invoiceNumber,
       RecurringInvoiceFields.client,
       RecurringInvoiceFields.amount,
-      RecurringInvoiceFields.status,
       RecurringInvoiceFields.remainingCycles,
       RecurringInvoiceFields.nextSendDate,
       RecurringInvoiceFields.frequency,

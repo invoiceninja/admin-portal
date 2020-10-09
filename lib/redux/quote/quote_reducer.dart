@@ -44,10 +44,12 @@ Reducer<String> selectedIdReducer = combineReducers([
   TypedReducer<String, ClearEntityFilter>((selectedId, action) => ''),
   TypedReducer<String, ClearEntitySelection>((selectedId, action) =>
       action.entityType == EntityType.quote ? '' : selectedId),
-  TypedReducer<String, FilterByEntity>((selectedId, action) => action
-          .clearSelection
-      ? ''
-      : action.entityType == EntityType.quote ? action.entityId : selectedId),
+  TypedReducer<String, FilterByEntity>(
+      (selectedId, action) => action.clearSelection
+          ? ''
+          : action.entityType == EntityType.quote
+              ? action.entityId
+              : selectedId),
 ]);
 
 final editingReducer = combineReducers<InvoiceEntity>([

@@ -70,7 +70,9 @@ class SettingsRepository {
       String path, EntityType type) async {
     final route = type == EntityType.company
         ? 'companies'
-        : type == EntityType.group ? 'group_settings' : 'clients';
+        : type == EntityType.group
+            ? 'group_settings'
+            : 'clients';
     final url = '${credentials.url}/$route/$entityId';
 
     final dynamic response = await webClient.post(url, credentials.token,

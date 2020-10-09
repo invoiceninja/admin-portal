@@ -199,7 +199,9 @@ class _NotificationSelector extends StatelessWidget {
           child: IconText(
             text: showNoneAsCustom
                 ? localization.custom
-                : hasMultipleUsers ? localization.none : localization.disabled,
+                : hasMultipleUsers
+                    ? localization.none
+                    : localization.disabled,
             icon: showNoneAsCustom
                 ? Icons.arrow_drop_down_circle
                 : Icons.do_not_disturb_alt,

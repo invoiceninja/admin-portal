@@ -90,7 +90,9 @@ Reducer<bool> historyVisibleReducer = combineReducers([
   TypedReducer<bool, UpdateUserPreferences>((value, action) {
     return action.historyMode == AppSidebarMode.visible
         ? true
-        : action.historyMode == AppSidebarMode.float ? false : value;
+        : action.historyMode == AppSidebarMode.float
+            ? false
+            : value;
   }),
 ]);
 

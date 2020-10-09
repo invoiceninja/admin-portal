@@ -292,8 +292,12 @@ String formatDate(String value, BuildContext context,
     String format;
     if (!showDate) {
       format = showSeconds
-          ? company.settings.enableMilitaryTime ? 'H:mm:ss' : 'h:mm:ss a'
-          : company.settings.enableMilitaryTime ? 'H:mm' : 'h:mm a';
+          ? company.settings.enableMilitaryTime
+              ? 'H:mm:ss'
+              : 'h:mm:ss a'
+          : company.settings.enableMilitaryTime
+              ? 'H:mm'
+              : 'h:mm a';
     } else {
       final dateFormats = state.staticState.dateFormatMap;
       final dateFormatId = (company.settings.dateFormatId ?? '').isNotEmpty
@@ -302,8 +306,12 @@ String formatDate(String value, BuildContext context,
       format = dateFormats[dateFormatId].format;
       format += ' ' +
           (showSeconds
-              ? company.settings.enableMilitaryTime ? 'H:mm:ss' : 'h:mm:ss a'
-              : company.settings.enableMilitaryTime ? 'H:mm' : 'h:mm a');
+              ? company.settings.enableMilitaryTime
+                  ? 'H:mm:ss'
+                  : 'h:mm:ss a'
+              : company.settings.enableMilitaryTime
+                  ? 'H:mm'
+                  : 'h:mm a');
     }
     final formatter = DateFormat(format, localeSelector(state));
     final parsed = DateTime.tryParse(value);
