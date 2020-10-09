@@ -154,6 +154,7 @@ class EmailTemplate extends EnumClass {
   static const EmailTemplate custom1 = _$custom1_email;
   static const EmailTemplate custom2 = _$custom2_email;
   static const EmailTemplate custom3 = _$custom3_email;
+  static const EmailTemplate statement = _$statement_email;
 
   static BuiltSet<EmailTemplate> get values => _$templateValues;
 

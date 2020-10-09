@@ -155,6 +155,10 @@ class _TemplatesAndRemindersState extends State<TemplatesAndReminders>
         settings = settings.rebuild((b) => b
           ..emailBodyCustom3 = body
           ..emailSubjectCustom3 = subject);
+      } else if (_template == EmailTemplate.statement) {
+        settings = settings.rebuild((b) => b
+          ..emailBodyStatement = body
+          ..emailSubjectStatement = subject);
       }
 
       if (settings != widget.viewModel.settings) {
@@ -248,7 +252,7 @@ class _TemplatesAndRemindersState extends State<TemplatesAndReminders>
                         if ([
                               EmailTemplate.invoice,
                               EmailTemplate.payment,
-                              EmailTemplate.partial_payment
+                              EmailTemplate.partial_payment,
                             ].contains(value) &&
                             !company.isModuleEnabled(EntityType.invoice)) {
                           return false;

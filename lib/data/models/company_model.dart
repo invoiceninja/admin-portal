@@ -1211,6 +1211,12 @@ abstract class SettingsEntity
       autoBill: clientSettings?.autoBill ??
           groupSettings?.autoBill ??
           companySettings?.autoBill,
+      emailBodyStatement: clientSettings?.emailBodyStatement ??
+          groupSettings?.emailBodyStatement ??
+          companySettings?.emailBodyStatement,
+      emailSubjectStatement: clientSettings?.emailSubjectStatement ??
+          groupSettings?.emailSubjectStatement ??
+          companySettings?.emailSubjectStatement,
     );
   }
 
@@ -1629,6 +1635,14 @@ abstract class SettingsEntity
   @nullable
   @BuiltValueField(wireName: 'email_template_custom3')
   String get emailBodyCustom3;
+
+  @nullable
+  @BuiltValueField(wireName: 'email_subject_statement')
+  String get emailSubjectStatement;
+
+  @nullable
+  @BuiltValueField(wireName: 'email_template_statement')
+  String get emailBodyStatement;
 
   @nullable
   @BuiltValueField(wireName: 'enable_client_portal_password')
