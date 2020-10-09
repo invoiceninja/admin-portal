@@ -128,7 +128,7 @@ Middleware<AppState> _stopRecurringInvoice(
     final action = dynamicAction as StopRecurringInvoicesRequest;
     repository
         .bulkAction(
-            store.state.credentials, action.invoiceIds, EntityAction.start)
+            store.state.credentials, action.invoiceIds, EntityAction.stop)
         .then((List<InvoiceEntity> invoices) {
       store.dispatch(StopRecurringInvoicesSuccess(invoices));
       if (action.completer != null) {
