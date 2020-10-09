@@ -800,7 +800,8 @@ abstract class InvoiceEntity extends Object
 
   double get requestedAmount => partial > 0 ? partial : amount;
 
-  bool get isRunning => isRecurring && statusId == kRecurringInvoiceStatusActive;
+  bool get isRunning =>
+      isRecurring && statusId == kRecurringInvoiceStatusActive;
 
   bool get isSent => statusId != kInvoiceStatusDraft;
 
@@ -825,6 +826,12 @@ abstract class InvoiceEntity extends Object
   String get calculatedStatusId {
     if (isPastDue && !isCancelledOrReversed) {
       return kInvoiceStatusPastDue;
+    }
+
+    if (isRecurring &&
+        statusId == kRecurringInvoiceStatusActive &&
+        (lastSentDate ?? '').isEmpty) {
+      return kRecurringInvoiceStatusPending;
     }
 
     /*
