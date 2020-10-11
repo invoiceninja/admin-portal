@@ -50,6 +50,7 @@ class ProjectFields {
   static const String taskRate = 'task_rate';
   static const String dueDate = 'due_date';
   static const String privateNotes = 'private_notes';
+  static const String publicNotes = 'public_notes';
   static const String budgetedHours = 'budgeted_hours';
   static const String customValue1 = 'custom1';
   static const String customValue2 = 'custom2';
@@ -72,6 +73,7 @@ abstract class ProjectEntity extends Object
       taskRate: 0.0,
       dueDate: '',
       privateNotes: '',
+      publicNotes: '',
       budgetedHours: 0.0,
       customValue1: '',
       customValue2: '',
@@ -116,6 +118,9 @@ abstract class ProjectEntity extends Object
 
   @BuiltValueField(wireName: 'private_notes')
   String get privateNotes;
+
+  @BuiltValueField(wireName: 'public_notes')
+  String get publicNotes;
 
   @BuiltValueField(wireName: 'budgeted_hours')
   double get budgetedHours;
@@ -195,6 +200,9 @@ abstract class ProjectEntity extends Object
         break;
       case ProjectFields.privateNotes:
         response = projectA.privateNotes.compareTo(projectB.privateNotes);
+        break;
+      case ProjectFields.publicNotes:
+        response = projectA.publicNotes.compareTo(projectB.publicNotes);
         break;
       case ProjectFields.budgetedHours:
         response = projectA.budgetedHours.compareTo(projectB.budgetedHours);

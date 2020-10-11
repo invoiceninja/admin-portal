@@ -132,6 +132,9 @@ class _$ProjectEntitySerializer implements StructuredSerializer<ProjectEntity> {
       'private_notes',
       serializers.serialize(object.privateNotes,
           specifiedType: const FullType(String)),
+      'public_notes',
+      serializers.serialize(object.publicNotes,
+          specifiedType: const FullType(String)),
       'budgeted_hours',
       serializers.serialize(object.budgetedHours,
           specifiedType: const FullType(double)),
@@ -216,6 +219,10 @@ class _$ProjectEntitySerializer implements StructuredSerializer<ProjectEntity> {
           break;
         case 'private_notes':
           result.privateNotes = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String;
+          break;
+        case 'public_notes':
+          result.publicNotes = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String;
           break;
         case 'budgeted_hours':
@@ -480,6 +487,8 @@ class _$ProjectEntity extends ProjectEntity {
   @override
   final String privateNotes;
   @override
+  final String publicNotes;
+  @override
   final double budgetedHours;
   @override
   final String customValue1;
@@ -515,6 +524,7 @@ class _$ProjectEntity extends ProjectEntity {
       this.taskRate,
       this.dueDate,
       this.privateNotes,
+      this.publicNotes,
       this.budgetedHours,
       this.customValue1,
       this.customValue2,
@@ -543,6 +553,9 @@ class _$ProjectEntity extends ProjectEntity {
     }
     if (privateNotes == null) {
       throw new BuiltValueNullFieldError('ProjectEntity', 'privateNotes');
+    }
+    if (publicNotes == null) {
+      throw new BuiltValueNullFieldError('ProjectEntity', 'publicNotes');
     }
     if (budgetedHours == null) {
       throw new BuiltValueNullFieldError('ProjectEntity', 'budgetedHours');
@@ -589,6 +602,7 @@ class _$ProjectEntity extends ProjectEntity {
         taskRate == other.taskRate &&
         dueDate == other.dueDate &&
         privateNotes == other.privateNotes &&
+        publicNotes == other.publicNotes &&
         budgetedHours == other.budgetedHours &&
         customValue1 == other.customValue1 &&
         customValue2 == other.customValue2 &&
@@ -625,16 +639,19 @@ class _$ProjectEntity extends ProjectEntity {
                                                                 $jc(
                                                                     $jc(
                                                                         $jc(
-                                                                            0,
-                                                                            name
+                                                                            $jc(
+                                                                                0,
+                                                                                name
+                                                                                    .hashCode),
+                                                                            clientId
                                                                                 .hashCode),
-                                                                        clientId
+                                                                        taskRate
                                                                             .hashCode),
-                                                                    taskRate
+                                                                    dueDate
                                                                         .hashCode),
-                                                                dueDate
+                                                                privateNotes
                                                                     .hashCode),
-                                                            privateNotes
+                                                            publicNotes
                                                                 .hashCode),
                                                         budgetedHours.hashCode),
                                                     customValue1.hashCode),
@@ -659,6 +676,7 @@ class _$ProjectEntity extends ProjectEntity {
           ..add('taskRate', taskRate)
           ..add('dueDate', dueDate)
           ..add('privateNotes', privateNotes)
+          ..add('publicNotes', publicNotes)
           ..add('budgetedHours', budgetedHours)
           ..add('customValue1', customValue1)
           ..add('customValue2', customValue2)
@@ -699,6 +717,10 @@ class ProjectEntityBuilder
   String _privateNotes;
   String get privateNotes => _$this._privateNotes;
   set privateNotes(String privateNotes) => _$this._privateNotes = privateNotes;
+
+  String _publicNotes;
+  String get publicNotes => _$this._publicNotes;
+  set publicNotes(String publicNotes) => _$this._publicNotes = publicNotes;
 
   double _budgetedHours;
   double get budgetedHours => _$this._budgetedHours;
@@ -764,6 +786,7 @@ class ProjectEntityBuilder
       _taskRate = _$v.taskRate;
       _dueDate = _$v.dueDate;
       _privateNotes = _$v.privateNotes;
+      _publicNotes = _$v.publicNotes;
       _budgetedHours = _$v.budgetedHours;
       _customValue1 = _$v.customValue1;
       _customValue2 = _$v.customValue2;
@@ -804,6 +827,7 @@ class ProjectEntityBuilder
             taskRate: taskRate,
             dueDate: dueDate,
             privateNotes: privateNotes,
+            publicNotes: publicNotes,
             budgetedHours: budgetedHours,
             customValue1: customValue1,
             customValue2: customValue2,

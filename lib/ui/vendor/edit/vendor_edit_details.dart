@@ -29,6 +29,8 @@ class VendorEditDetailsState extends State<VendorEditDetails> {
   final _phoneController = TextEditingController();
   final _custom1Controller = TextEditingController();
   final _custom2Controller = TextEditingController();
+  final _custom3Controller = TextEditingController();
+  final _custom4Controller = TextEditingController();
 
   final _debouncer = Debouncer();
   List<TextEditingController> _controllers;
@@ -43,6 +45,8 @@ class VendorEditDetailsState extends State<VendorEditDetails> {
       _phoneController,
       _custom1Controller,
       _custom2Controller,
+      _custom3Controller,
+      _custom4Controller,
     ];
 
     _controllers
@@ -56,6 +60,8 @@ class VendorEditDetailsState extends State<VendorEditDetails> {
     _phoneController.text = vendor.phone;
     _custom1Controller.text = vendor.customValue1;
     _custom2Controller.text = vendor.customValue2;
+    _custom3Controller.text = vendor.customValue3;
+    _custom4Controller.text = vendor.customValue4;
 
     _controllers
         .forEach((dynamic controller) => controller.addListener(_onChanged));
@@ -83,7 +89,9 @@ class VendorEditDetailsState extends State<VendorEditDetails> {
         ..website = _websiteController.text.trim()
         ..phone = _phoneController.text.trim()
         ..customValue1 = _custom1Controller.text.trim()
-        ..customValue2 = _custom2Controller.text.trim());
+        ..customValue2 = _custom2Controller.text.trim()
+        ..customValue3 = _custom3Controller.text.trim()
+        ..customValue4 = _custom4Controller.text.trim());
       if (vendor != viewModel.vendor) {
         viewModel.onChanged(vendor);
       }
@@ -134,12 +142,22 @@ class VendorEditDetailsState extends State<VendorEditDetails> {
             CustomField(
               controller: _custom1Controller,
               field: CustomFieldType.vendor1,
-              value: viewModel.vendor.customValue1,
+              value: vendor.customValue1,
             ),
             CustomField(
               controller: _custom2Controller,
               field: CustomFieldType.vendor2,
-              value: viewModel.vendor.customValue2,
+              value: vendor.customValue2,
+            ),
+            CustomField(
+              controller: _custom3Controller,
+              field: CustomFieldType.vendor3,
+              value: vendor.customValue3,
+            ),
+            CustomField(
+              controller: _custom4Controller,
+              field: CustomFieldType.vendor4,
+              value: vendor.customValue4,
             ),
           ],
         ),
