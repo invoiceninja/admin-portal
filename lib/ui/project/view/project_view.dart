@@ -13,6 +13,7 @@ import 'package:invoiceninja_flutter/ui/app/entities/entity_list_tile.dart';
 import 'package:invoiceninja_flutter/ui/app/entities/entity_state_title.dart';
 import 'package:invoiceninja_flutter/ui/app/icon_message.dart';
 import 'package:invoiceninja_flutter/ui/app/entity_header.dart';
+import 'package:invoiceninja_flutter/ui/app/lists/list_divider.dart';
 import 'package:invoiceninja_flutter/ui/app/view_scaffold.dart';
 import 'package:invoiceninja_flutter/ui/project/view/project_view_vm.dart';
 import 'package:invoiceninja_flutter/utils/formatting.dart';
@@ -95,20 +96,10 @@ class _ProjectViewState extends State<ProjectView> {
                     Duration(hours: project.budgetedHours.toInt()),
                     showSeconds: false),
               ),
-              Material(
-                color: Theme.of(context).canvasColor,
-                child: ListTile(
-                  title: EntityStateTitle(entity: client),
-                  //leading: Icon(MdiIcons.users, size: 18.0),
-                  trailing: Icon(Icons.navigate_next),
-                  onTap: () => inspectEntity(context: context, entity: client),
-                  onLongPress: () => inspectEntity(
-                      context: context, entity: client, longPress: true),
-                ),
-              ),
-              Container(
-                color: Theme.of(context).backgroundColor,
-                height: 12.0,
+              ListDivider(),
+              EntityListTile(
+                entity: client,
+                isFilter: widget.isFilter,
               ),
               EntitiesListTile(
                 isFilter: widget.isFilter,
@@ -120,10 +111,6 @@ class _ProjectViewState extends State<ProjectView> {
                 subtitle: memoizedTaskStatsForProject(
                         project.id, viewModel.state.taskState.map)
                     .present(localization.active, localization.archived),
-              ),
-              Container(
-                color: Theme.of(context).backgroundColor,
-                height: 12.0,
               ),
             ];
 
