@@ -10,6 +10,8 @@ Serializer<CompanyEntity> _$companyEntitySerializer =
     new _$CompanyEntitySerializer();
 Serializer<GatewayEntity> _$gatewayEntitySerializer =
     new _$GatewayEntitySerializer();
+Serializer<GatewayOptionsEntity> _$gatewayOptionsEntitySerializer =
+    new _$GatewayOptionsEntitySerializer();
 Serializer<UserCompanyEntity> _$userCompanyEntitySerializer =
     new _$UserCompanyEntitySerializer();
 Serializer<UserSettingsEntity> _$userSettingsEntitySerializer =
@@ -613,6 +615,12 @@ class _$GatewayEntitySerializer implements StructuredSerializer<GatewayEntity> {
       'sort_order',
       serializers.serialize(object.sortOrder,
           specifiedType: const FullType(int)),
+      'options',
+      serializers.serialize(object.options,
+          specifiedType: const FullType(BuiltMap, const [
+            const FullType(String),
+            const FullType(GatewayOptionsEntity)
+          ])),
       'fields',
       serializers.serialize(object.fields,
           specifiedType: const FullType(String)),
@@ -664,9 +672,69 @@ class _$GatewayEntitySerializer implements StructuredSerializer<GatewayEntity> {
           result.defaultGatewayTypeId = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String;
           break;
+        case 'options':
+          result.options.replace(serializers.deserialize(value,
+              specifiedType: const FullType(BuiltMap, const [
+                const FullType(String),
+                const FullType(GatewayOptionsEntity)
+              ])));
+          break;
         case 'fields':
           result.fields = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String;
+          break;
+      }
+    }
+
+    return result.build();
+  }
+}
+
+class _$GatewayOptionsEntitySerializer
+    implements StructuredSerializer<GatewayOptionsEntity> {
+  @override
+  final Iterable<Type> types = const [
+    GatewayOptionsEntity,
+    _$GatewayOptionsEntity
+  ];
+  @override
+  final String wireName = 'GatewayOptionsEntity';
+
+  @override
+  Iterable<Object> serialize(
+      Serializers serializers, GatewayOptionsEntity object,
+      {FullType specifiedType = FullType.unspecified}) {
+    final result = <Object>[
+      'refund',
+      serializers.serialize(object.supportRefunds,
+          specifiedType: const FullType(bool)),
+      'token_billing',
+      serializers.serialize(object.supportTokenBilling,
+          specifiedType: const FullType(bool)),
+    ];
+
+    return result;
+  }
+
+  @override
+  GatewayOptionsEntity deserialize(
+      Serializers serializers, Iterable<Object> serialized,
+      {FullType specifiedType = FullType.unspecified}) {
+    final result = new GatewayOptionsEntityBuilder();
+
+    final iterator = serialized.iterator;
+    while (iterator.moveNext()) {
+      final key = iterator.current as String;
+      iterator.moveNext();
+      final dynamic value = iterator.current;
+      switch (key) {
+        case 'refund':
+          result.supportRefunds = serializers.deserialize(value,
+              specifiedType: const FullType(bool)) as bool;
+          break;
+        case 'token_billing':
+          result.supportTokenBilling = serializers.deserialize(value,
+              specifiedType: const FullType(bool)) as bool;
           break;
       }
     }
@@ -3853,6 +3921,8 @@ class _$GatewayEntity extends GatewayEntity {
   @override
   final String defaultGatewayTypeId;
   @override
+  final BuiltMap<String, GatewayOptionsEntity> options;
+  @override
   final String fields;
 
   factory _$GatewayEntity([void Function(GatewayEntityBuilder) updates]) =>
@@ -3864,6 +3934,7 @@ class _$GatewayEntity extends GatewayEntity {
       this.isOffsite,
       this.sortOrder,
       this.defaultGatewayTypeId,
+      this.options,
       this.fields})
       : super._() {
     if (name == null) {
@@ -3874,6 +3945,9 @@ class _$GatewayEntity extends GatewayEntity {
     }
     if (sortOrder == null) {
       throw new BuiltValueNullFieldError('GatewayEntity', 'sortOrder');
+    }
+    if (options == null) {
+      throw new BuiltValueNullFieldError('GatewayEntity', 'options');
     }
     if (fields == null) {
       throw new BuiltValueNullFieldError('GatewayEntity', 'fields');
@@ -3896,6 +3970,7 @@ class _$GatewayEntity extends GatewayEntity {
         isOffsite == other.isOffsite &&
         sortOrder == other.sortOrder &&
         defaultGatewayTypeId == other.defaultGatewayTypeId &&
+        options == other.options &&
         fields == other.fields;
   }
 
@@ -3905,10 +3980,12 @@ class _$GatewayEntity extends GatewayEntity {
     return __hashCode ??= $jf($jc(
         $jc(
             $jc(
-                $jc($jc($jc(0, id.hashCode), name.hashCode),
-                    isOffsite.hashCode),
-                sortOrder.hashCode),
-            defaultGatewayTypeId.hashCode),
+                $jc(
+                    $jc($jc($jc(0, id.hashCode), name.hashCode),
+                        isOffsite.hashCode),
+                    sortOrder.hashCode),
+                defaultGatewayTypeId.hashCode),
+            options.hashCode),
         fields.hashCode));
   }
 
@@ -3920,6 +3997,7 @@ class _$GatewayEntity extends GatewayEntity {
           ..add('isOffsite', isOffsite)
           ..add('sortOrder', sortOrder)
           ..add('defaultGatewayTypeId', defaultGatewayTypeId)
+          ..add('options', options)
           ..add('fields', fields))
         .toString();
   }
@@ -3950,6 +4028,12 @@ class GatewayEntityBuilder
   set defaultGatewayTypeId(String defaultGatewayTypeId) =>
       _$this._defaultGatewayTypeId = defaultGatewayTypeId;
 
+  MapBuilder<String, GatewayOptionsEntity> _options;
+  MapBuilder<String, GatewayOptionsEntity> get options =>
+      _$this._options ??= new MapBuilder<String, GatewayOptionsEntity>();
+  set options(MapBuilder<String, GatewayOptionsEntity> options) =>
+      _$this._options = options;
+
   String _fields;
   String get fields => _$this._fields;
   set fields(String fields) => _$this._fields = fields;
@@ -3963,6 +4047,7 @@ class GatewayEntityBuilder
       _isOffsite = _$v.isOffsite;
       _sortOrder = _$v.sortOrder;
       _defaultGatewayTypeId = _$v.defaultGatewayTypeId;
+      _options = _$v.options?.toBuilder();
       _fields = _$v.fields;
       _$v = null;
     }
@@ -3984,14 +4069,132 @@ class GatewayEntityBuilder
 
   @override
   _$GatewayEntity build() {
+    _$GatewayEntity _$result;
+    try {
+      _$result = _$v ??
+          new _$GatewayEntity._(
+              id: id,
+              name: name,
+              isOffsite: isOffsite,
+              sortOrder: sortOrder,
+              defaultGatewayTypeId: defaultGatewayTypeId,
+              options: options.build(),
+              fields: fields);
+    } catch (_) {
+      String _$failedField;
+      try {
+        _$failedField = 'options';
+        options.build();
+      } catch (e) {
+        throw new BuiltValueNestedFieldError(
+            'GatewayEntity', _$failedField, e.toString());
+      }
+      rethrow;
+    }
+    replace(_$result);
+    return _$result;
+  }
+}
+
+class _$GatewayOptionsEntity extends GatewayOptionsEntity {
+  @override
+  final bool supportRefunds;
+  @override
+  final bool supportTokenBilling;
+
+  factory _$GatewayOptionsEntity(
+          [void Function(GatewayOptionsEntityBuilder) updates]) =>
+      (new GatewayOptionsEntityBuilder()..update(updates)).build();
+
+  _$GatewayOptionsEntity._({this.supportRefunds, this.supportTokenBilling})
+      : super._() {
+    if (supportRefunds == null) {
+      throw new BuiltValueNullFieldError(
+          'GatewayOptionsEntity', 'supportRefunds');
+    }
+    if (supportTokenBilling == null) {
+      throw new BuiltValueNullFieldError(
+          'GatewayOptionsEntity', 'supportTokenBilling');
+    }
+  }
+
+  @override
+  GatewayOptionsEntity rebuild(
+          void Function(GatewayOptionsEntityBuilder) updates) =>
+      (toBuilder()..update(updates)).build();
+
+  @override
+  GatewayOptionsEntityBuilder toBuilder() =>
+      new GatewayOptionsEntityBuilder()..replace(this);
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(other, this)) return true;
+    return other is GatewayOptionsEntity &&
+        supportRefunds == other.supportRefunds &&
+        supportTokenBilling == other.supportTokenBilling;
+  }
+
+  int __hashCode;
+  @override
+  int get hashCode {
+    return __hashCode ??=
+        $jf($jc($jc(0, supportRefunds.hashCode), supportTokenBilling.hashCode));
+  }
+
+  @override
+  String toString() {
+    return (newBuiltValueToStringHelper('GatewayOptionsEntity')
+          ..add('supportRefunds', supportRefunds)
+          ..add('supportTokenBilling', supportTokenBilling))
+        .toString();
+  }
+}
+
+class GatewayOptionsEntityBuilder
+    implements Builder<GatewayOptionsEntity, GatewayOptionsEntityBuilder> {
+  _$GatewayOptionsEntity _$v;
+
+  bool _supportRefunds;
+  bool get supportRefunds => _$this._supportRefunds;
+  set supportRefunds(bool supportRefunds) =>
+      _$this._supportRefunds = supportRefunds;
+
+  bool _supportTokenBilling;
+  bool get supportTokenBilling => _$this._supportTokenBilling;
+  set supportTokenBilling(bool supportTokenBilling) =>
+      _$this._supportTokenBilling = supportTokenBilling;
+
+  GatewayOptionsEntityBuilder();
+
+  GatewayOptionsEntityBuilder get _$this {
+    if (_$v != null) {
+      _supportRefunds = _$v.supportRefunds;
+      _supportTokenBilling = _$v.supportTokenBilling;
+      _$v = null;
+    }
+    return this;
+  }
+
+  @override
+  void replace(GatewayOptionsEntity other) {
+    if (other == null) {
+      throw new ArgumentError.notNull('other');
+    }
+    _$v = other as _$GatewayOptionsEntity;
+  }
+
+  @override
+  void update(void Function(GatewayOptionsEntityBuilder) updates) {
+    if (updates != null) updates(this);
+  }
+
+  @override
+  _$GatewayOptionsEntity build() {
     final _$result = _$v ??
-        new _$GatewayEntity._(
-            id: id,
-            name: name,
-            isOffsite: isOffsite,
-            sortOrder: sortOrder,
-            defaultGatewayTypeId: defaultGatewayTypeId,
-            fields: fields);
+        new _$GatewayOptionsEntity._(
+            supportRefunds: supportRefunds,
+            supportTokenBilling: supportTokenBilling);
     replace(_$result);
     return _$result;
   }

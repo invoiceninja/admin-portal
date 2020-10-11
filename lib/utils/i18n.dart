@@ -20,7 +20,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'show_password': 'Show Password',
       'hide_password': 'Hide Password',
       'copy_error': 'Copy Error',
-      'store_card': 'Store Card',
+      'capture_card': 'Capture Card',
       'auto_bill_enabled': 'Auto Bill Enabled',
       'total_taxes': 'Total Taxes',
       'line_taxes': 'Line Taxes',
@@ -80,8 +80,8 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'token_billing': 'Token Billing',
       'welcome_to_invoice_ninja': 'Welcome to Invoice Ninja',
       'always': 'Enabled',
-      'optin': 'Option disabled by default',
-      'optout': 'Option enabled by default',
+      'optin': 'Disabled by default',
+      'optout': 'Enabled by default',
       'label': 'Label',
       'client_number': 'Client Number',
       'auto_convert': 'Auto Convert',
@@ -4605,7 +4605,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
 
   String get lineTaxes => _localizedValues[localeCode]['line_taxes'] ?? '';
 
-  String get storeCard => _localizedValues[localeCode]['store_card'] ?? '';
+  String get captureCard => _localizedValues[localeCode]['capture_card'] ?? '';
 
   String get autoBillEnabled =>
       _localizedValues[localeCode]['auto_bill_enabled'] ?? '';

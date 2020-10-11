@@ -494,16 +494,14 @@ abstract class GatewayEntity extends Object
   @BuiltValueField(wireName: 'default_gateway_type_id')
   String get defaultGatewayTypeId;
 
-  //bool get recommended;
-  //bool get visible;
+  @BuiltValueField(wireName: 'options')
+  BuiltMap<String, GatewayOptionsEntity> get options;
 
   String get fields;
 
-  bool get supportsTokenBilling => [
-        kGatewayStripe,
-        kGatewayAuthorizeNet,
-        kGatewayCheckoutCom,
-      ].contains(id);
+  bool get supportsTokenBilling => options.keys
+      .where((typeId) => options[typeId].supportTokenBilling)
+      .isNotEmpty;
 
   Map<String, dynamic> get parsedFields =>
       fields.isEmpty ? <String, dynamic>{} : jsonDecode(fields);
@@ -571,6 +569,31 @@ abstract class GatewayEntity extends Object
 
   @override
   FormatNumberType get listDisplayAmountType => null;
+}
+
+abstract class GatewayOptionsEntity
+    implements Built<GatewayOptionsEntity, GatewayOptionsEntityBuilder> {
+  factory GatewayOptionsEntity() {
+    return _$GatewayOptionsEntity._(
+      supportRefunds: false,
+      supportTokenBilling: false,
+    );
+  }
+
+  GatewayOptionsEntity._();
+
+  @override
+  @memoized
+  int get hashCode;
+
+  @BuiltValueField(wireName: 'refund')
+  bool get supportRefunds;
+
+  @BuiltValueField(wireName: 'token_billing')
+  bool get supportTokenBilling;
+
+  static Serializer<GatewayOptionsEntity> get serializer =>
+      _$gatewayOptionsEntitySerializer;
 }
 
 abstract class UserCompanyEntity

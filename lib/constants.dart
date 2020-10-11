@@ -181,12 +181,11 @@ const String kGatewayTypeCreditCard = '1';
 const String kGatewayTypeBankTransfer = '2';
 const String kGatewayTypePayPal = '3';
 const String kGatewayTypeBitcoin = '4';
-//const String kGatewayTypeDwolla = '5';
-const String kGatewayTypeCustom = '6';
-const String kGatewayTypeAlipay = '7';
-const String kGatewayTypeSofort = '8';
-const String kGatewayTypeGoCardless = '9';
-const String kGatewayTypeApplePay = '10';
+const String kGatewayTypeCustom = '5';
+const String kGatewayTypeAlipay = '6';
+const String kGatewayTypeSofort = '7';
+const String kGatewayTypeGoCardless = '8';
+const String kGatewayTypeApplePay = '9';
 
 const kGatewayTypes = {
   kGatewayTypeCreditCard: 'credit_card',
