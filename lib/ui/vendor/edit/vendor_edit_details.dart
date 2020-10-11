@@ -4,6 +4,7 @@ import 'package:invoiceninja_flutter/data/models/entities.dart';
 import 'package:invoiceninja_flutter/ui/app/form_card.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/custom_field.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/decorated_form_field.dart';
+import 'package:invoiceninja_flutter/ui/app/forms/user_picker.dart';
 import 'package:invoiceninja_flutter/ui/vendor/edit/vendor_edit_vm.dart';
 import 'package:invoiceninja_flutter/utils/completers.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
@@ -93,6 +94,7 @@ class VendorEditDetailsState extends State<VendorEditDetails> {
   Widget build(BuildContext context) {
     final localization = AppLocalization.of(context);
     final viewModel = widget.viewModel;
+    final vendor = viewModel.vendor;
 
     return ListView(
       shrinkWrap: true,
@@ -105,6 +107,11 @@ class VendorEditDetailsState extends State<VendorEditDetails> {
               validator: (String val) => val == null || val.isEmpty
                   ? AppLocalization.of(context).pleaseEnterAName
                   : null,
+            ),
+            UserPicker(
+              userId: vendor.assignedUserId,
+              onChanged: (userId) => viewModel
+                  .onChanged(vendor.rebuild((b) => b..assignedUserId = userId)),
             ),
             DecoratedFormField(
               controller: _idNumberController,
