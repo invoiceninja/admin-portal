@@ -180,22 +180,20 @@ const kCreditStatuses = {
 const String kGatewayTypeCreditCard = '1';
 const String kGatewayTypeBankTransfer = '2';
 const String kGatewayTypePayPal = '3';
-const String kGatewayTypeBitcoin = '4';
+const String kGatewayTypeCrypto = '4';
 const String kGatewayTypeCustom = '5';
 const String kGatewayTypeAlipay = '6';
 const String kGatewayTypeSofort = '7';
-const String kGatewayTypeGoCardless = '8';
-const String kGatewayTypeApplePay = '9';
+const String kGatewayTypeApplePay = '8';
 
 const kGatewayTypes = {
   kGatewayTypeCreditCard: 'credit_card',
   kGatewayTypeBankTransfer: 'bank_transfer',
   kGatewayTypePayPal: 'paypal',
-  kGatewayTypeBitcoin: 'bitcoin',
+  kGatewayTypeCrypto: 'crypto',
   kGatewayTypeCustom: 'custom',
   kGatewayTypeAlipay: 'alipay',
   kGatewayTypeSofort: 'sofort',
-  kGatewayTypeGoCardless: 'gocardless',
   kGatewayTypeApplePay: 'apple_pay',
 };
 

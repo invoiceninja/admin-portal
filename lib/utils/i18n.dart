@@ -15,6 +15,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
   static final Map<String, Map<String, String>> _localizedValues = {
     'en': {
       // STARTER: lang key - do not remove comment
+      'crypto': 'Crypto',
       'paypal': 'PayPal',
       'alipay': 'Alipay',
       'sofort': 'Sofort',
@@ -4633,6 +4634,8 @@ mixin LocalizationsProvider on LocaleCodeAware {
   String get sofort => _localizedValues[localeCode]['sofort'] ?? '';
 
   String get applePay => _localizedValues[localeCode]['apple_pay'] ?? '';
+
+  String get crypto => _localizedValues[localeCode]['crypto'] ?? '';
 
   String lookup(String key) {
     final lookupKey = toSnakeCase(key);
