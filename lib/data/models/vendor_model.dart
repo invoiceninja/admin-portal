@@ -65,6 +65,7 @@ class VendorFields {
   static const String updatedAt = 'updated_at';
   static const String archivedAt = 'archived_at';
   static const String isDeleted = 'is_deleted';
+  static const String documents = 'documents';
 }
 
 abstract class VendorEntity extends Object
@@ -102,6 +103,7 @@ abstract class VendorEntity extends Object
       assignedUserId: '',
       createdAt: 0,
       createdUserId: '',
+      documents: BuiltList<DocumentEntity>(),
     );
   }
 
@@ -169,6 +171,9 @@ abstract class VendorEntity extends Object
 
   @BuiltValueField(wireName: 'vendor_contacts')
   BuiltList<VendorContactEntity> get contacts;
+
+  @nullable
+  BuiltList<DocumentEntity> get documents;
 
   @override
   List<EntityAction> getActions(
@@ -245,6 +250,9 @@ abstract class VendorEntity extends Object
         break;
       case VendorFields.updatedAt:
         response = vendorA.updatedAt.compareTo(vendorB.updatedAt);
+        break;
+      case VendorFields.documents:
+        response = vendorA.documents.length.compareTo(vendorB.documents.length);
         break;
       default:
         print('## ERROR: sort by vendor.$sortField is not implemented');

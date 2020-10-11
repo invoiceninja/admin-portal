@@ -417,6 +417,7 @@ Serializers _$serializers = (new Serializers().toBuilder()
       ..addBuilderFactory(const FullType(BuiltList, const [const FullType(UserCompanyState)]), () => new ListBuilder<UserCompanyState>())
       ..addBuilderFactory(const FullType(BuiltList, const [const FullType(UserEntity)]), () => new ListBuilder<UserEntity>())
       ..addBuilderFactory(const FullType(BuiltList, const [const FullType(VendorContactEntity)]), () => new ListBuilder<VendorContactEntity>())
+      ..addBuilderFactory(const FullType(BuiltList, const [const FullType(DocumentEntity)]), () => new ListBuilder<DocumentEntity>())
       ..addBuilderFactory(const FullType(BuiltList, const [const FullType(VendorEntity)]), () => new ListBuilder<VendorEntity>())
       ..addBuilderFactory(const FullType(BuiltList, const [const FullType(WebhookEntity)]), () => new ListBuilder<WebhookEntity>())
       ..addBuilderFactory(
