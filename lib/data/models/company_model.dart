@@ -463,6 +463,7 @@ abstract class GatewayEntity extends Object
       defaultGatewayTypeId: kGatewayTypeCreditCard,
       isOffsite: false,
       //isVisible: false,
+      options: BuiltMap<String, GatewayOptionsEntity>(),
     );
   }
 
@@ -502,6 +503,9 @@ abstract class GatewayEntity extends Object
   bool get supportsTokenBilling => options.keys
       .where((typeId) => options[typeId].supportTokenBilling)
       .isNotEmpty;
+
+  bool get supportsRefunds =>
+      options.keys.where((typeId) => options[typeId].supportRefunds).isNotEmpty;
 
   Map<String, dynamic> get parsedFields =>
       fields.isEmpty ? <String, dynamic>{} : jsonDecode(fields);
