@@ -150,6 +150,10 @@ class _$ProjectEntitySerializer implements StructuredSerializer<ProjectEntity> {
       'custom_value4',
       serializers.serialize(object.customValue4,
           specifiedType: const FullType(String)),
+      'documents',
+      serializers.serialize(object.documents,
+          specifiedType: const FullType(
+              BuiltList, const [const FullType(DocumentEntity)])),
       'created_at',
       serializers.serialize(object.createdAt,
           specifiedType: const FullType(int)),
@@ -244,6 +248,12 @@ class _$ProjectEntitySerializer implements StructuredSerializer<ProjectEntity> {
         case 'custom_value4':
           result.customValue4 = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String;
+          break;
+        case 'documents':
+          result.documents.replace(serializers.deserialize(value,
+                  specifiedType: const FullType(
+                      BuiltList, const [const FullType(DocumentEntity)]))
+              as BuiltList<Object>);
           break;
         case 'isChanged':
           result.isChanged = serializers.deserialize(value,
@@ -499,6 +509,8 @@ class _$ProjectEntity extends ProjectEntity {
   @override
   final String customValue4;
   @override
+  final BuiltList<DocumentEntity> documents;
+  @override
   final bool isChanged;
   @override
   final int createdAt;
@@ -530,6 +542,7 @@ class _$ProjectEntity extends ProjectEntity {
       this.customValue2,
       this.customValue3,
       this.customValue4,
+      this.documents,
       this.isChanged,
       this.createdAt,
       this.updatedAt,
@@ -572,6 +585,9 @@ class _$ProjectEntity extends ProjectEntity {
     if (customValue4 == null) {
       throw new BuiltValueNullFieldError('ProjectEntity', 'customValue4');
     }
+    if (documents == null) {
+      throw new BuiltValueNullFieldError('ProjectEntity', 'documents');
+    }
     if (createdAt == null) {
       throw new BuiltValueNullFieldError('ProjectEntity', 'createdAt');
     }
@@ -608,6 +624,7 @@ class _$ProjectEntity extends ProjectEntity {
         customValue2 == other.customValue2 &&
         customValue3 == other.customValue3 &&
         customValue4 == other.customValue4 &&
+        documents == other.documents &&
         isChanged == other.isChanged &&
         createdAt == other.createdAt &&
         updatedAt == other.updatedAt &&
@@ -640,24 +657,27 @@ class _$ProjectEntity extends ProjectEntity {
                                                                     $jc(
                                                                         $jc(
                                                                             $jc(
-                                                                                0,
-                                                                                name
+                                                                                $jc(
+                                                                                    0,
+                                                                                    name
+                                                                                        .hashCode),
+                                                                                clientId
                                                                                     .hashCode),
-                                                                            clientId
+                                                                            taskRate
                                                                                 .hashCode),
-                                                                        taskRate
+                                                                        dueDate
                                                                             .hashCode),
-                                                                    dueDate
+                                                                    privateNotes
                                                                         .hashCode),
-                                                                privateNotes
+                                                                publicNotes
                                                                     .hashCode),
-                                                            publicNotes
+                                                            budgetedHours
                                                                 .hashCode),
-                                                        budgetedHours.hashCode),
-                                                    customValue1.hashCode),
-                                                customValue2.hashCode),
-                                            customValue3.hashCode),
-                                        customValue4.hashCode),
+                                                        customValue1.hashCode),
+                                                    customValue2.hashCode),
+                                                customValue3.hashCode),
+                                            customValue4.hashCode),
+                                        documents.hashCode),
                                     isChanged.hashCode),
                                 createdAt.hashCode),
                             updatedAt.hashCode),
@@ -682,6 +702,7 @@ class _$ProjectEntity extends ProjectEntity {
           ..add('customValue2', customValue2)
           ..add('customValue3', customValue3)
           ..add('customValue4', customValue4)
+          ..add('documents', documents)
           ..add('isChanged', isChanged)
           ..add('createdAt', createdAt)
           ..add('updatedAt', updatedAt)
@@ -743,6 +764,12 @@ class ProjectEntityBuilder
   String get customValue4 => _$this._customValue4;
   set customValue4(String customValue4) => _$this._customValue4 = customValue4;
 
+  ListBuilder<DocumentEntity> _documents;
+  ListBuilder<DocumentEntity> get documents =>
+      _$this._documents ??= new ListBuilder<DocumentEntity>();
+  set documents(ListBuilder<DocumentEntity> documents) =>
+      _$this._documents = documents;
+
   bool _isChanged;
   bool get isChanged => _$this._isChanged;
   set isChanged(bool isChanged) => _$this._isChanged = isChanged;
@@ -792,6 +819,7 @@ class ProjectEntityBuilder
       _customValue2 = _$v.customValue2;
       _customValue3 = _$v.customValue3;
       _customValue4 = _$v.customValue4;
+      _documents = _$v.documents?.toBuilder();
       _isChanged = _$v.isChanged;
       _createdAt = _$v.createdAt;
       _updatedAt = _$v.updatedAt;
@@ -820,27 +848,41 @@ class ProjectEntityBuilder
 
   @override
   _$ProjectEntity build() {
-    final _$result = _$v ??
-        new _$ProjectEntity._(
-            name: name,
-            clientId: clientId,
-            taskRate: taskRate,
-            dueDate: dueDate,
-            privateNotes: privateNotes,
-            publicNotes: publicNotes,
-            budgetedHours: budgetedHours,
-            customValue1: customValue1,
-            customValue2: customValue2,
-            customValue3: customValue3,
-            customValue4: customValue4,
-            isChanged: isChanged,
-            createdAt: createdAt,
-            updatedAt: updatedAt,
-            archivedAt: archivedAt,
-            isDeleted: isDeleted,
-            createdUserId: createdUserId,
-            assignedUserId: assignedUserId,
-            id: id);
+    _$ProjectEntity _$result;
+    try {
+      _$result = _$v ??
+          new _$ProjectEntity._(
+              name: name,
+              clientId: clientId,
+              taskRate: taskRate,
+              dueDate: dueDate,
+              privateNotes: privateNotes,
+              publicNotes: publicNotes,
+              budgetedHours: budgetedHours,
+              customValue1: customValue1,
+              customValue2: customValue2,
+              customValue3: customValue3,
+              customValue4: customValue4,
+              documents: documents.build(),
+              isChanged: isChanged,
+              createdAt: createdAt,
+              updatedAt: updatedAt,
+              archivedAt: archivedAt,
+              isDeleted: isDeleted,
+              createdUserId: createdUserId,
+              assignedUserId: assignedUserId,
+              id: id);
+    } catch (_) {
+      String _$failedField;
+      try {
+        _$failedField = 'documents';
+        documents.build();
+      } catch (e) {
+        throw new BuiltValueNestedFieldError(
+            'ProjectEntity', _$failedField, e.toString());
+      }
+      rethrow;
+    }
     replace(_$result);
     return _$result;
   }

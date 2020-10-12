@@ -59,6 +59,7 @@ class ProjectFields {
   static const String updatedAt = 'updated_at';
   static const String archivedAt = 'archived_at';
   static const String isDeleted = 'is_deleted';
+  static const String documents = 'documents';
 }
 
 abstract class ProjectEntity extends Object
@@ -85,6 +86,7 @@ abstract class ProjectEntity extends Object
       createdUserId: '',
       createdAt: 0,
       assignedUserId: '',
+      documents: BuiltList<DocumentEntity>(),
     );
   }
 
@@ -136,6 +138,8 @@ abstract class ProjectEntity extends Object
 
   @BuiltValueField(wireName: 'custom_value4')
   String get customValue4;
+
+  BuiltList<DocumentEntity> get documents;
 
   @override
   List<EntityAction> getActions(
@@ -237,6 +241,9 @@ abstract class ProjectEntity extends Object
         response = userA.listDisplayName
             .toLowerCase()
             .compareTo(userB.listDisplayName.toLowerCase());
+        break;
+      case ProjectFields.documents:
+        response = projectA.documents.length.compareTo(projectB.documents.length);
         break;
       default:
         print('## ERROR: sort by project.$sortField is not implemented');
