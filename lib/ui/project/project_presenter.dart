@@ -12,6 +12,7 @@ class ProjectPresenter extends EntityPresenter {
       ProjectFields.client,
       ProjectFields.taskRate,
       ProjectFields.dueDate,
+      ProjectFields.publicNotes,
       ProjectFields.privateNotes,
       ProjectFields.budgetedHours,
       EntityFields.state,
@@ -34,11 +35,13 @@ class ProjectPresenter extends EntityPresenter {
       case ProjectFields.name:
         return Text(project.name);
       case ProjectFields.client:
-        return Text(state.clientState.map[project.clientId] ?? '');
+        return Text(state.clientState.get(project.clientId).displayName);
       case ProjectFields.taskRate:
         return Text(formatNumber(project.taskRate, context));
       case ProjectFields.dueDate:
         return Text(formatDate(project.dueDate, context));
+      case ProjectFields.publicNotes:
+        return Text(project.publicNotes);
       case ProjectFields.privateNotes:
         return Text(project.privateNotes);
       case ProjectFields.budgetedHours:

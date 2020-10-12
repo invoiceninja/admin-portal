@@ -36,13 +36,16 @@ class ProjectListItem extends StatelessWidget {
     final state = store.state;
     final uiState = state.uiState;
     final projectUIState = uiState.projectUIState;
+    final client = state.clientState.get(project.clientId);
     final filterMatch = filter != null && filter.isNotEmpty
-        ? project.matchesFilterValue(filter)
+        ? (project.matchesFilterValue(filter) ??
+            client.matchesFilterValue(filter))
         : null;
     final listUIState = projectUIState.listUIState;
     final isInMultiselect = listUIState.isInMultiselect();
     final showCheckbox = onCheckboxChanged != null || isInMultiselect;
     final textStyle = TextStyle(fontSize: 16);
+    final subtitle = client.displayName;
 
     return DismissibleEntity(
       isSelected: isDesktop(context) &&
@@ -119,13 +122,12 @@ class ProjectListItem extends StatelessWidget {
                                         ? '  📎'
                                         : ''),
                                 style: textStyle),
-                            if (filterMatch != null)
-                              Text(
-                                filterMatch,
-                                maxLines: 3,
-                                overflow: TextOverflow.ellipsis,
-                                style: Theme.of(context).textTheme.subtitle2,
-                              ),
+                            Text(
+                              subtitle ?? filterMatch,
+                              maxLines: 3,
+                              overflow: TextOverflow.ellipsis,
+                              style: Theme.of(context).textTheme.subtitle2,
+                            ),
                           ],
                         ),
                       ),
@@ -180,21 +182,17 @@ class ProjectListItem extends StatelessWidget {
                     ],
                   ),
                 ),
-                subtitle: (filterMatch == null && project.isActive)
-                    ? null
-                    : Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: <Widget>[
-                          filterMatch != null
-                              ? Text(
-                                  filterMatch,
-                                  maxLines: 3,
-                                  overflow: TextOverflow.ellipsis,
-                                )
-                              : SizedBox(),
-                          EntityStateLabel(project),
-                        ],
-                      ),
+                subtitle: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: <Widget>[
+                    Text(
+                      subtitle ?? filterMatch,
+                      maxLines: 3,
+                      overflow: TextOverflow.ellipsis,
+                    ),
+                    EntityStateLabel(project),
+                  ],
+                ),
               );
       }),
     );
