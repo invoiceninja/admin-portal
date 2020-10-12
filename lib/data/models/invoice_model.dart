@@ -407,6 +407,10 @@ abstract class InvoiceEntity extends Object
   String get invoiceId;
 
   @nullable
+  @BuiltValueField(wireName: 'recurring_id')
+  String get recurringId;
+
+  @nullable
   String get filename;
 
   @nullable

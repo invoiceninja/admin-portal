@@ -179,6 +179,12 @@ class InvoiceOverview extends StatelessWidget {
       ),
     );
 
+    if ((invoice.recurringId ?? '').isNotEmpty) {
+      final recurringInvoice =
+          state.recurringInvoiceState.get(invoice.recurringId);
+      widgets.add(EntityListTile(entity: recurringInvoice, isFilter: isFilter));
+    }
+
     if ((invoice.assignedUserId ?? '').isNotEmpty) {
       final assignedUser = state.userState.get(invoice.assignedUserId);
       widgets.add(EntityListTile(
