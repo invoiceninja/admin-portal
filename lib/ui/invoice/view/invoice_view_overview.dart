@@ -8,6 +8,7 @@ import 'package:invoiceninja_flutter/data/models/recurring_invoice_model.dart';
 import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/redux/payment/payment_selectors.dart';
+import 'package:invoiceninja_flutter/redux/recurring_invoice/recurring_invoice_selectors.dart';
 import 'package:invoiceninja_flutter/ui/app/FieldGrid.dart';
 import 'package:invoiceninja_flutter/ui/app/entities/entity_list_tile.dart';
 import 'package:invoiceninja_flutter/ui/app/invoice/invoice_item_view.dart';
@@ -193,6 +194,9 @@ class InvoiceOverview extends StatelessWidget {
             context: context,
             entityType: EntityType.invoice,
             filterEntity: invoice),
+        subtitle: memoizedRecurringInvoiceStatsForInvoice(
+                invoice.id, state.invoiceState.map)
+            .present(localization.active, localization.archived),
       ));
     }
 
