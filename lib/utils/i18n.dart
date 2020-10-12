@@ -15,6 +15,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
   static final Map<String, Map<String, String>> _localizedValues = {
     'en': {
       // STARTER: lang key - do not remove comment
+      'clone_to_recurring': 'Clone to Recurring',
       'crypto': 'Crypto',
       'paypal': 'PayPal',
       'alipay': 'Alipay',
@@ -4636,6 +4637,9 @@ mixin LocalizationsProvider on LocaleCodeAware {
   String get applePay => _localizedValues[localeCode]['apple_pay'] ?? '';
 
   String get crypto => _localizedValues[localeCode]['crypto'] ?? '';
+
+  String get cloneToRecurring =>
+      _localizedValues[localeCode]['clone_to_recurring'] ?? '';
 
   String lookup(String key) {
     final lookupKey = toSnakeCase(key);

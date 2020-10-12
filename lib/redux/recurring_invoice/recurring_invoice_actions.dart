@@ -433,6 +433,9 @@ void handleRecurringInvoiceAction(BuildContext context,
             forceSafariVC: false, forceWebView: false);
       }
       break;
+    case EntityAction.cloneToRecurring:
+      createEntity(context: context, entity: recurringInvoice.clone);
+      break;
     case EntityAction.cloneToInvoice:
       createEntity(
           context: context,

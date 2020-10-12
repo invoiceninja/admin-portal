@@ -715,22 +715,29 @@ abstract class InvoiceEntity extends Object
         }
       }
 
+      /*
       if (invitations.isNotEmpty && !multiselect) {
         actions.add(EntityAction.clientPortal);
       }
+       */
     }
 
     if (actions.isNotEmpty) {
       actions.add(null);
     }
 
-    if (userCompany.canCreate(EntityType.invoice) && !multiselect) {
-      actions.add(EntityAction.cloneToInvoice);
+    if (!multiselect) {
+      if (userCompany.canCreate(EntityType.invoice)) {
+        actions.add(EntityAction.cloneToInvoice);
+      }
       if (userCompany.canCreate(EntityType.quote)) {
         actions.add(EntityAction.cloneToQuote);
       }
       if (userCompany.canCreate(EntityType.credit)) {
         actions.add(EntityAction.cloneToCredit);
+      }
+      if (userCompany.canCreate(EntityType.recurringInvoice)) {
+        actions.add(EntityAction.cloneToRecurring);
       }
       actions.add(null);
     }

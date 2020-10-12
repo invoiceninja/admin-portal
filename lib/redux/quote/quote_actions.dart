@@ -506,6 +506,12 @@ Future handleQuoteAction(
           entity:
               quote.clone.rebuild((b) => b..entityType = EntityType.credit));
       break;
+    case EntityAction.cloneToRecurring:
+      createEntity(
+          context: context,
+          entity: quote.clone
+              .rebuild((b) => b..entityType = EntityType.recurringInvoice));
+      break;
     case EntityAction.restore:
       store.dispatch(RestoreQuotesRequest(
           snackBarCompleter<Null>(context, localization.restoredQuote),
