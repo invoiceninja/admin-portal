@@ -611,6 +611,14 @@ class EntityScreens extends StatelessWidget {
                 ? CompanyGatewayEditScreen()
                 : CompanyGatewayViewScreen(isFilter: true);
             break;
+          case EntityType.recurringInvoice:
+            leftFilterChild = editingFIlterEntity
+                ? RecurringInvoiceEditScreen()
+                : RecurringInvoiceViewScreen(isFilter: true);
+            break;
+          default:
+            print(
+                'Error: filter view not implemented for ${uiState.filterEntityType}');
         }
       }
     }
