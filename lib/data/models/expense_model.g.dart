@@ -228,6 +228,12 @@ class _$ExpenseEntitySerializer implements StructuredSerializer<ExpenseEntity> {
         ..add(serializers.serialize(object.vendorId,
             specifiedType: const FullType(String)));
     }
+    if (object.projectId != null) {
+      result
+        ..add('project_id')
+        ..add(serializers.serialize(object.projectId,
+            specifiedType: const FullType(String)));
+    }
     if (object.customValue3 != null) {
       result
         ..add('custom_value3')
@@ -373,6 +379,10 @@ class _$ExpenseEntitySerializer implements StructuredSerializer<ExpenseEntity> {
           break;
         case 'vendor_id':
           result.vendorId = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String;
+          break;
+        case 'project_id':
+          result.projectId = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String;
           break;
         case 'custom_value1':
@@ -849,6 +859,8 @@ class _$ExpenseEntity extends ExpenseEntity {
   @override
   final String vendorId;
   @override
+  final String projectId;
+  @override
   final String customValue1;
   @override
   final String customValue2;
@@ -903,6 +915,7 @@ class _$ExpenseEntity extends ExpenseEntity {
       this.clientId,
       this.invoiceId,
       this.vendorId,
+      this.projectId,
       this.customValue1,
       this.customValue2,
       this.customValue3,
@@ -1036,6 +1049,7 @@ class _$ExpenseEntity extends ExpenseEntity {
         clientId == other.clientId &&
         invoiceId == other.invoiceId &&
         vendorId == other.vendorId &&
+        projectId == other.projectId &&
         customValue1 == other.customValue1 &&
         customValue2 == other.customValue2 &&
         customValue3 == other.customValue3 &&
@@ -1072,13 +1086,13 @@ class _$ExpenseEntity extends ExpenseEntity {
                                                                 $jc(
                                                                     $jc(
                                                                         $jc(
-                                                                            $jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc(0, privateNotes.hashCode), publicNotes.hashCode), shouldBeInvoiced.hashCode), invoiceDocuments.hashCode), transactionId.hashCode), transactionReference.hashCode), bankId.hashCode), expenseCurrencyId.hashCode), categoryId.hashCode), amount.hashCode), expenseDate.hashCode), paymentDate.hashCode), exchangeRate.hashCode), invoiceCurrencyId.hashCode), paymentTypeId.hashCode), taxName1.hashCode), taxName2.hashCode), taxRate1.hashCode),
-                                                                                taxRate2.hashCode),
-                                                                            taxName3.hashCode),
-                                                                        taxRate3.hashCode),
-                                                                    clientId.hashCode),
-                                                                invoiceId.hashCode),
-                                                            vendorId.hashCode),
+                                                                            $jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc(0, privateNotes.hashCode), publicNotes.hashCode), shouldBeInvoiced.hashCode), invoiceDocuments.hashCode), transactionId.hashCode), transactionReference.hashCode), bankId.hashCode), expenseCurrencyId.hashCode), categoryId.hashCode), amount.hashCode), expenseDate.hashCode), paymentDate.hashCode), exchangeRate.hashCode), invoiceCurrencyId.hashCode), paymentTypeId.hashCode), taxName1.hashCode), taxName2.hashCode), taxRate1.hashCode), taxRate2.hashCode),
+                                                                                taxName3.hashCode),
+                                                                            taxRate3.hashCode),
+                                                                        clientId.hashCode),
+                                                                    invoiceId.hashCode),
+                                                                vendorId.hashCode),
+                                                            projectId.hashCode),
                                                         customValue1.hashCode),
                                                     customValue2.hashCode),
                                                 customValue3.hashCode),
@@ -1121,6 +1135,7 @@ class _$ExpenseEntity extends ExpenseEntity {
           ..add('clientId', clientId)
           ..add('invoiceId', invoiceId)
           ..add('vendorId', vendorId)
+          ..add('projectId', projectId)
           ..add('customValue1', customValue1)
           ..add('customValue2', customValue2)
           ..add('customValue3', customValue3)
@@ -1245,6 +1260,10 @@ class ExpenseEntityBuilder
   String get vendorId => _$this._vendorId;
   set vendorId(String vendorId) => _$this._vendorId = vendorId;
 
+  String _projectId;
+  String get projectId => _$this._projectId;
+  set projectId(String projectId) => _$this._projectId = projectId;
+
   String _customValue1;
   String get customValue1 => _$this._customValue1;
   set customValue1(String customValue1) => _$this._customValue1 = customValue1;
@@ -1329,6 +1348,7 @@ class ExpenseEntityBuilder
       _clientId = _$v.clientId;
       _invoiceId = _$v.invoiceId;
       _vendorId = _$v.vendorId;
+      _projectId = _$v.projectId;
       _customValue1 = _$v.customValue1;
       _customValue2 = _$v.customValue2;
       _customValue3 = _$v.customValue3;
@@ -1390,6 +1410,7 @@ class ExpenseEntityBuilder
               clientId: clientId,
               invoiceId: invoiceId,
               vendorId: vendorId,
+              projectId: projectId,
               customValue1: customValue1,
               customValue2: customValue2,
               customValue3: customValue3,

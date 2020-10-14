@@ -7,6 +7,7 @@ import 'package:invoiceninja_flutter/ui/app/entity_dropdown.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/custom_field.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/date_picker.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/decorated_form_field.dart';
+import 'package:invoiceninja_flutter/ui/app/forms/project_picker.dart';
 import 'package:invoiceninja_flutter/ui/expense/edit/expense_edit_vm.dart';
 import 'package:invoiceninja_flutter/utils/completers.dart';
 import 'package:invoiceninja_flutter/utils/formatting.dart';
@@ -116,31 +117,46 @@ class ExpenseEditDetailsState extends State<ExpenseEditDetails> {
                 viewModel.onAddVendorPressed(context, completer);
               },
             ),
-            expense.isInvoiced
-                ? SizedBox()
-                : EntityDropdown(
-                    key: ValueKey('__client_${expense.clientId}__'),
-                    allowClearing: true,
-                    entityType: EntityType.client,
-                    labelText: localization.client,
-                    entityId: expense.clientId,
-                    entityList: memoizedDropdownClientList(
-                        clientState.map,
-                        clientState.list,
-                        state.userState.map,
-                        state.staticState),
-                    onSelected: (client) {
-                      final currencyId =
-                          (client as ClientEntity)?.settings?.currencyId ??
-                              company.currencyId;
-                      viewModel.onChanged(expense.rebuild((b) => b
-                        ..clientId = client?.id
-                        ..invoiceCurrencyId = currencyId));
-                    },
-                    onAddPressed: (completer) {
-                      viewModel.onAddClientPressed(context, completer);
-                    },
-                  ),
+            if (!expense.isInvoiced) ...[
+              EntityDropdown(
+                key: ValueKey('__client_${expense.clientId}__'),
+                allowClearing: true,
+                entityType: EntityType.client,
+                labelText: localization.client,
+                entityId: expense.clientId,
+                entityList: memoizedDropdownClientList(clientState.map,
+                    clientState.list, state.userState.map, state.staticState),
+                onSelected: (client) {
+                  final currencyId =
+                      (client as ClientEntity)?.settings?.currencyId ??
+                          company.currencyId;
+                  viewModel.onChanged(expense.rebuild((b) => b
+                    ..clientId = client?.id
+                    ..invoiceCurrencyId = currencyId));
+                },
+                onAddPressed: (completer) {
+                  viewModel.onAddClientPressed(context, completer);
+                },
+              ),
+              ProjectPicker(
+                key: Key('__project_${expense.clientId}__'),
+                projectId: expense.projectId,
+                clientId: expense.clientId,
+                onChanged: (selectedId) {
+                  final project = state.projectState.get(selectedId);
+                  viewModel.onChanged(expense.rebuild((b) => b
+                    ..projectId = project?.id
+                    ..clientId = (project?.clientId ?? '').isNotEmpty
+                        ? project.clientId
+                        : expense.clientId));
+                },
+                /*
+                onAddPressed: (completer) {
+                  viewModel.onAddProjectPressed(context, completer);
+                },
+                 */
+              ),
+            ],
             EntityDropdown(
               key: ValueKey('__category_${expense.categoryId}__'),
               entityType: EntityType.expenseCategory,

@@ -224,6 +224,10 @@ abstract class ExpenseEntity extends Object
   @BuiltValueField(wireName: 'vendor_id')
   String get vendorId;
 
+  @nullable
+  @BuiltValueField(wireName: 'project_id')
+  String get projectId;
+
   @BuiltValueField(wireName: 'custom_value1')
   String get customValue1;
 

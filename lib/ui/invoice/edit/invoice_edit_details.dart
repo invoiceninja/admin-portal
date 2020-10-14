@@ -357,7 +357,6 @@ class InvoiceEditDetailsState extends State<InvoiceEditDetails> {
               clientId: invoice.clientId,
               onChanged: (selectedId) {
                 final project = state.projectState.get(selectedId);
-
                 if (project.clientId != invoice.clientId) {
                   final projectClient = state.clientState.get(project.clientId);
                   viewModel.onClientChanged(
@@ -372,11 +371,11 @@ class InvoiceEditDetailsState extends State<InvoiceEditDetails> {
                 }
               },
               /*
-                                      onAddPressed: (completer) {
-                                        viewModel.onAddProjectPressed(
-                                            context, completer);
-                                      },
-                                       */
+                onAddPressed: (completer) {
+                  viewModel.onAddProjectPressed(
+                      context, completer);
+                },
+                 */
             ),
             if (client.isOld && client.currencyId != company.currencyId)
               DecoratedFormField(

@@ -93,42 +93,44 @@ class _TaskEditDetailsState extends State<TaskEditDetails> {
       children: <Widget>[
         FormCard(
           children: <Widget>[
-            !task.isInvoiced
-                ? EntityDropdown(
-                    key: Key('__client_${task.clientId}__'),
-                    allowClearing: true,
-                    entityType: EntityType.client,
-                    labelText: localization.client,
-                    entityId: task.clientId,
-                    entityList: memoizedDropdownClientList(
-                        state.clientState.map,
-                        state.clientState.list,
-                        state.userState.map,
-                        state.staticState),
-                    onSelected: (client) {
-                      viewModel.onChanged(task.rebuild((b) => b
-                        ..clientId = client?.id
-                        ..projectId = null));
-                    },
-                    onAddPressed: (completer) {
-                      viewModel.onAddClientPressed(context, completer);
-                    },
-                  )
-                : SizedBox(),
-            ProjectPicker(
-              key: Key('__project_${task.clientId}__'),
-              projectId: task.projectId,
-              clientId: task.clientId,
-              onChanged: (selected) {
-                final project = selected as ProjectEntity;
-                viewModel.onChanged(task.rebuild((b) => b
-                  ..projectId = project?.id
-                  ..clientId = project?.clientId));
-              },
-              onAddPressed: (completer) {
-                viewModel.onAddProjectPressed(context, completer);
-              },
-            ),
+            if (!task.isInvoiced) ...[
+              EntityDropdown(
+                key: Key('__client_${task.clientId}__'),
+                allowClearing: true,
+                entityType: EntityType.client,
+                labelText: localization.client,
+                entityId: task.clientId,
+                entityList: memoizedDropdownClientList(
+                    state.clientState.map,
+                    state.clientState.list,
+                    state.userState.map,
+                    state.staticState),
+                onSelected: (client) {
+                  viewModel.onChanged(task.rebuild((b) => b
+                    ..clientId = client?.id
+                    ..projectId = null));
+                },
+                onAddPressed: (completer) {
+                  viewModel.onAddClientPressed(context, completer);
+                },
+              ),
+              ProjectPicker(
+                key: Key('__project_${task.clientId}__'),
+                projectId: task.projectId,
+                clientId: task.clientId,
+                onChanged: (selectedId) {
+                  final project = state.projectState.get(selectedId);
+                  viewModel.onChanged(task.rebuild((b) => b
+                    ..projectId = project?.id
+                    ..clientId = (project?.clientId ?? '').isNotEmpty
+                        ? project.clientId
+                        : task.clientId));
+                },
+                onAddPressed: (completer) {
+                  viewModel.onAddProjectPressed(context, completer);
+                },
+              ),
+            ],
             // TODO Remove isNotEmpty check in v2
             company.taskStatusMap.isNotEmpty
                 ? EntityDropdown(
