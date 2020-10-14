@@ -181,6 +181,14 @@ class InvoiceOverview extends StatelessWidget {
       ),
     );
 
+    if ((invoice.assignedUserId ?? '').isNotEmpty) {
+      final assignedUser = state.userState.get(invoice.assignedUserId);
+      widgets.add(EntityListTile(
+        isFilter: isFilter,
+        entity: assignedUser,
+      ));
+    }
+
     if ((invoice.recurringId ?? '').isNotEmpty) {
       final recurringInvoice =
           state.recurringInvoiceState.get(invoice.recurringId);
@@ -197,14 +205,6 @@ class InvoiceOverview extends StatelessWidget {
         subtitle: memoizedRecurringInvoiceStatsForInvoice(
                 invoice.id, state.invoiceState.map)
             .present(localization.active, localization.archived),
-      ));
-    }
-
-    if ((invoice.assignedUserId ?? '').isNotEmpty) {
-      final assignedUser = state.userState.get(invoice.assignedUserId);
-      widgets.add(EntityListTile(
-        isFilter: isFilter,
-        entity: assignedUser,
       ));
     }
 

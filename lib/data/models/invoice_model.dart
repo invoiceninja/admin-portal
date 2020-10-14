@@ -675,6 +675,18 @@ abstract class InvoiceEntity extends Object
         if (includeEdit && !multiselect) {
           actions.add(EntityAction.edit);
         }
+
+        if (isRecurringInvoice) {
+          if ([kRecurringInvoiceStatusDraft, kRecurringInvoiceStatusPaused]
+              .contains(statusId)) {
+            actions.add(EntityAction.start);
+          } else if ([
+            kRecurringInvoiceStatusPending,
+            kRecurringInvoiceStatusActive
+          ].contains(statusId)) {
+            actions.add(EntityAction.stop);
+          }
+        }
       }
 
       if (invitations.isNotEmpty && !multiselect) {
@@ -704,18 +716,6 @@ abstract class InvoiceEntity extends Object
 
         if (isQuote && !isApproved && (invoiceId ?? '').isEmpty) {
           actions.add(EntityAction.convert);
-        }
-
-        if (isRecurringInvoice) {
-          if ([kRecurringInvoiceStatusDraft, kRecurringInvoiceStatusPaused]
-              .contains(statusId)) {
-            actions.add(EntityAction.start);
-          } else if ([
-            kRecurringInvoiceStatusPending,
-            kRecurringInvoiceStatusActive
-          ].contains(statusId)) {
-            actions.add(EntityAction.stop);
-          }
         }
       }
 
