@@ -539,7 +539,6 @@ class InvoiceEditDesktopState extends State<InvoiceEditDesktop>
 
                                       if (project.clientId !=
                                           invoice.clientId) {
-                                        print('## CLIENT CHANGED');
                                         final projectClient = state.clientState
                                             .get(project.clientId);
                                         viewModel.onClientChanged(
