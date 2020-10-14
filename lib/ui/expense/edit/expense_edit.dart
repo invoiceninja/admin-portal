@@ -70,10 +70,10 @@ class _ExpenseEditState extends State<ExpenseEdit>
             text: localization.details,
           ),
           Tab(
-            text: localization.settings,
+            text: localization.notes,
           ),
           Tab(
-            text: localization.notes,
+            text: localization.settings,
           ),
         ],
       ),
@@ -86,10 +86,10 @@ class _ExpenseEditState extends State<ExpenseEdit>
             ExpenseEditDetails(
               viewModel: widget.viewModel,
             ),
-            ExpenseEditSettings(
+            ExpenseEditNotes(
               viewModel: widget.viewModel,
             ),
-            ExpenseEditNotes(
+            ExpenseEditSettings(
               viewModel: widget.viewModel,
             ),
           ],

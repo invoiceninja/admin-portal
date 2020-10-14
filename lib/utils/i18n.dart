@@ -891,7 +891,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'exchange_rate': 'Exchange Rate',
       'convert_currency': 'Convert Currency',
       'mark_paid': 'Mark Paid',
-      'mark_billable': 'Mark Billable',
+      'mark_invoiceable': 'Mark Invoiceable',
       'category': 'Category',
       'address': 'Address',
       'new_vendor': 'New Vendor',
@@ -2321,8 +2321,8 @@ mixin LocalizationsProvider on LocaleCodeAware {
 
   String get category => _localizedValues[localeCode]['category'] ?? '';
 
-  String get markBillable =>
-      _localizedValues[localeCode]['mark_billable'] ?? '';
+  String get markInvoiceable =>
+      _localizedValues[localeCode]['mark_invoiceable'] ?? '';
 
   String get markPaid => _localizedValues[localeCode]['mark_paid'] ?? '';
 
