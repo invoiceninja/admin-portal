@@ -536,13 +536,13 @@ class InvoiceEditDesktopState extends State<InvoiceEditDesktop>
                                       final project =
                                           state.projectState.get(selectedId);
                                       final updatedInvoice = invoice.rebuild(
-                                              (b) => b..projectId = project?.id);
+                                          (b) => b..projectId = project?.id);
                                       viewModel.onChanged(updatedInvoice);
                                       if ((invoice.clientId ?? '').isEmpty) {
                                         final projectClient = state.clientState
                                             .get(project.clientId);
-                                        viewModel.onClientChanged(
-                                            context, updatedInvoice, projectClient);
+                                        viewModel.onClientChanged(context,
+                                            updatedInvoice, projectClient);
                                       }
                                     },
                                     /*
