@@ -318,6 +318,7 @@ const String kSettingsTaxRatesView = 'tax_settings_rates_view';
 const String kSettingsTaxRatesEdit = 'tax_settings_rates_edit';
 const String kSettingsIntegrations = 'integrations';
 const String kSettingsProducts = 'product_settings';
+const String kSettingsExpenses = 'expense_settings';
 const String kSettingsImportExport = 'import_export';
 const String kSettingsDeviceSettings = 'device_settings';
 const String kSettingsGroupSettings = 'group_settings';

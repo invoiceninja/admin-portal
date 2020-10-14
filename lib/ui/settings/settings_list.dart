@@ -100,6 +100,11 @@ class SettingsList extends StatelessWidget {
             section: kSettingsProducts,
             viewModel: viewModel,
           ),
+        if (showAll)
+          SettingsListTile(
+            section: kSettingsExpenses,
+            viewModel: viewModel,
+          ),
         // TODO Re-entable
         /*
         if (showAll)
