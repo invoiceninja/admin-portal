@@ -141,6 +141,14 @@ class _ProjectEditState extends State<ProjectEdit> {
             children: <Widget>[
               FormCard(
                 children: <Widget>[
+                  DecoratedFormField(
+                    controller: _nameController,
+                    validator: (String val) => val.trim().isEmpty
+                        ? localization.pleaseEnterAName
+                        : null,
+                    autovalidate: _autoValidate,
+                    label: localization.name,
+                  ),
                   project.isNew
                       ? EntityDropdown(
                           key: ValueKey('__client_${project.clientId}__'),
@@ -166,14 +174,6 @@ class _ProjectEditState extends State<ProjectEdit> {
                           },
                         )
                       : SizedBox(),
-                  DecoratedFormField(
-                    controller: _nameController,
-                    validator: (String val) => val.trim().isEmpty
-                        ? localization.pleaseEnterAName
-                        : null,
-                    autovalidate: _autoValidate,
-                    label: localization.name,
-                  ),
                   DatePicker(
                     labelText: localization.dueDate,
                     selectedDate: project.dueDate,
