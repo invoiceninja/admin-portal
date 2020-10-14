@@ -149,22 +149,24 @@ abstract class ProjectEntity extends Object
       bool multiselect = false}) {
     final actions = <EntityAction>[];
 
-    if (!isDeleted) {
-      if (includeEdit && userCompany.canEditEntity(this)) {
-        actions.add(EntityAction.edit);
+    if (!multiselect) {
+      if (!isDeleted) {
+        if (includeEdit && userCompany.canEditEntity(this)) {
+          actions.add(EntityAction.edit);
+        }
+
+        if (userCompany.canCreate(EntityType.task) && isActive) {
+          actions.add(EntityAction.newTask);
+        }
+
+        if (userCompany.canCreate(EntityType.invoice) && isActive) {
+          actions.add(EntityAction.newInvoice);
+        }
       }
 
-      if (userCompany.canCreate(EntityType.task) && isActive) {
-        actions.add(EntityAction.newTask);
+      if (userCompany.canCreate(EntityType.project)) {
+        actions.add(EntityAction.clone);
       }
-
-      if (userCompany.canCreate(EntityType.invoice) && isActive) {
-        actions.add(EntityAction.newInvoice);
-      }
-    }
-
-    if (userCompany.canCreate(EntityType.project)) {
-      actions.add(EntityAction.clone);
     }
 
     if (actions.isNotEmpty) {
@@ -243,7 +245,8 @@ abstract class ProjectEntity extends Object
             .compareTo(userB.listDisplayName.toLowerCase());
         break;
       case ProjectFields.documents:
-        response = projectA.documents.length.compareTo(projectB.documents.length);
+        response =
+            projectA.documents.length.compareTo(projectB.documents.length);
         break;
       default:
         print('## ERROR: sort by project.$sortField is not implemented');
