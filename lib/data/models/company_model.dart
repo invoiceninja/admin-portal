@@ -253,6 +253,18 @@ abstract class CompanyEntity extends Object
   @BuiltValueField(wireName: 'google_analytics_key')
   String get googleAnalyticsKey;
 
+  @nullable // TODO remove nullable
+  @BuiltValueField(wireName: 'mark_expenses_invoiceable')
+  bool get markExpensesInvoiceable;
+
+  @nullable // TODO remove nullable
+  @BuiltValueField(wireName: 'mark_expenses_paid')
+  bool get markExpensesPaid;
+
+  @nullable // TODO remove nullable
+  @BuiltValueField(wireName: 'invoice_expense_documents')
+  bool get invoiceExpenseDocuments;
+
   SettingsEntity get settings;
 
   @nullable

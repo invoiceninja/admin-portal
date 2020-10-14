@@ -50,17 +50,30 @@ class _ExpenseSettingsState extends State<ExpenseSettings> {
         children: <Widget>[
           FormCard(
             children: <Widget>[
-              /*
               SwitchListTile(
                 activeColor: Theme.of(context).accentColor,
-                title: Text(localization.showCost),
-                value: company.enableExpenseCost ?? false,
-                subtitle: Text(localization.showCostHelp),
+                title: Text(localization.markInvoiceable),
+                value: company.markExpensesInvoiceable ?? false,
+                subtitle: Text(localization.markInvoiceableHelp),
                 onChanged: (value) => viewModel.onCompanyChanged(
-                    company.rebuild((b) => b..enableExpenseCost = value)),
+                    company.rebuild((b) => b..markExpensesInvoiceable = value)),
               ),
-
-               */
+              SwitchListTile(
+                activeColor: Theme.of(context).accentColor,
+                title: Text(localization.markPaid),
+                value: company.markExpensesPaid ?? false,
+                subtitle: Text(localization.markPaidHelp),
+                onChanged: (value) => viewModel.onCompanyChanged(
+                    company.rebuild((b) => b..markExpensesPaid = value)),
+              ),
+              SwitchListTile(
+                activeColor: Theme.of(context).accentColor,
+                title: Text(localization.addDocumentsToInvoice),
+                value: company.invoiceExpenseDocuments ?? false,
+                subtitle: Text(localization.addDocumentsToInvoiceHelp),
+                onChanged: (value) => viewModel.onCompanyChanged(
+                    company.rebuild((b) => b..invoiceExpenseDocuments = value)),
+              ),
             ],
           ),
         ],

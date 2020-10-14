@@ -15,6 +15,10 @@ mixin LocalizationsProvider on LocaleCodeAware {
   static final Map<String, Map<String, String>> _localizedValues = {
     'en': {
       // STARTER: lang key - do not remove comment
+      'mark_paid_help': 'Track the expense has been paid',
+      'mark_invoiceable_help': 'Enable the expense to be invoiced',
+      'add_documents_to_invoice_help': 'Make the documents visible to clients',
+      'convert_currency_help': 'Set an exchange rate',
       'expense_settings': 'Expense Settings',
       'clone_to_recurring': 'Clone to Recurring',
       'crypto': 'Crypto',
@@ -4639,8 +4643,20 @@ mixin LocalizationsProvider on LocaleCodeAware {
 
   String get crypto => _localizedValues[localeCode]['crypto'] ?? '';
 
+  String get markPaidHelp =>
+      _localizedValues[localeCode]['mark_paid_help'] ?? '';
+
+  String get markInvoiceableHelp =>
+      _localizedValues[localeCode]['mark_invoiceable_help'] ?? '';
+
+  String get addDocumentsToInvoiceHelp =>
+      _localizedValues[localeCode]['add_documents_to_invoice_help'] ?? '';
+
   String get expenseSettings =>
       _localizedValues[localeCode]['expense_settings'] ?? '';
+
+  String get convertCurrencyHelp =>
+      _localizedValues[localeCode]['convert_currency_help'] ?? '';
 
   String get cloneToRecurring =>
       _localizedValues[localeCode]['clone_to_recurring'] ?? '';
