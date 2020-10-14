@@ -82,19 +82,22 @@ abstract class ExpenseEntity extends Object
     implements Built<ExpenseEntity, ExpenseEntityBuilder> {
   factory ExpenseEntity(
       {String id, AppState state, VendorEntity vendor, ClientEntity client}) {
+    final company = state?.company;
     return _$ExpenseEntity._(
       id: id ?? BaseEntity.nextId,
       isChanged: false,
       privateNotes: '',
       publicNotes: '',
-      shouldBeInvoiced: false,
-      invoiceDocuments: state?.prefState?.addDocumentsToInvoice ?? false,
+      shouldBeInvoiced: company?.markExpensesInvoiceable ?? false,
+      invoiceDocuments: company?.invoiceExpenseDocuments ?? false,
       transactionId: '',
       transactionReference: '',
       bankId: '',
       amount: 0,
       expenseDate: convertDateTimeToSqlDate(),
-      paymentDate: '',
+      paymentDate: (company?.markExpensesPaid ?? false)
+          ? convertDateTimeToSqlDate()
+          : '',
       paymentTypeId: '',
       exchangeRate: 1,
       expenseCurrencyId: (vendor != null && vendor.hasCurrency)

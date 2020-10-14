@@ -17,7 +17,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       // STARTER: lang key - do not remove comment
       'mark_paid_help': 'Track the expense has been paid',
       'mark_invoiceable_help': 'Enable the expense to be invoiced',
-      'add_documents_to_invoice_help': 'Make the documents visible to clients',
+      'add_documents_to_invoice_help': 'Make the documents visible',
       'convert_currency_help': 'Set an exchange rate',
       'expense_settings': 'Expense Settings',
       'clone_to_recurring': 'Clone to Recurring',

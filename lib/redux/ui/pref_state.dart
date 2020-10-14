@@ -22,7 +22,6 @@ abstract class PrefState implements Built<PrefState, PrefStateBuilder> {
       autoStartTasks: false,
       showFilterSidebar: false,
       longPressSelectionIsDefault: false,
-      addDocumentsToInvoice: false,
       companyPrefs: BuiltMap<String, CompanyPrefState>(),
     );
   }
@@ -56,8 +55,6 @@ abstract class PrefState implements Built<PrefState, PrefStateBuilder> {
   bool get requireAuthentication;
 
   bool get autoStartTasks;
-
-  bool get addDocumentsToInvoice;
 
   int get rowsPerPage;
 

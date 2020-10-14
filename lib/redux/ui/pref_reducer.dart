@@ -60,9 +60,7 @@ PrefState prefReducer(
           longPressReducer(state.longPressSelectionIsDefault, action)
       ..autoStartTasks = autoStartTasksReducer(state.autoStartTasks, action)
       ..requireAuthentication =
-          requireAuthenticationReducer(state.requireAuthentication, action)
-      ..addDocumentsToInvoice =
-          addDocumentsToInvoiceReducer(state.addDocumentsToInvoice, action),
+          requireAuthenticationReducer(state.requireAuthentication, action),
   );
 }
 
@@ -175,12 +173,6 @@ Reducer<bool> autoStartTasksReducer = combineReducers([
 Reducer<bool> isPreviewVisibleReducer = combineReducers([
   TypedReducer<bool, UpdateUserPreferences>((isPreviewVisible, action) {
     return action.isPreviewVisible ?? isPreviewVisible;
-  }),
-]);
-
-Reducer<bool> addDocumentsToInvoiceReducer = combineReducers([
-  TypedReducer<bool, UpdateUserPreferences>((addDocumentsToInvoice, action) {
-    return action.addDocumentsToInvoice ?? addDocumentsToInvoice;
   }),
 ]);
 
