@@ -150,6 +150,28 @@ class InvoiceEditDetailsState extends State<InvoiceEditDetails> {
                         ? AppLocalization.of(context).pleaseEnterAnInvoiceNumber
                         : null,
                   ),
+            ProjectPicker(
+              key: Key('__project_${invoice.clientId}__'),
+              projectId: invoice.projectId,
+              clientId: invoice.clientId,
+              onChanged: (selectedId) {
+                final project = state.projectState.get(selectedId);
+                final updatedInvoice =
+                    invoice.rebuild((b) => b..projectId = project?.id);
+                viewModel.onChanged(updatedInvoice);
+                if ((invoice.clientId ?? '').isEmpty) {
+                  final projectClient = state.clientState.get(project.clientId);
+                  viewModel.onClientChanged(
+                      context, updatedInvoice, projectClient);
+                }
+              },
+              /*
+                onAddPressed: (completer) {
+                  viewModel.onAddProjectPressed(
+                      context, completer);
+                },
+                 */
+            ),
             UserPicker(
               userId: invoice.assignedUserId,
               onChanged: (userId) => viewModel.onChanged(
@@ -350,32 +372,6 @@ class InvoiceEditDetailsState extends State<InvoiceEditDetails> {
               initialValue: invoice.designId,
               onSelected: (value) => viewModel
                   .onChanged(invoice.rebuild((b) => b..designId = value?.id)),
-            ),
-            ProjectPicker(
-              key: Key('__project_${invoice.clientId}__'),
-              projectId: invoice.projectId,
-              clientId: invoice.clientId,
-              onChanged: (selectedId) {
-                final project = state.projectState.get(selectedId);
-                if (project.clientId != invoice.clientId) {
-                  final projectClient = state.clientState.get(project.clientId);
-                  viewModel.onClientChanged(
-                      context,
-                      invoice.rebuild((b) => b
-                        ..projectId = project?.id
-                        ..clientId = project?.id),
-                      projectClient);
-                } else {
-                  viewModel.onChanged(
-                      invoice.rebuild((b) => b..projectId = project?.id));
-                }
-              },
-              /*
-                onAddPressed: (completer) {
-                  viewModel.onAddProjectPressed(
-                      context, completer);
-                },
-                 */
             ),
             if (client.isOld && client.currencyId != company.currencyId)
               DecoratedFormField(
