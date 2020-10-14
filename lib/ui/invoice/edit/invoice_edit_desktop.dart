@@ -171,9 +171,10 @@ class InvoiceEditDesktopState extends State<InvoiceEditDesktop>
   Widget build(BuildContext context) {
     final localization = AppLocalization.of(context);
     final viewModel = widget.viewModel;
+    final state = viewModel.state;
     final invoice = viewModel.invoice;
     final company = viewModel.company;
-    final client = viewModel.state.clientState.get(invoice.clientId);
+    final client = state.clientState.get(invoice.clientId);
     final invoiceTotal =
         invoice.partial != 0 ? invoice.partial : invoice.calculateTotal;
     final entityType = invoice.entityType;
@@ -198,7 +199,7 @@ class InvoiceEditDesktopState extends State<InvoiceEditDesktop>
                     ClientPicker(
                       //autofocus: kIsWeb,
                       clientId: invoice.clientId,
-                      clientState: viewModel.state.clientState,
+                      clientState: state.clientState,
                       onSelected: (client) =>
                           viewModel.onClientChanged(context, invoice, client),
                       onAddPressed: (completer) =>
@@ -535,8 +536,22 @@ class InvoiceEditDesktopState extends State<InvoiceEditDesktop>
                                       final project = viewModel
                                           .state.projectState
                                           .get(selectedId);
-                                      viewModel.onChanged(invoice.rebuild(
-                                          (b) => b..projectId = project?.id));
+
+                                      if (project.clientId !=
+                                          invoice.clientId) {
+                                        print('## CLIENT CHANGED');
+                                        final projectClient = state.clientState
+                                            .get(project.clientId);
+                                        viewModel.onClientChanged(
+                                            context,
+                                            invoice.rebuild((b) => b
+                                              ..projectId = project?.id
+                                              ..clientId = project?.id),
+                                            projectClient);
+                                      } else {
+                                        viewModel.onChanged(invoice.rebuild(
+                                            (b) => b..projectId = project?.id));
+                                      }
                                     },
                                     /*
                                       onAddPressed: (completer) {
