@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:invoiceninja_flutter/data/models/entities.dart';
@@ -14,6 +16,7 @@ class DynamicSelector extends StatelessWidget {
     this.onChanged,
     this.overrideSuggestedAmount,
     this.overrideSuggestedLabel,
+    this.onAddPressed,
   });
 
   final String entityId;
@@ -22,6 +25,7 @@ class DynamicSelector extends StatelessWidget {
   final Function(String) onChanged;
   final Function(BaseEntity) overrideSuggestedAmount;
   final Function(BaseEntity) overrideSuggestedLabel;
+  final Function(Completer<SelectableEntity> completer) onAddPressed;
 
   @override
   Widget build(BuildContext context) {
@@ -51,6 +55,7 @@ class DynamicSelector extends StatelessWidget {
         entityType: entityType,
         allowClearing: true,
         onSelected: (entity) => onChanged(entity.id),
+        onAddPressed: onAddPressed,
         entityId: entityId,
         entityList: entityIds,
         overrideSuggestedAmount: overrideSuggestedAmount,

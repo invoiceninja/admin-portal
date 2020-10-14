@@ -14,6 +14,7 @@ import 'package:invoiceninja_flutter/ui/app/forms/date_picker.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/decorated_form_field.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/design_picker.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/discount_field.dart';
+import 'package:invoiceninja_flutter/ui/app/forms/project_picker.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/user_picker.dart';
 import 'package:invoiceninja_flutter/ui/app/invoice/tax_rate_dropdown.dart';
 import 'package:invoiceninja_flutter/ui/credit/edit/credit_edit_items_vm.dart';
@@ -470,10 +471,7 @@ class InvoiceEditDesktopState extends State<InvoiceEditDesktop>
                     ],
                   ),
                   SizedBox(
-                    height: (client.isOld &&
-                            client.currencyId != company.currencyId)
-                        ? 140
-                        : 100,
+                    height: 140,
                     child: TabBarView(
                       controller: _tabController,
                       children: <Widget>[
@@ -526,10 +524,33 @@ class InvoiceEditDesktopState extends State<InvoiceEditDesktop>
                                 ),
                               ],
                             ),
-                            if (client.isOld &&
-                                client.currencyId != company.currencyId)
-                              Row(
-                                children: [
+                            Row(
+                              children: [
+                                Expanded(
+                                  child: ProjectPicker(
+                                    key: Key('__project_${invoice.clientId}__'),
+                                    projectId: invoice.projectId,
+                                    clientId: invoice.clientId,
+                                    onChanged: (selectedId) {
+                                      final project = viewModel
+                                          .state.projectState
+                                          .get(selectedId);
+                                      viewModel.onChanged(invoice.rebuild(
+                                          (b) => b..projectId = project?.id));
+                                    },
+                                    /*
+                                      onAddPressed: (completer) {
+                                        viewModel.onAddProjectPressed(
+                                            context, completer);
+                                      },
+                                       */
+                                  ),
+                                ),
+                                SizedBox(
+                                  width: 38,
+                                ),
+                                if (client.isOld &&
+                                    client.currencyId != company.currencyId)
                                   Expanded(
                                     child: DecoratedFormField(
                                       key: ValueKey(
@@ -549,15 +570,13 @@ class InvoiceEditDesktopState extends State<InvoiceEditDesktop>
                                       onSavePressed:
                                           widget.entityViewModel.onSavePressed,
                                     ),
-                                  ),
-                                  SizedBox(
-                                    width: 38,
-                                  ),
+                                  )
+                                else
                                   Expanded(
                                     child: SizedBox(),
-                                  )
-                                ],
-                              )
+                                  ),
+                              ],
+                            )
                           ],
                         ),
                       ],
