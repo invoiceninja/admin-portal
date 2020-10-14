@@ -172,7 +172,9 @@ class EntitiesListTile extends StatelessWidget {
           child: ListTile(
             contentPadding: const EdgeInsets.symmetric(horizontal: 16),
             title: Text(title),
-            subtitle: Text(subtitle ?? ''),
+            subtitle: Text((subtitle ?? '').isEmpty
+                ? AppLocalization.of(context).none
+                : subtitle),
             leading: IgnorePointer(
               child: IconButton(
                 icon: Icon(getEntityIcon(entityType), size: 18.0),
