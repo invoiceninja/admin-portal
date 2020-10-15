@@ -43,6 +43,9 @@ class _TemplatesAndRemindersState extends State<TemplatesAndReminders>
   String _lastBody;
   String _subjectPreview = '';
   String _bodyPreview = '';
+  String _defaultSubject = '';
+  String _defaultBody = '';
+
   bool _isLoading = false;
   FocusScopeNode _focusNode;
   TabController _controller;
@@ -92,7 +95,9 @@ class _TemplatesAndRemindersState extends State<TemplatesAndReminders>
   }
 
   void _loadTemplate(EmailTemplate emailTemplate) {
-    final settings = widget.viewModel.settings;
+    final viewModel = widget.viewModel;
+    final settings = viewModel.settings;
+    final templateMap = viewModel.state.staticState.templateMap;
 
     _bodyController.removeListener(_onChanged);
     _subjectController.removeListener(_onChanged);
@@ -102,6 +107,12 @@ class _TemplatesAndRemindersState extends State<TemplatesAndReminders>
 
     _bodyController.addListener(_onChanged);
     _subjectController.addListener(_onChanged);
+
+    setState(() {
+      final template = templateMap['$emailTemplate'];
+      _defaultSubject = template.subject;
+      _defaultBody = template.body;
+    });
   }
 
   void _onChanged() {
@@ -274,12 +285,14 @@ class _TemplatesAndRemindersState extends State<TemplatesAndReminders>
                 DecoratedFormField(
                   label: localization.subject,
                   controller: _subjectController,
+                  hint: _defaultSubject,
                 ),
                 DecoratedFormField(
                   keyboardType: TextInputType.multiline,
                   label: localization.body,
                   controller: _bodyController,
                   maxLines: 8,
+                  hint: _defaultBody,
                 ),
               ]),
               if (_template == EmailTemplate.reminder1)

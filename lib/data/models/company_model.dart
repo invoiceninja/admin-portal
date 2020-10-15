@@ -423,13 +423,13 @@ abstract class CompanyEntity extends Object
 
   bool isModuleEnabled(EntityType entityType) {
     // TODO remove this
-    //if (kReleaseMode &&
-    if ([
-      EntityType.project,
-      EntityType.task,
-      EntityType.expense,
-      EntityType.vendor,
-    ].contains(entityType)) {
+    if (kReleaseMode &&
+        [
+          EntityType.project,
+          EntityType.task,
+          EntityType.expense,
+          EntityType.vendor,
+        ].contains(entityType)) {
       return false;
     }
 

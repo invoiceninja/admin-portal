@@ -20,6 +20,7 @@ abstract class StaticDataListResponse
   factory StaticDataListResponse(
           [void updates(StaticDataListResponseBuilder b)]) =
       _$StaticDataListResponse;
+
   StaticDataListResponse._();
 
   @override
@@ -37,6 +38,7 @@ abstract class StaticDataItemResponse
   factory StaticDataItemResponse(
           [void updates(StaticDataItemResponseBuilder b)]) =
       _$StaticDataItemResponse;
+
   StaticDataItemResponse._();
 
   @override
@@ -83,8 +85,10 @@ abstract class StaticDataEntity
       paymentTypes: BuiltList<PaymentTypeEntity>(),
       countries: BuiltList<CountryEntity>(),
       invoiceStatus: BuiltList<InvoiceStatusEntity>(),
+      templates: BuiltMap<String, TemplateEntity>(),
     );
   }
+
   StaticDataEntity._();
 
   @override
@@ -117,6 +121,32 @@ abstract class StaticDataEntity
   @BuiltValueField(wireName: 'invoice_status')
   BuiltList<InvoiceStatusEntity> get invoiceStatus;
 
+  BuiltMap<String, TemplateEntity> get templates;
+
   static Serializer<StaticDataEntity> get serializer =>
       _$staticDataEntitySerializer;
+}
+
+abstract class TemplateEntity
+    implements Built<TemplateEntity, TemplateEntityBuilder> {
+  factory TemplateEntity() {
+    return _$TemplateEntity._(
+      subject: '',
+      body: '',
+    );
+  }
+
+  TemplateEntity._();
+
+  @override
+  @memoized
+  int get hashCode;
+
+  String get subject;
+
+  @nullable // TODO remove nullable
+  String get body;
+
+  static Serializer<TemplateEntity> get serializer =>
+      _$templateEntitySerializer;
 }
