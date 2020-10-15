@@ -592,6 +592,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'invoice_email': 'Invoice Email',
       'payment_email': 'Payment Email',
       'partial_payment': 'Partial Payment',
+      'payment_partial': 'Partial Payment',
       'partial_payment_email': 'Partial Payment Email',
       'quote_email': 'Quote Email',
       'endless_reminder': 'Endless Reminder',

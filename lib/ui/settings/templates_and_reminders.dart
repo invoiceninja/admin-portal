@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:invoiceninja_flutter/constants.dart';
 import 'package:invoiceninja_flutter/data/models/company_model.dart';
 import 'package:invoiceninja_flutter/data/models/entities.dart';
+import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/ui/app/form_card.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/app_dropdown_button.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/app_form.dart';
@@ -109,7 +110,7 @@ class _TemplatesAndRemindersState extends State<TemplatesAndReminders>
     _subjectController.addListener(_onChanged);
 
     setState(() {
-      final template = templateMap['$emailTemplate'];
+      final template = templateMap['$emailTemplate'] ?? TemplateEntity();
       _defaultSubject = template.subject;
       _defaultBody = template.body;
     });
@@ -134,7 +135,7 @@ class _TemplatesAndRemindersState extends State<TemplatesAndReminders>
         settings = settings.rebuild((b) => b
           ..emailBodyPayment = body
           ..emailSubjectPayment = subject);
-      } else if (_template == EmailTemplate.partial_payment) {
+      } else if (_template == EmailTemplate.payment_partial) {
         settings = settings.rebuild((b) => b
           ..emailBodyPaymentPartial = body
           ..emailSubjectPaymentPartial = subject);
@@ -263,7 +264,7 @@ class _TemplatesAndRemindersState extends State<TemplatesAndReminders>
                         if ([
                               EmailTemplate.invoice,
                               EmailTemplate.payment,
-                              EmailTemplate.partial_payment,
+                              EmailTemplate.payment_partial,
                             ].contains(value) &&
                             !company.isModuleEnabled(EntityType.invoice)) {
                           return false;
