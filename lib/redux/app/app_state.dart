@@ -224,7 +224,6 @@ abstract class AppState implements Built<AppState, AppStateBuilder> {
       // STARTER: states switch map - do not remove comment
       case EntityType.recurringInvoice:
         return recurringInvoiceState.map;
-
       case EntityType.webhook:
         return webhookState.map;
       case EntityType.token:
@@ -279,6 +278,7 @@ abstract class AppState implements Built<AppState, AppStateBuilder> {
       case EntityType.timezone:
         return staticState.timezoneMap;
       default:
+        print('Error: getEntityMap $type not found');
         return null;
     }
   }
@@ -294,7 +294,6 @@ abstract class AppState implements Built<AppState, AppStateBuilder> {
       // STARTER: states switch list - do not remove comment
       case EntityType.recurringInvoice:
         return recurringInvoiceState.list;
-
       case EntityType.webhook:
         return webhookState.list;
       case EntityType.token:

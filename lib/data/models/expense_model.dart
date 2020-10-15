@@ -55,7 +55,7 @@ class ExpenseFields {
   static const String expenseCategoryId = 'expense_category_id';
   static const String expenseCategory = 'expense_category';
   static const String amount = 'amount';
-  static const String expenseDate = 'expense_date';
+  static const String expenseDate = 'date';
   static const String paymentDate = 'payment_date';
   static const String exchangeRate = 'exchange_rate';
   static const String invoiceCurrencyId = 'invoice_currency_id';
