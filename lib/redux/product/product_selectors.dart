@@ -26,7 +26,9 @@ InvoiceItemEntity convertProductToInvoiceItem({
       ..cost = cost
       ..quantity = company.enableProductQuantity
           ? product.quantity
-          : company.defaultQuantity ? 1 : null
+          : company.defaultQuantity
+              ? 1
+              : null
       ..customValue1 = product.customValue1
       ..customValue2 = product.customValue2
       ..taxName1 = product.taxName1

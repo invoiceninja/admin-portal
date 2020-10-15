@@ -59,7 +59,7 @@ class _PaymentViewState extends State<PaymentView> {
     if ((payment.typeId ?? '').isNotEmpty) {
       final paymentType = state.staticState.paymentTypeMap[payment.typeId];
       if (paymentType != null) {
-        fields[PaymentFields.paymentTypeId] = paymentType.name;
+        fields[PaymentFields.typeId] = paymentType.name;
       }
     }
     if (payment.transactionReference.isNotEmpty) {

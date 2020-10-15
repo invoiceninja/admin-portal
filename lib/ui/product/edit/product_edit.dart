@@ -103,8 +103,7 @@ class _ProductEditState extends State<ProductEdit> {
         ..customValue1 = _custom1Controller.text.trim()
         ..customValue2 = _custom2Controller.text.trim()
         ..customValue3 = _custom3Controller.text.trim()
-        ..customValue4 = _custom4Controller.text.trim()
-      );
+        ..customValue4 = _custom4Controller.text.trim());
       if (product != widget.viewModel.product) {
         widget.viewModel.onChanged(product);
       }

@@ -42,7 +42,7 @@ class VendorListBuilder extends StatelessWidget {
             final isInMultiselect = listUIState.isInMultiselect();
 
             return VendorListItem(
-              userCompany: viewModel.state.userCompany,
+              user: viewModel.state.user,
               filter: viewModel.filter,
               vendor: vendor,
               isChecked: isInMultiselect && listUIState.isSelected(vendor.id),

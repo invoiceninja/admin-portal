@@ -10,6 +10,8 @@ Serializer<CompanyEntity> _$companyEntitySerializer =
     new _$CompanyEntitySerializer();
 Serializer<GatewayEntity> _$gatewayEntitySerializer =
     new _$GatewayEntitySerializer();
+Serializer<GatewayOptionsEntity> _$gatewayOptionsEntitySerializer =
+    new _$GatewayOptionsEntitySerializer();
 Serializer<UserCompanyEntity> _$userCompanyEntitySerializer =
     new _$UserCompanyEntitySerializer();
 Serializer<UserSettingsEntity> _$userSettingsEntitySerializer =
@@ -233,6 +235,24 @@ class _$CompanyEntitySerializer implements StructuredSerializer<CompanyEntity> {
         ..add('plan')
         ..add(serializers.serialize(object.plan,
             specifiedType: const FullType(String)));
+    }
+    if (object.markExpensesInvoiceable != null) {
+      result
+        ..add('mark_expenses_invoiceable')
+        ..add(serializers.serialize(object.markExpensesInvoiceable,
+            specifiedType: const FullType(bool)));
+    }
+    if (object.markExpensesPaid != null) {
+      result
+        ..add('mark_expenses_paid')
+        ..add(serializers.serialize(object.markExpensesPaid,
+            specifiedType: const FullType(bool)));
+    }
+    if (object.invoiceExpenseDocuments != null) {
+      result
+        ..add('invoice_expense_documents')
+        ..add(serializers.serialize(object.invoiceExpenseDocuments,
+            specifiedType: const FullType(bool)));
     }
     if (object.enabledModules != null) {
       result
@@ -544,6 +564,18 @@ class _$CompanyEntitySerializer implements StructuredSerializer<CompanyEntity> {
           result.googleAnalyticsKey = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String;
           break;
+        case 'mark_expenses_invoiceable':
+          result.markExpensesInvoiceable = serializers.deserialize(value,
+              specifiedType: const FullType(bool)) as bool;
+          break;
+        case 'mark_expenses_paid':
+          result.markExpensesPaid = serializers.deserialize(value,
+              specifiedType: const FullType(bool)) as bool;
+          break;
+        case 'invoice_expense_documents':
+          result.invoiceExpenseDocuments = serializers.deserialize(value,
+              specifiedType: const FullType(bool)) as bool;
+          break;
         case 'settings':
           result.settings.replace(serializers.deserialize(value,
               specifiedType: const FullType(SettingsEntity)) as SettingsEntity);
@@ -613,6 +645,12 @@ class _$GatewayEntitySerializer implements StructuredSerializer<GatewayEntity> {
       'sort_order',
       serializers.serialize(object.sortOrder,
           specifiedType: const FullType(int)),
+      'options',
+      serializers.serialize(object.options,
+          specifiedType: const FullType(BuiltMap, const [
+            const FullType(String),
+            const FullType(GatewayOptionsEntity)
+          ])),
       'fields',
       serializers.serialize(object.fields,
           specifiedType: const FullType(String)),
@@ -664,9 +702,69 @@ class _$GatewayEntitySerializer implements StructuredSerializer<GatewayEntity> {
           result.defaultGatewayTypeId = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String;
           break;
+        case 'options':
+          result.options.replace(serializers.deserialize(value,
+              specifiedType: const FullType(BuiltMap, const [
+                const FullType(String),
+                const FullType(GatewayOptionsEntity)
+              ])));
+          break;
         case 'fields':
           result.fields = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String;
+          break;
+      }
+    }
+
+    return result.build();
+  }
+}
+
+class _$GatewayOptionsEntitySerializer
+    implements StructuredSerializer<GatewayOptionsEntity> {
+  @override
+  final Iterable<Type> types = const [
+    GatewayOptionsEntity,
+    _$GatewayOptionsEntity
+  ];
+  @override
+  final String wireName = 'GatewayOptionsEntity';
+
+  @override
+  Iterable<Object> serialize(
+      Serializers serializers, GatewayOptionsEntity object,
+      {FullType specifiedType = FullType.unspecified}) {
+    final result = <Object>[
+      'refund',
+      serializers.serialize(object.supportRefunds,
+          specifiedType: const FullType(bool)),
+      'token_billing',
+      serializers.serialize(object.supportTokenBilling,
+          specifiedType: const FullType(bool)),
+    ];
+
+    return result;
+  }
+
+  @override
+  GatewayOptionsEntity deserialize(
+      Serializers serializers, Iterable<Object> serialized,
+      {FullType specifiedType = FullType.unspecified}) {
+    final result = new GatewayOptionsEntityBuilder();
+
+    final iterator = serialized.iterator;
+    while (iterator.moveNext()) {
+      final key = iterator.current as String;
+      iterator.moveNext();
+      final dynamic value = iterator.current;
+      switch (key) {
+        case 'refund':
+          result.supportRefunds = serializers.deserialize(value,
+              specifiedType: const FullType(bool)) as bool;
+          break;
+        case 'token_billing':
+          result.supportTokenBilling = serializers.deserialize(value,
+              specifiedType: const FullType(bool)) as bool;
           break;
       }
     }
@@ -1243,6 +1341,18 @@ class _$SettingsEntitySerializer
         ..add(serializers.serialize(object.invoiceNumberCounter,
             specifiedType: const FullType(int)));
     }
+    if (object.recurringInvoiceNumberPattern != null) {
+      result
+        ..add('recurring_invoice_number_pattern')
+        ..add(serializers.serialize(object.recurringInvoiceNumberPattern,
+            specifiedType: const FullType(String)));
+    }
+    if (object.recurringInvoiceNumberCounter != null) {
+      result
+        ..add('recurring_invoice_number_counter')
+        ..add(serializers.serialize(object.recurringInvoiceNumberCounter,
+            specifiedType: const FullType(int)));
+    }
     if (object.quoteNumberPattern != null) {
       result
         ..add('quote_number_pattern')
@@ -1550,6 +1660,18 @@ class _$SettingsEntitySerializer
       result
         ..add('email_template_custom3')
         ..add(serializers.serialize(object.emailBodyCustom3,
+            specifiedType: const FullType(String)));
+    }
+    if (object.emailSubjectStatement != null) {
+      result
+        ..add('email_subject_statement')
+        ..add(serializers.serialize(object.emailSubjectStatement,
+            specifiedType: const FullType(String)));
+    }
+    if (object.emailBodyStatement != null) {
+      result
+        ..add('email_template_statement')
+        ..add(serializers.serialize(object.emailBodyStatement,
             specifiedType: const FullType(String)));
     }
     if (object.enablePortalPassword != null) {
@@ -2161,6 +2283,14 @@ class _$SettingsEntitySerializer
           result.invoiceNumberCounter = serializers.deserialize(value,
               specifiedType: const FullType(int)) as int;
           break;
+        case 'recurring_invoice_number_pattern':
+          result.recurringInvoiceNumberPattern = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String;
+          break;
+        case 'recurring_invoice_number_counter':
+          result.recurringInvoiceNumberCounter = serializers.deserialize(value,
+              specifiedType: const FullType(int)) as int;
+          break;
         case 'quote_number_pattern':
           result.quoteNumberPattern = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String;
@@ -2366,6 +2496,14 @@ class _$SettingsEntitySerializer
           break;
         case 'email_template_custom3':
           result.emailBodyCustom3 = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String;
+          break;
+        case 'email_subject_statement':
+          result.emailSubjectStatement = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String;
+          break;
+        case 'email_template_statement':
+          result.emailBodyStatement = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String;
           break;
         case 'enable_client_portal_password':
@@ -2802,6 +2940,12 @@ class _$CompanyEntity extends CompanyEntity {
   @override
   final String googleAnalyticsKey;
   @override
+  final bool markExpensesInvoiceable;
+  @override
+  final bool markExpensesPaid;
+  @override
+  final bool invoiceExpenseDocuments;
+  @override
   final SettingsEntity settings;
   @override
   final int enabledModules;
@@ -2880,6 +3024,9 @@ class _$CompanyEntity extends CompanyEntity {
       this.customFields,
       this.slackWebhookUrl,
       this.googleAnalyticsKey,
+      this.markExpensesInvoiceable,
+      this.markExpensesPaid,
+      this.invoiceExpenseDocuments,
       this.settings,
       this.enabledModules,
       this.isChanged,
@@ -3133,6 +3280,9 @@ class _$CompanyEntity extends CompanyEntity {
         customFields == other.customFields &&
         slackWebhookUrl == other.slackWebhookUrl &&
         googleAnalyticsKey == other.googleAnalyticsKey &&
+        markExpensesInvoiceable == other.markExpensesInvoiceable &&
+        markExpensesPaid == other.markExpensesPaid &&
+        invoiceExpenseDocuments == other.invoiceExpenseDocuments &&
         settings == other.settings &&
         enabledModules == other.enabledModules &&
         isChanged == other.isChanged &&
@@ -3167,15 +3317,15 @@ class _$CompanyEntity extends CompanyEntity {
                                                                 $jc(
                                                                     $jc(
                                                                         $jc(
-                                                                            $jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc(0, enableCustomSurchargeTaxes1.hashCode), enableCustomSurchargeTaxes2.hashCode), enableCustomSurchargeTaxes3.hashCode), enableCustomSurchargeTaxes4.hashCode), sizeId.hashCode), industryId.hashCode), subdomain.hashCode), portalMode.hashCode), portalDomain.hashCode), updateProducts.hashCode), convertProductExchangeRate.hashCode), fillProducts.hashCode), enableProductCost.hashCode), enableProductQuantity.hashCode), defaultQuantity.hashCode), showProductDetails.hashCode), clientCanRegister.hashCode), isLarge.hashCode), enableShopApi.hashCode), plan.hashCode), companyKey.hashCode), firstDayOfWeek.hashCode), firstMonthOfYear.hashCode), numberOfInvoiceTaxRates.hashCode), numberOfItemTaxRates.hashCode), groups.hashCode), activities.hashCode), taxRates.hashCode), taskStatuses.hashCode), taskStatusMap.hashCode), companyGateways.hashCode), expenseCategories.hashCode), expenseCategoryMap.hashCode), users.hashCode), clients.hashCode), products.hashCode), invoices.hashCode), recurringInvoices.hashCode), payments.hashCode), quotes.hashCode), credits.hashCode), tasks.hashCode), projects.hashCode), expenses.hashCode),
-                                                                                vendors.hashCode),
-                                                                            designs.hashCode),
-                                                                        tokens.hashCode),
-                                                                    webhooks.hashCode),
-                                                                paymentTerms.hashCode),
-                                                            customFields.hashCode),
-                                                        slackWebhookUrl.hashCode),
-                                                    googleAnalyticsKey.hashCode),
+                                                                            $jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc(0, enableCustomSurchargeTaxes1.hashCode), enableCustomSurchargeTaxes2.hashCode), enableCustomSurchargeTaxes3.hashCode), enableCustomSurchargeTaxes4.hashCode), sizeId.hashCode), industryId.hashCode), subdomain.hashCode), portalMode.hashCode), portalDomain.hashCode), updateProducts.hashCode), convertProductExchangeRate.hashCode), fillProducts.hashCode), enableProductCost.hashCode), enableProductQuantity.hashCode), defaultQuantity.hashCode), showProductDetails.hashCode), clientCanRegister.hashCode), isLarge.hashCode), enableShopApi.hashCode), plan.hashCode), companyKey.hashCode), firstDayOfWeek.hashCode), firstMonthOfYear.hashCode), numberOfInvoiceTaxRates.hashCode), numberOfItemTaxRates.hashCode), groups.hashCode), activities.hashCode), taxRates.hashCode), taskStatuses.hashCode), taskStatusMap.hashCode), companyGateways.hashCode), expenseCategories.hashCode), expenseCategoryMap.hashCode), users.hashCode), clients.hashCode), products.hashCode), invoices.hashCode), recurringInvoices.hashCode), payments.hashCode), quotes.hashCode), credits.hashCode), tasks.hashCode), projects.hashCode), expenses.hashCode), vendors.hashCode), designs.hashCode), tokens.hashCode),
+                                                                                webhooks.hashCode),
+                                                                            paymentTerms.hashCode),
+                                                                        customFields.hashCode),
+                                                                    slackWebhookUrl.hashCode),
+                                                                googleAnalyticsKey.hashCode),
+                                                            markExpensesInvoiceable.hashCode),
+                                                        markExpensesPaid.hashCode),
+                                                    invoiceExpenseDocuments.hashCode),
                                                 settings.hashCode),
                                             enabledModules.hashCode),
                                         isChanged.hashCode),
@@ -3244,6 +3394,9 @@ class _$CompanyEntity extends CompanyEntity {
           ..add('customFields', customFields)
           ..add('slackWebhookUrl', slackWebhookUrl)
           ..add('googleAnalyticsKey', googleAnalyticsKey)
+          ..add('markExpensesInvoiceable', markExpensesInvoiceable)
+          ..add('markExpensesPaid', markExpensesPaid)
+          ..add('invoiceExpenseDocuments', invoiceExpenseDocuments)
           ..add('settings', settings)
           ..add('enabledModules', enabledModules)
           ..add('isChanged', isChanged)
@@ -3532,6 +3685,21 @@ class CompanyEntityBuilder
   set googleAnalyticsKey(String googleAnalyticsKey) =>
       _$this._googleAnalyticsKey = googleAnalyticsKey;
 
+  bool _markExpensesInvoiceable;
+  bool get markExpensesInvoiceable => _$this._markExpensesInvoiceable;
+  set markExpensesInvoiceable(bool markExpensesInvoiceable) =>
+      _$this._markExpensesInvoiceable = markExpensesInvoiceable;
+
+  bool _markExpensesPaid;
+  bool get markExpensesPaid => _$this._markExpensesPaid;
+  set markExpensesPaid(bool markExpensesPaid) =>
+      _$this._markExpensesPaid = markExpensesPaid;
+
+  bool _invoiceExpenseDocuments;
+  bool get invoiceExpenseDocuments => _$this._invoiceExpenseDocuments;
+  set invoiceExpenseDocuments(bool invoiceExpenseDocuments) =>
+      _$this._invoiceExpenseDocuments = invoiceExpenseDocuments;
+
   SettingsEntityBuilder _settings;
   SettingsEntityBuilder get settings =>
       _$this._settings ??= new SettingsEntityBuilder();
@@ -3636,6 +3804,9 @@ class CompanyEntityBuilder
       _customFields = _$v.customFields?.toBuilder();
       _slackWebhookUrl = _$v.slackWebhookUrl;
       _googleAnalyticsKey = _$v.googleAnalyticsKey;
+      _markExpensesInvoiceable = _$v.markExpensesInvoiceable;
+      _markExpensesPaid = _$v.markExpensesPaid;
+      _invoiceExpenseDocuments = _$v.invoiceExpenseDocuments;
       _settings = _$v.settings?.toBuilder();
       _enabledModules = _$v.enabledModules;
       _isChanged = _$v.isChanged;
@@ -3723,6 +3894,9 @@ class CompanyEntityBuilder
               customFields: customFields.build(),
               slackWebhookUrl: slackWebhookUrl,
               googleAnalyticsKey: googleAnalyticsKey,
+              markExpensesInvoiceable: markExpensesInvoiceable,
+              markExpensesPaid: markExpensesPaid,
+              invoiceExpenseDocuments: invoiceExpenseDocuments,
               settings: settings.build(),
               enabledModules: enabledModules,
               isChanged: isChanged,
@@ -3813,6 +3987,8 @@ class _$GatewayEntity extends GatewayEntity {
   @override
   final String defaultGatewayTypeId;
   @override
+  final BuiltMap<String, GatewayOptionsEntity> options;
+  @override
   final String fields;
 
   factory _$GatewayEntity([void Function(GatewayEntityBuilder) updates]) =>
@@ -3824,6 +4000,7 @@ class _$GatewayEntity extends GatewayEntity {
       this.isOffsite,
       this.sortOrder,
       this.defaultGatewayTypeId,
+      this.options,
       this.fields})
       : super._() {
     if (name == null) {
@@ -3834,6 +4011,9 @@ class _$GatewayEntity extends GatewayEntity {
     }
     if (sortOrder == null) {
       throw new BuiltValueNullFieldError('GatewayEntity', 'sortOrder');
+    }
+    if (options == null) {
+      throw new BuiltValueNullFieldError('GatewayEntity', 'options');
     }
     if (fields == null) {
       throw new BuiltValueNullFieldError('GatewayEntity', 'fields');
@@ -3856,6 +4036,7 @@ class _$GatewayEntity extends GatewayEntity {
         isOffsite == other.isOffsite &&
         sortOrder == other.sortOrder &&
         defaultGatewayTypeId == other.defaultGatewayTypeId &&
+        options == other.options &&
         fields == other.fields;
   }
 
@@ -3865,10 +4046,12 @@ class _$GatewayEntity extends GatewayEntity {
     return __hashCode ??= $jf($jc(
         $jc(
             $jc(
-                $jc($jc($jc(0, id.hashCode), name.hashCode),
-                    isOffsite.hashCode),
-                sortOrder.hashCode),
-            defaultGatewayTypeId.hashCode),
+                $jc(
+                    $jc($jc($jc(0, id.hashCode), name.hashCode),
+                        isOffsite.hashCode),
+                    sortOrder.hashCode),
+                defaultGatewayTypeId.hashCode),
+            options.hashCode),
         fields.hashCode));
   }
 
@@ -3880,6 +4063,7 @@ class _$GatewayEntity extends GatewayEntity {
           ..add('isOffsite', isOffsite)
           ..add('sortOrder', sortOrder)
           ..add('defaultGatewayTypeId', defaultGatewayTypeId)
+          ..add('options', options)
           ..add('fields', fields))
         .toString();
   }
@@ -3910,6 +4094,12 @@ class GatewayEntityBuilder
   set defaultGatewayTypeId(String defaultGatewayTypeId) =>
       _$this._defaultGatewayTypeId = defaultGatewayTypeId;
 
+  MapBuilder<String, GatewayOptionsEntity> _options;
+  MapBuilder<String, GatewayOptionsEntity> get options =>
+      _$this._options ??= new MapBuilder<String, GatewayOptionsEntity>();
+  set options(MapBuilder<String, GatewayOptionsEntity> options) =>
+      _$this._options = options;
+
   String _fields;
   String get fields => _$this._fields;
   set fields(String fields) => _$this._fields = fields;
@@ -3923,6 +4113,7 @@ class GatewayEntityBuilder
       _isOffsite = _$v.isOffsite;
       _sortOrder = _$v.sortOrder;
       _defaultGatewayTypeId = _$v.defaultGatewayTypeId;
+      _options = _$v.options?.toBuilder();
       _fields = _$v.fields;
       _$v = null;
     }
@@ -3944,14 +4135,132 @@ class GatewayEntityBuilder
 
   @override
   _$GatewayEntity build() {
+    _$GatewayEntity _$result;
+    try {
+      _$result = _$v ??
+          new _$GatewayEntity._(
+              id: id,
+              name: name,
+              isOffsite: isOffsite,
+              sortOrder: sortOrder,
+              defaultGatewayTypeId: defaultGatewayTypeId,
+              options: options.build(),
+              fields: fields);
+    } catch (_) {
+      String _$failedField;
+      try {
+        _$failedField = 'options';
+        options.build();
+      } catch (e) {
+        throw new BuiltValueNestedFieldError(
+            'GatewayEntity', _$failedField, e.toString());
+      }
+      rethrow;
+    }
+    replace(_$result);
+    return _$result;
+  }
+}
+
+class _$GatewayOptionsEntity extends GatewayOptionsEntity {
+  @override
+  final bool supportRefunds;
+  @override
+  final bool supportTokenBilling;
+
+  factory _$GatewayOptionsEntity(
+          [void Function(GatewayOptionsEntityBuilder) updates]) =>
+      (new GatewayOptionsEntityBuilder()..update(updates)).build();
+
+  _$GatewayOptionsEntity._({this.supportRefunds, this.supportTokenBilling})
+      : super._() {
+    if (supportRefunds == null) {
+      throw new BuiltValueNullFieldError(
+          'GatewayOptionsEntity', 'supportRefunds');
+    }
+    if (supportTokenBilling == null) {
+      throw new BuiltValueNullFieldError(
+          'GatewayOptionsEntity', 'supportTokenBilling');
+    }
+  }
+
+  @override
+  GatewayOptionsEntity rebuild(
+          void Function(GatewayOptionsEntityBuilder) updates) =>
+      (toBuilder()..update(updates)).build();
+
+  @override
+  GatewayOptionsEntityBuilder toBuilder() =>
+      new GatewayOptionsEntityBuilder()..replace(this);
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(other, this)) return true;
+    return other is GatewayOptionsEntity &&
+        supportRefunds == other.supportRefunds &&
+        supportTokenBilling == other.supportTokenBilling;
+  }
+
+  int __hashCode;
+  @override
+  int get hashCode {
+    return __hashCode ??=
+        $jf($jc($jc(0, supportRefunds.hashCode), supportTokenBilling.hashCode));
+  }
+
+  @override
+  String toString() {
+    return (newBuiltValueToStringHelper('GatewayOptionsEntity')
+          ..add('supportRefunds', supportRefunds)
+          ..add('supportTokenBilling', supportTokenBilling))
+        .toString();
+  }
+}
+
+class GatewayOptionsEntityBuilder
+    implements Builder<GatewayOptionsEntity, GatewayOptionsEntityBuilder> {
+  _$GatewayOptionsEntity _$v;
+
+  bool _supportRefunds;
+  bool get supportRefunds => _$this._supportRefunds;
+  set supportRefunds(bool supportRefunds) =>
+      _$this._supportRefunds = supportRefunds;
+
+  bool _supportTokenBilling;
+  bool get supportTokenBilling => _$this._supportTokenBilling;
+  set supportTokenBilling(bool supportTokenBilling) =>
+      _$this._supportTokenBilling = supportTokenBilling;
+
+  GatewayOptionsEntityBuilder();
+
+  GatewayOptionsEntityBuilder get _$this {
+    if (_$v != null) {
+      _supportRefunds = _$v.supportRefunds;
+      _supportTokenBilling = _$v.supportTokenBilling;
+      _$v = null;
+    }
+    return this;
+  }
+
+  @override
+  void replace(GatewayOptionsEntity other) {
+    if (other == null) {
+      throw new ArgumentError.notNull('other');
+    }
+    _$v = other as _$GatewayOptionsEntity;
+  }
+
+  @override
+  void update(void Function(GatewayOptionsEntityBuilder) updates) {
+    if (updates != null) updates(this);
+  }
+
+  @override
+  _$GatewayOptionsEntity build() {
     final _$result = _$v ??
-        new _$GatewayEntity._(
-            id: id,
-            name: name,
-            isOffsite: isOffsite,
-            sortOrder: sortOrder,
-            defaultGatewayTypeId: defaultGatewayTypeId,
-            fields: fields);
+        new _$GatewayOptionsEntity._(
+            supportRefunds: supportRefunds,
+            supportTokenBilling: supportTokenBilling);
     replace(_$result);
     return _$result;
   }
@@ -4558,6 +4867,10 @@ class _$SettingsEntity extends SettingsEntity {
   @override
   final int invoiceNumberCounter;
   @override
+  final String recurringInvoiceNumberPattern;
+  @override
+  final int recurringInvoiceNumberCounter;
+  @override
   final String quoteNumberPattern;
   @override
   final int quoteNumberCounter;
@@ -4659,6 +4972,10 @@ class _$SettingsEntity extends SettingsEntity {
   final String emailSubjectCustom3;
   @override
   final String emailBodyCustom3;
+  @override
+  final String emailSubjectStatement;
+  @override
+  final String emailBodyStatement;
   @override
   final bool enablePortalPassword;
   @override
@@ -4846,6 +5163,8 @@ class _$SettingsEntity extends SettingsEntity {
       this.paymentNumberCounter,
       this.invoiceNumberPattern,
       this.invoiceNumberCounter,
+      this.recurringInvoiceNumberPattern,
+      this.recurringInvoiceNumberCounter,
       this.quoteNumberPattern,
       this.quoteNumberCounter,
       this.clientNumberPattern,
@@ -4897,6 +5216,8 @@ class _$SettingsEntity extends SettingsEntity {
       this.emailBodyCustom2,
       this.emailSubjectCustom3,
       this.emailBodyCustom3,
+      this.emailSubjectStatement,
+      this.emailBodyStatement,
       this.enablePortalPassword,
       this.signatureOnPdf,
       this.enableEmailMarkup,
@@ -5025,6 +5346,8 @@ class _$SettingsEntity extends SettingsEntity {
         paymentNumberCounter == other.paymentNumberCounter &&
         invoiceNumberPattern == other.invoiceNumberPattern &&
         invoiceNumberCounter == other.invoiceNumberCounter &&
+        recurringInvoiceNumberPattern == other.recurringInvoiceNumberPattern &&
+        recurringInvoiceNumberCounter == other.recurringInvoiceNumberCounter &&
         quoteNumberPattern == other.quoteNumberPattern &&
         quoteNumberCounter == other.quoteNumberCounter &&
         clientNumberPattern == other.clientNumberPattern &&
@@ -5076,6 +5399,8 @@ class _$SettingsEntity extends SettingsEntity {
         emailBodyCustom2 == other.emailBodyCustom2 &&
         emailSubjectCustom3 == other.emailSubjectCustom3 &&
         emailBodyCustom3 == other.emailBodyCustom3 &&
+        emailSubjectStatement == other.emailSubjectStatement &&
+        emailBodyStatement == other.emailBodyStatement &&
         enablePortalPassword == other.enablePortalPassword &&
         signatureOnPdf == other.signatureOnPdf &&
         enableEmailMarkup == other.enableEmailMarkup &&
@@ -5170,7 +5495,7 @@ class _$SettingsEntity extends SettingsEntity {
                                                                 $jc(
                                                                     $jc(
                                                                         $jc(
-                                                                            $jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc(0, timezoneId.hashCode), dateFormatId.hashCode), enableMilitaryTime.hashCode), languageId.hashCode), showCurrencyCode.hashCode), currencyId.hashCode), customValue1.hashCode), customValue2.hashCode), customValue3.hashCode), customValue4.hashCode), defaultPaymentTerms.hashCode), companyGatewayIds.hashCode), defaultTaskRate.hashCode), sendReminders.hashCode), enablePortal.hashCode), enablePortalDashboard.hashCode), enablePortalTasks.hashCode), emailStyle.hashCode), replyToEmail.hashCode), bccEmail.hashCode), pdfEmailAttachment.hashCode), ublEmailAttachment.hashCode), documentEmailAttachment.hashCode), emailStyleCustom.hashCode), customMessageDashboard.hashCode), customMessageUnpaidInvoice.hashCode), customMessagePaidInvoice.hashCode), customMessageUnapprovedQuote.hashCode), autoArchiveInvoice.hashCode), autoArchiveQuote.hashCode), autoEmailInvoice.hashCode), autoConvertQuote.hashCode), enableInclusiveTaxes.hashCode), translations.hashCode), taskNumberPattern.hashCode), taskNumberCounter.hashCode), expenseNumberPattern.hashCode), expenseNumberCounter.hashCode), vendorNumberPattern.hashCode), vendorNumberCounter.hashCode), ticketNumberPattern.hashCode), ticketNumberCounter.hashCode), paymentNumberPattern.hashCode), paymentNumberCounter.hashCode), invoiceNumberPattern.hashCode), invoiceNumberCounter.hashCode), quoteNumberPattern.hashCode), quoteNumberCounter.hashCode), clientNumberPattern.hashCode), clientNumberCounter.hashCode), creditNumberPattern.hashCode), creditNumberCounter.hashCode), recurringNumberPrefix.hashCode), resetCounterFrequencyId.hashCode), resetCounterDate.hashCode), counterPadding.hashCode), sharedInvoiceQuoteCounter.hashCode), defaultInvoiceTerms.hashCode), defaultQuoteTerms.hashCode), defaultQuoteFooter.hashCode), defaultCreditTerms.hashCode), defaultCreditFooter.hashCode), defaultInvoiceDesignId.hashCode), defaultQuoteDesignId.hashCode), defaultCreditDesignId.hashCode), defaultInvoiceFooter.hashCode), invoiceLabels.hashCode), defaultTaxName1.hashCode), defaultTaxRate1.hashCode), defaultTaxName2.hashCode), defaultTaxRate2.hashCode), defaultTaxName3.hashCode), defaultTaxRate3.hashCode), defaultPaymentTypeId.hashCode), invoiceFields.hashCode), pdfVariables.hashCode), emailSignature.hashCode), emailSubjectInvoice.hashCode), emailSubjectQuote.hashCode), emailSubjectPayment.hashCode), emailSubjectPaymentPartial.hashCode), emailBodyInvoice.hashCode), emailBodyQuote.hashCode), emailBodyPayment.hashCode), emailBodyPaymentPartial.hashCode), emailSubjectReminder1.hashCode), emailSubjectReminder2.hashCode), emailSubjectReminder3.hashCode), emailBodyReminder1.hashCode), emailBodyReminder2.hashCode), emailBodyReminder3.hashCode), emailSubjectCustom1.hashCode), emailBodyCustom1.hashCode), emailSubjectCustom2.hashCode), emailBodyCustom2.hashCode), emailSubjectCustom3.hashCode), emailBodyCustom3.hashCode), enablePortalPassword.hashCode), signatureOnPdf.hashCode), enableEmailMarkup.hashCode), showAcceptInvoiceTerms.hashCode), showAcceptQuoteTerms.hashCode), requireInvoiceSignature.hashCode), requireQuoteSignature.hashCode), name.hashCode), companyLogo.hashCode), website.hashCode), address1.hashCode), address2.hashCode), city.hashCode), state.hashCode), postalCode.hashCode), phone.hashCode), email.hashCode), countryId.hashCode), vatNumber.hashCode), idNumber.hashCode), pageSize.hashCode), fontSize.hashCode), primaryColor.hashCode), secondaryColor.hashCode), primaryFont.hashCode), secondaryFont.hashCode), hidePaidToDate.hashCode), embedDocuments.hashCode), allPagesHeader.hashCode), allPagesFooter.hashCode), enableReminder1.hashCode), enableReminder2.hashCode), enableReminder3.hashCode), enableReminder4.hashCode), numDaysReminder1.hashCode), numDaysReminder2.hashCode), numDaysReminder3.hashCode), scheduleReminder1.hashCode), scheduleReminder2.hashCode), scheduleReminder3.hashCode), endlessReminderFrequencyId.hashCode), lateFeeAmount1.hashCode), lateFeeAmount2.hashCode), lateFeeAmount3.hashCode), lateFeeAmountEndless.hashCode), lateFeePercent1.hashCode), lateFeePercent2.hashCode), lateFeePercent3.hashCode), lateFeePercentEndless.hashCode),
+                                                                            $jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc($jc(0, timezoneId.hashCode), dateFormatId.hashCode), enableMilitaryTime.hashCode), languageId.hashCode), showCurrencyCode.hashCode), currencyId.hashCode), customValue1.hashCode), customValue2.hashCode), customValue3.hashCode), customValue4.hashCode), defaultPaymentTerms.hashCode), companyGatewayIds.hashCode), defaultTaskRate.hashCode), sendReminders.hashCode), enablePortal.hashCode), enablePortalDashboard.hashCode), enablePortalTasks.hashCode), emailStyle.hashCode), replyToEmail.hashCode), bccEmail.hashCode), pdfEmailAttachment.hashCode), ublEmailAttachment.hashCode), documentEmailAttachment.hashCode), emailStyleCustom.hashCode), customMessageDashboard.hashCode), customMessageUnpaidInvoice.hashCode), customMessagePaidInvoice.hashCode), customMessageUnapprovedQuote.hashCode), autoArchiveInvoice.hashCode), autoArchiveQuote.hashCode), autoEmailInvoice.hashCode), autoConvertQuote.hashCode), enableInclusiveTaxes.hashCode), translations.hashCode), taskNumberPattern.hashCode), taskNumberCounter.hashCode), expenseNumberPattern.hashCode), expenseNumberCounter.hashCode), vendorNumberPattern.hashCode), vendorNumberCounter.hashCode), ticketNumberPattern.hashCode), ticketNumberCounter.hashCode), paymentNumberPattern.hashCode), paymentNumberCounter.hashCode), invoiceNumberPattern.hashCode), invoiceNumberCounter.hashCode), recurringInvoiceNumberPattern.hashCode), recurringInvoiceNumberCounter.hashCode), quoteNumberPattern.hashCode), quoteNumberCounter.hashCode), clientNumberPattern.hashCode), clientNumberCounter.hashCode), creditNumberPattern.hashCode), creditNumberCounter.hashCode), recurringNumberPrefix.hashCode), resetCounterFrequencyId.hashCode), resetCounterDate.hashCode), counterPadding.hashCode), sharedInvoiceQuoteCounter.hashCode), defaultInvoiceTerms.hashCode), defaultQuoteTerms.hashCode), defaultQuoteFooter.hashCode), defaultCreditTerms.hashCode), defaultCreditFooter.hashCode), defaultInvoiceDesignId.hashCode), defaultQuoteDesignId.hashCode), defaultCreditDesignId.hashCode), defaultInvoiceFooter.hashCode), invoiceLabels.hashCode), defaultTaxName1.hashCode), defaultTaxRate1.hashCode), defaultTaxName2.hashCode), defaultTaxRate2.hashCode), defaultTaxName3.hashCode), defaultTaxRate3.hashCode), defaultPaymentTypeId.hashCode), invoiceFields.hashCode), pdfVariables.hashCode), emailSignature.hashCode), emailSubjectInvoice.hashCode), emailSubjectQuote.hashCode), emailSubjectPayment.hashCode), emailSubjectPaymentPartial.hashCode), emailBodyInvoice.hashCode), emailBodyQuote.hashCode), emailBodyPayment.hashCode), emailBodyPaymentPartial.hashCode), emailSubjectReminder1.hashCode), emailSubjectReminder2.hashCode), emailSubjectReminder3.hashCode), emailBodyReminder1.hashCode), emailBodyReminder2.hashCode), emailBodyReminder3.hashCode), emailSubjectCustom1.hashCode), emailBodyCustom1.hashCode), emailSubjectCustom2.hashCode), emailBodyCustom2.hashCode), emailSubjectCustom3.hashCode), emailBodyCustom3.hashCode), emailSubjectStatement.hashCode), emailBodyStatement.hashCode), enablePortalPassword.hashCode), signatureOnPdf.hashCode), enableEmailMarkup.hashCode), showAcceptInvoiceTerms.hashCode), showAcceptQuoteTerms.hashCode), requireInvoiceSignature.hashCode), requireQuoteSignature.hashCode), name.hashCode), companyLogo.hashCode), website.hashCode), address1.hashCode), address2.hashCode), city.hashCode), state.hashCode), postalCode.hashCode), phone.hashCode), email.hashCode), countryId.hashCode), vatNumber.hashCode), idNumber.hashCode), pageSize.hashCode), fontSize.hashCode), primaryColor.hashCode), secondaryColor.hashCode), primaryFont.hashCode), secondaryFont.hashCode), hidePaidToDate.hashCode), embedDocuments.hashCode), allPagesHeader.hashCode), allPagesFooter.hashCode), enableReminder1.hashCode), enableReminder2.hashCode), enableReminder3.hashCode), enableReminder4.hashCode), numDaysReminder1.hashCode), numDaysReminder2.hashCode), numDaysReminder3.hashCode), scheduleReminder1.hashCode), scheduleReminder2.hashCode), scheduleReminder3.hashCode), endlessReminderFrequencyId.hashCode), lateFeeAmount1.hashCode), lateFeeAmount2.hashCode), lateFeeAmount3.hashCode), lateFeeAmountEndless.hashCode), lateFeePercent1.hashCode), lateFeePercent2.hashCode), lateFeePercent3.hashCode), lateFeePercentEndless.hashCode),
                                                                                 emailSubjectReminder4.hashCode),
                                                                             emailBodyReminder4.hashCode),
                                                                         clientOnlinePaymentNotification.hashCode),
@@ -5241,6 +5566,8 @@ class _$SettingsEntity extends SettingsEntity {
           ..add('paymentNumberCounter', paymentNumberCounter)
           ..add('invoiceNumberPattern', invoiceNumberPattern)
           ..add('invoiceNumberCounter', invoiceNumberCounter)
+          ..add('recurringInvoiceNumberPattern', recurringInvoiceNumberPattern)
+          ..add('recurringInvoiceNumberCounter', recurringInvoiceNumberCounter)
           ..add('quoteNumberPattern', quoteNumberPattern)
           ..add('quoteNumberCounter', quoteNumberCounter)
           ..add('clientNumberPattern', clientNumberPattern)
@@ -5292,6 +5619,8 @@ class _$SettingsEntity extends SettingsEntity {
           ..add('emailBodyCustom2', emailBodyCustom2)
           ..add('emailSubjectCustom3', emailSubjectCustom3)
           ..add('emailBodyCustom3', emailBodyCustom3)
+          ..add('emailSubjectStatement', emailSubjectStatement)
+          ..add('emailBodyStatement', emailBodyStatement)
           ..add('enablePortalPassword', enablePortalPassword)
           ..add('signatureOnPdf', signatureOnPdf)
           ..add('enableEmailMarkup', enableEmailMarkup)
@@ -5591,6 +5920,18 @@ class SettingsEntityBuilder
   set invoiceNumberCounter(int invoiceNumberCounter) =>
       _$this._invoiceNumberCounter = invoiceNumberCounter;
 
+  String _recurringInvoiceNumberPattern;
+  String get recurringInvoiceNumberPattern =>
+      _$this._recurringInvoiceNumberPattern;
+  set recurringInvoiceNumberPattern(String recurringInvoiceNumberPattern) =>
+      _$this._recurringInvoiceNumberPattern = recurringInvoiceNumberPattern;
+
+  int _recurringInvoiceNumberCounter;
+  int get recurringInvoiceNumberCounter =>
+      _$this._recurringInvoiceNumberCounter;
+  set recurringInvoiceNumberCounter(int recurringInvoiceNumberCounter) =>
+      _$this._recurringInvoiceNumberCounter = recurringInvoiceNumberCounter;
+
   String _quoteNumberPattern;
   String get quoteNumberPattern => _$this._quoteNumberPattern;
   set quoteNumberPattern(String quoteNumberPattern) =>
@@ -5846,6 +6187,16 @@ class SettingsEntityBuilder
   String get emailBodyCustom3 => _$this._emailBodyCustom3;
   set emailBodyCustom3(String emailBodyCustom3) =>
       _$this._emailBodyCustom3 = emailBodyCustom3;
+
+  String _emailSubjectStatement;
+  String get emailSubjectStatement => _$this._emailSubjectStatement;
+  set emailSubjectStatement(String emailSubjectStatement) =>
+      _$this._emailSubjectStatement = emailSubjectStatement;
+
+  String _emailBodyStatement;
+  String get emailBodyStatement => _$this._emailBodyStatement;
+  set emailBodyStatement(String emailBodyStatement) =>
+      _$this._emailBodyStatement = emailBodyStatement;
 
   bool _enablePortalPassword;
   bool get enablePortalPassword => _$this._enablePortalPassword;
@@ -6222,6 +6573,8 @@ class SettingsEntityBuilder
       _paymentNumberCounter = _$v.paymentNumberCounter;
       _invoiceNumberPattern = _$v.invoiceNumberPattern;
       _invoiceNumberCounter = _$v.invoiceNumberCounter;
+      _recurringInvoiceNumberPattern = _$v.recurringInvoiceNumberPattern;
+      _recurringInvoiceNumberCounter = _$v.recurringInvoiceNumberCounter;
       _quoteNumberPattern = _$v.quoteNumberPattern;
       _quoteNumberCounter = _$v.quoteNumberCounter;
       _clientNumberPattern = _$v.clientNumberPattern;
@@ -6273,6 +6626,8 @@ class SettingsEntityBuilder
       _emailBodyCustom2 = _$v.emailBodyCustom2;
       _emailSubjectCustom3 = _$v.emailSubjectCustom3;
       _emailBodyCustom3 = _$v.emailBodyCustom3;
+      _emailSubjectStatement = _$v.emailSubjectStatement;
+      _emailBodyStatement = _$v.emailBodyStatement;
       _enablePortalPassword = _$v.enablePortalPassword;
       _signatureOnPdf = _$v.signatureOnPdf;
       _enableEmailMarkup = _$v.enableEmailMarkup;
@@ -6411,6 +6766,8 @@ class SettingsEntityBuilder
               paymentNumberCounter: paymentNumberCounter,
               invoiceNumberPattern: invoiceNumberPattern,
               invoiceNumberCounter: invoiceNumberCounter,
+              recurringInvoiceNumberPattern: recurringInvoiceNumberPattern,
+              recurringInvoiceNumberCounter: recurringInvoiceNumberCounter,
               quoteNumberPattern: quoteNumberPattern,
               quoteNumberCounter: quoteNumberCounter,
               clientNumberPattern: clientNumberPattern,
@@ -6462,6 +6819,8 @@ class SettingsEntityBuilder
               emailBodyCustom2: emailBodyCustom2,
               emailSubjectCustom3: emailSubjectCustom3,
               emailBodyCustom3: emailBodyCustom3,
+              emailSubjectStatement: emailSubjectStatement,
+              emailBodyStatement: emailBodyStatement,
               enablePortalPassword: enablePortalPassword,
               signatureOnPdf: signatureOnPdf,
               enableEmailMarkup: enableEmailMarkup,

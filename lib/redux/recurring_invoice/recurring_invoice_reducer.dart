@@ -85,6 +85,10 @@ final editingReducer = combineReducers<InvoiceEntity>([
     return recurringInvoice.rebuild((b) => b
       ..isChanged = true
       ..clientId = client?.id ?? ''
+      ..projectId = (recurringInvoice.clientId ?? '').isEmpty ||
+              recurringInvoice.clientId == client?.id
+          ? recurringInvoice.projectId
+          : ''
       ..invitations.replace((client?.contacts ?? <ContactEntity>[])
           .where((contact) => contact.sendEmail)
           .map((contact) => InvitationEntity(contactId: contact.id))
@@ -314,6 +318,10 @@ final recurringInvoicesReducer = combineReducers<RecurringInvoiceState>([
       _updateRecurringInvoice),
   TypedReducer<RecurringInvoiceState, EmailRecurringInvoiceSuccess>(
       _emailRecurringInvoiceSuccess),
+  TypedReducer<RecurringInvoiceState, StartRecurringInvoicesSuccess>(
+      _startRecurringInvoicesSuccess),
+  TypedReducer<RecurringInvoiceState, StopRecurringInvoicesSuccess>(
+      _stopRecurringInvoicesSuccess),
   TypedReducer<RecurringInvoiceState, ArchiveRecurringInvoicesSuccess>(
       _archiveRecurringInvoiceSuccess),
   TypedReducer<RecurringInvoiceState, DeleteRecurringInvoicesSuccess>(
@@ -354,6 +362,26 @@ RecurringInvoiceState _restoreRecurringInvoiceSuccess(
     RestoreRecurringInvoicesSuccess action) {
   return recurringInvoiceState.rebuild((b) {
     for (final recurringInvoice in action.recurringInvoices) {
+      b.map[recurringInvoice.id] = recurringInvoice;
+    }
+  });
+}
+
+RecurringInvoiceState _startRecurringInvoicesSuccess(
+    RecurringInvoiceState recurringInvoiceState,
+    StartRecurringInvoicesSuccess action) {
+  return recurringInvoiceState.rebuild((b) {
+    for (final recurringInvoice in action.invoices) {
+      b.map[recurringInvoice.id] = recurringInvoice;
+    }
+  });
+}
+
+RecurringInvoiceState _stopRecurringInvoicesSuccess(
+    RecurringInvoiceState recurringInvoiceState,
+    StopRecurringInvoicesSuccess action) {
+  return recurringInvoiceState.rebuild((b) {
+    for (final recurringInvoice in action.invoices) {
       b.map[recurringInvoice.id] = recurringInvoice;
     }
   });

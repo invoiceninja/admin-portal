@@ -146,6 +146,9 @@ class _$VendorEntitySerializer implements StructuredSerializer<VendorEntity> {
       'id_number',
       serializers.serialize(object.idNumber,
           specifiedType: const FullType(String)),
+      'currency_id',
+      serializers.serialize(object.currencyId,
+          specifiedType: const FullType(String)),
       'custom_value1',
       serializers.serialize(object.customValue1,
           specifiedType: const FullType(String)),
@@ -174,11 +177,12 @@ class _$VendorEntitySerializer implements StructuredSerializer<VendorEntity> {
       'id',
       serializers.serialize(object.id, specifiedType: const FullType(String)),
     ];
-    if (object.currencyId != null) {
+    if (object.documents != null) {
       result
-        ..add('currency_id')
-        ..add(serializers.serialize(object.currencyId,
-            specifiedType: const FullType(String)));
+        ..add('documents')
+        ..add(serializers.serialize(object.documents,
+            specifiedType: const FullType(
+                BuiltList, const [const FullType(DocumentEntity)])));
     }
     if (object.isChanged != null) {
       result
@@ -290,6 +294,12 @@ class _$VendorEntitySerializer implements StructuredSerializer<VendorEntity> {
           result.contacts.replace(serializers.deserialize(value,
                   specifiedType: const FullType(
                       BuiltList, const [const FullType(VendorContactEntity)]))
+              as BuiltList<Object>);
+          break;
+        case 'documents':
+          result.documents.replace(serializers.deserialize(value,
+                  specifiedType: const FullType(
+                      BuiltList, const [const FullType(DocumentEntity)]))
               as BuiltList<Object>);
           break;
         case 'isChanged':
@@ -700,6 +710,8 @@ class _$VendorEntity extends VendorEntity {
   @override
   final BuiltList<VendorContactEntity> contacts;
   @override
+  final BuiltList<DocumentEntity> documents;
+  @override
   final bool isChanged;
   @override
   final int createdAt;
@@ -738,6 +750,7 @@ class _$VendorEntity extends VendorEntity {
       this.customValue3,
       this.customValue4,
       this.contacts,
+      this.documents,
       this.isChanged,
       this.createdAt,
       this.updatedAt,
@@ -782,6 +795,9 @@ class _$VendorEntity extends VendorEntity {
     }
     if (idNumber == null) {
       throw new BuiltValueNullFieldError('VendorEntity', 'idNumber');
+    }
+    if (currencyId == null) {
+      throw new BuiltValueNullFieldError('VendorEntity', 'currencyId');
     }
     if (customValue1 == null) {
       throw new BuiltValueNullFieldError('VendorEntity', 'customValue1');
@@ -841,6 +857,7 @@ class _$VendorEntity extends VendorEntity {
         customValue3 == other.customValue3 &&
         customValue4 == other.customValue4 &&
         contacts == other.contacts &&
+        documents == other.documents &&
         isChanged == other.isChanged &&
         createdAt == other.createdAt &&
         updatedAt == other.updatedAt &&
@@ -872,18 +889,18 @@ class _$VendorEntity extends VendorEntity {
                                                                 $jc(
                                                                     $jc(
                                                                         $jc(
-                                                                            $jc($jc($jc($jc($jc($jc($jc($jc(0, name.hashCode), address1.hashCode), address2.hashCode), city.hashCode), state.hashCode), postalCode.hashCode), countryId.hashCode),
-                                                                                phone.hashCode),
-                                                                            privateNotes.hashCode),
-                                                                        website.hashCode),
-                                                                    vatNumber.hashCode),
-                                                                idNumber.hashCode),
-                                                            currencyId.hashCode),
-                                                        customValue1.hashCode),
-                                                    customValue2.hashCode),
-                                                customValue3.hashCode),
-                                            customValue4.hashCode),
-                                        contacts.hashCode),
+                                                                            $jc($jc($jc($jc($jc($jc($jc($jc($jc(0, name.hashCode), address1.hashCode), address2.hashCode), city.hashCode), state.hashCode), postalCode.hashCode), countryId.hashCode), phone.hashCode),
+                                                                                privateNotes.hashCode),
+                                                                            website.hashCode),
+                                                                        vatNumber.hashCode),
+                                                                    idNumber.hashCode),
+                                                                currencyId.hashCode),
+                                                            customValue1.hashCode),
+                                                        customValue2.hashCode),
+                                                    customValue3.hashCode),
+                                                customValue4.hashCode),
+                                            contacts.hashCode),
+                                        documents.hashCode),
                                     isChanged.hashCode),
                                 createdAt.hashCode),
                             updatedAt.hashCode),
@@ -915,6 +932,7 @@ class _$VendorEntity extends VendorEntity {
           ..add('customValue3', customValue3)
           ..add('customValue4', customValue4)
           ..add('contacts', contacts)
+          ..add('documents', documents)
           ..add('isChanged', isChanged)
           ..add('createdAt', createdAt)
           ..add('updatedAt', updatedAt)
@@ -1005,6 +1023,12 @@ class VendorEntityBuilder
   set contacts(ListBuilder<VendorContactEntity> contacts) =>
       _$this._contacts = contacts;
 
+  ListBuilder<DocumentEntity> _documents;
+  ListBuilder<DocumentEntity> get documents =>
+      _$this._documents ??= new ListBuilder<DocumentEntity>();
+  set documents(ListBuilder<DocumentEntity> documents) =>
+      _$this._documents = documents;
+
   bool _isChanged;
   bool get isChanged => _$this._isChanged;
   set isChanged(bool isChanged) => _$this._isChanged = isChanged;
@@ -1061,6 +1085,7 @@ class VendorEntityBuilder
       _customValue3 = _$v.customValue3;
       _customValue4 = _$v.customValue4;
       _contacts = _$v.contacts?.toBuilder();
+      _documents = _$v.documents?.toBuilder();
       _isChanged = _$v.isChanged;
       _createdAt = _$v.createdAt;
       _updatedAt = _$v.updatedAt;
@@ -1111,6 +1136,7 @@ class VendorEntityBuilder
               customValue3: customValue3,
               customValue4: customValue4,
               contacts: contacts.build(),
+              documents: _documents?.build(),
               isChanged: isChanged,
               createdAt: createdAt,
               updatedAt: updatedAt,
@@ -1124,6 +1150,8 @@ class VendorEntityBuilder
       try {
         _$failedField = 'contacts';
         contacts.build();
+        _$failedField = 'documents';
+        _documents?.build();
       } catch (e) {
         throw new BuiltValueNestedFieldError(
             'VendorEntity', _$failedField, e.toString());

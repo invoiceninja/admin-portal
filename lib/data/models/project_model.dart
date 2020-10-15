@@ -50,6 +50,7 @@ class ProjectFields {
   static const String taskRate = 'task_rate';
   static const String dueDate = 'due_date';
   static const String privateNotes = 'private_notes';
+  static const String publicNotes = 'public_notes';
   static const String budgetedHours = 'budgeted_hours';
   static const String customValue1 = 'custom1';
   static const String customValue2 = 'custom2';
@@ -58,6 +59,7 @@ class ProjectFields {
   static const String updatedAt = 'updated_at';
   static const String archivedAt = 'archived_at';
   static const String isDeleted = 'is_deleted';
+  static const String documents = 'documents';
 }
 
 abstract class ProjectEntity extends Object
@@ -72,6 +74,7 @@ abstract class ProjectEntity extends Object
       taskRate: 0.0,
       dueDate: '',
       privateNotes: '',
+      publicNotes: '',
       budgetedHours: 0.0,
       customValue1: '',
       customValue2: '',
@@ -83,6 +86,7 @@ abstract class ProjectEntity extends Object
       createdUserId: '',
       createdAt: 0,
       assignedUserId: '',
+      documents: BuiltList<DocumentEntity>(),
     );
   }
 
@@ -117,6 +121,9 @@ abstract class ProjectEntity extends Object
   @BuiltValueField(wireName: 'private_notes')
   String get privateNotes;
 
+  @BuiltValueField(wireName: 'public_notes')
+  String get publicNotes;
+
   @BuiltValueField(wireName: 'budgeted_hours')
   double get budgetedHours;
 
@@ -132,6 +139,8 @@ abstract class ProjectEntity extends Object
   @BuiltValueField(wireName: 'custom_value4')
   String get customValue4;
 
+  BuiltList<DocumentEntity> get documents;
+
   @override
   List<EntityAction> getActions(
       {UserCompanyEntity userCompany,
@@ -140,22 +149,24 @@ abstract class ProjectEntity extends Object
       bool multiselect = false}) {
     final actions = <EntityAction>[];
 
-    if (!isDeleted) {
-      if (includeEdit && userCompany.canEditEntity(this)) {
-        actions.add(EntityAction.edit);
+    if (!multiselect) {
+      if (!isDeleted) {
+        if (includeEdit && userCompany.canEditEntity(this)) {
+          actions.add(EntityAction.edit);
+        }
+
+        if (userCompany.canCreate(EntityType.task) && isActive) {
+          actions.add(EntityAction.newTask);
+        }
+
+        if (userCompany.canCreate(EntityType.invoice) && isActive) {
+          actions.add(EntityAction.newInvoice);
+        }
       }
 
-      if (userCompany.canCreate(EntityType.task) && isActive) {
-        actions.add(EntityAction.newTask);
+      if (userCompany.canCreate(EntityType.project)) {
+        actions.add(EntityAction.clone);
       }
-
-      if (userCompany.canCreate(EntityType.invoice) && isActive) {
-        actions.add(EntityAction.newInvoice);
-      }
-    }
-
-    if (userCompany.canCreate(EntityType.project)) {
-      actions.add(EntityAction.clone);
     }
 
     if (actions.isNotEmpty) {
@@ -196,6 +207,9 @@ abstract class ProjectEntity extends Object
       case ProjectFields.privateNotes:
         response = projectA.privateNotes.compareTo(projectB.privateNotes);
         break;
+      case ProjectFields.publicNotes:
+        response = projectA.publicNotes.compareTo(projectB.publicNotes);
+        break;
       case ProjectFields.budgetedHours:
         response = projectA.budgetedHours.compareTo(projectB.budgetedHours);
         break;
@@ -229,6 +243,10 @@ abstract class ProjectEntity extends Object
         response = userA.listDisplayName
             .toLowerCase()
             .compareTo(userB.listDisplayName.toLowerCase());
+        break;
+      case ProjectFields.documents:
+        response =
+            projectA.documents.length.compareTo(projectB.documents.length);
         break;
       default:
         print('## ERROR: sort by project.$sortField is not implemented');

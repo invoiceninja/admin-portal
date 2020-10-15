@@ -44,10 +44,12 @@ Reducer<String> selectedIdReducer = combineReducers([
   TypedReducer<String, ClearEntityFilter>((selectedId, action) => ''),
   TypedReducer<String, ClearEntitySelection>((selectedId, action) =>
       action.entityType == EntityType.credit ? '' : selectedId),
-  TypedReducer<String, FilterByEntity>((selectedId, action) => action
-          .clearSelection
-      ? ''
-      : action.entityType == EntityType.credit ? action.entityId : selectedId),
+  TypedReducer<String, FilterByEntity>(
+      (selectedId, action) => action.clearSelection
+          ? ''
+          : action.entityType == EntityType.credit
+              ? action.entityId
+              : selectedId),
 ]);
 
 final editingReducer = combineReducers<InvoiceEntity>([
@@ -71,6 +73,10 @@ final editingReducer = combineReducers<InvoiceEntity>([
     return credit.rebuild((b) => b
       ..isChanged = true
       ..clientId = client?.id ?? ''
+      ..projectId =
+          (credit.clientId ?? '').isEmpty || credit.clientId == client?.id
+              ? credit.projectId
+              : ''
       ..invitations.replace((client?.contacts ?? <ContactEntity>[])
           .where((contact) => contact.sendEmail)
           .map((contact) => InvitationEntity(contactId: contact.id))

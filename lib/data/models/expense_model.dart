@@ -55,7 +55,7 @@ class ExpenseFields {
   static const String expenseCategoryId = 'expense_category_id';
   static const String expenseCategory = 'expense_category';
   static const String amount = 'amount';
-  static const String expenseDate = 'expense_date';
+  static const String expenseDate = 'date';
   static const String paymentDate = 'payment_date';
   static const String exchangeRate = 'exchange_rate';
   static const String invoiceCurrencyId = 'invoice_currency_id';
@@ -82,19 +82,22 @@ abstract class ExpenseEntity extends Object
     implements Built<ExpenseEntity, ExpenseEntityBuilder> {
   factory ExpenseEntity(
       {String id, AppState state, VendorEntity vendor, ClientEntity client}) {
+    final company = state?.company;
     return _$ExpenseEntity._(
       id: id ?? BaseEntity.nextId,
       isChanged: false,
       privateNotes: '',
       publicNotes: '',
-      shouldBeInvoiced: false,
-      invoiceDocuments: state?.prefState?.addDocumentsToInvoice ?? false,
+      shouldBeInvoiced: company?.markExpensesInvoiceable ?? false,
+      invoiceDocuments: company?.invoiceExpenseDocuments ?? false,
       transactionId: '',
       transactionReference: '',
       bankId: '',
       amount: 0,
       expenseDate: convertDateTimeToSqlDate(),
-      paymentDate: '',
+      paymentDate: (company?.markExpensesPaid ?? false)
+          ? convertDateTimeToSqlDate()
+          : '',
       paymentTypeId: '',
       exchangeRate: 1,
       expenseCurrencyId: (vendor != null && vendor.hasCurrency)
@@ -223,6 +226,10 @@ abstract class ExpenseEntity extends Object
   @nullable
   @BuiltValueField(wireName: 'vendor_id')
   String get vendorId;
+
+  @nullable
+  @BuiltValueField(wireName: 'project_id')
+  String get projectId;
 
   @BuiltValueField(wireName: 'custom_value1')
   String get customValue1;

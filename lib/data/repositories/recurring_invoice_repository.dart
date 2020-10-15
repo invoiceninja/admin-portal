@@ -19,20 +19,19 @@ class RecurringInvoiceRepository {
     final dynamic response = await webClient.get(
         '${credentials.url}/recurring_invoices/$entityId', credentials.token);
 
-    final InvoiceItemResponse recurringInvoiceResponse = serializers
-        .deserializeWith(InvoiceItemResponse.serializer, response);
+    final InvoiceItemResponse recurringInvoiceResponse =
+        serializers.deserializeWith(InvoiceItemResponse.serializer, response);
 
     return recurringInvoiceResponse.data;
   }
 
-  Future<BuiltList<InvoiceEntity>> loadList(
-      Credentials credentials) async {
+  Future<BuiltList<InvoiceEntity>> loadList(Credentials credentials) async {
     final String url = credentials.url + '/recurring_invoices?';
 
     final dynamic response = await webClient.get(url, credentials.token);
 
-    final InvoiceListResponse recurringInvoiceResponse = serializers
-        .deserializeWith(InvoiceListResponse.serializer, response);
+    final InvoiceListResponse recurringInvoiceResponse =
+        serializers.deserializeWith(InvoiceListResponse.serializer, response);
 
     return recurringInvoiceResponse.data;
   }
@@ -43,16 +42,16 @@ class RecurringInvoiceRepository {
     final dynamic response = await webClient.post(url, credentials.token,
         data: json.encode({'ids': ids, 'action': action.toApiParam()}));
 
-    final InvoiceListResponse recurringInvoiceResponse = serializers
-        .deserializeWith(InvoiceListResponse.serializer, response);
+    final InvoiceListResponse recurringInvoiceResponse =
+        serializers.deserializeWith(InvoiceListResponse.serializer, response);
 
     return recurringInvoiceResponse.data.toList();
   }
 
   Future<InvoiceEntity> saveData(
       Credentials credentials, InvoiceEntity recurringInvoice) async {
-    final data = serializers.serializeWith(
-        InvoiceEntity.serializer, recurringInvoice);
+    final data =
+        serializers.serializeWith(InvoiceEntity.serializer, recurringInvoice);
     dynamic response;
 
     if (recurringInvoice.isNew) {
@@ -66,8 +65,8 @@ class RecurringInvoiceRepository {
           await webClient.put(url, credentials.token, data: json.encode(data));
     }
 
-    final InvoiceItemResponse recurringInvoiceResponse = serializers
-        .deserializeWith(InvoiceItemResponse.serializer, response);
+    final InvoiceItemResponse recurringInvoiceResponse =
+        serializers.deserializeWith(InvoiceItemResponse.serializer, response);
 
     return recurringInvoiceResponse.data;
   }

@@ -8,7 +8,7 @@ class Constants {
 }
 
 // TODO remove version once #46609 is fixed
-const String kClientVersion = '5.0.17';
+const String kClientVersion = '5.0.18';
 const String kMinServerVersion = '5.0.4';
 
 const String kAppName = 'Invoice Ninja';
@@ -31,6 +31,8 @@ const String kGoogleStoreUrl =
 const String kCapterralUrl = 'https://www.capterra.com/p/145215/Invoice-Ninja/';
 const String kCronsHelpUrl =
     'https://invoiceninja.github.io/selfhost.html#cron-configuration';
+const String kGitHubDiffUrl =
+    'https://github.com/invoiceninja/invoiceninja/compare/vVERSION...v5-stable';
 
 enum AppEnvironment {
   hosted,
@@ -70,7 +72,7 @@ const double kDrawerWidth = 300;
 const double kTableColumnGap = 20;
 const double kTopBottomBarHeight = 50;
 const double kDialogWidth = 400;
-const double kDashboardPanelHeight = 509; // TODO remove this
+const double kDashboardPanelHeight = 525; // TODO remove this
 
 const double kTabletLayoutWidth = 1100;
 const double kTabletDialogPadding = 250;
@@ -180,23 +182,22 @@ const kCreditStatuses = {
 const String kGatewayTypeCreditCard = '1';
 const String kGatewayTypeBankTransfer = '2';
 const String kGatewayTypePayPal = '3';
-const String kGatewayTypeBitcoin = '4';
-//const String kGatewayTypeDwolla = '5';
-const String kGatewayTypeCustom = '6';
-const String kGatewayTypeAlipay = '7';
-const String kGatewayTypeSofort = '8';
-const String kGatewayTypeGoCardless = '9';
-const String kGatewayTypeApplePay = '10';
+const String kGatewayTypeCrypto = '4';
+const String kGatewayTypeCustom = '5';
+const String kGatewayTypeAlipay = '6';
+const String kGatewayTypeSofort = '7';
+const String kGatewayTypeApplePay = '8';
+const String kGatewayTypeSEPA = '9';
+const String kGatewayTypeCredit = '10';
 
 const kGatewayTypes = {
   kGatewayTypeCreditCard: 'credit_card',
   kGatewayTypeBankTransfer: 'bank_transfer',
   kGatewayTypePayPal: 'paypal',
-  kGatewayTypeBitcoin: 'bitcoin',
+  kGatewayTypeCrypto: 'crypto',
   kGatewayTypeCustom: 'custom',
   kGatewayTypeAlipay: 'alipay',
   kGatewayTypeSofort: 'sofort',
-  kGatewayTypeGoCardless: 'gocardless',
   kGatewayTypeApplePay: 'apple_pay',
 };
 
@@ -321,6 +322,7 @@ const String kSettingsTaxRatesView = 'tax_settings_rates_view';
 const String kSettingsTaxRatesEdit = 'tax_settings_rates_edit';
 const String kSettingsIntegrations = 'integrations';
 const String kSettingsProducts = 'product_settings';
+const String kSettingsExpenses = 'expense_settings';
 const String kSettingsImportExport = 'import_export';
 const String kSettingsDeviceSettings = 'device_settings';
 const String kSettingsGroupSettings = 'group_settings';

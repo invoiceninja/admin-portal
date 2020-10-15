@@ -38,8 +38,11 @@ class _ProjectEditState extends State<ProjectEdit> {
   final _hoursController = TextEditingController();
   final _taskRateController = TextEditingController();
   final _privateNotesController = TextEditingController();
+  final _publicNotesController = TextEditingController();
   final _custom1Controller = TextEditingController();
   final _custom2Controller = TextEditingController();
+  final _custom3Controller = TextEditingController();
+  final _custom4Controller = TextEditingController();
 
   List<TextEditingController> _controllers = [];
 
@@ -51,8 +54,11 @@ class _ProjectEditState extends State<ProjectEdit> {
       _hoursController,
       _taskRateController,
       _privateNotesController,
+      _publicNotesController,
       _custom1Controller,
       _custom2Controller,
+      _custom3Controller,
+      _custom4Controller,
     ];
 
     _controllers.forEach((controller) => controller.removeListener(_onChanged));
@@ -65,8 +71,11 @@ class _ProjectEditState extends State<ProjectEdit> {
     _taskRateController.text = formatNumber(project.taskRate, context,
         formatNumberType: FormatNumberType.inputMoney);
     _privateNotesController.text = project.privateNotes;
+    _publicNotesController.text = project.publicNotes;
     _custom1Controller.text = project.customValue1;
     _custom2Controller.text = project.customValue2;
+    _custom3Controller.text = project.customValue3;
+    _custom4Controller.text = project.customValue4;
 
     _controllers.forEach((controller) => controller.addListener(_onChanged));
 
@@ -91,7 +100,9 @@ class _ProjectEditState extends State<ProjectEdit> {
         ..taskRate = parseDouble(_taskRateController.text)
         ..privateNotes = _privateNotesController.text.trim()
         ..customValue1 = _custom1Controller.text.trim()
-        ..customValue2 = _custom2Controller.text.trim());
+        ..customValue2 = _custom2Controller.text.trim()
+        ..customValue3 = _custom3Controller.text.trim()
+        ..customValue4 = _custom4Controller.text.trim());
       if (project != widget.viewModel.project) {
         widget.viewModel.onChanged(project);
       }
@@ -130,6 +141,14 @@ class _ProjectEditState extends State<ProjectEdit> {
             children: <Widget>[
               FormCard(
                 children: <Widget>[
+                  DecoratedFormField(
+                    controller: _nameController,
+                    validator: (String val) => val.trim().isEmpty
+                        ? localization.pleaseEnterAName
+                        : null,
+                    autovalidate: _autoValidate,
+                    label: localization.name,
+                  ),
                   project.isNew
                       ? EntityDropdown(
                           key: ValueKey('__client_${project.clientId}__'),
@@ -155,14 +174,6 @@ class _ProjectEditState extends State<ProjectEdit> {
                           },
                         )
                       : SizedBox(),
-                  DecoratedFormField(
-                    controller: _nameController,
-                    validator: (String val) => val.trim().isEmpty
-                        ? localization.pleaseEnterAName
-                        : null,
-                    autovalidate: _autoValidate,
-                    label: localization.name,
-                  ),
                   DatePicker(
                     labelText: localization.dueDate,
                     selectedDate: project.dueDate,
@@ -185,6 +196,12 @@ class _ProjectEditState extends State<ProjectEdit> {
                   ),
                   DecoratedFormField(
                     maxLines: 4,
+                    controller: _publicNotesController,
+                    keyboardType: TextInputType.multiline,
+                    label: localization.publicNotes,
+                  ),
+                  DecoratedFormField(
+                    maxLines: 4,
                     controller: _privateNotesController,
                     keyboardType: TextInputType.multiline,
                     label: localization.privateNotes,
@@ -198,6 +215,16 @@ class _ProjectEditState extends State<ProjectEdit> {
                     controller: _custom2Controller,
                     field: CustomFieldType.project2,
                     value: project.customValue2,
+                  ),
+                  CustomField(
+                    controller: _custom3Controller,
+                    field: CustomFieldType.project3,
+                    value: project.customValue3,
+                  ),
+                  CustomField(
+                    controller: _custom4Controller,
+                    field: CustomFieldType.project4,
+                    value: project.customValue4,
                   ),
                 ],
               ),

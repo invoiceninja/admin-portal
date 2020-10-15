@@ -84,8 +84,7 @@ class RecurringInvoiceEditDetailsVM extends EntityEditDetailsVM {
       clientList: state.clientState.list,
       onClientChanged: (context, invoice, client) {
         if (client != null) {
-          final exchangeRate = getExchangeRate(
-              state.staticState.currencyMap,
+          final exchangeRate = getExchangeRate(state.staticState.currencyMap,
               fromCurrencyId: company.currencyId,
               toCurrencyId: client.currencyId);
           store.dispatch(UpdateRecurringInvoice(

@@ -808,6 +808,15 @@ void _showAbout(BuildContext context) async {
           },
         ),
       ),
+      Padding(
+        padding: const EdgeInsets.only(top: 20),
+        child: AppButton(
+          label: localization.forceUpdate.toUpperCase(),
+          iconData: MdiIcons.update,
+          color: Colors.grey,
+          onPressed: () => _showUpdate(context),
+        ),
+      ),
     ],
   );
 }

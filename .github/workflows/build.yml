@@ -36,7 +36,7 @@ jobs:
 
           git clone https://${{secrets.commit_secret}}@github.com/invoiceninja/invoiceninja.git
           cd invoiceninja
-          git checkout v2
+          git checkout v5-develop
 
           cp -r ../build/web/* ./public/
           git add .

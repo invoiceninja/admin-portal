@@ -14,6 +14,7 @@ import 'package:invoiceninja_flutter/ui/app/forms/date_picker.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/decorated_form_field.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/design_picker.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/discount_field.dart';
+import 'package:invoiceninja_flutter/ui/app/forms/project_picker.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/user_picker.dart';
 import 'package:invoiceninja_flutter/ui/app/invoice/tax_rate_dropdown.dart';
 import 'package:invoiceninja_flutter/ui/credit/edit/credit_edit_items_vm.dart';
@@ -170,9 +171,10 @@ class InvoiceEditDesktopState extends State<InvoiceEditDesktop>
   Widget build(BuildContext context) {
     final localization = AppLocalization.of(context);
     final viewModel = widget.viewModel;
+    final state = viewModel.state;
     final invoice = viewModel.invoice;
     final company = viewModel.company;
-    final client = viewModel.state.clientState.get(invoice.clientId);
+    final client = state.clientState.get(invoice.clientId);
     final invoiceTotal =
         invoice.partial != 0 ? invoice.partial : invoice.calculateTotal;
     final entityType = invoice.entityType;
@@ -197,7 +199,7 @@ class InvoiceEditDesktopState extends State<InvoiceEditDesktop>
                     ClientPicker(
                       //autofocus: kIsWeb,
                       clientId: invoice.clientId,
-                      clientState: viewModel.state.clientState,
+                      clientState: state.clientState,
                       onSelected: (client) =>
                           viewModel.onClientChanged(context, invoice, client),
                       onAddPressed: (completer) =>
@@ -470,8 +472,9 @@ class InvoiceEditDesktopState extends State<InvoiceEditDesktop>
                     ],
                   ),
                   SizedBox(
-                    height: (client.isOld &&
-                            client.currencyId != company.currencyId)
+                    height: ((client.isOld &&
+                                client.currencyId != company.currencyId) ||
+                            company.isModuleEnabled(EntityType.project))
                         ? 140
                         : 100,
                     child: TabBarView(
@@ -526,10 +529,48 @@ class InvoiceEditDesktopState extends State<InvoiceEditDesktop>
                                 ),
                               ],
                             ),
-                            if (client.isOld &&
-                                client.currencyId != company.currencyId)
-                              Row(
-                                children: [
+                            Row(
+                              children: [
+                                Expanded(
+                                  child: company
+                                          .isModuleEnabled(EntityType.project)
+                                      ? ProjectPicker(
+                                          key: Key(
+                                              '__project_${invoice.clientId}__'),
+                                          projectId: invoice.projectId,
+                                          clientId: invoice.clientId,
+                                          onChanged: (selectedId) {
+                                            final project = state.projectState
+                                                .get(selectedId);
+                                            final updatedInvoice =
+                                                invoice.rebuild((b) =>
+                                                    b..projectId = project?.id);
+                                            viewModel.onChanged(updatedInvoice);
+                                            if ((invoice.clientId ?? '')
+                                                .isEmpty) {
+                                              final projectClient = state
+                                                  .clientState
+                                                  .get(project.clientId);
+                                              viewModel.onClientChanged(
+                                                  context,
+                                                  updatedInvoice,
+                                                  projectClient);
+                                            }
+                                          },
+                                          /*
+                                      onAddPressed: (completer) {
+                                        viewModel.onAddProjectPressed(
+                                            context, completer);
+                                      },
+                                       */
+                                        )
+                                      : SizedBox(),
+                                ),
+                                SizedBox(
+                                  width: 38,
+                                ),
+                                if (client.isOld &&
+                                    client.currencyId != company.currencyId)
                                   Expanded(
                                     child: DecoratedFormField(
                                       key: ValueKey(
@@ -549,15 +590,13 @@ class InvoiceEditDesktopState extends State<InvoiceEditDesktop>
                                       onSavePressed:
                                           widget.entityViewModel.onSavePressed,
                                     ),
-                                  ),
-                                  SizedBox(
-                                    width: 38,
-                                  ),
+                                  )
+                                else
                                   Expanded(
                                     child: SizedBox(),
-                                  )
-                                ],
-                              )
+                                  ),
+                              ],
+                            )
                           ],
                         ),
                       ],

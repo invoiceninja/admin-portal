@@ -25,6 +25,15 @@ abstract class ProjectState
   int get hashCode;
 
   BuiltMap<String, ProjectEntity> get map;
+
+  ProjectEntity get(String projectId) {
+    if (map.containsKey(projectId)) {
+      return map[projectId];
+    } else {
+      return ProjectEntity(id: projectId);
+    }
+  }
+
   BuiltList<String> get list;
 
   ProjectState loadProjects(BuiltList<ProjectEntity> clients) {

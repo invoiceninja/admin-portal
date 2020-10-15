@@ -152,7 +152,9 @@ abstract class SettingsUIState extends Object
       user: user ?? UserEntity(),
       entityType: client != null
           ? EntityType.client
-          : group != null ? EntityType.group : EntityType.company,
+          : group != null
+              ? EntityType.group
+              : EntityType.company,
       origClient: origClient ?? ClientEntity(),
       origGroup: origGroup ?? GroupEntity(),
       origCompany: origCompany ?? CompanyEntity(),

@@ -9,6 +9,7 @@ import 'package:invoiceninja_flutter/redux/dashboard/dashboard_actions.dart';
 import 'package:invoiceninja_flutter/redux/reports/reports_actions.dart';
 import 'package:invoiceninja_flutter/redux/settings/settings_actions.dart';
 import 'package:invoiceninja_flutter/redux/ui/pref_state.dart';
+import 'package:invoiceninja_flutter/ui/app/app_shortcuts.dart';
 import 'package:invoiceninja_flutter/ui/app/blank_screen.dart';
 import 'package:invoiceninja_flutter/ui/app/change_layout_banner.dart';
 import 'package:invoiceninja_flutter/ui/app/history_drawer_vm.dart';
@@ -32,6 +33,7 @@ import 'package:invoiceninja_flutter/ui/recurring_invoice/view/recurring_invoice
 import 'package:invoiceninja_flutter/ui/reports/reports_screen.dart';
 import 'package:invoiceninja_flutter/ui/reports/reports_screen_vm.dart';
 import 'package:invoiceninja_flutter/ui/settings/account_management_vm.dart';
+import 'package:invoiceninja_flutter/ui/settings/expense_settings_vm.dart';
 import 'package:invoiceninja_flutter/ui/settings/settings_screen_vm.dart';
 import 'package:invoiceninja_flutter/ui/settings/tax_settings_vm.dart';
 import 'package:invoiceninja_flutter/ui/token/edit/token_edit_vm.dart';
@@ -324,20 +326,22 @@ class MainScreen extends StatelessWidget {
 
           return false;
         },
-        child: SafeArea(
-          child: FocusTraversalGroup(
-            policy: WidgetOrderTraversalPolicy(),
-            child: ChangeLayoutBanner(
-              appLayout: prefState.appLayout,
-              suggestedLayout: AppLayout.desktop,
-              child: Row(children: <Widget>[
-                if (prefState.showMenu) MenuDrawerBuilder(),
-                Expanded(
-                    child: AppBorder(
-                  child: screen,
-                  isLeft: prefState.showMenu,
-                )),
-              ]),
+        child: AppShortcuts(
+          child: SafeArea(
+            child: FocusTraversalGroup(
+              policy: WidgetOrderTraversalPolicy(),
+              child: ChangeLayoutBanner(
+                appLayout: prefState.appLayout,
+                suggestedLayout: AppLayout.desktop,
+                child: Row(children: <Widget>[
+                  if (prefState.showMenu) MenuDrawerBuilder(),
+                  Expanded(
+                      child: AppBorder(
+                    child: screen,
+                    isLeft: prefState.showMenu,
+                  )),
+                ]),
+              ),
             ),
           ),
         ),
@@ -398,6 +402,9 @@ class SettingsScreens extends StatelessWidget {
         break;
       case kSettingsProducts:
         screen = ProductSettingsScreen();
+        break;
+      case kSettingsExpenses:
+        screen = ExpenseSettingsScreen();
         break;
       case kSettingsIntegrations:
         screen = IntegrationSettingsScreen();
@@ -608,6 +615,14 @@ class EntityScreens extends StatelessWidget {
                 ? CompanyGatewayEditScreen()
                 : CompanyGatewayViewScreen(isFilter: true);
             break;
+          case EntityType.recurringInvoice:
+            leftFilterChild = editingFIlterEntity
+                ? RecurringInvoiceEditScreen()
+                : RecurringInvoiceViewScreen(isFilter: true);
+            break;
+          default:
+            print(
+                'Error: filter view not implemented for ${uiState.filterEntityType}');
         }
       }
     }

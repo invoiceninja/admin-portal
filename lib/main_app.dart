@@ -36,6 +36,7 @@ import 'package:invoiceninja_flutter/ui/payment_term/view/payment_term_view_vm.d
 import 'package:invoiceninja_flutter/ui/reports/reports_screen.dart';
 import 'package:invoiceninja_flutter/ui/reports/reports_screen_vm.dart';
 import 'package:invoiceninja_flutter/ui/settings/account_management_vm.dart';
+import 'package:invoiceninja_flutter/ui/settings/expense_settings_vm.dart';
 import 'package:invoiceninja_flutter/ui/settings/settings_screen_vm.dart';
 import 'package:invoiceninja_flutter/ui/settings/tax_settings_vm.dart';
 import 'package:invoiceninja_flutter/ui/tax_rate/edit/tax_rate_edit_vm.dart';
@@ -155,7 +156,7 @@ class InvoiceNinjaAppState extends State<InvoiceNinjaApp> {
         final state = store.state;
         final hasAccentColor = state.hasAccentColor;
         final accentColor = state.accentColor;
-        final fontFamily = kIsWeb ? 'Roboto' : null;
+        const fontFamily = kIsWeb ? 'Roboto' : null;
         final pageTransitionsTheme = PageTransitionsTheme(builders: {
           TargetPlatform.android: ZoomPageTransitionsBuilder(),
         });
@@ -335,6 +336,8 @@ class InvoiceNinjaAppState extends State<InvoiceNinjaApp> {
                   TaxRateEditScreen.route: (context) => TaxRateEditScreen(),
                   ProductSettingsScreen.route: (context) =>
                       ProductSettingsScreen(),
+                  ExpenseSettingsScreen.route: (context) =>
+                      ExpenseSettingsScreen(),
                   IntegrationSettingsScreen.route: (context) =>
                       IntegrationSettingsScreen(),
                   ImportExportScreen.route: (context) => ImportExportScreen(),

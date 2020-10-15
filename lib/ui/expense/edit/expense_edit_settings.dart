@@ -150,7 +150,8 @@ class ExpenseEditSettingsState extends State<ExpenseEditSettings> {
                 ? SizedBox()
                 : SwitchListTile(
                     activeColor: Theme.of(context).accentColor,
-                    title: Text(localization.markBillable),
+                    title: Text(localization.markInvoiceable),
+                    subtitle: Text(localization.markInvoiceableHelp),
                     value: expense.shouldBeInvoiced,
                     onChanged: (value) {
                       viewModel.onChanged(
@@ -161,6 +162,7 @@ class ExpenseEditSettingsState extends State<ExpenseEditSettings> {
               activeColor: Theme.of(context).accentColor,
               title: Text(localization.markPaid),
               value: showPaymentFields,
+              subtitle: Text(localization.markPaidHelp),
               onChanged: (value) {
                 if (value) {
                   if (expense.paymentDate.isEmpty) {
@@ -215,6 +217,7 @@ class ExpenseEditSettingsState extends State<ExpenseEditSettings> {
             SwitchListTile(
               activeColor: Theme.of(context).accentColor,
               title: Text(localization.convertCurrency),
+              subtitle: Text(localization.convertCurrencyHelp),
               value: showConvertCurrencyFields,
               onChanged: (value) {
                 setState(() => showConvertCurrencyFields = value);
@@ -259,6 +262,7 @@ class ExpenseEditSettingsState extends State<ExpenseEditSettings> {
             SwitchListTile(
                 activeColor: Theme.of(context).accentColor,
                 title: Text(localization.addDocumentsToInvoice),
+                subtitle: Text(localization.addDocumentsToInvoiceHelp),
                 value: expense.invoiceDocuments,
                 onChanged: (value) {
                   viewModel.onChanged(

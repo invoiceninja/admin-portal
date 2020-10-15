@@ -15,12 +15,27 @@ mixin LocalizationsProvider on LocaleCodeAware {
   static final Map<String, Map<String, String>> _localizedValues = {
     'en': {
       // STARTER: lang key - do not remove comment
+      'view_changes': 'View Changes',
+      'force_update': 'Force Update',
+      'force_update_help':
+          'You are running the latest version but there may be pending fixes available.',
+      'mark_paid_help': 'Track the expense has been paid',
+      'mark_invoiceable_help': 'Enable the expense to be invoiced',
+      'add_documents_to_invoice_help': 'Make the documents visible',
+      'convert_currency_help': 'Set an exchange rate',
+      'expense_settings': 'Expense Settings',
+      'clone_to_recurring': 'Clone to Recurring',
+      'crypto': 'Crypto',
+      'paypal': 'PayPal',
+      'alipay': 'Alipay',
+      'sofort': 'Sofort',
+      'apple_pay': 'Apple Pay',
       'user_field': 'User Field',
       'variables': 'Variables',
       'show_password': 'Show Password',
       'hide_password': 'Hide Password',
       'copy_error': 'Copy Error',
-      'store_card': 'Store Card',
+      'capture_card': 'Capture Card',
       'auto_bill_enabled': 'Auto Bill Enabled',
       'total_taxes': 'Total Taxes',
       'line_taxes': 'Line Taxes',
@@ -80,8 +95,8 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'token_billing': 'Token Billing',
       'welcome_to_invoice_ninja': 'Welcome to Invoice Ninja',
       'always': 'Enabled',
-      'optin': 'Option disabled by default',
-      'optout': 'Option enabled by default',
+      'optin': 'Disabled by default',
+      'optout': 'Enabled by default',
       'label': 'Label',
       'client_number': 'Client Number',
       'auto_convert': 'Auto Convert',
@@ -885,7 +900,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'exchange_rate': 'Exchange Rate',
       'convert_currency': 'Convert Currency',
       'mark_paid': 'Mark Paid',
-      'mark_billable': 'Mark Billable',
+      'mark_invoiceable': 'Mark Invoiceable',
       'category': 'Category',
       'address': 'Address',
       'new_vendor': 'New Vendor',
@@ -2315,8 +2330,8 @@ mixin LocalizationsProvider on LocaleCodeAware {
 
   String get category => _localizedValues[localeCode]['category'] ?? '';
 
-  String get markBillable =>
-      _localizedValues[localeCode]['mark_billable'] ?? '';
+  String get markInvoiceable =>
+      _localizedValues[localeCode]['mark_invoiceable'] ?? '';
 
   String get markPaid => _localizedValues[localeCode]['mark_paid'] ?? '';
 
@@ -4605,7 +4620,7 @@ mixin LocalizationsProvider on LocaleCodeAware {
 
   String get lineTaxes => _localizedValues[localeCode]['line_taxes'] ?? '';
 
-  String get storeCard => _localizedValues[localeCode]['store_card'] ?? '';
+  String get captureCard => _localizedValues[localeCode]['capture_card'] ?? '';
 
   String get autoBillEnabled =>
       _localizedValues[localeCode]['auto_bill_enabled'] ?? '';
@@ -4621,6 +4636,41 @@ mixin LocalizationsProvider on LocaleCodeAware {
   String get variables => _localizedValues[localeCode]['variables'] ?? '';
 
   String get userField => _localizedValues[localeCode]['user_field'] ?? '';
+
+  String get paypal => _localizedValues[localeCode]['paypal'] ?? '';
+
+  String get alipay => _localizedValues[localeCode]['alipay'] ?? '';
+
+  String get sofort => _localizedValues[localeCode]['sofort'] ?? '';
+
+  String get applePay => _localizedValues[localeCode]['apple_pay'] ?? '';
+
+  String get crypto => _localizedValues[localeCode]['crypto'] ?? '';
+
+  String get markPaidHelp =>
+      _localizedValues[localeCode]['mark_paid_help'] ?? '';
+
+  String get markInvoiceableHelp =>
+      _localizedValues[localeCode]['mark_invoiceable_help'] ?? '';
+
+  String get addDocumentsToInvoiceHelp =>
+      _localizedValues[localeCode]['add_documents_to_invoice_help'] ?? '';
+
+  String get expenseSettings =>
+      _localizedValues[localeCode]['expense_settings'] ?? '';
+
+  String get convertCurrencyHelp =>
+      _localizedValues[localeCode]['convert_currency_help'] ?? '';
+
+  String get cloneToRecurring =>
+      _localizedValues[localeCode]['clone_to_recurring'] ?? '';
+
+  String get forceUpdate => _localizedValues[localeCode]['force_update'] ?? '';
+
+  String get forceUpdateHelp =>
+      _localizedValues[localeCode]['force_update_help'] ?? '';
+
+  String get viewChanges => _localizedValues[localeCode]['view_changes'] ?? '';
 
   String lookup(String key) {
     final lookupKey = toSnakeCase(key);

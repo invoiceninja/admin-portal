@@ -15,6 +15,7 @@ IconData getEntityActionIcon(EntityAction entityAction) {
     case EntityAction.cloneToInvoice:
     case EntityAction.cloneToQuote:
     case EntityAction.cloneToCredit:
+    case EntityAction.cloneToRecurring:
       return Icons.control_point_duplicate;
     case EntityAction.markSent:
       return Icons.public;
@@ -152,8 +153,6 @@ IconData getSettingIcon(String section) {
     case kSettingsTaxSettings:
     case kSettingsTaxRates:
       return MdiIcons.percent;
-    case kSettingsProducts:
-      return MdiIcons.cube;
     case kSettingsIntegrations:
       return MdiIcons.link;
     case kSettingsImportExport:
@@ -188,6 +187,10 @@ IconData getSettingIcon(String section) {
       return Icons.people;
     case kSettingsAccountManagement:
       return MdiIcons.shieldAccount;
+    case kSettingsProducts:
+      return getEntityIcon(EntityType.product);
+    case kSettingsExpenses:
+      return getEntityIcon(EntityType.expense);
     default:
       return null;
   }

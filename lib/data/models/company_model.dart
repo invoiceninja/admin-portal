@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:built_collection/built_collection.dart';
 import 'package:built_value/built_value.dart';
 import 'package:built_value/serializer.dart';
+import 'package:flutter/foundation.dart';
 import 'package:invoiceninja_flutter/constants.dart';
 import 'package:invoiceninja_flutter/data/models/account_model.dart';
 import 'package:invoiceninja_flutter/data/models/company_gateway_model.dart';
@@ -252,6 +253,18 @@ abstract class CompanyEntity extends Object
   @BuiltValueField(wireName: 'google_analytics_key')
   String get googleAnalyticsKey;
 
+  @nullable // TODO remove nullable
+  @BuiltValueField(wireName: 'mark_expenses_invoiceable')
+  bool get markExpensesInvoiceable;
+
+  @nullable // TODO remove nullable
+  @BuiltValueField(wireName: 'mark_expenses_paid')
+  bool get markExpensesPaid;
+
+  @nullable // TODO remove nullable
+  @BuiltValueField(wireName: 'invoice_expense_documents')
+  bool get invoiceExpenseDocuments;
+
   SettingsEntity get settings;
 
   @nullable
@@ -410,8 +423,8 @@ abstract class CompanyEntity extends Object
 
   bool isModuleEnabled(EntityType entityType) {
     // TODO remove this
+    //if (kReleaseMode &&
     if ([
-      EntityType.recurringInvoice,
       EntityType.project,
       EntityType.task,
       EntityType.expense,
@@ -461,6 +474,7 @@ abstract class GatewayEntity extends Object
       defaultGatewayTypeId: kGatewayTypeCreditCard,
       isOffsite: false,
       //isVisible: false,
+      options: BuiltMap<String, GatewayOptionsEntity>(),
     );
   }
 
@@ -492,16 +506,17 @@ abstract class GatewayEntity extends Object
   @BuiltValueField(wireName: 'default_gateway_type_id')
   String get defaultGatewayTypeId;
 
-  //bool get recommended;
-  //bool get visible;
+  @BuiltValueField(wireName: 'options')
+  BuiltMap<String, GatewayOptionsEntity> get options;
 
   String get fields;
 
-  bool get supportsTokenBilling => [
-        kGatewayStripe,
-        kGatewayAuthorizeNet,
-        kGatewayCheckoutCom,
-      ].contains(id);
+  bool get supportsTokenBilling => options.keys
+      .where((typeId) => options[typeId].supportTokenBilling)
+      .isNotEmpty;
+
+  bool get supportsRefunds =>
+      options.keys.where((typeId) => options[typeId].supportRefunds).isNotEmpty;
 
   Map<String, dynamic> get parsedFields =>
       fields.isEmpty ? <String, dynamic>{} : jsonDecode(fields);
@@ -569,6 +584,31 @@ abstract class GatewayEntity extends Object
 
   @override
   FormatNumberType get listDisplayAmountType => null;
+}
+
+abstract class GatewayOptionsEntity
+    implements Built<GatewayOptionsEntity, GatewayOptionsEntityBuilder> {
+  factory GatewayOptionsEntity() {
+    return _$GatewayOptionsEntity._(
+      supportRefunds: false,
+      supportTokenBilling: false,
+    );
+  }
+
+  GatewayOptionsEntity._();
+
+  @override
+  @memoized
+  int get hashCode;
+
+  @BuiltValueField(wireName: 'refund')
+  bool get supportRefunds;
+
+  @BuiltValueField(wireName: 'token_billing')
+  bool get supportTokenBilling;
+
+  static Serializer<GatewayOptionsEntity> get serializer =>
+      _$gatewayOptionsEntitySerializer;
 }
 
 abstract class UserCompanyEntity
@@ -909,6 +949,14 @@ abstract class SettingsEntity
       invoiceNumberCounter: clientSettings?.invoiceNumberCounter ??
           groupSettings?.invoiceNumberCounter ??
           companySettings?.invoiceNumberCounter,
+      recurringInvoiceNumberPattern:
+          clientSettings?.recurringInvoiceNumberPattern ??
+              groupSettings?.recurringInvoiceNumberPattern ??
+              companySettings?.recurringInvoiceNumberPattern,
+      recurringInvoiceNumberCounter:
+          clientSettings?.recurringInvoiceNumberCounter ??
+              groupSettings?.recurringInvoiceNumberCounter ??
+              companySettings?.recurringInvoiceNumberCounter,
       quoteNumberPattern: clientSettings?.quoteNumberPattern ??
           groupSettings?.quoteNumberPattern ??
           companySettings?.quoteNumberPattern,
@@ -1201,6 +1249,12 @@ abstract class SettingsEntity
       autoBill: clientSettings?.autoBill ??
           groupSettings?.autoBill ??
           companySettings?.autoBill,
+      emailBodyStatement: clientSettings?.emailBodyStatement ??
+          groupSettings?.emailBodyStatement ??
+          companySettings?.emailBodyStatement,
+      emailSubjectStatement: clientSettings?.emailSubjectStatement ??
+          groupSettings?.emailSubjectStatement ??
+          companySettings?.emailSubjectStatement,
     );
   }
 
@@ -1409,6 +1463,14 @@ abstract class SettingsEntity
   int get invoiceNumberCounter;
 
   @nullable
+  @BuiltValueField(wireName: 'recurring_invoice_number_pattern')
+  String get recurringInvoiceNumberPattern;
+
+  @nullable
+  @BuiltValueField(wireName: 'recurring_invoice_number_counter')
+  int get recurringInvoiceNumberCounter;
+
+  @nullable
   @BuiltValueField(wireName: 'quote_number_pattern')
   String get quoteNumberPattern;
 
@@ -1611,6 +1673,14 @@ abstract class SettingsEntity
   @nullable
   @BuiltValueField(wireName: 'email_template_custom3')
   String get emailBodyCustom3;
+
+  @nullable
+  @BuiltValueField(wireName: 'email_subject_statement')
+  String get emailSubjectStatement;
+
+  @nullable
+  @BuiltValueField(wireName: 'email_template_statement')
+  String get emailBodyStatement;
 
   @nullable
   @BuiltValueField(wireName: 'enable_client_portal_password')

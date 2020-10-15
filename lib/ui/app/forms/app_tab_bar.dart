@@ -4,9 +4,9 @@ import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 
 class AppTabBar extends StatelessWidget {
   const AppTabBar({
-    this.isScrollable,
     this.tabs,
     this.controller,
+    this.isScrollable = false,
   });
 
   final List<Widget> tabs;

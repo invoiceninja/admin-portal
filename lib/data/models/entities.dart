@@ -80,18 +80,31 @@ class EntityType extends EnumClass {
           EntityType.payment,
           EntityType.quote,
           EntityType.credit,
-          //EntityType.task,
-          //EntityType.project,
-          //EntityType.expense,
+          EntityType.task,
+          EntityType.project,
+          EntityType.expense,
           EntityType.recurringInvoice,
         ];
       case EntityType.invoice:
         return [
           EntityType.payment,
         ];
+      case EntityType.recurringInvoice:
+        return [
+          EntityType.invoice,
+        ];
       case EntityType.payment:
         return [
           EntityType.invoice,
+        ];
+      case EntityType.project:
+        return [
+          EntityType.task,
+          EntityType.expense,
+          EntityType.invoice,
+          EntityType.quote,
+          EntityType.credit,
+          EntityType.recurringInvoice,
         ];
       case EntityType.group:
         return [
@@ -102,16 +115,20 @@ class EntityType extends EnumClass {
           EntityType.invoice,
           EntityType.quote,
           EntityType.credit,
-          //EntityType.task,
-          //EntityType.project,
-          //EntityType.expense,
-          //EntityType.vendor,
+          EntityType.task,
+          EntityType.project,
+          EntityType.expense,
+          EntityType.vendor,
           EntityType.recurringInvoice,
         ];
       case EntityType.companyGateway:
         return [
           EntityType.client,
           EntityType.payment,
+        ];
+      case EntityType.vendor:
+        return [
+          EntityType.expense,
         ];
       default:
         return [];
@@ -154,6 +171,7 @@ class EmailTemplate extends EnumClass {
   static const EmailTemplate custom1 = _$custom1_email;
   static const EmailTemplate custom2 = _$custom2_email;
   static const EmailTemplate custom3 = _$custom3_email;
+  static const EmailTemplate statement = _$statement_email;
 
   static BuiltSet<EmailTemplate> get values => _$templateValues;
 
