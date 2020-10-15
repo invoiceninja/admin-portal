@@ -185,6 +185,8 @@ const String kGatewayTypeCustom = '5';
 const String kGatewayTypeAlipay = '6';
 const String kGatewayTypeSofort = '7';
 const String kGatewayTypeApplePay = '8';
+const String kGatewayTypeSEPA = '9';
+const String kGatewayTypeCredit = '10';
 
 const kGatewayTypes = {
   kGatewayTypeCreditCard: 'credit_card',
