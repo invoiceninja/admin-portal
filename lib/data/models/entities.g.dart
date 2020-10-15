@@ -212,6 +212,7 @@ const EmailTemplate _$payment_email = const EmailTemplate._('payment');
 const EmailTemplate _$payment_partial_email =
     const EmailTemplate._('payment_partial');
 const EmailTemplate _$credit_email = const EmailTemplate._('credit');
+const EmailTemplate _$statement_email = const EmailTemplate._('statement');
 const EmailTemplate _$reminder1_email = const EmailTemplate._('reminder1');
 const EmailTemplate _$reminder2_email = const EmailTemplate._('reminder2');
 const EmailTemplate _$reminder3_email = const EmailTemplate._('reminder3');
@@ -220,7 +221,6 @@ const EmailTemplate _$reminder_endless_email =
 const EmailTemplate _$custom1_email = const EmailTemplate._('custom1');
 const EmailTemplate _$custom2_email = const EmailTemplate._('custom2');
 const EmailTemplate _$custom3_email = const EmailTemplate._('custom3');
-const EmailTemplate _$statement_email = const EmailTemplate._('statement');
 
 EmailTemplate _$templateValueOf(String name) {
   switch (name) {
@@ -234,6 +234,8 @@ EmailTemplate _$templateValueOf(String name) {
       return _$payment_partial_email;
     case 'credit':
       return _$credit_email;
+    case 'statement':
+      return _$statement_email;
     case 'reminder1':
       return _$reminder1_email;
     case 'reminder2':
@@ -248,8 +250,6 @@ EmailTemplate _$templateValueOf(String name) {
       return _$custom2_email;
     case 'custom3':
       return _$custom3_email;
-    case 'statement':
-      return _$statement_email;
     default:
       throw new ArgumentError(name);
   }
@@ -262,6 +262,7 @@ final BuiltSet<EmailTemplate> _$templateValues =
   _$payment_email,
   _$payment_partial_email,
   _$credit_email,
+  _$statement_email,
   _$reminder1_email,
   _$reminder2_email,
   _$reminder3_email,
@@ -269,7 +270,6 @@ final BuiltSet<EmailTemplate> _$templateValues =
   _$custom1_email,
   _$custom2_email,
   _$custom3_email,
-  _$statement_email,
 ]);
 
 const UserPermission _$create = const UserPermission._('create');
