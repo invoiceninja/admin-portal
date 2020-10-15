@@ -130,7 +130,7 @@ class _PasswordConfirmationState extends State<PasswordConfirmation> {
       actions: <Widget>[
         SaveCancelButtons(
           isHeader: false,
-          saveLabel: localization.save.toUpperCase(),
+          saveLabel: localization.submit.toUpperCase(),
           onSavePressed: (context) {
             if ((_password ?? '').isEmpty) {
               return;

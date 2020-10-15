@@ -31,6 +31,8 @@ const String kGoogleStoreUrl =
 const String kCapterralUrl = 'https://www.capterra.com/p/145215/Invoice-Ninja/';
 const String kCronsHelpUrl =
     'https://invoiceninja.github.io/selfhost.html#cron-configuration';
+const String kGitHubDiffUrl =
+    'https://github.com/invoiceninja/invoiceninja/compare/vVERSION...v5-stable';
 
 enum AppEnvironment {
   hosted,

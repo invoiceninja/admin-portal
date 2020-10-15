@@ -15,6 +15,10 @@ mixin LocalizationsProvider on LocaleCodeAware {
   static final Map<String, Map<String, String>> _localizedValues = {
     'en': {
       // STARTER: lang key - do not remove comment
+      'view_changes': 'View Changes',
+      'force_update': 'Force Update',
+      'force_update_help':
+          'You are running the latest version but there may be pending fixes available.',
       'mark_paid_help': 'Track the expense has been paid',
       'mark_invoiceable_help': 'Enable the expense to be invoiced',
       'add_documents_to_invoice_help': 'Make the documents visible',
@@ -4660,6 +4664,13 @@ mixin LocalizationsProvider on LocaleCodeAware {
 
   String get cloneToRecurring =>
       _localizedValues[localeCode]['clone_to_recurring'] ?? '';
+
+  String get forceUpdate => _localizedValues[localeCode]['force_update'] ?? '';
+
+  String get forceUpdateHelp =>
+      _localizedValues[localeCode]['force_update_help'] ?? '';
+
+  String get viewChanges => _localizedValues[localeCode]['view_changes'] ?? '';
 
   String lookup(String key) {
     final lookupKey = toSnakeCase(key);
