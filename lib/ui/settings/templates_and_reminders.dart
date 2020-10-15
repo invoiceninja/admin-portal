@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:invoiceninja_flutter/constants.dart';
 import 'package:invoiceninja_flutter/data/models/company_model.dart';
 import 'package:invoiceninja_flutter/data/models/entities.dart';
+import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/ui/app/form_card.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/app_dropdown_button.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/app_form.dart';
@@ -43,6 +44,9 @@ class _TemplatesAndRemindersState extends State<TemplatesAndReminders>
   String _lastBody;
   String _subjectPreview = '';
   String _bodyPreview = '';
+  String _defaultSubject = '';
+  String _defaultBody = '';
+
   bool _isLoading = false;
   FocusScopeNode _focusNode;
   TabController _controller;
@@ -92,7 +96,9 @@ class _TemplatesAndRemindersState extends State<TemplatesAndReminders>
   }
 
   void _loadTemplate(EmailTemplate emailTemplate) {
-    final settings = widget.viewModel.settings;
+    final viewModel = widget.viewModel;
+    final settings = viewModel.settings;
+    final templateMap = viewModel.state.staticState.templateMap;
 
     _bodyController.removeListener(_onChanged);
     _subjectController.removeListener(_onChanged);
@@ -102,6 +108,12 @@ class _TemplatesAndRemindersState extends State<TemplatesAndReminders>
 
     _bodyController.addListener(_onChanged);
     _subjectController.addListener(_onChanged);
+
+    setState(() {
+      final template = templateMap['$emailTemplate'] ?? TemplateEntity();
+      _defaultSubject = template.subject;
+      _defaultBody = template.body;
+    });
   }
 
   void _onChanged() {
@@ -123,7 +135,7 @@ class _TemplatesAndRemindersState extends State<TemplatesAndReminders>
         settings = settings.rebuild((b) => b
           ..emailBodyPayment = body
           ..emailSubjectPayment = subject);
-      } else if (_template == EmailTemplate.partial_payment) {
+      } else if (_template == EmailTemplate.payment_partial) {
         settings = settings.rebuild((b) => b
           ..emailBodyPaymentPartial = body
           ..emailSubjectPaymentPartial = subject);
@@ -252,7 +264,7 @@ class _TemplatesAndRemindersState extends State<TemplatesAndReminders>
                         if ([
                               EmailTemplate.invoice,
                               EmailTemplate.payment,
-                              EmailTemplate.partial_payment,
+                              EmailTemplate.payment_partial,
                             ].contains(value) &&
                             !company.isModuleEnabled(EntityType.invoice)) {
                           return false;
@@ -274,12 +286,14 @@ class _TemplatesAndRemindersState extends State<TemplatesAndReminders>
                 DecoratedFormField(
                   label: localization.subject,
                   controller: _subjectController,
+                  hint: _defaultSubject,
                 ),
                 DecoratedFormField(
                   keyboardType: TextInputType.multiline,
                   label: localization.body,
                   controller: _bodyController,
                   maxLines: 8,
+                  hint: _defaultBody,
                 ),
               ]),
               if (_template == EmailTemplate.reminder1)

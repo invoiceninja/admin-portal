@@ -692,7 +692,8 @@ class _EntityFilter extends StatelessWidget {
     final filterEntityType = uiState.filterEntityType;
     final routeEntityType = uiState.entityTypeRoute;
 
-    final entityMap = state.getEntityMap(filterEntityType);
+    final entityMap =
+        filterEntityType != null ? state.getEntityMap(filterEntityType) : null;
     final filterEntity =
         entityMap != null ? entityMap[uiState.filterEntityId] : null;
     final relatedTypes = filterEntityType?.relatedTypes

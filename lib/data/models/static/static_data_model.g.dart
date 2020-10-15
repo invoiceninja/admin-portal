@@ -12,6 +12,8 @@ Serializer<StaticDataItemResponse> _$staticDataItemResponseSerializer =
     new _$StaticDataItemResponseSerializer();
 Serializer<StaticDataEntity> _$staticDataEntitySerializer =
     new _$StaticDataEntitySerializer();
+Serializer<TemplateEntity> _$templateEntitySerializer =
+    new _$TemplateEntitySerializer();
 
 class _$StaticDataListResponseSerializer
     implements StructuredSerializer<StaticDataListResponse> {
@@ -164,6 +166,10 @@ class _$StaticDataEntitySerializer
       serializers.serialize(object.invoiceStatus,
           specifiedType: const FullType(
               BuiltList, const [const FullType(InvoiceStatusEntity)])),
+      'templates',
+      serializers.serialize(object.templates,
+          specifiedType: const FullType(BuiltMap,
+              const [const FullType(String), const FullType(TemplateEntity)])),
     ];
 
     return result;
@@ -246,6 +252,64 @@ class _$StaticDataEntitySerializer
                   specifiedType: const FullType(
                       BuiltList, const [const FullType(InvoiceStatusEntity)]))
               as BuiltList<Object>);
+          break;
+        case 'templates':
+          result.templates.replace(serializers.deserialize(value,
+              specifiedType: const FullType(BuiltMap, const [
+                const FullType(String),
+                const FullType(TemplateEntity)
+              ])));
+          break;
+      }
+    }
+
+    return result.build();
+  }
+}
+
+class _$TemplateEntitySerializer
+    implements StructuredSerializer<TemplateEntity> {
+  @override
+  final Iterable<Type> types = const [TemplateEntity, _$TemplateEntity];
+  @override
+  final String wireName = 'TemplateEntity';
+
+  @override
+  Iterable<Object> serialize(Serializers serializers, TemplateEntity object,
+      {FullType specifiedType = FullType.unspecified}) {
+    final result = <Object>[
+      'subject',
+      serializers.serialize(object.subject,
+          specifiedType: const FullType(String)),
+    ];
+    if (object.body != null) {
+      result
+        ..add('body')
+        ..add(serializers.serialize(object.body,
+            specifiedType: const FullType(String)));
+    }
+    return result;
+  }
+
+  @override
+  TemplateEntity deserialize(
+      Serializers serializers, Iterable<Object> serialized,
+      {FullType specifiedType = FullType.unspecified}) {
+    final result = new TemplateEntityBuilder();
+
+    final iterator = serialized.iterator;
+    while (iterator.moveNext()) {
+      final key = iterator.current as String;
+      iterator.moveNext();
+      final dynamic value = iterator.current;
+      switch (key) {
+        case 'subject':
+          result.subject = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String;
+          break;
+        case 'body':
+          result.body = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String;
           break;
       }
     }
@@ -469,6 +533,8 @@ class _$StaticDataEntity extends StaticDataEntity {
   final BuiltList<CountryEntity> countries;
   @override
   final BuiltList<InvoiceStatusEntity> invoiceStatus;
+  @override
+  final BuiltMap<String, TemplateEntity> templates;
 
   factory _$StaticDataEntity(
           [void Function(StaticDataEntityBuilder) updates]) =>
@@ -485,7 +551,8 @@ class _$StaticDataEntity extends StaticDataEntity {
       this.languages,
       this.paymentTypes,
       this.countries,
-      this.invoiceStatus})
+      this.invoiceStatus,
+      this.templates})
       : super._() {
     if (currencies == null) {
       throw new BuiltValueNullFieldError('StaticDataEntity', 'currencies');
@@ -520,6 +587,9 @@ class _$StaticDataEntity extends StaticDataEntity {
     if (invoiceStatus == null) {
       throw new BuiltValueNullFieldError('StaticDataEntity', 'invoiceStatus');
     }
+    if (templates == null) {
+      throw new BuiltValueNullFieldError('StaticDataEntity', 'templates');
+    }
   }
 
   @override
@@ -544,7 +614,8 @@ class _$StaticDataEntity extends StaticDataEntity {
         languages == other.languages &&
         paymentTypes == other.paymentTypes &&
         countries == other.countries &&
-        invoiceStatus == other.invoiceStatus;
+        invoiceStatus == other.invoiceStatus &&
+        templates == other.templates;
   }
 
   int __hashCode;
@@ -559,17 +630,19 @@ class _$StaticDataEntity extends StaticDataEntity {
                             $jc(
                                 $jc(
                                     $jc(
-                                        $jc($jc(0, currencies.hashCode),
-                                            sizes.hashCode),
-                                        industries.hashCode),
-                                    timezones.hashCode),
-                                gateways.hashCode),
-                            dateFormats.hashCode),
-                        datetimeFormats.hashCode),
-                    languages.hashCode),
-                paymentTypes.hashCode),
-            countries.hashCode),
-        invoiceStatus.hashCode));
+                                        $jc(
+                                            $jc($jc(0, currencies.hashCode),
+                                                sizes.hashCode),
+                                            industries.hashCode),
+                                        timezones.hashCode),
+                                    gateways.hashCode),
+                                dateFormats.hashCode),
+                            datetimeFormats.hashCode),
+                        languages.hashCode),
+                    paymentTypes.hashCode),
+                countries.hashCode),
+            invoiceStatus.hashCode),
+        templates.hashCode));
   }
 
   @override
@@ -585,7 +658,8 @@ class _$StaticDataEntity extends StaticDataEntity {
           ..add('languages', languages)
           ..add('paymentTypes', paymentTypes)
           ..add('countries', countries)
-          ..add('invoiceStatus', invoiceStatus))
+          ..add('invoiceStatus', invoiceStatus)
+          ..add('templates', templates))
         .toString();
   }
 }
@@ -659,6 +733,12 @@ class StaticDataEntityBuilder
   set invoiceStatus(ListBuilder<InvoiceStatusEntity> invoiceStatus) =>
       _$this._invoiceStatus = invoiceStatus;
 
+  MapBuilder<String, TemplateEntity> _templates;
+  MapBuilder<String, TemplateEntity> get templates =>
+      _$this._templates ??= new MapBuilder<String, TemplateEntity>();
+  set templates(MapBuilder<String, TemplateEntity> templates) =>
+      _$this._templates = templates;
+
   StaticDataEntityBuilder();
 
   StaticDataEntityBuilder get _$this {
@@ -674,6 +754,7 @@ class StaticDataEntityBuilder
       _paymentTypes = _$v.paymentTypes?.toBuilder();
       _countries = _$v.countries?.toBuilder();
       _invoiceStatus = _$v.invoiceStatus?.toBuilder();
+      _templates = _$v.templates?.toBuilder();
       _$v = null;
     }
     return this;
@@ -708,7 +789,8 @@ class StaticDataEntityBuilder
               languages: languages.build(),
               paymentTypes: paymentTypes.build(),
               countries: countries.build(),
-              invoiceStatus: invoiceStatus.build());
+              invoiceStatus: invoiceStatus.build(),
+              templates: templates.build());
     } catch (_) {
       String _$failedField;
       try {
@@ -734,12 +816,105 @@ class StaticDataEntityBuilder
         countries.build();
         _$failedField = 'invoiceStatus';
         invoiceStatus.build();
+        _$failedField = 'templates';
+        templates.build();
       } catch (e) {
         throw new BuiltValueNestedFieldError(
             'StaticDataEntity', _$failedField, e.toString());
       }
       rethrow;
     }
+    replace(_$result);
+    return _$result;
+  }
+}
+
+class _$TemplateEntity extends TemplateEntity {
+  @override
+  final String subject;
+  @override
+  final String body;
+
+  factory _$TemplateEntity([void Function(TemplateEntityBuilder) updates]) =>
+      (new TemplateEntityBuilder()..update(updates)).build();
+
+  _$TemplateEntity._({this.subject, this.body}) : super._() {
+    if (subject == null) {
+      throw new BuiltValueNullFieldError('TemplateEntity', 'subject');
+    }
+  }
+
+  @override
+  TemplateEntity rebuild(void Function(TemplateEntityBuilder) updates) =>
+      (toBuilder()..update(updates)).build();
+
+  @override
+  TemplateEntityBuilder toBuilder() =>
+      new TemplateEntityBuilder()..replace(this);
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(other, this)) return true;
+    return other is TemplateEntity &&
+        subject == other.subject &&
+        body == other.body;
+  }
+
+  int __hashCode;
+  @override
+  int get hashCode {
+    return __hashCode ??= $jf($jc($jc(0, subject.hashCode), body.hashCode));
+  }
+
+  @override
+  String toString() {
+    return (newBuiltValueToStringHelper('TemplateEntity')
+          ..add('subject', subject)
+          ..add('body', body))
+        .toString();
+  }
+}
+
+class TemplateEntityBuilder
+    implements Builder<TemplateEntity, TemplateEntityBuilder> {
+  _$TemplateEntity _$v;
+
+  String _subject;
+  String get subject => _$this._subject;
+  set subject(String subject) => _$this._subject = subject;
+
+  String _body;
+  String get body => _$this._body;
+  set body(String body) => _$this._body = body;
+
+  TemplateEntityBuilder();
+
+  TemplateEntityBuilder get _$this {
+    if (_$v != null) {
+      _subject = _$v.subject;
+      _body = _$v.body;
+      _$v = null;
+    }
+    return this;
+  }
+
+  @override
+  void replace(TemplateEntity other) {
+    if (other == null) {
+      throw new ArgumentError.notNull('other');
+    }
+    _$v = other as _$TemplateEntity;
+  }
+
+  @override
+  void update(void Function(TemplateEntityBuilder) updates) {
+    if (updates != null) updates(this);
+  }
+
+  @override
+  _$TemplateEntity build() {
+    final _$result =
+        _$v ?? new _$TemplateEntity._(subject: subject, body: body);
     replace(_$result);
     return _$result;
   }

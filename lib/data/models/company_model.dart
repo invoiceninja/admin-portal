@@ -423,13 +423,13 @@ abstract class CompanyEntity extends Object
 
   bool isModuleEnabled(EntityType entityType) {
     // TODO remove this
-    //if (kReleaseMode &&
-    if ([
-      EntityType.project,
-      EntityType.task,
-      EntityType.expense,
-      EntityType.vendor,
-    ].contains(entityType)) {
+    if (kReleaseMode &&
+        [
+          EntityType.project,
+          EntityType.task,
+          EntityType.expense,
+          EntityType.vendor,
+        ].contains(entityType)) {
       return false;
     }
 
@@ -1987,7 +1987,7 @@ abstract class SettingsEntity
         return emailSubjectQuote;
       case EmailTemplate.payment:
         return emailSubjectPayment;
-      case EmailTemplate.partial_payment:
+      case EmailTemplate.payment_partial:
         return emailSubjectPaymentPartial;
       case EmailTemplate.reminder1:
         return emailSubjectReminder1;
@@ -2014,7 +2014,7 @@ abstract class SettingsEntity
         return emailBodyQuote;
       case EmailTemplate.payment:
         return emailBodyPayment;
-      case EmailTemplate.partial_payment:
+      case EmailTemplate.payment_partial:
         return emailBodyPaymentPartial;
       case EmailTemplate.reminder1:
         return emailBodyReminder1;

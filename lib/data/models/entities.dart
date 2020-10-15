@@ -162,8 +162,9 @@ class EmailTemplate extends EnumClass {
   static const EmailTemplate invoice = _$invoice_email;
   static const EmailTemplate quote = _$quote_email;
   static const EmailTemplate payment = _$payment_email;
-  static const EmailTemplate partial_payment = _$partial_payment_email;
+  static const EmailTemplate payment_partial = _$payment_partial_email;
   static const EmailTemplate credit = _$credit_email;
+  static const EmailTemplate statement = _$statement_email;
   static const EmailTemplate reminder1 = _$reminder1_email;
   static const EmailTemplate reminder2 = _$reminder2_email;
   static const EmailTemplate reminder3 = _$reminder3_email;
@@ -171,7 +172,6 @@ class EmailTemplate extends EnumClass {
   static const EmailTemplate custom1 = _$custom1_email;
   static const EmailTemplate custom2 = _$custom2_email;
   static const EmailTemplate custom3 = _$custom3_email;
-  static const EmailTemplate statement = _$statement_email;
 
   static BuiltSet<EmailTemplate> get values => _$templateValues;
 

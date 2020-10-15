@@ -8,50 +8,52 @@ Reducer<StaticState> staticReducer = combineReducers([
 
 StaticState staticLoadedReducer(
     StaticState staticState, LoadStaticSuccess action) {
+  final data = action.data;
   return StaticState().rebuild((b) => b
     ..updatedAt = DateTime.now().millisecondsSinceEpoch
+    ..templateMap.replace(data.templates)
     ..currencyMap.addAll(Map.fromIterable(
-      action.data.currencies,
+      data.currencies,
       key: (dynamic item) => item.id,
       value: (dynamic item) => item,
     ))
     ..sizeMap.addAll(Map.fromIterable(
-      action.data.sizes,
+      data.sizes,
       key: (dynamic item) => item.id,
       value: (dynamic item) => item,
     ))
     ..industryMap.addAll(Map.fromIterable(
-      action.data.industries,
+      data.industries,
       key: (dynamic item) => item.id,
       value: (dynamic item) => item,
     ))
     ..timezoneMap.addAll(Map.fromIterable(
-      action.data.timezones,
+      data.timezones,
       key: (dynamic item) => item.id,
       value: (dynamic item) => item,
     ))
     ..dateFormatMap.addAll(Map.fromIterable(
-      action.data.dateFormats,
+      data.dateFormats,
       key: (dynamic item) => item.id,
       value: (dynamic item) => item,
     ))
     ..languageMap.addAll(Map.fromIterable(
-      action.data.languages,
+      data.languages,
       key: (dynamic item) => item.id,
       value: (dynamic item) => item,
     ))
     ..paymentTypeMap.addAll(Map.fromIterable(
-      action.data.paymentTypes,
+      data.paymentTypes,
       key: (dynamic item) => item.id,
       value: (dynamic item) => item,
     ))
     ..countryMap.addAll(Map.fromIterable(
-      action.data.countries,
+      data.countries,
       key: (dynamic item) => item.id,
       value: (dynamic item) => item,
     ))
     ..gatewayMap.addAll(Map.fromIterable(
-      action.data.gateways,
+      data.gateways,
       key: (dynamic item) => item.id,
       value: (dynamic item) => item,
     )));

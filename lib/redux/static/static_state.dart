@@ -18,6 +18,7 @@ abstract class StaticState implements Built<StaticState, StaticStateBuilder> {
       languageMap: BuiltMap<String, LanguageEntity>(),
       paymentTypeMap: BuiltMap<String, PaymentTypeEntity>(),
       countryMap: BuiltMap<String, CountryEntity>(),
+      templateMap: BuiltMap<String, TemplateEntity>(),
     );
   }
 
@@ -58,6 +59,8 @@ abstract class StaticState implements Built<StaticState, StaticStateBuilder> {
   BuiltMap<String, PaymentTypeEntity> get paymentTypeMap;
 
   BuiltMap<String, CountryEntity> get countryMap;
+
+  BuiltMap<String, TemplateEntity> get templateMap;
 
   static Serializer<StaticState> get serializer => _$staticStateSerializer;
 }
