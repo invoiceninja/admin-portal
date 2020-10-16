@@ -51,6 +51,10 @@ class _GeneratedNumbersState extends State<GeneratedNumbers>
       EntityType.quote,
       EntityType.credit,
       EntityType.recurringInvoice,
+      EntityType.task,
+      EntityType.vendor,
+      EntityType.expense,
+      EntityType.project,
     ].forEach((entityType) {
       if (company.isModuleEnabled(entityType)) {
         tabs++;
@@ -140,6 +144,22 @@ class _GeneratedNumbersState extends State<GeneratedNumbers>
           if (company.isModuleEnabled(EntityType.credit))
             Tab(
               text: localization.credits,
+            ),
+          if (company.isModuleEnabled(EntityType.project))
+            Tab(
+              text: localization.projects,
+            ),
+          if (company.isModuleEnabled(EntityType.task))
+            Tab(
+              text: localization.tasks,
+            ),
+          if (company.isModuleEnabled(EntityType.vendor))
+            Tab(
+              text: localization.vendors,
+            ),
+          if (company.isModuleEnabled(EntityType.expense))
+            Tab(
+              text: localization.expenses,
             ),
         ],
       ),
@@ -297,6 +317,50 @@ class _GeneratedNumbersState extends State<GeneratedNumbers>
                     viewModel.onSettingsChanged(settings.rebuild((b) => b
                       ..creditNumberCounter = counter
                       ..creditNumberPattern = pattern)),
+              ),
+            ]),
+          if (company.isModuleEnabled(EntityType.project))
+            ListView(children: <Widget>[
+              EntityNumberSettings(
+                counterValue: settings.projectNumberCounter,
+                patternValue: settings.projectNumberPattern,
+                onChanged: (counter, pattern) =>
+                    viewModel.onSettingsChanged(settings.rebuild((b) => b
+                      ..projectNumberCounter = counter
+                      ..projectNumberPattern = pattern)),
+              ),
+            ]),
+          if (company.isModuleEnabled(EntityType.task))
+            ListView(children: <Widget>[
+              EntityNumberSettings(
+                counterValue: settings.taskNumberCounter,
+                patternValue: settings.taskNumberPattern,
+                onChanged: (counter, pattern) =>
+                    viewModel.onSettingsChanged(settings.rebuild((b) => b
+                      ..taskNumberCounter = counter
+                      ..taskNumberPattern = pattern)),
+              ),
+            ]),
+          if (company.isModuleEnabled(EntityType.vendor))
+            ListView(children: <Widget>[
+              EntityNumberSettings(
+                counterValue: settings.vendorNumberCounter,
+                patternValue: settings.vendorNumberPattern,
+                onChanged: (counter, pattern) =>
+                    viewModel.onSettingsChanged(settings.rebuild((b) => b
+                      ..vendorNumberCounter = counter
+                      ..vendorNumberPattern = pattern)),
+              ),
+            ]),
+          if (company.isModuleEnabled(EntityType.expense))
+            ListView(children: <Widget>[
+              EntityNumberSettings(
+                counterValue: settings.expenseNumberCounter,
+                patternValue: settings.expenseNumberPattern,
+                onChanged: (counter, pattern) =>
+                    viewModel.onSettingsChanged(settings.rebuild((b) => b
+                      ..expenseNumberCounter = counter
+                      ..expenseNumberPattern = pattern)),
               ),
             ]),
         ],
