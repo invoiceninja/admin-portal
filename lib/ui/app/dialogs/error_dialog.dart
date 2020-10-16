@@ -20,7 +20,7 @@ class ErrorDialog extends StatelessWidget {
     final store = StoreProvider.of<AppState>(context);
 
     return AlertDialog(
-      title: Text(localization.anErrorOccurred),
+      title: Text(localization.error),
       content: error != null ? Text(error.toString()) : SizedBox(),
       actions: [
         if (clearErrorOnDismiss && !Config.DEMO_MODE)

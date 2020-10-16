@@ -15,6 +15,8 @@ mixin LocalizationsProvider on LocaleCodeAware {
   static final Map<String, Map<String, String>> _localizedValues = {
     'en': {
       // STARTER: lang key - do not remove comment
+      'negative_payment_error':
+          'The credit amount cannot exceed the payment amount',
       'view_changes': 'View Changes',
       'force_update': 'Force Update',
       'force_update_help':
@@ -4672,6 +4674,9 @@ mixin LocalizationsProvider on LocaleCodeAware {
       _localizedValues[localeCode]['force_update_help'] ?? '';
 
   String get viewChanges => _localizedValues[localeCode]['view_changes'] ?? '';
+
+  String get negativePaymentError =>
+      _localizedValues[localeCode]['negative_payment_error'] ?? '';
 
   String lookup(String key) {
     final lookupKey = toSnakeCase(key);

@@ -8,6 +8,7 @@ import 'package:invoiceninja_flutter/redux/ui/pref_state.dart';
 import 'package:invoiceninja_flutter/redux/ui/ui_actions.dart';
 import 'package:invoiceninja_flutter/ui/app/dialogs/error_dialog.dart';
 import 'package:invoiceninja_flutter/ui/payment/view/payment_view_vm.dart';
+import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:invoiceninja_flutter/utils/platforms.dart';
 import 'package:redux/redux.dart';
 import 'package:invoiceninja_flutter/redux/payment/payment_actions.dart';
@@ -70,6 +71,18 @@ class PaymentEditVM {
         store.dispatch(UpdateCurrentRoute(state.uiState.previousRoute));
       },
       onSavePressed: (BuildContext context) {
+        double amount = 0;
+        payment.invoices.forEach((invoice) => amount += invoice.amount);
+        payment.credits.forEach((credit) => amount -= credit.amount);
+        if (amount < 0) {
+          showDialog<ErrorDialog>(
+              context: context,
+              builder: (BuildContext context) {
+                return ErrorDialog(
+                    AppLocalization.of(context).negativePaymentError);
+              });
+          return null;
+        }
         final Completer<PaymentEntity> completer = Completer<PaymentEntity>();
         store.dispatch(
             SavePaymentRequest(completer: completer, payment: payment));
