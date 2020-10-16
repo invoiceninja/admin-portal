@@ -161,7 +161,7 @@ class _$VendorEntitySerializer implements StructuredSerializer<VendorEntity> {
       'custom_value4',
       serializers.serialize(object.customValue4,
           specifiedType: const FullType(String)),
-      'vendor_contacts',
+      'contacts',
       serializers.serialize(object.contacts,
           specifiedType: const FullType(
               BuiltList, const [const FullType(VendorContactEntity)])),
@@ -290,7 +290,7 @@ class _$VendorEntitySerializer implements StructuredSerializer<VendorEntity> {
           result.customValue4 = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String;
           break;
-        case 'vendor_contacts':
+        case 'contacts':
           result.contacts.replace(serializers.deserialize(value,
                   specifiedType: const FullType(
                       BuiltList, const [const FullType(VendorContactEntity)]))
