@@ -34,28 +34,23 @@ class TaskTimeListTile extends StatelessWidget {
     final subtitle = '$startDateString - $endDateString';
     final duration = formatDuration(taskTime.duration);
 
-    return Material(
-        color: Theme.of(context).canvasColor,
-        child: Padding(
-          padding: const EdgeInsets.only(top: 4.0, bottom: 4.0),
-          child: Column(
+    return Column(
+      children: <Widget>[
+        ListTile(
+          onTap: () => onTap(context),
+          title: Row(
             children: <Widget>[
-              ListTile(
-                onTap: () => onTap(context),
-                title: Row(
-                  children: <Widget>[
-                    Expanded(child: Text(title)),
-                    Text(duration),
-                  ],
-                ),
-                subtitle: Text(subtitle),
-                trailing: onTap != null ? Icon(Icons.navigate_next) : null,
-              ),
-              Divider(
-                height: 1.0,
-              ),
+              Expanded(child: Text(title)),
+              Text(duration),
             ],
           ),
-        ));
+          subtitle: Text(subtitle),
+          trailing: onTap != null ? Icon(Icons.navigate_next) : null,
+        ),
+        Divider(
+          height: 1.0,
+        ),
+      ],
+    );
   }
 }

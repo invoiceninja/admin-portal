@@ -2,16 +2,15 @@ import 'dart:async';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
-import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:invoiceninja_flutter/redux/task/task_selectors.dart';
 import 'package:invoiceninja_flutter/ui/app/FieldGrid.dart';
-import 'package:invoiceninja_flutter/ui/app/entities/entity_state_title.dart';
-import 'package:invoiceninja_flutter/ui/app/icon_message.dart';
+import 'package:invoiceninja_flutter/ui/app/entities/entity_list_tile.dart';
 import 'package:invoiceninja_flutter/ui/app/entity_header.dart';
+import 'package:invoiceninja_flutter/ui/app/icon_message.dart';
+import 'package:invoiceninja_flutter/ui/app/lists/list_divider.dart';
 import 'package:invoiceninja_flutter/ui/task/task_time_view.dart';
 import 'package:invoiceninja_flutter/ui/task/view/task_view_vm.dart';
 import 'package:invoiceninja_flutter/utils/formatting.dart';
-import 'package:invoiceninja_flutter/utils/icons.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 
 class TaskOverview extends StatefulWidget {
@@ -103,64 +102,32 @@ class _TaskOverviewState extends State<TaskOverview> {
             context,
           ),
         ),
+        ListDivider(),
       ];
 
       if (client != null) {
         widgets.addAll([
-          Material(
-            color: Theme.of(context).canvasColor,
-            child: ListTile(
-              title: EntityStateTitle(entity: client),
-              leading: Icon(getEntityIcon(EntityType.client), size: 18.0),
-              trailing: Icon(Icons.navigate_next),
-              onTap: () => inspectEntity(context: context, entity: client),
-              onLongPress: () => inspectEntity(
-                  context: context, entity: client, longPress: true),
-            ),
-          ),
-          Container(
-            color: Theme.of(context).backgroundColor,
-            height: 12.0,
+          EntityListTile(
+            entity: client,
+            isFilter: widget.isFilter,
           ),
         ]);
       }
 
       if (project != null) {
         widgets.addAll([
-          Material(
-            color: Theme.of(context).canvasColor,
-            child: ListTile(
-              title: EntityStateTitle(entity: project),
-              leading: Icon(getEntityIcon(EntityType.project), size: 18.0),
-              trailing: Icon(Icons.navigate_next),
-              onTap: () => inspectEntity(context: context, entity: project),
-              onLongPress: () => inspectEntity(
-                  context: context, entity: project, longPress: true),
-            ),
-          ),
-          Container(
-            color: Theme.of(context).backgroundColor,
-            height: 12.0,
+          EntityListTile(
+            entity: project,
+            isFilter: widget.isFilter,
           ),
         ]);
       }
 
       if (invoice != null) {
         widgets.addAll([
-          Material(
-            color: Theme.of(context).canvasColor,
-            child: ListTile(
-              title: EntityStateTitle(entity: invoice),
-              leading: Icon(getEntityIcon(EntityType.invoice), size: 18.0),
-              trailing: Icon(Icons.navigate_next),
-              onTap: () => inspectEntity(context: context, entity: invoice),
-              onLongPress: () => inspectEntity(
-                  context: context, entity: invoice, longPress: true),
-            ),
-          ),
-          Container(
-            color: Theme.of(context).backgroundColor,
-            height: 12.0,
+          EntityListTile(
+            entity: invoice,
+            isFilter: widget.isFilter,
           ),
         ]);
       }
@@ -168,10 +135,7 @@ class _TaskOverviewState extends State<TaskOverview> {
       if (task.description.isNotEmpty) {
         widgets.addAll([
           IconMessage(task.description),
-          Container(
-            color: Theme.of(context).backgroundColor,
-            height: 12.0,
-          ),
+          ListDivider(),
         ]);
       }
 
@@ -195,13 +159,6 @@ class _TaskOverviewState extends State<TaskOverview> {
             )
           ]);
         });
-
-        widgets.add(
-          Container(
-            color: Theme.of(context).backgroundColor,
-            height: 12.0,
-          ),
-        );
       }
 
       return widgets;
