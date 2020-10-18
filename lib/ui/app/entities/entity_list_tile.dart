@@ -163,6 +163,12 @@ class EntitiesListTile extends StatelessWidget {
     final mainRoute = state.uiState.mainRoute;
     final isFilterMatch = isFilter && '$entityType' == mainRoute;
 
+    if (![EntityType.invoice, EntityType.task, EntityType.expense]
+            .contains(entityType) &&
+        (subtitle ?? '').isEmpty) {
+      return SizedBox();
+    }
+
     return Column(
       mainAxisSize: MainAxisSize.min,
       children: <Widget>[

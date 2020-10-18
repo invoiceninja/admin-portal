@@ -42,7 +42,7 @@ class ProjectViewVM {
     @required this.client,
     @required this.company,
     @required this.onEntityAction,
-    @required this.onTasksPressed,
+    @required this.onEntityPressed,
     @required this.onAddTaskPressed,
     @required this.onRefreshed,
     @required this.isSaving,
@@ -73,18 +73,21 @@ class ProjectViewVM {
       project: project,
       client: client,
       onRefreshed: (context) => _handleRefresh(context),
-      onTasksPressed: (BuildContext context, {bool longPress = false}) {
-        if (longPress && project.isActive && client.isActive) {
-          createEntity(
-              context: context,
-              entity: TaskEntity(state: state).rebuild((b) => b
-                ..projectId = project.id
-                ..clientId = project.clientId));
-        } else {
+      onEntityPressed: (BuildContext context, EntityType entityType,
+          {bool longPress = false}) {
+        if (!longPress || !project.isActive || !client.isActive) {
           viewEntitiesByType(
-              context: context,
-              entityType: EntityType.task,
-              filterEntity: project);
+              context: context, entityType: entityType, filterEntity: project);
+        }
+
+        switch (entityType) {
+          case EntityType.task:
+            createEntity(
+                context: context,
+                entity: TaskEntity(state: state).rebuild((b) => b
+                  ..projectId = project.id
+                  ..clientId = project.clientId));
+            break;
         }
       },
       onAddTaskPressed: (context) {
@@ -106,7 +109,7 @@ class ProjectViewVM {
   final CompanyEntity company;
   final Function(BuildContext, EntityAction) onEntityAction;
   final Function(BuildContext) onAddTaskPressed;
-  final Function(BuildContext, {bool longPress}) onTasksPressed;
+  final Function(BuildContext, EntityType, {bool longPress}) onEntityPressed;
   final Function(BuildContext) onRefreshed;
   final bool isSaving;
   final bool isLoading;

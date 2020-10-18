@@ -98,6 +98,9 @@ List<String> filteredCreditsSelector(
     } else if (filterEntityType == EntityType.user &&
         credit.assignedUserId != filterEntityId) {
       return false;
+    } else if (filterEntityType == EntityType.project &&
+        credit.projectId != filterEntityId) {
+      return false;
     }
 
     if (!credit.matchesStates(creditListState.stateFilters)) {

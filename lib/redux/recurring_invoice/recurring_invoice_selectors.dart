@@ -51,6 +51,9 @@ List<String> filteredRecurringInvoicesSelector(
     } else if (filterEntityType == EntityType.user &&
         invoice.assignedUserId != filterEntityId) {
       return false;
+    } else if (filterEntityType == EntityType.project &&
+        invoice.projectId != filterEntityId) {
+      return false;
     }
 
     if (!invoice.matchesStates(invoiceListState.stateFilters)) {

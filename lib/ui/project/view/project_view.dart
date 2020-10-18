@@ -98,17 +98,90 @@ class _ProjectViewState extends State<ProjectView> {
                 entity: client,
                 isFilter: widget.isFilter,
               ),
-              EntitiesListTile(
-                isFilter: widget.isFilter,
-                entityType: EntityType.task,
-                title: localization.tasks,
-                onTap: () => viewModel.onTasksPressed(context),
-                onLongPress: () =>
-                    viewModel.onTasksPressed(context, longPress: true),
-                subtitle: memoizedTaskStatsForProject(
-                        project.id, viewModel.state.taskState.map)
-                    .present(localization.active, localization.archived),
-              ),
+              if (company.isModuleEnabled(EntityType.invoice))
+                EntitiesListTile(
+                  isFilter: widget.isFilter,
+                  entityType: EntityType.invoice,
+                  title: localization.invoices,
+                  onTap: () =>
+                      viewModel.onEntityPressed(context, EntityType.invoice),
+                  onLongPress: () => viewModel.onEntityPressed(
+                      context, EntityType.invoice,
+                      longPress: true),
+                  subtitle: memoizedTaskStatsForProject(
+                          project.id, viewModel.state.taskState.map)
+                      .present(localization.active, localization.archived),
+                ),
+              if (company.isModuleEnabled(EntityType.recurringInvoice))
+                EntitiesListTile(
+                  isFilter: widget.isFilter,
+                  entityType: EntityType.recurringInvoice,
+                  title: localization.recurringInvoices,
+                  onTap: () => viewModel.onEntityPressed(
+                      context, EntityType.recurringInvoice),
+                  onLongPress: () => viewModel.onEntityPressed(
+                      context, EntityType.recurringInvoice,
+                      longPress: true),
+                  subtitle: memoizedTaskStatsForProject(
+                          project.id, viewModel.state.taskState.map)
+                      .present(localization.active, localization.archived),
+                ),
+              if (company.isModuleEnabled(EntityType.quote))
+                EntitiesListTile(
+                  isFilter: widget.isFilter,
+                  entityType: EntityType.quote,
+                  title: localization.quotes,
+                  onTap: () =>
+                      viewModel.onEntityPressed(context, EntityType.quote),
+                  onLongPress: () => viewModel.onEntityPressed(
+                      context, EntityType.quote,
+                      longPress: true),
+                  subtitle: memoizedTaskStatsForProject(
+                          project.id, viewModel.state.taskState.map)
+                      .present(localization.active, localization.archived),
+                ),
+              if (company.isModuleEnabled(EntityType.credit))
+                EntitiesListTile(
+                  isFilter: widget.isFilter,
+                  entityType: EntityType.credit,
+                  title: localization.credits,
+                  onTap: () =>
+                      viewModel.onEntityPressed(context, EntityType.credit),
+                  onLongPress: () => viewModel.onEntityPressed(
+                      context, EntityType.credit,
+                      longPress: true),
+                  subtitle: memoizedTaskStatsForProject(
+                          project.id, viewModel.state.taskState.map)
+                      .present(localization.active, localization.archived),
+                ),
+              if (company.isModuleEnabled(EntityType.task))
+                EntitiesListTile(
+                  isFilter: widget.isFilter,
+                  entityType: EntityType.task,
+                  title: localization.tasks,
+                  onTap: () =>
+                      viewModel.onEntityPressed(context, EntityType.task),
+                  onLongPress: () => viewModel.onEntityPressed(
+                      context, EntityType.task,
+                      longPress: true),
+                  subtitle: memoizedTaskStatsForProject(
+                          project.id, viewModel.state.taskState.map)
+                      .present(localization.active, localization.archived),
+                ),
+              if (company.isModuleEnabled(EntityType.expense))
+                EntitiesListTile(
+                  isFilter: widget.isFilter,
+                  entityType: EntityType.expense,
+                  title: localization.expenses,
+                  onTap: () =>
+                      viewModel.onEntityPressed(context, EntityType.expense),
+                  onLongPress: () => viewModel.onEntityPressed(
+                      context, EntityType.expense,
+                      longPress: true),
+                  subtitle: memoizedTaskStatsForProject(
+                          project.id, viewModel.state.taskState.map)
+                      .present(localization.active, localization.archived),
+                ),
             ];
 
             if (project.privateNotes != null &&
