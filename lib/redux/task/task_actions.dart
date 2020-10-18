@@ -405,3 +405,27 @@ class RemoveFromTaskMultiselect {
 }
 
 class ClearTaskMultiselect {}
+
+class SaveTaskDocumentRequest implements StartSaving {
+  SaveTaskDocumentRequest({
+    @required this.completer,
+    @required this.filePath,
+    @required this.task,
+  });
+
+  final Completer completer;
+  final String filePath;
+  final TaskEntity task;
+}
+
+class SaveTaskDocumentSuccess implements StopSaving, PersistData, PersistUI {
+  SaveTaskDocumentSuccess(this.document);
+
+  final DocumentEntity document;
+}
+
+class SaveTaskDocumentFailure implements StopSaving {
+  SaveTaskDocumentFailure(this.error);
+
+  final Object error;
+}

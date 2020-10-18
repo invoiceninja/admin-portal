@@ -343,3 +343,27 @@ class RemoveFromExpenseMultiselect {
 }
 
 class ClearExpenseMultiselect {}
+
+class SaveExpenseDocumentRequest implements StartSaving {
+  SaveExpenseDocumentRequest({
+    @required this.completer,
+    @required this.filePath,
+    @required this.expense,
+  });
+
+  final Completer completer;
+  final String filePath;
+  final ExpenseEntity expense;
+}
+
+class SaveExpenseDocumentSuccess implements StopSaving, PersistData, PersistUI {
+  SaveExpenseDocumentSuccess(this.document);
+
+  final DocumentEntity document;
+}
+
+class SaveExpenseDocumentFailure implements StopSaving {
+  SaveExpenseDocumentFailure(this.error);
+
+  final Object error;
+}

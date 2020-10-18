@@ -388,3 +388,27 @@ class RemoveFromProjectMultiselect {
 }
 
 class ClearProjectMultiselect {}
+
+class SaveProjectDocumentRequest implements StartSaving {
+  SaveProjectDocumentRequest({
+    @required this.completer,
+    @required this.filePath,
+    @required this.project,
+  });
+
+  final Completer completer;
+  final String filePath;
+  final ProjectEntity project;
+}
+
+class SaveProjectDocumentSuccess implements StopSaving, PersistData, PersistUI {
+  SaveProjectDocumentSuccess(this.document);
+
+  final DocumentEntity document;
+}
+
+class SaveProjectDocumentFailure implements StopSaving {
+  SaveProjectDocumentFailure(this.error);
+
+  final Object error;
+}

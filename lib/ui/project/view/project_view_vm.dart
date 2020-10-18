@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
@@ -5,7 +7,10 @@ import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/data/models/project_model.dart';
 import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
+import 'package:invoiceninja_flutter/redux/document/document_actions.dart';
 import 'package:invoiceninja_flutter/redux/project/project_actions.dart';
+import 'package:invoiceninja_flutter/ui/app/dialogs/error_dialog.dart';
+import 'package:invoiceninja_flutter/ui/app/snackbar_row.dart';
 import 'package:invoiceninja_flutter/ui/project/view/project_view.dart';
 import 'package:invoiceninja_flutter/utils/completers.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
@@ -48,6 +53,8 @@ class ProjectViewVM {
     @required this.isSaving,
     @required this.isLoading,
     @required this.isDirty,
+    @required this.onUploadDocument,
+    @required this.onDeleteDocument,
   });
 
   factory ProjectViewVM.fromStore(Store<AppState> store) {
@@ -93,6 +100,35 @@ class ProjectViewVM {
       },
       onEntityAction: (BuildContext context, EntityAction action) =>
           handleEntitiesActions(context, [project], action, autoPop: true),
+      onUploadDocument: (BuildContext context, String filePath) {
+        final Completer<DocumentEntity> completer = Completer<DocumentEntity>();
+        store.dispatch(SaveProjectDocumentRequest(
+            filePath: filePath, project: project, completer: completer));
+        completer.future.then((client) {
+          Scaffold.of(context).showSnackBar(SnackBar(
+              content: SnackBarRow(
+            message: AppLocalization.of(context).uploadedDocument,
+          )));
+        }).catchError((Object error) {
+          showDialog<ErrorDialog>(
+              context: context,
+              builder: (BuildContext context) {
+                return ErrorDialog(error);
+              });
+        });
+      },
+      onDeleteDocument:
+          (BuildContext context, DocumentEntity document, String password) {
+        final completer = snackBarCompleter<Null>(
+            context, AppLocalization.of(context).deletedDocument);
+        completer.future.then<Null>(
+            (value) => store.dispatch(LoadProject(projectId: project.id)));
+        store.dispatch(DeleteDocumentRequest(
+          completer: completer,
+          documentIds: [document.id],
+          password: password,
+        ));
+      },
     );
   }
 
@@ -107,4 +143,6 @@ class ProjectViewVM {
   final bool isSaving;
   final bool isLoading;
   final bool isDirty;
+  final Function(BuildContext, String) onUploadDocument;
+  final Function(BuildContext, DocumentEntity, String) onDeleteDocument;
 }
