@@ -150,8 +150,8 @@ class ExpenseEditSettingsState extends State<ExpenseEditSettings> {
                 ? SizedBox()
                 : SwitchListTile(
                     activeColor: Theme.of(context).accentColor,
-                    title: Text(localization.markInvoiceable),
-                    subtitle: Text(localization.markInvoiceableHelp),
+                    title: Text(localization.shouldBeInvoiced),
+                    subtitle: Text(localization.shouldBeInvoicedHelp),
                     value: expense.shouldBeInvoiced,
                     onChanged: (value) {
                       viewModel.onChanged(

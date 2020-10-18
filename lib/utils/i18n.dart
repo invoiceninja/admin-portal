@@ -22,7 +22,8 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'force_update_help':
           'You are running the latest version but there may be pending fixes available.',
       'mark_paid_help': 'Track the expense has been paid',
-      'mark_invoiceable_help': 'Enable the expense to be invoiced',
+      'should_be_invoiced': 'Should be Invoiced',
+      'should_be_invoiced_help': 'Enable the expense to be invoiced',
       'add_documents_to_invoice_help': 'Make the documents visible',
       'convert_currency_help': 'Set an exchange rate',
       'expense_settings': 'Expense Settings',
@@ -899,11 +900,10 @@ mixin LocalizationsProvider on LocaleCodeAware {
       'expense_status_2': 'Pending',
       'expense_status_3': 'Invoiced',
       'converted': 'Converted',
-      'add_documents_to_invoice': 'Add documents to invoice',
+      'add_documents_to_invoice': 'Add Documents to Invoice',
       'exchange_rate': 'Exchange Rate',
       'convert_currency': 'Convert Currency',
       'mark_paid': 'Mark Paid',
-      'mark_invoiceable': 'Mark Invoiceable',
       'category': 'Category',
       'address': 'Address',
       'new_vendor': 'New Vendor',
@@ -2332,9 +2332,6 @@ mixin LocalizationsProvider on LocaleCodeAware {
   String get address => _localizedValues[localeCode]['address'] ?? '';
 
   String get category => _localizedValues[localeCode]['category'] ?? '';
-
-  String get markInvoiceable =>
-      _localizedValues[localeCode]['mark_invoiceable'] ?? '';
 
   String get markPaid => _localizedValues[localeCode]['mark_paid'] ?? '';
 
@@ -4653,9 +4650,6 @@ mixin LocalizationsProvider on LocaleCodeAware {
   String get markPaidHelp =>
       _localizedValues[localeCode]['mark_paid_help'] ?? '';
 
-  String get markInvoiceableHelp =>
-      _localizedValues[localeCode]['mark_invoiceable_help'] ?? '';
-
   String get addDocumentsToInvoiceHelp =>
       _localizedValues[localeCode]['add_documents_to_invoice_help'] ?? '';
 
@@ -4673,10 +4667,16 @@ mixin LocalizationsProvider on LocaleCodeAware {
   String get forceUpdateHelp =>
       _localizedValues[localeCode]['force_update_help'] ?? '';
 
-  String get viewChanges => _localizedValues[localeCode]['view_changes'] ?? '';
-
   String get negativePaymentError =>
       _localizedValues[localeCode]['negative_payment_error'] ?? '';
+
+  String get viewChanges => _localizedValues[localeCode]['view_changes'] ?? '';
+
+  String get shouldBeInvoiced =>
+      _localizedValues[localeCode]['should_be_invoiced'] ?? '';
+
+  String get shouldBeInvoicedHelp =>
+      _localizedValues[localeCode]['should_be_invoiced_help'] ?? '';
 
   String lookup(String key) {
     final lookupKey = toSnakeCase(key);
