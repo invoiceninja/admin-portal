@@ -118,6 +118,8 @@ class TaskListItem extends StatelessWidget {
                             Text(
                                 task.description +
                                     (task.documents.isNotEmpty ? '  📎' : ''),
+                                maxLines: 2,
+                                overflow: TextOverflow.ellipsis,
                                 style: textStyle),
                             Text(
                               subtitle ?? filterMatch,
@@ -164,6 +166,8 @@ class TaskListItem extends StatelessWidget {
                       Expanded(
                         child: Text(
                           task.description + (task.documents.isNotEmpty ? '  📎' : ''),
+                          maxLines: 2,
+                          overflow: TextOverflow.ellipsis,
                           style: Theme.of(context).textTheme.headline6,
                         ),
                       ),

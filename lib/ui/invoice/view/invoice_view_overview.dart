@@ -235,8 +235,12 @@ class InvoiceOverview extends StatelessWidget {
       paymentMap.entries.forEach((entry) {
         final payment = entry.value;
         final paymentable = entry.key;
-        final amount =
+        String amount =
             formatNumber(paymentable.amount, context, clientId: client.id);
+        if (paymentable.amount != payment.amount) {
+          amount +=
+              '/' + formatNumber(payment.amount, context, clientId: client.id);
+        }
 
         widgets.add(
           EntityListTile(
@@ -256,8 +260,12 @@ class InvoiceOverview extends StatelessWidget {
       creditMap.entries.forEach((entry) {
         final credit = entry.value;
         final paymentable = entry.key;
-        final amount =
+        String amount =
             formatNumber(paymentable.amount, context, clientId: client.id);
+        if (paymentable.amount != credit.amount) {
+          amount +=
+              '/' + formatNumber(credit.amount, context, clientId: client.id);
+        }
 
         widgets.add(
           EntityListTile(
