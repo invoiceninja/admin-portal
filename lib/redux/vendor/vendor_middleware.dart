@@ -25,6 +25,7 @@ List<Middleware<AppState>> createStoreVendorsMiddleware([
   final archiveVendor = _archiveVendor(repository);
   final deleteVendor = _deleteVendor(repository);
   final restoreVendor = _restoreVendor(repository);
+  final saveDocument = _saveDocument(repository);
 
   return [
     TypedMiddleware<AppState, ViewVendorList>(viewVendorList),
@@ -36,6 +37,7 @@ List<Middleware<AppState>> createStoreVendorsMiddleware([
     TypedMiddleware<AppState, ArchiveVendorRequest>(archiveVendor),
     TypedMiddleware<AppState, DeleteVendorRequest>(deleteVendor),
     TypedMiddleware<AppState, RestoreVendorRequest>(restoreVendor),
+    TypedMiddleware<AppState, SaveVendorDocumentRequest>(saveDocument),
   ];
 }
 
@@ -238,6 +240,31 @@ Middleware<AppState> _loadVendors(VendorRepository repository) {
         action.completer.completeError(error);
       }
     });
+
+    next(action);
+  };
+}
+
+Middleware<AppState> _saveDocument(VendorRepository repository) {
+  return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
+    final action = dynamicAction as SaveVendorDocumentRequest;
+    if (store.state.isEnterprisePlan) {
+      repository
+          .uploadDocument(
+          store.state.credentials, action.vendor, action.filePath)
+          .then((vendor) {
+        store.dispatch(SaveVendorSuccess(vendor));
+        action.completer.complete(null);
+      }).catchError((Object error) {
+        print(error);
+        store.dispatch(SaveVendorDocumentFailure(error));
+        action.completer.completeError(error);
+      });
+    } else {
+      const error = 'Uploading documents requires an enterprise plan';
+      store.dispatch(SaveVendorDocumentFailure(error));
+      action.completer.completeError(error);
+    }
 
     next(action);
   };

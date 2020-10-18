@@ -25,6 +25,7 @@ List<Middleware<AppState>> createStoreTasksMiddleware([
   final archiveTask = _archiveTask(repository);
   final deleteTask = _deleteTask(repository);
   final restoreTask = _restoreTask(repository);
+  final saveDocument = _saveDocument(repository);
 
   return [
     TypedMiddleware<AppState, ViewTaskList>(viewTaskList),
@@ -36,6 +37,7 @@ List<Middleware<AppState>> createStoreTasksMiddleware([
     TypedMiddleware<AppState, ArchiveTaskRequest>(archiveTask),
     TypedMiddleware<AppState, DeleteTaskRequest>(deleteTask),
     TypedMiddleware<AppState, RestoreTaskRequest>(restoreTask),
+    TypedMiddleware<AppState, SaveTaskDocumentRequest>(saveDocument),
   ];
 }
 
@@ -230,6 +232,31 @@ Middleware<AppState> _loadTasks(TaskRepository repository) {
         action.completer.completeError(error);
       }
     });
+
+    next(action);
+  };
+}
+
+Middleware<AppState> _saveDocument(TaskRepository repository) {
+  return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
+    final action = dynamicAction as SaveTaskDocumentRequest;
+    if (store.state.isEnterprisePlan) {
+      repository
+          .uploadDocument(
+          store.state.credentials, action.task, action.filePath)
+          .then((task) {
+        store.dispatch(SaveTaskSuccess(task));
+        action.completer.complete(null);
+      }).catchError((Object error) {
+        print(error);
+        store.dispatch(SaveTaskDocumentFailure(error));
+        action.completer.completeError(error);
+      });
+    } else {
+      const error = 'Uploading documents requires an enterprise plan';
+      store.dispatch(SaveTaskDocumentFailure(error));
+      action.completer.completeError(error);
+    }
 
     next(action);
   };

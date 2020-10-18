@@ -76,4 +76,20 @@ class TaskRepository {
 
     return taskResponse.data;
   }
+
+  Future<TaskEntity> uploadDocument(
+      Credentials credentials, BaseEntity entity, String filePath) async {
+    final fields = <String, String>{
+      '_method': 'put',
+    };
+
+    final dynamic response = await webClient.post(
+        '${credentials.url}/tasks/${entity.id}', credentials.token,
+        data: fields, filePath: filePath, fileIndex: 'documents[]');
+
+    final TaskItemResponse taskResponse =
+    serializers.deserializeWith(TaskItemResponse.serializer, response);
+
+    return taskResponse.data;
+  }
 }
