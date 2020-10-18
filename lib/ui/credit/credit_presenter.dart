@@ -11,10 +11,10 @@ import 'package:invoiceninja_flutter/utils/localization.dart';
 class CreditPresenter extends EntityPresenter {
   static List<String> getDefaultTableFields(UserCompanyEntity userCompany) {
     return [
+      CreditFields.status,
       CreditFields.number,
       CreditFields.client,
       CreditFields.amount,
-      CreditFields.status,
       CreditFields.date,
       CreditFields.balance,
     ];
