@@ -7,6 +7,7 @@ import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/data/models/task_model.dart';
 import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
+import 'package:invoiceninja_flutter/redux/document/document_actions.dart';
 import 'package:invoiceninja_flutter/redux/task/task_actions.dart';
 import 'package:invoiceninja_flutter/ui/app/dialogs/error_dialog.dart';
 import 'package:invoiceninja_flutter/ui/app/snackbar_row.dart';
@@ -53,6 +54,8 @@ class TaskViewVM {
     @required this.isSaving,
     @required this.isLoading,
     @required this.isDirty,
+    @required this.onUploadDocument,
+    @required this.onDeleteDocument,
   });
 
   factory TaskViewVM.fromStore(Store<AppState> store) {
@@ -124,6 +127,35 @@ class TaskViewVM {
       onRefreshed: (context) => _handleRefresh(context),
       onEntityAction: (BuildContext context, EntityAction action) =>
           handleEntitiesActions(context, [task], action, autoPop: true),
+      onUploadDocument: (BuildContext context, String filePath) {
+        final Completer<DocumentEntity> completer = Completer<DocumentEntity>();
+        store.dispatch(SaveTaskDocumentRequest(
+            filePath: filePath, task: task, completer: completer));
+        completer.future.then((client) {
+          Scaffold.of(context).showSnackBar(SnackBar(
+              content: SnackBarRow(
+            message: AppLocalization.of(context).uploadedDocument,
+          )));
+        }).catchError((Object error) {
+          showDialog<ErrorDialog>(
+              context: context,
+              builder: (BuildContext context) {
+                return ErrorDialog(error);
+              });
+        });
+      },
+      onDeleteDocument:
+          (BuildContext context, DocumentEntity document, String password) {
+        final completer = snackBarCompleter<Null>(
+            context, AppLocalization.of(context).deletedDocument);
+        completer.future
+            .then<Null>((value) => store.dispatch(LoadTask(taskId: task.id)));
+        store.dispatch(DeleteDocumentRequest(
+          completer: completer,
+          documentIds: [document.id],
+          password: password,
+        ));
+      },
     );
   }
 
@@ -139,4 +171,6 @@ class TaskViewVM {
   final bool isSaving;
   final bool isLoading;
   final bool isDirty;
+  final Function(BuildContext, String) onUploadDocument;
+  final Function(BuildContext, DocumentEntity, String) onDeleteDocument;
 }

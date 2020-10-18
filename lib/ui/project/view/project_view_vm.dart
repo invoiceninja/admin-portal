@@ -107,8 +107,10 @@ class ProjectViewVM {
         completer.future.then((client) {
           Scaffold.of(context).showSnackBar(SnackBar(
               content: SnackBarRow(
-            message: AppLocalization.of(context).uploadedDocument,
-          )));
+                message: AppLocalization
+                    .of(context)
+                    .uploadedDocument,
+              )));
         }).catchError((Object error) {
           showDialog<ErrorDialog>(
               context: context,
@@ -120,9 +122,11 @@ class ProjectViewVM {
       onDeleteDocument:
           (BuildContext context, DocumentEntity document, String password) {
         final completer = snackBarCompleter<Null>(
-            context, AppLocalization.of(context).deletedDocument);
+            context, AppLocalization
+            .of(context)
+            .deletedDocument);
         completer.future.then<Null>(
-            (value) => store.dispatch(LoadProject(projectId: project.id)));
+                (value) => store.dispatch(LoadProject(projectId: project.id)));
         store.dispatch(DeleteDocumentRequest(
           completer: completer,
           documentIds: [document.id],
