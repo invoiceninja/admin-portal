@@ -75,19 +75,12 @@ class ProjectViewVM {
       onRefreshed: (context) => _handleRefresh(context),
       onEntityPressed: (BuildContext context, EntityType entityType,
           {bool longPress = false}) {
-        if (!longPress || !project.isActive || !client.isActive) {
+        if (longPress && project.isActive && client.isActive) {
+          handleProjectAction(
+              context, [project], EntityAction.newEntityType(entityType));
+        } else {
           viewEntitiesByType(
               context: context, entityType: entityType, filterEntity: project);
-        }
-
-        switch (entityType) {
-          case EntityType.task:
-            createEntity(
-                context: context,
-                entity: TaskEntity(state: state).rebuild((b) => b
-                  ..projectId = project.id
-                  ..clientId = project.clientId));
-            break;
         }
       },
       onAddTaskPressed: (context) {

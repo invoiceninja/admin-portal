@@ -544,6 +544,10 @@ void createEntityByType(
   final state = store.state;
   final navigator = Navigator.of(context);
 
+  if (!state.userCompany.canCreate(entityType)) {
+    return;
+  }
+
   checkForChanges(
       store: store,
       context: context,
@@ -712,8 +716,13 @@ void createEntity({
   Completer cancelCompleter,
 }) {
   final store = StoreProvider.of<AppState>(context);
-  final uiState = store.state.uiState;
+  final state = store.state;
+  final uiState = state.uiState;
   final navigator = Navigator.of(context);
+
+  if (!state.userCompany.canCreate(entity.entityType)) {
+    return;
+  }
 
   checkForChanges(
       store: store,

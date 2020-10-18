@@ -155,12 +155,25 @@ abstract class ProjectEntity extends Object
           actions.add(EntityAction.edit);
         }
 
-        if (userCompany.canCreate(EntityType.task) && isActive) {
-          actions.add(EntityAction.newTask);
-        }
-
-        if (userCompany.canCreate(EntityType.invoice) && isActive) {
-          actions.add(EntityAction.newInvoice);
+        if (isActive && client?.isActive == true) {
+          if (userCompany.canCreate(EntityType.invoice)) {
+            actions.add(EntityAction.newInvoice);
+          }
+          if (userCompany.canCreate(EntityType.recurringInvoice)) {
+            actions.add(EntityAction.newRecurringInvoice);
+          }
+          if (userCompany.canCreate(EntityType.quote)) {
+            actions.add(EntityAction.newQuote);
+          }
+          if (userCompany.canCreate(EntityType.credit)) {
+            actions.add(EntityAction.newCredit);
+          }
+          if (userCompany.canCreate(EntityType.task)) {
+            actions.add(EntityAction.newTask);
+          }
+          if (userCompany.canCreate(EntityType.expense)) {
+            actions.add(EntityAction.newInvoice);
+          }
         }
       }
 
