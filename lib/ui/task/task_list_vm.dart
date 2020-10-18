@@ -28,7 +28,7 @@ class TaskListBuilder extends StatelessWidget {
       builder: (context, viewModel) {
         return EntityList(
             onClearMultiselect: viewModel.onClearMultielsect,
-            entityType: EntityType.taxRate,
+            entityType: EntityType.task,
             presenter: TaskPresenter(),
             state: viewModel.state,
             entityList: viewModel.taskList,
