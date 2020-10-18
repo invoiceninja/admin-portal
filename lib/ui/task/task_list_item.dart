@@ -1,21 +1,20 @@
+import 'package:flutter/foundation.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
+import 'package:invoiceninja_flutter/constants.dart';
+import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
+import 'package:invoiceninja_flutter/ui/app/actions_menu_button.dart';
+import 'package:invoiceninja_flutter/ui/app/dismissible_entity.dart';
 import 'package:invoiceninja_flutter/ui/app/entity_state_label.dart';
 import 'package:invoiceninja_flutter/ui/app/live_text.dart';
 import 'package:invoiceninja_flutter/utils/formatting.dart';
-import 'package:flutter/foundation.dart';
-import 'package:flutter/material.dart';
-import 'package:invoiceninja_flutter/data/models/models.dart';
-import 'package:invoiceninja_flutter/ui/app/dismissible_entity.dart';
-import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:invoiceninja_flutter/utils/platforms.dart';
 
 class TaskListItem extends StatelessWidget {
   const TaskListItem({
-    @required this.userCompany,
-    @required this.client,
-    @required this.project,
+    @required this.user,
     @required this.task,
     @required this.filter,
     this.onTap,
@@ -24,43 +23,29 @@ class TaskListItem extends StatelessWidget {
     this.isChecked = false,
   });
 
-  final UserCompanyEntity userCompany;
-  final ClientEntity client;
-  final ProjectEntity project;
+  final UserEntity user;
   final GestureTapCallback onTap;
   final GestureTapCallback onLongPress;
-  final Function(bool) onCheckboxChanged;
-  final bool isChecked;
   final TaskEntity task;
   final String filter;
+  final Function(bool) onCheckboxChanged;
+  final bool isChecked;
 
   @override
   Widget build(BuildContext context) {
-    final state = StoreProvider.of<AppState>(context).state;
+    final store = StoreProvider.of<AppState>(context);
+    final state = store.state;
     final uiState = state.uiState;
     final taskUIState = uiState.taskUIState;
-
-    final CompanyEntity company = state.company;
-    final taskStatus = company.taskStatusMap[task.taskStatusId];
-
-    final localization = AppLocalization.of(context);
+    final client = state.clientState.get(task.clientId);
     final filterMatch = filter != null && filter.isNotEmpty
-        ? task.matchesFilterValue(filter)
+        ? (task.matchesFilterValue(filter) ?? client.matchesFilterValue(filter))
         : null;
     final listUIState = taskUIState.listUIState;
     final isInMultiselect = listUIState.isInMultiselect();
     final showCheckbox = onCheckboxChanged != null || isInMultiselect;
-
-    //final subtitle = filterMatch ?? client?.displayName ?? task.description;
-    String subtitle;
-    if (filterMatch != null) {
-      subtitle = filterMatch;
-    } else if (client != null) {
-      subtitle = client.displayName;
-      if (project != null) {
-        subtitle += ' • ' + project.name;
-      }
-    }
+    final textStyle = TextStyle(fontSize: 16);
+    final subtitle = client.displayName;
 
     return DismissibleEntity(
       isSelected: isDesktop(context) &&
@@ -68,82 +53,140 @@ class TaskListItem extends StatelessWidget {
               (uiState.isEditing
                   ? taskUIState.editing.id
                   : taskUIState.selectedId),
-      userCompany: userCompany,
+      userCompany: store.state.userCompany,
       entity: task,
-      child: ListTile(
-        onTap: () => onTap != null
-            ? onTap()
-            : selectEntity(entity: task, context: context),
-        onLongPress: () => onLongPress != null
-            ? onLongPress()
-            : selectEntity(entity: task, context: context, longPress: true),
-        leading: showCheckbox
-            ? IgnorePointer(
-                ignoring: listUIState.isInMultiselect(),
-                child: Checkbox(
-                  value: isChecked,
-                  materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
-                  onChanged: (value) => onCheckboxChanged(value),
-                  activeColor: Theme.of(context).accentColor,
+      child: LayoutBuilder(
+          builder: (BuildContext context, BoxConstraints constraints) {
+        return constraints.maxWidth > kTableListWidthCutoff
+            ? InkWell(
+                onTap: () => onTap != null
+                    ? onTap()
+                    : selectEntity(entity: task, context: context),
+                onLongPress: () => onLongPress != null
+                    ? onLongPress()
+                    : selectEntity(
+                        entity: task, context: context, longPress: true),
+                child: Padding(
+                  padding: const EdgeInsets.only(
+                    left: 10,
+                    right: 28,
+                    top: 4,
+                    bottom: 4,
+                  ),
+                  child: Row(
+                    children: <Widget>[
+                      Padding(
+                        padding: const EdgeInsets.only(right: 16),
+                        child: showCheckbox
+                            ? Padding(
+                                padding: const EdgeInsets.only(right: 20),
+                                child: IgnorePointer(
+                                  ignoring: listUIState.isInMultiselect(),
+                                  child: Checkbox(
+                                    value: isChecked,
+                                    materialTapTargetSize:
+                                        MaterialTapTargetSize.shrinkWrap,
+                                    onChanged: (value) =>
+                                        onCheckboxChanged(value),
+                                    activeColor: Theme.of(context).accentColor,
+                                  ),
+                                ),
+                              )
+                            : ActionMenuButton(
+                                entityActions: task.getActions(
+                                    userCompany: state.userCompany),
+                                isSaving: false,
+                                entity: task,
+                                onSelected: (context, action) =>
+                                    handleEntityAction(context, task, action),
+                              ),
+                      ),
+                      SizedBox(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: <Widget>[
+                            if (!task.isActive) EntityStateLabel(task)
+                          ],
+                        ),
+                        width: 120,
+                      ),
+                      SizedBox(width: 10),
+                      Expanded(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: <Widget>[
+                            Text(
+                                task.description +
+                                    (task.documents.isNotEmpty ? '  📎' : ''),
+                                style: textStyle),
+                            Text(
+                              subtitle ?? filterMatch,
+                              maxLines: 3,
+                              overflow: TextOverflow.ellipsis,
+                              style: Theme.of(context).textTheme.subtitle2,
+                            ),
+                          ],
+                        ),
+                      ),
+                      SizedBox(width: 10),
+                      LiveText(() {
+                        return formatNumber(task.listDisplayAmount, context,
+                            formatNumberType: FormatNumberType.duration);
+                      }, style: Theme.of(context).textTheme.headline6),
+                    ],
+                  ),
                 ),
               )
-            : null,
-        title: Container(
-          width: MediaQuery.of(context).size.width,
-          child: Row(
-            children: <Widget>[
-              Expanded(
-                child: Text(
-                  task.description.isNotEmpty
-                      ? task.description
-                      : formatDate(convertTimestampToDateString(task.updatedAt),
-                          context),
-                  overflow: TextOverflow.ellipsis,
-                  style: Theme.of(context).textTheme.headline6,
+            : ListTile(
+                onTap: () => onTap != null
+                    ? onTap()
+                    : selectEntity(entity: task, context: context),
+                onLongPress: () => onLongPress != null
+                    ? onLongPress()
+                    : selectEntity(
+                        entity: task, context: context, longPress: true),
+                leading: showCheckbox
+                    ? IgnorePointer(
+                        ignoring: listUIState.isInMultiselect(),
+                        child: Checkbox(
+                          value: isChecked,
+                          materialTapTargetSize:
+                              MaterialTapTargetSize.shrinkWrap,
+                          onChanged: (value) => onCheckboxChanged(value),
+                          activeColor: Theme.of(context).accentColor,
+                        ),
+                      )
+                    : null,
+                title: Container(
+                  width: MediaQuery.of(context).size.width,
+                  child: Row(
+                    children: <Widget>[
+                      Expanded(
+                        child: Text(
+                          task.description + (task.documents.isNotEmpty ? '  📎' : ''),
+                          style: Theme.of(context).textTheme.headline6,
+                        ),
+                      ),
+                      LiveText(() {
+                        return formatNumber(task.listDisplayAmount, context,
+                            formatNumberType: FormatNumberType.duration);
+                      }, style: Theme.of(context).textTheme.headline6),
+                    ],
+                  ),
                 ),
-              ),
-              LiveText(() {
-                return formatNumber(task.listDisplayAmount, context,
-                    formatNumberType: FormatNumberType.duration);
-              }, style: Theme.of(context).textTheme.headline6),
-            ],
-          ),
-        ),
-        subtitle: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: <Widget>[
-            Row(
-              children: <Widget>[
-                Expanded(
-                  child: subtitle != null && subtitle.isNotEmpty
-                      ? Text(
-                          subtitle,
-                          maxLines: 3,
-                          overflow: TextOverflow.ellipsis,
-                        )
-                      : Container(),
+                subtitle: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: <Widget>[
+                    Text(
+                      subtitle ?? filterMatch,
+                      maxLines: 3,
+                      overflow: TextOverflow.ellipsis,
+                    ),
+                    EntityStateLabel(task),
+                  ],
                 ),
-                Text(
-                    task.isInvoiced
-                        ? localization.invoiced
-                        : task.isRunning
-                            ? localization.running
-                            : taskStatus != null
-                                ? taskStatus.name
-                                : localization.logged,
-                    style: TextStyle(
-                      color: task.isInvoiced
-                          ? Colors.green
-                          : task.isRunning
-                              ? Colors.blue
-                              : Colors.grey,
-                    )),
-              ],
-            ),
-            EntityStateLabel(task),
-          ],
-        ),
-      ),
+              );
+      }),
     );
   }
 }

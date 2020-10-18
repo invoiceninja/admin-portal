@@ -43,12 +43,10 @@ class TaskListBuilder extends StatelessWidget {
               final isInMultiselect = listUIState.isInMultiselect();
 
               return TaskListItem(
-                userCompany: viewModel.state.userCompany,
                 filter: viewModel.filter,
                 task: task,
-                client: viewModel.clientMap[task.clientId] ?? ClientEntity(),
-                project: viewModel.state.projectState.map[task.projectId],
                 isChecked: isInMultiselect && listUIState.isSelected(task.id),
+                user: state.user,
               );
             });
       },

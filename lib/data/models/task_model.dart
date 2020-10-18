@@ -190,8 +190,7 @@ abstract class TaskEntity extends Object
     ..invoiceId = null
     ..isRunning = false
     ..duration = 0
-    ..timeLog = '[]'
-    ..description = '');
+    ..timeLog = '[]');
 
   TaskEntity toggle() => isRunning ? stop() : start();
 
