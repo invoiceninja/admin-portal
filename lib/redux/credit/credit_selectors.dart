@@ -181,6 +181,29 @@ EntityStats creditStatsForUser(
   return EntityStats(countActive: countActive, countArchived: countArchived);
 }
 
+var memoizedCreditStatsForProject = memo2((
+  String projectId,
+  BuiltMap<String, InvoiceEntity> creditMap,
+) =>
+    creditStatsForProject(projectId, creditMap));
+
+EntityStats creditStatsForProject(
+    String projectId, BuiltMap<String, InvoiceEntity> creditMap) {
+  int countActive = 0;
+  int countArchived = 0;
+  creditMap.forEach((creditId, credit) {
+    if (credit.projectId == projectId) {
+      if (credit.isActive) {
+        countActive++;
+      } else if (credit.isArchived) {
+        countArchived++;
+      }
+    }
+  });
+
+  return EntityStats(countActive: countActive, countArchived: countArchived);
+}
+
 bool hasCreditChanges(
         InvoiceEntity credit, BuiltMap<String, InvoiceEntity> creditMap) =>
     credit.isNew ? credit.isChanged : credit != creditMap[credit.id];

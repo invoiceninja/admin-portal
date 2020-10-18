@@ -4,7 +4,12 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:invoiceninja_flutter/data/models/entities.dart';
 import 'package:invoiceninja_flutter/data/models/project_model.dart';
+import 'package:invoiceninja_flutter/redux/credit/credit_selectors.dart';
+import 'package:invoiceninja_flutter/redux/expense/expense_selectors.dart';
+import 'package:invoiceninja_flutter/redux/invoice/invoice_selectors.dart';
 import 'package:invoiceninja_flutter/redux/project/project_selectors.dart';
+import 'package:invoiceninja_flutter/redux/quote/quote_selectors.dart';
+import 'package:invoiceninja_flutter/redux/recurring_invoice/recurring_invoice_selectors.dart';
 import 'package:invoiceninja_flutter/ui/app/FieldGrid.dart';
 import 'package:invoiceninja_flutter/redux/task/task_selectors.dart';
 import 'package:invoiceninja_flutter/ui/app/entities/entity_list_tile.dart';
@@ -53,6 +58,7 @@ class _ProjectViewState extends State<ProjectView> {
     final project = viewModel.project;
     final client = viewModel.client;
     final company = viewModel.company;
+    final state = viewModel.state;
     final localization = AppLocalization.of(context);
 
     final Map<String, String> fields = {
@@ -86,8 +92,8 @@ class _ProjectViewState extends State<ProjectView> {
               EntityHeader(
                 entity: project,
                 label: localization.total,
-                value: formatDuration(taskDurationForProject(
-                    project, viewModel.state.taskState.map)),
+                value: formatDuration(
+                    taskDurationForProject(project, state.taskState.map)),
                 secondLabel: localization.budgeted,
                 secondValue: formatDuration(
                     Duration(hours: project.budgetedHours.toInt()),
@@ -108,8 +114,8 @@ class _ProjectViewState extends State<ProjectView> {
                   onLongPress: () => viewModel.onEntityPressed(
                       context, EntityType.invoice,
                       longPress: true),
-                  subtitle: memoizedTaskStatsForProject(
-                          project.id, viewModel.state.taskState.map)
+                  subtitle: memoizedInvoiceStatsForProject(
+                          project.id, state.invoiceState.map)
                       .present(localization.active, localization.archived),
                 ),
               if (company.isModuleEnabled(EntityType.recurringInvoice))
@@ -122,8 +128,8 @@ class _ProjectViewState extends State<ProjectView> {
                   onLongPress: () => viewModel.onEntityPressed(
                       context, EntityType.recurringInvoice,
                       longPress: true),
-                  subtitle: memoizedTaskStatsForProject(
-                          project.id, viewModel.state.taskState.map)
+                  subtitle: memoizedRecurringInvoiceStatsForProject(
+                          project.id, state.recurringInvoiceState.map)
                       .present(localization.active, localization.archived),
                 ),
               if (company.isModuleEnabled(EntityType.quote))
@@ -136,8 +142,8 @@ class _ProjectViewState extends State<ProjectView> {
                   onLongPress: () => viewModel.onEntityPressed(
                       context, EntityType.quote,
                       longPress: true),
-                  subtitle: memoizedTaskStatsForProject(
-                          project.id, viewModel.state.taskState.map)
+                  subtitle: memoizedQuoteStatsForProject(
+                          project.id, state.quoteState.map)
                       .present(localization.active, localization.archived),
                 ),
               if (company.isModuleEnabled(EntityType.credit))
@@ -150,8 +156,8 @@ class _ProjectViewState extends State<ProjectView> {
                   onLongPress: () => viewModel.onEntityPressed(
                       context, EntityType.credit,
                       longPress: true),
-                  subtitle: memoizedTaskStatsForProject(
-                          project.id, viewModel.state.taskState.map)
+                  subtitle: memoizedCreditStatsForProject(
+                          project.id, state.creditState.map)
                       .present(localization.active, localization.archived),
                 ),
               if (company.isModuleEnabled(EntityType.task))
@@ -165,7 +171,7 @@ class _ProjectViewState extends State<ProjectView> {
                       context, EntityType.task,
                       longPress: true),
                   subtitle: memoizedTaskStatsForProject(
-                          project.id, viewModel.state.taskState.map)
+                          project.id, state.taskState.map)
                       .present(localization.active, localization.archived),
                 ),
               if (company.isModuleEnabled(EntityType.expense))
@@ -178,8 +184,8 @@ class _ProjectViewState extends State<ProjectView> {
                   onLongPress: () => viewModel.onEntityPressed(
                       context, EntityType.expense,
                       longPress: true),
-                  subtitle: memoizedTaskStatsForProject(
-                          project.id, viewModel.state.taskState.map)
+                  subtitle: memoizedExpenseStatsForProject(
+                          project.id, state.expenseState.map)
                       .present(localization.active, localization.archived),
                 ),
             ];

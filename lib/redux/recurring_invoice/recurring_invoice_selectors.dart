@@ -165,6 +165,29 @@ EntityStats recurringInvoiceStatsForInvoice(
   return EntityStats(countActive: countActive, countArchived: countArchived);
 }
 
+var memoizedRecurringInvoiceStatsForProject = memo2((
+  String projectId,
+  BuiltMap<String, InvoiceEntity> recurringInvoiceMap,
+) =>
+    recurringInvoiceStatsForProject(projectId, recurringInvoiceMap));
+
+EntityStats recurringInvoiceStatsForProject(
+    String projectId, BuiltMap<String, InvoiceEntity> recurringInvoiceMap) {
+  int countActive = 0;
+  int countArchived = 0;
+  recurringInvoiceMap.forEach((recurringInvoiceId, recurringInvoice) {
+    if (recurringInvoice.projectId == projectId) {
+      if (recurringInvoice.isActive) {
+        countActive++;
+      } else if (recurringInvoice.isArchived) {
+        countArchived++;
+      }
+    }
+  });
+
+  return EntityStats(countActive: countActive, countArchived: countArchived);
+}
+
 bool hasRecurringInvoiceChanges(InvoiceEntity recurringInvoice,
         BuiltMap<String, InvoiceEntity> recurringInvoiceMap) =>
     recurringInvoice.isNew
