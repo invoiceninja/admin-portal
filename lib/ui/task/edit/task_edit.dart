@@ -46,6 +46,7 @@ class _TaskEditState extends State<TaskEdit>
     _controller = TabController(vsync: this, length: 2, initialIndex: index);
   }
 
+  /*
   @override
   void didUpdateWidget(oldWidget) {
     super.didUpdateWidget(oldWidget);
@@ -54,6 +55,7 @@ class _TaskEditState extends State<TaskEdit>
       _controller.animateTo(kTimesScreen);
     }
   }
+   */
 
   @override
   void dispose() {
