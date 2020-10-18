@@ -75,6 +75,7 @@ class ExpenseFields {
   static const String updatedAt = 'updated_at';
   static const String archivedAt = 'archived_at';
   static const String isDeleted = 'is_deleted';
+  static const String documents = 'documents';
 }
 
 abstract class ExpenseEntity extends Object
@@ -354,6 +355,10 @@ abstract class ExpenseEntity extends Object
         break;
       case ExpenseFields.archivedAt:
         response = expenseA.archivedAt.compareTo(expenseB.archivedAt);
+        break;
+      case ExpenseFields.documents:
+        response =
+            expenseA.documents.length.compareTo(expenseB.documents.length);
         break;
       default:
         print('## ERROR: sort by expense.$sortField is not implemented');
