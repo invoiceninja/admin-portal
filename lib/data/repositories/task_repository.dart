@@ -52,11 +52,6 @@ class TaskRepository {
   }
 
   Future<TaskEntity> saveData(Credentials credentials, TaskEntity task) async {
-    // Workaround for API issue
-    if (task.isNew) {
-      task = task.rebuild((b) => b..id = null);
-    }
-
     final data = serializers.serializeWith(TaskEntity.serializer, task);
 
     dynamic response;
@@ -88,7 +83,7 @@ class TaskRepository {
         data: fields, filePath: filePath, fileIndex: 'documents[]');
 
     final TaskItemResponse taskResponse =
-    serializers.deserializeWith(TaskItemResponse.serializer, response);
+        serializers.deserializeWith(TaskItemResponse.serializer, response);
 
     return taskResponse.data;
   }

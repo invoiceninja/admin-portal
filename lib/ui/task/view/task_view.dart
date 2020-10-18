@@ -89,7 +89,7 @@ class _TaskViewState extends State<TaskView> {
           List<Widget> _buildView() {
             final widgets = <Widget>[
               EntityHeader(
-                entity: project,
+                entity: task,
                 statusColor: task.isInvoiced
                     ? Colors.green
                     : task.isRunning
