@@ -10,6 +10,8 @@ import 'package:invoiceninja_flutter/ui/app/dismissible_entity.dart';
 import 'package:invoiceninja_flutter/ui/app/entity_state_label.dart';
 import 'package:invoiceninja_flutter/ui/app/live_text.dart';
 import 'package:invoiceninja_flutter/utils/formatting.dart';
+import 'package:invoiceninja_flutter/utils/icons.dart';
+import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:invoiceninja_flutter/utils/platforms.dart';
 
 class TaskListItem extends StatelessWidget {
@@ -47,6 +49,7 @@ class TaskListItem extends StatelessWidget {
     final textStyle = TextStyle(fontSize: 16);
     final subtitle = client.displayName;
     final textColor = Theme.of(context).textTheme.bodyText1.color;
+    final localization = AppLocalization.of(context);
 
     final duration = LiveText(() {
       return formatNumber(task.listDisplayAmount, context,
@@ -124,7 +127,7 @@ class TaskListItem extends StatelessWidget {
                             Text(
                                 task.description +
                                     (task.documents.isNotEmpty ? '  📎' : ''),
-                                maxLines: 2,
+                                maxLines: 1,
                                 overflow: TextOverflow.ellipsis,
                                 style: textStyle),
                             Text(
@@ -168,6 +171,13 @@ class TaskListItem extends StatelessWidget {
                         ),
                       )
                     : null,
+                trailing: IconButton(
+                  icon: Icon(getEntityActionIcon(
+                      task.isRunning ? EntityAction.stop : EntityAction.start)),
+                  onPressed: () => handleEntityAction(context, task,
+                      task.isRunning ? EntityAction.stop : EntityAction.start),
+                  visualDensity: VisualDensity.compact,
+                ),
                 title: Container(
                   width: MediaQuery.of(context).size.width,
                   child: Row(
@@ -176,7 +186,7 @@ class TaskListItem extends StatelessWidget {
                         child: Text(
                           task.description +
                               (task.documents.isNotEmpty ? '  📎' : ''),
-                          maxLines: 2,
+                          maxLines: 1,
                           overflow: TextOverflow.ellipsis,
                           style: Theme.of(context).textTheme.headline6,
                         ),
@@ -185,16 +195,27 @@ class TaskListItem extends StatelessWidget {
                     ],
                   ),
                 ),
-                subtitle: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: <Widget>[
-                    Text(subtitle ?? filterMatch,
-                        maxLines: 3,
-                        overflow: TextOverflow.ellipsis,
-                        style: Theme.of(context).textTheme.subtitle2.copyWith(
-                              color: textColor.withOpacity(kLighterOpacity),
-                            )),
-                    EntityStateLabel(task),
+                subtitle: Row(
+                  children: [
+                    Expanded(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: <Widget>[
+                          Text(subtitle ?? filterMatch,
+                              maxLines: 3,
+                              overflow: TextOverflow.ellipsis,
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .subtitle2
+                                  .copyWith(
+                                    color:
+                                        textColor.withOpacity(kLighterOpacity),
+                                  )),
+                          EntityStateLabel(task),
+                        ],
+                      ),
+                    ),
+                    Text(localization.logged),
                   ],
                 ),
               );
