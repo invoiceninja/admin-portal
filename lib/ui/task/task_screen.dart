@@ -68,7 +68,7 @@ class TaskScreen extends StatelessWidget {
         onSelectedCustom4: (value) =>
             store.dispatch(FilterTasksByCustom4(value)),
         sortFields: [
-          TaskFields.description,
+          TaskFields.number,
           TaskFields.duration,
           TaskFields.updatedAt,
         ],

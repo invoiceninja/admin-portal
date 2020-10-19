@@ -17,6 +17,7 @@ abstract class VendorState implements Built<VendorState, VendorStateBuilder> {
       list: BuiltList<String>(),
     );
   }
+
   VendorState._();
 
   @override
@@ -24,6 +25,7 @@ abstract class VendorState implements Built<VendorState, VendorStateBuilder> {
   int get hashCode;
 
   BuiltMap<String, VendorEntity> get map;
+
   BuiltList<String> get list;
 
   VendorState loadVendors(BuiltList<VendorEntity> clients) {
@@ -46,12 +48,13 @@ abstract class VendorUIState extends Object
     implements Built<VendorUIState, VendorUIStateBuilder> {
   factory VendorUIState() {
     return _$VendorUIState._(
-      listUIState: ListUIState(VendorFields.name),
+      listUIState: ListUIState(VendorFields.number),
       editing: VendorEntity(),
       editingContact: VendorContactEntity(),
       selectedId: '',
     );
   }
+
   VendorUIState._();
 
   @override

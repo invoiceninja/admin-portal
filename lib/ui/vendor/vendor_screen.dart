@@ -65,6 +65,7 @@ class VendorScreen extends StatelessWidget {
             store.dispatch(FilterVendorsByCustom4(value)),
         sortFields: [
           VendorFields.name,
+          VendorFields.number,
           VendorFields.updatedAt,
         ],
         onSelectedState: (EntityState state, value) {
