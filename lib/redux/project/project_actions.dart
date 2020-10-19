@@ -7,6 +7,7 @@ import 'package:flutter_redux/flutter_redux.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
+import 'package:invoiceninja_flutter/redux/project/project_selectors.dart';
 import 'package:invoiceninja_flutter/ui/app/entities/entity_actions_dialog.dart';
 import 'package:invoiceninja_flutter/utils/completers.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
@@ -279,11 +280,6 @@ void handleProjectAction(
             ..clientId = project.clientId));
       break;
     case EntityAction.newInvoice:
-      createEntity(
-          context: context,
-          entity: InvoiceEntity(state: state, client: client)
-              .rebuild((b) => b..clientId = project.clientId));
-      /*
       final items =
           convertProjectToInvoiceItem(project: project, context: context);
       createEntity(
@@ -291,8 +287,7 @@ void handleProjectAction(
           entity: InvoiceEntity(state: state).rebuild((b) => b
             ..hasTasks = true
             ..clientId = project.clientId
-            ..lineItems.addAll(items)));            
-       */
+            ..lineItems.addAll(items)));
       break;
     case EntityAction.newExpense:
       createEntity(
