@@ -4,8 +4,8 @@ import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/redux/ui/list_ui_state.dart';
 
 var memoizedPaymentsByInvoice = memo3((String invoiceId,
-    BuiltMap<String, PaymentEntity> paymentMap,
-    BuiltList<String> paymentList) =>
+        BuiltMap<String, PaymentEntity> paymentMap,
+        BuiltList<String> paymentList) =>
     paymentsByInvoiceSelector(invoiceId, paymentMap, paymentList));
 
 List<PaymentEntity> paymentsByInvoiceSelector(String invoiceId,
@@ -17,8 +17,8 @@ List<PaymentEntity> paymentsByInvoiceSelector(String invoiceId,
 }
 
 var memoizedPaymentsByCredit = memo3((String invoiceId,
-    BuiltMap<String, PaymentEntity> paymentMap,
-    BuiltList<String> paymentList) =>
+        BuiltMap<String, PaymentEntity> paymentMap,
+        BuiltList<String> paymentList) =>
     paymentsByCreditSelector(invoiceId, paymentMap, paymentList));
 
 List<PaymentEntity> paymentsByCreditSelector(String creditId,

@@ -145,7 +145,8 @@ class RecurringInvoiceListItem extends StatelessWidget {
                                     .textTheme
                                     .subtitle2
                                     .copyWith(
-                                      color: textColor.withOpacity(kLighterOpacity),
+                                      color: textColor
+                                          .withOpacity(kLighterOpacity),
                                     ),
                               ),
                             ],
@@ -221,7 +222,8 @@ class RecurringInvoiceListItem extends StatelessWidget {
                                                 : ''))
                                         .trim(),
                                     style: TextStyle(
-                                      color: textColor.withOpacity(kLighterOpacity),
+                                      color: textColor
+                                          .withOpacity(kLighterOpacity),
                                     ),
                                   )
                                 : Text(

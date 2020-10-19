@@ -115,9 +115,6 @@ List<String> filteredInvoicesSelector(
     } else if (filterEntityType == EntityType.user &&
         invoice.assignedUserId != filterEntityId) {
       return false;
-    } else if (filterEntityType == EntityType.project &&
-        invoice.projectId != filterEntityId) {
-      return false;
     } else if (filterEntityType == EntityType.recurringInvoice &&
         invoice.recurringId != filterEntityId) {
       return false;
@@ -211,29 +208,6 @@ EntityStats invoiceStatsForUser(
       if (invoice.isActive) {
         countActive++;
       } else if (invoice.isDeleted) {
-        countArchived++;
-      }
-    }
-  });
-
-  return EntityStats(countActive: countActive, countArchived: countArchived);
-}
-
-var memoizedInvoiceStatsForProject = memo2((
-  String projectId,
-  BuiltMap<String, InvoiceEntity> invoiceMap,
-) =>
-    invoiceStatsForProject(projectId, invoiceMap));
-
-EntityStats invoiceStatsForProject(
-    String projectId, BuiltMap<String, InvoiceEntity> invoiceMap) {
-  int countActive = 0;
-  int countArchived = 0;
-  invoiceMap.forEach((invoiceId, invoice) {
-    if (invoice.projectId == projectId) {
-      if (invoice.isActive) {
-        countActive++;
-      } else if (invoice.isArchived) {
         countArchived++;
       }
     }

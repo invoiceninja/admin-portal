@@ -132,17 +132,12 @@ class ExpenseListItem extends StatelessWidget {
               children: <Widget>[
                 Expanded(
                   child: subtitle != null && subtitle.isNotEmpty
-                      ? Text(
-                          subtitle,
+                      ? Text(subtitle,
                           maxLines: 3,
                           overflow: TextOverflow.ellipsis,
-                      style: Theme.of(context)
-                          .textTheme
-                          .subtitle2
-                          .copyWith(
-                        color: textColor.withOpacity(kLighterOpacity),
-                      )
-                        )
+                          style: Theme.of(context).textTheme.subtitle2.copyWith(
+                                color: textColor.withOpacity(kLighterOpacity),
+                              ))
                       : Container(),
                 ),
                 Text(localization.lookup('expense_status_${expense.statusId}'),

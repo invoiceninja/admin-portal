@@ -281,9 +281,8 @@ void handleProjectAction(
     case EntityAction.newInvoice:
       createEntity(
           context: context,
-          entity: InvoiceEntity(state: state, client: client).rebuild((b) => b
-            ..projectId = project.id
-            ..clientId = project.clientId));
+          entity: InvoiceEntity(state: state, client: client)
+              .rebuild((b) => b..clientId = project.clientId));
       /*
       final items =
           convertProjectToInvoiceItem(project: project, context: context);
@@ -294,30 +293,6 @@ void handleProjectAction(
             ..clientId = project.clientId
             ..lineItems.addAll(items)));            
        */
-      break;
-    case EntityAction.newQuote:
-      createEntity(
-          context: context,
-          entity: InvoiceEntity(state: state, client: client).rebuild((b) => b
-            ..projectId = project.id
-            ..clientId = project.clientId
-            ..entityType = EntityType.quote));
-      break;
-    case EntityAction.newCredit:
-      createEntity(
-          context: context,
-          entity: InvoiceEntity(state: state, client: client).rebuild((b) => b
-            ..projectId = project.id
-            ..clientId = project.clientId
-            ..entityType = EntityType.credit));
-      break;
-    case EntityAction.newRecurringInvoice:
-      createEntity(
-          context: context,
-          entity: InvoiceEntity(state: state, client: client).rebuild((b) => b
-            ..projectId = project.id
-            ..clientId = project.clientId
-            ..entityType = EntityType.recurringInvoice));
       break;
     case EntityAction.newExpense:
       createEntity(

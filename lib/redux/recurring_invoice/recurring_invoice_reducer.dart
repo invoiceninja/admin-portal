@@ -85,10 +85,6 @@ final editingReducer = combineReducers<InvoiceEntity>([
     return recurringInvoice.rebuild((b) => b
       ..isChanged = true
       ..clientId = client?.id ?? ''
-      ..projectId = (recurringInvoice.clientId ?? '').isEmpty ||
-              recurringInvoice.clientId == client?.id
-          ? recurringInvoice.projectId
-          : ''
       ..invitations.replace((client?.contacts ?? <ContactEntity>[])
           .where((contact) => contact.sendEmail)
           .map((contact) => InvitationEntity(contactId: contact.id))

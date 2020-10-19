@@ -3,12 +3,8 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:invoiceninja_flutter/data/models/entities.dart';
 import 'package:invoiceninja_flutter/data/models/project_model.dart';
-import 'package:invoiceninja_flutter/redux/credit/credit_selectors.dart';
 import 'package:invoiceninja_flutter/redux/expense/expense_selectors.dart';
-import 'package:invoiceninja_flutter/redux/invoice/invoice_selectors.dart';
 import 'package:invoiceninja_flutter/redux/project/project_selectors.dart';
-import 'package:invoiceninja_flutter/redux/quote/quote_selectors.dart';
-import 'package:invoiceninja_flutter/redux/recurring_invoice/recurring_invoice_selectors.dart';
 import 'package:invoiceninja_flutter/redux/task/task_selectors.dart';
 import 'package:invoiceninja_flutter/ui/app/FieldGrid.dart';
 import 'package:invoiceninja_flutter/ui/app/entities/entity_list_tile.dart';
@@ -96,59 +92,6 @@ class _ProjectOverviewState extends State<ProjectOverview> {
           entity: client,
           isFilter: widget.isFilter,
         ),
-        if (company.isModuleEnabled(EntityType.invoice))
-          EntitiesListTile(
-            isFilter: widget.isFilter,
-            entityType: EntityType.invoice,
-            title: localization.invoices,
-            onTap: () =>
-                widget.viewModel.onEntityPressed(context, EntityType.invoice),
-            onLongPress: () => widget.viewModel
-                .onEntityPressed(context, EntityType.invoice, longPress: true),
-            subtitle: memoizedInvoiceStatsForProject(
-                    project.id, state.invoiceState.map)
-                .present(localization.active, localization.archived),
-          ),
-        if (company.isModuleEnabled(EntityType.recurringInvoice))
-          EntitiesListTile(
-            isFilter: widget.isFilter,
-            entityType: EntityType.recurringInvoice,
-            title: localization.recurringInvoices,
-            onTap: () => widget.viewModel
-                .onEntityPressed(context, EntityType.recurringInvoice),
-            onLongPress: () => widget.viewModel.onEntityPressed(
-                context, EntityType.recurringInvoice,
-                longPress: true),
-            subtitle: memoizedRecurringInvoiceStatsForProject(
-                    project.id, state.recurringInvoiceState.map)
-                .present(localization.active, localization.archived),
-          ),
-        if (company.isModuleEnabled(EntityType.quote))
-          EntitiesListTile(
-            isFilter: widget.isFilter,
-            entityType: EntityType.quote,
-            title: localization.quotes,
-            onTap: () =>
-                widget.viewModel.onEntityPressed(context, EntityType.quote),
-            onLongPress: () => widget.viewModel
-                .onEntityPressed(context, EntityType.quote, longPress: true),
-            subtitle:
-                memoizedQuoteStatsForProject(project.id, state.quoteState.map)
-                    .present(localization.active, localization.archived),
-          ),
-        if (company.isModuleEnabled(EntityType.credit))
-          EntitiesListTile(
-            isFilter: widget.isFilter,
-            entityType: EntityType.credit,
-            title: localization.credits,
-            onTap: () =>
-                widget.viewModel.onEntityPressed(context, EntityType.credit),
-            onLongPress: () => widget.viewModel
-                .onEntityPressed(context, EntityType.credit, longPress: true),
-            subtitle:
-                memoizedCreditStatsForProject(project.id, state.creditState.map)
-                    .present(localization.active, localization.archived),
-          ),
         if (company.isModuleEnabled(EntityType.task))
           EntitiesListTile(
             isFilter: widget.isFilter,
