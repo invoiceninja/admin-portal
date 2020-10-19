@@ -46,6 +46,7 @@ class TaskListItem extends StatelessWidget {
     final showCheckbox = onCheckboxChanged != null || isInMultiselect;
     final textStyle = TextStyle(fontSize: 16);
     final subtitle = client.displayName;
+    final textColor = Theme.of(context).textTheme.bodyText1.color;
 
     return DismissibleEntity(
       isSelected: isDesktop(context) &&
@@ -125,7 +126,13 @@ class TaskListItem extends StatelessWidget {
                               subtitle ?? filterMatch,
                               maxLines: 3,
                               overflow: TextOverflow.ellipsis,
-                              style: Theme.of(context).textTheme.subtitle2,
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .subtitle2
+                                  .copyWith(
+                                    color:
+                                        textColor.withOpacity(kLighterOpacity),
+                                  ),
                             ),
                           ],
                         ),
@@ -165,7 +172,8 @@ class TaskListItem extends StatelessWidget {
                     children: <Widget>[
                       Expanded(
                         child: Text(
-                          task.description + (task.documents.isNotEmpty ? '  📎' : ''),
+                          task.description +
+                              (task.documents.isNotEmpty ? '  📎' : ''),
                           maxLines: 2,
                           overflow: TextOverflow.ellipsis,
                           style: Theme.of(context).textTheme.headline6,
@@ -181,11 +189,12 @@ class TaskListItem extends StatelessWidget {
                 subtitle: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
-                    Text(
-                      subtitle ?? filterMatch,
-                      maxLines: 3,
-                      overflow: TextOverflow.ellipsis,
-                    ),
+                    Text(subtitle ?? filterMatch,
+                        maxLines: 3,
+                        overflow: TextOverflow.ellipsis,
+                        style: Theme.of(context).textTheme.subtitle2.copyWith(
+                              color: textColor.withOpacity(kLighterOpacity),
+                            )),
                     EntityStateLabel(task),
                   ],
                 ),

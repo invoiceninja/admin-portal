@@ -101,6 +101,7 @@ const String kPlanEnterprise = 'enterprise';
 const String kPlanWhiteLabel = 'white_label';
 
 const double kGutterWidth = 16;
+const double kLighterOpacity = .6;
 
 const int kMaxNumberOfCompanies = 10;
 const int kMaxNumberOfHistory = 50;

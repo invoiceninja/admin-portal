@@ -47,6 +47,7 @@ class ExpenseListItem extends StatelessWidget {
 
     final company = state.company;
     final category = company.expenseCategoryMap[expense.categoryId];
+    final textColor = Theme.of(context).textTheme.bodyText1.color;
 
     String subtitle = '';
     if (filterMatch != null) {
@@ -135,6 +136,12 @@ class ExpenseListItem extends StatelessWidget {
                           subtitle,
                           maxLines: 3,
                           overflow: TextOverflow.ellipsis,
+                      style: Theme.of(context)
+                          .textTheme
+                          .subtitle2
+                          .copyWith(
+                        color: textColor.withOpacity(kLighterOpacity),
+                      )
                         )
                       : Container(),
                 ),
