@@ -88,7 +88,11 @@ class _TaskViewState extends State<TaskView>
             ),
             BottomButtons(
               entity: task,
-              action1: task.isRunning ? EntityAction.stop : EntityAction.start,
+              action1: task.isRunning
+                  ? EntityAction.stop
+                  : task.taskTimes.isEmpty
+                      ? EntityAction.start
+                      : EntityAction.resume,
               action2: EntityAction.newInvoice,
             ),
           ],
