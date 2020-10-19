@@ -51,7 +51,8 @@ class _TaskEditTimesState extends State<TaskEditTimes> {
     final localization = AppLocalization.of(context);
     final viewModel = widget.viewModel;
     final task = viewModel.task;
-    final taskTime = viewModel.taskTimeIndex != null
+    final taskTime = viewModel.taskTimeIndex != null &&
+            task.taskTimes.length > viewModel.taskTimeIndex
         ? task.taskTimes[viewModel.taskTimeIndex]
         : null;
 

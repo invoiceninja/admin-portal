@@ -172,8 +172,12 @@ class TaskListItem extends StatelessWidget {
                       )
                     : null,
                 trailing: IconButton(
-                  icon: Icon(getEntityActionIcon(
-                      task.isRunning ? EntityAction.stop : EntityAction.start)),
+                  icon: Icon(
+                    getEntityActionIcon(task.isRunning
+                        ? EntityAction.stop
+                        : EntityAction.start),
+                    color: task.isRunning ? state.accentColor : null,
+                  ),
                   onPressed: () => handleEntityAction(context, task,
                       task.isRunning ? EntityAction.stop : EntityAction.start),
                   visualDensity: VisualDensity.compact,
