@@ -39,7 +39,7 @@ class TaskListBuilder extends StatelessWidget {
               final taskId = viewModel.taskList[index];
               final task = viewModel.taskMap[taskId];
               final state = viewModel.state;
-              final listUIState = state.getListState(EntityType.client);
+              final listUIState = state.getListState(EntityType.task);
               final isInMultiselect = listUIState.isInMultiselect();
 
               return TaskListItem(

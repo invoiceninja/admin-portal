@@ -48,6 +48,11 @@ class TaskListItem extends StatelessWidget {
     final subtitle = client.displayName;
     final textColor = Theme.of(context).textTheme.bodyText1.color;
 
+    final duration = LiveText(() {
+      return formatNumber(task.listDisplayAmount, context,
+          formatNumberType: FormatNumberType.duration);
+    }, style: textStyle);
+
     return DismissibleEntity(
       isSelected: isDesktop(context) &&
           task.id ==
@@ -138,10 +143,7 @@ class TaskListItem extends StatelessWidget {
                         ),
                       ),
                       SizedBox(width: 10),
-                      LiveText(() {
-                        return formatNumber(task.listDisplayAmount, context,
-                            formatNumberType: FormatNumberType.duration);
-                      }, style: Theme.of(context).textTheme.headline6),
+                      duration,
                     ],
                   ),
                 ),
@@ -179,10 +181,7 @@ class TaskListItem extends StatelessWidget {
                           style: Theme.of(context).textTheme.headline6,
                         ),
                       ),
-                      LiveText(() {
-                        return formatNumber(task.listDisplayAmount, context,
-                            formatNumberType: FormatNumberType.duration);
-                      }, style: Theme.of(context).textTheme.headline6),
+                      duration,
                     ],
                   ),
                 ),
