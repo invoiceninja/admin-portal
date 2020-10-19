@@ -81,12 +81,6 @@ class _$TaskUIStateSerializer implements StructuredSerializer<TaskUIState> {
         ..add(serializers.serialize(object.editing,
             specifiedType: const FullType(TaskEntity)));
     }
-    if (object.editingTime != null) {
-      result
-        ..add('editingTime')
-        ..add(serializers.serialize(object.editingTime,
-            specifiedType: const FullType(TaskTime)));
-    }
     if (object.selectedId != null) {
       result
         ..add('selectedId')
@@ -110,10 +104,6 @@ class _$TaskUIStateSerializer implements StructuredSerializer<TaskUIState> {
         case 'editing':
           result.editing.replace(serializers.deserialize(value,
               specifiedType: const FullType(TaskEntity)) as TaskEntity);
-          break;
-        case 'editingTime':
-          result.editingTime.replace(serializers.deserialize(value,
-              specifiedType: const FullType(TaskTime)) as TaskTime);
           break;
         case 'listUIState':
           result.listUIState.replace(serializers.deserialize(value,
@@ -239,7 +229,7 @@ class _$TaskUIState extends TaskUIState {
   @override
   final TaskEntity editing;
   @override
-  final TaskTime editingTime;
+  final int editingTimeIndex;
   @override
   final ListUIState listUIState;
   @override
@@ -254,7 +244,7 @@ class _$TaskUIState extends TaskUIState {
 
   _$TaskUIState._(
       {this.editing,
-      this.editingTime,
+      this.editingTimeIndex,
       this.listUIState,
       this.selectedId,
       this.saveCompleter,
@@ -277,7 +267,7 @@ class _$TaskUIState extends TaskUIState {
     if (identical(other, this)) return true;
     return other is TaskUIState &&
         editing == other.editing &&
-        editingTime == other.editingTime &&
+        editingTimeIndex == other.editingTimeIndex &&
         listUIState == other.listUIState &&
         selectedId == other.selectedId &&
         saveCompleter == other.saveCompleter &&
@@ -290,7 +280,7 @@ class _$TaskUIState extends TaskUIState {
     return __hashCode ??= $jf($jc(
         $jc(
             $jc(
-                $jc($jc($jc(0, editing.hashCode), editingTime.hashCode),
+                $jc($jc($jc(0, editing.hashCode), editingTimeIndex.hashCode),
                     listUIState.hashCode),
                 selectedId.hashCode),
             saveCompleter.hashCode),
@@ -301,7 +291,7 @@ class _$TaskUIState extends TaskUIState {
   String toString() {
     return (newBuiltValueToStringHelper('TaskUIState')
           ..add('editing', editing)
-          ..add('editingTime', editingTime)
+          ..add('editingTimeIndex', editingTimeIndex)
           ..add('listUIState', listUIState)
           ..add('selectedId', selectedId)
           ..add('saveCompleter', saveCompleter)
@@ -317,11 +307,10 @@ class TaskUIStateBuilder implements Builder<TaskUIState, TaskUIStateBuilder> {
   TaskEntityBuilder get editing => _$this._editing ??= new TaskEntityBuilder();
   set editing(TaskEntityBuilder editing) => _$this._editing = editing;
 
-  TaskTimeBuilder _editingTime;
-  TaskTimeBuilder get editingTime =>
-      _$this._editingTime ??= new TaskTimeBuilder();
-  set editingTime(TaskTimeBuilder editingTime) =>
-      _$this._editingTime = editingTime;
+  int _editingTimeIndex;
+  int get editingTimeIndex => _$this._editingTimeIndex;
+  set editingTimeIndex(int editingTimeIndex) =>
+      _$this._editingTimeIndex = editingTimeIndex;
 
   ListUIStateBuilder _listUIState;
   ListUIStateBuilder get listUIState =>
@@ -348,7 +337,7 @@ class TaskUIStateBuilder implements Builder<TaskUIState, TaskUIStateBuilder> {
   TaskUIStateBuilder get _$this {
     if (_$v != null) {
       _editing = _$v.editing?.toBuilder();
-      _editingTime = _$v.editingTime?.toBuilder();
+      _editingTimeIndex = _$v.editingTimeIndex;
       _listUIState = _$v.listUIState?.toBuilder();
       _selectedId = _$v.selectedId;
       _saveCompleter = _$v.saveCompleter;
@@ -378,7 +367,7 @@ class TaskUIStateBuilder implements Builder<TaskUIState, TaskUIStateBuilder> {
       _$result = _$v ??
           new _$TaskUIState._(
               editing: _editing?.build(),
-              editingTime: _editingTime?.build(),
+              editingTimeIndex: editingTimeIndex,
               listUIState: listUIState.build(),
               selectedId: selectedId,
               saveCompleter: saveCompleter,
@@ -388,8 +377,7 @@ class TaskUIStateBuilder implements Builder<TaskUIState, TaskUIStateBuilder> {
       try {
         _$failedField = 'editing';
         _editing?.build();
-        _$failedField = 'editingTime';
-        _editingTime?.build();
+
         _$failedField = 'listUIState';
         listUIState.build();
       } catch (e) {

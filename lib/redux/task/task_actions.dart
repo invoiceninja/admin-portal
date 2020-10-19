@@ -103,9 +103,9 @@ class LoadTaskSuccess implements StopLoading, PersistData {
 }
 
 class EditTaskTime implements PersistUI {
-  EditTaskTime([this.taskTime]);
+  EditTaskTime([this.taskTimeIndex]);
 
-  final TaskTime taskTime;
+  final int taskTimeIndex;
 }
 
 class AddTaskTime implements PersistUI {

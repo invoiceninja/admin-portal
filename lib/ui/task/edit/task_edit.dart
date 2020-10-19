@@ -37,25 +37,20 @@ class _TaskEditState extends State<TaskEdit>
     _timer = Timer.periodic(Duration(seconds: 1),
         (Timer t) => mounted ? setState(() => false) : false);
 
-    final task = widget.viewModel.task;
-    final taskTime = widget.viewModel.taskTime;
-
     final index =
-        task.taskTimes.contains(taskTime) ? kTimesScreen : kDetailsScreen;
+        widget.viewModel.taskTimeIndex != null ? kTimesScreen : kDetailsScreen;
 
     _controller = TabController(vsync: this, length: 2, initialIndex: index);
   }
 
-  /*
   @override
   void didUpdateWidget(oldWidget) {
     super.didUpdateWidget(oldWidget);
 
-    if (widget.viewModel.taskTime != null) {
+    if (widget.viewModel.taskTimeIndex != null) {
       _controller.animateTo(kTimesScreen);
     }
   }
-   */
 
   @override
   void dispose() {

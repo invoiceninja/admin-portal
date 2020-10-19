@@ -105,23 +105,12 @@ class TaskViewVM {
       project: project,
       onFabPressed: (BuildContext context) => _toggleTask(context),
       onEditPressed: (BuildContext context, [TaskTime taskTime]) {
-        // TODO change from time to index
-        editEntity(context: context, entity: task);
-        /*
-        final Completer<TaskEntity> completer = new Completer<TaskEntity>();
-        store.dispatch(EditTask(
-          task: task,
-          taskTime: taskTime,
-          context: context,
-          completer: completer,
-        ));
-        completer.future.then((task) {
-          Scaffold.of(context).showSnackBar(SnackBar(
-              content: SnackBarRow(
-            message: AppLocalization.of(context).updatedTask,
-          )));
-        });
-         */
+        editEntity(
+            context: context,
+            entity: task,
+            subIndex: task.taskTimes.indexOf(taskTime),
+            completer: snackBarCompleter<ClientEntity>(
+                context, AppLocalization.of(context).updatedTask));
       },
       onRefreshed: (context) => _handleRefresh(context),
       onEntityAction: (BuildContext context, EntityAction action) =>

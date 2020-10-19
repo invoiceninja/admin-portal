@@ -1035,6 +1035,7 @@ void editEntity(
             store.dispatch(EditTask(
               task: entity,
               navigator: navigator,
+              taskTimeIndex: subIndex,
               completer: completer ??
                   snackBarCompleter<TaskEntity>(
                       context,
