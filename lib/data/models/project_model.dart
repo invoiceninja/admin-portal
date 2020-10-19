@@ -172,7 +172,7 @@ abstract class ProjectEntity extends Object
             actions.add(EntityAction.newTask);
           }
           if (userCompany.canCreate(EntityType.expense)) {
-            actions.add(EntityAction.newInvoice);
+            actions.add(EntityAction.newExpense);
           }
         }
       }

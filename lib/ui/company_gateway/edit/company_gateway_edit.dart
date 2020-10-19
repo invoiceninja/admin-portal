@@ -234,7 +234,7 @@ class _CompanyGatewayEditState extends State<CompanyGatewayEdit>
           ),
           ListView(
             children: <Widget>[
-              if (gateway.options.length > 1)
+              if (gateway?.options != null && gateway.options.length > 1)
                 FormCard(
                   children: <Widget>[
                     AppDropdownButton(
